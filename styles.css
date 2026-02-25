@@ -67,7 +67,7 @@ header{ padding:28px 0 18px; }
 
 .controls{
   display:grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr repeat(6, 1fr);
   gap:10px;
   padding:14px;
   background:var(--card);
@@ -250,6 +250,12 @@ tbody tr:hover{ background:#fcfcff; }
   margin:8px 0 0;
   font-size:13px;
   color:var(--muted);
+}
+.redNote{
+  margin:8px 0 0;
+  color:#dc2626;
+  font-size:13px;
+  font-weight:700;
 }
 .statementCard{
   border-left:4px solid #6366f1;

@@ -3,7 +3,8 @@
 
 const LIKE_STORAGE_KEY = "qdby.likes.v1";
 const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
-const state = { data: [], likes: {}, messages: [], storageOK: true };
+const API_BASE = "/api";
+const state = { data: [], likes: {}, messages: [], storageOK: true, onlineOK: false };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -11,6 +12,8 @@ const el = {
   type: document.getElementById("type"),
   degree: document.getElementById("degree"),
   age: document.getElementById("age"),
+  lang: document.getElementById("lang"),
+  duration: document.getElementById("duration"),
   sort: document.getElementById("sort"),
   status: document.getElementById("status"),
   viewer: document.getElementById("viewer"),
@@ -68,6 +71,57 @@ function setLocalItem(key, value){
     state.storageOK = false;
     return false;
   }
+}
+
+async function apiJson(path, options = {}){
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+  });
+  if(!res.ok){ throw new Error(`HTTP ${res.status}`); }
+  return res.json();
+}
+
+async function tryLoadRemoteState(){
+  try{
+    const remote = await apiJson('/state', { cache: 'no-store' });
+    if(remote && typeof remote === 'object'){
+      state.likes = remote.likes && typeof remote.likes === 'object' ? remote.likes : state.likes;
+      state.messages = Array.isArray(remote.messages) ? remote.messages : state.messages;
+      state.onlineOK = true;
+      return true;
+    }
+  }catch(_err){
+    state.onlineOK = false;
+  }
+  return false;
+}
+
+async function postLikeRemote(id){
+  const payload = await apiJson('/like', {
+    method: 'POST',
+    body: JSON.stringify({ id }),
+  });
+  if(payload && payload.likes && typeof payload.likes === 'object'){
+    state.likes = payload.likes;
+  }
+  state.onlineOK = true;
+  return payload;
+}
+
+async function postMessageRemote(author, text){
+  const payload = await apiJson('/messages', {
+    method: 'POST',
+    body: JSON.stringify({ author, text }),
+  });
+  if(payload && Array.isArray(payload.messages)){
+    state.messages = payload.messages;
+  }
+  state.onlineOK = true;
+  return payload;
 }
 
 function loadLikes(){
@@ -149,29 +203,39 @@ function renderMessages(){
   el.messageList.innerHTML = items;
 }
 
-function postMessage(name, text){
-  const payload = {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
-    author: safeText(name).trim().slice(0,20),
-    text: safeText(text).trim().slice(0,300),
-    createdAt: new Date().toISOString()
-  };
+async function postMessage(name, text){
+  const author = safeText(name).trim().slice(0,20);
+  const messageText = safeText(text).trim().slice(0,300);
 
-  if(!payload.text){
+  if(!messageText){
     return { ok:false, message:"留言内容不能为空。" };
   }
 
+  try{
+    await postMessageRemote(author, messageText);
+    renderMessages();
+    return { ok:true, message:"留言发布成功，已同步到在线留言板。" };
+  }catch(_err){
+    state.onlineOK = false;
+  }
+
+  const payload = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
+    author,
+    text: messageText,
+    createdAt: new Date().toISOString()
+  };
+
   state.messages.push(payload);
-  // keep latest 100 messages
   if(state.messages.length > 100){
     state.messages = state.messages.slice(-100);
   }
   const saved = saveMessages();
   renderMessages();
   if(!saved){
-    return { ok:true, message:"留言已发布（当前浏览器限制，关闭页面后可能不保留）。" };
+    return { ok:true, message:"在线服务不可用，且当前浏览器限制存储，留言仅临时显示。" };
   }
-  return { ok:true, message:"留言发布成功，已保存到本地。" };
+  return { ok:true, message:"在线服务暂不可用，已临时保存到本地。" };
 }
 
 function uniq(values){
@@ -261,12 +325,16 @@ function filtered(){
   const t = safeText(el.type.value).trim();
   const d = safeText(el.degree.value).trim();
   const a = safeText(el.age.value).trim();
+  const l = safeText(el.lang.value).trim();
+  const du = safeText(el.duration.value).trim();
 
   let arr = state.data.filter(r=>{
     if(!matches(r, q)){ return false; }
     if(t && safeText(r["游戏类型"]).trim() !== t){ return false; }
     if(d && safeText(r["汉化程度"]).trim() !== d){ return false; }
     if(a && safeText(r["年龄分级"]).trim() !== a){ return false; }
+    if(l && safeText(r["原版语言"]).trim() !== l){ return false; }
+    if(du && safeText(r["游戏时长"]).trim() !== du){ return false; }
     return true;
   });
 
@@ -337,6 +405,8 @@ function fillFilters(){
   const types = uniq(data.map(x=>x["游戏类型"]));
   const degrees = uniq(data.map(x=>x["汉化程度"]));
   const ages = uniq(data.map(x=>x["年龄分级"]));
+  const langs = uniq(data.map(x=>x["原版语言"]));
+  const durations = uniq(data.map(x=>x["游戏时长"]));
 
   for(const v of types){
     const opt = document.createElement("option");
@@ -356,6 +426,18 @@ function fillFilters(){
     opt.textContent = v;
     el.age.appendChild(opt);
   }
+  for(const v of langs){
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    el.lang.appendChild(opt);
+  }
+  for(const v of durations){
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    el.duration.appendChild(opt);
+  }
 }
 
 function wireControls(){
@@ -364,9 +446,11 @@ function wireControls(){
   el.type.addEventListener("change", rerender);
   el.degree.addEventListener("change", rerender);
   el.age.addEventListener("change", rerender);
+  el.lang.addEventListener("change", rerender);
+  el.duration.addEventListener("change", rerender);
   el.sort.addEventListener("change", rerender);
 
-  el.tbody.addEventListener("click", (e)=>{
+  el.tbody.addEventListener("click", async (e)=>{
     const shotBtn = e.target.closest("button[data-img]");
     if(shotBtn){
       const img = shotBtn.getAttribute("data-img");
@@ -379,18 +463,23 @@ function wireControls(){
     const likeBtn = e.target.closest("button[data-like-id]");
     if(likeBtn){
       const id = likeBtn.getAttribute("data-like-id");
-      addLike(id);
+      try{
+        await postLikeRemote(id);
+      }catch(_err){
+        state.onlineOK = false;
+        addLike(id);
+      }
       const countEl = el.tbody.querySelector(`[data-like-count="${id}"]`);
       if(countEl){ countEl.textContent = String(getLikeCount(id)); }
     }
   });
 
   if(el.messageForm){
-    el.messageForm.addEventListener("submit", (e)=>{
+    el.messageForm.addEventListener("submit", async (e)=>{
       e.preventDefault();
-      const result = postMessage(el.messageName.value, el.messageText.value);
+      const result = await postMessage(el.messageName.value, el.messageText.value);
       el.messageStatus.textContent = result.message;
-      el.messageStatus.classList.toggle("warn", !state.storageOK);
+      el.messageStatus.classList.toggle("warn", !state.storageOK || !state.onlineOK);
       if(result.ok){
         el.messageText.value = "";
         el.messageText.focus();
@@ -415,13 +504,17 @@ async function main(){
   state.storageOK = canUseLocalStorage();
   state.likes = loadLikes();
   state.messages = loadMessages();
+  await tryLoadRemoteState();
   wireControls();
   await loadData();
   fillFilters();
   render();
   renderMessages();
-  if(el.messageStatus && !state.storageOK){
-    el.messageStatus.textContent = "当前浏览器限制本地存储，留言仅在本次打开期间可见。";
+  if(el.messageStatus && !state.onlineOK){
+    el.messageStatus.textContent = "当前处于离线留言模式：会先显示并尝试保存在本地。";
+    el.messageStatus.classList.add("warn");
+  } else if(el.messageStatus && !state.storageOK){
+    el.messageStatus.textContent = "当前浏览器限制本地存储，但在线模式可正常同步。";
     el.messageStatus.classList.add("warn");
   }
 }
