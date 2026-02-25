@@ -75,6 +75,17 @@
   </header>
 
   <main class="wrap">
+
+    <section class="statement panel statementCard" aria-labelledby="statementTitle">
+      <h2 id="statementTitle">个人声明</h2>
+      <p class="panelLead">请先阅读以下说明，感谢理解与支持。</p>
+      <p>非专业汉化人员，全部为爱发电，部分有授权部分没有，没有的大部分是联系不上作者或者付费作品。</p>
+      <p>请勿倒卖二传商用，看到有人这么干请勤点举报，谢谢帮忙。</p>
+      <p>本意是安利些无汉化的小众游戏，可能会有少量撞坑情况，可以自由选择汉化版本。</p>
+      <p>不需要打钱捐助，如果很爱我可以通过爱发电 or B站发电，心意到了就行了，多多花钱支持正版。</p>
+      <p>网页内其他要素背景均为我 OC，请不要盗图，欢迎夸夸。</p>
+    </section>
+
     <div class="tableWrap">
       <table class="table" aria-label="汉化汇总表">
         <thead>
@@ -91,6 +102,41 @@
         <tbody id="tbody"></tbody>
       </table>
     </div>
+
+    <section class="extraPanels" aria-label="站点扩展功能区">
+      <section class="panel previewCard" aria-labelledby="previewTitle">
+        <h2 id="previewTitle">汉化预告 / 占坑</h2>
+        <p class="panelLead">以下为当前计划与进度说明。</p>
+        <ul class="previewList">
+          <li>恶魔之心的第四作正在制作机翻润色补丁；</li>
+          <li>dark nights 的 DLC 因为尚未更完 + 付费，所以暂时不会制作补丁，等更完再考虑；</li>
+          <li>R妈相关作品因为有其他人做汉化不会重复汉化，新作目前未完结等完结再看；</li>
+          <li>凡太后续的作品还会更新；</li>
+          <li>冬弥雪老师系列作正在绝赞填坑中。</li>
+        </ul>
+      </section>
+
+      <section class="panel messageCard" aria-labelledby="messageTitle">
+        <h2 id="messageTitle">匿名留言板</h2>
+        <p class="panelLead">欢迎留言交流，昵称可留空。</p>
+        <form id="messageForm" class="messageForm">
+          <div class="messageGrid">
+            <div class="control">
+              <label for="messageName">昵称（可留空）</label>
+              <input id="messageName" name="name" type="text" maxlength="20" placeholder="匿名" />
+            </div>
+            <div class="control span2 messageInputWrap">
+              <label for="messageText">留言内容</label>
+              <textarea id="messageText" name="text" maxlength="300" placeholder="写点想说的吧（最多 300 字）" required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="messageSubmit">发布留言</button>
+          <p class="messageStatus muted" id="messageStatus" role="status" aria-live="polite"></p>
+        </form>
+        <ul id="messageList" class="messageList" aria-live="polite"></ul>
+      </section>
+    </section>
+
   </main>
 
   <dialog id="viewer" class="viewer">

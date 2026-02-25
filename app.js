@@ -1,7 +1,9 @@
-// app.js (ESM) — static site (no likes)
+// app.js (ESM)
 // Data source: ./data.json
 
-const state = { data: [] };
+const LIKE_STORAGE_KEY = "qdby.likes.v1";
+const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
+const state = { data: [], likes: {}, messages: [], storageOK: true };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -13,7 +15,12 @@ const el = {
   status: document.getElementById("status"),
   viewer: document.getElementById("viewer"),
   viewerImg: document.getElementById("viewerImg"),
-  viewerClose: document.getElementById("viewerClose")
+  viewerClose: document.getElementById("viewerClose"),
+  messageForm: document.getElementById("messageForm"),
+  messageName: document.getElementById("messageName"),
+  messageText: document.getElementById("messageText"),
+  messageList: document.getElementById("messageList"),
+  messageStatus: document.getElementById("messageStatus")
 };
 
 document.getElementById("year").innerText = String(new Date().getFullYear());
@@ -21,6 +28,151 @@ document.getElementById("year").innerText = String(new Date().getFullYear());
 function setStatus(s){ el.status.textContent = s || ""; }
 
 function safeText(s){ return String(s == null ? "" : s); }
+
+function escapeHtml(s){
+  return safeText(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function canUseLocalStorage(){
+  try{
+    const key = "__qdby_test__";
+    localStorage.setItem(key, "1");
+    localStorage.removeItem(key);
+    return true;
+  }catch(_err){
+    return false;
+  }
+}
+
+function getLocalItem(key){
+  if(!state.storageOK){ return null; }
+  try{
+    return localStorage.getItem(key);
+  }catch(_err){
+    state.storageOK = false;
+    return null;
+  }
+}
+
+function setLocalItem(key, value){
+  if(!state.storageOK){ return false; }
+  try{
+    localStorage.setItem(key, value);
+    return true;
+  }catch(_err){
+    state.storageOK = false;
+    return false;
+  }
+}
+
+function loadLikes(){
+  try{
+    const raw = getLocalItem(LIKE_STORAGE_KEY);
+    if(!raw){ return {}; }
+    const parsed = JSON.parse(raw);
+    if(parsed && typeof parsed === "object"){ return parsed; }
+  }catch(_err){
+    // ignore malformed cache
+  }
+  return {};
+}
+
+function saveLikes(){
+  setLocalItem(LIKE_STORAGE_KEY, JSON.stringify(state.likes));
+}
+
+function getLikeCount(id){
+  const n = Number(state.likes[id] || 0);
+  return Number.isFinite(n) && n > 0 ? n : 0;
+}
+
+function addLike(id){
+  if(!id){ return; }
+  state.likes[id] = getLikeCount(id) + 1;
+  saveLikes();
+}
+
+
+function loadMessages(){
+  try{
+    const raw = getLocalItem(MESSAGE_STORAGE_KEY);
+    if(!raw){ return []; }
+    const parsed = JSON.parse(raw);
+    if(Array.isArray(parsed)){ return parsed; }
+  }catch(_err){
+    // ignore malformed cache
+  }
+  return [];
+}
+
+function saveMessages(){
+  return setLocalItem(MESSAGE_STORAGE_KEY, JSON.stringify(state.messages));
+}
+
+function formatTime(iso){
+  const t = Date.parse(safeText(iso));
+  if(!Number.isFinite(t)){ return "刚刚"; }
+  return new Date(t).toLocaleString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function renderMessages(){
+  if(!el.messageList){ return; }
+  if(state.messages.length === 0){
+    el.messageList.innerHTML = '<li class="messageEmpty muted">还没有留言，欢迎抢沙发～</li>';
+    return;
+  }
+
+  const items = state.messages
+    .slice()
+    .sort((a,b)=>Date.parse(b.createdAt || "") - Date.parse(a.createdAt || ""))
+    .map((msg)=>{
+      const author = escapeHtml(safeText(msg.author).trim() || "匿名");
+      const text = escapeHtml(safeText(msg.text).trim());
+      return `
+        <li class="messageItem">
+          <div class="messageMeta">${author} · ${formatTime(msg.createdAt)}</div>
+          <p>${text}</p>
+        </li>`;
+    }).join("");
+
+  el.messageList.innerHTML = items;
+}
+
+function postMessage(name, text){
+  const payload = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
+    author: safeText(name).trim().slice(0,20),
+    text: safeText(text).trim().slice(0,300),
+    createdAt: new Date().toISOString()
+  };
+
+  if(!payload.text){
+    return { ok:false, message:"留言内容不能为空。" };
+  }
+
+  state.messages.push(payload);
+  // keep latest 100 messages
+  if(state.messages.length > 100){
+    state.messages = state.messages.slice(-100);
+  }
+  const saved = saveMessages();
+  renderMessages();
+  if(!saved){
+    return { ok:true, message:"留言已发布（当前浏览器限制，关闭页面后可能不保留）。" };
+  }
+  return { ok:true, message:"留言发布成功，已保存到本地。" };
+}
 
 function uniq(values){
   const set = new Set();
@@ -156,6 +308,12 @@ function rowHtml(r){
       <td>
         <div class="name">${safeText(r["汉化名"]) || "—"}</div>
         <div class="mini">${safeText(r["要素"])}</div>
+        <div class="likeRow">
+          <button class="likeBtn" type="button" data-like-id="${r.__id}" aria-label="给 ${safeText(r["汉化名"]) || "这部作品"} 点赞">
+            👍 点赞
+          </button>
+          <span class="likeCount" data-like-count="${r.__id}">${getLikeCount(r.__id)}</span>
+        </div>
         ${buildDetails(r)}
       </td>
       <td>${safeText(r["游戏原名"]) || "—"}</td>
@@ -170,16 +328,6 @@ function rowHtml(r){
 function render(){
   const arr = filtered();
   el.tbody.innerHTML = arr.map(rowHtml).join("");
-
-  const btns = el.tbody.querySelectorAll("button[data-img]");
-  for(const b of btns){
-    b.addEventListener("click", ()=>{
-      const img = b.getAttribute("data-img");
-      if(!img){ return; }
-      el.viewerImg.src = img;
-      el.viewer.showModal();
-    });
-  }
 
   setStatus(`共 ${state.data.length} 条 · 当前显示 ${arr.length} 条`);
 }
@@ -218,6 +366,38 @@ function wireControls(){
   el.age.addEventListener("change", rerender);
   el.sort.addEventListener("change", rerender);
 
+  el.tbody.addEventListener("click", (e)=>{
+    const shotBtn = e.target.closest("button[data-img]");
+    if(shotBtn){
+      const img = shotBtn.getAttribute("data-img");
+      if(!img){ return; }
+      el.viewerImg.src = img;
+      el.viewer.showModal();
+      return;
+    }
+
+    const likeBtn = e.target.closest("button[data-like-id]");
+    if(likeBtn){
+      const id = likeBtn.getAttribute("data-like-id");
+      addLike(id);
+      const countEl = el.tbody.querySelector(`[data-like-count="${id}"]`);
+      if(countEl){ countEl.textContent = String(getLikeCount(id)); }
+    }
+  });
+
+  if(el.messageForm){
+    el.messageForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const result = postMessage(el.messageName.value, el.messageText.value);
+      el.messageStatus.textContent = result.message;
+      el.messageStatus.classList.toggle("warn", !state.storageOK);
+      if(result.ok){
+        el.messageText.value = "";
+        el.messageText.focus();
+      }
+    });
+  }
+
   el.viewerClose.addEventListener("click", ()=>el.viewer.close());
   el.viewer.addEventListener("click", (e)=>{
     const rect = el.viewer.getBoundingClientRect();
@@ -232,10 +412,18 @@ async function loadData(){
 }
 
 async function main(){
+  state.storageOK = canUseLocalStorage();
+  state.likes = loadLikes();
+  state.messages = loadMessages();
   wireControls();
   await loadData();
   fillFilters();
   render();
+  renderMessages();
+  if(el.messageStatus && !state.storageOK){
+    el.messageStatus.textContent = "当前浏览器限制本地存储，留言仅在本次打开期间可见。";
+    el.messageStatus.classList.add("warn");
+  }
 }
 
 main();
