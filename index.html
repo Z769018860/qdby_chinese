@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>青灯不弈的汉化小结</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bgLayer bgLeft" aria-hidden="true"></div>
+  <div class="bgLayer bgRight" aria-hidden="true"></div>
+
+  <header class="wrap">
+    <div class="hero">
+      <div class="title">
+        <div class="titleRow">
+        <div class="stickers" aria-hidden="true">
+          <img class="sticker" src="assets/sticker-1.gif" alt="" />
+          <img class="sticker" src="assets/sticker-2.gif" alt="" />
+        </div>
+        <h1>青灯不弈的汉化小结</h1>
+      </div>
+        <p class="subtitle">个人汉化工作汇总 · 可搜索筛选 · 持续更新</p>
+      </div>
+
+      <nav class="links" aria-label="外部主页">
+        <a class="chip" href="https://space.bilibili.com/95687310" target="_blank" rel="noopener">
+          <img alt="B站" src="https://www.bilibili.com/favicon.ico" />
+          <span>B站主页</span>
+        </a>
+        <a class="chip" href="https://weibo.com/5082872852" target="_blank" rel="noopener">
+          <img alt="微博" src="https://weibo.com/favicon.ico" />
+          <span>微博主页</span>
+        </a>
+        <a class="chip" href="https://afdian.com/a/qingdengbuyi" target="_blank" rel="noopener">
+          <img alt="爱发电" src="https://afdian.com/static/img/logo.png" />
+          <span>爱发电</span>
+        </a>
+      </nav>
+    </div>
+
+    <section class="controls" aria-label="搜索与筛选">
+      <div class="control span2">
+        <label for="q">搜索</label>
+        <input id="q" type="search" placeholder="按游戏名 / 作者 / 要素 / 汉化成员 / 备注等搜索…" />
+      </div>
+
+      <div class="control">
+        <label for="type">类型</label>
+        <select id="type"><option value="">全部</option></select>
+      </div>
+
+      <div class="control">
+        <label for="degree">汉化程度</label>
+        <select id="degree"><option value="">全部</option></select>
+      </div>
+
+      <div class="control">
+        <label for="age">年龄分级</label>
+        <select id="age"><option value="">全部</option></select>
+      </div>
+
+      <div class="control">
+        <label for="sort">排序</label>
+        <select id="sort">
+          <option value="date_desc">发布时间（新→旧）</option>
+          <option value="date_asc">发布时间（旧→新）</option>
+          <option value="name_asc">汉化名（A→Z）</option>
+          <option value="author_asc">作者（A→Z）</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="status" id="status"></div>
+  </header>
+
+  <main class="wrap">
+    <div class="tableWrap">
+      <table class="table" aria-label="汉化汇总表">
+        <thead>
+          <tr>
+            <th class="col-shot">截图</th>
+            <th class="col-name">汉化名</th>
+            <th class="col-ori">游戏原名</th>
+            <th class="col-author">作者</th>
+            <th class="col-meta">类型 / 分级 / 程度</th>
+            <th class="col-date">发布时间</th>
+            <th class="col-links">链接</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <dialog id="viewer" class="viewer">
+    <button class="viewerClose" id="viewerClose" aria-label="关闭">×</button>
+    <img id="viewerImg" alt="截图预览" />
+  </dialog>
+
+  <footer class="wrap footer">
+    <div>© <span id="year"></span> 青灯不弈</div>
+    <div class="muted">重要提示：本站为个人汉化汇总展示；请以原作者发布说明与授权范围为准。若链接失效或需要补档/更正信息，可通过友情链接联系我。</div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

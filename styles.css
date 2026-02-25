@@ -1,0 +1,317 @@
+:root{
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --accent:#111827;
+  --chip:#f3f4f6;
+  --shadow:0 10px 25px rgba(17,24,39,.08);
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Microsoft YaHei", "PingFang TC", "Noto Sans CJK TC", sans-serif;
+  color:var(--text);
+  background:var(--bg);
+}
+
+.wrap{
+  width:min(1200px, calc(100% - 28px));
+  margin:0 auto;
+}
+
+header{ padding:28px 0 18px; }
+
+.hero{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.title h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:.4px;
+}
+.subtitle{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:999px;
+  text-decoration:none;
+  color:var(--text);
+  box-shadow:0 6px 18px rgba(17,24,39,.06);
+}
+.chip:hover{transform:translateY(-1px)}
+.chip img{width:20px;height:20px;border-radius:4px}
+
+.controls{
+  display:grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap:10px;
+  padding:14px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-top:14px;
+}
+
+.control{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.control label{
+  font-size:12px;
+  color:var(--muted);
+}
+.control input, .control select{
+  height:38px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  outline:none;
+}
+.control input:focus, .control select:focus{
+  border-color:#c7cdd8;
+  box-shadow:0 0 0 4px rgba(17,24,39,.06);
+}
+.span2{ grid-column: span 2; }
+
+.status{
+  margin-top:10px;
+  font-size:13px;
+  color:var(--muted);
+  min-height:18px;
+}
+
+.tableWrap{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+
+thead th{
+  position:sticky;
+  top:0;
+  background:#fbfbfd;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+  color:var(--muted);
+  text-align:left;
+  padding:12px 12px;
+  z-index:1;
+}
+
+tbody td{
+  padding:12px 12px;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+  font-size:14px;
+}
+
+tbody tr:hover{ background:#fcfcff; }
+
+.col-date{ white-space:nowrap; }
+.col-links a{ color:var(--accent); text-decoration:none; }
+.col-links a:hover{ text-decoration:underline; }
+
+.badges{ display:flex; flex-wrap:wrap; gap:6px; }
+.badge{
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:var(--chip);
+  border:1px solid var(--line);
+  color:#374151;
+}
+
+.name{ font-weight:650; }
+.mini{ font-size:12px; color:var(--muted); margin-top:6px; line-height:1.4; }
+
+.shotBtn{
+  border:none;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+}
+.shot{
+  width:92px;
+  height:58px;
+  border-radius:10px;
+  object-fit:cover;
+  border:1px solid var(--line);
+  background:#f3f4f6;
+  display:block;
+}
+.shotEmpty{
+  width:92px;
+  height:58px;
+  border-radius:10px;
+  border:1px dashed var(--line);
+  background:#fafafa;
+}
+
+.details{ margin-top:8px; }
+.details summary{
+  cursor:pointer;
+  color:var(--muted);
+  font-size:12px;
+  list-style:none;
+}
+.details summary::-webkit-details-marker{display:none}
+.kv{
+  display:grid;
+  grid-template-columns: 110px 1fr;
+  gap:8px 10px;
+  padding:10px 0 0;
+  font-size:12px;
+  color:#374151;
+}
+.kv .k{ color:var(--muted); }
+.kv a{ color:var(--accent); text-decoration:none; }
+.kv a:hover{ text-decoration:underline; }
+
+.footer{
+  padding:18px 0 30px;
+  color:var(--muted);
+  font-size:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.muted{ color:var(--muted); }
+code{ background:#f3f4f6; border:1px solid var(--line); padding:2px 6px; border-radius:8px; }
+
+.viewer{
+  border:none;
+  border-radius:18px;
+  padding:0;
+  width:min(920px, calc(100vw - 32px));
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
+}
+.viewer::backdrop{ background:rgba(0,0,0,.35); }
+.viewerClose{
+  position:absolute;
+  right:10px;
+  top:8px;
+  width:38px;
+  height:38px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+.viewer img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:18px;
+}
+
+@media (max-width: 980px){
+  .controls{ grid-template-columns: 1fr 1fr; }
+  .span2{ grid-column: span 2; }
+  thead{ display:none; }
+  .table, tbody, tr, td{ display:block; width:100%; }
+  tbody td{ border-bottom:none; }
+  tbody tr{ border-bottom:1px solid var(--line); }
+}
+
+
+/* --- background illustration --- */
+.bgLayer{
+  position:fixed;
+  top:0;
+  bottom:0;
+  width:min(42vw, 640px);
+  pointer-events:none;
+  z-index:0;
+  opacity:.18;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
+  filter:saturate(0.9) contrast(1.05);
+}
+.bgLeft{
+  left:-10vw;
+  background-image:url("assets/bg-left.png");
+}
+.bgRight{
+  right:-10vw;
+  background-image:url("assets/bg-right.png");
+}
+@media (max-width: 980px){
+  .bgLayer{opacity:.12; width:min(60vw, 520px);}
+  .bgLeft{left:-22vw;}
+  .bgRight{right:-22vw;}
+}
+
+/* keep content above background */
+header, main, footer{ position:relative; z-index:1; }
+
+/* --- title stickers --- */
+.titleRow{
+  display:flex;
+  align-items:flex-end;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.stickers{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.sticker{
+  width:44px;
+  height:44px;
+}
+@media (max-width: 520px){
+  .sticker{width:38px;height:38px;}
+}
+
+/* mobile card labels */
+@media (max-width: 980px){
+  tbody tr{ padding:10px 12px; }
+  tbody td{ padding:8px 0; }
+  tbody td:nth-child(1)::before{ content:"截图"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  tbody td:nth-child(2)::before{ content:"汉化名"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  tbody td:nth-child(3)::before{ content:"游戏原名"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  tbody td:nth-child(4)::before{ content:"作者"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  tbody td:nth-child(5)::before{ content:"类型/分级/程度"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  tbody td:nth-child(6)::before{ content:"发布时间"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  tbody td:nth-child(7)::before{ content:"链接"; display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  .shot, .shotEmpty{ width:100%; max-width:260px; height:auto; aspect-ratio:16/10; }
+}
