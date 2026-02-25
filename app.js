@@ -1,7 +1,8 @@
-// app.js (ESM) — static site (no likes)
+// app.js (ESM)
 // Data source: ./data.json
 
-const state = { data: [] };
+const LIKE_STORAGE_KEY = "qdby.likes.v1";
+const state = { data: [], likes: {} };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -21,6 +22,33 @@ document.getElementById("year").innerText = String(new Date().getFullYear());
 function setStatus(s){ el.status.textContent = s || ""; }
 
 function safeText(s){ return String(s == null ? "" : s); }
+
+function loadLikes(){
+  try{
+    const raw = localStorage.getItem(LIKE_STORAGE_KEY);
+    if(!raw){ return {}; }
+    const parsed = JSON.parse(raw);
+    if(parsed && typeof parsed === "object"){ return parsed; }
+  }catch(_err){
+    // ignore malformed cache
+  }
+  return {};
+}
+
+function saveLikes(){
+  localStorage.setItem(LIKE_STORAGE_KEY, JSON.stringify(state.likes));
+}
+
+function getLikeCount(id){
+  const n = Number(state.likes[id] || 0);
+  return Number.isFinite(n) && n > 0 ? n : 0;
+}
+
+function addLike(id){
+  if(!id){ return; }
+  state.likes[id] = getLikeCount(id) + 1;
+  saveLikes();
+}
 
 function uniq(values){
   const set = new Set();
@@ -156,6 +184,12 @@ function rowHtml(r){
       <td>
         <div class="name">${safeText(r["汉化名"]) || "—"}</div>
         <div class="mini">${safeText(r["要素"])}</div>
+        <div class="likeRow">
+          <button class="likeBtn" type="button" data-like-id="${r.__id}" aria-label="给 ${safeText(r["汉化名"]) || "这部作品"} 点赞">
+            👍 点赞
+          </button>
+          <span class="likeCount" data-like-count="${r.__id}">${getLikeCount(r.__id)}</span>
+        </div>
         ${buildDetails(r)}
       </td>
       <td>${safeText(r["游戏原名"]) || "—"}</td>
@@ -170,16 +204,6 @@ function rowHtml(r){
 function render(){
   const arr = filtered();
   el.tbody.innerHTML = arr.map(rowHtml).join("");
-
-  const btns = el.tbody.querySelectorAll("button[data-img]");
-  for(const b of btns){
-    b.addEventListener("click", ()=>{
-      const img = b.getAttribute("data-img");
-      if(!img){ return; }
-      el.viewerImg.src = img;
-      el.viewer.showModal();
-    });
-  }
 
   setStatus(`共 ${state.data.length} 条 · 当前显示 ${arr.length} 条`);
 }
@@ -218,6 +242,25 @@ function wireControls(){
   el.age.addEventListener("change", rerender);
   el.sort.addEventListener("change", rerender);
 
+  el.tbody.addEventListener("click", (e)=>{
+    const shotBtn = e.target.closest("button[data-img]");
+    if(shotBtn){
+      const img = shotBtn.getAttribute("data-img");
+      if(!img){ return; }
+      el.viewerImg.src = img;
+      el.viewer.showModal();
+      return;
+    }
+
+    const likeBtn = e.target.closest("button[data-like-id]");
+    if(likeBtn){
+      const id = likeBtn.getAttribute("data-like-id");
+      addLike(id);
+      const countEl = el.tbody.querySelector(`[data-like-count="${id}"]`);
+      if(countEl){ countEl.textContent = String(getLikeCount(id)); }
+    }
+  });
+
   el.viewerClose.addEventListener("click", ()=>el.viewer.close());
   el.viewer.addEventListener("click", (e)=>{
     const rect = el.viewer.getBoundingClientRect();
@@ -232,6 +275,7 @@ async function loadData(){
 }
 
 async function main(){
+  state.likes = loadLikes();
   wireControls();
   await loadData();
   fillFilters();
