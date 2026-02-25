@@ -2,7 +2,8 @@
 // Data source: ./data.json
 
 const LIKE_STORAGE_KEY = "qdby.likes.v1";
-const state = { data: [], likes: {} };
+const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
+const state = { data: [], likes: {}, messages: [] };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -14,7 +15,12 @@ const el = {
   status: document.getElementById("status"),
   viewer: document.getElementById("viewer"),
   viewerImg: document.getElementById("viewerImg"),
-  viewerClose: document.getElementById("viewerClose")
+  viewerClose: document.getElementById("viewerClose"),
+  messageForm: document.getElementById("messageForm"),
+  messageName: document.getElementById("messageName"),
+  messageText: document.getElementById("messageText"),
+  messageList: document.getElementById("messageList"),
+  messageStatus: document.getElementById("messageStatus")
 };
 
 document.getElementById("year").innerText = String(new Date().getFullYear());
@@ -22,6 +28,15 @@ document.getElementById("year").innerText = String(new Date().getFullYear());
 function setStatus(s){ el.status.textContent = s || ""; }
 
 function safeText(s){ return String(s == null ? "" : s); }
+
+function escapeHtml(s){
+  return safeText(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
 function loadLikes(){
   try{
@@ -48,6 +63,80 @@ function addLike(id){
   if(!id){ return; }
   state.likes[id] = getLikeCount(id) + 1;
   saveLikes();
+}
+
+
+function loadMessages(){
+  try{
+    const raw = localStorage.getItem(MESSAGE_STORAGE_KEY);
+    if(!raw){ return []; }
+    const parsed = JSON.parse(raw);
+    if(Array.isArray(parsed)){ return parsed; }
+  }catch(_err){
+    // ignore malformed cache
+  }
+  return [];
+}
+
+function saveMessages(){
+  localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(state.messages));
+}
+
+function formatTime(iso){
+  const t = Date.parse(safeText(iso));
+  if(!Number.isFinite(t)){ return "刚刚"; }
+  return new Date(t).toLocaleString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function renderMessages(){
+  if(!el.messageList){ return; }
+  if(state.messages.length === 0){
+    el.messageList.innerHTML = '<li class="messageEmpty muted">还没有留言，欢迎抢沙发～</li>';
+    return;
+  }
+
+  const items = state.messages
+    .slice()
+    .sort((a,b)=>Date.parse(b.createdAt || "") - Date.parse(a.createdAt || ""))
+    .map((msg)=>{
+      const author = escapeHtml(safeText(msg.author).trim() || "匿名");
+      const text = escapeHtml(safeText(msg.text).trim());
+      return `
+        <li class="messageItem">
+          <div class="messageMeta">${author} · ${formatTime(msg.createdAt)}</div>
+          <p>${text}</p>
+        </li>`;
+    }).join("");
+
+  el.messageList.innerHTML = items;
+}
+
+function postMessage(name, text){
+  const payload = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
+    author: safeText(name).trim().slice(0,20),
+    text: safeText(text).trim().slice(0,300),
+    createdAt: new Date().toISOString()
+  };
+
+  if(!payload.text){
+    return { ok:false, message:"留言内容不能为空。" };
+  }
+
+  state.messages.push(payload);
+  // keep latest 100 messages
+  if(state.messages.length > 100){
+    state.messages = state.messages.slice(-100);
+  }
+  saveMessages();
+  renderMessages();
+  return { ok:true, message:"留言发布成功！" };
 }
 
 function uniq(values){
@@ -261,6 +350,18 @@ function wireControls(){
     }
   });
 
+  if(el.messageForm){
+    el.messageForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const result = postMessage(el.messageName.value, el.messageText.value);
+      el.messageStatus.textContent = result.message;
+      if(result.ok){
+        el.messageText.value = "";
+        el.messageText.focus();
+      }
+    });
+  }
+
   el.viewerClose.addEventListener("click", ()=>el.viewer.close());
   el.viewer.addEventListener("click", (e)=>{
     const rect = el.viewer.getBoundingClientRect();
@@ -276,10 +377,12 @@ async function loadData(){
 
 async function main(){
   state.likes = loadLikes();
+  state.messages = loadMessages();
   wireControls();
   await loadData();
   fillFilters();
   render();
+  renderMessages();
 }
 
 main();
