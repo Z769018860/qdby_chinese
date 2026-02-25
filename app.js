@@ -3,7 +3,7 @@
 
 const LIKE_STORAGE_KEY = "qdby.likes.v1";
 const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
-const state = { data: [], likes: {}, messages: [] };
+const state = { data: [], likes: {}, messages: [], storageOK: true };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -38,9 +38,41 @@ function escapeHtml(s){
     .replaceAll("'", "&#39;");
 }
 
+function canUseLocalStorage(){
+  try{
+    const key = "__qdby_test__";
+    localStorage.setItem(key, "1");
+    localStorage.removeItem(key);
+    return true;
+  }catch(_err){
+    return false;
+  }
+}
+
+function getLocalItem(key){
+  if(!state.storageOK){ return null; }
+  try{
+    return localStorage.getItem(key);
+  }catch(_err){
+    state.storageOK = false;
+    return null;
+  }
+}
+
+function setLocalItem(key, value){
+  if(!state.storageOK){ return false; }
+  try{
+    localStorage.setItem(key, value);
+    return true;
+  }catch(_err){
+    state.storageOK = false;
+    return false;
+  }
+}
+
 function loadLikes(){
   try{
-    const raw = localStorage.getItem(LIKE_STORAGE_KEY);
+    const raw = getLocalItem(LIKE_STORAGE_KEY);
     if(!raw){ return {}; }
     const parsed = JSON.parse(raw);
     if(parsed && typeof parsed === "object"){ return parsed; }
@@ -51,7 +83,7 @@ function loadLikes(){
 }
 
 function saveLikes(){
-  localStorage.setItem(LIKE_STORAGE_KEY, JSON.stringify(state.likes));
+  setLocalItem(LIKE_STORAGE_KEY, JSON.stringify(state.likes));
 }
 
 function getLikeCount(id){
@@ -68,7 +100,7 @@ function addLike(id){
 
 function loadMessages(){
   try{
-    const raw = localStorage.getItem(MESSAGE_STORAGE_KEY);
+    const raw = getLocalItem(MESSAGE_STORAGE_KEY);
     if(!raw){ return []; }
     const parsed = JSON.parse(raw);
     if(Array.isArray(parsed)){ return parsed; }
@@ -79,7 +111,7 @@ function loadMessages(){
 }
 
 function saveMessages(){
-  localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(state.messages));
+  return setLocalItem(MESSAGE_STORAGE_KEY, JSON.stringify(state.messages));
 }
 
 function formatTime(iso){
@@ -134,9 +166,12 @@ function postMessage(name, text){
   if(state.messages.length > 100){
     state.messages = state.messages.slice(-100);
   }
-  saveMessages();
+  const saved = saveMessages();
   renderMessages();
-  return { ok:true, message:"留言发布成功！" };
+  if(!saved){
+    return { ok:true, message:"留言已发布（当前浏览器限制，关闭页面后可能不保留）。" };
+  }
+  return { ok:true, message:"留言发布成功，已保存到本地。" };
 }
 
 function uniq(values){
@@ -355,6 +390,7 @@ function wireControls(){
       e.preventDefault();
       const result = postMessage(el.messageName.value, el.messageText.value);
       el.messageStatus.textContent = result.message;
+      el.messageStatus.classList.toggle("warn", !state.storageOK);
       if(result.ok){
         el.messageText.value = "";
         el.messageText.focus();
@@ -376,6 +412,7 @@ async function loadData(){
 }
 
 async function main(){
+  state.storageOK = canUseLocalStorage();
   state.likes = loadLikes();
   state.messages = loadMessages();
   wireControls();
@@ -383,6 +420,10 @@ async function main(){
   fillFilters();
   render();
   renderMessages();
+  if(el.messageStatus && !state.storageOK){
+    el.messageStatus.textContent = "当前浏览器限制本地存储，留言仅在本次打开期间可见。";
+    el.messageStatus.classList.add("warn");
+  }
 }
 
 main();

@@ -76,8 +76,9 @@
 
   <main class="wrap">
 
-    <section class="statement panel" aria-labelledby="statementTitle">
+    <section class="statement panel statementCard" aria-labelledby="statementTitle">
       <h2 id="statementTitle">个人声明</h2>
+      <p class="panelLead">请先阅读以下说明，感谢理解与支持。</p>
       <p>非专业汉化人员，全部为爱发电，部分有授权部分没有，没有的大部分是联系不上作者或者付费作品。</p>
       <p>请勿倒卖二传商用，看到有人这么干请勤点举报，谢谢帮忙。</p>
       <p>本意是安利些无汉化的小众游戏，可能会有少量撞坑情况，可以自由选择汉化版本。</p>
@@ -103,8 +104,9 @@
     </div>
 
     <section class="extraPanels" aria-label="站点扩展功能区">
-      <section class="panel" aria-labelledby="previewTitle">
+      <section class="panel previewCard" aria-labelledby="previewTitle">
         <h2 id="previewTitle">汉化预告 / 占坑</h2>
+        <p class="panelLead">以下为当前计划与进度说明。</p>
         <ul class="previewList">
           <li>恶魔之心的第四作正在制作机翻润色补丁；</li>
           <li>dark nights 的 DLC 因为尚未更完 + 付费，所以暂时不会制作补丁，等更完再考虑；</li>
@@ -114,8 +116,9 @@
         </ul>
       </section>
 
-      <section class="panel" aria-labelledby="messageTitle">
+      <section class="panel messageCard" aria-labelledby="messageTitle">
         <h2 id="messageTitle">匿名留言板</h2>
+        <p class="panelLead">欢迎留言交流，昵称可留空。</p>
         <form id="messageForm" class="messageForm">
           <div class="messageGrid">
             <div class="control">
@@ -128,7 +131,7 @@
             </div>
           </div>
           <button type="submit" class="messageSubmit">发布留言</button>
-          <p class="muted" id="messageStatus" role="status" aria-live="polite"></p>
+          <p class="messageStatus muted" id="messageStatus" role="status" aria-live="polite"></p>
         </form>
         <ul id="messageList" class="messageList" aria-live="polite"></ul>
       </section>
