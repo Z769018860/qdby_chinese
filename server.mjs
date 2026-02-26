@@ -8,6 +8,13 @@ const DB_DIR = join(ROOT, '.data');
 const DB_FILE = join(DB_DIR, 'store.json');
 const PORT = Number(process.env.PORT || 4173);
 
+const RATE_WINDOW_MS = 60_000;
+const MAX_REQ_PER_WINDOW = 240;
+const MAX_WRITE_REQ_PER_WINDOW = 60;
+const MAX_BODY_BYTES = 16 * 1024;
+const BLOCKED_UA_RE = /(bot|spider|crawler|scrapy|python-requests|wget|curl|httpclient)/i;
+const rateMap = new Map();
+
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -47,25 +54,69 @@ async function writeDb(db) {
   await writeFile(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
 }
 
+
+function getClientIp(req) {
+  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  return forwarded || req.socket.remoteAddress || 'unknown';
+}
+
+function isBlockedUa(req) {
+  const ua = String(req.headers['user-agent'] || '');
+  return BLOCKED_UA_RE.test(ua);
+}
+
+function isRateLimited(req, isWrite) {
+  const ip = getClientIp(req);
+  const now = Date.now();
+  const item = rateMap.get(ip) || { start: now, count: 0, writes: 0 };
+  if (now - item.start > RATE_WINDOW_MS) {
+    item.start = now;
+    item.count = 0;
+    item.writes = 0;
+  }
+  item.count += 1;
+  if (isWrite) { item.writes += 1; }
+  rateMap.set(ip, item);
+
+  if (item.count > MAX_REQ_PER_WINDOW) { return true; }
+  if (isWrite && item.writes > MAX_WRITE_REQ_PER_WINDOW) { return true; }
+  return false;
+}
+
+function setSecurityHeaders(headers = {}) {
+  return {
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'X-Robots-Tag': 'noindex, nofollow',
+    ...headers,
+  };
+}
+
 function sendJson(res, code, obj) {
-  res.writeHead(code, {
+  res.writeHead(code, setSecurityHeaders({
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': 'no-store',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-  });
+  }));
   res.end(JSON.stringify(obj));
 }
 
 function sendText(res, code, text) {
-  res.writeHead(code, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.writeHead(code, setSecurityHeaders({ 'Content-Type': 'text/plain; charset=utf-8' }));
   res.end(text);
 }
 
 async function readBody(req) {
   const chunks = [];
-  for await (const c of req) { chunks.push(c); }
+  let total = 0;
+  for await (const c of req) {
+    total += c.length;
+    if (total > MAX_BODY_BYTES) { return {}; }
+    chunks.push(c);
+  }
   const raw = Buffer.concat(chunks).toString('utf8');
   if (!raw) { return {}; }
   try { return JSON.parse(raw); } catch { return {}; }
@@ -73,11 +124,11 @@ async function readBody(req) {
 
 async function handleApi(req, res, url) {
   if (req.method === 'OPTIONS') {
-    res.writeHead(204, {
+    res.writeHead(204, setSecurityHeaders({
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    });
+    }));
     res.end();
     return true;
   }
@@ -139,12 +190,12 @@ async function serveStatic(req, res, url) {
   try {
     const content = await readFile(filePath);
     const ext = extname(filePath).toLowerCase();
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+    res.writeHead(200, setSecurityHeaders({ 'Content-Type': MIME[ext] || 'application/octet-stream' }));
     res.end(content);
   } catch {
     try {
       const html = await readFile(join(ROOT, 'index.html'));
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.writeHead(200, setSecurityHeaders({ 'Content-Type': 'text/html; charset=utf-8' }));
       res.end(html);
     } catch {
       sendText(res, 404, 'Not Found');
@@ -155,6 +206,16 @@ async function serveStatic(req, res, url) {
 createServer(async (req, res) => {
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
   try {
+    if (isBlockedUa(req)) {
+      sendJson(res, 403, { ok: false, message: 'Forbidden' });
+      return;
+    }
+
+    const isWrite = req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH' || req.method === 'DELETE';
+    if (isRateLimited(req, isWrite)) {
+      sendJson(res, 429, { ok: false, message: 'Too Many Requests' });
+      return;
+    }
     if (url.pathname.startsWith('/api/')) {
       const handled = await handleApi(req, res, url);
       if (!handled) { sendJson(res, 404, { ok: false, message: 'Not Found' }); }
