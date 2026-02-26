@@ -14,6 +14,9 @@ const el = {
   age: document.getElementById("age"),
   lang: document.getElementById("lang"),
   duration: document.getElementById("duration"),
+  license: document.getElementById("license"),
+  member: document.getElementById("member"),
+  price: document.getElementById("price"),
   sort: document.getElementById("sort"),
   status: document.getElementById("status"),
   viewer: document.getElementById("viewer"),
@@ -327,6 +330,9 @@ function filtered(){
   const a = safeText(el.age.value).trim();
   const l = safeText(el.lang.value).trim();
   const du = safeText(el.duration.value).trim();
+  const li = safeText(el.license.value).trim();
+  const me = safeText(el.member.value).trim();
+  const pr = safeText(el.price.value).trim();
 
   let arr = state.data.filter(r=>{
     if(!matches(r, q)){ return false; }
@@ -335,6 +341,9 @@ function filtered(){
     if(a && safeText(r["年龄分级"]).trim() !== a){ return false; }
     if(l && safeText(r["原版语言"]).trim() !== l){ return false; }
     if(du && safeText(r["游戏时长"]).trim() !== du){ return false; }
+    if(li && safeText(r["是否有授权/许可"]).trim() !== li){ return false; }
+    if(me && safeText(r["汉化成员"]).trim() !== me){ return false; }
+    if(pr && safeText(r["游戏价格"]).trim() !== pr){ return false; }
     return true;
   });
 
@@ -407,6 +416,9 @@ function fillFilters(){
   const ages = uniq(data.map(x=>x["年龄分级"]));
   const langs = uniq(data.map(x=>x["原版语言"]));
   const durations = uniq(data.map(x=>x["游戏时长"]));
+  const licenses = uniq(data.map(x=>x["是否有授权/许可"]));
+  const members = uniq(data.map(x=>x["汉化成员"]));
+  const prices = uniq(data.map(x=>x["游戏价格"]));
 
   for(const v of types){
     const opt = document.createElement("option");
@@ -438,6 +450,24 @@ function fillFilters(){
     opt.textContent = v;
     el.duration.appendChild(opt);
   }
+  for(const v of licenses){
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    el.license.appendChild(opt);
+  }
+  for(const v of members){
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    el.member.appendChild(opt);
+  }
+  for(const v of prices){
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    el.price.appendChild(opt);
+  }
 }
 
 function wireControls(){
@@ -448,6 +478,9 @@ function wireControls(){
   el.age.addEventListener("change", rerender);
   el.lang.addEventListener("change", rerender);
   el.duration.addEventListener("change", rerender);
+  el.license.addEventListener("change", rerender);
+  el.member.addEventListener("change", rerender);
+  el.price.addEventListener("change", rerender);
   el.sort.addEventListener("change", rerender);
 
   el.tbody.addEventListener("click", async (e)=>{
