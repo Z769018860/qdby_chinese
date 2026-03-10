@@ -21,6 +21,14 @@ function oldDecrypt(saveText) {
   return output;
 }
 
+function oldEncrypt(jsonText) {
+  let doubled = '';
+  for (const ch of jsonText) {
+    doubled += String.fromCharCode(ch.charCodeAt(0) * 2);
+  }
+  return OLD_PREFIX + encodeURIComponent(doubled);
+}
+
 function newDecrypt(saveText) {
   if (!saveText.startsWith(NEW_PREFIX)) {
     throw new Error('不是新格式存档，新格式前缀应为 J31mEo2:');
@@ -86,6 +94,7 @@ function createDownloadUrl(content, mimeType) {
 const dom = {
   file: document.querySelector('#saveFile'),
   name: document.querySelector('#charName'),
+  format: document.querySelector('#outputFormat'),
   normalize: document.querySelector('#normalizeName'),
   run: document.querySelector('#runRepair'),
   status: document.querySelector('#toolStatus'),
@@ -133,10 +142,12 @@ async function runRepair() {
 
     const fixedJsonPretty = JSON.stringify(data, null, 2);
     const fixedJsonCompact = JSON.stringify(data);
-    const fixedSave = newEncrypt(fixedJsonCompact);
+
+    const outputFormat = dom.format.value;
+    const fixedSave = outputFormat === 'old' ? oldEncrypt(fixedJsonCompact) : newEncrypt(fixedJsonCompact);
 
     const baseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
-    const repairedSaveName = `${baseName}_repaired.sav`;
+    const repairedSaveName = `${baseName}_repaired_${outputFormat}.sav`;
     const jsonName = `${baseName}_decrypted.json`;
 
     const saveUrl = createDownloadUrl(fixedSave, 'text/plain;charset=utf-8');
@@ -148,11 +159,15 @@ async function runRepair() {
     dom.saveLink.download = repairedSaveName;
     dom.jsonLink.href = jsonUrl;
     dom.jsonLink.download = jsonName;
-    dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}`;
+    dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
     dom.jsonPreview.textContent = fixedJsonPretty;
     dom.result.hidden = false;
 
-    setStatus('修复成功，文件已生成，请点击下方按钮下载。');
+    if (outputFormat === 'old') {
+      setStatus('修复成功：已生成旧版加密存档。注意：旧版不兼容中文名，可能显示乱码。');
+    } else {
+      setStatus('修复成功：已生成新版加密存档（仅适用于【我本人发布的】汉化版）。');
+    }
   } catch (error) {
     dom.result.hidden = true;
     setStatus(`处理失败：${error.message || error}`, true);
