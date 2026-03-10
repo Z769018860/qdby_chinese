@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>《恶魔之心：被诅咒的试炼》存档主角名修复工具</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bgLayer bgLeft" aria-hidden="true"></div>
+  <div class="bgLayer bgRight" aria-hidden="true"></div>
+
+  <main class="wrap toolWrap">
+    <section class="panel toolPanel" aria-labelledby="toolTitle">
+      <h1 id="toolTitle">《恶魔之心：被诅咒的试炼》存档主角名修复工具</h1>
+      <p class="panelLead">上传存档文件（例如 <code>save11_old.sav</code>），输入要替换的主角名，一键生成修复后的新格式存档与解密 JSON。</p>
+
+      <div class="toolGrid">
+        <label class="control span2" for="saveFile">
+          <span>上传存档文件</span>
+          <input id="saveFile" type="file" accept=".sav,.txt" />
+        </label>
+
+        <label class="control" for="charName">
+          <span>新的主角名</span>
+          <input id="charName" type="text" placeholder="例如：姜酒" />
+        </label>
+
+        <label class="control toolCheck" for="normalizeName">
+          <input id="normalizeName" type="checkbox" checked />
+          <span>启用 NFC 规范化</span>
+        </label>
+      </div>
+
+      <div class="toolActions">
+        <button id="runRepair" class="btn">执行修复并生成文件</button>
+        <a class="chip" href="index.html">返回主页</a>
+      </div>
+
+      <p id="toolStatus" class="toolStatus" role="status" aria-live="polite"></p>
+
+      <section id="toolResult" class="toolResult" hidden>
+        <h2>生成结果</h2>
+        <p id="nameSummary"></p>
+        <div class="toolDownloads">
+          <a id="downloadSave" class="btn" download>下载修复后的存档（.sav）</a>
+          <a id="downloadJson" class="btn" download>下载解密 JSON（.json）</a>
+        </div>
+        <details>
+          <summary>查看解密 JSON 预览</summary>
+          <pre id="jsonPreview"></pre>
+        </details>
+      </section>
+    </section>
+  </main>
+
+  <script src="save-repair.js"></script>
+</body>
+</html>
