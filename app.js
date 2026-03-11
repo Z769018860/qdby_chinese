@@ -528,6 +528,67 @@ function wireControls(){
   });
 }
 
+
+function initCoinLab(){
+  const stage = document.getElementById("coinStage");
+  const frontInput = document.getElementById("coinUploadFront");
+  const backInput = document.getElementById("coinUploadBack");
+  const startBtn = document.getElementById("coinStartBtn");
+  const stopBtn = document.getElementById("coinStopBtn");
+  const result = document.getElementById("coinResult");
+
+  if(!stage || !frontInput || !backInput || !startBtn || !stopBtn || !result){ return; }
+
+  let spinning = false;
+  let angle = 0;
+  let timer = null;
+
+  const frontFace = stage.querySelector('.front');
+  const backFace = stage.querySelector('.back');
+
+  const setResult = (text)=>{ result.textContent = `当前结果：${text}`; };
+
+  startBtn.addEventListener('click', ()=>{
+    if(spinning){ return; }
+    spinning = true;
+    setResult('旋转中…');
+    timer = window.setInterval(()=>{
+      angle += 18;
+      stage.style.transform = `rotateY(${angle}deg)`;
+    }, 16);
+  });
+
+  stopBtn.addEventListener('click', ()=>{
+    if(!spinning){
+      setResult('请先开始旋转');
+      return;
+    }
+    spinning = false;
+    if(timer){ window.clearInterval(timer); timer = null; }
+
+    const normalized = ((angle % 360) + 360) % 360;
+    const isFront = normalized < 90 || normalized > 270;
+    const finalAngle = isFront ? 0 : 180;
+    angle = angle + (finalAngle - normalized);
+    stage.style.transform = `rotateY(${angle}deg)`;
+    setResult(isFront ? '🐱 正面（猫）' : '🐶 反面（狗）');
+  });
+
+  const bindUploader = (input, face)=>{
+    input.addEventListener('change', (event)=>{
+      const file = event.target.files && event.target.files[0];
+      if(!file){ return; }
+      const reader = new FileReader();
+      reader.onload = (e)=>{
+        face.style.backgroundImage = `url('${e.target?.result || ''}')`;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  bindUploader(frontInput, frontFace);
+  bindUploader(backInput, backFace);
+}
 async function loadData(){
   const res = await fetch("./data.json", { cache: "no-store" });
   state.data = await res.json();
@@ -539,6 +600,7 @@ async function main(){
   state.messages = loadMessages();
   await tryLoadRemoteState();
   wireControls();
+  initCoinLab();
   await loadData();
   fillFilters();
   render();
