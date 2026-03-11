@@ -103,6 +103,7 @@ const dom = {
   normalize: document.querySelector('#normalizeName'),
   normalizeControl: document.querySelector('label[for="normalizeName"]'),
   run: document.querySelector('#runRepair'),
+  runJson: document.querySelector('#runJsonEncrypt'),
   status: document.querySelector('#toolStatus'),
   result: document.querySelector('#toolResult'),
   summary: document.querySelector('#nameSummary'),
@@ -127,6 +128,12 @@ function isValidOutputFormat(format) {
   return format === 'old' || format === 'new';
 }
 
+function getSelectedMode() {
+  const mode = String(dom.mode?.value || '').trim();
+  if (mode === 'json-encrypt') return 'json-encrypt';
+  return 'repair-name';
+}
+
 function toggleModeUi(mode) {
   const isJsonMode = mode === 'json-encrypt';
 
@@ -139,6 +146,9 @@ function toggleModeUi(mode) {
   dom.name.disabled = isJsonMode;
   dom.normalize.disabled = isJsonMode;
   dom.jsonFile.disabled = !isJsonMode;
+
+  dom.run.hidden = isJsonMode;
+  dom.runJson.hidden = !isJsonMode;
 
   if (isJsonMode) {
     dom.file.value = '';
@@ -247,7 +257,7 @@ async function runRepair() {
       throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
     }
 
-    const mode = dom.mode.value;
+    const mode = getSelectedMode();
     if (mode === 'json-encrypt') {
       await runJsonEncryptMode(outputFormat);
       return;
@@ -261,10 +271,11 @@ async function runRepair() {
 }
 
 dom.mode.addEventListener('change', () => {
-  toggleModeUi(dom.mode.value);
+  toggleModeUi(getSelectedMode());
   setStatus('');
   dom.result.hidden = true;
 });
 
 dom.run.addEventListener('click', runRepair);
-toggleModeUi(dom.mode.value);
+dom.runJson.addEventListener('click', runRepair);
+toggleModeUi(getSelectedMode());
