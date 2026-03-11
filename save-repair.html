@@ -65,6 +65,38 @@
           <pre id="jsonPreview"></pre>
         </details>
       </section>
+
+      <section class="jsonEditor" aria-labelledby="jsonEncryptTitle">
+        <h2 id="jsonEncryptTitle">JSON 加密为存档</h2>
+        <p class="panelLead">按 <code>python save_repair_tool.py encrypt save11.json save11_new.sav</code> 的方式，将 JSON 重新加密为存档，并额外支持旧版加密（J31mEo）。</p>
+
+        <div class="toolGrid">
+          <label class="control span2" for="jsonFile">
+            <span>上传 JSON 文件</span>
+            <input id="jsonFile" type="file" accept=".json,application/json,text/plain" />
+          </label>
+
+          <label class="control" for="jsonOutputFormat">
+            <span>加密格式</span>
+            <select id="jsonOutputFormat">
+              <option value="new">新版加密（J31mEo2:）</option>
+              <option value="old">旧版加密（J31mEo）</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="control" for="jsonEditor">
+          <span>JSON 内容（可直接粘贴修改）</span>
+          <textarea id="jsonEditor" spellcheck="false" placeholder='例如：{"vars":{"charname":"姜酒"}}'></textarea>
+        </label>
+
+        <div class="toolActions jsonActions">
+          <button id="runJsonEncrypt" class="btn" type="button">执行 JSON 加密</button>
+          <a id="downloadEncryptedSave" class="btn" download hidden>下载加密存档（.sav）</a>
+        </div>
+
+        <p id="jsonEncryptStatus" class="toolStatus" role="status" aria-live="polite"></p>
+      </section>
     </section>
   </main>
 

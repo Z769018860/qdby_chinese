@@ -103,6 +103,12 @@ const dom = {
   saveLink: document.querySelector('#downloadSave'),
   jsonLink: document.querySelector('#downloadJson'),
   jsonPreview: document.querySelector('#jsonPreview'),
+  jsonFile: document.querySelector('#jsonFile'),
+  jsonEditor: document.querySelector('#jsonEditor'),
+  jsonOutputFormat: document.querySelector('#jsonOutputFormat'),
+  runJsonEncrypt: document.querySelector('#runJsonEncrypt'),
+  jsonEncryptStatus: document.querySelector('#jsonEncryptStatus'),
+  downloadEncryptedSave: document.querySelector('#downloadEncryptedSave'),
 };
 
 let previousUrls = [];
@@ -115,6 +121,31 @@ function clearOldUrls() {
 function setStatus(message, isError = false) {
   dom.status.textContent = message;
   dom.status.classList.toggle('error', isError);
+}
+
+function getJsonStatusTarget() {
+  return dom.jsonEncryptStatus || dom.status || null;
+}
+
+function setJsonEncryptStatus(message, isError = false) {
+  const target = getJsonStatusTarget();
+  if (!target) return;
+  target.textContent = message;
+  target.classList.toggle('error', isError);
+}
+
+function hideJsonDownloadLink() {
+  if (!dom.downloadEncryptedSave) return;
+  dom.downloadEncryptedSave.hidden = true;
+  dom.downloadEncryptedSave.removeAttribute('href');
+  dom.downloadEncryptedSave.removeAttribute('download');
+}
+
+function showJsonDownloadLink(url, filename) {
+  if (!dom.downloadEncryptedSave) return;
+  dom.downloadEncryptedSave.href = url;
+  dom.downloadEncryptedSave.download = filename;
+  dom.downloadEncryptedSave.hidden = false;
 }
 
 async function runRepair() {
@@ -174,4 +205,91 @@ async function runRepair() {
   }
 }
 
+async function loadJsonToEditor() {
+  try {
+    if (!dom.jsonFile || !dom.jsonEditor) return;
+    const inputFile = dom.jsonFile.files?.[0];
+    if (!inputFile) return;
+    const text = await inputFile.text();
+    dom.jsonEditor.value = text;
+    hideJsonDownloadLink();
+    setJsonEncryptStatus('JSON 已加载，可直接编辑后加密。');
+  } catch (error) {
+    setJsonEncryptStatus(`JSON 加载失败：${error.message || error}`, true);
+  }
+}
+
+function runJsonEncrypt() {
+  try {
+    hideJsonDownloadLink();
+
+    if (!dom.jsonEditor || !dom.jsonOutputFormat) {
+      setJsonEncryptStatus('页面缺少 JSON 加密所需控件，请刷新后重试。', true);
+      return;
+    }
+
+    const jsonRaw = dom.jsonEditor.value.trim();
+    if (!jsonRaw) {
+      throw new Error('请先上传或粘贴 JSON 内容。');
+    }
+
+    const data = JSON.parse(jsonRaw);
+    const jsonCompact = JSON.stringify(data);
+    const outputFormat = dom.jsonOutputFormat.value;
+    const encryptedSave = outputFormat === 'old' ? oldEncrypt(jsonCompact) : newEncrypt(jsonCompact);
+
+    const sourceName = dom.jsonFile?.files?.[0]?.name || 'save';
+    const baseName = sourceName.replace(/\.[^.]+$/, '');
+    const outName = `${baseName}_${outputFormat}.sav`;
+
+    const saveUrl = createDownloadUrl(encryptedSave, 'text/plain;charset=utf-8');
+    previousUrls.push(saveUrl);
+
+    if (dom.downloadEncryptedSave) {
+      showJsonDownloadLink(saveUrl, outName);
+    } else {
+      const tempLink = document.createElement('a');
+      tempLink.href = saveUrl;
+      tempLink.download = outName;
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      tempLink.remove();
+    }
+
+    if (outputFormat === 'old') {
+      setJsonEncryptStatus('加密成功：已生成旧版加密存档（J31mEo）。');
+    } else {
+      setJsonEncryptStatus('加密成功：已生成新版加密存档（J31mEo2:）。');
+    }
+  } catch (error) {
+    setJsonEncryptStatus(`JSON 加密失败：${error.message || error}`, true);
+  }
+}
+
 dom.run.addEventListener('click', runRepair);
+
+if (dom.jsonFile) {
+  dom.jsonFile.addEventListener('change', loadJsonToEditor);
+}
+
+if (dom.runJsonEncrypt) {
+  dom.runJsonEncrypt.addEventListener('click', runJsonEncrypt);
+}
+
+hideJsonDownloadLink();
+
+if (dom.jsonEditor) {
+  dom.jsonEditor.addEventListener('input', hideJsonDownloadLink);
+}
+
+if (dom.jsonOutputFormat) {
+  dom.jsonOutputFormat.addEventListener('change', hideJsonDownloadLink);
+}
+
+// 兜底：兼容缓存导致的节点重建/脚本绑定丢失场景
+document.addEventListener('click', (event) => {
+  const target = event.target;
+  if (target && target.id === 'runJsonEncrypt') {
+    runJsonEncrypt();
+  }
+});

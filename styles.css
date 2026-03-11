@@ -673,6 +673,9 @@ header, main, footer{ position:relative; z-index:1; }
   align-items:center;
   flex-wrap:wrap;
 }
+
+.btn[hidden]{ display:none !important; }
+
 .btn{
   display:inline-flex;
   align-items:center;
