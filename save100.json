@@ -1,0 +1,1139 @@
+{
+  "version": 147,
+  "nodeID": 10114,
+  "nodeIndex": 10086,
+  "gameMode": 10,
+  "vars": {
+    "globals": [
+      {
+        "name": "RanApproval",
+        "value": 80
+      },
+      {
+        "name": "KaiApproval",
+        "value": -12
+      },
+      {
+        "name": "D1MeetKaiSaidName",
+        "value": 1
+      },
+      {
+        "name": "VitaApproval",
+        "value": 19
+      },
+      {
+        "name": "D1QuestionedKai",
+        "value": 1
+      },
+      {
+        "name": "JaniApproval",
+        "value": 8
+      },
+      {
+        "name": "D1QuestionedJani",
+        "value": 1
+      },
+      {
+        "name": "D1RanThreatenedJani",
+        "value": 1
+      },
+      {
+        "name": "D1ExploreRedLight",
+        "value": 2
+      },
+      {
+        "name": "D1ExploreChains",
+        "value": 2
+      },
+      {
+        "name": "D1ExploreCandles",
+        "value": 2
+      },
+      {
+        "name": "D1ExploreHallway",
+        "value": 2
+      },
+      {
+        "name": "D1ExploreCandelabra",
+        "value": 2
+      },
+      {
+        "name": "D1ExplorePrisonCells",
+        "value": 2
+      },
+      {
+        "name": "D1ExploreSideHall",
+        "value": 2
+      },
+      {
+        "name": "D1SleepWithVita",
+        "value": 1
+      },
+      {
+        "name": "EndDemo",
+        "value": 1
+      },
+      {
+        "name": "D2HoldHandsRan",
+        "value": 1
+      },
+      {
+        "name": "D2ExploredRD",
+        "value": 1
+      },
+      {
+        "name": "D2TotalExplored",
+        "value": 4
+      },
+      {
+        "name": "D2RD_HowOld",
+        "value": 1
+      },
+      {
+        "name": "D2RD_Scared",
+        "value": 1
+      },
+      {
+        "name": "D2RD_Who",
+        "value": 1
+      },
+      {
+        "name": "D2RD_NotYou",
+        "value": 1
+      },
+      {
+        "name": "D2KaiSecretAlly",
+        "value": 1
+      },
+      {
+        "name": "D2ExploredWT",
+        "value": 1
+      },
+      {
+        "name": "D2ExploreWeapons",
+        "value": 2
+      },
+      {
+        "name": "D2ExploreCandelabras",
+        "value": 2
+      },
+      {
+        "name": "D2ExploreSofa",
+        "value": 2
+      },
+      {
+        "name": "D2ExploreRat",
+        "value": 2
+      },
+      {
+        "name": "D2ExploreApples",
+        "value": 2
+      },
+      {
+        "name": "D2ExploreWebs",
+        "value": 2
+      },
+      {
+        "name": "D2ExploredGY",
+        "value": 1
+      },
+      {
+        "name": "AnagramSolved",
+        "value": 1
+      },
+      {
+        "name": "D2ExploredLeo",
+        "value": 1
+      },
+      {
+        "name": "D2Bane_Prof",
+        "value": 1
+      },
+      {
+        "name": "D2Bane_Trust",
+        "value": 1
+      },
+      {
+        "name": "D2Bane_Where",
+        "value": 1
+      },
+      {
+        "name": "D2Vita_DHs",
+        "value": 1
+      },
+      {
+        "name": "D2Vita_You",
+        "value": 1
+      },
+      {
+        "name": "D2Vita_Leo",
+        "value": 1
+      },
+      {
+        "name": "D2AS_TalkVit",
+        "value": 1
+      },
+      {
+        "name": "D2AS_NumTalked",
+        "value": 6
+      },
+      {
+        "name": "D2AS_TalkLeo",
+        "value": 1
+      },
+      {
+        "name": "CurrentAreaCampfire",
+        "value": 0
+      },
+      {
+        "name": "D2AS_TalkKai",
+        "value": 1
+      },
+      {
+        "name": "D2SawSolvedAnagram3DHs",
+        "value": 1
+      },
+      {
+        "name": "D2AS_KaiRiddle",
+        "value": 1
+      },
+      {
+        "name": "D2AS_KaiLeo",
+        "value": 1
+      },
+      {
+        "name": "D2AS_KaiWhyCome",
+        "value": 1
+      },
+      {
+        "name": "D2AS_KaiRan",
+        "value": 1
+      },
+      {
+        "name": "D2AS_KaiScared",
+        "value": 1
+      },
+      {
+        "name": "D2AS_TalkElo",
+        "value": 1
+      },
+      {
+        "name": "D2AS_TalkBan",
+        "value": 1
+      },
+      {
+        "name": "D2AS_BaneWhyAttack",
+        "value": 1
+      },
+      {
+        "name": "D2AS_BaneWhatThink",
+        "value": 1
+      },
+      {
+        "name": "D2AS_TalkJan",
+        "value": 1
+      },
+      {
+        "name": "D2AS_JaniSpells",
+        "value": 1
+      },
+      {
+        "name": "D2AS_JaniBane",
+        "value": 1
+      },
+      {
+        "name": "D2AS_JaniSeer",
+        "value": 1
+      },
+      {
+        "name": "D2AS_JaniOthers",
+        "value": 1
+      },
+      {
+        "name": "D2AteJaniyasCookies",
+        "value": 1
+      },
+      {
+        "name": "BecameDH_Flesh",
+        "value": 1
+      },
+      {
+        "name": "RazeBackstory",
+        "value": 1
+      },
+      {
+        "name": "D3CriedMeetingKaisar",
+        "value": 1
+      },
+      {
+        "name": "Tactful",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreMoss",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreTopOfBed",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreCloth",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreUnderBed",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreLamp",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreCeiling",
+        "value": 2
+      },
+      {
+        "name": "D3ExploreWindow",
+        "value": 2
+      },
+      {
+        "name": "D3SearchRoD",
+        "value": 1
+      },
+      {
+        "name": "D3NumSearched",
+        "value": 5
+      },
+      {
+        "name": "D3SearchWatchtower",
+        "value": 1
+      },
+      {
+        "name": "D3SearchCave",
+        "value": 1
+      },
+      {
+        "name": "D3SearchGY",
+        "value": 1
+      },
+      {
+        "name": "D3SearchCampfire",
+        "value": 1
+      },
+      {
+        "name": "D3BuryVitaAlone",
+        "value": 1
+      },
+      {
+        "name": "D3ToldRanRFAEvidence",
+        "value": 1
+      },
+      {
+        "name": "D3AccusedRFA",
+        "value": 1
+      },
+      {
+        "name": "D3RFA_Identity",
+        "value": 1
+      },
+      {
+        "name": "SeerFlirt",
+        "value": 4
+      },
+      {
+        "name": "D3MarryMeSeer",
+        "value": 1
+      },
+      {
+        "name": "D3JaniFedApple",
+        "value": 1
+      },
+      {
+        "name": "D4AcceptedKaisarAdvances",
+        "value": 1
+      },
+      {
+        "name": "BecameDH_Murder",
+        "value": -1
+      },
+      {
+        "name": "D4SleptWithRan",
+        "value": 1
+      },
+      {
+        "name": "D4AskedEloBane",
+        "value": 1
+      },
+      {
+        "name": "D4AskedEloKai",
+        "value": 1
+      },
+      {
+        "name": "D4LeanedOnRan",
+        "value": 1
+      },
+      {
+        "name": "D4SeerQ_Remains",
+        "value": 1
+      },
+      {
+        "name": "D4SeerQ_Count",
+        "value": 4
+      },
+      {
+        "name": "D4SeerQ_King",
+        "value": 1
+      },
+      {
+        "name": "D4SeerQ_Why",
+        "value": 1
+      },
+      {
+        "name": "D4SeerQ_Leo",
+        "value": 1
+      },
+      {
+        "name": "D4AnagramSolvedArrows",
+        "value": 1
+      },
+      {
+        "name": "D4BaneHowKnow",
+        "value": 1
+      },
+      {
+        "name": "D4WhoStayedWithKai",
+        "value": 2
+      },
+      {
+        "name": "D5KaiBedroomQ",
+        "value": 6
+      },
+      {
+        "name": "D5KaiBedWho",
+        "value": 1
+      },
+      {
+        "name": "D5KaiBedFeeling",
+        "value": 1
+      },
+      {
+        "name": "D5KaiBedSee",
+        "value": 1
+      },
+      {
+        "name": "D5KaiBedElos",
+        "value": 1
+      },
+      {
+        "name": "D5KaiBedJaniPoison",
+        "value": 1
+      },
+      {
+        "name": "D5KaiBedJaniAccuse",
+        "value": 1
+      },
+      {
+        "name": "D5ExploreElosBody",
+        "value": 2
+      },
+      {
+        "name": "D5ExplorePainting1",
+        "value": 2
+      },
+      {
+        "name": "D5ExplorePainting2",
+        "value": 2
+      },
+      {
+        "name": "D5ExplorePainting3",
+        "value": 2
+      },
+      {
+        "name": "D5ExplorePainting4",
+        "value": 2
+      },
+      {
+        "name": "D5ExplorePainting5",
+        "value": 2
+      },
+      {
+        "name": "D5ExploreBag",
+        "value": 2
+      },
+      {
+        "name": "D5ExploreCorner",
+        "value": 2
+      },
+      {
+        "name": "D5ExploreCeiling",
+        "value": 2
+      },
+      {
+        "name": "D5ExpCave",
+        "value": 1
+      },
+      {
+        "name": "D5MeditateSeer",
+        "value": 1
+      },
+      {
+        "name": "D5MedSeerSupportive",
+        "value": 1
+      },
+      {
+        "name": "D5ExpCrypt",
+        "value": 1
+      },
+      {
+        "name": "D5ExpLeoHouse",
+        "value": 1
+      },
+      {
+        "name": "D5ExpBane",
+        "value": 1
+      },
+      {
+        "name": "D5ExpRan",
+        "value": 1
+      },
+      {
+        "name": "D5HadSexWithRan",
+        "value": 0
+      },
+      {
+        "name": "D5EndSearchForRan",
+        "value": 1
+      },
+      {
+        "name": "D6Chasm_StayedWithRan",
+        "value": 1
+      },
+      {
+        "name": "D6ConfessedRanLove",
+        "value": 0
+      },
+      {
+        "name": "D6RanAgreedLiveInCrows",
+        "value": 0
+      },
+      {
+        "name": "D6RanChasmAskedToMarry",
+        "value": 0
+      },
+      {
+        "name": "D6AgreedMarryRan",
+        "value": 0
+      },
+      {
+        "name": "D6ToldRanVitaAlive",
+        "value": 1
+      },
+      {
+        "name": "D6TookCrystal",
+        "value": 1
+      },
+      {
+        "name": "D6FoughtBane",
+        "value": 1
+      },
+      {
+        "name": "KaiBranch",
+        "value": 1
+      }
+    ],
+    "charname": "姜酒",
+    "alignmentGood": 10,
+    "alignmentNice": 10
+  },
+  "background": "CG_C7_KAI_BOW_E3",
+  "music": "game/resources/sound/music/suspense-thugs.ogg",
+  "charDisplay": [],
+  "charModelChanges": [
+    {
+      "name": "CHARNAME",
+      "expression": "normal",
+      "pose": "normal"
+    },
+    {
+      "name": "RAN",
+      "expression": "dangerous_closed",
+      "pose": "hand1_blood"
+    },
+    {
+      "name": "VITA",
+      "expression": "scared_open",
+      "pose": "knife"
+    },
+    {
+      "name": "LEONA",
+      "expression": "angry",
+      "pose": "sword"
+    },
+    {
+      "name": "KAISAR",
+      "expression": "grin_psycho",
+      "pose": "bow_hand"
+    },
+    {
+      "name": "BANE",
+      "expression": "rage",
+      "pose": "hammer"
+    },
+    {
+      "name": "ELOS",
+      "expression": "sad",
+      "pose": "normal"
+    },
+    {
+      "name": "JANIYA",
+      "expression": "smile_evil",
+      "pose": "hands"
+    },
+    {
+      "name": "RAZE",
+      "expression": "normal",
+      "pose": "normal"
+    },
+    {
+      "name": "JANIYA_UP",
+      "expression": "laugh",
+      "pose": "hands"
+    }
+  ],
+  "visualEffects": {
+    "grayscaleActive": false
+  },
+  "convoLog": [
+    {
+      "ID": 9730,
+      "refNum": 9703
+    },
+    {
+      "ID": 9731,
+      "refNum": 9704
+    },
+    {
+      "ID": 9733,
+      "refNum": 9706
+    },
+    {
+      "ID": 9735,
+      "refNum": 9707
+    },
+    {
+      "ID": 9737,
+      "refNum": 9708
+    },
+    {
+      "ID": 9738,
+      "refNum": 9709
+    },
+    {
+      "ID": 9739,
+      "refNum": 9710
+    },
+    {
+      "ID": 9740,
+      "refNum": 9711
+    },
+    {
+      "ID": 9741,
+      "refNum": 9712
+    },
+    {
+      "ID": 9761,
+      "refNum": 9729
+    },
+    {
+      "ID": 9762,
+      "refNum": 9730
+    },
+    {
+      "ID": 9763,
+      "refNum": 9731
+    },
+    {
+      "ID": 9764,
+      "refNum": 9732
+    },
+    {
+      "ID": 9765,
+      "refNum": 9733
+    },
+    {
+      "ID": 9767,
+      "refNum": 9735
+    },
+    {
+      "ID": 9768,
+      "refNum": 9736
+    },
+    {
+      "ID": 9769,
+      "refNum": 9737
+    },
+    {
+      "ID": 9770,
+      "refNum": 9738
+    },
+    {
+      "pc": true,
+      "ID": 9770,
+      "refNum": 9738,
+      "pcIndex": 2
+    },
+    {
+      "ID": 9778,
+      "refNum": 9741
+    },
+    {
+      "ID": 9780,
+      "refNum": 9742
+    },
+    {
+      "ID": 9785,
+      "refNum": 9743
+    },
+    {
+      "ID": 9772,
+      "refNum": 9744
+    },
+    {
+      "pc": true,
+      "ID": 9772,
+      "refNum": 9744,
+      "pcIndex": 0
+    },
+    {
+      "ID": 9773,
+      "refNum": 9745
+    },
+    {
+      "ID": 9777,
+      "refNum": 9746
+    },
+    {
+      "ID": 9774,
+      "refNum": 9747
+    },
+    {
+      "ID": 9775,
+      "refNum": 9748
+    },
+    {
+      "ID": 9776,
+      "refNum": 9749
+    },
+    {
+      "ID": 9781,
+      "refNum": 9750
+    },
+    {
+      "ID": 9782,
+      "refNum": 9751
+    },
+    {
+      "ID": 9783,
+      "refNum": 9752
+    },
+    {
+      "ID": 9784,
+      "refNum": 9753
+    },
+    {
+      "ID": 9787,
+      "refNum": 9754
+    },
+    {
+      "ID": 9788,
+      "refNum": 9755
+    },
+    {
+      "ID": 9789,
+      "refNum": 9756
+    },
+    {
+      "ID": 9790,
+      "refNum": 9757
+    },
+    {
+      "ID": 9791,
+      "refNum": 9758
+    },
+    {
+      "ID": 9792,
+      "refNum": 9759
+    },
+    {
+      "ID": 9793,
+      "refNum": 9760
+    },
+    {
+      "pc": true,
+      "ID": 9793,
+      "refNum": 9760,
+      "pcIndex": 4
+    },
+    {
+      "ID": 9799,
+      "refNum": 9767
+    },
+    {
+      "ID": 9800,
+      "refNum": 9768
+    },
+    {
+      "ID": 9801,
+      "refNum": 9769
+    },
+    {
+      "ID": 9802,
+      "refNum": 9770
+    },
+    {
+      "ID": 9803,
+      "refNum": 9771
+    },
+    {
+      "pc": true,
+      "ID": 9803,
+      "refNum": 9771,
+      "pcIndex": 0
+    },
+    {
+      "ID": 9804,
+      "refNum": 9772
+    },
+    {
+      "ID": 9806,
+      "refNum": 9773
+    },
+    {
+      "ID": 9807,
+      "refNum": 9774
+    },
+    {
+      "ID": 9808,
+      "refNum": 9775
+    },
+    {
+      "ID": 9809,
+      "refNum": 9776
+    },
+    {
+      "ID": 9810,
+      "refNum": 9777
+    },
+    {
+      "ID": 9805,
+      "refNum": 9778
+    },
+    {
+      "ID": 9813,
+      "refNum": 9779
+    },
+    {
+      "ID": 9814,
+      "refNum": 9780
+    },
+    {
+      "ID": 9815,
+      "refNum": 9781
+    },
+    {
+      "ID": 9816,
+      "refNum": 9782
+    },
+    {
+      "ID": 9820,
+      "refNum": 9783
+    },
+    {
+      "ID": 9821,
+      "refNum": 9784
+    },
+    {
+      "pc": true,
+      "ID": 9821,
+      "refNum": 9784,
+      "pcIndex": 0
+    },
+    {
+      "ID": 9822,
+      "refNum": 9785
+    },
+    {
+      "ID": 9824,
+      "refNum": 9787
+    },
+    {
+      "ID": 9825,
+      "refNum": 9788
+    },
+    {
+      "ID": 9826,
+      "refNum": 9789
+    },
+    {
+      "ID": 9827,
+      "refNum": 9790
+    },
+    {
+      "ID": 9828,
+      "refNum": 9791
+    },
+    {
+      "ID": 9829,
+      "refNum": 9792
+    },
+    {
+      "ID": 9830,
+      "refNum": 9793
+    },
+    {
+      "ID": 9779,
+      "refNum": 9794
+    },
+    {
+      "ID": 9831,
+      "refNum": 9795
+    },
+    {
+      "ID": 9832,
+      "refNum": 9796
+    },
+    {
+      "ID": 9833,
+      "refNum": 9797
+    },
+    {
+      "ID": 9834,
+      "refNum": 9798
+    },
+    {
+      "ID": 9835,
+      "refNum": 9799
+    },
+    {
+      "ID": 9836,
+      "refNum": 9800
+    },
+    {
+      "ID": 9837,
+      "refNum": 9801
+    },
+    {
+      "ID": 9838,
+      "refNum": 9802
+    },
+    {
+      "ID": 9839,
+      "refNum": 9803
+    },
+    {
+      "ID": 9840,
+      "refNum": 9804
+    },
+    {
+      "ID": 9841,
+      "refNum": 9805
+    },
+    {
+      "ID": 9842,
+      "refNum": 9806
+    },
+    {
+      "ID": 9843,
+      "refNum": 9807
+    },
+    {
+      "ID": 9845,
+      "refNum": 9808
+    },
+    {
+      "ID": 9846,
+      "refNum": 9809
+    },
+    {
+      "ID": 9847,
+      "refNum": 9810
+    },
+    {
+      "ID": 9848,
+      "refNum": 9811
+    },
+    {
+      "ID": 9850,
+      "refNum": 9812
+    },
+    {
+      "ID": 9849,
+      "refNum": 9813
+    },
+    {
+      "ID": 9851,
+      "refNum": 9814
+    },
+    {
+      "ID": 9852,
+      "refNum": 9815
+    },
+    {
+      "ID": 9853,
+      "refNum": 9816
+    },
+    {
+      "ID": 9854,
+      "refNum": 9817
+    },
+    {
+      "pc": true,
+      "ID": 9854,
+      "refNum": 9817,
+      "pcIndex": 2
+    },
+    {
+      "ID": 9857,
+      "refNum": 9820
+    },
+    {
+      "ID": 9859,
+      "refNum": 9822
+    },
+    {
+      "ID": 9860,
+      "refNum": 9823
+    },
+    {
+      "ID": 9861,
+      "refNum": 9824
+    },
+    {
+      "ID": 9862,
+      "refNum": 9825
+    },
+    {
+      "ID": 9863,
+      "refNum": 9826
+    },
+    {
+      "ID": 9864,
+      "refNum": 9827
+    },
+    {
+      "ID": 10733,
+      "refNum": 9828
+    },
+    {
+      "ID": 9865,
+      "refNum": 9829
+    },
+    {
+      "ID": 9867,
+      "refNum": 9830
+    },
+    {
+      "ID": 9868,
+      "refNum": 9831
+    },
+    {
+      "ID": 9869,
+      "refNum": 9832
+    },
+    {
+      "pc": true,
+      "ID": 9869,
+      "refNum": 9832,
+      "pcIndex": 0
+    },
+    {
+      "ID": 9870,
+      "refNum": 9833
+    },
+    {
+      "ID": 10094,
+      "refNum": 10059
+    },
+    {
+      "ID": 9866,
+      "refNum": 10060
+    },
+    {
+      "ID": 10737,
+      "refNum": 10061
+    },
+    {
+      "ID": 10746,
+      "refNum": 10062
+    },
+    {
+      "ID": 10747,
+      "refNum": 10063
+    },
+    {
+      "ID": 10095,
+      "refNum": 10064
+    },
+    {
+      "ID": 10097,
+      "refNum": 10066
+    },
+    {
+      "pc": true,
+      "ID": 10097,
+      "refNum": 10066,
+      "pcIndex": 2
+    },
+    {
+      "ID": 10100,
+      "refNum": 10069
+    },
+    {
+      "ID": 10101,
+      "refNum": 10070
+    },
+    {
+      "ID": 10107,
+      "refNum": 10077
+    },
+    {
+      "ID": 10108,
+      "refNum": 10078
+    },
+    {
+      "ID": 10109,
+      "refNum": 10079
+    },
+    {
+      "ID": 10110,
+      "refNum": 10080
+    },
+    {
+      "ID": 10112,
+      "refNum": 10081
+    },
+    {
+      "ID": 9415,
+      "refNum": 10082
+    },
+    {
+      "ID": 9428,
+      "refNum": 10083
+    },
+    {
+      "ID": 10113,
+      "refNum": 10084
+    },
+    {
+      "pc": true,
+      "ID": 10113,
+      "refNum": 10084,
+      "pcIndex": 0
+    },
+    {
+      "ID": 10114,
+      "refNum": 10086
+    }
+  ]
+}
