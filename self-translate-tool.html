@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>自用提取脚本</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bgLayer bgLeft" aria-hidden="true"></div>
+  <div class="bgLayer bgRight" aria-hidden="true"></div>
+
+  <main class="wrap toolWrap">
+    <section class="panel toolPanel" aria-labelledby="extractToolTitle">
+      <h1 id="extractToolTitle">自用提取脚本</h1>
+      <p class="panelLead">支持上传 <code>.zip</code> 或多个 <code>.json</code> 文件，提取文本为表格；再上传原文件与表格进行批量替换并导出完整 <code>.zip</code>。</p>
+
+      <div class="toolNotice" role="note" aria-label="使用说明">
+        <p class="redNote">说明：本工具纯自用图方便，不提供完整使用说明；提取规则为手搓方案，适用范围有限，不推荐无基础用户使用。</p>
+        <p>① 先在「提取」区域上传文件，点击提取后可在下方表格内直接编辑译文。</p>
+        <p>② 可下载表格 JSON / XLSX 备份；后续在「替换导出」区域上传原文件 + 表格（JSON 或 XLSX），一键生成替换后的完整压缩包。</p>
+      </div>
+
+      <section class="translateToolSection" aria-labelledby="extractSectionTitle">
+        <h2 id="extractSectionTitle">1) 提取文本为表格</h2>
+        <div class="toolGrid">
+          <label class="control span2" for="extractInput">
+            <span>上传 .zip 或批量 .json</span>
+            <input id="extractInput" type="file" accept=".zip,.json,application/zip,application/json" multiple />
+          </label>
+        </div>
+        <div class="toolActions">
+          <button id="extractBtn" class="btn" type="button">提取并生成表格</button>
+          <button id="downloadTableJsonBtn" class="btn ghostBtn" type="button">下载表格 JSON</button>
+          <button id="downloadTableXlsxBtn" class="btn ghostBtn" type="button">下载表格 XLSX</button>
+        </div>
+      </section>
+
+      <section class="translateToolSection" aria-labelledby="replaceSectionTitle">
+        <h2 id="replaceSectionTitle">2) 替换并导出全部文件</h2>
+        <div class="toolGrid">
+          <label class="control" for="sourceInput">
+            <span>上传原始 .zip 或批量 .json</span>
+            <input id="sourceInput" type="file" accept=".zip,.json,application/zip,application/json" multiple />
+          </label>
+          <label class="control" for="tableInput">
+            <span>上传表格（JSON 或 XLSX）</span>
+            <input id="tableInput" type="file" accept=".json,.xlsx,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+          </label>
+        </div>
+        <div class="toolActions">
+          <button id="replaceBtn" class="btn" type="button">执行替换并打包 ZIP</button>
+          <a class="chip" href="index.html">返回主页</a>
+        </div>
+      </section>
+
+      <p id="translateStatus" class="toolStatus" role="status" aria-live="polite"></p>
+
+      <section id="tableWrap" class="translateTableWrap" hidden>
+        <h2>提取结果</h2>
+        <div class="tableWrap">
+          <table class="table" aria-label="提取文本表格">
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>JSON Path</th>
+                <th>Extracted Content</th>
+                <th>Translated Content（可编辑）</th>
+              </tr>
+            </thead>
+            <tbody id="extractTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="downloadWrap" class="toolResult" hidden>
+        <h2>替换完成</h2>
+        <div class="toolDownloads">
+          <a id="downloadZip" class="btn" download>下载替换后的全部文件.zip</a>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="self-translate-tool.js"></script>
+</body>
+</html>

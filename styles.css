@@ -723,3 +723,26 @@ header, main, footer{ position:relative; z-index:1; }
   .coinLabBody{ grid-template-columns:1fr; }
   .coinLabActions .btn, .coinUpload{ width:100%; }
 }
+
+/* self translate tool */
+.translateToolSection{
+  margin-top:16px;
+  padding-top:8px;
+  border-top:1px dashed var(--line);
+}
+.translateToolSection h2{
+  margin:0 0 10px;
+  font-size:18px;
+}
+.translateTableWrap{
+  margin-top:14px;
+}
+.translateCell{
+  width:100%;
+  min-height:70px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:8px;
+  font:inherit;
+  resize:vertical;
+}
