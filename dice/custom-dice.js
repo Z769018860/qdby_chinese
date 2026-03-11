@@ -16,17 +16,20 @@ const faceToCubeClass = {
 };
 
 const topFocusRotationByFace = {
-  1: { x: -60, y: 0 },
-  2: { x: 120, y: 0 },
-  3: { x: -60, y: -90 },
-  4: { x: -60, y: 90 },
-  5: { x: -150, y: 0 },
-  6: { x: -60, y: 180 },
+  1: { x: -55, y: 35 },
+  2: { x: 145, y: 45 },
+  3: { x: -55, y: -50 },
+  4: { x: -55, y: 50 },
+  5: { x: -35, y: 45 },
+  6: { x: 55, y: -35 },
 };
+
+const previewRotation = { x: -35, y: 45 };
 
 const diceNet = document.getElementById('diceNet');
 const cube = document.getElementById('cube');
 const rollBtn = document.getElementById('rollBtn');
+const stopRollBtn = document.getElementById('stopRollBtn');
 const resetBtn = document.getElementById('resetBtn');
 const updateDiceBtn = document.getElementById('updateDiceBtn');
 const updateHint = document.getElementById('updateHint');
@@ -50,6 +53,7 @@ let spinX = 0;
 let spinY = 0;
 let rollingTimer = null;
 let revealTimer = null;
+let netRollTimer = null;
 let isRolling = false;
 let hasPendingChanges = false;
 
@@ -259,8 +263,37 @@ function pickRandomDefaults() {
 function clearRollTimers() {
   if (rollingTimer) clearTimeout(rollingTimer);
   if (revealTimer) clearTimeout(revealTimer);
+  if (netRollTimer) clearInterval(netRollTimer);
   rollingTimer = null;
   revealTimer = null;
+  netRollTimer = null;
+}
+
+function setNetActiveFace(face) {
+  diceNet.querySelectorAll('.netFace').forEach((el) => {
+    el.classList.remove('rollingPick', 'finalPick');
+  });
+  const target = diceNet.querySelector(`[data-face="${face}"]`);
+  if (target) target.classList.add('finalPick');
+}
+
+function runNetRollingPreview(finalFace) {
+  let currentFace = randomInt(1, FACE_COUNT);
+  const pickRandomFace = () => {
+    currentFace = randomInt(1, FACE_COUNT);
+    diceNet.querySelectorAll('.netFace').forEach((el) => {
+      el.classList.remove('rollingPick', 'finalPick');
+    });
+    const current = diceNet.querySelector(`[data-face="${currentFace}"]`);
+    if (current) current.classList.add('rollingPick');
+  };
+
+  pickRandomFace();
+  netRollTimer = setInterval(pickRandomFace, 120);
+
+  rollingTimer = setTimeout(() => {
+    finishRoll(finalFace);
+  }, randomInt(1200, 10000));
 }
 
 function resetFaces() {
@@ -268,6 +301,8 @@ function resetFaces() {
   isRolling = false;
   cube.classList.remove('rolling');
   rollBtn.disabled = false;
+  stopRollBtn.disabled = true;
+  diceNet.querySelectorAll('.netFace').forEach((el) => el.classList.remove('rollingPick', 'finalPick'));
 
   const defaults = pickRandomDefaults();
   faceImageMap.clear();
@@ -278,13 +313,78 @@ function resetFaces() {
 
   applyAllFaces();
   rollResult.textContent = '当前结果：未投掷';
-  spinX = -25;
-  spinY = 35;
+  spinX = previewRotation.x;
+  spinY = previewRotation.y;
   cube.style.transform = `rotateX(${spinX}deg) rotateY(${spinY}deg)`;
 }
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function degToRad(deg) {
+  return (deg * Math.PI) / 180;
+}
+
+function rotateAroundX(vec, deg) {
+  const r = degToRad(deg);
+  const cos = Math.cos(r);
+  const sin = Math.sin(r);
+  return {
+    x: vec.x,
+    y: vec.y * cos - vec.z * sin,
+    z: vec.y * sin + vec.z * cos,
+  };
+}
+
+function rotateAroundY(vec, deg) {
+  const r = degToRad(deg);
+  const cos = Math.cos(r);
+  const sin = Math.sin(r);
+  return {
+    x: vec.x * cos + vec.z * sin,
+    y: vec.y,
+    z: -vec.x * sin + vec.z * cos,
+  };
+}
+
+function getTopFaceByRotation(rotX, rotY) {
+  const normals = {
+    1: { x: 0, y: 0, z: 1 },
+    2: { x: 0, y: -1, z: 0 },
+    3: { x: 1, y: 0, z: 0 },
+    4: { x: -1, y: 0, z: 0 },
+    5: { x: 0, y: 1, z: 0 },
+    6: { x: 0, y: 0, z: -1 },
+  };
+
+  let topFace = 1;
+  let maxY = -Infinity;
+
+  for (let face = 1; face <= FACE_COUNT; face += 1) {
+    let v = normals[face];
+    v = rotateAroundY(v, rotY);
+    v = rotateAroundX(v, rotX);
+    if (v.y > maxY) {
+      maxY = v.y;
+      topFace = face;
+    }
+  }
+
+  return topFace;
+}
+
+function finishRoll(forcedFace = null) {
+  clearRollTimers();
+  cube.classList.remove('rolling');
+  cube.style.transform = `rotateX(${spinX}deg) rotateY(${spinY}deg)`;
+  const topFace = forcedFace || getTopFaceByRotation(spinX, spinY);
+  setNetActiveFace(topFace);
+  rollResult.textContent = `当前结果：第 ${topFace} 面（以上方面为准）`;
+  isRolling = false;
+  rollBtn.disabled = false;
+  stopRollBtn.disabled = true;
 }
 
 function rollDice() {
@@ -296,6 +396,7 @@ function rollDice() {
 
   isRolling = true;
   rollBtn.disabled = true;
+  stopRollBtn.disabled = false;
   cube.classList.add('rolling');
   rollResult.textContent = '当前结果：骰子正在旋转...';
 
@@ -307,18 +408,8 @@ function rollDice() {
   spinX = extraTurnsX + focusRot.x;
   spinY = extraTurnsY + focusRot.y;
 
-  const revealDelay = randomInt(1200, 10000);
-
-  rollingTimer = setTimeout(() => {
-    cube.classList.remove('rolling');
-    cube.style.transform = `rotateX(${spinX}deg) rotateY(${spinY}deg)`;
-
-    revealTimer = setTimeout(() => {
-      rollResult.textContent = `当前结果：第 ${face} 面（立体结果展示）`;
-      isRolling = false;
-      rollBtn.disabled = false;
-    }, 1700);
-  }, revealDelay);
+  const finalFace = getTopFaceByRotation(spinX, spinY);
+  runNetRollingPreview(finalFace);
 }
 
 [zoomInput, offsetXInput, offsetYInput].forEach((control) => {
@@ -335,6 +426,10 @@ cancelCropBtn.addEventListener('click', () => cropDialog.close());
 rollBtn.addEventListener('click', rollDice);
 resetBtn.addEventListener('click', resetFaces);
 updateDiceBtn.addEventListener('click', applyAllFaces);
+stopRollBtn.addEventListener('click', () => {
+  if (!isRolling) return;
+  finishRoll();
+});
 
 createTextEditors();
 createNetFaces();

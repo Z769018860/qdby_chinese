@@ -48,6 +48,19 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.netFace.rollingPick {
+  border-color: #ffe08a;
+  box-shadow: 0 0 0 3px rgba(255, 224, 138, .35), 0 0 18px rgba(255, 224, 138, .45);
+  transform: scale(1.03);
+}
+
+.netFace.finalPick {
+  border-color: #86f4ff;
+  box-shadow: 0 0 0 3px rgba(134, 244, 255, .4), 0 0 20px rgba(134, 244, 255, .55);
+  transform: scale(1.05);
 }
 
 .faceLabel {
