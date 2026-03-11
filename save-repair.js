@@ -95,22 +95,24 @@ function createDownloadUrl(content, mimeType) {
   return URL.createObjectURL(blob);
 }
 
-const dom = {
-  file: document.querySelector('#saveFile'),
-  name: document.querySelector('#charName'),
-  format: document.querySelector('#outputFormat'),
-  normalize: document.querySelector('#normalizeName'),
-  run: document.querySelector('#runRepair'),
-  status: document.querySelector('#toolStatus'),
-  result: document.querySelector('#toolResult'),
-  summary: document.querySelector('#nameSummary'),
-  saveLink: document.querySelector('#downloadSave'),
-  jsonLink: document.querySelector('#downloadJson'),
-  jsonEditor: document.querySelector('#jsonEditor'),
-  jsonEncryptFormat: document.querySelector('#jsonEncryptFormat'),
-  encryptEditedJson: document.querySelector('#encryptEditedJson'),
-  downloadEditedSave: document.querySelector('#downloadEditedSave'),
-};
+function getDom() {
+  return {
+    file: document.querySelector('#saveFile'),
+    name: document.querySelector('#charName'),
+    format: document.querySelector('#outputFormat'),
+    normalize: document.querySelector('#normalizeName'),
+    run: document.querySelector('#runRepair'),
+    status: document.querySelector('#toolStatus'),
+    result: document.querySelector('#toolResult'),
+    summary: document.querySelector('#nameSummary'),
+    saveLink: document.querySelector('#downloadSave'),
+    jsonLink: document.querySelector('#downloadJson'),
+    jsonEditor: document.querySelector('#jsonEditor'),
+    jsonEncryptFormat: document.querySelector('#jsonEncryptFormat'),
+    encryptEditedJson: document.querySelector('#encryptEditedJson'),
+    downloadEditedSave: document.querySelector('#downloadEditedSave'),
+  };
+}
 
 let previousUrls = [];
 let lastBaseName = 'save';
@@ -121,9 +123,10 @@ function clearOldUrls() {
 }
 
 function setStatus(message, isError = false) {
-  if (!dom.status) return;
-  dom.status.textContent = message;
-  dom.status.classList.toggle('error', isError);
+  const status = document.querySelector('#toolStatus');
+  if (!status) return;
+  status.textContent = message;
+  status.classList.toggle('error', isError);
 }
 
 function registerUrl(url) {
@@ -132,6 +135,7 @@ function registerUrl(url) {
 }
 
 async function runRepair() {
+  const dom = getDom();
   try {
     clearOldUrls();
     if (dom.result) { dom.result.hidden = true; }
@@ -199,6 +203,7 @@ async function runRepair() {
 }
 
 function runEncryptEditedJson() {
+  const dom = getDom();
   try {
     const edited = dom.jsonEditor?.value?.trim() ?? '';
     if (!edited) {
@@ -223,9 +228,14 @@ function runEncryptEditedJson() {
   }
 }
 
-if (dom.run) {
-  dom.run.addEventListener('click', runRepair);
+function bindEvents() {
+  const dom = getDom();
+  dom.run?.addEventListener('click', runRepair);
+  dom.encryptEditedJson?.addEventListener('click', runEncryptEditedJson);
 }
-if (dom.encryptEditedJson) {
-  dom.encryptEditedJson.addEventListener('click', runEncryptEditedJson);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bindEvents, { once: true });
+} else {
+  bindEvents();
 }
