@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>自定义六面骰</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="custom-dice.css" />
 </head>
 <body class="dicePage">
@@ -23,6 +23,12 @@
 
       <section>
         <h2>立体六面骰</h2>
+        <div class="diceTextPanel">
+          <label for="customTextInput">自定义文字</label>
+          <input id="customTextInput" type="text" maxlength="24" placeholder="输入要显示在图片上方的文字" />
+          <label for="textOpacityInput">文字透明度</label>
+          <input id="textOpacityInput" type="range" min="0" max="1" step="0.05" value="0.9" />
+        </div>
         <div class="cubeScene">
           <div class="cube" id="cube" aria-label="立体六面骰">
             <div class="cubeFace face-front" data-face="1"></div>
