@@ -134,6 +134,20 @@ function setJsonEncryptStatus(message, isError = false) {
   target.classList.toggle('error', isError);
 }
 
+function hideJsonDownloadLink() {
+  if (!dom.downloadEncryptedSave) return;
+  dom.downloadEncryptedSave.hidden = true;
+  dom.downloadEncryptedSave.removeAttribute('href');
+  dom.downloadEncryptedSave.removeAttribute('download');
+}
+
+function showJsonDownloadLink(url, filename) {
+  if (!dom.downloadEncryptedSave) return;
+  dom.downloadEncryptedSave.href = url;
+  dom.downloadEncryptedSave.download = filename;
+  dom.downloadEncryptedSave.hidden = false;
+}
+
 async function runRepair() {
   try {
     clearOldUrls();
@@ -198,6 +212,7 @@ async function loadJsonToEditor() {
     if (!inputFile) return;
     const text = await inputFile.text();
     dom.jsonEditor.value = text;
+    hideJsonDownloadLink();
     setJsonEncryptStatus('JSON 已加载，可直接编辑后加密。');
   } catch (error) {
     setJsonEncryptStatus(`JSON 加载失败：${error.message || error}`, true);
@@ -206,6 +221,8 @@ async function loadJsonToEditor() {
 
 function runJsonEncrypt() {
   try {
+    hideJsonDownloadLink();
+
     if (!dom.jsonEditor || !dom.jsonOutputFormat) {
       setJsonEncryptStatus('页面缺少 JSON 加密所需控件，请刷新后重试。', true);
       return;
@@ -229,8 +246,7 @@ function runJsonEncrypt() {
     previousUrls.push(saveUrl);
 
     if (dom.downloadEncryptedSave) {
-      dom.downloadEncryptedSave.href = saveUrl;
-      dom.downloadEncryptedSave.download = outName;
+      showJsonDownloadLink(saveUrl, outName);
     } else {
       const tempLink = document.createElement('a');
       tempLink.href = saveUrl;
@@ -258,6 +274,16 @@ if (dom.jsonFile) {
 
 if (dom.runJsonEncrypt) {
   dom.runJsonEncrypt.addEventListener('click', runJsonEncrypt);
+}
+
+hideJsonDownloadLink();
+
+if (dom.jsonEditor) {
+  dom.jsonEditor.addEventListener('input', hideJsonDownloadLink);
+}
+
+if (dom.jsonOutputFormat) {
+  dom.jsonOutputFormat.addEventListener('change', hideJsonDownloadLink);
 }
 
 // 兜底：兼容缓存导致的节点重建/脚本绑定丢失场景
