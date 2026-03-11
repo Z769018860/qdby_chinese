@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>自定义六面骰</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="custom-dice.css" />
 </head>
 <body class="dicePage">
@@ -12,6 +12,7 @@
     <header class="diceHeader panel">
       <h1>🎲 自定义六面骰</h1>
       <p>上传每个面的图片，裁剪成合适大小，并同步到平面展开图与立体骰子中。</p>
+      <p class="diceNotice">声明：个人自娱自乐给 OC 做的，默认图均为我 OC，请勿盗用。</p>
     </header>
 
     <section class="panel diceGrid" aria-label="六面骰编辑区">
@@ -19,6 +20,15 @@
         <h2>平面展开图</h2>
         <p class="muted">点击任意面进行上传与裁剪。</p>
         <div class="diceNet" id="diceNet"></div>
+
+        <div class="diceTextPanel">
+          <h3>六面自定义文字</h3>
+          <div class="faceTextGrid" id="faceTextGrid"></div>
+          <label for="textOpacityInput">文字透明度</label>
+          <input id="textOpacityInput" type="range" min="0" max="1" step="0.05" value="0.9" />
+          <button class="btn" id="updateDiceBtn" type="button">更新骰子</button>
+          <p class="muted" id="updateHint">修改图片或文字后，点击“更新骰子”生效。</p>
+        </div>
       </section>
 
       <section>
