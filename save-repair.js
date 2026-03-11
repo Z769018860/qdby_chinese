@@ -178,9 +178,7 @@ async function runRepairModule() {
     const fixedJsonCompact = JSON.stringify(data);
     const fixedSave = encryptByFormat(fixedJsonCompact, outputFormat);
 
-    const baseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
-    const repairedSaveName = `${baseName}_repaired_${outputFormat}.sav`;
-    const jsonName = `${baseName}_decrypted.json`;
+  previousUrls.push(saveUrl, jsonUrl);
 
     const saveUrl = createDownloadUrl(fixedSave, 'text/plain;charset=utf-8');
     const jsonUrl = createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8');
