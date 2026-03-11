@@ -326,16 +326,9 @@ tbody tr:hover{ background:#fcfcff; }
 .coinLabBody{
   margin-top:12px;
   display:grid;
-  grid-template-columns:220px 1fr;
+  grid-template-columns:1fr;
   gap:12px;
   align-items:center;
-}
-.coinLabMedia{ display:flex; gap:8px; justify-content:center; }
-.coinLabGif{
-  width:100px;
-  border-radius:10px;
-  border:1px solid #d9e2ef;
-  background:#fff;
 }
 .coinLabStageWrap{ display:flex; justify-content:center; }
 .coinLabStage{
@@ -728,6 +721,5 @@ header, main, footer{ position:relative; z-index:1; }
 @media (max-width: 720px){
   .toolGrid{ grid-template-columns:1fr; }
   .coinLabBody{ grid-template-columns:1fr; }
-  .coinLabGif{ width:88px; }
   .coinLabActions .btn, .coinUpload{ width:100%; }
 }

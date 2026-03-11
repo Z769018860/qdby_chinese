@@ -571,7 +571,7 @@ function initCoinLab(){
     const finalAngle = isFront ? 0 : 180;
     angle = angle + (finalAngle - normalized);
     stage.style.transform = `rotateY(${angle}deg)`;
-    setResult(isFront ? '🐱 正面（猫）' : '🐶 反面（狗）');
+    setResult(isFront ? '🐶 正面（狗）' : '🐱 反面（猫）');
   });
 
   const bindUploader = (input, face)=>{
