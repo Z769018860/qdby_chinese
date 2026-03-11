@@ -1,6 +1,13 @@
 const OLD_PREFIX = 'J31mEo';
 const NEW_PREFIX = 'J31mEo2:';
 
+let previousUrls = [];
+let lastBaseName = 'save';
+
+function byId(id) {
+  return document.getElementById(id);
+}
+
 function normalizeName(name) {
   return String(name).normalize('NFC');
 }
@@ -95,38 +102,9 @@ function createDownloadUrl(content, mimeType) {
   return URL.createObjectURL(blob);
 }
 
-function getDom() {
-  return {
-    file: document.querySelector('#saveFile'),
-    name: document.querySelector('#charName'),
-    format: document.querySelector('#outputFormat'),
-    normalize: document.querySelector('#normalizeName'),
-    run: document.querySelector('#runRepair'),
-    status: document.querySelector('#toolStatus'),
-    result: document.querySelector('#toolResult'),
-    summary: document.querySelector('#nameSummary'),
-    saveLink: document.querySelector('#downloadSave'),
-    jsonLink: document.querySelector('#downloadJson'),
-    jsonEditor: document.querySelector('#jsonEditor'),
-    jsonEncryptFormat: document.querySelector('#jsonEncryptFormat'),
-    encryptEditedJson: document.querySelector('#encryptEditedJson'),
-    downloadEditedSave: document.querySelector('#downloadEditedSave'),
-  };
-}
-
-let previousUrls = [];
-let lastBaseName = 'save';
-
 function clearOldUrls() {
   previousUrls.forEach((url) => URL.revokeObjectURL(url));
   previousUrls = [];
-}
-
-function setStatus(message, isError = false) {
-  const status = document.querySelector('#toolStatus');
-  if (!status) return;
-  status.textContent = message;
-  status.classList.toggle('error', isError);
 }
 
 function registerUrl(url) {
@@ -134,14 +112,65 @@ function registerUrl(url) {
   return url;
 }
 
+function setStatus(message, isError = false) {
+  const statusEl = byId('toolStatus');
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  statusEl.classList.toggle('error', isError);
+}
+
+function setSummary(message) {
+  const summaryEl = byId('nameSummary');
+  if (!summaryEl) return;
+  summaryEl.textContent = message;
+}
+
+function setResultVisible(visible) {
+  const resultEl = byId('toolResult');
+  if (!resultEl) return;
+  resultEl.hidden = !visible;
+}
+
+function setAnchorDownload(id, href, filename) {
+  const link = byId(id);
+  if (!link) return;
+  link.href = href;
+  link.download = filename;
+}
+
+function clearAnchorDownload(id) {
+  const link = byId(id);
+  if (!link) return;
+  link.removeAttribute('href');
+  link.removeAttribute('download');
+}
+
+function compactJsonOrThrow(text, sourceLabel) {
+  try {
+    const parsed = JSON.parse(text);
+    return JSON.stringify(parsed);
+  } catch (error) {
+    throw new Error(`${sourceLabel} 解析失败：${error.message || error}`);
+  }
+}
+
 async function runRepair() {
   const dom = getDom();
   try {
     clearOldUrls();
-    if (dom.result) { dom.result.hidden = true; }
+    setResultVisible(false);
 
-    const inputFile = dom.file?.files?.[0];
-    const newName = dom.name?.value?.trim() ?? '';
+    const fileInput = byId('saveFile');
+    const nameInput = byId('charName');
+    const normalizeCheckbox = byId('normalizeName');
+    const formatSelect = byId('outputFormat');
+
+    if (!fileInput || !nameInput) {
+      throw new Error('页面控件加载失败，请刷新页面后重试。');
+    }
+
+    const inputFile = fileInput.files?.[0];
+    const newName = nameInput.value.trim();
 
     if (!inputFile) {
       throw new Error('请先上传存档文件。');
@@ -155,13 +184,14 @@ async function runRepair() {
     const data = JSON.parse(jsonText);
 
     const oldName = getCharname(data);
-    setCharname(data, newName, dom.normalize?.checked ?? true);
+    const shouldNormalize = normalizeCheckbox ? normalizeCheckbox.checked : true;
+    setCharname(data, newName, shouldNormalize);
     const fixedName = getCharname(data);
 
     const fixedJsonPretty = JSON.stringify(data, null, 2);
     const fixedJsonCompact = JSON.stringify(data);
 
-    const outputFormat = dom.format?.value === 'old' ? 'old' : 'new';
+    const outputFormat = formatSelect?.value === 'old' ? 'old' : 'new';
     const fixedSave = encryptByFormat(fixedJsonCompact, outputFormat);
 
     lastBaseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
@@ -171,25 +201,17 @@ async function runRepair() {
     const saveUrl = registerUrl(createDownloadUrl(fixedSave, 'text/plain;charset=utf-8'));
     const jsonUrl = registerUrl(createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8'));
 
-    if (dom.saveLink) {
-      dom.saveLink.href = saveUrl;
-      dom.saveLink.download = repairedSaveName;
+    setAnchorDownload('downloadSave', saveUrl, repairedSaveName);
+    setAnchorDownload('downloadJson', jsonUrl, jsonName);
+
+    setSummary(`主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`);
+
+    const jsonEditor = byId('jsonEditor');
+    if (jsonEditor) {
+      jsonEditor.value = fixedJsonPretty;
     }
-    if (dom.jsonLink) {
-      dom.jsonLink.href = jsonUrl;
-      dom.jsonLink.download = jsonName;
-    }
-    if (dom.summary) {
-      dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
-    }
-    if (dom.jsonEditor) {
-      dom.jsonEditor.value = fixedJsonPretty;
-    }
-    dom.downloadEditedSave?.removeAttribute('href');
-    dom.downloadEditedSave?.removeAttribute('download');
-    if (dom.result) {
-      dom.result.hidden = false;
-    }
+    clearAnchorDownload('downloadEditedSave');
+    setResultVisible(true);
 
     if (outputFormat === 'old') {
       setStatus('修复成功：已生成旧版加密存档。注意：旧版不兼容中文名，可能显示乱码。');
@@ -197,7 +219,7 @@ async function runRepair() {
       setStatus('修复成功：已生成新版加密存档（仅适用于【我本人发布的】汉化版）。');
     }
   } catch (error) {
-    if (dom.result) { dom.result.hidden = true; }
+    setResultVisible(false);
     setStatus(`处理失败：${error.message || error}`, true);
   }
 }
@@ -205,33 +227,63 @@ async function runRepair() {
 function runEncryptEditedJson() {
   const dom = getDom();
   try {
-    const edited = dom.jsonEditor?.value?.trim() ?? '';
+    const editor = byId('jsonEditor');
+    const formatSelect = byId('jsonEncryptFormat');
+
+    const edited = editor?.value?.trim() ?? '';
     if (!edited) {
       throw new Error('请先生成 JSON，或输入要加密的 JSON 内容。');
     }
 
-    const parsed = JSON.parse(edited);
-    const compactJson = JSON.stringify(parsed);
-    const format = dom.jsonEncryptFormat?.value === 'old' ? 'old' : 'new';
+    const compactJson = compactJsonOrThrow(edited, '编辑区 JSON');
+    const format = formatSelect?.value === 'old' ? 'old' : 'new';
     const saveText = encryptByFormat(compactJson, format);
 
     const editedSaveName = `${lastBaseName}_edited_${format}.sav`;
     const editedUrl = registerUrl(createDownloadUrl(saveText, 'text/plain;charset=utf-8'));
+    setAnchorDownload('downloadEditedSave', editedUrl, editedSaveName);
 
-    if (dom.downloadEditedSave) {
-      dom.downloadEditedSave.href = editedUrl;
-      dom.downloadEditedSave.download = editedSaveName;
-    }
     setStatus(`已将编辑后的 JSON 加密为 ${format === 'old' ? '旧版' : '新版'} .sav，请点击下载。`);
   } catch (error) {
     setStatus(`JSON 再加密失败：${error.message || error}`, true);
   }
 }
 
+async function runEncryptJsonUpload() {
+  try {
+    const fileInput = byId('jsonUploadFile');
+    const formatSelect = byId('jsonUploadFormat');
+
+    if (!fileInput) {
+      throw new Error('JSON 上传入口初始化失败，请刷新页面后重试。');
+    }
+
+    const inputFile = fileInput.files?.[0];
+    if (!inputFile) {
+      throw new Error('请先上传 JSON 文件。');
+    }
+
+    const rawText = await inputFile.text();
+    const compactJson = compactJsonOrThrow(rawText, '上传 JSON 文件');
+
+    const format = formatSelect?.value === 'old' ? 'old' : 'new';
+    const saveText = encryptByFormat(compactJson, format);
+
+    const baseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
+    const saveName = `${baseName}_encrypted_${format}.sav`;
+    const saveUrl = registerUrl(createDownloadUrl(saveText, 'text/plain;charset=utf-8'));
+    setAnchorDownload('downloadJsonUploadedSave', saveUrl, saveName);
+
+    setStatus(`JSON 上传加密成功：已生成${format === 'old' ? '旧版' : '新版'} .sav，请点击下载。`);
+  } catch (error) {
+    setStatus(`JSON 上传加密失败：${error.message || error}`, true);
+  }
+}
+
 function bindEvents() {
-  const dom = getDom();
-  dom.run?.addEventListener('click', runRepair);
-  dom.encryptEditedJson?.addEventListener('click', runEncryptEditedJson);
+  byId('runRepair')?.addEventListener('click', runRepair);
+  byId('encryptEditedJson')?.addEventListener('click', runEncryptEditedJson);
+  byId('runEncryptJsonUpload')?.addEventListener('click', runEncryptJsonUpload);
 }
 
 if (document.readyState === 'loading') {

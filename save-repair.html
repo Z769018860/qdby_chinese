@@ -55,6 +55,30 @@
 
       <p id="toolStatus" class="toolStatus" role="status" aria-live="polite"></p>
 
+
+
+      <section class="jsonEditor" aria-labelledby="jsonUploadTitle">
+        <h2 id="jsonUploadTitle">直接上传 JSON 加密为 .sav</h2>
+        <p class="panelLead">无需先上传存档，直接选择 JSON 文件并加密导出为 .sav。</p>
+        <div class="toolGrid jsonActions">
+          <label class="control span2" for="jsonUploadFile">
+            <span>上传 JSON 文件</span>
+            <input id="jsonUploadFile" type="file" accept=".json,application/json" />
+          </label>
+          <label class="control" for="jsonUploadFormat">
+            <span>JSON 上传加密格式</span>
+            <select id="jsonUploadFormat">
+              <option value="new">新版加密（J31mEo2:）</option>
+              <option value="old">旧版加密（J31mEo）</option>
+            </select>
+          </label>
+          <div class="toolActions editorBtns">
+            <button id="runEncryptJsonUpload" class="btn" type="button">将上传 JSON 加密为 .sav</button>
+            <a id="downloadJsonUploadedSave" class="btn" download>下载上传 JSON 加密的存档（.sav）</a>
+          </div>
+        </div>
+      </section>
+
       <section id="toolResult" class="toolResult" hidden>
         <h2>生成结果</h2>
         <p id="nameSummary"></p>
