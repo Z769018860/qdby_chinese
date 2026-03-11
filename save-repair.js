@@ -91,39 +91,67 @@ function createDownloadUrl(content, mimeType) {
   return URL.createObjectURL(blob);
 }
 
+function parseJsonText(rawText, sourceName = 'JSON') {
+  const text = String(rawText || '').replace(/^\uFEFF/, '');
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`${sourceName}解析失败：${error.message || error}`);
+  }
+}
+
+function isValidOutputFormat(format) {
+  return format === 'old' || format === 'new';
+}
+
+function clearOldUrls(urls) {
+  urls.forEach((url) => URL.revokeObjectURL(url));
+  urls.length = 0;
+}
+
 const dom = {
-  file: document.querySelector('#saveFile'),
-  name: document.querySelector('#charName'),
-  format: document.querySelector('#outputFormat'),
-  normalize: document.querySelector('#normalizeName'),
-  run: document.querySelector('#runRepair'),
-  status: document.querySelector('#toolStatus'),
-  result: document.querySelector('#toolResult'),
-  summary: document.querySelector('#nameSummary'),
-  saveLink: document.querySelector('#downloadSave'),
-  jsonLink: document.querySelector('#downloadJson'),
-  jsonPreview: document.querySelector('#jsonPreview'),
+  repair: {
+    file: document.querySelector('#saveFile'),
+    name: document.querySelector('#charName'),
+    format: document.querySelector('#repairOutputFormat'),
+    normalize: document.querySelector('#normalizeName'),
+    run: document.querySelector('#runRepair'),
+    status: document.querySelector('#repairStatus'),
+    result: document.querySelector('#repairResult'),
+    summary: document.querySelector('#repairSummary'),
+    saveLink: document.querySelector('#downloadRepairSave'),
+    jsonLink: document.querySelector('#downloadRepairJson'),
+    preview: document.querySelector('#repairJsonPreview'),
+  },
+  jsonEncrypt: {
+    file: document.querySelector('#jsonFile'),
+    format: document.querySelector('#jsonOutputFormat'),
+    run: document.querySelector('#runJsonEncrypt'),
+    status: document.querySelector('#jsonStatus'),
+    result: document.querySelector('#jsonResult'),
+    summary: document.querySelector('#jsonSummary'),
+    saveLink: document.querySelector('#downloadJsonSave'),
+    jsonLink: document.querySelector('#downloadJsonSource'),
+    preview: document.querySelector('#jsonPreview'),
+  },
 };
 
-let previousUrls = [];
+const repairUrls = [];
+const jsonUrls = [];
 
-function clearOldUrls() {
-  previousUrls.forEach((url) => URL.revokeObjectURL(url));
-  previousUrls = [];
+function setStatus(element, message, isError = false) {
+  element.textContent = message;
+  element.classList.toggle('error', isError);
 }
 
-function setStatus(message, isError = false) {
-  dom.status.textContent = message;
-  dom.status.classList.toggle('error', isError);
-}
-
-async function runRepair() {
+async function runRepairModule() {
   try {
-    clearOldUrls();
-    dom.result.hidden = true;
+    clearOldUrls(repairUrls);
+    dom.repair.result.hidden = true;
 
-    const inputFile = dom.file.files?.[0];
-    const newName = dom.name.value.trim();
+    const inputFile = dom.repair.file.files?.[0];
+    const newName = dom.repair.name.value.trim();
+    const outputFormat = dom.repair.format.value;
 
     if (!inputFile) {
       throw new Error('请先上传存档文件。');
@@ -131,19 +159,20 @@ async function runRepair() {
     if (!newName) {
       throw new Error('请输入新的主角名。');
     }
+    if (!isValidOutputFormat(outputFormat)) {
+      throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
+    }
 
     const saveText = (await inputFile.text()).trim();
     const jsonText = autoDecrypt(saveText);
-    const data = JSON.parse(jsonText);
+    const data = parseJsonText(jsonText, '解密后的 JSON');
 
     const oldName = getCharname(data);
-    setCharname(data, newName, dom.normalize.checked);
+    setCharname(data, newName, dom.repair.normalize.checked);
     const fixedName = getCharname(data);
 
     const fixedJsonPretty = JSON.stringify(data, null, 2);
     const fixedJsonCompact = JSON.stringify(data);
-
-    const outputFormat = dom.format.value;
     const fixedSave = outputFormat === 'old' ? oldEncrypt(fixedJsonCompact) : newEncrypt(fixedJsonCompact);
 
     const baseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
@@ -152,26 +181,73 @@ async function runRepair() {
 
     const saveUrl = createDownloadUrl(fixedSave, 'text/plain;charset=utf-8');
     const jsonUrl = createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8');
+    repairUrls.push(saveUrl, jsonUrl);
 
-    previousUrls.push(saveUrl, jsonUrl);
-
-    dom.saveLink.href = saveUrl;
-    dom.saveLink.download = repairedSaveName;
-    dom.jsonLink.href = jsonUrl;
-    dom.jsonLink.download = jsonName;
-    dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
-    dom.jsonPreview.textContent = fixedJsonPretty;
-    dom.result.hidden = false;
+    dom.repair.saveLink.href = saveUrl;
+    dom.repair.saveLink.download = repairedSaveName;
+    dom.repair.jsonLink.href = jsonUrl;
+    dom.repair.jsonLink.download = jsonName;
+    dom.repair.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
+    dom.repair.preview.textContent = fixedJsonPretty;
+    dom.repair.result.hidden = false;
 
     if (outputFormat === 'old') {
-      setStatus('修复成功：已生成旧版加密存档。注意：旧版不兼容中文名，可能显示乱码。');
+      setStatus(dom.repair.status, '修复成功：已生成旧版加密存档。注意：旧版不兼容中文名，可能显示乱码。');
     } else {
-      setStatus('修复成功：已生成新版加密存档（仅适用于【我本人发布的】汉化版）。');
+      setStatus(dom.repair.status, '修复成功：已生成新版加密存档（仅适用于【我本人发布的】汉化版）。');
     }
   } catch (error) {
-    dom.result.hidden = true;
-    setStatus(`处理失败：${error.message || error}`, true);
+    dom.repair.result.hidden = true;
+    setStatus(dom.repair.status, `处理失败：${error.message || error}`, true);
   }
 }
 
-dom.run.addEventListener('click', runRepair);
+async function runJsonEncryptModule() {
+  try {
+    clearOldUrls(jsonUrls);
+    dom.jsonEncrypt.result.hidden = true;
+
+    const inputFile = dom.jsonEncrypt.file.files?.[0];
+    const outputFormat = dom.jsonEncrypt.format.value;
+
+    if (!inputFile) {
+      throw new Error('请先上传 JSON 文件。');
+    }
+    if (!isValidOutputFormat(outputFormat)) {
+      throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
+    }
+
+    const rawText = await inputFile.text();
+    const data = parseJsonText(rawText, 'JSON 文件');
+    const compactJson = JSON.stringify(data);
+    const prettyJson = JSON.stringify(data, null, 2);
+    const encryptedSave = outputFormat === 'old' ? oldEncrypt(compactJson) : newEncrypt(compactJson);
+
+    const baseName = (inputFile.name || 'data').replace(/\.[^.]+$/, '');
+    const saveName = `${baseName}_encrypted_${outputFormat}.sav`;
+
+    const saveUrl = createDownloadUrl(encryptedSave, 'text/plain;charset=utf-8');
+    const jsonUrl = createDownloadUrl(prettyJson, 'application/json;charset=utf-8');
+    jsonUrls.push(saveUrl, jsonUrl);
+
+    dom.jsonEncrypt.saveLink.href = saveUrl;
+    dom.jsonEncrypt.saveLink.download = saveName;
+    dom.jsonEncrypt.jsonLink.href = jsonUrl;
+    dom.jsonEncrypt.jsonLink.download = `${baseName}_validated.json`;
+    dom.jsonEncrypt.summary.textContent = `JSON 加密成功，输出格式：${outputFormat === 'old' ? '旧版' : '新版'}`;
+    dom.jsonEncrypt.preview.textContent = prettyJson;
+    dom.jsonEncrypt.result.hidden = false;
+
+    if (outputFormat === 'old') {
+      setStatus(dom.jsonEncrypt.status, 'JSON 加密成功：已生成旧版加密存档。注意：旧版不兼容中文内容，可能显示乱码。');
+    } else {
+      setStatus(dom.jsonEncrypt.status, 'JSON 加密成功：已生成新版加密存档。');
+    }
+  } catch (error) {
+    dom.jsonEncrypt.result.hidden = true;
+    setStatus(dom.jsonEncrypt.status, `处理失败：${error.message || error}`, true);
+  }
+}
+
+dom.repair.run.addEventListener('click', runRepairModule);
+dom.jsonEncrypt.run.addEventListener('click', runJsonEncryptModule);
