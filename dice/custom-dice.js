@@ -360,14 +360,14 @@ function getTopFaceByRotation(rotX, rotY) {
   };
 
   let topFace = 1;
-  let maxY = -Infinity;
+  let minY = Infinity;
 
   for (let face = 1; face <= FACE_COUNT; face += 1) {
     let v = normals[face];
     v = rotateAroundY(v, rotY);
     v = rotateAroundX(v, rotX);
-    if (v.y > maxY) {
-      maxY = v.y;
+    if (v.y < minY) {
+      minY = v.y;
       topFace = face;
     }
   }
