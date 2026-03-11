@@ -100,13 +100,20 @@ function parseJsonText(rawText, sourceName = 'JSON') {
   }
 }
 
+function clearOldUrls(urls) {
+  urls.forEach((url) => URL.revokeObjectURL(url));
+  urls.length = 0;
+}
+
 function isValidOutputFormat(format) {
   return format === 'old' || format === 'new';
 }
 
-function clearOldUrls(urls) {
-  urls.forEach((url) => URL.revokeObjectURL(url));
-  urls.length = 0;
+function encryptByFormat(jsonText, outputFormat) {
+  if (!isValidOutputFormat(outputFormat)) {
+    throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
+  }
+  return outputFormat === 'old' ? oldEncrypt(jsonText) : newEncrypt(jsonText);
 }
 
 const dom = {
@@ -159,10 +166,6 @@ async function runRepairModule() {
     if (!newName) {
       throw new Error('请输入新的主角名。');
     }
-    if (!isValidOutputFormat(outputFormat)) {
-      throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
-    }
-
     const saveText = (await inputFile.text()).trim();
     const jsonText = autoDecrypt(saveText);
     const data = parseJsonText(jsonText, '解密后的 JSON');
@@ -173,7 +176,7 @@ async function runRepairModule() {
 
     const fixedJsonPretty = JSON.stringify(data, null, 2);
     const fixedJsonCompact = JSON.stringify(data);
-    const fixedSave = outputFormat === 'old' ? oldEncrypt(fixedJsonCompact) : newEncrypt(fixedJsonCompact);
+    const fixedSave = encryptByFormat(fixedJsonCompact, outputFormat);
 
   previousUrls.push(saveUrl, jsonUrl);
 
@@ -194,6 +197,8 @@ async function runRepairModule() {
     } else {
       setStatus(dom.repair.status, '修复成功：已生成新版加密存档（仅适用于【我本人发布的】汉化版）。');
     }
+
+    dom.repair.saveLink.click();
   } catch (error) {
     dom.repair.result.hidden = true;
     setStatus(dom.repair.status, `处理失败：${error.message || error}`, true);
@@ -207,19 +212,14 @@ async function runJsonEncryptModule() {
 
     const inputFile = dom.jsonEncrypt.file.files?.[0];
     const outputFormat = dom.jsonEncrypt.format.value;
-
     if (!inputFile) {
       throw new Error('请先上传 JSON 文件。');
     }
-    if (!isValidOutputFormat(outputFormat)) {
-      throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
-    }
-
     const rawText = await inputFile.text();
     const data = parseJsonText(rawText, 'JSON 文件');
     const compactJson = JSON.stringify(data);
     const prettyJson = JSON.stringify(data, null, 2);
-    const encryptedSave = outputFormat === 'old' ? oldEncrypt(compactJson) : newEncrypt(compactJson);
+    const encryptedSave = encryptByFormat(compactJson, outputFormat);
 
     const baseName = (inputFile.name || 'data').replace(/\.[^.]+$/, '');
     const saveName = `${baseName}_encrypted_${outputFormat}.sav`;
@@ -242,12 +242,12 @@ async function runJsonEncryptModule() {
       setStatus(dom.jsonEncrypt.status, 'JSON 加密成功：已生成新版加密存档。');
     }
 
-    await runRepairNameMode(outputFormat);
+    dom.jsonEncrypt.saveLink.click();
   } catch (error) {
     dom.jsonEncrypt.result.hidden = true;
     setStatus(dom.jsonEncrypt.status, `处理失败：${error.message || error}`, true);
   }
 }
 
-dom.repair.run.addEventListener('click', runRepairModule);
-dom.jsonEncrypt.run.addEventListener('click', runJsonEncryptModule);
+if (dom.repair.run) dom.repair.run.addEventListener('click', runRepairModule);
+if (dom.jsonEncrypt.run) dom.jsonEncrypt.run.addEventListener('click', runJsonEncryptModule);
