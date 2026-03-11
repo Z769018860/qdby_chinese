@@ -12,73 +12,101 @@
 
   <main class="wrap toolWrap">
     <section class="panel toolPanel" aria-labelledby="toolTitle">
-      <h1 id="toolTitle">《恶魔之心：被诅咒的试炼》存档主角名修复工具</h1>
-      <p class="panelLead">上传存档文件（例如 <code>save11_old.sav</code>），输入要替换的主角名，一键生成修复后的存档与解密 JSON。</p>
+      <h1 id="toolTitle">《恶魔之心：被诅咒的试炼》存档处理工具</h1>
+      <p class="panelLead">下面提供两个独立模块：上方用于修复存档主角名，下方用于将 JSON 直接加密为存档。</p>
 
       <div class="toolNotice" role="note" aria-label="格式说明">
         <p><strong>旧版加密（J31mEo）</strong>：可用于旧版存档流程，但<strong>不兼容中文名</strong>，主角名会变成乱码。</p>
         <p><strong>新版加密（J31mEo2:）</strong>：兼容中文名，但<strong>只能在【我本人发布的】汉化版游戏中使用</strong>。</p>
-        <p>本工具可用于游戏进行中途修改主角名。</p>
       </div>
 
-      <div class="toolGrid">
-        <label class="control" for="workMode">
-          <span>工作模式</span>
-          <select id="workMode">
-            <option value="repair-name">修复主角名</option>
-            <option value="json-encrypt">JSON 加密</option>
-          </select>
-        </label>
+      <section class="toolResult" aria-labelledby="repairTitle">
+        <h2 id="repairTitle">模块 1：修复 SAV 主角名</h2>
+        <div class="toolGrid">
+          <label class="control span2" for="saveFile">
+            <span>上传存档文件</span>
+            <input id="saveFile" type="file" accept=".sav,.txt" />
+          </label>
 
-        <label class="control span2" for="saveFile">
-          <span>上传存档文件</span>
-          <input id="saveFile" type="file" accept=".sav,.txt" />
-        </label>
+          <label class="control" for="charName">
+            <span>新的主角名</span>
+            <input id="charName" type="text" placeholder="例如：姜酒" />
+          </label>
 
-        <label class="control span2" for="jsonFile" hidden>
-          <span>上传 JSON 文件</span>
-          <input id="jsonFile" type="file" accept=".json,application/json" />
-        </label>
+          <label class="control" for="repairOutputFormat">
+            <span>输出加密格式</span>
+            <select id="repairOutputFormat">
+              <option value="new">新版加密（J31mEo2:，推荐）</option>
+              <option value="old">旧版加密（J31mEo，不兼容中文名）</option>
+            </select>
+          </label>
 
-        <label class="control" for="charName">
-          <span>新的主角名</span>
-          <input id="charName" type="text" placeholder="例如：姜酒" />
-        </label>
+          <label class="control toolCheck" for="normalizeName">
+            <input id="normalizeName" type="checkbox" checked />
+            <span>启用 NFC 规范化</span>
+          </label>
+        </div>
 
-        <label class="control" for="outputFormat">
-          <span>输出加密格式</span>
-          <select id="outputFormat">
-            <option value="new">新版加密（J31mEo2:，推荐）</option>
-            <option value="old">旧版加密（J31mEo，不兼容中文名）</option>
-          </select>
-        </label>
+        <div class="toolActions">
+          <button id="runRepair" class="btn" type="button">执行修复并生成文件</button>
+        </div>
 
-        <label class="control toolCheck" for="normalizeName">
-          <input id="normalizeName" type="checkbox" checked />
-          <span>启用 NFC 规范化</span>
-        </label>
-      </div>
+        <p id="repairStatus" class="toolStatus" role="status" aria-live="polite"></p>
+
+        <section id="repairResult" class="toolResult" hidden>
+          <h3>修复结果</h3>
+          <p id="repairSummary"></p>
+          <div class="toolDownloads">
+            <a id="downloadRepairSave" class="btn" download>下载修复后的存档（.sav）</a>
+            <a id="downloadRepairJson" class="btn" download>下载解密 JSON（.json）</a>
+          </div>
+          <details>
+            <summary>查看修复后 JSON 预览</summary>
+            <pre id="repairJsonPreview"></pre>
+          </details>
+        </section>
+      </section>
+
+      <section class="toolResult" aria-labelledby="jsonTitle">
+        <h2 id="jsonTitle">模块 2：JSON 加密为 SAV</h2>
+        <div class="toolGrid">
+          <label class="control span2" for="jsonFile">
+            <span>上传 JSON 文件</span>
+            <input id="jsonFile" type="file" accept=".json,application/json" />
+          </label>
+
+          <label class="control" for="jsonOutputFormat">
+            <span>输出加密格式</span>
+            <select id="jsonOutputFormat">
+              <option value="new">新版加密（J31mEo2:，推荐）</option>
+              <option value="old">旧版加密（J31mEo，不兼容中文内容）</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="toolActions">
+          <button id="runJsonEncrypt" class="btn" type="button">执行 JSON 加密并生成文件</button>
+        </div>
+
+        <p id="jsonStatus" class="toolStatus" role="status" aria-live="polite"></p>
+
+        <section id="jsonResult" class="toolResult" hidden>
+          <h3>加密结果</h3>
+          <p id="jsonSummary"></p>
+          <div class="toolDownloads">
+            <a id="downloadJsonSave" class="btn" download>下载加密后的存档（.sav）</a>
+            <a id="downloadJsonSource" class="btn" download>下载已校验 JSON（.json）</a>
+          </div>
+          <details>
+            <summary>查看 JSON 预览</summary>
+            <pre id="jsonPreview"></pre>
+          </details>
+        </section>
+      </section>
 
       <div class="toolActions">
-        <button id="runRepair" class="btn" type="button">执行修复并生成文件</button>
-        <button id="runJsonEncrypt" class="btn" type="button" hidden>执行 JSON 加密并生成文件</button>
         <a class="chip" href="index.html">返回主页</a>
       </div>
-
-      <p id="toolStatus" class="toolStatus" role="status" aria-live="polite"></p>
-
-      <section id="toolResult" class="toolResult" hidden>
-        <h2>生成结果</h2>
-        <p id="nameSummary"></p>
-        <div class="toolDownloads">
-          <a id="downloadSave" class="btn" download>下载修复后的存档（.sav）</a>
-          <a id="downloadJson" class="btn" download>下载解密 JSON（.json）</a>
-        </div>
-        <details>
-          <summary>查看解密 JSON 预览</summary>
-          <pre id="jsonPreview"></pre>
-        </details>
-      </section>
     </section>
   </main>
 
