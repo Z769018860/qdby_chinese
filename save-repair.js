@@ -121,6 +121,7 @@ function clearOldUrls() {
 }
 
 function setStatus(message, isError = false) {
+  if (!dom.status) return;
   dom.status.textContent = message;
   dom.status.classList.toggle('error', isError);
 }
@@ -133,7 +134,7 @@ function registerUrl(url) {
 async function runRepair() {
   try {
     clearOldUrls();
-    dom.result.hidden = true;
+    if (dom.result) { dom.result.hidden = true; }
 
     const inputFile = dom.file.files?.[0];
     const newName = dom.name.value.trim();
@@ -166,15 +167,25 @@ async function runRepair() {
     const saveUrl = registerUrl(createDownloadUrl(fixedSave, 'text/plain;charset=utf-8'));
     const jsonUrl = registerUrl(createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8'));
 
-    dom.saveLink.href = saveUrl;
-    dom.saveLink.download = repairedSaveName;
-    dom.jsonLink.href = jsonUrl;
-    dom.jsonLink.download = jsonName;
-    dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
-    dom.jsonEditor.value = fixedJsonPretty;
-    dom.downloadEditedSave.removeAttribute('href');
-    dom.downloadEditedSave.removeAttribute('download');
-    dom.result.hidden = false;
+    if (dom.saveLink) {
+      dom.saveLink.href = saveUrl;
+      dom.saveLink.download = repairedSaveName;
+    }
+    if (dom.jsonLink) {
+      dom.jsonLink.href = jsonUrl;
+      dom.jsonLink.download = jsonName;
+    }
+    if (dom.summary) {
+      dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
+    }
+    if (dom.jsonEditor) {
+      dom.jsonEditor.value = fixedJsonPretty;
+    }
+    dom.downloadEditedSave?.removeAttribute('href');
+    dom.downloadEditedSave?.removeAttribute('download');
+    if (dom.result) {
+      dom.result.hidden = false;
+    }
 
     if (outputFormat === 'old') {
       setStatus('修复成功：已生成旧版加密存档。注意：旧版不兼容中文名，可能显示乱码。');
@@ -182,7 +193,7 @@ async function runRepair() {
       setStatus('修复成功：已生成新版加密存档（仅适用于【我本人发布的】汉化版）。');
     }
   } catch (error) {
-    dom.result.hidden = true;
+    if (dom.result) { dom.result.hidden = true; }
     setStatus(`处理失败：${error.message || error}`, true);
   }
 }
@@ -202,13 +213,19 @@ function runEncryptEditedJson() {
     const editedSaveName = `${lastBaseName}_edited_${format}.sav`;
     const editedUrl = registerUrl(createDownloadUrl(saveText, 'text/plain;charset=utf-8'));
 
-    dom.downloadEditedSave.href = editedUrl;
-    dom.downloadEditedSave.download = editedSaveName;
+    if (dom.downloadEditedSave) {
+      dom.downloadEditedSave.href = editedUrl;
+      dom.downloadEditedSave.download = editedSaveName;
+    }
     setStatus(`已将编辑后的 JSON 加密为 ${format === 'old' ? '旧版' : '新版'} .sav，请点击下载。`);
   } catch (error) {
     setStatus(`JSON 再加密失败：${error.message || error}`, true);
   }
 }
 
-dom.run.addEventListener('click', runRepair);
-dom.encryptEditedJson.addEventListener('click', runEncryptEditedJson);
+if (dom.run) {
+  dom.run.addEventListener('click', runRepair);
+}
+if (dom.encryptEditedJson) {
+  dom.encryptEditedJson.addEventListener('click', runEncryptEditedJson);
+}
