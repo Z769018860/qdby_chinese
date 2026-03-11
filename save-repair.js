@@ -124,6 +124,7 @@ function setStatus(message, isError = false) {
 }
 
 function setJsonEncryptStatus(message, isError = false) {
+  if (!dom.jsonEncryptStatus) return;
   dom.jsonEncryptStatus.textContent = message;
   dom.jsonEncryptStatus.classList.toggle('error', isError);
 }
@@ -187,6 +188,7 @@ async function runRepair() {
 
 async function loadJsonToEditor() {
   try {
+    if (!dom.jsonFile || !dom.jsonEditor) return;
     const inputFile = dom.jsonFile.files?.[0];
     if (!inputFile) return;
     const text = await inputFile.text();
@@ -199,6 +201,7 @@ async function loadJsonToEditor() {
 
 function runJsonEncrypt() {
   try {
+    if (!dom.jsonEditor || !dom.jsonOutputFormat || !dom.downloadEncryptedSave) return;
     const jsonRaw = dom.jsonEditor.value.trim();
     if (!jsonRaw) {
       throw new Error('请先上传或粘贴 JSON 内容。');
@@ -229,5 +232,11 @@ function runJsonEncrypt() {
 }
 
 dom.run.addEventListener('click', runRepair);
-dom.jsonFile.addEventListener('change', loadJsonToEditor);
-dom.runJsonEncrypt.addEventListener('click', runJsonEncrypt);
+
+if (dom.jsonFile) {
+  dom.jsonFile.addEventListener('change', loadJsonToEditor);
+}
+
+if (dom.runJsonEncrypt) {
+  dom.runJsonEncrypt.addEventListener('click', runJsonEncrypt);
+}
