@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HTML 文字伪推理游戏（猫狗悬案）v1</title>
+<style>
+/* ===== 背景左右图与角标 ===== */
+.background {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; justify-content: space-between; z-index: -1;
+}
+.side-bg { position: relative; width: 50%; height: 100%; overflow: hidden; }
+.side-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
+.image-overlay {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 18px; font-weight: bold; color: white;
+  background: rgba(0, 0, 0, 0.55); padding: 12px 20px; border-radius: 8px;
+  text-align: center; line-height: 1.6em; white-space: normal; max-width: 40%;
+}
+.left-overlay { left: 10%; }
+.right-overlay { right: 10%; }
+
+/* ===== 主题与布局 ===== */
+:root { --bg:#0b0d10; --panel:#12161b; --panel2:#0f1317; --accent:#5eead4; --muted:#8b98a5; --text:#e6edf3; --card:#151a20cc; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:radial-gradient(1200px 800px at 80% -10%, #15202b 0%, #0b0d10 50%, #05070a 100%);
+  color:var(--text);
+  font:16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
+}
+.app{display:grid;grid-template-rows:auto 1fr auto;max-width:1200px;height:100%;margin:0 auto}
+
+.header{
+  position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  padding:12px clamp(12px,4vw,24px);
+  backdrop-filter:saturate(1.4) blur(10px);
+  background:linear-gradient(180deg,#0b0d10f2,#0b0d10e6 50%,#0b0d10cc 100%);
+  border-bottom:1px solid #1f2937
+}
+.header h1{margin:0;font-size:18px;font-weight:700}
+.header .spacer{flex:1}
+.btn{
+  border:1px solid #1f2937;background:linear-gradient(180deg,#1a2027,#11161c);color:var(--text);
+  padding:8px 12px;border-radius:12px;cursor:pointer;outline:none;transition:.18s ease;font-weight:600
+}
+.btn:hover{transform:translateY(-1px);border-color:#2a3542;box-shadow:0 6px 24px -10px rgba(94,234,212,.25)}
+.btn[aria-pressed="true"]{border-color:var(--accent)}
+.speed{display:flex;align-items:center;gap:8px;border:1px solid #1f2937;background:#11161c;border-radius:12px;padding:6px 10px}
+.speed input{width:180px}
+.speed b{font-size:12px;color:#a7b4c3}
+
+.main{display:grid;grid-template-columns:1fr 340px;gap:18px;padding:18px clamp(10px,3.5vw,26px)}
+@media(max-width:1024px){.main{grid-template-columns:1fr}}
+
+/* ===== 半透明对话容器 ===== */
+.chat{
+  background: rgba(18,22,27,0.55);
+  border: 1px solid rgba(31,41,55,.7);
+  border-radius: 20px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 60vh;
+  max-height: 76vh;
+  overflow: auto;
+  box-shadow: inset 0 0 0 1px rgba(14,19,24,.5), 0 60px 120px -60px rgba(0,0,0,.55);
+  backdrop-filter: blur(6px) saturate(1.1);
+}
+.chat::-webkit-scrollbar{width:10px;height:10px}
+.chat::-webkit-scrollbar-thumb{background:#1f2937;border-radius:10px}
+
+.row{display:flex;gap:10px;margin:10px 8px;align-items:flex-end}
+.row.right{justify-content:flex-end}
+
+/* ===== 放大后的头像 ===== */
+.avatar{
+  width:68px;height:68px;min-width:68px;border-radius:50%;
+  background:#222;background-size:cover;background-position:center;
+  border:1px solid #2a3542;box-shadow:0 4px 14px -6px rgba(0,0,0,.8),0 0 0 3px #0b0f14 inset
+}
+
+/* ===== 半透明聊天气泡 ===== */
+.bubble{
+  max-width:min(680px,88%);
+  padding:12px 14px;border-radius:16px;
+  background: rgba(26,33,41,0.55);
+  border:1px solid rgba(34,48,60,.7);
+  box-shadow:0 6px 26px -18px rgba(0,0,0,.65);
+  backdrop-filter: blur(4px) saturate(1.05);
+}
+.bubble .meta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:6px}
+.bubble .text{white-space:pre-wrap;word-break:break-word}
+.right .bubble{background: rgba(18,32,34,0.55); border-color: rgba(31,58,61,.7);}
+.right .bubble .meta{color:#93c5fd}
+
+.tag{
+  display:inline-flex;align-items:center;gap:6px;padding:2px 8px;font-size:11px;
+  background:#17202a;border:1px solid #243241;border-radius:999px;color:#cbd5e1
+}
+.tag.evi{background:#0f1e1a;border-color:#1c352d;color:#d1fae5}
+
+/* ===== 页脚/侧栏/模态 ===== */
+.footer{
+  display:flex;align-items:center;gap:10px;
+  padding:16px clamp(12px,4vw,24px);
+  border-top:1px solid #1f2937;
+  background: rgba(15,19,23,0.6); backdrop-filter: blur(6px) saturate(1.05);
+}
+.progress{height:10px;flex:1;background:#0d1217;border:1px solid #1f2937;border-radius:999px;overflow:hidden}
+.progress>i{display:block;height:100%;background:linear-gradient(90deg,#5eead4,#60a5fa);width:0%;transition:width .3s ease}
+
+.sidebar{
+  background: rgba(18,22,27,0.55);
+  border:1px solid #1f2937;border-radius:20px;padding:14px;
+  display:flex;flex-direction:column;gap:10px;
+  backdrop-filter: blur(6px) saturate(1.05);
+}
+.sidebar h3{margin:4px 4px 8px;font-size:15px;font-weight:700;color:#a7b4c3}
+.quick-evi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.quick-evi .card{
+  background: rgba(21,26,32,0.75);
+  border:1px solid #1f2937;border-radius:14px;padding:10px;cursor:pointer;transition:.2s ease
+}
+.quick-evi .card:hover{transform:translateY(-2px);border-color:#314254;box-shadow:0 16px 60px -30px rgba(94,234,212,.25)}
+.quick-evi .thumb{aspect-ratio:4/3;border-radius:10px;background:#10161c;border:1px dashed #233140;display:grid;place-items:center;font-size:22px;overflow:hidden}
+.quick-evi .thumb img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.quick-evi .ttl{margin-top:8px;font-size:12px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.modal{position:fixed;inset:0;display:none}
+.modal[open]{display:grid;place-items:center;background:#000000bf;backdrop-filter:blur(4px)}
+.sheet{
+  width:min(980px,92vw);max-height:86vh;
+  background: rgba(18,22,27,0.75);
+  border:1px solid #26313d;border-radius:18px;overflow:hidden;
+  display:grid;grid-template-columns:300px 1fr;
+  backdrop-filter: blur(6px) saturate(1.05);
+}
+@media(max-width:900px){.sheet{grid-template-columns:1fr}}
+.sheet .list{border-right:1px solid #1f2937;overflow:auto;max-height:86vh}
+.sheet .list .item{display:grid;grid-template-columns:60px 1fr;gap:10px;padding:12px;border-bottom:1px solid #17202a;cursor:pointer;align-items:center}
+.sheet .list .item:hover{background:#10161b}
+.sheet .list .icon{width:56px;height:42px;display:grid;place-items:center;border:1px solid #213040;border-radius:10px;background:#0f141a;overflow:hidden}
+.sheet .list .icon img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.sheet .list .name{font-weight:600}.sheet .list .when{font-size:12px;color:#8ea0b2}
+.sheet .detail{padding:16px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
+.sheet .detail .hero{width:100%;aspect-ratio:16/9;background:#0f141a;border:1px solid #203040;border-radius:12px;display:grid;place-items:center;overflow:hidden}
+.sheet .detail .desc{color:#cbd5e1;font-size:14px;line-height:1.7}
+.sheet .detail .meta{color:#9fb5c9;font-size:12px}
+.close-x{position:absolute;right:18px;top:14px;background:#11161c;border:1px solid #253244;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;cursor:pointer}
+
+/* === 证物画廊（新增） === */
+.evi-hero {
+  width: 100%;
+  background: #0f141a;
+  border: 1px solid #203040;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 82px;
+  gap: 10px;
+  padding: 10px;
+}
+.evi-hero .main {
+  width: 100%; aspect-ratio: 16/9;
+  background: #0b1016;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.evi-hero .main img { width: 100%; height: 100%; object-fit: contain; }
+.evi-hero .thumbs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 96px;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.evi-hero .thumb {
+  width: 96px; height: 72px; border-radius: 8px;
+  background: #0f141a;
+  border: 1px solid #22303c;
+  overflow: hidden; cursor: pointer;
+}
+.evi-hero .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.evi-hero .thumb.active { outline: 2px solid #5eead4; border-color: #5eead4; }
+.evi-cap { margin-top: 6px; font-size: 12px; color: #9fb5c9; }
+.evi-notes { color:#cbd5e1; font-size:14px; line-height:1.7; white-space:pre-wrap; }
+
+/* 系统条 */
+.system-row{justify-content:center}
+.system-note{
+  font-size:16px;color:#e6f0f8;background:rgba(14,20,26,.75);
+  border:1px dashed #31c3b5;padding:10px 14px;border-radius:999px;
+  box-shadow:0 10px 30px -20px rgba(94,234,212,.35);
+  backdrop-filter: blur(4px);
+}
+
+/* 分支列表 */
+.branch-list{display:grid;grid-template-columns:1fr;gap:10px;padding:12px}
+.branch-list .opt{
+  background:rgba(21,26,32,.75);border:1px solid #1f2937;padding:12px;border-radius:12px;cursor:pointer;color:#e6edf3;
+  backdrop-filter: blur(4px);
+}
+.branch-list .opt:hover{border-color:#314254;box-shadow:0 16px 60px -30px rgba(94,234,212,.25)}
+
+/* 选择栏：居中+显眼（包含“下一条”按钮） */
+.choicebar{
+  position:sticky;bottom:0;display:flex;justify-content:center;gap:12px;padding:12px 14px;flex-wrap:wrap;
+  background: rgba(15,19,23,0.6); border-top:1px solid rgba(31,41,55,.65);
+  backdrop-filter: blur(10px) saturate(1.1); z-index:5;
+}
+.choicebar .choice{
+  background:linear-gradient(180deg, rgba(26,32,39,.85), rgba(17,22,28,.85));
+  border:1px solid rgba(94,234,212,.4); border-radius:14px; padding:12px 18px; cursor:pointer;
+  color:#e6edf3; font-size:18px; font-weight:800;
+  box-shadow:0 10px 30px -18px rgba(94,234,212,.35), inset 0 0 0 1px rgba(255,255,255,.03);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.choicebar .choice:hover{
+  transform:translateY(-1px) scale(1.02);
+  border-color:rgba(94,234,212,.7);
+  box-shadow:0 18px 60px -30px rgba(94,234,212,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* —— 底部“下一条”（偏右对齐） —— */
+#nextBtn{
+  margin-left:auto;
+  background:linear-gradient(180deg, #1a2027, #11161c);
+  border:1px solid rgba(94,234,212,.4);
+  border-radius:14px;
+  padding:12px 18px;
+  cursor:pointer;
+  color:#e6edf3;
+  font-size:16px;
+  font-weight:700;
+  box-shadow:0 10px 30px -18px rgba(94,234,212,.35), inset 0 0 0 1px rgba(255,255,255,.03);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+#nextBtn:hover{
+  transform:translateY(-1px) scale(1.02);
+  border-color:rgba(94,234,212,.7);
+  box-shadow:0 18px 60px -30px rgba(94,234,212,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+#nextBtn:disabled{
+  opacity:.55; cursor:not-allowed; filter:grayscale(.15);
+}
+
+small.hint{color:#8ea0b2}
+
+/* ===== 新增：红色高亮样式 ===== */
+.hl-red{ color:#ff4d4f; font-weight:800; }
+</style>
+</head>
+<body>
+<!-- 背景左右图 -->
+<div class="background">
+  <div class="side-bg">
+    <img src="bg1.png" />
+    <div class="image-overlay left-overlay">
+      证物图片等由AI辅助生成，<br>其他OC图片为私人图片请勿使用。<br>by青灯不弈
+    </div>
+  </div>
+  <div class="side-bg">
+    <img src="bg2.jfif" />
+    <div class="image-overlay right-overlay">
+      证物图片等由AI辅助生成，<br>其他OC图片为私人图片请勿使用。<br>by青灯不弈
+    </div>
+  </div>
+</div>
+
+<div class="app"> 
+  <div class="header">
+    <h1>猫狗宇宙·第一悬案</h1>
+    <a class="hint" href="https://space.bilibili.com/95687310?spm_id_from=333.1007.0.0" target="_blank">
+      <img src="https://www.bilibili.com/favicon.ico" alt="Bilibili" style="width:20px;height:20px;vertical-align:middle;">
+    </a>
+    <div class="spacer"></div>
+
+    <!-- 播放速度 -->
+    <div class="speed" style="margin-right:8px;">
+      <b>播放</b>
+      <input id="speedRange" type="range" min="800" max="5000" step="100" value="3000" />
+      <b id="speedLabel">3.0 s/条</b>
+    </div>
+    <!-- 打字速度（字符/秒） -->
+    <div class="speed">
+      <b>打字</b>
+      <input id="typeRange" type="range" min="10" max="120" step="5" value="40" />
+      <b id="typeLabel">40 字/秒</b>
+    </div>
+
+    <button id="btn-evi" class="btn">证物</button>
+    <button id="btn-branch" class="btn">选择分支</button>
+    <button id="btn-auto" class="btn" aria-pressed="false">自动播放</button>
+    <button id="btn-replay" class="btn">回放</button>
+    <button id="btn-reset" class="btn">重置</button>
+  </div>
+
+  <div class="main">
+    <div class="chat" id="chat"></div>
+    <aside class="sidebar">
+      <h3>关键证物（快捷预览）</h3>
+      <div id="quickEvi" class="quick-evi"></div>
+    </aside>
+  </div>
+
+  <!-- 底部选择栏 -->
+  <div class="choicebar" id="choicebar">
+    <button id="nextBtn" type="button">下一条</button>
+  </div>
+
+  <div class="footer">
+    <div class="progress"><i id="bar"></i></div>
+    <div id="status" class="hint"></div>
+  </div>
+</div>
+
+<!-- 证物弹窗 -->
+<dialog id="eviModal" class="modal">
+  <div class="sheet">
+    <div class="list" id="eviList"></div>
+    <div class="detail">
+      <div class="hero" id="eviHero"></div>
+      <div class="desc" id="eviDesc"></div>
+      <div class="meta" id="eviMeta"></div>
+    </div>
+  </div>
+  <div class="close-x" id="closeEvi">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6L6 18" stroke="#a7b4c3" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+</dialog>
+
+<!-- 分支弹窗 -->
+<dialog id="branchModal" class="modal">
+  <div class="sheet" style="grid-template-columns:1fr; width:min(680px,92vw)">
+    <div class="detail">
+      <div class="desc">选择一个推理分支（不会改变主线，只会插入额外讨论）：</div>
+      <div class="branch-list">
+        <div class="opt" data-branch="密室派">密室派：从“虫子进不来”为前提，论证密室合理性</div>
+        <div class="opt" data-branch="老鼠派">老鼠派：从“黑色颗粒=鼠屎”为前提，论证老鼠致因</div>
+        <div class="opt" data-branch="自然派">自然派：从“夏季闷热+潮湿”出发，讨论自然腐败与时间线</div>
+      </div>
+    </div>
+  </div>
+  <div class="close-x" id="closeBranch">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6L6 18" stroke="#a7b4c3" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+</dialog>
+
+<script>
+/* ===== 简易报错浮层 ===== */
+window.addEventListener('error', (e)=>{
+  const div=document.createElement('div');
+  div.style.cssText='position:fixed;inset:12px;z-index:9999;background:#170e0e;border:1px solid #3a1f1f;color:#ffd2d2;border-radius:12px;padding:12px;font:14px/1.6 ui-sans-serif';
+  div.innerHTML='<b>脚本异常</b><br>'+ (e.message||'未知错误');
+  document.body.appendChild(div);
+});
+window.addEventListener('unhandledrejection', (e)=>{
+  const div=document.createElement('div');
+  div.style.cssText='position:fixed;inset:12px;z-index:9999;background:#170e0e;border:1px solid #3a1f1f;color:#ffd2d2;border-radius:12px;padding:12px;font:14px/1.6 ui-sans-serif';
+  div.innerHTML='<b>未处理的 Promise 异常</b><br>'+ (e.reason&&e.reason.message?e.reason.message:String(e.reason));
+  document.body.appendChild(div);
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const chatEl = document.getElementById('chat');
+  const bar = document.getElementById('bar');
+  const statusEl = document.getElementById('status');
+  const btn_auto = document.getElementById('btn-auto');
+  const btn_evi  = document.getElementById('btn-evi');
+  const btn_reset  = document.getElementById('btn-reset');
+  const btn_replay = document.getElementById('btn-replay');
+  const btn_branch = document.getElementById('btn-branch');
+  const nextBtn = document.getElementById('nextBtn');
+  const eviModal = document.getElementById('eviModal');
+  const branchModal = document.getElementById('branchModal');
+  const closeEvi = document.getElementById('closeEvi');
+  const closeBranch = document.getElementById('closeBranch');
+  const choicebar = document.getElementById('choicebar');
+  const speedRange = document.getElementById('speedRange');
+  const speedLabel = document.getElementById('speedLabel');
+  const typeRange = document.getElementById('typeRange');
+  const typeLabel = document.getElementById('typeLabel');
+
+  function getSpeed(){ return Number(speedRange && speedRange.value || 3000); }
+  function fmtMs(ms){return (ms/1000).toFixed(1)+ ' s/条'}
+  function updateSpeedLabel(){ if(speedLabel) speedLabel.textContent = fmtMs(getSpeed()); }
+
+  function getTypeCPS(){ return Number(typeRange && typeRange.value || 40); } // chars per second
+  function getTypeDelay(){ return 1000 / Math.max(1, getTypeCPS()); }
+  function updateTypeLabel(){ if(typeLabel) typeLabel.textContent = getTypeCPS() + ' 字/秒'; }
+
+  // 头像 GIF
+  const Avatars = {
+    狗: "dog.gif",
+    猫: "cat.gif",
+    人女: "https://i.postimg.cc/8zFQq0ZZ/Image-1755523606747.png",
+    人男: "https://i.postimg.cc/Qxdrqt1G/Image-1755523609402.png",
+    父母: "https://i.postimg.cc/3xhfZfPy/1755521655008.png",
+    旁白: ""
+  };
+
+  const roleMap = {
+    "警探狗": { side:"right", avatar: Avatars.狗, label:"警探狗" },
+    "第一发现人猫": { side:"left", avatar: Avatars.猫, label:"第一发现人猫" },
+    "屋主猫": { side:"left", avatar: Avatars.猫, label:"屋主猫" },
+    "无辜的保洁": { side:"left", avatar: Avatars.人女, label:"无辜的保洁" },
+    "第一发现人保洁": { side:"left", avatar: Avatars.人女, label:"无辜的保洁" },
+    "专业灭鼠人": { side:"left", avatar: Avatars.人男, label:"专业灭鼠人" },
+    "猫父母": { side:"left", avatar: Avatars.父母, label:"猫父母" },
+    "场外音": { side:"center", avatar: Avatars.旁白, label:"场外音" },
+    "系统": { side:"center", avatar: Avatars.旁白, label:"系统" }
+  };
+
+  function avatarFor(who){
+    if(who.includes('警探狗')) return roleMap['警探狗'].avatar;
+    if(who.includes('第一发现人保洁')) return roleMap['第一发现人保洁'].avatar;
+    if(who.includes('第一发现人猫') || who.includes('屋主猫')) return roleMap['屋主猫'].avatar;
+    if(who.includes('无辜的保洁')) return roleMap['无辜的保洁'].avatar;
+    if(who.includes('专业灭鼠人')) return roleMap['专业灭鼠人'].avatar;
+    if(who.includes('猫父母')) return roleMap['猫父母'].avatar;
+    return roleMap['场外音'].avatar;
+  }
+  function sideFor(who){ return who.includes('警探狗') ? 'right':'left'; }
+
+  /* ===== WebAudio：喵/汪/打字声音 ===== */
+  const SFX = (()=>{
+    let ctx;
+    function ac(){ return ctx || (ctx = new (window.AudioContext||window.webkitAudioContext)()); }
+
+    function envGain(time, attack=0.005, hold=0.04, release=0.08, peak=0.06){
+      const a = ac(); const gain=a.createGain(); const now=a.currentTime+ (time||0);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(peak, now+attack);
+      gain.gain.setValueAtTime(peak, now+attack+hold);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now+attack+hold+release);
+      return {a, gain, dur:attack+hold+release};
+    }
+
+    function meowShort(){
+      const {a, gain, dur} = envGain(0, 0.005, 0.07, 0.12, 0.08);
+      const o = a.createOscillator(); o.type='triangle';
+      o.frequency.setValueAtTime(660, a.currentTime);
+      o.frequency.exponentialRampToValueAtTime(420, a.currentTime+dur*0.9);
+      const lfo=a.createOscillator(); const lGain=a.createGain();
+      lfo.frequency.value=6; lGain.gain.value=10; lfo.connect(lGain); lGain.connect(o.frequency);
+      o.connect(gain); gain.connect(a.destination); o.start(); lfo.start();
+      o.stop(a.currentTime+dur); lfo.stop(a.currentTime+dur);
+    }
+
+    function barkShort(){
+      const a = ac();
+      const buffer=a.createBuffer(1, a.sampleRate*0.08, a.sampleRate);
+      const data=buffer.getChannelData(0);
+      for(let i=0;i<data.length;i++){ data[i]=(Math.random()*2-1)*(1 - i/data.length); }
+      const src=a.createBufferSource(); src.buffer=buffer;
+      const bp=a.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=450; bp.Q.value=0.8;
+      const g1=a.createGain(); g1.gain.value=0.2;
+      src.connect(bp); bp.connect(g1); g1.connect(a.destination); src.start();
+
+      const {gain, dur}=envGain(0, 0.003, 0.05, 0.07, 0.12);
+      const o=a.createOscillator(); o.type='square'; o.frequency.setValueAtTime(220, a.currentTime);
+      o.frequency.exponentialRampToValueAtTime(160, a.currentTime+dur*0.9);
+      o.connect(gain); gain.connect(a.destination); o.start(); o.stop(a.currentTime+dur);
+    }
+
+    function typeClick(){
+      const {a, gain, dur}=envGain(0, 0.001, 0.01, 0.02, 0.05);
+      const o=a.createOscillator(); o.type='square'; o.frequency.value=1500;
+      o.connect(gain); gain.connect(a.destination); o.start(); o.stop(a.currentTime+dur);
+    }
+
+    return { meowShort, barkShort, typeClick };
+  })();
+
+  /* ===== 新增：把 **高亮** 转成 <span class="hl-red"> ===== */
+  function mdToHTML(s){
+    const safe = String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    // 双星号高亮
+    return safe.replace(/\*\*(.+?)\*\*/g, '<span class="hl-red">$1</span>');
+  }
+
+  /* ===== 打字渲染 ===== */
+  function typeText(el, fullText, onStart, onEnd){
+    if(!el){ if(typeof onEnd==='function') onEnd(); return; }
+    el.textContent = '';
+    const delay = Math.max(8, Number((typeof getTypeDelay==='function' && getTypeDelay()) || 30));
+    let idx = 0;
+    if(typeof onStart === 'function') onStart();
+
+    const timer = setInterval(()=>{
+      const cps   = Math.max(1, Number((typeof getTypeCPS==='function' && getTypeCPS()) || 30));
+      const chunk = Math.max(1, Math.round(cps / (1000 / delay)));
+      const next = fullText.slice(idx, idx + chunk);
+      if(next.length){
+        el.textContent += next;
+        if (SFX && typeof SFX.typeClick === 'function') SFX.typeClick();
+        idx += next.length;
+      }
+      if(idx >= fullText.length){
+        clearInterval(timer);
+        // —— 完整打字后再把 **高亮** 替换成红色 span —— //
+        el.innerHTML = mdToHTML(fullText);
+        if(typeof onEnd === 'function') onEnd();
+      }
+      const chat = el.closest('.chat');
+      if(chat) chat.scrollTo({ top: chat.scrollHeight, behavior: 'auto' });
+    }, delay);
+  }
+
+  function pushMsg(who, text){
+    const row = document.createElement('div');
+    const side = sideFor(who);
+    row.className = 'row' + (side==='right'?' right':'');
+    const av = document.createElement('div'); av.className='avatar'; av.style.backgroundImage = `url(${avatarFor(who)})`;
+    const bub = document.createElement('div'); bub.className='bubble';
+    const meta = document.createElement('div'); meta.className='meta';
+    const tag = document.createElement('span'); tag.className='tag' + (who.includes('警探狗')?' evi':''); tag.textContent = who;
+    meta.appendChild(tag);
+    const txt = document.createElement('div'); txt.className='text';
+    bub.appendChild(meta); bub.appendChild(txt);
+    if(side==='right'){ row.appendChild(bub); row.appendChild(av);} else { row.appendChild(av); row.appendChild(bub);} 
+    chatEl.appendChild(row);
+
+    const isDog = /狗/.test(who);
+    const isCat = /猫/.test(who);
+    typeText(
+      txt,
+      text || '',
+      ()=>{},
+      ()=>{ if(isDog) SFX.barkShort(); else if(isCat) SFX.meowShort(); }
+    );
+
+    chatEl.scrollTo({top: chatEl.scrollHeight, behavior:'smooth'});
+  }
+
+  function systemNote(text){
+    const r = document.createElement('div'); r.className = 'row system-row';
+    const b = document.createElement('div'); b.className = 'system-note';
+    // 系统条也支持 **高亮**（用红色）
+    b.innerHTML = mdToHTML(text);
+    r.appendChild(b);
+    chatEl.appendChild(r);
+  }
+
+  /* ===== 证物：支持多图与文字 ===== */
+  const evidence = new Map();
+  function baseTitle(t){ return String(t||'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').trim(); }
+  function pickIcon(name){
+    if(/血|血迹|血泊|红色/.test(name)) return '🩸';
+    if(/尸|尸体|腐烂|死|鼠|老鼠/.test(name)) return '🐭';
+    if(/猫|猫咪|猫毛|猫爪/.test(name)) return '🐱';
+    if(/狗|犬|警犬|狗毛/.test(name)) return '🐶';
+    if(/照片|相片|现场|门口|通风管|窟窿|沙发|地板|墙|痕迹|房间/.test(name)) return '📷';
+    if(/合同|文件|档案|纸|字条|笔记/.test(name)) return '📄';
+    if(/天气|风|雨|雪|云|气温/.test(name)) return '⛅';
+    if(/聊天|群|对话|微信|消息/.test(name)) return '💬';
+    if(/猫粮|罐头|鱼|食物|餐/.test(name)) return '🍖';
+    if(/下水|疏通|水管|污水|药剂|化学|液体/.test(name)) return '🧪';
+    if(/半地下|地下|结构|门窗|密室|屋子|楼|楼梯|房/.test(name)) return '🏠';
+    if(/钥匙|锁|门锁|开锁/.test(name)) return '🔑';
+    if(/手机|电话|通话/.test(name)) return '📱';
+    if(/钱|现金|票据|账单/.test(name)) return '💰';
+    if(/时间|钟|表|日记/.test(name)) return '⏰';
+    if(/鞋|脚印|衣服|布/.test(name)) return '👟';
+    if(/武器|刀|匕首|剪刀|棍/.test(name)) return '🔪';
+    if(/酒|饮料|瓶子|罐子/.test(name)) return '🍾';
+    if(/指纹|掌印|痕迹|DNA/.test(name)) return '🖐️';
+    return '🧩';
+  }
+
+  function ensureEvidence(name, idx){
+    if(!name) return;
+    const id = baseTitle(name);
+    if(!evidence.has(id)){
+      evidence.set(id, {
+        id, title: id, emoji: pickIcon(id),
+        firstIndex: idx ?? 0,
+        images: [],
+        notes:  [],
+        updates:[]
+      });
+    }
+    const e = evidence.get(id);
+    const extra = (String(name).match(/（(.*)）/)||[])[1];
+    if(extra) e.notes.push(extra);
+    return e;
+  }
+  function addEvi(arr, idx){ (arr||[]).forEach(n=> ensureEvidence(n, idx)); renderQuick(); systemNote('新增证物：'+(arr||[]).map(baseTitle).join('、')); }
+  function updateEvi(arr, idx){ (arr||[]).forEach(n=>{ const e = ensureEvidence(n, idx); if(e) e.updates.push({at:idx}); }); renderQuick(); systemNote('更新证物：'+(arr||[]).map(baseTitle).join('、')); }
+
+  function addEviDetail(name, detail, idx){
+    const e = ensureEvidence(name, idx);
+    if(!e) return;
+    if(detail?.images?.length){
+      detail.images.forEach(img=>{ if(img?.src) e.images.push({src: img.src, cap: img.cap||''}); });
+    }
+    if(detail?.notes?.length){ detail.notes.forEach(n=>{ if(n) e.notes.push(String(n)); }); }
+    e.updates.push({at: idx ?? 0, note:'add-detail'});
+    renderQuick();
+  }
+  function updateEviDetail(name, detail, idx){
+    const e = ensureEvidence(name, idx);
+    if(!e) return;
+    if(detail?.images?.length){
+      detail.images.forEach(img=>{ if(img?.src) e.images.push({src: img.src, cap: img.cap||''}); });
+    }
+    if(detail?.notes?.length){ e.notes.push(...detail.notes.map(String)); }
+    e.updates.push({at: idx ?? 0, note:'update-detail'});
+    renderQuick(); systemNote('更新证物：'+ baseTitle(name));
+  }
+
+  function renderQuick(){
+    const q = document.getElementById('quickEvi'); if(!q) return;
+    q.innerHTML='';
+    Array.from(evidence.values())
+      .sort((a,b)=>(a.firstIndex??0)-(b.firstIndex??0))
+      .forEach(e=>{
+        const c = document.createElement('div'); c.className='card';
+        const th = document.createElement('div'); th.className='thumb';
+        if(e.images && e.images[0]?.src){
+          th.innerHTML = `<img src="${e.images[0].src}" alt="${e.title}">`;
+        }else{
+          th.textContent = e.emoji;
+          th.style.display='grid'; th.style.placeItems='center'; th.style.fontSize='22px';
+        }
+        const tt = document.createElement('div'); tt.className='ttl'; tt.textContent = e.title;
+        c.appendChild(th); c.appendChild(tt); q.appendChild(c);
+        c.addEventListener('click', ()=> openEvi(e.id));
+      });
+  }
+
+  /* ===== 证物弹窗 ===== */
+  function openEvi(targetId){
+    eviModal.setAttribute('open','');
+    const list = document.getElementById('eviList'); list.innerHTML='';
+
+    const all = Array.from(evidence.values()).sort((a,b)=>(a.firstIndex??0)-(b.firstIndex??0));
+    all.forEach(e=>{
+      const it = document.createElement('div'); it.className='item';
+      const ic = document.createElement('div'); ic.className='icon';
+      if(e.images && e.images[0]?.src){
+        ic.innerHTML = `<img src="${e.images[0].src}" alt="">`;
+      }else{
+        ic.textContent = e.emoji;
+        ic.style.display='grid'; ic.style.placeItems='center'; ic.style.fontSize='20px';
+      }
+      const nm = document.createElement('div');
+      const t1 = document.createElement('div'); t1.className='name'; t1.textContent = e.title;
+      const t2 = document.createElement('div'); t2.className='when'; t2.textContent = '获得于对话 #'+(e.firstIndex+1);
+      nm.appendChild(t1); nm.appendChild(t2);
+      it.appendChild(ic); it.appendChild(nm);
+      list.appendChild(it);
+      it.addEventListener('click', ()=> showDetail(e));
+    });
+
+    if(all.length){
+      const first = targetId ? all.find(x=>x.id===targetId) || all[0] : all[0];
+      showDetail(first);
+    }
+  }
+  function showDetail(e){
+    const hero = document.getElementById('eviHero'); 
+    const desc = document.getElementById('eviDesc'); 
+    const meta = document.getElementById('eviMeta');
+
+    hero.className = 'hero evi-hero';
+    const imgs = Array.isArray(e.images) ? e.images : [];
+    const hasImg = imgs.length > 0;
+
+    hero.innerHTML = `
+      <div class="main">${ hasImg ? `<img id="eviMain" src="${imgs[0].src}" alt="${e.title}">` :
+        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'>
+          <defs><linearGradient id='bg' x1='0' x2='1' y1='0' y2='1'>
+            <stop offset='0' stop-color='#0f1620'/><stop offset='1' stop-color='#141b24'/>
+          </linearGradient></defs>
+          <rect width='800' height='450' rx='16' fill='url(#bg)'/>
+          <g font-family='ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto' font-weight='700'>
+            <text x='36' y='70' font-size='22' fill='#9fb5c9'>证物</text>
+            <text x='36' y='110' font-size='34' fill='#e6edf3'>${e.title}</text>
+            <rect x='36' y='150' width='160' height='120' rx='12' fill='#0f141a' stroke='#22303c'/>
+            <text x='112' y='222' text-anchor='middle' font-size='52'>${e.emoji}</text>
+          </g>
+        </svg>`}
+      </div>
+      <div class="thumbs">
+        ${ imgs.map((m,idx)=>`
+          <div class="thumb ${idx===0?'active':''}" data-idx="${idx}">
+            <img src="${m.src}" alt="">
+          </div>
+        `).join('') }
+      </div>
+    `;
+
+    const capEl = document.createElement('div'); capEl.className='evi-cap';
+    capEl.textContent = hasImg && imgs[0].cap ? imgs[0].cap : '';
+    const notes = (e.notes||[]).join('\n\n');
+    desc.innerHTML = ''; 
+    desc.appendChild(capEl);
+    const notesEl = document.createElement('div'); notesEl.className='evi-notes'; notesEl.textContent = notes || '暂无详细描述。';
+    desc.appendChild(notesEl);
+
+    if(hasImg){
+      const main = hero.querySelector('#eviMain');
+      const thumbs = hero.querySelectorAll('.thumb');
+      thumbs.forEach(t=>{
+        t.addEventListener('click', ()=>{
+          thumbs.forEach(x=>x.classList.remove('active'));
+          t.classList.add('active');
+          const i = Number(t.getAttribute('data-idx'));
+          main.src = imgs[i].src || '';
+          capEl.textContent = imgs[i].cap ? String(imgs[i].cap) : '';
+        });
+      });
+    }
+
+    const got = '获得于对话 #'+(e.firstIndex+1);
+    const upd = e.updates && e.updates.length ? '；曾更新 '+e.updates.length+' 次' : '';
+    meta.textContent = got + upd;
+  }
+  const closeEviHandler = ()=> eviModal && eviModal.removeAttribute('open');
+  closeEvi && closeEvi.addEventListener('click', closeEviHandler);
+
+  /* ===== 剧本解析：场外音→narr，证物格式照旧 ===== */
+  function parseScript(raw){
+    const src = (raw && raw.length>10) ? raw : "【第一发现人猫】:我进屋就闻到了异味……";
+    const lines = src.split(/\r?\n+/).map(s=>s.trim()).filter(Boolean);
+    const entries = [];
+    lines.forEach(line=>{
+      if(/^【(添加证物|更新证物)/.test(line)){
+        const isUpd = line.startsWith('【更新证物');
+        const inside = line.replace(/^【(添加证物|更新证物)[：:]/,'').replace(/】$/,'').trim();
+        const items = inside.split(/[，,]/).map(s=>s.trim()).filter(Boolean);
+        entries.push({type:isUpd? 'update-evi':'add-evi', payload:items}); return;
+      }
+      if(/^【[^】]+】/.test(line)){
+        const head = (line.match(/^【([^】]+)】/)||['','场外音'])[1].trim();
+        const text = line.replace(/^【[^】]+】[：:]/,'');
+        entries.push({type:'msg', who:head, text}); return;
+      }
+      if(/^（.*）$/.test(line) || /^后日谈/.test(line)){
+        entries.push({type:'narr', text: line.replace(/^（|）$/g,'')}); return;
+      }
+      entries.push({type:'narr', text: line});
+    });
+    return entries;
+  }
+
+ /* ===== 剧本（润色优化版·完整版） ===== */
+const scriptRaw = `
+【第一发现人猫】：我一进屋，就闻到一股 **刺鼻的异味**。  
+【第一发现人猫】：当时完全不明白情况，就先 **开窗通风**，准备后续再清理，所以保留了现场。  
+【第一发现人猫】：开窗后，我立刻寻找异味来源。结果发现 **不是厕所，也不是厨房**，反而像是集中在 **客厅**。  
+【第一发现人猫】：可是客厅里只有地上一些 **可疑污迹**。因为没开灯，我不确定是什么。于是买了一些 **清洁用品**，还买了 **香薰**，准备清理。  
+
+【添加证物：案发现场照片，第一发现人证言，超市小票】
+
+【警探狗】：之后呢？你是怎么发现 **尸体** 的？  
+
+【第一发现人猫】：其实我没有发现尸体。  
+【第一发现人猫】：只是等超市送货到了，我开灯准备清洁时，打开 **厨房橱柜**，发现里面有 **不明的黑色颗粒物**。  
+【第一发现人猫】：离家前我明明关好了 **门窗和柜门**，但橱柜里也出现这些东西，实在奇怪。  
+【第一发现人猫】：我还顺手处理了厨房下水道的堵塞问题，疏通剂虽然见效慢，但看起来有效。  
+
+【添加证物：橱柜门口照片，下水道疏通剂，堵塞的厨房下水道】
+
+【警探狗】：然后你联系我了？  
+
+【第一发现人猫】：是的。我觉得这件事太 **异常**，于是报警。  
+【第一发现人猫】：可警方却说让我自己清理家中污渍……  
+【第一发现人猫】：于是我提交了 **客厅痕迹的照片**。  
+
+【添加证物：地板血迹】
+
+【警探狗】：你没看出那是 **血迹** 吗？我一眼就认出来了。你确定没说谎？  
+
+【第一发现人猫】：没有。正常人不会想到，自己没人住的房子里会有血迹。  
+【第一发现人猫】：再说我一开始 **没开灯**。  
+
+【添加证物：门窗情况与密室证言】
+
+【警探狗】：你说这是 **密室**？可有人说你家以前有个大洞。你确定？  
+
+【第一发现人猫】：天地良心，那是 **厨房抽油烟机的通风管洞**。之前管子掉了，我用胶布里三层外三层贴紧了。  
+【第一发现人猫】：回来第一时间确认过，仍然很牢固。  
+
+【添加证物：油烟机通风管照片】
+
+【警探狗】：所以你坚持这是密室？  
+
+【第一发现人猫】：是的。  
+
+【警探狗】：那会不会这些血迹和异味，早就存在，只是你没注意？你平时不怎么去客厅吧？你这个两点一线的死宅。  
+
+【第一发现人猫】：怀疑您在 **人身攻击**……  举报，举报！
+【第一发现人猫】：但这不可能。我走之前 **特意到客厅倒过垃圾**，当时那里没有异样。  
+【第一发现人猫】：也许会有点味道，那是因为房子不通风，卫生间又没排风扇。可这和现在的情况完全是两码事。  
+
+【更新证物：案发现场照片（翻倒的空垃圾桶）】
+
+【警探狗】：那你为什么不仔细确认异味来源？至今仍没提交决定性的证据？  
+
+【第一发现人猫】：我确认过，当时范围只锁定在客厅。可您也看到了，客厅除了地上的 **血迹**，没别的异样。  
+
+【警探狗】：注意到你提交的照片里有 **蟑螂尸体**。这会不会才是气味来源？既然有蟑螂，那可能不是密室？  
+
+【第一发现人猫】：不好意思让您看到……  
+【第一发现人猫】：其实离开前两周，我托您找了 **专业除蟑人员**来，把所有可能的入口都堵住了，只剩下 **排风管口**要我自己封。后来我也封好了。  
+
+【警探狗】：那为什么还有蟑螂尸体？  
+
+【第一发现人猫】：对方说一个月内出现尸体是 **正常现象**，可能有漏网的。一个月后若还有，可免费再来处理。  
+
+【添加证物：灭蟑螂包年合同】
+
+【警探狗】：那会不会是蟑螂造成的？  
+
+【第一发现人猫】：不可能。就算蟑螂再多，也不会造成 **这么大范围的血迹**，而且它们没什么异味。  
+
+【警探狗】：你这出租屋还真是 **虫鼠一窝**。  
+
+【第一发现人猫】：没办法。为了房租便宜，我只能住 **半地下**。这段时间又连着下雨，非常潮湿。  
+
+【添加证物：半地下结构，近一个月天气预报】
+
+【警探狗】：说到虫鼠，有没有可能是老鼠？那 **黑色颗粒物**很像老鼠屎。  
+
+【第一发现人猫】：（惊恐）那真是老鼠屎吗？我没见过……我问了更懂的人，您请看。  
+
+【猫父母】：是不是老鼠屎？全都清掉，被咬过的东西也要扔掉。  
+
+【添加证物：家庭群聊天记录】
+
+【警探狗】：一切果然在我推测之中。那就是说，**血迹和异味都是老鼠造成的**。  
+
+【第一发现人猫】：您是说，血迹是老鼠留下的？那异味就是 **死老鼠的味道**？  
+
+【警探狗】：没错。我们已经接近真相了。  
+
+【第一发现人猫】：可蟑螂都进不来，老鼠是怎么进来的？  
+
+【警探狗】：尽快清理现场，找到气味来源。  
+
+【第一发现人猫】：不行，请帮我叫 **保洁**。我真的不敢碰这些痕迹。  
+【第一发现人猫】：而且担心被倒打一耙，说我破坏现场。必须有人见证。  
+
+【警探狗】：好，我联系保洁。但我还是问一句，你真的不能自己处理吗？  
+【警探狗】：现在我们已经很怀疑，死者就是老鼠。你必须尽快提交新的证据。  
+
+【第一发现人猫】：一想到可能看到 **死老鼠**，我全身就发麻……  
+
+（场外音：敲门声）  
+
+【无辜的保洁】：您好，我是“猫狗到家”的保洁，上门为您服务。  
+
+【第一发现人猫】：太好了，请进。  
+
+【无辜的保洁】：哇，这味道好大。您家养宠物吗？  
+
+【第一发现人猫】：没有。家里只有一袋 **猫粮**，是用来喂流浪猫的。我从没养过宠物。  
+
+【无辜的保洁】：那怎么会有这么大气味？  
+
+【第一发现人猫】：我回来时就已经这样了。我怀疑是 **死老鼠**，但不知道在哪。可能在客厅。请帮我重点处理客厅和厨房。  
+
+【无辜的保洁】：老鼠？？？我怕老鼠啊！  
+
+【第一发现人猫】：我也怕……不是怕老鼠，而是不想看到尸体。  
+
+【警探狗】：（异议）你明明天天玩猎奇推理游戏，尸体看得还少吗？  
+
+【第一发现人猫】：但今天，我只想好好吃顿晚饭……  
+
+【警探狗】：那就交给保洁吧。  
+
+【无辜的保洁】：呃呃呃呃！可我们保洁，十个有十个都怕老鼠！  
+
+【第一发现人猫】：那怎么办……  
+
+【警探狗】：找到之后扔掉不就行了？  
+
+【第一发现人猫】：你这和“把大象装冰箱只要两步”没区别！  
+
+【无辜的保洁】：我、我尽力……我发现血迹似乎 **拖到书架后面**？  
+
+【添加证物：案发现场照片（拖拽痕迹）】
+
+【第一发现人猫】：书架是轮子的，可以拉开。  
+
+【无辜的保洁】：……后面没有（松口气）。那看看沙发……啊啊啊啊！！！！  
+
+（叮咚，有人发现尸体）  
+
+【添加证物：沙发后面的鼠尸】
+
+【第一发现人保洁】：在这后面！已经 **烂掉了**！！！  
+
+【屋主猫】：怪不得气味这么大……  
+
+【第一发现人保洁】：不行，我满头大汗。您确定只走了两周？尸体腐烂程度太高了！  
+
+【屋主猫】：可能是夏天+闷在屋内？  
+
+【第一发现人保洁】：对。那东西尾巴很长，已经烂到只剩骨头和蛆。我们保洁只会打扫，处理不了。要退单……  
+
+【屋主猫】：好的，抱歉。我当时只想到保洁能处理。  
+
+【警探狗】：发现后直接扔掉不就行了吗？  
+
+【屋主猫】：请听清她的证言，**腐烂严重**，根本没法直接扔掉。  
+
+【添加证物：尸体的腐烂程度证言】
+
+（保洁退场）
+
+【屋主猫】：现在怎么办？尸体确实在，可需要专业处理。你们不能派人来吗？  
+
+【警探狗】：我们联系了 **专业灭鼠** 的，加200就能处理。  
+
+【屋主猫】：……200，好贵。但还是处理吧，不然鼠鼠也不得安息。  
+【屋主猫】：而且我快饿死了。  
+
+（场外音：敲门声）  
+
+【专业灭鼠人】：您好，哇，这里味道真大。  
+
+【屋主猫】：是的，刚刚在沙发后发现 **严重腐烂的尸体**。可我两周不在家，完全没找到老鼠的入口。  
+
+【专业灭鼠人】：我来检查下。（拿出手电筒）  
+
+（过了一会）  
+
+【专业灭鼠人】：您看，冰箱旁边有个 **窟窿**。  
+
+【添加证物：冰箱旁的窟窿】
+
+【屋主猫】：天啊！上次灭蟑螂的也没发现！  
+
+【专业灭鼠人】：这个洞必须把冰箱移开才能看到。很明显是老鼠咬坏的。  
+
+【警探狗】：是的。和蟑螂不同，**老鼠会破坏东西**。  
+
+【添加证物：蟑螂与老鼠的区别】
+
+【专业灭鼠人】：我帮你把洞堵上。  
+
+【屋主猫】：还有别的尸体或洞吗？  
+
+【专业灭鼠人】：没有。只是这一处。  
+【专业灭鼠人】：另外我放了两张 **粘鼠板**，一张在厨房角落，一张在橱柜下。  
+
+【屋主猫】：可老鼠怎么进橱柜的？我走前是关紧的。  
+
+【专业灭鼠人】：这只老鼠个头大，可能会自己 **开门**。老鼠很聪明。  
+
+【屋主猫】：啊？？？  
+
+【警探狗】：比猫聪明嗷。  
+
+【专业灭鼠人】：而且橱柜下面也有个 **洞**。  
+
+【添加证物：橱柜的洞】
+
+【屋主猫】：啊？那老鼠就是从这里进的？不用堵吗？  
+
+【专业灭鼠人】：这个洞只通向你家，堵了也没意义。我在这里放了粘鼠板就行。  
+
+【屋主猫】：好的，明白了。  
+
+【专业灭鼠人】：建议你把橱柜里的东西都 **扔掉**。  
+
+【屋主猫】：好的。  
+
+【专业灭鼠人】：这边和你签个 **一年合同**，后续免费上门。鼠尸我帮你带走，沙发要不要也处理掉？  
+
+【屋主猫】：好的，带走吧。  
+
+【添加证物：灭鼠包年合同，丢弃的沙发】
+
+【专业灭鼠人】：很可能是邻居家打老鼠没打死，它才窜过来死在你家。不然老鼠一般不会死在屋里。  
+
+（专业灭鼠人离开）
+
+【警探狗】：处理完了？  
+
+【屋主猫】：处理完了。你怎么看他的推测？  
+
+【警探狗】：我觉得不对。你看血迹只出现在 **客厅中央**，然后拖拽到沙发。如果是洞口进来的，不该这样。  
+
+【屋主猫】：对。而且洞口那边也没痕迹。我冰箱紧贴洞口，老鼠怎么钻？冰箱上也没痕迹。  
+
+【警探狗】：我有个假设。老鼠是 **群居动物**，肯定不止一只。  
+
+【屋主猫】：所以呢？是不是因为我家太穷没吃的，老鼠互相攻击，剩下一只死了？  
+
+【警探狗】：没错。你家太穷了，老鼠饿到只能吃同类。  
+
+【屋主猫】：你又在 **人身攻击**！  
+
+【屋主猫】：会不会是它吃了蟑螂药？  
+
+【警探狗】：不可能。蟑螂药对老鼠无效。  
+
+【屋主猫】：那也可能吃了别的东西。  
+
+【警探狗】：你看看旁边的 **猫粮袋**？  
+
+【屋主猫】：老鼠吃猫粮吃死了？太地狱了吧。而且袋子完好无损。  
+
+【添加证物：完好无损的猫粮】
+
+【警探狗】：那就不是这个。  
+
+【屋主猫】：或者它被东西砸死？垃圾桶倒了，折叠桌子又棱角吧。  
+
+【警探狗】：可没看到痕迹啊，除了地上哪儿都没血迹。  
+
+【屋主猫】：唉，尸体腐烂太严重，**无法确认死因**。天气炎热也难定死亡时间。  
+
+【警探狗】：你根本没看尸体。  
+
+【屋主猫】：真相和吃饭之间，我还是选择了吃饭。  
+
+【警探狗】：那么此案封存，为 **猫狗宇宙第一悬案**。  
+
+（The End）
+
+—— 后日谈 ——  
+买了一堆消毒用品，第二天又叫了保洁。  
+保洁一听说有死老鼠，差点跑掉，得知已处理才安心。  
+睡了一觉，醒来时满屋子都是 **消毒水味**。  
+虽然客厅的气味还有一点点，但它提醒着屋主猫：这里曾发生过案件。  
+除此之外，又恢复到了平静的日常。 
+**可喜可贺，可喜可贺。**
+您对此又有何高见呢？
+【警探狗】：是不是你以前喂的流浪猫来报恩了？  
+【屋主猫】：？
+`;
+
+  let entries = parseScript(scriptRaw);
+  let i = 0, auto = false, timer = null;
+  let waitingDogChoice = false; // 等待【警探狗】选择时的硬阻塞
+
+  function renderProgress(){
+    if(!statusEl||!bar) return;
+    const pct = entries.length? Math.round((i/entries.length)*100):0;
+    bar.style.width = pct + '%';
+    statusEl.textContent = i + ' / ' + entries.length;
+  }
+
+  /* ===== “警探狗”选择：先逐字渲染狗台词 → 再等 1 秒 → 才进入下一条 ===== */
+  function showDogChoice(line){
+    waitingDogChoice = true;
+    auto = false;
+    btn_auto && btn_auto.setAttribute('aria-pressed','false');
+    if(nextBtn) nextBtn.disabled = true;
+
+    Array.from(choicebar.querySelectorAll('.choice')).forEach(n=>n.remove());
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = line || '……';
+    b.onclick = () => {
+      const who = '警探狗';
+      const row = document.createElement('div');
+      row.className = 'row right';
+      const av = document.createElement('div'); av.className='avatar'; av.style.backgroundImage = `url(${avatarFor(who)})`;
+      const bub = document.createElement('div'); bub.className='bubble';
+      const meta = document.createElement('div'); meta.className='meta';
+      const tag = document.createElement('span'); tag.className='tag evi'; tag.textContent = who;
+      meta.appendChild(tag);
+      const txt = document.createElement('div'); txt.className='text';
+      bub.appendChild(meta); bub.appendChild(txt);
+      row.appendChild(bub); row.appendChild(av);
+      chatEl.appendChild(row);
+      chatEl.scrollTo({top: chatEl.scrollHeight, behavior:'smooth'});
+
+      typeText(
+        txt,
+        (line || '……'),
+        ()=>{},
+        ()=>{ SFX.barkShort(); setTimeout(()=>{ waitingDogChoice=false; if(nextBtn) nextBtn.disabled=false; step(); }, 1000); }
+      );
+      b.remove();
+    };
+    choicebar.insertBefore(b, nextBtn);
+  }
+
+  function step(){
+    if(waitingDogChoice) return;
+    if(i>=entries.length){ clearInterval(timer); renderProgress(); return; }
+    const e = entries[i];
+
+    if(e && e.type==='msg' && e.who && e.who.includes('警探狗')){
+      showDogChoice(e.text||'……'); 
+      i++; renderProgress(); 
+      return;
+    }
+    if(e && e.type==='msg'){
+      pushMsg(e.who||'场外音', e.text||'');
+    } else if(e && e.type==='add-evi'){
+      addEvi(e.payload, i);
+
+// —— 根据“添加/更新证物”行，为所有证物补充图片与说明 ——
+// 仅保留 m.qpic.cn 图片；原先使用占位或 emoji 的图片已移除，cap 改写入 notes 另起一行
+
+// 1) 案发现场照片（含你提供的两张）
+if(e.payload.some(n=>/案发现场照片/.test(n))){
+  addEviDetail('案发现场照片', {
+    images: [
+      { src: 'anfa.png', cap:'客厅远景：血迹位于中央地板' }
+    ],
+    notes: [
+      '入屋异味首先在客厅感知；初期未大规模清洁，现场较原始。',
+      '客厅远景：血迹位于中央地板'
+    ]
+  }, i);
+}
+
+// 1.1) 更新证物：案发现场照片（翻倒的空垃圾桶）
+if(e.payload.some(n=>/案发现场照片（.*翻倒的空垃圾桶.*）|翻倒的空垃圾桶/.test(n))){
+  addEviDetail('案发现场照片', {
+    images: [
+      { src: 'lajitong.png', cap:'客厅一角：倒下的垃圾桶与折叠桌子' }
+    ],
+    notes: [
+      '屋主称离家前曾倒垃圾；返回时见垃圾桶倒地，支持“非长期遗留”的自证。',
+      '客厅一角：倒下的垃圾桶与折叠桌子'
+    ]
+  }, i);
+}
+
+// 1.2) 更新证物：案发现场照片（拖拽痕迹）
+if(e.payload.some(n=>/案发现场照片（.*拖拽痕迹.*）|拖拽痕迹/.test(n))){
+  addEviDetail('案发现场照片', {
+    images: [
+      { src: 'baojie.png', cap:'保洁到现场的地面' },
+      { src: 'fangdaxueji.png', cap:'保洁发现的痕迹' }
+    ],
+    notes: [
+      '地面的血迹疑似有拖拽的痕迹。',
+      '保洁到现场的地面',
+      '保洁发现的痕迹'
+    ]
+  }, i);
+}
+
+// 2) 第一发现人证言
+if(e.payload.some(n=>/第一发现人证言/.test(n))){
+  addEviDetail('第一发现人证言', {
+    // 无图片（原 emoji/占位图已移除）
+    notes: [
+      '文字证词扫描/录音转写',
+      '入屋即闻异味；初步排除厕所与厨房，疑似客厅集中。',
+      '未开灯时仅见地面污迹；后续购置清洁/疏通/香薰等物资。'
+    ]
+  }, i);
+}
+
+// 3) 超市小票
+if(e.payload.some(n=>/超市小票/.test(n))){
+  addEviDetail('超市小票', {
+    notes: [
+      '清洁/疏通剂/香薰等购买记录',
+      '小票时间与“返回当日清理意图”吻合，用于校正案发窗口期。'
+    ]
+  }, i);
+}
+
+// 4) 堵塞地下水道和厕所（剧本原文为合并项）
+if(e.payload.some(n=>/堵塞地下水道|似乎和异味无关的厕所|厕所/.test(n))){
+  addEviDetail('堵塞地下水道与厕所情况', {
+    notes: [
+      '下水口外观与使用环境',
+      '厕所与主要异味关联性较低，第一嗅检与经验均指向客厅。',
+      '存在堵塞但疏通后改善，异味主因不在此处。'
+    ]
+  }, i);
+}
+
+// 5) 橱柜门口照片
+if(e.payload.some(n=>/橱柜门口照片/.test(n))){
+  addEviDetail('橱柜门口照片', {
+    images: [
+      { src: 'chugui.png', cap:'门缝/拉手与颗粒物分布示意' }
+    ],
+    notes: [
+      '发现不明黑色颗粒，后续被怀疑为“鼠屎”；门离家前处于关闭状态。',
+      '门缝/拉手与颗粒物分布示意'
+    ]
+  }, i);
+}
+
+// 5) 橱柜门口照片
+if(e.payload.some(n=>/橱柜的洞/.test(n))){
+  addEviDetail('橱柜的洞', {
+    images: [
+      { src: 'chuguidong.png', cap:'橱柜内部的洞' }
+    ],
+    notes: [
+      '在纸箱下面，有通向橱柜下方的洞。',
+      '不过并不通向房间外，无需堵上。但有可能是老鼠进橱柜的方法。'
+    ]
+  }, i);
+}
+
+// 6) 下水道疏通剂
+if(e.payload.some(n=>/下水道疏通剂/.test(n))){
+  addEviDetail('下水道疏通剂', {
+    notes: [
+      '购买与使用记录',
+      '屋主称“生效慢但似乎有用”，削弱厕所是异味源的假设。'
+    ]
+  }, i);
+}
+
+// 7) 地板血迹（含你提供的图片）
+if(e.payload.some(n=>/地板血迹/.test(n))){
+  addEviDetail('地板血迹', {
+    images: [
+      { src: 'xueji.png', cap:'血迹边缘呈不规则锯齿状，疑似拖拽' }
+    ],
+    notes: [
+      '血迹集中于客厅；拖痕方向指向沙发后方。',
+      '支持“客厅内形成/拖行”的事件路径。',
+      '血迹边缘呈不规则锯齿状，疑似拖拽'
+    ]
+  }, i);
+}
+
+// 8) 门窗情况、密室证言
+if(e.payload.some(n=>/门窗情况|密室证言/.test(n))){
+  addEviDetail('门窗情况与密室证言', {
+    notes: [
+      '门窗闭合/封条/反锁状态示意',
+      '离家前门窗与柜门均关闭，回家后初检仍为关闭。',
+      '支撑“密室”主张，但需结合墙体/设备穿孔评估。'
+    ]
+  }, i);
+}
+
+// 9) 油烟机通风管照片
+if(e.payload.some(n=>/油烟机通风管照片/.test(n))){
+  addEviDetail('油烟机通风管照片', {
+    notes: [
+      '通风管口已用胶带多层封堵',
+      '返家确认封堵牢固，作为虫鼠入口可能性低。'
+    ]
+  }, i);
+}
+
+// 10) 灭蟑螂包年合同
+if(e.payload.some(n=>/灭蟑螂包年合同/.test(n))){
+  addEviDetail('灭蟑螂包年合同', {
+    notes: [
+      '服务合同与上门记录',
+      '此前已封堵蟑螂入口，一个月内仍可能有残余尸体。',
+      '为“蟑螂非主要致因”提供支撑。'
+    ]
+  }, i);
+}
+
+// 11) 半地下结构
+if(e.payload.some(n=>/半地下结构/.test(n))){
+  addEviDetail('半地下结构', {
+    notes: [
+      '结构/朝向/通风示意图',
+      '潮湿环境与通风不良，利于异味聚集与腐败进程加快。'
+    ]
+  }, i);
+}
+
+// 12) 近一个月的天气预报
+if(e.payload.some(n=>/近一个月的天气预报/.test(n))){
+  addEviDetail('近一个月的天气预报', {
+    notes: [
+      '高温+高湿的时序趋势',
+      '高温潮湿加速腐败与气味产生，解释强烈异味。'
+    ]
+  }, i);
+}
+
+// 13) 家庭群聊天记录
+if(e.payload.some(n=>/家庭群聊天记录/.test(n))){
+  addEviDetail('家庭群聊天记录', {
+    images: [
+      { src: 'default.jpeg', cap:'聊天截图（关键对话高亮）' }
+    ],
+    notes: [
+      '对“黑色颗粒=鼠屎”观点的民间佐证：建议清理并丢弃咬过的食品。',
+      '聊天截图（关键对话高亮）'
+    ]
+  }, i);
+}
+
+// 14) 沙发后面的鼠尸
+if(e.payload.some(n=>/沙发后面的鼠尸/.test(n))){
+  addEviDetail('沙发后面的鼠尸', {
+    notes: [
+      '问就是我也没看到，自行想象吧',
+      '位置在沙发后，与拖痕吻合。',
+      '腐烂严重并有蛆，说明时间已久。'
+    ]
+  }, i);
+}
+
+// 15) 尸体的腐烂程度证言
+if(e.payload.some(n=>/尸体的腐烂程度证言/.test(n))){
+  addEviDetail('尸体的腐烂程度证言', {
+    notes: [
+      '保洁口述：尾巴长、骨骼外露、有蛆',
+      '证人反应强烈，腐败程度“很高”。',
+      '与天气/环境共同解释腐败速度。'
+    ]
+  }, i);
+}
+
+// 16) 冰箱旁的窟窿
+if(e.payload.some(n=>/冰箱旁的窟窿/.test(n))){
+  addEviDetail('冰箱旁的窟窿', {
+    images: [
+      { src: 'dong.png', cap:'拖出冰箱后才可见；疑似被咬破坏' }
+    ],
+    notes: [
+      '疑为老鼠破坏形成的穿孔，可能作为进出路径。',
+      '但洞口处未见明显拖痕/血迹，需与动线进一步交叉验证。',
+      '拖出冰箱后才可见；疑似被咬破坏'
+    ]
+  }, i);
+}
+
+// 17) 蟑螂和老鼠的区别
+if(e.payload.some(n=>/蟑螂和老鼠的区别/.test(n))){
+  addEviDetail('蟑螂和老鼠的区别', {
+    notes: [
+      '对比表：破坏力/体液痕迹/残留物',
+      '老鼠能咬穿结构，蟑螂不能。',
+      '结合冰箱窟窿，老鼠路径更合理。'
+    ]
+  }, i);
+}
+
+// 18) 灭鼠包年合同
+if(e.payload.some(n=>/灭鼠包年合同/.test(n))){
+  addEviDetail('灭鼠包年合同', {
+    notes: [
+      '合同与上门单据',
+      '约定后续免费上门，含鼠尸处理。'
+    ]
+  }, i);
+}
+
+// 19) 丢弃的沙发
+if(e.payload.some(n=>/丢弃的沙发/.test(n))){
+  addEviDetail('丢弃的沙发', {
+    notes: [
+      '与专业人员搬运丢弃',
+      '污染源家具已移除，利于清洁与去味。'
+    ]
+  }, i);
+}
+
+// 20) 完好无损的猫粮
+if(e.payload.some(n=>/完好无损的猫粮/.test(n))){
+  addEviDetail('完好无损的猫粮', {
+    images: [
+      { src: 'maoliang.png', cap:'袋体未见破损或啃咬痕迹' }
+    ],
+    notes: [
+      '排除“猫粮被啃食→中毒/过饱致死”类推测；袋体无痕迹支撑。',
+      '袋体未见破损或啃咬痕迹'
+    ]
+  }, i);
+}
+
+    } else if(e && e.type==='update-evi'){
+      updateEvi(e.payload, i);
+    } else if(e && e.type==='narr'){
+      systemNote(e.text||'');
+    }
+    i++; renderProgress();
+  }
+
+  function play(){
+    clearInterval(timer);
+    timer = setInterval(()=>{
+      if(!auto || waitingDogChoice){ clearInterval(timer); return; }
+      step();
+      if(i>=entries.length){ clearInterval(timer); }
+    }, getSpeed());
+  }
+  function resetAll(){
+    clearInterval(timer);
+    chatEl.innerHTML='';
+    i=0; auto=false; waitingDogChoice=false;
+    evidence.clear(); renderQuick(); renderProgress();
+    btn_auto && btn_auto.setAttribute('aria-pressed','false');
+    systemNote('已重置至开头');
+    if(nextBtn) nextBtn.disabled=false;
+  }
+  function replay(){ resetAll(); auto=true; btn_auto && btn_auto.setAttribute('aria-pressed','true'); step(); play(); }
+
+  // 交互
+  nextBtn && nextBtn.addEventListener('click', ()=>{
+    if(waitingDogChoice) return;
+    auto=false; btn_auto && btn_auto.setAttribute('aria-pressed','false');
+    step();
+  });
+  btn_auto && btn_auto.addEventListener('click', ()=>{
+    if(waitingDogChoice){ return; }
+    auto = !auto;
+    btn_auto.setAttribute('aria-pressed', String(auto));
+    if(auto){ play(); } else { clearInterval(timer); }
+  });
+  btn_evi && btn_evi.addEventListener('click', ()=> openEvi());
+  btn_reset && btn_reset.addEventListener('click', resetAll);
+  btn_replay && btn_replay.addEventListener('click', replay);
+  speedRange && speedRange.addEventListener('input', ()=>{ updateSpeedLabel(); if(auto){ play(); } });
+  typeRange && typeRange.addEventListener('input', ()=> updateTypeLabel());
+
+  /* ===== 分支选择 ===== */
+  function insertBranch(key){
+    const pack = {
+      '密室派': [
+        {type:'msg', who:'警探狗', text:'支线：密室派——若虫子与蟑螂都难以入内，老鼠如何进入？请给出最合理路径。'},
+        {type:'msg', who:'第一发现人猫', text:'可能路径一：冰箱旁的窟窿 → 厨房 → 客厅；但洞口处缺少拖痕。'}
+      ],
+      '老鼠派': [
+        {type:'msg', who:'警探狗', text:'支线：老鼠派——以“黑色颗粒=鼠屎”为前提，推演血迹形成。'},
+        {type:'msg', who:'第一发现人猫', text:'推演：负伤后从客厅中央拖行至沙发后方死亡，气味集中与拖痕相符。'}
+      ],
+      '自然派': [
+        {type:'msg', who:'警探狗', text:'支线：自然派——考虑夏季高温+潮湿对腐败速度的影响。'},
+        {type:'msg', who:'第一发现人猫', text:'两周不在家、半地下、闷热：腐败显著加速，虫蛆出现合理。'}
+      ]
+    }[key] || [];
+    if(pack.length){ systemNote('插入分支：'+key); entries.splice(i, 0, ...pack); renderProgress(); }
+  }
+  btn_branch && btn_branch.addEventListener('click', ()=> branchModal && branchModal.setAttribute('open',''));
+  closeBranch && closeBranch.addEventListener('click', ()=> branchModal && branchModal.removeAttribute('open'));
+  branchModal && branchModal.addEventListener('click', (e)=>{
+    const t = e.target.closest && e.target.closest('.opt'); if(!t) return;
+    const key = t.getAttribute('data-branch'); insertBranch(key);
+    branchModal.removeAttribute('open');
+  });
+
+  // 启动
+  updateSpeedLabel(); updateTypeLabel();
+  step();
+  renderQuick();
+});
+</script>
+</body>
+</html>
