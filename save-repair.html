@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>《恶魔之心：被诅咒的试炼》存档主角名修复工具</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bgLayer bgLeft" aria-hidden="true"></div>
+  <div class="bgLayer bgRight" aria-hidden="true"></div>
+
+  <main class="wrap toolWrap">
+    <section class="panel toolPanel" aria-labelledby="toolTitle">
+      <h1 id="toolTitle">《恶魔之心：被诅咒的试炼》存档主角名修复工具</h1>
+      <p class="panelLead">上传存档文件（例如 <code>save11_old.sav</code>），输入要替换的主角名，一键生成修复后的存档与解密 JSON。</p>
+
+      <div class="toolNotice" role="note" aria-label="格式说明">
+        <p><strong>旧版加密（J31mEo）</strong>：可用于旧版存档流程，但<strong>不兼容中文名</strong>，主角名会变成乱码。</p>
+        <p><strong>新版加密（J31mEo2:）</strong>：兼容中文名，但<strong>只能在【我本人发布的】汉化版游戏中使用</strong>。</p>
+        <p>本工具可用于游戏进行中途修改主角名。</p>
+        <p><strong>注意：</strong>修改 JSON 内容可影响游戏局内的部分数值和重要参数，请谨慎修改。</p>
+      </div>
+
+      <div class="toolGrid">
+        <label class="control span2" for="saveFile">
+          <span>上传存档文件</span>
+          <input id="saveFile" type="file" accept=".sav,.txt" />
+        </label>
+
+        <label class="control" for="charName">
+          <span>新的主角名</span>
+          <input id="charName" type="text" placeholder="例如：姜酒" />
+        </label>
+
+        <label class="control" for="outputFormat">
+          <span>输出加密格式</span>
+          <select id="outputFormat">
+            <option value="new">新版加密（J31mEo2:，推荐）</option>
+            <option value="old">旧版加密（J31mEo，不兼容中文名）</option>
+          </select>
+        </label>
+
+        <label class="control toolCheck" for="normalizeName">
+          <input id="normalizeName" type="checkbox" checked />
+          <span>启用 NFC 规范化</span>
+        </label>
+      </div>
+
+      <div class="toolActions">
+        <button id="runRepair" class="btn">执行修复并生成文件</button>
+        <a class="chip" href="index.html">返回主页</a>
+      </div>
+
+      <p id="toolStatus" class="toolStatus" role="status" aria-live="polite"></p>
+
+      <section id="toolResult" class="toolResult" hidden>
+        <h2>生成结果</h2>
+        <p id="nameSummary"></p>
+        <div class="toolDownloads">
+          <a id="downloadSave" class="btn" download>下载修复后的存档（.sav）</a>
+          <a id="downloadJson" class="btn" download>下载解密 JSON（.json）</a>
+        </div>
+
+        <section class="jsonEditor" aria-labelledby="jsonEditorTitle">
+          <h3 id="jsonEditorTitle">JSON 编辑后再加密为 .sav</h3>
+          <p class="panelLead">你可以在下方编辑 JSON，再选择旧版/新版加密重新导出 .sav。</p>
+          <textarea id="jsonEditor" spellcheck="false"></textarea>
+          <div class="toolGrid jsonActions">
+            <label class="control" for="jsonEncryptFormat">
+              <span>JSON 再加密格式</span>
+              <select id="jsonEncryptFormat">
+                <option value="new">新版加密（J31mEo2:）</option>
+                <option value="old">旧版加密（J31mEo）</option>
+              </select>
+            </label>
+            <div class="toolActions editorBtns">
+              <button id="encryptEditedJson" class="btn" type="button">将编辑后的 JSON 加密为 .sav</button>
+              <a id="downloadEditedSave" class="btn" download>下载编辑后加密的存档（.sav）</a>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="save-repair.js"></script>
+</body>
+</html>
