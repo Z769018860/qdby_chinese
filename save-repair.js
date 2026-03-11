@@ -128,6 +128,15 @@ function isValidOutputFormat(format) {
   return format === 'old' || format === 'new';
 }
 
+function parseJsonText(rawText, sourceName = 'JSON') {
+  const text = String(rawText || '').replace(/^\uFEFF/, '');
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`${sourceName}解析失败：${error.message || error}`);
+  }
+}
+
 function getSelectedMode() {
   const mode = String(dom.mode?.value || '').trim();
   if (mode === 'json-encrypt') return 'json-encrypt';
@@ -171,7 +180,7 @@ async function runRepairNameMode(outputFormat) {
 
   const saveText = (await inputFile.text()).trim();
   const jsonText = autoDecrypt(saveText);
-  const data = JSON.parse(jsonText);
+  const data = parseJsonText(jsonText, '解密后的 JSON');
 
   const oldName = getCharname(data);
   setCharname(data, newName, dom.normalize.checked);
@@ -213,14 +222,9 @@ async function runJsonEncryptMode(outputFormat) {
   }
 
   const rawText = await jsonInputFile.text();
-  let data;
-  try {
-    data = JSON.parse(rawText);
-  } catch (error) {
-    throw new Error(`JSON 解析失败：${error.message || error}`);
-  }
+  const data = parseJsonText(rawText, 'JSON 文件');
 
-  const compactJson = JSON.stringify(data);
+  const compactJson = JSON.stringify(data, null, 0);
   const prettyJson = JSON.stringify(data, null, 2);
   const encryptedSave = outputFormat === 'old' ? oldEncrypt(compactJson) : newEncrypt(compactJson);
 
@@ -240,6 +244,9 @@ async function runJsonEncryptMode(outputFormat) {
   dom.jsonPreview.textContent = prettyJson;
   dom.result.hidden = false;
 
+  // JSON 加密模式下自动触发一次下载，避免用户误以为“没有生成文件”。
+  dom.saveLink.click();
+
   if (outputFormat === 'old') {
     setStatus('JSON 加密成功：已生成旧版加密存档。注意：旧版不兼容中文内容，可能显示乱码。');
   } else {
@@ -247,7 +254,7 @@ async function runJsonEncryptMode(outputFormat) {
   }
 }
 
-async function runRepair() {
+async function runRepair(event) {
   try {
     clearOldUrls();
     dom.result.hidden = true;
@@ -257,7 +264,8 @@ async function runRepair() {
       throw new Error('输出格式无效，请选择“旧版加密”或“新版加密”。');
     }
 
-    const mode = getSelectedMode();
+    const clickedId = event?.currentTarget?.id;
+    const mode = clickedId === 'runJsonEncrypt' ? 'json-encrypt' : getSelectedMode();
     if (mode === 'json-encrypt') {
       await runJsonEncryptMode(outputFormat);
       return;
