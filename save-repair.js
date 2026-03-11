@@ -95,22 +95,24 @@ function createDownloadUrl(content, mimeType) {
   return URL.createObjectURL(blob);
 }
 
-const dom = {
-  file: document.querySelector('#saveFile'),
-  name: document.querySelector('#charName'),
-  format: document.querySelector('#outputFormat'),
-  normalize: document.querySelector('#normalizeName'),
-  run: document.querySelector('#runRepair'),
-  status: document.querySelector('#toolStatus'),
-  result: document.querySelector('#toolResult'),
-  summary: document.querySelector('#nameSummary'),
-  saveLink: document.querySelector('#downloadSave'),
-  jsonLink: document.querySelector('#downloadJson'),
-  jsonEditor: document.querySelector('#jsonEditor'),
-  jsonEncryptFormat: document.querySelector('#jsonEncryptFormat'),
-  encryptEditedJson: document.querySelector('#encryptEditedJson'),
-  downloadEditedSave: document.querySelector('#downloadEditedSave'),
-};
+function getDom() {
+  return {
+    file: document.querySelector('#saveFile'),
+    name: document.querySelector('#charName'),
+    format: document.querySelector('#outputFormat'),
+    normalize: document.querySelector('#normalizeName'),
+    run: document.querySelector('#runRepair'),
+    status: document.querySelector('#toolStatus'),
+    result: document.querySelector('#toolResult'),
+    summary: document.querySelector('#nameSummary'),
+    saveLink: document.querySelector('#downloadSave'),
+    jsonLink: document.querySelector('#downloadJson'),
+    jsonEditor: document.querySelector('#jsonEditor'),
+    jsonEncryptFormat: document.querySelector('#jsonEncryptFormat'),
+    encryptEditedJson: document.querySelector('#encryptEditedJson'),
+    downloadEditedSave: document.querySelector('#downloadEditedSave'),
+  };
+}
 
 let previousUrls = [];
 let lastBaseName = 'save';
@@ -121,9 +123,10 @@ function clearOldUrls() {
 }
 
 function setStatus(message, isError = false) {
-  if (!dom.status) return;
-  dom.status.textContent = message;
-  dom.status.classList.toggle('error', isError);
+  const status = document.querySelector('#toolStatus');
+  if (!status) return;
+  status.textContent = message;
+  status.classList.toggle('error', isError);
 }
 
 function registerUrl(url) {
@@ -132,12 +135,13 @@ function registerUrl(url) {
 }
 
 async function runRepair() {
+  const dom = getDom();
   try {
     clearOldUrls();
     if (dom.result) { dom.result.hidden = true; }
 
-    const inputFile = dom.file.files?.[0];
-    const newName = dom.name.value.trim();
+    const inputFile = dom.file?.files?.[0];
+    const newName = dom.name?.value?.trim() ?? '';
 
     if (!inputFile) {
       throw new Error('请先上传存档文件。');
@@ -151,13 +155,13 @@ async function runRepair() {
     const data = JSON.parse(jsonText);
 
     const oldName = getCharname(data);
-    setCharname(data, newName, dom.normalize.checked);
+    setCharname(data, newName, dom.normalize?.checked ?? true);
     const fixedName = getCharname(data);
 
     const fixedJsonPretty = JSON.stringify(data, null, 2);
     const fixedJsonCompact = JSON.stringify(data);
 
-    const outputFormat = dom.format.value;
+    const outputFormat = dom.format?.value === 'old' ? 'old' : 'new';
     const fixedSave = encryptByFormat(fixedJsonCompact, outputFormat);
 
     lastBaseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
@@ -199,15 +203,16 @@ async function runRepair() {
 }
 
 function runEncryptEditedJson() {
+  const dom = getDom();
   try {
-    const edited = dom.jsonEditor.value.trim();
+    const edited = dom.jsonEditor?.value?.trim() ?? '';
     if (!edited) {
       throw new Error('请先生成 JSON，或输入要加密的 JSON 内容。');
     }
 
     const parsed = JSON.parse(edited);
     const compactJson = JSON.stringify(parsed);
-    const format = dom.jsonEncryptFormat.value;
+    const format = dom.jsonEncryptFormat?.value === 'old' ? 'old' : 'new';
     const saveText = encryptByFormat(compactJson, format);
 
     const editedSaveName = `${lastBaseName}_edited_${format}.sav`;
@@ -223,9 +228,14 @@ function runEncryptEditedJson() {
   }
 }
 
-if (dom.run) {
-  dom.run.addEventListener('click', runRepair);
+function bindEvents() {
+  const dom = getDom();
+  dom.run?.addEventListener('click', runRepair);
+  dom.encryptEditedJson?.addEventListener('click', runEncryptEditedJson);
 }
-if (dom.encryptEditedJson) {
-  dom.encryptEditedJson.addEventListener('click', runEncryptEditedJson);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bindEvents, { once: true });
+} else {
+  bindEvents();
 }
