@@ -1,0 +1,238 @@
+.dicePage {
+  min-height: 100vh;
+}
+
+.diceWrap {
+  width: min(1200px, 92vw);
+  margin: 24px auto 56px;
+}
+
+.diceHeader {
+  margin-bottom: 18px;
+}
+
+.diceNotice {
+  margin-top: 8px;
+  color: #ffcccf;
+  font-weight: 700;
+}
+
+.diceGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+}
+
+.diceNet {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(90px, 1fr));
+  gap: 12px;
+}
+
+.netFace,
+.cubeFace {
+  --label-opacity: 0.9;
+}
+
+.netFace {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  border: 2px dashed rgba(255,255,255,.35);
+  background: rgba(255,255,255,.05) center/cover no-repeat;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.netFace.rollingPick {
+  border-color: #ffe08a;
+  box-shadow: 0 0 0 3px rgba(255, 224, 138, .35), 0 0 18px rgba(255, 224, 138, .45);
+  transform: scale(1.03);
+}
+
+.netFace.finalPick {
+  border-color: #86f4ff;
+  box-shadow: 0 0 0 3px rgba(134, 244, 255, .4), 0 0 20px rgba(134, 244, 255, .55);
+  transform: scale(1.05);
+}
+
+.faceLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: calc(100% - 20px);
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, .45);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .55);
+  opacity: var(--label-opacity);
+  white-space: normal;
+  word-break: break-word;
+  pointer-events: none;
+}
+
+.netFace::after {
+  content: '上传/裁剪';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(255,255,255,.88);
+  background: rgba(0,0,0,.3);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.net-face-1 { grid-column: 2; grid-row: 2; }
+.net-face-2 { grid-column: 2; grid-row: 3; }
+.net-face-3 { grid-column: 3; grid-row: 2; }
+.net-face-4 { grid-column: 1; grid-row: 2; }
+.net-face-5 { grid-column: 2; grid-row: 1; }
+.net-face-6 { grid-column: 4; grid-row: 2; }
+
+.cubeScene {
+  margin: 24px auto;
+  width: 320px;
+  height: 320px;
+  perspective: 1100px;
+}
+
+.cube {
+  width: 210px;
+  height: 210px;
+  margin: 55px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.7s cubic-bezier(.17,.84,.44,1);
+}
+
+.cube.rolling {
+  animation: spinDice 0.7s linear infinite;
+  transition: none;
+}
+
+@keyframes spinDice {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to { transform: rotateX(360deg) rotateY(540deg); }
+}
+
+.cubeFace {
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border-radius: 18px;
+  border: 2px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.08) center/cover no-repeat;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.08);
+  overflow: hidden;
+}
+
+.face-front  { transform: translateZ(105px); }
+.face-back   { transform: rotateY(180deg) translateZ(105px); }
+.face-right  { transform: rotateY(90deg) translateZ(105px); }
+.face-left   { transform: rotateY(-90deg) translateZ(105px); }
+.face-top    { transform: rotateX(90deg) translateZ(105px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(105px); }
+
+.diceTextPanel {
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+}
+
+.faceTextGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.faceTextGrid label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.faceTextGrid input {
+  padding: 7px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.32);
+  background: rgba(0,0,0,.2);
+  color: #fff;
+}
+
+.diceActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cropDialog {
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  max-width: min(94vw, 560px);
+  background: transparent;
+}
+
+.cropDialog::backdrop {
+  background: rgba(0,0,0,.62);
+}
+
+.cropPanel {
+  background: #15171f;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+#cropCanvas {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: #0e1017;
+}
+
+.cropControls {
+  margin: 12px 0;
+  display: grid;
+  gap: 8px;
+}
+
+.cropControls label {
+  display: grid;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.cropActions {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 960px) {
+  .diceGrid { grid-template-columns: 1fr; }
+}
+
+#updateDiceBtn {
+  justify-self: start;
+}
+
+#updateHint {
+  margin: 0;
+}
