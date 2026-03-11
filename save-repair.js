@@ -175,9 +175,7 @@ async function runRepairModule() {
     const fixedJsonCompact = JSON.stringify(data);
     const fixedSave = outputFormat === 'old' ? oldEncrypt(fixedJsonCompact) : newEncrypt(fixedJsonCompact);
 
-    const baseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
-    const repairedSaveName = `${baseName}_repaired_${outputFormat}.sav`;
-    const jsonName = `${baseName}_decrypted.json`;
+  previousUrls.push(saveUrl, jsonUrl);
 
     const saveUrl = createDownloadUrl(fixedSave, 'text/plain;charset=utf-8');
     const jsonUrl = createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8');
@@ -243,6 +241,8 @@ async function runJsonEncryptModule() {
     } else {
       setStatus(dom.jsonEncrypt.status, 'JSON 加密成功：已生成新版加密存档。');
     }
+
+    await runRepairNameMode(outputFormat);
   } catch (error) {
     dom.jsonEncrypt.result.hidden = true;
     setStatus(dom.jsonEncrypt.status, `处理失败：${error.message || error}`, true);
