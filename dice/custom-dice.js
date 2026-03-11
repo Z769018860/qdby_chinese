@@ -1,5 +1,6 @@
 const FACE_COUNT = 6;
 const faceImageMap = new Map();
+const faceTextMap = new Map();
 const DEFAULT_IMAGE_POOL = [
   '1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg', '6.jpeg',
   '7.png', '8.png', '9.png', '10.png', '11.png', '12.jpeg',
@@ -14,22 +15,24 @@ const faceToCubeClass = {
   6: '.face-back',
 };
 
-const finalRotationByFace = {
-  1: { x: 0, y: 0 },
-  2: { x: 90, y: 0 },
-  3: { x: 0, y: -90 },
-  4: { x: 0, y: 90 },
-  5: { x: -90, y: 0 },
-  6: { x: 0, y: 180 },
+const topFocusRotationByFace = {
+  1: { x: -60, y: 0 },
+  2: { x: 120, y: 0 },
+  3: { x: -60, y: -90 },
+  4: { x: -60, y: 90 },
+  5: { x: -150, y: 0 },
+  6: { x: -60, y: 180 },
 };
 
 const diceNet = document.getElementById('diceNet');
 const cube = document.getElementById('cube');
 const rollBtn = document.getElementById('rollBtn');
 const resetBtn = document.getElementById('resetBtn');
+const updateDiceBtn = document.getElementById('updateDiceBtn');
+const updateHint = document.getElementById('updateHint');
 const rollResult = document.getElementById('rollResult');
-const customTextInput = document.getElementById('customTextInput');
 const textOpacityInput = document.getElementById('textOpacityInput');
+const faceTextGrid = document.getElementById('faceTextGrid');
 
 const cropDialog = document.getElementById('cropDialog');
 const cropCanvas = document.getElementById('cropCanvas');
@@ -48,6 +51,16 @@ let spinY = 0;
 let rollingTimer = null;
 let revealTimer = null;
 let isRolling = false;
+let hasPendingChanges = false;
+
+function setPendingChanges(isPending) {
+  hasPendingChanges = isPending;
+  if (hasPendingChanges) {
+    updateHint.textContent = '你有未应用的改动，点击“更新骰子”同步。';
+  } else {
+    updateHint.textContent = '当前已是最新骰子效果。';
+  }
+}
 
 function createLabel(text) {
   const span = document.createElement('span');
@@ -66,7 +79,16 @@ function ensureFaceLabel(el) {
   return label;
 }
 
-function applyFaceVisual(face, imageUrl, text) {
+function getFaceText(face) {
+  return (faceTextMap.get(face) || '').trim();
+}
+
+function setFaceText(face, text) {
+  faceTextMap.set(face, String(text || '').slice(0, 24));
+}
+
+function applyFaceVisual(face, imageUrl) {
+  const text = getFaceText(face);
   const netFace = diceNet.querySelector(`[data-face="${face}"]`);
   const cubeFace = cube.querySelector(faceToCubeClass[face]);
 
@@ -82,6 +104,39 @@ function applyFaceVisual(face, imageUrl, text) {
     const label = ensureFaceLabel(cubeFace);
     label.textContent = text;
     label.style.display = text ? 'block' : 'none';
+  }
+}
+
+function applyAllFaces() {
+  for (let face = 1; face <= FACE_COUNT; face += 1) {
+    const imagePath = faceImageMap.get(face);
+    if (!imagePath) continue;
+    const imageUrl = imagePath.startsWith('data:') ? `url(${imagePath})` : `url(${imagePath})`;
+    applyFaceVisual(face, imageUrl);
+  }
+  updateLabelOpacity();
+  setPendingChanges(false);
+}
+
+function createTextEditors() {
+  for (let face = 1; face <= FACE_COUNT; face += 1) {
+    setFaceText(face, '');
+    const wrapper = document.createElement('label');
+    wrapper.innerHTML = `面 ${face} 文案`;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 24;
+    input.placeholder = `面 ${face}`;
+    input.dataset.face = String(face);
+
+    input.addEventListener('input', () => {
+      setFaceText(face, input.value);
+      setPendingChanges(true);
+    });
+
+    wrapper.appendChild(input);
+    faceTextGrid.appendChild(wrapper);
   }
 }
 
@@ -101,22 +156,6 @@ function createNetFaces() {
   cube.querySelectorAll('.cubeFace').forEach((face) => {
     face.appendChild(createLabel(''));
   });
-}
-
-function setFaceLabel(el, text) {
-  const label = ensureFaceLabel(el);
-  label.textContent = text;
-  label.style.display = text ? 'block' : 'none';
-}
-
-function updateAllLabels() {
-  const text = customTextInput.value.trim();
-  for (let face = 1; face <= FACE_COUNT; face += 1) {
-    const netFace = diceNet.querySelector(`[data-face="${face}"]`);
-    const cubeFace = cube.querySelector(faceToCubeClass[face]);
-    if (netFace) setFaceLabel(netFace, text);
-    if (cubeFace) setFaceLabel(cubeFace, text);
-  }
 }
 
 function updateLabelOpacity() {
@@ -204,13 +243,8 @@ function applyCropToFace() {
   if (!currentFace || !sourceImage) return;
   const dataUrl = cropCanvas.toDataURL('image/png');
   faceImageMap.set(currentFace, dataUrl);
-  syncFaceImage(currentFace, dataUrl);
+  setPendingChanges(true);
   cropDialog.close();
-}
-
-function syncFaceImage(face, dataUrl) {
-  applyFaceVisual(face, `url(${dataUrl})`, customTextInput.value.trim());
-  updateLabelOpacity();
 }
 
 function pickRandomDefaults() {
@@ -239,16 +273,14 @@ function resetFaces() {
   faceImageMap.clear();
   for (let face = 1; face <= FACE_COUNT; face += 1) {
     const defaultPath = defaults[face - 1];
-    const imageUrl = `url(${defaultPath})`;
     faceImageMap.set(face, defaultPath);
-
-    applyFaceVisual(face, imageUrl, customTextInput.value.trim());
   }
-  updateLabelOpacity();
+
+  applyAllFaces();
   rollResult.textContent = '当前结果：未投掷';
-  spinX = 0;
-  spinY = 0;
-  cube.style.transform = 'rotateX(-25deg) rotateY(35deg)';
+  spinX = -25;
+  spinY = 35;
+  cube.style.transform = `rotateX(${spinX}deg) rotateY(${spinY}deg)`;
 }
 
 function randomInt(min, max) {
@@ -258,18 +290,22 @@ function randomInt(min, max) {
 function rollDice() {
   if (isRolling) return;
 
+  if (hasPendingChanges) {
+    applyAllFaces();
+  }
+
   isRolling = true;
   rollBtn.disabled = true;
   cube.classList.add('rolling');
   rollResult.textContent = '当前结果：骰子正在旋转...';
 
   const face = randomInt(1, 6);
-  const finalRot = finalRotationByFace[face];
+  const focusRot = topFocusRotationByFace[face];
   const extraTurnsX = randomInt(4, 8) * 360;
   const extraTurnsY = randomInt(4, 8) * 360;
 
-  spinX = extraTurnsX + finalRot.x;
-  spinY = extraTurnsY + finalRot.y;
+  spinX = extraTurnsX + focusRot.x;
+  spinY = extraTurnsY + focusRot.y;
 
   const revealDelay = randomInt(1200, 10000);
 
@@ -278,7 +314,7 @@ function rollDice() {
     cube.style.transform = `rotateX(${spinX}deg) rotateY(${spinY}deg)`;
 
     revealTimer = setTimeout(() => {
-      rollResult.textContent = `当前结果：第 ${face} 面`;
+      rollResult.textContent = `当前结果：第 ${face} 面（立体结果展示）`;
       isRolling = false;
       rollBtn.disabled = false;
     }, 1700);
@@ -289,13 +325,17 @@ function rollDice() {
   control.addEventListener('input', renderCropPreview);
 });
 
-customTextInput.addEventListener('input', updateAllLabels);
-textOpacityInput.addEventListener('input', updateLabelOpacity);
+textOpacityInput.addEventListener('input', () => {
+  updateLabelOpacity();
+  setPendingChanges(true);
+});
 
 applyCropBtn.addEventListener('click', applyCropToFace);
 cancelCropBtn.addEventListener('click', () => cropDialog.close());
 rollBtn.addEventListener('click', rollDice);
 resetBtn.addEventListener('click', resetFaces);
+updateDiceBtn.addEventListener('click', applyAllFaces);
 
+createTextEditors();
 createNetFaces();
 resetFaces();
