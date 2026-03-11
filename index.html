@@ -36,8 +36,8 @@
           <img alt="爱发电" src="https://afdian.com/static/img/logo.png" />
           <span>爱发电</span>
         </a>
-        <a class="chip" href="save-repair.html">
-          <span>🛠️ 存档主角名修复工具</span>
+        <a class="chip" href="#toolboxTitle">
+          <span>🧰 个人工具箱</span>
         </a>
       </nav>
     </div>
@@ -166,6 +166,64 @@
           <p class="messageStatus muted" id="messageStatus" role="status" aria-live="polite"></p>
         </form>
         <ul id="messageList" class="messageList" aria-live="polite"></ul>
+      </section>
+
+      <section class="panel toolboxCard" aria-labelledby="toolboxTitle">
+        <h2 id="toolboxTitle">个人工具箱</h2>
+        <p class="panelLead">收录猫狗主题整活页面与实用存档修复工具。</p>
+
+        <div class="toolboxLayout">
+        <section class="coinLab" aria-labelledby="coinLabTitle">
+          <div class="coinLabHead">
+            <h3 id="coinLabTitle">猫狗决策币（主页内嵌版）</h3>
+            <p>保留原玩法，视觉统一到本站卡片风格。</p>
+          </div>
+          <div class="coinLabBody">
+            <div class="coinLabStageWrap">
+              <div class="coinLabStage" id="coinStage" role="img" aria-label="猫狗决策币">
+                <div class="coinFace front"></div>
+                <div class="coinFace back"></div>
+              </div>
+            </div>
+          </div>
+          <div class="coinLabActions">
+            <label class="coinUpload" for="coinUploadFront">上传正面图</label>
+            <input id="coinUploadFront" type="file" accept="image/*" />
+            <label class="coinUpload" for="coinUploadBack">上传反面图</label>
+            <input id="coinUploadBack" type="file" accept="image/*" />
+            <button type="button" class="btn" id="coinStartBtn">开始旋转</button>
+            <button type="button" class="btn ghostBtn" id="coinStopBtn">停止并判定</button>
+          </div>
+          <p class="coinResult" id="coinResult">当前结果：待开始</p>
+        </section>
+
+        <aside class="toolboxLinks" aria-label="工具页面链接">
+          <h3 class="toolboxLinksTitle">其他工具页面</h3>
+          <div class="toolboxGrid">
+          <a class="toolboxBtn" href="catdog-main/index.html" target="_blank" rel="noopener">
+            <span class="toolboxEmoji" aria-hidden="true">🪙</span>
+            <span>
+              <strong>猫狗决策币（原页面）</strong>
+              <small>打开原版静态页面</small>
+            </span>
+          </a>
+          <a class="toolboxBtn" href="catdogcase-main/index.html" target="_blank" rel="noopener">
+            <span class="toolboxEmoji" aria-hidden="true">🕵️</span>
+            <span>
+              <strong>（纯整活）猫狗疑案</strong>
+              <small>网页文字小游戏个人向纯整活玩</small>
+            </span>
+          </a>
+          <a class="toolboxBtn" href="save-repair.html" target="_blank" rel="noopener">
+            <span class="toolboxEmoji" aria-hidden="true">🛠️</span>
+            <span>
+              <strong>存档修复工具</strong>
+              <small>《恶魔之心》第四作个人魔改工具</small>
+            </span>
+          </a>
+          </div>
+        </aside>
+        </div>
       </section>
     </section>
 
