@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>自定义六面骰</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="custom-dice.css" />
+</head>
+<body class="dicePage">
+  <main class="diceWrap">
+    <header class="diceHeader panel">
+      <h1>🎲 自定义六面骰</h1>
+      <p>上传每个面的图片，裁剪成合适大小，并同步到平面展开图与立体骰子中。</p>
+    </header>
+
+    <section class="panel diceGrid" aria-label="六面骰编辑区">
+      <section>
+        <h2>平面展开图</h2>
+        <p class="muted">点击任意面进行上传与裁剪。</p>
+        <div class="diceNet" id="diceNet"></div>
+      </section>
+
+      <section>
+        <h2>立体六面骰</h2>
+        <div class="cubeScene">
+          <div class="cube" id="cube" aria-label="立体六面骰">
+            <div class="cubeFace face-front" data-face="1"></div>
+            <div class="cubeFace face-back" data-face="6"></div>
+            <div class="cubeFace face-right" data-face="3"></div>
+            <div class="cubeFace face-left" data-face="4"></div>
+            <div class="cubeFace face-top" data-face="5"></div>
+            <div class="cubeFace face-bottom" data-face="2"></div>
+          </div>
+        </div>
+        <div class="diceActions">
+          <button class="btn" id="rollBtn" type="button">扔骰子</button>
+          <button class="btn ghostBtn" id="resetBtn" type="button">重置默认图</button>
+        </div>
+        <p id="rollResult" class="coinResult">当前结果：未投掷</p>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="cropDialog" class="cropDialog">
+    <form method="dialog" class="cropPanel">
+      <h3>裁剪图片</h3>
+      <canvas id="cropCanvas" width="420" height="420" aria-label="图片裁剪预览"></canvas>
+      <div class="cropControls">
+        <label>缩放 <input id="zoomInput" type="range" min="1" max="3" step="0.01" value="1" /></label>
+        <label>横向 <input id="offsetXInput" type="range" min="-200" max="200" step="1" value="0" /></label>
+        <label>纵向 <input id="offsetYInput" type="range" min="-200" max="200" step="1" value="0" /></label>
+      </div>
+      <div class="cropActions">
+        <button type="button" class="btn" id="applyCropBtn">应用到该面</button>
+        <button type="button" class="btn ghostBtn" id="cancelCropBtn">取消</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="custom-dice.js"></script>
+</body>
+</html>
