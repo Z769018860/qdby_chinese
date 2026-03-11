@@ -349,7 +349,7 @@ function rotateAroundY(vec, deg) {
   };
 }
 
-function getTopFaceByRotation(rotX, rotY) {
+function getDominantFaceByRotation(rotX, rotY) {
   const normals = {
     1: { x: 0, y: 0, z: 1 },
     2: { x: 0, y: -1, z: 0 },
@@ -359,29 +359,29 @@ function getTopFaceByRotation(rotX, rotY) {
     6: { x: 0, y: 0, z: -1 },
   };
 
-  let topFace = 1;
-  let minY = Infinity;
+  let dominantFace = 1;
+  let maxZ = -Infinity;
 
   for (let face = 1; face <= FACE_COUNT; face += 1) {
     let v = normals[face];
     v = rotateAroundY(v, rotY);
     v = rotateAroundX(v, rotX);
-    if (v.y < minY) {
-      minY = v.y;
-      topFace = face;
+    if (v.z > maxZ) {
+      maxZ = v.z;
+      dominantFace = face;
     }
   }
 
-  return topFace;
+  return dominantFace;
 }
 
 function finishRoll(forcedFace = null) {
   clearRollTimers();
   cube.classList.remove('rolling');
   cube.style.transform = `rotateX(${spinX}deg) rotateY(${spinY}deg)`;
-  const topFace = forcedFace || getTopFaceByRotation(spinX, spinY);
-  setNetActiveFace(topFace);
-  rollResult.textContent = `当前结果：第 ${topFace} 面（以上方面为准）`;
+  const dominantFace = forcedFace || getDominantFaceByRotation(spinX, spinY);
+  setNetActiveFace(dominantFace);
+  rollResult.textContent = `当前结果：第 ${dominantFace} 面（按占据最大版面/斜角最小判定）`;
   isRolling = false;
   rollBtn.disabled = false;
   stopRollBtn.disabled = true;
@@ -408,7 +408,7 @@ function rollDice() {
   spinX = extraTurnsX + focusRot.x;
   spinY = extraTurnsY + focusRot.y;
 
-  const finalFace = getTopFaceByRotation(spinX, spinY);
+  const finalFace = getDominantFaceByRotation(spinX, spinY);
   runNetRollingPreview(finalFace);
 }
 
