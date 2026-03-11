@@ -123,10 +123,15 @@ function setStatus(message, isError = false) {
   dom.status.classList.toggle('error', isError);
 }
 
+function getJsonStatusTarget() {
+  return dom.jsonEncryptStatus || dom.status || null;
+}
+
 function setJsonEncryptStatus(message, isError = false) {
-  if (!dom.jsonEncryptStatus) return;
-  dom.jsonEncryptStatus.textContent = message;
-  dom.jsonEncryptStatus.classList.toggle('error', isError);
+  const target = getJsonStatusTarget();
+  if (!target) return;
+  target.textContent = message;
+  target.classList.toggle('error', isError);
 }
 
 async function runRepair() {
@@ -201,7 +206,11 @@ async function loadJsonToEditor() {
 
 function runJsonEncrypt() {
   try {
-    if (!dom.jsonEditor || !dom.jsonOutputFormat || !dom.downloadEncryptedSave) return;
+    if (!dom.jsonEditor || !dom.jsonOutputFormat) {
+      setJsonEncryptStatus('页面缺少 JSON 加密所需控件，请刷新后重试。', true);
+      return;
+    }
+
     const jsonRaw = dom.jsonEditor.value.trim();
     if (!jsonRaw) {
       throw new Error('请先上传或粘贴 JSON 内容。');
@@ -212,14 +221,24 @@ function runJsonEncrypt() {
     const outputFormat = dom.jsonOutputFormat.value;
     const encryptedSave = outputFormat === 'old' ? oldEncrypt(jsonCompact) : newEncrypt(jsonCompact);
 
-    const sourceName = dom.jsonFile.files?.[0]?.name || 'save';
+    const sourceName = dom.jsonFile?.files?.[0]?.name || 'save';
     const baseName = sourceName.replace(/\.[^.]+$/, '');
     const outName = `${baseName}_${outputFormat}.sav`;
 
     const saveUrl = createDownloadUrl(encryptedSave, 'text/plain;charset=utf-8');
     previousUrls.push(saveUrl);
-    dom.downloadEncryptedSave.href = saveUrl;
-    dom.downloadEncryptedSave.download = outName;
+
+    if (dom.downloadEncryptedSave) {
+      dom.downloadEncryptedSave.href = saveUrl;
+      dom.downloadEncryptedSave.download = outName;
+    } else {
+      const tempLink = document.createElement('a');
+      tempLink.href = saveUrl;
+      tempLink.download = outName;
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      tempLink.remove();
+    }
 
     if (outputFormat === 'old') {
       setJsonEncryptStatus('加密成功：已生成旧版加密存档（J31mEo）。');
@@ -240,3 +259,11 @@ if (dom.jsonFile) {
 if (dom.runJsonEncrypt) {
   dom.runJsonEncrypt.addEventListener('click', runJsonEncrypt);
 }
+
+// 兜底：兼容缓存导致的节点重建/脚本绑定丢失场景
+document.addEventListener('click', (event) => {
+  const target = event.target;
+  if (target && target.id === 'runJsonEncrypt') {
+    runJsonEncrypt();
+  }
+});
