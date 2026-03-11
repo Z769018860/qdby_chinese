@@ -545,6 +545,25 @@ header, main, footer{ position:relative; z-index:1; }
 .toolStatus.error{ color:#b91c1c; }
 .toolResult{ margin-top:14px; border-top:1px solid var(--line); padding-top:14px; }
 .toolDownloads{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 0; }
+
+.jsonEditor{ margin-top:14px; border-top:1px dashed var(--line); padding-top:12px; }
+#jsonEditor{
+  width:100%;
+  min-height:220px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  background:#fff;
+  padding:10px;
+  font:12px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color:#111827;
+}
+#jsonEditor:focus{
+  outline:none;
+  border-color:#94a3b8;
+  box-shadow:0 0 0 4px rgba(99,102,241,.12);
+}
+.jsonActions{ margin-top:10px; }
+.editorBtns{ margin-top:auto; }
 #jsonPreview{
   margin-top:10px;
   max-height:320px;

@@ -48,6 +48,10 @@ function newEncrypt(jsonText) {
   return NEW_PREFIX + btoa(binary);
 }
 
+function encryptByFormat(jsonText, format) {
+  return format === 'old' ? oldEncrypt(jsonText) : newEncrypt(jsonText);
+}
+
 function autoDecrypt(saveText) {
   if (saveText.startsWith(NEW_PREFIX)) return newDecrypt(saveText);
   if (saveText.startsWith(OLD_PREFIX)) return oldDecrypt(saveText);
@@ -102,10 +106,14 @@ const dom = {
   summary: document.querySelector('#nameSummary'),
   saveLink: document.querySelector('#downloadSave'),
   jsonLink: document.querySelector('#downloadJson'),
-  jsonPreview: document.querySelector('#jsonPreview'),
+  jsonEditor: document.querySelector('#jsonEditor'),
+  jsonEncryptFormat: document.querySelector('#jsonEncryptFormat'),
+  encryptEditedJson: document.querySelector('#encryptEditedJson'),
+  downloadEditedSave: document.querySelector('#downloadEditedSave'),
 };
 
 let previousUrls = [];
+let lastBaseName = 'save';
 
 function clearOldUrls() {
   previousUrls.forEach((url) => URL.revokeObjectURL(url));
@@ -115,6 +123,11 @@ function clearOldUrls() {
 function setStatus(message, isError = false) {
   dom.status.textContent = message;
   dom.status.classList.toggle('error', isError);
+}
+
+function registerUrl(url) {
+  previousUrls.push(url);
+  return url;
 }
 
 async function runRepair() {
@@ -144,23 +157,23 @@ async function runRepair() {
     const fixedJsonCompact = JSON.stringify(data);
 
     const outputFormat = dom.format.value;
-    const fixedSave = outputFormat === 'old' ? oldEncrypt(fixedJsonCompact) : newEncrypt(fixedJsonCompact);
+    const fixedSave = encryptByFormat(fixedJsonCompact, outputFormat);
 
-    const baseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
-    const repairedSaveName = `${baseName}_repaired_${outputFormat}.sav`;
-    const jsonName = `${baseName}_decrypted.json`;
+    lastBaseName = (inputFile.name || 'save').replace(/\.[^.]+$/, '');
+    const repairedSaveName = `${lastBaseName}_repaired_${outputFormat}.sav`;
+    const jsonName = `${lastBaseName}_decrypted.json`;
 
-    const saveUrl = createDownloadUrl(fixedSave, 'text/plain;charset=utf-8');
-    const jsonUrl = createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8');
-
-    previousUrls.push(saveUrl, jsonUrl);
+    const saveUrl = registerUrl(createDownloadUrl(fixedSave, 'text/plain;charset=utf-8'));
+    const jsonUrl = registerUrl(createDownloadUrl(fixedJsonPretty, 'application/json;charset=utf-8'));
 
     dom.saveLink.href = saveUrl;
     dom.saveLink.download = repairedSaveName;
     dom.jsonLink.href = jsonUrl;
     dom.jsonLink.download = jsonName;
     dom.summary.textContent = `主角名：${oldName ?? '（未找到）'} → ${fixedName ?? '（未找到）'}；输出格式：${outputFormat === 'old' ? '旧版加密 J31mEo' : '新版加密 J31mEo2:'}`;
-    dom.jsonPreview.textContent = fixedJsonPretty;
+    dom.jsonEditor.value = fixedJsonPretty;
+    dom.downloadEditedSave.removeAttribute('href');
+    dom.downloadEditedSave.removeAttribute('download');
     dom.result.hidden = false;
 
     if (outputFormat === 'old') {
@@ -174,4 +187,28 @@ async function runRepair() {
   }
 }
 
+function runEncryptEditedJson() {
+  try {
+    const edited = dom.jsonEditor.value.trim();
+    if (!edited) {
+      throw new Error('请先生成 JSON，或输入要加密的 JSON 内容。');
+    }
+
+    const parsed = JSON.parse(edited);
+    const compactJson = JSON.stringify(parsed);
+    const format = dom.jsonEncryptFormat.value;
+    const saveText = encryptByFormat(compactJson, format);
+
+    const editedSaveName = `${lastBaseName}_edited_${format}.sav`;
+    const editedUrl = registerUrl(createDownloadUrl(saveText, 'text/plain;charset=utf-8'));
+
+    dom.downloadEditedSave.href = editedUrl;
+    dom.downloadEditedSave.download = editedSaveName;
+    setStatus(`已将编辑后的 JSON 加密为 ${format === 'old' ? '旧版' : '新版'} .sav，请点击下载。`);
+  } catch (error) {
+    setStatus(`JSON 再加密失败：${error.message || error}`, true);
+  }
+}
+
 dom.run.addEventListener('click', runRepair);
+dom.encryptEditedJson.addEventListener('click', runEncryptEditedJson);
