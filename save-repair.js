@@ -155,7 +155,6 @@ function compactJsonOrThrow(text, sourceLabel) {
 }
 
 async function runRepair() {
-  const dom = getDom();
   try {
     clearOldUrls();
     setResultVisible(false);
@@ -225,7 +224,6 @@ async function runRepair() {
 }
 
 function runEncryptEditedJson() {
-  const dom = getDom();
   try {
     const editor = byId('jsonEditor');
     const formatSelect = byId('jsonEncryptFormat');
