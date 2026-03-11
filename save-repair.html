@@ -22,9 +22,22 @@
       </div>
 
       <div class="toolGrid">
+        <label class="control" for="workMode">
+          <span>工作模式</span>
+          <select id="workMode">
+            <option value="repair-name">修复主角名</option>
+            <option value="json-encrypt">JSON 加密</option>
+          </select>
+        </label>
+
         <label class="control span2" for="saveFile">
           <span>上传存档文件</span>
           <input id="saveFile" type="file" accept=".sav,.txt" />
+        </label>
+
+        <label class="control span2" for="jsonFile" hidden>
+          <span>上传 JSON 文件</span>
+          <input id="jsonFile" type="file" accept=".json,application/json" />
         </label>
 
         <label class="control" for="charName">
@@ -47,7 +60,8 @@
       </div>
 
       <div class="toolActions">
-        <button id="runRepair" class="btn">执行修复并生成文件</button>
+        <button id="runRepair" class="btn" type="button">执行修复并生成文件</button>
+        <button id="runJsonEncrypt" class="btn" type="button" hidden>执行 JSON 加密并生成文件</button>
         <a class="chip" href="index.html">返回主页</a>
       </div>
 
