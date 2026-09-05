@@ -6379,7 +6379,57 @@
       "team_b": "一朵寒芒先到",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "鸿蒙",
+              "composition": [
+                {
+                  "id": "bingxin",
+                  "name": "冰心诀"
+                },
+                {
+                  "id": "taixu",
+                  "name": "太玄经"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "bingxin,taixu,xiangzhi"
+            },
+            "blue": {
+              "name": "一朵寒芒先到",
+              "composition": [
+                {
+                  "id": "linghai",
+                  "name": "凌海诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                }
+              ],
+              "composition_raw": "linghai,xiangzhi,unknown"
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "bvid": null,
+            "url": null
+          },
+          "source_note": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_and_recording_verified"
     },
     {
       "match_id": "master-8-55",
@@ -6393,7 +6443,57 @@
       "team_b": "海阔天空",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "恋爱脑",
+              "composition": [
+                {
+                  "id": "jingyu",
+                  "name": "待核验"
+                },
+                {
+                  "id": "yinlong",
+                  "name": "隐龙诀"
+                },
+                {
+                  "id": "lijing",
+                  "name": "离经易道"
+                }
+              ],
+              "composition_raw": "jingyu,yinlong,lijing"
+            },
+            "blue": {
+              "name": "海阔天空",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "taixu",
+                  "name": "太玄经"
+                },
+                {
+                  "id": "lingsu",
+                  "name": "灵素"
+                }
+              ],
+              "composition_raw": "fenying,taixu,lingsu"
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "bvid": null,
+            "url": null
+          },
+          "source_note": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_and_recording_verified"
     },
     {
       "match_id": "master-8-56",
@@ -6757,7 +6857,57 @@
       "team_b": "梅子青时雨",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "鸿蒙",
+              "composition": [
+                {
+                  "id": "aoxue",
+                  "name": "傲血战意"
+                },
+                {
+                  "id": "yinlong",
+                  "name": "隐龙诀"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                }
+              ],
+              "composition_raw": "aoxue,yinlong,unknown"
+            },
+            "blue": {
+              "name": "梅子青时雨",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                }
+              ],
+              "composition_raw": "fenying,xiangzhi,unknown"
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "bvid": "BV1jM4y1a7aN",
+            "url": "https://www.bilibili.com/video/BV1jM4y1a7aN/"
+          },
+          "source_note": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_and_recording_verified"
     },
     {
       "match_id": "master-8-67",
@@ -6841,7 +6991,57 @@
       "team_b": "海阔天空",
       "score": "2:3",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "梅子青时雨",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "gufeng",
+                  "name": "孤锋诀"
+                },
+                {
+                  "id": "lingsu",
+                  "name": "灵素"
+                }
+              ],
+              "composition_raw": "yijin,gufeng,lingsu"
+            },
+            "blue": {
+              "name": "海阔天空",
+              "composition": [
+                {
+                  "id": "gufeng",
+                  "name": "孤锋诀"
+                },
+                {
+                  "id": "gufeng",
+                  "name": "孤锋诀"
+                },
+                {
+                  "id": "lingsu",
+                  "name": "灵素"
+                }
+              ],
+              "composition_raw": "gufeng,gufeng,lingsu"
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "bvid": "BV1eP411S7uE",
+            "url": "https://www.bilibili.com/video/BV1eP411S7uE/"
+          },
+          "source_note": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_and_recording_verified"
     }
   ],
   "video_collections": [
@@ -7643,5 +7843,11 @@
       "按官方队伍名双向匹配"
     ],
     "notes": "已将32进16与16进8表格逐行转为标准games记录；无法确认的字段保留null或空数组。"
+  },
+  "source_notes": " 已补充表格配置；B站地址作为录屏证据。",
+  "spreadsheet_import": {
+    "source_file": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx",
+    "matched_match_count": 7,
+    "imported_game_count": 7
   }
 }
