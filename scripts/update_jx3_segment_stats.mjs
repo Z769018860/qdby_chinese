@@ -24,7 +24,7 @@ async function signedGet(path){
   const response=await fetch(`${BASE}${path}`,{headers});
   const responseText=await response.text();
   if(!response.ok)throw new Error(`${path} HTTP ${response.status}: ${responseText.slice(0,500)}`);
-  try{return JSON.parse(responseText);}catch(e){throw new Error(`${path} returned non-JSON: ${responseText.slice(0,500)}`);}
+  try{const parsed=JSON.parse(responseText);return {rank:parsed?.rank||{data:[]}};}catch(e){throw new Error(`${path} returned non-JSON: ${responseText.slice(0,500)}`);}
 }
 function normalize(data){
   const list=data?.rank?.data;
