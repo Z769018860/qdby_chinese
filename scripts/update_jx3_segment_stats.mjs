@@ -37,10 +37,10 @@ function normalize(data,role){
   for(const entry of ordered){
     const result=entry.value.map((x,i)=>({
       rank:Number(x.rank??x.ranking??i+1),
-      kungfu:x.kungfu||x.name||x.kungfuName||x.forceName||x.force_name||x.schoolName,
-      win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct??x.rate??x.win),
+      kungfu:x.kungfu||x.name||x.kungfuName||x.forceName||x.force_name||x.schoolName||x.kungfu_name||x.force,
+      win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct??x.rate??x.win??x.winrate??x.victoryRate??x.victory_rate),
       pick_rate:Number(x.pick_rate??x.pickRate??x.pickRatePct??0),
-      sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??0),
+      sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??x.games??x.battleCount??0),
       player_count:Number(x.player_count??x.playerCount??0)
     })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
     if(result.length)return result;
