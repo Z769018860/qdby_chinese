@@ -1576,5 +1576,43 @@
         }
       ]
     }
-  ]
+  ],
+  "online_research": {
+    "checked_at": "2026-09-05T00:00:00Z",
+    "priority": "先补八强及以上",
+    "sources": [
+      {
+        "type": "official_match_center",
+        "url": "https://jx3.xoyo.com/match/",
+        "use": "核对赛事、队伍、赛程、胜负"
+      },
+      {
+        "type": "official_news",
+        "url": "https://jx3.xoyo.com/master-match/details.html",
+        "use": "重点大师赛战报与配置文字"
+      },
+      {
+        "type": "bilibili",
+        "url": "https://search.bilibili.com/all?keyword=%E5%89%91%E7%BD%913%E5%A4%A7%E5%B8%88%E8%B5%9B",
+        "use": "逐局录像与开局配置画面"
+      },
+      {
+        "type": "douyu_report",
+        "url": "https://yuba.douyu.com/thema/115814/latest",
+        "use": "名剑杯/JPL部分逐局Ban与配置文字"
+      },
+      {
+        "type": "media_report",
+        "url": "https://news.17173.com/content/12222021/113125729.shtml",
+        "use": "JPL重点对局配置战报"
+      },
+      {
+        "type": "video_example",
+        "url": "https://www.bilibili.com/video/BV1hZ4y1u7zT/",
+        "use": "斗鱼杯逐局录像合集"
+      }
+    ],
+    "status": "source_indexed_game_extraction_pending",
+    "note": "已记录可用渠道，尚未将来源中的逐局配置逐条映射到98条历史记录"
+  }
 }
