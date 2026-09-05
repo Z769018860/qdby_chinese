@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "resource_id": "jx3-master-4-matches",
   "event": {
     "name": "第四届剑网3竞技大师赛",
@@ -11,7 +11,11 @@
     "status": "partial_official_video_index",
     "match_count": 0,
     "video_collection_count": 2,
-    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。",
+    "official_api_event_id": "71002d1b528c45bf8f09602544b92163",
+    "official_match_count": 119,
+    "official_battle_count": 297,
+    "import_status": "pending_complete_snapshot"
   },
   "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
   "normalization_notes": [
@@ -80,6 +84,34 @@
       ],
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
+    }
+  ],
+  "source": {
+    "primary_url": "https://jx3.xoyo.com/match/#/",
+    "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+    "event_table_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/event-table",
+    "retrieved_via": "公开 JSONP 接口",
+    "snapshot_status": "interface_verified_full_snapshot_pending_import"
+  },
+  "official_api_snapshot": {
+    "event_id": "71002d1b528c45bf8f09602544b92163",
+    "match_count": 119,
+    "battle_count": 297,
+    "field_status": "接口已确认逐局心法/Ban/地图/胜负字段，等待完整快照导入"
+  },
+  "jpl_cross_reference": [
+    {
+      "name": "2019剑网3职业联赛联赛总决赛",
+      "eventId": "16ce4a7969ed47ad9219e9f019318d6f",
+      "overlap": [
+        "乘风",
+        "扶摇",
+        "沧海",
+        "虎头",
+        "踏云",
+        "青锋",
+        "风义"
+      ]
     }
   ]
 }
