@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "source": "https://jx3.unua.top/jjc-stats/",
+  "updated_at": "2026-09-06T02:23:00+08:00",
+  "mode": "3v3",
+  "sample": "solo",
+  "period": "1d",
+  "ranges": {
+    "2200-2400": {
+      "min_score": 2200,
+      "max_score": 2400,
+      "stats": [
+        {
+          "rank": 1,
+          "kungfu": "苍云",
+          "win_rate": 0.5252,
+          "pick_rate": 0.0461
+        },
+        {
+          "rank": 2,
+          "kungfu": "无相",
+          "win_rate": 0.5268,
+          "pick_rate": 0.0245
+        },
+        {
+          "rank": 3,
+          "kungfu": "剑纯",
+          "win_rate": 0.5166,
+          "pick_rate": 0.0534
+        },
+        {
+          "rank": 4,
+          "kungfu": "田螺",
+          "win_rate": 0.5263,
+          "pick_rate": 0.0135
+        },
+        {
+          "rank": 5,
+          "kungfu": "无方",
+          "win_rate": 0.5232,
+          "pick_rate": 0.0213
+        },
+        {
+          "rank": 6,
+          "kungfu": "刀宗",
+          "win_rate": 0.5089,
+          "pick_rate": 0.063
+        },
+        {
+          "rank": 7,
+          "kungfu": "天策",
+          "win_rate": 0.4919,
+          "pick_rate": 0.1125
+        },
+        {
+          "rank": 8,
+          "kungfu": "衍天",
+          "win_rate": 0.5193,
+          "pick_rate": 0.0278
+        },
+        {
+          "rank": 9,
+          "kungfu": "蓬莱",
+          "win_rate": 0.5148,
+          "pick_rate": 0.0388
+        },
+        {
+          "rank": 10,
+          "kungfu": "霸刀",
+          "win_rate": 0.5014,
+          "pick_rate": 0.079
+        },
+        {
+          "rank": 11,
+          "kungfu": "喵子",
+          "win_rate": 0.5147,
+          "pick_rate": 0.0358
+        },
+        {
+          "rank": 12,
+          "kungfu": "毒经",
+          "win_rate": 0.4949,
+          "pick_rate": 0.086
+        },
+        {
+          "rank": 13,
+          "kungfu": "段氏",
+          "win_rate": 0.5121,
+          "pick_rate": 0.0233
+        },
+        {
+          "rank": 14,
+          "kungfu": "冰心",
+          "win_rate": 0.4991,
+          "pick_rate": 0.0631
+        },
+        {
+          "rank": 15,
+          "kungfu": "万灵",
+          "win_rate": 0.5088,
+          "pick_rate": 0.0235
+        },
+        {
+          "rank": 16,
+          "kungfu": "藏剑",
+          "win_rate": 0.482,
+          "pick_rate": 0.0915
+        },
+        {
+          "rank": 17,
+          "kungfu": "惊羽",
+          "win_rate": 0.5009,
+          "pick_rate": 0.033
+        },
+        {
+          "rank": 18,
+          "kungfu": "花间",
+          "win_rate": 0.499,
+          "pick_rate": 0.0382
+        },
+        {
+          "rank": 19,
+          "kungfu": "丐帮",
+          "win_rate": 0.499,
+          "pick_rate": 0.036
+        },
+        {
+          "rank": 20,
+          "kungfu": "凌雪",
+          "win_rate": 0.4972,
+          "pick_rate": 0.0262
+        }
+      ]
+    }
+  }
+}
