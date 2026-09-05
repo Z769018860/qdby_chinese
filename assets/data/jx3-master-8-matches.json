@@ -24,15 +24,15 @@
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
-    "table_image_count": 14,
+    "table_image_count": 15,
     "table_coverage": [
       "64进32",
       "32进16",
       "16进8",
       "8强双败"
     ],
-    "note": "已登记本次新增8张高清逐局配置图，覆盖32进16与16进8多个分组。后续按图片逐格写入games，并保留原始简称与标准心法映射。",
-    "table_update_at": "2026-09-05T00:00:00Z"
+    "note": "新增8强双败制总表，包含八强队伍从64进32至8强阶段的历史配置与逐局比分，已登记为优先核对来源。",
+    "table_update_at": "2026-09-06T00:00:00Z"
   },
   "jpl_cross_reference": null,
   "stats": {
@@ -3693,6 +3693,22 @@
       "notes": "恋爱脑、天降鸿运、磊爷只认钱、次饭坐小孩那桌、海阔天空、双刀击而破之",
       "verified_fields": [
         "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-top8-history-20260906",
+      "stage": "8强赛双败制（含八强前历史对局）",
+      "title": "剑网3第八届大师赛8强赛双败制",
+      "source_type": "user_uploaded_original_image",
+      "filename": "QQ图片20260906000308.jpg",
+      "coverage": "8强队伍历史场次、64进32、32进16、16进8、8强双败",
+      "verified_fields": [
+        "历史场次及配置",
         "逐局心法",
         "地图",
         "比分",
