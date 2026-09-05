@@ -19,7 +19,7 @@
   "coverage": {
     "status": "official_match_data_without_game_rows",
     "match_count": 85,
-    "game_count": 0,
+    "game_count": 63,
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z"
@@ -27,8 +27,8 @@
   "jpl_cross_reference": null,
   "stats": {
     "match_count": 85,
-    "game_count": 0,
-    "verified_composition_count": 0
+    "game_count": 63,
+    "verified_composition_count": 63
   },
   "matches": [
     {
@@ -561,7 +561,72 @@
       "team_b": "突破八十三",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*长安茶馆",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "南城葫芦娃(衍天)、喜欢浅绵绵(莫问)、小岚心(奶花)"
+          },
+          "team_b": {
+            "name": "突破八十三",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "田螺凌雪奶花"
+        },
+        {
+          "game_no": 2,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*长安茶馆",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "日月劫(明教)、喜欢浅绵绵(莫问)、小岚心(奶药)"
+          },
+          "team_b": {
+            "name": "突破八十三",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯丐帮奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-40",
@@ -575,7 +640,104 @@
       "team_b": "山水相逢",
       "score": "1:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "登仙(奶药)、小羽化(气纯)、迟意(花间)"
+          },
+          "team_b": {
+            "name": "抽象传说",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "莫问无方奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "登仙(衍天)、有狐(冰心)、孤眠花(奶花)"
+          },
+          "team_b": {
+            "name": "抽象传说",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯苍云奶花"
+        },
+        {
+          "game_no": 3,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "登仙(衍天)、有狐(无方)、孤眠花(奶花)"
+          },
+          "team_b": {
+            "name": "抽象传说",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-41",
@@ -589,7 +751,100 @@
       "team_b": "风月载酒行且歌",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "夏景澜(和尚)、啥情况(君弈)(和尚)、月夜难分(奶秀)"
+          },
+          "team_b": {
+            "name": "风月载酒行且歌",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯花间奶歌"
+        },
+        {
+          "game_no": 2,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "butian",
+                "name": "butian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "夏景澜(霸刀)、啥情况(和尚)、月夜难分(奶毒)"
+          },
+          "team_b": {
+            "name": "风月载酒行且歌",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "明教花间奶歌"
+        },
+        {
+          "game_no": 3,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "夏景澜(和尚)、啥情况(无方)、月夜难分(奶花)"
+          },
+          "team_b": {
+            "name": "风月载酒行且歌",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "霸刀无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-42",
@@ -603,7 +858,104 @@
       "team_b": "你也没人要呀",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "给鸽子精两拳",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "小吴蜮(田螺)、三尺焦桐(无方)、药嘎了(奶药)"
+          },
+          "team_b": {
+            "name": "你也没人要呀",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "毒经毒经奶歌"
+        },
+        {
+          "game_no": 2,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "给鸽子精两拳",
+            "composition": [
+              {
+                "id": "linghai",
+                "name": "linghai"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "小吴蜮(鲸鱼/蓬莱)、三尺焦桐(剑纯)、药嘎了(奶药)"
+          },
+          "team_b": {
+            "name": "你也没人要呀",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "冰心花间奶歌"
+        },
+        {
+          "game_no": 3,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "给鸽子精两拳",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三尺焦桐(剑纯)、药嘎了(无方)、快板(奶药)"
+          },
+          "team_b": {
+            "name": "你也没人要呀",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-43",
@@ -631,7 +983,72 @@
       "team_b": "种花家的兔子们",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "种花家的兔子们",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "梦幻汤圆(天策)、柳芝芝(丐帮)、后跳被抓(奶秀)"
+          },
+          "team_b": {
+            "name": "大唐锦鲤",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯衍天奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "种花家的兔子们",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "存于梦中(鲸鱼)、给小醉一拳(无方)、后跳被抓(奶秀)"
+          },
+          "team_b": {
+            "name": "大唐锦鲤",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯花间奶歌"
+        }
+      ]
     },
     {
       "match_id": "master-7-45",
@@ -645,7 +1062,104 @@
       "team_b": "春秋难测庸常",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "落叶听松(天策)、旬子哥本人(剑纯)、听风风(奶药)"
+          },
+          "team_b": {
+            "name": "春秋难测庸常",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "藏剑凌雪奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "阿越君(藏剑)、慕言酱(花间)、听风风(奶药)"
+          },
+          "team_b": {
+            "name": "春秋难测庸常",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯田螺奶药"
+        },
+        {
+          "game_no": 3,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "阿越君(剑纯)、慕言酱(无方)、听风风(奶药)"
+          },
+          "team_b": {
+            "name": "春秋难测庸常",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-46",
@@ -673,7 +1187,104 @@
       "team_b": "都去吃汁汁嫩牛堡",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "狱寺钱(丐帮)、祁砚(霸刀)、只羡暴富(奶药)"
+          },
+          "team_b": {
+            "name": "都去吃汁汁嫩牛堡",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天魔剑明教"
+        },
+        {
+          "game_no": 2,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "狱寺钱(丐帮)、小无为(气纯)、只羡暴富(丐帮)"
+          },
+          "team_b": {
+            "name": "都去吃汁汁嫩牛堡",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "藏剑凌雪明教"
+        },
+        {
+          "game_no": 3,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "小无为(剑纯)、祁砚(无方)、泡沫琦谈(奶药)"
+          },
+          "team_b": {
+            "name": "都去吃汁汁嫩牛堡",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-48",
@@ -687,7 +1298,72 @@
       "team_b": "不如开摆",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "娇娇和秋秋两心相知",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "萧合十(气纯)、花拂墨(花间)、笋花(奶药)"
+          },
+          "team_b": {
+            "name": "不如开摆",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "天策鲸鱼奶秀"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "娇娇和秋秋两心相知",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "萧合十(气纯)、花拂墨(霸刀)、笋花(奶药)"
+          },
+          "team_b": {
+            "name": "不如开摆",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "鲸鱼丐帮奶秀"
+        }
+      ]
     },
     {
       "match_id": "master-7-49",
@@ -701,7 +1377,104 @@
       "team_b": "霜月晚云",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "潇洒哥(气纯)、槐墨(花间)、小稠珊(奶歌)"
+          },
+          "team_b": {
+            "name": "霜月晚云",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "丐帮霸刀奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "潇洒哥(气纯)、草草(田螺)、小稠珊(奶药)"
+          },
+          "team_b": {
+            "name": "霜月晚云",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯凌雪奶药"
+        },
+        {
+          "game_no": 3,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "潇洒哥(气纯)、槐墨(花间)、小稠珊(奶歌)"
+          },
+          "team_b": {
+            "name": "霜月晚云",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-50",
@@ -757,7 +1530,72 @@
       "team_b": "挟剑惊风",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "孤勇者",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "不洁狂热(衍天)、黎拆(冰心)、风初染(奶药)"
+          },
+          "team_b": {
+            "name": "挟剑惊风",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯蓬莱奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "孤勇者",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "墨道烟雨(气纯)、黎拆(田螺)、风初染(奶药)"
+          },
+          "team_b": {
+            "name": "挟剑惊风",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "苍云蓬莱奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-54",
@@ -771,7 +1609,104 @@
       "team_b": "斗鱼",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "秋江夜雨",
+            "composition": [
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "君山鱼塘主(丐帮)、摘星殿(霸刀)、裴京墨(奶药)"
+          },
+          "team_b": {
+            "name": "斗鱼",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯莫问奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "秋江夜雨",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "摘星殿(剑纯)、花虫啥虫啥(毒经)、裴京墨(奶药)"
+          },
+          "team_b": {
+            "name": "斗鱼",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "霸刀衍天奶药"
+        },
+        {
+          "game_no": 3,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "秋江夜雨",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "摘星殿(剑纯)、花虫啥虫啥(无方)、裴京墨(奶药)"
+          },
+          "team_b": {
+            "name": "斗鱼",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "和尚无方奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-55",
@@ -785,7 +1720,136 @@
       "team_b": "山水相逢",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "登仙(衍天)、迟意(衍天)、孤眠花(奶歌)"
+          },
+          "team_b": {
+            "name": "*长安茶馆",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天莫问奶花"
+        },
+        {
+          "game_no": 2,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "登仙(奶药)、小羽化(气纯)、孤眠花(奶花)"
+          },
+          "team_b": {
+            "name": "*长安茶馆",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯田螺奶药"
+        },
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "*长安茶馆",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "南城葫芦娃(明教)、喜欢浅绵绵(莫问)、小岚心(奶花)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天衍天奶歌"
+        },
+        {
+          "game_no": 2,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "山水相逢",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "*长安茶馆",
+            "composition": [
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "南城葫芦娃(凌雪)、喜欢浅绵绵(藏剑)、小岚心(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯田螺奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-56",
@@ -799,7 +1863,136 @@
       "team_b": "给鸽子精两拳",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "butian",
+                "name": "butian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "夏景澜(藏剑)、啥情况(天策)、月夜难分(奶毒)"
+          },
+          "team_b": {
+            "name": "给鸽子精两拳",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯凌雪奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "butian",
+                "name": "butian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "夏景澜(霸刀)、啥情况(藏剑)、月夜难分(奶毒)"
+          },
+          "team_b": {
+            "name": "给鸽子精两拳",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "田螺衍天奶药"
+        },
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "给鸽子精两拳",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "小吴蜮(田螺)、三尺焦桐(剑纯)、药嘎了(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "藏剑天策奶毒"
+        },
+        {
+          "game_no": 2,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "蒸鹅心",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "给鸽子精两拳",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "linghai",
+                "name": "linghai"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "小吴蜮(鲸鱼)、三尺焦桐(蓬莱)、药嘎了(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "霸刀藏剑奶毒"
+        }
+      ]
     },
     {
       "match_id": "master-7-57",
@@ -813,7 +2006,200 @@
       "team_b": "种花家的兔子们",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "怎么会事呢",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "谢与诀(无方)、暖见鱼(无方)、韩以灵(奶秀)"
+          },
+          "team_b": {
+            "name": "种花家的兔子们",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "藏剑丐帮奶秀"
+        },
+        {
+          "game_no": 2,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "怎么会事呢",
+            "composition": [
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "谢与诀(丐帮)、暖见鱼(田螺)、韩以灵(奶药)"
+          },
+          "team_b": {
+            "name": "种花家的兔子们",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方鲸鱼奶药"
+        },
+        {
+          "game_no": 3,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "怎么会事呢",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "谢与诀(无方)、暖见鱼(莫问)、韩以灵(奶秀)"
+          },
+          "team_b": {
+            "name": "种花家的兔子们",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "天策鲸鱼奶秀"
+        },
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "怎么会事呢",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "种花家的兔子们",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "存于梦中(鲸鱼)、给小醉一拳(无方)、后跳被抓(奶秀)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方无方奶秀"
+        },
+        {
+          "game_no": 2,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "怎么会事呢",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "种花家的兔子们",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "梦幻汤圆(天策)、柳芝芝(丐帮)、后跳被抓(奶秀)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "丐帮田螺奶药"
+        },
+        {
+          "game_no": 3,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "怎么会事呢",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "种花家的兔子们",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "存于梦中(鲸鱼)、给小醉一拳(无方)、后跳被抓(奶秀)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方莫问奶秀"
+        }
+      ]
     },
     {
       "match_id": "master-7-58",
@@ -827,7 +2213,128 @@
       "team_b": "要没时间了",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "阿越君(藏剑)、慕言酱(凌雪)、听风风(奶药)"
+          },
+          "team_b": {
+            "name": "要没时间了",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "田螺衍天奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "阿越君(藏剑)、慕言酱(凌雪)、听风风(奶药)"
+          },
+          "team_b": {
+            "name": "要没时间了",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天无方奶药"
+        },
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "要没时间了",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "顶不住那瞬间(剑纯)、小危阑(天策)、空山(晨光)(奶毒)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "藏剑凌雪奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*言尽于此",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "要没时间了",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "顶不住那瞬间(剑纯)、摸神吓炸了(鲸鱼)、空山(晨光)(奶毒)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "藏剑凌雪奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-59",
@@ -841,7 +2348,136 @@
       "team_b": "娇娇和秋秋两心相知",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "小无为(无方)、祁砚(无方)、只羡暴富(奶花)"
+          },
+          "team_b": {
+            "name": "娇娇和秋秋两心相知",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯霸刀奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "狱寺钱(剑纯)、小无为(霸刀)、只羡暴富(奶花)"
+          },
+          "team_b": {
+            "name": "娇娇和秋秋两心相知",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "莫问无方奶药"
+        },
+        {
+          "game_no": 1,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "娇娇和秋秋两心相知",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "萧合十(气纯)、花拂墨(霸刀)、笋花(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方无方奶花"
+        },
+        {
+          "game_no": 2,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*皮卡丘咬网线",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "娇娇和秋秋两心相知",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "萧合十(气纯)、花拂墨(花间)、笋花(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯霸刀奶花"
+        }
+      ]
     },
     {
       "match_id": "master-7-60",
@@ -855,7 +2491,136 @@
       "team_b": "超能力患者",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "潇洒哥(无方)、槐墨(明教)、小稠珊(奶歌)"
+          },
+          "team_b": {
+            "name": "超能力患者",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯花间奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "潇洒哥(衍天)、草草(花间)、小稠珊(奶药)"
+          },
+          "team_b": {
+            "name": "超能力患者",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "和尚气纯奶花"
+        },
+        {
+          "game_no": 1,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "超能力患者",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无秋的狗(天策)、叶耶也耶(藏剑)、鹊语成诗(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "无方明教奶歌"
+        },
+        {
+          "game_no": 2,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*青青草原队",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "超能力患者",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "顾明微(和尚)、叶耶也耶(气纯)、鹊语成诗(花间)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天花间奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-61",
@@ -869,7 +2634,136 @@
       "team_b": "刀与雪月花",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*岁岁平安",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "黑暗蓝猫侠(明教)、离人清欢(花间)、修哲(毒经)"
+          },
+          "team_b": {
+            "name": "刀与雪月花",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯蓬莱奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*岁岁平安",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "黑暗蓝猫侠(明教)、离人清欢(莫问)、修哲(奶歌)"
+          },
+          "team_b": {
+            "name": "刀与雪月花",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "冰心衍天奶秀"
+        },
+        {
+          "game_no": 1,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*岁岁平安",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "刀与雪月花",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "见鬼(无方)、清微的微笑(明教)、小桃花(奶花)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "明教花间毒经"
+        },
+        {
+          "game_no": 2,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*岁岁平安",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "刀与雪月花",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "见鬼(无方)、清微的微笑(田螺)、小桃花(奶花)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "明教莫问奶歌"
+        }
+      ]
     },
     {
       "match_id": "master-7-62",
@@ -883,7 +2777,136 @@
       "team_b": "秋江夜雨",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "孤勇者",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "不洁狂热(衍天)、黎拆(冰心)、风初染(奶药)"
+          },
+          "team_b": {
+            "name": "秋江夜雨",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "剑纯霸刀奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "孤勇者",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "墨道烟雨(气纯)、黎拆(田螺)、风初染(奶药)"
+          },
+          "team_b": {
+            "name": "秋江夜雨",
+            "composition": [],
+            "bans": []
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "丐帮霸刀奶药"
+        },
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "孤勇者",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "秋江夜雨",
+            "composition": [
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "君山鱼塘主(丐帮)、摘星殿(霸刀)、裴京墨(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "衍天冰心奶药"
+        },
+        {
+          "game_no": 2,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "孤勇者",
+            "composition": [],
+            "bans": []
+          },
+          "team_b": {
+            "name": "秋江夜雨",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "摘星殿(剑纯)、花虫啥虫啥(毒经)、裴京墨(奶药)"
+          },
+          "source_note": "用户提供的第七届大师赛逐局表格",
+          "opponent_composition_raw": "气纯田螺奶药"
+        }
+      ]
     },
     {
       "match_id": "master-7-63",
@@ -1544,5 +3567,16 @@
     "composition_count": 0,
     "status": "official_match_level_verified_battles_not_returned",
     "note": "官方接口已核对比赛级记录；当前快照没有可用 battles 逐局配置，未伪造地图、Ban 或心法。"
+  },
+  "markdown_import": {
+    "source_file": "e9c1859a-48ec-46e9-99e0-a5cfb5c0d46f.md",
+    "matched_match_count": 19,
+    "imported_game_count": 63,
+    "normalization_rules": [
+      "去除星号",
+      "忽略括号备注",
+      "藏剑/魔剑统一为藏剑"
+    ],
+    "notes": "逐局心法来自用户整理表；未出现的对手侧配置保留空数组并保留原始对手配置文本。"
   }
 }
