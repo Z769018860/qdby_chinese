@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-7-matches",
+  "event": {
+    "name": "第七届剑网3竞技大师赛",
+    "season": 7,
+    "year": 2022
+  },
+  "generated_at": "2026-09-05T00:00:00Z",
+  "coverage": {
+    "status": "partial_official_video_index",
+    "match_count": 0,
+    "video_collection_count": 7,
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+  },
+  "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
+  "normalization_notes": [
+    "不从标题推断比分或单局胜方。",
+    "未读取到完整分P列表的合集不拆成虚构比赛。",
+    "配置字段只有在战报或录像画面核验后才会加入。"
+  ],
+  "stats": {
+    "match_count": 0,
+    "game_shell_count": 0,
+    "verified_composition_count": 0,
+    "video_collection_count": 7
+  },
+  "matches": [],
+  "video_collections": [
+    {
+      "collection_id": "master-7-video-1",
+      "title": "2022第七届剑网3大师赛俱乐部争锋赛DAY1（卿酒VS踏云①）",
+      "stage": "俱乐部争锋赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1JU4y1d7tA",
+        "url": "https://www.bilibili.com/video/BV1JU4y1d7tA/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1JU4y1d7tA/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-7-video-2",
+      "title": "2022第七届剑网3大师赛俱乐部争锋赛DAY2（星源VS星辰③）",
+      "stage": "俱乐部争锋赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1ER4y1c771",
+        "url": "https://www.bilibili.com/video/BV1ER4y1c771/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1ER4y1c771/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-7-video-3",
+      "title": "2022第七届剑网3大师赛小组赛DAY8（秋江夜雨VS烟云七千度）",
+      "stage": "小组赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1FZ4y1U7WU",
+        "url": "https://www.bilibili.com/video/BV1FZ4y1U7WU/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1FZ4y1U7WU/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-7-video-4",
+      "title": "2022第七届剑网3大师赛小组赛DAY9（抽象传说VS山水相逢）",
+      "stage": "小组赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1dY4y1v7dQ",
+        "url": "https://www.bilibili.com/video/BV1dY4y1v7dQ/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1dY4y1v7dQ/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-7-video-5",
+      "title": "2022第七届剑网3大师赛小组赛DAY13（山水相逢VS长安茶馆）",
+      "stage": "小组赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1HY4y1e7TD",
+        "url": "https://www.bilibili.com/video/BV1HY4y1e7TD/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1HY4y1e7TD/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-7-video-6",
+      "title": "2022第七届剑网3大师赛晋级赛DAY2（青青草原队VS星源）",
+      "stage": "晋级赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1A94y1o7vS",
+        "url": "https://www.bilibili.com/video/BV1A94y1o7vS/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1A94y1o7vS/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-7-video-7",
+      "title": "2022第七届剑网3大师赛决赛（长安茶馆VS卿酒）",
+      "stage": "决赛",
+      "date": "2022-04-24",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1pA4y1X7Fh",
+        "url": "https://www.bilibili.com/video/BV1pA4y1X7Fh/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1pA4y1X7Fh/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    }
+  ]
+}
