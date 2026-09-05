@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const BASE='https://jx3.unua.top';
 const USER_AGENT='Mozilla/5.0 (compatible; qdby-chinese-segment-sync/2.0)';
-const ranges=Array.from({length:11},(_,i)=>[1000+i*200,1200+i*200]);
+const ranges=[[2100,2300],[2200,2400],[2400,2600],[2600,2800],[2800,3000],[3000,3200]];
 const sha256=v=>createHash('sha256').update(v).digest('hex');
 
 async function session(){
