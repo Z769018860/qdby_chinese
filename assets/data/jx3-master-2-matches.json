@@ -9,7 +9,8 @@
   "generated_at": "2026-09-05T00:00:00Z",
   "coverage": {
     "status": "official_schedule_complete_for_preserved_api",
-    "match_count": 74
+    "match_count": 74,
+    "historical_record_count": 18
   },
   "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。各小局心法、红蓝方与单局胜负等待战报或录像核验。",
   "normalization_notes": [
@@ -7831,5 +7832,280 @@
       }
     }
   ],
-  "video_collections": []
+  "video_collections": [],
+  "historical_records": [
+    {
+      "source_row": 29,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": "日月凌空",
+      "placement": "冠军",
+      "team": "醉雨话禅",
+      "healer": "小花 ",
+      "teammates": [
+        "童话",
+        "黑人",
+        "雨豪",
+        "破戒"
+      ]
+    },
+    {
+      "source_row": 30,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "亚军",
+      "team": "歌尽鸽僧",
+      "healer": "俗气歌",
+      "teammates": [
+        "毛毛",
+        "夏小花",
+        "衍涩",
+        "截元丹"
+      ]
+    },
+    {
+      "source_row": 31,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "季军",
+      "team": "水月无妄思",
+      "healer": "赵若曦",
+      "teammates": [
+        "叶亦墨",
+        "柳词",
+        "慕月淅",
+        "镇魂歌"
+      ]
+    },
+    {
+      "source_row": 32,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "四强",
+      "team": "九歌云",
+      "healer": "小小小浅",
+      "teammates": [
+        "跑毛",
+        "温夜琅",
+        "风清歌",
+        "蒙着面会很强"
+      ]
+    },
+    {
+      "source_row": 33,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "六强",
+      "team": "挽月听琴",
+      "healer": "苏言",
+      "teammates": [
+        "等牛奶的咖啡",
+        "发开",
+        "白大反",
+        "小晴初"
+      ]
+    },
+    {
+      "source_row": 34,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "六强",
+      "team": "天琴九剑",
+      "healer": "十六弦",
+      "teammates": [
+        "舜琴",
+        "祁月笙",
+        "封心",
+        "漓七"
+      ]
+    },
+    {
+      "source_row": 35,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "八强",
+      "team": "一隅清棠花",
+      "healer": "茶茶",
+      "teammates": [
+        "海棠",
+        "泠兮陌",
+        "清儒"
+      ]
+    },
+    {
+      "source_row": 36,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "八强",
+      "team": "剑破九歌",
+      "healer": "王维维",
+      "teammates": [
+        "伯弦",
+        "凌羽大帝",
+        "星辰枫",
+        "谢云流"
+      ]
+    },
+    {
+      "source_row": 37,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": "日月凌空",
+      "placement": "冠军",
+      "team": "清一色杠上花",
+      "healer": "十六弦",
+      "teammates": [
+        "毛毛",
+        "发开",
+        "黄泉",
+        "夏小花"
+      ]
+    },
+    {
+      "source_row": 38,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "亚军",
+      "team": "暗杠幺鸡杠上花",
+      "healer": "小小小浅",
+      "teammates": [
+        "海棠",
+        "泠兮陌",
+        "清儒",
+        "落年"
+      ]
+    },
+    {
+      "source_row": 39,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "季军",
+      "team": "九弦琴歌",
+      "healer": "笋花",
+      "teammates": [
+        "舜琴",
+        "风清歌",
+        "白大反",
+        "跑毛"
+      ]
+    },
+    {
+      "source_row": 40,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "四强",
+      "team": "小呗们求轻虐",
+      "healer": "茶茶",
+      "teammates": [
+        "落叶听松",
+        "忘水鱼",
+        "塔麻麻"
+      ]
+    },
+    {
+      "source_row": 41,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": "日月凌空",
+      "placement": "冠军",
+      "team": "清风望月",
+      "healer": "清衣",
+      "teammates": [
+        "舜琴",
+        "阿越",
+        "清儒",
+        "晏殊"
+      ]
+    },
+    {
+      "source_row": 42,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "亚军",
+      "team": "清一色杠上花",
+      "healer": "十六弦",
+      "teammates": [
+        "毛毛",
+        "发开",
+        "夏小花",
+        "跑毛"
+      ]
+    },
+    {
+      "source_row": 43,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "季军",
+      "team": "水月无妄思",
+      "healer": "赵若曦",
+      "teammates": [
+        "洗髓丹",
+        "截元丹",
+        "叶亦墨",
+        "镇魂歌"
+      ]
+    },
+    {
+      "source_row": 44,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "四强",
+      "team": "墨洒琴心",
+      "healer": "花海",
+      "teammates": [
+        "太子",
+        "万罗",
+        "问情子枫",
+        "忘水鱼"
+      ]
+    },
+    {
+      "source_row": 45,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "六强",
+      "team": "特大碗红烧牛肉面",
+      "healer": "笋花",
+      "teammates": [
+        "花舞剑",
+        "清风",
+        "白大反",
+        "慕月淅"
+      ]
+    },
+    {
+      "source_row": 46,
+      "event": "大师赛",
+      "season": "第二届",
+      "version": null,
+      "placement": "六强",
+      "team": "醉雨话禅",
+      "healer": "忆旧年",
+      "teammates": [
+        "童话",
+        "黑人",
+        "慕堇",
+        "破戒"
+      ]
+    }
+  ],
+  "source": {
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
+  }
 }
