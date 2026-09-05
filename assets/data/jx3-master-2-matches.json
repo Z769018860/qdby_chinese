@@ -8119,6 +8119,11 @@
       "https://jx3.17173.com/content/06122017/101236121.shtml",
       "https://jx3.17173.com/content/06012017/100317237.shtml"
     ],
-    "verification_note": "已确认第二届官方回放索引、32进16录像与官方赛报；逐局心法仍需视频画面核验"
+    "verification_note": "已确认第二届官方回放索引、32进16录像与官方赛报；逐局心法仍需视频画面核验",
+    "official_pages": [
+      "https://jx3.xoyo.com/zt/2016/04/13/Jx3PVP/index.html",
+      "https://jx3.xoyo.com/zb/media.html"
+    ],
+    "official_page_findings": "官方专题页提供比赛回放入口、赛制与报名规则，但页面正文未提供逐局红蓝心法/地图/Ban文字；逐局配置仍需打开回放画面核验。"
   }
 }
