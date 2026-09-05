@@ -30,10 +30,10 @@ function normalize(data){
 }
 async function fetchSegment(min,max,role){
   const candidates=[
-    'mode=summary&sample=solo&period=1d&role='+role+'&minScore='+min+'&maxScore='+max,
-    'mode=summary&sample=solo&period=1d&role='+role+'&scoreMin='+min+'&scoreMax='+max,
-    'mode=summary&sample=solo&period=1d&role='+role+'&score_min='+min+'&score_max='+max,
-    'mode=summary&sample=solo&period=1d&role='+role+'&rating_min='+min+'&rating_max='+max
+    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&minScore='+min+'&maxScore='+max,
+    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&scoreMin='+min+'&scoreMax='+max,
+    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&score_min='+min+'&score_max='+max,
+    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&rating_min='+min+'&rating_max='+max
   ];
   let last;
   for(const query of candidates){
