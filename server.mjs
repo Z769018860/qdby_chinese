@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { createHash, randomBytes } from 'node:crypto';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
@@ -122,6 +123,82 @@ async function readBody(req) {
   try { return JSON.parse(raw); } catch { return {}; }
 }
 
+const JX3_BASE = 'https://jx3.unua.top';
+const JX3_CACHE_MS = 5 * 60_000;
+let jx3Top1000Cache = null;
+
+function sha256(value) {
+  return createHash('sha256').update(value).digest('hex');
+}
+
+async function fetchJx3Top1000() {
+  const now = Date.now();
+  if (jx3Top1000Cache && now - jx3Top1000Cache.fetchedAt < JX3_CACHE_MS) {
+    return jx3Top1000Cache.data;
+  }
+
+  const commonHeaders = {
+    Accept: 'application/json',
+    'User-Agent': 'Mozilla/5.0 (compatible; qdby-chinese-jjc-tool/1.0)',
+    Referer: `${JX3_BASE}/jjc-stats/`,
+  };
+  const proofStartedAt = Date.now();
+  const proofResponse = await fetch(`${JX3_BASE}/api/client-proof`, {
+    headers: commonHeaders,
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!proofResponse.ok) {
+    throw new Error(`JX3 client proof failed: ${proofResponse.status}`);
+  }
+
+  const proofFinishedAt = Date.now();
+  const proofData = await proofResponse.json();
+  const aliases = proofData.headerAliases || {};
+  const required = ['token', 'timestamp', 'nonce', 'proof', 'bodyHash'];
+  if (!proofData.token || !required.every((key) => aliases[key])) {
+    throw new Error('JX3 client proof response is incomplete');
+  }
+
+  const clockOffset = Number(proofData.serverTimeMs || now) - (proofStartedAt + proofFinishedAt) / 2;
+  const path = '/api/rank/builds?mode=summary&scope=top1000';
+  const timestamp = String(Math.floor((Date.now() + clockOffset) / 1000));
+  const nonce = randomBytes(12).toString('hex');
+  const bodyHash = sha256('');
+  const dailySuffix = proofData.kid && proofData.dailySalt
+    ? `:${proofData.kid}:${proofData.dailySalt}`
+    : '';
+  const signature = sha256(`GET:${path}:${timestamp}:${nonce}:${proofData.token}:${bodyHash}${dailySuffix}`);
+  const headers = {
+    ...commonHeaders,
+    [aliases.token]: proofData.token,
+    [aliases.timestamp]: timestamp,
+    [aliases.nonce]: nonce,
+    [aliases.proof]: signature,
+    [aliases.bodyHash]: bodyHash,
+  };
+  if (proofData.kid && proofData.dailySalt && aliases.kid && aliases.daily) {
+    headers[aliases.kid] = proofData.kid;
+    headers[aliases.daily] = proofData.dailySalt;
+  }
+  const cookie = proofResponse.headers.get('set-cookie');
+  if (cookie) { headers.Cookie = cookie; }
+
+  const response = await fetch(`${JX3_BASE}${path}`, {
+    headers,
+    signal: AbortSignal.timeout(45_000),
+  });
+  if (!response.ok) {
+    throw new Error(`JX3 Top1000 request failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (!Array.isArray(data?.stats)) {
+    throw new Error('JX3 Top1000 response has no stats');
+  }
+  jx3Top1000Cache = { fetchedAt: Date.now(), data };
+  return data;
+}
+
 async function handleApi(req, res, url) {
   if (req.method === 'OPTIONS') {
     res.writeHead(204, setSecurityHeaders({
@@ -131,6 +208,19 @@ async function handleApi(req, res, url) {
     }));
     res.end();
     return true;
+  }
+
+  if (url.pathname === '/api/jx3/top1000' && req.method === 'GET') {
+    try {
+      const data = await fetchJx3Top1000();
+      return sendJson(res, 200, { ok: true, ...data }), true;
+    } catch (error) {
+      console.error('JX3 Top1000 proxy error:', error);
+      return sendJson(res, 502, {
+        ok: false,
+        message: '剑三 Top1000 数据暂时无法获取，请稍后重试',
+      }), true;
+    }
   }
 
   if (url.pathname === '/api/state' && req.method === 'GET') {
