@@ -40,7 +40,7 @@
       <div class="liveStats" id="liveStats" aria-live="polite"></div>
     </section>
     <section class="panel classicPanel" aria-labelledby="classicTitle">
-      <div class="panelHead"><div><h2 id="classicTitle">经典赛事回顾</h2><p class="featureIntro">根据本轮抽出的 3V3 心法组合，检索已整理的历届大师赛逐局数据。</p></div><span class="count" id="classicCount">等待抽签</span></div>
+      <div class="panelHead"><div><h2 id="classicTitle">经典赛事回顾</h2><p class="featureIntro">根据本轮抽出的 3V3 心法组合，检索已整理的历届大师赛与群英赛逐局数据。</p></div><div class="actions"><span class="count" id="classicCount">等待抽签</span><button class="miniBtn" id="classicSearchBtn" type="button">检索当前配置</button></div></div>
       <div id="classicReviews" class="classicReviews"><p class="statsStatus">抽出配置后自动匹配经典对局。</p></div>
     </section>
     <section class="panel"><div class="panelHead"><h2>输出位一范围</h2><span class="count" id="dps1Count"></span></div><div class="actions"><button class="miniBtn" data-action="all" data-pool="dps1">全选</button><button class="miniBtn" data-action="none" data-pool="dps1">清空</button><button class="miniBtn" data-action="invert" data-pool="dps1">反选</button></div><div class="grid" id="dps1Grid"></div></section>
@@ -92,10 +92,10 @@
     async function readJsonResponse(response,label){const type=response.headers.get('content-type')||'';if(!response.ok)throw new Error(`${label}返回 HTTP ${response.status}`);if(!type.includes('application/json'))throw new Error(`${label}返回了非 JSON 内容`);const data=await response.json();if(!Array.isArray(data?.stats))throw new Error(`${label}缺少统计数据`);return data}
     async function getTopStats(){if(topStatsCache&&Date.now()-topStatsFetchedAt<5*60_000)return topStatsCache;let apiError=null,data=null;try{const response=await fetch('/api/jx3/top1000',{cache:'no-store'});data=await readJsonResponse(response,'实时 API');if(data.ok===false)throw new Error(data.message||'实时 API 请求失败')}catch(error){apiError=error}if(!data){try{const response=await fetch(`./jx3-top1000.json?_=${Date.now()}`,{cache:'no-store'});data=await readJsonResponse(response,'Top1000 数据快照')}catch(snapshotError){throw new Error(`${apiError?.message||'实时 API 不可用'}；${snapshotError.message}`)}}topStatsCache=data;topStatsFetchedAt=Date.now();return data}
     function slot(x,label){return `<article class="slot"><div class="role">${label}</div>${x?`<img class="avatar" src="${x.icon}" alt=""><div class="name">${x.name}</div><div class="full">${x.school} · ${x.full}</div>`:'<div class="name">等待抽签</div>'}</article>`}
-    function showResult(ids){const xs=ids?.map(byId)||[];document.querySelector('#slots').innerHTML=slot(xs[0],'输出一')+slot(xs[1],'输出二')+slot(xs[2],'治疗');if(ids?.length===3)loadClassicReviews(ids);else renderClassicEmpty('抽出配置后自动匹配经典对局。')}
+    function showResult(ids,options={review:true}){const xs=ids?.map(byId)||[];document.querySelector('#slots').innerHTML=slot(xs[0],'输出一')+slot(xs[1],'输出二')+slot(xs[2],'治疗');if(options.review&&ids?.length===3)loadClassicReviews(ids);else if(!ids?.length)renderClassicEmpty('抽出配置后自动匹配经典对局。')}
     function renderClassicEmpty(message){const box=document.querySelector('#classicReviews');if(box)box.innerHTML='<div class="classicEmpty">'+message+'</div>';const count=document.querySelector('#classicCount');if(count)count.textContent='暂无匹配'}
     const classicSeasonCache=new Map();
-    function compositionIds(team){return (team?.composition||[]).map(x=>x.id||x.name).filter(Boolean).sort()}
+    const specNameToId=new Map(specs.flatMap(x=>[[x.id,x.id],[x.name,x.id],[x.full,x.id]]));function compositionIds(team){return (team?.composition||[]).map(x=>specNameToId.get(x.id||x.name)||x.id||x.name).filter(Boolean).sort()}
     function compositionMatches(team,ids){const a=compositionIds(team),b=[...ids].sort();return a.length===3&&a.join('|')===b.join('|')}
     function classicDate(value){return value?String(value).replace('T',' ').slice(0,16):'时间待核'}
     async function loadClassicReviews(ids){
@@ -103,10 +103,8 @@
       box.innerHTML='<p class="statsStatus">正在检索历届大师赛逐局数据…</p>';count.textContent='检索中';
       const hits=[];
       const sources=[...Array.from({length:8},(_,i)=>({key:String(i+1),label:'第'+(i+1)+'届大师赛',loader:()=>loadMasterSeason(i+1)})),{key:'hero1',label:'第一届群英赛',loader:()=>fetch('./assets/data/jx3-hero-1-matches.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('hero1 HTTP '+r.status);return r.json()})},{key:'hero2',label:'第二届群英赛',loader:()=>fetch('./assets/data/jx3-hero-2-matches.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('hero2 HTTP '+r.status);return r.json()})}];
-      for(const source of sources){
-        try{
-          let data=classicSeasonCache.get(source.key);if(!data){data=await source.loader();classicSeasonCache.set(source.key,data)}
-          for(const match of data.matches||[]){
+      const loaded=await Promise.all(sources.map(async source=>{try{return {source,data:classicSeasonCache.get(source.key)||await source.loader()}}catch(error){console.warn('classic review source load failed',source.key,error);return null}}));
+      loaded.filter(Boolean).forEach(({source,data})=>{classicSeasonCache.set(source.key,data);for(const match of data.matches||[]){
             for(const game of match.games||[]){
               const side=compositionMatches(game.team_a,ids)?'team_a':compositionMatches(game.team_b,ids)?'team_b':null;if(!side)continue;
               let replay=game.video?.url||null;
@@ -114,8 +112,7 @@
               hits.push({season:source.key,seasonLabel:source.label,match,game,side,replay});
             }
           }
-        }catch(error){console.warn('classic review source load failed',source.key,error)}
-      }
+      });
       if(!hits.length){renderClassicEmpty('已整理的逐局数据中暂未找到完全相同的三心法配置；可继续补充赛事逐局 JSON。');return}
       const unique=hits.filter((x,i,a)=>i===a.findIndex(y=>y.season===x.season&&y.match.match_id===x.match.match_id&&y.game.game_no===x.game.game_no)).slice(0,12);
       count.textContent='匹配 '+unique.length+' 场';
@@ -144,7 +141,8 @@
       }
     }
     document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>{const poolName=b.dataset.pool,ids=poolName==='healer'?healerIds:dpsIds,target=pools[poolName];if(b.dataset.action==='all')ids.forEach(id=>target.add(id));if(b.dataset.action==='none')ids.forEach(id=>target.delete(id));if(b.dataset.action==='invert')ids.forEach(id=>target.has(id)?target.delete(id):target.add(id));savePools();renderPools()});
-    document.querySelector('#drawBtn').onclick=()=>{const d1=choices('dps1'),d2=choices('dps2'),h=choices('healer'),notice=document.querySelector('#notice');if(!d1.length||!d2.length||!h.length){notice.textContent='请为输出位一、输出位二和治疗位各选择至少 1 个心法。';return}notice.textContent='';const btn=document.querySelector('#drawBtn');btn.disabled=true;document.querySelector('#slots').classList.add('rolling');let ticks=0,timer=setInterval(()=>{showResult([d1[Math.floor(Math.random()*d1.length)].id,d2[Math.floor(Math.random()*d2.length)].id,h[Math.floor(Math.random()*h.length)].id]);if(++ticks>=10){clearInterval(timer);const chosen=[d1[Math.floor(Math.random()*d1.length)].id,d2[Math.floor(Math.random()*d2.length)].id,h[Math.floor(Math.random()*h.length)].id];showResult(chosen);history=[chosen,...history].slice(0,12);localStorage.setItem('jx3DrawHistory',JSON.stringify(history));renderHistory();loadStats(chosen);btn.disabled=false;document.querySelector('#slots').classList.remove('rolling')}},90)};
+    document.querySelector('#classicSearchBtn').onclick=()=>{const ids=history[0];if(ids?.length===3)loadClassicReviews(ids);else renderClassicEmpty('请先完成一次 3V3 抽签。')};
+    document.querySelector('#drawBtn').onclick=()=>{const d1=choices('dps1'),d2=choices('dps2'),h=choices('healer'),notice=document.querySelector('#notice');if(!d1.length||!d2.length||!h.length){notice.textContent='请为输出位一、输出位二和治疗位各选择至少 1 个心法。';return}notice.textContent='';const btn=document.querySelector('#drawBtn');btn.disabled=true;document.querySelector('#slots').classList.add('rolling');let ticks=0,timer=setInterval(()=>{showResult([d1[Math.floor(Math.random()*d1.length)].id,d2[Math.floor(Math.random()*d2.length)].id,h[Math.floor(Math.random()*h.length)].id],{review:false});if(++ticks>=10){clearInterval(timer);const chosen=[d1[Math.floor(Math.random()*d1.length)].id,d2[Math.floor(Math.random()*d2.length)].id,h[Math.floor(Math.random()*h.length)].id];showResult(chosen);history=[chosen,...history].slice(0,12);localStorage.setItem('jx3DrawHistory',JSON.stringify(history));renderHistory();loadStats(chosen);btn.disabled=false;document.querySelector('#slots').classList.remove('rolling')}},90)};
     document.querySelectorAll('[data-solo-action]').forEach(b=>b.onclick=()=>{const action=b.dataset.soloAction,ids=specs.map(x=>x.id);if(action==='all')ids.forEach(id=>soloPool.add(id));if(action==='none')soloPool.clear();if(action==='invert')ids.forEach(id=>soloPool.has(id)?soloPool.delete(id):soloPool.add(id));saveSolo();renderSolo()});
     document.querySelector('#soloDrawBtn').onclick=async()=>{const list=specs.filter(x=>soloPool.has(x.id)),notice=document.querySelector('#soloNotice'),result=document.querySelector('#soloResult'),statsBox=document.querySelector('#soloStats');if(!list.length){notice.textContent='请至少选择 1 个散排心法。';return}notice.textContent='';const chosen=list[Math.floor(Math.random()*list.length)];result.innerHTML=`<img class="avatar" src="${chosen.icon}" alt=""><div class="soloResultText"><strong>${chosen.name}</strong><span>${chosen.school} · ${chosen.full} · ${chosen.type==='dps'?'输出':'治疗'}</span></div>`;statsBox.innerHTML='<p class="statsStatus">正在同步 Top1000 实时统计…</p>';try{const data=await getTopStats(),item=data.stats.find(x=>x.kungfu===chosen.name);statsBox.innerHTML=item?`<div class="configStat"><strong>Top1000 心法统计：胜率 ${percent(item.win_rate)}</strong><div class="statNumbers"><span>样本 ${number(item.sample_count)}</span><span>玩家 ${number(item.player_count)}</span></div></div>`:'<p class="statsStatus">Top1000 暂无该心法数据。</p>'}catch(error){statsBox.innerHTML=`<p class="statsStatus">统计同步失败：${String(error.message||error)}</p>`}};
     let fortuneSpecId='';
