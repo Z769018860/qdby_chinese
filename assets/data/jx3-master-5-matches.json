@@ -11,12 +11,16 @@
   "source": {
     "primary_url": "https://jx3.xoyo.com/match/#/",
     "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
-    "retrieved_via": "用户提供的完整 cms_query.json"
+    "retrieved_via": "用户提供的完整 cms_query.json",
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
   },
   "coverage": {
     "status": "official_match_and_game_data",
     "match_count": 132,
-    "game_count": 311
+    "game_count": 311,
+    "historical_record_count": 33
   },
   "jpl_cross_reference": {
     "name": "2020年职业联赛",
@@ -19036,6 +19040,507 @@
       ],
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
+    }
+  ],
+  "historical_records": [
+    {
+      "source_row": 103,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": "凌雪藏锋",
+      "placement": "冠军",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "空城",
+        "童话"
+      ]
+    },
+    {
+      "source_row": 104,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "亚军",
+      "team": "青锋",
+      "healer": "风幕幕",
+      "teammates": [
+        "阿越",
+        "落叶听松",
+        "清儒",
+        "持风"
+      ]
+    },
+    {
+      "source_row": 105,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "季军",
+      "team": "千狐",
+      "healer": "叶霜",
+      "teammates": [
+        "曲彼岸",
+        "小巷",
+        "夏景澜",
+        "玄字"
+      ]
+    },
+    {
+      "source_row": 106,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "四强",
+      "team": "炫石",
+      "healer": "晨光",
+      "teammates": [
+        "舜琴",
+        "叶亦墨",
+        "问情子枫",
+        "小决丐"
+      ]
+    },
+    {
+      "source_row": 107,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "六强",
+      "team": "一柄长剑桀骜",
+      "healer": "顾绛绛",
+      "teammates": [
+        "被遗忘的角落",
+        "君莫羁",
+        "笑无聊",
+        "寒楚"
+      ]
+    },
+    {
+      "source_row": 108,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "六强",
+      "team": "唯剑",
+      "healer": "奶妈决赛缺席（乔壹）",
+      "teammates": [
+        "可爱女孩返返",
+        "黎拆",
+        "火舞蹁跹",
+        "宫泠"
+      ]
+    },
+    {
+      "source_row": 109,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "八强",
+      "team": "羽兮花白兔",
+      "healer": "唱将小花",
+      "teammates": [
+        "谨兮",
+        "亓官昇睿",
+        "风初染",
+        "凌羽大帝"
+      ]
+    },
+    {
+      "source_row": 110,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "八强",
+      "team": "无惧",
+      "healer": "忆旧年",
+      "teammates": [
+        "风吹折柳",
+        "柳维维",
+        "不洁狂热",
+        "东城落雪"
+      ]
+    },
+    {
+      "source_row": 111,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "十强",
+      "team": "行雪",
+      "healer": "安钰",
+      "teammates": [
+        "小苞米",
+        "花开",
+        "洗髓丹",
+        "萧白衣"
+      ]
+    },
+    {
+      "source_row": 112,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "十强",
+      "team": "小往昔求情缘",
+      "healer": "叮咛",
+      "teammates": [
+        "小无尘",
+        "聂曲明",
+        "灰小宝",
+        "小往昔"
+      ]
+    },
+    {
+      "source_row": 113,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "十六强",
+      "team": "山河入墨",
+      "healer": "小岚窗",
+      "teammates": []
+    },
+    {
+      "source_row": 114,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": "结庐江湖",
+      "placement": "冠军",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "白大反",
+        "空城",
+        "童话"
+      ]
+    },
+    {
+      "source_row": 115,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "亚军",
+      "team": "炫石",
+      "healer": "晨光",
+      "teammates": [
+        "舜琴",
+        "叶亦墨",
+        "问情子枫",
+        "小诀丐"
+      ]
+    },
+    {
+      "source_row": 116,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "季军",
+      "team": "青锋",
+      "healer": "风幕幕",
+      "teammates": [
+        "清儒",
+        "持风",
+        "落叶听松",
+        "君弈"
+      ]
+    },
+    {
+      "source_row": 117,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "四强",
+      "team": "踏云",
+      "healer": "俞白维",
+      "teammates": [
+        "不辞远",
+        "倾罪",
+        "衍涩",
+        "夏小花"
+      ]
+    },
+    {
+      "source_row": 118,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "六强",
+      "team": "沧海",
+      "healer": "云染叶",
+      "teammates": [
+        "苏挥墨",
+        "一只肥猫",
+        "相忘于情",
+        "狗岛"
+      ]
+    },
+    {
+      "source_row": 119,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "六强",
+      "team": "月影",
+      "healer": "歌手小花",
+      "teammates": [
+        "泠兮陌",
+        "亓官晟睿",
+        "凌羽大帝",
+        "君莫羁"
+      ]
+    },
+    {
+      "source_row": 120,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": "结庐江湖",
+      "placement": "冠军",
+      "team": "燃尽人间色",
+      "healer": "小凉琴",
+      "teammates": [
+        "极念",
+        "阿酒酒酒",
+        "怀黎",
+        "灵魂"
+      ]
+    },
+    {
+      "source_row": 121,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "亚军",
+      "team": "我斑愿称你为最强",
+      "healer": "不思捌玖",
+      "teammates": [
+        "闲庭晚风",
+        "小乌龟",
+        "江淮棠（和光",
+        "小柱"
+      ]
+    },
+    {
+      "source_row": 122,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "季军",
+      "team": "要没时间了",
+      "healer": "小花四",
+      "teammates": [
+        "危阑",
+        "小思想",
+        "挽琛",
+        "钢琴钢琴"
+      ]
+    },
+    {
+      "source_row": 123,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "四强",
+      "team": "跨起个小猫猫脸",
+      "healer": "凌呀",
+      "teammates": [
+        "江安予",
+        "心中客·",
+        "顾易之",
+        "喜欢双宝"
+      ]
+    },
+    {
+      "source_row": 124,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": "结庐江湖",
+      "placement": "冠军",
+      "team": "沧海",
+      "healer": "云染叶",
+      "teammates": [
+        "小藏花",
+        "肥猫",
+        "苏挥墨",
+        "离挽",
+        "小宽野",
+        "月弄痕（替补"
+      ]
+    },
+    {
+      "source_row": 125,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "亚军",
+      "team": "踏云",
+      "healer": "俞白维+清衣",
+      "teammates": [
+        "倾罪",
+        "衍涩",
+        "夏小花",
+        "赤鳞",
+        "东浅（替补"
+      ]
+    },
+    {
+      "source_row": 126,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "季军",
+      "team": "炫石",
+      "healer": "晨光+听风风",
+      "teammates": [
+        "舜琴",
+        "叶亦墨",
+        "问情子枫",
+        "小诀丐"
+      ]
+    },
+    {
+      "source_row": 127,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "四强",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "白大反",
+        "童话"
+      ]
+    },
+    {
+      "source_row": 128,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "六强",
+      "team": "青锋",
+      "healer": "小弯弯",
+      "teammates": [
+        "落叶听松",
+        "清儒",
+        "持风",
+        "君弈"
+      ]
+    },
+    {
+      "source_row": 129,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "六强",
+      "team": "千狐",
+      "healer": "叶霜+艳鬼（替补",
+      "teammates": [
+        "小巷",
+        "慕言酱",
+        "曲彼岸",
+        "焚影不归",
+        "绯尽（替补",
+        "夏景澜（替补"
+      ]
+    },
+    {
+      "source_row": 130,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "八强",
+      "team": "月影",
+      "healer": "歌手小花",
+      "teammates": [
+        "泠兮陌",
+        "棒棒糖",
+        "亓官昇睿",
+        "凌羽",
+        "君莫羁（替补"
+      ]
+    },
+    {
+      "source_row": 131,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "八强",
+      "team": "行雪",
+      "healer": "林寒",
+      "teammates": [
+        "小苞米",
+        "花开",
+        "洗髓丹",
+        "萧白衣"
+      ]
+    },
+    {
+      "source_row": 133,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": "奉天证道",
+      "placement": "冠军",
+      "team": "随便玩玩",
+      "healer": "叶霜",
+      "teammates": [
+        "柳词",
+        "焚影不归",
+        "曲彼岸",
+        "鱼希"
+      ]
+    },
+    {
+      "source_row": 134,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "亚军",
+      "team": "长安茶馆",
+      "healer": "小岚心",
+      "teammates": [
+        "南城葫芦娃",
+        "一梦绘君衣",
+        "昼夜不舍",
+        "黑夜的"
+      ]
+    },
+    {
+      "source_row": 135,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "季军",
+      "team": "木叶村的下忍们",
+      "healer": "桃桃",
+      "teammates": [
+        "芊芊",
+        "小乌龟",
+        "唐落尘",
+        "老年江少爷"
+      ]
+    },
+    {
+      "source_row": 136,
+      "event": "大师赛",
+      "season": "第五届",
+      "version": null,
+      "placement": "四强",
+      "team": "我很愤怒",
+      "healer": "蛊幽幽",
+      "teammates": [
+        "玄天君",
+        "晏殊",
+        "阿遇",
+        "一镇仙"
+      ]
     }
   ]
 }
