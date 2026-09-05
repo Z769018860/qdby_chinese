@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-8-matches",
+  "event": {
+    "name": "第八届剑网3竞技大师赛",
+    "season": 8,
+    "year": 2023
+  },
+  "generated_at": "2026-09-05T00:00:00Z",
+  "coverage": {
+    "status": "partial_official_video_index",
+    "match_count": 0,
+    "video_collection_count": 10,
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+  },
+  "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
+  "normalization_notes": [
+    "不从标题推断比分或单局胜方。",
+    "未读取到完整分P列表的合集不拆成虚构比赛。",
+    "配置字段只有在战报或录像画面核验后才会加入。"
+  ],
+  "stats": {
+    "match_count": 0,
+    "game_shell_count": 0,
+    "verified_composition_count": 0,
+    "video_collection_count": 10
+  },
+  "matches": [],
+  "video_collections": [
+    {
+      "collection_id": "master-8-video-1",
+      "title": "2023第八届剑网3竞技大师赛宣传及赛事入口",
+      "stage": "赛事入口",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV15M411Y7YR",
+        "url": "https://www.bilibili.com/video/BV15M411Y7YR/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV15M411Y7YR/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-2",
+      "title": "第八届剑网3竞技大师赛淘汰赛DAY1（我奶不住捏VS流浪儿童）",
+      "stage": "淘汰赛DAY1",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1KY4y1R7pM",
+        "url": "https://www.bilibili.com/video/BV1KY4y1R7pM/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1KY4y1R7pM/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-3",
+      "title": "第八届剑网3竞技大师赛淘汰赛DAY4（雾灭VS天才幼儿园六）",
+      "stage": "淘汰赛DAY4",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1S24y1E7o8",
+        "url": "https://www.bilibili.com/video/BV1S24y1E7o8/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1S24y1E7o8/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-4",
+      "title": "第八届剑网3竞技大师赛淘汰赛DAY4（数码没有宝贝VS你好不好）",
+      "stage": "淘汰赛DAY4",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1Hg4y1x75Y",
+        "url": "https://www.bilibili.com/video/BV1Hg4y1x75Y/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1Hg4y1x75Y/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-5",
+      "title": "第八届剑网3竞技大师赛淘汰赛DAY5（老莫我想吃鱼了VS一朵寒…）",
+      "stage": "淘汰赛DAY5",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV15M4y1z7M1",
+        "url": "https://www.bilibili.com/video/BV15M4y1z7M1/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV15M4y1z7M1/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-6",
+      "title": "第八届剑网3竞技大师赛淘汰赛DAY8（长风绕旗VS双刀击而破之）",
+      "stage": "淘汰赛DAY8",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1ps4y1J75s",
+        "url": "https://www.bilibili.com/video/BV1ps4y1J75s/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1ps4y1J75s/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-7",
+      "title": "第八届剑网3竞技大师赛32强DAY2（你好不好VS天才幼儿园六）",
+      "stage": "32强DAY2",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1mj411w7Yy",
+        "url": "https://www.bilibili.com/video/BV1mj411w7Yy/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1mj411w7Yy/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-8",
+      "title": "第八届剑网3竞技大师赛16强DAY1（彻底癫狂VS鹦鹉说唱天团）",
+      "stage": "16强DAY1",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1qM411T74D",
+        "url": "https://www.bilibili.com/video/BV1qM411T74D/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1qM411T74D/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-9",
+      "title": "第八届剑网3竞技大师赛8强决赛周DAY1（飘渺VS天降鸿运）",
+      "stage": "8强决赛周DAY1",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1vN411w76G",
+        "url": "https://www.bilibili.com/video/BV1vN411w76G/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1vN411w76G/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-8-video-10",
+      "title": "第八届剑网3竞技大师赛娱乐赛阶段二DAY2（彻底癫狂VS鸿蒙）",
+      "stage": "娱乐赛阶段二DAY2",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV11j411c7G2",
+        "url": "https://www.bilibili.com/video/BV11j411c7G2/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV11j411c7G2/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    }
+  ]
+}
