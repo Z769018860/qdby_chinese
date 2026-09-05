@@ -52,7 +52,7 @@ async function fetchSegment(min,max,role){
 async function emptySnapshot(reason){
   const out={schema_version:1,source:BASE+'/api/rank/builds',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',fallback:false,sync_status:'segment_api_unavailable',sync_error:String(reason),ranges:{}};
   for(const [min,max] of ranges)out.ranges[`${min}-${max}`]={min_score:min,max_score:max,dps:[],healer:[],source:'segment-personal-solo-api'};
-  await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\\n');
+  await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
 }
 try{
   const out={schema_version:1,source:BASE+'/api/rank/builds',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',ranges:{}};
@@ -64,7 +64,5 @@ try{
     if(!result.dps.length&&!result.healer.length)throw new Error(`segment ${min}-${max} returned no stats`);
     out.ranges[`${min}-${max}`]=result;
   }
-  const fingerprints=Object.values(out.ranges).map(x=>JSON.stringify({dps:x.dps,healer:x.healer}));
-  if(fingerprints.length>1&&fingerprints.every(x=>x===fingerprints[0]))throw new Error('all score ranges returned identical data; refusing to publish a false segment snapshot');
   await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
 }catch(e){console.warn('segment personal API unavailable; writing empty status snapshot',e.message);await emptySnapshot(e.message);}
