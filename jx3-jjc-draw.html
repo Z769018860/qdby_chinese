@@ -102,15 +102,16 @@
       const box=document.querySelector('#classicReviews'),count=document.querySelector('#classicCount');if(!box)return;
       box.innerHTML='<p class="statsStatus">正在检索历届大师赛逐局数据…</p>';count.textContent='检索中';
       const hits=[];
-      for(let season=1;season<=8;season++){
+      const sources=[...Array.from({length:8},(_,i)=>({key:String(i+1),label:'第'+(i+1)+'届大师赛',loader:()=>loadMasterSeason(i+1)})),{key:'hero1',label:'第一届群英赛',loader:()=>fetch('./assets/data/jx3-hero-1-matches.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('hero1 HTTP '+r.status);return r.json()})},{key:'hero2',label:'第二届群英赛',loader:()=>fetch('./assets/data/jx3-hero-2-matches.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('hero2 HTTP '+r.status);return r.json()})}];
+      for(const source of sources){
         try{
-          let data=classicSeasonCache.get(season);if(!data){data=await loadMasterSeason(season);classicSeasonCache.set(season,data)}
+          let data=classicSeasonCache.get(source.key);if(!data){data=await source.loader();classicSeasonCache.set(source.key,data)}
           for(const match of data.matches||[]){
             for(const game of match.games||[]){
               const side=compositionMatches(game.team_a,ids)?'team_a':compositionMatches(game.team_b,ids)?'team_b':null;if(!side)continue;
               let replay=game.video?.url||null;
               if(!replay){const collection=(data.video_collections||[]).find(v=>v.stage&&match.stage&&String(v.stage).includes(String(match.stage)))||data.video_collections?.[0];replay=collection?.video?.url||null}
-              hits.push({season,match,game,side,replay});
+              hits.push({season:source.key,seasonLabel:source.label,match,game,side,replay});
             }
           }
         }catch(error){console.warn('classic review season load failed',season,error)}
@@ -118,7 +119,7 @@
       if(!hits.length){renderClassicEmpty('已整理的逐局数据中暂未找到完全相同的三心法配置；可继续补充赛事逐局 JSON。');return}
       const unique=hits.filter((x,i,a)=>i===a.findIndex(y=>y.season===x.season&&y.match.match_id===x.match.match_id&&y.game.game_no===x.game.game_no)).slice(0,12);
       count.textContent='匹配 '+unique.length+' 场';
-      box.innerHTML=unique.map(({season,match,game,replay})=>{const a=game.team_a,b=game.team_b;return '<article class="classicCard"><div class="classicCardHead"><div><h3>第'+season+'届大师赛 · '+(match.stage||'赛事对局')+'</h3><div class="classicMeta">'+classicDate(match.date)+' · 第'+(game.game_no||1)+'局 · '+(game.map||'地图待补')+' · 系列赛 '+(match.score||'—')+'</div></div></div><div class="classicSides"><div class="classicTeam"><strong>'+a.name+'</strong><span class="classicComp">'+a.composition.map(x=>x.name||x.id).join(' · ')+'</span></div><div class="classicVs">VS</div><div class="classicTeam"><strong>'+b.name+'</strong><span class="classicComp">'+b.composition.map(x=>x.name||x.id).join(' · ')+'</span></div></div>'+(replay?'<a class="classicReplay" href="'+replay+'" target="_blank" rel="noopener">▶ 查看赛事回放</a>':'<div class="classicMeta">暂无已登记回放链接</div>')+'</article>'}).join('')
+      box.innerHTML=unique.map(({season,match,game,replay})=>{const a=game.team_a,b=game.team_b;return '<article class="classicCard"><div class="classicCardHead"><div><h3>'+({[...Array(8)].map((_,i)=>String(i+1)+':第'+(i+1)+'届大师赛'),hero1:'第一届群英赛',hero2:'第二届群英赛'}[String(season)]||'经典赛事')+' · '+(match.stage||'赛事对局')+'</h3><div class="classicMeta">'+classicDate(match.date)+' · 第'+(game.game_no||1)+'局 · '+(game.map||'地图待补')+' · 系列赛 '+(match.score||'—')+'</div></div></div><div class="classicSides"><div class="classicTeam"><strong>'+a.name+'</strong><span class="classicComp">'+a.composition.map(x=>x.name||x.id).join(' · ')+'</span></div><div class="classicVs">VS</div><div class="classicTeam"><strong>'+b.name+'</strong><span class="classicComp">'+b.composition.map(x=>x.name||x.id).join(' · ')+'</span></div></div>'+(replay?'<a class="classicReplay" href="'+replay+'" target="_blank" rel="noopener">▶ 查看赛事回放</a>':'<div class="classicMeta">暂无已登记回放链接</div>')+'</article>'}).join('')
     }
     function renderHistory(){const el=document.querySelector('#history');el.innerHTML=history.length?history.map(ids=>`<span class="historyItem">${ids.map(id=>byId(id)?.name).join(' · ')}</span>`).join(''):'<span class="count">还没有抽签记录</span>'}
     const percent=value=>Number.isFinite(Number(value))?`${(Number(value)*100).toFixed(1)}%`:'—';
