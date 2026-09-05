@@ -8,21 +8,24 @@
       "year": 2016,
       "path": "./assets/data/jx3-master-1-matches.json",
       "coverage": "official_schedule_complete_for_preserved_api",
-      "match_count": 32
+      "match_count": 32,
+      "historical_record_count": 26
     },
     {
       "season": 2,
       "year": 2017,
       "path": "./assets/data/jx3-master-2-matches.json",
       "coverage": "official_schedule_complete_for_preserved_api",
-      "match_count": 74
+      "match_count": 74,
+      "historical_record_count": 18
     },
     {
       "season": 3,
       "year": 2018,
       "path": "./assets/data/jx3-master-3-matches.json",
       "coverage": "official_schedule_complete_for_preserved_api",
-      "match_count": 23
+      "match_count": 23,
+      "historical_record_count": 19
     },
     {
       "season": 4,
@@ -34,7 +37,8 @@
       "official_battle_count": 297,
       "match_count": 119,
       "game_count": 297,
-      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+      "historical_record_count": 35
     },
     {
       "season": 5,
@@ -46,7 +50,8 @@
       "official_battle_count": 311,
       "match_count": 132,
       "game_count": 311,
-      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+      "historical_record_count": 33
     },
     {
       "season": 6,
@@ -58,7 +63,8 @@
       "official_battle_count": 244,
       "match_count": 103,
       "game_count": 244,
-      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+      "historical_record_count": 24
     },
     {
       "season": 7,
@@ -70,7 +76,8 @@
       "official_battle_count": 0,
       "match_count": 85,
       "game_count": 0,
-      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+      "historical_record_count": 8
     },
     {
       "season": 8,
@@ -82,7 +89,8 @@
       "official_battle_count": 0,
       "match_count": 116,
       "game_count": 0,
-      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+      "historical_record_count": 8
     },
     {
       "season": 9,
@@ -94,7 +102,8 @@
       "official_battle_count": 0,
       "match_count": 116,
       "game_count": 0,
-      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+      "historical_record_count": 8
     }
   ],
   "special_events": [
@@ -112,7 +121,8 @@
         "https://jx3.xoyo.com/competitive-match/index.html",
         "https://www.kdocs.cn/l/chx9R9u3s3RO",
         "https://www.kdocs.cn/l/cqhoKx4U4Jux"
-      ]
+      ],
+      "historical_record_count": 8
     },
     {
       "type": "competitive-hero",
@@ -136,5 +146,10 @@
         "2026XS2 64强抽签版"
       ]
     }
-  ]
+  ],
+  "historical_records_source": {
+    "file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "note": "队伍名次、成员和配置摘要；逐局数据需结合官方接口、微博战报和录像交叉核验"
+  }
 }
