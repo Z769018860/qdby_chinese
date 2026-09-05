@@ -1,0 +1,3436 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-1-matches",
+  "event": {
+    "name": "第一届剑网3竞技大师赛",
+    "season": 1,
+    "year": 2016
+  },
+  "generated_at": "2026-09-05T00:00:00Z",
+  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。旧接口仅提供整场比分和回放，不提供各小局红蓝方、胜负及心法；这些字段保留为空，等待战报或录像画面核验。",
+  "normalization_notes": [
+    "保留官方接口中的原始战队名称，不擅自合并近似名称。",
+    "legacy av 号作为稳定录像标识；bvid 与分P在核验前为 null。",
+    "games 数量按最终比分双方胜局之和建立，但每局胜方与双方配置不从总比分推断。"
+  ],
+  "stats": {
+    "match_count": 32,
+    "game_shell_count": 83,
+    "verified_composition_count": 0
+  },
+  "matches": [
+    {
+      "match_id": "master-1-155",
+      "official_match_id": 155,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-23",
+      "start_time": "19:00",
+      "stage": "32进16",
+      "teams": {
+        "a": "曾经陌上少年游",
+        "b": "娃娃鱼带我们灰啊"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "娃娃鱼带我们灰啊",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4751600,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4751600"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "曾经陌上少年游",
+              "composition": []
+            },
+            "blue": {
+              "name": "娃娃鱼带我们灰啊",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4751600,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4751600"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "曾经陌上少年游",
+              "composition": []
+            },
+            "blue": {
+              "name": "娃娃鱼带我们灰啊",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4751600,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4751600"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-156",
+      "official_match_id": 156,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-23",
+      "start_time": "19:45",
+      "stage": "32进16",
+      "teams": {
+        "a": "小呗们求轻虐啊",
+        "b": "望美人兮未来临风晃兮浩歌"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "小呗们求轻虐啊",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4752153,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4752153"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "望美人兮未来临风晃兮浩歌",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4752153,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4752153"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "望美人兮未来临风晃兮浩歌",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4752153,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4752153"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-157",
+      "official_match_id": 157,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-23",
+      "start_time": "20:30",
+      "stage": "32进16",
+      "teams": {
+        "a": "没有时间了快上车",
+        "b": "我们的目标是苹果六"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "没有时间了快上车",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4746674,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4746674"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没有时间了快上车",
+              "composition": []
+            },
+            "blue": {
+              "name": "我们的目标是苹果六",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4746674,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4746674"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没有时间了快上车",
+              "composition": []
+            },
+            "blue": {
+              "name": "我们的目标是苹果六",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4746674,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4746674"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-158",
+      "official_match_id": 158,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-23",
+      "start_time": "21:15",
+      "stage": "32进16",
+      "teams": {
+        "a": "叼打小伯顿天团",
+        "b": "女娲补天蕨"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "叼打小伯顿天团",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4746901,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4746901"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "女娲补天蕨",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4746901,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4746901"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "女娲补天蕨",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4746901,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4746901"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "女娲补天蕨",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4746901,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4746901"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-159",
+      "official_match_id": 159,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-24",
+      "start_time": "19:00",
+      "stage": "32进16",
+      "teams": {
+        "a": "夜聆风晚棠",
+        "b": "恩施舞阳坝车神开车了"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "恩施舞阳坝车神开车了",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926019,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926019"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "夜聆风晚棠",
+              "composition": []
+            },
+            "blue": {
+              "name": "恩施舞阳坝车神开车了",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926019,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926019"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "夜聆风晚棠",
+              "composition": []
+            },
+            "blue": {
+              "name": "恩施舞阳坝车神开车了",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926019,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926019"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "夜聆风晚棠",
+              "composition": []
+            },
+            "blue": {
+              "name": "恩施舞阳坝车神开车了",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926019,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926019"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-160",
+      "official_match_id": 160,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-24",
+      "start_time": "19:45",
+      "stage": "32进16",
+      "teams": {
+        "a": "清汤红汤带个锅",
+        "b": "听说气纯两仪不掉血"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "听说气纯两仪不掉血",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9925911,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9925911"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "清汤红汤带个锅",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9925911,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9925911"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "清汤红汤带个锅",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9925911,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9925911"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-161",
+      "official_match_id": 161,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-24",
+      "start_time": "20:30",
+      "stage": "32进16",
+      "teams": {
+        "a": "没钱了呢",
+        "b": "笔走偏锋"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "没钱了呢",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9925958,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9925958"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没钱了呢",
+              "composition": []
+            },
+            "blue": {
+              "name": "笔走偏锋",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9925958,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9925958"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没钱了呢",
+              "composition": []
+            },
+            "blue": {
+              "name": "笔走偏锋",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9925958,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9925958"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-162",
+      "official_match_id": 162,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-24",
+      "start_time": "21:15",
+      "stage": "32进16",
+      "teams": {
+        "a": "休道默以殇离别",
+        "b": "倚云戏梦"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "休道默以殇离别",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9925982,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9925982"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "休道默以殇离别",
+              "composition": []
+            },
+            "blue": {
+              "name": "倚云戏梦",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9925982,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9925982"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "休道默以殇离别",
+              "composition": []
+            },
+            "blue": {
+              "name": "倚云戏梦",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9925982,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9925982"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-163",
+      "official_match_id": 163,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-25",
+      "start_time": "19:00",
+      "stage": "32进16",
+      "teams": {
+        "a": "听说前方没有藏剑",
+        "b": "笙歌烟雨醉流年"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "听说前方没有藏剑",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4775108,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4775108"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "笙歌烟雨醉流年",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4775108,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4775108"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "笙歌烟雨醉流年",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4775108,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4775108"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-164",
+      "official_match_id": 164,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-25",
+      "start_time": "19:45",
+      "stage": "32进16",
+      "teams": {
+        "a": "豆豆好次",
+        "b": "四川文化艺术学院男生寝室"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "四川文化艺术学院男生寝室",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926053,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926053"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "豆豆好次",
+              "composition": []
+            },
+            "blue": {
+              "name": "四川文化艺术学院男生寝室",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926053,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926053"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "豆豆好次",
+              "composition": []
+            },
+            "blue": {
+              "name": "四川文化艺术学院男生寝室",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926053,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926053"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "豆豆好次",
+              "composition": []
+            },
+            "blue": {
+              "name": "四川文化艺术学院男生寝室",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926053,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926053"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-165",
+      "official_match_id": 165,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-25",
+      "start_time": "20:30",
+      "stage": "32进16",
+      "teams": {
+        "a": "建队不需要解锁",
+        "b": "霸道明教俏长歌"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "建队不需要解锁",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926012,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926012"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "建队不需要解锁",
+              "composition": []
+            },
+            "blue": {
+              "name": "霸道明教俏长歌",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926012,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926012"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "建队不需要解锁",
+              "composition": []
+            },
+            "blue": {
+              "name": "霸道明教俏长歌",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926012,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926012"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-166",
+      "official_match_id": 166,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-25",
+      "start_time": "21:15",
+      "stage": "32进16",
+      "teams": {
+        "a": "前排的吃瓜少女",
+        "b": "苍茫乾坤"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "前排的吃瓜少女",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926062,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926062"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "前排的吃瓜少女",
+              "composition": []
+            },
+            "blue": {
+              "name": "苍茫乾坤",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926062,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926062"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "前排的吃瓜少女",
+              "composition": []
+            },
+            "blue": {
+              "name": "苍茫乾坤",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926062,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926062"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "前排的吃瓜少女",
+              "composition": []
+            },
+            "blue": {
+              "name": "苍茫乾坤",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926062,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926062"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-167",
+      "official_match_id": 167,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-26",
+      "start_time": "19:00",
+      "stage": "32进16",
+      "teams": {
+        "a": "墨洒琴心",
+        "b": "不掉线会很强"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "墨洒琴心",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926165,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926165"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "不掉线会很强",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926165,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926165"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "不掉线会很强",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926165,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926165"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-168",
+      "official_match_id": 168,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-26",
+      "start_time": "19:45",
+      "stage": "32进16",
+      "teams": {
+        "a": "电四颜值担当",
+        "b": "别鹤"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "电四颜值担当",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926151,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926151"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "电四颜值担当",
+              "composition": []
+            },
+            "blue": {
+              "name": "别鹤",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926151,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926151"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "电四颜值担当",
+              "composition": []
+            },
+            "blue": {
+              "name": "别鹤",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926151,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926151"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-169",
+      "official_match_id": 169,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-26",
+      "start_time": "20:30",
+      "stage": "32进16",
+      "teams": {
+        "a": "风清玄",
+        "b": "一剑倾城非常专业"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "一剑倾城非常专业",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926145,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926145"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "风清玄",
+              "composition": []
+            },
+            "blue": {
+              "name": "一剑倾城非常专业",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926145,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926145"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "风清玄",
+              "composition": []
+            },
+            "blue": {
+              "name": "一剑倾城非常专业",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926145,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926145"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "风清玄",
+              "composition": []
+            },
+            "blue": {
+              "name": "一剑倾城非常专业",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926145,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926145"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-170",
+      "official_match_id": 170,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-26",
+      "start_time": "21:15",
+      "stage": "32进16",
+      "teams": {
+        "a": "菜儿做实验了吗",
+        "b": "乌龙茶奶盖"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "乌龙茶奶盖",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926112,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926112"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "菜儿做实验了吗",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926112,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926112"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "菜儿做实验了吗",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926112,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926112"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "菜儿做实验了吗",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926112,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926112"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-171",
+      "official_match_id": 171,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-30",
+      "start_time": "19:00",
+      "stage": "16进8",
+      "teams": {
+        "a": "娃娃鱼带我们灰",
+        "b": "小呗们求轻虐啊"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "小呗们求轻虐啊",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926242,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926242"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "娃娃鱼带我们灰",
+              "composition": []
+            },
+            "blue": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926242,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926242"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "娃娃鱼带我们灰",
+              "composition": []
+            },
+            "blue": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926242,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926242"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "娃娃鱼带我们灰",
+              "composition": []
+            },
+            "blue": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926242,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926242"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-172",
+      "official_match_id": 172,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-30",
+      "start_time": "19:45",
+      "stage": "16进8",
+      "teams": {
+        "a": "没有时间了快上车",
+        "b": "叼打小伯顿天团"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "叼打小伯顿天团",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926148,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926148"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没有时间了快上车",
+              "composition": []
+            },
+            "blue": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926148,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926148"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没有时间了快上车",
+              "composition": []
+            },
+            "blue": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926148,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926148"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-173",
+      "official_match_id": 173,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-30",
+      "start_time": "20:30",
+      "stage": "16进8",
+      "teams": {
+        "a": "恩施舞阳坝车神开车了",
+        "b": "听说气纯两仪不掉血"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "听说气纯两仪不掉血",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926177,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926177"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "恩施舞阳坝车神开车了",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926177,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926177"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "恩施舞阳坝车神开车了",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926177,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926177"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "恩施舞阳坝车神开车了",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926177,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926177"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-174",
+      "official_match_id": 174,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-30",
+      "start_time": "21:15",
+      "stage": "16进8",
+      "teams": {
+        "a": "没钱了呢",
+        "b": "休道默以殇离别"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "休道默以殇离别",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926173,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926173"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没钱了呢",
+              "composition": []
+            },
+            "blue": {
+              "name": "休道默以殇离别",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926173,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926173"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "没钱了呢",
+              "composition": []
+            },
+            "blue": {
+              "name": "休道默以殇离别",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926173,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926173"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-175",
+      "official_match_id": 175,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-31",
+      "start_time": "19:00",
+      "stage": "16进8",
+      "teams": {
+        "a": "听说前方没有藏剑",
+        "b": "四川文化艺术学院男生寝室"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "听说前方没有藏剑",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926273,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926273"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "四川文化艺术学院男生寝室",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926273,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926273"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "四川文化艺术学院男生寝室",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926273,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926273"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-176",
+      "official_match_id": 176,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-31",
+      "start_time": "19:45",
+      "stage": "16进8",
+      "teams": {
+        "a": "建队不需要解锁真的",
+        "b": "前排的吃瓜少女"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "建队不需要解锁真的",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926283,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926283"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "建队不需要解锁真的",
+              "composition": []
+            },
+            "blue": {
+              "name": "前排的吃瓜少女",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926283,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926283"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "建队不需要解锁真的",
+              "composition": []
+            },
+            "blue": {
+              "name": "前排的吃瓜少女",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926283,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926283"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "建队不需要解锁真的",
+              "composition": []
+            },
+            "blue": {
+              "name": "前排的吃瓜少女",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926283,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926283"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-177",
+      "official_match_id": 177,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-31",
+      "start_time": "20:30",
+      "stage": "16进8",
+      "teams": {
+        "a": "墨洒琴心",
+        "b": "电四颜值担当"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "墨洒琴心",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926260,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926260"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "电四颜值担当",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926260,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926260"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "电四颜值担当",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926260,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926260"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "电四颜值担当",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926260,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926260"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-178",
+      "official_match_id": 178,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-05-31",
+      "start_time": "21:15",
+      "stage": "16进8",
+      "teams": {
+        "a": "一剑倾城非常专业",
+        "b": "乌龙茶奶盖"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "乌龙茶奶盖",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926236,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926236"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "一剑倾城非常专业",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926236,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926236"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "一剑倾城非常专业",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926236,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926236"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-179",
+      "official_match_id": 179,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-01",
+      "start_time": "19:00",
+      "stage": "8进4",
+      "teams": {
+        "a": "小呗们求轻虐啊",
+        "b": "叼打小伯顿天团"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "叼打小伯顿天团",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4834132,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4834132"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4834132,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4834132"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "小呗们求轻虐啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4834132,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4834132"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-180",
+      "official_match_id": 180,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-01",
+      "start_time": "19:45",
+      "stage": "8进4",
+      "teams": {
+        "a": "听说前方没有藏剑",
+        "b": "建队不需要解锁真的"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "听说前方没有藏剑",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926282,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926282"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "建队不需要解锁真的",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926282,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926282"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "建队不需要解锁真的",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926282,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926282"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-181",
+      "official_match_id": 181,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-01",
+      "start_time": "20:30",
+      "stage": "8进4",
+      "teams": {
+        "a": "听说气纯两仪不掉血",
+        "b": "休道默以殇离别"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "听说气纯两仪不掉血",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926386,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926386"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            },
+            "blue": {
+              "name": "休道默以殇离别",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926386,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926386"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            },
+            "blue": {
+              "name": "休道默以殇离别",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926386,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926386"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-182",
+      "official_match_id": 182,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-01",
+      "start_time": "21:15",
+      "stage": "8进4",
+      "teams": {
+        "a": "墨洒琴心",
+        "b": "乌龙茶奶盖"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "墨洒琴心",
+      "video": {
+        "platform": "bilibili",
+        "avid": 4835761,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av4835761"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4835761,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4835761"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4835761,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4835761"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": []
+            },
+            "blue": {
+              "name": "乌龙茶奶盖",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 4835761,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av4835761"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-183",
+      "official_match_id": 183,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-02",
+      "start_time": "19:00",
+      "stage": "总决赛",
+      "teams": {
+        "a": "叼打小伯顿天团",
+        "b": "听说气纯两仪不掉血"
+      },
+      "score": {
+        "a": 2,
+        "b": 3
+      },
+      "winner": "听说气纯两仪不掉血",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926706,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926706"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926706,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926706"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926706,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926706"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926706,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926706"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 4,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926706,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926706"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 5,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926706,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926706"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-184",
+      "official_match_id": 184,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-02",
+      "start_time": "19:45",
+      "stage": "总决赛",
+      "teams": {
+        "a": "听说前方没有藏剑",
+        "b": "墨洒琴心"
+      },
+      "score": {
+        "a": 1,
+        "b": 3
+      },
+      "winner": "墨洒琴心",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926714,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926714"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926714,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926714"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926714,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926714"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926714,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926714"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 4,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926714,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926714"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-185",
+      "official_match_id": 185,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-03",
+      "start_time": "19:00",
+      "stage": "总决赛",
+      "teams": {
+        "a": "叼打小伯顿天团",
+        "b": "听说前方没有藏剑"
+      },
+      "score": {
+        "a": 1,
+        "b": 3
+      },
+      "winner": "听说前方没有藏剑",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9929503,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9929503"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9929503,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9929503"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9929503,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9929503"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9929503,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9929503"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 4,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "叼打小伯顿天团",
+              "composition": []
+            },
+            "blue": {
+              "name": "听说前方没有藏剑",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9929503,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9929503"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-1-186",
+      "official_match_id": 186,
+      "event": "第一届剑网3竞技大师赛",
+      "season": 1,
+      "date": "2016-06-03",
+      "start_time": "19:45",
+      "stage": "总决赛",
+      "teams": {
+        "a": "听说气纯两仪不掉血",
+        "b": "墨洒琴心"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "墨洒琴心",
+      "video": {
+        "platform": "bilibili",
+        "avid": 9926608,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av9926608"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926608,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926608"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926608,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926608"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "听说气纯两仪不掉血",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 9926608,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av9926608"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    }
+  ]
+}
