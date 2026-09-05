@@ -27,6 +27,8 @@ jobs:
         with:
           node-version: 22
       - name: Generate segment snapshot
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         run: node scripts/update_jx3_segment_stats.mjs
       - name: Verify generated records
         run: |
