@@ -22,8 +22,9 @@ async function signedGet(path){
   if(s.cookie)headers.Cookie=s.cookie;
   if(p.kid&&p.dailySalt&&a.kid&&a.daily) {headers[a.kid]=p.kid;headers[a.daily]=p.dailySalt;}
   const response=await fetch(`${BASE}${path}`,{headers});
-  if(!response.ok)throw new Error(`${path} ${response.status}`);
-  return response.json();
+  const responseText=await response.text();
+  if(!response.ok)throw new Error(`${path} HTTP ${response.status}: ${responseText.slice(0,500)}`);
+  try{return JSON.parse(responseText);}catch(e){throw new Error(`${path} returned non-JSON: ${responseText.slice(0,500)}`);}
 }
 function normalize(data){
   const list=data?.rank?.data;
