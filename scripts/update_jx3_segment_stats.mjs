@@ -22,9 +22,37 @@ async function signedGet(path){
   if(s.cookie)headers.Cookie=s.cookie;
   if(p.kid&&p.dailySalt&&a.kid&&a.daily) {headers[a.kid]=p.kid;headers[a.daily]=p.dailySalt;}
   const response=await fetch(`${BASE}${path}`,{headers});
-  const responseText=await response.text();
-  if(!response.ok)throw new Error(`${path} HTTP ${response.status}: ${responseText.slice(0,500)}`);
-  try{const parsed=JSON.parse(responseText);return {rank:parsed?.rank||{data:[]}};}catch(e){throw new Error(`${path} returned non-JSON: ${responseText.slice(0,500)}`);}
+  if(!response.ok){
+    const errorText=await response.text();
+    throw new Error(`${path} HTTP ${response.status}: ${errorText.slice(0,500)}`);
+  }
+  const reader=response.body?.getReader();
+  const chunks=[];
+  let total=0;
+  const maxBytes=32*1024*1024;
+  if(reader){
+    while(true){
+      const part=await reader.read();
+      if(part.done)break;
+      total+=part.value.byteLength;
+      if(total>maxBytes){
+        await reader.cancel();
+        throw new Error(`${path} response exceeds 32MB; skipped to protect workflow memory`);
+      }
+      chunks.push(Buffer.from(part.value));
+    }
+  }else{
+    const text=await response.text();
+    if(text.length>maxBytes)throw new Error(`${path} response exceeds 32MB; skipped to protect workflow memory`);
+    chunks.push(Buffer.from(text));
+  }
+  const responseText=Buffer.concat(chunks).toString('utf8');
+  try{
+    const parsed=JSON.parse(responseText);
+    return {rank:parsed?.rank||{data:[]}};
+  }catch(e){
+    throw new Error(`${path} returned non-JSON: ${responseText.slice(0,500)}`);
+  }
 }
 function normalize(data){
   const list=data?.rank?.data;
