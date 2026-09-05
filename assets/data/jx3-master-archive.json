@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-archive",
+  "updated_at": "2026-09-05T00:00:00Z",
+  "seasons": [
+    {
+      "season": 1,
+      "year": 2016,
+      "path": "./assets/data/jx3-master-1-matches.json",
+      "coverage": "official_schedule_complete_for_preserved_api",
+      "match_count": 32
+    },
+    {
+      "season": 2,
+      "year": 2017,
+      "path": "./assets/data/jx3-master-2-matches.json",
+      "coverage": "official_schedule_complete_for_preserved_api",
+      "match_count": 74
+    },
+    {
+      "season": 3,
+      "year": 2018,
+      "path": "./assets/data/jx3-master-3-matches.json",
+      "coverage": "official_schedule_complete_for_preserved_api",
+      "match_count": 23
+    },
+    {
+      "season": 4,
+      "year": 2019,
+      "path": "./assets/data/jx3-master-4-matches.json",
+      "coverage": "partial_official_video_index"
+    },
+    {
+      "season": 5,
+      "year": 2020,
+      "path": "./assets/data/jx3-master-5-matches.json",
+      "coverage": "partial_official_video_index"
+    },
+    {
+      "season": 6,
+      "year": 2021,
+      "path": "./assets/data/jx3-master-6-matches.json",
+      "coverage": "partial_official_video_index"
+    },
+    {
+      "season": 7,
+      "year": 2022,
+      "path": "./assets/data/jx3-master-7-matches.json",
+      "coverage": "partial_official_video_index"
+    },
+    {
+      "season": 8,
+      "year": 2023,
+      "path": "./assets/data/jx3-master-8-matches.json",
+      "coverage": "partial_official_video_index"
+    }
+  ]
+}
