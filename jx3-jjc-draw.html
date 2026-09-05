@@ -13,7 +13,7 @@
 <body>
   <header class="wrap topbar"><a class="back" href="index.html#toolboxTitle">← 返回个人工具箱</a></header>
   <main class="wrap">
-    <section class="hero"><p class="eyebrow">名剑大会 · 3V3</p><h1>剑三 JJC 配置抽签</h1><p class="lead">自己勾选本次抽签范围，随机组成两个不同的输出心法和一个治疗心法。点击心法卡片即可加入或移出抽签池。</p></section>
+    <section class="hero"><p class="eyebrow">名剑大会 · 3V3</p><h1>剑三 JJC 配置抽签</h1><p class="lead">自己勾选本次抽签范围，两个输出位分别从所选范围独立抽取，并搭配一个治疗心法；两个输出可以相同。点击心法卡片即可加入或移出抽签池。</p></section>
     <section class="panel drawPanel" aria-labelledby="drawTitle">
       <h2 id="drawTitle">本轮配置</h2>
       <div class="slots" id="slots" aria-live="polite"></div>
@@ -40,7 +40,7 @@
     function showResult(ids){const xs=ids?.map(byId)||[];document.querySelector('#slots').innerHTML=slot(xs[0],'输出一')+slot(xs[1],'输出二')+slot(xs[2],'治疗')}
     function renderHistory(){const el=document.querySelector('#history');el.innerHTML=history.length?history.map(ids=>`<span class="historyItem">${ids.map(id=>byId(id)?.name).join(' · ')}</span>`).join(''):'<span class="count">还没有抽签记录</span>'}
     document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>{const ids=specs.filter(x=>x.type===b.dataset.type).map(x=>x.id);if(b.dataset.action==='all')ids.forEach(id=>selected.add(id));if(b.dataset.action==='none')ids.forEach(id=>selected.delete(id));if(b.dataset.action==='invert')ids.forEach(id=>selected.has(id)?selected.delete(id):selected.add(id));savePool();renderPools()});
-    document.querySelector('#drawBtn').onclick=()=>{const d=pool('dps'),h=pool('healer'),notice=document.querySelector('#notice');if(d.length<2||h.length<1){notice.textContent='请至少选择 2 个输出心法和 1 个治疗心法。';return}notice.textContent='';const btn=document.querySelector('#drawBtn');btn.disabled=true;document.querySelector('#slots').classList.add('rolling');let ticks=0,timer=setInterval(()=>{const shuffled=[...d].sort(()=>Math.random()-.5);showResult([shuffled[0].id,shuffled[1].id,h[Math.floor(Math.random()*h.length)].id]);if(++ticks>=10){clearInterval(timer);const chosen=[...d].sort(()=>Math.random()-.5).slice(0,2).map(x=>x.id);chosen.push(h[Math.floor(Math.random()*h.length)].id);showResult(chosen);history=[chosen,...history].slice(0,12);localStorage.setItem('jx3DrawHistory',JSON.stringify(history));renderHistory();btn.disabled=false;document.querySelector('#slots').classList.remove('rolling')}},90)};
+    document.querySelector('#drawBtn').onclick=()=>{const d=pool('dps'),h=pool('healer'),notice=document.querySelector('#notice');if(d.length<1||h.length<1){notice.textContent='请至少选择 1 个输出心法和 1 个治疗心法。';return}notice.textContent='';const btn=document.querySelector('#drawBtn');btn.disabled=true;document.querySelector('#slots').classList.add('rolling');let ticks=0,timer=setInterval(()=>{showResult([d[Math.floor(Math.random()*d.length)].id,d[Math.floor(Math.random()*d.length)].id,h[Math.floor(Math.random()*h.length)].id]);if(++ticks>=10){clearInterval(timer);const chosen=[d[Math.floor(Math.random()*d.length)].id,d[Math.floor(Math.random()*d.length)].id,h[Math.floor(Math.random()*h.length)].id];showResult(chosen);history=[chosen,...history].slice(0,12);localStorage.setItem('jx3DrawHistory',JSON.stringify(history));renderHistory();btn.disabled=false;document.querySelector('#slots').classList.remove('rolling')}},90)};
     document.querySelector('#clearHistory').onclick=()=>{history=[];localStorage.removeItem('jx3DrawHistory');renderHistory()};
     renderPools();showResult(history[0]);renderHistory();
   </script>
