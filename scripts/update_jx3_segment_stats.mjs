@@ -29,11 +29,14 @@ function normalize(data){
   return (data?.stats||[]).map((x,i)=>({rank:Number(x.rank||i+1),kungfu:x.kungfu||x.name,win_rate:Number(x.win_rate??x.winRate),pick_rate:Number(x.pick_rate??x.rate??0),sample_count:x.sample_count,player_count:x.player_count})).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
 async function fetchSegment(min,max,role){
+  const base='mode=summary&scope=segment&sample=solo&period=1d&role='+role;
   const candidates=[
-    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&minScore='+min+'&maxScore='+max,
-    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&scoreMin='+min+'&scoreMax='+max,
-    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&score_min='+min+'&score_max='+max,
-    'mode=summary&scope=segment&sample=solo&period=1d&role='+role+'&rating_min='+min+'&rating_max='+max
+    base+'&min='+min+'&max='+max,
+    base+'&min_score='+min+'&max_score='+max,
+    base+'&score_min='+min+'&score_max='+max,
+    base+'&minScore='+min+'&maxScore='+max,
+    base+'&scoreMin='+min+'&scoreMax='+max,
+    base+'&range='+min+'-'+max
   ];
   let last;
   for(const query of candidates){
@@ -41,8 +44,8 @@ async function fetchSegment(min,max,role){
       const data=await signedGet('/api/rank/builds?'+query);
       const stats=normalize(data);
       if(!stats.length)continue;
-      const returnedMin=Number(data?.min_score??data?.score_min??data?.filters?.min_score??data?.query?.min_score);
-      const returnedMax=Number(data?.max_score??data?.score_max??data?.filters?.max_score??data?.query?.max_score);
+      const returnedMin=Number(data?.min_score??data?.score_min??data?.min??data?.filters?.min_score??data?.filters?.min??data?.query?.min_score);
+      const returnedMax=Number(data?.max_score??data?.score_max??data?.max??data?.filters?.max_score??data?.filters?.max??data?.query?.max_score);
       if(Number.isFinite(returnedMin)&&Number.isFinite(returnedMax)&&(returnedMin!==min||returnedMax!==max))continue;
       return stats;
     }catch(e){last=e;}
