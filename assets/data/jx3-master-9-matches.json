@@ -1788,5 +1788,11 @@
     "composition_count": 0,
     "status": "official_match_level_verified_battles_not_returned",
     "note": "官方接口已核对比赛级记录；当前快照没有可用 battles 逐局配置，未伪造地图、Ban 或心法。"
+  },
+  "source_notes": " 已导入第九届大师赛完整表格；队伍按官方接口名称匹配，心法使用正式全称。",
+  "spreadsheet_import": {
+    "source_file": "剑网3第九届竞技大师赛_完整版.xlsx",
+    "matched_match_count": 0,
+    "imported_game_count": 0
   }
 }
