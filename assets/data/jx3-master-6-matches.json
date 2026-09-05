@@ -11,12 +11,16 @@
   "source": {
     "primary_url": "https://jx3.xoyo.com/match/#/",
     "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
-    "retrieved_via": "用户提供的完整 cms_query.json"
+    "retrieved_via": "用户提供的完整 cms_query.json",
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
   },
   "coverage": {
     "status": "official_match_and_game_data",
     "match_count": 103,
-    "game_count": 244
+    "game_count": 244,
+    "historical_record_count": 24
   },
   "jpl_cross_reference": {
     "name": "2021年职业联赛",
@@ -14939,6 +14943,378 @@
       ],
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
+    }
+  ],
+  "historical_records": [
+    {
+      "source_row": 137,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": "白帝风云",
+      "placement": "冠军",
+      "team": "星源",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "清儒"
+      ]
+    },
+    {
+      "source_row": 138,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "亚军",
+      "team": "长安茶馆",
+      "healer": "小岚心",
+      "teammates": [
+        "寒月无悔",
+        "南城葫芦娃",
+        "一梦绘君衣",
+        "饮血者清夜"
+      ]
+    },
+    {
+      "source_row": 139,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "季军",
+      "team": "所以你睡了没",
+      "healer": "方兮尔",
+      "teammates": [
+        "琴抚歌",
+        "小雪",
+        "搪瓷杯",
+        "声声乌龙"
+      ]
+    },
+    {
+      "source_row": 140,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "四强",
+      "team": "神的粉丝们",
+      "healer": "小花四",
+      "teammates": [
+        "旬子哥",
+        "吴恙",
+        "挽琛",
+        "钢琴钢琴"
+      ]
+    },
+    {
+      "source_row": 141,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "六强",
+      "team": "踏云",
+      "healer": "云染叶",
+      "teammates": [
+        "倾罪",
+        "方青砚",
+        "夏小花",
+        "衍涩"
+      ]
+    },
+    {
+      "source_row": 142,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "六强",
+      "team": "斗鱼",
+      "healer": "怯意",
+      "teammates": [
+        "泠兮陌",
+        "玄字",
+        "忘忧",
+        "危阑"
+      ]
+    },
+    {
+      "source_row": 143,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "八强",
+      "team": "轮椅上的外功",
+      "healer": "简直优秀",
+      "teammates": [
+        "烟笼沙",
+        "十月负雪",
+        "狗岛君",
+        "辰寒"
+      ]
+    },
+    {
+      "source_row": 144,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "八强",
+      "team": "岁岁平安",
+      "healer": "小疏蝶",
+      "teammates": [
+        "离人清欢",
+        "黑暗蓝猫侠",
+        "小卿枫",
+        "感时已暮"
+      ]
+    },
+    {
+      "source_row": 145,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "十六强",
+      "team": "九霄",
+      "healer": "听风风",
+      "teammates": [
+        "道德",
+        "日月劫",
+        "槐墨",
+        "清酒"
+      ]
+    },
+    {
+      "source_row": 146,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "十六强",
+      "team": "菠萝吹雪",
+      "healer": "十六弦",
+      "teammates": [
+        "尘微",
+        "东浅",
+        "绯尽",
+        "一柚子"
+      ]
+    },
+    {
+      "source_row": 147,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": "白帝风云",
+      "placement": "冠军",
+      "team": "斗鱼",
+      "healer": "怯意",
+      "teammates": [
+        "泠兮陌",
+        "玄字",
+        "忘忧",
+        "蓝曦晨",
+        "危阑"
+      ]
+    },
+    {
+      "source_row": 148,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "亚军",
+      "team": "轨迹",
+      "healer": "小疏蝶",
+      "teammates": [
+        "离人清欢",
+        "日月劫",
+        "亓官",
+        "葫芦娃",
+        "柳词"
+      ]
+    },
+    {
+      "source_row": 149,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "季军",
+      "team": "踏云",
+      "healer": "云染叶",
+      "teammates": [
+        "方青砚",
+        "夏小花",
+        "衍涩",
+        "倾罪",
+        "跑毛"
+      ]
+    },
+    {
+      "source_row": 150,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "四强",
+      "team": "卿酒",
+      "healer": "听风风",
+      "teammates": [
+        "小凉琴",
+        "肥猫",
+        "持风",
+        "问情子枫",
+        "小藏花"
+      ]
+    },
+    {
+      "source_row": 151,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": "白帝风云",
+      "placement": "冠军",
+      "team": "短危咖啡屋",
+      "healer": "长晏",
+      "teammates": [
+        "槐墨",
+        "黑暗蓝猫侠",
+        "浅陌轻语",
+        "潇洒哥"
+      ]
+    },
+    {
+      "source_row": 152,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "亚军",
+      "team": "男神音天花板",
+      "healer": "闻风声",
+      "teammates": [
+        "白悠然",
+        "心中客·",
+        "玄天君",
+        "困告告"
+      ]
+    },
+    {
+      "source_row": 153,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "季军",
+      "team": "王遗风",
+      "healer": "桃枝",
+      "teammates": [
+        "小阑珊",
+        "尘微",
+        "罩罩",
+        "怀黎"
+      ]
+    },
+    {
+      "source_row": 154,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "四强",
+      "team": "你也想巡逻吗",
+      "healer": "嗷润桔",
+      "teammates": [
+        "唐落尘",
+        "君弈",
+        "闲庭晚风",
+        "夏景澜"
+      ]
+    },
+    {
+      "source_row": 155,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": "北天药宗",
+      "placement": "冠军",
+      "team": "星源",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "白大反",
+        "清儒"
+      ]
+    },
+    {
+      "source_row": 156,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "亚军",
+      "team": "卿酒",
+      "healer": "听风风",
+      "teammates": [
+        "小藏花",
+        "破戒",
+        "心中客·",
+        "被遗忘的角落",
+        "持风"
+      ]
+    },
+    {
+      "source_row": 157,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "季军",
+      "team": "踏云",
+      "healer": "云染叶",
+      "teammates": [
+        "方青砚",
+        "倾罪",
+        "夏小花",
+        "衍涩",
+        "跑毛"
+      ]
+    },
+    {
+      "source_row": 158,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "四强",
+      "team": "斗鱼",
+      "healer": "怯意",
+      "teammates": [
+        "泠兮陌",
+        "玄字",
+        "忘忧",
+        "蓝曦晨",
+        "危阑"
+      ]
+    },
+    {
+      "source_row": 159,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "六强",
+      "team": "星辰",
+      "healer": "晨光",
+      "teammates": [
+        "君弈",
+        "苏挥墨",
+        "离挽",
+        "月弄痕",
+        "罩罩"
+      ]
+    },
+    {
+      "source_row": 160,
+      "event": "大师赛",
+      "season": "第六届",
+      "version": null,
+      "placement": "六强",
+      "team": "轨迹",
+      "healer": "叶霜",
+      "teammates": [
+        "日月劫",
+        "南城葫芦娃",
+        "一梦绘君衣",
+        "亓官昇睿",
+        "旬子哥"
+      ]
     }
   ]
 }
