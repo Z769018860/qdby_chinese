@@ -1,0 +1,35 @@
+name: Update JX3 Top1000 data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-jx3-top1000
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch Top1000 snapshot
+        run: node scripts/update_jx3_top1000.mjs
+      - name: Commit changed snapshot
+        run: |
+          if git diff --quiet -- jx3-top1000.json; then
+            echo "Top1000 snapshot is unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add jx3-top1000.json
+          git commit -m "chore: refresh JX3 Top1000 snapshot"
+          git push
