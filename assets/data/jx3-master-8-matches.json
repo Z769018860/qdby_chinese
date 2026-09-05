@@ -20,7 +20,7 @@
   "coverage": {
     "status": "official_match_data_plus_ocr_spreadsheet_game_rows_partial",
     "match_count": 116,
-    "game_count": 38,
+    "game_count": 149,
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
@@ -37,7 +37,7 @@
   "jpl_cross_reference": null,
   "stats": {
     "match_count": 116,
-    "game_count": 38,
+    "game_count": 149,
     "verified_composition_count": 0
   },
   "matches": [
@@ -473,7 +473,275 @@
       "team_b": "故人二三",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍云 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "故人二三",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "凌药歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "和尚 | 鲸鱼 | 奶药"
+          },
+          "team_b": {
+            "name": "故人二三",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒药歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "和尚 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "故人二三",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒刀歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "凌药歌"
+          },
+          "team_b": {
+            "name": "故人二三(花海)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒药歌"
+          },
+          "team_b": {
+            "name": "故人二三(花海)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒刀歌"
+          },
+          "team_b": {
+            "name": "故人二三(花海)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫刀药"
+          },
+          "team_b": {
+            "name": "故人二三(花海)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*夸张了鸭",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策藏花"
+          },
+          "team_b": {
+            "name": "故人二三(花海)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-3",
@@ -509,27 +777,29 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "凌雪 | 刀宗 | 奶秀"
           },
           "team_b": {
             "name": "我宁愿做错也不愿不做",
             "composition": [
               {
-                "id": "aoxue",
-                "name": "aoxue"
+                "id": "yunshang",
+                "name": "yunshang"
               },
               {
                 "id": "badao",
                 "name": "badao"
               },
               {
-                "id": "yunshang",
-                "name": "yunshang"
+                "id": "aoxue",
+                "name": "aoxue"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "策霸秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -552,7 +822,8 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "藏剑 | 天策 | 奶秀"
           },
           "team_b": {
             "name": "我宁愿做错也不愿不做",
@@ -562,9 +833,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "双刀秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -602,23 +874,25 @@
                 "name": "xiangzhi"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "明教 | 花间 | 奶歌"
           },
           "team_b": {
             "name": "归来惆怅见海棠",
             "composition": [
               {
-                "id": "tianluo",
-                "name": "tianluo"
-              },
-              {
                 "id": "yunshang",
                 "name": "yunshang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸螺秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -641,23 +915,29 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "毒经 | 刀宗 | 奶秀"
           },
           "team_b": {
             "name": "归来惆怅见海棠",
             "composition": [
               {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
                 "id": "tianluo",
                 "name": "tianluo"
               },
               {
-                "id": "yunshang",
-                "name": "yunshang"
+                "id": "zixia",
+                "name": "zixia"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "气螺秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 3,
@@ -672,15 +952,16 @@
                 "name": "gufeng"
               },
               {
-                "id": "yunshang",
-                "name": "yunshang"
+                "id": "gufeng",
+                "name": "gufeng"
               },
               {
-                "id": "xiangzhi",
-                "name": "xiangzhi"
+                "id": "yunshang",
+                "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶秀 | 奶歌"
           },
           "team_b": {
             "name": "归来惆怅见海棠",
@@ -690,9 +971,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸刀秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -722,23 +1004,20 @@
                 "name": "wufang"
               },
               {
-                "id": "fen shan",
-                "name": "fen shan"
+                "id": "fenshan",
+                "name": "fenshan"
               },
               {
                 "id": "lingsu",
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "无方 | 苍云 | 奶药"
           },
           "team_b": {
             "name": "我奶不住捏(四人队)",
             "composition": [
-              {
-                "id": "tianluo",
-                "name": "tianluo"
-              },
               {
                 "id": "huajian",
                 "name": "huajian"
@@ -746,11 +1025,16 @@
               {
                 "id": "yunshang",
                 "name": "yunshang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "螺花秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -773,7 +1057,8 @@
                 "name": "xiangzhi"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "田螺 | 衍天 | 奶歌"
           },
           "team_b": {
             "name": "我奶不住捏(四人队)",
@@ -781,15 +1066,124 @@
               {
                 "id": "lingsu",
                 "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "鲸药药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "流浪儿童",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
               },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "螺花秀"
+          },
+          "team_b": {
+            "name": "我奶不住捏(4人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "流浪儿童",
+            "composition": [
               {
                 "id": "lingsu",
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸药药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "team_b": {
+            "name": "我奶不住捏(4人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "流浪儿童",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒螺歌"
+          },
+          "team_b": {
+            "name": "我奶不住捏(4人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "流浪儿童",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双刀歌"
+          },
+          "team_b": {
+            "name": "我奶不住捏(4人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -819,7 +1213,251 @@
       "team_b": "玩玩",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "衍天 | 刀宗 | 奶歌"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫药药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "衍天 | 花间 | 奶秀"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒藏药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒经 | 毒经 | 奶歌"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫刀药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫药药"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫刀药"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气药秀"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双刀秀"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 6,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "彻底癫狂",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍药药"
+          },
+          "team_b": {
+            "name": "玩玩(一梦绘君衣3人)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-8",
@@ -836,6 +1474,133 @@
       "games": [
         {
           "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "鹦鹉说唱天团",
+            "composition": [
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "凌雪 | 和尚 | 奶秀"
+          },
+          "team_b": {
+            "name": "三亿不够三十亿",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍药毒"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "鹦鹉说唱天团",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "三亿不够三十亿",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气花歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "鹦鹉说唱天团",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "三亿不够三十亿",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气刀毒"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
           "map": "乐山大佛窟",
           "score": null,
           "winner": null,
@@ -843,26 +1608,112 @@
             "name": "鹦鹉说唱天团",
             "composition": [
               {
-                "id": "fen shan",
-                "name": "fen shan"
+                "id": "dujing",
+                "name": "dujing"
               },
               {
                 "id": "lingsu",
                 "name": "lingsu"
-              },
-              {
-                "id": "dujing",
-                "name": "dujing"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "苍药毒"
           },
           "team_b": {
             "name": "三亿不够三十亿",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "鹦鹉说唱天团",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气花歌"
+          },
+          "team_b": {
+            "name": "三亿不够三十亿",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "鹦鹉说唱天团",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气刀毒"
+          },
+          "team_b": {
+            "name": "三亿不够三十亿",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "鹦鹉说唱天团",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气刀毒"
+          },
+          "team_b": {
+            "name": "三亿不够三十亿",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -900,7 +1751,8 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "霸刀 | 无方 | 奶秀"
           },
           "team_b": {
             "name": "给鸽子精三拳",
@@ -910,9 +1762,10 @@
                 "name": "dujing"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸刀毒"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -935,7 +1788,8 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "霸刀*摔死 | 明教 | 奶药"
           },
           "team_b": {
             "name": "给鸽子精三拳",
@@ -945,9 +1799,10 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸蓬药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 3,
@@ -970,23 +1825,25 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "蓬莱 | 明教 | 奶药"
           },
           "team_b": {
             "name": "给鸽子精三拳",
             "composition": [
               {
-                "id": "tianluo",
-                "name": "tianluo"
-              },
-              {
                 "id": "lingsu",
                 "name": "lingsu"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "螺蓬药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1002,7 +1859,135 @@
       "team_b": "错的不是瓦塔西是赛该",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "小桃源呀",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶秀"
+          },
+          "team_b": {
+            "name": "*错的不是瓦塔西是赛该",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花衍秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "小桃源呀",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "奶秀 | 衍天 | 冰心"
+          },
+          "team_b": {
+            "name": "*错的不是瓦塔西是赛该",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气花歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "小桃源呀",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "天策 | 奶秀 | 冰心"
+          },
+          "team_b": {
+            "name": "*错的不是瓦塔西是赛该",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花衍歌"
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-11",
@@ -1019,6 +2004,96 @@
       "games": [
         {
           "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "飘渺",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "五年一剑江湖老",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃螺药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "飘渺",
+            "composition": [
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍云 | 藏剑 | 奶花"
+          },
+          "team_b": {
+            "name": "五年一剑江湖老",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒花药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
           "map": "青竹书院",
           "score": null,
           "winner": null,
@@ -1026,26 +2101,28 @@
             "name": "飘渺",
             "composition": [
               {
-                "id": "yijin",
-                "name": "yijin"
+                "id": "lingsu",
+                "name": "lingsu"
               },
               {
                 "id": "tianluo",
                 "name": "tianluo"
               },
               {
-                "id": "lingsu",
-                "name": "lingsu"
+                "id": "yijin",
+                "name": "yijin"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "秃螺药"
           },
           "team_b": {
             "name": "五年一剑江湖老",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1060,22 +2137,24 @@
                 "name": "dujing"
               },
               {
-                "id": "huajian",
-                "name": "huajian"
-              },
-              {
                 "id": "lingsu",
                 "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "毒花药"
           },
           "team_b": {
             "name": "五年一剑江湖老",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 4,
@@ -1086,26 +2165,28 @@
             "name": "飘渺",
             "composition": [
               {
-                "id": "aoxue",
-                "name": "aoxue"
+                "id": "yunshang",
+                "name": "yunshang"
               },
               {
                 "id": "badao",
                 "name": "badao"
               },
               {
-                "id": "yunshang",
-                "name": "yunshang"
+                "id": "aoxue",
+                "name": "aoxue"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "策霸秀"
           },
           "team_b": {
             "name": "五年一剑江湖老",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 5,
@@ -1116,26 +2197,28 @@
             "name": "飘渺",
             "composition": [
               {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
                 "id": "aoxue",
                 "name": "aoxue"
               },
               {
                 "id": "bingxin",
                 "name": "bingxin"
-              },
-              {
-                "id": "yunshang",
-                "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "策冰秀"
           },
           "team_b": {
             "name": "五年一剑江湖老",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 6,
@@ -1146,26 +2229,28 @@
             "name": "飘渺",
             "composition": [
               {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
                 "id": "aoxue",
                 "name": "aoxue"
               },
               {
                 "id": "bingxin",
                 "name": "bingxin"
-              },
-              {
-                "id": "yunshang",
-                "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "策冰秀"
           },
           "team_b": {
             "name": "五年一剑江湖老",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1191,8 +2276,8 @@
             "name": "不才",
             "composition": [
               {
-                "id": "fen shan",
-                "name": "fen shan"
+                "id": "fenshan",
+                "name": "fenshan"
               },
               {
                 "id": "zixia",
@@ -1203,7 +2288,8 @@
                 "name": "lijing"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "苍云 | 气纯 | 奶花"
           },
           "team_b": {
             "name": "夏日重现",
@@ -1217,9 +2303,10 @@
                 "name": "mowen"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "明花歌"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1242,23 +2329,25 @@
                 "name": "lijing"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "和尚 | 气纯 | 奶花"
           },
           "team_b": {
             "name": "夏日重现",
             "composition": [
               {
-                "id": "huajian",
-                "name": "huajian"
-              },
-              {
                 "id": "lingsu",
                 "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "花衍药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 3,
@@ -1281,7 +2370,8 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "刀宗 | 和尚 | 奶药"
           },
           "team_b": {
             "name": "夏日重现",
@@ -1291,9 +2381,10 @@
                 "name": "mowen"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "莫刀歌"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1309,7 +2400,251 @@
       "team_b": "弈悟",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "田螺 | 衍天 | 奶药"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气秃秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "田螺 | 和尚 | 奶歌"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑刀秀*掉线"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 衍天 | 奶歌"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃刀药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气秃秀"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑刀秀*掉线"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秀刀药"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "继续参与",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气刀花"
+          },
+          "team_b": {
+            "name": "弈悟",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-14",
@@ -1323,7 +2658,162 @@
       "team_b": "梅子青时雨",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*梅子青时雨",
+            "composition": [
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "凌雪 | 藏剑 | 奶药"
+          },
+          "team_b": {
+            "name": "三个焚影",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三田螺"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*梅子青时雨",
+            "composition": [
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "凌雪 | 明教 | 奶药"
+          },
+          "team_b": {
+            "name": "三个焚影",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三田螺"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*梅子青时雨",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三田螺"
+          },
+          "team_b": {
+            "name": "三个焚影",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*梅子青时雨",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒药药"
+          },
+          "team_b": {
+            "name": "三个焚影",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*梅子青时雨",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐秀"
+          },
+          "team_b": {
+            "name": "三个焚影",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-15",
@@ -1359,7 +2849,8 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "剑纯 | 无方 | 奶药"
           },
           "team_b": {
             "name": "感觉不如感觉",
@@ -1369,9 +2860,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "凌刀秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1394,7 +2886,8 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "无方 | 无方 | 奶药"
           },
           "team_b": {
             "name": "感觉不如感觉",
@@ -1408,9 +2901,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "剑凌秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1426,7 +2920,255 @@
       "team_b": "天才幼儿园六",
       "score": "1:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍云 | 和尚 | 奶药"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双刀秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 苍云 | 奶药"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃凌花"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶秀"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃刀药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双刀秀"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃凌花"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明药花"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明凌花"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "天才幼儿园六",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明凌花"
+          },
+          "team_b": {
+            "name": "雾灭",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-17",
@@ -1462,15 +3204,12 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "刀宗 | 衍天 | 奶药"
           },
           "team_b": {
             "name": "数码没有宝贝",
             "composition": [
-              {
-                "id": "yijin",
-                "name": "yijin"
-              },
               {
                 "id": "lingsu",
                 "name": "lingsu"
@@ -1478,11 +3217,16 @@
               {
                 "id": "yunshang",
                 "name": "yunshang"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "秃药秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1505,23 +3249,25 @@
                 "name": "lijing"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "气纯 | 无方 | 奶花"
           },
           "team_b": {
             "name": "数码没有宝贝",
             "composition": [
               {
-                "id": "bingxin",
-                "name": "bingxin"
-              },
-              {
                 "id": "yunshang",
                 "name": "yunshang"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "冰鲸秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1537,7 +3283,198 @@
       "team_b": "你在搞锤子呢",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*鸿蒙",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 莫问 | 奶药"
+          },
+          "team_b": {
+            "name": "你在搞锤子呢",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气药药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*鸿蒙",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 花间 | 奶药"
+          },
+          "team_b": {
+            "name": "你在搞锤子呢",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃凌药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*鸿蒙",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气药药"
+          },
+          "team_b": {
+            "name": "你在搞锤子呢",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*鸿蒙",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃凌药"
+          },
+          "team_b": {
+            "name": "你在搞锤子呢",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*鸿蒙",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "螺衍歌"
+          },
+          "team_b": {
+            "name": "你在搞锤子呢",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*鸿蒙",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "鲸衍秀"
+          },
+          "team_b": {
+            "name": "你在搞锤子呢",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-19",
@@ -1573,7 +3510,8 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "天策 | 刀宗 | 奶秀"
           },
           "team_b": {
             "name": "来点人间配置",
@@ -1591,9 +3529,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "剑药秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1616,7 +3555,8 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸鱼 | 天策 | 奶秀"
           },
           "team_b": {
             "name": "来点人间配置",
@@ -1626,9 +3566,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "凌刀秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 3,
@@ -1651,7 +3592,8 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "鲸鱼 | 天策 | 奶秀"
           },
           "team_b": {
             "name": "来点人间配置",
@@ -1661,9 +3603,10 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "凌刀秀"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1679,7 +3622,90 @@
       "team_b": "男童女童向前冲",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "男童女童向前冲",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "和尚 | 霸刀 | 奶花"
+          },
+          "team_b": {
+            "name": "哥的心禁止访问(中和哥)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策药药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "男童女童向前冲",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 冰心 | 奶花"
+          },
+          "team_b": {
+            "name": "哥的心禁止访问(中和哥)",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "螺衍花"
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-21",
@@ -1693,7 +3719,271 @@
       "team_b": "一朵寒芒先到",
       "score": "1:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 凌雪 | 奶歌"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明歌秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 凌雪 | 奶药"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑气秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双刀药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明歌秀"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": "乐山大佛窟",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑气秀"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双刀药"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "冰鲸歌"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 6,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一朵寒芒先到",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "毒潜秀"
+          },
+          "team_b": {
+            "name": "老莫我想吃鱼了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-22",
@@ -1707,7 +3997,271 @@
       "team_b": "恋爱脑",
       "score": "1:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花间 | 衍天 | 奶花"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气鲸毒"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气纯 | 明教 | 奶药"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃药药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "zixia",
+                "name": "zixia"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气纯 | 明教 | 奶药"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃刀药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气鲸毒"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃药药"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃刀药"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秀药药"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*恋爱脑",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秀药药"
+          },
+          "team_b": {
+            "name": "包子掉地上了",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-23",
@@ -1721,7 +4275,119 @@
       "team_b": "天歌",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "扶小绿过马路",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "天歌(三人队)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "扶小绿过马路",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "田螺 | 鲸鱼 | 奶秀"
+          },
+          "team_b": {
+            "name": "天歌(三人队)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "扶小绿过马路",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶秀"
+          },
+          "team_b": {
+            "name": "天歌(三人队)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三药"
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-24",
@@ -1735,7 +4401,198 @@
       "team_b": "海阔天空",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "海阔天空",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "鲸鱼 | 藏剑 | 奶药"
+          },
+          "team_b": {
+            "name": "我的心可不冷",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "海阔天空",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "butian",
+                "name": "butian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 藏剑 | 奶毒"
+          },
+          "team_b": {
+            "name": "我的心可不冷",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊丐秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "墟海之眼",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "海阔天空",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐秀"
+          },
+          "team_b": {
+            "name": "我的心可不冷",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "海阔天空",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊丐秀"
+          },
+          "team_b": {
+            "name": "我的心可不冷",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "海阔天空",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气药花"
+          },
+          "team_b": {
+            "name": "我的心可不冷",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "天山碎冰谷",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "海阔天空",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐秀"
+          },
+          "team_b": {
+            "name": "我的心可不冷",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-25",
@@ -1749,7 +4606,131 @@
       "team_b": "一偃仰俗尘一",
       "score": "1:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一偃仰俗尘一",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 霸刀 | 奶药"
+          },
+          "team_b": {
+            "name": "阿司匹林(登仙哥)",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃刀花"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一偃仰俗尘一",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "鲸鱼 | 刀宗 | 奶花"
+          },
+          "team_b": {
+            "name": "阿司匹林(登仙哥)",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "螺衍花"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "一偃仰俗尘一",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "鲸鱼 | 刀宗 | 奶秀"
+          },
+          "team_b": {
+            "name": "阿司匹林(登仙哥)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃刀药"
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-26",
@@ -1763,7 +4744,202 @@
       "team_b": "天降鸿运",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*天降鸿运",
+            "composition": [
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "冰心 | 衍天 | 奶药"
+          },
+          "team_b": {
+            "name": "队友说随便叫啥",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三明教"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*天降鸿运",
+            "composition": [
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              },
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍云 | 无方 | 奶药"
+          },
+          "team_b": {
+            "name": "队友说随便叫啥",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策衍药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*天降鸿运",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "三明教"
+          },
+          "team_b": {
+            "name": "队友说随便叫啥",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*天降鸿运",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策衍药"
+          },
+          "team_b": {
+            "name": "队友说随便叫啥",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*天降鸿运",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气螺秀"
+          },
+          "team_b": {
+            "name": "队友说随便叫啥",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*天降鸿运",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "zixia",
+                "name": "zixia"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "气螺秀"
+          },
+          "team_b": {
+            "name": "队友说随便叫啥",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-27",
@@ -1799,27 +4975,29 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "霸刀 | 明教 | 奶药"
           },
           "team_b": {
             "name": "夏乔画故棠",
             "composition": [
               {
-                "id": "yijin",
-                "name": "yijin"
+                "id": "lingsu",
+                "name": "lingsu"
               },
               {
                 "id": "huajian",
                 "name": "huajian"
               },
               {
-                "id": "lingsu",
-                "name": "lingsu"
+                "id": "yijin",
+                "name": "yijin"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "秃花药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1842,7 +5020,8 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "霸刀 | 明教 | 奶药"
           },
           "team_b": {
             "name": "夏乔画故棠",
@@ -1852,13 +5031,14 @@
                 "name": "lingsu"
               },
               {
-                "id": "lingsu",
-                "name": "lingsu"
+                "id": "zixia",
+                "name": "zixia"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "气药药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -1896,27 +5076,21 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "冰心 | 鲸鱼 | 奶秀"
           },
           "team_b": {
             "name": "粉红泡泡屋",
             "composition": [
               {
-                "id": "fen shan",
-                "name": "fen shan"
-              },
-              {
-                "id": "lingsu",
-                "name": "lingsu"
-              },
-              {
                 "id": "lingsu",
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "苍药药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -1939,27 +5113,25 @@
                 "name": "xiangzhi"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "衍天 | 鲸鱼 | 奶歌"
           },
           "team_b": {
             "name": "粉红泡泡屋",
             "composition": [
               {
-                "id": "yijin",
-                "name": "yijin"
-              },
-              {
-                "id": "fen shan",
-                "name": "fen shan"
-              },
-              {
                 "id": "lingsu",
                 "name": "lingsu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "秃苍药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 3,
@@ -1982,7 +5154,8 @@
                 "name": "xiangzhi"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "冰心 | 刀宗 | 奶歌"
           },
           "team_b": {
             "name": "粉红泡泡屋",
@@ -1992,9 +5165,10 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "双刀药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -2010,7 +5184,198 @@
       "team_b": "守男德爱老婆",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "守男德爱老婆",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "无方 | 田螺 | 奶药"
+          },
+          "team_b": {
+            "name": "低手(三人队)",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫刀歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "守男德爱老婆",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 衍天 | 奶秀"
+          },
+          "team_b": {
+            "name": "低手(三人队)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花药歌"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "守男德爱老婆",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "莫刀歌"
+          },
+          "team_b": {
+            "name": "低手(三人队)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "守男德爱老婆",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花药歌"
+          },
+          "team_b": {
+            "name": "低手(三人队)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "守男德爱老婆",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "鲸刀歌"
+          },
+          "team_b": {
+            "name": "低手(三人队)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "藏剑武库",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "守男德爱老婆",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "bingxin",
+                "name": "bingxin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "冰苍歌"
+          },
+          "team_b": {
+            "name": "低手(三人队)",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-30",
@@ -2024,7 +5389,194 @@
       "team_b": "成功不一定要自己努力",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*磊爷只认钱",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lijing",
+                "name": "lijing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "田螺 | 刀宗 | 奶花"
+          },
+          "team_b": {
+            "name": "成功不一定要自己努力",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃苍毒"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*磊爷只认钱",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "和尚 | 天策 | 奶药"
+          },
+          "team_b": {
+            "name": "成功不一定要自己努力",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "藏刀秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
+          "map": "拭剑台",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*磊爷只认钱",
+            "composition": [
+              {
+                "id": "dujing",
+                "name": "dujing"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃苍毒"
+          },
+          "team_b": {
+            "name": "成功不一定要自己努力",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*磊爷只认钱",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "藏刀秀"
+          },
+          "team_b": {
+            "name": "成功不一定要自己努力",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "沃石火狱",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*磊爷只认钱",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秀苍药"
+          },
+          "team_b": {
+            "name": "成功不一定要自己努力",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 5,
+          "map": "华山之巅",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "*磊爷只认钱",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑刀毒"
+          },
+          "team_b": {
+            "name": "成功不一定要自己努力",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-31",
@@ -2038,7 +5590,119 @@
       "team_b": "次饭坐小孩那桌",
       "score": "1:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "次饭坐小孩那桌",
+            "composition": [
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              },
+              {
+                "id": "butian",
+                "name": "butian"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "衍天 | 苍云 | 奶毒"
+          },
+          "team_b": {
+            "name": "下水道观光大师赛(四人队)",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊丐秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "次饭坐小孩那桌",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "和尚 | 刀宗 | 奶秀"
+          },
+          "team_b": {
+            "name": "下水道观光大师赛(四人队)",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "苍丐秀"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "次饭坐小孩那桌",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "fenshan",
+                "name": "fenshan"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "和尚 | 刀宗 | 苍云 | 奶毒"
+          },
+          "team_b": {
+            "name": "下水道观光大师赛(四人队)",
+            "composition": [
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "丐刀秀"
+          },
+          "source_note": "OCR汇总表"
+        }
+      ]
     },
     {
       "match_id": "master-8-32",
@@ -2055,6 +5719,92 @@
       "games": [
         {
           "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "双刀击而破之",
+            "composition": [
+              {
+                "id": "cangjian",
+                "name": "cangjian"
+              },
+              {
+                "id": "yinlong",
+                "name": "yinlong"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "藏剑 | 凌雪 | 奶药"
+          },
+          "team_b": {
+            "name": "长风绕旗",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "秃霸药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "双刀击而破之",
+            "composition": [
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "gufeng",
+                "name": "gufeng"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶药"
+          },
+          "team_b": {
+            "name": "长风绕旗",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸药药"
+          },
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 1,
           "map": "乐山大佛窟",
           "score": null,
           "winner": null,
@@ -2062,26 +5812,28 @@
             "name": "双刀击而破之",
             "composition": [
               {
-                "id": "yijin",
-                "name": "yijin"
+                "id": "lingsu",
+                "name": "lingsu"
               },
               {
                 "id": "badao",
                 "name": "badao"
               },
               {
-                "id": "lingsu",
-                "name": "lingsu"
+                "id": "yijin",
+                "name": "yijin"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "秃霸药"
           },
           "team_b": {
             "name": "长风绕旗",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -2092,26 +5844,52 @@
             "name": "双刀击而破之",
             "composition": [
               {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
                 "id": "badao",
                 "name": "badao"
-              },
-              {
-                "id": "lingsu",
-                "name": "lingsu"
-              },
-              {
-                "id": "lingsu",
-                "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "霸药药"
           },
           "team_b": {
             "name": "长风绕旗",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
+        },
+        {
+          "game_no": 4,
+          "map": "青竹书院",
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "双刀击而破之",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "双花秀"
+          },
+          "team_b": {
+            "name": "长风绕旗",
+            "composition": [],
+            "bans": [],
+            "composition_raw": ""
+          },
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 5,
@@ -2134,14 +5912,16 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "毒花秀"
           },
           "team_b": {
             "name": "长风绕旗",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 6,
@@ -2164,14 +5944,16 @@
                 "name": "yunshang"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "毒花秀"
           },
           "team_b": {
             "name": "长风绕旗",
             "composition": [],
-            "bans": []
+            "bans": [],
+            "composition_raw": ""
           },
-          "source_note": "OCR汇总表16进8单败制；对方配置待同场另一侧核对"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -2209,27 +5991,25 @@
                 "name": "xiangzhi"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "刀宗 | 刀宗 | 奶歌"
           },
           "team_b": {
             "name": "鼠道难",
             "composition": [
               {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
                 "id": "yijin",
                 "name": "yijin"
-              },
-              {
-                "id": "lingsu",
-                "name": "lingsu"
-              },
-              {
-                "id": "lingsu",
-                "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "秃药药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 2,
@@ -2252,7 +6032,8 @@
                 "name": "huajian"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "毒经 | 奶秀 | 花间"
           },
           "team_b": {
             "name": "鼠道难",
@@ -2262,9 +6043,10 @@
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "蓬刀药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         },
         {
           "game_no": 3,
@@ -2287,23 +6069,21 @@
                 "name": "gufeng"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "毒经 | 奶秀 | 刀宗"
           },
           "team_b": {
             "name": "鼠道难",
             "composition": [
               {
-                "id": "fen shan",
-                "name": "fen shan"
-              },
-              {
                 "id": "lingsu",
                 "name": "lingsu"
               }
             ],
-            "bans": []
+            "bans": [],
+            "composition_raw": "苍蓬药"
           },
-          "source_note": "OCR汇总表32进16单败制"
+          "source_note": "OCR汇总表"
         }
       ]
     },
@@ -3854,16 +7634,14 @@
     }
   ],
   "ocr_spreadsheet_import": {
-    "source_file": "剑网3第八届大师赛赛程表.xlsx",
-    "imported_at": "2026-09-05T00:00:00Z",
-    "matched_match_count": 14,
-    "imported_game_count": 38,
-    "notes": "从OCR汇总表导入逐局配置；表中未提供或无法确认的对方配置、地图、比分保留为null或空数组，待后续核对。",
+    "source_file": "剑网3第八届大师赛赛程表 (1).xlsx",
+    "matched_match_count": 31,
+    "imported_game_count": 149,
     "normalization_rules": [
-      "去除队伍名前缀星号",
-      "去除括号及括号内容",
-      "强免集团→强兔集团",
-      "我奶不住捏(四人队/4人)→我奶不住捏"
-    ]
+      "去除星号",
+      "去除括号及备注",
+      "按官方队伍名双向匹配"
+    ],
+    "notes": "已将32进16与16进8表格逐行转为标准games记录；无法确认的字段保留null或空数组。"
   }
 }
