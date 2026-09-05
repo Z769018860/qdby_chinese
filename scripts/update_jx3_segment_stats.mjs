@@ -16,7 +16,7 @@ try{
   await page.waitForTimeout(1200);
   const rows=await page.locator('[role="row"][title*="热门队伍配置"]').allTextContents(),stats=[];
   for(const text of rows){const m=text.match(/#\\s*(\\d+)\\s+(.+?)\\s+(\\d+(?:\\.\\d+)?)%\\s+(\\d+(?:\\.\\d+)?)%/);if(m)stats.push({rank:Number(m[1]),kungfu:m[2].trim(),win_rate:Number(m[3])/100,pick_rate:Number(m[4])/100});}
-  out.ranges[String(min)+'-'+String(max)]={min_score:min,max_score:max,stats};
+  out.ranges[String(min)+'-'+String(max)]={min_score:min,max_score:max,dps:stats,healer:[]};
  }
 }finally{await browser.close();}
 await fs.writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\\n');
