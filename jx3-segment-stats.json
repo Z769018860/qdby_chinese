@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "https://jx3.unua.top/api/rank/builds",
-  "updated_at": "2026-09-05T21:11:46.430Z",
+  "updated_at": "2026-09-05T21:17:16.023Z",
   "mode": "3v3",
   "sample": "solo",
   "period": "1d",
@@ -46,48 +46,6 @@
       "min_score": 2200,
       "max_score": 2400,
       "dps": [
-        {
-          "rank": 1,
-          "kungfu": "离经易道",
-          "win_rate": 0.5148,
-          "pick_rate": 0.3134,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 2,
-          "kungfu": "相知",
-          "win_rate": 0.5174,
-          "pick_rate": 0.082,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 3,
-          "kungfu": "云裳心经",
-          "win_rate": 0.5034,
-          "pick_rate": 0.2594,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 4,
-          "kungfu": "补天诀",
-          "win_rate": 0.5041,
-          "pick_rate": 0.2258,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 5,
-          "kungfu": "灵素",
-          "win_rate": 0.4989,
-          "pick_rate": 0.1195,
-          "sample_count": 0,
-          "player_count": 0
-        }
-      ],
-      "healer": [
         {
           "rank": 1,
           "kungfu": "北傲诀",
@@ -272,54 +230,54 @@
           "sample_count": 0,
           "player_count": 0
         }
-      ]
-    },
-    "2400-2600": {
-      "min_score": 2400,
-      "max_score": 2600,
-      "dps": [
+      ],
+      "healer": [
         {
           "rank": 1,
           "kungfu": "离经易道",
-          "win_rate": 0.504,
-          "pick_rate": 0.373,
+          "win_rate": 0.5148,
+          "pick_rate": 0.3134,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 2,
           "kungfu": "相知",
-          "win_rate": 0.544,
-          "pick_rate": 0.1192,
+          "win_rate": 0.5174,
+          "pick_rate": 0.082,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 3,
           "kungfu": "云裳心经",
-          "win_rate": 0.4742,
-          "pick_rate": 0.2228,
+          "win_rate": 0.5034,
+          "pick_rate": 0.2594,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 4,
           "kungfu": "补天诀",
-          "win_rate": 0.4827,
-          "pick_rate": 0.1779,
+          "win_rate": 0.5041,
+          "pick_rate": 0.2258,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 5,
           "kungfu": "灵素",
-          "win_rate": 0.4873,
-          "pick_rate": 0.1071,
+          "win_rate": 0.4989,
+          "pick_rate": 0.1195,
           "sample_count": 0,
           "player_count": 0
         }
-      ],
-      "healer": [
+      ]
+    },
+    "2400-2600": {
+      "min_score": 2400,
+      "max_score": 2600,
+      "dps": [
         {
           "rank": 1,
           "kungfu": "孤锋诀",
@@ -501,6 +459,48 @@
           "kungfu": "紫霞功",
           "win_rate": 0.4769,
           "pick_rate": 0.0208,
+          "sample_count": 0,
+          "player_count": 0
+        }
+      ],
+      "healer": [
+        {
+          "rank": 1,
+          "kungfu": "离经易道",
+          "win_rate": 0.504,
+          "pick_rate": 0.373,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 2,
+          "kungfu": "相知",
+          "win_rate": 0.544,
+          "pick_rate": 0.1192,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 3,
+          "kungfu": "云裳心经",
+          "win_rate": 0.4742,
+          "pick_rate": 0.2228,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 4,
+          "kungfu": "补天诀",
+          "win_rate": 0.4827,
+          "pick_rate": 0.1779,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 5,
+          "kungfu": "灵素",
+          "win_rate": 0.4873,
+          "pick_rate": 0.1071,
           "sample_count": 0,
           "player_count": 0
         }
