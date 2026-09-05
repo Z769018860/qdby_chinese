@@ -38,12 +38,18 @@ function normalize(data){
 }
 async function fetchSegment(min,max,role){
   const kungfuType=role==='healer'?'hps':'tps';
-  const matchMode='solo';
-  const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType=last1d&scoreStart='+min+'&scoreEnd='+max;
-  const data=await signedGet(path);
-  const stats=normalize(data);
-  if(!stats.length)throw new Error('jjc-stats returned no '+role+' data for '+min+'-'+max);
-  return stats;
+  const modes=['single','solo','individual'];
+  let last;
+  for(const matchMode of modes){
+    const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType=last1d&scoreStart='+min+'&scoreEnd='+max;
+    try{
+      const data=await signedGet(path);
+      const stats=normalize(data);
+      if(stats.length)return stats;
+      last=new Error('empty response for matchMode='+matchMode);
+    }catch(e){last=e;}
+  }
+  throw last||new Error('jjc-stats returned no '+role+' data for '+min+'-'+max);
 }
 async function emptySnapshot(reason){
   const out={schema_version:1,source:BASE+'/api/rank/builds',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',fallback:false,sync_status:'segment_api_unavailable',sync_error:String(reason),ranges:{}};
