@@ -83,6 +83,51 @@
       "match_count": 116,
       "game_count": 0,
       "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+    },
+    {
+      "season": 9,
+      "year": 2023,
+      "path": "./assets/data/jx3-master-9-matches.json",
+      "coverage": "official_match_data_without_game_rows",
+      "official_event_id": "9cbc29e92c7d43fc94cdfc0467cf8084",
+      "official_match_count": 116,
+      "official_battle_count": 0,
+      "match_count": 116,
+      "game_count": 0,
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
+    }
+  ],
+  "special_events": [
+    {
+      "type": "competitive-hero",
+      "season": 1,
+      "year": 2025,
+      "name": "第一届剑网3竞技群英赛",
+      "path": "./assets/data/jx3-hero-1-matches.json",
+      "official_event_id": "4a27e57c30c54dd3928469e322bd13e5",
+      "match_count": 70,
+      "game_count": 196,
+      "coverage": "official_match_and_game_data",
+      "sources": [
+        "https://jx3.xoyo.com/competitive-match/index.html",
+        "https://www.kdocs.cn/l/chx9R9u3s3RO",
+        "https://www.kdocs.cn/l/cqhoKx4U4Jux"
+      ]
+    },
+    {
+      "type": "competitive-hero",
+      "season": 2,
+      "year": 2026,
+      "name": "第二届剑网3竞技群英赛",
+      "path": "./assets/data/jx3-hero-2-matches.json",
+      "official_event_id": "a644441154e04c6fb4915d92f97345a4",
+      "match_count": 70,
+      "game_count": 0,
+      "coverage": "official_match_data_without_game_rows",
+      "sources": [
+        "https://jx3.xoyo.com/competitive-match/index.html",
+        "https://www.kdocs.cn/l/cqhoKx4U4Jux"
+      ]
     }
   ]
 }
