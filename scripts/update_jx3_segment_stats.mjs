@@ -65,7 +65,7 @@ try{
     for(const role of ['dps','healer']){
       try{result[role]=await fetchSegment(min,max,role);}catch(e){console.warn(`segment ${min}-${max} ${role}`,e.message);}
     }
-    if(!result.dps.length&&!result.healer.length)throw new Error(`segment ${min}-${max} returned no stats`);
+    if(!result.dps.length&&!result.healer.length)console.warn(`segment ${min}-${max} has no records; continuing`);
     out.ranges[`${min}-${max}`]=result;
   }
   await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
