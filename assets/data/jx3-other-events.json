@@ -1,0 +1,1580 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-other-events",
+  "generated_at": "2026-09-05T00:00:00Z",
+  "source": {
+    "file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "note": "赛事名次、队伍成员与历史配置摘要，不等同于逐局比赛记录"
+  },
+  "events": [
+    {
+      "name": "熊猫杯",
+      "record_count": 15,
+      "editions": [
+        "第一届",
+        "第二届"
+      ],
+      "records": [
+        {
+          "source_row": 11,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "冠军",
+          "team": "别打奶秀奶秀那么萌",
+          "healer": "清衣",
+          "teammates": [
+            "落叶听松",
+            "陌枫",
+            "问情子枫",
+            "忘水鱼"
+          ]
+        },
+        {
+          "source_row": 12,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "亚军",
+          "team": "阿越打三个",
+          "healer": "花舞剑",
+          "teammates": [
+            "阿越",
+            "云青霄",
+            "风清歌",
+            "蒙面"
+          ]
+        },
+        {
+          "source_row": 13,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "季军",
+          "team": "墨洒琴心",
+          "healer": "花海",
+          "teammates": [
+            "伍贰",
+            "花开",
+            "太子",
+            "万罗"
+          ]
+        },
+        {
+          "source_row": 14,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "四强",
+          "team": "酸辣土豆丝还是好吃",
+          "healer": "曹长卿",
+          "teammates": [
+            "泠兮陌",
+            "叶弈墨",
+            "四十米砍刀",
+            "九天谚月"
+          ]
+        },
+        {
+          "source_row": 15,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "八强",
+          "team": "今天也是颜值担当",
+          "healer": "小灭在不在",
+          "teammates": [
+            "烟雨若梦",
+            "今天还要团灭",
+            "小影不在",
+            "小影在不在"
+          ]
+        },
+        {
+          "source_row": 16,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "八强",
+          "team": "鼎姐姐带我们飞",
+          "healer": "长歌漫漫兮",
+          "teammates": [
+            "月咒",
+            "榭伊",
+            "蜘蛛女孩儿",
+            "天子"
+          ]
+        },
+        {
+          "source_row": 17,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "八强",
+          "team": "听说前方没有天策",
+          "healer": "风苏暖",
+          "teammates": [
+            "夜雨声饭",
+            "会走路的醉二",
+            "陵陵的逾越辉",
+            "卿烟"
+          ]
+        },
+        {
+          "source_row": 18,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "八强",
+          "team": "长歌小迷妹联盟",
+          "healer": "袁湘琴+雪宝",
+          "teammates": [
+            "舜琴",
+            "蠢的无可救药",
+            "仲夏琴醉月",
+            "云吞大战馄饨"
+          ]
+        },
+        {
+          "source_row": 19,
+          "event": "熊猫杯",
+          "edition": "第一届",
+          "version": "百家争鸣",
+          "placement": "十六强",
+          "team": "成天被竞技场打",
+          "healer": "小蛮",
+          "teammates": [
+            "童话",
+            "黑人",
+            "慕堇",
+            "死开"
+          ]
+        },
+        {
+          "source_row": 41,
+          "event": "熊猫杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "冠军",
+          "team": "清风望月",
+          "healer": "清衣",
+          "teammates": [
+            "舜琴",
+            "阿越",
+            "清儒",
+            "晏殊"
+          ]
+        },
+        {
+          "source_row": 42,
+          "event": "熊猫杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "亚军",
+          "team": "清一色杠上花",
+          "healer": "十六弦",
+          "teammates": [
+            "毛毛",
+            "发开",
+            "夏小花",
+            "跑毛"
+          ]
+        },
+        {
+          "source_row": 43,
+          "event": "熊猫杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "季军",
+          "team": "水月无妄思",
+          "healer": "赵若曦",
+          "teammates": [
+            "洗髓丹",
+            "截元丹",
+            "叶亦墨",
+            "镇魂歌"
+          ]
+        },
+        {
+          "source_row": 44,
+          "event": "熊猫杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "四强",
+          "team": "墨洒琴心",
+          "healer": "花海",
+          "teammates": [
+            "太子",
+            "万罗",
+            "问情子枫",
+            "忘水鱼"
+          ]
+        },
+        {
+          "source_row": 45,
+          "event": "熊猫杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "六强",
+          "team": "特大碗红烧牛肉面",
+          "healer": "笋花",
+          "teammates": [
+            "花舞剑",
+            "清风",
+            "白大反",
+            "慕月淅"
+          ]
+        },
+        {
+          "source_row": 46,
+          "event": "熊猫杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "六强",
+          "team": "醉雨话禅",
+          "healer": "忆旧年",
+          "teammates": [
+            "童话",
+            "黑人",
+            "慕堇",
+            "破戒"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "贴吧杯",
+      "record_count": 8,
+      "editions": [
+        "第一届",
+        "第二届"
+      ],
+      "records": [
+        {
+          "source_row": 20,
+          "event": "贴吧杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "冠军",
+          "team": "临时抱佛脚吧",
+          "healer": "芙霜",
+          "teammates": [
+            "等牛奶的咖啡",
+            "青锅大侠",
+            "忘卿歌",
+            "吉祥"
+          ]
+        },
+        {
+          "source_row": 21,
+          "event": "贴吧杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "亚军",
+          "team": "极光交织的邂逅",
+          "healer": "阿梦",
+          "teammates": [
+            "月咒",
+            "藏剑阿布",
+            "天子"
+          ]
+        },
+        {
+          "source_row": 22,
+          "event": "贴吧杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "季军",
+          "team": "青山遇绝壁",
+          "healer": "云起",
+          "teammates": [
+            "变声器",
+            "阿越",
+            "事事休",
+            "慕堇"
+          ]
+        },
+        {
+          "source_row": 23,
+          "event": "贴吧杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "四强",
+          "team": "都说江南好",
+          "healer": "血瓶",
+          "teammates": [
+            "童话",
+            "黑人",
+            "雨豪",
+            "夏小花"
+          ]
+        },
+        {
+          "source_row": 37,
+          "event": "贴吧杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "冠军",
+          "team": "清一色杠上花",
+          "healer": "十六弦",
+          "teammates": [
+            "毛毛",
+            "发开",
+            "黄泉",
+            "夏小花"
+          ]
+        },
+        {
+          "source_row": 38,
+          "event": "贴吧杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "亚军",
+          "team": "暗杠幺鸡杠上花",
+          "healer": "小小小浅",
+          "teammates": [
+            "海棠",
+            "泠兮陌",
+            "清儒",
+            "落年"
+          ]
+        },
+        {
+          "source_row": 39,
+          "event": "贴吧杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "季军",
+          "team": "九弦琴歌",
+          "healer": "笋花",
+          "teammates": [
+            "舜琴",
+            "风清歌",
+            "白大反",
+            "跑毛"
+          ]
+        },
+        {
+          "source_row": 40,
+          "event": "贴吧杯",
+          "edition": "第二届",
+          "version": "日月凌空",
+          "placement": "四强",
+          "team": "小呗们求轻虐",
+          "healer": "茶茶",
+          "teammates": [
+            "落叶听松",
+            "忘水鱼",
+            "塔麻麻"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "虎牙杯",
+      "record_count": 12,
+      "editions": [
+        "第一届",
+        "第二届"
+      ],
+      "records": [
+        {
+          "source_row": 24,
+          "event": "虎牙杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "冠军",
+          "team": "小呗们拆了霍霍你们",
+          "healer": "清衣",
+          "teammates": [
+            "清风望落陌",
+            "问情子枫",
+            "落叶",
+            "陌枫"
+          ]
+        },
+        {
+          "source_row": 25,
+          "event": "虎牙杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "亚军",
+          "team": "一隅清棠花",
+          "healer": "笋花",
+          "teammates": [
+            "海棠",
+            "泠兮陌",
+            "清儒",
+            "死开"
+          ]
+        },
+        {
+          "source_row": 26,
+          "event": "虎牙杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "季军",
+          "team": "童话是最胖的",
+          "healer": "小花",
+          "teammates": [
+            "童话",
+            "黑人",
+            "雨豪",
+            "破戒"
+          ]
+        },
+        {
+          "source_row": 27,
+          "event": "虎牙杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "四强",
+          "team": "人间自是有情痴",
+          "healer": "——",
+          "teammates": [
+            "霸刀"
+          ]
+        },
+        {
+          "source_row": 28,
+          "event": "虎牙杯",
+          "edition": "第一届",
+          "version": "风骨霸刀",
+          "placement": "十六强",
+          "team": "——",
+          "healer": "花舞剑",
+          "teammates": [
+            "阿越",
+            "日月劫",
+            "慕月淅"
+          ]
+        },
+        {
+          "source_row": 80,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "冠军",
+          "team": "乘风",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "慕堇",
+            "童话"
+          ]
+        },
+        {
+          "source_row": 81,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "亚军",
+          "team": "扶摇",
+          "healer": "茶茶",
+          "teammates": [
+            "伍贰",
+            "问情子枫",
+            "夏小花",
+            "衍涩"
+          ]
+        },
+        {
+          "source_row": 82,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "季军",
+          "team": "青锋",
+          "healer": "清衣",
+          "teammates": [
+            "阿越",
+            "清儒",
+            "君弈",
+            "持风"
+          ]
+        },
+        {
+          "source_row": 83,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "四强",
+          "team": "五个工具人",
+          "healer": "云居月",
+          "teammates": [
+            "名濑结弦",
+            "暗杠",
+            "阿良",
+            "任千轻"
+          ]
+        },
+        {
+          "source_row": 84,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "六强",
+          "team": "雄霸",
+          "healer": "忆旧年",
+          "teammates": [
+            "离挽",
+            "小宽野",
+            "心中客",
+            "月弄痕"
+          ]
+        },
+        {
+          "source_row": 85,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "六强",
+          "team": "惊鸿掠影",
+          "healer": "花海",
+          "teammates": [
+            "曲彼岸",
+            "肥猫",
+            "感时已暮",
+            "绯尽"
+          ]
+        },
+        {
+          "source_row": 86,
+          "event": "虎牙杯",
+          "edition": "第二届",
+          "version": "怒海争锋",
+          "placement": "八强",
+          "team": "——",
+          "healer": "小岚窗",
+          "teammates": [
+            "狗毛"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "B站杯",
+      "record_count": 6,
+      "editions": [
+        "第一届"
+      ],
+      "records": [
+        {
+          "source_row": 55,
+          "event": "B站杯",
+          "edition": "第一届",
+          "version": "长风破晓",
+          "placement": "冠军",
+          "team": "水调歌头",
+          "healer": "茶茶",
+          "teammates": [
+            "截元丹",
+            "跑毛",
+            "夏小花",
+            "衍涩"
+          ]
+        },
+        {
+          "source_row": 56,
+          "event": "B站杯",
+          "edition": "第一届",
+          "version": "长风破晓",
+          "placement": "亚军",
+          "team": "刀枪剑棒",
+          "healer": "云水沐",
+          "teammates": [
+            "空城",
+            "竹霖",
+            "向小天",
+            "星语小贼"
+          ]
+        },
+        {
+          "source_row": 57,
+          "event": "B站杯",
+          "edition": "第一届",
+          "version": "长风破晓",
+          "placement": "季军",
+          "team": "破晓生花",
+          "healer": "花海",
+          "teammates": [
+            "尘微",
+            "漓七",
+            "离挽",
+            "相忘于情"
+          ]
+        },
+        {
+          "source_row": 58,
+          "event": "B站杯",
+          "edition": "第一届",
+          "version": "长风破晓",
+          "placement": "四强",
+          "team": "奥特曼",
+          "healer": "桃枝",
+          "teammates": [
+            "小巷",
+            "小宽野",
+            "花天初",
+            "小离岸"
+          ]
+        },
+        {
+          "source_row": 59,
+          "event": "B站杯",
+          "edition": "第一届",
+          "version": "长风破晓",
+          "placement": "六强",
+          "team": "曲云么么哒哒",
+          "healer": "云染叶",
+          "teammates": [
+            "包菜",
+            "卿沐逸",
+            "肥猫",
+            "曲彼岸"
+          ]
+        },
+        {
+          "source_row": 60,
+          "event": "B站杯",
+          "edition": "第一届",
+          "version": "长风破晓",
+          "placement": "六强",
+          "team": "醉雨话禅",
+          "healer": "忆旧年",
+          "teammates": [
+            "花舞剑",
+            "童话",
+            "黑人",
+            "白大反"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "斗鱼杯",
+      "record_count": 15,
+      "editions": [
+        "第一届",
+        "第二届\n俱乐部赛道"
+      ],
+      "records": [
+        {
+          "source_row": 62,
+          "event": "斗鱼杯",
+          "edition": "第一届",
+          "version": "世外蓬莱",
+          "placement": "冠军",
+          "team": "月照清风",
+          "healer": "小阿宁",
+          "teammates": [
+            "焚影不归",
+            "江安予",
+            "二白",
+            "方青砚"
+          ]
+        },
+        {
+          "source_row": 64,
+          "event": "斗鱼杯",
+          "edition": "第一届",
+          "version": "世外蓬莱",
+          "placement": "季军",
+          "team": "淡酒三杯",
+          "healer": "山翠沾衣",
+          "teammates": [
+            "豆浆先森",
+            "风吹折柳",
+            "雁长禀",
+            "会会心"
+          ]
+        },
+        {
+          "source_row": 65,
+          "event": "斗鱼杯",
+          "edition": "第一届",
+          "version": "世外蓬莱",
+          "placement": "四强",
+          "team": "醉雨话禅",
+          "healer": "花舞剑",
+          "teammates": [
+            "童话",
+            "黑人",
+            "慕堇",
+            "白大反"
+          ]
+        },
+        {
+          "source_row": 66,
+          "event": "斗鱼杯",
+          "edition": "第一届",
+          "version": "世外蓬莱",
+          "placement": "六强",
+          "team": "扶摇",
+          "healer": "茶茶",
+          "teammates": [
+            "伍贰",
+            "墨道烟雨",
+            "问情子枫",
+            "夏小花"
+          ]
+        },
+        {
+          "source_row": 67,
+          "event": "斗鱼杯",
+          "edition": "第一届",
+          "version": "世外蓬莱",
+          "placement": "六强",
+          "team": "你害怕点我不正常",
+          "healer": "米酱",
+          "teammates": [
+            "辣鸡",
+            "谨兮",
+            "溜溜溜溜",
+            "精灵羊小弟"
+          ]
+        },
+        {
+          "source_row": 114,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "冠军",
+          "team": "乘风",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "慕堇",
+            "白大反",
+            "空城",
+            "童话"
+          ]
+        },
+        {
+          "source_row": 115,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "亚军",
+          "team": "炫石",
+          "healer": "晨光",
+          "teammates": [
+            "舜琴",
+            "叶亦墨",
+            "问情子枫",
+            "小诀丐"
+          ]
+        },
+        {
+          "source_row": 116,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "季军",
+          "team": "青锋",
+          "healer": "风幕幕",
+          "teammates": [
+            "清儒",
+            "持风",
+            "落叶听松",
+            "君弈"
+          ]
+        },
+        {
+          "source_row": 117,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "四强",
+          "team": "踏云",
+          "healer": "俞白维",
+          "teammates": [
+            "不辞远",
+            "倾罪",
+            "衍涩",
+            "夏小花"
+          ]
+        },
+        {
+          "source_row": 118,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "六强",
+          "team": "沧海",
+          "healer": "云染叶",
+          "teammates": [
+            "苏挥墨",
+            "一只肥猫",
+            "相忘于情",
+            "狗岛"
+          ]
+        },
+        {
+          "source_row": 119,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "六强",
+          "team": "月影",
+          "healer": "歌手小花",
+          "teammates": [
+            "泠兮陌",
+            "亓官晟睿",
+            "凌羽大帝",
+            "君莫羁"
+          ]
+        },
+        {
+          "source_row": 120,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "冠军",
+          "team": "燃尽人间色",
+          "healer": "小凉琴",
+          "teammates": [
+            "极念",
+            "阿酒酒酒",
+            "怀黎",
+            "灵魂"
+          ]
+        },
+        {
+          "source_row": 121,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "亚军",
+          "team": "我斑愿称你为最强",
+          "healer": "不思捌玖",
+          "teammates": [
+            "闲庭晚风",
+            "小乌龟",
+            "江淮棠（和光",
+            "小柱"
+          ]
+        },
+        {
+          "source_row": 122,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "季军",
+          "team": "要没时间了",
+          "healer": "小花四",
+          "teammates": [
+            "危阑",
+            "小思想",
+            "挽琛",
+            "钢琴钢琴"
+          ]
+        },
+        {
+          "source_row": 123,
+          "event": "斗鱼杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "结庐江湖",
+          "placement": "四强",
+          "team": "跨起个小猫猫脸",
+          "healer": "凌呀",
+          "teammates": [
+            "江安予",
+            "心中客·",
+            "顾易之",
+            "喜欢双宝"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CJ邀请赛",
+      "record_count": 4,
+      "editions": [
+        "第一届"
+      ],
+      "records": [
+        {
+          "source_row": 87,
+          "event": "CJ邀请赛",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "冠军",
+          "team": "乘风",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "慕堇",
+            "童话"
+          ]
+        },
+        {
+          "source_row": 88,
+          "event": "CJ邀请赛",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "亚军",
+          "team": "青峰",
+          "healer": "清衣",
+          "teammates": [
+            "阿越",
+            "清儒",
+            "君弈",
+            "落叶听松"
+          ]
+        },
+        {
+          "source_row": 89,
+          "event": "CJ邀请赛",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "季军",
+          "team": "扶摇",
+          "healer": "蛊幽幽",
+          "teammates": [
+            "伍贰",
+            "夏小花",
+            "衍涩",
+            "问情子枫"
+          ]
+        },
+        {
+          "source_row": 90,
+          "event": "CJ邀请赛",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "四强",
+          "team": "踏云",
+          "healer": "晨光",
+          "teammates": [
+            "日月劫",
+            "舜琴",
+            "叶亦墨",
+            "浅陌轻语"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "JPL",
+      "record_count": 22,
+      "editions": [
+        "第一届",
+        "第二届",
+        "第三届"
+      ],
+      "records": [
+        {
+          "source_row": 91,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "冠军",
+          "team": "乘风",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "慕堇",
+            "童话"
+          ]
+        },
+        {
+          "source_row": 92,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "亚军",
+          "team": "青锋",
+          "healer": "清衣",
+          "teammates": [
+            "阿越",
+            "清儒",
+            "落叶听松",
+            "持风"
+          ]
+        },
+        {
+          "source_row": 93,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "季军",
+          "team": "扶摇",
+          "healer": "蛊幽幽",
+          "teammates": [
+            "夏小花",
+            "衍涩",
+            "问情子枫",
+            "却之秋"
+          ]
+        },
+        {
+          "source_row": 94,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "四强",
+          "team": "踏云",
+          "healer": "晨光",
+          "teammates": [
+            "舜琴",
+            "日月劫",
+            "叶亦墨",
+            "柳词"
+          ]
+        },
+        {
+          "source_row": 95,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "六强",
+          "team": "沧海",
+          "healer": "听风风",
+          "teammates": [
+            "祁月笙",
+            "封心",
+            "花开",
+            "苏挥墨"
+          ]
+        },
+        {
+          "source_row": 96,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "六强",
+          "team": "风义",
+          "healer": "俞白维",
+          "teammates": [
+            "小藏花",
+            "小糖总",
+            "语潇",
+            "北落"
+          ]
+        },
+        {
+          "source_row": 97,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "八强",
+          "team": "赤心",
+          "healer": "柳梦璃",
+          "teammates": [
+            "离挽",
+            "被遗忘的角落",
+            "月弄痕",
+            "小宽野"
+          ]
+        },
+        {
+          "source_row": 98,
+          "event": "JPL",
+          "edition": "第一届",
+          "version": "怒海争锋",
+          "placement": "八强",
+          "team": "虎头",
+          "healer": "米酱",
+          "teammates": [
+            "东浅",
+            "谨兮",
+            "寒江",
+            "萧白衣"
+          ]
+        },
+        {
+          "source_row": 124,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "冠军",
+          "team": "沧海",
+          "healer": "云染叶",
+          "teammates": [
+            "小藏花",
+            "肥猫",
+            "苏挥墨",
+            "离挽",
+            "小宽野",
+            "月弄痕（替补"
+          ]
+        },
+        {
+          "source_row": 125,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "亚军",
+          "team": "踏云",
+          "healer": "俞白维+清衣",
+          "teammates": [
+            "倾罪",
+            "衍涩",
+            "夏小花",
+            "赤鳞",
+            "东浅（替补"
+          ]
+        },
+        {
+          "source_row": 126,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "季军",
+          "team": "炫石",
+          "healer": "晨光+听风风",
+          "teammates": [
+            "舜琴",
+            "叶亦墨",
+            "问情子枫",
+            "小诀丐"
+          ]
+        },
+        {
+          "source_row": 127,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "四强",
+          "team": "乘风",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "慕堇",
+            "白大反",
+            "童话"
+          ]
+        },
+        {
+          "source_row": 128,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "六强",
+          "team": "青锋",
+          "healer": "小弯弯",
+          "teammates": [
+            "落叶听松",
+            "清儒",
+            "持风",
+            "君弈"
+          ]
+        },
+        {
+          "source_row": 129,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "六强",
+          "team": "千狐",
+          "healer": "叶霜+艳鬼（替补",
+          "teammates": [
+            "小巷",
+            "慕言酱",
+            "曲彼岸",
+            "焚影不归",
+            "绯尽（替补",
+            "夏景澜（替补"
+          ]
+        },
+        {
+          "source_row": 130,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "八强",
+          "team": "月影",
+          "healer": "歌手小花",
+          "teammates": [
+            "泠兮陌",
+            "棒棒糖",
+            "亓官昇睿",
+            "凌羽",
+            "君莫羁（替补"
+          ]
+        },
+        {
+          "source_row": 131,
+          "event": "JPL",
+          "edition": "第二届",
+          "version": "结庐江湖",
+          "placement": "八强",
+          "team": "行雪",
+          "healer": "林寒",
+          "teammates": [
+            "小苞米",
+            "花开",
+            "洗髓丹",
+            "萧白衣"
+          ]
+        },
+        {
+          "source_row": 155,
+          "event": "JPL",
+          "edition": "第三届",
+          "version": "北天药宗",
+          "placement": "冠军",
+          "team": "星源",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "慕堇",
+            "白大反",
+            "清儒"
+          ]
+        },
+        {
+          "source_row": 156,
+          "event": "JPL",
+          "edition": "第三届",
+          "version": "北天药宗",
+          "placement": "亚军",
+          "team": "卿酒",
+          "healer": "听风风",
+          "teammates": [
+            "小藏花",
+            "破戒",
+            "心中客·",
+            "被遗忘的角落",
+            "持风"
+          ]
+        },
+        {
+          "source_row": 157,
+          "event": "JPL",
+          "edition": "第三届",
+          "version": "北天药宗",
+          "placement": "季军",
+          "team": "踏云",
+          "healer": "云染叶",
+          "teammates": [
+            "方青砚",
+            "倾罪",
+            "夏小花",
+            "衍涩",
+            "跑毛"
+          ]
+        },
+        {
+          "source_row": 158,
+          "event": "JPL",
+          "edition": "第三届",
+          "version": "北天药宗",
+          "placement": "四强",
+          "team": "斗鱼",
+          "healer": "怯意",
+          "teammates": [
+            "泠兮陌",
+            "玄字",
+            "忘忧",
+            "蓝曦晨",
+            "危阑"
+          ]
+        },
+        {
+          "source_row": 159,
+          "event": "JPL",
+          "edition": "第三届",
+          "version": "北天药宗",
+          "placement": "六强",
+          "team": "星辰",
+          "healer": "晨光",
+          "teammates": [
+            "君弈",
+            "苏挥墨",
+            "离挽",
+            "月弄痕",
+            "罩罩"
+          ]
+        },
+        {
+          "source_row": 160,
+          "event": "JPL",
+          "edition": "第三届",
+          "version": "北天药宗",
+          "placement": "六强",
+          "team": "轨迹",
+          "healer": "叶霜",
+          "teammates": [
+            "日月劫",
+            "南城葫芦娃",
+            "一梦绘君衣",
+            "亓官昇睿",
+            "旬子哥"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "俱乐部邀请赛",
+      "record_count": 4,
+      "editions": [
+        "第一届"
+      ],
+      "records": [
+        {
+          "source_row": 99,
+          "event": "俱乐部邀请赛",
+          "edition": "第一届",
+          "version": "凌雪藏锋",
+          "placement": "冠军",
+          "team": "乘风",
+          "healer": "花舞剑",
+          "teammates": [
+            "云水沐",
+            "竹霖",
+            "空城",
+            "白大反"
+          ]
+        },
+        {
+          "source_row": 100,
+          "event": "俱乐部邀请赛",
+          "edition": "第一届",
+          "version": "凌雪藏锋",
+          "placement": "亚军",
+          "team": "赤心",
+          "healer": "长晏",
+          "teammates": [
+            "离挽",
+            "月弄痕",
+            "小宽野",
+            "落年"
+          ]
+        },
+        {
+          "source_row": 101,
+          "event": "俱乐部邀请赛",
+          "edition": "第一届",
+          "version": "凌雪藏锋",
+          "placement": "季军",
+          "team": "青峰",
+          "healer": "风幕幕",
+          "teammates": [
+            "清儒",
+            "君弈",
+            "持风",
+            "阿越"
+          ]
+        },
+        {
+          "source_row": 102,
+          "event": "俱乐部邀请赛",
+          "edition": "第一届",
+          "version": "凌雪藏锋",
+          "placement": "四强",
+          "team": "踏云",
+          "healer": "清衣",
+          "teammates": [
+            "倾罪",
+            "小诀丐",
+            "棒棒糖",
+            "任千轻"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "名剑杯",
+      "record_count": 12,
+      "editions": [
+        "第一届",
+        "第二届\n俱乐部赛道"
+      ],
+      "records": [
+        {
+          "source_row": 133,
+          "event": "名剑杯",
+          "edition": "第一届",
+          "version": "奉天证道",
+          "placement": "冠军",
+          "team": "随便玩玩",
+          "healer": "叶霜",
+          "teammates": [
+            "柳词",
+            "焚影不归",
+            "曲彼岸",
+            "鱼希"
+          ]
+        },
+        {
+          "source_row": 134,
+          "event": "名剑杯",
+          "edition": "第一届",
+          "version": "奉天证道",
+          "placement": "亚军",
+          "team": "长安茶馆",
+          "healer": "小岚心",
+          "teammates": [
+            "南城葫芦娃",
+            "一梦绘君衣",
+            "昼夜不舍",
+            "黑夜的"
+          ]
+        },
+        {
+          "source_row": 135,
+          "event": "名剑杯",
+          "edition": "第一届",
+          "version": "奉天证道",
+          "placement": "季军",
+          "team": "木叶村的下忍们",
+          "healer": "桃桃",
+          "teammates": [
+            "芊芊",
+            "小乌龟",
+            "唐落尘",
+            "老年江少爷"
+          ]
+        },
+        {
+          "source_row": 136,
+          "event": "名剑杯",
+          "edition": "第一届",
+          "version": "奉天证道",
+          "placement": "四强",
+          "team": "我很愤怒",
+          "healer": "蛊幽幽",
+          "teammates": [
+            "玄天君",
+            "晏殊",
+            "阿遇",
+            "一镇仙"
+          ]
+        },
+        {
+          "source_row": 147,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "冠军",
+          "team": "斗鱼",
+          "healer": "怯意",
+          "teammates": [
+            "泠兮陌",
+            "玄字",
+            "忘忧",
+            "蓝曦晨",
+            "危阑"
+          ]
+        },
+        {
+          "source_row": 148,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "亚军",
+          "team": "轨迹",
+          "healer": "小疏蝶",
+          "teammates": [
+            "离人清欢",
+            "日月劫",
+            "亓官",
+            "葫芦娃",
+            "柳词"
+          ]
+        },
+        {
+          "source_row": 149,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "季军",
+          "team": "踏云",
+          "healer": "云染叶",
+          "teammates": [
+            "方青砚",
+            "夏小花",
+            "衍涩",
+            "倾罪",
+            "跑毛"
+          ]
+        },
+        {
+          "source_row": 150,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "四强",
+          "team": "卿酒",
+          "healer": "听风风",
+          "teammates": [
+            "小凉琴",
+            "肥猫",
+            "持风",
+            "问情子枫",
+            "小藏花"
+          ]
+        },
+        {
+          "source_row": 151,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "冠军",
+          "team": "短危咖啡屋",
+          "healer": "长晏",
+          "teammates": [
+            "槐墨",
+            "黑暗蓝猫侠",
+            "浅陌轻语",
+            "潇洒哥"
+          ]
+        },
+        {
+          "source_row": 152,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "亚军",
+          "team": "男神音天花板",
+          "healer": "闻风声",
+          "teammates": [
+            "白悠然",
+            "心中客·",
+            "玄天君",
+            "困告告"
+          ]
+        },
+        {
+          "source_row": 153,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "季军",
+          "team": "王遗风",
+          "healer": "桃枝",
+          "teammates": [
+            "小阑珊",
+            "尘微",
+            "罩罩",
+            "怀黎"
+          ]
+        },
+        {
+          "source_row": 154,
+          "event": "名剑杯",
+          "edition": "第二届\n俱乐部赛道",
+          "version": "白帝风云",
+          "placement": "四强",
+          "team": "你也想巡逻吗",
+          "healer": "嗷润桔",
+          "teammates": [
+            "唐落尘",
+            "君弈",
+            "闲庭晚风",
+            "夏景澜"
+          ]
+        }
+      ]
+    }
+  ]
+}
