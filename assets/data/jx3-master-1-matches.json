@@ -3432,5 +3432,392 @@
         "game_compositions": "unverified"
       }
     }
-  ]
+  ],
+  "historical_records": [
+    {
+      "source_row": 3,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": "剑胆琴心",
+      "placement": "冠军",
+      "team": "墨洒琴心",
+      "healer": "花海",
+      "teammates": [
+        "太子",
+        "万罗",
+        "【双花歌】"
+      ]
+    },
+    {
+      "source_row": 4,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "亚军",
+      "team": "听说气纯两仪不掉血",
+      "healer": "十六弦",
+      "teammates": [
+        "飘云凌",
+        "日月劫",
+        "【明歌歌】"
+      ]
+    },
+    {
+      "source_row": 5,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "季军",
+      "team": "听说前方没有藏剑",
+      "healer": "花舞剑",
+      "teammates": [
+        "阿越",
+        "云青霄",
+        "【苍藏歌】"
+      ]
+    },
+    {
+      "source_row": 6,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "四强",
+      "team": "叼打小伯顿天团",
+      "healer": "小小小浅",
+      "teammates": [
+        "布丁",
+        "慕月淅",
+        "【明歌歌】"
+      ]
+    },
+    {
+      "source_row": 7,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "小呗们求轻虐啊",
+      "healer": "几昼",
+      "teammates": [
+        "青玉流",
+        "残月惊天",
+        "【明歌歌】"
+      ]
+    },
+    {
+      "source_row": 8,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "休道默以殇离别",
+      "healer": "吉利鼎",
+      "teammates": [
+        "事事休",
+        "赤麟",
+        "【毒歌毒】"
+      ]
+    },
+    {
+      "source_row": 9,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "建队不需要解锁",
+      "healer": "笋花",
+      "teammates": [
+        "方青砚",
+        "柳词",
+        "【气花歌】"
+      ]
+    },
+    {
+      "source_row": 10,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "乌龙茶奶盖",
+      "healer": "樱兮",
+      "teammates": [
+        "黑人",
+        "死开",
+        "【苍丐秀】"
+      ]
+    },
+    {
+      "source_row": 11,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": "百家争鸣",
+      "placement": "冠军",
+      "team": "别打奶秀奶秀那么萌",
+      "healer": "清衣",
+      "teammates": [
+        "落叶听松",
+        "陌枫",
+        "问情子枫",
+        "忘水鱼"
+      ]
+    },
+    {
+      "source_row": 12,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "亚军",
+      "team": "阿越打三个",
+      "healer": "花舞剑",
+      "teammates": [
+        "阿越",
+        "云青霄",
+        "风清歌",
+        "蒙面"
+      ]
+    },
+    {
+      "source_row": 13,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "季军",
+      "team": "墨洒琴心",
+      "healer": "花海",
+      "teammates": [
+        "伍贰",
+        "花开",
+        "太子",
+        "万罗"
+      ]
+    },
+    {
+      "source_row": 14,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "四强",
+      "team": "酸辣土豆丝还是好吃",
+      "healer": "曹长卿",
+      "teammates": [
+        "泠兮陌",
+        "叶弈墨",
+        "四十米砍刀",
+        "九天谚月"
+      ]
+    },
+    {
+      "source_row": 15,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "今天也是颜值担当",
+      "healer": "小灭在不在",
+      "teammates": [
+        "烟雨若梦",
+        "今天还要团灭",
+        "小影不在",
+        "小影在不在"
+      ]
+    },
+    {
+      "source_row": 16,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "鼎姐姐带我们飞",
+      "healer": "长歌漫漫兮",
+      "teammates": [
+        "月咒",
+        "榭伊",
+        "蜘蛛女孩儿",
+        "天子"
+      ]
+    },
+    {
+      "source_row": 17,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "听说前方没有天策",
+      "healer": "风苏暖",
+      "teammates": [
+        "夜雨声饭",
+        "会走路的醉二",
+        "陵陵的逾越辉",
+        "卿烟"
+      ]
+    },
+    {
+      "source_row": 18,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "八强",
+      "team": "长歌小迷妹联盟",
+      "healer": "袁湘琴+雪宝",
+      "teammates": [
+        "舜琴",
+        "蠢的无可救药",
+        "仲夏琴醉月",
+        "云吞大战馄饨"
+      ]
+    },
+    {
+      "source_row": 19,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "十六强",
+      "team": "成天被竞技场打",
+      "healer": "小蛮",
+      "teammates": [
+        "童话",
+        "黑人",
+        "慕堇",
+        "死开"
+      ]
+    },
+    {
+      "source_row": 20,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": "风骨霸刀",
+      "placement": "冠军",
+      "team": "临时抱佛脚吧",
+      "healer": "芙霜",
+      "teammates": [
+        "等牛奶的咖啡",
+        "青锅大侠",
+        "忘卿歌",
+        "吉祥"
+      ]
+    },
+    {
+      "source_row": 21,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "亚军",
+      "team": "极光交织的邂逅",
+      "healer": "阿梦",
+      "teammates": [
+        "月咒",
+        "藏剑阿布",
+        "天子"
+      ]
+    },
+    {
+      "source_row": 22,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "季军",
+      "team": "青山遇绝壁",
+      "healer": "云起",
+      "teammates": [
+        "变声器",
+        "阿越",
+        "事事休",
+        "慕堇"
+      ]
+    },
+    {
+      "source_row": 23,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "四强",
+      "team": "都说江南好",
+      "healer": "血瓶",
+      "teammates": [
+        "童话",
+        "黑人",
+        "雨豪",
+        "夏小花"
+      ]
+    },
+    {
+      "source_row": 24,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": "风骨霸刀",
+      "placement": "冠军",
+      "team": "小呗们拆了霍霍你们",
+      "healer": "清衣",
+      "teammates": [
+        "清风望落陌",
+        "问情子枫",
+        "落叶",
+        "陌枫"
+      ]
+    },
+    {
+      "source_row": 25,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "亚军",
+      "team": "一隅清棠花",
+      "healer": "笋花",
+      "teammates": [
+        "海棠",
+        "泠兮陌",
+        "清儒",
+        "死开"
+      ]
+    },
+    {
+      "source_row": 26,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "季军",
+      "team": "童话是最胖的",
+      "healer": "小花",
+      "teammates": [
+        "童话",
+        "黑人",
+        "雨豪",
+        "破戒"
+      ]
+    },
+    {
+      "source_row": 27,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "四强",
+      "team": "人间自是有情痴",
+      "healer": "——",
+      "teammates": [
+        "霸刀"
+      ]
+    },
+    {
+      "source_row": 28,
+      "event": "大师赛",
+      "season": "第一届",
+      "version": null,
+      "placement": "十六强",
+      "team": "——",
+      "healer": "花舞剑",
+      "teammates": [
+        "阿越",
+        "日月劫",
+        "慕月淅"
+      ]
+    }
+  ],
+  "source": {
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
+  },
+  "coverage": {
+    "historical_record_count": 26
+  }
 }
