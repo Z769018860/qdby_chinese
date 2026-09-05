@@ -26,20 +26,26 @@ async function signedGet(path){
   return response.json();
 }
 function normalize(data,role){
-  const root=data?.data&&typeof data.data==='object'?data.data:data;
-  const roleKeys=role==='healer'?['hps','healer','heal']:['dps','tps','output'];
-  const candidates=[];
-  for(const key of roleKeys)candidates.push(root?.[key],data?.[key]);
-  candidates.push(root?.stats,root?.list,root?.rows,root?.items,root?.result,data?.stats,data?.list,data?.rows,data?.items,data?.result);
-  const list=candidates.find(Array.isArray)||[];
-  return list.map((x,i)=>({
-    rank:Number(x.rank||x.ranking||i+1),
-    kungfu:x.kungfu||x.name||x.kungfuName||x.forceName||x.force_name,
-    win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct??x.rate),
-    pick_rate:Number(x.pick_rate??x.pickRate??x.pickRatePct??0),
-    sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??0),
-    player_count:Number(x.player_count??x.playerCount??0)
-  })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
+  const wanted=role==='healer'?['hps','healer','heal']:['dps','tps','output'];
+  const arrays=[];
+  const visit=(value,key='')=>{
+    if(Array.isArray(value)){arrays.push({key,value});return;}
+    if(value&&typeof value==='object')for(const [k,v] of Object.entries(value))visit(v,k);
+  };
+  visit(data);
+  const ordered=arrays.sort((a,b)=>Number(wanted.includes(b.key))-Number(wanted.includes(a.key)));
+  for(const entry of ordered){
+    const result=entry.value.map((x,i)=>({
+      rank:Number(x.rank??x.ranking??i+1),
+      kungfu:x.kungfu||x.name||x.kungfuName||x.forceName||x.force_name||x.schoolName,
+      win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct??x.rate??x.win),
+      pick_rate:Number(x.pick_rate??x.pickRate??x.pickRatePct??0),
+      sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??0),
+      player_count:Number(x.player_count??x.playerCount??0)
+    })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
+    if(result.length)return result;
+  }
+  return [];
 }
 async function fetchSegment(min,max,role){
   const kungfuType=role==='healer'?'hps':'dps';
