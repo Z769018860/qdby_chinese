@@ -68,4 +68,4 @@ try{
     out.ranges[`${min}-${max}`]=result;
   }
   await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
-}catch(e){console.warn('segment personal API unavailable; writing empty status snapshot',e.message);await emptySnapshot(e.message);}
+}catch(e){console.error('segment personal API failed:',e.stack||e.message||e);process.exitCode=1;throw e;}
