@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: '15 1 * * *'
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/update_jx3_segment_stats.mjs'
+      - '.github/workflows/update-jx3-segment-stats.yml'
 permissions:
   contents: write
 jobs:
