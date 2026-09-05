@@ -39,7 +39,7 @@ function normalize(data){
   })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
 async function fetchSegment(min,max,role){
-  const kungfuType=role==='healer'?'hps':'tps';
+  const kungfuType=role==='healer'?'tps':'dps';
   const matchMode='solo';
   let last;
   {
