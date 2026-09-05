@@ -39,7 +39,7 @@ function normalize(data){
   })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
 async function fetchSegment(min,max,role){
-  const kungfuType=role==='healer'?'hps':'dps';
+  const kungfuType=role==='healer'?'hps':'tps';
   const matchMode='solo';
   let last;
   {
@@ -54,7 +54,7 @@ async function fetchSegment(min,max,role){
   throw last||new Error('jjc-stats returned no '+role+' data for '+min+'-'+max);
 }
 async function emptySnapshot(reason){
-  const out={schema_version:1,source:BASE+'/api/rank/builds',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',fallback:false,sync_status:'segment_api_unavailable',sync_error:String(reason),ranges:{}};
+  const out={schema_version:1,source:BASE+'/api/rank/jjc-stats',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',fallback:false,sync_status:'segment_api_unavailable',sync_error:String(reason),ranges:{}};
   for(const [min,max] of ranges)out.ranges[`${min}-${max}`]={min_score:min,max_score:max,dps:[],healer:[],source:'segment-personal-solo-api'};
   await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
 }
