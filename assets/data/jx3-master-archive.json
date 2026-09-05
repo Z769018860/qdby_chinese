@@ -168,5 +168,80 @@
       "俱乐部邀请赛",
       "名剑杯"
     ]
+  },
+  "coverage_gaps": {
+    "checked_at": "2026-09-05T00:00:00Z",
+    "standard_game_config": "逐局 records 需包含 games[].teams.red/blue.composition 或 team_a/team_b.composition",
+    "seasons": [
+      {
+        "resource": "jx3-master-1-matches",
+        "season": 1,
+        "match_count": 32,
+        "game_config_status": "match_and_game_shell_only",
+        "missing": "全部逐局心法、地图、Ban"
+      },
+      {
+        "resource": "jx3-master-2-matches",
+        "season": 2,
+        "match_count": 74,
+        "game_config_status": "match_and_game_shell_only",
+        "missing": "全部逐局心法、地图、Ban"
+      },
+      {
+        "resource": "jx3-master-3-matches",
+        "season": 3,
+        "match_count": 23,
+        "game_config_status": "match_and_game_shell_only",
+        "missing": "全部逐局心法、地图、Ban"
+      },
+      {
+        "resource": "jx3-master-4-matches",
+        "season": 4,
+        "match_count": 119,
+        "game_config_status": "complete_official",
+        "missing": "录像链接仍有部分为空"
+      },
+      {
+        "resource": "jx3-master-5-matches",
+        "season": 5,
+        "match_count": 132,
+        "game_config_status": "complete_official",
+        "missing": "录像链接仍有部分为空"
+      },
+      {
+        "resource": "jx3-master-6-matches",
+        "season": 6,
+        "match_count": 103,
+        "game_config_status": "complete_official",
+        "missing": "录像链接仍有部分为空"
+      },
+      {
+        "resource": "jx3-master-7-matches",
+        "season": 7,
+        "match_count": 85,
+        "game_config_status": "match_only",
+        "missing": "官方快照无 battles；需微博/录像逐局补录"
+      },
+      {
+        "resource": "jx3-master-8-matches",
+        "season": 8,
+        "match_count": 116,
+        "game_config_status": "match_only",
+        "missing": "官方快照无 battles；需微博/录像逐局补录"
+      },
+      {
+        "resource": "jx3-master-9-matches",
+        "season": 9,
+        "match_count": 116,
+        "game_config_status": "match_only",
+        "missing": "官方快照无 battles；需微博/录像逐局补录"
+      }
+    ],
+    "other_events": {
+      "resource": "jx3-other-events",
+      "record_count": 98,
+      "game_config_status": "none",
+      "missing": "当前仅有队伍/名次/成员摘要，尚未完成逐局映射；优先补八强及以上"
+    }
   }
 }
