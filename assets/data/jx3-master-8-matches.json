@@ -14,15 +14,24 @@
     "retrieved_via": "用户提供的完整 cms_query.json",
     "historical_records_file": "历届赛事记录.xlsx",
     "weibo_account": "@剑网3赛事",
-    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。",
+    "table_evidence_note": "四张图片与官方大师赛比赛中心快照配套使用；官方赛事入口：https://jx3.xoyo.com/master-match/index.html#/ ，官方比赛中心：https://jx3.xoyo.com/match/#/ 。"
   },
   "coverage": {
-    "status": "official_match_data_without_game_rows",
+    "status": "official_match_level_plus_uploaded_table_evidence",
     "match_count": 116,
     "game_count": 0,
     "historical_record_count": 8,
     "official_snapshot_verified": true,
-    "official_snapshot_checked_at": "2026-09-05T00:00:00Z"
+    "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
+    "table_image_count": 4,
+    "table_coverage": [
+      "64进32",
+      "32进16",
+      "16进8",
+      "8强双败"
+    ],
+    "note": "官方接口仅返回116条比赛级记录；用户上传的四张赛事表格已登记为逐局配置证据源。图片中的逐局心法/地图/比分需逐格人工复核后再写入games，避免将低清OCR误认为正式数据。"
   },
   "jpl_cross_reference": null,
   "stats": {
@@ -2058,6 +2067,69 @@
     "battle_count": 0,
     "composition_count": 0,
     "status": "official_match_level_verified_battles_not_returned",
-    "note": "官方接口已核对比赛级记录；当前快照没有可用 battles 逐局配置，未伪造地图、Ban 或心法。"
-  }
+    "note": "官方接口已核对比赛级记录；当前快照没有 battles 逐局配置。图片表格已作为逐局配置证据挂载，当前不把无法逐格确认的简称/心法写入 games。"
+  },
+  "table_evidence": [
+    {
+      "id": "master8-table-64-32",
+      "stage": "64进32",
+      "title": "剑网3第八届大师赛小组淘汰赛64进32 单败制 V1.2",
+      "source_type": "user_uploaded_image",
+      "filename": "6K)2BN5_8{W2C9[11QXI@3P.jpg",
+      "coverage": "A1/A2/B1/B2/C1/C2/D1/D2",
+      "verified_fields": [
+        "match_name",
+        "team_names",
+        "match_score",
+        "player_or_class_text_visible"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "master8-table-32-16",
+      "stage": "32进16",
+      "title": "剑网3第八届大师赛小组淘汰赛32进16 单败制",
+      "source_type": "user_uploaded_image",
+      "filename": "N3P6DXYX9IR%KR751}`]9Z6_tmb.jpg",
+      "coverage": "3月30日—4月2日",
+      "verified_fields": [
+        "match_name",
+        "team_names",
+        "match_score",
+        "composition_table_present"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "master8-table-16-8",
+      "stage": "16进8",
+      "title": "剑网3第八届大师赛小组淘汰赛16进8 单败制",
+      "source_type": "user_uploaded_image",
+      "filename": "M@O7B9Q6]_89SJIX8B7[4EJ_tmb.jpg",
+      "coverage": "4月6日—4月7日 A1/B1/C1/D1",
+      "verified_fields": [
+        "match_name",
+        "team_names",
+        "64进32_composition_column",
+        "32进16_composition_column",
+        "ban_column"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "master8-table-top8",
+      "stage": "8强双败",
+      "title": "剑网3第八届大师赛8强 双败制",
+      "source_type": "user_uploaded_image",
+      "filename": "IJKR}7ATK}{Z5BG]BPL$O99_tmb.jpg",
+      "coverage": "胜者组/败者组/决赛周",
+      "verified_fields": [
+        "bracket_stage",
+        "team_names",
+        "series_score",
+        "composition_table_present"
+      ],
+      "confidence": "medium"
+    }
+  ]
 }
