@@ -15,7 +15,7 @@
     "historical_records_file": "历届赛事记录.xlsx",
     "weibo_account": "@剑网3赛事",
     "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。",
-    "table_evidence_note": "四张图片与官方大师赛比赛中心快照配套使用；官方赛事入口：https://jx3.xoyo.com/master-match/index.html#/ ，官方比赛中心：https://jx3.xoyo.com/match/#/ 。"
+    "table_evidence_note": "已登记此前四张表格图片及本次新增两张原图；新增原图优先用于逐局字段人工核对。"
   },
   "coverage": {
     "status": "official_match_level_plus_uploaded_table_evidence",
@@ -24,14 +24,15 @@
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
-    "table_image_count": 4,
+    "table_image_count": 6,
     "table_coverage": [
       "64进32",
       "32进16",
       "16进8",
       "8强双败"
     ],
-    "note": "官方接口仅返回116条比赛级记录；用户上传的四张赛事表格已登记为逐局配置证据源。图片中的逐局心法/地图/比分需逐格人工复核后再写入games，避免将低清OCR误认为正式数据。"
+    "note": "已补充用户提供的16进8与32进16原图证据；官方快照仍为比赛级数据，未返回逐局 battles。逐局心法字段仅在原图可逐格确认后写入。",
+    "table_update_at": "2026-09-05T00:00:00Z"
   },
   "jpl_cross_reference": null,
   "stats": {
@@ -2130,6 +2131,40 @@
         "composition_table_present"
       ],
       "confidence": "medium"
+    },
+    {
+      "id": "master8-table-32-16-20260905",
+      "stage": "32进16",
+      "title": "剑网3第八届大师赛小组淘汰赛32进16 单败制",
+      "source_type": "user_uploaded_original_image",
+      "filename": "QQ图片20260905223451.jpg",
+      "coverage": "3月30日—4月2日",
+      "verified_fields": [
+        "淘汰赛配置",
+        "64进32第1/2局配置",
+        "32进16第1/2局配置",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-table-16-8-20260905",
+      "stage": "16进8",
+      "title": "剑网3第八届大师赛小组淘汰赛16进8 单败制",
+      "source_type": "user_uploaded_original_image",
+      "filename": "QQ图片20260905223526.jpg",
+      "coverage": "4月6日—4月7日 A1/B1/C1/D1",
+      "verified_fields": [
+        "淘汰赛配置",
+        "64进32第1/2局配置",
+        "32进16第1/2局配置",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
     }
   ]
 }
