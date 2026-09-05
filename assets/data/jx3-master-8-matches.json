@@ -11,12 +11,16 @@
   "source": {
     "primary_url": "https://jx3.xoyo.com/match/#/",
     "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
-    "retrieved_via": "用户提供的完整 cms_query.json"
+    "retrieved_via": "用户提供的完整 cms_query.json",
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
   },
   "coverage": {
     "status": "official_match_data_without_game_rows",
     "match_count": 116,
-    "game_count": 0
+    "game_count": 0,
+    "historical_record_count": 8
   },
   "jpl_cross_reference": null,
   "stats": {
@@ -1920,6 +1924,128 @@
       ],
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
+    }
+  ],
+  "historical_records": [
+    {
+      "source_row": 170,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": "横刀断浪",
+      "placement": "冠军",
+      "team": "海阔天空",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "持风",
+        "白大反"
+      ]
+    },
+    {
+      "source_row": 171,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "亚军",
+      "team": "梅子青时雨",
+      "healer": "小岚心",
+      "teammates": [
+        "慕言酱",
+        "南城葫芦娃",
+        "旬子哥",
+        "萧易凡"
+      ]
+    },
+    {
+      "source_row": 172,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "季军",
+      "team": "双刀击而破之",
+      "healer": "摇光",
+      "teammates": [
+        "持之心",
+        "凌柏川",
+        "玄天君",
+        "恶即斩"
+      ]
+    },
+    {
+      "source_row": 173,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "四强",
+      "team": "天降鸿运",
+      "healer": "怯意",
+      "teammates": [
+        "阿越",
+        "落叶听松",
+        "玄字",
+        "月弄痕"
+      ]
+    },
+    {
+      "source_row": 174,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "六强",
+      "team": "鸿蒙",
+      "healer": "风幕幕",
+      "teammates": [
+        "肥猫",
+        "日月劫",
+        "小藏花",
+        "道德"
+      ]
+    },
+    {
+      "source_row": 175,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "六强",
+      "team": "飘渺",
+      "healer": "忆旧年",
+      "teammates": [
+        "苏挥墨",
+        "晏殊",
+        "黎拆",
+        "小卿枫"
+      ]
+    },
+    {
+      "source_row": 176,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "八强",
+      "team": "彻底癫狂",
+      "healer": "小岚窗",
+      "teammates": [
+        "病娇怨何生",
+        "惟命",
+        "秋白落",
+        "打蛊波比（马甲）"
+      ]
+    },
+    {
+      "source_row": 177,
+      "event": "大师赛",
+      "season": "第八届",
+      "version": null,
+      "placement": "八强",
+      "team": "夸张了鸭",
+      "healer": "咕呱花（马甲）",
+      "teammates": [
+        "奇迹",
+        "语潇",
+        "小砚悬",
+        "只羡慕言"
+      ]
     }
   ]
 }
