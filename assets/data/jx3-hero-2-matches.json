@@ -25,7 +25,8 @@
       "2026 32-16",
       "2026XS2 64强抽签版"
     ],
-    "spreadsheet_note": "已导入表格中的赛程、双方、地图、心法简称、比分及海选对阵文本；原表图片型单元格未作为结构化字段导入。"
+    "spreadsheet_note": "已导入表格中的赛程、双方、地图、心法简称、比分及海选对阵文本；原表图片型单元格未作为结构化字段导入。",
+    "spreadsheet_sync": "completed"
   },
   "jpl_cross_reference": null,
   "stats": {
@@ -14664,5 +14665,24 @@
         ]
       }
     ]
+  },
+  "spreadsheet_sync": {
+    "status": "completed",
+    "synced_at": "2026-09-05T00:00:00Z",
+    "source_file": "剑网3 2026XS2第二届小师赛 总表.xlsx",
+    "source_url": "https://www.kdocs.cn/l/chx9R9u3s3RO",
+    "sheets": [
+      "2026 4强",
+      "2026 16-8",
+      "2026 32-16",
+      "2026XS2 64强抽签版"
+    ],
+    "row_counts": {
+      "2026 4强": 40,
+      "2026 16-8": 77,
+      "2026 32-16": 62,
+      "2026XS2 64强抽签版": 56
+    },
+    "field_note": "cells 中保存原表行号、列号和值；图片型 DISPIMG 单元格不作为文本配置导入。"
   }
 }
