@@ -3018,7 +3018,57 @@
       "team_b": "孤勇者",
       "score": "2:0",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "青青草原队",
+              "composition": [
+                {
+                  "id": "bingxin",
+                  "name": "冰心诀"
+                },
+                {
+                  "id": "yinlong",
+                  "name": "隐龙诀"
+                },
+                {
+                  "id": "lijing",
+                  "name": "离经易道"
+                }
+              ],
+              "composition_raw": "bingxin,yinlong,lijing"
+            },
+            "blue": {
+              "name": "孤勇者",
+              "composition": [
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "taixu",
+                  "name": "太玄经"
+                },
+                {
+                  "id": "lingsu",
+                  "name": "灵素"
+                }
+              ],
+              "composition_raw": "huajian,taixu,lingsu"
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "bvid": "BV1Ea411Y7dg",
+            "url": "https://www.bilibili.com/video/BV1Ea411Y7dg/"
+          },
+          "source_note": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_and_recording_verified"
     },
     {
       "match_id": "master-7-71",
@@ -3578,5 +3628,11 @@
       "藏剑/魔剑统一为藏剑"
     ],
     "notes": "逐局心法来自用户整理表；未出现的对手侧配置保留空数组并保留原始对手配置文本。"
+  },
+  "source_notes": " 已补充表格配置；B站地址作为录屏证据。",
+  "spreadsheet_import": {
+    "source_file": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx",
+    "matched_match_count": 2,
+    "imported_game_count": 2
   }
 }
