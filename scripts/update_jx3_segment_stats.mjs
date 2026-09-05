@@ -25,13 +25,18 @@ async function signedGet(path){
   if(!response.ok)throw new Error(`${path} ${response.status}`);
   return response.json();
 }
-function normalize(data){
-  const list=data?.stats||data?.data?.stats||data?.list||data?.data?.list||data?.rows||data?.data?.rows||data?.items||data?.data?.items||data?.result||data?.data?.result||data?.data||[];
-  return (Array.isArray(list)?list:[]).map((x,i)=>({
+function normalize(data,role){
+  const root=data?.data&&typeof data.data==='object'?data.data:data;
+  const roleKeys=role==='healer'?['hps','healer','heal']:['tps','dps','output'];
+  const candidates=[];
+  for(const key of roleKeys)candidates.push(root?.[key],data?.[key]);
+  candidates.push(root?.stats,root?.list,root?.rows,root?.items,root?.result,data?.stats,data?.list,data?.rows,data?.items,data?.result);
+  const list=candidates.find(Array.isArray)||[];
+  return list.map((x,i)=>({
     rank:Number(x.rank||x.ranking||i+1),
-    kungfu:x.kungfu||x.name||x.kungfuName||x.forceName,
-    win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct),
-    pick_rate:Number(x.pick_rate??x.pickRate??x.rate??0),
+    kungfu:x.kungfu||x.name||x.kungfuName||x.forceName||x.force_name,
+    win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct??x.rate),
+    pick_rate:Number(x.pick_rate??x.pickRate??x.pickRatePct??0),
     sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??0),
     player_count:Number(x.player_count??x.playerCount??0)
   })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
@@ -44,7 +49,7 @@ async function fetchSegment(min,max,role){
     const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType=last1d&scoreStart='+min+'&scoreEnd='+max;
     try{
       const data=await signedGet(path);
-      const stats=normalize(data);
+      const stats=normalize(data,role);
       if(stats.length)return stats;
       last=new Error('empty response for matchMode='+matchMode);
     }catch(e){last=e;}
