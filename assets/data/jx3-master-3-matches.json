@@ -1,0 +1,2305 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-3-matches",
+  "event": {
+    "name": "第三届剑网3竞技大师赛",
+    "season": 3,
+    "year": 2018
+  },
+  "generated_at": "2026-09-05T00:00:00Z",
+  "coverage": {
+    "status": "official_schedule_complete_for_preserved_api",
+    "match_count": 23
+  },
+  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。各小局心法、红蓝方与单局胜负等待战报或录像核验。",
+  "normalization_notes": [
+    "保留官方接口原始战队名称。",
+    "旧 av 号作为录像标识；未核验的 bvid 与分P为 null。",
+    "games 数量按最终比分双方胜局之和建立，不推断每局胜方。"
+  ],
+  "stats": {
+    "match_count": 23,
+    "game_shell_count": 51,
+    "verified_composition_count": 0
+  },
+  "matches": [
+    {
+      "match_id": "master-3-187",
+      "official_match_id": 187,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-16",
+      "start_time": "19:30",
+      "stage": "48进24",
+      "teams": {
+        "a": "曲云么么哒哒",
+        "b": "茗酒与月歌"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "曲云么么哒哒",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22195576,
+        "bvid": null,
+        "page": null,
+        "url": "https://www.bilibili.com/video/av22195576"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "曲云么么哒哒",
+              "composition": []
+            },
+            "blue": {
+              "name": "茗酒与月歌",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "曲云么么哒哒",
+              "composition": []
+            },
+            "blue": {
+              "name": "茗酒与月歌",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-188",
+      "official_match_id": 188,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-16",
+      "start_time": "20:15",
+      "stage": "48进24",
+      "teams": {
+        "a": "剑破九歌",
+        "b": "剑气纵横天地间"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "剑破九歌",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22195576,
+        "bvid": null,
+        "page": 3,
+        "url": "https://www.bilibili.com/video/av22195576/?p=3"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "剑破九歌",
+              "composition": []
+            },
+            "blue": {
+              "name": "剑气纵横天地间",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "剑破九歌",
+              "composition": []
+            },
+            "blue": {
+              "name": "剑气纵横天地间",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-189",
+      "official_match_id": 189,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-16",
+      "start_time": "21:00",
+      "stage": "48进24",
+      "teams": {
+        "a": "空山月影霜",
+        "b": "天上法王三千万"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "空山月影霜",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22195576,
+        "bvid": null,
+        "page": 5,
+        "url": "https://www.bilibili.com/video/av22195576/?p=5"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "空山月影霜",
+              "composition": []
+            },
+            "blue": {
+              "name": "天上法王三千万",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "空山月影霜",
+              "composition": []
+            },
+            "blue": {
+              "name": "天上法王三千万",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-190",
+      "official_match_id": 190,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-16",
+      "start_time": "21:40",
+      "stage": "48进24",
+      "teams": {
+        "a": "意难平",
+        "b": "逮锅对唔住"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "意难平",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22195576,
+        "bvid": null,
+        "page": 7,
+        "url": "https://www.bilibili.com/video/av22195576/?p=7"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "意难平",
+              "composition": []
+            },
+            "blue": {
+              "name": "逮锅对唔住",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "意难平",
+              "composition": []
+            },
+            "blue": {
+              "name": "逮锅对唔住",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22195576,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22195576/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-191",
+      "official_match_id": 191,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-17",
+      "start_time": "19:30",
+      "stage": "48进24",
+      "teams": {
+        "a": "麻麻我回不去惹",
+        "b": "一神奇宝贝"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "一神奇宝贝",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22238508,
+        "bvid": null,
+        "page": null,
+        "url": "https://www.bilibili.com/video/av22238508"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "麻麻我回不去惹",
+              "composition": []
+            },
+            "blue": {
+              "name": "一神奇宝贝",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "麻麻我回不去惹",
+              "composition": []
+            },
+            "blue": {
+              "name": "一神奇宝贝",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-192",
+      "official_match_id": 192,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-17",
+      "start_time": "20:15",
+      "stage": "48进24",
+      "teams": {
+        "a": "空大就空大",
+        "b": "熏风南来"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "空大就空大",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22238508,
+        "bvid": null,
+        "page": 3,
+        "url": "https://www.bilibili.com/video/av22238508/?p=3"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "空大就空大",
+              "composition": []
+            },
+            "blue": {
+              "name": "熏风南来",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "空大就空大",
+              "composition": []
+            },
+            "blue": {
+              "name": "熏风南来",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-193",
+      "official_match_id": 193,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-17",
+      "start_time": "21:00",
+      "stage": "48进24",
+      "teams": {
+        "a": "龙隐仙踪",
+        "b": "五只鸭子"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "龙隐仙踪",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22238508,
+        "bvid": null,
+        "page": 5,
+        "url": "https://www.bilibili.com/video/av22238508/?p=5"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "龙隐仙踪",
+              "composition": []
+            },
+            "blue": {
+              "name": "五只鸭子",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "龙隐仙踪",
+              "composition": []
+            },
+            "blue": {
+              "name": "五只鸭子",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-194",
+      "official_match_id": 194,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-17",
+      "start_time": "21:45",
+      "stage": "48进24",
+      "teams": {
+        "a": "贴吧理论选手",
+        "b": "一水调歌头一"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "一水调歌头一",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22238508,
+        "bvid": null,
+        "page": 7,
+        "url": "https://www.bilibili.com/video/av22238508/?p=7"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "贴吧理论选手",
+              "composition": []
+            },
+            "blue": {
+              "name": "一水调歌头一",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "贴吧理论选手",
+              "composition": []
+            },
+            "blue": {
+              "name": "一水调歌头一",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22238508,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22238508/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-195",
+      "official_match_id": 195,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-18",
+      "start_time": "19:30",
+      "stage": "48进24",
+      "teams": {
+        "a": "剑舞花月影",
+        "b": "追命亢龙卒"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "剑舞花月影",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22273635,
+        "bvid": null,
+        "page": null,
+        "url": "https://www.bilibili.com/video/av22273635"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "剑舞花月影",
+              "composition": []
+            },
+            "blue": {
+              "name": "追命亢龙卒",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "剑舞花月影",
+              "composition": []
+            },
+            "blue": {
+              "name": "追命亢龙卒",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-196",
+      "official_match_id": 196,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-18",
+      "start_time": "20:15",
+      "stage": "48进24",
+      "teams": {
+        "a": "拆哪儿南波湾",
+        "b": "明月渔火逐流"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "明月渔火逐流",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22273635,
+        "bvid": null,
+        "page": 3,
+        "url": "https://www.bilibili.com/video/av22273635/?p=3"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "拆哪儿南波湾",
+              "composition": []
+            },
+            "blue": {
+              "name": "明月渔火逐流",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "拆哪儿南波湾",
+              "composition": []
+            },
+            "blue": {
+              "name": "明月渔火逐流",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-197",
+      "official_match_id": 197,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-18",
+      "start_time": "21:00",
+      "stage": "48进24",
+      "teams": {
+        "a": "我偷塔养你",
+        "b": "打完就出道"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "打完就出道",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22273635,
+        "bvid": null,
+        "page": 5,
+        "url": "https://www.bilibili.com/video/av22273635/?p=5"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "我偷塔养你",
+              "composition": []
+            },
+            "blue": {
+              "name": "打完就出道",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "我偷塔养你",
+              "composition": []
+            },
+            "blue": {
+              "name": "打完就出道",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-198",
+      "official_match_id": 198,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-18",
+      "start_time": "21:45",
+      "stage": "48进24",
+      "teams": {
+        "a": "你心中的刺",
+        "b": "墨洒琴心"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "墨洒琴心",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22273635,
+        "bvid": null,
+        "page": 7,
+        "url": "https://www.bilibili.com/video/av22273635/?p=7"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "你心中的刺",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "你心中的刺",
+              "composition": []
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22273635,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22273635/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-199",
+      "official_match_id": 199,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-19",
+      "start_time": "19:30",
+      "stage": "48进24",
+      "teams": {
+        "a": "淡酒三杯",
+        "b": "各大掌门亲自上号"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "淡酒三杯",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22314361,
+        "bvid": null,
+        "page": null,
+        "url": "https://www.bilibili.com/video/av22314361"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "淡酒三杯",
+              "composition": []
+            },
+            "blue": {
+              "name": "各大掌门亲自上号",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "淡酒三杯",
+              "composition": []
+            },
+            "blue": {
+              "name": "各大掌门亲自上号",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "淡酒三杯",
+              "composition": []
+            },
+            "blue": {
+              "name": "各大掌门亲自上号",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-200",
+      "official_match_id": 200,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-19",
+      "start_time": "20:15",
+      "stage": "48进24",
+      "teams": {
+        "a": "江山代有才人秃",
+        "b": "别说了峰哥不喜欢"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "别说了峰哥不喜欢",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22314361,
+        "bvid": null,
+        "page": 4,
+        "url": "https://www.bilibili.com/video/av22314361/?p=4"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "江山代有才人秃",
+              "composition": []
+            },
+            "blue": {
+              "name": "别说了峰哥不喜欢",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=4"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "江山代有才人秃",
+              "composition": []
+            },
+            "blue": {
+              "name": "别说了峰哥不喜欢",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=4"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "江山代有才人秃",
+              "composition": []
+            },
+            "blue": {
+              "name": "别说了峰哥不喜欢",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=4"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-201",
+      "official_match_id": 201,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-19",
+      "start_time": "21:00",
+      "stage": "48进24",
+      "teams": {
+        "a": "虽然弱但有猫",
+        "b": "超怕取名字"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "虽然弱但有猫",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22314361,
+        "bvid": null,
+        "page": 7,
+        "url": "https://www.bilibili.com/video/av22314361/?p=7"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "虽然弱但有猫",
+              "composition": []
+            },
+            "blue": {
+              "name": "超怕取名字",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "虽然弱但有猫",
+              "composition": []
+            },
+            "blue": {
+              "name": "超怕取名字",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-202",
+      "official_match_id": 202,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-19",
+      "start_time": "21:45",
+      "stage": "48进24",
+      "teams": {
+        "a": "歌尽鸽僧",
+        "b": "折剑听雨落"
+      },
+      "score": {
+        "a": 2,
+        "b": 0
+      },
+      "winner": "歌尽鸽僧",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22314361,
+        "bvid": null,
+        "page": 9,
+        "url": "https://www.bilibili.com/video/av22314361/?p=9"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "歌尽鸽僧",
+              "composition": []
+            },
+            "blue": {
+              "name": "折剑听雨落",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=9"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "歌尽鸽僧",
+              "composition": []
+            },
+            "blue": {
+              "name": "折剑听雨落",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22314361,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22314361/?p=9"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-203",
+      "official_match_id": 203,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-20",
+      "start_time": "19:30",
+      "stage": "48进24",
+      "teams": {
+        "a": "撸猫观光团",
+        "b": "东漓初采薇"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "东漓初采薇",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22350240,
+        "bvid": null,
+        "page": null,
+        "url": "https://www.bilibili.com/video/av22350240"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "撸猫观光团",
+              "composition": []
+            },
+            "blue": {
+              "name": "东漓初采薇",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "撸猫观光团",
+              "composition": []
+            },
+            "blue": {
+              "name": "东漓初采薇",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-204",
+      "official_match_id": 204,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-20",
+      "start_time": "20:15",
+      "stage": "48进24",
+      "teams": {
+        "a": "白鸟故迟留",
+        "b": "水月无妄思"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "水月无妄思",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22350240,
+        "bvid": null,
+        "page": 3,
+        "url": "https://www.bilibili.com/video/av22350240/?p=3"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "白鸟故迟留",
+              "composition": []
+            },
+            "blue": {
+              "name": "水月无妄思",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "白鸟故迟留",
+              "composition": []
+            },
+            "blue": {
+              "name": "水月无妄思",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-205",
+      "official_match_id": 205,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-20",
+      "start_time": "21:00",
+      "stage": "48进24",
+      "teams": {
+        "a": "桃下双子听归笙",
+        "b": "清风望月"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "清风望月",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22350240,
+        "bvid": null,
+        "page": 5,
+        "url": "https://www.bilibili.com/video/av22350240/?p=5"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "桃下双子听归笙",
+              "composition": []
+            },
+            "blue": {
+              "name": "清风望月",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "桃下双子听归笙",
+              "composition": []
+            },
+            "blue": {
+              "name": "清风望月",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=5"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-206",
+      "official_match_id": 206,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-20",
+      "start_time": "21:45",
+      "stage": "48进24",
+      "teams": {
+        "a": "想你想你想我喔喔",
+        "b": "烈酒拭刀"
+      },
+      "score": {
+        "a": 1,
+        "b": 2
+      },
+      "winner": "烈酒拭刀",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22350240,
+        "bvid": null,
+        "page": 7,
+        "url": "https://www.bilibili.com/video/av22350240/?p=7"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "想你想你想我喔喔",
+              "composition": []
+            },
+            "blue": {
+              "name": "烈酒拭刀",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "想你想你想我喔喔",
+              "composition": []
+            },
+            "blue": {
+              "name": "烈酒拭刀",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "想你想你想我喔喔",
+              "composition": []
+            },
+            "blue": {
+              "name": "烈酒拭刀",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22350240,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22350240/?p=7"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-207",
+      "official_match_id": 207,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-21",
+      "start_time": "19:30",
+      "stage": "48进24",
+      "teams": {
+        "a": "人间凉薄客",
+        "b": "醉雨话禅"
+      },
+      "score": {
+        "a": 0,
+        "b": 2
+      },
+      "winner": "醉雨话禅",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22405993,
+        "bvid": null,
+        "page": null,
+        "url": "https://www.bilibili.com/video/av22405993"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "人间凉薄客",
+              "composition": []
+            },
+            "blue": {
+              "name": "醉雨话禅",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "人间凉薄客",
+              "composition": []
+            },
+            "blue": {
+              "name": "醉雨话禅",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-208",
+      "official_match_id": 208,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-21",
+      "start_time": "20:15",
+      "stage": "48进24",
+      "teams": {
+        "a": "你过来啊啊",
+        "b": "如果有天变得有钱"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "你过来啊啊",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22405993,
+        "bvid": null,
+        "page": 3,
+        "url": "https://www.bilibili.com/video/av22405993/?p=3"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "你过来啊啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "如果有天变得有钱",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "你过来啊啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "如果有天变得有钱",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "你过来啊啊",
+              "composition": []
+            },
+            "blue": {
+              "name": "如果有天变得有钱",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993/?p=3"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    },
+    {
+      "match_id": "master-3-209",
+      "official_match_id": 209,
+      "event": "第三届剑网3竞技大师赛",
+      "season": 3,
+      "date": "2018-04-21",
+      "start_time": "21:00",
+      "stage": "48进24",
+      "teams": {
+        "a": "来帅哥哥抱",
+        "b": "相濡以沫扣哎扣"
+      },
+      "score": {
+        "a": 2,
+        "b": 1
+      },
+      "winner": "来帅哥哥抱",
+      "video": {
+        "platform": "bilibili",
+        "avid": 22405993,
+        "bvid": null,
+        "page": 6,
+        "url": "https://www.bilibili.com/video/av22405993/?p=6"
+      },
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "来帅哥哥抱",
+              "composition": []
+            },
+            "blue": {
+              "name": "相濡以沫扣哎扣",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993/?p=6"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 2,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "来帅哥哥抱",
+              "composition": []
+            },
+            "blue": {
+              "name": "相濡以沫扣哎扣",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993/?p=6"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        },
+        {
+          "game_no": 3,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "来帅哥哥抱",
+              "composition": []
+            },
+            "blue": {
+              "name": "相濡以沫扣哎扣",
+              "composition": []
+            }
+          },
+          "video": {
+            "platform": "bilibili",
+            "avid": 22405993,
+            "bvid": null,
+            "page": null,
+            "url": "https://www.bilibili.com/video/av22405993/?p=6"
+          },
+          "composition_status": "pending_video_frame_or_report_verification",
+          "confidence": "unverified"
+        }
+      ],
+      "evidence": [
+        {
+          "type": "official_schedule_api",
+          "url": "https://ws.xoyo.com/jx3/scorecenter170725/get_game_detail",
+          "fields": [
+            "official_match_id",
+            "event",
+            "stage",
+            "date",
+            "start_time",
+            "teams",
+            "score",
+            "video"
+          ]
+        }
+      ],
+      "confidence": {
+        "match_identity": "verified",
+        "score": "verified",
+        "game_compositions": "unverified"
+      }
+    }
+  ],
+  "video_collections": []
+}
