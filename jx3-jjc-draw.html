@@ -62,7 +62,7 @@
     const soloPool=new Set(soloSaved||specs.map(x=>x.id));
     let soloSegment='all';
     const mingjianMatchType='personal';
-    let mingjianRange={min:1000,max:1200};
+    let mingjianRange={min:2100,max:2300};
     const soloSegmentRules={all:()=>true,'低分段':x=>x.type==='healer'||['yijin','zixia','bingxin','mowen','xiaochen'].includes(x.id),'中分段':x=>['huajian','taixu','jingyu','fenying','wufang','dujing','yunshang','xiangzhi'].includes(x.id),'高分段':x=>['gufeng','shanhai','yinlong','linghai','badao','aoxue','tianluo','lingsu','lijing'].includes(x.id),'名剑高阶':x=>['gufeng','shanhai','yinlong','linghai','badao','lingsu','lijing','mowen'].includes(x.id)};
     const soloLore={lijing:'花间留香，适合稳住节奏后寻找反打窗口。',lingsu:'药香护阵，注意驱散与减伤的交替。',butian:'蛊影缠身，先保命再等毒伤滚起。',xiangzhi:'琴音相和，沟通控场链比单点伤害更重要。',yunshang:'云裳回春，适合稳健拉扯与保护队友。',gufeng:'孤锋破阵，抓住对手技能真空再进场。',shanhai:'万灵远程压制，保持距离和视野。',yinlong:'凌雪隐身切入，避免过早交关键爆发。',linghai:'蓬莱位移频繁，宜用地形制造隔离。',taixuan:'衍天控场，先算对手解控再落子。',wufang:'毒药持续施压，配合队友集火收尾。',mowen:'莫问平沙，优先寻找安全的读条窗口。',huajian:'花间爆发，玉石俱焚要与控制同步。',dujing:'毒经磨血，适合拉长战斗并限制治疗。',butian:'补天诀护持，关键时刻保住队友血线。',yijin:'少林抢珠与控制，适合正面压迫。',badao:'霸刀风车，注意进出场和减伤覆盖。',aoxue:'天策冲锋，先逼解控再打爆发。',taixu:'剑纯封内，围绕气场与控制链推进。',zixia:'气纯远程压制，保持距离并抓读条。',bingxin:'冰心爆发，转火前先确认队友控制。',jingyu:'惊羽远程点杀，优先锁定关键治疗。',fenying:'明教隐身抓点，别在无把握时提前现身。',xiaochen:'丐帮连段，贴身后注意对手反制。',tianluo:'天罗机关与持续伤害，适合控场消耗。'};
     let topStatsCache=null,topStatsFetchedAt=0;
