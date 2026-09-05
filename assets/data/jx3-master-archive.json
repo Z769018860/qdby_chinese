@@ -123,10 +123,17 @@
       "official_event_id": "a644441154e04c6fb4915d92f97345a4",
       "match_count": 70,
       "game_count": 0,
-      "coverage": "official_match_data_without_game_rows",
+      "coverage": "official_match_data_plus_spreadsheet_round_details",
       "sources": [
         "https://jx3.xoyo.com/competitive-match/index.html",
         "https://www.kdocs.cn/l/cqhoKx4U4Jux"
+      ],
+      "spreadsheet_url": "https://www.kdocs.cn/l/chx9R9u3s3RO",
+      "spreadsheet_sheets": [
+        "2026 4强",
+        "2026 16-8",
+        "2026 32-16",
+        "2026XS2 64强抽签版"
       ]
     }
   ]
