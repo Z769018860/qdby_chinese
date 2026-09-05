@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "resource_id": "jx3-master-6-matches",
   "event": {
     "name": "第六届剑网3竞技大师赛",
@@ -11,7 +11,11 @@
     "status": "partial_official_video_index",
     "match_count": 0,
     "video_collection_count": 3,
-    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。",
+    "official_api_event_id": "b31bc5113e6e4f1a9457cf80f2f99b15",
+    "official_match_count": 103,
+    "official_battle_count": 244,
+    "import_status": "pending_complete_snapshot"
   },
   "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
   "normalization_notes": [
@@ -107,6 +111,32 @@
       ],
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
+    }
+  ],
+  "source": {
+    "primary_url": "https://jx3.xoyo.com/match/#/",
+    "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+    "event_table_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/event-table",
+    "retrieved_via": "公开 JSONP 接口",
+    "snapshot_status": "interface_verified_full_snapshot_pending_import"
+  },
+  "official_api_snapshot": {
+    "event_id": "b31bc5113e6e4f1a9457cf80f2f99b15",
+    "match_count": 103,
+    "battle_count": 244,
+    "field_status": "接口已确认逐局心法/Ban/地图/胜负字段，等待完整快照导入"
+  },
+  "jpl_cross_reference": [
+    {
+      "name": "2021年职业联赛",
+      "eventId": "19fa0aa5e78d4e4f93b4ec6ac6860752",
+      "overlap": [
+        "卿酒",
+        "斗鱼",
+        "星源",
+        "踏云",
+        "轨迹"
+      ]
     }
   ]
 }
