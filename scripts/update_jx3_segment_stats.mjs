@@ -43,5 +43,7 @@ try{
     if(!result.dps.length&&!result.healer.length)throw new Error(`segment ${min}-${max} returned no stats`);
     out.ranges[`${min}-${max}`]=result;
   }
+  const fingerprints=Object.values(out.ranges).map(x=>JSON.stringify({dps:x.dps,healer:x.healer}));
+  if(fingerprints.length>1&&fingerprints.every(x=>x===fingerprints[0]))throw new Error('all score ranges returned identical data; refusing to publish a false segment snapshot');
   await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
 }catch(e){console.warn('segment personal API unavailable; writing empty status snapshot',e.message);await emptySnapshot(e.message);}
