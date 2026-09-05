@@ -28,17 +28,7 @@ async function signedGet(path){
 function normalize(data){
   return (data?.stats||[]).map((x,i)=>({rank:Number(x.rank||i+1),kungfu:x.kungfu||x.name,win_rate:Number(x.win_rate??x.winRate),pick_rate:Number(x.pick_rate??x.rate??0),sample_count:x.sample_count,player_count:x.player_count})).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
-async function fetchSegment(min,max,role){
-  const candidates=[
-    `/api/rank/builds?mode=summary&scope=segment&sample=solo&period=1d&minScore=${min}&maxScore=${max}&role=${role}`,
-    `/api/rank/builds?mode=summary&scope=segment&matchType=solo&period=1d&scoreMin=${min}&scoreMax=${max}&role=${role}`,
-    `/api/rank/builds?mode=summary&scope=segment&match=solo&days=1&min=${min}&max=${max}&role=${role}`
-  ];
-  let last;
-  for(const path of candidates){try{const stats=normalize(await signedGet(path));if(stats.length)return stats;}catch(e){last=e;}}
-  throw last||new Error(`segment ${min}-${max} ${role} returned no stats`);
-}
-async function emptySnapshot(reason){
+async function fetchSegment(min,max,role){\n  const candidates=[\n    'mode=summary&sample=solo&period=1d&role='+role+'&minScore='+min+'&maxScore='+max,\n    'mode=summary&sample=solo&period=1d&role='+role+'&scoreMin='+min+'&scoreMax='+max,\n    'mode=summary&sample=solo&period=1d&role='+role+'&score_min='+min+'&score_max='+max,\n    'mode=summary&sample=solo&period=1d&role='+role+'&rating_min='+min+'&rating_max='+max\n  ];\n  let last;\n  for(const query of candidates){\n    try{\n      const data=await signedGet('/api/rank/builds?'+query);\n      const stats=normalize(data);\n      if(!stats.length)continue;\n      const returnedMin=Number(data?.min_score??data?.score_min??data?.filters?.min_score??data?.query?.min_score);\n      const returnedMax=Number(data?.max_score??data?.score_max??data?.filters?.max_score??data?.query?.max_score);\n      if(Number.isFinite(returnedMin)&&Number.isFinite(returnedMax)&&(returnedMin!==min||returnedMax!==max))continue;\n      return stats;\n    }catch(e){last=e;}\n  }\n  throw last||new Error('segment '+min+'-'+max+' '+role+' returned no filtered stats');\n}\nasync function emptySnapshot(reason){
   const out={schema_version:1,source:BASE+'/api/rank/builds',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',fallback:false,sync_status:'segment_api_unavailable',sync_error:String(reason),ranges:{}};
   for(const [min,max] of ranges)out.ranges[`${min}-${max}`]={min_score:min,max_score:max,dps:[],healer:[],source:'segment-personal-solo-api'};
   await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\\n');
