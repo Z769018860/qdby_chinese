@@ -7,7 +7,7 @@
     "year": 2016
   },
   "generated_at": "2026-09-05T00:00:00Z",
-  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。旧接口仅提供整场比分和回放，不提供各小局红蓝方、胜负及心法；这些字段保留为空，等待战报或录像画面核验。 已导入第一届完整赛程与配置表；心法统一为正式全称，原始简称保留在 composition_raw。",
+  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。旧接口仅提供整场比分和回放，不提供各小局红蓝方、胜负及心法；这些字段保留为空，等待战报或录像画面核验。 已导入第一届完整赛程与配置表；心法统一为正式全称，原始简称保留在 composition_raw。 队伍匹配已忽略符号、括号与“啊”等表记差异，以官方接口队伍名为准。",
   "normalization_notes": [
     "保留官方接口中的原始战队名称，不擅自合并近似名称。",
     "legacy av 号作为稳定录像标识；bvid 与分P在核验前为 null。",
@@ -1671,72 +1671,128 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "娃娃鱼带我们灰",
-              "composition": []
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑苍歌"
             },
             "blue": {
               "name": "小呗们求轻虐啊",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926242,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926242"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "娃娃鱼带我们灰",
-              "composition": []
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑苍歌"
             },
             "blue": {
               "name": "小呗们求轻虐啊",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926242,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926242"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "娃娃鱼带我们灰",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "苍歌"
             },
             "blue": {
               "name": "小呗们求轻虐啊",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926242,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926242"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -1759,7 +1815,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-172",
