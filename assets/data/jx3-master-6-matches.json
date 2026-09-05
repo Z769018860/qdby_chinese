@@ -7273,7 +7273,7 @@
               },
               {
                 "id": "cangjian",
-                "name": "问水诀"
+                "name": "藏剑"
               },
               {
                 "id": "yunshang",
@@ -7385,7 +7385,7 @@
               },
               {
                 "id": "cangjian",
-                "name": "问水诀"
+                "name": "藏剑"
               },
               {
                 "id": "yunshang",
@@ -15316,5 +15316,6 @@
         "旬子哥"
       ]
     }
-  ]
+  ],
+  "source_notes": " 已完成全量心法名称校验，composition 字段统一为正式中文全称。"
 }
