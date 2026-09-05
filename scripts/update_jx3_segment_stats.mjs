@@ -27,7 +27,7 @@ async function signedGet(path){
 }
 function normalize(data,role){
   const root=data?.data&&typeof data.data==='object'?data.data:data;
-  const roleKeys=role==='healer'?['hps','healer','heal']:['tps','dps','output'];
+  const roleKeys=role==='healer'?['hps','healer','heal']:['dps','tps','output'];
   const candidates=[];
   for(const key of roleKeys)candidates.push(root?.[key],data?.[key]);
   candidates.push(root?.stats,root?.list,root?.rows,root?.items,root?.result,data?.stats,data?.list,data?.rows,data?.items,data?.result);
@@ -42,7 +42,7 @@ function normalize(data,role){
   })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
 async function fetchSegment(min,max,role){
-  const kungfuType=role==='healer'?'hps':'tps';
+  const kungfuType=role==='healer'?'hps':'dps';
   const modes=['single','solo','individual'];
   let last;
   for(const matchMode of modes){
