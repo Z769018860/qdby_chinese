@@ -1,29 +1,41 @@
 name: Update JJC segment snapshots
+
 on:
-  schedule:
-    - cron: '15 1 * * *'
   workflow_dispatch:
+  schedule:
+    - cron: "15 1 * * *"
   push:
     paths:
-      - 'scripts/update_jx3_segment_stats.mjs'
-      - '.github/workflows/update-jx3-segment-stats.yml'
+      - "scripts/update_jx3_segment_stats.mjs"
+      - ".github/workflows/update-jx3-segment-stats.yml"
+      - "jx3-top1000.json"
+
 permissions:
   contents: write
+
+concurrency:
+  group: update-jx3-segment-stats
+  cancel-in-progress: true
+
 jobs:
   snapshot:
-    runs-on: ubuntu-latest\n    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: npm install --no-save playwright
-      - run: npx playwright install chromium
-      - run: node scripts/update_jx3_segment_stats.mjs
-      - name: Commit snapshot
+          node-version: 22
+      - name: Generate segment snapshot
+        run: node scripts/update_jx3_segment_stats.mjs
+      - name: Commit changed snapshot
         run: |
+          if git diff --quiet -- jx3-segment-stats.json; then
+            echo "Segment snapshot is unchanged."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add jx3-segment-stats.json
-          git diff --cached --quiet || git commit -m "chore: update daily JJC segment stats snapshot"
+          git commit -m "chore: refresh JJC segment snapshot"
           git push
