@@ -49,9 +49,16 @@ async function signedGet(path){
   }
   const responseText=Buffer.concat(chunks).toString('utf8');
   try{
-    const parsed=JSON.parse(responseText);
-    return {rank:parsed?.rank||{data:[]}};
-  }catch(e){
+  const out={schema_version:1,source:BASE+'/api/rank/jjc-stats',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',ranges:{}};
+  for(const [min,max] of ranges){
+    const result={min_score:min,max_score:max,dps:[],healer:[]};
+    for(const role of ['dps','healer']){
+      try{result[role]=await fetchSegment(min,max,role,'last1d');}catch(e){console.warn(`segment ${min}-${max} ${role} last1d`,e.message);}
+    }
+    out.ranges[`${min}-${max}`]=result;
+  }
+  await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
+}catch(e){
     throw new Error(`${path} returned non-JSON: ${responseText.slice(0,500)}`);
   }
 }
