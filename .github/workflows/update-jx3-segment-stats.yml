@@ -28,6 +28,9 @@ jobs:
           node-version: 22
       - name: Generate segment snapshot
         run: node scripts/update_jx3_segment_stats.mjs
+      - name: Verify generated records
+        run: |
+          node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('jx3-segment-stats.json','utf8')); const rs=Object.values(d.ranges||{}); const dps=rs.reduce((n,x)=>n+(x.dps||[]).length,0); const healer=rs.reduce((n,x)=>n+(x.healer||[]).length,0); console.log('Generated records: dps='+dps+', healer='+healer); if(!dps&&!healer) process.exit(1)
       - name: Commit changed snapshot
         run: |
           if git diff --quiet -- jx3-segment-stats.json; then
@@ -38,4 +41,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add jx3-segment-stats.json
           git commit -m "chore: refresh JJC segment snapshot"
-          git pull --rebase origin main\n          git push
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            echo "Push attempt $attempt failed; retrying..."
+            sleep 2
+          done
+          exit 1
