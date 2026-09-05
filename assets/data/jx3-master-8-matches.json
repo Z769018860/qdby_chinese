@@ -24,14 +24,14 @@
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
-    "table_image_count": 6,
+    "table_image_count": 14,
     "table_coverage": [
       "64进32",
       "32进16",
       "16进8",
       "8强双败"
     ],
-    "note": "已补充用户提供的16进8与32进16原图证据；官方快照仍为比赛级数据，未返回逐局 battles。逐局心法字段仅在原图可逐格确认后写入。",
+    "note": "已登记本次新增8张高清逐局配置图，覆盖32进16与16进8多个分组。后续按图片逐格写入games，并保留原始简称与标准心法映射。",
     "table_update_at": "2026-09-05T00:00:00Z"
   },
   "jpl_cross_reference": null,
@@ -2160,6 +2160,142 @@
         "淘汰赛配置",
         "64进32第1/2局配置",
         "32进16第1/2局配置",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-2b4bb917",
+      "stage": "16进8",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "2b4bb917-ffb8-4463-a314-b0728c3c0002.png",
+      "coverage": "B1/B2",
+      "notes": "继雄参与、飘渺、梅子青时雨、天才幼儿园六",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-7175ce32",
+      "stage": "16进8",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "7175ce32-a895-4d2d-bcc2-044f8c19c183.png",
+      "coverage": "C1/C2",
+      "notes": "鸿蒙、海阔天空、恋爱脑",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-f90b2f16",
+      "stage": "16进8",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "f90b2f16-ab31-4efe-8aff-1ccf99ddbbd6.png",
+      "coverage": "D1/D2",
+      "notes": "守男德爱老婆、天降鸿运、磊爷只认钱、双刀击而破之",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-4f783ff2",
+      "stage": "16进8",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "4f783ff2-e7db-4e3d-bebd-d5ab5fa71f64.png",
+      "coverage": "A1/A2/B1",
+      "notes": "流浪儿童、夸张了鸭、彻底癫狂、鹦鹉说唱天团",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-9cd141fa",
+      "stage": "32进16",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "9cd141fa-09e8-47b4-8a20-34ba2c982af8.png",
+      "coverage": "3月30日—3月31日",
+      "notes": "64进32与32进16逐局配置表",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-c7ce9e84",
+      "stage": "32进16",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "c7ce9e84-b005-409b-a4d4-a6aaba68a049.png",
+      "coverage": "4月1日—4月2日",
+      "notes": "64进32与32进16逐局配置表",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-caf78f0a",
+      "stage": "淘汰赛配置明细",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "caf78f0a-07d9-4e6f-9f8a-e3fa8c728323.png",
+      "coverage": "A2/B2",
+      "notes": "彻底癫狂、强兔集团、四个自闭哥们和他的破、梅子青时雨、天才幼儿园六",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-upload-7d1b447b",
+      "stage": "淘汰赛配置明细",
+      "title": "第八届大师赛逐局配置表（用户上传）",
+      "source_type": "user_uploaded_original_image",
+      "filename": "7d1b447b-cd31-4348-a48a-c36bbe117c66.png",
+      "coverage": "C2/D2",
+      "notes": "恋爱脑、天降鸿运、磊爷只认钱、次饭坐小孩那桌、海阔天空、双刀击而破之",
+      "verified_fields": [
+        "对阵双方",
+        "逐局心法",
         "地图",
         "比分",
         "Ban"
