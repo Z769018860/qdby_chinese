@@ -1879,10 +1879,24 @@
     "status": "official_match_level_verified_battles_not_returned",
     "note": "官方接口已核对比赛级记录；当前快照没有可用 battles 逐局配置，未伪造地图、Ban 或心法。"
   },
-  "source_notes": " 已导入第九届大师赛完整表格；队伍按官方接口名称匹配，心法使用正式全称。 已按官方接口队伍名归一化导入第九届表格配置；鸿蒙沧海按官方接口名“鸿蒙”匹配。",
+  "source_notes": " 已导入第九届大师赛完整表格；队伍按官方接口名称匹配，心法使用正式全称。 已按官方接口队伍名归一化导入第九届表格配置；鸿蒙沧海按官方接口名“鸿蒙”匹配。 已进行队伍相似名称匹配；仅对高置信度别名合并，低相似度队伍保留待核验。",
   "spreadsheet_import": {
     "source_file": "剑网3第九届竞技大师赛_完整版.xlsx",
     "matched_match_count": 2,
-    "imported_game_count": 2
+    "imported_game_count": 2,
+    "matching_policy": "官方接口队伍名优先；忽略符号、括号、空格及常见后缀；相似度不足不强行合并",
+    "high_confidence_aliases": {
+      "鸿蒙沧海": "鸿蒙"
+    },
+    "unmatched_table_teams": [
+      "追星少年",
+      "如履薄冰",
+      "山河入梦",
+      "兰舟渡月",
+      "很想睡觉",
+      "江湖传闻",
+      "山河入墨",
+      "清风拂明月"
+    ]
   }
 }
