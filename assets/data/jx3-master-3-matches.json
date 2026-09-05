@@ -9,7 +9,8 @@
   "generated_at": "2026-09-05T00:00:00Z",
   "coverage": {
     "status": "official_schedule_complete_for_preserved_api",
-    "match_count": 23
+    "match_count": 23,
+    "historical_record_count": 19
   },
   "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。各小局心法、红蓝方与单局胜负等待战报或录像核验。",
   "normalization_notes": [
@@ -2301,5 +2302,297 @@
       }
     }
   ],
-  "video_collections": []
+  "video_collections": [],
+  "historical_records": [
+    {
+      "source_row": 47,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": "大美江湖",
+      "placement": "冠军",
+      "team": "清风望月",
+      "healer": "清衣",
+      "teammates": [
+        "阿越",
+        "落叶",
+        "风清歌",
+        "持风"
+      ]
+    },
+    {
+      "source_row": 48,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "亚军",
+      "team": "水调歌头",
+      "healer": "茶茶",
+      "teammates": [
+        "墨道烟雨",
+        "跑毛",
+        "夏小花",
+        "衍涩"
+      ]
+    },
+    {
+      "source_row": 49,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "季军",
+      "team": "墨洒琴心",
+      "healer": "花海",
+      "teammates": [
+        "太子",
+        "万罗",
+        "问情子枫",
+        "忘水鱼"
+      ]
+    },
+    {
+      "source_row": 50,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "四强",
+      "team": "醉雨话禅",
+      "healer": "忆旧年",
+      "teammates": [
+        "童话",
+        "黑人",
+        "白大反",
+        "慕堇"
+      ]
+    },
+    {
+      "source_row": 51,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "六强",
+      "team": "虽然弱但有猫",
+      "healer": "花舞剑",
+      "teammates": [
+        "事事休",
+        "慕月淅",
+        "迎风客",
+        "赤鳞"
+      ]
+    },
+    {
+      "source_row": 52,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "六强",
+      "team": "神奇宝贝",
+      "healer": "赵若曦",
+      "teammates": [
+        "泠兮陌",
+        "飘云凌",
+        "日月劫",
+        "柳词"
+      ]
+    },
+    {
+      "source_row": 53,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "八强",
+      "team": "明月渔火逐流客",
+      "healer": "蛊幽幽",
+      "teammates": [
+        "枫晚",
+        "离挽",
+        "向小天",
+        "夏景澜"
+      ]
+    },
+    {
+      "source_row": 54,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "八强",
+      "team": "意难平",
+      "healer": "叶小舞",
+      "teammates": [
+        "封心",
+        "镇魂歌",
+        "浅陌轻语",
+        "温沐风"
+      ]
+    },
+    {
+      "source_row": 55,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": "长风破晓",
+      "placement": "冠军",
+      "team": "水调歌头",
+      "healer": "茶茶",
+      "teammates": [
+        "截元丹",
+        "跑毛",
+        "夏小花",
+        "衍涩"
+      ]
+    },
+    {
+      "source_row": 56,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "亚军",
+      "team": "刀枪剑棒",
+      "healer": "云水沐",
+      "teammates": [
+        "空城",
+        "竹霖",
+        "向小天",
+        "星语小贼"
+      ]
+    },
+    {
+      "source_row": 57,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "季军",
+      "team": "破晓生花",
+      "healer": "花海",
+      "teammates": [
+        "尘微",
+        "漓七",
+        "离挽",
+        "相忘于情"
+      ]
+    },
+    {
+      "source_row": 58,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "四强",
+      "team": "奥特曼",
+      "healer": "桃枝",
+      "teammates": [
+        "小巷",
+        "小宽野",
+        "花天初",
+        "小离岸"
+      ]
+    },
+    {
+      "source_row": 59,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "六强",
+      "team": "曲云么么哒哒",
+      "healer": "云染叶",
+      "teammates": [
+        "包菜",
+        "卿沐逸",
+        "肥猫",
+        "曲彼岸"
+      ]
+    },
+    {
+      "source_row": 60,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "六强",
+      "team": "醉雨话禅",
+      "healer": "忆旧年",
+      "teammates": [
+        "花舞剑",
+        "童话",
+        "黑人",
+        "白大反"
+      ]
+    },
+    {
+      "source_row": 62,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": "世外蓬莱",
+      "placement": "冠军",
+      "team": "月照清风",
+      "healer": "小阿宁",
+      "teammates": [
+        "焚影不归",
+        "江安予",
+        "二白",
+        "方青砚"
+      ]
+    },
+    {
+      "source_row": 64,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "季军",
+      "team": "淡酒三杯",
+      "healer": "山翠沾衣",
+      "teammates": [
+        "豆浆先森",
+        "风吹折柳",
+        "雁长禀",
+        "会会心"
+      ]
+    },
+    {
+      "source_row": 65,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "四强",
+      "team": "醉雨话禅",
+      "healer": "花舞剑",
+      "teammates": [
+        "童话",
+        "黑人",
+        "慕堇",
+        "白大反"
+      ]
+    },
+    {
+      "source_row": 66,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "六强",
+      "team": "扶摇",
+      "healer": "茶茶",
+      "teammates": [
+        "伍贰",
+        "墨道烟雨",
+        "问情子枫",
+        "夏小花"
+      ]
+    },
+    {
+      "source_row": 67,
+      "event": "大师赛",
+      "season": "第三届",
+      "version": null,
+      "placement": "六强",
+      "team": "你害怕点我不正常",
+      "healer": "米酱",
+      "teammates": [
+        "辣鸡",
+        "谨兮",
+        "溜溜溜溜",
+        "精灵羊小弟"
+      ]
+    }
+  ],
+  "source": {
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
+  }
 }
