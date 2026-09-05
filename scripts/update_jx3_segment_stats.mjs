@@ -26,7 +26,7 @@ async function signedGet(path){
   return response.json();
 }
 function normalize(data){
-  const list=data?.stats||data?.data?.stats||data?.data||data?.rows||data?.items||[];
+  const list=data?.stats||data?.data?.stats||data?.list||data?.data?.list||data?.rows||data?.data?.rows||data?.items||data?.data?.items||data?.result||data?.data?.result||data?.data||[];
   return (Array.isArray(list)?list:[]).map((x,i)=>({
     rank:Number(x.rank||x.ranking||i+1),
     kungfu:x.kungfu||x.name||x.kungfuName||x.forceName,
