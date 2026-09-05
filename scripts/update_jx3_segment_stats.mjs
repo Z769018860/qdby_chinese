@@ -38,18 +38,28 @@ function normalize(data){
     player_count:Number(x.playerCount??x.player_count??0)
   })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
-async function fetchSegment(min,max,role){
+async function fetchSegment(min,max,role,periodType='last1d'){
   const kungfuType=role==='healer'?'tps':'dps';
   const matchMode='solo';
   let last;
   {
-    const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType=last1d&scoreStart='+min+'&scoreEnd='+max;
+    const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType='+periodType+'&scoreStart='+min+'&scoreEnd='+max;
     try{
-      const data=await signedGet(path);
-      const stats=normalize(data);
-      if(stats.length)return stats;
-      last=new Error('empty response for matchMode='+matchMode);
-    }catch(e){last=e;}
+  const out={schema_version:1,source:BASE+'/api/rank/jjc-stats',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',periods:{}};
+  for(const periodType of ['last1d','last7d']){
+    const periodRanges={};
+    for(const [min,max] of ranges){
+      const result={min_score:min,max_score:max,dps:[],healer:[]};
+      for(const role of ['dps','healer']){
+        try{result[role]=await fetchSegment(min,max,role,periodType);}catch(e){console.warn(`segment ${min}-${max} ${role} ${periodType}`,e.message);}
+      }
+      periodRanges[`${min}-${max}`]=result;
+    }
+    out.periods[periodType]={ranges:periodRanges};
+  }
+  out.ranges=out.periods.last1d.ranges;
+  await writeFile('jx3-segment-stats.json',JSON.stringify(out,null,2)+'\n');
+}catch(e){last=e;}
   }
   throw last||new Error('jjc-stats returned no '+role+' data for '+min+'-'+max);
 }
