@@ -3819,5 +3819,16 @@
   },
   "coverage": {
     "historical_record_count": 26
+  },
+  "online_research": {
+    "checked_at": "2026-09-05T00:00:00Z",
+    "status": "video_and_report_sources_indexed",
+    "official_urls": [
+      "https://jx3.xoyo.com/zb/media.html"
+    ],
+    "video_or_report_urls": [
+      "https://www.bilibili.com/video/BV14x411D77n/"
+    ],
+    "verification_note": "已确认第一届官方录像索引和B站单场录像入口；逐局心法仍需视频画面核验"
   }
 }
