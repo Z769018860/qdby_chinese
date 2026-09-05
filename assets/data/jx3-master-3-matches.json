@@ -8,9 +8,11 @@
   },
   "generated_at": "2026-09-05T00:00:00Z",
   "coverage": {
-    "status": "official_schedule_complete_for_preserved_api",
+    "status": "official_schedule_plus_excel_top8_game_data",
     "match_count": 23,
-    "historical_record_count": 19
+    "historical_record_count": 19,
+    "game_count": 89,
+    "top8_match_count": 15
   },
   "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。各小局心法、红蓝方与单局胜负等待战报或录像核验。",
   "normalization_notes": [
@@ -19,9 +21,10 @@
     "games 数量按最终比分双方胜局之和建立，不推断每局胜方。"
   ],
   "stats": {
-    "match_count": 23,
+    "match_count": 38,
     "game_shell_count": 51,
-    "verified_composition_count": 0
+    "verified_composition_count": 38,
+    "game_count": 89
   },
   "matches": [
     {
@@ -2300,6 +2303,1956 @@
         "score": "verified",
         "game_compositions": "unverified"
       }
+    },
+    {
+      "match_id": "master-3-g1",
+      "official_match_id": "G1",
+      "event_id": null,
+      "stage": "胜者组R1",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "水调歌头",
+      "team_b": "神奇宝贝",
+      "score": "2:0",
+      "winner": "水调歌头",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "佛霸秀"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑策秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊霸毒"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明策毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g2",
+      "official_match_id": "G2",
+      "event_id": null,
+      "stage": "胜者组R1",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "醉雨话禅",
+      "team_b": "明月渔火逐流客",
+      "score": "2:1",
+      "winner": "醉雨话禅",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明花毒"
+          },
+          "team_b": {
+            "name": "明月渔火逐流客",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸歌秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸明秀"
+          },
+          "team_b": {
+            "name": "明月渔火逐流客",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊佛毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸毒"
+          },
+          "team_b": {
+            "name": "明月渔火逐流客",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸歌秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g3",
+      "official_match_id": "G3",
+      "event_id": null,
+      "stage": "胜者组R1",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "墨洒琴心",
+      "team_b": "虽然弱但有猫",
+      "score": "2:0",
+      "winner": "墨洒琴心",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花歌秀"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸秀"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花剑秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g4",
+      "official_match_id": "G4",
+      "event_id": null,
+      "stage": "胜者组R1",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "清风望月",
+      "team_b": "意难平",
+      "score": "2:0",
+      "winner": "清风望月",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策剑毒"
+          },
+          "team_b": {
+            "name": "意难平",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策惊毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策丐毒"
+          },
+          "team_b": {
+            "name": "意难平",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明歌毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g5",
+      "official_match_id": "G5",
+      "event_id": null,
+      "stage": "胜者组R2",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "水调歌头",
+      "team_b": "醉雨话禅",
+      "score": "2:1",
+      "winner": "水调歌头",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "佛霸秀"
+          },
+          "team_b": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明霸毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑霸歌"
+          },
+          "team_b": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花明秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊歌毒"
+          },
+          "team_b": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸花毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g6",
+      "official_match_id": "G6",
+      "event_id": null,
+      "stage": "胜者组R2",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "清风望月",
+      "team_b": "墨洒琴心",
+      "score": "2:0",
+      "winner": "清风望月",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策剑秀"
+          },
+          "team_b": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花歌秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策惊毒"
+          },
+          "team_b": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g7",
+      "official_match_id": "G7",
+      "event_id": null,
+      "stage": "胜者组决赛",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "水调歌头",
+      "team_b": "清风望月",
+      "score": "0:2",
+      "winner": "清风望月",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "佛霸秀"
+          },
+          "team_b": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策剑秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑霸歌"
+          },
+          "team_b": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策惊毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g8",
+      "official_match_id": "G8",
+      "event_id": null,
+      "stage": "败者组R1",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "明月渔火逐流客",
+      "team_b": "神奇宝贝",
+      "score": "0:2",
+      "winner": "神奇宝贝",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "明月渔火逐流客",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸歌秀"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑策毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "明月渔火逐流客",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊佛毒"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明策秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g9",
+      "official_match_id": "G9",
+      "event_id": null,
+      "stage": "败者组R1",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "意难平",
+      "team_b": "虽然弱但有猫",
+      "score": "1:2",
+      "winner": "虽然弱但有猫",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "意难平",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策明毒"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑花毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "意难平",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊歌毒"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "丐花秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "意难平",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策惊毒"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g10",
+      "official_match_id": "G10",
+      "event_id": null,
+      "stage": "败者组R2",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "醉雨话禅",
+      "team_b": "神奇宝贝",
+      "score": "2:1",
+      "winner": "醉雨话禅",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸明毒"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑策秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸秀"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明策毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明花毒"
+          },
+          "team_b": {
+            "name": "神奇宝贝",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑明秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g11",
+      "official_match_id": "G11",
+      "event_id": null,
+      "stage": "败者组R2",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "墨洒琴心",
+      "team_b": "虽然弱但有猫",
+      "score": "1:2",
+      "winner": "虽然弱但有猫",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花歌秀"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸毒"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花剑秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "歌霸秀"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g12",
+      "official_match_id": "G12",
+      "event_id": null,
+      "stage": "败者组R3",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "醉雨话禅",
+      "team_b": "虽然弱但有猫",
+      "score": "2:0",
+      "winner": "醉雨话禅",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明霸毒"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑花秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花明秀"
+          },
+          "team_b": {
+            "name": "虽然弱但有猫",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑丐毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g13",
+      "official_match_id": "G13",
+      "event_id": null,
+      "stage": "败者组半决赛",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "墨洒琴心",
+      "team_b": "醉雨话禅",
+      "score": "2:0",
+      "winner": "墨洒琴心",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花歌秀"
+          },
+          "team_b": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "明花毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸毒"
+          },
+          "team_b": {
+            "name": "醉雨话禅",
+            "composition": [
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "fenying",
+                "name": "fenying"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "霸明秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g14",
+      "official_match_id": "G14",
+      "event_id": null,
+      "stage": "败者组决赛/季军赛",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "水调歌头",
+      "team_b": "墨洒琴心",
+      "score": "3:1",
+      "winner": "水调歌头",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "佛霸秀"
+          },
+          "team_b": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花歌秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑霸歌"
+          },
+          "team_b": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "花霸毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊歌毒"
+          },
+          "team_b": {
+            "name": "墨洒琴心",
+            "composition": [
+              {
+                "id": "mowen",
+                "name": "mowen"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "歌霸秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "录像整理"
+    },
+    {
+      "match_id": "master-3-g15",
+      "official_match_id": "G15",
+      "event_id": null,
+      "stage": "总决赛",
+      "group": "线下8强",
+      "date": "2018-05",
+      "end_date": null,
+      "team_a": "水调歌头",
+      "team_b": "清风望月",
+      "score": "1:3",
+      "winner": "清风望月",
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "yijin",
+                "name": "yijin"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "佛霸秀"
+          },
+          "team_b": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑策秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊霸毒"
+          },
+          "team_b": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "xiaochen",
+                "name": "xiaochen"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "惊丐毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 3,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "badao",
+                "name": "badao"
+              },
+              {
+                "id": "mowen",
+                "name": "mowen"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑霸歌"
+          },
+          "team_b": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑策秀"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        },
+        {
+          "game_no": 4,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "水调歌头",
+            "composition": [
+              {
+                "id": "taixu",
+                "name": "taixu"
+              },
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "剑罗毒"
+          },
+          "team_b": {
+            "name": "清风望月",
+            "composition": [
+              {
+                "id": "aoxue",
+                "name": "aoxue"
+              },
+              {
+                "id": "jingyu",
+                "name": "jingyu"
+              },
+              {
+                "id": "dujing",
+                "name": "dujing"
+              }
+            ],
+            "bans": [],
+            "composition_raw": "策惊毒"
+          },
+          "source_note": "第三届大师赛 Excel 线下8强完整对阵表"
+        }
+      ],
+      "source": "17173官方复盘"
     }
   ],
   "video_collections": [
@@ -2685,7 +4638,9 @@
     "historical_records_file": "历届赛事记录.xlsx",
     "weibo_account": "@剑网3赛事",
     "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。",
-    "video_research_note": "已补充公开可检索的第三届大师赛官方/赛事录像合集；视频已建立回放索引，但逐局心法仍需从视频画面逐局核验。"
+    "video_research_note": "已补充公开可检索的第三届大师赛官方/赛事录像合集；视频已建立回放索引，但逐局心法仍需从视频画面逐局核验。",
+    "spreadsheet": "072c96a8-f3dc-4ac9-96fa-693b941bd2b3.xlsx",
+    "spreadsheet_note": "线下8强完整对阵表已导入，紧凑心法简称已按位置展开为标准心法名称。"
   },
   "online_research": {
     "checked_at": "2026-09-05T00:00:00Z",
@@ -2703,5 +4658,18 @@
       "https://jx3.xoyo.com/zb/media.html"
     ],
     "official_page_findings": "官方专题页提供比赛回放入口、赛制与报名规则，但页面正文未提供逐局红蓝心法/地图/Ban文字；逐局配置仍需打开回放画面核验。"
+  },
+  "spreadsheet_import": {
+    "source_file": "072c96a8-f3dc-4ac9-96fa-693b941bd2b3.xlsx",
+    "top8_match_count": 15,
+    "imported_game_count": 38,
+    "normalization_rules": [
+      "佛→易筋经",
+      "惊→惊羽诀",
+      "剑→太虚剑意",
+      "毒（第三位）→补天诀",
+      "歌（第三位）→相知",
+      "秀（第三位）→云裳心经"
+    ]
   }
 }
