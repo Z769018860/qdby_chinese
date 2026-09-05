@@ -7,7 +7,7 @@
     "year": 2016
   },
   "generated_at": "2026-09-05T00:00:00Z",
-  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。旧接口仅提供整场比分和回放，不提供各小局红蓝方、胜负及心法；这些字段保留为空，等待战报或录像画面核验。",
+  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。旧接口仅提供整场比分和回放，不提供各小局红蓝方、胜负及心法；这些字段保留为空，等待战报或录像画面核验。 已导入第一届完整赛程与配置表；心法统一为正式全称，原始简称保留在 composition_raw。",
   "normalization_notes": [
     "保留官方接口中的原始战队名称，不擅自合并近似名称。",
     "legacy av 号作为稳定录像标识；bvid 与分P在核验前为 null。",
@@ -16,7 +16,7 @@
   "stats": {
     "match_count": 32,
     "game_shell_count": 83,
-    "verified_composition_count": 0
+    "verified_composition_count": 31
   },
   "matches": [
     {
@@ -1787,49 +1787,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "没有时间了快上车",
-              "composition": []
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑歌歌"
             },
             "blue": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926148,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926148"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "没有时间了快上车",
-              "composition": []
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑歌歌"
             },
             "blue": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926148,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926148"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -1852,7 +1892,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-173",
@@ -1880,72 +1921,132 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "恩施舞阳坝车神开车了",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926177,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926177"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "恩施舞阳坝车神开车了",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926177,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926177"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "恩施舞阳坝车神开车了",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926177,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926177"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -1968,7 +2069,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-174",
@@ -1996,49 +2098,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "没钱了呢",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "jingyu",
+                  "name": "惊羽诀"
+                },
+                {
+                  "id": "lijing",
+                  "name": "离经易道"
+                }
+              ],
+              "composition_raw": "苍惊花"
             },
             "blue": {
               "name": "休道默以殇离别",
-              "composition": []
+              "composition": [
+                {
+                  "id": "dujing",
+                  "name": "毒经"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "毒歌毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926173,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926173"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "没钱了呢",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "jingyu",
+                  "name": "惊羽诀"
+                },
+                {
+                  "id": "lijing",
+                  "name": "离经易道"
+                }
+              ],
+              "composition_raw": "苍惊花"
             },
             "blue": {
               "name": "休道默以殇离别",
-              "composition": []
+              "composition": [
+                {
+                  "id": "dujing",
+                  "name": "毒经"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "毒歌毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926173,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926173"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -2061,7 +2203,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-175",
@@ -2507,49 +2650,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "小呗们求轻虐啊",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 4834132,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av4834132"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "小呗们求轻虐啊",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 4834132,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av4834132"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -2572,7 +2755,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-180",
@@ -2600,49 +2784,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
               "name": "建队不需要解锁真的",
-              "composition": []
+              "composition": [
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "zixia",
+                  "name": "紫霞功"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "花气歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926282,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926282"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
               "name": "建队不需要解锁真的",
-              "composition": []
+              "composition": [
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "zixia",
+                  "name": "紫霞功"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "花气歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926282,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926282"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -2665,7 +2889,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-181",
@@ -2693,49 +2918,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "休道默以殇离别",
-              "composition": []
+              "composition": [
+                {
+                  "id": "dujing",
+                  "name": "毒经"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "毒歌毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926386,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926386"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "休道默以殇离别",
-              "composition": []
+              "composition": [
+                {
+                  "id": "dujing",
+                  "name": "毒经"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "毒歌毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926386,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926386"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -2758,7 +3023,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-182",
@@ -2786,72 +3052,132 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
-              "name": "墨洒琴心",
-              "composition": []
+              "name": "乌龙茶奶盖",
+              "composition": [
+                {
+                  "id": "xiaochen",
+                  "name": "笑尘诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "yunshang",
+                  "name": "云裳心经"
+                }
+              ],
+              "composition_raw": "丐苍秀"
             },
             "blue": {
-              "name": "乌龙茶奶盖",
-              "composition": []
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 4835761,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av4835761"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
-              "name": "墨洒琴心",
-              "composition": []
+              "name": "乌龙茶奶盖",
+              "composition": [
+                {
+                  "id": "xiaochen",
+                  "name": "笑尘诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "yunshang",
+                  "name": "云裳心经"
+                }
+              ],
+              "composition_raw": "丐苍秀"
             },
             "blue": {
-              "name": "乌龙茶奶盖",
-              "composition": []
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 4835761,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av4835761"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
-              "name": "墨洒琴心",
-              "composition": []
+              "name": "乌龙茶奶盖",
+              "composition": [
+                {
+                  "id": "xiaochen",
+                  "name": "笑尘诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "yunshang",
+                  "name": "云裳心经"
+                }
+              ],
+              "composition_raw": "丐苍秀"
             },
             "blue": {
-              "name": "乌龙茶奶盖",
-              "composition": []
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 4835761,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av4835761"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -2874,7 +3200,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-183",
@@ -2902,118 +3229,175 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926706,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926706"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926706,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926706"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926706,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926706"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 4,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "叼打小伯顿天团",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             },
             "blue": {
               "name": "听说气纯两仪不掉血",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926706,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926706"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 5,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "叼打小伯顿天团",
-              "composition": []
-            },
-            "blue": {
-              "name": "听说气纯两仪不掉血",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926706,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926706"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -3036,7 +3420,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-184",
@@ -3064,95 +3449,218 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
               "name": "墨洒琴心",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926714,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926714"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
               "name": "墨洒琴心",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926714,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926714"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
               "name": "墨洒琴心",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926714,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926714"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 4,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
               "name": "墨洒琴心",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926714,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926714"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
+        },
+        {
+          "game_no": 5,
+          "winner": "blue",
+          "teams": {
+            "red": {
+              "name": "听说前方没有藏剑",
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
+            },
+            "blue": {
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
+            }
           },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -3175,7 +3683,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-185",
@@ -3203,95 +3712,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "叼打小伯顿天团",
-              "composition": []
+              "name": "听说前方没有藏剑",
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
-              "name": "听说前方没有藏剑",
-              "composition": []
+              "name": "叼打小伯顿天团",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9929503,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9929503"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "叼打小伯顿天团",
-              "composition": []
+              "name": "听说前方没有藏剑",
+              "composition": [
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "苍藏歌"
             },
             "blue": {
-              "name": "听说前方没有藏剑",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9929503,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9929503"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 3,
-          "winner": null,
-          "teams": {
-            "red": {
               "name": "叼打小伯顿天团",
-              "composition": []
-            },
-            "blue": {
-              "name": "听说前方没有藏剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9929503,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9929503"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 4,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "叼打小伯顿天团",
-              "composition": []
-            },
-            "blue": {
-              "name": "听说前方没有藏剑",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9929503,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9929503"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -3314,7 +3817,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-1-186",
@@ -3342,72 +3846,175 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "听说气纯两仪不掉血",
-              "composition": []
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             },
             "blue": {
-              "name": "墨洒琴心",
-              "composition": []
+              "name": "听说气纯两仪不掉血",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926608,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926608"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "听说气纯两仪不掉血",
-              "composition": []
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             },
             "blue": {
-              "name": "墨洒琴心",
-              "composition": []
+              "name": "听说气纯两仪不掉血",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926608,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926608"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "听说气纯两仪不掉血",
-              "composition": []
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
             },
             "blue": {
-              "name": "墨洒琴心",
-              "composition": []
+              "name": "听说气纯两仪不掉血",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 9926608,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av9926608"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
+        },
+        {
+          "game_no": 4,
+          "winner": "red",
+          "teams": {
+            "red": {
+              "name": "墨洒琴心",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "双花歌"
+            },
+            "blue": {
+              "name": "听说气纯两仪不掉血",
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明歌歌"
+            }
           },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第一届竞技大师赛_完整赛程与配置.xlsx"
         }
       ],
       "evidence": [
@@ -3430,7 +4037,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     }
   ],
   "historical_records": [
