@@ -21,30 +21,31 @@ async function signedGet(path){
   const headers={...s.headers,[a.token]:p.token,[a.timestamp]:ts,[a.nonce]:nonce,[a.proof]:sig,[a.bodyHash]:bodyHash};
   if(s.cookie)headers.Cookie=s.cookie;
   if(p.kid&&p.dailySalt&&a.kid&&a.daily) {headers[a.kid]=p.kid;headers[a.daily]=p.dailySalt;}
-  const response=await fetch(`${BASE}${path}`,{headers});
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),15000);
+  let response;
+  try{response=await fetch(`${BASE}${path}`,{headers,signal:controller.signal});}
+  finally{clearTimeout(timeout);}
   if(!response.ok){
     const errorText=await response.text();
     throw new Error(`${path} HTTP ${response.status}: ${errorText.slice(0,500)}`);
   }
+  const contentLength=Number(response.headers.get('content-length')||0);
+  const maxBytes=4*1024*1024;
+  if(contentLength>maxBytes)throw new Error(`${path} response content-length exceeds 4MB`);
   const reader=response.body?.getReader();
+  if(!reader)throw new Error(`${path} has no readable response body`);
   const chunks=[];
   let total=0;
-  const maxBytes=32*1024*1024;
-  if(reader){
-    while(true){
-      const part=await reader.read();
-      if(part.done)break;
-      total+=part.value.byteLength;
-      if(total>maxBytes){
-        await reader.cancel();
-        throw new Error(`${path} response exceeds 32MB; skipped to protect workflow memory`);
-      }
-      chunks.push(Buffer.from(part.value));
+  while(true){
+    const part=await reader.read();
+    if(part.done)break;
+    total+=part.value.byteLength;
+    if(total>maxBytes){
+      await reader.cancel();
+      throw new Error(`${path} response exceeds 4MB; skipped`);
     }
-  }else{
-    const text=await response.text();
-    if(text.length>maxBytes)throw new Error(`${path} response exceeds 32MB; skipped to protect workflow memory`);
-    chunks.push(Buffer.from(text));
+    chunks.push(Buffer.from(part.value));
   }
   const responseText=Buffer.concat(chunks).toString('utf8');
   try{
