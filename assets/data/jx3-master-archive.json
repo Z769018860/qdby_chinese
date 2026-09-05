@@ -151,5 +151,22 @@
     "file": "历届赛事记录.xlsx",
     "weibo_account": "@剑网3赛事",
     "note": "队伍名次、成员和配置摘要；逐局数据需结合官方接口、微博战报和录像交叉核验"
+  },
+  "other_events": {
+    "path": "./assets/data/jx3-other-events.json",
+    "source_file": "历届赛事记录.xlsx",
+    "event_count": 9,
+    "record_count": 98,
+    "events": [
+      "熊猫杯",
+      "贴吧杯",
+      "虎牙杯",
+      "B站杯",
+      "斗鱼杯",
+      "CJ邀请赛",
+      "JPL",
+      "俱乐部邀请赛",
+      "名剑杯"
+    ]
   }
 }
