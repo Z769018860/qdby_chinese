@@ -28,46 +28,61 @@
       "season": 4,
       "year": 2019,
       "path": "./assets/data/jx3-master-4-matches.json",
-      "coverage": "official_api_snapshot_pending_import",
+      "coverage": "official_match_and_game_data",
       "official_event_id": "71002d1b528c45bf8f09602544b92163",
       "official_match_count": 119,
-      "official_battle_count": 297
+      "official_battle_count": 297,
+      "match_count": 119,
+      "game_count": 297,
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
     },
     {
       "season": 5,
       "year": 2020,
       "path": "./assets/data/jx3-master-5-matches.json",
-      "coverage": "official_api_snapshot_pending_import",
+      "coverage": "official_match_and_game_data",
       "official_event_id": "3057dfff845149fa85d3dd323e4c90fa",
       "official_match_count": 132,
-      "official_battle_count": 311
+      "official_battle_count": 311,
+      "match_count": 132,
+      "game_count": 311,
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
     },
     {
       "season": 6,
       "year": 2021,
       "path": "./assets/data/jx3-master-6-matches.json",
-      "coverage": "official_api_snapshot_pending_import",
+      "coverage": "official_match_and_game_data",
       "official_event_id": "b31bc5113e6e4f1a9457cf80f2f99b15",
       "official_match_count": 103,
-      "official_battle_count": 244
+      "official_battle_count": 244,
+      "match_count": 103,
+      "game_count": 244,
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
     },
     {
       "season": 7,
       "year": 2022,
       "path": "./assets/data/jx3-master-7-matches.json",
-      "coverage": "official_api_snapshot_pending_import",
+      "coverage": "official_match_data_without_game_rows",
       "official_event_id": "c8f3f03b36234490ade1866f0846b532",
       "official_match_count": 85,
-      "official_battle_count": 0
+      "official_battle_count": 0,
+      "match_count": 85,
+      "game_count": 0,
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
     },
     {
       "season": 8,
       "year": 2023,
       "path": "./assets/data/jx3-master-8-matches.json",
-      "coverage": "official_api_snapshot_pending_import",
+      "coverage": "official_match_data_without_game_rows",
       "official_event_id": "9cbc29e92c7d43fc94cdfc0467cf8084",
       "official_match_count": 116,
-      "official_battle_count": 0
+      "official_battle_count": 0,
+      "match_count": 116,
+      "game_count": 0,
+      "source_api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match"
     }
   ]
 }
