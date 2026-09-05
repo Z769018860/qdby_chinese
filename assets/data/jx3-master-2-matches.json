@@ -12,7 +12,7 @@
     "match_count": 74,
     "historical_record_count": 18
   },
-  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。各小局心法、红蓝方与单局胜负等待战报或录像核验。",
+  "source_notes": "比赛层数据来自剑网3赛事中心旧版官方接口。各小局心法、红蓝方与单局胜负等待战报或录像核验。 已导入第二届逐局配置表；简称按位置展开，待核验项保留标记。",
   "normalization_notes": [
     "保留官方接口原始战队名称。",
     "旧 av 号作为录像标识；未核验的 bvid 与分P为 null。",
@@ -21,7 +21,7 @@
   "stats": {
     "match_count": 74,
     "game_shell_count": 185,
-    "verified_composition_count": 0
+    "verified_composition_count": 28
   },
   "matches": [
     {
@@ -145,72 +145,42 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "歌尽鸽僧",
-              "composition": []
+              "composition": [
+                {
+                  "id": "bingxin",
+                  "name": "冰心诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "冰歌"
             },
             "blue": {
               "name": "我超爱吃猪皮",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                }
+              ],
+              "composition_raw": "待核验"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10761664,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10761664/?p=2"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 2,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "歌尽鸽僧",
-              "composition": []
-            },
-            "blue": {
-              "name": "我超爱吃猪皮",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10761664,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10761664/?p=2"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 3,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "歌尽鸽僧",
-              "composition": []
-            },
-            "blue": {
-              "name": "我超爱吃猪皮",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10761664,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10761664/?p=2"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -233,7 +203,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-74",
@@ -2234,49 +2205,46 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "一曲大漠孤烟",
-              "composition": []
+              "composition": [
+                {
+                  "id": "xiaochen",
+                  "name": "笑尘诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "丐苍歌"
             },
             "blue": {
               "name": "九歌云",
-              "composition": []
+              "composition": [
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "霸苍歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10826331,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10826331/?p=5"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 2,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "一曲大漠孤烟",
-              "composition": []
-            },
-            "blue": {
-              "name": "九歌云",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10826331,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10826331/?p=5"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -2299,7 +2267,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-95",
@@ -3195,72 +3164,42 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "就你们不要那么怂",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "明佛歌"
             },
             "blue": {
               "name": "醉雨话禅",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10872306,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10872306/?p=4"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 2,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "就你们不要那么怂",
-              "composition": []
-            },
-            "blue": {
-              "name": "醉雨话禅",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10872306,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10872306/?p=4"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 3,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "就你们不要那么怂",
-              "composition": []
-            },
-            "blue": {
-              "name": "醉雨话禅",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 10872306,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av10872306/?p=4"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -3283,7 +3222,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-104",
@@ -3312,49 +3252,38 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "歌尽鸽僧",
-              "composition": []
+              "composition": [
+                {
+                  "id": "bingxin",
+                  "name": "冰心诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "冰歌"
             },
             "blue": {
               "name": "清风伴我扶摇直上",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                }
+              ],
+              "composition_raw": "佛霸"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11003546,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11003546"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 2,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "歌尽鸽僧",
-              "composition": []
-            },
-            "blue": {
-              "name": "清风伴我扶摇直上",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11003546,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11003546"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -3377,7 +3306,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-105",
@@ -6241,49 +6171,81 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "挽月听琴",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "双歌"
             },
             "blue": {
               "name": "剑破九歌",
-              "composition": []
+              "composition": [
+                {
+                  "id": "jingyu",
+                  "name": "惊羽诀"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "惊霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=5"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "挽月听琴",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "明歌"
             },
             "blue": {
               "name": "剑破九歌",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "yunshang",
+                  "name": "云裳心经"
+                }
+              ],
+              "composition_raw": "佛霸秀"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=5"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -6306,7 +6268,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-135",
@@ -6335,49 +6298,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "醉雨话禅",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=8"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "醉雨话禅",
-              "composition": []
+              "composition": [
+                {
+                  "id": "jingyu",
+                  "name": "惊羽诀"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "惊霸歌"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "zixia",
+                  "name": "紫霞功"
+                },
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "气明毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=8"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -6400,7 +6403,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-154",
@@ -6523,49 +6527,81 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
-              "name": "九歌云",
-              "composition": []
+              "name": "天琴九剑",
+              "composition": [
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                }
+              ],
+              "composition_raw": "歌花"
             },
             "blue": {
-              "name": "天琴九剑",
-              "composition": []
+              "name": "九歌云",
+              "composition": [
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "霸苍歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=4"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
-              "name": "九歌云",
-              "composition": []
+              "name": "天琴九剑",
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                }
+              ],
+              "composition_raw": "双花"
             },
             "blue": {
-              "name": "天琴九剑",
-              "composition": []
+              "name": "九歌云",
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=4"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -6588,7 +6624,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-138",
@@ -6617,49 +6654,81 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "挽月听琴",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                }
+              ],
+              "composition_raw": "双和尚"
             },
             "blue": {
               "name": "醉雨话禅",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=6"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "挽月听琴",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "明歌"
             },
             "blue": {
               "name": "醉雨话禅",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=6"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -6682,7 +6751,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-146",
@@ -6711,72 +6781,124 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "九歌云",
-              "composition": []
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             },
             "blue": {
-              "name": "歌尽鸽僧",
-              "composition": []
+              "name": "九歌云",
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11395604,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11395604/?p=6"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "九歌云",
-              "composition": []
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "bingxin",
+                  "name": "冰心诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "冰歌毒"
             },
             "blue": {
-              "name": "歌尽鸽僧",
-              "composition": []
+              "name": "九歌云",
+              "composition": [
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "霸苍歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11395604,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11395604/?p=6"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "九歌云",
-              "composition": []
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             },
             "blue": {
-              "name": "歌尽鸽僧",
-              "composition": []
+              "name": "九歌云",
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "xiaochen",
+                  "name": "笑尘诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑丐歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11395604,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11395604/?p=6"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -6799,7 +6921,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-142",
@@ -6828,49 +6951,155 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "歌尽鸽僧",
-              "composition": []
+              "name": "醉雨话禅",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             },
             "blue": {
-              "name": "醉雨话禅",
-              "composition": []
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=6"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
-              "name": "歌尽鸽僧",
-              "composition": []
+              "name": "醉雨话禅",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             },
             "blue": {
-              "name": "醉雨话禅",
-              "composition": []
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "佛罗"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=6"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
+        },
+        {
+          "game_no": 3,
+          "winner": "red",
+          "teams": {
+            "red": {
+              "name": "醉雨话禅",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
+            },
+            "blue": {
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "bingxin",
+                  "name": "冰心诀"
+                },
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "冰鲸毒"
+            }
           },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
+        },
+        {
+          "game_no": 4,
+          "winner": "red",
+          "teams": {
+            "red": {
+              "name": "醉雨话禅",
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
+            },
+            "blue": {
+              "name": "歌尽鸽僧",
+              "composition": [
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "tianluo",
+                  "name": "天罗诡道"
+                }
+              ],
+              "composition_raw": "歌罗"
+            }
+          },
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -6893,7 +7122,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-131",
@@ -7085,72 +7315,132 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "剑破九歌",
-              "composition": []
+              "composition": [
+                {
+                  "id": "jingyu",
+                  "name": "惊羽诀"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "惊霸歌"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=3"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "剑破九歌",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "yunshang",
+                  "name": "云裳心经"
+                }
+              ],
+              "composition_raw": "佛霸秀"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "藏霸毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=3"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 3,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "剑破九歌",
-              "composition": []
+              "composition": [
+                {
+                  "id": "jingyu",
+                  "name": "惊羽诀"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "惊歌毒"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛明歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=3"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -7173,7 +7463,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-133",
@@ -7202,49 +7493,73 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "一隅清棠花",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                }
+              ],
+              "composition_raw": "佛霸"
             },
             "blue": {
               "name": "天琴九剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                }
+              ],
+              "composition_raw": "歌花"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=7"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "一隅清棠花",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "双歌"
             },
             "blue": {
               "name": "天琴九剑",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "huajian",
+                  "name": "花间游"
+                }
+              ],
+              "composition_raw": "双花"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11492795,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11492795/?p=7"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -7267,7 +7582,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-148",
@@ -7296,72 +7612,81 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "挽月听琴",
-              "composition": []
+              "composition": [
+                {
+                  "id": "unknown",
+                  "name": "待核验"
+                },
+                {
+                  "id": "mowen",
+                  "name": "莫问"
+                }
+              ],
+              "composition_raw": "双歌"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=3"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "blue",
           "teams": {
             "red": {
               "name": "挽月听琴",
-              "composition": []
+              "composition": [
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                }
+              ],
+              "composition_raw": "明霸"
             },
             "blue": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "zixia",
+                  "name": "紫霞功"
+                },
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "气明毒"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=3"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
-        },
-        {
-          "game_no": 3,
-          "winner": null,
-          "teams": {
-            "red": {
-              "name": "挽月听琴",
-              "composition": []
-            },
-            "blue": {
-              "name": "水月无妄思",
-              "composition": []
-            }
-          },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=3"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -7384,7 +7709,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-149",
@@ -7507,49 +7833,89 @@
       "games": [
         {
           "game_no": 1,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "yijin",
+                  "name": "易筋经"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "佛霸歌"
             },
             "blue": {
               "name": "九歌云",
-              "composition": []
+              "composition": [
+                {
+                  "id": "taixu",
+                  "name": "太虚剑意"
+                },
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "剑霸歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=5"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         },
         {
           "game_no": 2,
-          "winner": null,
+          "winner": "red",
           "teams": {
             "red": {
               "name": "水月无妄思",
-              "composition": []
+              "composition": [
+                {
+                  "id": "cangjian",
+                  "name": "藏剑"
+                },
+                {
+                  "id": "fenying",
+                  "name": "焚影圣诀"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "藏明毒"
             },
             "blue": {
               "name": "九歌云",
-              "composition": []
+              "composition": [
+                {
+                  "id": "badao",
+                  "name": "北傲诀"
+                },
+                {
+                  "id": "fenshan",
+                  "name": "分山劲"
+                },
+                {
+                  "id": "xiangzhi",
+                  "name": "相知"
+                }
+              ],
+              "composition_raw": "霸苍歌"
             }
           },
-          "video": {
-            "platform": "bilibili",
-            "avid": 11450011,
-            "bvid": null,
-            "page": null,
-            "url": "https://www.bilibili.com/video/av11450011/?p=5"
-          },
-          "composition_status": "pending_video_frame_or_report_verification",
-          "confidence": "unverified"
+          "source_note": "剑网3第二届竞技大师赛_每局详细配置.xlsx"
         }
       ],
       "evidence": [
@@ -7572,7 +7938,8 @@
         "match_identity": "verified",
         "score": "verified",
         "game_compositions": "unverified"
-      }
+      },
+      "composition_status": "spreadsheet_verified_or_transcribed"
     },
     {
       "match_id": "master-2-151",
