@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-4-matches",
+  "event": {
+    "name": "第四届剑网3竞技大师赛",
+    "season": 4,
+    "year": 2019
+  },
+  "generated_at": "2026-09-05T00:00:00Z",
+  "coverage": {
+    "status": "partial_official_video_index",
+    "match_count": 0,
+    "video_collection_count": 2,
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+  },
+  "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
+  "normalization_notes": [
+    "不从标题推断比分或单局胜方。",
+    "未读取到完整分P列表的合集不拆成虚构比赛。",
+    "配置字段只有在战报或录像画面核验后才会加入。"
+  ],
+  "stats": {
+    "match_count": 0,
+    "game_shell_count": 0,
+    "verified_composition_count": 0,
+    "video_collection_count": 2
+  },
+  "matches": [],
+  "video_collections": [
+    {
+      "collection_id": "master-4-video-1",
+      "title": "剑网3第四届竞技大师赛总决赛Day1（5月10日）",
+      "stage": "总决赛Day1",
+      "date": "2019-05-10",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1F4411e7BQ",
+        "url": "https://www.bilibili.com/video/BV1F4411e7BQ/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1F4411e7BQ/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-4-video-2",
+      "title": "剑网3第四届竞技大师赛64进32重赛部分",
+      "stage": "64进32重赛",
+      "date": null,
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1Mb411K7yW",
+        "url": "https://www.bilibili.com/video/BV1Mb411K7yW/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1Mb411K7yW/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    }
+  ]
+}
