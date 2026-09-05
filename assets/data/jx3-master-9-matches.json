@@ -20,7 +20,9 @@
     "status": "official_match_data_without_game_rows",
     "match_count": 116,
     "game_count": 0,
-    "historical_record_count": 8
+    "historical_record_count": 8,
+    "official_snapshot_verified": true,
+    "official_snapshot_checked_at": "2026-09-05T00:00:00Z"
   },
   "jpl_cross_reference": null,
   "stats": {
@@ -1776,5 +1778,15 @@
         "寒月无悔"
       ]
     }
-  ]
+  ],
+  "official_data_verification": {
+    "verified_at": "2026-09-05T00:00:00Z",
+    "source_api": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+    "event_id": "9cbc29e92c7d43fc94cdfc0467cf8084",
+    "match_count": 116,
+    "battle_count": 0,
+    "composition_count": 0,
+    "status": "official_match_level_verified_battles_not_returned",
+    "note": "官方接口已核对比赛级记录；当前快照没有可用 battles 逐局配置，未伪造地图、Ban 或心法。"
+  }
 }
