@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "resource_id": "jx3-master-5-matches",
+  "event": {
+    "name": "第五届剑网3竞技大师赛",
+    "season": 5,
+    "year": 2020
+  },
+  "generated_at": "2026-09-05T00:00:00Z",
+  "coverage": {
+    "status": "partial_official_video_index",
+    "match_count": 0,
+    "video_collection_count": 5,
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+  },
+  "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
+  "normalization_notes": [
+    "不从标题推断比分或单局胜方。",
+    "未读取到完整分P列表的合集不拆成虚构比赛。",
+    "配置字段只有在战报或录像画面核验后才会加入。"
+  ],
+  "stats": {
+    "match_count": 0,
+    "game_shell_count": 0,
+    "verified_composition_count": 0,
+    "video_collection_count": 5
+  },
+  "matches": [],
+  "video_collections": [
+    {
+      "collection_id": "master-5-video-1",
+      "title": "剑网3第五届竞技大师赛-俱乐部争锋赛3月20日",
+      "stage": "俱乐部争锋赛",
+      "date": "2020-03-20",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1cE411P7je",
+        "url": "https://www.bilibili.com/video/BV1cE411P7je/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1cE411P7je/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-5-video-2",
+      "title": "剑网3第五届竞技大师赛-俱乐部争锋赛3月22日",
+      "stage": "俱乐部争锋赛",
+      "date": "2020-03-22",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1aE411c7KV",
+        "url": "https://www.bilibili.com/video/BV1aE411c7KV/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1aE411c7KV/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-5-video-3",
+      "title": "剑网3第五届竞技大师赛4月01日",
+      "stage": "正赛",
+      "date": "2020-04-01",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1WQ4y1M7Zz",
+        "url": "https://www.bilibili.com/video/BV1WQ4y1M7Zz/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1WQ4y1M7Zz/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-5-video-4",
+      "title": "剑网3第五届竞技大师赛4月05日",
+      "stage": "正赛",
+      "date": "2020-04-05",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": 710173609,
+        "bvid": null,
+        "url": "https://www.bilibili.com/video/av710173609/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/av710173609/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-5-video-5",
+      "title": "剑网3第五届竞技大师赛4月07日",
+      "stage": "正赛",
+      "date": "2020-04-07",
+      "uploader": "剑网3赛事",
+      "video": {
+        "platform": "bilibili",
+        "avid": null,
+        "bvid": "BV1LZ4y1x758",
+        "url": "https://www.bilibili.com/video/BV1LZ4y1x758/"
+      },
+      "games": [],
+      "evidence": [
+        {
+          "type": "official_bilibili_upload",
+          "url": "https://www.bilibili.com/video/BV1LZ4y1x758/",
+          "fields": [
+            "title",
+            "stage",
+            "video"
+          ]
+        }
+      ],
+      "extraction_status": "collection_verified_parts_pending",
+      "confidence": "probable"
+    }
+  ]
+}
