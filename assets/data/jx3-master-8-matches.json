@@ -24,7 +24,7 @@
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
-    "table_image_count": 15,
+    "table_image_count": 23,
     "table_coverage": [
       "64进32",
       "32进16",
@@ -3709,6 +3709,142 @@
       "coverage": "8强队伍历史场次、64进32、32进16、16进8、8强双败",
       "verified_fields": [
         "历史场次及配置",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-0bcd2142",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "0bcd2142-eed1-434d-8413-c6ec91f5c830.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-ae66be2a",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "ae66be2a-9dfc-470e-9380-78081bcbc021.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-5a171f18",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "5a171f18-67c1-423e-b338-704b03b49300.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-69f73cec",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "69f73cec-7dab-457d-848e-9f525bd131f7.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-979b3afd",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "979b3afd-1f56-463e-ba27-aba398f2d745.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-68054293",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "68054293-c532-4929-960e-02038614e5e6.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-92e1a67a",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "92e1a67a-3cd7-44b6-9939-48e930b560d8.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
+        "逐局心法",
+        "地图",
+        "比分",
+        "Ban"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "master8-team-crop-393739d3",
+      "stage": "八强前历史对局",
+      "title": "第八届大师赛队伍级逐局配置截图",
+      "source_type": "user_uploaded_team_crop",
+      "filename": "393739d3-e281-4fc7-85fc-b4e1bf62c41c.png",
+      "coverage": "队伍历史配置及64进32/32进16/16进8/8强前记录",
+      "verified_fields": [
+        "官方队伍名",
+        "对阵双方",
         "逐局心法",
         "地图",
         "比分",
