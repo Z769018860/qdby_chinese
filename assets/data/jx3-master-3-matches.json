@@ -2594,5 +2594,17 @@
     "historical_records_file": "历届赛事记录.xlsx",
     "weibo_account": "@剑网3赛事",
     "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
+  },
+  "online_research": {
+    "checked_at": "2026-09-05T00:00:00Z",
+    "status": "video_and_report_sources_indexed",
+    "official_urls": [
+      "https://jx3.xoyo.com/match/match.html"
+    ],
+    "video_or_report_urls": [
+      "https://www.bilibili.com/video/BV19p411o7wQ/",
+      "https://jx3.17173.com/content/05142018/094616193.shtml"
+    ],
+    "verification_note": "已确认第三届线下决赛录像和官方赛果报道；逐局心法仍需视频画面核验"
   }
 }
