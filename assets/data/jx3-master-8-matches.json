@@ -20,7 +20,7 @@
   "coverage": {
     "status": "official_match_data_plus_ocr_spreadsheet_game_rows_partial",
     "match_count": 116,
-    "game_count": 36,
+    "game_count": 38,
     "historical_record_count": 8,
     "official_snapshot_verified": true,
     "official_snapshot_checked_at": "2026-09-05T00:00:00Z",
@@ -37,7 +37,7 @@
   "jpl_cross_reference": null,
   "stats": {
     "match_count": 116,
-    "game_count": 36,
+    "game_count": 38,
     "verified_composition_count": 0
   },
   "matches": [
@@ -708,7 +708,90 @@
       "team_b": "流浪儿童",
       "score": "0:2",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "流浪儿童",
+            "composition": [
+              {
+                "id": "wufang",
+                "name": "wufang"
+              },
+              {
+                "id": "fen shan",
+                "name": "fen shan"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": []
+          },
+          "team_b": {
+            "name": "我奶不住捏(四人队)",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "huajian",
+                "name": "huajian"
+              },
+              {
+                "id": "yunshang",
+                "name": "yunshang"
+              }
+            ],
+            "bans": []
+          },
+          "source_note": "OCR汇总表32进16单败制"
+        },
+        {
+          "game_no": 2,
+          "map": null,
+          "score": null,
+          "winner": null,
+          "team_a": {
+            "name": "流浪儿童",
+            "composition": [
+              {
+                "id": "tianluo",
+                "name": "tianluo"
+              },
+              {
+                "id": "taixuan",
+                "name": "taixuan"
+              },
+              {
+                "id": "xiangzhi",
+                "name": "xiangzhi"
+              }
+            ],
+            "bans": []
+          },
+          "team_b": {
+            "name": "我奶不住捏(四人队)",
+            "composition": [
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              },
+              {
+                "id": "lingsu",
+                "name": "lingsu"
+              }
+            ],
+            "bans": []
+          },
+          "source_note": "OCR汇总表32进16单败制"
+        }
+      ]
     },
     {
       "match_id": "master-8-6",
@@ -3621,8 +3704,14 @@
   "ocr_spreadsheet_import": {
     "source_file": "剑网3第八届大师赛赛程表.xlsx",
     "imported_at": "2026-09-05T00:00:00Z",
-    "matched_match_count": 13,
-    "imported_game_count": 36,
-    "notes": "从OCR汇总表导入逐局配置；表中未提供或无法确认的对方配置、地图、比分保留为null或空数组，待后续核对。"
+    "matched_match_count": 14,
+    "imported_game_count": 38,
+    "notes": "从OCR汇总表导入逐局配置；表中未提供或无法确认的对方配置、地图、比分保留为null或空数组，待后续核对。",
+    "normalization_rules": [
+      "去除队伍名前缀星号",
+      "去除括号及括号内容",
+      "强免集团→强兔集团",
+      "我奶不住捏(四人队/4人)→我奶不住捏"
+    ]
   }
 }
