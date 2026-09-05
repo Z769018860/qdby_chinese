@@ -1429,7 +1429,52 @@
       "team_b": "海阔天空",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "鸿蒙",
+              "composition": [
+                {
+                  "id": "gufeng",
+                  "name": "孤锋诀"
+                },
+                {
+                  "id": "wufang",
+                  "name": "无方"
+                },
+                {
+                  "id": "butian",
+                  "name": "补天诀"
+                }
+              ],
+              "composition_raw": "gufeng,wufang,butian"
+            },
+            "blue": {
+              "name": "海阔天空",
+              "composition": [
+                {
+                  "id": "shanhai",
+                  "name": "山海心诀"
+                },
+                {
+                  "id": "yinlong",
+                  "name": "隐龙诀"
+                },
+                {
+                  "id": "yunshang",
+                  "name": "云裳心经"
+                }
+              ],
+              "composition_raw": "shanhai,yinlong,yunshang"
+            }
+          },
+          "source_note": "剑网3第九届竞技大师赛_完整版.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_verified"
     },
     {
       "match_id": "master-9-116",
@@ -1499,7 +1544,52 @@
       "team_b": "海阔天空",
       "score": "2:1",
       "winner": null,
-      "games": []
+      "games": [
+        {
+          "game_no": 1,
+          "winner": null,
+          "teams": {
+            "red": {
+              "name": "鸿蒙",
+              "composition": [
+                {
+                  "id": "shanhai",
+                  "name": "山海心诀"
+                },
+                {
+                  "id": "xiaochen",
+                  "name": "笑尘诀"
+                },
+                {
+                  "id": "lingsu",
+                  "name": "灵素"
+                }
+              ],
+              "composition_raw": "shanhai,xiaochen,lingsu"
+            },
+            "blue": {
+              "name": "海阔天空",
+              "composition": [
+                {
+                  "id": "gufeng",
+                  "name": "孤锋诀"
+                },
+                {
+                  "id": "lingsu",
+                  "name": "灵素"
+                },
+                {
+                  "id": "yinlong",
+                  "name": "隐龙诀"
+                }
+              ],
+              "composition_raw": "gufeng,lingsu,yinlong"
+            }
+          },
+          "source_note": "剑网3第九届竞技大师赛_完整版.xlsx"
+        }
+      ],
+      "composition_status": "spreadsheet_verified"
     },
     {
       "match_id": "master-9-61",
@@ -1789,10 +1879,10 @@
     "status": "official_match_level_verified_battles_not_returned",
     "note": "官方接口已核对比赛级记录；当前快照没有可用 battles 逐局配置，未伪造地图、Ban 或心法。"
   },
-  "source_notes": " 已导入第九届大师赛完整表格；队伍按官方接口名称匹配，心法使用正式全称。",
+  "source_notes": " 已导入第九届大师赛完整表格；队伍按官方接口名称匹配，心法使用正式全称。 已按官方接口队伍名归一化导入第九届表格配置；鸿蒙沧海按官方接口名“鸿蒙”匹配。",
   "spreadsheet_import": {
     "source_file": "剑网3第九届竞技大师赛_完整版.xlsx",
-    "matched_match_count": 0,
-    "imported_game_count": 0
+    "matched_match_count": 2,
+    "imported_game_count": 2
   }
 }
