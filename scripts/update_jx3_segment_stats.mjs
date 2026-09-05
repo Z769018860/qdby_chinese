@@ -25,37 +25,27 @@ async function signedGet(path){
   if(!response.ok)throw new Error(`${path} ${response.status}`);
   return response.json();
 }
-function normalize(data,role){
-  const wanted=role==='healer'?['hps','healer','heal']:['dps','tps','output'];
-  const arrays=[];
-  const visit=(value,key='')=>{
-    if(Array.isArray(value)){arrays.push({key,value});return;}
-    if(value&&typeof value==='object')for(const [k,v] of Object.entries(value))visit(v,k);
-  };
-  visit(data);
-  const ordered=arrays.sort((a,b)=>Number(wanted.includes(b.key))-Number(wanted.includes(a.key)));
-  for(const entry of ordered){
-    const result=entry.value.map((x,i)=>({
-      rank:Number(x.rank??x.ranking??i+1),
-      kungfu:x.kungfu||x.name||x.kungfuName||x.forceName||x.force_name||x.schoolName||x.kungfu_name||x.force,
-      win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct??x.rate??x.win??x.winrate??x.victoryRate??x.victory_rate),
-      pick_rate:Number(x.pick_rate??x.pickRate??x.pickRatePct??0),
-      sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??x.games??x.battleCount??0),
-      player_count:Number(x.player_count??x.playerCount??0)
-    })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
-    if(result.length)return result;
-  }
-  return [];
+function normalize(data){
+  const list=data?.rank?.data;
+  if(!Array.isArray(list))return [];
+  return list.map((x,i)=>({
+    rank:Number(x.strengthRank??x.rank??i+1),
+    kungfu:x.kungfuName||x.kungfu||x.name,
+    win_rate:Number(x.winRate??x.win_rate),
+    pick_rate:Number(x.appearRate??x.pickRate??x.pick_rate??0),
+    sample_count:Number(x.sampleCount??x.sample_count??0),
+    player_count:Number(x.playerCount??x.player_count??0)
+  })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
 async function fetchSegment(min,max,role){
   const kungfuType=role==='healer'?'hps':'dps';
-  const modes=['single','solo','individual'];
+  const matchMode='solo';
   let last;
-  for(const matchMode of modes){
+  {
     const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType=last1d&scoreStart='+min+'&scoreEnd='+max;
     try{
       const data=await signedGet(path);
-      const stats=normalize(data,role);
+      const stats=normalize(data);
       if(stats.length)return stats;
       last=new Error('empty response for matchMode='+matchMode);
     }catch(e){last=e;}
