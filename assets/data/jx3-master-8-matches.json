@@ -484,15 +484,15 @@
             "composition": [
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -503,11 +503,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -525,15 +525,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -544,15 +544,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -570,15 +570,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -589,11 +589,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -611,11 +611,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -639,15 +639,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -671,11 +671,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -699,7 +699,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -723,11 +723,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               }
             ],
             "bans": [],
@@ -766,15 +766,15 @@
             "composition": [
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -785,15 +785,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               }
             ],
             "bans": [],
@@ -811,15 +811,15 @@
             "composition": [
               {
                 "id": "cangjian",
-                "name": "cangjian"
+                "name": "藏剑"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -830,7 +830,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -863,15 +863,15 @@
             "composition": [
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -882,11 +882,11 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -904,15 +904,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -923,15 +923,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -949,15 +949,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -968,7 +968,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1001,15 +1001,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1020,15 +1020,15 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -1046,15 +1046,15 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -1065,7 +1065,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1083,15 +1083,15 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -1115,7 +1115,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1139,15 +1139,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -1171,7 +1171,7 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -1224,15 +1224,15 @@
             "composition": [
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -1243,7 +1243,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1261,15 +1261,15 @@
             "composition": [
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1280,11 +1280,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1302,15 +1302,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -1321,7 +1321,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1339,7 +1339,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1363,7 +1363,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1387,15 +1387,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1419,7 +1419,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1443,7 +1443,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1482,15 +1482,15 @@
             "composition": [
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1501,11 +1501,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1523,15 +1523,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1542,15 +1542,15 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1568,15 +1568,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1587,11 +1587,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1609,11 +1609,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1637,15 +1637,15 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1669,11 +1669,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1697,11 +1697,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1740,15 +1740,15 @@
             "composition": [
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1759,7 +1759,7 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               }
             ],
             "bans": [],
@@ -1777,15 +1777,15 @@
             "composition": [
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1796,7 +1796,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1814,15 +1814,15 @@
             "composition": [
               {
                 "id": "linghai",
-                "name": "linghai"
+                "name": "凌海诀"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -1833,11 +1833,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -1870,15 +1870,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1889,11 +1889,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -1911,15 +1911,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -1930,15 +1930,15 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -1956,15 +1956,15 @@
             "composition": [
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -1975,11 +1975,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -2012,15 +2012,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2031,15 +2031,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -2057,15 +2057,15 @@
             "composition": [
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "cangjian",
-                "name": "cangjian"
+                "name": "藏剑"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -2076,15 +2076,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -2102,15 +2102,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -2134,15 +2134,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -2166,15 +2166,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               }
             ],
             "bans": [],
@@ -2198,15 +2198,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -2230,15 +2230,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -2277,15 +2277,15 @@
             "composition": [
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -2296,11 +2296,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -2318,15 +2318,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -2337,11 +2337,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -2359,15 +2359,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2378,7 +2378,7 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -2411,15 +2411,15 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2430,15 +2430,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -2456,15 +2456,15 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -2475,11 +2475,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2497,15 +2497,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -2516,11 +2516,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -2538,15 +2538,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -2570,11 +2570,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2598,11 +2598,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2626,11 +2626,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -2669,15 +2669,15 @@
             "composition": [
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "cangjian",
-                "name": "cangjian"
+                "name": "藏剑"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2688,7 +2688,7 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -2706,15 +2706,15 @@
             "composition": [
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2725,7 +2725,7 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -2743,7 +2743,7 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -2767,11 +2767,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2795,11 +2795,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2838,15 +2838,15 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2857,7 +2857,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2875,15 +2875,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2894,11 +2894,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2931,15 +2931,15 @@
             "composition": [
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2950,7 +2950,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -2968,15 +2968,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -2987,11 +2987,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -3009,15 +3009,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3028,11 +3028,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -3050,7 +3050,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3074,11 +3074,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -3102,11 +3102,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -3130,7 +3130,7 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -3154,7 +3154,7 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -3193,15 +3193,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3212,15 +3212,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -3238,15 +3238,15 @@
             "composition": [
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               },
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -3257,11 +3257,11 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -3294,15 +3294,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3313,11 +3313,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -3335,15 +3335,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3354,11 +3354,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -3376,11 +3376,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -3404,11 +3404,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -3432,11 +3432,11 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -3460,7 +3460,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3499,15 +3499,15 @@
             "composition": [
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3518,15 +3518,15 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3544,15 +3544,15 @@
             "composition": [
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3563,7 +3563,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3581,15 +3581,15 @@
             "composition": [
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3600,7 +3600,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3633,15 +3633,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -3652,11 +3652,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               }
             ],
             "bans": [],
@@ -3674,15 +3674,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -3693,11 +3693,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -3730,15 +3730,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -3749,11 +3749,11 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3771,15 +3771,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3790,15 +3790,15 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -3816,15 +3816,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3835,7 +3835,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3853,11 +3853,11 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -3881,15 +3881,15 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -3913,7 +3913,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -3937,11 +3937,11 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -3965,11 +3965,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4008,15 +4008,15 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -4027,11 +4027,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -4049,15 +4049,15 @@
             "composition": [
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4068,11 +4068,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -4090,15 +4090,15 @@
             "composition": [
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4109,11 +4109,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -4131,11 +4131,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -4159,11 +4159,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -4187,11 +4187,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -4215,11 +4215,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4243,11 +4243,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4286,15 +4286,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4305,7 +4305,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4323,15 +4323,15 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4342,7 +4342,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4360,15 +4360,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4379,7 +4379,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4412,15 +4412,15 @@
             "composition": [
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "cangjian",
-                "name": "cangjian"
+                "name": "藏剑"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4431,11 +4431,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4453,15 +4453,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "cangjian",
-                "name": "cangjian"
+                "name": "藏剑"
               },
               {
                 "id": "butian",
-                "name": "butian"
+                "name": "补天诀"
               }
             ],
             "bans": [],
@@ -4472,7 +4472,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4490,11 +4490,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4518,7 +4518,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4542,15 +4542,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -4574,11 +4574,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4617,15 +4617,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4636,11 +4636,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -4658,15 +4658,15 @@
             "composition": [
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -4677,11 +4677,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               }
             ],
             "bans": [],
@@ -4699,15 +4699,15 @@
             "composition": [
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -4718,11 +4718,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -4755,15 +4755,15 @@
             "composition": [
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4774,7 +4774,7 @@
             "composition": [
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               }
             ],
             "bans": [],
@@ -4792,15 +4792,15 @@
             "composition": [
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4811,11 +4811,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               }
             ],
             "bans": [],
@@ -4833,7 +4833,7 @@
             "composition": [
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               }
             ],
             "bans": [],
@@ -4857,11 +4857,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               }
             ],
             "bans": [],
@@ -4885,15 +4885,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -4917,15 +4917,15 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -4964,15 +4964,15 @@
             "composition": [
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -4983,15 +4983,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -5009,15 +5009,15 @@
             "composition": [
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "fenying",
-                "name": "fenying"
+                "name": "焚影圣诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5028,11 +5028,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "zixia",
-                "name": "zixia"
+                "name": "紫霞功"
               }
             ],
             "bans": [],
@@ -5065,15 +5065,15 @@
             "composition": [
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               },
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5084,7 +5084,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5102,15 +5102,15 @@
             "composition": [
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "jingyu",
-                "name": "jingyu"
+                "name": "惊羽诀"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -5121,11 +5121,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -5143,15 +5143,15 @@
             "composition": [
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -5162,7 +5162,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5195,15 +5195,15 @@
             "composition": [
               {
                 "id": "wufang",
-                "name": "wufang"
+                "name": "无方"
               },
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5214,7 +5214,7 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -5232,15 +5232,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5251,15 +5251,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -5277,7 +5277,7 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -5301,15 +5301,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -5333,7 +5333,7 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               }
             ],
             "bans": [],
@@ -5357,11 +5357,11 @@
             "composition": [
               {
                 "id": "mowen",
-                "name": "mowen"
+                "name": "莫问"
               },
               {
                 "id": "bingxin",
-                "name": "bingxin"
+                "name": "冰心诀"
               }
             ],
             "bans": [],
@@ -5400,15 +5400,15 @@
             "composition": [
               {
                 "id": "tianluo",
-                "name": "tianluo"
+                "name": "天罗诡道"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lijing",
-                "name": "lijing"
+                "name": "离经易道"
               }
             ],
             "bans": [],
@@ -5419,11 +5419,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -5441,15 +5441,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "aoxue",
-                "name": "aoxue"
+                "name": "傲血战意"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5460,7 +5460,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5478,11 +5478,11 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -5506,7 +5506,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5530,11 +5530,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5558,11 +5558,11 @@
             "composition": [
               {
                 "id": "taixu",
-                "name": "taixu"
+                "name": "太虚剑意"
               },
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               }
             ],
             "bans": [],
@@ -5601,15 +5601,15 @@
             "composition": [
               {
                 "id": "taixuan",
-                "name": "taixuan"
+                "name": "太玄经"
               },
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               },
               {
                 "id": "butian",
-                "name": "butian"
+                "name": "补天诀"
               }
             ],
             "bans": [],
@@ -5620,7 +5620,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5638,15 +5638,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5657,7 +5657,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5675,15 +5675,15 @@
             "composition": [
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "fenshan",
-                "name": "fenshan"
+                "name": "分山劲"
               }
             ],
             "bans": [],
@@ -5694,7 +5694,7 @@
             "composition": [
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5727,15 +5727,15 @@
             "composition": [
               {
                 "id": "cangjian",
-                "name": "cangjian"
+                "name": "藏剑"
               },
               {
                 "id": "yinlong",
-                "name": "yinlong"
+                "name": "隐龙诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5746,15 +5746,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -5772,15 +5772,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -5791,11 +5791,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               }
             ],
             "bans": [],
@@ -5813,15 +5813,15 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -5845,11 +5845,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "badao",
-                "name": "badao"
+                "name": "北傲诀"
               }
             ],
             "bans": [],
@@ -5873,11 +5873,11 @@
             "composition": [
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5901,15 +5901,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5933,15 +5933,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               }
             ],
             "bans": [],
@@ -5980,15 +5980,15 @@
             "composition": [
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               },
               {
                 "id": "xiangzhi",
-                "name": "xiangzhi"
+                "name": "相知"
               }
             ],
             "bans": [],
@@ -5999,11 +5999,11 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               },
               {
                 "id": "yijin",
-                "name": "yijin"
+                "name": "易筋经"
               }
             ],
             "bans": [],
@@ -6021,15 +6021,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "huajian",
-                "name": "huajian"
+                "name": "花间游"
               }
             ],
             "bans": [],
@@ -6040,7 +6040,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -6058,15 +6058,15 @@
             "composition": [
               {
                 "id": "dujing",
-                "name": "dujing"
+                "name": "毒经"
               },
               {
                 "id": "yunshang",
-                "name": "yunshang"
+                "name": "云裳心经"
               },
               {
                 "id": "gufeng",
-                "name": "gufeng"
+                "name": "孤锋诀"
               }
             ],
             "bans": [],
@@ -6077,7 +6077,7 @@
             "composition": [
               {
                 "id": "lingsu",
-                "name": "lingsu"
+                "name": "灵素"
               }
             ],
             "bans": [],
@@ -6393,7 +6393,7 @@
                 },
                 {
                   "id": "taixu",
-                  "name": "太玄经"
+                  "name": "太虚剑意"
                 },
                 {
                   "id": "xiangzhi",
@@ -6453,7 +6453,7 @@
               "composition": [
                 {
                   "id": "jingyu",
-                  "name": "待核验"
+                  "name": "惊羽诀"
                 },
                 {
                   "id": "yinlong",
@@ -6475,7 +6475,7 @@
                 },
                 {
                   "id": "taixu",
-                  "name": "太玄经"
+                  "name": "太虚剑意"
                 },
                 {
                   "id": "lingsu",
@@ -7844,7 +7844,7 @@
     ],
     "notes": "已将32进16与16进8表格逐行转为标准games记录；无法确认的字段保留null或空数组。"
   },
-  "source_notes": " 已补充表格配置；B站地址作为录屏证据。",
+  "source_notes": " 已补充表格配置；B站地址作为录屏证据。 已完成全量心法名称校验，composition 字段统一为正式中文全称。",
   "spreadsheet_import": {
     "source_file": "fa16e014-28cf-44f8-b240-869002e7d23a.xlsx",
     "matched_match_count": 7,
