@@ -57,6 +57,18 @@
     const soloSaved=JSON.parse(localStorage.getItem('jx3SoloPool')||'null');
     const soloPool=new Set(soloSaved||specs.map(x=>x.id));
     let topStatsCache=null,topStatsFetchedAt=0;
+    const MASTER_ARCHIVE_URL='./assets/data/jx3-master-1-matches.json';
+    let firstMasterArchiveCache=null;
+    async function getFirstMasterMatches(){
+      if(firstMasterArchiveCache)return firstMasterArchiveCache;
+      const response=await fetch(MASTER_ARCHIVE_URL,{cache:'no-store'});
+      if(!response.ok)throw new Error(`第一届大师赛资源返回 HTTP ${response.status}`);
+      const data=await response.json();
+      if(data?.resource_id!=='jx3-master-1-matches'||!Array.isArray(data.matches))throw new Error('第一届大师赛资源格式无效');
+      firstMasterArchiveCache=data;
+      return data;
+    }
+    window.JX3MasterArchive={url:MASTER_ARCHIVE_URL,loadFirstSeason:getFirstMasterMatches};
     let history=JSON.parse(localStorage.getItem('jx3DrawHistory')||'[]');
     const byId=id=>specs.find(x=>x.id===id);
     const choices=poolName=>{const type=poolName==='healer'?'healer':'dps';return specs.filter(x=>x.type===type&&pools[poolName].has(x.id))};
