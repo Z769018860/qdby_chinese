@@ -26,31 +26,24 @@ async function signedGet(path){
   return response.json();
 }
 function normalize(data){
-  return (data?.stats||[]).map((x,i)=>({rank:Number(x.rank||i+1),kungfu:x.kungfu||x.name,win_rate:Number(x.win_rate??x.winRate),pick_rate:Number(x.pick_rate??x.rate??0),sample_count:x.sample_count,player_count:x.player_count})).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
+  const list=data?.stats||data?.data?.stats||data?.data||data?.rows||data?.items||[];
+  return (Array.isArray(list)?list:[]).map((x,i)=>({
+    rank:Number(x.rank||x.ranking||i+1),
+    kungfu:x.kungfu||x.name||x.kungfuName||x.forceName,
+    win_rate:Number(x.win_rate??x.winRate??x.winRatePct??x.win_rate_pct),
+    pick_rate:Number(x.pick_rate??x.pickRate??x.rate??0),
+    sample_count:Number(x.sample_count??x.sampleCount??x.count??x.total??0),
+    player_count:Number(x.player_count??x.playerCount??0)
+  })).filter(x=>x.kungfu&&Number.isFinite(x.win_rate));
 }
 async function fetchSegment(min,max,role){
-  const base='mode=summary&scope=segment&sample=solo&period=1d&role='+role;
-  const candidates=[
-    base+'&min='+min+'&max='+max,
-    base+'&min_score='+min+'&max_score='+max,
-    base+'&score_min='+min+'&score_max='+max,
-    base+'&minScore='+min+'&maxScore='+max,
-    base+'&scoreMin='+min+'&scoreMax='+max,
-    base+'&range='+min+'-'+max
-  ];
-  let last;
-  for(const query of candidates){
-    try{
-      const data=await signedGet('/api/rank/builds?'+query);
-      const stats=normalize(data);
-      if(!stats.length)continue;
-      const returnedMin=Number(data?.min_score??data?.score_min??data?.min??data?.filters?.min_score??data?.filters?.min??data?.query?.min_score);
-      const returnedMax=Number(data?.max_score??data?.score_max??data?.max??data?.filters?.max_score??data?.filters?.max??data?.query?.max_score);
-      if(Number.isFinite(returnedMin)&&Number.isFinite(returnedMax)&&(returnedMin!==min||returnedMax!==max))continue;
-      return stats;
-    }catch(e){last=e;}
-  }
-  throw last||new Error('segment '+min+'-'+max+' '+role+' returned no filtered stats');
+  const kungfuType=role==='healer'?'hps':'tps';
+  const matchMode='solo';
+  const path='/api/rank/jjc-stats?kungfuType='+kungfuType+'&matchMode='+matchMode+'&periodType=last1d&scoreStart='+min+'&scoreEnd='+max;
+  const data=await signedGet(path);
+  const stats=normalize(data);
+  if(!stats.length)throw new Error('jjc-stats returned no '+role+' data for '+min+'-'+max);
+  return stats;
 }
 async function emptySnapshot(reason){
   const out={schema_version:1,source:BASE+'/api/rank/builds',updated_at:new Date().toISOString(),mode:'3v3',sample:'solo',period:'1d',fallback:false,sync_status:'segment_api_unavailable',sync_error:String(reason),ranges:{}};
