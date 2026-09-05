@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "resource_id": "jx3-master-8-matches",
   "event": {
     "name": "第八届剑网3竞技大师赛",
@@ -11,7 +11,11 @@
     "status": "partial_official_video_index",
     "match_count": 0,
     "video_collection_count": 10,
-    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。"
+    "warning": "该届赛事不在旧版官方赛程接口中；当前文件先保存已核验官方录像索引，不能视为完整赛程。",
+    "official_api_event_id": "9cbc29e92c7d43fc94cdfc0467cf8084",
+    "official_match_count": 116,
+    "official_battle_count": 0,
+    "import_status": "pending_complete_snapshot"
   },
   "source_notes": "录像来自B站“剑网3赛事”官方账号的公开投稿。分P、每局双方心法、比分和胜方将在后续逐条核验后写入 matches/games。",
   "normalization_notes": [
@@ -297,5 +301,19 @@
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
     }
-  ]
+  ],
+  "source": {
+    "primary_url": "https://jx3.xoyo.com/match/#/",
+    "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
+    "event_table_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/event-table",
+    "retrieved_via": "公开 JSONP 接口",
+    "snapshot_status": "interface_verified_full_snapshot_pending_import"
+  },
+  "official_api_snapshot": {
+    "event_id": "9cbc29e92c7d43fc94cdfc0467cf8084",
+    "match_count": 116,
+    "battle_count": 0,
+    "field_status": "接口已确认比赛层记录；当前返回 battles 为空"
+  },
+  "jpl_cross_reference": []
 }
