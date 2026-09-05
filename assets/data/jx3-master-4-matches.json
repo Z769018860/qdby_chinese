@@ -11,12 +11,16 @@
   "source": {
     "primary_url": "https://jx3.xoyo.com/match/#/",
     "api_endpoint": "https://ws.xoyo.com/core/jhdaily/cms_query?uri=/webgw/match/all-event-match",
-    "retrieved_via": "用户提供的完整 cms_query.json"
+    "retrieved_via": "用户提供的完整 cms_query.json",
+    "historical_records_file": "历届赛事记录.xlsx",
+    "weibo_account": "@剑网3赛事",
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
   },
   "coverage": {
     "status": "official_match_and_game_data",
     "match_count": 119,
-    "game_count": 297
+    "game_count": 297,
+    "historical_record_count": 35
   },
   "jpl_cross_reference": {
     "name": "2019剑网3职业联赛联赛总决赛",
@@ -18030,6 +18034,530 @@
       ],
       "extraction_status": "collection_verified_parts_pending",
       "confidence": "probable"
+    }
+  ],
+  "historical_records": [
+    {
+      "source_row": 68,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": "世外蓬莱",
+      "placement": "冠军",
+      "team": "踏云",
+      "healer": "晨光",
+      "teammates": [
+        "舜琴",
+        "日月劫",
+        "老飘",
+        "叶亦墨"
+      ]
+    },
+    {
+      "source_row": 69,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "亚军",
+      "team": "青锋",
+      "healer": "清衣",
+      "teammates": [
+        "阿越",
+        "清儒",
+        "落叶听松",
+        "持风"
+      ]
+    },
+    {
+      "source_row": 70,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "季军",
+      "team": "扶摇",
+      "healer": "茶茶",
+      "teammates": [
+        "伍贰",
+        "墨道烟雨",
+        "问情子枫",
+        "夏小花"
+      ]
+    },
+    {
+      "source_row": 71,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "四强",
+      "team": "风义",
+      "healer": "山翠沾衣",
+      "teammates": [
+        "阿毅 ",
+        "风吹折柳",
+        "浪子原",
+        "语潇"
+      ]
+    },
+    {
+      "source_row": 72,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "六强",
+      "team": "龙傲天天开心",
+      "healer": "风幕幕",
+      "teammates": [
+        "小藏花",
+        "小宽野",
+        "苏挥墨",
+        "月弄痕"
+      ]
+    },
+    {
+      "source_row": 73,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "六强",
+      "team": "剑寒秋水",
+      "healer": "云水沐",
+      "teammates": [
+        "竹霖",
+        "空城小时候",
+        "晏殊",
+        "星语小贼"
+      ]
+    },
+    {
+      "source_row": 74,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "八强",
+      "team": "落花笙梧桐",
+      "healer": "特伊嗷",
+      "teammates": [
+        "落尘",
+        "宸笙",
+        "夜雨声饭",
+        "老梧桐"
+      ]
+    },
+    {
+      "source_row": 75,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "八强",
+      "team": "沧海",
+      "healer": "听风风",
+      "teammates": [
+        "祁月笙",
+        "花开",
+        "截元丹",
+        "罩罩"
+      ]
+    },
+    {
+      "source_row": 76,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "十强",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "童话",
+        "黑人",
+        "慕堇",
+        "白大反"
+      ]
+    },
+    {
+      "source_row": 77,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "十强",
+      "team": "虎头",
+      "healer": "俗气歌",
+      "teammates": [
+        "谨兮",
+        "清酒",
+        "晨影",
+        "月烬衣"
+      ]
+    },
+    {
+      "source_row": 78,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "十二强",
+      "team": "燃尽人间色",
+      "healer": "小凉琴",
+      "teammates": [
+        "极念",
+        "倾罪",
+        "阿酒",
+        "怀黎"
+      ]
+    },
+    {
+      "source_row": 79,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "十二强",
+      "team": "明月共我",
+      "healer": "蛊幽幽",
+      "teammates": [
+        "不辞远",
+        "豆浆",
+        "枫晚",
+        "赤鳞"
+      ]
+    },
+    {
+      "source_row": 80,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": "怒海争锋",
+      "placement": "冠军",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "童话"
+      ]
+    },
+    {
+      "source_row": 81,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "亚军",
+      "team": "扶摇",
+      "healer": "茶茶",
+      "teammates": [
+        "伍贰",
+        "问情子枫",
+        "夏小花",
+        "衍涩"
+      ]
+    },
+    {
+      "source_row": 82,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "季军",
+      "team": "青锋",
+      "healer": "清衣",
+      "teammates": [
+        "阿越",
+        "清儒",
+        "君弈",
+        "持风"
+      ]
+    },
+    {
+      "source_row": 83,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "四强",
+      "team": "五个工具人",
+      "healer": "云居月",
+      "teammates": [
+        "名濑结弦",
+        "暗杠",
+        "阿良",
+        "任千轻"
+      ]
+    },
+    {
+      "source_row": 84,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "六强",
+      "team": "雄霸",
+      "healer": "忆旧年",
+      "teammates": [
+        "离挽",
+        "小宽野",
+        "心中客",
+        "月弄痕"
+      ]
+    },
+    {
+      "source_row": 85,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "六强",
+      "team": "惊鸿掠影",
+      "healer": "花海",
+      "teammates": [
+        "曲彼岸",
+        "肥猫",
+        "感时已暮",
+        "绯尽"
+      ]
+    },
+    {
+      "source_row": 86,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "八强",
+      "team": "——",
+      "healer": "小岚窗",
+      "teammates": [
+        "狗毛"
+      ]
+    },
+    {
+      "source_row": 87,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": "怒海争锋",
+      "placement": "冠军",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "童话"
+      ]
+    },
+    {
+      "source_row": 88,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "亚军",
+      "team": "青峰",
+      "healer": "清衣",
+      "teammates": [
+        "阿越",
+        "清儒",
+        "君弈",
+        "落叶听松"
+      ]
+    },
+    {
+      "source_row": 89,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "季军",
+      "team": "扶摇",
+      "healer": "蛊幽幽",
+      "teammates": [
+        "伍贰",
+        "夏小花",
+        "衍涩",
+        "问情子枫"
+      ]
+    },
+    {
+      "source_row": 90,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "四强",
+      "team": "踏云",
+      "healer": "晨光",
+      "teammates": [
+        "日月劫",
+        "舜琴",
+        "叶亦墨",
+        "浅陌轻语"
+      ]
+    },
+    {
+      "source_row": 91,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": "怒海争锋",
+      "placement": "冠军",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "慕堇",
+        "童话"
+      ]
+    },
+    {
+      "source_row": 92,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "亚军",
+      "team": "青锋",
+      "healer": "清衣",
+      "teammates": [
+        "阿越",
+        "清儒",
+        "落叶听松",
+        "持风"
+      ]
+    },
+    {
+      "source_row": 93,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "季军",
+      "team": "扶摇",
+      "healer": "蛊幽幽",
+      "teammates": [
+        "夏小花",
+        "衍涩",
+        "问情子枫",
+        "却之秋"
+      ]
+    },
+    {
+      "source_row": 94,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "四强",
+      "team": "踏云",
+      "healer": "晨光",
+      "teammates": [
+        "舜琴",
+        "日月劫",
+        "叶亦墨",
+        "柳词"
+      ]
+    },
+    {
+      "source_row": 95,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "六强",
+      "team": "沧海",
+      "healer": "听风风",
+      "teammates": [
+        "祁月笙",
+        "封心",
+        "花开",
+        "苏挥墨"
+      ]
+    },
+    {
+      "source_row": 96,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "六强",
+      "team": "风义",
+      "healer": "俞白维",
+      "teammates": [
+        "小藏花",
+        "小糖总",
+        "语潇",
+        "北落"
+      ]
+    },
+    {
+      "source_row": 97,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "八强",
+      "team": "赤心",
+      "healer": "柳梦璃",
+      "teammates": [
+        "离挽",
+        "被遗忘的角落",
+        "月弄痕",
+        "小宽野"
+      ]
+    },
+    {
+      "source_row": 98,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "八强",
+      "team": "虎头",
+      "healer": "米酱",
+      "teammates": [
+        "东浅",
+        "谨兮",
+        "寒江",
+        "萧白衣"
+      ]
+    },
+    {
+      "source_row": 99,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": "凌雪藏锋",
+      "placement": "冠军",
+      "team": "乘风",
+      "healer": "花舞剑",
+      "teammates": [
+        "云水沐",
+        "竹霖",
+        "空城",
+        "白大反"
+      ]
+    },
+    {
+      "source_row": 100,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "亚军",
+      "team": "赤心",
+      "healer": "长晏",
+      "teammates": [
+        "离挽",
+        "月弄痕",
+        "小宽野",
+        "落年"
+      ]
+    },
+    {
+      "source_row": 101,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "季军",
+      "team": "青峰",
+      "healer": "风幕幕",
+      "teammates": [
+        "清儒",
+        "君弈",
+        "持风",
+        "阿越"
+      ]
+    },
+    {
+      "source_row": 102,
+      "event": "大师赛",
+      "season": "第四届",
+      "version": null,
+      "placement": "四强",
+      "team": "踏云",
+      "healer": "清衣",
+      "teammates": [
+        "倾罪",
+        "小诀丐",
+        "棒棒糖",
+        "任千轻"
+      ]
     }
   ]
 }
