@@ -2302,7 +2302,98 @@
       }
     }
   ],
-  "video_collections": [],
+  "video_collections": [
+    {
+      "collection_id": "master-3-bili-BV1pW411F7DE",
+      "title": "第三届剑网3竞技大师赛·线下决赛阶段（第一天）",
+      "stage": "线下决赛第一天",
+      "date": "2018-05",
+      "uploader": "剑网3赛事/赛事录像",
+      "video": {
+        "platform": "bilibili",
+        "bvid": "BV1pW411F7DE",
+        "url": "https://www.bilibili.com/video/BV1pW411F7DE/"
+      },
+      "games": [],
+      "extraction_status": "video_indexed_game_config_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-3-bili-BV19p411o7wQ",
+      "title": "第三届剑网3竞技大师赛·线下决赛阶段（第二天）",
+      "stage": "线下决赛第二天",
+      "date": "2018-05",
+      "uploader": "剑网3赛事/赛事录像",
+      "video": {
+        "platform": "bilibili",
+        "bvid": "BV19p411o7wQ",
+        "url": "https://www.bilibili.com/video/BV19p411o7wQ/"
+      },
+      "games": [],
+      "extraction_status": "video_indexed_game_config_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-3-bili-BV1Vp411Z7vP",
+      "title": "20180513第三届大师赛冠军争夺赛 水调歌头VS清风望月",
+      "stage": "总决赛",
+      "date": "2018-05",
+      "uploader": "剑网3赛事/赛事录像",
+      "video": {
+        "platform": "bilibili",
+        "bvid": "BV1Vp411Z7vP",
+        "url": "https://www.bilibili.com/video/BV1Vp411Z7vP/"
+      },
+      "games": [],
+      "extraction_status": "video_indexed_game_config_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-3-bili-BV1Kp411Z7so",
+      "title": "第三届大师赛冠军赛 清风望月VS水调歌头",
+      "stage": "总决赛分集",
+      "date": "2018-05",
+      "uploader": "剑网3赛事/赛事录像",
+      "video": {
+        "platform": "bilibili",
+        "bvid": "BV1Kp411Z7so",
+        "url": "https://www.bilibili.com/video/BV1Kp411Z7so/"
+      },
+      "games": [],
+      "extraction_status": "video_indexed_game_config_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-3-bili-BV1WW411F7cq",
+      "title": "20180511第三届大师赛上海线下决赛",
+      "stage": "线下决赛",
+      "date": "2018-05",
+      "uploader": "剑网3赛事/赛事录像",
+      "video": {
+        "platform": "bilibili",
+        "bvid": "BV1WW411F7cq",
+        "url": "https://www.bilibili.com/video/BV1WW411F7cq/"
+      },
+      "games": [],
+      "extraction_status": "video_indexed_game_config_pending",
+      "confidence": "probable"
+    },
+    {
+      "collection_id": "master-3-bili-BV1xW411F7oc",
+      "title": "第三届大师赛清风望月比赛专场Day1",
+      "stage": "线下决赛Day1",
+      "date": "2018-05",
+      "uploader": "剑网3赛事/赛事录像",
+      "video": {
+        "platform": "bilibili",
+        "bvid": "BV1xW411F7oc",
+        "url": "https://www.bilibili.com/video/BV1xW411F7oc/"
+      },
+      "games": [],
+      "extraction_status": "video_indexed_game_config_pending",
+      "confidence": "probable"
+    }
+  ],
   "historical_records": [
     {
       "source_row": 47,
@@ -2593,7 +2684,8 @@
   "source": {
     "historical_records_file": "历届赛事记录.xlsx",
     "weibo_account": "@剑网3赛事",
-    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。"
+    "weibo_verification_note": "历史记录已导入；微博赛报需按具体对局逐条交叉核验，未将摘要直接视为逐局事实。",
+    "video_research_note": "已补充公开可检索的第三届大师赛官方/赛事录像合集；视频已建立回放索引，但逐局心法仍需从视频画面逐局核验。"
   },
   "online_research": {
     "checked_at": "2026-09-05T00:00:00Z",
