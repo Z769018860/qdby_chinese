@@ -1,10 +1,1406 @@
 {
-  "schema_version": 1,
-  "source": "https://jx3.unua.top/api/rank/builds",
-  "updated_at": "2026-09-05T21:30:39.016Z",
+  "schema_version": 2,
+  "source": "https://jx3.unua.top/api/rank/jjc-stats",
+  "updated_at": "2026-09-09T11:30:27.233Z",
   "mode": "3v3",
   "sample": "solo",
-  "period": "1d",
+  "periods": {
+    "last1d": {
+      "ranges": {
+        "2100-2300": {
+          "min_score": 2100,
+          "max_score": 2300,
+          "dps": [
+            {
+              "rank": 1,
+              "kungfu": "太玄经",
+              "win_rate": 0.5684,
+              "pick_rate": 0.0211,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "傲血战意",
+              "win_rate": 0.4764,
+              "pick_rate": 0.1387,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "无方",
+              "win_rate": 0.5552,
+              "pick_rate": 0.0174,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "北傲诀",
+              "win_rate": 0.5072,
+              "pick_rate": 0.078,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "藏剑",
+              "win_rate": 0.4645,
+              "pick_rate": 0.121,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 6,
+              "kungfu": "冰心诀",
+              "win_rate": 0.5025,
+              "pick_rate": 0.0667,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 7,
+              "kungfu": "分山劲",
+              "win_rate": 0.5243,
+              "pick_rate": 0.036,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 8,
+              "kungfu": "太虚剑意",
+              "win_rate": 0.5111,
+              "pick_rate": 0.0535,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 9,
+              "kungfu": "笑尘诀",
+              "win_rate": 0.5221,
+              "pick_rate": 0.0358,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 10,
+              "kungfu": "毒经",
+              "win_rate": 0.4968,
+              "pick_rate": 0.0623,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 11,
+              "kungfu": "周天功",
+              "win_rate": 0.5194,
+              "pick_rate": 0.0189,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 12,
+              "kungfu": "焚影圣诀",
+              "win_rate": 0.5114,
+              "pick_rate": 0.0298,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 13,
+              "kungfu": "幽罗引",
+              "win_rate": 0.5184,
+              "pick_rate": 0.0184,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 14,
+              "kungfu": "山海心诀",
+              "win_rate": 0.5144,
+              "pick_rate": 0.0157,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 15,
+              "kungfu": "天罗诡道",
+              "win_rate": 0.5142,
+              "pick_rate": 0.0139,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 16,
+              "kungfu": "孤锋诀",
+              "win_rate": 0.4736,
+              "pick_rate": 0.0664,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 17,
+              "kungfu": "花间游",
+              "win_rate": 0.4942,
+              "pick_rate": 0.0294,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 18,
+              "kungfu": "凌海诀",
+              "win_rate": 0.476,
+              "pick_rate": 0.0377,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 19,
+              "kungfu": "易筋经",
+              "win_rate": 0.4879,
+              "pick_rate": 0.0163,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 20,
+              "kungfu": "隐龙诀",
+              "win_rate": 0.4645,
+              "pick_rate": 0.0357,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 21,
+              "kungfu": "莫问",
+              "win_rate": 0.4549,
+              "pick_rate": 0.0325,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 22,
+              "kungfu": "惊羽诀",
+              "win_rate": 0.4551,
+              "pick_rate": 0.027,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 23,
+              "kungfu": "紫霞功",
+              "win_rate": 0.4429,
+              "pick_rate": 0.0277,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ],
+          "healer": []
+        },
+        "2200-2400": {
+          "min_score": 2200,
+          "max_score": 2400,
+          "dps": [
+            {
+              "rank": 1,
+              "kungfu": "傲血战意",
+              "win_rate": 0.4952,
+              "pick_rate": 0.1339,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "无方",
+              "win_rate": 0.5692,
+              "pick_rate": 0.0202,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "北傲诀",
+              "win_rate": 0.5051,
+              "pick_rate": 0.0829,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "太虚剑意",
+              "win_rate": 0.5189,
+              "pick_rate": 0.0542,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "藏剑",
+              "win_rate": 0.4789,
+              "pick_rate": 0.1063,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 6,
+              "kungfu": "孤锋诀",
+              "win_rate": 0.5035,
+              "pick_rate": 0.0696,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 7,
+              "kungfu": "冰心诀",
+              "win_rate": 0.504,
+              "pick_rate": 0.0667,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 8,
+              "kungfu": "毒经",
+              "win_rate": 0.4976,
+              "pick_rate": 0.073,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 9,
+              "kungfu": "天罗诡道",
+              "win_rate": 0.5387,
+              "pick_rate": 0.0132,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 10,
+              "kungfu": "花间游",
+              "win_rate": 0.5276,
+              "pick_rate": 0.0282,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 11,
+              "kungfu": "幽罗引",
+              "win_rate": 0.5326,
+              "pick_rate": 0.0191,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 12,
+              "kungfu": "分山劲",
+              "win_rate": 0.5206,
+              "pick_rate": 0.0334,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 13,
+              "kungfu": "太玄经",
+              "win_rate": 0.5266,
+              "pick_rate": 0.0225,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 14,
+              "kungfu": "笑尘诀",
+              "win_rate": 0.5156,
+              "pick_rate": 0.0372,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 15,
+              "kungfu": "凌海诀",
+              "win_rate": 0.5098,
+              "pick_rate": 0.0431,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 16,
+              "kungfu": "焚影圣诀",
+              "win_rate": 0.5146,
+              "pick_rate": 0.0335,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 17,
+              "kungfu": "易筋经",
+              "win_rate": 0.5271,
+              "pick_rate": 0.0156,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 18,
+              "kungfu": "山海心诀",
+              "win_rate": 0.515,
+              "pick_rate": 0.0149,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 19,
+              "kungfu": "周天功",
+              "win_rate": 0.5104,
+              "pick_rate": 0.0193,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 20,
+              "kungfu": "惊羽诀",
+              "win_rate": 0.4986,
+              "pick_rate": 0.0317,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 21,
+              "kungfu": "隐龙诀",
+              "win_rate": 0.4862,
+              "pick_rate": 0.0289,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 22,
+              "kungfu": "紫霞功",
+              "win_rate": 0.4839,
+              "pick_rate": 0.0235,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 23,
+              "kungfu": "莫问",
+              "win_rate": 0.4508,
+              "pick_rate": 0.0289,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ],
+          "healer": [
+            {
+              "rank": 1,
+              "kungfu": "离经易道",
+              "win_rate": 0.5198,
+              "pick_rate": 0.3009,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "云裳心经",
+              "win_rate": 0.5037,
+              "pick_rate": 0.2794,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "相知",
+              "win_rate": 0.5196,
+              "pick_rate": 0.084,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "补天诀",
+              "win_rate": 0.4915,
+              "pick_rate": 0.2144,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "灵素",
+              "win_rate": 0.4915,
+              "pick_rate": 0.1212,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ]
+        },
+        "2400-2600": {
+          "min_score": 2400,
+          "max_score": 2600,
+          "dps": [],
+          "healer": []
+        },
+        "2600-2800": {
+          "min_score": 2600,
+          "max_score": 2800,
+          "dps": [],
+          "healer": []
+        },
+        "2800-3000": {
+          "min_score": 2800,
+          "max_score": 3000,
+          "dps": [],
+          "healer": []
+        },
+        "3000-3200": {
+          "min_score": 3000,
+          "max_score": 3200,
+          "dps": [],
+          "healer": []
+        }
+      }
+    },
+    "last7d": {
+      "ranges": {
+        "2100-2300": {
+          "min_score": 2100,
+          "max_score": 2300,
+          "dps": [
+            {
+              "rank": 1,
+              "kungfu": "傲血战意",
+              "win_rate": 0.4822,
+              "pick_rate": 0.1289,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "太玄经",
+              "win_rate": 0.5396,
+              "pick_rate": 0.0235,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "分山劲",
+              "win_rate": 0.53,
+              "pick_rate": 0.0393,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "冰心诀",
+              "win_rate": 0.5078,
+              "pick_rate": 0.0598,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "凌海诀",
+              "win_rate": 0.5213,
+              "pick_rate": 0.0353,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 6,
+              "kungfu": "北傲诀",
+              "win_rate": 0.4991,
+              "pick_rate": 0.0742,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 7,
+              "kungfu": "藏剑",
+              "win_rate": 0.4697,
+              "pick_rate": 0.1229,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 8,
+              "kungfu": "孤锋诀",
+              "win_rate": 0.5021,
+              "pick_rate": 0.0656,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 9,
+              "kungfu": "太虚剑意",
+              "win_rate": 0.5063,
+              "pick_rate": 0.0491,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 10,
+              "kungfu": "毒经",
+              "win_rate": 0.4874,
+              "pick_rate": 0.0748,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 11,
+              "kungfu": "焚影圣诀",
+              "win_rate": 0.5005,
+              "pick_rate": 0.0336,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 12,
+              "kungfu": "周天功",
+              "win_rate": 0.5055,
+              "pick_rate": 0.0225,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 13,
+              "kungfu": "山海心诀",
+              "win_rate": 0.506,
+              "pick_rate": 0.0189,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 14,
+              "kungfu": "幽罗引",
+              "win_rate": 0.5045,
+              "pick_rate": 0.0211,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 15,
+              "kungfu": "无方",
+              "win_rate": 0.5063,
+              "pick_rate": 0.0169,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 16,
+              "kungfu": "笑尘诀",
+              "win_rate": 0.4902,
+              "pick_rate": 0.037,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 17,
+              "kungfu": "花间游",
+              "win_rate": 0.4925,
+              "pick_rate": 0.0311,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 18,
+              "kungfu": "惊羽诀",
+              "win_rate": 0.4866,
+              "pick_rate": 0.03,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 19,
+              "kungfu": "莫问",
+              "win_rate": 0.4724,
+              "pick_rate": 0.0283,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 20,
+              "kungfu": "隐龙诀",
+              "win_rate": 0.4698,
+              "pick_rate": 0.0299,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 21,
+              "kungfu": "易筋经",
+              "win_rate": 0.471,
+              "pick_rate": 0.015,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 22,
+              "kungfu": "紫霞功",
+              "win_rate": 0.456,
+              "pick_rate": 0.0298,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 23,
+              "kungfu": "天罗诡道",
+              "win_rate": 0.4488,
+              "pick_rate": 0.0128,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ],
+          "healer": [
+            {
+              "rank": 1,
+              "kungfu": "离经易道",
+              "win_rate": 0.5098,
+              "pick_rate": 0.2665,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "相知",
+              "win_rate": 0.5176,
+              "pick_rate": 0.0755,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "云裳心经",
+              "win_rate": 0.4861,
+              "pick_rate": 0.2887,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "补天诀",
+              "win_rate": 0.4825,
+              "pick_rate": 0.2559,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "灵素",
+              "win_rate": 0.4904,
+              "pick_rate": 0.1134,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ]
+        },
+        "2200-2400": {
+          "min_score": 2200,
+          "max_score": 2400,
+          "dps": [
+            {
+              "rank": 1,
+              "kungfu": "凌海诀",
+              "win_rate": 0.5258,
+              "pick_rate": 0.0395,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "幽罗引",
+              "win_rate": 0.53,
+              "pick_rate": 0.0231,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "孤锋诀",
+              "win_rate": 0.511,
+              "pick_rate": 0.0671,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "分山劲",
+              "win_rate": 0.5185,
+              "pick_rate": 0.0413,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "太玄经",
+              "win_rate": 0.5231,
+              "pick_rate": 0.0245,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 6,
+              "kungfu": "傲血战意",
+              "win_rate": 0.4899,
+              "pick_rate": 0.1201,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 7,
+              "kungfu": "太虚剑意",
+              "win_rate": 0.5116,
+              "pick_rate": 0.0519,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 8,
+              "kungfu": "焚影圣诀",
+              "win_rate": 0.5166,
+              "pick_rate": 0.0348,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 9,
+              "kungfu": "冰心诀",
+              "win_rate": 0.5054,
+              "pick_rate": 0.0677,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 10,
+              "kungfu": "北傲诀",
+              "win_rate": 0.5024,
+              "pick_rate": 0.0753,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 11,
+              "kungfu": "无方",
+              "win_rate": 0.5196,
+              "pick_rate": 0.0205,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 12,
+              "kungfu": "周天功",
+              "win_rate": 0.5179,
+              "pick_rate": 0.0216,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 13,
+              "kungfu": "山海心诀",
+              "win_rate": 0.5173,
+              "pick_rate": 0.0208,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 14,
+              "kungfu": "毒经",
+              "win_rate": 0.4931,
+              "pick_rate": 0.0803,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 15,
+              "kungfu": "藏剑",
+              "win_rate": 0.4813,
+              "pick_rate": 0.1029,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 16,
+              "kungfu": "花间游",
+              "win_rate": 0.5,
+              "pick_rate": 0.0359,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 17,
+              "kungfu": "天罗诡道",
+              "win_rate": 0.5029,
+              "pick_rate": 0.0119,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 18,
+              "kungfu": "笑尘诀",
+              "win_rate": 0.494,
+              "pick_rate": 0.0369,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 19,
+              "kungfu": "惊羽诀",
+              "win_rate": 0.4925,
+              "pick_rate": 0.0336,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 20,
+              "kungfu": "隐龙诀",
+              "win_rate": 0.4923,
+              "pick_rate": 0.0261,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 21,
+              "kungfu": "紫霞功",
+              "win_rate": 0.4838,
+              "pick_rate": 0.0257,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 22,
+              "kungfu": "莫问",
+              "win_rate": 0.4833,
+              "pick_rate": 0.0257,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 23,
+              "kungfu": "易筋经",
+              "win_rate": 0.4831,
+              "pick_rate": 0.0128,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ],
+          "healer": [
+            {
+              "rank": 1,
+              "kungfu": "离经易道",
+              "win_rate": 0.5194,
+              "pick_rate": 0.3038,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "相知",
+              "win_rate": 0.5247,
+              "pick_rate": 0.0788,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "补天诀",
+              "win_rate": 0.5043,
+              "pick_rate": 0.2227,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "云裳心经",
+              "win_rate": 0.4941,
+              "pick_rate": 0.2868,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "灵素",
+              "win_rate": 0.4956,
+              "pick_rate": 0.108,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ]
+        },
+        "2400-2600": {
+          "min_score": 2400,
+          "max_score": 2600,
+          "dps": [
+            {
+              "rank": 1,
+              "kungfu": "孤锋诀",
+              "win_rate": 0.5063,
+              "pick_rate": 0.0868,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "毒经",
+              "win_rate": 0.4885,
+              "pick_rate": 0.0935,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "太虚剑意",
+              "win_rate": 0.5239,
+              "pick_rate": 0.0574,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "幽罗引",
+              "win_rate": 0.5414,
+              "pick_rate": 0.0368,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "凌海诀",
+              "win_rate": 0.5159,
+              "pick_rate": 0.0486,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 6,
+              "kungfu": "分山劲",
+              "win_rate": 0.511,
+              "pick_rate": 0.0504,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 7,
+              "kungfu": "天罗诡道",
+              "win_rate": 0.5306,
+              "pick_rate": 0.0303,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 8,
+              "kungfu": "山海心诀",
+              "win_rate": 0.5282,
+              "pick_rate": 0.0316,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 9,
+              "kungfu": "北傲诀",
+              "win_rate": 0.4913,
+              "pick_rate": 0.0647,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 10,
+              "kungfu": "焚影圣诀",
+              "win_rate": 0.5112,
+              "pick_rate": 0.044,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 11,
+              "kungfu": "太玄经",
+              "win_rate": 0.5203,
+              "pick_rate": 0.0295,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 12,
+              "kungfu": "傲血战意",
+              "win_rate": 0.4834,
+              "pick_rate": 0.0666,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 13,
+              "kungfu": "周天功",
+              "win_rate": 0.5167,
+              "pick_rate": 0.0303,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 14,
+              "kungfu": "无方",
+              "win_rate": 0.5218,
+              "pick_rate": 0.0222,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 15,
+              "kungfu": "冰心诀",
+              "win_rate": 0.4836,
+              "pick_rate": 0.0584,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 16,
+              "kungfu": "易筋经",
+              "win_rate": 0.53,
+              "pick_rate": 0.0093,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 17,
+              "kungfu": "藏剑",
+              "win_rate": 0.4761,
+              "pick_rate": 0.0604,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 18,
+              "kungfu": "笑尘诀",
+              "win_rate": 0.4922,
+              "pick_rate": 0.0304,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 19,
+              "kungfu": "花间游",
+              "win_rate": 0.4763,
+              "pick_rate": 0.0463,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 20,
+              "kungfu": "莫问",
+              "win_rate": 0.487,
+              "pick_rate": 0.0349,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 21,
+              "kungfu": "惊羽诀",
+              "win_rate": 0.4759,
+              "pick_rate": 0.0305,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 22,
+              "kungfu": "隐龙诀",
+              "win_rate": 0.4855,
+              "pick_rate": 0.017,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 23,
+              "kungfu": "紫霞功",
+              "win_rate": 0.4781,
+              "pick_rate": 0.0199,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ],
+          "healer": [
+            {
+              "rank": 1,
+              "kungfu": "离经易道",
+              "win_rate": 0.5042,
+              "pick_rate": 0.3632,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "相知",
+              "win_rate": 0.5268,
+              "pick_rate": 0.1039,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "补天诀",
+              "win_rate": 0.4997,
+              "pick_rate": 0.1923,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "云裳心经",
+              "win_rate": 0.4817,
+              "pick_rate": 0.236,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "灵素",
+              "win_rate": 0.4965,
+              "pick_rate": 0.1046,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ]
+        },
+        "2600-2800": {
+          "min_score": 2600,
+          "max_score": 2800,
+          "dps": [
+            {
+              "rank": 1,
+              "kungfu": "孤锋诀",
+              "win_rate": 0.4889,
+              "pick_rate": 0.0875,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "毒经",
+              "win_rate": 0.5065,
+              "pick_rate": 0.0723,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "太虚剑意",
+              "win_rate": 0.5109,
+              "pick_rate": 0.0694,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "北傲诀",
+              "win_rate": 0.5021,
+              "pick_rate": 0.0676,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "焚影圣诀",
+              "win_rate": 0.5261,
+              "pick_rate": 0.0537,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 6,
+              "kungfu": "分山劲",
+              "win_rate": 0.5158,
+              "pick_rate": 0.0498,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 7,
+              "kungfu": "周天功",
+              "win_rate": 0.5214,
+              "pick_rate": 0.0468,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 8,
+              "kungfu": "傲血战意",
+              "win_rate": 0.5129,
+              "pick_rate": 0.0489,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 9,
+              "kungfu": "山海心诀",
+              "win_rate": 0.5073,
+              "pick_rate": 0.0489,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 10,
+              "kungfu": "冰心诀",
+              "win_rate": 0.4814,
+              "pick_rate": 0.0563,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 11,
+              "kungfu": "无方",
+              "win_rate": 0.5052,
+              "pick_rate": 0.0466,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 12,
+              "kungfu": "幽罗引",
+              "win_rate": 0.5239,
+              "pick_rate": 0.0372,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 13,
+              "kungfu": "藏剑",
+              "win_rate": 0.493,
+              "pick_rate": 0.0472,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 14,
+              "kungfu": "天罗诡道",
+              "win_rate": 0.5134,
+              "pick_rate": 0.0396,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 15,
+              "kungfu": "凌海诀",
+              "win_rate": 0.5077,
+              "pick_rate": 0.0373,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 16,
+              "kungfu": "太玄经",
+              "win_rate": 0.555,
+              "pick_rate": 0.0185,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 17,
+              "kungfu": "莫问",
+              "win_rate": 0.4862,
+              "pick_rate": 0.0373,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 18,
+              "kungfu": "紫霞功",
+              "win_rate": 0.5527,
+              "pick_rate": 0.0136,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 19,
+              "kungfu": "易筋经",
+              "win_rate": 0.5279,
+              "pick_rate": 0.02,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 20,
+              "kungfu": "花间游",
+              "win_rate": 0.5011,
+              "pick_rate": 0.0262,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 21,
+              "kungfu": "惊羽诀",
+              "win_rate": 0.4921,
+              "pick_rate": 0.0236,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 22,
+              "kungfu": "笑尘诀",
+              "win_rate": 0.4663,
+              "pick_rate": 0.0297,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 23,
+              "kungfu": "隐龙诀",
+              "win_rate": 0.4606,
+              "pick_rate": 0.0222,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ],
+          "healer": [
+            {
+              "rank": 1,
+              "kungfu": "离经易道",
+              "win_rate": 0.5097,
+              "pick_rate": 0.2691,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 2,
+              "kungfu": "补天诀",
+              "win_rate": 0.5141,
+              "pick_rate": 0.2379,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 3,
+              "kungfu": "相知",
+              "win_rate": 0.5294,
+              "pick_rate": 0.2064,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 4,
+              "kungfu": "云裳心经",
+              "win_rate": 0.4895,
+              "pick_rate": 0.2013,
+              "sample_count": 0,
+              "player_count": 0
+            },
+            {
+              "rank": 5,
+              "kungfu": "灵素",
+              "win_rate": 0.4679,
+              "pick_rate": 0.0853,
+              "sample_count": 0,
+              "player_count": 0
+            }
+          ]
+        },
+        "2800-3000": {
+          "min_score": 2800,
+          "max_score": 3000,
+          "dps": [],
+          "healer": []
+        },
+        "3000-3200": {
+          "min_score": 3000,
+          "max_score": 3200,
+          "dps": [],
+          "healer": []
+        }
+      }
+    }
+  },
   "ranges": {
     "2100-2300": {
       "min_score": 2100,
@@ -12,185 +1408,185 @@
       "dps": [
         {
           "rank": 1,
-          "kungfu": "傲血战意",
-          "win_rate": 0.4873,
-          "pick_rate": 0.1178,
+          "kungfu": "太玄经",
+          "win_rate": 0.5684,
+          "pick_rate": 0.0211,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 2,
-          "kungfu": "凌海诀",
-          "win_rate": 0.5496,
-          "pick_rate": 0.0331,
+          "kungfu": "傲血战意",
+          "win_rate": 0.4764,
+          "pick_rate": 0.1387,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 3,
-          "kungfu": "北傲诀",
-          "win_rate": 0.5029,
-          "pick_rate": 0.0796,
+          "kungfu": "无方",
+          "win_rate": 0.5552,
+          "pick_rate": 0.0174,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 4,
-          "kungfu": "分山劲",
-          "win_rate": 0.5268,
-          "pick_rate": 0.0494,
+          "kungfu": "北傲诀",
+          "win_rate": 0.5072,
+          "pick_rate": 0.078,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 5,
-          "kungfu": "冰心诀",
-          "win_rate": 0.5215,
-          "pick_rate": 0.0537,
+          "kungfu": "藏剑",
+          "win_rate": 0.4645,
+          "pick_rate": 0.121,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 6,
-          "kungfu": "藏剑",
-          "win_rate": 0.4605,
-          "pick_rate": 0.118,
+          "kungfu": "冰心诀",
+          "win_rate": 0.5025,
+          "pick_rate": 0.0667,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 7,
-          "kungfu": "孤锋诀",
-          "win_rate": 0.4952,
-          "pick_rate": 0.0658,
+          "kungfu": "分山劲",
+          "win_rate": 0.5243,
+          "pick_rate": 0.036,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 8,
-          "kungfu": "焚影圣诀",
-          "win_rate": 0.514,
-          "pick_rate": 0.0391,
+          "kungfu": "太虚剑意",
+          "win_rate": 0.5111,
+          "pick_rate": 0.0535,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 9,
-          "kungfu": "毒经",
-          "win_rate": 0.4781,
-          "pick_rate": 0.0763,
+          "kungfu": "笑尘诀",
+          "win_rate": 0.5221,
+          "pick_rate": 0.0358,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 10,
-          "kungfu": "幽罗引",
-          "win_rate": 0.5215,
-          "pick_rate": 0.0201,
+          "kungfu": "毒经",
+          "win_rate": 0.4968,
+          "pick_rate": 0.0623,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 11,
-          "kungfu": "太虚剑意",
-          "win_rate": 0.5007,
-          "pick_rate": 0.0439,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 12,
-          "kungfu": "笑尘诀",
-          "win_rate": 0.5092,
-          "pick_rate": 0.0312,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 13,
-          "kungfu": "花间游",
-          "win_rate": 0.4991,
-          "pick_rate": 0.0329,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 14,
-          "kungfu": "太玄经",
-          "win_rate": 0.5053,
-          "pick_rate": 0.0219,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 15,
-          "kungfu": "惊羽诀",
-          "win_rate": 0.4831,
-          "pick_rate": 0.0341,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 16,
-          "kungfu": "易筋经",
-          "win_rate": 0.4831,
-          "pick_rate": 0.0222,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 17,
-          "kungfu": "山海心诀",
-          "win_rate": 0.4848,
+          "kungfu": "周天功",
+          "win_rate": 0.5194,
           "pick_rate": 0.0189,
           "sample_count": 0,
           "player_count": 0
         },
         {
+          "rank": 12,
+          "kungfu": "焚影圣诀",
+          "win_rate": 0.5114,
+          "pick_rate": 0.0298,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 13,
+          "kungfu": "幽罗引",
+          "win_rate": 0.5184,
+          "pick_rate": 0.0184,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 14,
+          "kungfu": "山海心诀",
+          "win_rate": 0.5144,
+          "pick_rate": 0.0157,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 15,
+          "kungfu": "天罗诡道",
+          "win_rate": 0.5142,
+          "pick_rate": 0.0139,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 16,
+          "kungfu": "孤锋诀",
+          "win_rate": 0.4736,
+          "pick_rate": 0.0664,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
+          "rank": 17,
+          "kungfu": "花间游",
+          "win_rate": 0.4942,
+          "pick_rate": 0.0294,
+          "sample_count": 0,
+          "player_count": 0
+        },
+        {
           "rank": 18,
-          "kungfu": "周天功",
-          "win_rate": 0.4815,
-          "pick_rate": 0.0202,
+          "kungfu": "凌海诀",
+          "win_rate": 0.476,
+          "pick_rate": 0.0377,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 19,
-          "kungfu": "莫问",
-          "win_rate": 0.4693,
-          "pick_rate": 0.0337,
+          "kungfu": "易筋经",
+          "win_rate": 0.4879,
+          "pick_rate": 0.0163,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 20,
-          "kungfu": "紫霞功",
-          "win_rate": 0.4635,
-          "pick_rate": 0.0339,
+          "kungfu": "隐龙诀",
+          "win_rate": 0.4645,
+          "pick_rate": 0.0357,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 21,
-          "kungfu": "隐龙诀",
-          "win_rate": 0.4535,
-          "pick_rate": 0.026,
+          "kungfu": "莫问",
+          "win_rate": 0.4549,
+          "pick_rate": 0.0325,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 22,
-          "kungfu": "无方",
-          "win_rate": 0.4566,
-          "pick_rate": 0.0199,
+          "kungfu": "惊羽诀",
+          "win_rate": 0.4551,
+          "pick_rate": 0.027,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 23,
-          "kungfu": "天罗诡道",
-          "win_rate": 0.4178,
-          "pick_rate": 0.0084,
+          "kungfu": "紫霞功",
+          "win_rate": 0.4429,
+          "pick_rate": 0.0277,
           "sample_count": 0,
           "player_count": 0
         }
@@ -203,185 +1599,185 @@
       "dps": [
         {
           "rank": 1,
-          "kungfu": "北傲诀",
-          "win_rate": 0.5049,
-          "pick_rate": 0.0829,
+          "kungfu": "傲血战意",
+          "win_rate": 0.4952,
+          "pick_rate": 0.1339,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 2,
-          "kungfu": "凌海诀",
-          "win_rate": 0.5358,
-          "pick_rate": 0.0365,
+          "kungfu": "无方",
+          "win_rate": 0.5692,
+          "pick_rate": 0.0202,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 3,
-          "kungfu": "孤锋诀",
-          "win_rate": 0.512,
-          "pick_rate": 0.0646,
+          "kungfu": "北傲诀",
+          "win_rate": 0.5051,
+          "pick_rate": 0.0829,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 4,
-          "kungfu": "冰心诀",
-          "win_rate": 0.5034,
-          "pick_rate": 0.0721,
+          "kungfu": "太虚剑意",
+          "win_rate": 0.5189,
+          "pick_rate": 0.0542,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 5,
-          "kungfu": "傲血战意",
-          "win_rate": 0.4803,
-          "pick_rate": 0.1057,
+          "kungfu": "藏剑",
+          "win_rate": 0.4789,
+          "pick_rate": 0.1063,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 6,
-          "kungfu": "毒经",
-          "win_rate": 0.5003,
-          "pick_rate": 0.0738,
+          "kungfu": "孤锋诀",
+          "win_rate": 0.5035,
+          "pick_rate": 0.0696,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 7,
-          "kungfu": "焚影圣诀",
-          "win_rate": 0.5228,
-          "pick_rate": 0.0404,
+          "kungfu": "冰心诀",
+          "win_rate": 0.504,
+          "pick_rate": 0.0667,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 8,
-          "kungfu": "藏剑",
-          "win_rate": 0.4771,
-          "pick_rate": 0.1034,
+          "kungfu": "毒经",
+          "win_rate": 0.4976,
+          "pick_rate": 0.073,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 9,
-          "kungfu": "笑尘诀",
-          "win_rate": 0.5239,
-          "pick_rate": 0.0333,
+          "kungfu": "天罗诡道",
+          "win_rate": 0.5387,
+          "pick_rate": 0.0132,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 10,
-          "kungfu": "分山劲",
-          "win_rate": 0.5127,
-          "pick_rate": 0.0468,
+          "kungfu": "花间游",
+          "win_rate": 0.5276,
+          "pick_rate": 0.0282,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 11,
-          "kungfu": "太虚剑意",
-          "win_rate": 0.5016,
-          "pick_rate": 0.0525,
+          "kungfu": "幽罗引",
+          "win_rate": 0.5326,
+          "pick_rate": 0.0191,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 12,
-          "kungfu": "幽罗引",
-          "win_rate": 0.5135,
-          "pick_rate": 0.0258,
+          "kungfu": "分山劲",
+          "win_rate": 0.5206,
+          "pick_rate": 0.0334,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 13,
-          "kungfu": "花间游",
-          "win_rate": 0.5027,
-          "pick_rate": 0.038,
+          "kungfu": "太玄经",
+          "win_rate": 0.5266,
+          "pick_rate": 0.0225,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 14,
-          "kungfu": "山海心诀",
-          "win_rate": 0.514,
-          "pick_rate": 0.0204,
+          "kungfu": "笑尘诀",
+          "win_rate": 0.5156,
+          "pick_rate": 0.0372,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 15,
-          "kungfu": "天罗诡道",
-          "win_rate": 0.5085,
-          "pick_rate": 0.0072,
+          "kungfu": "凌海诀",
+          "win_rate": 0.5098,
+          "pick_rate": 0.0431,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 16,
-          "kungfu": "莫问",
-          "win_rate": 0.4887,
-          "pick_rate": 0.0306,
+          "kungfu": "焚影圣诀",
+          "win_rate": 0.5146,
+          "pick_rate": 0.0335,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 17,
-          "kungfu": "周天功",
-          "win_rate": 0.4943,
-          "pick_rate": 0.018,
+          "kungfu": "易筋经",
+          "win_rate": 0.5271,
+          "pick_rate": 0.0156,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 18,
-          "kungfu": "太玄经",
-          "win_rate": 0.4921,
-          "pick_rate": 0.0207,
+          "kungfu": "山海心诀",
+          "win_rate": 0.515,
+          "pick_rate": 0.0149,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 19,
-          "kungfu": "惊羽诀",
-          "win_rate": 0.4777,
-          "pick_rate": 0.0367,
+          "kungfu": "周天功",
+          "win_rate": 0.5104,
+          "pick_rate": 0.0193,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 20,
-          "kungfu": "无方",
-          "win_rate": 0.4842,
-          "pick_rate": 0.0246,
+          "kungfu": "惊羽诀",
+          "win_rate": 0.4986,
+          "pick_rate": 0.0317,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 21,
-          "kungfu": "紫霞功",
-          "win_rate": 0.4801,
-          "pick_rate": 0.0277,
+          "kungfu": "隐龙诀",
+          "win_rate": 0.4862,
+          "pick_rate": 0.0289,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 22,
-          "kungfu": "隐龙诀",
-          "win_rate": 0.48,
-          "pick_rate": 0.0245,
+          "kungfu": "紫霞功",
+          "win_rate": 0.4839,
+          "pick_rate": 0.0235,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 23,
-          "kungfu": "易筋经",
-          "win_rate": 0.4435,
-          "pick_rate": 0.0137,
+          "kungfu": "莫问",
+          "win_rate": 0.4508,
+          "pick_rate": 0.0289,
           "sample_count": 0,
           "player_count": 0
         }
@@ -390,40 +1786,40 @@
         {
           "rank": 1,
           "kungfu": "离经易道",
-          "win_rate": 0.5148,
-          "pick_rate": 0.3134,
+          "win_rate": 0.5198,
+          "pick_rate": 0.3009,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 2,
-          "kungfu": "相知",
-          "win_rate": 0.5174,
-          "pick_rate": 0.082,
+          "kungfu": "云裳心经",
+          "win_rate": 0.5037,
+          "pick_rate": 0.2794,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 3,
-          "kungfu": "云裳心经",
-          "win_rate": 0.5034,
-          "pick_rate": 0.2594,
+          "kungfu": "相知",
+          "win_rate": 0.5196,
+          "pick_rate": 0.084,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 4,
           "kungfu": "补天诀",
-          "win_rate": 0.5041,
-          "pick_rate": 0.2258,
+          "win_rate": 0.4915,
+          "pick_rate": 0.2144,
           "sample_count": 0,
           "player_count": 0
         },
         {
           "rank": 5,
           "kungfu": "灵素",
-          "win_rate": 0.4989,
-          "pick_rate": 0.1195,
+          "win_rate": 0.4915,
+          "pick_rate": 0.1212,
           "sample_count": 0,
           "player_count": 0
         }
@@ -432,234 +1828,8 @@
     "2400-2600": {
       "min_score": 2400,
       "max_score": 2600,
-      "dps": [
-        {
-          "rank": 1,
-          "kungfu": "孤锋诀",
-          "win_rate": 0.5015,
-          "pick_rate": 0.0942,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 2,
-          "kungfu": "毒经",
-          "win_rate": 0.4763,
-          "pick_rate": 0.0946,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 3,
-          "kungfu": "太虚剑意",
-          "win_rate": 0.5283,
-          "pick_rate": 0.0557,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 4,
-          "kungfu": "山海心诀",
-          "win_rate": 0.556,
-          "pick_rate": 0.0327,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 5,
-          "kungfu": "太玄经",
-          "win_rate": 0.5529,
-          "pick_rate": 0.0311,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 6,
-          "kungfu": "焚影圣诀",
-          "win_rate": 0.5422,
-          "pick_rate": 0.0385,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 7,
-          "kungfu": "幽罗引",
-          "win_rate": 0.5275,
-          "pick_rate": 0.0473,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 8,
-          "kungfu": "天罗诡道",
-          "win_rate": 0.5317,
-          "pick_rate": 0.0418,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 9,
-          "kungfu": "凌海诀",
-          "win_rate": 0.5192,
-          "pick_rate": 0.0418,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 10,
-          "kungfu": "分山劲",
-          "win_rate": 0.5004,
-          "pick_rate": 0.0525,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 11,
-          "kungfu": "无方",
-          "win_rate": 0.5365,
-          "pick_rate": 0.0219,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 12,
-          "kungfu": "北傲诀",
-          "win_rate": 0.4762,
-          "pick_rate": 0.0616,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 13,
-          "kungfu": "傲血战意",
-          "win_rate": 0.4887,
-          "pick_rate": 0.0524,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 14,
-          "kungfu": "冰心诀",
-          "win_rate": 0.4893,
-          "pick_rate": 0.0515,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 15,
-          "kungfu": "周天功",
-          "win_rate": 0.5126,
-          "pick_rate": 0.0344,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 16,
-          "kungfu": "花间游",
-          "win_rate": 0.4815,
-          "pick_rate": 0.0507,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 17,
-          "kungfu": "易筋经",
-          "win_rate": 0.5324,
-          "pick_rate": 0.0134,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 18,
-          "kungfu": "惊羽诀",
-          "win_rate": 0.5118,
-          "pick_rate": 0.0271,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 19,
-          "kungfu": "藏剑",
-          "win_rate": 0.4665,
-          "pick_rate": 0.0566,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 20,
-          "kungfu": "莫问",
-          "win_rate": 0.4936,
-          "pick_rate": 0.0359,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 21,
-          "kungfu": "笑尘诀",
-          "win_rate": 0.496,
-          "pick_rate": 0.0289,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 22,
-          "kungfu": "隐龙诀",
-          "win_rate": 0.5108,
-          "pick_rate": 0.0149,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 23,
-          "kungfu": "紫霞功",
-          "win_rate": 0.4769,
-          "pick_rate": 0.0208,
-          "sample_count": 0,
-          "player_count": 0
-        }
-      ],
-      "healer": [
-        {
-          "rank": 1,
-          "kungfu": "离经易道",
-          "win_rate": 0.504,
-          "pick_rate": 0.373,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 2,
-          "kungfu": "相知",
-          "win_rate": 0.544,
-          "pick_rate": 0.1192,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 3,
-          "kungfu": "云裳心经",
-          "win_rate": 0.4742,
-          "pick_rate": 0.2228,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 4,
-          "kungfu": "补天诀",
-          "win_rate": 0.4827,
-          "pick_rate": 0.1779,
-          "sample_count": 0,
-          "player_count": 0
-        },
-        {
-          "rank": 5,
-          "kungfu": "灵素",
-          "win_rate": 0.4873,
-          "pick_rate": 0.1071,
-          "sample_count": 0,
-          "player_count": 0
-        }
-      ]
+      "dps": [],
+      "healer": []
     },
     "2600-2800": {
       "min_score": 2600,
