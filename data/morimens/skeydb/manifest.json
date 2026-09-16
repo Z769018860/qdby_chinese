@@ -1,0 +1,19 @@
+{
+  "source": {
+    "repository": "dansa/SKeyDB",
+    "ref": "main",
+    "commit": "27064cd13285f1c49737d6266d17a1c382faffa8",
+    "syncedAt": "2026-09-16T15:39:28.224Z",
+    "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
+  },
+  "counts": {
+    "awakeners": 60,
+    "portraits": 60,
+    "cards": 60
+  },
+  "paths": {
+    "awakeners": "data/morimens/skeydb/awakeners.json",
+    "portraits": "assets/morimens/portraits",
+    "cards": "assets/morimens/cards"
+  }
+}
