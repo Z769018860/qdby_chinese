@@ -3,8 +3,7 @@ import {mkdir, writeFile} from 'node:fs/promises';
 const ORIGIN='https://eremora.com';
 const PAGE='/leaderboard';
 const TARGET=`${ORIGIN}${PAGE}`;
-const JINA=`https://r.jina.ai/${TARGET}`;
-const UA='qdby-chinese-eremora-discovery/1.3 (+https://github.com/Z769018860/qdby_chinese)';
+const UA='qdby-chinese-eremora-discovery/1.4 (+https://github.com/Z769018860/qdby_chinese)';
 const OUT_DIR='data/morimens/eremora';
 const OUT=`${OUT_DIR}/discovery.json`;
 
@@ -14,7 +13,9 @@ async function get(url,headers={}){
   const r=await fetch(url,{headers:{'user-agent':UA,'accept':'text/html,application/xhtml+xml,application/json,text/plain;q=0.9,*/*;q=0.8',...headers},redirect:'follow',signal:AbortSignal.timeout(45000)});
   return {status:r.status,url:r.url,headers:Object.fromEntries(r.headers.entries()),text:await r.text()};
 }
-async function getReader(target){return get(`https://r.jina.ai/${target}`,{'accept':'text/plain','x-engine':'browser','x-timeout':'40','x-wait-for-selector':'body'})}
+async function getReader(target,format='markdown'){
+  return get(`https://r.jina.ai/${target}`,{'accept':format==='html'?'text/html':'text/plain','x-engine':'browser','x-timeout':'40','x-wait-for-selector':'body','x-return-format':format});
+}
 function apiCandidates(text=''){
   const out=[];
   const patterns=[
@@ -33,7 +34,7 @@ function contexts(text='',needleRe=/(leaderboard|dzone|d-zone|dtide|d-tide|chall
 }
 
 const page=await get(TARGET);
-let reader={status:0,url:JINA,headers:{},text:'',error:null};
+let reader={status:0,url:'',headers:{},text:'',error:null};
 try{reader=await getReader(TARGET)}catch(error){reader.error=String(error)}
 
 const sourceText=page.status===200?page.text:reader.text;
@@ -45,18 +46,22 @@ for(const url of scriptSrcs.filter(u=>u?.includes('/_next/')).slice(0,80)){
   catch(error){assets.push({url,error:String(error)})}
 }
 const candidates=uniq([...apiCandidates(page.text),...apiCandidates(reader.text),...nextData.flatMap(apiCandidates),...assets.flatMap(x=>x.candidates||[])]);
-const challengeUrls=uniq([...reader.text.matchAll(/\]\((https:\/\/eremora\.com\/u\/\d+\/challenges\/dzone\/\d+)\)/g)].map(m=>m[1]));
-let challengeSample={url:null,status:0,text:'',error:null};
+const challengeUrls=uniq([...reader.text.matchAll(/\]\((https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+))\)/g)].map(m=>m[1]));
+let challengeSample={url:null,status:0,text:'',error:null},challengeHtml={status:0,text:'',error:null},profileSample={url:null,status:0,text:'',error:null};
 if(challengeUrls[0]){
-  try{const r=await getReader(challengeUrls[0]);challengeSample={url:challengeUrls[0],status:r.status,text:r.text,error:null}}
-  catch(error){challengeSample={url:challengeUrls[0],status:0,text:'',error:String(error)}}
+  try{const r=await getReader(challengeUrls[0]);challengeSample={url:challengeUrls[0],status:r.status,text:r.text,error:null}}catch(error){challengeSample={url:challengeUrls[0],status:0,text:'',error:String(error)}}
+  try{const r=await getReader(challengeUrls[0],'html');challengeHtml={status:r.status,text:r.text,error:null}}catch(error){challengeHtml={status:0,text:'',error:String(error)}}
+  const uid=challengeUrls[0].match(/\/u\/(\d+)\//)?.[1];
+  if(uid){const profileUrl=`${ORIGIN}/u/${uid}`;try{const r=await getReader(profileUrl);profileSample={url:profileUrl,status:r.status,text:r.text,error:null}}catch(error){profileSample={url:profileUrl,status:0,text:'',error:String(error)}}}
 }
 const markdownLines=reader.text.split(/\r?\n/).filter(Boolean);
+const history=uniq([...profileSample.text.matchAll(/https:\/\/eremora\.com\/u\/\d+\/challenges\/dzone\/(\d+)/g)].map(m=>Number(m[1]))).sort((a,b)=>b-a);
 const payload={
   source:{url:TARGET,fetchedAt:new Date().toISOString(),directStatus:page.status,directFinalUrl:page.url,readerStatus:reader.status,readerFinalUrl:reader.url,readerError:reader.error},
   html:{length:page.text.length,scriptSrcs,nextInlineCount:nextData.length,candidates:apiCandidates(page.text),contexts:contexts(page.text)},
   reader:{length:reader.text.length,titleLine:markdownLines.find(x=>/^Title:/i.test(x))||null,urlLine:markdownLines.find(x=>/^URL Source:/i.test(x))||null,candidates:apiCandidates(reader.text),contexts:contexts(reader.text)},
-  challenge:{count:challengeUrls.length,firstUrl:challengeSample.url,firstStatus:challengeSample.status,firstLength:challengeSample.text.length,error:challengeSample.error,contexts:contexts(challengeSample.text,/(team|awakener|wheel|covenant|enlighten|level|wave|turn|score|damage|d zone|dzone)/ig,180)},
+  challenge:{count:challengeUrls.length,firstUrl:challengeSample.url,firstStatus:challengeSample.status,firstLength:challengeSample.text.length,htmlStatus:challengeHtml.status,htmlLength:challengeHtml.text.length,error:challengeSample.error,contexts:contexts(challengeSample.text,/(team|awakener|wheel|covenant|enlighten|level|wave|turn|score|damage|d zone|dzone|aa|oe)/ig,180)},
+  profile:{url:profileSample.url,status:profileSample.status,length:profileSample.text.length,error:profileSample.error,dzoneSeasonIds:history,contexts:contexts(profileSample.text,/(d-zone|dzone|season|challenge)/ig,120)},
   assets,
   candidates
 };
@@ -64,7 +69,8 @@ await mkdir(OUT_DIR,{recursive:true});
 await Promise.all([
   writeFile(OUT,JSON.stringify(payload,null,2)+'\n'),
   writeFile(`${OUT_DIR}/reader.md`,reader.text||''),
-  writeFile(`${OUT_DIR}/challenge-sample.md`,challengeSample.text||'')
+  writeFile(`${OUT_DIR}/challenge-sample.md`,challengeSample.text||''),
+  writeFile(`${OUT_DIR}/challenge-sample.html`,challengeHtml.text||''),
+  writeFile(`${OUT_DIR}/profile-sample.md`,profileSample.text||'')
 ]);
-console.log(`Eremora discovery: direct=${page.status}/${page.text.length} bytes, reader=${reader.status}/${reader.text.length} bytes, challenge=${challengeSample.status}/${challengeSample.text.length}, ${challengeUrls.length} clear links.`);
-for(const c of candidates.slice(0,120))console.log(`candidate: ${c}`);
+console.log(`Eremora discovery: direct=${page.status}/${page.text.length}, reader=${reader.status}/${reader.text.length}, challenge=${challengeSample.status}/${challengeSample.text.length}, html=${challengeHtml.status}/${challengeHtml.text.length}, profile=${profileSample.status}/${profileSample.text.length}, clearLinks=${challengeUrls.length}, seasons=${history.join(',')}.`);
