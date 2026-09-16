@@ -1,172 +1,169 @@
-import {mkdir, readFile, readdir, writeFile} from 'node:fs/promises';
+import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
+import {
+  decodeSvelteData,fetchViaJina,findDzoneActivities,findMediaBase,findProfileHeader,
+  fixMojibake,mediaUrl,num,sleep,uniq
+} from './eremora_sveltekit.mjs';
 
 const ORIGIN='https://eremora.com';
-const READER='https://r.jina.ai/';
 const OUT_DIR='data/morimens/eremora';
 const SEASON_DIR=path.join(OUT_DIR,'seasons');
 const STATS_DIR=path.join(OUT_DIR,'stats');
 const AWAKENERS_FILE='data/morimens/skeydb/awakeners.json';
-const MAX_RECORDS=Math.max(1,Number(process.env.EREMORA_MAX_RECORDS||50));
-const BATCH_SIZE=Math.max(1,Math.min(4,Number(process.env.EREMORA_BATCH_SIZE||3)));
-const BATCH_DELAY=Math.max(1500,Number(process.env.EREMORA_BATCH_DELAY_MS||3800));
-const UA='qdby-chinese-eremora-sync/1.0 (+https://github.com/Z769018860/qdby_chinese)';
+const MAX_RECORDS=Math.max(1,Number(process.env.EREMORA_MAX_RECORDS||60));
+const BATCH_SIZE=Math.max(1,Math.min(4,Number(process.env.EREMORA_BATCH_SIZE||2)));
+const BATCH_DELAY=Math.max(1200,Number(process.env.EREMORA_BATCH_DELAY_MS||2600));
+const UA='qdby-chinese-eremora-sync/2.0 (+https://github.com/Z769018860/qdby_chinese)';
 
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const uniq=xs=>[...new Set(xs.filter(x=>x!==null&&x!==undefined&&x!==''))];
-const num=v=>{const n=Number(String(v??'').replace(/,/g,''));return Number.isFinite(n)?n:null};
 async function readJson(file,fallback=null){try{return JSON.parse(await readFile(file,'utf8'))}catch{return fallback}}
 async function saveJson(file,data){await mkdir(path.dirname(file),{recursive:true});await writeFile(file,JSON.stringify(data,null,2)+'\n')}
+async function fetchText(target,retries=5){return (await fetchViaJina(target,{ua:UA,retries})).text}
 
-async function fetchReader(target,retries=5){
-  let last;
-  for(let i=0;i<retries;i++){
-    try{
-      const r=await fetch(`${READER}${target}`,{headers:{'user-agent':UA,'accept':'text/plain','x-engine':'browser','x-timeout':'40','x-wait-for-selector':'body'},redirect:'follow',signal:AbortSignal.timeout(50000)});
-      const text=await r.text();
-      if(r.ok&&text&&!/Target URL returned error 429/i.test(text))return text;
-      last=new Error(`${target}: HTTP ${r.status}${text?` (${text.slice(0,120).replace(/\s+/g,' ')})`:''}`);
-      if(r.status!==429&&r.status<500)break;
-    }catch(e){last=e}
-    if(i+1<retries)await sleep(Math.min(30000,3500*Math.pow(2,i)));
-  }
-  throw last;
-}
-
-function stripImages(s=''){return s.replace(/!\[[^\]]*\]\([^)]*\)/g,' ').replace(/\s+/g,' ').trim()}
 function parseLeaderboard(md=''){
+  const linkRe=/\[((?:\d+\s+)?(?:!\[[^\]]*\]\([^)]+\)\s*)*)([^\]]*?)\]\((https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+))\)/g;
   const out=[];
-  for(const raw of md.split(/\r?\n/)){
-    if(!/\/challenges\/dzone\/\d+\)/.test(raw)||!/~?UID\s+\d+/i.test(raw))continue;
-    const line=stripImages(raw);
-    const url=raw.match(/\]\((https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+))\)/)?.[1];
-    if(!url)continue;
-    const uid=url.match(/\/u\/(\d+)\//)?.[1]||null,seasonId=num(url.match(/\/dzone\/(\d+)/)?.[1]);
-    const visibleRank=num(line.match(/^\d+\.\s+\[(\d+)\s+/)?.[1]);
-    const score=num(line.match(/UID\s+\d+\s+([\d,]+)\]/i)?.[1]);
-    let player=line.match(/^\d+\.\s+\[\d+\s+(.+?)\s+UID\s+\d+/i)?.[1]?.trim()||'';
-    player=player.replace(/\s+/g,' ').trim();
+  for(const m of md.matchAll(linkRe)){
+    const prefix=(m[1]||'').trim(),label=fixMojibake((m[2]||'').replace(/\s+/g,' ').trim()),url=m[3],uid=m[4],seasonId=num(m[5]);
+    let rank=null,score=null,player='';
+    const medal=label.match(/^(\d+)(?:st|nd|rd|th)\s+(.+?)\s+([\d,]+)\s+Score$/i);
+    if(medal){rank=num(medal[1]);player=medal[2].trim();score=num(medal[3])}
+    else{
+      rank=num(prefix.match(/^(\d+)\b/)?.[1]);
+      score=num(label.match(new RegExp(`UID\\s+${uid}\\s+([\\d,]+)`, 'i'))?.[1]??label.match(/([\d,]+)\s+Score/i)?.[1]);
+      player=(label.match(new RegExp(`^(.+?)\\s+UID\\s+${uid}\\b`,'i'))?.[1]||label).trim();
+    }
     if(!uid||!seasonId)continue;
-    out.push({rank:visibleRank,player,uid,score,url,seasonId});
+    out.push({rank,player,uid,score,url,seasonId});
   }
-  const seen=new Set();return out.filter(x=>{const k=`${x.uid}:${x.seasonId}`;if(seen.has(k))return false;seen.add(k);return true}).slice(0,MAX_RECORDS);
-}
-
-function parseCharacterImage(line=''){
-  const m=line.match(/!\[Image\s+\d+:\s*([^\]]+)\]\((https:\/\/media\.eremora\.com\/[^)]+\/portraits\/Portrait_Minihead_Awaker_([A-Za-z0-9]+)_AF\.webp)\)(.*)$/i);
-  if(!m)return null;
-  return {name:m[1].replace(/^"|"$/g,''),image:m[2],ingameId:m[3],borrowed:/Borrowed support/i.test(m[4]||'')};
-}
-function parseTokenImage(line=''){
-  const m=line.match(/!\[Image\s+\d+:\s*([^\]]+)\]\((https:\/\/media\.eremora\.com\/[^)]+\/icon\/KeyToken_Skill_[^)]+)\)/i);
-  return m?{name:m[1],image:m[2]}:null;
-}
-function parseChallenge(md='',entry,byIngame){
-  const title=md.match(/^Title:\s*(.+)$/m)?.[1]?.trim()||entry.player||'';
-  const player=title.replace(/\s*\|\s*D-Zone Season\s+\d+.*$/i,'').trim()||entry.player||'';
-  const seasonId=num(md.match(/\bSeason\s+(\d+)\b/i)?.[1])??entry.seasonId;
-  const period=md.match(/\n([A-Z][a-z]{2}\s+\d{1,2},\s+\d{4}\s+[–-]\s+[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4})\n/)?.[1]||null;
-  const currentScore=num(md.match(/Current Score\s+([\d,]+)/i)?.[1]);
-  const leaderboardScore=num(md.match(/Leaderboard Score\s+\*\*([\d,]+)\*\*/i)?.[1]);
-  const waveMatches=[...md.matchAll(/^Wave\s+(\d+)\s*$/gm)];
-  const waves=[];
-  for(let wi=0;wi<waveMatches.length;wi++){
-    const wave=Number(waveMatches[wi][1]),start=waveMatches[wi].index,end=wi+1<waveMatches.length?waveMatches[wi+1].index:md.length;
-    const segment=md.slice(start,end),lines=segment.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-    const madness=num(segment.match(/Madness\s+([\d,]+)/i)?.[1]);
-    const teams=[];let team=null;
-    const flush=()=>{if(team){team.members=team.members.slice(0,8);teams.push(team);team=null}};
-    for(let i=0;i<lines.length;i++){
-      const line=lines[i];
-      if(line==='Clear'||line==='Extra Clear'){
-        flush();team={clearType:line==='Clear'?'clear':'extra',token:null,members:[]};continue;
-      }
-      if(!team)continue;
-      const token=parseTokenImage(line);if(token&&!team.token){team.token=token;continue}
-      const c=parseCharacterImage(line);if(!c)continue;
-      let level=null,progression=null;
-      for(let j=i+1;j<Math.min(lines.length,i+4);j++){
-        if(parseCharacterImage(lines[j])||lines[j]==='Clear'||lines[j]==='Extra Clear'||/^Wave\s+\d+/.test(lines[j]))break;
-        const lv=lines[j].match(/^Lv\.?\s*(\d+)(?:\s+([A-Z]{2,}))?/i);
-        if(lv){level=num(lv[1]);progression=lv[2]||null;break}
-      }
-      const rec=byIngame.get(String(c.ingameId).toUpperCase())||null;
-      team.members.push({...c,level,progression,enlightenLevel:null,skeydbId:rec?.id||null,canonicalName:rec?.name||c.name,wheels:[],covenant:null});
-    }
-    flush();
-    waves.push({wave,madness,teams});
+  if(!out.length){
+    for(const m of md.matchAll(/https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+)/g))out.push({rank:null,player:'',uid:m[1],score:null,url:m[0],seasonId:num(m[2])});
   }
-  return {rank:entry.rank,player,uid:entry.uid,score:entry.score,currentScore,leaderboardScore,url:entry.url,seasonId,period,waves,fetchedAt:new Date().toISOString()};
+  const seen=new Set();
+  return out.filter(x=>{const key=`${x.uid}:${x.seasonId}`;if(seen.has(key))return false;seen.add(key);return true})
+    .sort((a,b)=>(a.rank??9999)-(b.rank??9999)||(b.score??0)-(a.score??0)).slice(0,MAX_RECORDS);
 }
 
-function parseHistory(md='',uid){
-  const ids=[];
-  for(const m of md.matchAll(new RegExp(`https:\\/\\/eremora\\.com\\/u\\/${uid}\\/challenges\\/dzone\\/(\\d+)`,'g')))ids.push(Number(m[1]));
-  for(const m of md.matchAll(/D-Zone\s+Season\s+(\d+)/gi))ids.push(Number(m[1]));
-  return uniq(ids).sort((a,b)=>b-a);
+function normalizeIngameId(awaker={}){
+  const raw=awaker.res||String(awaker.mini||awaker.image||'').match(/Awaker_([A-Za-z0-9]+)_AF/i)?.[1]||'';
+  return String(raw).replace(/_AF$/i,'').toUpperCase()||null;
+}
+function normalizeAttrs(attrs=[]){return (Array.isArray(attrs)?attrs:[]).map(x=>({id:x?.id??null,name:fixMojibake(x?.name||''),value:x?.value??null,percentage:!!x?.percentage,rollQuality:x?.roll_quality??null})).filter(x=>x.id!=null||x.name)}
+function normalizeWheel(w,mediaBase){if(!w||typeof w!=='object')return null;return {id:w.id??null,name:fixMojibake(w.name||''),image:mediaUrl(mediaBase,w.image),rarity:w.rarity??null,slot:w.slot??null,level:num(w.level),enhanceLevel:num(w.enhance_level),breakLevel:num(w.break_level),attrs:normalizeAttrs(w.attrs)}}
+function normalizeTrinket(t,mediaBase){if(!t||typeof t!=='object')return null;return {id:t.id??null,name:fixMojibake(t.name||''),image:mediaUrl(mediaBase,t.image),rarity:t.rarity??null,slot:t.slot??null,level:num(t.level),enhanceLevel:num(t.enhance_level),breakLevel:num(t.break_level),suitId:t.suit_id??null,bound:!!t.bound,attrs:normalizeAttrs(t.attrs)}}
+function normalizeCovenant(s,mediaBase){
+  if(!s||typeof s!=='object')return null;
+  return {id:s.id??null,name:fixMojibake(s.name||''),image:mediaUrl(mediaBase,s.image),count:num(s.count),effects:(Array.isArray(s.effects)?s.effects:[]).map(e=>({pieces:num(e?.pieces),desc:fixMojibake(e?.desc||''),active:!!e?.active}))};
+}
+function enlightenmentInfo(list=[]){
+  const nodes=(Array.isArray(list)?list:[]).map(x=>({id:x?.id??null,name:fixMojibake(x?.name||''),lv:num(x?.lv),unlocked:!!x?.unlocked}));
+  const count=nodes.filter(x=>x.unlocked).length;
+  const milestone=['E0','E1','E2','E3','OE','AA'][Math.max(0,Math.min(5,count))];
+  return {nodes,count,milestone};
+}
+function normalizeMember(build,mediaBase,byIngame){
+  const a=build?.awaker||{},ingameId=normalizeIngameId(a),catalog=ingameId?byIngame.get(ingameId):null,en=enlightenmentInfo(build?.enlightenment);
+  const wheels=(Array.isArray(build?.weapons)?build.weapons:[]).map(x=>normalizeWheel(x,mediaBase)).filter(Boolean);
+  const trinkets=(Array.isArray(build?.trinkets)?build.trinkets:[]).map(x=>normalizeTrinket(x,mediaBase)).filter(Boolean);
+  const covenants=(Array.isArray(build?.suits)?build.suits:[]).map(x=>normalizeCovenant(x,mediaBase)).filter(Boolean);
+  return {
+    id:a.id??null,name:fixMojibake(a.name||catalog?.name||ingameId||'未知'),canonicalName:catalog?.name||fixMojibake(a.name||'')||ingameId||'未知',skeydbId:catalog?.id||null,ingameId,
+    image:mediaUrl(mediaBase,a.mini||a.image,{thumb:true})||catalog?.assets?.portrait||null,realm:fixMojibake(a.realm?.name||''),role:fixMojibake(a.role||''),rarity:fixMojibake(a.rarity||''),
+    level:num(build?.level),potencyLevel:num(build?.potency_level),breakLevel:num(build?.break_level),fighting:num(build?.fighting),potential:build?.potential??null,likeLevel:num(build?.like_level),
+    enlightenLevel:en.count,enlightenCount:en.count,enlightenMilestone:en.milestone,enlightenment:en.nodes,progression:en.milestone,
+    wheels,trinkets,covenants,covenant:covenants[0]||null,covenantScore:num(build?.covenant_score),borrowed:!!build?.borrowed,assistUid:build?.assist_uid??null,
+    stats:normalizeAttrs(build?.stats)
+  };
+}
+function normalizeToken(token,mediaBase){if(!token||typeof token!=='object')return null;return {id:token.id??null,name:fixMojibake(token.name||''),image:mediaUrl(mediaBase,token.image),rarity:fixMojibake(token.rarity||'')}}
+function normalizeActivity(activityItem,entry,decoded,byIngame){
+  const node=activityItem.node,activity=node.activity||{},mediaBase=findMediaBase(decoded),header=findProfileHeader(decoded)||{};
+  const stageRows=[];
+  for(const stageRec of node.stages||[]){
+    if(!stageRec?.team||!Array.isArray(stageRec.team.awakers))continue;
+    const stage=stageRec.stage||{},stageName=fixMojibake(stage.name||''),wave=num(stageName.match(/Wave\s*(\d+)/i)?.[1]);if(!wave)continue;
+    const members=stageRec.team.awakers.map(x=>normalizeMember(x,mediaBase,byIngame));
+    stageRows.push({wave,madness:num(stage.rec_level),stageId:stage.id??stageRec.team.stage_tid??null,stageName,score:num(stageRec.score),clearType:stageRec.extra?'extra':'clear',extraPass:!!stageRec.extra_pass,groupTid:stageRec.group_tid??null,token:normalizeToken(stageRec.team.keeper_skill,mediaBase),wid:stageRec.team.wid??null,battleUuid:stageRec.team.battle_uuid??null,members});
+  }
+  const wavesMap=new Map();
+  for(const s of stageRows){const w=wavesMap.get(s.wave)||{wave:s.wave,madness:s.madness,teams:[]};w.madness??=s.madness;w.teams.push({clearType:s.clearType,score:s.score,extraPass:s.extraPass,groupTid:s.groupTid,stageId:s.stageId,stageName:s.stageName,token:s.token,wid:s.wid,battleUuid:s.battleUuid,members:s.members});wavesMap.set(s.wave,w)}
+  const waves=[...wavesMap.values()].sort((a,b)=>a.wave-b.wave),computedScore=stageRows.reduce((sum,x)=>sum+(x.score||0),0);
+  const start=num(activity.start),end=num(activity.end),iso=d=>d?new Date(d*1000).toISOString().slice(0,10):null;
+  return {rank:entry?.rank??null,player:fixMojibake(header.name||entry?.player||''),uid:String(header.uid??entry?.uid??''),score:entry?.score??computedScore,currentScore:computedScore,leaderboardScore:entry?.score??null,url:entry?.url||`${ORIGIN}/u/${header.uid}/challenges/dzone/${activityItem.period}`,seasonId:activityItem.period,period:start&&end?`${iso(start)} – ${iso(end)}`:null,activity:{id:activity.id??null,tid:node.activity_tid??null,name:fixMojibake(activity.name||'Dissoluted Abyss'),start,end,maxScore:num(node.max_score),stageCount:num(node.stage_count)||stageRows.length},waves,fetchedAt:new Date().toISOString(),sourceTransport:'Eremora SvelteKit __data.json'};
+}
+function mergeRecord(oldRec,newRec){
+  if(!oldRec)return newRec;if(!newRec)return oldRec;
+  const oldTeams=(oldRec.waves||[]).reduce((n,w)=>n+(w.teams?.length||0),0),newTeams=(newRec.waves||[]).reduce((n,w)=>n+(w.teams?.length||0),0);
+  return newTeams>=oldTeams?{...oldRec,...newRec,rank:newRec.rank??oldRec.rank,score:newRec.score??oldRec.score}:{...newRec,...oldRec,rank:newRec.rank??oldRec.rank,score:newRec.score??oldRec.score};
 }
 
-function addCount(map,key,meta={}){if(!key)return;const cur=map.get(key)||{key,count:0,...meta};cur.count++;map.set(key,cur)}
+function addCount(map,key,meta={}){if(key===null||key===undefined||key==='')return;const cur=map.get(String(key))||{key:String(key),count:0,...meta};cur.count++;map.set(String(key),cur)}
 function ratesFromTeams(teams){
-  const char=new Map(),token=new Map(),wheel=new Map(),covenant=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0;
+  const char=new Map(),token=new Map(),wheel=new Map(),covenant=new Map(),byCharacter=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0;
   for(const team of teams){
-    const seenChars=new Set(),seenWheels=new Set(),seenCov=new Set();
-    addCount(token,team.token?.name,{name:team.token?.name});
+    const seenChars=new Set(),seenWheels=new Set(),seenCov=new Set();addCount(token,team.token?.id??team.token?.name,{id:team.token?.id??null,name:team.token?.name||null,image:team.token?.image||null});
     for(const m of team.members||[]){
-      memberSlots++;
-      const key=m.skeydbId||m.ingameId||m.name;if(key&&!seenChars.has(key)){seenChars.add(key);addCount(char,key,{id:m.skeydbId||null,ingameId:m.ingameId,name:m.canonicalName||m.name,image:m.image})}
-      for(const w of m.wheels||[]){wheelSlots++;const wk=w.id||w.name;if(wk&&!seenWheels.has(wk)){seenWheels.add(wk);addCount(wheel,wk,{id:w.id||null,name:w.name||wk})}}
-      if(m.covenant){covenantSlots++;const ck=m.covenant.id||m.covenant.name;if(ck&&!seenCov.has(ck)){seenCov.add(ck);addCount(covenant,ck,{id:m.covenant.id||null,name:m.covenant.name||ck})}}
+      memberSlots++;const ck=m.skeydbId||m.ingameId||m.id||m.name;
+      if(ck&&!seenChars.has(String(ck))){seenChars.add(String(ck));addCount(char,ck,{id:m.skeydbId||null,ingameId:m.ingameId||null,name:m.canonicalName||m.name,image:m.image||null})}
+      let bc=byCharacter.get(String(ck));if(!bc){bc={key:String(ck),id:m.skeydbId||null,ingameId:m.ingameId||null,name:m.canonicalName||m.name,image:m.image||null,appearances:0,levels:[],enlightenment:[],milestones:new Map(),wheels:new Map(),covenants:new Map()};byCharacter.set(String(ck),bc)}
+      bc.appearances++;if(m.level!=null)bc.levels.push(m.level);if(m.enlightenLevel!=null)bc.enlightenment.push(m.enlightenLevel);if(m.enlightenMilestone)addCount(bc.milestones,m.enlightenMilestone,{name:m.enlightenMilestone});
+      for(const w of m.wheels||[]){wheelSlots++;const wk=w.id??w.name;if(wk==null)continue;if(!seenWheels.has(String(wk))){seenWheels.add(String(wk));addCount(wheel,wk,{id:w.id??null,name:w.name||String(wk),image:w.image||null})}addCount(bc.wheels,wk,{id:w.id??null,name:w.name||String(wk),image:w.image||null})}
+      for(const c of m.covenants||[]){covenantSlots++;const sk=c.id??c.name;if(sk==null)continue;if(!seenCov.has(String(sk))){seenCov.add(String(sk));addCount(covenant,sk,{id:c.id??null,name:c.name||String(sk),image:c.image||null})}addCount(bc.covenants,sk,{id:c.id??null,name:c.name||String(sk),image:c.image||null})}
     }
   }
-  const n=teams.length||1;
-  const finish=map=>[...map.values()].map(x=>({...x,teamRate:x.count/n,teamRatePct:Number((x.count/n*100).toFixed(2))})).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key)));
-  return {teamCount:teams.length,memberSlots,wheelSlots,covenantSlots,characters:finish(char),tokens:finish(token),wheels:finish(wheel),covenants:finish(covenant)};
+  const n=teams.length||1,finish=map=>[...map.values()].map(x=>({...x,teamRate:x.count/n,teamRatePct:Number((x.count/n*100).toFixed(2))})).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN'));
+  const byCharOut=[...byCharacter.values()].map(x=>({key:x.key,id:x.id,ingameId:x.ingameId,name:x.name,image:x.image,appearances:x.appearances,level:{min:x.levels.length?Math.min(...x.levels):null,max:x.levels.length?Math.max(...x.levels):null,avg:x.levels.length?Number((x.levels.reduce((a,b)=>a+b,0)/x.levels.length).toFixed(2)):null},enlighten:{min:x.enlightenment.length?Math.min(...x.enlightenment):null,max:x.enlightenment.length?Math.max(...x.enlightenment):null,avg:x.enlightenment.length?Number((x.enlightenment.reduce((a,b)=>a+b,0)/x.enlightenment.length).toFixed(2)):null,milestones:[...x.milestones.values()].sort((a,b)=>b.count-a.count)},wheels:[...x.wheels.values()].map(v=>({...v,ratePct:Number((v.count/x.appearances*100).toFixed(2))})).sort((a,b)=>b.count-a.count),covenants:[...x.covenants.values()].map(v=>({...v,ratePct:Number((v.count/x.appearances*100).toFixed(2))})).sort((a,b)=>b.count-a.count)})).sort((a,b)=>b.appearances-a.appearances);
+  return {teamCount:teams.length,memberSlots,wheelSlots,covenantSlots,characters:finish(char),tokens:finish(token),wheels:finish(wheel),covenants:finish(covenant),byCharacter:byCharOut};
 }
 function buildStats(season){
   const allTeams=[],byWave={};
-  for(const rec of season.records){for(const wave of rec.waves||[]){byWave[wave.wave]??={all:[],clear:[],extra:[]};for(const team of wave.teams||[]){byWave[wave.wave].all.push(team);byWave[wave.wave][team.clearType]?.push(team);allTeams.push(team)}}}
+  for(const rec of season.records||[])for(const wave of rec.waves||[]){byWave[wave.wave]??={all:[],clear:[],extra:[]};for(const team of wave.teams||[]){byWave[wave.wave].all.push(team);if(team.clearType==='extra')byWave[wave.wave].extra.push(team);else byWave[wave.wave].clear.push(team);allTeams.push(team)}}
   const waves=Object.fromEntries(Object.entries(byWave).map(([w,g])=>[w,{all:ratesFromTeams(g.all),clear:ratesFromTeams(g.clear),extra:ratesFromTeams(g.extra)}]));
-  const all=ratesFromTeams(allTeams);
-  const equipAvailable=all.wheelSlots>0||all.covenantSlots>0;
-  return {seasonId:season.seasonId,generatedAt:new Date().toISOString(),recordCount:season.records.length,waves,all,equipment:{available:equipAvailable,wheelSlots:all.wheelSlots,covenantSlots:all.covenantSlots,note:equipAvailable?null:'Eremora 的公开渲染挑战页当前未直接展开角色配装弹层；命轮与密契字段保留在数据结构中，未取得原始字段时不会猜测或伪造出场率。'}};
+  const all=ratesFromTeams(allTeams),hasEnlighten=all.byCharacter.some(x=>x.enlighten.max!=null),equipAvailable=all.wheelSlots>0||all.covenantSlots>0;
+  return {seasonId:season.seasonId,generatedAt:new Date().toISOString(),recordCount:season.records.length,waves,all,equipment:{available:equipAvailable,wheelSlots:all.wheelSlots,covenantSlots:all.covenantSlots,note:equipAvailable?'命轮来自 Eremora 原始 weapons 字段；密契来自 trinkets / suits 字段。':'本期原始记录没有可统计的命轮或密契字段。'},coverage:{enlightenment:hasEnlighten,wheels:all.wheelSlots>0,covenants:all.covenantSlots>0}};
 }
 
 await mkdir(SEASON_DIR,{recursive:true});await mkdir(STATS_DIR,{recursive:true});
-const awakeners=await readJson(AWAKENERS_FILE,{records:[]});
-const byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
-let leaderboardMd;
-try{leaderboardMd=await fetchReader(`${ORIGIN}/leaderboard/abyss`)}catch{leaderboardMd=await fetchReader(`${ORIGIN}/leaderboard`)}
-const entries=parseLeaderboard(leaderboardMd);
-if(!entries.length)throw new Error('No D-Zone leaderboard records found in the rendered Eremora page.');
-const currentSeason=Math.max(...entries.map(x=>x.seasonId));
-const currentEntries=entries.filter(x=>x.seasonId===currentSeason);
-const oldSeason=await readJson(path.join(SEASON_DIR,`${currentSeason}.json`),{records:[]});
-const oldByUid=new Map((oldSeason.records||[]).map(x=>[String(x.uid),x]));
-const records=[];const failures=[];
+const awakeners=await readJson(AWAKENERS_FILE,{records:[]}),byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
+let leaderboardMd;try{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard/abyss`)}catch{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard`)}
+const entries=parseLeaderboard(leaderboardMd);if(!entries.length)throw new Error('No D-Zone leaderboard records found.');
+const currentSeason=Math.max(...entries.map(x=>x.seasonId)),currentEntries=entries.filter(x=>x.seasonId===currentSeason);
+const oldCurrent=await readJson(path.join(SEASON_DIR,`${currentSeason}.json`),{records:[]}),oldByUid=new Map((oldCurrent.records||[]).map(x=>[String(x.uid),x]));
+const currentRecords=[],failures=[],historyBySeason=new Map();
 for(let i=0;i<currentEntries.length;i+=BATCH_SIZE){
-  const batch=currentEntries.slice(i,i+BATCH_SIZE);
-  const results=await Promise.all(batch.map(async entry=>{
-    try{return {ok:true,record:parseChallenge(await fetchReader(entry.url),entry,byIngame)}}catch(error){return {ok:false,entry,error:String(error)}}
+  const batch=currentEntries.slice(i,i+BATCH_SIZE),results=await Promise.all(batch.map(async entry=>{
+    try{
+      const detailUrl=`${entry.url}/__data.json`,decoded=decodeSvelteData(await fetchText(detailUrl));
+      const activities=findDzoneActivities(decoded),currentActivity=activities.find(x=>x.period===entry.seasonId);
+      if(!currentActivity)throw new Error(`Season ${entry.seasonId} activity not found in ${detailUrl}`);
+      const current=normalizeActivity(currentActivity,entry,decoded,byIngame),history=[];
+      for(const a of activities)if(a.period!==entry.seasonId){const r=normalizeActivity(a,{...entry,rank:null,score:null,url:`${ORIGIN}/u/${entry.uid}/challenges/dzone/${a.period}`,seasonId:a.period},decoded,byIngame);if(r.waves.length)history.push(r)}
+      return {ok:true,current,history,activityPeriods:activities.map(x=>x.period)};
+    }catch(error){return {ok:false,entry,error:String(error)}}
   }));
   for(const r of results){
-    if(r.ok)records.push(r.record);else{failures.push({uid:r.entry.uid,url:r.entry.url,error:r.error});const cached=oldByUid.get(String(r.entry.uid));if(cached)records.push(cached)}
+    if(r.ok){currentRecords.push(r.current);for(const h of r.history){if(!historyBySeason.has(h.seasonId))historyBySeason.set(h.seasonId,new Map());historyBySeason.get(h.seasonId).set(String(h.uid),h)}}
+    else{failures.push({uid:r.entry.uid,url:r.entry.url,error:r.error});const cached=oldByUid.get(String(r.entry.uid));if(cached)currentRecords.push(cached)}
   }
   if(i+BATCH_SIZE<currentEntries.length)await sleep(BATCH_DELAY);
 }
-records.sort((a,b)=>(a.rank??999)-(b.rank??999)||(b.score??0)-(a.score??0));
-const period=records.find(x=>x.period)?.period||null;
-const season={source:{site:'Eremora',url:`${ORIGIN}/leaderboard`,transport:'public rendered pages via Jina Reader',syncedAt:new Date().toISOString()},seasonId:currentSeason,period,leaderboardEntryCount:currentEntries.length,recordCount:records.length,complete:failures.length===0&&records.length===currentEntries.length,failures,records};
-const stats=buildStats(season);
-await saveJson(path.join(SEASON_DIR,`${currentSeason}.json`),season);await saveJson(path.join(STATS_DIR,`${currentSeason}.json`),stats);
+currentRecords.sort((a,b)=>(a.rank??9999)-(b.rank??9999)||(b.score??0)-(a.score??0));
+const currentPeriod=currentRecords.find(x=>x.period)?.period||null,currentComplete=failures.length===0&&currentRecords.length===currentEntries.length&&currentEntries.length>=Math.min(50,MAX_RECORDS);
+const currentSeasonDoc={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,transport:'Eremora SvelteKit __data.json server-load stream via Jina Reader',syncedAt:new Date().toISOString()},seasonId:currentSeason,period:currentPeriod,leaderboardEntryCount:currentEntries.length,recordCount:currentRecords.length,complete:currentComplete,coverageMode:'current-leaderboard',failures,records:currentRecords};
+await saveJson(path.join(SEASON_DIR,`${currentSeason}.json`),currentSeasonDoc);await saveJson(path.join(STATS_DIR,`${currentSeason}.json`),buildStats(currentSeasonDoc));
 
-let historyIds=[];
-try{historyIds=parseHistory(await fetchReader(`${ORIGIN}/u/${currentEntries[0].uid}/challenges/dzone`),currentEntries[0].uid)}catch(error){console.warn('History discovery failed:',String(error))}
-const seasonFiles=(await readdir(SEASON_DIR)).filter(x=>/^\d+\.json$/.test(x));
-const snapshots=[];
-for(const f of seasonFiles){const s=await readJson(path.join(SEASON_DIR,f));if(s)snapshots.push({seasonId:s.seasonId,period:s.period||null,recordCount:s.recordCount||0,leaderboardEntryCount:s.leaderboardEntryCount||0,complete:!!s.complete,path:`data/morimens/eremora/seasons/${s.seasonId}.json`,statsPath:`data/morimens/eremora/stats/${s.seasonId}.json`})}
+for(const [seasonId,map] of historyBySeason){
+  if(seasonId===currentSeason)continue;const file=path.join(SEASON_DIR,`${seasonId}.json`),old=await readJson(file,{records:[]}),merged=new Map((old.records||[]).map(x=>[String(x.uid),x]));
+  for(const [uid,rec] of map)merged.set(uid,mergeRecord(merged.get(uid),rec));
+  const records=[...merged.values()].sort((a,b)=>(b.score??0)-(a.score??0)||String(a.player).localeCompare(String(b.player),'zh-CN'));
+  const doc={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,transport:'historical activities exposed by Eremora profile challenge __data.json',syncedAt:new Date().toISOString()},seasonId,period:records.find(x=>x.period)?.period||old.period||null,leaderboardEntryCount:old.leaderboardEntryCount||null,recordCount:records.length,complete:!!old.complete,coverageMode:old.complete?'archived-leaderboard':'profile-history-partial',failures:old.failures||[],records};
+  await saveJson(file,doc);await saveJson(path.join(STATS_DIR,`${seasonId}.json`),buildStats(doc));
+}
+
+const seasonFiles=(await readdir(SEASON_DIR)).filter(x=>/^\d+\.json$/.test(x)),snapshots=[];
+for(const f of seasonFiles){const s=await readJson(path.join(SEASON_DIR,f));if(s)snapshots.push({seasonId:s.seasonId,period:s.period||null,recordCount:s.recordCount||0,leaderboardEntryCount:s.leaderboardEntryCount??null,complete:!!s.complete,coverageMode:s.coverageMode||'snapshot',path:`data/morimens/eremora/seasons/${s.seasonId}.json`,statsPath:`data/morimens/eremora/stats/${s.seasonId}.json`})}
 snapshots.sort((a,b)=>b.seasonId-a.seasonId);
-const discovered=uniq([currentSeason,...historyIds,...snapshots.map(x=>x.seasonId)]).sort((a,b)=>b-a);
-const manifest={source:{site:'Eremora',url:`${ORIGIN}/leaderboard`,syncedAt:new Date().toISOString(),transport:'public rendered pages via Jina Reader'},currentSeason,availableSeasons:snapshots,discoveredSeasonIds:discovered,pendingBackfillSeasonIds:discovered.filter(id=>!snapshots.some(s=>s.seasonId===id)),current:{leaderboardEntries:currentEntries.length,records:records.length,complete:season.complete,failures:failures.length},fieldCoverage:{character:true,wave:true,level:true,progressionLabel:true,enlightenLevel:false,wheels:stats.equipment.available,covenants:stats.equipment.available},notes:['角色、波次、等级与页面显示的 AA/OE 状态直接来自 Eremora 公开挑战记录。','数值启灵等级、命轮与密契仅在数据源公开渲染到具体记录时写入；当前不会用角色展示页的现时配装冒充历史挑战配装。','历史期次由已保存快照永久保留；发现到但尚未完整回填的期次列在 pendingBackfillSeasonIds。']};
+const currentStats=await readJson(path.join(STATS_DIR,`${currentSeason}.json`),{}),discovered=uniq([currentSeason,...historyBySeason.keys(),...snapshots.map(x=>x.seasonId)]).map(Number).sort((a,b)=>b-a);
+const fieldCoverage={character:true,wave:true,level:true,progressionLabel:true,enlightenLevel:!!currentStats.coverage?.enlightenment,wheels:!!currentStats.coverage?.wheels,covenants:!!currentStats.coverage?.covenants};
+const manifest={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailEndpointTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,syncedAt:new Date().toISOString(),transport:'Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page'},currentSeason,availableSeasons:snapshots,discoveredSeasonIds:discovered,pendingBackfillSeasonIds:snapshots.filter(x=>!x.complete).map(x=>x.seasonId),current:{leaderboardEntries:currentEntries.length,records:currentRecords.length,complete:currentSeasonDoc.complete,failures:failures.length},fieldCoverage,notes:['当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。','命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。','历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。']};
 await saveJson(path.join(OUT_DIR,'manifest.json'),manifest);
-console.log(`Eremora D-Zone season ${currentSeason}: ${records.length}/${currentEntries.length} records, ${Object.keys(stats.waves).length} waves, failures=${failures.length}; discovered seasons=${discovered.join(',')}.`);
+console.log(`Eremora D-Zone season ${currentSeason}: leaderboard=${currentEntries.length}, records=${currentRecords.length}, failures=${failures.length}, complete=${currentSeasonDoc.complete}; raw fields: enlight=${fieldCoverage.enlightenLevel}, wheels=${fieldCoverage.wheels}, covenants=${fieldCoverage.covenants}; seasons=${snapshots.map(x=>`${x.seasonId}:${x.recordCount}${x.complete?'✓':'~'}`).join(', ')}`);
