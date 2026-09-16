@@ -3,14 +3,16 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "Jina Reader",
-    "syncedAt": "2026-09-16T16:00:28.943Z",
+    "syncedAt": "2026-09-16T16:11:57.361Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "status": "ok",
   "counts": {
-    "pages": 55,
+    "targets": 62,
+    "pages": 62,
     "mapped": 1,
-    "failed": 11
+    "unmapped": 61,
+    "failed": 0
   },
   "paths": {
     "zhCN": "data/morimens/huiji/zh-CN.json"
