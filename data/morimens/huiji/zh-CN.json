@@ -2,142 +2,17 @@
   "source": {
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
-    "transport": "MediaWiki API / Jina Reader + stable local identity map",
-    "syncedAt": "2026-09-16T17:18:47.711Z",
+    "transport": "MediaWiki API / Jina Reader + persistent verified cache + stable local identity map",
+    "syncedAt": "2026-09-16T17:21:19.089Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 60,
   "mapped": 60,
-  "enriched": 35,
-  "jinaRecords": 34,
-  "voiceRecords": 35,
-  "failed": [
-    {
-      "title": "珈伦",
-      "skeydbId": "awakener-0026",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%8F%88%E4%BC%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6: HTTP 429"
-    },
-    {
-      "title": "萝坦",
-      "skeydbId": "awakener-0031",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: HTTP 429"
-    },
-    {
-      "title": "茉夏",
-      "skeydbId": "awakener-0033",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8C%89%E5%A4%8F&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F: HTTP 429"
-    },
-    {
-      "title": "诞妄·墨菲",
-      "skeydbId": "awakener-0035",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2: HTTP 429"
-    },
-    {
-      "title": "诺缔拉",
-      "skeydbId": "awakener-0036",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%AF%BA%E7%BC%94%E6%8B%89&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89: HTTP 429"
-    },
-    {
-      "title": "奥吉尔",
-      "skeydbId": "awakener-0038",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A5%A5%E5%90%89%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94: HTTP 429"
-    },
-    {
-      "title": "潘狄娅",
-      "skeydbId": "awakener-0039",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%BD%98%E7%8B%84%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85: HTTP 429"
-    },
-    {
-      "title": "皮克曼",
-      "skeydbId": "awakener-0040",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: HTTP 429"
-    },
-    {
-      "title": "波吕克斯",
-      "skeydbId": "awakener-0041",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF: HTTP 429"
-    },
-    {
-      "title": "拉蒙娜",
-      "skeydbId": "awakener-0042",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%8B%89%E8%92%99%E5%A8%9C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C: HTTP 429"
-    },
-    {
-      "title": "莱克",
-      "skeydbId": "awakener-0043",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: HTTP 429"
-    },
-    {
-      "title": "萨尔瓦多",
-      "skeydbId": "awakener-0044",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A: HTTP 429"
-    },
-    {
-      "title": "索蕾尔",
-      "skeydbId": "awakener-0046",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: HTTP 429"
-    },
-    {
-      "title": "塔薇",
-      "skeydbId": "awakener-0047",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A1%94%E8%96%87&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87: HTTP 429"
-    },
-    {
-      "title": "汀克特",
-      "skeydbId": "awakener-0049",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B1%80%E5%85%8B%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9: HTTP 429"
-    },
-    {
-      "title": "尤乌哈希",
-      "skeydbId": "awakener-0051",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C: HTTP 429"
-    },
-    {
-      "title": "旺达",
-      "skeydbId": "awakener-0052",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%97%BA%E8%BE%BE&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE: HTTP 429"
-    },
-    {
-      "title": "温柯尔",
-      "skeydbId": "awakener-0053",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B8%A9%E6%9F%AF%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94: HTTP 429"
-    },
-    {
-      "title": "徐",
-      "skeydbId": "awakener-0054",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: HTTP 429"
-    },
-    {
-      "title": "莫丝",
-      "skeydbId": "awakener-0055",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: HTTP 429"
-    },
-    {
-      "title": "阿拉克涅",
-      "skeydbId": "awakener-0056",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85: HTTP 429"
-    },
-    {
-      "title": "沙耶",
-      "skeydbId": "awakener-0057",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B2%99%E8%80%B6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6: HTTP 429"
-    },
-    {
-      "title": "庞托斯",
-      "skeydbId": "awakener-0058",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: HTTP 429"
-    },
-    {
-      "title": "蚀灭·萝坦",
-      "skeydbId": "awakener-0059",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6: HTTP 429"
-    },
-    {
-      "title": "卡拉布",
-      "skeydbId": "awakener-0060",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: HTTP 429"
-    }
-  ],
+  "enriched": 60,
+  "jinaRecords": 58,
+  "cachedRecords": 35,
+  "voiceRecords": 59,
+  "failed": [],
   "unmapped": [],
   "records": [
     {
@@ -162,7 +37,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0002",
@@ -186,7 +61,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%A0%BC%E9%87%8C%E5%B8%95"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0003",
@@ -210,7 +85,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%BB%A7%E4%B8%9D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0004",
@@ -234,7 +109,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0005",
@@ -258,7 +133,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0006",
@@ -461,7 +336,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%87%AF%E5%88%BB%E6%96%AF"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0007",
@@ -485,7 +360,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0008",
@@ -509,7 +384,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0009",
@@ -715,7 +590,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0010",
@@ -739,7 +614,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0011",
@@ -763,7 +638,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0012",
@@ -806,7 +681,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0014",
@@ -830,7 +705,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9D%9C%E5%8B%92%E8%B5%9B%E5%9B%A0"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0015",
@@ -970,7 +845,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%91%9E%E5%8D%A1"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0016",
@@ -994,7 +869,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8F%B2%E8%8C%B5%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0017",
@@ -1018,7 +893,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0018",
@@ -1042,7 +917,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%86%94%E6%AF%81%C2%B7%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0019",
@@ -1066,7 +941,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A1%80%E9%93%BE%C2%B7%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0020",
@@ -1090,7 +965,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0021",
@@ -1114,7 +989,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0022",
@@ -1138,7 +1013,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%93%88%E5%A7%86%E6%9E%97"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0023",
@@ -1162,7 +1037,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0024",
@@ -1186,7 +1061,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0025",
@@ -1389,7 +1264,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0026",
@@ -1401,14 +1276,19 @@
         "name": "珈伦",
         "englishName": "Karen"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%8F%88%E4%BC%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0027",
@@ -1775,7 +1655,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%87%AF%E8%92%82%E5%8F%A4%E6%8B%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0028",
@@ -1799,7 +1679,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0029",
@@ -1823,7 +1703,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0030",
@@ -1847,7 +1727,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0031",
@@ -1859,14 +1739,19 @@
         "name": "萝坦",
         "englishName": "Lotan"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0032",
@@ -1890,7 +1775,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0033",
@@ -1902,14 +1787,19 @@
         "name": "茉夏",
         "englishName": "Mouchette"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8C%89%E5%A4%8F&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0034",
@@ -2115,7 +2005,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0035",
@@ -2127,14 +2017,19 @@
         "name": "诞妄·墨菲",
         "englishName": "Murphy: Fauxborn"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0036",
@@ -2146,14 +2041,198 @@
         "name": "诺缔拉",
         "englishName": "Nautila"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "空白的过去",
+              "「基础打击」获得等同于 15% 攻击力的 反击（效果随「基础打击」的等级提高，满级时为 30%）。"
+            ],
+            [
+              "",
+              "缺失的螺母",
+              "「高热区禁入」获得 预备1。"
+            ],
+            [
+              "",
+              "模糊的梦想",
+              "「整装待发」触发 反击 倍率 +50%，释放后自身免疫 脆弱、 虚弱、 易伤1 回合。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%AF%BA%E7%BC%94%E6%8B%89&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0037",
@@ -2375,7 +2454,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0038",
@@ -2387,14 +2466,206 @@
         "name": "奥吉尔",
         "englishName": "Ogier"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "形态切换 本源降临形态拥有以下特性︰ ● 本源降临是唤醒体的第二形态。",
+          "content": "文件:负誓·奥吉尔无底.png"
+        },
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "牺牲，以全大义",
+              "「不定壁垒」获得的护盾提高 43%，获得等同于攻击力 4% 的 力量（效果随「不定壁垒」的等级提高，满级时为 8%）。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "13 1300"
+            ],
+            [
+              "Lv.10→20",
+              "68 6800"
+            ],
+            [
+              "Lv.20→30",
+              "174 17400"
+            ],
+            [
+              "Lv.30→40",
+              "261 26100"
+            ],
+            [
+              "Lv.40→50",
+              "347 34700"
+            ],
+            [
+              "Lv.50→60",
+              "434 43400"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "6 2100",
+              "2→3",
+              "6 8100",
+              "3→4",
+              "1 10 16500"
+            ],
+            [
+              "4→5",
+              "2 6 29700",
+              "5→6",
+              "1 3 12 59400"
+            ],
+            [
+              "1→2",
+              "12 4200",
+              "2→3",
+              "12 16200",
+              "3→4",
+              "1 20 33000"
+            ],
+            [
+              "4→5",
+              "2 12 59400",
+              "5→6",
+              "1 3 24 118800"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A5%A5%E5%90%89%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0039",
@@ -2406,14 +2677,217 @@
         "name": "潘狄娅",
         "englishName": "Pandia"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "享受疼痛",
+              "「基础打击」获得 50% 伤害的临时 反击。「基础防御」获得等同于攻击力 10% 的 反击（效果随「基础防御」的等级提高，满级时为 20%）。"
+            ],
+            [
+              "",
+              "欲火焚身",
+              "「灼燃蜡滴之欲」获得 20 点狂气。"
+            ]
+          ]
+        },
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "你不乖",
+              "「蜜糖色悲惨幻象」基础伤害翻倍，并获得等同于攻击力 15% 的 反击（效果随「蜜糖色悲惨幻象」的等级提高，满级时为 30%）。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ],
+            [
+              "1→2",
+              "1 18 6300",
+              "2→3",
+              "2 18 24300",
+              "3→4",
+              "1 3 30 49500"
+            ],
+            [
+              "4→5",
+              "1 4 18 89100",
+              "5→6",
+              "1 5 36 178200"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%BD%98%E7%8B%84%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0040",
@@ -2425,14 +2899,19 @@
         "name": "皮克曼",
         "englishName": "Pickman"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0041",
@@ -2444,14 +2923,19 @@
         "name": "波吕克斯",
         "englishName": "Pollux"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0042",
@@ -2463,14 +2947,198 @@
         "name": "拉蒙娜",
         "englishName": "Ramona"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "懵懂的启程",
+              "「女王之剑」伤害次数 +1，每次造成伤害时，获得等同于攻击力 2.5% 的临时 力量（效果随「女王之剑」的等级提升，满级时为 5%）。「女王之剑」弃掉后，获得和打出相等的银钥能量。"
+            ],
+            [
+              "",
+              "未知的期待",
+              "「攻势推演」所抽的牌每有 1点算力消耗，额外获得 35 点银钥充能。"
+            ],
+            [
+              "",
+              "珍贵的羁绊",
+              "释放钥令后，拉蒙娜临时暴击率提高 50%。「世界演绎法」将 1 张 灵感 洗入抽牌推。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "13 1300"
+            ],
+            [
+              "Lv.10→20",
+              "68 6800"
+            ],
+            [
+              "Lv.20→30",
+              "174 17400"
+            ],
+            [
+              "Lv.30→40",
+              "261 26100"
+            ],
+            [
+              "Lv.40→50",
+              "347 34700"
+            ],
+            [
+              "Lv.50→60",
+              "434 43400"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "6 2100",
+              "2→3",
+              "6 8100",
+              "3→4",
+              "1 10 16500"
+            ],
+            [
+              "4→5",
+              "2 6 29700",
+              "5→6",
+              "1 3 12 59400"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%8B%89%E8%92%99%E5%A8%9C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0043",
@@ -2482,14 +3150,19 @@
         "name": "莱克",
         "englishName": "Ryker"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0044",
@@ -2501,14 +3174,19 @@
         "name": "萨尔瓦多",
         "englishName": "Salvador"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0045",
@@ -2724,7 +3402,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0046",
@@ -2736,14 +3414,19 @@
         "name": "索蕾尔",
         "englishName": "Sorel"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0047",
@@ -2755,14 +3438,19 @@
         "name": "塔薇",
         "englishName": "Tawil"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A1%94%E8%96%87&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0048",
@@ -3769,7 +4457,7 @@
         "mode": "mediawiki-api",
         "endpoint": "https://cdn.huijiwiki.com/morimens/api.php"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0049",
@@ -3781,14 +4469,19 @@
         "name": "汀克特",
         "englishName": "Tinct"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B1%80%E5%85%8B%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0050",
@@ -3994,7 +4687,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0051",
@@ -4006,14 +4699,19 @@
         "name": "尤乌哈希",
         "englishName": "Uvhash"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0052",
@@ -4025,14 +4723,19 @@
         "name": "旺达",
         "englishName": "Wanda"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%97%BA%E8%BE%BE&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0053",
@@ -4055,7 +4758,7 @@
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94",
         "mode": "static-identity"
       },
-      "syncStatus": "fallback",
+      "syncStatus": "cached",
       "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B8%A9%E6%9F%AF%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94: HTTP 429"
     },
     {
@@ -4068,14 +4771,19 @@
         "name": "徐",
         "englishName": "Xu"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0055",
@@ -4087,14 +4795,19 @@
         "name": "莫丝",
         "englishName": "Vortice"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0056",
@@ -4106,14 +4819,143 @@
         "name": "阿拉克涅",
         "englishName": "Arachne"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        },
+        {
+          "title": "唤醒",
+          "content": "命运的舞台之上，众生在各自的因果中静候登场，万般悲欢在齿轮转动间悄然成章……帷幕已启，守密人，你我之间的故事，至此便要开始了。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "又一根丝线，清晰了。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "命运的低语，更近了。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "无尽的命运之网，我已窥见全貌。"
+        },
+        {
+          "title": "启灵·远眺",
+          "content": "帷幕已为你敞开，命运的剧本静待开启。告诉我，您更愿步入哪一重命定的轨迹？是悲恸的终局，抑或欢愉的序章？ （启灵等级达到1解锁）"
+        },
+        {
+          "title": "启灵·凝视",
+          "content": "若您钟情于喜剧，《仲夏夜之梦》是不错的选择。我尤爱迫克那些狡黠的谵语，精灵的嬉笑间，总藏着命运不经意泄露的密语。 （启灵等级达到2解锁）"
+        },
+        {
+          "title": "启灵·深思",
+          "content": "若您愿步入悲剧的殿堂，请容我为您呈上《安提戈涅》。于神律与尘世的对峙间，她每一步都踏在命运纺就的丝线上，直至踏入石墓深沉的阴影。正因这桎梏不可挣脱，她那渺小身躯里迸发的意志，才如长夜中的孤焰般灼目。 （启灵等级达到3解锁）"
+        },
+        {
+          "title": "启灵·体悟",
+          "content": "我本以为世间再无选择能令我惊讶……您对戏剧的品味，让我印象深刻。 （启灵等级达到7解锁）"
+        },
+        {
+          "title": "启灵·构筑",
+          "content": "承蒙您一路相伴于幕起幕落之间。未来，我定不负所期，为您奉上更动人心魄的戏剧之夜。 （启灵等级达到11解锁）"
+        },
+        {
+          "title": "启灵·绽放",
+          "content": "凡是过往，皆为序章。你我的新篇，正等待着您的书写，守密人。 （启灵等级达到15解锁）"
+        },
+        {
+          "title": "同调率·一",
+          "content": "命运的丝线总在暗处连接……您惊动了这根丝线，也惊动了我。 （同调率等级到达2解锁）"
+        },
+        {
+          "title": "同调率·二",
+          "content": "命运之线本在我掌心流转有序……直到您的出现，让它们的轨迹生出未曾预料的涟漪。 （同调率等级到达4解锁）"
+        },
+        {
+          "title": "同调率·三",
+          "content": "剧院新排了一出浪漫喜剧，我已在命运的席位上，为您留了一隅空座。我将在每个命运交织的长夜里，静候与你相逢的星光。 （同调率等级到达6解锁）"
+        },
+        {
+          "title": "同调率·四",
+          "content": "如果您允许……我想为您编织一幕只属于您和我的双人剧。无需观众，不必彩排……我只是期待着，当您站在光下时，那根我无法看清的丝线，将有着怎样令人惊叹的跃动。 （同调率等级到达8解锁）"
+        },
+        {
+          "title": "同调率·五",
+          "content": "你与我，那两根无法看清的命运丝线，早已紧紧相缠、无分彼此，编织成囚笼与道路。我无法看清囚笼的边际，也无法看清道路的终点。这正是这段故事里，最令人着迷的部分。 （同调率等级到达10解锁）"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "如此执着于拨动命运的纺线……您，也想要窥见属于自己的篇章？"
+        },
+        {
+          "title": "闲话·关于索蕾尔",
+          "content": "她常来我的剧院落座……可我知道，她并非为戏而来，而是借这方舞台，映照自己的格调。然而那样精湛的演技，若只作看客，未免可惜。它本该在聚光灯下绽放，而非隐于观众席的暗影之中。 （获得唤醒体「索蕾尔」后解锁）"
+        },
+        {
+          "title": "闲话·关于莉兹",
+          "content": "不幸的舞者啊，我目睹了她的舞步。那是一种迫近毁灭的美，每一转旋都燃起绿色的焰火，试图将命运之线烧毁，可惜终将被那些丝线割裂出最凄艳的图景。若有机会，我愿为她写一出独属于她的舞剧。 （获得唤醒体「莉兹」后解锁）"
+        },
+        {
+          "title": "闲话·关于哈姆林",
+          "content": "我曾听过他的演奏，那美妙的旋律，让人灵魂震颤……或许，该邀请他为我的新戏谱一曲命运的交响？ （获得唤醒体「哈姆林」后解锁）"
+        },
+        {
+          "title": "闲话·关于汀克特",
+          "content": "如此有天赋的歌者，天赐的嗓音，清澈又灼热，仿佛源自命运之声……若能请来我的剧院，想必即使是最挑剔的观众也会感到惊喜。 （获得唤醒体「汀克特」后解锁）"
+        },
+        {
+          "title": "闲话·关于塔薇",
+          "content": "纵是洞悉万象的观者，亦不过是自身剧本中笨拙的伶人。执掌命运之网，却终被纺线所缚，在这命定的处境里，我们走在不同的道路上，但都从未放弃过那些徒劳的追寻。愚鲁也好，痴妄也罢，我是这样，她亦如是。 （获得唤醒体「塔薇」后解锁）"
+        },
+        {
+          "title": "闲话·关于危机",
+          "content": "您所见的悲剧，不过是万千可能性的其中一瞥。掀开命运的帷幕，我看到了那片漆黑的舞台。灯灭，人散，万象归于混沌之渊。然而……一切并非终局。我的意志尚在，足以支撑这徒劳的苦役，等待下一束辉光点燃。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "纺线之上，我窥见彩虹流转万端的光色——它勾连起无尽网罗，铺展无垠世界，延展出无限之可能，最终织就世间最瑰丽斑斓的图样。无论神明或凡人，英雄或恶徒，都被那一道纤细的纺线操纵，在命运的注视下义无反顾地奔向属于自己的结局。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "我的确沉醉于这日复一日的纺织……在重复而静谧的牵引中，预见万千故事的始终，旁观所有命运的落幕，恍若已超然于命运之外。然而，命运之网避无可避，仅作旁观终究寂寥。于是，我步入剧院，在扮演之中，亲尝那些我亲手纺出、却未曾亲历的悲欢。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "我始终不愿看到一成不变的样板戏。走进剧院的意义，本就在于亲历那无法被复刻的现场，若每一场都只是机械的重复，那舞台便成了精致的牢笼，而观剧，也沦为对已知结局的倦怠巡礼。那样的演出，再华丽，也失去了灵魂。您是怎样看待的呢？"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "世人的命运皆由丝线牵引……可是您的命运，是我无法读懂的剧本。我期待着，您会为这个世界带来怎样精彩的即兴表演？"
+        },
+        {
+          "title": "死亡",
+          "content": "……这就是命运注定的结局。"
+        },
+        {
+          "title": "闲话·关于茉夏",
+          "content": "你的双眼尚被迷雾所蔽，自然不会知晓责任的重量。"
+        },
+        {
+          "title": "闲话·关于波吕克斯",
+          "content": "被命运之网束缚的鸟儿，将以怎样的姿态重新飞翔？"
+        },
+        {
+          "title": "闲话·关于莫丝",
+          "content": "被命运囚禁的笨拙伶人……你与我，又有什么本质的区别？"
+        },
+        {
+          "title": "闲话·关于萨尔瓦多",
+          "content": "主动拥抱命运的苦难……你选择了人迹罕至的走向。"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0057",
@@ -4125,14 +4967,19 @@
         "name": "沙耶",
         "englishName": "Saya"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B2%99%E8%80%B6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0058",
@@ -4144,14 +4991,19 @@
         "name": "庞托斯",
         "englishName": "Pontos"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0059",
@@ -4163,14 +5015,19 @@
         "name": "蚀灭·萝坦",
         "englishName": "Lotan: Cetarchon"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6: HTTP 429"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0060",
@@ -4182,14 +5039,19 @@
         "name": "卡拉布",
         "englishName": "Caraboo"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: HTTP 429"
+      "syncStatus": "ok"
     }
   ],
   "bySkeydbId": {
@@ -4215,7 +5077,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0002": {
       "skeydbId": "awakener-0002",
@@ -4239,7 +5101,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%A0%BC%E9%87%8C%E5%B8%95"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0003": {
       "skeydbId": "awakener-0003",
@@ -4263,7 +5125,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%BB%A7%E4%B8%9D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0004": {
       "skeydbId": "awakener-0004",
@@ -4287,7 +5149,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0005": {
       "skeydbId": "awakener-0005",
@@ -4311,7 +5173,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0006": {
       "skeydbId": "awakener-0006",
@@ -4514,7 +5376,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%87%AF%E5%88%BB%E6%96%AF"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0007": {
       "skeydbId": "awakener-0007",
@@ -4538,7 +5400,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0008": {
       "skeydbId": "awakener-0008",
@@ -4562,7 +5424,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0009": {
       "skeydbId": "awakener-0009",
@@ -4768,7 +5630,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0010": {
       "skeydbId": "awakener-0010",
@@ -4792,7 +5654,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0011": {
       "skeydbId": "awakener-0011",
@@ -4816,7 +5678,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0012": {
       "skeydbId": "awakener-0012",
@@ -4859,7 +5721,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0014": {
       "skeydbId": "awakener-0014",
@@ -4883,7 +5745,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9D%9C%E5%8B%92%E8%B5%9B%E5%9B%A0"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0015": {
       "skeydbId": "awakener-0015",
@@ -5023,7 +5885,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%91%9E%E5%8D%A1"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0016": {
       "skeydbId": "awakener-0016",
@@ -5047,7 +5909,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8F%B2%E8%8C%B5%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0017": {
       "skeydbId": "awakener-0017",
@@ -5071,7 +5933,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0018": {
       "skeydbId": "awakener-0018",
@@ -5095,7 +5957,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%86%94%E6%AF%81%C2%B7%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0019": {
       "skeydbId": "awakener-0019",
@@ -5119,7 +5981,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A1%80%E9%93%BE%C2%B7%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0020": {
       "skeydbId": "awakener-0020",
@@ -5143,7 +6005,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0021": {
       "skeydbId": "awakener-0021",
@@ -5167,7 +6029,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0022": {
       "skeydbId": "awakener-0022",
@@ -5191,7 +6053,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%93%88%E5%A7%86%E6%9E%97"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0023": {
       "skeydbId": "awakener-0023",
@@ -5215,7 +6077,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0024": {
       "skeydbId": "awakener-0024",
@@ -5239,7 +6101,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0025": {
       "skeydbId": "awakener-0025",
@@ -5442,7 +6304,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0026": {
       "skeydbId": "awakener-0026",
@@ -5454,14 +6316,19 @@
         "name": "珈伦",
         "englishName": "Karen"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%8F%88%E4%BC%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0027": {
       "skeydbId": "awakener-0027",
@@ -5828,7 +6695,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%87%AF%E8%92%82%E5%8F%A4%E6%8B%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0028": {
       "skeydbId": "awakener-0028",
@@ -5852,7 +6719,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0029": {
       "skeydbId": "awakener-0029",
@@ -5876,7 +6743,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0030": {
       "skeydbId": "awakener-0030",
@@ -5900,7 +6767,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0031": {
       "skeydbId": "awakener-0031",
@@ -5912,14 +6779,19 @@
         "name": "萝坦",
         "englishName": "Lotan"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0032": {
       "skeydbId": "awakener-0032",
@@ -5943,7 +6815,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0033": {
       "skeydbId": "awakener-0033",
@@ -5955,14 +6827,19 @@
         "name": "茉夏",
         "englishName": "Mouchette"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8C%89%E5%A4%8F&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0034": {
       "skeydbId": "awakener-0034",
@@ -6168,7 +7045,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0035": {
       "skeydbId": "awakener-0035",
@@ -6180,14 +7057,19 @@
         "name": "诞妄·墨菲",
         "englishName": "Murphy: Fauxborn"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0036": {
       "skeydbId": "awakener-0036",
@@ -6199,14 +7081,198 @@
         "name": "诺缔拉",
         "englishName": "Nautila"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "空白的过去",
+              "「基础打击」获得等同于 15% 攻击力的 反击（效果随「基础打击」的等级提高，满级时为 30%）。"
+            ],
+            [
+              "",
+              "缺失的螺母",
+              "「高热区禁入」获得 预备1。"
+            ],
+            [
+              "",
+              "模糊的梦想",
+              "「整装待发」触发 反击 倍率 +50%，释放后自身免疫 脆弱、 虚弱、 易伤1 回合。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%AF%BA%E7%BC%94%E6%8B%89&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0037": {
       "skeydbId": "awakener-0037",
@@ -6428,7 +7494,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0038": {
       "skeydbId": "awakener-0038",
@@ -6440,14 +7506,206 @@
         "name": "奥吉尔",
         "englishName": "Ogier"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "形态切换 本源降临形态拥有以下特性︰ ● 本源降临是唤醒体的第二形态。",
+          "content": "文件:负誓·奥吉尔无底.png"
+        },
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "牺牲，以全大义",
+              "「不定壁垒」获得的护盾提高 43%，获得等同于攻击力 4% 的 力量（效果随「不定壁垒」的等级提高，满级时为 8%）。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "13 1300"
+            ],
+            [
+              "Lv.10→20",
+              "68 6800"
+            ],
+            [
+              "Lv.20→30",
+              "174 17400"
+            ],
+            [
+              "Lv.30→40",
+              "261 26100"
+            ],
+            [
+              "Lv.40→50",
+              "347 34700"
+            ],
+            [
+              "Lv.50→60",
+              "434 43400"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "6 2100",
+              "2→3",
+              "6 8100",
+              "3→4",
+              "1 10 16500"
+            ],
+            [
+              "4→5",
+              "2 6 29700",
+              "5→6",
+              "1 3 12 59400"
+            ],
+            [
+              "1→2",
+              "12 4200",
+              "2→3",
+              "12 16200",
+              "3→4",
+              "1 20 33000"
+            ],
+            [
+              "4→5",
+              "2 12 59400",
+              "5→6",
+              "1 3 24 118800"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A5%A5%E5%90%89%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0039": {
       "skeydbId": "awakener-0039",
@@ -6459,14 +7717,217 @@
         "name": "潘狄娅",
         "englishName": "Pandia"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "享受疼痛",
+              "「基础打击」获得 50% 伤害的临时 反击。「基础防御」获得等同于攻击力 10% 的 反击（效果随「基础防御」的等级提高，满级时为 20%）。"
+            ],
+            [
+              "",
+              "欲火焚身",
+              "「灼燃蜡滴之欲」获得 20 点狂气。"
+            ]
+          ]
+        },
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "你不乖",
+              "「蜜糖色悲惨幻象」基础伤害翻倍，并获得等同于攻击力 15% 的 反击（效果随「蜜糖色悲惨幻象」的等级提高，满级时为 30%）。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ],
+            [
+              "1→2",
+              "1 18 6300",
+              "2→3",
+              "2 18 24300",
+              "3→4",
+              "1 3 30 49500"
+            ],
+            [
+              "4→5",
+              "1 4 18 89100",
+              "5→6",
+              "1 5 36 178200"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%BD%98%E7%8B%84%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0040": {
       "skeydbId": "awakener-0040",
@@ -6478,14 +7939,19 @@
         "name": "皮克曼",
         "englishName": "Pickman"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0041": {
       "skeydbId": "awakener-0041",
@@ -6497,14 +7963,19 @@
         "name": "波吕克斯",
         "englishName": "Pollux"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0042": {
       "skeydbId": "awakener-0042",
@@ -6516,14 +7987,198 @@
         "name": "拉蒙娜",
         "englishName": "Ramona"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "懵懂的启程",
+              "「女王之剑」伤害次数 +1，每次造成伤害时，获得等同于攻击力 2.5% 的临时 力量（效果随「女王之剑」的等级提升，满级时为 5%）。「女王之剑」弃掉后，获得和打出相等的银钥能量。"
+            ],
+            [
+              "",
+              "未知的期待",
+              "「攻势推演」所抽的牌每有 1点算力消耗，额外获得 35 点银钥充能。"
+            ],
+            [
+              "",
+              "珍贵的羁绊",
+              "释放钥令后，拉蒙娜临时暴击率提高 50%。「世界演绎法」将 1 张 灵感 洗入抽牌推。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "13 1300"
+            ],
+            [
+              "Lv.10→20",
+              "68 6800"
+            ],
+            [
+              "Lv.20→30",
+              "174 17400"
+            ],
+            [
+              "Lv.30→40",
+              "261 26100"
+            ],
+            [
+              "Lv.40→50",
+              "347 34700"
+            ],
+            [
+              "Lv.50→60",
+              "434 43400"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "6 2100",
+              "2→3",
+              "6 8100",
+              "3→4",
+              "1 10 16500"
+            ],
+            [
+              "4→5",
+              "2 6 29700",
+              "5→6",
+              "1 3 12 59400"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%8B%89%E8%92%99%E5%A8%9C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0043": {
       "skeydbId": "awakener-0043",
@@ -6535,14 +8190,19 @@
         "name": "莱克",
         "englishName": "Ryker"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0044": {
       "skeydbId": "awakener-0044",
@@ -6554,14 +8214,19 @@
         "name": "萨尔瓦多",
         "englishName": "Salvador"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0045": {
       "skeydbId": "awakener-0045",
@@ -6777,7 +8442,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0046": {
       "skeydbId": "awakener-0046",
@@ -6789,14 +8454,19 @@
         "name": "索蕾尔",
         "englishName": "Sorel"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0047": {
       "skeydbId": "awakener-0047",
@@ -6808,14 +8478,19 @@
         "name": "塔薇",
         "englishName": "Tawil"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A1%94%E8%96%87&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0048": {
       "skeydbId": "awakener-0048",
@@ -7822,7 +9497,7 @@
         "mode": "mediawiki-api",
         "endpoint": "https://cdn.huijiwiki.com/morimens/api.php"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0049": {
       "skeydbId": "awakener-0049",
@@ -7834,14 +9509,19 @@
         "name": "汀克特",
         "englishName": "Tinct"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B1%80%E5%85%8B%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0050": {
       "skeydbId": "awakener-0050",
@@ -8047,7 +9727,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0051": {
       "skeydbId": "awakener-0051",
@@ -8059,14 +9739,19 @@
         "name": "尤乌哈希",
         "englishName": "Uvhash"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0052": {
       "skeydbId": "awakener-0052",
@@ -8078,14 +9763,19 @@
         "name": "旺达",
         "englishName": "Wanda"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%97%BA%E8%BE%BE&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0053": {
       "skeydbId": "awakener-0053",
@@ -8108,7 +9798,7 @@
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94",
         "mode": "static-identity"
       },
-      "syncStatus": "fallback",
+      "syncStatus": "cached",
       "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B8%A9%E6%9F%AF%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94: HTTP 429"
     },
     "awakener-0054": {
@@ -8121,14 +9811,19 @@
         "name": "徐",
         "englishName": "Xu"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0055": {
       "skeydbId": "awakener-0055",
@@ -8140,14 +9835,19 @@
         "name": "莫丝",
         "englishName": "Vortice"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0056": {
       "skeydbId": "awakener-0056",
@@ -8159,14 +9859,143 @@
         "name": "阿拉克涅",
         "englishName": "Arachne"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        },
+        {
+          "title": "唤醒",
+          "content": "命运的舞台之上，众生在各自的因果中静候登场，万般悲欢在齿轮转动间悄然成章……帷幕已启，守密人，你我之间的故事，至此便要开始了。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "又一根丝线，清晰了。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "命运的低语，更近了。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "无尽的命运之网，我已窥见全貌。"
+        },
+        {
+          "title": "启灵·远眺",
+          "content": "帷幕已为你敞开，命运的剧本静待开启。告诉我，您更愿步入哪一重命定的轨迹？是悲恸的终局，抑或欢愉的序章？ （启灵等级达到1解锁）"
+        },
+        {
+          "title": "启灵·凝视",
+          "content": "若您钟情于喜剧，《仲夏夜之梦》是不错的选择。我尤爱迫克那些狡黠的谵语，精灵的嬉笑间，总藏着命运不经意泄露的密语。 （启灵等级达到2解锁）"
+        },
+        {
+          "title": "启灵·深思",
+          "content": "若您愿步入悲剧的殿堂，请容我为您呈上《安提戈涅》。于神律与尘世的对峙间，她每一步都踏在命运纺就的丝线上，直至踏入石墓深沉的阴影。正因这桎梏不可挣脱，她那渺小身躯里迸发的意志，才如长夜中的孤焰般灼目。 （启灵等级达到3解锁）"
+        },
+        {
+          "title": "启灵·体悟",
+          "content": "我本以为世间再无选择能令我惊讶……您对戏剧的品味，让我印象深刻。 （启灵等级达到7解锁）"
+        },
+        {
+          "title": "启灵·构筑",
+          "content": "承蒙您一路相伴于幕起幕落之间。未来，我定不负所期，为您奉上更动人心魄的戏剧之夜。 （启灵等级达到11解锁）"
+        },
+        {
+          "title": "启灵·绽放",
+          "content": "凡是过往，皆为序章。你我的新篇，正等待着您的书写，守密人。 （启灵等级达到15解锁）"
+        },
+        {
+          "title": "同调率·一",
+          "content": "命运的丝线总在暗处连接……您惊动了这根丝线，也惊动了我。 （同调率等级到达2解锁）"
+        },
+        {
+          "title": "同调率·二",
+          "content": "命运之线本在我掌心流转有序……直到您的出现，让它们的轨迹生出未曾预料的涟漪。 （同调率等级到达4解锁）"
+        },
+        {
+          "title": "同调率·三",
+          "content": "剧院新排了一出浪漫喜剧，我已在命运的席位上，为您留了一隅空座。我将在每个命运交织的长夜里，静候与你相逢的星光。 （同调率等级到达6解锁）"
+        },
+        {
+          "title": "同调率·四",
+          "content": "如果您允许……我想为您编织一幕只属于您和我的双人剧。无需观众，不必彩排……我只是期待着，当您站在光下时，那根我无法看清的丝线，将有着怎样令人惊叹的跃动。 （同调率等级到达8解锁）"
+        },
+        {
+          "title": "同调率·五",
+          "content": "你与我，那两根无法看清的命运丝线，早已紧紧相缠、无分彼此，编织成囚笼与道路。我无法看清囚笼的边际，也无法看清道路的终点。这正是这段故事里，最令人着迷的部分。 （同调率等级到达10解锁）"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "如此执着于拨动命运的纺线……您，也想要窥见属于自己的篇章？"
+        },
+        {
+          "title": "闲话·关于索蕾尔",
+          "content": "她常来我的剧院落座……可我知道，她并非为戏而来，而是借这方舞台，映照自己的格调。然而那样精湛的演技，若只作看客，未免可惜。它本该在聚光灯下绽放，而非隐于观众席的暗影之中。 （获得唤醒体「索蕾尔」后解锁）"
+        },
+        {
+          "title": "闲话·关于莉兹",
+          "content": "不幸的舞者啊，我目睹了她的舞步。那是一种迫近毁灭的美，每一转旋都燃起绿色的焰火，试图将命运之线烧毁，可惜终将被那些丝线割裂出最凄艳的图景。若有机会，我愿为她写一出独属于她的舞剧。 （获得唤醒体「莉兹」后解锁）"
+        },
+        {
+          "title": "闲话·关于哈姆林",
+          "content": "我曾听过他的演奏，那美妙的旋律，让人灵魂震颤……或许，该邀请他为我的新戏谱一曲命运的交响？ （获得唤醒体「哈姆林」后解锁）"
+        },
+        {
+          "title": "闲话·关于汀克特",
+          "content": "如此有天赋的歌者，天赐的嗓音，清澈又灼热，仿佛源自命运之声……若能请来我的剧院，想必即使是最挑剔的观众也会感到惊喜。 （获得唤醒体「汀克特」后解锁）"
+        },
+        {
+          "title": "闲话·关于塔薇",
+          "content": "纵是洞悉万象的观者，亦不过是自身剧本中笨拙的伶人。执掌命运之网，却终被纺线所缚，在这命定的处境里，我们走在不同的道路上，但都从未放弃过那些徒劳的追寻。愚鲁也好，痴妄也罢，我是这样，她亦如是。 （获得唤醒体「塔薇」后解锁）"
+        },
+        {
+          "title": "闲话·关于危机",
+          "content": "您所见的悲剧，不过是万千可能性的其中一瞥。掀开命运的帷幕，我看到了那片漆黑的舞台。灯灭，人散，万象归于混沌之渊。然而……一切并非终局。我的意志尚在，足以支撑这徒劳的苦役，等待下一束辉光点燃。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "纺线之上，我窥见彩虹流转万端的光色——它勾连起无尽网罗，铺展无垠世界，延展出无限之可能，最终织就世间最瑰丽斑斓的图样。无论神明或凡人，英雄或恶徒，都被那一道纤细的纺线操纵，在命运的注视下义无反顾地奔向属于自己的结局。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "我的确沉醉于这日复一日的纺织……在重复而静谧的牵引中，预见万千故事的始终，旁观所有命运的落幕，恍若已超然于命运之外。然而，命运之网避无可避，仅作旁观终究寂寥。于是，我步入剧院，在扮演之中，亲尝那些我亲手纺出、却未曾亲历的悲欢。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "我始终不愿看到一成不变的样板戏。走进剧院的意义，本就在于亲历那无法被复刻的现场，若每一场都只是机械的重复，那舞台便成了精致的牢笼，而观剧，也沦为对已知结局的倦怠巡礼。那样的演出，再华丽，也失去了灵魂。您是怎样看待的呢？"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "世人的命运皆由丝线牵引……可是您的命运，是我无法读懂的剧本。我期待着，您会为这个世界带来怎样精彩的即兴表演？"
+        },
+        {
+          "title": "死亡",
+          "content": "……这就是命运注定的结局。"
+        },
+        {
+          "title": "闲话·关于茉夏",
+          "content": "你的双眼尚被迷雾所蔽，自然不会知晓责任的重量。"
+        },
+        {
+          "title": "闲话·关于波吕克斯",
+          "content": "被命运之网束缚的鸟儿，将以怎样的姿态重新飞翔？"
+        },
+        {
+          "title": "闲话·关于莫丝",
+          "content": "被命运囚禁的笨拙伶人……你与我，又有什么本质的区别？"
+        },
+        {
+          "title": "闲话·关于萨尔瓦多",
+          "content": "主动拥抱命运的苦难……你选择了人迹罕至的走向。"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0057": {
       "skeydbId": "awakener-0057",
@@ -8178,14 +10007,19 @@
         "name": "沙耶",
         "englishName": "Saya"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%B2%99%E8%80%B6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0058": {
       "skeydbId": "awakener-0058",
@@ -8197,14 +10031,19 @@
         "name": "庞托斯",
         "englishName": "Pontos"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0059": {
       "skeydbId": "awakener-0059",
@@ -8216,14 +10055,19 @@
         "name": "蚀灭·萝坦",
         "englishName": "Lotan: Cetarchon"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6: HTTP 429"
+      "syncStatus": "ok"
     },
     "awakener-0060": {
       "skeydbId": "awakener-0060",
@@ -8235,14 +10079,19 @@
         "name": "卡拉布",
         "englishName": "Caraboo"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "调查等级达到25解锁",
+          "content": "调查等级达到35解锁"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: HTTP 429"
+      "syncStatus": "ok"
     }
   }
 }
