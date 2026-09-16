@@ -3,7 +3,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 const run=promisify(execFile);
 import path from 'node:path';
-import {sleep,fixMojibake} from './eremora_sveltekit.mjs';
+import {sleep,fixMojibake,decodeSvelteData,walk,mediaUrl} from './eremora_sveltekit.mjs';
 
 const ORIGIN='https://eremora.com';
 const READER='https://r.jina.ai/';
@@ -83,6 +83,21 @@ const awakeners=await readJson(AWAKENERS,{records:[]});
 const byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
 try{await run('git',['config','user.name','github-actions[bot]']);await run('git',['config','user.email','41898282+github-actions[bot]@users.noreply.github.com'])}catch{}
 
+async function fetchDirectUsage(uid,seasonId,row,byIngame){
+  const url=ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId+'/__data.json';
+  const response=await fetch(url,{headers:{'user-agent':UA,accept:'application/json'},redirect:'follow',signal:AbortSignal.timeout(30000)});
+  const text=await response.text();
+  if(!response.ok||!text.startsWith('{"type"'))throw new Error('direct __data HTTP '+response.status);
+  const decoded=decodeSvelteData(text);let profile=null,mediaBase='';
+  walk(decoded.root,value=>{if(!profile&&Array.isArray(value?.teams)&&value.teams.length)profile=value;if(!mediaBase&&typeof value?.mediaBase==='string')mediaBase=value.mediaBase});
+  if(!profile?.teams?.length)throw new Error('direct __data has no team records');
+  const members=profile.teams.map(team=>{const a=team.awaker||{},rec=byIngame.get(String(a.res||'').replace(/_(?:AF|NF)$/i,'').toUpperCase())||null;const count=Array.isArray(team.enlightenment)?team.enlightenment.filter(x=>x?.unlocked!==false).length:0;const tier=count>=5?'law12':count>=4?'overlimit':'e3';return {name:fixMojibake(a.name||''),image:mediaUrl(mediaBase,a.mini||a.image),ingameId:String(a.res||'').replace(/_(?:AF|NF)$/i,''),level:team.level??null,progression:count?'E'+count:null,enlightTier:tier,enlightTierLabel:ENLIGHT_ZH[tier],skeydbId:rec?.id||null,canonicalName:rec?.name||a.name||''}});
+  return {rank:row.rank,uid:String(uid),player:profile.header?.name||row.name||'',score:row.score,currentScore:null,leaderboardScore:null,dzoneSeason:seasonId,url:ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId,rankFingerprint:fingerprint(row),fetchedAt:new Date().toISOString(),waves:[{wave:0,difficulty:'unknown',difficultyLabel:DIFFICULTY_ZH.unknown,recommendedLevel:null,teams:[{clearType:'clear',difficulty:'unknown',difficultyLabel:DIFFICULTY_ZH.unknown,recommendedLevel:null,token:null,members}]}],transport:'sveltekit-__data'};
+}
+async function fetchUsageRecord(uid,seasonId,row,byIngame){
+  try{return await fetchDirectUsage(uid,seasonId,row,byIngame)}
+  catch(directError){try{return parseUsagePage(await fetchReader(ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId),row,seasonId,byIngame)}catch(readerError){throw new Error('direct: '+directError.message+'; reader: '+readerError.message)}}
+}
 async function syncSeason(seasonId){
   const historical=seasonId!==currentSeason;
   const rankPath=historical?path.join(ROOT,'seasons',`${seasonId}.json`):(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${seasonId}.json`);
@@ -95,7 +110,7 @@ async function syncSeason(seasonId){
   for(const row of sourceRows){const oldRec=cache.get(String(row.uid)),changed=!oldRec||oldRec.rankFingerprint!==fingerprint(row),stale=!historical&&oldRec?.fetchedAt?now-Date.parse(oldRec.fetchedAt)>staleMs:false,retry=failedBefore.has(String(row.uid));if(!oldRec||retry||changed||stale)queue.push({row,priority:!oldRec?0:retry?1:changed?2:3,age:oldRec?.fetchedAt?Date.parse(oldRec.fetchedAt):0})}
   queue.sort((a,b)=>a.priority-b.priority||a.age-b.age||a.row.rank-b.row.rank);const selected=queue.slice(0,MAX_FETCH),failures=[];
   console.log(`Eremora season ${seasonId}: fixed=${historical}, rows=${sourceRows.length}, cached=${cache.size}, retryQueue=${queue.length}, selected=${selected.length}`);
-  for(let i=0;i<selected.length;i+=BATCH){const batch=selected.slice(i,i+BATCH);const results=await Promise.all(batch.map(async({row})=>{let last;try{return {ok:true,row,record:parseUsagePage(await fetchReader(`${ORIGIN}/u/${row.uid}/challenges/dzone/${seasonId}`),row,seasonId,byIngame)}}catch(e){last=e}return {ok:false,row,error:String(last||'unknown error')}}));for(const result of results){if(result.ok)cache.set(String(result.row.uid),result.record);else failures.push({rank:result.row.rank,uid:String(result.row.uid),error:result.error})}
+  for(let i=0;i<selected.length;i+=BATCH){const batch=selected.slice(i,i+BATCH);const results=await Promise.all(batch.map(async({row})=>{let last;try{return {ok:true,row,record:fetchUsageRecord(row.uid,seasonId,row,byIngame)}}catch(e){last=e}return {ok:false,row,error:String(last||'unknown error')}}));for(const result of results){if(result.ok)cache.set(String(result.row.uid),result.record);else failures.push({rank:result.row.rank,uid:String(result.row.uid),error:result.error})}
     const valid=[...cache.values()].filter(x=>sourceRows.some(row=>String(row.uid)===String(x.uid))).sort((a,b)=>a.rank-b.rank),expected=sourceRows.length,covered=new Set(valid.map(x=>x.rank)).size;
     await saveJson(outPath,{source:{site:'Eremora',rankIndex:rankPath,detailTransport:'public challenge pages via Jina Reader',syncedAt:new Date().toISOString()},seasonId,target:TARGET,rankIndexCount:sourceRows.length,recordCount:valid.length,coverage:{expected,covered,coveragePct:Number((covered/expected*100).toFixed(2)),complete:covered===expected},refresh:{historical,requested:selected.length,completed:Math.min(i+BATCH,selected.length),failed:failures.length,staleDays:historical?null:STALE_DAYS},failures,records:valid,progress:{completed:Math.min(i+BATCH,selected.length),target:selected.length,updatedAt:new Date().toISOString()}});
     console.log(`Eremora season ${seasonId} progress: ${Math.min(i+BATCH,selected.length)}/${selected.length}, cached=${valid.length}, failed=${failures.length}`);
