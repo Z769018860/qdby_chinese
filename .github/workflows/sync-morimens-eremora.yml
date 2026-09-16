@@ -7,6 +7,7 @@ on:
     paths:
       - "scripts/discover_eremora_leaderboard.mjs"
       - "scripts/sync_morimens_eremora.mjs"
+      - "morimens-dtide.js"
       - ".github/workflows/sync-morimens-eremora.yml"
   schedule:
     - cron: "11 4 * * *"
@@ -21,6 +22,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,10 +30,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Validate Eremora sync scripts
+        run: |
+          node --check scripts/discover_eremora_leaderboard.mjs
+          node --check scripts/sync_morimens_eremora.mjs
+          node --check morimens-dtide.js
       - name: Discover Eremora public data
         run: node scripts/discover_eremora_leaderboard.mjs
       - name: Sync Eremora leaderboard snapshot
-        if: ${{ hashFiles('scripts/sync_morimens_eremora.mjs') != '' }}
         run: node scripts/sync_morimens_eremora.mjs
       - name: Commit Eremora snapshots
         run: |
