@@ -21,6 +21,11 @@
     }
     const tags=document.querySelector('.heroTags');
     if(tags&&!$('skeydbStatus')){const s=document.createElement('span');s.className='tag';s.id='skeydbStatus';s.textContent='SKeyDB：等待同步快照';tags.appendChild(s)}
+    const sources=document.querySelector('.sourceList');
+    if(sources&&!$('skeydbAttribution')){
+      const note=document.createElement('div');note.id='skeydbAttribution';note.className='sourceItem';note.innerHTML='<strong>SKeyDB 同步：</strong>角色资料、数值与结构化数据来自 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a> 及其贡献者，SKeyDB 原创数据按 CC BY-NC-SA 4.0 使用。角色立绘、头像、卡面与游戏原文属于《忘却前夜》及相应权利方，不属于 SKeyDB 的 CC 授权范围。本站仅作为非商业个人工具同步展示。';sources.appendChild(note);
+    }
+    const lead=document.querySelector('.hero .lead');if(lead)lead.textContent='角色、技能和每日签资料改为优先读取由 GitHub Actions 从 SKeyDB 同步到本站的静态快照；角色卡面与头像也保存为本站本地静态资源，避免灰机图片接口失效。伤害公式仍保留客户端日志校准层。';
   }
 
   function allQuotes(rec){return rec?.profile?.voiceLines?.filter(x=>x?.content)||[]}
@@ -32,15 +37,14 @@
   function render(rec,random=false){
     current=rec;quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,allQuotes(rec).length);
     const portrait=$('fortunePortrait');
-    if(portrait){portrait.src=rec.assets?.card||rec.assets?.portrait||'';portrait.hidden=!portrait.src;portrait.alt=`${rec.name} 立绘`;portrait.style.objectPosition='center 18%'}
-    const avatar=$('skeydbAvatar');if(avatar){avatar.src=rec.assets?.portrait||rec.assets?.card||'';avatar.hidden=!avatar.src}
+    if(portrait){portrait.src=rec.assets?.card||rec.assets?.portrait||'';portrait.hidden=!portrait.src;portrait.alt=`${rec.name} 角色卡面`;portrait.style.objectPosition='center 18%'}
+    const avatar=$('skeydbAvatar');if(avatar){avatar.src=rec.assets?.portrait||rec.assets?.card||'';avatar.hidden=!avatar.src;avatar.alt=`${rec.name} 头像`}
     if($('fortuneName'))$('fortuneName').textContent=rec.name;
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?' · 随机再抽':''}`;
     renderQuote(rec);
     const p=$('skeydbProfile');if(p)p.innerHTML=[
       ['稀有度',rec.rarity],['界域',rec.realm],['类型',rec.type],['阵营',rec.faction],['生日',rec.profile?.birthday],['声优',rec.profile?.voiceActor]
     ].filter(x=>x[1]).map(([k,v])=>`<div style="padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf">${escape(k)}<strong style="display:block;color:#e5e7eb;margin-top:3px">${escape(v)}</strong></div>`).join('');
-    const wiki=$('wikiBtn');if(wiki){wiki.href=`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(rec.name)}`;wiki.textContent='查看中文维基'}
   }
   function renderToday(){if(!db?.records?.length)return;render(db.records[hash(todayKey())%db.records.length])}
   function renderRandom(){if(!db?.records?.length)return;render(db.records[Math.floor(Math.random()*db.records.length)],true)}
