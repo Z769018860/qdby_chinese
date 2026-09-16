@@ -1,7 +1,7 @@
 import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {
-  decodeSvelteData,fetchViaJina,findDzoneActivities,findMediaBase,findProfileHeader,
+  decodeSvelteData,fetchViaJina,findDzoneActivities,findMediaBase,findProfileHeader,parseSvelteTransport,unflatten,walk,
   fixMojibake,mediaUrl,num,sleep,uniq
 } from './eremora_sveltekit.mjs';
 
@@ -10,7 +10,7 @@ const OUT_DIR='data/morimens/eremora';
 const SEASON_DIR=path.join(OUT_DIR,'seasons');
 const STATS_DIR=path.join(OUT_DIR,'stats');
 const AWAKENERS_FILE='data/morimens/skeydb/awakeners.json';
-const MAX_RECORDS=Math.max(1,Number(process.env.EREMORA_MAX_RECORDS||60));
+const MAX_RECORDS=Math.max(1,Number(process.env.EREMORA_MAX_RECORDS||1000));
 const BATCH_SIZE=Math.max(1,Math.min(4,Number(process.env.EREMORA_BATCH_SIZE||2)));
 const BATCH_DELAY=Math.max(1200,Number(process.env.EREMORA_BATCH_DELAY_MS||2600));
 const UA='qdby-chinese-eremora-sync/2.0 (+https://github.com/Z769018860/qdby_chinese)';
@@ -41,6 +41,21 @@ function parseLeaderboard(md=''){
   const seen=new Set();
   return out.filter(x=>{const key=`${x.uid}:${x.seasonId}`;if(seen.has(key))return false;seen.add(key);return true})
     .sort((a,b)=>(a.rank??9999)-(b.rank??9999)||(b.score??0)-(a.score??0)).slice(0,MAX_RECORDS);
+}
+
+function parseStructuredLeaderboard(md=''){
+  const out=[];
+  try{
+    const {docs}=parseSvelteTransport(md);
+    for(const doc of docs||[])for(const node of doc.nodes||[]){
+      const root=unflatten(node.data);walk(root,value=>{
+        if(!value||typeof value!=='object'||value.rank==null||value.uid==null||value.dzone_season==null)return;
+        const seasonId=num(value.dzone_season),uid=String(value.uid),rank=num(value.rank);if(!seasonId||!uid||!rank)return;
+        out.push({rank,player:fixMojibake(value.name||value.raw_name||''),uid,score:num(value.score),url:`${ORIGIN}/u/${uid}/challenges/dzone/${seasonId}`,seasonId});
+      });
+    }
+  }catch(error){console.warn('Structured leaderboard parse failed:',String(error))}
+  const seen=new Set();return out.filter(x=>{const key=`${x.uid}:${x.seasonId}`;if(seen.has(key))return false;seen.add(key);return true}).sort((a,b)=>(a.rank??9999)-(b.rank??9999)).slice(0,MAX_RECORDS);
 }
 
 function normalizeIngameId(awaker={}){
@@ -124,9 +139,10 @@ function buildStats(season){
 
 await mkdir(SEASON_DIR,{recursive:true});await mkdir(STATS_DIR,{recursive:true});
 const awakeners=await readJson(AWAKENERS_FILE,{records:[]}),byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
-let leaderboardMd;try{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard/abyss`)}catch{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard`)}
-const entries=parseLeaderboard(leaderboardMd);if(!entries.length)throw new Error('No D-Zone leaderboard records found.');
-const currentSeason=Math.max(...entries.map(x=>x.seasonId)),currentEntries=entries.filter(x=>x.seasonId===currentSeason);
+let leaderboardMd,structuredMd='';try{structuredMd=await fetchText(`${ORIGIN}/leaderboard/abyss/__data.json`)}catch(error){console.warn('Structured leaderboard unavailable:',String(error))}
+try{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard/abyss`)}catch{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard`)}
+const entries=parseStructuredLeaderboard(structuredMd);const finalEntries=entries.length?entries:parseLeaderboard(leaderboardMd);if(!finalEntries.length)throw new Error('No D-Zone leaderboard records found.');
+const currentSeason=Math.max(...finalEntries.map(x=>x.seasonId)),currentEntries=finalEntries.filter(x=>x.seasonId===currentSeason);
 const oldCurrent=await readJson(path.join(SEASON_DIR,`${currentSeason}.json`),{records:[]}),oldByUid=new Map((oldCurrent.records||[]).map(x=>[String(x.uid),x]));
 const currentRecords=[],failures=[],historyBySeason=new Map();
 for(let i=0;i<currentEntries.length;i+=BATCH_SIZE){
@@ -167,3 +183,4 @@ const fieldCoverage={character:true,wave:true,level:true,progressionLabel:true,e
 const manifest={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailEndpointTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,syncedAt:new Date().toISOString(),transport:'Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page'},currentSeason,availableSeasons:snapshots,discoveredSeasonIds:discovered,pendingBackfillSeasonIds:snapshots.filter(x=>!x.complete).map(x=>x.seasonId),current:{leaderboardEntries:currentEntries.length,records:currentRecords.length,complete:currentSeasonDoc.complete,failures:failures.length},fieldCoverage,notes:['当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。','命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。','历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。']};
 await saveJson(path.join(OUT_DIR,'manifest.json'),manifest);
 console.log(`Eremora D-Zone season ${currentSeason}: leaderboard=${currentEntries.length}, records=${currentRecords.length}, failures=${failures.length}, complete=${currentSeasonDoc.complete}; raw fields: enlight=${fieldCoverage.enlightenLevel}, wheels=${fieldCoverage.wheels}, covenants=${fieldCoverage.covenants}; seasons=${snapshots.map(x=>`${x.seasonId}:${x.recordCount}${x.complete?'✓':'~'}`).join(', ')}`);
+
