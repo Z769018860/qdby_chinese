@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -39,4 +39,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/morimens/skeydb assets/morimens
           git commit -m "chore: refresh Morimens data from SKeyDB"
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
