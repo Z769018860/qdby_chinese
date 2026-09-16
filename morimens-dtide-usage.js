@@ -60,6 +60,8 @@
     const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team';
     const all=scopedRows({cap,difficulty,wave:'all',clearType:ct}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b),groups=new Map(waves.map(w=>[w,group(all.filter(x=>Number(x.wave.wave)===w))])),union=new Map();
     for(const [,g] of groups)for(const c of g.characters)union.set(c.key,c);const rows=[...union.values()].map(c=>({...c,total:waves.reduce((s,w)=>s+(groups.get(w).characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total);
+    const spec=$('dtideSort')?.value||'total-desc',m=spec.match(/^wave(\\d+)-(asc|desc)$/);
+    rows.sort((a,b)=>{let av=a.total||0,bv=b.total||0;if(m){const w=Number(m[1]),g=groups.get(w);av=g?.characters.find(x=>x.key===a.key)?.count||0;bv=g?.characters.find(x=>x.key===b.key)?.count||0}const d=bv-av;return spec.endsWith('-asc')?-d:d||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
     const host=$('dtideMatrix');if(!host)return;if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无记录。</div>';return}
     host.innerHTML=`<table class="dtideTable"><thead><tr><th>角色</th>${waves.map(w=>`<th>Wave ${w}</th>`).join('')}<th>总出现</th></tr></thead><tbody>${rows.map(c=>`<tr><td><div class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></div></td>${waves.map(w=>{const g=groups.get(w),hit=g.characters.find(x=>x.key===c.key),rate=mode==='slot'?(hit?.slotRatePct||0):(hit?.teamRatePct||0);return `<td class="dtideRate">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
   }
@@ -78,11 +80,21 @@
   }
   function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight()})}
 
-  async function loadForSeason(id){
-    const idx=manifest?.usageIndex;if(!idx||String(idx.seasonId)!==String(id)){usage=null;usageStats=null;return false}
-    [usage,usageStats]=await Promise.all([json(idx.path),json(idx.statsPath)]);activeSeason=Number(id);renderAll();return true;
+  function fallbackStats(records){
+    const ranks=(records||[]).map(x=>Number(x.rank)).filter(Number.isFinite),maxRank=ranks.length?Math.max(...ranks):0;
+    const rankTiers={};for(const cap of rankCaps){const covered=ranks.filter(x=>x<=cap).length;rankTiers[String(cap)]={covered,expected:cap,complete:covered>=cap}}
+    return {seasonId:activeSeason,generatedAt:new Date().toISOString(),rankTiers,maxRankAvailable:maxRank}
   }
-  function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideWave','dtideClearType','dtideRateMode'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
+  async function loadForSeason(id){
+    const entry=manifest?.availableSeasons?.find(x=>String(x.seasonId)===String(id));
+    if(!entry){usage=null;usageStats=null;return false}
+    try{
+      usage=await json(entry.path);
+      try{usageStats=await json(entry.statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
+      activeSeason=Number(id);renderAll();return true
+    }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
+  }
+  function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideWave','dtideClearType','dtideRateMode','dtideSort'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
     try{manifest=await json('data/morimens/eremora/manifest.json');bind();const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
