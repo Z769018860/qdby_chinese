@@ -1,0 +1,57 @@
+{
+  "fetchedAt": "2026-09-16T18:48:11.484Z",
+  "results": [
+    {
+      "target": "https://eremora.com/leaderboard/abyss/__data.json",
+      "status": 200,
+      "length": 52075,
+      "summary": {
+        "rootCount": 0,
+        "arrays": [],
+        "objectCount": 0,
+        "objectSamples": [],
+        "rankRange": null,
+        "scalars": []
+      }
+    },
+    {
+      "target": "https://eremora.com/leaderboard/abyss/__data.json?page=2",
+      "status": 200,
+      "length": 52082,
+      "summary": {
+        "rootCount": 0,
+        "arrays": [],
+        "objectCount": 0,
+        "objectSamples": [],
+        "rankRange": null,
+        "scalars": []
+      }
+    },
+    {
+      "target": "https://eremora.com/leaderboard/abyss/__data.json?limit=1000",
+      "status": 200,
+      "length": 52086,
+      "summary": {
+        "rootCount": 0,
+        "arrays": [],
+        "objectCount": 0,
+        "objectSamples": [],
+        "rankRange": null,
+        "scalars": []
+      }
+    },
+    {
+      "target": "https://eremora.com/leaderboard/abyss/__data.json?offset=50&limit=50",
+      "status": 200,
+      "length": 52094,
+      "summary": {
+        "rootCount": 0,
+        "arrays": [],
+        "objectCount": 0,
+        "objectSamples": [],
+        "rankRange": null,
+        "scalars": []
+      }
+    }
+  ]
+}

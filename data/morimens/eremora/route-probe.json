@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-16T18:20:55.223Z",
+  "fetchedAt": "2026-09-16T18:47:57.659Z",
   "target": "https://eremora.com/u/100167859/challenges/dzone/69/__data.json",
   "transport": "SvelteKit __data.json via Jina Reader",
   "length": 1691382,
@@ -121,9 +121,9 @@
               ],
               "sample": {
                 "good": 11274,
-                "visiters": 14447,
+                "visiters": 14449,
                 "attention": 1000,
-                "assist": 24410,
+                "assist": 24422,
                 "followers": 7580
               }
             },
@@ -323,53 +323,53 @@
                 "raw": {
                   "type": "object",
                   "keys": [
-                    "LoginDay",
-                    "PVPFuncOpen",
-                    "GoodOtherNum",
-                    "HardStarStageId",
-                    "RailWayLv",
-                    "SmallSubplotHard",
-                    "ConsciousDive",
-                    "AssistNum",
-                    "DailyChallengeRandCfgId",
-                    "AchieveNum",
-                    "DarkRealm",
-                    "Main2",
-                    "AwakerNum",
-                    "SpecialTaskRecord",
-                    "SmallSubplot",
                     "PhaseDuelPrebuildLv",
+                    "GoodOtherNum",
+                    "AssistNum",
                     "DailyChallengeLifeMaxScore",
-                    "Main3",
-                    "Main1",
-                    "LargeSubplotHard",
-                    "HardMemoryStageId",
-                    "DreamDiveLevel",
-                    "PropagationFrenzy",
+                    "Main2",
+                    "AbyssChallengeLifeMaxScore",
+                    "SmallSubplotHard",
+                    "DarkRealm",
                     "PhaseDuelDraftLv",
                     "TrialPlay",
-                    "MultiDimensionLink",
+                    "HardMemoryStageId",
                     "DreamWorld",
-                    "AbyssChallengeLifeMaxScore",
-                    "LargeSubplot"
+                    "DailyChallengeRandCfgId",
+                    "Main1",
+                    "DreamDiveLevel",
+                    "AwakerNum",
+                    "SmallSubplot",
+                    "ConsciousDive",
+                    "MultiDimensionLink",
+                    "RailWayLv",
+                    "LoginDay",
+                    "HardStarStageId",
+                    "LargeSubplotHard",
+                    "PVPFuncOpen",
+                    "AchieveNum",
+                    "PropagationFrenzy",
+                    "LargeSubplot",
+                    "SpecialTaskRecord",
+                    "Main3"
                   ],
                   "sample": {
-                    "LoginDay": "number",
-                    "PVPFuncOpen": "number",
+                    "PhaseDuelPrebuildLv": "number",
                     "GoodOtherNum": "number",
-                    "HardStarStageId": "number",
-                    "RailWayLv": "number",
-                    "SmallSubplotHard": "number",
-                    "ConsciousDive": "number",
                     "AssistNum": "number",
-                    "DailyChallengeRandCfgId": "number",
-                    "AchieveNum": "number",
-                    "DarkRealm": "number",
+                    "DailyChallengeLifeMaxScore": "number",
                     "Main2": "number",
-                    "AwakerNum": "number",
-                    "SpecialTaskRecord": "number",
-                    "SmallSubplot": "number",
-                    "PhaseDuelPrebuildLv": "number"
+                    "AbyssChallengeLifeMaxScore": "number",
+                    "SmallSubplotHard": "number",
+                    "DarkRealm": "number",
+                    "PhaseDuelDraftLv": "number",
+                    "TrialPlay": "number",
+                    "HardMemoryStageId": "number",
+                    "DreamWorld": "number",
+                    "DailyChallengeRandCfgId": "number",
+                    "Main1": "number",
+                    "DreamDiveLevel": "number",
+                    "AwakerNum": "number"
                   }
                 }
               }
@@ -400,7 +400,7 @@
                 "period": 69,
                 "start": 1789347600,
                 "end": 1790557198,
-                "ends_in": 975231
+                "ends_in": 972978
               }
             },
             "daily": {
@@ -419,7 +419,7 @@
                 "period": null,
                 "start": 1789347600,
                 "end": 1790557200,
-                "ends_in": 975233
+                "ends_in": 972980
               }
             },
             "railway": {
@@ -438,7 +438,7 @@
                 "period": null,
                 "start": 1789347600,
                 "end": 1790557200,
-                "ends_in": 975233
+                "ends_in": 972980
               }
             }
           }
@@ -1498,6 +1498,6 @@
       }
     ]
   },
-  "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"uid\":1,\"selection\":2,\"challengeData\":6},100167859,{\"mode\":3,\"level\":4,\"season\":5},\"abyss\",\"season\",69,[\"Promise\",7],1],\"uses\":{\"params\":[\"uid\",\"challenge\"]}},null]}\n{\"type\":\"chunk\",\"id\":1,\"data\":[{\"data\":1,\"error\":80},{\"profile\":2,\"challengeSchedule\":34910,\"dzoneCatalog\":34917},{\"meta\":3,\"header\":4,\"counts\":23,\"showcase\":29,\"teams\":134,\"collections\":411,\"clear_wids\":412,\"review_hidden\":51,\"challenges\":413,\"matches\":80,\"progression\":34867},{},{\"uid\":5,\"name\":6,\"level\":7,\"note\":8,\"birthday\":9,\"gender\":10,\"collection_count\":11,\"last_online\":12,\"avatar\":13,\"frame\":18},100167859,\"æ½¶ç³–ä¹Œé¾™\",96,\"é‡‘äººç²‰ä¸ç¾¤1098633910\",\"2-5\",1,1317,1789516800,{\"id\":14,\"name\":15,\"image\":16,\"quality\":17},130545,\"Mythag Interlude: Pandia\",\"portraits/Portrait_Minihead_PlayerAvatar_Style_Interlude_C09.webp\",\"Orange\",{\"id\":19,\"name\":20,\"image\":21,\"quality\":22},54582,\"Mythag's Keeper\",\"icon/Icon_PortraitFrame_01.webp\",\"Purple\",{\"good\":24,\"visiters\":25,\"attention\":26,\"assist\":27,\"followers\":28},11274,14447,1000,24410,7580,{\"awaker\":30,\"level\":41,\"potency_level\":42,\"skin\":43,\"slots\":44,\"talents\":86,\"enlightenment\":106,\"stickers\":130},{\"id\":31,\"name\":32,\"image\":33,\"res\":34,\"school\":10,\"realm\":35,\"role\":38,\"rarity\":39,\"mini\":40},15568,\"Ramona: Timeworn\",\"portraits/Portrait_Middle_Awaker_C01EX_AF.webp\",\"C01EX_AF\",{\"id\":10,\"name\":36,\"image\":37},\"Chaos\",\"icon/Icon_Career_illustrate_Chaos.webp\",\"Chorus\",\"Genesis\",\"portraits/Portrait_Minihead_Awaker_C01EX_AF.webp\",80,15,116763,[45,52,58,63,68,73,77,82],{\"id\":46,\"name\":47,\"image\":40,\"cost\":48,\"desc\":49,\"slot\":10,\"level\":50,\"is_up\":51},4019,\"Paradox Converged\",100,\"Obtain X Keyflare. P",
+  "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"uid\":1,\"selection\":2,\"challengeData\":6},100167859,{\"mode\":3,\"level\":4,\"season\":5},\"abyss\",\"season\",69,[\"Promise\",7],1],\"uses\":{\"params\":[\"uid\",\"challenge\"]}},null]}\n{\"type\":\"chunk\",\"id\":1,\"data\":[{\"data\":1,\"error\":80},{\"profile\":2,\"challengeSchedule\":34910,\"dzoneCatalog\":34917},{\"meta\":3,\"header\":4,\"counts\":23,\"showcase\":29,\"teams\":134,\"collections\":411,\"clear_wids\":412,\"review_hidden\":51,\"challenges\":413,\"matches\":80,\"progression\":34867},{},{\"uid\":5,\"name\":6,\"level\":7,\"note\":8,\"birthday\":9,\"gender\":10,\"collection_count\":11,\"last_online\":12,\"avatar\":13,\"frame\":18},100167859,\"æ½¶ç³–ä¹Œé¾™\",96,\"é‡‘äººç²‰ä¸ç¾¤1098633910\",\"2-5\",1,1317,1789516800,{\"id\":14,\"name\":15,\"image\":16,\"quality\":17},130545,\"Mythag Interlude: Pandia\",\"portraits/Portrait_Minihead_PlayerAvatar_Style_Interlude_C09.webp\",\"Orange\",{\"id\":19,\"name\":20,\"image\":21,\"quality\":22},54582,\"Mythag's Keeper\",\"icon/Icon_PortraitFrame_01.webp\",\"Purple\",{\"good\":24,\"visiters\":25,\"attention\":26,\"assist\":27,\"followers\":28},11274,14449,1000,24422,7580,{\"awaker\":30,\"level\":41,\"potency_level\":42,\"skin\":43,\"slots\":44,\"talents\":86,\"enlightenment\":106,\"stickers\":130},{\"id\":31,\"name\":32,\"image\":33,\"res\":34,\"school\":10,\"realm\":35,\"role\":38,\"rarity\":39,\"mini\":40},15568,\"Ramona: Timeworn\",\"portraits/Portrait_Middle_Awaker_C01EX_AF.webp\",\"C01EX_AF\",{\"id\":10,\"name\":36,\"image\":37},\"Chaos\",\"icon/Icon_Career_illustrate_Chaos.webp\",\"Chorus\",\"Genesis\",\"portraits/Portrait_Minihead_Awaker_C01EX_AF.webp\",80,15,116763,[45,52,58,63,68,73,77,82],{\"id\":46,\"name\":47,\"image\":40,\"cost\":48,\"desc\":49,\"slot\":10,\"level\":50,\"is_up\":51},4019,\"Paradox Converged\",100,\"Obtain X Keyflare. P",
   "suffix": "shold\":7388,\"items\":35052},[35053,35054,35055,35056],{\"id\":35019,\"name\":35020,\"image\":35021,\"quality\":17,\"count\":72},{\"id\":34993,\"name\":34994,\"image\":34995,\"quality\":22,\"count\":6034},{\"id\":35024,\"name\":35025,\"image\":35026,\"quality\":22,\"count\":103},{\"id\":35028,\"name\":35029,\"image\":35030,\"quality\":35031,\"count\":35032},{\"threshold\":32679,\"items\":35058},[35059,35060],{\"id\":35019,\"name\":35020,\"image\":35021,\"quality\":17,\"count\":72},{\"id\":34989,\"name\":34990,\"image\":34991,\"quality\":17,\"count\":7728},{\"threshold\":11825,\"items\":35062},[35063,35064],{\"id\":35019,\"name\":35020,\"image\":35021,\"quality\":17,\"count\":72},{\"id\":34989,\"name\":34990,\"image\":34991,\"quality\":17,\"count\":7728},{\"threshold\":29567,\"items\":35066},[35067,35068],{\"id\":35019,\"name\":35020,\"image\":35021,\"quality\":17,\"count\":72},{\"id\":34989,\"name\":34990,\"image\":34991,\"quality\":17,\"count\":7728},{\"threshold\":18559,\"items\":35070},[35071,35072],{\"id\":35019,\"name\":35020,\"image\":35021,\"quality\":17,\"count\":72},{\"id\":34989,\"name\":34990,\"image\":34991,\"quality\":17,\"count\":7728},{\"threshold\":9214,\"items\":35074},[35075,35076],{\"id\":35019,\"name\":35020,\"image\":35021,\"quality\":17,\"count\":72},{\"id\":34989,\"name\":34990,\"image\":34991,\"quality\":17,\"count\":7728},{\"threshold\":2034,\"items\":35078},[35079],{\"id\":35080,\"name\":35081,\"image\":35082,\"quality\":17,\"count\":10},67378,\"Formless One's Invitation\",\"icon/Icon_PickCosmetics.webp\",{\"threshold\":8840,\"items\":35084},[35085],{\"id\":35080,\"name\":35081,\"image\":35082,\"quality\":17,\"count\":10},{\"threshold\":15044,\"items\":35087},[35088],{\"id\":35080,\"name\":35081,\"image\":35082,\"quality\":17,\"count\":10},{\"threshold\":9571,\"items\":35090},[35091],{\"id\":35080,\"name\":35081,\"image\":35082,\"quality\":17,\"count\":10},{\"threshold\":17373,\"items\":35093},[35094],{\"id\":35080,\"name\":35081,\"image\":35082,\"quality\":17,\"count\":10}]}"
 }
