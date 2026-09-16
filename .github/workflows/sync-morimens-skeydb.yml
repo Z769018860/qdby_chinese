@@ -1,4 +1,4 @@
-name: Sync Morimens SKeyDB
+name: Sync Morimens Data
 
 on:
   workflow_dispatch:
@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "scripts/sync_morimens_skeydb.mjs"
+      - "scripts/sync_morimens_huiji.mjs"
       - ".github/workflows/sync-morimens-skeydb.yml"
   schedule:
     - cron: "23 3 * * *"
@@ -14,30 +15,52 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-morimens-skeydb
+  group: sync-morimens-data
   cancel-in-progress: true
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout site repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Sync SKeyDB data and character art
+
+      - name: Checkout SKeyDB source snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: dansa/SKeyDB
+          ref: main
+          path: .skeydb
+          fetch-depth: 1
+          sparse-checkout: |
+            src/data/public-v3
+            src/assets/awk-portraits
+            src/assets/awk-cards
+            src/assets/wheels
+            src/assets/relics
+            src/assets/covenants
+
+      - name: Sync SKeyDB full public data and assets
         run: node scripts/sync_morimens_skeydb.mjs
-      - name: Commit synchronized snapshot
+
+      - name: Sync Chinese localization from HuijiWiki
+        run: node scripts/sync_morimens_huiji.mjs
+
+      - name: Commit synchronized snapshots
         run: |
-          if [ -z "$(git status --porcelain -- data/morimens/skeydb assets/morimens)" ]; then
-            echo "SKeyDB snapshot is unchanged."
+          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/huiji assets/morimens)" ]; then
+            echo "Morimens snapshots are unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/morimens/skeydb assets/morimens
-          git commit -m "chore: refresh Morimens data from SKeyDB"
+          git add data/morimens/skeydb data/morimens/huiji assets/morimens
+          git commit -m "chore: refresh Morimens SKeyDB and Huiji snapshots"
           git pull --rebase origin main
           git push origin HEAD:main
