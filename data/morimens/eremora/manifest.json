@@ -1,0 +1,44 @@
+{
+  "source": {
+    "site": "Eremora",
+    "url": "https://eremora.com/leaderboard",
+    "syncedAt": "2026-09-16T18:01:37.921Z",
+    "transport": "public rendered pages via Jina Reader"
+  },
+  "currentSeason": 69,
+  "availableSeasons": [
+    {
+      "seasonId": 69,
+      "period": "Sep 14, 2026 – Sep 28, 2026",
+      "recordCount": 47,
+      "leaderboardEntryCount": 47,
+      "complete": true,
+      "path": "data/morimens/eremora/seasons/69.json",
+      "statsPath": "data/morimens/eremora/stats/69.json"
+    }
+  ],
+  "discoveredSeasonIds": [
+    69
+  ],
+  "pendingBackfillSeasonIds": [],
+  "current": {
+    "leaderboardEntries": 47,
+    "records": 47,
+    "complete": true,
+    "failures": 0
+  },
+  "fieldCoverage": {
+    "character": true,
+    "wave": true,
+    "level": true,
+    "progressionLabel": true,
+    "enlightenLevel": false,
+    "wheels": false,
+    "covenants": false
+  },
+  "notes": [
+    "角色、波次、等级与页面显示的 AA/OE 状态直接来自 Eremora 公开挑战记录。",
+    "数值启灵等级、命轮与密契仅在数据源公开渲染到具体记录时写入；当前不会用角色展示页的现时配装冒充历史挑战配装。",
+    "历史期次由已保存快照永久保留；发现到但尚未完整回填的期次列在 pendingBackfillSeasonIds。"
+  ]
+}
