@@ -1,76 +1,24 @@
-import {mkdir, writeFile} from 'node:fs/promises';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {decodeSvelteData,fetchViaJina,findDzoneActivities,findMediaBase,findProfileHeader,walk} from './eremora_sveltekit.mjs';
 
-const ORIGIN='https://eremora.com';
-const PAGE='/leaderboard';
-const TARGET=`${ORIGIN}${PAGE}`;
-const UA='qdby-chinese-eremora-discovery/1.4 (+https://github.com/Z769018860/qdby_chinese)';
-const OUT_DIR='data/morimens/eremora';
-const OUT=`${OUT_DIR}/discovery.json`;
+const ORIGIN='https://eremora.com',OUT_DIR='data/morimens/eremora',UA='qdby-chinese-eremora-discovery/2.0 (+https://github.com/Z769018860/qdby_chinese)';
+const PAGE=`${ORIGIN}/leaderboard/abyss`,RAW_INDEX=`${PAGE}/__data.json`;
+const uniq=xs=>[...new Set((xs||[]).filter(Boolean))];
+async function reader(url){return (await fetchViaJina(url,{ua:UA,retries:4})).text}
+function challengeUrls(text=''){return uniq([...text.matchAll(/https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+)/g)].map(m=>({url:m[0],uid:m[1],season:Number(m[2])})).map(x=>JSON.stringify(x))).map(JSON.parse)}
+function shape(root){
+  const keys=new Map(),arrays=new Map();walk(root,(v,p)=>{if(Array.isArray(v)){arrays.set(p,v.length);return}for(const k of Object.keys(v))keys.set(k,(keys.get(k)||0)+1)});
+  return {topKeys:root&&typeof root==='object'?Object.keys(root):[],keyFrequency:[...keys].sort((a,b)=>b[1]-a[1]).slice(0,120),largestArrays:[...arrays].sort((a,b)=>b[1]-a[1]).slice(0,40)};
+}
+function apiCandidates(text=''){return uniq([...text.matchAll(/https?:\/\/[^"'`\\\s]+|\/api\/[A-Za-z0-9_?=&./:${}\-]+/g)].map(m=>m[0]).filter(x=>/api|leaderboard|dzone|challenge|season/i.test(x))).slice(0,200)}
 
-function uniq(xs){return [...new Set(xs.filter(Boolean))]}
-function abs(u){try{return new URL(u,ORIGIN).href}catch{return null}}
-async function get(url,headers={}){
-  const r=await fetch(url,{headers:{'user-agent':UA,'accept':'text/html,application/xhtml+xml,application/json,text/plain;q=0.9,*/*;q=0.8',...headers},redirect:'follow',signal:AbortSignal.timeout(45000)});
-  return {status:r.status,url:r.url,headers:Object.fromEntries(r.headers.entries()),text:await r.text()};
+const rendered=await reader(PAGE),links=challengeUrls(rendered);let rawIndex={ok:false,error:null,length:0,docs:[],schema:null,apiCandidates:[]};
+try{const text=await reader(RAW_INDEX),decoded=decodeSvelteData(text);rawIndex={ok:true,error:null,length:decoded.raw.length,docs:decoded.docs.map(x=>({type:x?.type??null,id:x?.id??null,dataLength:Array.isArray(x?.data)?x.data.length:null,nodes:Array.isArray(x?.nodes)?x.nodes.length:null})),schema:shape(decoded.root),apiCandidates:apiCandidates(decoded.raw)}}catch(error){rawIndex.error=String(error)}
+let detail={ok:false,url:null,error:null,length:0,profile:null,mediaBase:null,activities:[],schema:null,apiCandidates:[]};
+if(links[0]){
+  detail.url=`${links[0].url}/__data.json`;
+  try{const text=await reader(detail.url),decoded=decodeSvelteData(text);detail={ok:true,url:detail.url,error:null,length:decoded.raw.length,profile:findProfileHeader(decoded),mediaBase:findMediaBase(decoded),activities:findDzoneActivities(decoded).map(x=>({period:x.period,stageCount:x.stageCount,activityId:x.node?.activity?.id??null,activityTid:x.node?.activity_tid??null,start:x.node?.activity?.start??null,end:x.node?.activity?.end??null})),schema:shape(decoded.root),apiCandidates:apiCandidates(decoded.raw)}}catch(error){detail.error=String(error)}
 }
-async function getReader(target,format='markdown'){
-  return get(`https://r.jina.ai/${target}`,{'accept':format==='html'?'text/html':'text/plain','x-engine':'browser','x-timeout':'40','x-wait-for-selector':'body','x-return-format':format});
-}
-function apiCandidates(text=''){
-  const out=[];
-  const patterns=[
-    /["'`](\/api\/[A-Za-z0-9_?=&./:${}\-]+)["'`]/g,
-    /["'`](https?:\/\/[^"'`\s]+(?:leaderboard|dzone|d-zone|dtide|d-tide|challenge|clear|season|wave)[^"'`\s]*)["'`]/gi,
-    /(?:href|src)=["']([^"']*(?:leaderboard|dzone|d-zone|dtide|d-tide|challenge|clear|season|wave)[^"']*)["']/gi,
-    /\]\((https?:\/\/[^)]+|\/[^)]+)\)/g,
-  ];
-  for(const p of patterns)for(const m of text.matchAll(p))out.push(m[1]);
-  return uniq(out).slice(0,1000);
-}
-function contexts(text='',needleRe=/(leaderboard|dzone|d-zone|dtide|d-tide|challenge|clear|season|wave|融灾)/ig,limit=180){
-  const out=[];let m;
-  while((m=needleRe.exec(text))&&out.length<limit){const s=Math.max(0,m.index-300),e=Math.min(text.length,m.index+900);out.push(text.slice(s,e).replace(/\s+/g,' '))}
-  return uniq(out);
-}
-
-const page=await get(TARGET);
-let reader={status:0,url:'',headers:{},text:'',error:null};
-try{reader=await getReader(TARGET)}catch(error){reader.error=String(error)}
-
-const sourceText=page.status===200?page.text:reader.text;
-const scriptSrcs=uniq([...sourceText.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map(m=>abs(m[1])));
-const nextData=[...sourceText.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(x=>/leaderboard|dzone|d-tide|dtide|challenge|__next_f|__NEXT_DATA__/i.test(x));
-const assets=[];
-for(const url of scriptSrcs.filter(u=>u?.includes('/_next/')).slice(0,80)){
-  try{const r=await get(url);assets.push({url,status:r.status,length:r.text.length,candidates:apiCandidates(r.text),contexts:contexts(r.text,/(leaderboard|dzone|d-zone|dtide|d-tide|challenge|clear|season|wave)/ig,80)})}
-  catch(error){assets.push({url,error:String(error)})}
-}
-const candidates=uniq([...apiCandidates(page.text),...apiCandidates(reader.text),...nextData.flatMap(apiCandidates),...assets.flatMap(x=>x.candidates||[])]);
-const challengeUrls=uniq([...reader.text.matchAll(/\]\((https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+))\)/g)].map(m=>m[1]));
-let challengeSample={url:null,status:0,text:'',error:null},challengeHtml={status:0,text:'',error:null},profileSample={url:null,status:0,text:'',error:null};
-if(challengeUrls[0]){
-  try{const r=await getReader(challengeUrls[0]);challengeSample={url:challengeUrls[0],status:r.status,text:r.text,error:null}}catch(error){challengeSample={url:challengeUrls[0],status:0,text:'',error:String(error)}}
-  try{const r=await getReader(challengeUrls[0],'html');challengeHtml={status:r.status,text:r.text,error:null}}catch(error){challengeHtml={status:0,text:'',error:String(error)}}
-  const uid=challengeUrls[0].match(/\/u\/(\d+)\//)?.[1];
-  if(uid){const profileUrl=`${ORIGIN}/u/${uid}`;try{const r=await getReader(profileUrl);profileSample={url:profileUrl,status:r.status,text:r.text,error:null}}catch(error){profileSample={url:profileUrl,status:0,text:'',error:String(error)}}}
-}
-const markdownLines=reader.text.split(/\r?\n/).filter(Boolean);
-const history=uniq([...profileSample.text.matchAll(/https:\/\/eremora\.com\/u\/\d+\/challenges\/dzone\/(\d+)/g)].map(m=>Number(m[1]))).sort((a,b)=>b-a);
-const payload={
-  source:{url:TARGET,fetchedAt:new Date().toISOString(),directStatus:page.status,directFinalUrl:page.url,readerStatus:reader.status,readerFinalUrl:reader.url,readerError:reader.error},
-  html:{length:page.text.length,scriptSrcs,nextInlineCount:nextData.length,candidates:apiCandidates(page.text),contexts:contexts(page.text)},
-  reader:{length:reader.text.length,titleLine:markdownLines.find(x=>/^Title:/i.test(x))||null,urlLine:markdownLines.find(x=>/^URL Source:/i.test(x))||null,candidates:apiCandidates(reader.text),contexts:contexts(reader.text)},
-  challenge:{count:challengeUrls.length,firstUrl:challengeSample.url,firstStatus:challengeSample.status,firstLength:challengeSample.text.length,htmlStatus:challengeHtml.status,htmlLength:challengeHtml.text.length,error:challengeSample.error,contexts:contexts(challengeSample.text,/(team|awakener|wheel|covenant|enlighten|level|wave|turn|score|damage|d zone|dzone|aa|oe)/ig,180)},
-  profile:{url:profileSample.url,status:profileSample.status,length:profileSample.text.length,error:profileSample.error,dzoneSeasonIds:history,contexts:contexts(profileSample.text,/(d-zone|dzone|season|challenge)/ig,120)},
-  assets,
-  candidates
-};
-await mkdir(OUT_DIR,{recursive:true});
-await Promise.all([
-  writeFile(OUT,JSON.stringify(payload,null,2)+'\n'),
-  writeFile(`${OUT_DIR}/reader.md`,reader.text||''),
-  writeFile(`${OUT_DIR}/challenge-sample.md`,challengeSample.text||''),
-  writeFile(`${OUT_DIR}/challenge-sample.html`,challengeHtml.text||''),
-  writeFile(`${OUT_DIR}/profile-sample.md`,profileSample.text||'')
-]);
-console.log(`Eremora discovery: direct=${page.status}/${page.text.length}, reader=${reader.status}/${reader.text.length}, challenge=${challengeSample.status}/${challengeSample.text.length}, html=${challengeHtml.status}/${challengeHtml.text.length}, profile=${profileSample.status}/${profileSample.text.length}, clearLinks=${challengeUrls.length}, seasons=${history.join(',')}.`);
+const payload={fetchedAt:new Date().toISOString(),source:{renderedLeaderboard:PAGE,structuredLeaderboard:RAW_INDEX,challengeDetailTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,transport:'SvelteKit server-load __data.json (newline-delimited devalue stream)',relay:'Jina Reader is used only as an HTTP/browser relay because direct Eremora requests are Cloudflare-protected'},leaderboard:{renderedLength:rendered.length,challengeLinkCount:links.length,seasons:uniq(links.map(x=>x.season)).sort((a,b)=>b-a),sample:links.slice(0,5)},structuredLeaderboard:rawIndex,challengeDetail:detail,deeperPublicApi:{verified:false,candidates:uniq([...(rawIndex.apiCandidates||[]),...(detail.apiCandidates||[])]),note:'No separate documented/public backend API is treated as verified. The SvelteKit __data.json endpoints are Eremora’s own structured server-load source and are the stable source used by this project.'}};
+await mkdir(OUT_DIR,{recursive:true});await writeFile(`${OUT_DIR}/discovery.json`,JSON.stringify(payload,null,2)+'\n');
+console.log(`Eremora source discovery: rendered links=${links.length}, leaderboard __data=${rawIndex.ok?'ok':'unavailable'}, challenge __data=${detail.ok?'ok':'unavailable'}, periods=${detail.activities.map(x=>x.period).join(',')}`);
