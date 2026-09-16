@@ -1,15 +1,15 @@
 {
-  "fetchedAt": "2026-09-16T18:59:45.962Z",
+  "fetchedAt": "2026-09-16T19:03:22.241Z",
   "results": [
     {
       "target": "https://eremora.com/leaderboard/abyss/__data.json",
       "status": 200,
-      "length": 52152,
+      "length": 52153,
       "direct": {
         "status": 403,
         "url": "https://eremora.com/leaderboard/abyss/__data.json",
         "length": 5616,
-        "prefix": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-Z3ZiJRMUl1c3c1bdBOrPvl&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-s"
+        "prefix": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-QcwyG8XOfKKEcMdK5qWnYv&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-s"
       },
       "documentTypes": [
         {
@@ -3630,10 +3630,10 @@
       "status": 200,
       "length": 52172,
       "direct": {
-        "status": 200,
+        "status": 403,
         "url": "https://eremora.com/leaderboard/abyss/__data.json?offset=50&limit=50",
-        "length": 52063,
-        "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":443,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,"
+        "length": 5746,
+        "prefix": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-7Z4kbQ4LVr6OAgsMERKx6U&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-s"
       },
       "documentTypes": [
         {
