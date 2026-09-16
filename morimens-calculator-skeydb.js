@@ -30,6 +30,10 @@
     return null;
   }
   function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
+  const slotZh={Defense:'防御',Strike:'打击',Skill1:'技能一',Skill2:'技能二',Rouse:'灵知觉醒',Exalt:'启灵',OverExalt:'超限爆发'};
+  const termZh={'Defense':'防御','Strike':'打击','Skill':'技能','Rouse':'灵知觉醒','Exalt':'启灵','Over Exalt':'超限爆发','Damage':'伤害','Gain':'获得','Shield':'护盾','Crit':'暴击','DMG':'伤害','ATK':'攻击力'};
+  function zhText(value){let out=String(value||'');for(const [a,b] of Object.entries(termZh))out=out.replace(new RegExp(`\\b${a}\\b`,'gi'),b);return out}
+  function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
   function renderTemplate(record,level=1){
     let text=record?.descriptionTemplate||record?.description||'';
     text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
@@ -87,7 +91,7 @@
     try{
       const rows=await window.MorimensRepository.recordsForAwakener('skills',rec.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
       currentSkills.sort((a,b)=>String(a.slot||'').localeCompare(String(b.slot||''))||String(a.name||'').localeCompare(String(b.name||'')));
-      if(select){select.innerHTML='';for(const skill of currentSkills){const o=document.createElement('option');o.value=skill.id;o.textContent=`${skill.slot||''}${skill.slot?' · ':''}${skill.name}`;select.appendChild(o)}}
+      if(select){select.innerHTML='';for(const skill of currentSkills){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);select.appendChild(o)}}
       setText('charSyncStatus',`${labelForAwakener(rec)} · ${currentSkills.length} 个技能已从本地 SKeyDB 同步`);await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
@@ -98,13 +102,13 @@
   }
   function updateSkillLevel(){
     if(!currentSkill)return;const level=Number($('skillLevel')?.value)||1,coef=damageCoefficient(currentSkill,level);if($('skillCoef'))$('skillCoef').value=String(coef);
-    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(currentSkill.name)}</strong> · ${escape(renderTemplate(currentSkill,level))}`;
+    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillCoeffSummary'))$('skillCoeffSummary').textContent=coef?`ATK × ${coef}% · ${currentSkill.id}`:`该技能没有直接 ATK 伤害倍率 · ${currentSkill.id}`;
   }
 
   async function loadCatalogs(){
     const [wr,cr]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants')]);wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];
-    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML='<option value="">无 / None</option>';for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${w.name} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
+    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML='<option value="">无 / None</option>';for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${zhText(w.name)} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
     const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无 / None</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
     const missing=[wr,cr].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
@@ -113,7 +117,7 @@
     for(const o of a.options)o.disabled=!!(o.value&&o.value===bv&&o.value!==av);
     for(const o of b.options)o.disabled=!!(o.value&&o.value===av&&o.value!==bv);
   }
-  function fillLevelSelect(slot,record){const sel=$(`fateLevel${slot+1}`);if(!sel)return;const max=maxArgLevel(record),prev=Math.min(Number(sel.value)||1,max);sel.innerHTML='';for(let i=1;i<=max;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`${i}`;o.selected=i===prev;sel.appendChild(o)}sel.disabled=max<=1}
+  function fillLevelSelect(slot,record){const sel=$(`fateLevel${slot+1}`);if(!sel)return;const max=Math.min(12,Math.max(0,maxArgLevel(record)-1)),prev=Math.min(Math.max(Number(sel.value)||0,max),max);sel.innerHTML='';for(let i=0;i<=max;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0':`+${i}`;o.selected=i===prev;sel.appendChild(o)}sel.disabled=!record||max<=0}
   async function loadWheel(slot){
     const sel=$(slot===0?'fateSelect':'fateSelect2'),id=sel?.value;
     const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();return}
@@ -136,7 +140,7 @@
     return out;
   }
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final'])target[k]+=num(b[k])}
-  function wheelDescription(rec,slot){if(!rec)return '';const level=Number($(`fateLevel${slot+1}`)?.value)||1;return renderTemplate(rec,level)}
+  function wheelDescription(rec,slot){if(!rec)return '';const stage=Math.min(12,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return zhText(renderTemplate(rec,stage+1))}
   function renderWheelsAndBonuses(){
     const texts=currentWheels.map((w,i)=>w?`<strong>${escape(w.name)}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
   }
