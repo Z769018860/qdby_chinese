@@ -3,17 +3,23 @@
     "repository": "dansa/SKeyDB",
     "ref": "main",
     "commit": "27064cd13285f1c49737d6266d17a1c382faffa8",
-    "syncedAt": "2026-09-16T15:39:28.224Z",
+    "syncedAt": "2026-09-16T15:46:13.406Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {
     "awakeners": 60,
     "portraits": 60,
-    "cards": 60
+    "cards": 60,
+    "publicV3Records": null
   },
+  "scopes": null,
   "paths": {
-    "awakeners": "data/morimens/skeydb/awakeners.json",
+    "compactAwakeners": "data/morimens/skeydb/awakeners.json",
+    "publicV3": null,
     "portraits": "assets/morimens/portraits",
-    "cards": "assets/morimens/cards"
+    "cards": "assets/morimens/cards",
+    "wheels": "assets/morimens/wheels",
+    "relics": "assets/morimens/relics",
+    "covenants": "assets/morimens/covenants"
   }
 }
