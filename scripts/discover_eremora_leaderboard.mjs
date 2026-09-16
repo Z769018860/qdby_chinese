@@ -4,8 +4,9 @@ const ORIGIN='https://eremora.com';
 const PAGE='/leaderboard';
 const TARGET=`${ORIGIN}${PAGE}`;
 const JINA=`https://r.jina.ai/${TARGET}`;
-const UA='qdby-chinese-eremora-discovery/1.1 (+https://github.com/Z769018860/qdby_chinese)';
-const OUT='data/morimens/eremora/discovery.json';
+const UA='qdby-chinese-eremora-discovery/1.2 (+https://github.com/Z769018860/qdby_chinese)';
+const OUT_DIR='data/morimens/eremora';
+const OUT=`${OUT_DIR}/discovery.json`;
 
 function uniq(xs){return [...new Set(xs.filter(Boolean))]}
 function abs(u){try{return new URL(u,ORIGIN).href}catch{return null}}
@@ -49,11 +50,14 @@ const markdownLines=reader.text.split(/\r?\n/).filter(Boolean);
 const payload={
   source:{url:TARGET,fetchedAt:new Date().toISOString(),directStatus:page.status,directFinalUrl:page.url,readerStatus:reader.status,readerFinalUrl:reader.url,readerError:reader.error},
   html:{length:page.text.length,scriptSrcs,nextInlineCount:nextData.length,candidates:apiCandidates(page.text),contexts:contexts(page.text)},
-  reader:{length:reader.text.length,titleLine:markdownLines.find(x=>/^Title:/i.test(x))||null,urlLine:markdownLines.find(x=>/^URL Source:/i.test(x))||null,candidates:apiCandidates(reader.text),contexts:contexts(reader.text),sample:reader.text.slice(0,24000)},
+  reader:{length:reader.text.length,titleLine:markdownLines.find(x=>/^Title:/i.test(x))||null,urlLine:markdownLines.find(x=>/^URL Source:/i.test(x))||null,candidates:apiCandidates(reader.text),contexts:contexts(reader.text)},
   assets,
   candidates
 };
-await mkdir('data/morimens/eremora',{recursive:true});
-await writeFile(OUT,JSON.stringify(payload,null,2)+'\n');
+await mkdir(OUT_DIR,{recursive:true});
+await Promise.all([
+  writeFile(OUT,JSON.stringify(payload,null,2)+'\n'),
+  writeFile(`${OUT_DIR}/reader.md`,reader.text||'')
+]);
 console.log(`Eremora discovery: direct=${page.status}/${page.text.length} bytes, reader=${reader.status}/${reader.text.length} bytes, ${scriptSrcs.length} scripts, ${candidates.length} candidates.`);
 for(const c of candidates.slice(0,120))console.log(`candidate: ${c}`);
