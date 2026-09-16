@@ -46,7 +46,7 @@
     const zh=zhFor(rec);
     if(isZh()){
       const q=(zh?.voiceLines?.length?zh.voiceLines:zh?.fallbackVoiceLines)||[];
-      if(!q.length)return [{title:'今日寄语',content:`今天也和${zh?.name||rec.name}一起，稳住节奏，再做决定。`}];
+      
       return q.filter(x=>x?.content);
     }
     return rec?.profile?.voiceLines?.filter(x=>x?.content)||[];
