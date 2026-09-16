@@ -12,6 +12,7 @@
   const normalize=s=>String(s||'').toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
   const realms={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维'};
   const types={ASSAULT:'伤害型',WARDEN:'防御型',CHORUS:'辅助型'};
+  const ART_SLUG_GUARD={'awakener-0014':'doresain','awakener-0053':'winkle'};
 
   function identityFor(rec){return identityDb?.bySkeydbId?.[rec?.id]||null}
   function zhFor(rec){
@@ -20,6 +21,16 @@
     if(live&&normalize(live.englishName)===normalize(rec.name))return seed?{...seed,...live,profile:{...(seed.profile||{}),...(live.profile||{})},voiceLines:live.voiceLines?.length?live.voiceLines:(seed.voiceLines||seed.fallbackVoiceLines||[])}:live;
     if(live)console.warn('Ignored mismatched Morimens zh mapping',rec.id,rec.name,live.name,live.englishName);
     return seed;
+  }
+  function assetVersion(){return encodeURIComponent(db?.source?.syncedAt||db?.source?.commit||'current')}
+  function assetFor(rec,kind){
+    if(!rec)return '';
+    const guarded=ART_SLUG_GUARD[rec.id];
+    let raw='';
+    if(guarded)raw=`assets/morimens/${kind==='card'?'cards':'portraits'}/${guarded}.webp`;
+    else raw=rec.assets?.[kind]||rec.assets?.[kind==='card'?'portrait':'card']||'';
+    if(!raw)return '';
+    return `${raw}${raw.includes('?')?'&':'?'}v=${assetVersion()}`;
   }
 
   function ensureUi(){
@@ -56,10 +67,10 @@
   }
   function render(rec,random=false){
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
-    const portrait=$('fortunePortrait');if(portrait){const src=rec.assets?.card||rec.assets?.portrait||'';portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.alt=`${loc.name} ${isZh()?'角色卡面':'character card'}`;portrait.style.objectPosition='center 18%'}
-    const avatar=$('skeydbAvatar');if(avatar){const src=rec.assets?.portrait||rec.assets?.card||'';avatar.src=src;avatar.hidden=!src;avatar.dataset.awakenerId=rec.id;avatar.alt=`${loc.name} ${isZh()?'头像':'portrait'}`}
+    const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';portrait.alt=`${loc.name} ${isZh()?'角色卡面':'character card'}`;portrait.style.objectPosition='center 18%'}
+    const avatar=$('skeydbAvatar');if(avatar){const src=assetFor(rec,'portrait');avatar.src=src;avatar.hidden=!src;avatar.dataset.awakenerId=rec.id;avatar.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';avatar.alt=`${loc.name} ${isZh()?'头像':'portrait'}`}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}
-    if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
+    if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · ${ART_SLUG_GUARD[rec.id]||rec.assetSlug||''} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
     const labels=isZh()?['稀有度','界域','类型','阵营','生日','声优']:['Rarity','Realm','Type','Faction','Birthday','Voice actor'];
     const values=[loc.rarity,loc.realm,loc.type,loc.faction,loc.birthday,loc.voiceActor];
@@ -78,7 +89,7 @@
       if(enResult.status!=='fulfilled')throw enResult.reason;db=enResult.value;
       if(idResult.status==='fulfilled'){identityDb=idResult.value;identityDb.bySkeydbId=Object.fromEntries((identityDb.records||[]).map(x=>[x.skeydbId,x]))}else console.warn('Chinese identity map unavailable',idResult.reason);
       if(zhResult.status==='fulfilled'&&zhResult.value&&typeof zhResult.value==='object')zhDb=zhResult.value;else console.warn('Chinese Huiji snapshot unavailable',zhResult.reason);
-      window.MorimensData={db,zhDb,identityDb,language,zhFor,localizedProfile};
+      window.MorimensData={db,zhDb,identityDb,language,zhFor,localizedProfile,assetFor};
       const fortune=$('fortuneBtn'),reroll=$('rerollBtn');
       if(fortune)fortune.addEventListener('click',e=>{e.stopImmediatePropagation();renderToday()},{capture:true});
       if(reroll)reroll.addEventListener('click',e=>{e.stopImmediatePropagation();renderRandom()},{capture:true});
