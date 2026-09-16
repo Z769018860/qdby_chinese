@@ -36,7 +36,7 @@
   function ensureUi(){
     const visual=$('fortuneVisual');
     if(visual&&!$('skeydbAvatar')){const img=document.createElement('img');img.id='skeydbAvatar';img.alt='Character portrait';img.style.cssText='position:absolute;left:16px;bottom:16px;z-index:5;width:72px;height:72px;border-radius:12px;object-fit:cover;border:2px solid rgba(213,177,118,.65);background:#111827;box-shadow:0 8px 24px rgba(0,0,0,.35)';visual.appendChild(img)}
-    const body=document.querySelector('.fortuneBody');if(body&&!$('skeydbProfile')){const box=document.createElement('div');box.id='skeydbProfile';box.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px';body.insertBefore(box,body.querySelector('.fortuneMeta'))}
+    const body=document.querySelector('.fortuneBody');if(body&&!$('skeydbAdvice')){const box=document.createElement('div');box.id='skeydbAdvice';box.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px';body.insertBefore(box,body.querySelector('.fortuneMeta'))}if(body&&!$('skeydbProfile')){const box=document.createElement('div');box.id='skeydbProfile';box.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px';body.insertBefore(box,body.querySelector('.fortuneMeta'))}
     const actions=document.querySelector('.fortuneActions');if(actions&&!$('skeydbQuoteBtn')){const b=document.createElement('button');b.id='skeydbQuoteBtn';b.type='button';b.className='ghostBtn';b.textContent='换一句角色台词';b.addEventListener('click',()=>{if(!current)return;quoteIndex++;renderQuote(current)});actions.insertBefore(b,actions.lastElementChild)}
     const tags=document.querySelector('.heroTags');if(tags&&!$('skeydbStatus')){const s=document.createElement('span');s.className='tag';s.id='skeydbStatus';s.textContent='SKeyDB / Wiki：等待同步快照';tags.appendChild(s)}
     const sources=document.querySelector('.sourceList');if(sources&&!$('skeydbAttribution')){const note=document.createElement('div');note.id='skeydbAttribution';note.className='sourceItem';sources.appendChild(note)}
@@ -46,6 +46,7 @@
     const zh=zhFor(rec);
     if(isZh()){
       const q=(zh?.voiceLines?.length?zh.voiceLines:zh?.fallbackVoiceLines)||[];
+      if(!q.length)return [{title:'今日寄语',content:`今天也和${zh?.name||rec.name}一起，稳住节奏，再做决定。`}];
       return q.filter(x=>x?.content);
     }
     return rec?.profile?.voiceLines?.filter(x=>x?.content)||[];
@@ -72,6 +73,7 @@
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · ${ART_SLUG_GUARD[rec.id]||rec.assetSlug||''} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
+    const advice=$('skeydbAdvice');if(advice){const seed=hash(`${todayKey()}-${rec.id}`),yi=['刷取资源与升级技能','尝试新配队','整理卡组与命轮','挑战高难关卡','查看角色剧情','为明日预留体力'][seed%6],ji=['冲动消耗稀有资源','忽略队伍生存','在不了解机制时盲目挑战','忘记保存计算结果','只看单项倍率而忽略乘区','连续重复无效操作'][(seed>>>3)%6];advice.innerHTML=`<div style="padding:10px;border-radius:10px;background:rgba(72,187,120,.12);color:#b7f7cf"><strong>今日宜</strong><br>${yi}</div><div style="padding:10px;border-radius:10px;background:rgba(248,113,113,.12);color:#fecaca"><strong>今日忌</strong><br>${ji}</div>`}
     const labels=isZh()?['稀有度','界域','类型','阵营','生日','声优']:['Rarity','Realm','Type','Faction','Birthday','Voice actor'];
     const values=[loc.rarity,loc.realm,loc.type,loc.faction,loc.birthday,loc.voiceActor];
     const p=$('skeydbProfile');if(p)p.innerHTML=labels.map((k,i)=>[k,values[i]]).filter(x=>x[1]).map(([k,v])=>`<div style="padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf">${escape(k)}<strong style="display:block;color:#e5e7eb;margin-top:3px">${escape(v)}</strong></div>`).join('');
