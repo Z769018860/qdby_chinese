@@ -3,14 +3,14 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-16T17:30:45.930Z",
+    "syncedAt": "2026-09-16T17:46:19.227Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 60,
   "mapped": 60,
-  "enriched": 5,
+  "enriched": 6,
   "jinaRecords": 58,
-  "cachedRecords": 5,
+  "cachedRecords": 6,
   "voiceRecords": 6,
   "failed": [
     {
@@ -88,12 +88,6 @@
     {
       "title": "朵尔",
       "skeydbId": "awakener-0013",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "杜勒赛因",
-      "skeydbId": "awakener-0014",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -1155,7 +1149,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9D%9C%E5%8B%92%E8%B5%9B%E5%9B%A0"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0015",
@@ -5825,7 +5819,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9D%9C%E5%8B%92%E8%B5%9B%E5%9B%A0"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0015": {
       "skeydbId": "awakener-0015",
