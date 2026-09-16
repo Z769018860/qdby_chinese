@@ -61,9 +61,10 @@ jobs:
         env:
           EREMORA_USAGE_TARGET: "1000"
           EREMORA_USAGE_MAX_FETCH: "1000"
-          EREMORA_USAGE_BATCH_SIZE: "3"
-          EREMORA_USAGE_BATCH_DELAY_MS: "2800"
+          EREMORA_USAGE_BATCH_SIZE: "8"
+          EREMORA_USAGE_BATCH_DELAY_MS: "800"
           EREMORA_USAGE_STALE_DAYS: "7"
+          EREMORA_USAGE_CHECKPOINT_EVERY: "10"
         run: node scripts/sync_morimens_eremora_usage.mjs
       - name: Commit Eremora snapshots
         run: |
