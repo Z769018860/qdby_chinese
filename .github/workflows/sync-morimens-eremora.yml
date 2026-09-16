@@ -55,12 +55,11 @@ jobs:
       - name: Precompute detailed rank, difficulty and enlightenment analytics
         continue-on-error: true
         run: node scripts/postprocess_morimens_eremora.mjs
-      - name: Sync Eremora Top 1000 rank index
-        continue-on-error: true
-        env:
-          EREMORA_RANK_TARGET: "1000"
-          EREMORA_RANK_DELAY_MS: "1100"
-        run: node scripts/sync_morimens_eremora_rank_index.mjs
+      - name: Use previously synchronized Eremora Top 1000 rank index
+        run: |
+          test -s data/morimens/eremora/rank-index/69.json
+          node -e "const x=require('./data/morimens/eremora/rank-index/69.json'); if((x.rows||[]).length<1000) throw new Error('Cached rank index is incomplete: '+(x.rows||[]).length); console.log('Using cached complete rank index:', x.rows.length)"
+
       - name: Sync Top 1000 public D-Zone usage records
         env:
           EREMORA_USAGE_TARGET: "1000"
