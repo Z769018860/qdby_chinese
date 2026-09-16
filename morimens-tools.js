@@ -20,11 +20,12 @@
     const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
     const code=new TextDecoder("utf-8").decode(bytes);
     (0,eval)(code);
+    await import(`./morimens-skeydb.js?v=${Date.now()}`);
   }catch(err){
     console.error("Morimens v0.3 loader failed",err);
     const box=document.createElement("div");
     box.style.cssText="position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;padding:12px 14px;border-radius:12px;background:#7f1d1d;color:#fff;font:14px/1.6 system-ui";
-    box.textContent="忘却前夜工具 v0.3 加载失败，请刷新页面或稍后再试。";
+    box.textContent="忘却前夜工具加载失败，请刷新页面或稍后再试。";
     document.body.appendChild(box);
   }
 })();
