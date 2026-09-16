@@ -89,8 +89,9 @@
     const entry=manifest?.availableSeasons?.find(x=>String(x.seasonId)===String(id));
     if(!entry){usage=null;usageStats=null;return false}
     try{
-      usage=await json(entry.path);
-      try{usageStats=await json(entry.statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
+      const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
+      usage=await json((current||entry).path);
+      try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
       activeSeason=Number(id);renderAll();return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
   }
