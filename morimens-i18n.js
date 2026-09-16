@@ -33,9 +33,7 @@
     '稀有度':'Rarity','界域':'Realm','类型':'Type','阵营':'Faction','生日':'Birthday','声优':'Voice actor'
   };
   const reverse=Object.fromEntries(Object.entries(dict).map(([a,b])=>[b,a]));
-  const realm={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维'};
-  const type={ASSAULT:'伤害型',WARDEN:'防御型',CHORUS:'辅助型'};
-  const normalize=s=>String(s||'').toLowerCase().replace(/[“”"'「」·:：\s_\-]/g,'').replace(/[^a-z0-9\u4e00-\u9fff]/g,'');
+  const normalize=s=>String(s||'').toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
   let lang=localStorage.getItem(KEY)||ZH;
   let observer=null;
 
@@ -51,12 +49,20 @@
   }
   function dataMaps(){
     const data=window.MorimensData;if(!data?.db?.records)return null;
-    const byAny=new Map();for(const rec of data.db.records){const zh=data.zhDb?.bySkeydbId?.[rec.id];for(const k of [rec.name,rec.slug,rec.assetSlug,...(rec.aliases||[]),zh?.name,zh?.englishName]){const n=normalize(k);if(n)byAny.set(n,{rec,zh})}}
+    const byAny=new Map();for(const rec of data.db.records){const zh=data.zhDb?.bySkeydbId?.[rec.id];for(const k of [rec.id,rec.name,rec.slug,rec.assetSlug,...(rec.aliases||[]),zh?.name,zh?.englishName]){const n=normalize(k);if(n)byAny.set(n,{rec,zh})}}
     return byAny;
   }
   function translateCharacterOptions(){
-    const select=document.getElementById('charSelect'),map=dataMaps();if(!select||!map)return;
-    for(const opt of select.options){const hit=map.get(normalize(opt.textContent))||map.get(normalize(opt.value));if(!hit)continue;opt.textContent=lang===ZH?(hit.zh?.name||hit.rec.name):hit.rec.name}
+    const select=document.getElementById('charSelect'),data=window.MorimensData,map=dataMaps();if(!select||!data?.db?.records||!map)return;
+    const byId=new Map(data.db.records.map(rec=>[rec.id,rec]));
+    for(const opt of select.options){
+      const stableId=opt.dataset?.awakenerId||'';
+      const rec=byId.get(stableId);
+      const hit=rec?{rec,zh:data.zhDb?.bySkeydbId?.[rec.id]||null}:(map.get(normalize(opt.value))||map.get(normalize(opt.textContent)));
+      if(!hit)continue;
+      opt.dataset.awakenerId=hit.rec.id;
+      opt.textContent=lang===ZH?(hit.zh?.name||hit.rec.name):hit.rec.name;
+    }
   }
   function translateDynamicControls(){
     const quote=document.getElementById('skeydbQuoteBtn');if(quote)quote.textContent=lang===ZH?'换一句角色台词':'Another Voice Line';
