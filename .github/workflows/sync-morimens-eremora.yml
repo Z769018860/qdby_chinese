@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "scripts/discover_eremora_leaderboard.mjs"
+      - "scripts/eremora_sveltekit.mjs"
       - "scripts/sync_morimens_eremora.mjs"
       - "morimens-dtide.js"
       - ".github/workflows/sync-morimens-eremora.yml"
@@ -22,7 +23,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,11 +34,16 @@ jobs:
       - name: Validate Eremora sync scripts
         run: |
           node --check scripts/discover_eremora_leaderboard.mjs
+          node --check scripts/eremora_sveltekit.mjs
           node --check scripts/sync_morimens_eremora.mjs
           node --check morimens-dtide.js
       - name: Discover Eremora public data
         run: node scripts/discover_eremora_leaderboard.mjs
-      - name: Sync Eremora leaderboard snapshot
+      - name: Sync Eremora structured D-Zone records
+        env:
+          EREMORA_MAX_RECORDS: "60"
+          EREMORA_BATCH_SIZE: "2"
+          EREMORA_BATCH_DELAY_MS: "3000"
         run: node scripts/sync_morimens_eremora.mjs
       - name: Commit Eremora snapshots
         run: |
@@ -48,6 +54,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/morimens/eremora
-          git commit -m "chore: refresh Eremora leaderboard snapshot"
+          git commit -m "chore: refresh Eremora structured leaderboard snapshot"
           git pull --rebase origin main
           git push origin HEAD:main
