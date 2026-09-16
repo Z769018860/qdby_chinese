@@ -30,7 +30,7 @@
     return null;
   }
   function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
-  const slotZh={Defense:'防御',Strike:'打击',Skill1:'技能一',Skill2:'技能二',Rouse:'灵知觉醒',Exalt:'启灵',OverExalt:'超限爆发'};
+  const slotZh={Strike:'打击',Defense:'防御',Rouse:'灵知觉醒',Skill1:'技能卡一',Skill2:'技能卡二',Exalt:'狂气爆发',OverExalt:'超限爆发'};const slotOrder={Strike:1,Defense:2,Rouse:3,Skill1:4,Skill2:5,Exalt:6,OverExalt:7};
   const termZh={'Defense':'防御','Strike':'打击','Skill':'技能','Rouse':'灵知觉醒','Exalt':'启灵','Over Exalt':'超限爆发','Damage':'伤害','Gain':'获得','Shield':'护盾','Crit':'暴击','DMG':'伤害','ATK':'攻击力'};
   function zhText(value){let out=String(value||'');for(const [a,b] of Object.entries(termZh))out=out.replace(new RegExp(`\\b${a}\\b`,'gi'),b);return out}
   function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
@@ -90,7 +90,7 @@
     applyCharacterStats();
     try{
       const rows=await window.MorimensRepository.recordsForAwakener('skills',rec.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
-      currentSkills.sort((a,b)=>String(a.slot||'').localeCompare(String(b.slot||''))||String(a.name||'').localeCompare(String(b.name||'')));
+      currentSkills=currentSkills.filter(x=>slotOrder[x.slot]);currentSkills.sort((a,b)=>(slotOrder[a.slot]||99)-(slotOrder[b.slot]||99)||String(a.name||'').localeCompare(String(b.name||'')));
       if(select){select.innerHTML='';for(const skill of currentSkills){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);select.appendChild(o)}}
       setText('charSyncStatus',`${labelForAwakener(rec)} · ${currentSkills.length} 个技能已从本地 SKeyDB 同步`);await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
