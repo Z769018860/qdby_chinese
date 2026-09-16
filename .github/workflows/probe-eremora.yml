@@ -1,0 +1,35 @@
+name: Probe Eremora Routes
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/probe_eremora_routes.mjs"
+      - ".github/workflows/probe-eremora.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --check scripts/probe_eremora_routes.mjs
+      - run: node scripts/probe_eremora_routes.mjs
+      - name: Commit probe result
+        run: |
+          if [ -z "$(git status --porcelain -- data/morimens/eremora/route-probe.json)" ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/morimens/eremora/route-probe.json
+          git commit -m "chore: refresh Eremora route probe"
+          git pull --rebase origin main
+          git push origin HEAD:main
