@@ -3,7 +3,7 @@
     "site": "Eremora",
     "rankIndex": "data/morimens/eremora/rank-index/69.json",
     "detailTransport": "public challenge pages via Jina Reader",
-    "syncedAt": "2026-09-16T23:05:16.700Z"
+    "syncedAt": "2026-09-16T23:05:54.342Z"
   },
   "seasonId": 69,
   "target": 1000,
@@ -18,8 +18,8 @@
   "refresh": {
     "historical": false,
     "requested": 349,
-    "completed": 24,
-    "failed": 24,
+    "completed": 48,
+    "failed": 48,
     "staleDays": 7
   },
   "failures": [
@@ -142,6 +142,126 @@
       "rank": 298,
       "uid": "101179423",
       "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 311,
+      "uid": "100540706",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 312,
+      "uid": "101886244",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 323,
+      "uid": "100660672",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 337,
+      "uid": "100555078",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 345,
+      "uid": "100700212",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 376,
+      "uid": "101127653",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 398,
+      "uid": "100981349",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 406,
+      "uid": "100996946",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 428,
+      "uid": "100984270",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 454,
+      "uid": "101077574",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 464,
+      "uid": "101393465",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 474,
+      "uid": "100936437",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 503,
+      "uid": "100805095",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 510,
+      "uid": "101151719",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 519,
+      "uid": "100410259",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 527,
+      "uid": "101621246",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 529,
+      "uid": "101269917",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 550,
+      "uid": "100444743",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 566,
+      "uid": "100659716",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 570,
+      "uid": "101251325",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 576,
+      "uid": "100988963",
+      "error": "Error: no D-Zone teams parsed"
+    },
+    {
+      "rank": 577,
+      "uid": "100428806",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 579,
+      "uid": "101983392",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 594,
+      "uid": "100567328",
+      "error": "Error: no D-Zone teams parsed"
     }
   ],
   "records": [
@@ -249697,8 +249817,8 @@
     }
   ],
   "progress": {
-    "completed": 24,
+    "completed": 48,
     "target": 349,
-    "updatedAt": "2026-09-16T23:05:16.700Z"
+    "updatedAt": "2026-09-16T23:05:54.342Z"
   }
 }
