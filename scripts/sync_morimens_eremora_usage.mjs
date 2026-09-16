@@ -1,4 +1,7 @@
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+const run=promisify(execFile);
 import path from 'node:path';
 import {sleep,fixMojibake} from './eremora_sveltekit.mjs';
 
@@ -13,7 +16,8 @@ const AWAKENERS='data/morimens/skeydb/awakeners.json';
 const TARGET=Math.max(50,Math.min(1000,Number(process.env.EREMORA_USAGE_TARGET||1000)));
 const MAX_FETCH=Math.max(1,Math.min(1000,Number(process.env.EREMORA_USAGE_MAX_FETCH||1000)));
 const BATCH=Math.max(1,Math.min(4,Number(process.env.EREMORA_USAGE_BATCH_SIZE||3)));
-const DELAY=Math.max(1200,Number(process.env.EREMORA_USAGE_BATCH_DELAY_MS||2800));
+const DELAY=Math.max(500,Number(process.env.EREMORA_USAGE_BATCH_DELAY_MS||800));
+const CHECKPOINT_EVERY=Math.max(1,Number(process.env.EREMORA_USAGE_CHECKPOINT_EVERY||10));
 const STALE_DAYS=Math.max(1,Number(process.env.EREMORA_USAGE_STALE_DAYS||7));
 const UA='qdby-chinese-eremora-usage-sync/1.0 (+https://github.com/Z769018860/qdby_chinese)';
 const DIFFICULTY_ZH={normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
@@ -79,6 +83,13 @@ const rankRows=rankDoc.rows.filter(r=>Number(r.rank)<=TARGET).sort((a,b)=>a.rank
 const queue=[];
 for(const row of rankRows){const oldRec=cache.get(String(row.uid)),changed=!oldRec||oldRec.rankFingerprint!==fingerprint(row),stale=oldRec?.fetchedAt?now-Date.parse(oldRec.fetchedAt)>staleMs:true;if(!oldRec||changed||stale)queue.push({row,priority:!oldRec?0:changed?1:2,age:oldRec?.fetchedAt?Date.parse(oldRec.fetchedAt):0})}
 queue.sort((a,b)=>a.priority-b.priority||a.age-b.age||a.row.rank-b.row.rank);const selected=queue.slice(0,MAX_FETCH),failures=[];
+async function checkpoint(batchNumber,done){
+  const partial=[...cache.values()].filter(x=>rankRows.some(row=>String(row.uid)===String(x.uid))).sort((a,b)=>a.rank-b.rank);
+  const expected=Math.min(TARGET,rankRows.length),covered=new Set(partial.map(x=>x.rank)).size;
+  await saveJson(outPath,{source:{site:'Eremora',rankIndex:rankPath,detailTransport:'public challenge pages via Jina Reader',syncedAt:new Date().toISOString()},seasonId,target:TARGET,rankIndexCount:rankRows.length,recordCount:partial.length,coverage:{expected,covered,coveragePct:expected?Number((covered/expected*100).toFixed(2)):0,complete:covered===expected},refresh:{requested:selected.length,completed:done,failed:failures.length,staleDays:STALE_DAYS},failures,records:partial,progress:{batch:batchNumber,batches:Math.ceil(selected.length/BATCH),completed:done,target:selected.length,updatedAt:new Date().toISOString()}});
+  console.log(`Eremora usage progress: ${done}/${selected.length} selected, cached records=${partial.length}, failed=${failures.length}`);
+  if(batchNumber%CHECKPOINT_EVERY===0){try{await run('git',['add',outPath]);await run('git',['commit','-m',`chore: checkpoint Eremora usage ${done}/${selected.length}`]);await run('git',['push','origin','HEAD:main']);console.log(`checkpoint committed: ${done}`)}catch(error){console.warn(`checkpoint push skipped at ${done}: ${error.message}`)}}
+}
 console.log(`Eremora usage season ${seasonId}: rankRows=${rankRows.length}, cached=${cache.size}, refreshQueue=${queue.length}, selected=${selected.length}`);
 for(let i=0;i<selected.length;i+=BATCH){
   const batch=selected.slice(i,i+BATCH),results=await Promise.all(batch.map(async({row})=>{
@@ -87,6 +98,7 @@ for(let i=0;i<selected.length;i+=BATCH){
     return {ok:false,row,error:String(last||'unknown error')};
   }));
   for(const r of results){if(r.ok)cache.set(String(r.row.uid),r.record);else failures.push({rank:r.row.rank,uid:r.row.uid,error:r.error})}
+  await checkpoint(Math.floor(i/BATCH)+1,Math.min(i+BATCH,selected.length));
   if(i+BATCH<selected.length)await sleep(DELAY);
 }
 const valid=[];for(const row of rankRows){const rec=cache.get(String(row.uid));if(!rec)continue;rec.rank=row.rank;rec.score=row.score;rec.rankFingerprint=fingerprint(row);valid.push(rec)}valid.sort((a,b)=>a.rank-b.rank);
