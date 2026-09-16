@@ -66,6 +66,8 @@ jobs:
         run: node scripts/sync_morimens_skeydb.mjs
 
       - name: Sync Chinese localization from HuijiWiki
+        env:
+          MORIMENS_REFRESH_ALL: "1"
         run: node scripts/sync_morimens_huiji_jina.mjs
 
       - name: Validate character identity and art mappings
