@@ -1,104 +1,191 @@
 (()=>{
   const $=id=>document.getElementById(id);
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
-  let currentAwakener=null,currentSkills=[],currentSkill=null;
   const recordCache=new Map();
+  let currentAwakener=null,currentSkills=[],currentSkill=null;
+  let wheelCatalog=[],covenantCatalog=[],currentWheels=[null,null],currentCovenant=null;
+  let applyingAuto=false;
+  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
+  const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
+  const zhCovenants={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸'};
 
   function data(){return window.MorimensData}
   function recordById(id){return data()?.db?.records?.find(x=>x.id===id)||null}
-  function zhFor(rec){return data()?.zhDb?.bySkeydbId?.[rec?.id]||null}
-  function selectedAwakenerId(){return $('charSelect')?.selectedOptions?.[0]?.dataset?.awakenerId||null}
+  function zhFor(rec){return data()?.zhFor?.(rec)||data()?.zhDb?.bySkeydbId?.[rec?.id]||data()?.identityDb?.bySkeydbId?.[rec?.id]||null}
+  function labelForAwakener(rec){return isEnglish()?rec.name:(zhFor(rec)?.name||rec.name)}
+  function escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function selectedAwakenerId(){return $('charSelect')?.selectedOptions?.[0]?.dataset?.awakenerId||$('charSelect')?.value||null}
+  function num(v,fallback=0){const n=Number.parseFloat(v);return Number.isFinite(n)?n:fallback}
+  function setText(id,text){const el=$(id);if(el)el.textContent=text}
 
-  function renderCharacters(language){
-    const select=$('charSelect'),db=data()?.db;if(!select||!db?.records?.length)return;
-    const previous=selectedAwakenerId()||currentAwakener?.id||db.records[0].id;
-    select.innerHTML='';
-    for(const rec of db.records){
-      const opt=document.createElement('option');const zh=zhFor(rec);
-      opt.dataset.awakenerId=rec.id;
-      if(language==='en'){opt.value=rec.id;opt.textContent=rec.name}
-      else{const label=zh?.name||rec.name;opt.value=label;opt.textContent=label}
-      opt.selected=rec.id===previous;select.appendChild(opt);
-    }
+  async function fetchRecord(scope,id){
+    const key=`${scope}:${id}`;if(recordCache.has(key))return recordCache.get(key);
+    const p=window.MorimensRepository.record(scope,id);recordCache.set(key,p);try{return await p}catch(e){recordCache.delete(key);throw e}
   }
-
-  function argValue(arg,level){
+  function argValue(arg,level=1){
     if(!arg)return null;
     if(Array.isArray(arg.values)&&arg.values.length)return arg.values[Math.min(Math.max(level-1,0),arg.values.length-1)];
     if(arg.value!==undefined)return arg.value;
+    if(arg.base!==undefined){const base=num(arg.base),gain=num(arg.gainPerLevel);return String(base+gain*Math.max(0,level-1))}
     return null;
   }
+  function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
+  function renderTemplate(record,level=1){
+    let text=record?.descriptionTemplate||record?.description||'';
+    text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
+    text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level);return v===null?name:`${v}${arg?.suffix||''}`});
+    return text.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1');
+  }
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
-  function damageCoefficient(skill,level){
-    const name=damageArgName(skill);if(!name)return 0;const arg=skill?.descriptionArgs?.[name];const value=Number.parseFloat(argValue(arg,level));return Number.isFinite(value)?value:0;
+  function damageCoefficient(skill,level){const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)}
+  function maxSkillLevel(skill){let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
+
+  function ensureCharacterLevel(){
+    if($('skeydbCharacterLevel'))return;
+    const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;
+    const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="skeydbCharacterLevel">角色等级 / Character Lv.</label><input id="skeydbCharacterLevel" type="number" min="1" max="90" step="1" value="90"><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';
+    anchor.parentNode.insertBefore(wrap,anchor.nextSibling);
+    $('skeydbCharacterLevel').addEventListener('input',()=>{if(currentAwakener){$('attack').dataset.autoAttack='1';applyCharacterStats()}},{capture:true});
+    $('attack')?.addEventListener('input',()=>{if(!applyingAuto)$('attack').dataset.autoAttack='0'});
   }
-  function maxLevel(skill){
-    let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n;
+  function ensureSecondWheelUi(){
+    const first=$('fateSelect');if(!first||$('fateSelect2'))return;
+    const field=first.closest('.field');if(!field)return;field.classList.remove('full');
+    const second=document.createElement('div');second.className='field';second.innerHTML='<label for="fateSelect2">命轮 2 / Wheel 2</label><select id="fateSelect2"><option value="">无 / None</option></select>';
+    field.parentNode.insertBefore(second,field.nextSibling);
+    const l1=document.createElement('div');l1.className='field';l1.innerHTML='<label for="fateLevel1">命轮 1 效果档位</label><select id="fateLevel1"><option value="1">1</option></select>';
+    const l2=document.createElement('div');l2.className='field';l2.innerHTML='<label for="fateLevel2">命轮 2 效果档位</label><select id="fateLevel2"><option value="1">1</option></select>';
+    second.parentNode.insertBefore(l1,second.nextSibling);second.parentNode.insertBefore(l2,l1.nextSibling);
+    first.previousElementSibling&&(first.previousElementSibling.textContent='命轮 1 / Wheel 1');
+    $('fateSelect2').addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(1)},{capture:true});
+    $('fateLevel1').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses()},{capture:true});
+    $('fateLevel2').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses()},{capture:true});
   }
-  function renderDescription(skill,level){
-    let text=skill?.descriptionTemplate||'No description is available in the synchronized SKeyDB record.';
-    text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{
-      const arg=skill?.descriptionArgs?.[name],value=argValue(arg,level);if(value===null||value===undefined)return name;
-      if(kind==='Damage'&&arg?.stat)return `${arg.stat} × ${value}${arg.suffix||''}`;
-      return `${value}${arg?.suffix||''}`;
-    });
-    text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=skill?.descriptionArgs?.[name],value=argValue(arg,level);return value===null||value===undefined?name:`${value}${arg?.suffix||''}`});
-    return text.replace(/\n/g,' ');
-  }
-  async function fetchSkill(id){
-    if(recordCache.has(id))return recordCache.get(id);
-    const p=window.MorimensRepository.record('skills',id);recordCache.set(id,p);try{return await p}catch(e){recordCache.delete(id);throw e}
-  }
-  async function loadEnglishAwakener(){
-    const id=selectedAwakenerId()||$('charSelect')?.value;const rec=recordById(id);if(!rec)return;currentAwakener=rec;
-    const select=$('skillSelect');if(!select)return;
-    $('charSyncText')&&($('charSyncText').textContent='SKeyDB public-v3');
-    $('charSyncStatus')&&($('charSyncStatus').textContent=`Loading ${rec.name} skills from the local SKeyDB snapshot…`);
-    $('charSyncDot')?.classList.remove('bad','warn');
-    select.innerHTML='<option value="">Loading skills…</option>';
-    try{
-      const rows=await window.MorimensRepository.recordsForAwakener('skills',rec.id);
-      currentSkills=await Promise.all(rows.map(x=>fetchSkill(x.id)));
-      currentSkills.sort((a,b)=>String(a.slot||'').localeCompare(String(b.slot||''))||String(a.name).localeCompare(String(b.name)));
-      select.innerHTML='';
-      for(const skill of currentSkills){const opt=document.createElement('option');opt.value=skill.id;opt.textContent=skill.name;select.appendChild(opt)}
-      $('charSyncStatus')&&($('charSyncStatus').textContent=`SKeyDB: ${currentSkills.length} synchronized skills for ${rec.name}`);
-      $('charSyncDot')?.classList.add('ok');
-      await applyEnglishSkill();
-    }catch(error){
-      console.warn('SKeyDB English skill load failed',error);$('charSyncStatus')&&($('charSyncStatus').textContent='SKeyDB skill snapshot failed to load');$('charSyncDot')?.classList.add('bad');
-    }
-  }
-  async function applyEnglishSkill(){
-    const id=$('skillSelect')?.value;if(!id)return;currentSkill=currentSkills.find(x=>x.id===id)||await fetchSkill(id);
-    const levelSelect=$('skillLevel'),levels=maxLevel(currentSkill),previous=Math.min(Number(levelSelect?.value)||1,levels);
-    if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}
-    updateEnglishSkillLevel();
-  }
-  function updateEnglishSkillLevel(){
-    if(!currentSkill)return;const level=Number($('skillLevel')?.value)||1,coef=damageCoefficient(currentSkill,level);
-    if($('skillCoeff'))$('skillCoeff').value=String(coef);
-    if($('hitCount'))$('hitCount').value='1';
-    if($('skillDamageMode'))$('skillDamageMode').value='primary';
-    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${currentSkill.name}</strong> · ${renderDescription(currentSkill,level)}`;
-    if($('skillCoeffSummary'))$('skillCoeffSummary').textContent=coef?`ATK scaling: ${coef}% · SKeyDB ${currentSkill.id}`:`No direct ATK damage coefficient · SKeyDB ${currentSkill.id}`;
+  function ensureSyncBadge(){
+    const block=$('fateDesc')?.closest('.builderBlock');if(block&&!$('skeydbBuildStatus')){const d=document.createElement('div');d.id='skeydbBuildStatus';d.className='syncLine';d.innerHTML='<span class="syncDot" id="skeydbBuildDot"></span><span id="skeydbBuildText">SKeyDB 配装数据加载中…</span>';block.appendChild(d)}
   }
 
-  function restoreChinese(){
-    renderCharacters('zh-CN');
-    const select=$('charSelect');if(!select)return;
-    const event=new Event('change',{bubbles:true});select.dispatchEvent(event);
-    $('charSyncText')&&($('charSyncText').textContent='中文维基 / 同步快照');
+  function renderCharacters(){
+    const select=$('charSelect'),db=data()?.db;if(!select||!db?.records?.length)return;
+    const previous=selectedAwakenerId()||currentAwakener?.id||db.records[0].id;select.innerHTML='';
+    for(const rec of db.records){const opt=document.createElement('option');opt.dataset.awakenerId=rec.id;opt.value=rec.id;opt.textContent=labelForAwakener(rec);opt.selected=rec.id===previous;select.appendChild(opt)}
   }
-  function activateEnglish(){renderCharacters('en');loadEnglishAwakener()}
-  function applyLanguage(){if(isEnglish())activateEnglish();else restoreChinese()}
+  function applyCharacterStats(){
+    if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number($('skeydbCharacterLevel')?.value)||90));
+    const base=num(currentAwakener.baseStatsLv1?.ATK),growth=num(currentAwakener.statScaling?.ATK);const atk=Math.floor(base+growth*(level-1)+1e-7);
+    const input=$('attack');if(input&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(atk);input.dataset.autoAttack='1';applyingAuto=false}
+    const cr=num(currentAwakener.substatsLv1?.CritRate),cd=num(currentAwakener.substatsLv1?.CritDamage);
+    if($('critRate')&&!$('critRate').dataset.manualInitialized)$('critRate').dataset.manualBase=String(cr);
+    if($('critDamage')&&!$('critDamage').dataset.manualInitialized)$('critDamage').dataset.manualBase=String(100+cd);
+    applyAutoBonuses();
+  }
+  async function loadAwakener(){
+    const id=selectedAwakenerId(),rec=recordById(id);if(!rec)return;currentAwakener=rec;
+    setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(rec)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
+    const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
+    applyCharacterStats();
+    try{
+      const rows=await window.MorimensRepository.recordsForAwakener('skills',rec.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
+      currentSkills.sort((a,b)=>String(a.slot||'').localeCompare(String(b.slot||''))||String(a.name||'').localeCompare(String(b.name||'')));
+      if(select){select.innerHTML='';for(const skill of currentSkills){const o=document.createElement('option');o.value=skill.id;o.textContent=`${skill.slot||''}${skill.slot?' · ':''}${skill.name}`;select.appendChild(o)}}
+      setText('charSyncStatus',`${labelForAwakener(rec)} · ${currentSkills.length} 个技能已从本地 SKeyDB 同步`);await applySkill();
+    }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
+  }
+  async function applySkill(){
+    const id=$('skillSelect')?.value;if(!id)return;currentSkill=currentSkills.find(x=>x.id===id)||await fetchRecord('skills',id);
+    const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
+    if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
+  }
+  function updateSkillLevel(){
+    if(!currentSkill)return;const level=Number($('skillLevel')?.value)||1,coef=damageCoefficient(currentSkill,level);if($('skillCoef'))$('skillCoef').value=String(coef);
+    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(currentSkill.name)}</strong> · ${escape(renderTemplate(currentSkill,level))}`;
+    if($('skillCoeffSummary'))$('skillCoeffSummary').textContent=coef?`ATK × ${coef}% · ${currentSkill.id}`:`该技能没有直接 ATK 伤害倍率 · ${currentSkill.id}`;
+  }
+
+  async function loadCatalogs(){
+    const [wheels,covenants]=await Promise.all([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants')]);wheelCatalog=wheels?.records||[];covenantCatalog=covenants?.records||[];
+    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML='<option value="">无 / None</option>';for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${w.name} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
+    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无 / None</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
+    setText('skeydbBuildText',`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add('ok');syncWheelDuplicates();
+  }
+  function syncWheelDuplicates(){
+    const a=$('fateSelect'),b=$('fateSelect2');if(!a||!b)return;const av=a.value,bv=b.value;
+    for(const o of a.options)o.disabled=!!(o.value&&o.value===bv&&o.value!==av);
+    for(const o of b.options)o.disabled=!!(o.value&&o.value===av&&o.value!==bv);
+  }
+  function fillLevelSelect(slot,record){const sel=$(`fateLevel${slot+1}`);if(!sel)return;const max=maxArgLevel(record),prev=Math.min(Number(sel.value)||1,max);sel.innerHTML='';for(let i=1;i<=max;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`${i}`;o.selected=i===prev;sel.appendChild(o)}sel.disabled=max<=1}
+  async function loadWheel(slot){
+    const sel=$(slot===0?'fateSelect':'fateSelect2'),id=sel?.value;
+    const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();return}
+    currentWheels[slot]=id?await fetchRecord('wheels',id):null;fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();
+  }
+  function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
+  function numericBonusesFromText(text,allowConditional=false){
+    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,skipped:[]};
+    for(const raw of String(text||'').split(/(?<=[.!?。；;])\s*/)){
+      const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
+      let m;
+      if((m=s.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i)))out.base+=num(m[1]);
+      if((m=s.match(/(?:Damage Amplification|DMG Amplification|DMG Amp)[^+%]*\+\s*([\d.]+)%/i)))out.power+=num(m[1]);
+      if((m=s.match(/Crit\.? Rate[^+%]*\+\s*([\d.]+)%/i)))out.critRate+=num(m[1]);
+      if((m=s.match(/Crit\.? DMG[^+%]*\+\s*([\d.]+)%/i)))out.critDamage+=num(m[1]);
+      if((m=s.match(/Vulnerab(?:le|ility)[^+%]*\+\s*([\d.]+)%/i)))out.vulnerability+=num(m[1]);
+      if((m=s.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i)))out.final+=num(m[1]);
+      const both=s.match(/Crit\.? Rate and Crit\.? DMG(?: increase)? by\s*([\d.]+)%/i);if(both){out.critRate+=num(both[1]);out.critDamage+=num(both[1])}
+    }
+    return out;
+  }
+  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final'])target[k]+=num(b[k])}
+  function wheelDescription(rec,slot){if(!rec)return '';const level=Number($(`fateLevel${slot+1}`)?.value)||1;return renderTemplate(rec,level)}
+  function renderWheelsAndBonuses(){
+    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(w.name)}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
+  }
+
+  async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses()}
+  function renderEffect(effect){let text=effect?.descriptionTemplate||'';text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=effect?.descriptionArgs?.[name],v=argValue(arg,1);return v===null?name:`${v}${arg?.suffix||''}`});return text}
+  function renderCovenantAndBonuses(){
+    if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后从 SKeyDB 读取完整 3 / 6 件套效果。';recomputeGearBonuses();return}
+    const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
+  }
+  function recomputeGearBonuses(){
+    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
+    currentWheels.forEach((w,i)=>{if(w)sumBonus(next,numericBonusesFromText(wheelDescription(w,i),false))});
+    if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffect(e),e.set<6||allow))}}
+    Object.assign(auto,next);applyAutoBonuses();renderAutoSummary();
+  }
+
+  function initManualTracking(){
+    for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;if(el.dataset.manualBase===undefined)el.dataset.manualBase=String(num(el.value));el.dataset.manualInitialized='1';el.addEventListener('input',()=>{if(applyingAuto)return;el.dataset.manualBase=String(num(el.value)-num(auto[key]));},{capture:true})}
+  }
+  function applyAutoBonuses(){
+    applyingAuto=true;
+    for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;const manual=num(el.dataset.manualBase, key==='critDamage'?150:0);el.value=String(Math.round((manual+num(auto[key]))*1000)/1000)}
+    applyingAuto=false;
+  }
+  function renderAutoSummary(){
+    const box=$('autoSummary');if(!box)return;const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害']];const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}%</span>`);rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);if(currentCovenant)rows.push(`<span class="chip">密契：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</span>`);box.innerHTML=rows.join('')}
 
   function bindCapture(){
-    const char=$('charSelect'),skill=$('skillSelect'),level=$('skillLevel');
-    char?.addEventListener('change',e=>{if(!isEnglish())return;e.stopImmediatePropagation();loadEnglishAwakener()},{capture:true});
-    skill?.addEventListener('change',e=>{if(!isEnglish())return;e.stopImmediatePropagation();applyEnglishSkill()},{capture:true});
-    level?.addEventListener('change',e=>{if(!isEnglish())return;e.stopImmediatePropagation();updateEnglishSkillLevel()},{capture:true});
+    $('charSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadAwakener()},{capture:true});
+    $('skillSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();applySkill()},{capture:true});
+    $('skillLevel')?.addEventListener('change',e=>{e.stopImmediatePropagation();updateSkillLevel()},{capture:true});
+    $('fateSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(0)},{capture:true});
+    $('contractSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadCovenant()},{capture:true});
+    $('contractPieces')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses()},{capture:true});
+    $('contractConditional')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses()},{capture:true});
+    $('calcBtn')?.addEventListener('click',()=>{recomputeGearBonuses()},{capture:true});
+    $('resetBtn')?.addEventListener('click',e=>{e.stopImmediatePropagation();resetBuild()},{capture:true});
   }
-  function boot(){bindCapture();applyLanguage();window.addEventListener('morimens-language-change',applyLanguage)}
-  if(window.MorimensData?.db)boot();else window.addEventListener('morimens-data-ready',boot,{once:true});
+  async function resetBuild(){
+    if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
+    for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0)}
+    if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();$('calcBtn')?.click();
+  }
+  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderCovenantAndBonuses()}
+
+  async function boot(){
+    ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
+    try{await loadCatalogs();await loadAwakener();window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 配装数据加载失败');$('skeydbBuildDot')?.classList.add('bad')}
+  }
+  if(window.MorimensData?.db&&window.MorimensRepository)boot();else window.addEventListener('morimens-data-ready',boot,{once:true});
 })();
