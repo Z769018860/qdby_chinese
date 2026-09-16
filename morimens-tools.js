@@ -20,6 +20,7 @@
     const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
     const code=new TextDecoder("utf-8").decode(bytes);
     (0,eval)(code);
+    await import(`./morimens-data.js?v=${Date.now()}`);
     await import(`./morimens-skeydb.js?v=${Date.now()}`);
     await import(`./morimens-i18n.js?v=${Date.now()}`);
   }catch(err){
