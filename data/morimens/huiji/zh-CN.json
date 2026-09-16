@@ -3,15 +3,15 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-16T17:46:19.227Z",
+    "syncedAt": "2026-09-16T18:01:24.001Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 60,
   "mapped": 60,
-  "enriched": 6,
+  "enriched": 7,
   "jinaRecords": 58,
   "cachedRecords": 6,
-  "voiceRecords": 6,
+  "voiceRecords": 7,
   "failed": [
     {
       "title": "「24」",
@@ -112,12 +112,6 @@
     {
       "title": "血链·希洛",
       "skeydbId": "awakener-0019",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "环行·拉蒙娜",
-      "skeydbId": "awakener-0020",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -1329,14 +1323,67 @@
         "name": "环行·拉蒙娜",
         "englishName": "Ramona: Timeworn"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "如果你愿意承认我还是「拉蒙娜」的话，请继续这么称呼我吧。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "请不要有顾虑。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "终究还是……"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "变得更加不同了。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "很在意眼罩之下的样子吗？在更合适的场合，我会让你看的，别太心急。"
+        },
+        {
+          "title": "闲话·关于塔薇",
+          "content": "塔薇……远比我们想象中要危险。以后若我不在了，你要对她万分小心。"
+        },
+        {
+          "title": "闲话·关于",
+          "content": "你和另一个朵尔见过面了吗？所谓「世界的真相」，竟会将如此冷静理智的朵尔变成完全另一个人……到了最后，你我也会变成那副模样吗？ （获得唤醒体 后解锁）"
+        },
+        {
+          "title": "闲话·关于墨菲",
+          "content": "和酒会上那些贵族小姐比起来，墨菲的脾气简直算得上可爱。 （获得唤醒体「墨菲」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "从她的记忆里，我看到了很多关于「融蚀」的过往……但每次想告诉你时，我的意识就会中断，恐怕这也是她搞的鬼。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "弥萨格是我留下最多记忆的场所，也是我……最温暖的家。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "和大家在一起度过的时间，总是让人感到闲适……"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "拉蒙娜讨厌失去……抱歉，我的意思是，我不喜欢别离，这太令人伤感了。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "只要我还是「拉蒙娜」，我们就还是搭档，对吗？"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0021",
@@ -5999,14 +6046,67 @@
         "name": "环行·拉蒙娜",
         "englishName": "Ramona: Timeworn"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "如果你愿意承认我还是「拉蒙娜」的话，请继续这么称呼我吧。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "请不要有顾虑。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "终究还是……"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "变得更加不同了。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "很在意眼罩之下的样子吗？在更合适的场合，我会让你看的，别太心急。"
+        },
+        {
+          "title": "闲话·关于塔薇",
+          "content": "塔薇……远比我们想象中要危险。以后若我不在了，你要对她万分小心。"
+        },
+        {
+          "title": "闲话·关于",
+          "content": "你和另一个朵尔见过面了吗？所谓「世界的真相」，竟会将如此冷静理智的朵尔变成完全另一个人……到了最后，你我也会变成那副模样吗？ （获得唤醒体 后解锁）"
+        },
+        {
+          "title": "闲话·关于墨菲",
+          "content": "和酒会上那些贵族小姐比起来，墨菲的脾气简直算得上可爱。 （获得唤醒体「墨菲」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "从她的记忆里，我看到了很多关于「融蚀」的过往……但每次想告诉你时，我的意识就会中断，恐怕这也是她搞的鬼。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "弥萨格是我留下最多记忆的场所，也是我……最温暖的家。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "和大家在一起度过的时间，总是让人感到闲适……"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "拉蒙娜讨厌失去……抱歉，我的意思是，我不喜欢别离，这太令人伤感了。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "只要我还是「拉蒙娜」，我们就还是搭档，对吗？"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     "awakener-0021": {
       "skeydbId": "awakener-0021",
