@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>忘却前夜每日签</title>
+  <style>
+    :root{--bg:#0c1017;--card:rgba(20,27,40,.92);--text:#edf2f7;--muted:#98a4b6;--line:#334155;--accent:#d5b176;--blood:#8f3441;--teal:#6fb3ae;--shadow:0 18px 55px rgba(0,0,0,.34);--radius:22px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Microsoft YaHei","PingFang SC",sans-serif;background:radial-gradient(circle at 20% 0%,rgba(99,74,62,.25),transparent 34%),radial-gradient(circle at 100% 20%,rgba(36,89,91,.18),transparent 30%),linear-gradient(180deg,var(--bg),#090c12 72%);min-height:100vh}
+    a{color:inherit}.wrap{width:min(1220px,calc(100% - 28px));margin:auto}.topbar{padding:22px 0 4px}.back{color:#c6ceda;text-decoration:none;font-size:14px}.back:hover{color:#fff}.hero{margin:16px 0 18px;padding:34px 28px;border:1px solid rgba(213,177,118,.22);border-radius:28px;background:linear-gradient(135deg,rgba(25,31,43,.94),rgba(13,19,29,.9));box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-100px;top:-160px;border:1px solid rgba(213,177,118,.18);box-shadow:0 0 80px rgba(213,177,118,.1)}.eyebrow{margin:0 0 8px;color:var(--accent);font-weight:800;letter-spacing:.18em;font-size:12px}.hero h1{font-size:clamp(30px,5vw,54px);margin:0;line-height:1.05}.lead{max-width:900px;color:#b9c2d0;line-height:1.8;margin:14px 0 0}.heroTags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.tag,.chip{padding:6px 10px;border:1px solid rgba(213,177,118,.26);border-radius:999px;color:#d9c8aa;font-size:12px;background:rgba(213,177,118,.06)}
+    .grid2{display:grid;grid-template-columns:1.22fr .78fr;gap:18px;align-items:start}.panel{background:linear-gradient(180deg,var(--card),rgba(12,17,26,.92));border:1px solid rgba(148,163,184,.16);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}.panel h2{font-size:20px;margin:0}.panelHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.panelLead{color:var(--muted);font-size:13px;line-height:1.7;margin:7px 0 0}.statusPill{font-size:11px;padding:5px 9px;border-radius:999px;border:1px solid rgba(213,177,118,.28);color:#d9c8aa;background:rgba(213,177,118,.07)}
+    .builder{margin-top:17px;display:grid;gap:12px}.builderBlock{border:1px solid rgba(148,163,184,.14);border-radius:15px;padding:14px;background:rgba(255,255,255,.025)}.builderTitle{font-size:13px;font-weight:800;color:#ead9b9;margin-bottom:10px;display:flex;gap:8px;align-items:center;justify-content:space-between}.builderTitle small{font-weight:500;color:#7f8da1}.formGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#aeb8c7}.field input,.field select{width:100%;height:42px;border:1px solid var(--line);border-radius:11px;background:#111827;color:#eef2f7;padding:0 11px;outline:none}.field input:focus,.field select:focus{border-color:#9b825e;box-shadow:0 0 0 3px rgba(213,177,118,.1)}.field small{color:#78869a;font-size:10px;line-height:1.45}.desc{margin-top:9px;padding:10px 11px;border-radius:10px;background:rgba(2,6,23,.28);color:#aeb8c7;font-size:11px;line-height:1.65;min-height:34px}.desc strong{color:#e6d2aa}.syncLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:9px;font-size:11px;color:#8190a4}.syncDot{width:7px;height:7px;border-radius:50%;background:#64748b}.syncDot.ok{background:#5bb98c}.syncDot.warn{background:#d7a85b}.syncDot.bad{background:#c75e68}
+    .checkGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.check{display:flex;gap:9px;align-items:flex-start;border:1px solid #293548;border-radius:11px;padding:10px;background:#111827}.check input{margin-top:2px}.check span{font-size:12px;line-height:1.45}.check small{display:block;color:#77869a;margin-top:3px}.autoSummary{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.autoSummary .chip{font-size:11px;padding:5px 8px}
+    .advanced{margin-top:12px}.advanced summary{cursor:pointer;color:#aeb8c7;font-size:12px}.advanced .formGrid{margin-top:10px}.switchRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.modeBtn,.primaryBtn,.ghostBtn{border:1px solid var(--line);border-radius:11px;background:#141c29;color:#dce4ee;padding:9px 13px;cursor:pointer;font:inherit}.modeBtn[aria-pressed="true"]{border-color:#a28558;background:rgba(213,177,118,.12);color:#f4dfb9}.primaryBtn{border:0;background:linear-gradient(135deg,#8d6a43,#c29b60);color:#10141b;font-weight:900;box-shadow:0 8px 22px rgba(194,155,96,.18)}.ghostBtn:hover,.modeBtn:hover{border-color:#64748b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    .resultHero{margin-top:18px;padding:18px;border-radius:16px;background:linear-gradient(135deg,rgba(143,52,65,.22),rgba(111,179,174,.12));border:1px solid rgba(213,177,118,.17)}.resultLabel{font-size:12px;color:#aab5c4}.resultNumber{font-size:clamp(31px,7vw,52px);font-weight:900;line-height:1.05;margin-top:4px;letter-spacing:.02em}.resultSub{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:#c2ccd8;font-size:12px}.formula{margin-top:14px;padding:13px;border:1px dashed #475569;border-radius:13px;background:rgba(2,6,23,.25);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.8;color:#d2dae5;word-break:break-word}.breakdown{display:grid;gap:8px;margin-top:13px}.step{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:12px}.step span{color:#aeb8c7}.step strong{color:#f1e0bf;font-variant-numeric:tabular-nums}.note{margin-top:14px;padding:12px 13px;border-radius:12px;background:rgba(143,52,65,.10);border:1px solid rgba(143,52,65,.28);font-size:12px;line-height:1.7;color:#c9d1dc}.note strong{color:#f0d7a8}
+    .fortuneCard{position:relative;overflow:hidden;min-height:480px;padding:0}.fortuneVisual{height:270px;background:linear-gradient(145deg,#18212e,#0f1722);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}.fortuneVisual:before{content:"";position:absolute;inset:-25%;background:radial-gradient(circle,rgba(213,177,118,.22),transparent 48%);transform:rotate(16deg)}.portrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;filter:saturate(.82) contrast(1.02);opacity:.92}.portraitShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,8,13,0) 35%,rgba(5,8,13,.92) 100%)}.initial{font-size:110px;font-family:serif;color:rgba(213,177,118,.42);text-shadow:0 0 36px rgba(213,177,118,.15)}.fortuneBody{padding:20px}.fortuneDate{color:#8e9aad;font-size:11px;letter-spacing:.12em}.fortuneName{font-size:32px;font-weight:900;margin-top:6px}.fortuneLevel{display:inline-block;margin-top:7px;padding:5px 9px;border-radius:999px;background:rgba(213,177,118,.12);border:1px solid rgba(213,177,118,.3);color:#e7cf9d;font-size:12px}.fortuneText{font-size:16px;line-height:1.85;margin:16px 0 0;color:#e3e8ef}.fortuneQuote{margin-top:13px;padding-left:13px;border-left:2px solid #a18153;color:#bfc9d6;font-size:13px;line-height:1.7}.fortuneMeta{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}.fortuneMeta div{padding:10px;border-radius:11px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf}.fortuneMeta strong{display:block;color:#dce4ef;font-size:13px;margin-top:3px}.fortuneActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.fortuneActions a{text-decoration:none}
+    .sourceList{display:grid;gap:9px;margin-top:14px}.sourceItem{padding:11px;border-radius:11px;background:rgba(255,255,255,.035);font-size:12px;line-height:1.6;color:#b7c0ce}.sourceItem code{color:#e4cfab}.sourceItem strong{color:#eef2f7}.footer{padding:8px 0 34px;color:#7f8a9a;font-size:11px;line-height:1.6}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr}.fortuneCard{min-height:auto}.fortuneVisual{height:330px}}@media(max-width:580px){.hero{padding:27px 20px}.panel{padding:18px}.formGrid,.checkGrid{grid-template-columns:1fr}.field.full{grid-column:auto}.fortuneMeta{grid-template-columns:1fr}.resultSub{display:grid;gap:5px}}
+  </style>
+</head>
+<body data-morimens-standalone="fortune">
+  <header class="wrap topbar"><a class="back" href="index.html#toolboxTitle">← 返回个人工具箱</a></header>
+  <main class="wrap">
+    <section class="hero">
+      <h1>忘却前夜伤害计算 & 每日签</h1>
+    </section>
+
+    <section class="panel" aria-label="更新记录"><div class="sourceItem"><strong>更新记录：</strong>2026-09-16 · 融灾榜单新增 Top50 / Top200 / Top500 / Top1000（均为 1–N）、普通 / 困难 / 噩梦 / 癫狂出场率、启灵三档分类及角色最高出场率队友；页面拆分为融灾榜单、伤害计算器、每日签三个标签。</div></section>
+
+    <div class="grid2">
+      <section class="panel" aria-labelledby="calcTitle">
+        <div class="panelHead"><div><h2 id="calcTitle">伤害配装计算器</h2><p class="panelLead">角色、技能、命轮、密契和 Buff 负责“自动带值”；攻击力、力量以及仍未还原的防御系数保留手动输入。同步失败时自动使用内置的已核对样例，不会让页面失效。</p></div><span class="statusPill">v0.2 · Wiki 实值 + 客户端术语</span></div>
+
+        <div class="builder">
+          <div class="builderBlock">
+            <div class="builderTitle"><span>① 角色与技能</span><small id="charSyncText">等待同步</small></div>
+            <div class="formGrid">
+              <div class="field full"><label for="charSelect">角色</label><select id="charSelect"></select></div>
+              <div class="field"><label for="skillSelect">技能</label><select id="skillSelect"><option value="">先选择角色</option></select></div>
+              <div class="field"><label for="skillLevel">技能等级</label><select id="skillLevel"><option value="1">1</option></select></div>
+              <div class="field"><label for="attack">有效攻击力</label><input id="attack" type="number" min="0" step="1" value="1000"><small>当前仍手填；后续可接角色等级/启灵/灵知深化。</small></div>
+              <div class="field"><label for="strength">力量 / 临时力量</label><input id="strength" type="number" step="0.1" value="0"><small>按“主动伤害基础项 + 力量”实验处理，可由刻印自动带入。</small></div>
+            </div>
+            <div class="desc" id="skillDesc">选择角色后会尝试从中文维基实时读取技能表，并提取“攻击力*XX%”倍率。</div>
+            <div class="syncLine"><span class="syncDot" id="charSyncDot"></span><span id="charSyncStatus">尚未请求角色页面</span></div>
+          </div>
+
+          <div class="builderBlock">
+            <div class="builderTitle"><span>② 命轮</span><small>固有属性自动计入</small></div>
+            <div class="formGrid">
+              <div class="field full"><label for="fateSelect">命轮</label><select id="fateSelect"><option value="">无</option><option>陨日</option><option>虔诚的伟力</option></select></div>
+            </div>
+            <div class="desc" id="fateDesc">选择命轮后读取页面的主属性。条件型特性不会在无法确认触发条件时强制计入。</div>
+          </div>
+
+          <div class="builderBlock">
+            <div class="builderTitle"><span>③ 密契</span><small>3 / 6 件套分开处理</small></div>
+            <div class="formGrid">
+              <div class="field"><label for="contractSelect">密契</label><select id="contractSelect"><option value="">无</option><option>四月礼赞</option><option>荒原狼</option><option>猩红之悸</option><option>再衍化</option></select></div>
+              <div class="field"><label for="contractPieces">套装件数</label><select id="contractPieces"><option value="0">不启用</option><option value="3">3 件套</option><option value="6">6 件套</option></select></div>
+            </div>
+            <div class="checkGrid" style="margin-top:10px"><label class="check"><input id="contractConditional" type="checkbox"><span>启用条件型 6 件套效果<small>例如“四月礼赞：敌人总生命 >75%”时才勾选。</small></span></label></div>
+            <div class="desc" id="contractDesc">选择密契后显示 3 件套 / 6 件套原始效果，并只自动解析明确写出的暴击率、暴击伤害、伤害强效等百分比。</div>
+          </div>
+
+          <div class="builderBlock">
+            <div class="builderTitle"><span>④ Buff / Debuff</span><small>可叠加</small></div>
+            <div class="checkGrid">
+              <label class="check"><input id="buffVuln" type="checkbox"><span>目标：易伤<small>承受的所有伤害提高 50%</small></span></label>
+              <label class="check"><input id="buffWeak" type="checkbox"><span>自身：虚弱<small>造成的所有伤害降低 25%</small></span></label>
+              <label class="check"><input id="buffBrute" type="checkbox"><span>刻印：蛮力<small>获得 8 点力量</small></span></label>
+              <label class="check"><input id="buffBurst" type="checkbox"><span>刻印：高级爆发<small>获得 66 点临时力量</small></span></label>
+            </div>
+            <div class="autoSummary" id="autoSummary"></div>
+          </div>
+        </div>
+
+        <details class="advanced">
+          <summary>高级 / 手动校准字段（自动值会与这里相加）</summary>
+          <div class="formGrid">
+            <div class="field"><label for="skillCoef">技能倍率 %</label><input id="skillCoef" type="number" min="0" step="0.1" value="200"></div>
+            <div class="field"><label for="baseBonus">基础伤害增幅 %</label><input id="baseBonus" type="number" step="0.1" value="0"></div>
+            <div class="field"><label for="powerBonus">手动伤害强效 %</label><input id="powerBonus" type="number" step="0.1" value="0"></div>
+            <div class="field"><label for="vulnerability">手动易伤 %</label><input id="vulnerability" type="number" step="0.1" value="0"></div>
+            <div class="field"><label for="finalBonus">最终伤害增幅 %</label><input id="finalBonus" type="number" step="0.1" value="0"></div>
+            <div class="field"><label for="critRate">基础 / 手动暴击率 %</label><input id="critRate" type="number" min="0" max="100" step="0.1" value="0"></div>
+            <div class="field"><label for="critDamage">基础暴击伤害倍率 %</label><input id="critDamage" type="number" min="0" step="0.1" value="150"><small>装备的“暴击伤害 +X%”会自动加到该倍率上。</small></div>
+            <div class="field"><label for="defenseFactor">防御 / 减伤后系数 %</label><input id="defenseFactor" type="number" min="0" step="0.1" value="100"></div>
+            <div class="field"><label for="otherMultiplier">其他独立乘区 ×</label><input id="otherMultiplier" type="number" min="0" step="0.01" value="1"></div>
+          </div>
+        </details>
+
+        <div class="switchRow" role="group" aria-label="结果显示模式"><button class="modeBtn" data-mode="expected" aria-pressed="true">期望伤害</button><button class="modeBtn" data-mode="crit" aria-pressed="false">暴击伤害</button><button class="modeBtn" data-mode="normal" aria-pressed="false">非暴击伤害</button></div>
+        <div class="actions"><button class="primaryBtn" id="calcBtn" type="button">重新计算</button><button class="ghostBtn" id="resetBtn" type="button">重置配装</button></div>
+        <div class="resultHero" aria-live="polite"><div class="resultLabel" id="resultLabel">期望伤害</div><div class="resultNumber" id="resultNumber">0</div><div class="resultSub"><span id="normalLine">非暴击：0</span><span id="critLine">暴击：0</span><span id="expectedLine">期望：0</span></div></div>
+        <div class="formula" id="formula"></div><div class="breakdown" id="breakdown"></div>
+        <div class="note"><strong>当前精度边界：</strong>技能倍率、命轮/密契明确属性以及“易伤 +50% / 虚弱 -25%”来自公开游戏资料，可自动带入；客户端 AssetBundle 中能确认 <code>BattleApi.lua</code>、<code>SkillProcessed.lua</code>、<code>PVPSkillProcessed.lua</code>、<code>Damage</code>、<code>Power</code>、<code>Vulnerability</code> 等对象，但上传版本的 Lua 内容仍为字节码/封装状态。因此“力量插入位置、最终伤害/Power/易伤的精确先后、防御公式”仍保留为实验层级，页面会明确展示每一步。</div>
+      </section>
+
+      <section class="panel fortuneCard" aria-labelledby="fortuneTitle">
+        <div class="fortuneVisual" id="fortuneVisual"><div class="initial" id="fortuneInitial">夜</div><img class="portrait" id="fortunePortrait" alt="" hidden><div class="portraitShade"></div></div>
+        <div class="fortuneBody"><div class="fortuneDate" id="fortuneDate"></div><h2 id="fortuneTitle" class="fortuneName">今日唤醒体</h2><span class="fortuneLevel" id="fortuneLevel">等待抽签</span><p class="fortuneText" id="fortuneText">每天按日期固定生成一名唤醒体与一支娱乐签；同一天刷新页面不会改变结果。</p><div class="fortuneQuote" id="fortuneQuote">点击“生成今日签”开始。</div><div class="fortuneMeta"><div>今日宜<strong id="fortuneGood">—</strong></div><div>今日忌<strong id="fortuneBad">—</strong></div><div>幸运乘区<strong id="fortuneStat">—</strong></div><div>今日关键词<strong id="fortuneKeyword">—</strong></div></div><div class="fortuneActions"><button class="primaryBtn" id="fortuneBtn" type="button">生成今日签</button><button class="ghostBtn" id="rerollBtn" type="button">随机再抽一次</button><a class="ghostBtn" id="wikiBtn" href="https://morimens.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5" target="_blank" rel="noopener noreferrer">查看角色维基</a></div></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panelHead"><div><h2>数据来源与同步策略</h2><p class="panelLead">为了不把数十 MB 的游戏资源直接塞进静态站点，页面采用“客户端资源定位术语 + 中文维基实时读取数值 + 本地 fallback”的方式。</p></div><span class="statusPill">客户端资源 + 中文维基</span></div>
+      <div class="sourceList">
+        <div class="sourceItem"><strong>客户端：</strong>上传的 UnityFS Bundle 可确认战斗/技能相关 Lua 和 <code>Damage / Power / Vulnerability</code> 配置术语；<code>_ab_info.json</code> 同时给出了大量 AssetBundle 与资源路径映射。</div>
+        <div class="sourceItem"><strong>角色技能：</strong>运行时请求角色维基页并扫描技能表，抽取每一级描述中的 <code>[攻击力*XX%]</code>。多段伤害或特殊派生伤害会保留原描述，避免把多个系数错误合并。</div>
+        <div class="sourceItem"><strong>命轮 / 密契：</strong>运行时读取对应页面，自动解析“伤害强效、暴击率、暴击伤害”等明确百分比；条件型 6 件套必须由玩家手动确认条件已满足。</div>
+        <div class="sourceItem"><strong>离线 fallback：</strong>内置少量已核对样例：莱克「肆意豪赌」Lv1~6、神王·图鲁「打击」Lv1~5、血链·希洛「缚身锁链」Lv1、萝坦「混沌之兽」Lv1、艾继丝「万古之眸」Lv1；命轮“陨日”“虔诚的伟力”和密契“四月礼赞”。</div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer">《忘却前夜》相关角色、图片和文本版权归原权利方所有。本页为非商业个人工具；维基内容请以原页面与其授权说明为准。伤害公式仍在通过客户端脚本与 BattleLog 逐步校准。</footer>
+
+<script src="morimens-tools.js"></script>
+</body>
+</html>
+
