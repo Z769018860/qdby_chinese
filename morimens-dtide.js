@@ -27,10 +27,12 @@
 
   function setupTabs(){
     const main=document.querySelector('main.wrap'),hero=main?.querySelector('.hero'),grid=main?.querySelector('.grid2');if(!main||!hero||!grid||$('morimensTabs'))return;
+    const standalone=document.body.dataset.morimensStandalone||'';
     const source=Array.from(main.children).find(x=>x!==hero&&x!==grid&&x.matches?.('section.panel'))||null;
     const tabs=document.createElement('nav');tabs.id='morimensTabs';tabs.className='morimensTabs';tabs.setAttribute('role','tablist');tabs.innerHTML='<button class="morimensTab" id="morimensDtideTab" role="tab" aria-selected="true" aria-controls="morimensDtidePanel">融灾榜单</button><button class="morimensTab" id="morimensCalcTab" role="tab" aria-selected="false" aria-controls="morimensCalcPanel">伤害计算器</button><button class="morimensTab" id="morimensFortuneTab" role="tab" aria-selected="false" aria-controls="morimensFortunePanel">每日签</button>';
     const calc=document.createElement('div');calc.id='morimensCalcPanel';calc.setAttribute('role','tabpanel');calc.appendChild(grid.querySelector('[aria-labelledby="calcTitle"]'));
     const fortune=document.createElement('div');fortune.id='morimensFortunePanel';fortune.setAttribute('role','tabpanel');fortune.hidden=true;fortune.appendChild(grid.querySelector('.fortuneCard'));
+    if(standalone==='calc'||standalone==='fortune'){hero.remove();main.querySelector('.topbar')?.remove();grid.remove();if(standalone==='calc'){main.appendChild(calc)}else{main.appendChild(fortune);fortune.hidden=false}return;}
     if(source)calc.appendChild(source);
     const dtide=document.createElement('div');dtide.id='morimensDtidePanel';dtide.setAttribute('role','tabpanel');dtide.innerHTML=panelHtml();hero.after(tabs,dtide,calc,fortune);
     const activate=name=>{const isD=name==='dtide',isC=name==='calc';for(const [id,on] of [['morimensDtideTab',isD],['morimensCalcTab',isC],['morimensFortuneTab',!isD&&!isC]])$(id).setAttribute('aria-selected',String(on));dtide.hidden=!isD;calc.hidden=!isC;fortune.hidden=isD||isC;if(isD){history.replaceState(null,'','#dtide');loadOnce()}else if(location.hash==='#dtide')history.replaceState(null,'',location.pathname+location.search)};
@@ -44,7 +46,7 @@
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope">${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
         <div class="dtideField"><label>难度</label><select id="dtideDifficulty"><option value="all">全部难度</option>${difficultyOrder.map(x=>`<option value="${x}">${difficultyZh[x]}</option>`).join('')}</select></div>
-        <div class="dtideField"><label>波次</label><select id="dtideWave"><option value="all">全部波次</option></select></div><div class="dtideField"><label>排序</label><select id="dtideSort"><option value="total-desc">总出场率：高 → 低</option><option value="total-asc">总出场率：低 → 高</option><option value="wave1-desc">Wave 1：高 → 低</option><option value="wave1-asc">Wave 1：低 → 高</option><option value="wave2-desc">Wave 2：高 → 低</option><option value="wave2-asc">Wave 2：低 → 高</option><option value="wave3-desc">Wave 3：高 → 低</option><option value="wave3-asc">Wave 3：低 → 高</option><option value="wave4-desc">Wave 4：高 → 低</option><option value="wave4-asc">Wave 4：低 → 高</option><option value="wave5-desc">Wave 5：高 → 低</option><option value="wave5-asc">Wave 5：低 → 高</option></select></div>
+        <div class="dtideField"><label>波次</label><select id="dtideWave"><option value="all">全部波次</option></select></div>
         <input id="dtideClearType" type="hidden" value="all">
         <input id="dtideRateMode" type="hidden" value="team">
       </div>
@@ -52,7 +54,6 @@
       <div id="dtideCoverageWarn" class="dtideCoverageWarn"></div>
       <div class="dtideSection"><h3>角色逐波出场率</h3><div class="dtideScroll" id="dtideMatrix"></div></div>
       <div class="dtideSection"><h3>当前筛选热门角色与最高出场率队友</h3><div class="dtideUsageCards" id="dtideUsage"></div></div>
-      <div class="dtideSection"><h3>分层出场率对比</h3><div class="dtideCompareGrid"><div><div class="dtideSubhead"><b>按榜单范围</b><small>当前难度 / 波次 / Clear 口径</small></div><div class="dtideScroll" id="dtideRankCompare"></div></div><div><div class="dtideSubhead"><b>按难度</b><small>当前榜单范围 / 波次 / Clear 口径</small></div><div class="dtideScroll" id="dtideDifficultyCompare"></div></div></div></div>
       <div class="dtideSection"><div class="dtideSubhead"><h3 style="margin:0">命轮 / 密契 / 启灵分布</h3><div class="dtideField" style="min-width:240px"><label>按角色查看配装</label><select id="dtideEquipCharacter"><option value="">全部角色</option></select></div></div><div id="dtideEquipment"></div></div>
     </section>
     <section class="panel">
