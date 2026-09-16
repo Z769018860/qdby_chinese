@@ -17,7 +17,7 @@
   async function index(name){const m=await manifest();const p=m?.indexes?.[name];if(!p)throw new Error(`Unknown SKeyDB index: ${name}`);return json(p)}
   async function gameplayMath(){const m=await manifest();return json(m?.metadata?.gameplayMath||'metadata/gameplay-math.json')}
   async function recordsForAwakener(scope,awakenerId){
-    const c=await catalog(scope);const rows=c?.records||[];return rows.filter(x=>x.ownerAwakenerId===awakenerId||x.awakenerId===awakenerId||x.ownerId===awakenerId)
+    const c=await catalog(scope);const rows=c?.records||[];return rows.filter(x=>[x.ownerAwakenerId,x.awakenerId,x.ownerId,x.characterId,x.character_id,x.character].some(v=>String(v||'')===String(awakenerId)))
   }
   async function fullRecordsForAwakener(scope,awakenerId){const rows=await recordsForAwakener(scope,awakenerId);return Promise.all(rows.map(x=>record(scope,x.id)))}
   async function preloadCore(){return Promise.all([manifest(),catalog('awakeners'),catalog('skills'),catalog('wheels'),catalog('covenants'),gameplayMath()])}
