@@ -25,7 +25,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-morimens-data
+  group: sync-morimens-all
   cancel-in-progress: true
 
 jobs:
@@ -88,5 +88,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/morimens/skeydb data/morimens/huiji assets/morimens
           git commit -m "chore: refresh Morimens SKeyDB and Huiji snapshots"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5 6; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 10))
+          done
+          echo "Failed to push Morimens snapshots after retries." >&2
+          exit 1
+
