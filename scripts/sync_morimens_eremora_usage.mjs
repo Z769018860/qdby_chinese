@@ -16,7 +16,7 @@ const AWAKENERS='data/morimens/skeydb/awakeners.json';
 const TARGET=Math.max(50,Math.min(1000,Number(process.env.EREMORA_USAGE_TARGET||1000)));
 const MAX_FETCH=Math.max(1,Math.min(1000,Number(process.env.EREMORA_USAGE_MAX_FETCH||1000)));
 const BATCH=Math.max(1,Math.min(4,Number(process.env.EREMORA_USAGE_BATCH_SIZE||3)));
-const DELAY=Math.max(500,Number(process.env.EREMORA_USAGE_BATCH_DELAY_MS||800));
+const DELAY=Math.max(1800,Number(process.env.EREMORA_USAGE_BATCH_DELAY_MS||2200));
 const CHECKPOINT_EVERY=Math.max(1,Number(process.env.EREMORA_USAGE_CHECKPOINT_EVERY||10));
 const STALE_DAYS=Math.max(1,Number(process.env.EREMORA_USAGE_STALE_DAYS||7));
 const UA='qdby-chinese-eremora-usage-sync/1.0 (+https://github.com/Z769018860/qdby_chinese)';
@@ -31,7 +31,7 @@ const fingerprint=r=>`${r.uid}:${r.score??''}:${r.dzoneSeason??''}`;
 function difficultyId(s=''){const x=String(s).toLowerCase();if(x==='normal')return'normal';if(x==='hard')return'hard';if(x==='nightmare')return'nightmare';if(x==='madness')return'madness';return'unknown'}
 function enlightTier(p=''){const x=String(p).toUpperCase();if(x==='AA')return'law12';if(x==='OE')return'overlimit';return'e3'}
 
-async function fetchReader(url,retries=5){let last;for(let i=0;i<retries;i++){
+async function fetchReader(url,retries=8){let last;for(let i=0;i<retries;i++){
   try{const r=await fetch(`${READER}${url}`,{headers:{'user-agent':UA,'accept':'text/plain','x-engine':'browser','x-timeout':'40','x-wait-for-selector':'body'},redirect:'follow',signal:AbortSignal.timeout(50000)}),text=await r.text();if(r.ok&&text&&!/Target URL returned error 429/i.test(text))return text;last=new Error(`${url}: HTTP ${r.status}`);if(r.status!==429&&r.status<500)break}catch(e){last=e}
   if(i+1<retries)await sleep(Math.min(20000,2500*Math.pow(2,i)));
 }throw last||new Error(`${url}: failed`)}
@@ -83,6 +83,7 @@ const rankRows=rankDoc.rows.filter(r=>Number(r.rank)<=TARGET).sort((a,b)=>a.rank
 const queue=[];
 for(const row of rankRows){const oldRec=cache.get(String(row.uid)),changed=!oldRec||oldRec.rankFingerprint!==fingerprint(row),stale=oldRec?.fetchedAt?now-Date.parse(oldRec.fetchedAt)>staleMs:true;if(!oldRec||changed||stale)queue.push({row,priority:!oldRec?0:changed?1:2,age:oldRec?.fetchedAt?Date.parse(oldRec.fetchedAt):0})}
 queue.sort((a,b)=>a.priority-b.priority||a.age-b.age||a.row.rank-b.row.rank);const selected=queue.slice(0,MAX_FETCH),failures=[];
+try{await run('git',['config','user.name','github-actions[bot]']);await run('git',['config','user.email','41898282+github-actions[bot]@users.noreply.github.com'])}catch(error){console.warn(`git checkpoint identity setup skipped: ${error.message}`)}
 async function checkpoint(batchNumber,done){
   const partial=[...cache.values()].filter(x=>rankRows.some(row=>String(row.uid)===String(x.uid))).sort((a,b)=>a.rank-b.rank);
   const expected=Math.min(TARGET,rankRows.length),covered=new Set(partial.map(x=>x.rank)).size;
