@@ -1,44 +1,245 @@
 {
   "source": {
     "site": "Eremora",
-    "url": "https://eremora.com/leaderboard",
-    "syncedAt": "2026-09-16T18:01:37.921Z",
-    "transport": "public rendered pages via Jina Reader"
+    "url": "https://eremora.com/leaderboard/abyss",
+    "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
+    "syncedAt": "2026-09-16T21:46:44.303Z",
+    "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 69,
   "availableSeasons": [
     {
       "seasonId": 69,
-      "period": "Sep 14, 2026 – Sep 28, 2026",
-      "recordCount": 47,
-      "leaderboardEntryCount": 47,
-      "complete": true,
+      "period": "2026-09-14 – 2026-09-28",
+      "recordCount": 38,
+      "leaderboardEntryCount": 38,
+      "complete": false,
+      "coverageMode": "current-leaderboard",
       "path": "data/morimens/eremora/seasons/69.json",
       "statsPath": "data/morimens/eremora/stats/69.json"
+    },
+    {
+      "seasonId": 68,
+      "period": "2026-08-31 – 2026-09-14",
+      "recordCount": 33,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
+      "path": "data/morimens/eremora/seasons/68.json",
+      "statsPath": "data/morimens/eremora/stats/68.json"
+    },
+    {
+      "seasonId": 67,
+      "period": "2026-08-17 – 2026-08-31",
+      "recordCount": 28,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
+      "path": "data/morimens/eremora/seasons/67.json",
+      "statsPath": "data/morimens/eremora/stats/67.json"
+    },
+    {
+      "seasonId": 66,
+      "period": "2026-08-03 – 2026-08-17",
+      "recordCount": 28,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
+      "path": "data/morimens/eremora/seasons/66.json",
+      "statsPath": "data/morimens/eremora/stats/66.json"
+    },
+    {
+      "seasonId": 65,
+      "period": "2026-07-20 – 2026-08-03",
+      "recordCount": 24,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
+      "path": "data/morimens/eremora/seasons/65.json",
+      "statsPath": "data/morimens/eremora/stats/65.json"
     }
   ],
   "discoveredSeasonIds": [
-    69
+    69,
+    68,
+    67,
+    66,
+    65
   ],
-  "pendingBackfillSeasonIds": [],
+  "pendingBackfillSeasonIds": [
+    69,
+    68,
+    67,
+    66,
+    65
+  ],
   "current": {
-    "leaderboardEntries": 47,
-    "records": 47,
-    "complete": true,
-    "failures": 0
+    "leaderboardEntries": 38,
+    "records": 38,
+    "complete": false,
+    "failures": 5
   },
   "fieldCoverage": {
     "character": true,
     "wave": true,
     "level": true,
     "progressionLabel": true,
-    "enlightenLevel": false,
-    "wheels": false,
-    "covenants": false
+    "enlightenLevel": true,
+    "wheels": true,
+    "covenants": true,
+    "difficulty": true
   },
   "notes": [
-    "角色、波次、等级与页面显示的 AA/OE 状态直接来自 Eremora 公开挑战记录。",
-    "数值启灵等级、命轮与密契仅在数据源公开渲染到具体记录时写入；当前不会用角色展示页的现时配装冒充历史挑战配装。",
-    "历史期次由已保存快照永久保留；发现到但尚未完整回填的期次列在 pendingBackfillSeasonIds。"
-  ]
+    "当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。",
+    "命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。",
+    "历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。",
+    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
+    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
+    "榜单索引：Eremora 客户端“Show more”实际调用 /api/rank?board=abyss&start={start}&end={end}，本站按 50 条一页同步至 Top 1000；若 1–50 接口被 Cloudflare 拦截则回退同次渲染榜单快照，仅缺失名次为 0 时标记完整。",
+    "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。"
+  ],
+  "analytics": {
+    "generatedAt": "2026-09-16T21:46:45.367Z",
+    "rankScopes": [
+      50,
+      200,
+      500,
+      1000
+    ],
+    "difficulties": [
+      {
+        "id": "normal",
+        "label": "普通"
+      },
+      {
+        "id": "hard",
+        "label": "困难"
+      },
+      {
+        "id": "nightmare",
+        "label": "噩梦"
+      },
+      {
+        "id": "madness",
+        "label": "癫狂"
+      }
+    ],
+    "enlightenmentGroups": [
+      {
+        "id": "e3",
+        "label": "最高三启"
+      },
+      {
+        "id": "overlimit",
+        "label": "最高超限"
+      },
+      {
+        "id": "law12",
+        "label": "最高+12法则"
+      }
+    ],
+    "coverage": [
+      {
+        "seasonId": 69,
+        "maxRankAvailable": 48,
+        "difficulty": {
+          "recognizedTeams": 186,
+          "totalTeams": 211,
+          "complete": false
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
+        "seasonId": 68,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 186,
+          "totalTeams": 186,
+          "complete": true
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
+        "seasonId": 67,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 0,
+          "totalTeams": 152,
+          "complete": false
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
+        "seasonId": 66,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 0,
+          "totalTeams": 240,
+          "complete": false
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
+        "seasonId": 65,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 0,
+          "totalTeams": 205,
+          "complete": false
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      }
+    ]
+  },
+  "rankIndex": {
+    "seasonId": 69,
+    "path": "data/morimens/eremora/rank-index/69.json",
+    "target": 1000,
+    "count": 1000,
+    "complete": true,
+    "maxRank": 1000,
+    "missingCount": 0,
+    "syncedAt": "2026-09-16T21:47:16.482Z",
+    "endpoint": "https://eremora.com/api/rank?board=abyss&start={start}&end={end}"
+  },
+  "usageIndex": {
+    "seasonId": 69,
+    "path": "data/morimens/eremora/usage/69.json",
+    "statsPath": "data/morimens/eremora/usage-stats/69.json",
+    "target": 1000,
+    "rankIndexCount": 1000,
+    "recordCount": 651,
+    "coverage": {
+      "expected": 1000,
+      "covered": 651,
+      "coveragePct": 65.1,
+      "complete": false
+    },
+    "syncedAt": "2026-09-16T22:49:10.195Z"
+  }
 }
