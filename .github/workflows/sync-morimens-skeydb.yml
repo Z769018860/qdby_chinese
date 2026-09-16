@@ -8,6 +8,7 @@ on:
       - "scripts/sync_morimens_skeydb.mjs"
       - "scripts/sync_morimens_huiji.mjs"
       - "scripts/sync_morimens_huiji_jina.mjs"
+      - "scripts/validate_morimens_data.mjs"
       - ".github/workflows/sync-morimens-skeydb.yml"
   schedule:
     - cron: "23 3 * * *"
@@ -47,11 +48,20 @@ jobs:
             src/assets/relics
             src/assets/covenants
 
+      - name: Check Morimens sync scripts
+        run: |
+          node --check scripts/sync_morimens_skeydb.mjs
+          node --check scripts/sync_morimens_huiji_jina.mjs
+          node --check scripts/validate_morimens_data.mjs
+
       - name: Sync SKeyDB full public data and assets
         run: node scripts/sync_morimens_skeydb.mjs
 
       - name: Sync Chinese localization from HuijiWiki
         run: node scripts/sync_morimens_huiji_jina.mjs
+
+      - name: Validate character identity and art mappings
+        run: node scripts/validate_morimens_data.mjs
 
       - name: Commit synchronized snapshots
         run: |
