@@ -1,0 +1,37 @@
+name: Sync Morimens SKeyDB
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-morimens-skeydb
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Sync SKeyDB data and character art
+        run: node scripts/sync_morimens_skeydb.mjs
+      - name: Commit synchronized snapshot
+        run: |
+          if git diff --quiet -- data/morimens/skeydb assets/morimens; then
+            echo "SKeyDB snapshot is unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/morimens/skeydb assets/morimens
+          git commit -m "chore: refresh Morimens data from SKeyDB"
+          git push
