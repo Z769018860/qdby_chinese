@@ -3,7 +3,7 @@
     "site": "Eremora",
     "rankIndex": "data/morimens/eremora/rank-index/69.json",
     "detailTransport": "public challenge pages via Jina Reader",
-    "syncedAt": "2026-09-16T22:43:00.733Z"
+    "syncedAt": "2026-09-16T22:44:22.024Z"
   },
   "seasonId": 69,
   "target": 1000,
@@ -17,8 +17,8 @@
   },
   "refresh": {
     "requested": 1000,
-    "completed": 888,
-    "failed": 237,
+    "completed": 912,
+    "failed": 261,
     "staleDays": 7
   },
   "failures": [
@@ -1205,6 +1205,126 @@
     {
       "rank": 888,
       "uid": "100341649",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 889,
+      "uid": "101976195",
+      "error": "Error: season mismatch: wanted 68, page=0"
+    },
+    {
+      "rank": 890,
+      "uid": "101810405",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 891,
+      "uid": "100474016",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 892,
+      "uid": "100997334",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 893,
+      "uid": "100225305",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 894,
+      "uid": "100745318",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 895,
+      "uid": "101626946",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 896,
+      "uid": "101914678",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 897,
+      "uid": "100656288",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 898,
+      "uid": "102217162",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 899,
+      "uid": "101984045",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 900,
+      "uid": "101341842",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 901,
+      "uid": "101874265",
+      "error": "Error: season mismatch: wanted 68, page=0"
+    },
+    {
+      "rank": 902,
+      "uid": "102006777",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 903,
+      "uid": "101329818",
+      "error": "Error: season mismatch: wanted 68, page=0"
+    },
+    {
+      "rank": 904,
+      "uid": "102111549",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 905,
+      "uid": "102110697",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 906,
+      "uid": "100249529",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 907,
+      "uid": "101099695",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 908,
+      "uid": "100739319",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 909,
+      "uid": "100402888",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 910,
+      "uid": "100589887",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 911,
+      "uid": "101830628",
+      "error": "Error: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 912,
+      "uid": "101297031",
       "error": "Error: season mismatch: wanted 69, page=0"
     }
   ],
@@ -250761,10 +250881,10 @@
     }
   ],
   "progress": {
-    "batch": 296,
+    "batch": 304,
     "batches": 334,
-    "completed": 888,
+    "completed": 912,
     "target": 1000,
-    "updatedAt": "2026-09-16T22:43:00.733Z"
+    "updatedAt": "2026-09-16T22:44:22.024Z"
   }
 }
