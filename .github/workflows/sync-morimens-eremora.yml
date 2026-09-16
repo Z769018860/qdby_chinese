@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-morimens-eremora
+  group: sync-morimens-all
   cancel-in-progress: true
 
 jobs:
@@ -79,7 +79,7 @@ jobs:
           for attempt in 1 2 3 4 5; do
             git pull --rebase origin main
             if git push origin HEAD:main; then exit 0; fi
-            sleep $((attempt * 5))
+            sleep $((attempt * 10))
           done
           echo "Failed to push Eremora snapshot after retries." >&2
           exit 1
