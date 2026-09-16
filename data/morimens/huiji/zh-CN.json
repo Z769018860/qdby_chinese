@@ -3,14 +3,14 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-16T19:11:45.302Z",
+    "syncedAt": "2026-09-16T19:22:05.925Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 60,
   "mapped": 60,
   "enriched": 12,
   "jinaRecords": 58,
-  "cachedRecords": 11,
+  "cachedRecords": 12,
   "voiceRecords": 12,
   "failed": [
     {
@@ -2243,7 +2243,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0027",
@@ -7705,7 +7705,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0027": {
       "skeydbId": "awakener-0027",
