@@ -43,16 +43,20 @@ jobs:
           node --check scripts/postprocess_morimens_eremora.mjs
           node --check morimens-dtide.js
       - name: Discover Eremora public data
+        continue-on-error: true
         run: node scripts/discover_eremora_leaderboard.mjs
       - name: Sync Eremora structured D-Zone records
+        continue-on-error: true
         env:
           EREMORA_MAX_RECORDS: "1000"
           EREMORA_BATCH_SIZE: "3"
           EREMORA_BATCH_DELAY_MS: "2200"
         run: node scripts/sync_morimens_eremora.mjs
       - name: Precompute detailed rank, difficulty and enlightenment analytics
+        continue-on-error: true
         run: node scripts/postprocess_morimens_eremora.mjs
       - name: Sync Eremora Top 1000 rank index
+        continue-on-error: true
         env:
           EREMORA_RANK_TARGET: "1000"
           EREMORA_RANK_DELAY_MS: "1100"
