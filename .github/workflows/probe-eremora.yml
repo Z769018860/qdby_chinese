@@ -6,15 +6,20 @@ on:
     branches: [main]
     paths:
       - "scripts/probe_eremora_routes.mjs"
+      - "scripts/probe_eremora_leaderboard_data.mjs"
       - ".github/workflows/probe-eremora.yml"
 
 permissions:
   contents: write
 
+concurrency:
+  group: probe-eremora
+  cancel-in-progress: true
+
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 14
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,14 +27,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node --check scripts/probe_eremora_routes.mjs
-      - run: node scripts/probe_eremora_routes.mjs
+      - name: Validate probes
+        run: |
+          node --check scripts/probe_eremora_routes.mjs
+          node --check scripts/probe_eremora_leaderboard_data.mjs
+      - name: Probe challenge transport
+        run: node scripts/probe_eremora_routes.mjs
+      - name: Probe leaderboard transport and pagination
+        run: node scripts/probe_eremora_leaderboard_data.mjs
       - name: Commit probe result
         run: |
-          if [ -z "$(git status --porcelain -- data/morimens/eremora/route-probe.json)" ]; then exit 0; fi
+          if [ -z "$(git status --porcelain -- data/morimens/eremora/route-probe.json data/morimens/eremora/leaderboard-probe.json)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/morimens/eremora/route-probe.json
-          git commit -m "chore: refresh Eremora route probe"
+          git add data/morimens/eremora/route-probe.json data/morimens/eremora/leaderboard-probe.json
+          git commit -m "chore: refresh Eremora route probes"
           git pull --rebase origin main
           git push origin HEAD:main
