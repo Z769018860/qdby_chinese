@@ -7,6 +7,7 @@ on:
     paths:
       - "scripts/sync_morimens_skeydb.mjs"
       - "scripts/sync_morimens_huiji.mjs"
+      - "scripts/sync_morimens_huiji_jina.mjs"
       - ".github/workflows/sync-morimens-skeydb.yml"
   schedule:
     - cron: "23 3 * * *"
@@ -50,7 +51,7 @@ jobs:
         run: node scripts/sync_morimens_skeydb.mjs
 
       - name: Sync Chinese localization from HuijiWiki
-        run: node scripts/sync_morimens_huiji.mjs
+        run: node scripts/sync_morimens_huiji_jina.mjs
 
       - name: Commit synchronized snapshots
         run: |
