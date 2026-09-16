@@ -36,7 +36,7 @@
     if(source)calc.appendChild(source);
     const dtide=document.createElement('div');dtide.id='morimensDtidePanel';dtide.setAttribute('role','tabpanel');dtide.innerHTML=panelHtml();hero.after(tabs,dtide,calc,fortune);
     const activate=name=>{const isD=name==='dtide',isC=name==='calc';for(const [id,on] of [['morimensDtideTab',isD],['morimensCalcTab',isC],['morimensFortuneTab',!isD&&!isC]])$(id).setAttribute('aria-selected',String(on));dtide.hidden=!isD;calc.hidden=!isC;fortune.hidden=isD||isC;if(isD){history.replaceState(null,'','#dtide');loadOnce()}else if(location.hash==='#dtide')history.replaceState(null,'',location.pathname+location.search)};
-    $('morimensDtideTab').addEventListener('click',()=>activate('dtide'));$('morimensCalcTab').addEventListener('click',()=>activate('calc'));$('morimensFortuneTab').addEventListener('click',()=>activate('fortune'));if(location.hash==='#dtide')activate('dtide');
+    $('morimensDtideTab').addEventListener('click',()=>activate('dtide'));$('morimensCalcTab').addEventListener('click',()=>location.href='morimens-calculator.html');$('morimensFortuneTab').addEventListener('click',()=>location.href='morimens-daily.html');if(location.hash==='#dtide')activate('dtide');
   }
 
   function panelHtml(){return `
