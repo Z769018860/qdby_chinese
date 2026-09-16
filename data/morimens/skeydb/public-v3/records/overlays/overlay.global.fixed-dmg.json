@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 3,
+  "kind": "overlay",
+  "id": "overlay.global.fixed-dmg",
+  "name": "Fixed DMG",
+  "route": {
+    "slug": "fixed-dmg",
+    "canonicalPath": "/database/overlays/fixed-dmg"
+  },
+  "overlayType": "mechanic",
+  "aliases": [],
+  "textColor": "misc",
+  "descriptionTemplate": "Cannot Critical Hit, not considered Base DMG, and not affected by Final DMG bonuses or similar effects.",
+  "descriptionArgs": {}
+}

@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 3,
+  "kind": "awakener",
+  "id": "awakener-0046",
+  "name": "Sorel",
+  "route": {
+    "slug": "sorel",
+    "canonicalPath": "/database/awakeners/sorel"
+  },
+  "assets": {
+    "icon": "asset-awakener-0046-icon"
+  },
+  "numericId": 46,
+  "ingameId": "B04",
+  "lineupToken": "B",
+  "realm": "CARO",
+  "rarity": "SSR",
+  "type": "ASSAULT",
+  "availabilityType": "LIMITED_FADED_LEGACY",
+  "releaseDate": "2024-01-10",
+  "faction": "Outlanders",
+  "aliases": ["sorel"],
+  "searchTags": ["STR Up", "Death Resistance", "Heal", "Self-Damage"],
+  "primaryScalingBase": 20,
+  "baseStatsLv1": {
+    "CON": 31,
+    "ATK": 44,
+    "DEF": 23
+  },
+  "substatsLv1": {
+    "CritRate": 6.6,
+    "CritDamage": 51.2,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 15,
+    "RealmMastery": 0,
+    "SigilYield": 0,
+    "DamageAmplification": 0,
+    "DeathResistance": 0
+  },
+  "statScaling": {
+    "CON": 1.45,
+    "ATK": 2.05,
+    "DEF": 1.05
+  },
+  "substatScaling": {
+    "CritRate": 1.6,
+    "CritDamage": 1.2,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 0,
+    "RealmMastery": 0,
+    "SigilYield": 0,
+    "DamageAmplification": 0,
+    "DeathResistance": 0
+  },
+  "profile": {
+    "title": "Sorel",
+    "birthday": "9-Feb",
+    "voiceActor": "Tamura Yukari",
+    "gender": "Female",
+    "height": "5'7''",
+    "weight": "130lbs",
+    "gnosticIndex": "23.1421",
+    "storySections": [
+      {
+        "kind": "introduction",
+        "title": "Basic Information",
+        "unlockCondition": "Awakener Level 1",
+        "content": "A silver tongue is the nectar of a rosebud; lords and courtiers, the bees and butterflies that dance around its swaying bloom.\n\nThe thorns fed by desire have crept up on the rose window, coiling tightly around it.\n\nPeople may gossip behind her back, and the crown may leave her hands torn and bleeding, but she will never relinquish the power she has drawn into her arms.\n\nAfter all, this is the nourishment a rose truly needs to bloom."
+      },
+      {
+        "kind": "story",
+        "title": "Story: I",
+        "unlockCondition": "Affinity Level 6",
+        "content": "No one could point to the exact moment the \"salon\" wove itself into the upper crust of Londinium.\n\nIn this mysterious salon, one won the chance to have a master paint their portrait; another was granted a private supper with the Prime Minister; and yet another even received a promise from the Queen herself.\n\nThe host, the venue, the time—all remain a mystery. People only know that everyone can obtain what they desire most in the salon.\n\nYet none can say what it takes to please the hostess and earn an invitation.\n\nEven Lord Dexter, famous for his social charm, was flatly turned away.\n\n\"Our apologies, sir. The hostess currently prefers the company of artists.\"\n\n\"The nobility? Please await a future invitation.\""
+      },
+      {
+        "kind": "story",
+        "title": "Story: II",
+        "unlockCondition": "Affinity Level 5",
+        "content": "It began with nothing more than a glass of grape soda standing in for red wine.\n\nIn an unnoticed corner, Sorel adopted a delicate, pitiable expression, drinking with a mere two or three students.\n\nNext came a modest afternoon tea.\n\nIn the student cafeteria, Sorel politely turned down the macarons offered by the students, her eyes lingering with a hint of genuine affection.\n\nAnd finally, it culminated in a grand salon, and the full blossoming of a rose.\n\nThe lounge was lavished with flowers and jewels; the brilliant rose and young students toasted one another, thoroughly enjoying the elegant gathering.\n\nThe newly appointed Keeper witnessed it all, silently praying that her next move would not be \"to become the principal of Mythag University.\""
+      },
+      {
+        "kind": "story",
+        "title": "Story: III",
+        "unlockCondition": "Affinity Level 7",
+        "content": "Sorel always knew she was beautiful, and in her heart, she regarded this beauty as a gift from heaven.\n\nAs long as she pleads with tearful eyes, people will melt with pity; a hint of vulnerability was all it took for her childhood playmates to take her side unconditionally.\n\nHowever, beauty was worthless in the face of true power.\n\nWhen her own parents sought to trade her to nobility for their own future, Sorel's tears tasted the bitterness of failure for the very first time.\n\nIs there anyone who can help her? Could anyone rescue her from this ignorant and backward fate?\n\nIs there anything, anywhere, that can transform her beauty into a real weapon?\n\nAs Sorel sobbed with her face buried in her hands, the messenger capable of stirring the currents of fate manifested before her."
+      },
+      {
+        "kind": "story",
+        "title": "Story: IV",
+        "unlockCondition": "Affinity Level 9",
+        "content": "Even now, as an Awakener, Sorel cannot forget those nobles who fawned over her, nor the endless parade of their sycophantic faces.\n\nHow utterly nauseating those smiling faces were: slick, mercenary, dripping with undisguised lust and calculation. Yet she had no choice but to weave a gentle web around such faces.\n\nShe would weave the most meticulous of webs, reaching into every dark corner, winning over every person, securing every ounce of leverage. She had to be like water slowly brought to a boil, letting those people grow comfortable in it, so that by the time they wished to remove their masks, they would find there was no escape.\n\nBut when she finally came to her senses, the one with no escape turned out to be herself.\n\nNo escape. No rest. No quitting.\n\nSorel had long since lost the right to turn back. Aside from standing above everyone, there was no other path for her to walk."
+      }
+    ],
+    "voiceLines": {
+      "daily": [
+        {
+          "id": "voice-6190",
+          "title": "Awaken",
+          "content": "Guests at my salon receive the finest hospitality... As an entry ticket, have you prepared secrets worthy of this grand banquet?"
+        },
+        {
+          "id": "voice-6556",
+          "title": "Upgrade: I",
+          "content": "I shall accept your generous gift with gratitude."
+        },
+        {
+          "id": "voice-6557",
+          "title": "Upgrade: II",
+          "content": "What kind of return gift could match your dedication?"
+        },
+        {
+          "id": "voice-6558",
+          "title": "Upgrade: III",
+          "content": "How beautiful..."
+        },
+        {
+          "id": "voice-5038",
+          "title": "Enlighten: Observe",
+          "unlockCondition": "Unlocks at Enlighten Level 1",
+          "content": "Consider this my vow of loyalty to you."
+        },
+        {
+          "id": "voice-5509",
+          "title": "Enlighten: Ponder",
+          "unlockCondition": "Unlocks at Enlighten Level 2",
+          "content": "This academy is... in desperate need of refurbishing; only the principal's lounge is somewhat presentable. What do you think?"
+        },
+        {
+          "id": "voice-5514",
+          "title": "Enlighten: Reflect",
+          "unlockCondition": "Unlocks at Enlighten Level 3",
+          "content": "Silk cushions, black tea, macarons... I also need fresh roses with morning dew to adorn my reception room."
+        },
+        {
+          "id": "voice-5515",
+          "title": "Enlighten: Insight",
+          "unlockCondition": "Unlocks at Enlighten Level 7",
+          "content": "Please allow outside guests. I need to host my salons. Tell them to make an exception for me, please?"
+        },
+        {
+          "id": "voice-5512",
+          "title": "Enlighten: Elevate",
+          "unlockCondition": "Unlocks at Enlighten Level 11",
+          "content": "My salon is not as innocent as a ball. Are you prepared?"
+        },
+        {
+          "id": "voice-5513",
+          "title": "Enlighten: Florish",
+          "unlockCondition": "Unlocks at Enlighten Level 15",
+          "content": "My salon is the soil, the garden, where intoxicating beauty and power will flourish..."
+        },
+        {
+          "id": "voice-5220",
+          "title": "Affinity: I",
+          "unlockCondition": "Unlocks at Affinity Level 2",
+          "content": "As the hostess, it is my duty to ensure every guest is satisfied."
+        },
+        {
+          "id": "voice-5219",
+          "title": "Affinity: II",
+          "unlockCondition": "Unlocks at Affinity Level 4",
+          "content": "In the past, guests called me \"Madam in Red\". Of course, you can also call me \"Sorel\"—after all, you are my most special guest..."
+        },
+        {
+          "id": "voice-5218",
+          "title": "Affinity: III",
+          "unlockCondition": "Unlocks at Affinity Level 6",
+          "content": "Before the salon begins, would you like to hear a story? A tale of how a village girl claimed the crown of power... Where should we start? From her parents forcing her to marry an elderly man, or perhaps the part where she blossoms in the noble garden?"
+        },
+        {
+          "id": "voice-5217",
+          "title": "Affinity: IV",
+          "unlockCondition": "Unlocks at Affinity Level 8",
+          "content": "You're quite an unyielding guest. What must I do to make you relinquish the privilege in your hands? Power only invites trouble—such a simple truth, surely you understand it?"
+        },
+        {
+          "id": "voice-5216",
+          "title": "Affinity: V",
+          "unlockCondition": "Unlocks at Affinity Level 10",
+          "content": "Power is a double-edged sword. How could I not understand? I realized it far too late. Once I let go, they will tear me apart... If only I had been as clear-minded as you from the start, I wouldn't have met such a tragic end. Eh? You say I can host salons in the principle's lounge from now on?! This is... How else can I repay you besides serving you personally...?"
+        },
+        {
+          "id": "voice-5195",
+          "title": "Chat: Touch",
+          "content": "So eager. It seems a bit crude for someone of your caliber."
+        },
+        {
+          "id": "voice-6713",
+          "title": "Chat: About Humans",
+          "content": "After all, humans are only shallow creatures. A few words, a hint, and they begin to fight each other... Sigh, this level of conflict is hardly enough to inspire."
+        },
+        {
+          "id": "voice-5791",
+          "title": "Chat: About Daffodil",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Daffodil\"",
+          "content": "I swear to you, that shopkeeper definitely showed up at one of the salons in Fontainebleau... I see, her looks have not changed. I wonder how many secrets we can trade from her?"
+        },
+        {
+          "id": "voice-5575",
+          "title": "Chat: About Karen",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Karen\"",
+          "content": "A skilled maid can greatly enhance the salon, but a bluish-green maid... let me reconsider..."
+        },
+        {
+          "id": "voice-6018",
+          "title": "Chat: About Dissolution",
+          "content": "Dissolution... I must admit, there are things in this world beyond the control of power."
+        },
+        {
+          "id": "voice-5291",
+          "title": "Chat: About Mythag",
+          "content": "You have quite the gathering of talents here, worthy of a grand salon... Rest assured, the invitation will be delivered to you by my servant."
+        },
+        {
+          "id": "voice-6095",
+          "title": "Chat: What I Like",
+          "content": "I love the stained glass at Fontainebleau. It casts different shades on people's faces: despairing purple, flattering blue, and, of course, my favorite—ambitious red..."
+        },
+        {
+          "id": "voice-6308",
+          "title": "Chat: What I Hate",
+          "content": "I hate candles that go out easily, black bread, and loose threads on skirts... No reason, I simply detest them. Isn't that natural?"
+        },
+        {
+          "id": "voice-5875",
+          "title": "Chat: About the Keeper",
+          "content": "You are the master here, but also a guest in my salon. I will prepare the finest hospitality for your visit—do you prefer a scarlet petticoat or a white rose-colored nightgown?"
+        }
+      ],
+      "battle": [
+        {
+          "id": "voice-6479",
+          "title": "Investigation Begins",
+          "content": "After plucking the flower of victory, I would like to claim a small prize..."
+        },
+        {
+          "id": "voice-6520",
+          "title": "Investigation Success",
+          "content": "Ah, my dress is dirty. I should change out of it before the next salon."
+        },
+        {
+          "id": "voice-6300",
+          "title": "Investigation Halted",
+          "content": "How dare you inflict such humiliation upon me..."
+        },
+        {
+          "id": "voice-6501",
+          "title": "Strike: I",
+          "content": "Hah!"
+        },
+        {
+          "id": "voice-5251",
+          "title": "Defense: I",
+          "content": "Aah!"
+        },
+        {
+          "id": "voice-5250",
+          "title": "Defense: II",
+          "content": "That is disgraceful."
+        },
+        {
+          "id": "voice-5692",
+          "title": "Hit: I",
+          "content": "How dare you!"
+        },
+        {
+          "id": "voice-5693",
+          "title": "Hit: II",
+          "content": "(An elegant, stifled gasp of pain)"
+        },
+        {
+          "id": "voice-5694",
+          "title": "Hit: III",
+          "content": "(A careful, stifled groan of endurance)"
+        },
+        {
+          "id": "voice-5971",
+          "title": "Skill: I",
+          "content": "Watch this."
+        },
+        {
+          "id": "voice-6113",
+          "title": "Skill: II",
+          "content": "Out of my way!"
+        },
+        {
+          "id": "voice-6662",
+          "title": "Rouse",
+          "content": "This is MY salon."
+        },
+        {
+          "id": "voice-5022",
+          "title": "Exalt",
+          "content": "Now I will cleanse myself of disgrace!"
+        },
+        {
+          "id": "voice-54630",
+          "title": "Over-Exalt",
+          "content": "Bow down and kiss the tips of my feet!"
+        }
+      ],
+      "traphase": [
+        {
+          "id": "traphase-100108",
+          "title": "Opening",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "I've made a special effort to dress up, just for you."
+        },
+        {
+          "id": "traphase-99742",
+          "title": "Chat: About Karen",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "For Karen to be working this diligently, she must have been receiving quite a few tips from you.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0026",
+              "lineId": "traphase-100189"
+            },
+            {
+              "awakenerId": "awakener-0046",
+              "lineId": "traphase-99742"
+            }
+          ]
+        },
+        {
+          "id": "traphase-100103",
+          "title": "Chat: About Ryker",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Well, I'm not very fond of smooth-talkers like you.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0043",
+              "lineId": "traphase-99771"
+            },
+            {
+              "awakenerId": "awakener-0046",
+              "lineId": "traphase-100103"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99829",
+          "title": "Chat: About Daffodil",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "They should really bring the nobles from Londinium to your shop to see this. A treasure that no amount of wealth can buy—now that's what true luxury means.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0046",
+              "lineId": "traphase-99829"
+            },
+            {
+              "awakenerId": "awakener-0012",
+              "lineId": "traphase-100015"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99813",
+          "title": "Chat: About Wanda",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "If I may be frank, your approach to power is somewhat too brutal. If one relies solely on violence and fear to build a throne, that throne will inevitably collapse one day, undone by the anger born from the very fear you wield.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0046",
+              "lineId": "traphase-99813"
+            },
+            {
+              "awakenerId": "awakener-0052",
+              "lineId": "traphase-100222"
+            }
+          ]
+        },
+        {
+          "id": "traphase-120271",
+          "title": "Chat: About Pickman",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "You aspire to host an exhibition? Sorry, but I'm afraid the nobility of Londinium and I find you lacking in talent.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0046",
+              "lineId": "traphase-120271"
+            },
+            {
+              "awakenerId": "awakener-0040",
+              "lineId": "traphase-120260"
+            }
+          ]
+        },
+        {
+          "id": "traphase-100044",
+          "title": "Thinking",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Ensuring all guests are fully satisfied is the true ability of a salon host."
+        },
+        {
+          "id": "traphase-100202",
+          "title": "Urging",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Please continue with the banquet. Or is there something I failed to provide as a host?"
+        },
+        {
+          "id": "traphase-100054",
+          "title": "Fatal Blow",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Bow and kiss the hem of my red dress!"
+        },
+        {
+          "id": "traphase-99836",
+          "title": "Blunder",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "My clothes got dirty. That's not elegant at all."
+        },
+        {
+          "id": "traphase-99898",
+          "title": "Death",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "So ruthless... I'll be sure to remember this..."
+        }
+      ]
+    }
+  }
+}

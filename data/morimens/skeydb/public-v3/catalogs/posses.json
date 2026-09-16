@@ -1,0 +1,1189 @@
+{
+  "schemaVersion": 3,
+  "scope": "posses",
+  "kind": "posse",
+  "recordCount": 62,
+  "records": [
+    {
+      "kind": "posse",
+      "id": "posse-0001",
+      "name": "Encounter in Pure White",
+      "route": {
+        "slug": "encounter-in-pure-white",
+        "canonicalPath": "/database/posses/encounter-in-pure-white"
+      },
+      "assets": {
+        "icon": "asset-posse-0001-icon",
+        "crystal": "asset-posse-0001-crystal",
+        "badge": "asset-posse-0001-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "d"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0002",
+      "name": "Voices in Your Head",
+      "route": {
+        "slug": "voices-in-your-head",
+        "canonicalPath": "/database/posses/voices-in-your-head"
+      },
+      "assets": {
+        "icon": "asset-posse-0002-icon",
+        "crystal": "asset-posse-0002-crystal",
+        "badge": "asset-posse-0002-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "h"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0003",
+      "name": "Warded Injection",
+      "route": {
+        "slug": "warded-injection",
+        "canonicalPath": "/database/posses/warded-injection"
+      },
+      "assets": {
+        "icon": "asset-posse-0003-icon",
+        "crystal": "asset-posse-0003-crystal",
+        "badge": "asset-posse-0003-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "b"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0004",
+      "name": "A Mouse's Wisdom",
+      "route": {
+        "slug": "a-mouses-wisdom",
+        "canonicalPath": "/database/posses/a-mouses-wisdom"
+      },
+      "assets": {
+        "icon": "asset-posse-0004-icon",
+        "crystal": "asset-posse-0004-crystal",
+        "badge": "asset-posse-0004-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "c"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0005",
+      "name": "Tiny Wish",
+      "route": {
+        "slug": "tiny-wish",
+        "canonicalPath": "/database/posses/tiny-wish"
+      },
+      "assets": {
+        "icon": "asset-posse-0005-icon",
+        "crystal": "asset-posse-0005-crystal",
+        "badge": "asset-posse-0005-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "i"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0006",
+      "name": "Obsession Eternal",
+      "route": {
+        "slug": "obsession-eternal",
+        "canonicalPath": "/database/posses/obsession-eternal"
+      },
+      "assets": {
+        "icon": "asset-posse-0006-icon",
+        "crystal": "asset-posse-0006-crystal",
+        "badge": "asset-posse-0006-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "g"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0007",
+      "name": "Unequal Exchange",
+      "route": {
+        "slug": "unequal-exchange",
+        "canonicalPath": "/database/posses/unequal-exchange"
+      },
+      "assets": {
+        "icon": "asset-posse-0007-icon",
+        "crystal": "asset-posse-0007-crystal",
+        "badge": "asset-posse-0007-badge"
+      },
+      "realm": "OTHER",
+      "lineupToken": "e"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0008",
+      "name": "Funus Aeternum",
+      "route": {
+        "slug": "funus-aeternum",
+        "canonicalPath": "/database/posses/funus-aeternum"
+      },
+      "assets": {
+        "icon": "asset-posse-0008-icon",
+        "crystal": "asset-posse-0008-crystal",
+        "badge": "asset-posse-0008-badge"
+      },
+      "realm": "FADED_LEGACY",
+      "lineupToken": "f"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0009",
+      "name": "The Final Vow",
+      "route": {
+        "slug": "the-final-vow",
+        "canonicalPath": "/database/posses/the-final-vow"
+      },
+      "assets": {
+        "icon": "asset-posse-0009-icon",
+        "crystal": "asset-posse-0009-crystal",
+        "badge": "asset-posse-0009-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "lineupToken": "l"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0010",
+      "name": "Aurita's Treasure",
+      "route": {
+        "slug": "auritas-treasure",
+        "canonicalPath": "/database/posses/auritas-treasure"
+      },
+      "assets": {
+        "icon": "asset-posse-0010-icon",
+        "crystal": "asset-posse-0010-crystal",
+        "badge": "asset-posse-0010-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "lineupToken": "j"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0011",
+      "name": "Roaring Blood and Sand",
+      "route": {
+        "slug": "roaring-blood-and-sand",
+        "canonicalPath": "/database/posses/roaring-blood-and-sand"
+      },
+      "assets": {
+        "icon": "asset-posse-0011-icon",
+        "crystal": "asset-posse-0011-crystal",
+        "badge": "asset-posse-0011-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "lineupToken": "k"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0012",
+      "name": "Ephemeral Eternity",
+      "route": {
+        "slug": "ephemeral-eternity",
+        "canonicalPath": "/database/posses/ephemeral-eternity"
+      },
+      "assets": {
+        "icon": "asset-posse-0012-icon",
+        "crystal": "asset-posse-0012-crystal",
+        "badge": "asset-posse-0012-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "lineupToken": "m"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0013",
+      "name": "Feast of Decay",
+      "route": {
+        "slug": "feast-of-decay",
+        "canonicalPath": "/database/posses/feast-of-decay"
+      },
+      "assets": {
+        "icon": "asset-posse-0013-icon",
+        "crystal": "asset-posse-0013-crystal",
+        "badge": "asset-posse-0013-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "lineupToken": "q"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0014",
+      "name": "Bone-Chilling Embrace",
+      "route": {
+        "slug": "bone-chilling-embrace",
+        "canonicalPath": "/database/posses/bone-chilling-embrace"
+      },
+      "assets": {
+        "icon": "asset-posse-0014-icon",
+        "crystal": "asset-posse-0014-crystal",
+        "badge": "asset-posse-0014-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "lineupToken": "n"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0015",
+      "name": "Lakeside Glimpse",
+      "route": {
+        "slug": "lakeside-glimpse",
+        "canonicalPath": "/database/posses/lakeside-glimpse"
+      },
+      "assets": {
+        "icon": "asset-posse-0015-icon",
+        "crystal": "asset-posse-0015-crystal",
+        "badge": "asset-posse-0015-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "lineupToken": "o"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0016",
+      "name": "Gateway of Retrospection",
+      "route": {
+        "slug": "gateway-of-retrospection",
+        "canonicalPath": "/database/posses/gateway-of-retrospection"
+      },
+      "assets": {
+        "icon": "asset-posse-0016-icon",
+        "crystal": "asset-posse-0016-crystal",
+        "badge": "asset-posse-0016-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "lineupToken": "p"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0017",
+      "name": "Truth Behind Grey Mist",
+      "route": {
+        "slug": "truth-behind-grey-mist",
+        "canonicalPath": "/database/posses/truth-behind-grey-mist"
+      },
+      "assets": {
+        "icon": "asset-posse-0017-icon",
+        "crystal": "asset-posse-0017-crystal",
+        "badge": "asset-posse-0017-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "lineupToken": "v"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0018",
+      "name": "Midsummer Vision",
+      "route": {
+        "slug": "midsummer-vision",
+        "canonicalPath": "/database/posses/midsummer-vision"
+      },
+      "assets": {
+        "icon": "asset-posse-0018-icon",
+        "crystal": "asset-posse-0018-crystal",
+        "badge": "asset-posse-0018-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "lineupToken": "w"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0019",
+      "name": "Victory of Roses",
+      "route": {
+        "slug": "victory-of-roses",
+        "canonicalPath": "/database/posses/victory-of-roses"
+      },
+      "assets": {
+        "icon": "asset-posse-0019-icon",
+        "crystal": "asset-posse-0019-crystal",
+        "badge": "asset-posse-0019-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "lineupToken": "u"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0020",
+      "name": "Miracle's Dawn",
+      "route": {
+        "slug": "miracles-dawn",
+        "canonicalPath": "/database/posses/miracles-dawn"
+      },
+      "assets": {
+        "icon": "asset-posse-0020-icon",
+        "crystal": "asset-posse-0020-crystal",
+        "badge": "asset-posse-0020-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "lineupToken": "r"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0021",
+      "name": "Giant's Reign",
+      "route": {
+        "slug": "giants-reign",
+        "canonicalPath": "/database/posses/giants-reign"
+      },
+      "assets": {
+        "icon": "asset-posse-0021-icon",
+        "crystal": "asset-posse-0021-crystal",
+        "badge": "asset-posse-0021-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "lineupToken": "s"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0022",
+      "name": "All of Her",
+      "route": {
+        "slug": "all-of-her",
+        "canonicalPath": "/database/posses/all-of-her"
+      },
+      "assets": {
+        "icon": "asset-posse-0022-icon",
+        "crystal": "asset-posse-0022-crystal",
+        "badge": "asset-posse-0022-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "lineupToken": "t"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0023",
+      "name": "The Lone Seed",
+      "route": {
+        "slug": "the-lone-seed",
+        "canonicalPath": "/database/posses/the-lone-seed"
+      },
+      "assets": {
+        "icon": "asset-posse-0023-icon",
+        "crystal": "asset-posse-0023-crystal",
+        "badge": "asset-posse-0023-badge"
+      },
+      "realm": "CARO",
+      "lineupToken": "G"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0024",
+      "name": "The Mountains' Resolve",
+      "route": {
+        "slug": "the-mountains-resolve",
+        "canonicalPath": "/database/posses/the-mountains-resolve"
+      },
+      "assets": {
+        "icon": "asset-posse-0024-icon",
+        "crystal": "asset-posse-0024-crystal",
+        "badge": "asset-posse-0024-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "lineupToken": "E"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0025",
+      "name": "Festival of Tides",
+      "route": {
+        "slug": "festival-of-tides",
+        "canonicalPath": "/database/posses/festival-of-tides"
+      },
+      "assets": {
+        "icon": "asset-posse-0025-icon",
+        "crystal": "asset-posse-0025-crystal",
+        "badge": "asset-posse-0025-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "lineupToken": "C"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0026",
+      "name": "Spring's Verse",
+      "route": {
+        "slug": "springs-verse",
+        "canonicalPath": "/database/posses/springs-verse"
+      },
+      "assets": {
+        "icon": "asset-posse-0026-icon",
+        "crystal": "asset-posse-0026-crystal",
+        "badge": "asset-posse-0026-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "lineupToken": "A"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0027",
+      "name": "A Gun's Cry",
+      "route": {
+        "slug": "a-guns-cry",
+        "canonicalPath": "/database/posses/a-guns-cry"
+      },
+      "assets": {
+        "icon": "asset-posse-0027-icon",
+        "crystal": "asset-posse-0027-crystal",
+        "badge": "asset-posse-0027-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "lineupToken": "D"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0028",
+      "name": "Symphony Fourth",
+      "route": {
+        "slug": "symphony-fourth",
+        "canonicalPath": "/database/posses/symphony-fourth"
+      },
+      "assets": {
+        "icon": "asset-posse-0028-icon",
+        "crystal": "asset-posse-0028-crystal",
+        "badge": "asset-posse-0028-badge"
+      },
+      "realm": "CHAOS",
+      "lineupToken": "I"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0029",
+      "name": "Answer of the Gate",
+      "route": {
+        "slug": "answer-of-the-gate",
+        "canonicalPath": "/database/posses/answer-of-the-gate"
+      },
+      "assets": {
+        "icon": "asset-posse-0029-icon",
+        "crystal": "asset-posse-0029-crystal",
+        "badge": "asset-posse-0029-badge"
+      },
+      "realm": "CHAOS",
+      "lineupToken": "H"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0030",
+      "name": "Plague of Illusions",
+      "route": {
+        "slug": "plague-of-illusions",
+        "canonicalPath": "/database/posses/plague-of-illusions"
+      },
+      "assets": {
+        "icon": "asset-posse-0030-icon",
+        "crystal": "asset-posse-0030-crystal",
+        "badge": "asset-posse-0030-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "lineupToken": "J"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0031",
+      "name": "Blessing of the Stars",
+      "route": {
+        "slug": "blessing-of-the-stars",
+        "canonicalPath": "/database/posses/blessing-of-the-stars"
+      },
+      "assets": {
+        "icon": "asset-posse-0031-icon",
+        "crystal": "asset-posse-0031-crystal",
+        "badge": "asset-posse-0031-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "lineupToken": "K"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0032",
+      "name": "Black Swan's Dance",
+      "route": {
+        "slug": "black-swans-dance",
+        "canonicalPath": "/database/posses/black-swans-dance"
+      },
+      "assets": {
+        "icon": "asset-posse-0032-icon",
+        "crystal": "asset-posse-0032-crystal",
+        "badge": "asset-posse-0032-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "lineupToken": "B"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0033",
+      "name": "Tavern's Opening",
+      "route": {
+        "slug": "taverns-opening",
+        "canonicalPath": "/database/posses/taverns-opening"
+      },
+      "assets": {
+        "icon": "asset-posse-0033-icon",
+        "crystal": "asset-posse-0033-crystal",
+        "badge": "asset-posse-0033-badge"
+      },
+      "realm": "OTHER",
+      "lineupToken": "L"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0034",
+      "name": "Sacred Mending",
+      "route": {
+        "slug": "sacred-mending",
+        "canonicalPath": "/database/posses/sacred-mending"
+      },
+      "assets": {
+        "icon": "asset-posse-0034-icon",
+        "crystal": "asset-posse-0034-crystal",
+        "badge": "asset-posse-0034-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "lineupToken": "M"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0035",
+      "name": "Undying Thunder",
+      "route": {
+        "slug": "undying-thunder",
+        "canonicalPath": "/database/posses/undying-thunder"
+      },
+      "assets": {
+        "icon": "asset-posse-0035-icon",
+        "crystal": "asset-posse-0035-crystal",
+        "badge": "asset-posse-0035-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "lineupToken": "N"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0036",
+      "name": "Derision of Destiny",
+      "route": {
+        "slug": "derision-of-destiny",
+        "canonicalPath": "/database/posses/derision-of-destiny"
+      },
+      "assets": {
+        "icon": "asset-posse-0036-icon",
+        "crystal": "asset-posse-0036-crystal",
+        "badge": "asset-posse-0036-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "lineupToken": "O"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0037",
+      "name": "Cruel Homage",
+      "route": {
+        "slug": "cruel-homage",
+        "canonicalPath": "/database/posses/cruel-homage"
+      },
+      "assets": {
+        "icon": "asset-posse-0037-icon",
+        "crystal": "asset-posse-0037-crystal",
+        "badge": "asset-posse-0037-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "lineupToken": "S"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0038",
+      "name": "Undying Sun",
+      "route": {
+        "slug": "undying-sun",
+        "canonicalPath": "/database/posses/undying-sun"
+      },
+      "assets": {
+        "icon": "asset-posse-0038-icon",
+        "crystal": "asset-posse-0038-crystal",
+        "badge": "asset-posse-0038-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "lineupToken": "R"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0039",
+      "name": "Sacred Bleeding Heart",
+      "route": {
+        "slug": "sacred-bleeding-heart",
+        "canonicalPath": "/database/posses/sacred-bleeding-heart"
+      },
+      "assets": {
+        "icon": "asset-posse-0039-icon",
+        "crystal": "asset-posse-0039-crystal",
+        "badge": "asset-posse-0039-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "lineupToken": "V"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0040",
+      "name": "Voracious Resolve",
+      "route": {
+        "slug": "voracious-resolve",
+        "canonicalPath": "/database/posses/voracious-resolve"
+      },
+      "assets": {
+        "icon": "asset-posse-0040-icon",
+        "crystal": "asset-posse-0040-crystal",
+        "badge": "asset-posse-0040-badge"
+      },
+      "realm": "CARO",
+      "lineupToken": "Q"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0041",
+      "name": "Beachside Memento",
+      "route": {
+        "slug": "beachside-memento",
+        "canonicalPath": "/database/posses/beachside-memento"
+      },
+      "assets": {
+        "icon": "asset-posse-0041-icon",
+        "crystal": "asset-posse-0041-crystal",
+        "badge": "asset-posse-0041-badge"
+      },
+      "realm": "OTHER",
+      "lineupToken": "T"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0042",
+      "name": "Void Hues",
+      "route": {
+        "slug": "void-hues",
+        "canonicalPath": "/database/posses/void-hues"
+      },
+      "assets": {
+        "icon": "asset-posse-0042-icon",
+        "crystal": "asset-posse-0042-crystal",
+        "badge": "asset-posse-0042-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "lineupToken": "U"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0043",
+      "name": "A Fleeting Dream",
+      "route": {
+        "slug": "a-fleeting-dream",
+        "canonicalPath": "/database/posses/a-fleeting-dream"
+      },
+      "assets": {
+        "icon": "asset-posse-0043-icon",
+        "crystal": "asset-posse-0043-crystal",
+        "badge": "asset-posse-0043-badge"
+      },
+      "realm": "OTHER",
+      "lineupToken": "W"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0044",
+      "name": "Wayward Ship",
+      "route": {
+        "slug": "wayward-ship",
+        "canonicalPath": "/database/posses/wayward-ship"
+      },
+      "assets": {
+        "icon": "asset-posse-0044-icon",
+        "crystal": "asset-posse-0044-crystal",
+        "badge": "asset-posse-0044-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "lineupToken": "X"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0045",
+      "name": "Reunion Wish",
+      "route": {
+        "slug": "reunion-wish",
+        "canonicalPath": "/database/posses/reunion-wish"
+      },
+      "assets": {
+        "icon": "asset-posse-0045-icon",
+        "crystal": "asset-posse-0045-crystal",
+        "badge": "asset-posse-0045-badge"
+      },
+      "realm": "OTHER",
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "lineupToken": "Y"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0046",
+      "name": "From the Mist Realm",
+      "route": {
+        "slug": "from-the-mist-realm",
+        "canonicalPath": "/database/posses/from-the-mist-realm"
+      },
+      "assets": {
+        "icon": "asset-posse-0046-icon",
+        "crystal": "asset-posse-0046-crystal",
+        "badge": "asset-posse-0046-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "lineupToken": "Z"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0047",
+      "name": "Manor Echoes",
+      "route": {
+        "slug": "manor-echoes",
+        "canonicalPath": "/database/posses/manor-echoes"
+      },
+      "assets": {
+        "icon": "asset-posse-0047-icon",
+        "crystal": "asset-posse-0047-crystal",
+        "badge": "asset-posse-0047-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "lineupToken": "2"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0048",
+      "name": "Year-End Sparks",
+      "route": {
+        "slug": "year-end-sparks",
+        "canonicalPath": "/database/posses/year-end-sparks"
+      },
+      "assets": {
+        "icon": "asset-posse-0048-icon",
+        "crystal": "asset-posse-0048-crystal",
+        "badge": "asset-posse-0048-badge"
+      },
+      "realm": "OTHER",
+      "lineupToken": "3"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0049",
+      "name": "Drowned Innocence",
+      "route": {
+        "slug": "drowned-innocence",
+        "canonicalPath": "/database/posses/drowned-innocence"
+      },
+      "assets": {
+        "icon": "asset-posse-0049-icon",
+        "crystal": "asset-posse-0049-crystal",
+        "badge": "asset-posse-0049-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "lineupToken": "5"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0050",
+      "name": "Orbis Fatum",
+      "route": {
+        "slug": "orbis-fatum",
+        "canonicalPath": "/database/posses/orbis-fatum"
+      },
+      "assets": {
+        "icon": "asset-posse-0050-icon",
+        "crystal": "asset-posse-0050-crystal",
+        "badge": "asset-posse-0050-badge"
+      },
+      "realm": "ULTRA",
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "lineupToken": "1"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0051",
+      "name": "For the New World",
+      "route": {
+        "slug": "for-the-new-world",
+        "canonicalPath": "/database/posses/for-the-new-world"
+      },
+      "assets": {
+        "icon": "asset-posse-0051-icon",
+        "crystal": "asset-posse-0051-crystal",
+        "badge": "asset-posse-0051-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "lineupToken": "4"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0052",
+      "name": "The Hollow One",
+      "route": {
+        "slug": "the-hollow-one",
+        "canonicalPath": "/database/posses/the-hollow-one"
+      },
+      "assets": {
+        "icon": "asset-posse-0052-icon",
+        "crystal": "asset-posse-0052-crystal",
+        "badge": "asset-posse-0052-badge"
+      },
+      "realm": "AEQUOR",
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "lineupToken": "6"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0053",
+      "name": "Cetus-Devouring Storm",
+      "route": {
+        "slug": "cetus-devouring-storm",
+        "canonicalPath": "/database/posses/cetus-devouring-storm"
+      },
+      "assets": {
+        "icon": "asset-posse-0053-icon",
+        "crystal": "asset-posse-0053-crystal",
+        "badge": "asset-posse-0053-badge"
+      },
+      "realm": "CHAOS",
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "lineupToken": "7"
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0054",
+      "name": "Primordial Memory: Drain",
+      "route": {
+        "slug": "primordial-memory-drain",
+        "canonicalPath": "/database/posses/primordial-memory-drain"
+      },
+      "assets": {
+        "icon": "asset-posse-0054-icon",
+        "crystal": "asset-posse-0054-crystal",
+        "badge": "asset-posse-0054-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Temporarily reduce all enemies' {STR▼} by [Arg1].\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "esotericResearchDepth",
+          "rounding": "ceil",
+          "multiplier": 0.04,
+          "inputs": ["accountLevel", "ownedPosseCount", "realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "utility"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0055",
+      "name": "Primordial Memory: Catalysis",
+      "route": {
+        "slug": "primordial-memory-catalysis",
+        "canonicalPath": "/database/posses/primordial-memory-catalysis"
+      },
+      "assets": {
+        "icon": "asset-posse-0055-icon",
+        "crystal": "asset-posse-0055-crystal",
+        "badge": "asset-posse-0055-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "All Awakeners gain [Arg1] Aliemus.\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "fixed",
+          "baseValue": 5.0,
+          "rounding": "ceil",
+          "inputs": ["realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "utility"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0056",
+      "name": "Primordial Memory: Healing",
+      "route": {
+        "slug": "primordial-memory-healing",
+        "canonicalPath": "/database/posses/primordial-memory-healing"
+      },
+      "assets": {
+        "icon": "asset-posse-0056-icon",
+        "crystal": "asset-posse-0056-crystal",
+        "badge": "asset-posse-0056-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Restore [Arg1] HP\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "esotericResearchDepth",
+          "rounding": "ceil",
+          "multiplier": 0.08,
+          "inputs": ["accountLevel", "ownedPosseCount", "realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "utility"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0057",
+      "name": "Primordial Memory: Toxin",
+      "route": {
+        "slug": "primordial-memory-toxin",
+        "canonicalPath": "/database/posses/primordial-memory-toxin"
+      },
+      "assets": {
+        "icon": "asset-posse-0057-icon",
+        "crystal": "asset-posse-0057-crystal",
+        "badge": "asset-posse-0057-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Inflict [Arg1] {plural:[Arg1]|stack|stacks} of {Poison} on all enemies.\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "occultResearchDepth",
+          "rounding": "ceil",
+          "multiplier": 0.3,
+          "inputs": ["accountLevel", "ownedPosseCount", "realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "offensive"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0058",
+      "name": "Primordial Memory: Spike",
+      "route": {
+        "slug": "primordial-memory-spike",
+        "canonicalPath": "/database/posses/primordial-memory-spike"
+      },
+      "assets": {
+        "icon": "asset-posse-0058-icon",
+        "crystal": "asset-posse-0058-crystal",
+        "badge": "asset-posse-0058-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Gain [Arg1] {plural:[Arg1]|stack|stacks} of {Temporary Counter}.\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "occultResearchDepth",
+          "rounding": "ceil",
+          "multiplier": 0.6,
+          "inputs": ["accountLevel", "ownedPosseCount", "realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "offensive"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0059",
+      "name": "Primordial Memory: Might",
+      "route": {
+        "slug": "primordial-memory-might",
+        "canonicalPath": "/database/posses/primordial-memory-might"
+      },
+      "assets": {
+        "icon": "asset-posse-0059-icon",
+        "crystal": "asset-posse-0059-crystal",
+        "badge": "asset-posse-0059-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Gain [Arg1] {STR}.\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "esotericResearchDepth",
+          "rounding": "ceil",
+          "multiplier": 0.03,
+          "inputs": ["accountLevel", "ownedPosseCount", "realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "offensive"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0060",
+      "name": "Primordial Memory: Bastion",
+      "route": {
+        "slug": "primordial-memory-bastion",
+        "canonicalPath": "/database/posses/primordial-memory-bastion"
+      },
+      "assets": {
+        "icon": "asset-posse-0060-icon",
+        "crystal": "asset-posse-0060-crystal",
+        "badge": "asset-posse-0060-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Gain [Arg1] Shield.\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "esotericResearchDepth",
+          "rounding": "ceil",
+          "multiplier": 0.1,
+          "inputs": ["accountLevel", "ownedPosseCount", "realmMasteryFinal", "primordiaAllChaosTeam"],
+          "scalingBucket": "utility"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0061",
+      "name": "Primordial Memory: Fury",
+      "route": {
+        "slug": "primordial-memory-fury",
+        "canonicalPath": "/database/posses/primordial-memory-fury"
+      },
+      "assets": {
+        "icon": "asset-posse-0061-icon",
+        "crystal": "asset-posse-0061-crystal",
+        "badge": "asset-posse-0061-badge"
+      },
+      "realm": "OTHER",
+      "classification": "PRIMORDIAL_MEMORY",
+      "equippable": false,
+      "collectible": false,
+      "descriptionTemplate": "Gain [Arg1] Temporary DMG Amplification.\nScaling guide: {Primordia Mastery Scaling}",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "computed",
+          "formulaKey": "primordiaPosseScaled",
+          "baseFormula": "fixed",
+          "baseValue": 50.0,
+          "rounding": "ceil",
+          "inputs": ["realmMasteryFinal", "primordiaAllChaosTeam"],
+          "suffix": "%",
+          "scalingBucket": "utility"
+        }
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0062",
+      "name": "That Which is No Lie",
+      "route": {
+        "slug": "that-which-is-no-lie",
+        "canonicalPath": "/database/posses/that-which-is-no-lie"
+      },
+      "assets": {
+        "icon": "asset-posse-0062-icon",
+        "crystal": "asset-posse-0062-crystal",
+        "badge": "asset-posse-0062-badge"
+      },
+      "realm": "CARO",
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "lineupToken": "8"
+    }
+  ]
+}

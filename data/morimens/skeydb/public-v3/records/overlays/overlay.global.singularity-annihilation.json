@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 3,
+  "kind": "overlay",
+  "id": "overlay.global.singularity-annihilation",
+  "name": "Singularity Annihilation",
+  "route": {
+    "slug": "singularity-annihilation",
+    "canonicalPath": "/database/overlays/singularity-annihilation"
+  },
+  "overlayType": "mechanic",
+  "aliases": [],
+  "descriptionTemplate": "Draw the leftmost card from {Ultra Space}. 3 turns cooldown.",
+  "descriptionArgs": {}
+}

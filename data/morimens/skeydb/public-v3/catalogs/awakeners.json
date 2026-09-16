@@ -1,0 +1,3353 @@
+{
+  "schemaVersion": 3,
+  "scope": "awakeners",
+  "kind": "awakener",
+  "recordCount": 60,
+  "records": [
+    {
+      "kind": "awakener",
+      "id": "awakener-0001",
+      "name": "\"24\"",
+      "route": {
+        "slug": "24",
+        "canonicalPath": "/database/awakeners/24"
+      },
+      "assets": {
+        "icon": "asset-awakener-0001-icon"
+      },
+      "numericId": 1,
+      "ingameId": "C06",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-04-27",
+      "faction": "Hybrid",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 35,
+        "ATK": 45,
+        "DEF": 20
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.65,
+        "ATK": 2.1,
+        "DEF": 0.95
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "S",
+      "aliases": ["24", "twenty-four"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "Bleed", "Counter", "STR Up", "Tentacle DMG", "Pierce DMG", "Arithmetica", "Hand Limit", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0002",
+      "name": "Agrippa",
+      "route": {
+        "slug": "agrippa",
+        "canonicalPath": "/database/awakeners/agrippa"
+      },
+      "assets": {
+        "icon": "asset-awakener-0002-icon"
+      },
+      "numericId": 2,
+      "ingameId": "B06",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 35,
+        "ATK": 30,
+        "DEF": 36
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.65,
+        "ATK": 1.4,
+        "DEF": 1.7
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "R",
+      "aliases": ["agrippa"],
+      "searchTags": ["Poison", "Alert", "STR Up", "Draw", "Spider"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0003",
+      "name": "Aigis",
+      "route": {
+        "slug": "aigis",
+        "canonicalPath": "/database/awakeners/aigis"
+      },
+      "assets": {
+        "icon": "asset-awakener-0003-icon"
+      },
+      "numericId": 3,
+      "ingameId": "B03",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "Hybrid",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 27,
+        "ATK": 32,
+        "DEF": 29
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.25,
+        "ATK": 1.5,
+        "DEF": 1.35
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "I",
+      "aliases": ["aigis"],
+      "searchTags": ["Vulnerable", "Stun", "Draw", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0004",
+      "name": "Alva",
+      "route": {
+        "slug": "alva",
+        "canonicalPath": "/database/awakeners/alva"
+      },
+      "assets": {
+        "icon": "asset-awakener-0004-icon"
+      },
+      "numericId": 4,
+      "ingameId": "C11",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 32,
+        "ATK": 34,
+        "DEF": 37
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "statScaling": {
+        "CON": 1.5,
+        "ATK": 1.6,
+        "DEF": 1.75
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "lineupToken": "F",
+      "aliases": ["alva"],
+      "searchTags": ["Vulnerable", "Alert", "Dispel", "Death Resistance", "Discard", "Draw", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0005",
+      "name": "Aurita",
+      "route": {
+        "slug": "aurita",
+        "canonicalPath": "/database/awakeners/aurita"
+      },
+      "assets": {
+        "icon": "asset-awakener-0005-icon"
+      },
+      "numericId": 5,
+      "ingameId": "O05",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 26,
+        "ATK": 28,
+        "DEF": 25
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.2,
+        "ATK": 1.3,
+        "DEF": 1.15
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "n",
+      "aliases": ["aurita"],
+      "searchTags": ["STR Up", "Tentacle DMG", "Pierce DMG", "Aftershock", "Discard", "Draw", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0006",
+      "name": "Caecus",
+      "route": {
+        "slug": "caecus",
+        "canonicalPath": "/database/awakeners/caecus"
+      },
+      "assets": {
+        "icon": "asset-awakener-0006-icon"
+      },
+      "numericId": 6,
+      "ingameId": "O04",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Hybrid",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 41,
+        "ATK": 33,
+        "DEF": 36
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.95,
+        "ATK": 1.55,
+        "DEF": 1.7
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "L",
+      "aliases": ["caecus"],
+      "searchTags": ["Vulnerable", "Counter", "STR Up", "Tentacle DMG", "Dispel", "Heal", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0007",
+      "name": "Casiah",
+      "route": {
+        "slug": "casiah",
+        "canonicalPath": "/database/awakeners/casiah"
+      },
+      "assets": {
+        "icon": "asset-awakener-0007-icon"
+      },
+      "numericId": 7,
+      "ingameId": "D09",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 29,
+        "ATK": 30,
+        "DEF": 26
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.35,
+        "ATK": 1.4,
+        "DEF": 1.2
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "m",
+      "aliases": ["casiah"],
+      "searchTags": ["STR Up", "Aftershock", "Arithmetica", "Discard", "Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0008",
+      "name": "Castor",
+      "route": {
+        "slug": "castor",
+        "canonicalPath": "/database/awakeners/castor"
+      },
+      "assets": {
+        "icon": "asset-awakener-0008-icon"
+      },
+      "numericId": 8,
+      "ingameId": "D11",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-06-02",
+      "faction": "The Fools",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 35,
+        "ATK": 32,
+        "DEF": 37
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 51.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.65,
+        "ATK": 1.5,
+        "DEF": 1.75
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 1.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "lineupToken": "6",
+      "aliases": ["castor"],
+      "searchTags": ["Weakness", "Corrosion", "Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0009",
+      "name": "Celeste",
+      "route": {
+        "slug": "celeste",
+        "canonicalPath": "/database/awakeners/celeste"
+      },
+      "assets": {
+        "icon": "asset-awakener-0009-icon"
+      },
+      "numericId": 9,
+      "ingameId": "O09",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 21,
+        "ATK": 20,
+        "DEF": 21
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 1,
+        "ATK": 0.95,
+        "DEF": 1
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "g",
+      "aliases": ["celeste"],
+      "searchTags": ["Weakness", "Tentacle DMG", "Dispel", "Arithmetica", "Heal", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0010",
+      "name": "Clementine",
+      "route": {
+        "slug": "clementine",
+        "canonicalPath": "/database/awakeners/clementine"
+      },
+      "assets": {
+        "icon": "asset-awakener-0010-icon"
+      },
+      "numericId": 10,
+      "ingameId": "D13",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-04-07",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 30,
+        "ATK": 35,
+        "DEF": 29
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.4,
+        "ATK": 1.65,
+        "DEF": 1.35
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "8",
+      "aliases": ["clementine"],
+      "searchTags": ["Bleed", "STR Up", "STR Down", "Dispel", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0011",
+      "name": "Corposant",
+      "route": {
+        "slug": "corposant",
+        "canonicalPath": "/database/awakeners/corposant"
+      },
+      "assets": {
+        "icon": "asset-awakener-0011-icon"
+      },
+      "numericId": 11,
+      "ingameId": "O10",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-05-05",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 34,
+        "ATK": 30,
+        "DEF": 35
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "statScaling": {
+        "CON": 1.6,
+        "ATK": 1.4,
+        "DEF": 1.65
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "lineupToken": "5",
+      "aliases": ["corposant"],
+      "searchTags": ["Weakness", "Vulnerable", "STR Up", "Tentacle DMG", "Aftershock", "Death Resistance", "Discard", "Draw", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0012",
+      "name": "Daffodil",
+      "route": {
+        "slug": "daffodil",
+        "canonicalPath": "/database/awakeners/daffodil"
+      },
+      "assets": {
+        "icon": "asset-awakener-0012-icon"
+      },
+      "numericId": 12,
+      "ingameId": "D02",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2023-12-20",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 33,
+        "ATK": 41,
+        "DEF": 31
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.55,
+        "ATK": 1.95,
+        "DEF": 1.45
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "H",
+      "aliases": ["daffodil"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "Counter", "STR Up", "Pierce DMG", "Arithmetica", "Draw", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0013",
+      "name": "Doll",
+      "route": {
+        "slug": "doll",
+        "canonicalPath": "/database/awakeners/doll"
+      },
+      "assets": {
+        "icon": "asset-awakener-0013-icon"
+      },
+      "numericId": 13,
+      "ingameId": "C02",
+      "realm": "CHAOS",
+      "rarity": "SR",
+      "type": "CHORUS",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 24,
+        "ATK": 19,
+        "DEF": 26
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 16.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.1,
+        "ATK": 0.9,
+        "DEF": 1.2
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 1.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "k",
+      "aliases": ["doll"],
+      "searchTags": ["Weakness", "Dispel", "Discard", "Heal"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0014",
+      "name": "Doresain",
+      "route": {
+        "slug": "doresain",
+        "canonicalPath": "/database/awakeners/doresain"
+      },
+      "assets": {
+        "icon": "asset-awakener-0014-icon"
+      },
+      "numericId": 14,
+      "ingameId": "B10",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-07-21",
+      "faction": "Out of the Aeons",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 35,
+        "ATK": 37,
+        "DEF": 31
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.65,
+        "ATK": 1.75,
+        "DEF": 1.45
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "xh",
+      "aliases": ["doresain"],
+      "searchTags": ["Vulnerable", "STR Up", "Pierce DMG", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0015",
+      "name": "Erica",
+      "route": {
+        "slug": "erica",
+        "canonicalPath": "/database/awakeners/erica"
+      },
+      "assets": {
+        "icon": "asset-awakener-0015-icon"
+      },
+      "numericId": 15,
+      "ingameId": "D08",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "Hybrid",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 39,
+        "ATK": 38,
+        "DEF": 38
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.85,
+        "ATK": 1.8,
+        "DEF": 1.8
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "U",
+      "aliases": ["erica"],
+      "searchTags": ["Weakness", "Vulnerable", "Alert", "STR Up", "Dispel", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0016",
+      "name": "Faint",
+      "route": {
+        "slug": "faint",
+        "canonicalPath": "/database/awakeners/faint"
+      },
+      "assets": {
+        "icon": "asset-awakener-0016-icon"
+      },
+      "numericId": 16,
+      "ingameId": "B09",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 28,
+        "ATK": 21,
+        "DEF": 33
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "statScaling": {
+        "CON": 1.3,
+        "ATK": 1,
+        "DEF": 1.55
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "lineupToken": "r",
+      "aliases": ["faint"],
+      "searchTags": ["Weakness", "Counter", "STR Up", "STR Down", "Steal STR", "Dispel", "Death Resistance", "Heal"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0017",
+      "name": "Faros",
+      "route": {
+        "slug": "faros",
+        "canonicalPath": "/database/awakeners/faros"
+      },
+      "assets": {
+        "icon": "asset-awakener-0017-icon"
+      },
+      "numericId": 17,
+      "ingameId": "O03",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 26,
+        "ATK": 28,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.2,
+        "ATK": 1.3,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "lineupToken": "p",
+      "aliases": ["faros"],
+      "searchTags": ["Poison", "Tentacle DMG", "Dispel", "Arithmetica", "Draw", "Hand Limit", "Lemurian", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0018",
+      "name": "Doll: Inferno",
+      "route": {
+        "slug": "doll-inferno",
+        "canonicalPath": "/database/awakeners/doll-inferno"
+      },
+      "assets": {
+        "icon": "asset-awakener-0018-icon"
+      },
+      "numericId": 18,
+      "ingameId": "C02EX",
+      "realm": "CHAOS",
+      "rarity": "Genesis",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-02-10",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 24,
+        "ATK": 19,
+        "DEF": 26
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 16.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.1,
+        "ATK": 0.9,
+        "DEF": 1.2
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 1.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "T",
+      "aliases": ["doll: inferno", "g-doll"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "Arithmetica", "Draw", "Heal", "Max HP DMG", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0019",
+      "name": "Helot: Catena",
+      "route": {
+        "slug": "helot-catena",
+        "canonicalPath": "/database/awakeners/helot-catena"
+      },
+      "assets": {
+        "icon": "asset-awakener-0019-icon"
+      },
+      "numericId": 19,
+      "ingameId": "B05EX",
+      "realm": "CARO",
+      "rarity": "Genesis",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-10-07",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 37,
+        "ATK": 36,
+        "DEF": 27
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.75,
+        "ATK": 1.7,
+        "DEF": 1.25
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "lineupToken": "h",
+      "aliases": ["helot: catena", "g-helot"],
+      "searchTags": ["Bleed", "STR Up", "Draw", "Hand Limit", "Heal", "Self-Damage", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0020",
+      "name": "Ramona: Timeworn",
+      "route": {
+        "slug": "ramona-timeworn",
+        "canonicalPath": "/database/awakeners/ramona-timeworn"
+      },
+      "assets": {
+        "icon": "asset-awakener-0020-icon"
+      },
+      "numericId": 20,
+      "ingameId": "C01EX",
+      "realm": "CHAOS",
+      "rarity": "Genesis",
+      "type": "CHORUS",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 32,
+        "ATK": 32,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.5,
+        "ATK": 1.5,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "i",
+      "aliases": ["ramona: timeworn", "g-ramona"],
+      "searchTags": ["STR Up", "STR Down", "Arithmetica", "Draw", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0021",
+      "name": "Goliath",
+      "route": {
+        "slug": "goliath",
+        "canonicalPath": "/database/awakeners/goliath"
+      },
+      "assets": {
+        "icon": "asset-awakener-0021-icon"
+      },
+      "numericId": 21,
+      "ingameId": "O06",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 44,
+        "ATK": 42,
+        "DEF": 35
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 51.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 2.05,
+        "ATK": 2,
+        "DEF": 1.65
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 1.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "e",
+      "aliases": ["goliath"],
+      "searchTags": ["STR Up", "Tentacle DMG", "Dispel", "Lemurian", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0022",
+      "name": "Hameln",
+      "route": {
+        "slug": "hameln",
+        "canonicalPath": "/database/awakeners/hameln"
+      },
+      "assets": {
+        "icon": "asset-awakener-0022-icon"
+      },
+      "numericId": 22,
+      "ingameId": "D12",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-09-09",
+      "faction": "The Unknowable",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 32,
+        "ATK": 33,
+        "DEF": 31
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.5,
+        "ATK": 1.55,
+        "DEF": 1.45
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "X",
+      "aliases": ["hameln"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "Bleed", "STR Up", "STR Down", "Steal STR", "Pierce DMG", "Arithmetica"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0023",
+      "name": "Helot",
+      "route": {
+        "slug": "helot",
+        "canonicalPath": "/database/awakeners/helot"
+      },
+      "assets": {
+        "icon": "asset-awakener-0023-icon"
+      },
+      "numericId": 23,
+      "ingameId": "B05",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 37,
+        "ATK": 36,
+        "DEF": 27
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.75,
+        "ATK": 1.7,
+        "DEF": 1.25
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "lineupToken": "E",
+      "aliases": ["helot"],
+      "searchTags": ["Dispel", "Discard", "Draw", "Hand Limit", "Self-Damage", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0024",
+      "name": "Horla",
+      "route": {
+        "slug": "horla",
+        "canonicalPath": "/database/awakeners/horla"
+      },
+      "assets": {
+        "icon": "asset-awakener-0024-icon"
+      },
+      "numericId": 24,
+      "ingameId": "D06",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-07-15",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 25,
+        "ATK": 26,
+        "DEF": 23
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "statScaling": {
+        "CON": 1.15,
+        "ATK": 1.2,
+        "DEF": 1.05
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "lineupToken": "A",
+      "aliases": ["horla"],
+      "searchTags": ["Weakness", "Vulnerable", "Counter", "STR Up", "STR Down", "Death Resistance", "Heal"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0025",
+      "name": "Jenkin",
+      "route": {
+        "slug": "jenkin",
+        "canonicalPath": "/database/awakeners/jenkin"
+      },
+      "assets": {
+        "icon": "asset-awakener-0025-icon"
+      },
+      "numericId": 25,
+      "ingameId": "D07",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 27,
+        "ATK": 37,
+        "DEF": 28
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.25,
+        "ATK": 1.75,
+        "DEF": 1.3
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "K",
+      "aliases": ["jenkins"],
+      "searchTags": ["Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0026",
+      "name": "Karen",
+      "route": {
+        "slug": "karen",
+        "canonicalPath": "/database/awakeners/karen"
+      },
+      "assets": {
+        "icon": "asset-awakener-0026-icon"
+      },
+      "numericId": 26,
+      "ingameId": "C12",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 30,
+        "ATK": 26,
+        "DEF": 29
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 1.4,
+        "ATK": 1.2,
+        "DEF": 1.35
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "l",
+      "aliases": ["karen"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "Dispel", "Arithmetica", "Draw", "Heal", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0027",
+      "name": "Kathigu-Ra",
+      "route": {
+        "slug": "kathigu-ra",
+        "canonicalPath": "/database/awakeners/kathigu-ra"
+      },
+      "assets": {
+        "icon": "asset-awakener-0027-icon"
+      },
+      "numericId": 27,
+      "ingameId": "C16",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-08-18",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 33,
+        "ATK": 39,
+        "DEF": 30
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.55,
+        "ATK": 1.85,
+        "DEF": 1.4
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "Z",
+      "aliases": ["kathigu-ra", "kathigura"],
+      "searchTags": ["STR Up", "Pierce DMG", "Dispel", "Discard", "Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0028",
+      "name": "Leigh",
+      "route": {
+        "slug": "leigh",
+        "canonicalPath": "/database/awakeners/leigh"
+      },
+      "assets": {
+        "icon": "asset-awakener-0028-icon"
+      },
+      "numericId": 28,
+      "ingameId": "B08",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Hybrid",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 19,
+        "ATK": 19,
+        "DEF": 19
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 0.9,
+        "ATK": 0.9,
+        "DEF": 0.9
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "O",
+      "aliases": ["leigh"],
+      "searchTags": ["STR Up", "Pierce DMG", "Dispel", "Heal", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0029",
+      "name": "Lily",
+      "route": {
+        "slug": "lily",
+        "canonicalPath": "/database/awakeners/lily"
+      },
+      "assets": {
+        "icon": "asset-awakener-0029-icon"
+      },
+      "numericId": 29,
+      "ingameId": "C10",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-01-31",
+      "faction": "Hybrid",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 38,
+        "ATK": 28,
+        "DEF": 38
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 1.8,
+        "ATK": 1.3,
+        "DEF": 1.8
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "v",
+      "aliases": ["lily"],
+      "searchTags": ["Poison", "Death Resistance", "Heal", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0030",
+      "name": "Liz",
+      "route": {
+        "slug": "liz",
+        "canonicalPath": "/database/awakeners/liz"
+      },
+      "assets": {
+        "icon": "asset-awakener-0030-icon"
+      },
+      "numericId": 30,
+      "ingameId": "D01",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 29,
+        "ATK": 39,
+        "DEF": 31
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 51.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.35,
+        "ATK": 1.85,
+        "DEF": 1.45
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 1.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "c",
+      "aliases": ["liz"],
+      "searchTags": ["Poison", "STR Up", "Pierce DMG", "Discard", "Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0031",
+      "name": "Lotan",
+      "route": {
+        "slug": "lotan",
+        "canonicalPath": "/database/awakeners/lotan"
+      },
+      "assets": {
+        "icon": "asset-awakener-0031-icon"
+      },
+      "numericId": 31,
+      "ingameId": "C04",
+      "realm": "CHAOS",
+      "rarity": "SR",
+      "type": "ASSAULT",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "Out of the Aeons",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 34,
+        "ATK": 35,
+        "DEF": 30
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 51.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.6,
+        "ATK": 1.65,
+        "DEF": 1.4
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 1.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "j",
+      "aliases": ["lotan"],
+      "searchTags": ["STR Up", "Dispel", "Max HP DMG", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0032",
+      "name": "Miryam",
+      "route": {
+        "slug": "miryam",
+        "canonicalPath": "/database/awakeners/miryam"
+      },
+      "assets": {
+        "icon": "asset-awakener-0032-icon"
+      },
+      "numericId": 32,
+      "ingameId": "O07",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-06-17",
+      "faction": "Out of the Aeons",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 23,
+        "ATK": 35,
+        "DEF": 19
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.05,
+        "ATK": 1.65,
+        "DEF": 0.9
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "w",
+      "aliases": ["miryam"],
+      "searchTags": [
+        "Weakness",
+        "Vulnerable",
+        "Poison",
+        "STR Up",
+        "STR Down",
+        "Tentacle DMG",
+        "Pierce DMG",
+        "Arithmetica",
+        "Draw",
+        "Heal",
+        "Lemurian",
+        "Tentacle Generation"
+      ]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0033",
+      "name": "Mouchette",
+      "route": {
+        "slug": "mouchette",
+        "canonicalPath": "/database/awakeners/mouchette"
+      },
+      "assets": {
+        "icon": "asset-awakener-0033-icon"
+      },
+      "numericId": 33,
+      "ingameId": "C17",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-12-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 30,
+        "ATK": 35,
+        "DEF": 30
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "statScaling": {
+        "CON": 1.4,
+        "ATK": 1.65,
+        "DEF": 1.4
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "lineupToken": "xf",
+      "aliases": ["mouchette"],
+      "searchTags": ["Stun", "Pursuit", "Death Resistance", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0034",
+      "name": "Murphy",
+      "route": {
+        "slug": "murphy",
+        "canonicalPath": "/database/awakeners/murphy"
+      },
+      "assets": {
+        "icon": "asset-awakener-0034-icon"
+      },
+      "numericId": 34,
+      "ingameId": "O02",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-02-21",
+      "faction": "Hybrid",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 31,
+        "ATK": 33,
+        "DEF": 37
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 16.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.45,
+        "ATK": 1.55,
+        "DEF": 1.75
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 1.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "q",
+      "aliases": ["murphy"],
+      "searchTags": ["Weakness", "Vulnerable", "Tentacle DMG", "Aftershock", "Dispel", "Arithmetica", "Keyflare", "Tentacle Generation", "Sacrifice"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0035",
+      "name": "Murphy: Fauxborn",
+      "route": {
+        "slug": "murphy-fauxborn",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn"
+      },
+      "assets": {
+        "icon": "asset-awakener-0035-icon"
+      },
+      "numericId": 35,
+      "ingameId": "O02EX",
+      "realm": "AEQUOR",
+      "rarity": "Genesis",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-11-24",
+      "faction": "Out of the Aeons",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 24,
+        "ATK": 29,
+        "DEF": 28
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 51.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.1,
+        "ATK": 1.35,
+        "DEF": 1.3
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 1.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "G",
+      "aliases": ["murphy: fauxborn", "g-murphy"],
+      "searchTags": ["Tentacle DMG", "Aftershock", "Dispel", "Arithmetica", "Divine Realm", "Draw", "Keyflare", "Lemurian", "Tentacle Generation", "Sacrifice"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0036",
+      "name": "Nautila",
+      "route": {
+        "slug": "nautila",
+        "canonicalPath": "/database/awakeners/nautila"
+      },
+      "assets": {
+        "icon": "asset-awakener-0036-icon"
+      },
+      "numericId": 36,
+      "ingameId": "C07",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 40,
+        "ATK": 25,
+        "DEF": 42
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.9,
+        "ATK": 1.15,
+        "DEF": 2
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "f",
+      "aliases": ["nautila"],
+      "searchTags": ["Counter"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0037",
+      "name": "Nymphaea",
+      "route": {
+        "slug": "nymphaea",
+        "canonicalPath": "/database/awakeners/nymphaea"
+      },
+      "assets": {
+        "icon": "asset-awakener-0037-icon"
+      },
+      "numericId": 37,
+      "ingameId": "C08",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 20,
+        "ATK": 32,
+        "DEF": 21
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 16.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 0.95,
+        "ATK": 1.5,
+        "DEF": 1
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 1.2,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "lineupToken": "u",
+      "aliases": ["nymphaea"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "STR Up"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0038",
+      "name": "Ogier",
+      "route": {
+        "slug": "ogier",
+        "canonicalPath": "/database/awakeners/ogier"
+      },
+      "assets": {
+        "icon": "asset-awakener-0038-icon"
+      },
+      "numericId": 38,
+      "ingameId": "C03",
+      "realm": "CHAOS",
+      "rarity": "SR",
+      "type": "WARDEN",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "The Fools",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 36,
+        "ATK": 31,
+        "DEF": 39
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.7,
+        "ATK": 1.45,
+        "DEF": 1.85
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "C",
+      "aliases": ["ogier"],
+      "searchTags": ["Vulnerable", "STR Up", "Pierce DMG", "Dispel"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0039",
+      "name": "Pandia",
+      "route": {
+        "slug": "pandia",
+        "canonicalPath": "/database/awakeners/pandia"
+      },
+      "assets": {
+        "icon": "asset-awakener-0039-icon"
+      },
+      "numericId": 39,
+      "ingameId": "C09",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 32,
+        "ATK": 37,
+        "DEF": 33
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.5,
+        "ATK": 1.75,
+        "DEF": 1.55
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "b",
+      "aliases": ["pandia"],
+      "searchTags": ["Vulnerable", "Counter", "STR Up", "Steal STR", "Dispel"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0040",
+      "name": "Pickman",
+      "route": {
+        "slug": "pickman",
+        "canonicalPath": "/database/awakeners/pickman"
+      },
+      "assets": {
+        "icon": "asset-awakener-0040-icon"
+      },
+      "numericId": 40,
+      "ingameId": "B12",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-09-08",
+      "faction": "The Fools",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 34,
+        "ATK": 31,
+        "DEF": 34
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.6,
+        "ATK": 1.45,
+        "DEF": 1.6
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "9",
+      "aliases": ["pickman"],
+      "searchTags": ["Weakness", "Vulnerable", "STR Up", "Steal STR", "Discover", "Arithmetica", "Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0041",
+      "name": "Pollux",
+      "route": {
+        "slug": "pollux",
+        "canonicalPath": "/database/awakeners/pollux"
+      },
+      "assets": {
+        "icon": "asset-awakener-0041-icon"
+      },
+      "numericId": 41,
+      "ingameId": "D14",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2025-10-20",
+      "faction": "Hybrid",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 33,
+        "ATK": 37,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.55,
+        "ATK": 1.75,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "2",
+      "aliases": ["pollux"],
+      "searchTags": ["Bleed", "Discard", "Draw"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0042",
+      "name": "Ramona",
+      "route": {
+        "slug": "ramona",
+        "canonicalPath": "/database/awakeners/ramona"
+      },
+      "assets": {
+        "icon": "asset-awakener-0042-icon"
+      },
+      "numericId": 42,
+      "ingameId": "C01",
+      "realm": "CHAOS",
+      "rarity": "SR",
+      "type": "CHORUS",
+      "availabilityType": "WELFARE",
+      "releaseDate": "2023-11-29",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 32,
+        "ATK": 32,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.5,
+        "ATK": 1.5,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "M",
+      "aliases": ["ramona"],
+      "searchTags": ["Weakness", "Vulnerable", "STR Up", "STR Down", "Arithmetica", "Discard", "Draw", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0043",
+      "name": "Ryker",
+      "route": {
+        "slug": "ryker",
+        "canonicalPath": "/database/awakeners/ryker"
+      },
+      "assets": {
+        "icon": "asset-awakener-0043-icon"
+      },
+      "numericId": 43,
+      "ingameId": "C05",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-08-12",
+      "faction": "The Fools",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 42,
+        "ATK": 35,
+        "DEF": 34
+      },
+      "substatsLv1": {
+        "CritRate": 5.8,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 2,
+        "ATK": 1.65,
+        "DEF": 1.6
+      },
+      "substatScaling": {
+        "CritRate": 0.8,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "V",
+      "aliases": ["ryker"],
+      "searchTags": ["Weakness", "Vulnerable", "STR Up", "Arithmetica", "Draw", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0044",
+      "name": "Salvador",
+      "route": {
+        "slug": "salvador",
+        "canonicalPath": "/database/awakeners/salvador"
+      },
+      "assets": {
+        "icon": "asset-awakener-0044-icon"
+      },
+      "numericId": 44,
+      "ingameId": "B02",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-04-04",
+      "faction": "Out of the Aeons",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 45,
+        "ATK": 29,
+        "DEF": 45
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 2.1,
+        "ATK": 1.35,
+        "DEF": 2.1
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "Q",
+      "aliases": ["salvador"],
+      "searchTags": ["Weakness", "Vulnerable", "Barrier", "STR Up", "Heal", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0045",
+      "name": "Sanga",
+      "route": {
+        "slug": "sanga",
+        "canonicalPath": "/database/awakeners/sanga"
+      },
+      "assets": {
+        "icon": "asset-awakener-0045-icon"
+      },
+      "numericId": 45,
+      "ingameId": "O08",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 34,
+        "ATK": 27,
+        "DEF": 40
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "statScaling": {
+        "CON": 1.6,
+        "ATK": 1.25,
+        "DEF": 1.9
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 5.6
+      },
+      "lineupToken": "J",
+      "aliases": ["sanga"],
+      "searchTags": ["Tentacle DMG", "Aftershock", "Dispel", "Death Resistance", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0046",
+      "name": "Sorel",
+      "route": {
+        "slug": "sorel",
+        "canonicalPath": "/database/awakeners/sorel"
+      },
+      "assets": {
+        "icon": "asset-awakener-0046-icon"
+      },
+      "numericId": 46,
+      "ingameId": "B04",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-01-10",
+      "faction": "Outlanders",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 31,
+        "ATK": 44,
+        "DEF": 23
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 51.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.45,
+        "ATK": 2.05,
+        "DEF": 1.05
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 1.2,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "B",
+      "aliases": ["sorel"],
+      "searchTags": ["STR Up", "Death Resistance", "Heal", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0047",
+      "name": "Tawil",
+      "route": {
+        "slug": "tawil",
+        "canonicalPath": "/database/awakeners/tawil"
+      },
+      "assets": {
+        "icon": "asset-awakener-0047-icon"
+      },
+      "numericId": 47,
+      "ingameId": "C15",
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-11-18",
+      "faction": "Gateway",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 32,
+        "ATK": 32,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.5,
+        "ATK": 1.5,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 2,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "W",
+      "aliases": ["tawil"],
+      "searchTags": ["Barrier", "STR Up", "Pierce DMG", "Arithmetica", "Discard", "Draw", "Keyflare", "Max HP DMG"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0048",
+      "name": "Thais",
+      "route": {
+        "slug": "thais",
+        "canonicalPath": "/database/awakeners/thais"
+      },
+      "assets": {
+        "icon": "asset-awakener-0048-icon"
+      },
+      "numericId": 48,
+      "ingameId": "B01",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-05-18",
+      "faction": "Out of the Aeons",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 33,
+        "ATK": 32,
+        "DEF": 30
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.55,
+        "ATK": 1.5,
+        "DEF": 1.4
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "N",
+      "aliases": ["thais"],
+      "searchTags": ["Weakness", "Vulnerable", "Poison", "Bleed", "Counter", "STR Up", "Arithmetica", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0049",
+      "name": "Tinct",
+      "route": {
+        "slug": "tinct",
+        "canonicalPath": "/database/awakeners/tinct"
+      },
+      "assets": {
+        "icon": "asset-awakener-0049-icon"
+      },
+      "numericId": 49,
+      "ingameId": "D03",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 28,
+        "ATK": 26,
+        "DEF": 27
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.3,
+        "ATK": 1.2,
+        "DEF": 1.25
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "o",
+      "aliases": ["tinct"],
+      "searchTags": ["STR Up", "Steal STR", "Dispel", "Arithmetica", "Draw", "Strike"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0050",
+      "name": "Tulu",
+      "route": {
+        "slug": "tulu",
+        "canonicalPath": "/database/awakeners/tulu"
+      },
+      "assets": {
+        "icon": "asset-awakener-0050-icon"
+      },
+      "numericId": 50,
+      "ingameId": "O01",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2023-11-29",
+      "faction": "Out of the Aeons",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 36,
+        "ATK": 40,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 17.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.7,
+        "ATK": 1.9,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 2.4,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "d",
+      "aliases": ["tulu"],
+      "searchTags": ["STR Up", "STR Down", "Tentacle DMG", "Pierce DMG", "Aftershock", "Dispel", "Lemurian", "Tentacle Generation"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0051",
+      "name": "Uvhash",
+      "route": {
+        "slug": "uvhash",
+        "canonicalPath": "/database/awakeners/uvhash"
+      },
+      "assets": {
+        "icon": "asset-awakener-0051-icon"
+      },
+      "numericId": 51,
+      "ingameId": "B07",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Outlanders",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 38,
+        "ATK": 36,
+        "DEF": 32
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.8,
+        "ATK": 1.7,
+        "DEF": 1.5
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "P",
+      "aliases": ["uvhash"],
+      "searchTags": ["STR Up", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0052",
+      "name": "Wanda",
+      "route": {
+        "slug": "wanda",
+        "canonicalPath": "/database/awakeners/wanda"
+      },
+      "assets": {
+        "icon": "asset-awakener-0052-icon"
+      },
+      "numericId": 52,
+      "ingameId": "D04",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "releaseDate": "2024-03-14",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 37,
+        "ATK": 24,
+        "DEF": 44
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.75,
+        "ATK": 1.1,
+        "DEF": 2.05
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 0
+      },
+      "lineupToken": "D",
+      "aliases": ["wanda"],
+      "searchTags": ["Counter", "STR Down"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0053",
+      "name": "Winkle",
+      "route": {
+        "slug": "winkle",
+        "canonicalPath": "/database/awakeners/winkle"
+      },
+      "assets": {
+        "icon": "asset-awakener-0053-icon"
+      },
+      "numericId": 53,
+      "ingameId": "D05",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "PERMANENT",
+      "releaseDate": "2023-11-29",
+      "faction": "Among the Stars",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 30,
+        "ATK": 27,
+        "DEF": 34
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.4,
+        "ATK": 1.25,
+        "DEF": 1.6
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "t",
+      "aliases": ["winkle"],
+      "searchTags": ["Counter", "Dispel", "Discard", "Draw", "Keyflare"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0054",
+      "name": "Xu",
+      "route": {
+        "slug": "xu",
+        "canonicalPath": "/database/awakeners/xu"
+      },
+      "assets": {
+        "icon": "asset-awakener-0054-icon"
+      },
+      "numericId": 54,
+      "ingameId": "B14",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-01-26",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 48,
+        "ATK": 29,
+        "DEF": 27
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 2.25,
+        "ATK": 1.35,
+        "DEF": 1.25
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 1.6,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "xi",
+      "aliases": ["xu"],
+      "searchTags": ["Poison", "STR Down", "Arithmetica", "Max HP DMG"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0055",
+      "name": "Vortice",
+      "route": {
+        "slug": "vortice",
+        "canonicalPath": "/database/awakeners/vortice"
+      },
+      "assets": {
+        "icon": "asset-awakener-0055-icon"
+      },
+      "numericId": 55,
+      "ingameId": "O11",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-03-09",
+      "faction": "The Fools",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 35,
+        "ATK": 42,
+        "DEF": 29
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 16.2,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.65,
+        "ATK": 2,
+        "DEF": 1.35
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 1.2,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "xl",
+      "aliases": ["vortice"],
+      "searchTags": ["Tentacle DMG", "Pursuit", "Fixed DMG", "Aftershock", "Dispel", "Divine Realm"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0056",
+      "name": "Arachne",
+      "route": {
+        "slug": "arachne",
+        "canonicalPath": "/database/awakeners/arachne"
+      },
+      "assets": {
+        "icon": "asset-awakener-0056-icon"
+      },
+      "numericId": 56,
+      "ingameId": "D10",
+      "realm": "ULTRA",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-04-20",
+      "faction": "The Unknowable",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 34,
+        "ATK": 25,
+        "DEF": 33
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 1.6,
+        "ATK": 1.15,
+        "DEF": 1.55
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "3",
+      "aliases": ["arachne"],
+      "searchTags": ["Final Verdict", "Pursuit", "Dispel", "Divine Realm", "Self-Damage", "Spider"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0057",
+      "name": "Saya",
+      "route": {
+        "slug": "saya",
+        "canonicalPath": "/database/awakeners/saya"
+      },
+      "assets": {
+        "icon": "asset-awakener-0057-icon"
+      },
+      "numericId": 57,
+      "ingameId": "B15",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-05-30",
+      "faction": "TBD",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 25,
+        "ATK": 25,
+        "DEF": 24
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.15,
+        "ATK": 1.15,
+        "DEF": 1.1
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 2,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "xj",
+      "aliases": ["saya"],
+      "searchTags": ["Discard", "Corrosion", "Divine Realm", "Self-Damage"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0058",
+      "name": "Pontos",
+      "route": {
+        "slug": "pontos",
+        "canonicalPath": "/database/awakeners/pontos"
+      },
+      "assets": {
+        "icon": "asset-awakener-0058-icon"
+      },
+      "numericId": 58,
+      "ingameId": "O13",
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-06-29",
+      "faction": "TBD",
+      "gender": "Male",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 42,
+        "ATK": 31,
+        "DEF": 41
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 52.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 2,
+        "ATK": 1.45,
+        "DEF": 1.95
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 2.4,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0,
+        "DamageAmplification": 0.8,
+        "DeathResistance": 0
+      },
+      "lineupToken": "xq",
+      "aliases": ["pontos"],
+      "searchTags": ["STR Down", "Tentacle DMG", "Fixed DMG", "Dispel", "Divine Realm"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0059",
+      "name": "Lotan: Cetarchon",
+      "route": {
+        "slug": "lotan-cetarchon",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon"
+      },
+      "assets": {
+        "icon": "asset-awakener-0059-icon"
+      },
+      "numericId": 59,
+      "ingameId": "C04EX",
+      "realm": "CHAOS",
+      "rarity": "Genesis",
+      "type": "ASSAULT",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-07-27",
+      "faction": "TBD",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 28,
+        "ATK": 48,
+        "DEF": 29
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "statScaling": {
+        "CON": 1.3,
+        "ATK": 2.25,
+        "DEF": 1.35
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 1.2,
+        "DamageAmplification": 0,
+        "DeathResistance": 2.8
+      },
+      "lineupToken": "xs",
+      "aliases": ["lotan cetarchon", "cetarchon", "glotan", "rotan"],
+      "searchTags": ["STR Up", "Divine Realm"]
+    },
+    {
+      "kind": "awakener",
+      "id": "awakener-0060",
+      "name": "Caraboo",
+      "route": {
+        "slug": "caraboo",
+        "canonicalPath": "/database/awakeners/caraboo"
+      },
+      "assets": {
+        "icon": "asset-awakener-0060-icon"
+      },
+      "numericId": 60,
+      "ingameId": "B11",
+      "realm": "CARO",
+      "rarity": "SSR",
+      "type": "WARDEN",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "releaseDate": "2026-08-24",
+      "faction": "TBD",
+      "gender": "Female",
+      "primaryScalingBase": 20,
+      "defaultPrimaryStatBonusLevel": 10,
+      "baseStatsLv1": {
+        "CON": 21,
+        "ATK": 26,
+        "DEF": 35
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 15,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1,
+        "ATK": 1.2,
+        "DEF": 1.65
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.4,
+        "KeyflareRegen": 0,
+        "RealmMastery": 4,
+        "SigilYield": 0,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "lineupToken": "4",
+      "aliases": ["caraboo"],
+      "searchTags": ["Weakness", "STR Up", "STR Down", "Fixed DMG", "Dispel", "Corrosion", "Divine Realm"]
+    }
+  ]
+}

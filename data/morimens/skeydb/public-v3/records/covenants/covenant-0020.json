@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 3,
+  "kind": "covenant",
+  "id": "covenant-0020",
+  "name": "Steppenwolf",
+  "route": {
+    "slug": "steppenwolf",
+    "canonicalPath": "/database/covenants/steppenwolf"
+  },
+  "assets": {
+    "icon": "asset-covenant-0020-icon"
+  },
+  "acquisitionSource": "Purchase from Mythag Shop - Rose Scrip Exchange",
+  "lineupToken": "w",
+  "setEffects": [
+    {
+      "set": 3,
+      "descriptionTemplate": "DMG Amplification +[Arg1]%",
+      "descriptionArgs": {
+        "Arg1": {
+          "kind": "fixed",
+          "value": "4.8",
+          "suffix": "%"
+        }
+      }
+    },
+    {
+      "set": 6,
+      "descriptionTemplate": "The wielder's Base DMG +20%, and {Poison} Infliction and {Counter} Generation +10%.",
+      "descriptionArgs": {}
+    }
+  ],
+  "lore": "Awoo, awoo!\nMasked and vengeful, the lone wolf roars and springs for the kill."
+}

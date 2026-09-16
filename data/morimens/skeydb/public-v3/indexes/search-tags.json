@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 3,
+  "tags": [
+    {
+      "id": "weakness",
+      "label": "Weakness",
+      "section": "affix",
+      "aliases": ["weak"],
+      "order": 100,
+      "count": 25
+    },
+    {
+      "id": "vulnerable",
+      "label": "Vulnerable",
+      "section": "affix",
+      "aliases": ["vulnerability", "vuln"],
+      "order": 110,
+      "count": 25
+    },
+    {
+      "id": "poison",
+      "label": "Poison",
+      "section": "affix",
+      "aliases": [],
+      "order": 120,
+      "count": 26
+    },
+    {
+      "id": "bleed",
+      "label": "Bleed",
+      "section": "affix",
+      "aliases": [],
+      "order": 130,
+      "count": 6
+    },
+    {
+      "id": "barrier",
+      "label": "Barrier",
+      "section": "affix",
+      "aliases": [],
+      "order": 180,
+      "count": 2
+    },
+    {
+      "id": "counter",
+      "label": "Counter",
+      "section": "affix",
+      "aliases": [],
+      "order": 190,
+      "count": 17
+    },
+    {
+      "id": "final-verdict",
+      "label": "Final Verdict",
+      "section": "affix",
+      "aliases": ["verdict"],
+      "order": 200,
+      "count": 1
+    },
+    {
+      "id": "alert",
+      "label": "Alert",
+      "section": "affix",
+      "aliases": ["alert buff"],
+      "order": 205,
+      "count": 3
+    },
+    {
+      "id": "str-up",
+      "label": "STR Up",
+      "section": "affix",
+      "aliases": ["strength up"],
+      "order": 210,
+      "count": 49
+    },
+    {
+      "id": "str-down",
+      "label": "STR Down",
+      "section": "affix",
+      "aliases": ["strength down", "str down"],
+      "order": 220,
+      "count": 15
+    },
+    {
+      "id": "tentacle-dmg",
+      "label": "Tentacle DMG",
+      "section": "archetype",
+      "aliases": ["tentacle damage"],
+      "order": 225,
+      "count": 19
+    },
+    {
+      "id": "stun",
+      "label": "Stun",
+      "section": "affix",
+      "aliases": ["petrify", "petrified", "fainted"],
+      "order": 230,
+      "count": 2
+    },
+    {
+      "id": "pursuit",
+      "label": "Pursuit",
+      "section": "mechanic",
+      "aliases": [],
+      "order": 240,
+      "count": 6
+    },
+    {
+      "id": "steal-str",
+      "label": "Steal STR",
+      "section": "mechanic",
+      "aliases": ["steal", "str steal", "strength steal"],
+      "order": 245,
+      "count": 5
+    },
+    {
+      "id": "pierce-dmg",
+      "label": "Pierce DMG",
+      "section": "mechanic",
+      "aliases": ["pierce damage"],
+      "order": 250,
+      "count": 12
+    },
+    {
+      "id": "fixed-dmg",
+      "label": "Fixed DMG",
+      "section": "mechanic",
+      "aliases": ["fixed damage"],
+      "order": 255,
+      "count": 3
+    },
+    {
+      "id": "aftershock",
+      "label": "Aftershock",
+      "section": "mechanic",
+      "aliases": [],
+      "order": 260,
+      "count": 8
+    },
+    {
+      "id": "discover",
+      "label": "Discover",
+      "section": "mechanic",
+      "aliases": [],
+      "order": 265,
+      "count": 1
+    },
+    {
+      "id": "dispel",
+      "label": "Dispel",
+      "section": "mechanic",
+      "aliases": ["cleanse", "clear", "remove"],
+      "order": 300,
+      "count": 26
+    },
+    {
+      "id": "arithmetica",
+      "label": "Arithmetica",
+      "section": "archetype",
+      "aliases": [],
+      "order": 900,
+      "count": 30
+    },
+    {
+      "id": "death-resistance",
+      "label": "Death Resistance",
+      "section": "archetype",
+      "aliases": ["resistance"],
+      "order": 910,
+      "count": 16
+    },
+    {
+      "id": "discard",
+      "label": "Discard",
+      "section": "archetype",
+      "aliases": [],
+      "order": 920,
+      "count": 14
+    },
+    {
+      "id": "corrosion",
+      "label": "Corrosion",
+      "section": "affix",
+      "aliases": [],
+      "order": 925,
+      "count": 3
+    },
+    {
+      "id": "divine-realm",
+      "label": "Divine Realm",
+      "section": "archetype",
+      "aliases": ["alt realm"],
+      "order": 930,
+      "count": 7
+    },
+    {
+      "id": "draw",
+      "label": "Draw",
+      "section": "archetype",
+      "aliases": [],
+      "order": 940,
+      "count": 35
+    },
+    {
+      "id": "shield",
+      "label": "Shield",
+      "section": "archetype",
+      "aliases": ["shield generation"],
+      "order": 945,
+      "count": 39
+    },
+    {
+      "id": "hand-limit",
+      "label": "Hand Limit",
+      "section": "archetype",
+      "aliases": [],
+      "order": 950,
+      "count": 9
+    },
+    {
+      "id": "heal",
+      "label": "Heal",
+      "section": "archetype",
+      "aliases": ["healing", "hp recovery"],
+      "order": 960,
+      "count": 33
+    },
+    {
+      "id": "keyflare",
+      "label": "Keyflare",
+      "section": "archetype",
+      "aliases": [],
+      "order": 970,
+      "count": 34
+    },
+    {
+      "id": "aliemus",
+      "label": "Aliemus",
+      "section": "archetype",
+      "aliases": ["aliemus generation"],
+      "order": 975,
+      "count": 46
+    },
+    {
+      "id": "max-hp-dmg",
+      "label": "Max HP DMG",
+      "section": "archetype",
+      "aliases": [],
+      "order": 980,
+      "count": 4
+    },
+    {
+      "id": "self-harm",
+      "label": "Self-Damage",
+      "section": "archetype",
+      "aliases": [],
+      "order": 990,
+      "count": 10
+    },
+    {
+      "id": "lemurian",
+      "label": "Lemurian",
+      "section": "archetype",
+      "aliases": ["lemuria"],
+      "order": 995,
+      "count": 5
+    },
+    {
+      "id": "spider",
+      "label": "Spider",
+      "section": "archetype",
+      "aliases": [],
+      "order": 1000,
+      "count": 2
+    },
+    {
+      "id": "strike",
+      "label": "Strike",
+      "section": "archetype",
+      "aliases": [],
+      "order": 1010,
+      "count": 22
+    },
+    {
+      "id": "defense",
+      "label": "Defense",
+      "section": "archetype",
+      "aliases": ["defence", "defend"],
+      "order": 1015,
+      "count": 8
+    },
+    {
+      "id": "tentacles",
+      "label": "Tentacle Generation",
+      "section": "archetype",
+      "aliases": ["tentacles", "tentacle gen", "tentacle limit"],
+      "order": 1020,
+      "count": 11
+    },
+    {
+      "id": "sacrifice",
+      "label": "Sacrifice",
+      "section": "mechanic",
+      "aliases": [],
+      "order": 1030,
+      "count": 2
+    },
+    {
+      "id": "crit-rate",
+      "label": "Crit Rate",
+      "section": "archetype",
+      "aliases": ["crit. rate", "critical rate"],
+      "order": 1040,
+      "count": 25
+    },
+    {
+      "id": "crit-dmg",
+      "label": "Crit DMG",
+      "section": "archetype",
+      "aliases": ["crit. dmg", "crit damage", "critical damage"],
+      "order": 1050,
+      "count": 29
+    },
+    {
+      "id": "temporary-realm-mastery",
+      "label": "Temporary Realm Mastery",
+      "section": "archetype",
+      "aliases": ["temp realm mastery"],
+      "order": 1060,
+      "count": 2
+    },
+    {
+      "id": "embryo-fusion",
+      "label": "Embryo Fusion",
+      "section": "archetype",
+      "aliases": [],
+      "order": 1070,
+      "count": 9
+    },
+    {
+      "id": "sigil-gain",
+      "label": "Sigil Gain",
+      "section": "archetype",
+      "aliases": ["sigil generation"],
+      "order": 1080,
+      "count": 7
+    },
+    {
+      "id": "sigil-yield",
+      "label": "Sigil Yield",
+      "section": "archetype",
+      "aliases": [],
+      "order": 1090,
+      "count": 1
+    }
+  ]
+}

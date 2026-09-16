@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 3,
+  "kind": "awakener",
+  "id": "awakener-0043",
+  "name": "Ryker",
+  "route": {
+    "slug": "ryker",
+    "canonicalPath": "/database/awakeners/ryker"
+  },
+  "assets": {
+    "icon": "asset-awakener-0043-icon"
+  },
+  "numericId": 43,
+  "ingameId": "C05",
+  "lineupToken": "V",
+  "realm": "CHAOS",
+  "rarity": "SSR",
+  "type": "CHORUS",
+  "availabilityType": "LIMITED_FADED_LEGACY",
+  "releaseDate": "2024-08-12",
+  "faction": "The Fools",
+  "aliases": ["ryker"],
+  "searchTags": ["Weakness", "Vulnerable", "STR Up", "Arithmetica", "Draw", "Keyflare"],
+  "primaryScalingBase": 20,
+  "baseStatsLv1": {
+    "CON": 42,
+    "ATK": 35,
+    "DEF": 34
+  },
+  "substatsLv1": {
+    "CritRate": 5.8,
+    "CritDamage": 50,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 15,
+    "RealmMastery": 0,
+    "SigilYield": 1.2,
+    "DamageAmplification": 0,
+    "DeathResistance": 0
+  },
+  "statScaling": {
+    "CON": 2,
+    "ATK": 1.65,
+    "DEF": 1.6
+  },
+  "substatScaling": {
+    "CritRate": 0.8,
+    "CritDamage": 0,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 0,
+    "RealmMastery": 0,
+    "SigilYield": 1.2,
+    "DamageAmplification": 0,
+    "DeathResistance": 0
+  },
+  "profile": {
+    "title": "Ryker",
+    "birthday": "6-Jun",
+    "voiceActor": "Takanaka Yusei",
+    "gender": "Male",
+    "height": "?",
+    "weight": "102lbs",
+    "gnosticIndex": "?",
+    "storySections": [
+      {
+        "kind": "introduction",
+        "title": "Basic Information",
+        "unlockCondition": "Awakener Level 1",
+        "content": "Ryker is known as the \"Lucky Detective\" by his detective friends.\n\nAs the name suggests, he is a lucky person: whenever he places a bet, he wins ten times the stake; whenever he guesses, he chooses the right answer.\n\nThe \"Lucky Detective\" doesn't have to be an actual detective; he‘s solved many cases by chance alone, so he was embraced on this path.\n\nHe doesn't solve cases by deduction, relying on luck instead. Just a tour around the crime scene and he stumbles upon the culprit; just walking along the road, he picks up key evidence.\n\nWith such good fortune, he's lived out a smooth twenty-five years.\n\nHe never worries about yesterday, nor frets about tomorrow."
+      },
+      {
+        "kind": "story",
+        "title": "Story: I",
+        "unlockCondition": "Affinity Level 3",
+        "content": "The Silver from Ryker's awakening was excavated from the interior of the renowned Remouahe monument, the Triangular Giant Tower. It is streamlined and perfectly bullet-shaped, matching the size and form of bullets used in the SAA revolver, embedded within the skull of a young male corpse.\n\nTouching this Silver evokes magnificent and grand visions of the Triangular Giant Tower, causing the body to instinctively curl up and crawl. If the toucher resists desperately and looks ahead, they will see the blurred figure of a crowned man backlit, followed by an instant interruption of consciousness, causing the Silver to naturally slip from their fingers.\n\n\"The tip of the Triangular Tower has not yet been eroded; it should be a scene soon after its completion.\"—Researcher B.R. Longman\n\"I can hear horrifying whispers from dark souls.\"—Researcher K. Waters\n\"I must denounce the inhumane experiments arranged for us by Mythag. The side effects of repeatedly touching this Silver are enough to cause complete loss of bodily control. In short, I refuse to touch it again.\"—Researcher L. Lopez"
+      },
+      {
+        "kind": "story",
+        "title": "Story: II",
+        "unlockCondition": "Affinity Level 5",
+        "content": "After the @3@1 Event, Ryker became a special advisor at Mythag University.\n\nRyker is a competent advisor. From the mysterious disappearance of professors or inexplicable damage to instruments, to trivial matters such as searching for cats and dogs, Ryker can patiently and swiftly deliver satisfactory results.\n\nSoon, due to his unique appearance, dignified and elegant demeanor, and helpful habits, Ryker became an idol figure beloved by countless young men and women in Mythag.\n\nProfessor Dexter once lamented, \"The spotlight has been stolen by the youth.\"\n\nBut as he gradually became integrated into the campus, everyone noticed that Ryker's time in front of people began to decrease.\n\nMeanwhile, in a certain abandoned basement of Mythag, the sound of dice rolling began to occur frequently."
+      },
+      {
+        "kind": "story",
+        "title": "Story: III",
+        "unlockCondition": "Affinity Level 7",
+        "content": "At the age of twenty-five, Ryker encountered a strange suspect while investigating a murder case in a locked room.\n\nAfter obtaining an absolutely complete chain of evidence, the suspect mysteriously vanished from the police station, with the handcuffs still intact. Of course, this was the responsibility of the on-duty police, but Ryker still received his reward.\n\nRyker took this reward and traveled overseas for a vacation. He then encountered the fleeing suspect by a stall. The suspect was placing bets, and upon seeing Ryker, remained unfazed, merely inviting him to join the game and promising that if Ryker won, he would willingly surrender.\n\nRyker didn't win a single round.\n\nHe lost his pipe, lost his tie, lost his hat, and lost his trench coat.\n\nWhen he was completely naked, the suspect returned all his clothes to him, stating that those stakes were too small. Without hesitation, Ryker asked what the suspect wanted to bet on and readily agreed when the other proposed wagering an arm.\n\nAfter several additional stakes, the suspect pulled out a revolver. Facing a life-or-death gamble, Ryker picked up the gun without hesitation and aimed it at his temple.\n\nAfter a gunshot, Ryker collapsed. The suspect summoned back his undead to mock his ignorance. However, Ryker's first words were, \"What are we betting on next?\"\n\nHis arrogance finally piqued the demon's interest. The suspect, whose true name was \"N@2@3,\" decided to let the wager continue.\n\n\"N\" produced three top hats and told him to make the \"best choice\" that would allow him to restore his body.\n\nRyker chose a hat, and \"N\" opened one that was empty, asking if he wanted to change his choice. Ryker shook his head.\n\n- Don't you understand probability?\n\n- I just believe in my luck.\n\n\"N\" revealed the third top hat, which was also empty. Finally, he lifted Ryker's hat, and inside was a mass of strange black mist. The mist surged toward Ryker, transforming into a bizarre beastly form. \"N\" replaced him with the body that had already been wagered.\n\n- For one with the keen sense of a beast, isn't this incarnation a perfect match? So, this is the \"best choice\"!"
+      },
+      {
+        "kind": "story",
+        "title": "Story: IV",
+        "unlockCondition": "Affinity Level 9",
+        "content": "When the mountaineer reaches the peak of Elworth.\n\nWhen the competitor lifts the world's number one trophy.\n\nWhen the devout listens to the Revelation in dreams.\n\nWhen victory comes too easily, the accompanying satisfaction may turn into bland inertia.\n\nLooking around, there are no opponents, no fun at all.\n\nOn the surface, Ryker yearns for an exhilarating game, craving the heart-pounding moment after an ALL-IN, desiring the surge of adrenaline.\n\n\"There is no need to say those things. Only I understand you. What you truly desire is simply failure.\n\nLet me grant you the sweetest failure.\""
+      }
+    ],
+    "voiceLines": {
+      "daily": [
+        {
+          "id": "voice-5138",
+          "title": "Awaken",
+          "content": "What's up, you wanna go gamble? ...An investigation? Aww, nah, that's a waste of a lucky streak..."
+        },
+        {
+          "id": "voice-5432",
+          "title": "Upgrade: I",
+          "content": "Feels like my dice are rollin' a bit hotter today!"
+        },
+        {
+          "id": "voice-5433",
+          "title": "Upgrade: II",
+          "content": "Wow! Your luck is burnin' hot right now!"
+        },
+        {
+          "id": "voice-5434",
+          "title": "Upgrade: III",
+          "content": "Lucky~"
+        },
+        {
+          "id": "voice-6067",
+          "title": "Enlighten: Observe",
+          "unlockCondition": "Unlocks at Enlighten Level 1",
+          "content": "This beast's sense of smell? That's just luck, alright? Don't get it twisted."
+        },
+        {
+          "id": "voice-6466",
+          "title": "Enlighten: Ponder",
+          "unlockCondition": "Unlocks at Enlighten Level 2",
+          "content": "My luck might not rub off on my companions. You know the saying, right? \"A rabbit's foot isn't lucky for the rabbit.\""
+        },
+        {
+          "id": "voice-6464",
+          "title": "Enlighten: Reflect",
+          "unlockCondition": "Unlocks at Enlighten Level 3",
+          "content": "Sigh, I owe you too many favors to keep this secret: Actually, I might be the unluckiest bloke in the whole world."
+        },
+        {
+          "id": "voice-6465",
+          "title": "Enlighten: Insight",
+          "unlockCondition": "Unlocks at Enlighten Level 7",
+          "content": "Seems you didn't take my warning to heart... Ah, never mind. I'll still help you tear through the enemy. After all, these claws and fangs were won by chance, right?"
+        },
+        {
+          "id": "voice-6462",
+          "title": "Enlighten: Elevate",
+          "unlockCondition": "Unlocks at Enlighten Level 11",
+          "content": "Still wanna bet on me? Guess living carefree isn't as easy as it looks. Don't worry, I'll solve your problems... with plenty of breaks."
+        },
+        {
+          "id": "voice-6463",
+          "title": "Enlighten: Florish",
+          "unlockCondition": "Unlocks at Enlighten Level 15",
+          "content": "Well, looks like we gotta bring out the big guns, right? Where's the crime scene? I'll burn every last bit of my luck to bring the suspect in before the deadline!"
+        },
+        {
+          "id": "voice-5406",
+          "title": "Affinity: I",
+          "unlockCondition": "Unlocks at Affinity Level 2",
+          "content": "You keen on this fur? Wanna touch it? Don't worry, I don't mind!"
+        },
+        {
+          "id": "voice-5405",
+          "title": "Affinity: II",
+          "unlockCondition": "Unlocks at Affinity Level 4",
+          "content": "Perfect—fancy a gamble? Win, and I'll share a secret.\nBut careful, Alva might catch you~"
+        },
+        {
+          "id": "voice-5404",
+          "title": "Affinity: III",
+          "unlockCondition": "Unlocks at Affinity Level 6",
+          "content": "Hmm? You wanna ask about that photo in my wallet? Ah, that's the old me. This current look was a... gift, from my gambling buddy and rival."
+        },
+        {
+          "id": "voice-5408",
+          "title": "Affinity: IV",
+          "unlockCondition": "Unlocks at Affinity Level 8",
+          "content": "Do I ever regret? Not a chance. Life'd be too boring if everything went smoothly, wouldn't it?"
+        },
+        {
+          "id": "voice-5407",
+          "title": "Affinity: V",
+          "unlockCondition": "Unlocks at Affinity Level 10",
+          "content": "Course there are benefits. I met my Watson, didn't I? Compared to that, dying and a change of look don't matter much."
+        },
+        {
+          "id": "voice-5958",
+          "title": "Chat: Touch",
+          "content": "Aw, you're interested in my new look? Guess there's always a trade-off. Gotta be one of my lucky breaks—that's Ryker's luck!"
+        },
+        {
+          "id": "voice-6306",
+          "title": "Chat: About Salvador",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Salvador\"",
+          "content": "I just can't get along with that guy. Life isn't all about sin and punishment, is it? What's wrong with seizing the moment?"
+        },
+        {
+          "id": "voice-4985",
+          "title": "Chat: About Others",
+          "content": "That man... Hey, hang on, our bet's not over yet, is it?"
+        },
+        {
+          "id": "voice-5919",
+          "title": "Chat: About Jenkin",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Jenkin\"",
+          "content": "That kid's sharp; you need that kind of wit on the streets. If I was still out there investigating, I'd definitely buddy up with her."
+        },
+        {
+          "id": "voice-6728",
+          "title": "Chat: About Dissolution",
+          "content": "Dissolution... worked a case that touched on it. But disappearing seems pretty natural, doesn't it? Everyone vanishes in the end."
+        },
+        {
+          "id": "voice-6711",
+          "title": "Chat: About Mythag",
+          "content": "Mythag University's a great place, especially with the underground casino that pops up every week...\nWait, you didn't know? Oops, let the cat out of the bag."
+        },
+        {
+          "id": "voice-5893",
+          "title": "Chat: What I Like",
+          "content": "Likes? Good luck, obviously. I always look for a good omen before heading out."
+        },
+        {
+          "id": "voice-5502",
+          "title": "Chat: What I Hate",
+          "content": "Dislikes? A pipe that runs out, a missed carriage, rain on new shoes. Basically, any bad luck is a pain."
+        },
+        {
+          "id": "voice-5393",
+          "title": "Chat: About the Keeper",
+          "content": "Our relationship's like Sherlock and Watson, right? You read the latest magazines?"
+        }
+      ],
+      "battle": [
+        {
+          "id": "voice-5609",
+          "title": "Investigation Begins",
+          "content": "Alright, let's start this with a win!"
+        },
+        {
+          "id": "voice-5472",
+          "title": "Investigation Success",
+          "content": "With enough luck, anyone can be invincible."
+        },
+        {
+          "id": "voice-6218",
+          "title": "Investigation Halted",
+          "content": "Whoops, my bad! I'll make it happen next time, promise!"
+        },
+        {
+          "id": "voice-6271",
+          "title": "Strike: I",
+          "content": "Wouldn't hurt to be a lil reckless!"
+        },
+        {
+          "id": "voice-6272",
+          "title": "Strike: II",
+          "content": "Bang!"
+        },
+        {
+          "id": "voice-6060",
+          "title": "Defense: I",
+          "content": "Ooh, that was a close one."
+        },
+        {
+          "id": "voice-6059",
+          "title": "Defense: II",
+          "content": "Hey!"
+        },
+        {
+          "id": "voice-5223",
+          "title": "Hit: I",
+          "content": "Oops!"
+        },
+        {
+          "id": "voice-4999",
+          "title": "Skill: I",
+          "content": "Not bad."
+        },
+        {
+          "id": "voice-6750",
+          "title": "Skill: II",
+          "content": "ALL-IN!"
+        },
+        {
+          "id": "voice-6261",
+          "title": "Rouse",
+          "content": "Lady Luck, smile on me just this once!"
+        },
+        {
+          "id": "voice-6764",
+          "title": "Exalt",
+          "content": "Hit, Stand, Blackjack!"
+        },
+        {
+          "id": "voice-59464",
+          "title": "Over-Exalt",
+          "content": "Make it an easy win! It's our total victory!"
+        }
+      ],
+      "traphase": [
+        {
+          "id": "traphase-99785",
+          "title": "Opening",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "The hourly fee for a master detective like me is quite expensive, you know."
+        },
+        {
+          "id": "traphase-99771",
+          "title": "Chat: About Sorel",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "My esteemed lady, with your wealth, I presume you wouldn't mind a small wager with me?",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0043",
+              "lineId": "traphase-99771"
+            },
+            {
+              "awakenerId": "awakener-0046",
+              "lineId": "traphase-100103"
+            }
+          ]
+        },
+        {
+          "id": "traphase-100215",
+          "title": "Chat: About Celeste",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Although I'm very confident in my own luck, if I could make a wish, I'd still wish for as much good luck as possible.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0043",
+              "lineId": "traphase-100215"
+            },
+            {
+              "awakenerId": "awakener-0009",
+              "lineId": "traphase-99753"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99761",
+          "title": "Chat: About Caecus",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Ah, truthfully, a life like this can sometimes feel a bit boring...",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0006",
+              "lineId": "traphase-100188"
+            },
+            {
+              "awakenerId": "awakener-0043",
+              "lineId": "traphase-99761"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99835",
+          "title": "Chat: About Daffodil",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Aww. Even if you wanted to buy it, I wouldn't sell it!",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0012",
+              "lineId": "traphase-99808"
+            },
+            {
+              "awakenerId": "awakener-0043",
+              "lineId": "traphase-99835"
+            }
+          ]
+        },
+        {
+          "id": "traphase-100027",
+          "title": "Thinking",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "The clues are hidden within the details."
+        },
+        {
+          "id": "traphase-100130",
+          "title": "Urging",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Come on, come on! A good feel won't last forever!"
+        },
+        {
+          "id": "traphase-99905",
+          "title": "Fatal Blow",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "This is the moment! All in!"
+        },
+        {
+          "id": "traphase-100198",
+          "title": "Blunder",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Oh no! I've got a bad feeling about this!"
+        },
+        {
+          "id": "traphase-100100",
+          "title": "Death",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "My luck... Have I used it up?"
+        }
+      ]
+    }
+  }
+}

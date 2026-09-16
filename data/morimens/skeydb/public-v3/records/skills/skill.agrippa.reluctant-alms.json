@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.agrippa.reluctant-alms",
+  "name": "Reluctant Alms",
+  "route": {
+    "slug": "reluctant-alms",
+    "canonicalPath": "/database/awakeners/agrippa/skills/reluctant-alms"
+  },
+  "ownerAwakenerId": "awakener-0002",
+  "slot": "Skill1",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Gain [Block:Arg1] Shield. Current {Embryo Fusion} is doubled.\n{overlay:Embryo Fusion Double}",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["12.5", "15", "17.5", "20", "22.5", "25"],
+      "stat": "DEF",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "2",
+  "lore": "She begged the gladiator to kill her.\n\"Soon, they will find me, humiliate me, and then behead me, just as they did to my parents.\nI refuse to die at the hands of those despicable worms, but you... you're different.\nThis is my only request—kill me.\"\nThe gladiator laughed heartily, his chest vibrating, chains clinking.\nHer plea did not move him, but he never refused fresh blood offered to him.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.agrippa.the-usurper.skill.agrippa.reluctant-alms",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.agrippa.the-usurper",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E1",
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "patch": {
+        "descriptionTemplate": "Gain [Block:Arg1] Shield. Current {Embryo Fusion} is doubled. The card with the highest Arithmetica Cost in your hand has its Arithmetica Cost -1 this turn."
+      }
+    }
+  ],
+  "ownerAwakenerName": "Agrippa"
+}

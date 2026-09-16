@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 3,
+  "kind": "derivedSkill",
+  "id": "derived.global.gauntward",
+  "name": "Gauntward",
+  "route": {
+    "slug": "gauntward",
+    "canonicalPath": "/database/derived-skills/gauntward"
+  },
+  "cardFamily": "buff",
+  "cardTypes": ["buff"],
+  "descriptionTemplate": "Choose {Escort} or {Hunt}.",
+  "descriptionArgs": {},
+  "cardKeywords": [
+    {
+      "id": "mechanic.retain"
+    }
+  ],
+  "cost": "8"
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.arachne.eternal-weave",
+  "name": "Eternal Weave",
+  "route": {
+    "slug": "eternal-weave",
+    "canonicalPath": "/database/awakeners/arachne/skills/eternal-weave"
+  },
+  "ownerAwakenerId": "awakener-0056",
+  "slot": "Skill1",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Inflict [FateCut:Arg1] {Final Verdict} on all enemies, then create 1 {derived:Guiding Strings}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["300", "360", "420", "480", "540", "600"],
+      "stat": "ATK",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "1",
+  "lore": "From the first day of her birth, she saw the threads of fate spread.\nFollowing the trail of the threads, she stepped through the gateway, accepting her endless destiny as a prisoner.\nThe threads passed through the spinning wheel known as Moirae, through city walls and straits, through oaths and lies, through every soul that believed it was making its own choices.\nIn this mirage of freedom, the spinning wheel turns, ceaselessly, for all eternity.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.arachne.universe-as-i-conceive.skill.arachne.eternal-weave",
+      "operation": "override_args",
+      "upgraderId": "enlighten.arachne.universe-as-i-conceive",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E2",
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "patch": {
+        "descriptionArgs": {
+          "Arg1": {
+            "kind": "scaling",
+            "values": ["450", "540", "630", "720", "810", "900"],
+            "stat": "ATK",
+            "suffix": "%"
+          }
+        }
+      }
+    }
+  ],
+  "ownerAwakenerName": "Arachne"
+}

@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 3,
+  "scope": "covenants",
+  "records": [
+    {
+      "kind": "covenant",
+      "id": "covenant-0001",
+      "name": "Deus Ex Machina",
+      "aliases": [],
+      "tokens": ["deus", "deus ex machina", "ex", "machina"],
+      "fields": {
+        "name": ["Deus Ex Machina", "deus-ex-machina"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0002",
+      "name": "Re-evolution",
+      "aliases": [],
+      "tokens": ["evolution", "re", "re evolution"],
+      "fields": {
+        "name": ["Re-evolution"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0003",
+      "name": "Scarlet Embrace",
+      "aliases": [],
+      "tokens": ["embrace", "scarlet", "scarlet embrace"],
+      "fields": {
+        "name": ["Scarlet Embrace", "scarlet-embrace"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0004",
+      "name": "Crimson Pulse",
+      "aliases": [],
+      "tokens": ["crimson", "crimson pulse", "pulse"],
+      "fields": {
+        "name": ["Crimson Pulse", "crimson-pulse"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0005",
+      "name": "Twisted Twins: Black",
+      "aliases": [],
+      "tokens": ["black", "twins", "twisted", "twisted twins black"],
+      "fields": {
+        "name": ["Twisted Twins: Black", "twisted-twins-black"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0006",
+      "name": "Burial Ground's Sighs",
+      "aliases": [],
+      "tokens": ["burial", "burial grounds sighs", "grounds", "sighs"],
+      "fields": {
+        "name": ["Burial Ground's Sighs", "burial-grounds-sighs"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0007",
+      "name": "Twisted Twins: White",
+      "aliases": [],
+      "tokens": ["twins", "twisted", "twisted twins white", "white"],
+      "fields": {
+        "name": ["Twisted Twins: White", "twisted-twins-white"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0008",
+      "name": "Cursed Rabbit",
+      "aliases": [],
+      "tokens": ["cursed", "cursed rabbit", "rabbit"],
+      "fields": {
+        "name": ["Cursed Rabbit", "cursed-rabbit"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0009",
+      "name": "Paradox",
+      "aliases": [],
+      "tokens": ["paradox"],
+      "fields": {
+        "name": ["Paradox"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0010",
+      "name": "Photosynthesis Ritual",
+      "aliases": [],
+      "tokens": ["photosynthesis", "photosynthesis ritual", "ritual"],
+      "fields": {
+        "name": ["Photosynthesis Ritual", "photosynthesis-ritual"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0011",
+      "name": "Returnal Line",
+      "aliases": [],
+      "tokens": ["line", "returnal", "returnal line"],
+      "fields": {
+        "name": ["Returnal Line", "returnal-line"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0012",
+      "name": "Ring of Chamber 36",
+      "aliases": [],
+      "tokens": ["36", "chamber", "of", "ring", "ring of chamber 36"],
+      "fields": {
+        "name": ["Ring of Chamber 36", "ring-of-chamber-36"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0013",
+      "name": "Life Drain",
+      "aliases": [],
+      "tokens": ["drain", "life", "life drain"],
+      "fields": {
+        "name": ["Life Drain", "life-drain"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0014",
+      "name": "April Tribute",
+      "aliases": [],
+      "tokens": ["april", "april tribute", "tribute"],
+      "fields": {
+        "name": ["April Tribute", "april-tribute"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0015",
+      "name": "Organic Form",
+      "aliases": [],
+      "tokens": ["form", "organic", "organic form"],
+      "fields": {
+        "name": ["Organic Form", "organic-form"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0016",
+      "name": "Sweet Slug",
+      "aliases": [],
+      "tokens": ["slug", "sweet", "sweet slug"],
+      "fields": {
+        "name": ["Sweet Slug", "sweet-slug"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0017",
+      "name": "Dream of Medicine",
+      "aliases": [],
+      "tokens": ["dream", "dream of medicine", "medicine", "of"],
+      "fields": {
+        "name": ["Dream of Medicine", "dream-of-medicine"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0018",
+      "name": "Feast from Afar",
+      "aliases": [],
+      "tokens": ["afar", "feast", "feast from afar", "from"],
+      "fields": {
+        "name": ["Feast from Afar", "feast-from-afar"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0019",
+      "name": "Unstained Chronicle",
+      "aliases": [],
+      "tokens": ["chronicle", "unstained", "unstained chronicle"],
+      "fields": {
+        "name": ["Unstained Chronicle", "unstained-chronicle"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0020",
+      "name": "Steppenwolf",
+      "aliases": [],
+      "tokens": ["steppenwolf"],
+      "fields": {
+        "name": ["Steppenwolf"]
+      }
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0021",
+      "name": "Cocoon of the Maiden",
+      "aliases": [],
+      "tokens": ["cocoon", "cocoon of the maiden", "maiden", "of", "the"],
+      "fields": {
+        "name": ["Cocoon of the Maiden", "cocoon-of-the-maiden"]
+      }
+    }
+  ]
+}

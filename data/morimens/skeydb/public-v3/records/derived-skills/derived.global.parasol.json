@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 3,
+  "kind": "derivedSkill",
+  "id": "derived.global.parasol",
+  "name": "Parasol",
+  "route": {
+    "slug": "parasol",
+    "canonicalPath": "/database/derived-skills/parasol"
+  },
+  "cardFamily": "buff",
+  "cardTypes": ["buff"],
+  "descriptionTemplate": "Gain [Arg1] Temporary {Alert}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "computed",
+      "formulaKey": "scaled",
+      "baseFormula": "esotericResearchDepth",
+      "multiplier": 0.01,
+      "inputs": ["accountLevel", "ownedPosseCount"]
+    }
+  },
+  "cardKeywords": [
+    {
+      "id": "mechanic.exhaust"
+    },
+    {
+      "id": "mechanic.retain"
+    }
+  ],
+  "cost": "0"
+}

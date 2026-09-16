@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 3,
+  "kind": "awakener",
+  "id": "awakener-0050",
+  "name": "Tulu",
+  "route": {
+    "slug": "tulu",
+    "canonicalPath": "/database/awakeners/tulu"
+  },
+  "assets": {
+    "icon": "asset-awakener-0050-icon"
+  },
+  "numericId": 50,
+  "ingameId": "O01",
+  "lineupToken": "d",
+  "realm": "AEQUOR",
+  "rarity": "SSR",
+  "type": "ASSAULT",
+  "availabilityType": "LIMITED_FADED_LEGACY",
+  "releaseDate": "2023-11-29",
+  "faction": "Out of the Aeons",
+  "aliases": ["tulu"],
+  "searchTags": ["STR Up", "STR Down", "Tentacle DMG", "Pierce DMG", "Aftershock", "Dispel", "Lemurian", "Tentacle Generation"],
+  "primaryScalingBase": 20,
+  "baseStatsLv1": {
+    "CON": 36,
+    "ATK": 40,
+    "DEF": 32
+  },
+  "substatsLv1": {
+    "CritRate": 5,
+    "CritDamage": 50,
+    "AliemusRegen": 0.4,
+    "KeyflareRegen": 17.4,
+    "RealmMastery": 0,
+    "SigilYield": 0,
+    "DamageAmplification": 0,
+    "DeathResistance": 0
+  },
+  "statScaling": {
+    "CON": 1.7,
+    "ATK": 1.9,
+    "DEF": 1.5
+  },
+  "substatScaling": {
+    "CritRate": 0,
+    "CritDamage": 0,
+    "AliemusRegen": 0.4,
+    "KeyflareRegen": 2.4,
+    "RealmMastery": 0,
+    "SigilYield": 0,
+    "DamageAmplification": 0,
+    "DeathResistance": 0
+  },
+  "profile": {
+    "title": "Tulu",
+    "birthday": "20-Aug",
+    "voiceActor": "Miyazono Miumi",
+    "gender": "Male",
+    "height": "8'3''",
+    "weight": "70.5lbs",
+    "gnosticIndex": "49.51",
+    "faction": "Lemuria",
+    "storySections": [
+      {
+        "kind": "introduction",
+        "title": "Basic Information",
+        "unlockCondition": "Awakener Level 1",
+        "content": "The young King slumbers upon his throne. Upon waking, he issues his decrees, his authority reaching every corner of the world.\n\nYet before the sun has set, the King is already weary. He has grown tired of his own power and transcendent wisdom; tired of the fanatical worship of his followers, and of the long dreams that have stretched across aeons.\n\nNone know what he witnessed during his long sleep, but they should be grateful for the bliss of their own ignorance."
+      },
+      {
+        "kind": "story",
+        "title": "Story: I",
+        "unlockCondition": "Affinity Level 3",
+        "content": "Until now, the oldest known human civilization was believed to have originated in Mesopotamia, a fact supported by a wealth of solid archaeological evidence.\n\nHowever, humanity is never content with the known. When facing the vast, black seas of infinity, we do not hesitate to set sail into the unknown.\n\nPerhaps this is not the first time we have been granted such warnings or hints. Theosophists once proposed a chilling hypothesis: that the cosmos is an awe-inspiring cycle, and our current world—and humanity itself—is but a transient link within it.\n\nFar too many things have perished silently in these cycles, leaving not a shred of evidence behind. This is, in fact, a mercy; some forces are so ancient and extreme that even their lingering vestiges could exert an immeasurable and devastating influence on our era.\n\nTake, for instance, the accidental discovery made by the crew of the Vigilant on the floor of the Southern Ocean. It has pushed our understanding of prehistoric civilization back by tens of thousands of years.\n\nFrom this, we have learned of a civilization—complete with its own state, monarch, and peculiar faith—that was swallowed by a global deluge and has long lain dormant beneath the waves.\n\nWere it not for the Mystia Treaty Committee's assistance in containment and censorship, human history might have been rewritten. But the world as it stands is not yet prepared for such a cataclysmic revelation."
+      },
+      {
+        "kind": "story",
+        "title": "Story: II",
+        "unlockCondition": "Affinity Level 5",
+        "content": "Some Awakeners struggle to adapt to their new vessels and lives, while others embrace the change, pivoting eagerly into their second life.\n\nTulu belongs to neither category. Never has any Awakener displayed such blatant, naked indifference toward the modern world.\n\nHis aptitude is peerless; perhaps he has already peered through the veil of current crises and global shifts. Yet, he prefers to lose himself in the depths of sleep.\n\nDespite having no desire for fame, he has become a figure of renown among both humans and Awakeners at the university. Researchers scrutinize his every move, churning out paper after paper on his behavior. The Departments of Archaeology and Astronomy frequently send invitations to academic symposia, almost always requesting him by name.\n\nTulu's influence among his fellow Awakeners is equally profound: Murphy grows sullen at the mere sight of him; Goliath seems perpetually locked in a silent, private rivalry with him; and Miriam treats his every word as divine law.\n\nTo all of this, he maintains a singular lack of affect—harboring no expectations, making no demands. He grants the occasional request only as the whim strikes him; otherwise, he remains unreachable."
+      },
+      {
+        "kind": "story",
+        "title": "Story: III",
+        "unlockCondition": "Affinity Level 7",
+        "content": "When he was chosen from among thousands of children and ascended the throne, Tulu was not even as tall as the blue stone throne.\n\nYet, no one dared to question his indifference or his perpetual slumber; all understood these to be the signs of a King listening to the divine.\n\nThe young King's decisions invariably solved every hardship, and his prophecies never failed to pass.\n\nTulu accepted this life: entering the dreams of a \"God,\" meeting an existence beyond comprehension, ruling his nation through oracles, and sinking once more into sleep.\n\nThe gears of this civilization turned on the will of the divine. He was content to simply follow the current—to be nothing more than the sole \"messenger\" for a higher power.\n\nHowever, Tulu held one prophecy back, the only one he never spoke: that the nation would be destroyed by a deluge, and their civilization would be entombed beneath the sea.\n\nBecause he knew all, he knew that their destruction was immutable. But he resolved that, in their final hours, they should not live in terror and despair.\n\nThis was his final decree—made not as an \"Divine Envoy,\" but as a King."
+      },
+      {
+        "kind": "story",
+        "title": "Story: IV",
+        "unlockCondition": "Affinity Level 9",
+        "content": "His transcendent wisdom exacts a heavy toll on his body; he must sleep for more than fifteen hours a day, and even in his waking hours, he is haunted by a persistent lethargy.\n\nWithin his dreams, he sometimes feels the fury of the gods; at other times, he glimpses the intersection of fractured timelines. Occasionally, he even wanders into the furthest depths, coming face-to-face with the Divine itself.\n\nHe has never sought their revelations or prophecies, yet no matter how he tries to evade them, the visions always come to pass.\n\nHe never asked for offerings. To be worshiped, to be feared—these were burdens thrust upon him by others, and they hold no interest for him.\n\nTo be reborn was nothing more than an unwelcome interruption of an eternal dream.\n\nNo need for invocation. No need for prayer."
+      }
+    ],
+    "voiceLines": {
+      "daily": [
+        {
+          "id": "voice-6195",
+          "title": "Awaken",
+          "content": "Who dares disturb This One's slumber?"
+        },
+        {
+          "id": "voice-6080",
+          "title": "Upgrade: I",
+          "content": "Fine. I shall consider it a subject's humble offering."
+        },
+        {
+          "id": "voice-6467",
+          "title": "Upgrade: II",
+          "content": "Do you seek This One's sigil branded upon your soul?"
+        },
+        {
+          "id": "voice-6468",
+          "title": "Upgrade: III",
+          "content": "Do you covet my power so desperately?"
+        },
+        {
+          "id": "voice-6335",
+          "title": "Enlighten: Observe",
+          "unlockCondition": "Unlocks at Enlighten Level 1",
+          "content": "Wait, without my permission..."
+        },
+        {
+          "id": "voice-5209",
+          "title": "Enlighten: Ponder",
+          "unlockCondition": "Unlocks at Enlighten Level 2",
+          "content": "Those who remain stubborn in their folly perform futile deeds."
+        },
+        {
+          "id": "voice-5212",
+          "title": "Enlighten: Reflect",
+          "unlockCondition": "Unlocks at Enlighten Level 3",
+          "content": "Isn't it good to follow the will of heaven? Why resist the will of fate?"
+        },
+        {
+          "id": "voice-5213",
+          "title": "Enlighten: Insight",
+          "unlockCondition": "Unlocks at Enlighten Level 7",
+          "content": "To fulfill your wish, you are willing to sacrifice so much..."
+        },
+        {
+          "id": "voice-5210",
+          "title": "Enlighten: Elevate",
+          "unlockCondition": "Unlocks at Enlighten Level 11",
+          "content": "Very well. At this point, I can somewhat grasp your aim. Proceed."
+        },
+        {
+          "id": "voice-5211",
+          "title": "Enlighten: Florish",
+          "unlockCondition": "Unlocks at Enlighten Level 15",
+          "content": "I see your resolve. Before returning to the void, This One shall bear witness to mankind's heir defying fate. But now... rest is required."
+        },
+        {
+          "id": "voice-5955",
+          "title": "Affinity: I",
+          "unlockCondition": "Unlocks at Affinity Level 2",
+          "content": "I see none of my vassals' traits in you... Perhaps that is for the best. Merely recalling that woman wearies me."
+        },
+        {
+          "id": "voice-5954",
+          "title": "Affinity: II",
+          "unlockCondition": "Unlocks at Affinity Level 4",
+          "content": "I never demanded worship. Mortals' fervor only exhausts me further... Withdraw. I will sleep now."
+        },
+        {
+          "id": "voice-5953",
+          "title": "Affinity: III",
+          "unlockCondition": "Unlocks at Affinity Level 6",
+          "content": "It has been a while since you awakened me. Have you no questions? Divine secrets? The absolute prophecy? Even the drowned continent's treasures... Nothing stirs your curiosity? Hmph... You are peculiar, indeed."
+        },
+        {
+          "id": "voice-5952",
+          "title": "Affinity: IV",
+          "unlockCondition": "Unlocks at Affinity Level 8",
+          "content": "To shoulder calamity's weight... it must be a heavy burden for your age. Tell me—had you known from the start that destiny is immutable... would you still have fought so fiercely? Keep your answer. Reflect as I rest. Your reply... interests me."
+        },
+        {
+          "id": "voice-5951",
+          "title": "Affinity: V",
+          "unlockCondition": "Unlocks at Affinity Level 10",
+          "content": "I am not omnipotent. Even I err. That woman's ruinous action was my miscalculation... Hence, I require your aid. That you may heed my summons, you may place a bed here, in my chamber."
+        },
+        {
+          "id": "voice-5901",
+          "title": "Chat: Touch",
+          "content": "Your insolence... This One shall interpret as a plea for eternal rest."
+        },
+        {
+          "id": "voice-6693",
+          "title": "Chat: About Slumber",
+          "content": "My slumber spills dreams like poison. Approach not while I sleep—and wake me never without cause."
+        },
+        {
+          "id": "voice-6145",
+          "title": "Chat: About the Divine Bloodline",
+          "unlockCondition": "Unlocks after acquiring either Awakener \"Aigis\" or \"Murphy\"",
+          "content": "This girl... her veins undoubtedly carry my blood. No—I have not walked this earth long enough to sire progeny. And yet... her power mirrors my own."
+        },
+        {
+          "id": "voice-4949",
+          "title": "Chat: About Seafarers",
+          "unlockCondition": "Unlocks after acquiring any one of Awakeners \"Miryam,\" \"Goliath,\" \"Caecus,\" \"Sanga,\" or \"Faros\".",
+          "content": "...It matters not, so long as their zeal doesn't rouse me. Sharing quarters is tolerable."
+        },
+        {
+          "id": "voice-5215",
+          "title": "Chat: About Dissolution",
+          "content": "Dissolution... Those vile black tides invade my dreams. Unbearable."
+        },
+        {
+          "id": "voice-5603",
+          "title": "Chat: About Mythag",
+          "content": "No matter how many cushions you stack, a lapis lazuli throne can't compare to a feather bed. In this regard, there is something commendable about your place."
+        },
+        {
+          "id": "voice-5900",
+          "title": "Chat: What I Like",
+          "content": "Preferences? A king should not indulge... yet if I could avoid tedious rites, a soft divan might suffice."
+        },
+        {
+          "id": "voice-6029",
+          "title": "Chat: What I Hate",
+          "content": "They found my bones beneath waves and presume I enjoy water? Now they wish to build a pool outside my chambers? ...Ha. They may do as they will. As long as they cease troubling me with trifles."
+        },
+        {
+          "id": "voice-6136",
+          "title": "Chat: About the Keeper",
+          "content": "For a subject, you observe keenly. Before my next long sleep, I shall... grace this era with my presence."
+        }
+      ],
+      "battle": [
+        {
+          "id": "voice-6719",
+          "title": "Investigation Begins",
+          "content": "Let's make it quick, Keeper."
+        },
+        {
+          "id": "voice-5551",
+          "title": "Investigation Success",
+          "content": "Not worth mentioning."
+        },
+        {
+          "id": "voice-5697",
+          "title": "Investigation Halted",
+          "content": "Ugh, it's still rather hard to focus..."
+        },
+        {
+          "id": "voice-5037",
+          "title": "Strike: I",
+          "content": "Impudent rogue!"
+        },
+        {
+          "id": "voice-5866",
+          "title": "Strike: II",
+          "content": "Insolent!"
+        },
+        {
+          "id": "voice-4914",
+          "title": "Defense: I",
+          "content": "Quite bold of you."
+        },
+        {
+          "id": "voice-5040",
+          "title": "Hit: I",
+          "content": "(Groan)"
+        },
+        {
+          "id": "voice-5041",
+          "title": "Hit: II",
+          "content": "(Groan)"
+        },
+        {
+          "id": "voice-5042",
+          "title": "Hit: III",
+          "content": "(Groan)"
+        },
+        {
+          "id": "voice-6485",
+          "title": "Skill: I",
+          "content": "Divine Punishment!"
+        },
+        {
+          "id": "voice-6321",
+          "title": "Skill: II",
+          "content": "Kneel before the throne."
+        },
+        {
+          "id": "voice-5588",
+          "title": "Rouse",
+          "content": "Witness the radiance of This One's might."
+        },
+        {
+          "id": "voice-6705",
+          "title": "Exalt",
+          "content": "Slumbering stars of mine dream now stir—let them converge unto their ordained fate. Point thy path to the Divine Realm!"
+        },
+        {
+          "id": "voice-57832",
+          "title": "Over-Exalt",
+          "content": "The hour has come. My promise shall be fulfilled."
+        }
+      ],
+      "traphase": [
+        {
+          "id": "traphase-99942",
+          "title": "Opening",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "A boring battle. Did you really have to bring me here?"
+        },
+        {
+          "id": "traphase-100168",
+          "title": "Chat: About Miryam",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "I've told you many times already, pointless prayers like this only disturb my dream...",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0032",
+              "lineId": "traphase-99793"
+            },
+            {
+              "awakenerId": "awakener-0050",
+              "lineId": "traphase-100168"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99895",
+          "title": "Chat: About Salvador",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Faith... Perhaps it is indeed a kind of happiness to always firmly believe in the divine.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0050",
+              "lineId": "traphase-99895"
+            },
+            {
+              "awakenerId": "awakener-0044",
+              "lineId": "traphase-99932"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99965",
+          "title": "Chat: About Clementine",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Do you wish to peep into my dream? You should know that those who are overly greedy for the unknown always invite retribution for their arrogance.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0010",
+              "lineId": "traphase-99890"
+            },
+            {
+              "awakenerId": "awakener-0050",
+              "lineId": "traphase-99965"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99823",
+          "title": "Chat: About Faros",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "I can't believe there are still descendants of Lemuria out there...",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0050",
+              "lineId": "traphase-99823"
+            },
+            {
+              "awakenerId": "awakener-0017",
+              "lineId": "traphase-99868"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99996",
+          "title": "Chat: About Kathigu-Ra",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Boring... If you don't enjoy my precense, don't come disturb my rest...",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0027",
+              "lineId": "traphase-100106"
+            },
+            {
+              "awakenerId": "awakener-0050",
+              "lineId": "traphase-99996"
+            }
+          ]
+        },
+        {
+          "id": "traphase-120256",
+          "title": "Chat: About Pollux",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "So you wish to eliminate all evil... what a stubbornly futile endeavor. I shall not engage in such folly.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0041",
+              "lineId": "traphase-120283"
+            },
+            {
+              "awakenerId": "awakener-0050",
+              "lineId": "traphase-120256"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99748",
+          "title": "Thinking",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "I'm getting tired..."
+        },
+        {
+          "id": "traphase-99826",
+          "title": "Urging",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Don't interrupt my rest."
+        },
+        {
+          "id": "traphase-99978",
+          "title": "Fatal Blow",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Stars, I invoke your protection!"
+        },
+        {
+          "id": "traphase-99846",
+          "title": "Blunder",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Tsk, I got distracted..."
+        },
+        {
+          "id": "traphase-99975",
+          "title": "Death",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Stop disturbing my sleep..."
+        }
+      ]
+    }
+  }
+}

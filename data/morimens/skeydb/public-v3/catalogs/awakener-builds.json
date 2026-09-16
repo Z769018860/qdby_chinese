@@ -1,0 +1,2497 @@
+{
+  "schemaVersion": 3,
+  "scope": "awakener-builds",
+  "kind": "awakenerBuild",
+  "recordCount": 56,
+  "records": [
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0001",
+      "name": "24 Builds",
+      "route": {
+        "slug": "dps",
+        "canonicalPath": "/database/awakeners/24/builds/dps"
+      },
+      "ownerAwakenerName": "24",
+      "awakenerId": "awakener-0001",
+      "primaryBuildId": "dps",
+      "builds": [
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0020", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0121"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0018"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0088"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0087", "wheel-0083"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["DMG_AMP"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0016"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0015"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0077"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0020"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0002",
+      "name": "Agrippa Builds",
+      "route": {
+        "slug": "dps",
+        "canonicalPath": "/database/awakeners/agrippa/builds/dps"
+      },
+      "ownerAwakenerName": "Agrippa",
+      "awakenerId": "awakener-0002",
+      "primaryBuildId": "dps",
+      "builds": [
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0020", "covenant-0017"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0121"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0007"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["SIGIL_YIELD"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "SIGIL_YIELD"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0003",
+      "name": "Aigis Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/aigis/builds/standard"
+      },
+      "ownerAwakenerName": "Aigis",
+      "awakenerId": "awakener-0003",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0003", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0001"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0003"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0004",
+      "name": "Alva Builds",
+      "route": {
+        "slug": "standard-support",
+        "canonicalPath": "/database/awakeners/alva/builds/standard-support"
+      },
+      "ownerAwakenerName": "Alva",
+      "awakenerId": "awakener-0004",
+      "primaryBuildId": "standard-support",
+      "builds": [
+        {
+          "id": "standard-support",
+          "label": "Standard Support",
+          "recommendedCovenantIds": ["covenant-0007", "covenant-0009", "covenant-0018"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0021"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0094", "wheel-0093"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP", "DEATH_RESISTANCE"]],
+          "recommendedWheelMainstats": ["REALM_MASTERY", "SIGIL_YIELD"]
+        },
+        {
+          "id": "dps-arc-2",
+          "label": "DPS Arc 2",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0024"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0021"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["DEATH_RESISTANCE"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0005",
+      "name": "Aurita Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/aurita/builds/standard"
+      },
+      "ownerAwakenerName": "Aurita",
+      "awakenerId": "awakener-0005",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0003", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0036"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0090"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0097", "wheel-0004", "wheel-0083", "wheel-0096"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0006",
+      "name": "Caecus Builds",
+      "route": {
+        "slug": "defence",
+        "canonicalPath": "/database/awakeners/caecus/builds/defence"
+      },
+      "ownerAwakenerName": "Caecus",
+      "awakenerId": "awakener-0006",
+      "primaryBuildId": "defence",
+      "builds": [
+        {
+          "id": "defence",
+          "label": "Defence",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0053"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095", "wheel-0089", "wheel-0081", "wheel-0078"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN", "DMG_AMP"]
+        },
+        {
+          "id": "counter-carry",
+          "label": "Counter Carry",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0020"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0121"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0007",
+      "name": "Casiah Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/casiah/builds/standard"
+      },
+      "ownerAwakenerName": "Casiah",
+      "awakenerId": "awakener-0007",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0038"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0080"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["REALM_MASTERY", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "REALM_MASTERY", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0008",
+      "name": "Castor Builds",
+      "route": {
+        "slug": "general-dps",
+        "canonicalPath": "/database/awakeners/castor/builds/general-dps"
+      },
+      "ownerAwakenerName": "Castor",
+      "awakenerId": "awakener-0008",
+      "primaryBuildId": "general-dps",
+      "recommendedPosseIds": ["posse-0036"],
+      "builds": [
+        {
+          "id": "general-dps",
+          "label": "General/DPS",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0005", "covenant-0020"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0121"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0005"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0080"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0094", "wheel-0006", "wheel-0112"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DMG_AMP"], ["CRIT_DMG"]],
+          "recommendedWheelMainstats": ["DMG_AMP", "CRIT_DMG"]
+        },
+        {
+          "id": "tank-focus",
+          "label": "Tank Focus",
+          "recommendedCovenantIds": ["covenant-0008", "covenant-0018"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0039"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0094", "wheel-0021"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DMG_AMP"], ["DEATH_RESISTANCE"]],
+          "recommendedWheelMainstats": ["DMG_AMP", "DEATH_RESISTANCE"]
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0005", "covenant-0010"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0039"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0080"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0094"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DMG_AMP"], ["DEATH_RESISTANCE"]],
+          "recommendedWheelMainstats": ["DMG_AMP", "DEATH_RESISTANCE"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0009",
+      "name": "Celeste Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/celeste/builds/standard"
+      },
+      "ownerAwakenerName": "Celeste",
+      "awakenerId": "awakener-0009",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0008", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0123"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0010",
+      "name": "Clementine Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/clementine/builds/standard"
+      },
+      "ownerAwakenerName": "Clementine",
+      "awakenerId": "awakener-0010",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0005"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0041"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0011",
+      "name": "Corposant Builds",
+      "route": {
+        "slug": "dps",
+        "canonicalPath": "/database/awakeners/corposant/builds/dps"
+      },
+      "ownerAwakenerName": "Corposant",
+      "awakenerId": "awakener-0011",
+      "primaryBuildId": "dps",
+      "builds": [
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0035"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0005"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0006", "covenant-0008", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0035"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0005"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0057"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DEATH_RESISTANCE"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DEATH_RESISTANCE"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0012",
+      "name": "Daffodil Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/daffodil/builds/standard"
+      },
+      "ownerAwakenerName": "Daffodil",
+      "awakenerId": "awakener-0012",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0020"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0031"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0121"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_DMG"], ["KEYFLARE_REGEN", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["CRIT_DMG", "KEYFLARE_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0013",
+      "name": "Doll Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/doll/builds/standard"
+      },
+      "ownerAwakenerName": "Doll",
+      "awakenerId": "awakener-0013",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0013", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0015"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0016"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0077"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["ALIEMUS_REGEN"], ["KEYFLARE_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["ALIEMUS_REGEN", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0014",
+      "name": "Doresain Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/doresain/builds/standard"
+      },
+      "ownerAwakenerName": "Doresain",
+      "awakenerId": "awakener-0014",
+      "primaryBuildId": "standard",
+      "recommendedPosseIds": ["posse-0037"],
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0011"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0008"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0028", "wheel-0137"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0015",
+      "name": "Erica Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/erica/builds/standard"
+      },
+      "ownerAwakenerName": "Erica",
+      "awakenerId": "awakener-0015",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0124"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0037"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0016",
+      "name": "Faint Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/faint/builds/standard"
+      },
+      "ownerAwakenerName": "Faint",
+      "awakenerId": "awakener-0016",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0006", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0123"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0050"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0081"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0093"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0017",
+      "name": "Faros Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/faros/builds/standard"
+      },
+      "ownerAwakenerName": "Faros",
+      "awakenerId": "awakener-0017",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0008", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0102"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP", "ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP", "ALIEMUS_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0018",
+      "name": "Doll: Inferno Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/doll-inferno/builds/standard"
+      },
+      "ownerAwakenerName": "Doll: Inferno",
+      "awakenerId": "awakener-0018",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0017"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0016"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0077"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["ALIEMUS_REGEN"], ["KEYFLARE_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["ALIEMUS_REGEN", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0019",
+      "name": "Helot: Catena Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/helot-catena/builds/standard"
+      },
+      "ownerAwakenerName": "Helot: Catena",
+      "awakenerId": "awakener-0019",
+      "primaryBuildId": "standard",
+      "recommendedPosseIds": ["posse-0023"],
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0006"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0092"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0018"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE", "CRIT_DMG"], ["KEYFLARE_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0020",
+      "name": "Ramona: Timeworn Builds",
+      "route": {
+        "slug": "support",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/builds/support"
+      },
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "awakenerId": "awakener-0020",
+      "primaryBuildId": "support",
+      "builds": [
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0001"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN"]
+        },
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0009", "covenant-0014", "covenant-0017"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0040"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN", "CRIT_RATE", "CRIT_DMG"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0021",
+      "name": "Goliath Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/goliath/builds/standard"
+      },
+      "ownerAwakenerName": "Goliath",
+      "awakenerId": "awakener-0021",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0050"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095", "wheel-0054", "wheel-0122"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP", "ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP", "ALIEMUS_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0022",
+      "name": "Hameln Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/hameln/builds/standard"
+      },
+      "ownerAwakenerName": "Hameln",
+      "awakenerId": "awakener-0022",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0001"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0023",
+      "name": "Helot Builds",
+      "route": {
+        "slug": "support",
+        "canonicalPath": "/database/awakeners/helot/builds/support"
+      },
+      "ownerAwakenerName": "Helot",
+      "awakenerId": "awakener-0023",
+      "primaryBuildId": "support",
+      "builds": [
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0050"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0052"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        },
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0006"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0024",
+      "name": "Horla Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/horla/builds/standard"
+      },
+      "ownerAwakenerName": "Horla",
+      "awakenerId": "awakener-0024",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0006", "covenant-0007"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0123"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0035"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0085"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0100"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DEATH_RESISTANCE"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["DEATH_RESISTANCE", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0025",
+      "name": "Jenkin Builds",
+      "route": {
+        "slug": "dps",
+        "canonicalPath": "/database/awakeners/jenkin/builds/dps"
+      },
+      "ownerAwakenerName": "Jenkin",
+      "awakenerId": "awakener-0025",
+      "primaryBuildId": "dps",
+      "builds": [
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0028"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0036", "wheel-0087"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0050"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0123"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095", "wheel-0031", "wheel-0036", "wheel-0087"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0026",
+      "name": "Karen Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/karen/builds/standard"
+      },
+      "ownerAwakenerName": "Karen",
+      "awakenerId": "awakener-0026",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0001"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0050"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["ALIEMUS_REGEN"], ["KEYFLARE_REGEN", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["ALIEMUS_REGEN", "KEYFLARE_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0027",
+      "name": "Kathigu-Ra Builds",
+      "route": {
+        "slug": "dps",
+        "canonicalPath": "/database/awakeners/kathigu-ra/builds/dps"
+      },
+      "ownerAwakenerName": "Kathigu-Ra",
+      "awakenerId": "awakener-0027",
+      "primaryBuildId": "dps",
+      "recommendedPosseIds": ["posse-0038"],
+      "builds": [
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0028"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        },
+        {
+          "id": "tank",
+          "label": "Tank",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0009"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0025"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0035"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0028",
+      "name": "Leigh Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/leigh/builds/standard"
+      },
+      "ownerAwakenerName": "Leigh",
+      "awakenerId": "awakener-0028",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0008", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0009"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0029",
+      "name": "Lily Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/lily/builds/standard"
+      },
+      "ownerAwakenerName": "Lily",
+      "awakenerId": "awakener-0029",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0007", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0024"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0025"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0123"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DEATH_RESISTANCE"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["DEATH_RESISTANCE", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0030",
+      "name": "Liz Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/liz/builds/standard"
+      },
+      "ownerAwakenerName": "Liz",
+      "awakenerId": "awakener-0030",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0020", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0121"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0030"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0110", "wheel-0039", "wheel-0005", "wheel-0022", "wheel-0087"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0031",
+      "name": "Lotan Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/lotan/builds/standard"
+      },
+      "ownerAwakenerName": "Lotan",
+      "awakenerId": "awakener-0031",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0024"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0018"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0092"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0005", "wheel-0055"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0032",
+      "name": "Miryam Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/miryam/builds/standard"
+      },
+      "ownerAwakenerName": "Miryam",
+      "awakenerId": "awakener-0032",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0017"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0056"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["CRIT_DMG"], ["ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0033",
+      "name": "Mouchette Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/mouchette/builds/standard"
+      },
+      "ownerAwakenerName": "Mouchette",
+      "awakenerId": "awakener-0033",
+      "primaryBuildId": "standard",
+      "recommendedPosseIds": ["posse-0046"],
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0017", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0024"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0018", "wheel-0029", "wheel-0093"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["DEATH_RESISTANCE"], ["CRIT_DMG"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "DEATH_RESISTANCE"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0034",
+      "name": "Murphy Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/murphy/builds/standard"
+      },
+      "ownerAwakenerName": "Murphy",
+      "awakenerId": "awakener-0034",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0007"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0051"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104", "wheel-0090", "wheel-0102"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP", "ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP", "ALIEMUS_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0035",
+      "name": "Murphy: Fauxborn Builds",
+      "route": {
+        "slug": "support",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/builds/support"
+      },
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "awakenerId": "awakener-0035",
+      "primaryBuildId": "support",
+      "builds": [
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0013"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0131"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0090"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104", "wheel-0001"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP", "ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP", "ALIEMUS_REGEN"]
+        },
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0027"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0090"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["KEYFLARE_REGEN"], ["CRIT_DMG"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0036",
+      "name": "Nautila Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/nautila/builds/standard"
+      },
+      "ownerAwakenerName": "Nautila",
+      "awakenerId": "awakener-0036",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0008", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0021"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP"], ["ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0037",
+      "name": "Nymphaea Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/nymphaea/builds/standard"
+      },
+      "ownerAwakenerName": "Nymphaea",
+      "awakenerId": "awakener-0037",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0020", "covenant-0013", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0016"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0022"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP"], ["ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0038",
+      "name": "Ogier Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/ogier/builds/standard"
+      },
+      "ownerAwakenerName": "Ogier",
+      "awakenerId": "awakener-0038",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0017"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0122"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["SIGIL_YIELD"], ["ALIEMUS_REGEN", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "SIGIL_YIELD"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0039",
+      "name": "Pandia Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/pandia/builds/standard"
+      },
+      "ownerAwakenerName": "Pandia",
+      "awakenerId": "awakener-0039",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0004", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0023"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0008"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0040",
+      "name": "Pickman Builds",
+      "route": {
+        "slug": "supp",
+        "canonicalPath": "/database/awakeners/pickman/builds/supp"
+      },
+      "ownerAwakenerName": "Pickman",
+      "awakenerId": "awakener-0040",
+      "primaryBuildId": "supp",
+      "builds": [
+        {
+          "id": "supp",
+          "label": "Supp",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0002", "covenant-0003"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0012"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0016", "wheel-0015"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN"]
+        },
+        {
+          "id": "sub-dps",
+          "label": "Sub DPS",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0006"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0005"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_DMG", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0041",
+      "name": "Pollux Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/pollux/builds/standard"
+      },
+      "ownerAwakenerName": "Pollux",
+      "awakenerId": "awakener-0041",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0042"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0042",
+      "name": "Ramona Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/ramona/builds/standard"
+      },
+      "ownerAwakenerName": "Ramona",
+      "awakenerId": "awakener-0042",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0001"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0001"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104", "wheel-0003"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["DMG_AMP", "ALIEMUS_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "DMG_AMP", "ALIEMUS_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0043",
+      "name": "Ryker Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/ryker/builds/standard"
+      },
+      "ownerAwakenerName": "Ryker",
+      "awakenerId": "awakener-0043",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0003", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0019"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0036"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0103"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["SIGIL_YIELD"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "SIGIL_YIELD"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0044",
+      "name": "Salvador Builds",
+      "route": {
+        "slug": "support",
+        "canonicalPath": "/database/awakeners/salvador/builds/support"
+      },
+      "ownerAwakenerName": "Salvador",
+      "awakenerId": "awakener-0044",
+      "primaryBuildId": "support",
+      "builds": [
+        {
+          "id": "support",
+          "label": "Support",
+          "recommendedCovenantIds": ["covenant-0009", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0002"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0014"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0089"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095", "wheel-0035"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        },
+        {
+          "id": "dps",
+          "label": "DPS",
+          "recommendedCovenantIds": ["covenant-0009", "covenant-0014"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0002"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0035"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE", "CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0045",
+      "name": "Sanga Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/sanga/builds/standard"
+      },
+      "ownerAwakenerName": "Sanga",
+      "awakenerId": "awakener-0045",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0012", "covenant-0006"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0025"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0024"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0093"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DEATH_RESISTANCE"], ["CRIT_RATE"], ["CRIT_DMG"]],
+          "recommendedWheelMainstats": ["DEATH_RESISTANCE", "CRIT_RATE"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0046",
+      "name": "Sorel Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/sorel/builds/standard"
+      },
+      "ownerAwakenerName": "Sorel",
+      "awakenerId": "awakener-0046",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0012"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0004"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0008"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0101", "wheel-0036"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0047",
+      "name": "Tawil Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/tawil/builds/standard"
+      },
+      "ownerAwakenerName": "Tawil",
+      "awakenerId": "awakener-0047",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0017", "covenant-0014", "covenant-0004", "covenant-0013"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0027"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0090"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["KEYFLARE_REGEN"], ["CRIT_DMG"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0048",
+      "name": "Thais Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/thais/builds/standard"
+      },
+      "ownerAwakenerName": "Thais",
+      "awakenerId": "awakener-0048",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0013", "covenant-0002"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0001"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0104", "wheel-0015"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0049",
+      "name": "Tinct Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/tinct/builds/standard"
+      },
+      "ownerAwakenerName": "Tinct",
+      "awakenerId": "awakener-0049",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0018", "covenant-0013"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0051"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0021"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0091"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0107"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["SIGIL_YIELD", "DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "SIGIL_YIELD", "DMG_AMP"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0050",
+      "name": "Tulu Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/tulu/builds/standard"
+      },
+      "ownerAwakenerName": "Tulu",
+      "awakenerId": "awakener-0050",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0013"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0050"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0084"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0107", "wheel-0078"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["ALIEMUS_REGEN"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["ALIEMUS_REGEN", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0051",
+      "name": "Uvhash Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/uvhash/builds/standard"
+      },
+      "ownerAwakenerName": "Uvhash",
+      "awakenerId": "awakener-0051",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0014", "covenant-0004"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0008"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0055"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0083"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "substatPriorityGroups": [["CRIT_RATE"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["CRIT_RATE", "CRIT_DMG"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0052",
+      "name": "Wanda Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/wanda/builds/standard"
+      },
+      "ownerAwakenerName": "Wanda",
+      "awakenerId": "awakener-0052",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0020", "covenant-0017"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0033"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0053"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0081"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0023", "wheel-0078"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DMG_AMP"], ["SIGIL_YIELD"], ["DEATH_RESISTANCE"]],
+          "recommendedWheelMainstats": ["DMG_AMP", "SIGIL_YIELD"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0053",
+      "name": "Winkle Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/winkle/builds/standard"
+      },
+      "ownerAwakenerName": "Winkle",
+      "awakenerId": "awakener-0053",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0002", "covenant-0013"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0041"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0034"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0095", "wheel-0015", "wheel-0016", "wheel-0050", "wheel-0038"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["KEYFLARE_REGEN"], ["ALIEMUS_REGEN"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["KEYFLARE_REGEN", "ALIEMUS_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0054",
+      "name": "Xu Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/xu/builds/standard"
+      },
+      "ownerAwakenerName": "Xu",
+      "awakenerId": "awakener-0054",
+      "primaryBuildId": "standard",
+      "recommendedPosseIds": ["posse-0047"],
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0006", "covenant-0007", "covenant-0005", "covenant-0001"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0013"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0022"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0118"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0034", "wheel-0052", "wheel-0078"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["DEATH_RESISTANCE"], ["KEYFLARE_REGEN", "DMG_AMP"], ["REALM_MASTERY"]],
+          "recommendedWheelMainstats": ["DMG_AMP", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0055",
+      "name": "Vortice Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/vortice/builds/standard"
+      },
+      "ownerAwakenerName": "Vortice",
+      "awakenerId": "awakener-0055",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0011", "covenant-0001", "covenant-0017"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0060", "wheel-0021"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0126"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0078"],
+              "tier": "BIS_SR"
+            },
+            {
+              "wheelIds": ["wheel-0119"],
+              "tier": "GOOD"
+            }
+          ],
+          "substatPriorityGroups": [["REALM_MASTERY"], ["CRIT_DMG"], ["KEYFLARE_REGEN"]],
+          "recommendedWheelMainstats": ["REALM_MASTERY", "CRIT_DMG", "KEYFLARE_REGEN"]
+        }
+      ]
+    },
+    {
+      "kind": "awakenerBuild",
+      "id": "awakener-build-0056",
+      "name": "Arachne Builds",
+      "route": {
+        "slug": "standard",
+        "canonicalPath": "/database/awakeners/arachne/builds/standard"
+      },
+      "ownerAwakenerName": "Arachne",
+      "awakenerId": "awakener-0056",
+      "primaryBuildId": "standard",
+      "builds": [
+        {
+          "id": "standard",
+          "label": "Core",
+          "recommendedCovenantIds": ["covenant-0006", "covenant-0017", "covenant-0008"],
+          "recommendedWheels": [
+            {
+              "wheelIds": ["wheel-0128"],
+              "tier": "BIS_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0058", "wheel-0021"],
+              "tier": "ALT_SSR"
+            },
+            {
+              "wheelIds": ["wheel-0132", "wheel-0089"],
+              "tier": "BIS_SR"
+            }
+          ],
+          "summary": "Sparse early guide content; prioritize Realm Mastery wheels while Arachne recommendations settle.",
+          "substatPriorityGroups": [["REALM_MASTERY"], ["DMG_AMP"]],
+          "recommendedWheelMainstats": ["REALM_MASTERY", "DMG_AMP"]
+        }
+      ]
+    }
+  ]
+}

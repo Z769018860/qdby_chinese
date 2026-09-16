@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.thais.sacred-bloods-instinct",
+  "name": "Sacred Blood's Instinct",
+  "route": {
+    "slug": "sacred-bloods-instinct",
+    "canonicalPath": "/database/awakeners/thais/skills/sacred-bloods-instinct"
+  },
+  "ownerAwakenerId": "awakener-0048",
+  "slot": "Skill2",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "{Embryo Fusion} +[Blood:Arg1], gain Keyflare equal to 2× Thais's Keyflare Regen. Choose: {Blood of Fear}, {Blood of Decay}, {Blood of Coition}",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["30", "32", "34", "36", "38", "40"]
+    }
+  },
+  "cardKeywords": [],
+  "cost": "2",
+  "lore": "From eternity, born of ignorance, stemming from fear.\nFlowing through Thais' veins is a primordial instinct.\nIn an unforgettable sacrifice, the young Thais was implanted with this instinct.\nWill, emotion, and even personality were replaced by an alien existence—\nWhat remained was the common thread of life: the instinctive fear of death.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.thais.forests-embrace.skill.thais.sacred-bloods-instinct",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.thais.forests-embrace",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E1",
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "patch": {
+        "descriptionTemplate": "{Embryo Fusion} +[Blood:Arg1], gain Keyflare equal to 2× Thais's Keyflare Regen. Choose: {Blood of Fear}, {Blood of Decay}, {Blood of Coition}"
+      }
+    }
+  ],
+  "ownerAwakenerName": "Thais"
+}

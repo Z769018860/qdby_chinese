@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 3,
+  "kind": "overlay",
+  "id": "overlay.global.barrier",
+  "name": "Barrier",
+  "route": {
+    "slug": "barrier",
+    "canonicalPath": "/database/overlays/barrier"
+  },
+  "assets": {
+    "icon": "asset-overlay.global.barrier-icon"
+  },
+  "overlayType": "mechanic",
+  "aliases": [],
+  "iconId": "IconS_Buff_013",
+  "textColor": "shield",
+  "descriptionTemplate": "When taking Active or {Tentacle DMG}, Immune to DMG and remove 1 stack.",
+  "descriptionArgs": {}
+}

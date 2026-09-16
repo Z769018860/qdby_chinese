@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.doll-inferno.self-destruct",
+  "name": "Self-Destruct",
+  "route": {
+    "slug": "self-destruct",
+    "canonicalPath": "/database/awakeners/doll-inferno/skills/self-destruct"
+  },
+  "ownerAwakenerId": "awakener-0018",
+  "slot": "Skill1",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Choose {derived:Elation} or {derived:Curse}.\n{Self-Destruct: Finale}",
+  "descriptionArgs": {},
+  "cardKeywords": [],
+  "cost": "2",
+  "lore": "Doll's hands work with cruel precision, every soul's core pliant as a Rubik's Cube in her grasp.\nThis kind genius offers free modifications—generous, if you ignore the side effects.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.doll-inferno.borealis-visitor.skill.doll-inferno.self-destruct",
+      "operation": "link_only",
+      "upgraderId": "enlighten.doll-inferno.borealis-visitor",
+      "upgraderType": "enlighten",
+      "patch": {}
+    }
+  ],
+  "ownerAwakenerName": "Doll: Inferno"
+}

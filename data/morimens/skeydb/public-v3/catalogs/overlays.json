@@ -1,0 +1,2107 @@
+{
+  "schemaVersion": 3,
+  "scope": "overlays",
+  "kind": "overlay",
+  "recordCount": 151,
+  "records": [
+    {
+      "kind": "overlay",
+      "id": "overlay.24.realm-and-persona",
+      "name": "Realm and Persona",
+      "route": {
+        "slug": "realm-and-persona",
+        "canonicalPath": "/database/awakeners/24/overlays/realm-and-persona"
+      },
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "overlayType": "tag",
+      "aliases": ["Realm and Persona Effects"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.aigis.petrify",
+      "name": "Petrify",
+      "route": {
+        "slug": "petrify",
+        "canonicalPath": "/database/awakeners/aigis/overlays/petrify"
+      },
+      "assets": {
+        "icon": "asset-overlay.aigis.petrify-icon"
+      },
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.arachne.final-verdict",
+      "name": "Final Verdict",
+      "route": {
+        "slug": "final-verdict",
+        "canonicalPath": "/database/awakeners/arachne/overlays/final-verdict"
+      },
+      "assets": {
+        "icon": "asset-overlay.arachne.final-verdict-icon"
+      },
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.arachne.singularity-warp",
+      "name": "Singularity Warp",
+      "route": {
+        "slug": "singularity-warp",
+        "canonicalPath": "/database/awakeners/arachne/overlays/singularity-warp"
+      },
+      "assets": {
+        "icon": "asset-overlay.arachne.singularity-warp-icon"
+      },
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.arachne.weaver",
+      "name": "Weaver",
+      "route": {
+        "slug": "weaver",
+        "canonicalPath": "/database/awakeners/arachne/overlays/weaver"
+      },
+      "assets": {
+        "icon": "asset-overlay.arachne.weaver-icon"
+      },
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.caecus.outcasts-anguish",
+      "name": "Outcast's Anguish",
+      "route": {
+        "slug": "outcasts-anguish",
+        "canonicalPath": "/database/awakeners/caecus/overlays/outcasts-anguish"
+      },
+      "assets": {
+        "icon": "asset-overlay.caecus.outcasts-anguish-icon"
+      },
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.caraboo.offering",
+      "name": "Offering",
+      "route": {
+        "slug": "offering",
+        "canonicalPath": "/database/awakeners/caraboo/overlays/offering"
+      },
+      "assets": {
+        "icon": "asset-overlay.caraboo.offering-icon"
+      },
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "overlayType": "mechanic",
+      "textColor": "light",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.caraboo.satiety",
+      "name": "Satiety",
+      "route": {
+        "slug": "satiety",
+        "canonicalPath": "/database/awakeners/caraboo/overlays/satiety"
+      },
+      "assets": {
+        "icon": "asset-overlay.caraboo.satiety-icon"
+      },
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.celeste.revival",
+      "name": "Revival",
+      "route": {
+        "slug": "revival",
+        "canonicalPath": "/database/awakeners/celeste/overlays/revival"
+      },
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.clementine.phobic-fixation",
+      "name": "Phobic Fixation",
+      "route": {
+        "slug": "phobic-fixation",
+        "canonicalPath": "/database/awakeners/clementine/overlays/phobic-fixation"
+      },
+      "assets": {
+        "icon": "asset-overlay.clementine.phobic-fixation-icon"
+      },
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.clementine.psychic-trauma",
+      "name": "Psychic Trauma",
+      "route": {
+        "slug": "psychic-trauma",
+        "canonicalPath": "/database/awakeners/clementine/overlays/psychic-trauma"
+      },
+      "assets": {
+        "icon": "asset-overlay.clementine.psychic-trauma-icon"
+      },
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.clementine.symbiosis",
+      "name": "Symbiosis",
+      "route": {
+        "slug": "symbiosis",
+        "canonicalPath": "/database/awakeners/clementine/overlays/symbiosis"
+      },
+      "assets": {
+        "icon": "asset-overlay.clementine.symbiosis-icon"
+      },
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.doll-inferno.finale",
+      "name": "Finale",
+      "route": {
+        "slug": "finale",
+        "canonicalPath": "/database/awakeners/doll-inferno/overlays/finale"
+      },
+      "assets": {
+        "icon": "asset-overlay.doll-inferno.finale-icon"
+      },
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.doll-inferno.finale-form",
+      "name": "Finale Form",
+      "route": {
+        "slug": "finale-form",
+        "canonicalPath": "/database/awakeners/doll-inferno/overlays/finale-form"
+      },
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.doll-inferno.illusions-end",
+      "name": "Illusion's End",
+      "route": {
+        "slug": "illusions-end",
+        "canonicalPath": "/database/awakeners/doll-inferno/overlays/illusions-end"
+      },
+      "assets": {
+        "icon": "asset-overlay.doll-inferno.illusions-end-icon"
+      },
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.doresain.corpse",
+      "name": "Corpse",
+      "route": {
+        "slug": "corpse",
+        "canonicalPath": "/database/awakeners/doresain/overlays/corpse"
+      },
+      "assets": {
+        "icon": "asset-overlay.doresain.corpse-icon"
+      },
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.faros.dimmed-candle",
+      "name": "Dimmed candle",
+      "route": {
+        "slug": "dimmed-candle",
+        "canonicalPath": "/database/awakeners/faros/overlays/dimmed-candle"
+      },
+      "assets": {
+        "icon": "asset-overlay.faros.dimmed-candle-icon"
+      },
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.aequor",
+      "name": "Aequor",
+      "route": {
+        "slug": "aequor",
+        "canonicalPath": "/database/overlays/aequor"
+      },
+      "overlayType": "realm",
+      "aliases": ["Aequor Realm"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.aftershock",
+      "name": "Aftershock",
+      "route": {
+        "slug": "aftershock",
+        "canonicalPath": "/database/overlays/aftershock"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.alert",
+      "name": "Alert",
+      "route": {
+        "slug": "alert",
+        "canonicalPath": "/database/overlays/alert"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.alert-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.ancient-embers",
+      "name": "Ancient Embers",
+      "route": {
+        "slug": "ancient-embers",
+        "canonicalPath": "/database/overlays/ancient-embers"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.ancient-embers-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": ["Old Embers"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.annihilation",
+      "name": "Annihilation",
+      "route": {
+        "slug": "annihilation",
+        "canonicalPath": "/database/overlays/annihilation"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.arithmetica-harmony",
+      "name": "Arithmetica Harmony",
+      "route": {
+        "slug": "arithmetica-harmony",
+        "canonicalPath": "/database/overlays/arithmetica-harmony"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.arithmetica-harmony-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.ashen-ruins",
+      "name": "Ashen Ruins",
+      "route": {
+        "slug": "ashen-ruins",
+        "canonicalPath": "/database/overlays/ashen-ruins"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.astral-reign",
+      "name": "Astral Reign",
+      "route": {
+        "slug": "astral-reign",
+        "canonicalPath": "/database/overlays/astral-reign"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.barrier",
+      "name": "Barrier",
+      "route": {
+        "slug": "barrier",
+        "canonicalPath": "/database/overlays/barrier"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.barrier-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.blackened-flame",
+      "name": "Blackened Flame",
+      "route": {
+        "slug": "blackened-flame",
+        "canonicalPath": "/database/overlays/blackened-flame"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.blackened-flame-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.bleed",
+      "name": "Bleed",
+      "route": {
+        "slug": "bleed",
+        "canonicalPath": "/database/overlays/bleed"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.bleed-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": ["Bleeding"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.blighten",
+      "name": "Blighten",
+      "route": {
+        "slug": "blighten",
+        "canonicalPath": "/database/overlays/blighten"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.blighten-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.burn",
+      "name": "Burn",
+      "route": {
+        "slug": "burn",
+        "canonicalPath": "/database/overlays/burn"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.burn-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": ["Burned"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.caro",
+      "name": "Caro",
+      "route": {
+        "slug": "caro",
+        "canonicalPath": "/database/overlays/caro"
+      },
+      "overlayType": "realm",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.chaos",
+      "name": "Chaos",
+      "route": {
+        "slug": "chaos",
+        "canonicalPath": "/database/overlays/chaos"
+      },
+      "overlayType": "realm",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.corrosion",
+      "name": "Corrosion",
+      "route": {
+        "slug": "corrosion",
+        "canonicalPath": "/database/overlays/corrosion"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.corrosion-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.counter",
+      "name": "Counter",
+      "route": {
+        "slug": "counter",
+        "canonicalPath": "/database/overlays/counter"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.counter-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.crimson-furnace",
+      "name": "Crimson Furnace",
+      "route": {
+        "slug": "crimson-furnace",
+        "canonicalPath": "/database/overlays/crimson-furnace"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.death-resistance",
+      "name": "Death Resistance",
+      "route": {
+        "slug": "death-resistance",
+        "canonicalPath": "/database/overlays/death-resistance"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.death-resistance-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "heal",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.delayed-sacrifice",
+      "name": "Delayed Sacrifice",
+      "route": {
+        "slug": "delayed-sacrifice",
+        "canonicalPath": "/database/overlays/delayed-sacrifice"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.delayed-sacrifice-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.destroy",
+      "name": "Destroy",
+      "route": {
+        "slug": "destroy",
+        "canonicalPath": "/database/overlays/destroy"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Destroyed"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.devour",
+      "name": "Devour",
+      "route": {
+        "slug": "devour",
+        "canonicalPath": "/database/overlays/devour"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Devouring", "Devoured"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.dimension-shuttle",
+      "name": "Dimension Shuttle",
+      "route": {
+        "slug": "dimension-shuttle",
+        "canonicalPath": "/database/overlays/dimension-shuttle"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.dimension-shuttle-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": ["Singularity Shuttle"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.discover",
+      "name": "Discover",
+      "route": {
+        "slug": "discover",
+        "canonicalPath": "/database/overlays/discover"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Discovered"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.divine-realm-aequor",
+      "name": "Benthos: Aequor",
+      "route": {
+        "slug": "divine-realm-aequor",
+        "canonicalPath": "/database/overlays/divine-realm-aequor"
+      },
+      "overlayType": "realm",
+      "aliases": ["Divine Realm: Aequor"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.divine-realm-aequor-mastery",
+      "name": "Benthos: Aequor Mastery",
+      "route": {
+        "slug": "divine-realm-aequor-mastery",
+        "canonicalPath": "/database/overlays/divine-realm-aequor-mastery"
+      },
+      "overlayType": "mechanic",
+      "aliases": ["Divine Realm: Aequor Mastery"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.divine-realm-raging-waves",
+      "name": "Benthos: Raging Waves",
+      "route": {
+        "slug": "divine-realm-raging-waves",
+        "canonicalPath": "/database/overlays/divine-realm-raging-waves"
+      },
+      "overlayType": "mechanic",
+      "aliases": ["Divine Realm: Raging Waves"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.divine-realm-surging-tides",
+      "name": "Benthos: Surging Tides",
+      "route": {
+        "slug": "divine-realm-surging-tides",
+        "canonicalPath": "/database/overlays/divine-realm-surging-tides"
+      },
+      "overlayType": "mechanic",
+      "aliases": ["Divine Realm: Surging Tides"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.divine-realm-tentacle-stance",
+      "name": "Benthos: Tentacle Stance",
+      "route": {
+        "slug": "divine-realm-tentacle-stance",
+        "canonicalPath": "/database/overlays/divine-realm-tentacle-stance"
+      },
+      "overlayType": "mechanic",
+      "aliases": ["Divine Realm: Tentacle Stance"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.divine-realm-tranquil-sea",
+      "name": "Benthos: Tranquil Sea",
+      "route": {
+        "slug": "divine-realm-tranquil-sea",
+        "canonicalPath": "/database/overlays/divine-realm-tranquil-sea"
+      },
+      "overlayType": "mechanic",
+      "aliases": ["Divine Realm: Tranquil Sea"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.echo",
+      "name": "Echo",
+      "route": {
+        "slug": "echo",
+        "canonicalPath": "/database/overlays/echo"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.embryo-fusion",
+      "name": "Embryo Fusion",
+      "route": {
+        "slug": "embryo-fusion",
+        "canonicalPath": "/database/overlays/embryo-fusion"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.embryo-fusion-double",
+      "name": "Embryo Fusion Double",
+      "route": {
+        "slug": "embryo-fusion-double",
+        "canonicalPath": "/database/overlays/embryo-fusion-double"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.enhance",
+      "name": "Enhance",
+      "route": {
+        "slug": "enhance",
+        "canonicalPath": "/database/overlays/enhance"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.enhance-icon"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.exhaust",
+      "name": "Exhaust",
+      "route": {
+        "slug": "exhaust",
+        "canonicalPath": "/database/overlays/exhaust"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Exhausted"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.fainted",
+      "name": "Fainted",
+      "route": {
+        "slug": "fainted",
+        "canonicalPath": "/database/overlays/fainted"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.fainted-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.final-rule",
+      "name": "Final Rule",
+      "route": {
+        "slug": "final-rule",
+        "canonicalPath": "/database/overlays/final-rule"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Absolute Axiom"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.fixed-dmg",
+      "name": "Fixed DMG",
+      "route": {
+        "slug": "fixed-dmg",
+        "canonicalPath": "/database/overlays/fixed-dmg"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.fleeting",
+      "name": "Fleeting",
+      "route": {
+        "slug": "fleeting",
+        "canonicalPath": "/database/overlays/fleeting"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.forbidden-lore",
+      "name": "Forbidden Lore",
+      "route": {
+        "slug": "forbidden-lore",
+        "canonicalPath": "/database/overlays/forbidden-lore"
+      },
+      "overlayType": "help",
+      "aliases": ["Forbidden Lore Level", "Somatic Research", "Esoteric Research", "Occult Research"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.fortress",
+      "name": "Fortress",
+      "route": {
+        "slug": "fortress",
+        "canonicalPath": "/database/overlays/fortress"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.fortress-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.fragile",
+      "name": "Fragile",
+      "route": {
+        "slug": "fragile",
+        "canonicalPath": "/database/overlays/fragile"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.fragile-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.infinite-devour",
+      "name": "Infinite Devour",
+      "route": {
+        "slug": "infinite-devour",
+        "canonicalPath": "/database/overlays/infinite-devour"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.innate",
+      "name": "Innate",
+      "route": {
+        "slug": "innate",
+        "canonicalPath": "/database/overlays/innate"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.leap",
+      "name": "Leap",
+      "route": {
+        "slug": "leap",
+        "canonicalPath": "/database/overlays/leap"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.lemurian",
+      "name": "Lemurian",
+      "route": {
+        "slug": "lemurian",
+        "canonicalPath": "/database/overlays/lemurian"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.madness",
+      "name": "Madness",
+      "route": {
+        "slug": "madness",
+        "canonicalPath": "/database/overlays/madness"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.madness-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "heal",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.mental-interference",
+      "name": "Mental Interference",
+      "route": {
+        "slug": "mental-interference",
+        "canonicalPath": "/database/overlays/mental-interference"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.over-exalt",
+      "name": "Over-Exalt",
+      "route": {
+        "slug": "over-exalt",
+        "canonicalPath": "/database/overlays/over-exalt"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Over Exalt"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.perception",
+      "name": "Perception",
+      "route": {
+        "slug": "perception",
+        "canonicalPath": "/database/overlays/perception"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.perception-warp",
+      "name": "Perception Warp",
+      "route": {
+        "slug": "perception-warp",
+        "canonicalPath": "/database/overlays/perception-warp"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.pierce-dmg",
+      "name": "Pierce DMG",
+      "route": {
+        "slug": "pierce-dmg",
+        "canonicalPath": "/database/overlays/pierce-dmg"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.pistoles-de-marie",
+      "name": "Pistoles de Marie",
+      "route": {
+        "slug": "pistoles-de-marie",
+        "canonicalPath": "/database/overlays/pistoles-de-marie"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.poison",
+      "name": "Poison",
+      "route": {
+        "slug": "poison",
+        "canonicalPath": "/database/overlays/poison"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.poison-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.prepare",
+      "name": "Prepare",
+      "route": {
+        "slug": "prepare",
+        "canonicalPath": "/database/overlays/prepare"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Prepare 1", "Prepare 2", "Prepare 3", "Prepare 4", "Prepare 5"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.primordia-chaos",
+      "name": "Primordia: Chaos",
+      "route": {
+        "slug": "primordia-chaos",
+        "canonicalPath": "/database/overlays/primordia-chaos"
+      },
+      "overlayType": "realm",
+      "aliases": ["Divine Realm: Chaos", "Primordia Chaos"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.primordia-mastery-scaling",
+      "name": "Primordia Mastery Scaling",
+      "route": {
+        "slug": "primordia-mastery-scaling",
+        "canonicalPath": "/database/overlays/primordia-mastery-scaling"
+      },
+      "overlayType": "help",
+      "aliases": ["Primordia: Chaos Mastery Scaling", "Primordia Posse Scaling"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.propagation-caro",
+      "name": "Propagation: Caro",
+      "route": {
+        "slug": "propagation-caro",
+        "canonicalPath": "/database/overlays/propagation-caro"
+      },
+      "overlayType": "realm",
+      "aliases": ["Propagation Caro", "Divine Caro", "Propagation: Caro Mastery"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.propagation-frenzy",
+      "name": "Propagation Fiesta",
+      "route": {
+        "slug": "propagation-frenzy",
+        "canonicalPath": "/database/overlays/propagation-frenzy"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.propagation-frenzy-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": ["Propagation Frenzy", "Breeding Frenzy"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.pure-dmg",
+      "name": "Pure DMG",
+      "route": {
+        "slug": "pure-dmg",
+        "canonicalPath": "/database/overlays/pure-dmg"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.pure-ultra",
+      "name": "Pure Ultra",
+      "route": {
+        "slug": "pure-ultra",
+        "canonicalPath": "/database/overlays/pure-ultra"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.pursuit",
+      "name": "Pursuit",
+      "route": {
+        "slug": "pursuit",
+        "canonicalPath": "/database/overlays/pursuit"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.quasar",
+      "name": "Quasar",
+      "route": {
+        "slug": "quasar",
+        "canonicalPath": "/database/overlays/quasar"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.raging-waves",
+      "name": "Raging Waves",
+      "route": {
+        "slug": "raging-waves",
+        "canonicalPath": "/database/overlays/raging-waves"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.resonance",
+      "name": "Resonance",
+      "route": {
+        "slug": "resonance",
+        "canonicalPath": "/database/overlays/resonance"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Resonance 1", "Resonance 2", "Resonance 3", "Resonance 4", "Resonance 5"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.retain",
+      "name": "Retain",
+      "route": {
+        "slug": "retain",
+        "canonicalPath": "/database/overlays/retain"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Retained"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.rouse",
+      "name": "Rouse",
+      "route": {
+        "slug": "rouse",
+        "canonicalPath": "/database/overlays/rouse"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Keyflare Rouse"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.sacrifice",
+      "name": "Sacrifice",
+      "route": {
+        "slug": "sacrifice",
+        "canonicalPath": "/database/overlays/sacrifice"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.sacrifice-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.sealed",
+      "name": "Sealed",
+      "route": {
+        "slug": "sealed",
+        "canonicalPath": "/database/overlays/sealed"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.sealed-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.singularity-annihilation",
+      "name": "Singularity Annihilation",
+      "route": {
+        "slug": "singularity-annihilation",
+        "canonicalPath": "/database/overlays/singularity-annihilation"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.singularity-beacon",
+      "name": "Singularity Beacon",
+      "route": {
+        "slug": "singularity-beacon",
+        "canonicalPath": "/database/overlays/singularity-beacon"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.singularity-beacon-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.singularity-prism",
+      "name": "Singularity Prism",
+      "route": {
+        "slug": "singularity-prism",
+        "canonicalPath": "/database/overlays/singularity-prism"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.singularity-prism-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.singularity-ultra",
+      "name": "Singularity: Ultra",
+      "route": {
+        "slug": "singularity-ultra",
+        "canonicalPath": "/database/overlays/singularity-ultra"
+      },
+      "overlayType": "realm",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.stagnation",
+      "name": "Stagnation",
+      "route": {
+        "slug": "stagnation",
+        "canonicalPath": "/database/overlays/stagnation"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.stagnation-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.steal",
+      "name": "Steal",
+      "route": {
+        "slug": "steal",
+        "canonicalPath": "/database/overlays/steal"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.steal-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": ["Stealing"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.stellar-protection",
+      "name": "Stellar Protection",
+      "route": {
+        "slug": "stellar-protection",
+        "canonicalPath": "/database/overlays/stellar-protection"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.str",
+      "name": "STR",
+      "route": {
+        "slug": "str",
+        "canonicalPath": "/database/overlays/str"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.str-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "heal",
+      "aliases": ["Strength"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.strength",
+      "name": "STR▼",
+      "route": {
+        "slug": "str-down",
+        "canonicalPath": "/database/overlays/str-down"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.strength-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": ["STR⯆"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.stun",
+      "name": "Stun",
+      "route": {
+        "slug": "stun",
+        "canonicalPath": "/database/overlays/stun"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.stun-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.surging-tides",
+      "name": "Surging Tides",
+      "route": {
+        "slug": "surging-tides",
+        "canonicalPath": "/database/overlays/surging-tides"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.temporary-counter",
+      "name": "Temporary Counter",
+      "route": {
+        "slug": "temporary-counter",
+        "canonicalPath": "/database/overlays/temporary-counter"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.temporary-counter-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.temporary-enhance",
+      "name": "Temporary Enhance",
+      "route": {
+        "slug": "temporary-enhance",
+        "canonicalPath": "/database/overlays/temporary-enhance"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.temporary-str",
+      "name": "Temporary STR",
+      "route": {
+        "slug": "temporary-str",
+        "canonicalPath": "/database/overlays/temporary-str"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.temporary-str-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "heal",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.tentacle-dmg",
+      "name": "Tentacle DMG",
+      "route": {
+        "slug": "tentacle-dmg",
+        "canonicalPath": "/database/overlays/tentacle-dmg"
+      },
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.tranquil-sea",
+      "name": "Tranquil Sea",
+      "route": {
+        "slug": "tranquil-sea",
+        "canonicalPath": "/database/overlays/tranquil-sea"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.ultra",
+      "name": "Ultra",
+      "route": {
+        "slug": "ultra",
+        "canonicalPath": "/database/overlays/ultra"
+      },
+      "overlayType": "realm",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.ultra-mastery",
+      "name": "Ultra Mastery",
+      "route": {
+        "slug": "ultra-mastery",
+        "canonicalPath": "/database/overlays/ultra-mastery"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.ultra-round",
+      "name": "Ultra Round",
+      "route": {
+        "slug": "ultra-round",
+        "canonicalPath": "/database/overlays/ultra-round"
+      },
+      "overlayType": "mechanic",
+      "aliases": ["Ultra Rounds"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.ultra-space",
+      "name": "Ultra Space",
+      "route": {
+        "slug": "ultra-space",
+        "canonicalPath": "/database/overlays/ultra-space"
+      },
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.usable-x-times",
+      "name": "Usable X times",
+      "route": {
+        "slug": "usable-x-times",
+        "canonicalPath": "/database/overlays/usable-x-times"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": [
+        "Usable 1 times",
+        "Useable 1 times",
+        "Usable 2 times",
+        "Useable 2 times",
+        "Usable 3 times",
+        "Useable 3 times",
+        "Usable 4 times",
+        "Useable 4 times",
+        "Usable 5 times",
+        "Useable 5 times",
+        "Usable 6 times",
+        "Useable 6 times",
+        "Usable 7 times",
+        "Useable 7 times",
+        "Usable 8 times",
+        "Useable 8 times",
+        "Usable 9 times",
+        "Useable 9 times",
+        "Usable 10 times",
+        "Useable 10 times",
+        "Useable X times"
+      ]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.void",
+      "name": "Void",
+      "route": {
+        "slug": "void",
+        "canonicalPath": "/database/overlays/void"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.void-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "aliemus",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.vulnerable",
+      "name": "Vulnerable",
+      "route": {
+        "slug": "vulnerable",
+        "canonicalPath": "/database/overlays/vulnerable"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.vulnerable-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": ["Vulnerability"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.global.weakness",
+      "name": "Weakness",
+      "route": {
+        "slug": "weakness",
+        "canonicalPath": "/database/overlays/weakness"
+      },
+      "assets": {
+        "icon": "asset-overlay.global.weakness-icon"
+      },
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.hameln.crescendo",
+      "name": "Crescendo",
+      "route": {
+        "slug": "crescendo",
+        "canonicalPath": "/database/awakeners/hameln/overlays/crescendo"
+      },
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.hameln.marvelous-debuff",
+      "name": "Marvelous Debuff",
+      "route": {
+        "slug": "marvelous-debuff",
+        "canonicalPath": "/database/awakeners/hameln/overlays/marvelous-debuff"
+      },
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "childOverlayIds": ["overlay.global.bleed", "overlay.global.poison", "overlay.global.weakness", "overlay.global.vulnerable", "overlay.global.strength"],
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.hameln.melody",
+      "name": "Melody",
+      "route": {
+        "slug": "melody",
+        "canonicalPath": "/database/awakeners/hameln/overlays/melody"
+      },
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "nodeKind": "group",
+      "childOverlayIds": ["overlay.hameln.rondino", "overlay.hameln.crescendo"],
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.hameln.rondino",
+      "name": "Rondino",
+      "route": {
+        "slug": "rondino",
+        "canonicalPath": "/database/awakeners/hameln/overlays/rondino"
+      },
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.anger",
+      "name": "Anger",
+      "route": {
+        "slug": "anger",
+        "canonicalPath": "/database/awakeners/horla/overlays/anger"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.emotion",
+      "name": "Emotion",
+      "route": {
+        "slug": "emotion",
+        "canonicalPath": "/database/awakeners/horla/overlays/emotion"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.fear",
+      "name": "Fear",
+      "route": {
+        "slug": "fear",
+        "canonicalPath": "/database/awakeners/horla/overlays/fear"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.grief",
+      "name": "Grief",
+      "route": {
+        "slug": "grief",
+        "canonicalPath": "/database/awakeners/horla/overlays/grief"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.happiness",
+      "name": "Happiness",
+      "route": {
+        "slug": "happiness",
+        "canonicalPath": "/database/awakeners/horla/overlays/happiness"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.metaphor",
+      "name": "Metaphor",
+      "route": {
+        "slug": "metaphor",
+        "canonicalPath": "/database/awakeners/horla/overlays/metaphor"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "mechanic",
+      "aliases": ["Metaphors"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.horla.poetry-page",
+      "name": "Poetry Page",
+      "route": {
+        "slug": "poetry-page",
+        "canonicalPath": "/database/awakeners/horla/overlays/poetry-page"
+      },
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "overlayType": "tag",
+      "aliases": ["Poetry Pages", "Poems"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.kathigu-ra.combust",
+      "name": "Combust",
+      "route": {
+        "slug": "combust",
+        "canonicalPath": "/database/awakeners/kathigu-ra/overlays/combust"
+      },
+      "assets": {
+        "icon": "asset-overlay.kathigu-ra.combust-icon"
+      },
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.kathigu-ra.fiamma",
+      "name": "Fiamma",
+      "route": {
+        "slug": "fiamma",
+        "canonicalPath": "/database/awakeners/kathigu-ra/overlays/fiamma"
+      },
+      "assets": {
+        "icon": "asset-overlay.kathigu-ra.fiamma-icon"
+      },
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.lily.endure",
+      "name": "Endure",
+      "route": {
+        "slug": "endure",
+        "canonicalPath": "/database/awakeners/lily/overlays/endure"
+      },
+      "assets": {
+        "icon": "asset-overlay.lily.endure-icon"
+      },
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.miryam.ritual",
+      "name": "Ritual",
+      "route": {
+        "slug": "ritual",
+        "canonicalPath": "/database/awakeners/miryam/overlays/ritual"
+      },
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.miryam.undying-piety",
+      "name": "Undying Piety",
+      "route": {
+        "slug": "undying-piety",
+        "canonicalPath": "/database/awakeners/miryam/overlays/undying-piety"
+      },
+      "assets": {
+        "icon": "asset-overlay.miryam.undying-piety-icon"
+      },
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.miryam.vanitys-collapse",
+      "name": "Vanity's Collapse",
+      "route": {
+        "slug": "vanitys-collapse",
+        "canonicalPath": "/database/awakeners/miryam/overlays/vanitys-collapse"
+      },
+      "assets": {
+        "icon": "asset-overlay.miryam.vanitys-collapse-icon"
+      },
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.murphy-fauxborn.birth-ritual",
+      "name": "Birth Ritual",
+      "route": {
+        "slug": "birth-ritual",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/overlays/birth-ritual"
+      },
+      "assets": {
+        "icon": "asset-overlay.murphy-fauxborn.birth-ritual-icon"
+      },
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.murphy-fauxborn.life-seal",
+      "name": "Life Seal",
+      "route": {
+        "slug": "life-seal",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/overlays/life-seal"
+      },
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pickman.collaboration",
+      "name": "Collaboration",
+      "route": {
+        "slug": "collaboration",
+        "canonicalPath": "/database/awakeners/pickman/overlays/collaboration"
+      },
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pickman.creativity",
+      "name": "Creativity",
+      "route": {
+        "slug": "creativity",
+        "canonicalPath": "/database/awakeners/pickman/overlays/creativity"
+      },
+      "assets": {
+        "icon": "asset-overlay.pickman.creativity-icon"
+      },
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pickman.fantasia",
+      "name": "Fantasia",
+      "route": {
+        "slug": "fantasia",
+        "canonicalPath": "/database/awakeners/pickman/overlays/fantasia"
+      },
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pickman.painted-orisons",
+      "name": "Painted Orisons",
+      "route": {
+        "slug": "painted-orisons",
+        "canonicalPath": "/database/awakeners/pickman/overlays/painted-orisons"
+      },
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Advanced Orisons", "Orisons"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pickman.painted-relics",
+      "name": "Painted Relics",
+      "route": {
+        "slug": "painted-relics",
+        "canonicalPath": "/database/awakeners/pickman/overlays/painted-relics"
+      },
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": ["Golden Relics", "Silver Relics", "Painted Silver Relics"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pollux.ablaze",
+      "name": "Ablaze",
+      "route": {
+        "slug": "ablaze",
+        "canonicalPath": "/database/awakeners/pollux/overlays/ablaze"
+      },
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "overlayType": "mechanic",
+      "aliases": ["Aflame"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pollux.alight",
+      "name": "Alight",
+      "route": {
+        "slug": "alight",
+        "canonicalPath": "/database/awakeners/pollux/overlays/alight"
+      },
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pollux.sin-mark",
+      "name": "Sin Mark",
+      "route": {
+        "slug": "sin-mark",
+        "canonicalPath": "/database/awakeners/pollux/overlays/sin-mark"
+      },
+      "assets": {
+        "icon": "asset-overlay.pollux.sin-mark-icon"
+      },
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.pontos.pack-hunt",
+      "name": "Pack Hunt",
+      "route": {
+        "slug": "pack-hunt",
+        "canonicalPath": "/database/awakeners/pontos/overlays/pack-hunt"
+      },
+      "assets": {
+        "icon": "asset-overlay.pontos.pack-hunt-icon"
+      },
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": ["Battue"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.ramona-timeworn.loop",
+      "name": "Loop",
+      "route": {
+        "slug": "loop",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/overlays/loop"
+      },
+      "assets": {
+        "icon": "asset-overlay.ramona-timeworn.loop-icon"
+      },
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "overlayType": "mechanic",
+      "textColor": "light",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.ramona-timeworn.negentropy",
+      "name": "Negentropy",
+      "route": {
+        "slug": "negentropy",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/overlays/negentropy"
+      },
+      "assets": {
+        "icon": "asset-overlay.ramona-timeworn.negentropy-icon"
+      },
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "overlayType": "mechanic",
+      "textColor": "light",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.ryker.certain-gain",
+      "name": "Certain Gain",
+      "route": {
+        "slug": "certain-gain",
+        "canonicalPath": "/database/awakeners/ryker/overlays/certain-gain"
+      },
+      "assets": {
+        "icon": "asset-overlay.ryker.certain-gain-icon"
+      },
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.ryker.chaotic-legacy",
+      "name": "Chaotic Legacy",
+      "route": {
+        "slug": "chaotic-legacy",
+        "canonicalPath": "/database/awakeners/ryker/overlays/chaotic-legacy"
+      },
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "overlayType": "mechanic",
+      "textColor": "misc",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.ryker.winner-takes-all",
+      "name": "Winner Takes All",
+      "route": {
+        "slug": "winner-takes-all",
+        "canonicalPath": "/database/awakeners/ryker/overlays/winner-takes-all"
+      },
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.saya.gynoecium",
+      "name": "Gynoecium",
+      "route": {
+        "slug": "gynoecium",
+        "canonicalPath": "/database/awakeners/saya/overlays/gynoecium"
+      },
+      "assets": {
+        "icon": "asset-overlay.saya.gynoecium-icon"
+      },
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "overlayType": "mechanic",
+      "textColor": "light",
+      "aliases": ["Gynoecium stacks"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.tulu.the-stars-are-right",
+      "name": "The Stars Are Right",
+      "route": {
+        "slug": "the-stars-are-right",
+        "canonicalPath": "/database/awakeners/tulu/overlays/the-stars-are-right"
+      },
+      "assets": {
+        "icon": "asset-overlay.tulu.the-stars-are-right-icon"
+      },
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "overlayType": "mechanic",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.vortice.vortex-reload",
+      "name": "Vortex Reload",
+      "route": {
+        "slug": "vortex-reload",
+        "canonicalPath": "/database/awakeners/vortice/overlays/vortex-reload"
+      },
+      "assets": {
+        "icon": "asset-overlay.vortice.vortex-reload-icon"
+      },
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "overlayType": "mechanic",
+      "textColor": "shield",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.wanda.dreamlure",
+      "name": "Dreamlure",
+      "route": {
+        "slug": "dreamlure",
+        "canonicalPath": "/database/awakeners/wanda/overlays/dreamlure"
+      },
+      "assets": {
+        "icon": "asset-overlay.wanda.dreamlure-icon"
+      },
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "overlayType": "mechanic",
+      "textColor": "affliction",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.wanda.murmurs",
+      "name": "Murmurs",
+      "route": {
+        "slug": "murmurs",
+        "canonicalPath": "/database/awakeners/wanda/overlays/murmurs"
+      },
+      "assets": {
+        "icon": "asset-overlay.wanda.murmurs-icon"
+      },
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "overlayType": "mechanic",
+      "aliases": ["Murmur"]
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.xu.betroth",
+      "name": "Betroth",
+      "route": {
+        "slug": "betroth",
+        "canonicalPath": "/database/awakeners/xu/overlays/betroth"
+      },
+      "assets": {
+        "icon": "asset-overlay.xu.betroth-icon"
+      },
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.xu.enthrall",
+      "name": "Enthrall",
+      "route": {
+        "slug": "enthrall",
+        "canonicalPath": "/database/awakeners/xu/overlays/enthrall"
+      },
+      "assets": {
+        "icon": "asset-overlay.xu.enthrall-icon"
+      },
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    },
+    {
+      "kind": "overlay",
+      "id": "overlay.xu.spellbound",
+      "name": "Spellbound",
+      "route": {
+        "slug": "spellbound",
+        "canonicalPath": "/database/awakeners/xu/overlays/spellbound"
+      },
+      "assets": {
+        "icon": "asset-overlay.xu.spellbound-icon"
+      },
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "overlayType": "mechanic",
+      "textColor": "damage",
+      "aliases": []
+    }
+  ]
+}

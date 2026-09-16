@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.agrippa.path-of-the-lost",
+  "name": "Path of the Lost",
+  "route": {
+    "slug": "path-of-the-lost",
+    "canonicalPath": "/database/awakeners/agrippa/skills/path-of-the-lost"
+  },
+  "ownerAwakenerId": "awakener-0002",
+  "slot": "Rouse",
+  "cardFamily": "rouse",
+  "cardTypes": ["rouse"],
+  "descriptionTemplate": "Agrippa gains [Energy:Arg1] Aliemus. {Rouse}: {Poison} applied by Agrippa increases by 50%. At the end of the turn, gain [Block:Arg2] Shield.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["25", "30", "35", "40", "45", "50"]
+    },
+    "Arg2": {
+      "kind": "scaling",
+      "values": ["12.5", "15", "17.5", "20", "22.5", "25"],
+      "stat": "DEF",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [
+    {
+      "id": "mechanic.retain"
+    }
+  ],
+  "cost": "1",
+  "lore": "The mountain wind rustles through the bones of the maze, sighing.\nShe hears the cries of lost travelers and lets out her 8,001st yawn.\nShe sips on pain, categorizing and displaying it.\nOnly one issue—no one knows about her masterpiece; she is the sole audience.\nSigh—!\nSeated in the deepest part of the maze, she yawns once more.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.agrippa.covenant-of-no-return.skill.agrippa.path-of-the-lost",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.agrippa.covenant-of-no-return",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "AbsoluteAxiom",
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "patch": {
+        "descriptionTemplate": "Agrippa gains [Energy:Arg1] Aliemus. {Rouse}: {Poison} applied by Agrippa +100%. At turn end, gain [Block:Arg2] Shield. Each time Agrippa inflicts or triggers {Poison} in the turn, this Shield +50%, up to 5 stacks."
+      }
+    }
+  ],
+  "ownerAwakenerName": "Agrippa"
+}

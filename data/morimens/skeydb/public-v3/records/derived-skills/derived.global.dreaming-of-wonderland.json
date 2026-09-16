@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "kind": "derivedSkill",
+  "id": "derived.global.dreaming-of-wonderland",
+  "name": "Dreaming of Wonderland",
+  "route": {
+    "slug": "dreaming-of-wonderland",
+    "canonicalPath": "/database/derived-skills/dreaming-of-wonderland"
+  },
+  "cardFamily": "buff",
+  "cardTypes": ["buff"],
+  "descriptionTemplate": "The wielder gains [Arg1] Aliemus and {Mental Interference}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["20", "30", "40", "50"],
+      "scalingContext": "wheelRefinement"
+    }
+  },
+  "cardKeywords": [
+    {
+      "id": "mechanic.retain"
+    },
+    {
+      "id": "mechanic.exhaust"
+    }
+  ],
+  "cost": "2"
+}

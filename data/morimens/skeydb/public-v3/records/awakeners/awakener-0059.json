@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 3,
+  "kind": "awakener",
+  "id": "awakener-0059",
+  "name": "Lotan: Cetarchon",
+  "route": {
+    "slug": "lotan-cetarchon",
+    "canonicalPath": "/database/awakeners/lotan-cetarchon"
+  },
+  "assets": {
+    "icon": "asset-awakener-0059-icon"
+  },
+  "numericId": 59,
+  "ingameId": "C04EX",
+  "lineupToken": "xs",
+  "realm": "CHAOS",
+  "rarity": "Genesis",
+  "type": "ASSAULT",
+  "availabilityType": "LIMITED_ASTRAL_REIGN",
+  "releaseDate": "2026-07-27",
+  "faction": "TBD",
+  "aliases": ["lotan cetarchon", "cetarchon", "glotan", "rotan"],
+  "searchTags": ["STR Up", "Divine Realm"],
+  "primaryScalingBase": 20,
+  "baseStatsLv1": {
+    "CON": 28,
+    "ATK": 48,
+    "DEF": 29
+  },
+  "substatsLv1": {
+    "CritRate": 5,
+    "CritDamage": 50,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 15,
+    "RealmMastery": 0,
+    "SigilYield": 1.2,
+    "DamageAmplification": 0,
+    "DeathResistance": 2.8
+  },
+  "statScaling": {
+    "CON": 1.3,
+    "ATK": 2.25,
+    "DEF": 1.35
+  },
+  "substatScaling": {
+    "CritRate": 0,
+    "CritDamage": 0,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 0,
+    "RealmMastery": 0,
+    "SigilYield": 1.2,
+    "DamageAmplification": 0,
+    "DeathResistance": 2.8
+  },
+  "profile": {
+    "title": "Lotan: Cetarchon",
+    "birthday": "21-Mar",
+    "voiceActor": "Miyazono Miumi",
+    "gender": "Female",
+    "height": "5'6''",
+    "weight": "30 tons",
+    "gnosticIndex": "39.03",
+    "storySections": [
+      {
+        "kind": "introduction",
+        "title": "Basic Information",
+        "unlockCondition": "Awakener Level 1",
+        "content": "No matter which dimension she's from, Lotan has little use for words—Lotan: Cetarchon even less so. Words mean nothing to her. Strength itself is the ultimate eloquence.\nBeneath a regal, unhurried composure lies her truest hunger, burning in heterochromatic eyes like dying stars—she is an ancient force risen from the abyss of the universe, a bone blade forged in the wrath of chaos. To her, all things fall into two categories: those worthy of a fight, and those not.\nCarved from the bones of the Astral Cetus, her twin blades hunger endlessly—just like her own unquenchable thirst for the zenith of strength."
+      },
+      {
+        "kind": "story",
+        "title": "Story: I",
+        "unlockCondition": "Affinity Level 3",
+        "content": "Mythag University Astronomical Observatory: Anomaly Report\n\nSince A.F.@3, several observatories across the northern hemisphere have reported anomalous spectral attenuation at the galactic rim. Initial data showed that at least three catalogued stars vanished from the observable range within an extremely brief span, and their residual spectra matched no known stellar death models. No supernova radiation signature, no gravitational lensing from black hole accretion. The stars were simply swallowed whole—clean, swift, leaving no trace.\nIn March of A.F.@3, the Committee's Celestial Anomaly Task Force detected a series of extremely low-frequency Gnostic Fluctuations at the coordinates of the fourth vanished star. That August, following the fifth disappearance, the observatory finally captured a fleeting visual signal through the upgraded Silver-Core Long-Range Detection Array: a colossal, whale-like creature composed of bone, its abdomen bristling with spikes, its oral cavity emitting a high-temperature spectrum incompatible with the material plane. The instant it opened its maw, the stars' light poured in like water into the abyss—gone without a sound.\nThe footage lasted only 0.7 seconds before the array overloaded and cut out. Subsequent examination revealed irreversible structural collapse in one-third of the array's Silver-Core components.\nIn the winter of A.F.@3, the observatory detected a sudden shift in the Gnostic pulse's trajectory; its destination was our exact location.\nThe Committee was put on maximum alert, yet the anticipated catastrophe never came. The signal condensed into a harmless state upon approaching low orbit, ultimately settling on an uninhabited volcanic island in the northwestern seas. When the first survey team landed, they found twin massive blades of some unknown bone-like material deeply embedded in the basalt wall of the crater, and beside them, a humanoid figure \nseated cross-legged, as if she had long been waiting.\nThe entity appeared female, clad in bone-plated armor bearing alien motifs, with heterochromatic eyes. As the team approached, she opened her eyes.\n\"Any of you worth a strike?\"\nHer tone carried no hostility, only a calm bordering on arrogance.\nThe team exchanged glances. No one answered. After a moment's silence, she closed her eyes again.\n\"Then go find one. I'll wait.\"\nThereafter, the Committee and Mythag University jointly designated the island a Special Surveillance Zone, dispatching several Awakeners to assist in the investigation. After months of remote observation and cautious contact, the entity finally concurred with a state of loose supervision and was registered in the Committee's Awakener list—on the condition of being provided \"a truly worthy opponent.\"\nThe stellar disappearances ceased entirely following her containment. But detection data suggested the energy of the devoured stars remained stored within her body. During prolonged observation, her Gnostic Index continued to climb, showing no sign of decline."
+      },
+      {
+        "kind": "story",
+        "title": "Story: II",
+        "unlockCondition": "Affinity Level 5",
+        "content": "Upon her arrival at Mythag, Lotan: Cetarchon remained quiet for two days. At dusk on the third, she appeared at the public training grounds, bone blades in hand.\nThe Awakeners of Mythag had every reason to be proud, especially those who frequented the training grounds. Yet they remained highly wary of this insolent, uninvited guest. Word of what happened on the volcanic island had already spread among the Awakeners; they knew exactly what kind of opponent awaited them.\nTheir caution, as it turned out, wasn't nearly enough.\nWhen the first challenger was swatted out of the training grounds by a single strike, shattering a stone wall twenty meters away, the entire crowd erupted into an unprecedented frenzy. A second challenger stepped up, then a third... On that ordinary dusk in A.F.@3, nine Awakeners challenged Lotan: Cetarchon in succession.\nAccording to campus reporter Hannah, who witnessed the events firsthand, Lotan: Cetarchon did not utter a single word throughout. She stood like a silent, unbreakable lighthouse amidst the crashing tides of assault. Her twin bone blades gleamed like light through the dusk, their elegant arcs ending every offensive with absolute precision.\nBy the end of that day, over 80% of Lotan's armor was shattered. She bore two severe wounds on her shoulder and abdomen, and a massive notch was gouged into her bone blade, leaving it on the verge of snapping. At the cost of all this, she became the only one left standing on the training grounds.\nLooking at the deep gouges carved into the walls, the huge craters left on the ground, and the Awakeners watching her with conflicted expressions, she gave her first smile since arriving in this world.\n\"A pleasure meeting you all. You may call me Lotan: Cetarchon.\""
+      },
+      {
+        "kind": "story",
+        "title": "Story: III",
+        "unlockCondition": "Affinity Level 7",
+        "content": "Her earliest memory was nothing but rage.\nThere was no face, no form, only an endless, boiling instinct for violence. She was chaos coalesced in the depths of the cosmos, a calamity brewed over billions of years. She tore, she burned, she devoured—it was the only thing she knew.\nUntil the \"goddess\" in the white veil arrived. Like a star split in half from its core, she felt her power ebb away, her flesh and bone uprooted from her spirit, her surging fury torn raw from her soul.\nUnable to quell her rage, the goddess chose to sever her spirit from her flesh. The Beast of Chaos was no more; her body became Leviathan, sinking into the void with all her strength. And she, a mere mental remnant, awoke in an empty consciousness.\nYet her wrath had not died. It had transformed into something more enduring and terrifying: hunger. An endless hunger for strength drove her back to her feet.\nShe began to walk, to fight. She wandered the desolate sea of stars, challenging every formidable being that stood in her way. Each victory was like a handful of sand filled into her hollow shell—and grain by grain, she ground out a shape, a will, the very contour of \"Lotan: Cetarchon.\"\nThen she heard the whale's song.\nThe Astral Cetus, Its body an entire world, a colossus that bound and enslaved countless living beings—in It she saw neither desire nor fear, but kinship. Her memories began to return. She knew that was her strength. She knew that, from the very beginning, It had belonged to her.\nSo she came before It.\nSo she drew her sword against It.\nThe whale's power surged into her body like an unleashed torrent, nearly tearing her apart. Yet she remained standing—and when the tide receded, nothing was left of the whale but a carcass drifting in the void.\nThe enslaved planet was freed. The souls lost to desire looked up, calling her savior, guardian goddess, offering the Crown at her feet.\nLotan: Cetarchon did not respond to their praises. She simply stood atop the great whale's remains, feeling the newborn power surging within her, listening to the call deep in her soul growing clearer than ever.\nIt was the voice of the Astral Cetus. It was her own flesh and blood calling out to her. She placed her hand upon Leviathan's skull. Spirit and flesh, severed for countless eons, fused once more. Bone-plated armor clad her body; strength welled up within her.\nThe Beast of Chaos was reborn—but she was no longer the calamity who had known only fury. The long wandering, the countless battles, all those who had bested her and been bested by her—all had forged that pure chaos into a blade with a will of its own. She closed her eyes, savoring the surging, complete power within. But she also knew clearly that this was not the end.\nThe power of the Astral Cetus, the strength of Leviathan, all the stars she had devoured... all of it was but stepping stones beneath her feet. She lifted her bone blades, and turned toward the next unknown expanse of the universe.\nShe yearned for the next battle that would set her blood aflame."
+      },
+      {
+        "kind": "story",
+        "title": "Story: IV",
+        "unlockCondition": "Affinity Level 9",
+        "content": "Lotan: Cetarchon never looks back at the corpses left in her wake.\nDefeated opponents. Shattered wastelands. Devoured stars. One by one she steps over them all, seeking her next destination.\nSomeone once asked her what she'd do after reaching the summit of strength. She did not answer. The question was meaningless; fire never contemplates where it goes once it burns out. Fire has no \"after.\" Burning is the whole of its existence.\nShe walks. She fights. She raises her blades again and again—never to prove, to protect, to avenge, or to satisfy any petty desire.\nShe does it simply because, in the clash of blades and the collision of raw strength, she can feel most vividly that she is alive.\nThe path toward strength has no end.\nAnd she wouldn't have it any other way."
+      }
+    ],
+    "voiceLines": {
+      "daily": [
+        {
+          "id": "voice-146169",
+          "title": "Awaken",
+          "content": "I see an alien will in your eyes. Impure, but tenacious enough. Come, show me what strength or longing brought you before me."
+        },
+        {
+          "id": "voice-146164",
+          "title": "Upgrade: I",
+          "content": "Not enough. Far from enough..."
+        },
+        {
+          "id": "voice-146159",
+          "title": "Upgrade: II",
+          "content": "More—give me more power!"
+        },
+        {
+          "id": "voice-146195",
+          "title": "Upgrade: III",
+          "content": "Power is boiling in my marrow!"
+        },
+        {
+          "id": "voice-146177",
+          "title": "Enlighten: Observe",
+          "unlockCondition": "Unlocks at Enlighten Level 1",
+          "content": "The seal loosens a little... The power from the depths of the universe is surging up. I haven't felt this in ages..."
+        },
+        {
+          "id": "voice-146186",
+          "title": "Enlighten: Ponder",
+          "unlockCondition": "Unlocks at Enlighten Level 2",
+          "content": "Heh... You see it clearly, Keeper. The shackles of power are meant to be shattered!"
+        },
+        {
+          "id": "voice-146172",
+          "title": "Enlighten: Reflect",
+          "unlockCondition": "Unlocks at Enlighten Level 3",
+          "content": "The scent of chaos—how nostalgic... Ever since the moment I was born from this void, my pursuit has never changed."
+        },
+        {
+          "id": "voice-146185",
+          "title": "Enlighten: Insight",
+          "unlockCondition": "Unlocks at Enlighten Level 7",
+          "content": "My bones tremble with delight... I have witnessed your effort. And this proves you are worthy to stand by my side, Keeper."
+        },
+        {
+          "id": "voice-146189",
+          "title": "Enlighten: Elevate",
+          "unlockCondition": "Unlocks at Enlighten Level 11",
+          "content": "Just ahead... the zenith of power I have pursued my entire life... You've walked this path with me and guided me to this threshold. I'm eager to witness that ultimate day with you!"
+        },
+        {
+          "id": "voice-146193",
+          "title": "Enlighten: Florish",
+          "unlockCondition": "Unlocks at Enlighten Level 15",
+          "content": "Ah, I see... there never was an end to power. The true challenge has only just begun! It was you who brought me here and showed me the reality. Soon, I shall present a more perfect warrior before you. Ensure that you return even stronger, my \"opponent.\""
+        },
+        {
+          "id": "voice-146197",
+          "title": "Affinity: I",
+          "unlockCondition": "Unlocks at Affinity Level 2",
+          "content": "Mercy, weakness, confusion... your eyes are clouded with impurities. One who wavers can never understand what strength is."
+        },
+        {
+          "id": "voice-146173",
+          "title": "Affinity: II",
+          "unlockCondition": "Unlocks at Affinity Level 4",
+          "content": "You wish to challenge me? I admire your courage, and I'll grant you the honor of being defeated. Consider this my respect for the \"Keeper of Mythag.\""
+        },
+        {
+          "id": "voice-146180",
+          "title": "Affinity: III",
+          "unlockCondition": "Unlocks at Affinity Level 6",
+          "content": "I've wandered the vast cosmos for eons; I've thrown all those \"mighty\" ones into the abyss. You are unique, but to stand beside me, first learn to hold your head high. I have no use for cowards."
+        },
+        {
+          "id": "voice-146190",
+          "title": "Affinity: IV",
+          "unlockCondition": "Unlocks at Affinity Level 8",
+          "content": "Perhaps I judged you too hastily... Your growth, your hidden power have surprised me. I've watched countless lives fade in time, but you... are truly different. I am quite curious about the true origin of your power."
+        },
+        {
+          "id": "voice-146199",
+          "title": "Affinity: V",
+          "unlockCondition": "Unlocks at Affinity Level 10",
+          "content": "Listen well, I'll say this only once:\nI, Lotan, deem you an opponent worthy of my patience.\nUntil you reach your peak, I shall be your most reliable blade. This promise has nothing to do with feeling or loyalty. You're my most thrilling rival, and I will never let you fall along the way."
+        },
+        {
+          "id": "voice-146158",
+          "title": "Chat: Touch",
+          "content": "Oh? You want to fight me, here? Fine by me."
+        },
+        {
+          "id": "voice-146167",
+          "title": "Chat: About the Crisis",
+          "content": "I care little for the fading of this world—but I will not let it hinder my pursuit of strength."
+        },
+        {
+          "id": "voice-146174",
+          "title": "Chat: About Mythag",
+          "content": "A false utopia, packed with weaklings, cowards, and self-deluding fools. But no matter. This place brings me the most thrilling opponents—and that's enough."
+        },
+        {
+          "id": "voice-146181",
+          "title": "Chat: What I Like",
+          "content": "Brave or cowardly, strong or frail... Heh—no, I don't care what kind of person my opponent is. Any worthy opponent brings me a genuine thrill."
+        },
+        {
+          "id": "voice-146182",
+          "title": "Chat: What I Hate",
+          "content": "Weakness. Of all the vile things in the world, weakness is the most wretched sin. Everyone is born with a sword in hand; no one has the right to yield before the end, nor to step onto the fated battlefield already resigned to defeat. That insults both your opponent and yourself."
+        },
+        {
+          "id": "voice-146160",
+          "title": "Chat: About the Keeper",
+          "content": "I dislike those with a divided heart, as such division usually means weakness. But you are an exception. I once believed those who carry too much could never go far. But the path you've chosen surprises me... Perhaps an opponent walking a different path is more worthy of honing and challenge. Wouldn't you agree, \"opponent\"?"
+        },
+        {
+          "id": "voice-146175",
+          "title": "Chat: About Tulu",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Tulu\"",
+          "content": "He wasted immense power. He trapped his talent in a long dream, chased there by fear, guilt, and fatigue. A pity."
+        },
+        {
+          "id": "voice-146198",
+          "title": "Chat: About Lotan",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Lotan\"",
+          "content": "True power has nothing to do with revenge or protection—power is simply power. My other self never truly grasped this. That's why she's not strong enough."
+        },
+        {
+          "id": "voice-146168",
+          "title": "Chat: About Doll: Inferno",
+          "unlockCondition": "Unlock after acquiring Awakener \"Doll: Inferno\".",
+          "content": "Doubting the value of existence simply because oblivion awaits... I have no interest in such childish debates. Destruction means nothing, nor does memory. Power itself is the meaning."
+        }
+      ],
+      "battle": [
+        {
+          "id": "voice-146200",
+          "title": "Investigation Begins",
+          "content": "Come—kill me, or be killed."
+        },
+        {
+          "id": "voice-146176",
+          "title": "Investigation Success",
+          "content": "Hardly worth my time."
+        },
+        {
+          "id": "voice-146184",
+          "title": "Investigation Halted",
+          "content": "Heh... Now that was thrilling. Next time, I won't hold back."
+        },
+        {
+          "id": "voice-146170",
+          "title": "Strike: I",
+          "content": "Ha!"
+        },
+        {
+          "id": "voice-146196",
+          "title": "Strike: II",
+          "content": "Devour—all of it!"
+        },
+        {
+          "id": "voice-146166",
+          "title": "Defense: I",
+          "content": "Hmph."
+        },
+        {
+          "id": "voice-146194",
+          "title": "Defense: II",
+          "content": "Petty tricks."
+        },
+        {
+          "id": "voice-146179",
+          "title": "Hit: I",
+          "content": "...Exhilarating."
+        },
+        {
+          "id": "voice-146187",
+          "title": "Hit: II",
+          "content": "Hm?"
+        },
+        {
+          "id": "voice-146162",
+          "title": "Skill: I",
+          "content": "Be honored to stand against me!"
+        },
+        {
+          "id": "voice-146163",
+          "title": "Skill: II",
+          "content": "Let the stars witness annihilation!"
+        },
+        {
+          "id": "voice-146521",
+          "title": "Special Skill: I",
+          "content": "Before my bone blades, all shall crumble!"
+        },
+        {
+          "id": "voice-147047",
+          "title": "Special Skill: II",
+          "content": "Power... knows no end!"
+        },
+        {
+          "id": "voice-146183",
+          "title": "Rouse",
+          "content": "Corrupted Astral Carcass—awaken!"
+        },
+        {
+          "id": "voice-146192",
+          "title": "Exalt",
+          "content": "Maw of Hell, open wide for me!"
+        },
+        {
+          "id": "voice-146178",
+          "title": "Over-Exalt",
+          "content": "Cetus of the Astral Sea—devour them all!"
+        }
+      ],
+      "traphase": [
+        {
+          "id": "traphase-146422",
+          "title": "Opening",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Draw your blades. I've waited long enough for this."
+        },
+        {
+          "id": "traphase-146423",
+          "title": "Thinking",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Where to strike next..."
+        },
+        {
+          "id": "traphase-146424",
+          "title": "Urging",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "A hesitant blade won't pierce the enemy's heart."
+        },
+        {
+          "id": "traphase-146416",
+          "title": "Fatal Blow",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Perish, Leviathan!"
+        },
+        {
+          "id": "traphase-146419",
+          "title": "Blunder",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Oh? Did I actually miss?"
+        },
+        {
+          "id": "traphase-146425",
+          "title": "Death",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "So this is... the sound of my blade shattering..."
+        },
+        {
+          "id": "traphase-146428",
+          "title": "Chat: About Tawil",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Let's see if you can take my blade, goddess in white.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0047",
+              "lineId": "traphase-146426"
+            },
+            {
+              "awakenerId": "awakener-0059",
+              "lineId": "traphase-146428"
+            }
+          ]
+        },
+        {
+          "id": "traphase-146421",
+          "title": "Chat: About Uvhash",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "What battle lust. You might actually give me a real fight.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0051",
+              "lineId": "traphase-146420"
+            },
+            {
+              "awakenerId": "awakener-0059",
+              "lineId": "traphase-146421"
+            }
+          ]
+        },
+        {
+          "id": "traphase-146417",
+          "title": "Chat: About Celeste",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Peace, mercy, protection... such pathetic words make me sick.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0059",
+              "lineId": "traphase-146417"
+            },
+            {
+              "awakenerId": "awakener-0009",
+              "lineId": "traphase-146427"
+            }
+          ]
+        },
+        {
+          "id": "traphase-146415",
+          "title": "Chat: About Daffodil",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "I wonder... what kind of power a dimension-walker actually has.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0059",
+              "lineId": "traphase-146415"
+            },
+            {
+              "awakenerId": "awakener-0012",
+              "lineId": "traphase-146418"
+            }
+          ]
+        },
+        {
+          "id": "traphase-147591",
+          "title": "Chat: About Lotan",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Look at what you're trying to protect. You've never truly understood what pure power is.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0031",
+              "lineId": "traphase-147590"
+            },
+            {
+              "awakenerId": "awakener-0059",
+              "lineId": "traphase-147591"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

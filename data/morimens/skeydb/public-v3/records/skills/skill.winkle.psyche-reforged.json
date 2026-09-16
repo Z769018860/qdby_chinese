@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.winkle.psyche-reforged",
+  "name": "Psyche Reforged",
+  "route": {
+    "slug": "psyche-reforged",
+    "canonicalPath": "/database/awakeners/winkle/skills/psyche-reforged"
+  },
+  "ownerAwakenerId": "awakener-0053",
+  "slot": "Skill2",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Gain [Block:Arg1] Shield, discard all cards in hand, and for each card discarded, the Shield gained +50%. {Leap}: Do not discard cards and draw 1 card; the Shield gained +100%.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["20", "24", "28", "32", "36", "40"],
+      "stat": "DEF",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "3",
+  "lore": "Even after witnessing the destruction of her homeland, and even after everything she knows has vanished under the devouring force of dissolution, she refuses to give up her search. The locator emits a searching light, attempting to find those who share her home.\nThere must be someone, there must be someone.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.winkle.forsaken-homeland.skill.winkle.psyche-reforged",
+      "operation": "mixed",
+      "upgraderId": "enlighten.winkle.forsaken-homeland",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E2",
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "patch": {
+        "descriptionTemplate": "Gain [Block:Arg1] Shield, discard all hands, for each card discarded, the Shield Generation +50% and gain [Block:Arg2] points of Delayed Shield. {Leap}: No longer discard cards and draw 2 cards, the Shield Generation +100%.",
+        "descriptionArgs": {
+          "Arg1": {
+            "kind": "scaling",
+            "values": ["20", "24", "28", "32", "36", "40"],
+            "stat": "DEF",
+            "suffix": "%"
+          },
+          "Arg2": {
+            "kind": "scaling",
+            "values": ["5", "6", "7", "8", "9", "10"],
+            "stat": "DEF",
+            "suffix": "%"
+          }
+        }
+      }
+    }
+  ],
+  "ownerAwakenerName": "Winkle"
+}

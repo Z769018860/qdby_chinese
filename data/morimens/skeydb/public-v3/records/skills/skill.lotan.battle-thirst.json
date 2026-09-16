@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.lotan.battle-thirst",
+  "name": "Battle Thirst",
+  "route": {
+    "slug": "battle-thirst",
+    "canonicalPath": "/database/awakeners/lotan/skills/battle-thirst"
+  },
+  "ownerAwakenerId": "awakener-0031",
+  "slot": "Rouse",
+  "cardFamily": "rouse",
+  "cardTypes": ["rouse"],
+  "descriptionTemplate": "Lotan gains [Energy:Arg1] Aliemus. {Rouse}: Lotan's hits count +[Arg2] {plural:[Arg2]|time|times}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["25", "30", "35", "40", "45", "50"]
+    },
+    "Arg2": {
+      "kind": "fixed",
+      "value": "1"
+    }
+  },
+  "cardKeywords": [
+    {
+      "id": "mechanic.retain"
+    }
+  ],
+  "cost": "3",
+  "lore": "After eons of solitude, that person's appearance was like a sudden light in the deep ocean, igniting the long-dormant seabed.\nEager for a fair duel, Lotan willingly took on a human form, quietly awaiting the growth of a worthy opponent—she had yearned for an intense battle for far too long.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.lotan.primal-leviathan.skill.lotan.battle-thirst",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.lotan.primal-leviathan",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "AbsoluteAxiom",
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "patch": {
+        "descriptionTemplate": "Lotan gains [Energy:Arg1] Aliemus. {Rouse}: Lotan's hits count +[Arg2] {plural:[Arg2]|time|times}. Lotan's \"Defense\" makes the next {Blade of Defiance} this turn take effect 2 times."
+      }
+    }
+  ],
+  "ownerAwakenerName": "Lotan"
+}

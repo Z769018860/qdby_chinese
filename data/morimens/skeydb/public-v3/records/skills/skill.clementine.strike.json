@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.clementine.strike",
+  "name": "Strike",
+  "route": {
+    "slug": "strike",
+    "canonicalPath": "/database/awakeners/clementine/skills/strike"
+  },
+  "ownerAwakenerId": "awakener-0010",
+  "slot": "Strike",
+  "cardFamily": "command",
+  "cardTypes": ["strike"],
+  "descriptionTemplate": "Deal [Damage:Arg1] DMG, Clementine obtains [Energy:Arg3] Aliemus. {Quasar}: Obtain [Power:Arg4] {STR}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["10", "12", "14", "16", "18", "20"],
+      "stat": "ATK",
+      "suffix": "%"
+    },
+    "Arg3": {
+      "kind": "scaling",
+      "values": ["5", "6", "7", "8", "9", "10"]
+    },
+    "Arg4": {
+      "kind": "scaling",
+      "values": ["7.5", "9", "10.5", "12", "13.5", "15"],
+      "stat": "ATK",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "1",
+  "lore": "Her voice is gentle and kind, entwined and spreading in the dark side of your unseen mind.\nA person cannot be defeated by an existence outside of themselves, and you yourself are her weapon.",
+  "ownerAwakenerName": "Clementine"
+}

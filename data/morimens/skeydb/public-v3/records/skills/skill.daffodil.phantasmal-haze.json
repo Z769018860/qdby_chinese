@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.daffodil.phantasmal-haze",
+  "name": "Phantasmal Haze",
+  "route": {
+    "slug": "phantasmal-haze",
+    "canonicalPath": "/database/awakeners/daffodil/skills/phantasmal-haze"
+  },
+  "ownerAwakenerId": "awakener-0012",
+  "slot": "OverExalt",
+  "cardFamily": "exalt",
+  "cardTypes": ["over_exalt"],
+  "descriptionTemplate": "Additionally, place 2 copies of {derived:Thousand Mirage} into hand, increasing the Base DMG of {Skull Reaver} by 50% in this battle.",
+  "descriptionArgs": {},
+  "cardKeywords": [],
+  "ownerAwakenerName": "Daffodil"
+}

@@ -1,0 +1,950 @@
+{
+  "schemaVersion": 3,
+  "scope": "posses",
+  "records": [
+    {
+      "kind": "posse",
+      "id": "posse-0001",
+      "name": "Encounter in Pure White",
+      "aliases": [],
+      "tokens": ["encounter", "encounter in pure white", "faded", "faded legacy", "in", "legacy", "pure", "white"],
+      "fields": {
+        "name": ["Encounter in Pure White", "encounter-in-pure-white"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0002",
+      "name": "Voices in Your Head",
+      "aliases": [],
+      "tokens": ["faded", "faded legacy", "head", "in", "legacy", "voices", "voices in your head", "your"],
+      "fields": {
+        "name": ["Voices in Your Head", "voices-in-your-head"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0003",
+      "name": "Warded Injection",
+      "aliases": [],
+      "tokens": ["faded", "faded legacy", "injection", "legacy", "warded", "warded injection"],
+      "fields": {
+        "name": ["Warded Injection", "warded-injection"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0004",
+      "name": "A Mouse's Wisdom",
+      "aliases": [],
+      "tokens": ["a", "a mouses wisdom", "faded", "faded legacy", "legacy", "mouses", "wisdom"],
+      "fields": {
+        "name": ["A Mouse's Wisdom", "a-mouses-wisdom"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0005",
+      "name": "Tiny Wish",
+      "aliases": [],
+      "tokens": ["faded", "faded legacy", "legacy", "tiny", "tiny wish", "wish"],
+      "fields": {
+        "name": ["Tiny Wish", "tiny-wish"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0006",
+      "name": "Obsession Eternal",
+      "aliases": [],
+      "tokens": ["eternal", "faded", "faded legacy", "legacy", "obsession", "obsession eternal"],
+      "fields": {
+        "name": ["Obsession Eternal", "obsession-eternal"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0007",
+      "name": "Unequal Exchange",
+      "aliases": [],
+      "tokens": ["exchange", "other", "unequal", "unequal exchange"],
+      "fields": {
+        "name": ["Unequal Exchange", "unequal-exchange"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0008",
+      "name": "Funus Aeternum",
+      "aliases": [],
+      "tokens": ["aeternum", "faded", "faded legacy", "funus", "funus aeternum", "legacy"],
+      "fields": {
+        "name": ["Funus Aeternum", "funus-aeternum"],
+        "facet": ["FADED_LEGACY", "Faded Legacy"]
+      },
+      "facets": {
+        "realm": "FADED_LEGACY"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0009",
+      "name": "The Final Vow",
+      "aliases": [],
+      "tokens": ["chaos", "final", "ogier", "the", "the final vow", "vow"],
+      "fields": {
+        "name": ["The Final Vow", "the-final-vow"],
+        "owner": ["Ogier"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0038"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0010",
+      "name": "Aurita's Treasure",
+      "aliases": [],
+      "tokens": ["aequor", "aurita", "auritas", "auritas treasure", "treasure"],
+      "fields": {
+        "name": ["Aurita's Treasure", "auritas-treasure"],
+        "owner": ["Aurita"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0005"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0011",
+      "name": "Roaring Blood and Sand",
+      "aliases": [],
+      "tokens": ["and", "blood", "caro", "roaring", "roaring blood and sand", "sand", "uvhash"],
+      "fields": {
+        "name": ["Roaring Blood and Sand", "roaring-blood-and-sand"],
+        "owner": ["Uvhash"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0051"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0012",
+      "name": "Ephemeral Eternity",
+      "aliases": [],
+      "tokens": ["ephemeral", "ephemeral eternity", "erica", "eternity", "ultra"],
+      "fields": {
+        "name": ["Ephemeral Eternity", "ephemeral-eternity"],
+        "owner": ["Erica"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0015"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0013",
+      "name": "Feast of Decay",
+      "aliases": [],
+      "tokens": ["decay", "feast", "feast of decay", "of", "ultra", "wanda"],
+      "fields": {
+        "name": ["Feast of Decay", "feast-of-decay"],
+        "owner": ["Wanda"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0052"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0014",
+      "name": "Bone-Chilling Embrace",
+      "aliases": [],
+      "tokens": ["aequor", "bone", "bone chilling embrace", "chilling", "embrace", "sanga"],
+      "fields": {
+        "name": ["Bone-Chilling Embrace", "bone-chilling-embrace"],
+        "owner": ["Sanga"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0045"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0015",
+      "name": "Lakeside Glimpse",
+      "aliases": [],
+      "tokens": ["agrippa", "caro", "glimpse", "lakeside", "lakeside glimpse"],
+      "fields": {
+        "name": ["Lakeside Glimpse", "lakeside-glimpse"],
+        "owner": ["Agrippa"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0002"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0016",
+      "name": "Gateway of Retrospection",
+      "aliases": [],
+      "tokens": ["chaos", "g", "g ramona", "gateway", "gateway of retrospection", "of", "ramona", "ramona timeworn", "retrospection", "timeworn"],
+      "fields": {
+        "name": ["Gateway of Retrospection", "gateway-of-retrospection"],
+        "owner": ["Ramona: Timeworn", "ramona-timeworn", "g-ramona"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0020"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0017",
+      "name": "Truth Behind Grey Mist",
+      "aliases": [],
+      "tokens": ["behind", "daffodil", "grey", "mist", "truth", "truth behind grey mist", "ultra"],
+      "fields": {
+        "name": ["Truth Behind Grey Mist", "truth-behind-grey-mist"],
+        "owner": ["Daffodil"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0012"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0018",
+      "name": "Midsummer Vision",
+      "aliases": [],
+      "tokens": ["chaos", "lily", "midsummer", "midsummer vision", "vision"],
+      "fields": {
+        "name": ["Midsummer Vision", "midsummer-vision"],
+        "owner": ["Lily"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0029"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0019",
+      "name": "Victory of Roses",
+      "aliases": [],
+      "tokens": ["caro", "of", "roses", "sorel", "victory", "victory of roses"],
+      "fields": {
+        "name": ["Victory of Roses", "victory-of-roses"],
+        "owner": ["Sorel"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0046"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0020",
+      "name": "Miracle's Dawn",
+      "aliases": [],
+      "tokens": ["caro", "dawn", "miracles", "miracles dawn", "salvador"],
+      "fields": {
+        "name": ["Miracle's Dawn", "miracles-dawn"],
+        "owner": ["Salvador"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0044"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0021",
+      "name": "Giant's Reign",
+      "aliases": [],
+      "tokens": ["aequor", "giants", "giants reign", "goliath", "reign"],
+      "fields": {
+        "name": ["Giant's Reign", "giants-reign"],
+        "owner": ["Goliath"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0021"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0022",
+      "name": "All of Her",
+      "aliases": [],
+      "tokens": ["24", "all", "all of her", "chaos", "four", "her", "of", "twenty", "twenty four"],
+      "fields": {
+        "name": ["All of Her", "all-of-her"],
+        "owner": ["24", "\"24\"", "twenty-four"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0001"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0023",
+      "name": "The Lone Seed",
+      "aliases": [],
+      "tokens": ["caro", "lone", "seed", "the", "the lone seed"],
+      "fields": {
+        "name": ["The Lone Seed", "the-lone-seed"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0024",
+      "name": "The Mountains' Resolve",
+      "aliases": [],
+      "tokens": ["caro", "catena", "g", "g helot", "helot", "helot catena", "mountains", "resolve", "the", "the mountains resolve"],
+      "fields": {
+        "name": ["The Mountains' Resolve", "the-mountains-resolve"],
+        "owner": ["Helot: Catena", "helot-catena", "g-helot"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0019"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0025",
+      "name": "Festival of Tides",
+      "aliases": [],
+      "tokens": ["aequor", "festival", "festival of tides", "miryam", "of", "tides"],
+      "fields": {
+        "name": ["Festival of Tides", "festival-of-tides"],
+        "owner": ["Miryam"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0032"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0026",
+      "name": "Spring's Verse",
+      "aliases": [],
+      "tokens": ["horla", "springs", "springs verse", "ultra", "verse"],
+      "fields": {
+        "name": ["Spring's Verse", "springs-verse"],
+        "owner": ["Horla"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0024"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0027",
+      "name": "A Gun's Cry",
+      "aliases": [],
+      "tokens": ["a", "a guns cry", "chaos", "cry", "guns", "ryker"],
+      "fields": {
+        "name": ["A Gun's Cry", "a-guns-cry"],
+        "owner": ["Ryker"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0043"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0028",
+      "name": "Symphony Fourth",
+      "aliases": [],
+      "tokens": ["chaos", "fourth", "symphony", "symphony fourth"],
+      "fields": {
+        "name": ["Symphony Fourth", "symphony-fourth"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0029",
+      "name": "Answer of the Gate",
+      "aliases": [],
+      "tokens": ["answer", "answer of the gate", "chaos", "gate", "of", "the"],
+      "fields": {
+        "name": ["Answer of the Gate", "answer-of-the-gate"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0030",
+      "name": "Plague of Illusions",
+      "aliases": [],
+      "tokens": ["chaos", "doll", "doll inferno", "g", "g doll", "illusions", "inferno", "of", "plague", "plague of illusions"],
+      "fields": {
+        "name": ["Plague of Illusions", "plague-of-illusions"],
+        "owner": ["Doll: Inferno", "doll-inferno", "g-doll"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0018"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0031",
+      "name": "Blessing of the Stars",
+      "aliases": [],
+      "tokens": ["aequor", "blessing", "blessing of the stars", "of", "stars", "the", "tulu"],
+      "fields": {
+        "name": ["Blessing of the Stars", "blessing-of-the-stars"],
+        "owner": ["Tulu"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0050"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0032",
+      "name": "Black Swan's Dance",
+      "aliases": [],
+      "tokens": ["black", "black swans dance", "dance", "liz", "swans", "ultra"],
+      "fields": {
+        "name": ["Black Swan's Dance", "black-swans-dance"],
+        "owner": ["Liz"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0030"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0033",
+      "name": "Tavern's Opening",
+      "aliases": [],
+      "tokens": ["opening", "other", "taverns", "taverns opening"],
+      "fields": {
+        "name": ["Tavern's Opening", "taverns-opening"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0034",
+      "name": "Sacred Mending",
+      "aliases": [],
+      "tokens": ["clementine", "mending", "sacred", "sacred mending", "ultra"],
+      "fields": {
+        "name": ["Sacred Mending", "sacred-mending"],
+        "owner": ["Clementine"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0010"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0035",
+      "name": "Undying Thunder",
+      "aliases": [],
+      "tokens": ["aequor", "corposant", "thunder", "undying", "undying thunder"],
+      "fields": {
+        "name": ["Undying Thunder", "undying-thunder"],
+        "owner": ["Corposant"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0011"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0036",
+      "name": "Derision of Destiny",
+      "aliases": [],
+      "tokens": ["castor", "derision", "derision of destiny", "destiny", "of", "ultra"],
+      "fields": {
+        "name": ["Derision of Destiny", "derision-of-destiny"],
+        "owner": ["Castor"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0008"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0037",
+      "name": "Cruel Homage",
+      "aliases": [],
+      "tokens": ["caro", "cruel", "cruel homage", "doresain", "homage"],
+      "fields": {
+        "name": ["Cruel Homage", "cruel-homage"],
+        "owner": ["Doresain"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0014"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0038",
+      "name": "Undying Sun",
+      "aliases": [],
+      "tokens": ["chaos", "kathigu", "kathigu ra", "kathigura", "ra", "sun", "undying", "undying sun"],
+      "fields": {
+        "name": ["Undying Sun", "undying-sun"],
+        "owner": ["Kathigu-Ra", "kathigura"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0027"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0039",
+      "name": "Sacred Bleeding Heart",
+      "aliases": [],
+      "tokens": ["bleeding", "heart", "pollux", "sacred", "sacred bleeding heart", "ultra"],
+      "fields": {
+        "name": ["Sacred Bleeding Heart", "sacred-bleeding-heart"],
+        "owner": ["Pollux"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0041"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0040",
+      "name": "Voracious Resolve",
+      "aliases": [],
+      "tokens": ["caro", "resolve", "voracious", "voracious resolve"],
+      "fields": {
+        "name": ["Voracious Resolve", "voracious-resolve"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0041",
+      "name": "Beachside Memento",
+      "aliases": [],
+      "tokens": ["beachside", "beachside memento", "memento", "other"],
+      "fields": {
+        "name": ["Beachside Memento", "beachside-memento"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0042",
+      "name": "Void Hues",
+      "aliases": [],
+      "tokens": ["caro", "hues", "pickman", "void", "void hues"],
+      "fields": {
+        "name": ["Void Hues", "void-hues"],
+        "owner": ["Pickman"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0040"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0043",
+      "name": "A Fleeting Dream",
+      "aliases": [],
+      "tokens": ["a", "a fleeting dream", "dream", "fleeting", "other"],
+      "fields": {
+        "name": ["A Fleeting Dream", "a-fleeting-dream"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0044",
+      "name": "Wayward Ship",
+      "aliases": [],
+      "tokens": ["aequor", "fauxborn", "g", "g murphy", "murphy", "murphy fauxborn", "ship", "wayward", "wayward ship"],
+      "fields": {
+        "name": ["Wayward Ship", "wayward-ship"],
+        "owner": ["Murphy: Fauxborn", "murphy-fauxborn", "g-murphy"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0035"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0045",
+      "name": "Reunion Wish",
+      "aliases": [],
+      "tokens": ["other", "ramona", "reunion", "reunion wish", "wish"],
+      "fields": {
+        "name": ["Reunion Wish", "reunion-wish"],
+        "owner": ["Ramona"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER",
+        "owner": "awakener-0042"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0046",
+      "name": "From the Mist Realm",
+      "aliases": [],
+      "tokens": ["chaos", "from", "from the mist realm", "mist", "mouchette", "realm", "the"],
+      "fields": {
+        "name": ["From the Mist Realm", "from-the-mist-realm"],
+        "owner": ["Mouchette"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0033"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0047",
+      "name": "Manor Echoes",
+      "aliases": [],
+      "tokens": ["caro", "echoes", "manor", "manor echoes", "xu"],
+      "fields": {
+        "name": ["Manor Echoes", "manor-echoes"],
+        "owner": ["Xu"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0054"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0048",
+      "name": "Year-End Sparks",
+      "aliases": [],
+      "tokens": ["end", "other", "sparks", "year", "year end sparks"],
+      "fields": {
+        "name": ["Year-End Sparks", "year-end-sparks"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0049",
+      "name": "Drowned Innocence",
+      "aliases": [],
+      "tokens": ["aequor", "drowned", "drowned innocence", "innocence", "vortice"],
+      "fields": {
+        "name": ["Drowned Innocence", "drowned-innocence"],
+        "owner": ["Vortice"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0055"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0050",
+      "name": "Orbis Fatum",
+      "aliases": [],
+      "tokens": ["arachne", "fatum", "orbis", "orbis fatum", "ultra"],
+      "fields": {
+        "name": ["Orbis Fatum", "orbis-fatum"],
+        "owner": ["Arachne"],
+        "facet": ["ULTRA"]
+      },
+      "facets": {
+        "realm": "ULTRA",
+        "owner": "awakener-0056"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0051",
+      "name": "For the New World",
+      "aliases": [],
+      "tokens": ["caro", "for", "for the new world", "new", "saya", "the", "world"],
+      "fields": {
+        "name": ["For the New World", "for-the-new-world"],
+        "owner": ["Saya"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0057"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0052",
+      "name": "The Hollow One",
+      "aliases": [],
+      "tokens": ["aequor", "hollow", "one", "pontos", "the", "the hollow one"],
+      "fields": {
+        "name": ["The Hollow One", "the-hollow-one"],
+        "owner": ["Pontos"],
+        "facet": ["AEQUOR"]
+      },
+      "facets": {
+        "realm": "AEQUOR",
+        "owner": "awakener-0058"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0053",
+      "name": "Cetus-Devouring Storm",
+      "aliases": [],
+      "tokens": ["cetarchon", "cetus", "cetus devouring storm", "chaos", "devouring", "glotan", "lotan", "lotan cetarchon", "rotan", "storm"],
+      "fields": {
+        "name": ["Cetus-Devouring Storm", "cetus-devouring-storm"],
+        "owner": ["Lotan: Cetarchon", "lotan-cetarchon", "lotan cetarchon", "cetarchon", "glotan", "rotan"],
+        "facet": ["CHAOS"]
+      },
+      "facets": {
+        "realm": "CHAOS",
+        "owner": "awakener-0059"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0054",
+      "name": "Primordial Memory: Drain",
+      "aliases": [],
+      "tokens": ["drain", "memory", "other", "primordial", "primordial memory drain"],
+      "fields": {
+        "name": ["Primordial Memory: Drain", "primordial-memory-drain"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0055",
+      "name": "Primordial Memory: Catalysis",
+      "aliases": [],
+      "tokens": ["catalysis", "memory", "other", "primordial", "primordial memory catalysis"],
+      "fields": {
+        "name": ["Primordial Memory: Catalysis", "primordial-memory-catalysis"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0056",
+      "name": "Primordial Memory: Healing",
+      "aliases": [],
+      "tokens": ["healing", "memory", "other", "primordial", "primordial memory healing"],
+      "fields": {
+        "name": ["Primordial Memory: Healing", "primordial-memory-healing"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0057",
+      "name": "Primordial Memory: Toxin",
+      "aliases": [],
+      "tokens": ["memory", "other", "primordial", "primordial memory toxin", "toxin"],
+      "fields": {
+        "name": ["Primordial Memory: Toxin", "primordial-memory-toxin"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0058",
+      "name": "Primordial Memory: Spike",
+      "aliases": [],
+      "tokens": ["memory", "other", "primordial", "primordial memory spike", "spike"],
+      "fields": {
+        "name": ["Primordial Memory: Spike", "primordial-memory-spike"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0059",
+      "name": "Primordial Memory: Might",
+      "aliases": [],
+      "tokens": ["memory", "might", "other", "primordial", "primordial memory might"],
+      "fields": {
+        "name": ["Primordial Memory: Might", "primordial-memory-might"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0060",
+      "name": "Primordial Memory: Bastion",
+      "aliases": [],
+      "tokens": ["bastion", "memory", "other", "primordial", "primordial memory bastion"],
+      "fields": {
+        "name": ["Primordial Memory: Bastion", "primordial-memory-bastion"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0061",
+      "name": "Primordial Memory: Fury",
+      "aliases": [],
+      "tokens": ["fury", "memory", "other", "primordial", "primordial memory fury"],
+      "fields": {
+        "name": ["Primordial Memory: Fury", "primordial-memory-fury"],
+        "facet": ["OTHER"]
+      },
+      "facets": {
+        "realm": "OTHER"
+      }
+    },
+    {
+      "kind": "posse",
+      "id": "posse-0062",
+      "name": "That Which is No Lie",
+      "aliases": [],
+      "tokens": ["caraboo", "caro", "is", "lie", "no", "that", "that which is no lie", "which"],
+      "fields": {
+        "name": ["That Which is No Lie", "that-which-is-no-lie"],
+        "owner": ["Caraboo"],
+        "facet": ["CARO"]
+      },
+      "facets": {
+        "realm": "CARO",
+        "owner": "awakener-0060"
+      }
+    }
+  ]
+}

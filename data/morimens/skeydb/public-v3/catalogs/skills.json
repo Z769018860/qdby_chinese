@@ -1,0 +1,5899 @@
+{
+  "schemaVersion": 3,
+  "scope": "skills",
+  "kind": "skill",
+  "recordCount": 420,
+  "records": [
+    {
+      "kind": "skill",
+      "id": "skill.24.aberrant-vivisection",
+      "name": "Aberrant Vivisection",
+      "route": {
+        "slug": "aberrant-vivisection",
+        "canonicalPath": "/database/awakeners/24/skills/aberrant-vivisection"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.24.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/24/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.24.frenzied-slash",
+      "name": "Frenzied Slash",
+      "route": {
+        "slug": "frenzied-slash",
+        "canonicalPath": "/database/awakeners/24/skills/frenzied-slash"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.24.mediating-personalities",
+      "name": "Mediating Personalities",
+      "route": {
+        "slug": "mediating-personalities",
+        "canonicalPath": "/database/awakeners/24/skills/mediating-personalities"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.24.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/24/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.24.symbiotic-aberration",
+      "name": "Symbiotic Aberration",
+      "route": {
+        "slug": "symbiotic-aberration",
+        "canonicalPath": "/database/awakeners/24/skills/symbiotic-aberration"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.24.twisted-carrion-revel",
+      "name": "Twisted Carrion Revel",
+      "route": {
+        "slug": "twisted-carrion-revel",
+        "canonicalPath": "/database/awakeners/24/skills/twisted-carrion-revel"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0001",
+      "ownerAwakenerName": "24",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.colorless-spiral",
+      "name": "Colorless Spiral",
+      "route": {
+        "slug": "colorless-spiral",
+        "canonicalPath": "/database/awakeners/agrippa/skills/colorless-spiral"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/agrippa/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.lady-of-labyrinths",
+      "name": "Lady of Labyrinths",
+      "route": {
+        "slug": "lady-of-labyrinths",
+        "canonicalPath": "/database/awakeners/agrippa/skills/lady-of-labyrinths"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.pale-blessing",
+      "name": "Pale Blessing",
+      "route": {
+        "slug": "pale-blessing",
+        "canonicalPath": "/database/awakeners/agrippa/skills/pale-blessing"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.path-of-the-lost",
+      "name": "Path of the Lost",
+      "route": {
+        "slug": "path-of-the-lost",
+        "canonicalPath": "/database/awakeners/agrippa/skills/path-of-the-lost"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.reluctant-alms",
+      "name": "Reluctant Alms",
+      "route": {
+        "slug": "reluctant-alms",
+        "canonicalPath": "/database/awakeners/agrippa/skills/reluctant-alms"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.agrippa.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/agrippa/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0002",
+      "ownerAwakenerName": "Agrippa",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.a-small-wish",
+      "name": "A Small Wish",
+      "route": {
+        "slug": "a-small-wish",
+        "canonicalPath": "/database/awakeners/aigis/skills/a-small-wish"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.decomposition",
+      "name": "Decomposition",
+      "route": {
+        "slug": "decomposition",
+        "canonicalPath": "/database/awakeners/aigis/skills/decomposition"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/aigis/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.eye-of-eternity",
+      "name": "Eye of Eternity",
+      "route": {
+        "slug": "eye-of-eternity",
+        "canonicalPath": "/database/awakeners/aigis/skills/eye-of-eternity"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.gaze-out-of-the-aeons",
+      "name": "Gaze Out of the Aeons",
+      "route": {
+        "slug": "gaze-out-of-the-aeons",
+        "canonicalPath": "/database/awakeners/aigis/skills/gaze-out-of-the-aeons"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.stagnant-curse",
+      "name": "Stagnant Curse",
+      "route": {
+        "slug": "stagnant-curse",
+        "canonicalPath": "/database/awakeners/aigis/skills/stagnant-curse"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aigis.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/aigis/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.combat-stance",
+      "name": "Combat Stance",
+      "route": {
+        "slug": "combat-stance",
+        "canonicalPath": "/database/awakeners/alva/skills/combat-stance"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/alva/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.endless-justice",
+      "name": "Endless Justice",
+      "route": {
+        "slug": "endless-justice",
+        "canonicalPath": "/database/awakeners/alva/skills/endless-justice"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.justice-and-truth",
+      "name": "Justice and Truth",
+      "route": {
+        "slug": "justice-and-truth",
+        "canonicalPath": "/database/awakeners/alva/skills/justice-and-truth"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.outstanding-veteran",
+      "name": "Outstanding Veteran",
+      "route": {
+        "slug": "outstanding-veteran",
+        "canonicalPath": "/database/awakeners/alva/skills/outstanding-veteran"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.precision-slash",
+      "name": "Precision Slash",
+      "route": {
+        "slug": "precision-slash",
+        "canonicalPath": "/database/awakeners/alva/skills/precision-slash"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "Skill2",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.alva.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/alva/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0004",
+      "ownerAwakenerName": "Alva",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/arachne/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.elegy-over-fate",
+      "name": "Elegy Over Fate",
+      "route": {
+        "slug": "elegy-over-fate",
+        "canonicalPath": "/database/awakeners/arachne/skills/elegy-over-fate"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.eternal-weave",
+      "name": "Eternal Weave",
+      "route": {
+        "slug": "eternal-weave",
+        "canonicalPath": "/database/awakeners/arachne/skills/eternal-weave"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.fate-binding-web",
+      "name": "Fate-Binding Web",
+      "route": {
+        "slug": "fate-binding-web",
+        "canonicalPath": "/database/awakeners/arachne/skills/fate-binding-web"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.moira-as-i-decree",
+      "name": "Moira, As I Decree",
+      "route": {
+        "slug": "moira-as-i-decree",
+        "canonicalPath": "/database/awakeners/arachne/skills/moira-as-i-decree"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.puppet-stage-unveiled",
+      "name": "Puppet Stage Unveiled",
+      "route": {
+        "slug": "puppet-stage-unveiled",
+        "canonicalPath": "/database/awakeners/arachne/skills/puppet-stage-unveiled"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.arachne.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/arachne/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0056",
+      "ownerAwakenerName": "Arachne",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.clamorous-ocean",
+      "name": "Clamorous Ocean",
+      "route": {
+        "slug": "clamorous-ocean",
+        "canonicalPath": "/database/awakeners/aurita/skills/clamorous-ocean"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/aurita/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.gland-division",
+      "name": "Gland Division",
+      "route": {
+        "slug": "gland-division",
+        "canonicalPath": "/database/awakeners/aurita/skills/gland-division"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.jellyfish-congregation",
+      "name": "Jellyfish Congregation",
+      "route": {
+        "slug": "jellyfish-congregation",
+        "canonicalPath": "/database/awakeners/aurita/skills/jellyfish-congregation"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.power-of-friendship",
+      "name": "Power of Friendship",
+      "route": {
+        "slug": "power-of-friendship",
+        "canonicalPath": "/database/awakeners/aurita/skills/power-of-friendship"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.self-proliferation",
+      "name": "Self-Proliferation",
+      "route": {
+        "slug": "self-proliferation",
+        "canonicalPath": "/database/awakeners/aurita/skills/self-proliferation"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.aurita.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/aurita/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0005",
+      "ownerAwakenerName": "Aurita",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.bloodline-of-heresy",
+      "name": "Bloodline of Heresy",
+      "route": {
+        "slug": "bloodline-of-heresy",
+        "canonicalPath": "/database/awakeners/caecus/skills/bloodline-of-heresy"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/caecus/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.metamorphosed-body",
+      "name": "Metamorphosed Body",
+      "route": {
+        "slug": "metamorphosed-body",
+        "canonicalPath": "/database/awakeners/caecus/skills/metamorphosed-body"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.protective-scales",
+      "name": "Protective Scales",
+      "route": {
+        "slug": "protective-scales",
+        "canonicalPath": "/database/awakeners/caecus/skills/protective-scales"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.shattered-halberd",
+      "name": "Shattered Halberd",
+      "route": {
+        "slug": "shattered-halberd",
+        "canonicalPath": "/database/awakeners/caecus/skills/shattered-halberd"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/caecus/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caecus.unbending-resolve",
+      "name": "Unbending Resolve",
+      "route": {
+        "slug": "unbending-resolve",
+        "canonicalPath": "/database/awakeners/caecus/skills/unbending-resolve"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0006",
+      "ownerAwakenerName": "Caecus",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/caraboo/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.flawless-fairy-tale",
+      "name": "Flawless Fairy Tale",
+      "route": {
+        "slug": "flawless-fairy-tale",
+        "canonicalPath": "/database/awakeners/caraboo/skills/flawless-fairy-tale"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.miracle-blessing",
+      "name": "Miracle Blessing",
+      "route": {
+        "slug": "miracle-blessing",
+        "canonicalPath": "/database/awakeners/caraboo/skills/miracle-blessing"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.snowy-hex",
+      "name": "Snowy Hex",
+      "route": {
+        "slug": "snowy-hex",
+        "canonicalPath": "/database/awakeners/caraboo/skills/snowy-hex"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/caraboo/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.ta-da-its-the-fairy",
+      "name": "Ta-da★It's the Fairy!",
+      "route": {
+        "slug": "ta-daits-the-fairy",
+        "canonicalPath": "/database/awakeners/caraboo/skills/ta-daits-the-fairy"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.caraboo.tempting-honeyfruit",
+      "name": "Tempting Honeyfruit",
+      "route": {
+        "slug": "tempting-honeyfruit",
+        "canonicalPath": "/database/awakeners/caraboo/skills/tempting-honeyfruit"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0060",
+      "ownerAwakenerName": "Caraboo",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/casiah/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.magic-carnival",
+      "name": "Magic Carnival",
+      "route": {
+        "slug": "magic-carnival",
+        "canonicalPath": "/database/awakeners/casiah/skills/magic-carnival"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.opening-act",
+      "name": "Opening Act",
+      "route": {
+        "slug": "opening-act",
+        "canonicalPath": "/database/awakeners/casiah/skills/opening-act"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.poof",
+      "name": "Poof!",
+      "route": {
+        "slug": "poof",
+        "canonicalPath": "/database/awakeners/casiah/skills/poof"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/casiah/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.telekinesis",
+      "name": "Telekinesis",
+      "route": {
+        "slug": "telekinesis",
+        "canonicalPath": "/database/awakeners/casiah/skills/telekinesis"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "Skill1",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.casiah.unfettered-mirth",
+      "name": "Unfettered Mirth",
+      "route": {
+        "slug": "unfettered-mirth",
+        "canonicalPath": "/database/awakeners/casiah/skills/unfettered-mirth"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0007",
+      "ownerAwakenerName": "Casiah",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/castor/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.dirge-of-the-unbroken",
+      "name": "Dirge of the Unbroken",
+      "route": {
+        "slug": "dirge-of-the-unbroken",
+        "canonicalPath": "/database/awakeners/castor/skills/dirge-of-the-unbroken"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.over-the-sea-of-thorns",
+      "name": "Over the Sea of Thorns",
+      "route": {
+        "slug": "over-the-sea-of-thorns",
+        "canonicalPath": "/database/awakeners/castor/skills/over-the-sea-of-thorns"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.skybound-oath",
+      "name": "Skybound Oath",
+      "route": {
+        "slug": "skybound-oath",
+        "canonicalPath": "/database/awakeners/castor/skills/skybound-oath"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/castor/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.stygian-wings",
+      "name": "Stygian Wings",
+      "route": {
+        "slug": "stygian-wings",
+        "canonicalPath": "/database/awakeners/castor/skills/stygian-wings"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.castor.umbral-flight",
+      "name": "Umbral Flight",
+      "route": {
+        "slug": "umbral-flight",
+        "canonicalPath": "/database/awakeners/castor/skills/umbral-flight"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0008",
+      "ownerAwakenerName": "Castor",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/celeste/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.divine-vigil",
+      "name": "Divine Vigil",
+      "route": {
+        "slug": "divine-vigil",
+        "canonicalPath": "/database/awakeners/celeste/skills/divine-vigil"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.everlasting-phantasm",
+      "name": "Everlasting Phantasm",
+      "route": {
+        "slug": "everlasting-phantasm",
+        "canonicalPath": "/database/awakeners/celeste/skills/everlasting-phantasm"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.power-of-blessing",
+      "name": "Power of Blessing",
+      "route": {
+        "slug": "power-of-blessing",
+        "canonicalPath": "/database/awakeners/celeste/skills/power-of-blessing"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/celeste/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.tintless-dream",
+      "name": "Tintless Dream",
+      "route": {
+        "slug": "tintless-dream",
+        "canonicalPath": "/database/awakeners/celeste/skills/tintless-dream"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.celeste.undying-bird-of-paradise",
+      "name": "Undying Bird of Paradise",
+      "route": {
+        "slug": "undying-bird-of-paradise",
+        "canonicalPath": "/database/awakeners/celeste/skills/undying-bird-of-paradise"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0009",
+      "ownerAwakenerName": "Celeste",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.call-of-shaggai",
+      "name": "Call of Shaggai",
+      "route": {
+        "slug": "call-of-shaggai",
+        "canonicalPath": "/database/awakeners/clementine/skills/call-of-shaggai"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/clementine/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.lifeform-reconstruction",
+      "name": "Lifeform Reconstruction",
+      "route": {
+        "slug": "lifeform-reconstruction",
+        "canonicalPath": "/database/awakeners/clementine/skills/lifeform-reconstruction"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.pain-extraction",
+      "name": "Pain Extraction",
+      "route": {
+        "slug": "pain-extraction",
+        "canonicalPath": "/database/awakeners/clementine/skills/pain-extraction"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.soulsalve",
+      "name": "Soulsalve",
+      "route": {
+        "slug": "soulsalve",
+        "canonicalPath": "/database/awakeners/clementine/skills/soulsalve"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/clementine/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.clementine.subconscious-corrosion",
+      "name": "Subconscious Corrosion",
+      "route": {
+        "slug": "subconscious-corrosion",
+        "canonicalPath": "/database/awakeners/clementine/skills/subconscious-corrosion"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/corposant/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.face-death-in-fiery-resolve",
+      "name": "Face Death in Fiery Resolve",
+      "route": {
+        "slug": "face-death-in-fiery-resolve",
+        "canonicalPath": "/database/awakeners/corposant/skills/face-death-in-fiery-resolve"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.lightning-retribution",
+      "name": "Lightning Retribution",
+      "route": {
+        "slug": "lightning-retribution",
+        "canonicalPath": "/database/awakeners/corposant/skills/lightning-retribution"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.ominous-semaphore",
+      "name": "Ominous Semaphore",
+      "route": {
+        "slug": "ominous-semaphore",
+        "canonicalPath": "/database/awakeners/corposant/skills/ominous-semaphore"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/corposant/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.sunken-in-the-profound",
+      "name": "Sunken in the Profound",
+      "route": {
+        "slug": "sunken-in-the-profound",
+        "canonicalPath": "/database/awakeners/corposant/skills/sunken-in-the-profound"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.corposant.to-sail-the-sundered-tides",
+      "name": "To Sail the Sundered Tides",
+      "route": {
+        "slug": "to-sail-the-sundered-tides",
+        "canonicalPath": "/database/awakeners/corposant/skills/to-sail-the-sundered-tides"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0011",
+      "ownerAwakenerName": "Corposant",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/daffodil/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.dimensional-projection",
+      "name": "Dimensional Projection",
+      "route": {
+        "slug": "dimensional-projection",
+        "canonicalPath": "/database/awakeners/daffodil/skills/dimensional-projection"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.heterogeneous-tides",
+      "name": "Heterogeneous Tides",
+      "route": {
+        "slug": "heterogeneous-tides",
+        "canonicalPath": "/database/awakeners/daffodil/skills/heterogeneous-tides"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.phantasmal-haze",
+      "name": "Phantasmal Haze",
+      "route": {
+        "slug": "phantasmal-haze",
+        "canonicalPath": "/database/awakeners/daffodil/skills/phantasmal-haze"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.sea-of-primordial-essence",
+      "name": "Sea of Primordial Essence",
+      "route": {
+        "slug": "sea-of-primordial-essence",
+        "canonicalPath": "/database/awakeners/daffodil/skills/sea-of-primordial-essence"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.skull-reaver",
+      "name": "Skull Reaver",
+      "route": {
+        "slug": "skull-reaver",
+        "canonicalPath": "/database/awakeners/daffodil/skills/skull-reaver"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.daffodil.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/daffodil/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0012",
+      "ownerAwakenerName": "Daffodil",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.fates-descent",
+      "name": "Fate's Descent",
+      "route": {
+        "slug": "fates-descent",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/fates-descent"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.madness-infection",
+      "name": "Madness Infection",
+      "route": {
+        "slug": "madness-infection",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/madness-infection"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.self-destruct",
+      "name": "Self-Destruct",
+      "route": {
+        "slug": "self-destruct",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/self-destruct"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.soulblight",
+      "name": "Soulblight",
+      "route": {
+        "slug": "soulblight",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/soulblight"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll-inferno.terminal-of-truth-and-abyss",
+      "name": "Terminal of Truth and Abyss",
+      "route": {
+        "slug": "terminal-of-truth-and-abyss",
+        "canonicalPath": "/database/awakeners/doll-inferno/skills/terminal-of-truth-and-abyss"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0018",
+      "ownerAwakenerName": "Doll: Inferno",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/doll/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.equivalent-exchange",
+      "name": "Equivalent Exchange",
+      "route": {
+        "slug": "equivalent-exchange",
+        "canonicalPath": "/database/awakeners/doll/skills/equivalent-exchange"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.flesh-detached",
+      "name": "Flesh Detached",
+      "route": {
+        "slug": "flesh-detached",
+        "canonicalPath": "/database/awakeners/doll/skills/flesh-detached"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.outer-surgery",
+      "name": "Outer Surgery",
+      "route": {
+        "slug": "outer-surgery",
+        "canonicalPath": "/database/awakeners/doll/skills/outer-surgery"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.psyche-dissection",
+      "name": "Psyche Dissection",
+      "route": {
+        "slug": "psyche-dissection",
+        "canonicalPath": "/database/awakeners/doll/skills/psyche-dissection"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.rationality-truth-and-reality",
+      "name": "Rationality, Truth, and Reality",
+      "route": {
+        "slug": "rationality-truth-and-reality",
+        "canonicalPath": "/database/awakeners/doll/skills/rationality-truth-and-reality"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doll.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/doll/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0013",
+      "ownerAwakenerName": "Doll",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.crimson-invite",
+      "name": "Crimson Invite",
+      "route": {
+        "slug": "crimson-invite",
+        "canonicalPath": "/database/awakeners/doresain/skills/crimson-invite"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/doresain/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.dirge-of-the-fallen",
+      "name": "Dirge of the Fallen",
+      "route": {
+        "slug": "dirge-of-the-fallen",
+        "canonicalPath": "/database/awakeners/doresain/skills/dirge-of-the-fallen"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.necrotic-gala",
+      "name": "Necrotic Gala",
+      "route": {
+        "slug": "necrotic-gala",
+        "canonicalPath": "/database/awakeners/doresain/skills/necrotic-gala"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.netherward-path",
+      "name": "Netherward Path",
+      "route": {
+        "slug": "netherward-path",
+        "canonicalPath": "/database/awakeners/doresain/skills/netherward-path"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.pandemonium-glut",
+      "name": "Pandemonium Glut",
+      "route": {
+        "slug": "pandemonium-glut",
+        "canonicalPath": "/database/awakeners/doresain/skills/pandemonium-glut"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.doresain.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/doresain/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0014",
+      "ownerAwakenerName": "Doresain",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/erica/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.electromagnetic-blast",
+      "name": "Electromagnetic Blast",
+      "route": {
+        "slug": "electromagnetic-blast",
+        "canonicalPath": "/database/awakeners/erica/skills/electromagnetic-blast"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.function-overload",
+      "name": "Function Overload",
+      "route": {
+        "slug": "function-overload",
+        "canonicalPath": "/database/awakeners/erica/skills/function-overload"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.multiple-calculations",
+      "name": "Multiple Calculations",
+      "route": {
+        "slug": "multiple-calculations",
+        "canonicalPath": "/database/awakeners/erica/skills/multiple-calculations"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.parameter-fitting",
+      "name": "Parameter Fitting",
+      "route": {
+        "slug": "parameter-fitting",
+        "canonicalPath": "/database/awakeners/erica/skills/parameter-fitting"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/erica/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.erica.unleash-mecha",
+      "name": "Unleash: Mecha",
+      "route": {
+        "slug": "unleash-mecha",
+        "canonicalPath": "/database/awakeners/erica/skills/unleash-mecha"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.blossom-from-cocoon",
+      "name": "Blossom from Cocoon",
+      "route": {
+        "slug": "blossom-from-cocoon",
+        "canonicalPath": "/database/awakeners/faint/skills/blossom-from-cocoon"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.boundless-starlight",
+      "name": "Boundless Starlight",
+      "route": {
+        "slug": "boundless-starlight",
+        "canonicalPath": "/database/awakeners/faint/skills/boundless-starlight"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.cradle-of-stars",
+      "name": "Cradle of Stars",
+      "route": {
+        "slug": "cradle-of-stars",
+        "canonicalPath": "/database/awakeners/faint/skills/cradle-of-stars"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/faint/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.nutrient-absorption",
+      "name": "Nutrient Absorption",
+      "route": {
+        "slug": "nutrient-absorption",
+        "canonicalPath": "/database/awakeners/faint/skills/nutrient-absorption"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.sprouting-bud",
+      "name": "Sprouting Bud",
+      "route": {
+        "slug": "sprouting-bud",
+        "canonicalPath": "/database/awakeners/faint/skills/sprouting-bud"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faint.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/faint/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0016",
+      "ownerAwakenerName": "Faint",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.abyssal-obsession",
+      "name": "Abyssal Obsession",
+      "route": {
+        "slug": "abyssal-obsession",
+        "canonicalPath": "/database/awakeners/faros/skills/abyssal-obsession"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.deep-currents",
+      "name": "Deep Currents",
+      "route": {
+        "slug": "deep-currents",
+        "canonicalPath": "/database/awakeners/faros/skills/deep-currents"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/faros/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.light-of-the-lost",
+      "name": "Light of the Lost",
+      "route": {
+        "slug": "light-of-the-lost",
+        "canonicalPath": "/database/awakeners/faros/skills/light-of-the-lost"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.lost-city-of-lemuria",
+      "name": "Lost City of Lemuria",
+      "route": {
+        "slug": "lost-city-of-lemuria",
+        "canonicalPath": "/database/awakeners/faros/skills/lost-city-of-lemuria"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.ocean-of-elation",
+      "name": "Ocean of Elation",
+      "route": {
+        "slug": "ocean-of-elation",
+        "canonicalPath": "/database/awakeners/faros/skills/ocean-of-elation"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.faros.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/faros/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0017",
+      "ownerAwakenerName": "Faros",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.abyssal-depths-power",
+      "name": "Abyssal Depths' Power",
+      "route": {
+        "slug": "abyssal-depths-power",
+        "canonicalPath": "/database/awakeners/goliath/skills/abyssal-depths-power"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.decapitation-damage",
+      "name": "Decapitation Damage",
+      "route": {
+        "slug": "decapitation-damage",
+        "canonicalPath": "/database/awakeners/goliath/skills/decapitation-damage"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/goliath/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.giants-grip",
+      "name": "Giant's Grip",
+      "route": {
+        "slug": "giants-grip",
+        "canonicalPath": "/database/awakeners/goliath/skills/giants-grip"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.law-of-the-strongest",
+      "name": "Law of the Strongest",
+      "route": {
+        "slug": "law-of-the-strongest",
+        "canonicalPath": "/database/awakeners/goliath/skills/law-of-the-strongest"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.preemptive-revenge",
+      "name": "Preemptive Revenge",
+      "route": {
+        "slug": "preemptive-revenge",
+        "canonicalPath": "/database/awakeners/goliath/skills/preemptive-revenge"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.goliath.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/goliath/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0021",
+      "ownerAwakenerName": "Goliath",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/hameln/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.laudable-masterpiece",
+      "name": "Laudable Masterpiece",
+      "route": {
+        "slug": "laudable-masterpiece",
+        "canonicalPath": "/database/awakeners/hameln/skills/laudable-masterpiece"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.memory-rondo",
+      "name": "Memory Rondo",
+      "route": {
+        "slug": "memory-rondo",
+        "canonicalPath": "/database/awakeners/hameln/skills/memory-rondo"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.primal-chord",
+      "name": "Primal Chord",
+      "route": {
+        "slug": "primal-chord",
+        "canonicalPath": "/database/awakeners/hameln/skills/primal-chord"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.soul-overture",
+      "name": "Soul Overture",
+      "route": {
+        "slug": "soul-overture",
+        "canonicalPath": "/database/awakeners/hameln/skills/soul-overture"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/hameln/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.hameln.the-final-sonata",
+      "name": "The Final Sonata",
+      "route": {
+        "slug": "the-final-sonata",
+        "canonicalPath": "/database/awakeners/hameln/skills/the-final-sonata"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0022",
+      "ownerAwakenerName": "Hameln",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.crimson-shackles",
+      "name": "Crimson Shackles",
+      "route": {
+        "slug": "crimson-shackles",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/crimson-shackles"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.fettered-malice",
+      "name": "Fettered Malice",
+      "route": {
+        "slug": "fettered-malice",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/fettered-malice"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.hatred-unleashed",
+      "name": "Hatred Unleashed",
+      "route": {
+        "slug": "hatred-unleashed",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/hatred-unleashed"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.reapers-declaration",
+      "name": "Reaper's Declaration",
+      "route": {
+        "slug": "reapers-declaration",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/reapers-declaration"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.sanguine-fetters",
+      "name": "Sanguine Fetters",
+      "route": {
+        "slug": "sanguine-fetters",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/sanguine-fetters"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot-catena.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/helot-catena/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0019",
+      "ownerAwakenerName": "Helot: Catena",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.blood-for-blood",
+      "name": "Blood for Blood",
+      "route": {
+        "slug": "blood-for-blood",
+        "canonicalPath": "/database/awakeners/helot/skills/blood-for-blood"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/helot/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.lasting-loathe",
+      "name": "Lasting Loathe",
+      "route": {
+        "slug": "lasting-loathe",
+        "canonicalPath": "/database/awakeners/helot/skills/lasting-loathe"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "Skill2",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.shattering-strike",
+      "name": "Shattering Strike",
+      "route": {
+        "slug": "shattering-strike",
+        "canonicalPath": "/database/awakeners/helot/skills/shattering-strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "Skill1",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/helot/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.surviving-impasse",
+      "name": "Surviving Impasse",
+      "route": {
+        "slug": "surviving-impasse",
+        "canonicalPath": "/database/awakeners/helot/skills/surviving-impasse"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.helot.vengeance-upon-thee",
+      "name": "Vengeance Upon Thee",
+      "route": {
+        "slug": "vengeance-upon-thee",
+        "canonicalPath": "/database/awakeners/helot/skills/vengeance-upon-thee"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0023",
+      "ownerAwakenerName": "Helot",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.carol-psalm",
+      "name": "Carol Psalm",
+      "route": {
+        "slug": "carol-psalm",
+        "canonicalPath": "/database/awakeners/horla/skills/carol-psalm"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.dirge-psalm",
+      "name": "Dirge Psalm",
+      "route": {
+        "slug": "dirge-psalm",
+        "canonicalPath": "/database/awakeners/horla/skills/dirge-psalm"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.elegy-psalm",
+      "name": "Elegy Psalm",
+      "route": {
+        "slug": "elegy-psalm",
+        "canonicalPath": "/database/awakeners/horla/skills/elegy-psalm"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.ink-stained-sonnet",
+      "name": "Ink-Stained Sonnet",
+      "route": {
+        "slug": "ink-stained-sonnet",
+        "canonicalPath": "/database/awakeners/horla/skills/ink-stained-sonnet"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.prelude-verse",
+      "name": "Prelude Verse",
+      "route": {
+        "slug": "prelude-verse",
+        "canonicalPath": "/database/awakeners/horla/skills/prelude-verse"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.resplendent-chapters",
+      "name": "Resplendent Chapters",
+      "route": {
+        "slug": "resplendent-chapters",
+        "canonicalPath": "/database/awakeners/horla/skills/resplendent-chapters"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.horla.snarl-psalm",
+      "name": "Snarl Psalm",
+      "route": {
+        "slug": "snarl-psalm",
+        "canonicalPath": "/database/awakeners/horla/skills/snarl-psalm"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0024",
+      "ownerAwakenerName": "Horla",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/jenkin/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.get-em-brown",
+      "name": "Get 'em! Brown!",
+      "route": {
+        "slug": "get-em-brown",
+        "canonicalPath": "/database/awakeners/jenkin/skills/get-em-brown"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.gotcha",
+      "name": "Gotcha!",
+      "route": {
+        "slug": "gotcha",
+        "canonicalPath": "/database/awakeners/jenkin/skills/gotcha"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.mice-assemble",
+      "name": "Mice Assemble",
+      "route": {
+        "slug": "mice-assemble",
+        "canonicalPath": "/database/awakeners/jenkin/skills/mice-assemble"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.mistborn-street-urchin",
+      "name": "Mistborn Street Urchin",
+      "route": {
+        "slug": "mistborn-street-urchin",
+        "canonicalPath": "/database/awakeners/jenkin/skills/mistborn-street-urchin"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.spatial-fold",
+      "name": "Spatial Fold",
+      "route": {
+        "slug": "spatial-fold",
+        "canonicalPath": "/database/awakeners/jenkin/skills/spatial-fold"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.jenkins.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/jenkin/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0025",
+      "ownerAwakenerName": "Jenkin",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.bounteous-feast",
+      "name": "Bounteous Feast",
+      "route": {
+        "slug": "bounteous-feast",
+        "canonicalPath": "/database/awakeners/karen/skills/bounteous-feast"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.dance-of-the-gibbous-moon",
+      "name": "Dance of the Gibbous Moon",
+      "route": {
+        "slug": "dance-of-the-gibbous-moon",
+        "canonicalPath": "/database/awakeners/karen/skills/dance-of-the-gibbous-moon"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/karen/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.heres-your-meal",
+      "name": "Here's Your Meal!",
+      "route": {
+        "slug": "heres-your-meal",
+        "canonicalPath": "/database/awakeners/karen/skills/heres-your-meal"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.silent-fealty",
+      "name": "Silent Fealty",
+      "route": {
+        "slug": "silent-fealty",
+        "canonicalPath": "/database/awakeners/karen/skills/silent-fealty"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/karen/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.karen.toad-stew",
+      "name": "Toad Stew",
+      "route": {
+        "slug": "toad-stew",
+        "canonicalPath": "/database/awakeners/karen/skills/toad-stew"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0026",
+      "ownerAwakenerName": "Karen",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.all-melting-truth",
+      "name": "All-Melting Truth",
+      "route": {
+        "slug": "all-melting-truth",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/all-melting-truth"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.karmic-embers",
+      "name": "Karmic Embers",
+      "route": {
+        "slug": "karmic-embers",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/karmic-embers"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.last-stand-salvo",
+      "name": "Last Stand Salvo",
+      "route": {
+        "slug": "last-stand-salvo",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/last-stand-salvo"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.solarflare",
+      "name": "Solarflare",
+      "route": {
+        "slug": "solarflare",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/solarflare"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.kathigu-ra.world-ending-inferno",
+      "name": "World-Ending Inferno",
+      "route": {
+        "slug": "world-ending-inferno",
+        "canonicalPath": "/database/awakeners/kathigu-ra/skills/world-ending-inferno"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0027",
+      "ownerAwakenerName": "Kathigu-Ra",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/leigh/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.flatterers-embrace",
+      "name": "Flatterer's Embrace",
+      "route": {
+        "slug": "flatterers-embrace",
+        "canonicalPath": "/database/awakeners/leigh/skills/flatterers-embrace"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.pain-and-pleasure",
+      "name": "Pain and Pleasure",
+      "route": {
+        "slug": "pain-and-pleasure",
+        "canonicalPath": "/database/awakeners/leigh/skills/pain-and-pleasure"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.pain-of-unfulfilled-desires",
+      "name": "Pain of Unfulfilled Desires",
+      "route": {
+        "slug": "pain-of-unfulfilled-desires",
+        "canonicalPath": "/database/awakeners/leigh/skills/pain-of-unfulfilled-desires"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.pallid-bloodied-kiss",
+      "name": "Pallid Bloodied Kiss",
+      "route": {
+        "slug": "pallid-bloodied-kiss",
+        "canonicalPath": "/database/awakeners/leigh/skills/pallid-bloodied-kiss"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.sanguivore",
+      "name": "Sanguivore",
+      "route": {
+        "slug": "sanguivore",
+        "canonicalPath": "/database/awakeners/leigh/skills/sanguivore"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.leigh.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/leigh/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0028",
+      "ownerAwakenerName": "Leigh",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.at-your-behest",
+      "name": "At Your Behest",
+      "route": {
+        "slug": "at-your-behest",
+        "canonicalPath": "/database/awakeners/lily/skills/at-your-behest"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/lily/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.forbidden-swamp",
+      "name": "Forbidden Swamp",
+      "route": {
+        "slug": "forbidden-swamp",
+        "canonicalPath": "/database/awakeners/lily/skills/forbidden-swamp"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.slime-convergence",
+      "name": "Slime Convergence",
+      "route": {
+        "slug": "slime-convergence",
+        "canonicalPath": "/database/awakeners/lily/skills/slime-convergence"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/lily/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.strike-to-protect",
+      "name": "Strike to Protect",
+      "route": {
+        "slug": "strike-to-protect",
+        "canonicalPath": "/database/awakeners/lily/skills/strike-to-protect"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "Skill1",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lily.undying-flower-upon-slime",
+      "name": "Undying Flower Upon Slime",
+      "route": {
+        "slug": "undying-flower-upon-slime",
+        "canonicalPath": "/database/awakeners/lily/skills/undying-flower-upon-slime"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0029",
+      "ownerAwakenerName": "Lily",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.dance-to-destruction",
+      "name": "Dance to Destruction",
+      "route": {
+        "slug": "dance-to-destruction",
+        "canonicalPath": "/database/awakeners/liz/skills/dance-to-destruction"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/liz/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.emerald-reflection",
+      "name": "Emerald Reflection",
+      "route": {
+        "slug": "emerald-reflection",
+        "canonicalPath": "/database/awakeners/liz/skills/emerald-reflection"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.green-flames",
+      "name": "Green Flames",
+      "route": {
+        "slug": "green-flames",
+        "canonicalPath": "/database/awakeners/liz/skills/green-flames"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.moth-trapping-fire",
+      "name": "Moth-Trapping Fire",
+      "route": {
+        "slug": "moth-trapping-fire",
+        "canonicalPath": "/database/awakeners/liz/skills/moth-trapping-fire"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.omens-descent",
+      "name": "Omen's Descent",
+      "route": {
+        "slug": "omens-descent",
+        "canonicalPath": "/database/awakeners/liz/skills/omens-descent"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.liz.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/liz/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0030",
+      "ownerAwakenerName": "Liz",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.long-blade-perish",
+      "name": "Long Blade: Perish",
+      "route": {
+        "slug": "long-blade-perish",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/long-blade-perish"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "Skill1",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.mundus-severance",
+      "name": "Mundus Severance",
+      "route": {
+        "slug": "mundus-severance",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/mundus-severance"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.night-of-whalefall",
+      "name": "Night of Whalefall",
+      "route": {
+        "slug": "night-of-whalefall",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/night-of-whalefall"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.primeval-return",
+      "name": "Primeval Return",
+      "route": {
+        "slug": "primeval-return",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/primeval-return"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.short-blade-devour",
+      "name": "Short Blade: Devour",
+      "route": {
+        "slug": "short-blade-devour",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/short-blade-devour"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "Skill2",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan-cetarchon.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/lotan-cetarchon/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0059",
+      "ownerAwakenerName": "Lotan: Cetarchon",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.battle-thirst",
+      "name": "Battle Thirst",
+      "route": {
+        "slug": "battle-thirst",
+        "canonicalPath": "/database/awakeners/lotan/skills/battle-thirst"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.beast-of-chaos",
+      "name": "Beast of Chaos",
+      "route": {
+        "slug": "beast-of-chaos",
+        "canonicalPath": "/database/awakeners/lotan/skills/beast-of-chaos"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.blade-of-defiance",
+      "name": "Blade of Defiance",
+      "route": {
+        "slug": "blade-of-defiance",
+        "canonicalPath": "/database/awakeners/lotan/skills/blade-of-defiance"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/lotan/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/lotan/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.tides-of-hubris",
+      "name": "Tides of Hubris",
+      "route": {
+        "slug": "tides-of-hubris",
+        "canonicalPath": "/database/awakeners/lotan/skills/tides-of-hubris"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.lotan.until-the-planets-end",
+      "name": "Until the Planet's End",
+      "route": {
+        "slug": "until-the-planets-end",
+        "canonicalPath": "/database/awakeners/lotan/skills/until-the-planets-end"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0031",
+      "ownerAwakenerName": "Lotan",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/miryam/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.exalted-pyre",
+      "name": "Exalted Pyre",
+      "route": {
+        "slug": "exalted-pyre",
+        "canonicalPath": "/database/awakeners/miryam/skills/exalted-pyre"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.pray-to-the-abyss",
+      "name": "Pray to the Abyss",
+      "route": {
+        "slug": "pray-to-the-abyss",
+        "canonicalPath": "/database/awakeners/miryam/skills/pray-to-the-abyss"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/miryam/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.testament-of-faith",
+      "name": "Testament of Faith",
+      "route": {
+        "slug": "testament-of-faith",
+        "canonicalPath": "/database/awakeners/miryam/skills/testament-of-faith"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.the-chosen-one",
+      "name": "The Chosen One",
+      "route": {
+        "slug": "the-chosen-one",
+        "canonicalPath": "/database/awakeners/miryam/skills/the-chosen-one"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.miryam.unacquainted-pain",
+      "name": "Unacquainted Pain",
+      "route": {
+        "slug": "unacquainted-pain",
+        "canonicalPath": "/database/awakeners/miryam/skills/unacquainted-pain"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0032",
+      "ownerAwakenerName": "Miryam",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/mouchette/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.mist-realm-vestige",
+      "name": "Mist Realm Vestige",
+      "route": {
+        "slug": "mist-realm-vestige",
+        "canonicalPath": "/database/awakeners/mouchette/skills/mist-realm-vestige"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.mortal-blast",
+      "name": "Mortal Blast",
+      "route": {
+        "slug": "mortal-blast",
+        "canonicalPath": "/database/awakeners/mouchette/skills/mortal-blast"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "Skill1",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.shining-crush",
+      "name": "Shining☆Crush",
+      "route": {
+        "slug": "shiningcrush",
+        "canonicalPath": "/database/awakeners/mouchette/skills/shiningcrush"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "Skill2",
+      "countsAs": ["strike"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.shining-tornado",
+      "name": "Shining☆Tornado",
+      "route": {
+        "slug": "shiningtornado",
+        "canonicalPath": "/database/awakeners/mouchette/skills/shiningtornado"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/mouchette/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.mouchette.tornado-of-annihilation",
+      "name": "Tornado of Annihilation☆!",
+      "route": {
+        "slug": "tornado-of-annihilation",
+        "canonicalPath": "/database/awakeners/mouchette/skills/tornado-of-annihilation"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0033",
+      "ownerAwakenerName": "Mouchette",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.abyss-hymns",
+      "name": "Abyss Hymns",
+      "route": {
+        "slug": "abyss-hymns",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/abyss-hymns"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.aetherial-loop",
+      "name": "Aetherial Loop",
+      "route": {
+        "slug": "aetherial-loop",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/aetherial-loop"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.princess-of-delusions",
+      "name": "Princess of Delusions",
+      "route": {
+        "slug": "princess-of-delusions",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/princess-of-delusions"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.tidal-sacrament",
+      "name": "Tidal Sacrament",
+      "route": {
+        "slug": "tidal-sacrament",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/tidal-sacrament"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy-fauxborn.waltz-of-lemuria",
+      "name": "Waltz of Lemuria",
+      "route": {
+        "slug": "waltz-of-lemuria",
+        "canonicalPath": "/database/awakeners/murphy-fauxborn/skills/waltz-of-lemuria"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0035",
+      "ownerAwakenerName": "Murphy: Fauxborn",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/murphy/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.delusions-heir",
+      "name": "Delusion's Heir",
+      "route": {
+        "slug": "delusions-heir",
+        "canonicalPath": "/database/awakeners/murphy/skills/delusions-heir"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.divine-maidens-birth",
+      "name": "Divine Maiden's Birth",
+      "route": {
+        "slug": "divine-maidens-birth",
+        "canonicalPath": "/database/awakeners/murphy/skills/divine-maidens-birth"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.made-into-being",
+      "name": "Made Into Being",
+      "route": {
+        "slug": "made-into-being",
+        "canonicalPath": "/database/awakeners/murphy/skills/made-into-being"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.oath-of-liberation",
+      "name": "Oath of Liberation",
+      "route": {
+        "slug": "oath-of-liberation",
+        "canonicalPath": "/database/awakeners/murphy/skills/oath-of-liberation"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/murphy/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.murphy.vortex-reversed",
+      "name": "Vortex Reversed",
+      "route": {
+        "slug": "vortex-reversed",
+        "canonicalPath": "/database/awakeners/murphy/skills/vortex-reversed"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0034",
+      "ownerAwakenerName": "Murphy",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/nautila/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.maintenance-expert",
+      "name": "Maintenance Expert",
+      "route": {
+        "slug": "maintenance-expert",
+        "canonicalPath": "/database/awakeners/nautila/skills/maintenance-expert"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.no-trespassing",
+      "name": "No Trespassing",
+      "route": {
+        "slug": "no-trespassing",
+        "canonicalPath": "/database/awakeners/nautila/skills/no-trespassing"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.ready-and-set",
+      "name": "Ready and Set",
+      "route": {
+        "slug": "ready-and-set",
+        "canonicalPath": "/database/awakeners/nautila/skills/ready-and-set"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.short-term-memory",
+      "name": "Short-Term Memory",
+      "route": {
+        "slug": "short-term-memory",
+        "canonicalPath": "/database/awakeners/nautila/skills/short-term-memory"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/nautila/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nautila.vroom-vroom",
+      "name": "Vroom Vroom!",
+      "route": {
+        "slug": "vroom-vroom",
+        "canonicalPath": "/database/awakeners/nautila/skills/vroom-vroom"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0036",
+      "ownerAwakenerName": "Nautila",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.abyssal-funeral-rites",
+      "name": "Abyssal Funeral Rites",
+      "route": {
+        "slug": "abyssal-funeral-rites",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/abyssal-funeral-rites"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.drowning-in-sorrow",
+      "name": "Drowning in Sorrow",
+      "route": {
+        "slug": "drowning-in-sorrow",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/drowning-in-sorrow"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.knell-of-death",
+      "name": "Knell of Death",
+      "route": {
+        "slug": "knell-of-death",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/knell-of-death"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.midnight-tide",
+      "name": "Midnight Tide",
+      "route": {
+        "slug": "midnight-tide",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/midnight-tide"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.passage-of-the-ego",
+      "name": "Passage of the Ego",
+      "route": {
+        "slug": "passage-of-the-ego",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/passage-of-the-ego"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.nymphaea.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/nymphaea/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0037",
+      "ownerAwakenerName": "Nymphaea",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/ogier/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.knights-zeal",
+      "name": "Knight's Zeal",
+      "route": {
+        "slug": "knights-zeal",
+        "canonicalPath": "/database/awakeners/ogier/skills/knights-zeal"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.piercing-strike",
+      "name": "Piercing Strike",
+      "route": {
+        "slug": "piercing-strike",
+        "canonicalPath": "/database/awakeners/ogier/skills/piercing-strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.resolute-devotion",
+      "name": "Resolute Devotion",
+      "route": {
+        "slug": "resolute-devotion",
+        "canonicalPath": "/database/awakeners/ogier/skills/resolute-devotion"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.seven-arts-and-virtues",
+      "name": "Seven Arts and Virtues",
+      "route": {
+        "slug": "seven-arts-and-virtues",
+        "canonicalPath": "/database/awakeners/ogier/skills/seven-arts-and-virtues"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/ogier/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ogier.unstable-barrier",
+      "name": "Unstable Barrier",
+      "route": {
+        "slug": "unstable-barrier",
+        "canonicalPath": "/database/awakeners/ogier/skills/unstable-barrier"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0038",
+      "ownerAwakenerName": "Ogier",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/pandia/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.give-and-take",
+      "name": "Give and Take",
+      "route": {
+        "slug": "give-and-take",
+        "canonicalPath": "/database/awakeners/pandia/skills/give-and-take"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.honey-colored-tragedy",
+      "name": "Honey-Colored Tragedy",
+      "route": {
+        "slug": "honey-colored-tragedy",
+        "canonicalPath": "/database/awakeners/pandia/skills/honey-colored-tragedy"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/pandia/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.sweet-surrender",
+      "name": "Sweet Surrender",
+      "route": {
+        "slug": "sweet-surrender",
+        "canonicalPath": "/database/awakeners/pandia/skills/sweet-surrender"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.wax-hot-desire",
+      "name": "Wax-Hot Desire",
+      "route": {
+        "slug": "wax-hot-desire",
+        "canonicalPath": "/database/awakeners/pandia/skills/wax-hot-desire"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pandia.whip-of-madness",
+      "name": "Whip of Madness",
+      "route": {
+        "slug": "whip-of-madness",
+        "canonicalPath": "/database/awakeners/pandia/skills/whip-of-madness"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0039",
+      "ownerAwakenerName": "Pandia",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.art-is-madness",
+      "name": "Art is Madness",
+      "route": {
+        "slug": "art-is-madness",
+        "canonicalPath": "/database/awakeners/pickman/skills/art-is-madness"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.chromaphage",
+      "name": "Chromaphage",
+      "route": {
+        "slug": "chromaphage",
+        "canonicalPath": "/database/awakeners/pickman/skills/chromaphage"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/pickman/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.lifelike-rendition",
+      "name": "Lifelike Rendition",
+      "route": {
+        "slug": "lifelike-rendition",
+        "canonicalPath": "/database/awakeners/pickman/skills/lifelike-rendition"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.morgue-studio",
+      "name": "Morgue Studio",
+      "route": {
+        "slug": "morgue-studio",
+        "canonicalPath": "/database/awakeners/pickman/skills/morgue-studio"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/pickman/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pickman.truth-in-delusion",
+      "name": "Truth in Delusion",
+      "route": {
+        "slug": "truth-in-delusion",
+        "canonicalPath": "/database/awakeners/pickman/skills/truth-in-delusion"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0040",
+      "ownerAwakenerName": "Pickman",
+      "slot": "Exalt",
+      "orisonIds": ["orison-0001", "orison-0002", "orison-0003", "orison-0016", "orison-0017", "orison-0006", "orison-0014", "orison-0018"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.cleansing-judgement",
+      "name": "Cleansing Judgement",
+      "route": {
+        "slug": "cleansing-judgement",
+        "canonicalPath": "/database/awakeners/pollux/skills/cleansing-judgement"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/pollux/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.path-of-ablution",
+      "name": "Path of Ablution",
+      "route": {
+        "slug": "path-of-ablution",
+        "canonicalPath": "/database/awakeners/pollux/skills/path-of-ablution"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.sinless-verdict",
+      "name": "Sinless Verdict",
+      "route": {
+        "slug": "sinless-verdict",
+        "canonicalPath": "/database/awakeners/pollux/skills/sinless-verdict"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.soulsearing-light",
+      "name": "Soulsearing Light",
+      "route": {
+        "slug": "soulsearing-light",
+        "canonicalPath": "/database/awakeners/pollux/skills/soulsearing-light"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/pollux/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pollux.the-nightbreaker",
+      "name": "The Nightbreaker",
+      "route": {
+        "slug": "the-nightbreaker",
+        "canonicalPath": "/database/awakeners/pollux/skills/the-nightbreaker"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0041",
+      "ownerAwakenerName": "Pollux",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.another-ebwynnos",
+      "name": "Another Ebwynnos",
+      "route": {
+        "slug": "another-ebwynnos",
+        "canonicalPath": "/database/awakeners/pontos/skills/another-ebwynnos"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/pontos/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.gaunt-ravage",
+      "name": "Gaunt Ravage",
+      "route": {
+        "slug": "gaunt-ravage",
+        "canonicalPath": "/database/awakeners/pontos/skills/gaunt-ravage"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.gauntwards-call",
+      "name": "Gauntwards' Call",
+      "route": {
+        "slug": "gauntwards-call",
+        "canonicalPath": "/database/awakeners/pontos/skills/gauntwards-call"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.relentless-hunt",
+      "name": "Relentless Hunt",
+      "route": {
+        "slug": "relentless-hunt",
+        "canonicalPath": "/database/awakeners/pontos/skills/relentless-hunt"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/pontos/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.pontos.wrath-of-the-abyss",
+      "name": "Wrath of the Abyss",
+      "route": {
+        "slug": "wrath-of-the-abyss",
+        "canonicalPath": "/database/awakeners/pontos/skills/wrath-of-the-abyss"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0058",
+      "ownerAwakenerName": "Pontos",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.entropy-undone",
+      "name": "Entropy Undone",
+      "route": {
+        "slug": "entropy-undone",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/entropy-undone"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.paradox-converged",
+      "name": "Paradox Converged",
+      "route": {
+        "slug": "paradox-converged",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/paradox-converged"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.predetermined-strike",
+      "name": "Predetermined Strike",
+      "route": {
+        "slug": "predetermined-strike",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/predetermined-strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.reach-into-yesterday",
+      "name": "Reach into Yesterday",
+      "route": {
+        "slug": "reach-into-yesterday",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/reach-into-yesterday"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.sight-unbound",
+      "name": "Sight Unbound",
+      "route": {
+        "slug": "sight-unbound",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/sight-unbound"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona-timeworn.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/ramona-timeworn/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0020",
+      "ownerAwakenerName": "Ramona: Timeworn",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.assault-thesis",
+      "name": "Assault Thesis",
+      "route": {
+        "slug": "assault-thesis",
+        "canonicalPath": "/database/awakeners/ramona/skills/assault-thesis"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/ramona/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.first-doctrine",
+      "name": "First Doctrine",
+      "route": {
+        "slug": "first-doctrine",
+        "canonicalPath": "/database/awakeners/ramona/skills/first-doctrine"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.labyrinth-of-thought",
+      "name": "Labyrinth of Thought",
+      "route": {
+        "slug": "labyrinth-of-thought",
+        "canonicalPath": "/database/awakeners/ramona/skills/labyrinth-of-thought"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.mundus-decree",
+      "name": "Mundus Decree",
+      "route": {
+        "slug": "mundus-decree",
+        "canonicalPath": "/database/awakeners/ramona/skills/mundus-decree"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.queens-sword",
+      "name": "Queen's Sword",
+      "route": {
+        "slug": "queens-sword",
+        "canonicalPath": "/database/awakeners/ramona/skills/queens-sword"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ramona.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/ramona/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0042",
+      "ownerAwakenerName": "Ramona",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.all-in",
+      "name": "All-in!",
+      "route": {
+        "slug": "all-in",
+        "canonicalPath": "/database/awakeners/ryker/skills/all-in"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/ryker/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.exceptional-luck",
+      "name": "Exceptional Luck",
+      "route": {
+        "slug": "exceptional-luck",
+        "canonicalPath": "/database/awakeners/ryker/skills/exceptional-luck"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.jackpot",
+      "name": "Jackpot!",
+      "route": {
+        "slug": "jackpot",
+        "canonicalPath": "/database/awakeners/ryker/skills/jackpot"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.showdown",
+      "name": "Showdown",
+      "route": {
+        "slug": "showdown",
+        "canonicalPath": "/database/awakeners/ryker/skills/showdown"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/ryker/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.ryker.unexpected-gain",
+      "name": "Unexpected Gain",
+      "route": {
+        "slug": "unexpected-gain",
+        "canonicalPath": "/database/awakeners/ryker/skills/unexpected-gain"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0043",
+      "ownerAwakenerName": "Ryker",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.benediction",
+      "name": "Benediction",
+      "route": {
+        "slug": "benediction",
+        "canonicalPath": "/database/awakeners/salvador/skills/benediction"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.blessed-are-the-bones",
+      "name": "Blessed are the Bones",
+      "route": {
+        "slug": "blessed-are-the-bones",
+        "canonicalPath": "/database/awakeners/salvador/skills/blessed-are-the-bones"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/salvador/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.end-of-suffering",
+      "name": "End of Suffering",
+      "route": {
+        "slug": "end-of-suffering",
+        "canonicalPath": "/database/awakeners/salvador/skills/end-of-suffering"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.he-who-protects",
+      "name": "He Who Protects",
+      "route": {
+        "slug": "he-who-protects",
+        "canonicalPath": "/database/awakeners/salvador/skills/he-who-protects"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.rite-of-creation",
+      "name": "Rite of Creation",
+      "route": {
+        "slug": "rite-of-creation",
+        "canonicalPath": "/database/awakeners/salvador/skills/rite-of-creation"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.salvador.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/salvador/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0044",
+      "ownerAwakenerName": "Salvador",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.beautys-mercy",
+      "name": "Beauty's Mercy",
+      "route": {
+        "slug": "beautys-mercy",
+        "canonicalPath": "/database/awakeners/sanga/skills/beautys-mercy"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/sanga/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.opus-of-isolation",
+      "name": "Opus of Isolation",
+      "route": {
+        "slug": "opus-of-isolation",
+        "canonicalPath": "/database/awakeners/sanga/skills/opus-of-isolation"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.realm-of-oblivion",
+      "name": "Realm of Oblivion",
+      "route": {
+        "slug": "realm-of-oblivion",
+        "canonicalPath": "/database/awakeners/sanga/skills/realm-of-oblivion"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/sanga/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.the-lost-art",
+      "name": "The Lost Art",
+      "route": {
+        "slug": "the-lost-art",
+        "canonicalPath": "/database/awakeners/sanga/skills/the-lost-art"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sanga.the-sea-of-corals",
+      "name": "The Sea of Corals",
+      "route": {
+        "slug": "the-sea-of-corals",
+        "canonicalPath": "/database/awakeners/sanga/skills/the-sea-of-corals"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0045",
+      "ownerAwakenerName": "Sanga",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.biomimicry",
+      "name": "Biomimicry",
+      "route": {
+        "slug": "biomimicry",
+        "canonicalPath": "/database/awakeners/saya/skills/biomimicry"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.cognitive-alteration",
+      "name": "Cognitive Alteration",
+      "route": {
+        "slug": "cognitive-alteration",
+        "canonicalPath": "/database/awakeners/saya/skills/cognitive-alteration"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/saya/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.paradise-just-for-you",
+      "name": "Paradise Just For You",
+      "route": {
+        "slug": "paradise-just-for-you",
+        "canonicalPath": "/database/awakeners/saya/skills/paradise-just-for-you"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.song-of-saya",
+      "name": "Song of Saya",
+      "route": {
+        "slug": "song-of-saya",
+        "canonicalPath": "/database/awakeners/saya/skills/song-of-saya"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/saya/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.saya.viscera-blossoms",
+      "name": "Viscera Blossoms",
+      "route": {
+        "slug": "viscera-blossoms",
+        "canonicalPath": "/database/awakeners/saya/skills/viscera-blossoms"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0057",
+      "ownerAwakenerName": "Saya",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.carousel-of-ambition",
+      "name": "Carousel of Ambition",
+      "route": {
+        "slug": "carousel-of-ambition",
+        "canonicalPath": "/database/awakeners/sorel/skills/carousel-of-ambition"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/sorel/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.diamond-in-the-rough",
+      "name": "Diamond in the Rough",
+      "route": {
+        "slug": "diamond-in-the-rough",
+        "canonicalPath": "/database/awakeners/sorel/skills/diamond-in-the-rough"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.elegance-of-rose",
+      "name": "Elegance of Rose",
+      "route": {
+        "slug": "elegance-of-rose",
+        "canonicalPath": "/database/awakeners/sorel/skills/elegance-of-rose"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.host-ladys-privilege",
+      "name": "Host Lady's Privilege",
+      "route": {
+        "slug": "host-ladys-privilege",
+        "canonicalPath": "/database/awakeners/sorel/skills/host-ladys-privilege"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.roses-infinite-desire",
+      "name": "Rose's Infinite Desire",
+      "route": {
+        "slug": "roses-infinite-desire",
+        "canonicalPath": "/database/awakeners/sorel/skills/roses-infinite-desire"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.sorel.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/sorel/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/tawil/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.infinite-radiant-brilliance",
+      "name": "Infinite Radiant Brilliance",
+      "route": {
+        "slug": "infinite-radiant-brilliance",
+        "canonicalPath": "/database/awakeners/tawil/skills/infinite-radiant-brilliance"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.omnifex-convergence",
+      "name": "Omnifex Convergence",
+      "route": {
+        "slug": "omnifex-convergence",
+        "canonicalPath": "/database/awakeners/tawil/skills/omnifex-convergence"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.omniscient-verity",
+      "name": "Omniscient Verity",
+      "route": {
+        "slug": "omniscient-verity",
+        "canonicalPath": "/database/awakeners/tawil/skills/omniscient-verity"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.pinions-of-time",
+      "name": "Pinions of Time",
+      "route": {
+        "slug": "pinions-of-time",
+        "canonicalPath": "/database/awakeners/tawil/skills/pinions-of-time"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/tawil/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tawil.the-silver-key-gate",
+      "name": "The Silver Key Gate",
+      "route": {
+        "slug": "the-silver-key-gate",
+        "canonicalPath": "/database/awakeners/tawil/skills/the-silver-key-gate"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0047",
+      "ownerAwakenerName": "Tawil",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.ad-matrem-vocatus",
+      "name": "Ad Matrem Vocatus",
+      "route": {
+        "slug": "ad-matrem-vocatus",
+        "canonicalPath": "/database/awakeners/thais/skills/ad-matrem-vocatus"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.ancient-caress",
+      "name": "Ancient Caress",
+      "route": {
+        "slug": "ancient-caress",
+        "canonicalPath": "/database/awakeners/thais/skills/ancient-caress"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/thais/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.ritual-of-abundance",
+      "name": "Ritual of Abundance",
+      "route": {
+        "slug": "ritual-of-abundance",
+        "canonicalPath": "/database/awakeners/thais/skills/ritual-of-abundance"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.sacred-bloods-instinct",
+      "name": "Sacred Blood's Instinct",
+      "route": {
+        "slug": "sacred-bloods-instinct",
+        "canonicalPath": "/database/awakeners/thais/skills/sacred-bloods-instinct"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.sacred-relics-perpetuity",
+      "name": "Sacred Relic's Perpetuity",
+      "route": {
+        "slug": "sacred-relics-perpetuity",
+        "canonicalPath": "/database/awakeners/thais/skills/sacred-relics-perpetuity"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.thais.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/thais/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.cosmic-symphony",
+      "name": "Cosmic Symphony",
+      "route": {
+        "slug": "cosmic-symphony",
+        "canonicalPath": "/database/awakeners/tinct/skills/cosmic-symphony"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/tinct/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.distant-melody",
+      "name": "Distant Melody",
+      "route": {
+        "slug": "distant-melody",
+        "canonicalPath": "/database/awakeners/tinct/skills/distant-melody"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.requiem",
+      "name": "Requiem",
+      "route": {
+        "slug": "requiem",
+        "canonicalPath": "/database/awakeners/tinct/skills/requiem"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.starlight-aurora",
+      "name": "Starlight Aurora",
+      "route": {
+        "slug": "starlight-aurora",
+        "canonicalPath": "/database/awakeners/tinct/skills/starlight-aurora"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/tinct/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tinct.voices-from-beyond",
+      "name": "Voices from Beyond",
+      "route": {
+        "slug": "voices-from-beyond",
+        "canonicalPath": "/database/awakeners/tinct/skills/voices-from-beyond"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0049",
+      "ownerAwakenerName": "Tinct",
+      "slot": "Rouse",
+      "orisonIds": ["orison-0001", "orison-0002", "orison-0003", "orison-0004", "orison-0005", "orison-0006"]
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.abyss-order",
+      "name": "Abyss Order",
+      "route": {
+        "slug": "abyss-order",
+        "canonicalPath": "/database/awakeners/tulu/skills/abyss-order"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/tulu/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.immortal-majesty",
+      "name": "Immortal Majesty",
+      "route": {
+        "slug": "immortal-majesty",
+        "canonicalPath": "/database/awakeners/tulu/skills/immortal-majesty"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/tulu/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.the-promised-day",
+      "name": "The Promised Day",
+      "route": {
+        "slug": "the-promised-day",
+        "canonicalPath": "/database/awakeners/tulu/skills/the-promised-day"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.when-lemuria-returns",
+      "name": "When Lemuria Returns",
+      "route": {
+        "slug": "when-lemuria-returns",
+        "canonicalPath": "/database/awakeners/tulu/skills/when-lemuria-returns"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.tulu.when-the-stars-are-right",
+      "name": "When the Stars Are Right",
+      "route": {
+        "slug": "when-the-stars-are-right",
+        "canonicalPath": "/database/awakeners/tulu/skills/when-the-stars-are-right"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0050",
+      "ownerAwakenerName": "Tulu",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.boil-blood",
+      "name": "Boil, Blood!",
+      "route": {
+        "slug": "boil-blood",
+        "canonicalPath": "/database/awakeners/uvhash/skills/boil-blood"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/uvhash/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.gift-of-surging-blood",
+      "name": "Gift of Surging Blood",
+      "route": {
+        "slug": "gift-of-surging-blood",
+        "canonicalPath": "/database/awakeners/uvhash/skills/gift-of-surging-blood"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.hymn-of-blood-and-sand",
+      "name": "Hymn of Blood and Sand",
+      "route": {
+        "slug": "hymn-of-blood-and-sand",
+        "canonicalPath": "/database/awakeners/uvhash/skills/hymn-of-blood-and-sand"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.screech-blood",
+      "name": "Screech, Blood!",
+      "route": {
+        "slug": "screech-blood",
+        "canonicalPath": "/database/awakeners/uvhash/skills/screech-blood"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/uvhash/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.uvhash.vermilion-rite",
+      "name": "Vermilion Rite",
+      "route": {
+        "slug": "vermilion-rite",
+        "canonicalPath": "/database/awakeners/uvhash/skills/vermilion-rite"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0051",
+      "ownerAwakenerName": "Uvhash",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.abyssal-vortex-cannon",
+      "name": "Abyssal! Vortex! Cannon!",
+      "route": {
+        "slug": "abyssal-vortex-cannon",
+        "canonicalPath": "/database/awakeners/vortice/skills/abyssal-vortex-cannon"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.charge",
+      "name": "Charge!",
+      "route": {
+        "slug": "charge",
+        "canonicalPath": "/database/awakeners/vortice/skills/charge"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/vortice/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.here-it-goes",
+      "name": "HERE IT GOES!",
+      "route": {
+        "slug": "here-it-goes",
+        "canonicalPath": "/database/awakeners/vortice/skills/here-it-goes"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.moskstraumen-boom",
+      "name": "Moskstraumen! BOOM!",
+      "route": {
+        "slug": "moskstraumen-boom",
+        "canonicalPath": "/database/awakeners/vortice/skills/moskstraumen-boom"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.reload",
+      "name": "Reload!",
+      "route": {
+        "slug": "reload",
+        "canonicalPath": "/database/awakeners/vortice/skills/reload"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.vortice.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/vortice/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0055",
+      "ownerAwakenerName": "Vortice",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/wanda/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.keeper-of-the-lost",
+      "name": "Keeper of the Lost",
+      "route": {
+        "slug": "keeper-of-the-lost",
+        "canonicalPath": "/database/awakeners/wanda/skills/keeper-of-the-lost"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.living-deads-delirium",
+      "name": "Living Dead's Delirium",
+      "route": {
+        "slug": "living-deads-delirium",
+        "canonicalPath": "/database/awakeners/wanda/skills/living-deads-delirium"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.lost-dreams-guide",
+      "name": "Lost Dream's Guide",
+      "route": {
+        "slug": "lost-dreams-guide",
+        "canonicalPath": "/database/awakeners/wanda/skills/lost-dreams-guide"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.necropolis-of-dreams",
+      "name": "Necropolis of Dreams",
+      "route": {
+        "slug": "necropolis-of-dreams",
+        "canonicalPath": "/database/awakeners/wanda/skills/necropolis-of-dreams"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.spine-needle-chains",
+      "name": "Spine Needle Chains",
+      "route": {
+        "slug": "spine-needle-chains",
+        "canonicalPath": "/database/awakeners/wanda/skills/spine-needle-chains"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.wanda.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/wanda/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0052",
+      "ownerAwakenerName": "Wanda",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/winkle/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.energy-beam",
+      "name": "Energy Beam",
+      "route": {
+        "slug": "energy-beam",
+        "canonicalPath": "/database/awakeners/winkle/skills/energy-beam"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.formless-shifting",
+      "name": "Formless Shifting",
+      "route": {
+        "slug": "formless-shifting",
+        "canonicalPath": "/database/awakeners/winkle/skills/formless-shifting"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.psyche-reforged",
+      "name": "Psyche Reforged",
+      "route": {
+        "slug": "psyche-reforged",
+        "canonicalPath": "/database/awakeners/winkle/skills/psyche-reforged"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.self-imprisonment",
+      "name": "Self-Imprisonment",
+      "route": {
+        "slug": "self-imprisonment",
+        "canonicalPath": "/database/awakeners/winkle/skills/self-imprisonment"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.space-time-fold",
+      "name": "Space-Time Fold",
+      "route": {
+        "slug": "space-time-fold",
+        "canonicalPath": "/database/awakeners/winkle/skills/space-time-fold"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.winkle.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/winkle/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0053",
+      "ownerAwakenerName": "Winkle",
+      "slot": "Strike"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.bonesick-longing",
+      "name": "Bonesick Longing",
+      "route": {
+        "slug": "bonesick-longing",
+        "canonicalPath": "/database/awakeners/xu/skills/bonesick-longing"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "Skill1"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.defense",
+      "name": "Defense",
+      "route": {
+        "slug": "defense",
+        "canonicalPath": "/database/awakeners/xu/skills/defense"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["defense"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "Defense"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.fan-sealed-kiss",
+      "name": "Fan-Sealed Kiss",
+      "route": {
+        "slug": "fan-sealed-kiss",
+        "canonicalPath": "/database/awakeners/xu/skills/fan-sealed-kiss"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["skill"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "Skill2"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.karmic-grave",
+      "name": "Karmic Grave",
+      "route": {
+        "slug": "karmic-grave",
+        "canonicalPath": "/database/awakeners/xu/skills/karmic-grave"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["over_exalt"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "OverExalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.lady-of-dreamless-land",
+      "name": "Lady of Dreamless Land",
+      "route": {
+        "slug": "lady-of-dreamless-land",
+        "canonicalPath": "/database/awakeners/xu/skills/lady-of-dreamless-land"
+      },
+      "cardFamily": "rouse",
+      "cardTypes": ["rouse"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "Rouse"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.mist-bound-vow",
+      "name": "Mist-Bound Vow",
+      "route": {
+        "slug": "mist-bound-vow",
+        "canonicalPath": "/database/awakeners/xu/skills/mist-bound-vow"
+      },
+      "cardFamily": "exalt",
+      "cardTypes": ["exalt"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "Exalt"
+    },
+    {
+      "kind": "skill",
+      "id": "skill.xu.strike",
+      "name": "Strike",
+      "route": {
+        "slug": "strike",
+        "canonicalPath": "/database/awakeners/xu/skills/strike"
+      },
+      "cardFamily": "command",
+      "cardTypes": ["strike"],
+      "ownerAwakenerId": "awakener-0054",
+      "ownerAwakenerName": "Xu",
+      "slot": "Strike"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.clementine.call-of-shaggai",
+  "name": "Call of Shaggai",
+  "route": {
+    "slug": "call-of-shaggai",
+    "canonicalPath": "/database/awakeners/clementine/skills/call-of-shaggai"
+  },
+  "ownerAwakenerId": "awakener-0010",
+  "slot": "Rouse",
+  "cardFamily": "rouse",
+  "cardTypes": ["rouse"],
+  "descriptionTemplate": "Clementine gains [Energy:Arg1] Aliemus. {Rouse}: Clementine's first Command Card played each turn triggers its DMG, Shield, HP Recovery, Aliemus, and Keyflare effects +[Arg2] {plural:[Arg2]|time|times}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["25", "30", "35", "40", "45", "50"]
+    },
+    "Arg2": {
+      "kind": "fixed",
+      "value": "2"
+    }
+  },
+  "cardKeywords": [
+    {
+      "id": "mechanic.retain"
+    }
+  ],
+  "cost": "2",
+  "lore": "Strange shrieking pierces deep into your skull, intertwining with your memories.\nFrom henceforth, your breath becomes uncontrollable, carrying the scent of insects.\nFeel this call, embrace this call, and then metamorphose, be reborn—\nMy friend, my kin.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.clementine.collective-unconscious.skill.clementine.call-of-shaggai",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.clementine.collective-unconscious",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "AbsoluteAxiom",
+      "ownerAwakenerId": "awakener-0010",
+      "ownerAwakenerName": "Clementine",
+      "patch": {
+        "descriptionTemplate": "Clementine gains [Energy:Arg1] Aliemus. {Rouse}: Clementine's DMG instances +1. Clementine's first Command Card played each turn triggers its DMG, Shield, HP Recovery, Aliemus, and Keyflare effects +[Arg2] {plural:[Arg2]|time|times}. The {Symbiosis} cap is raised to 20."
+      }
+    }
+  ],
+  "ownerAwakenerName": "Clementine"
+}

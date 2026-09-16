@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.erica.unleash-mecha",
+  "name": "Unleash: Mecha",
+  "route": {
+    "slug": "unleash-mecha",
+    "canonicalPath": "/database/awakeners/erica/skills/unleash-mecha"
+  },
+  "ownerAwakenerId": "awakener-0015",
+  "slot": "Skill1",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Obtain [Power:Arg1] Temporary {STR}. Obtain Keyflare equal to Erica's Keyflare Regen. Dispel self {Weakness} state. Whenever 1 card enters {overlay:Ultra Space}, transform to {derived:Retract: Mecha}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["15", "18", "21", "24", "27", "30"],
+      "stat": "ATK",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "0",
+  "lore": "Cold machinery replaced the heart, and hydraulic oil replaced blood in the tubes. She should be cold, rational, and act as instructed.\nBut an external will stirred quietly within her shell. It needed no blood, no temperature; it could burn with inhuman malice on its own. It said: Submit, you vile and insignificant creature, then be destroyed in my searing electric sphere.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.erica.auto-rectification.skill.erica.unleash-mecha",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.erica.auto-rectification",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E1",
+      "ownerAwakenerId": "awakener-0015",
+      "ownerAwakenerName": "Erica",
+      "patch": {
+        "descriptionTemplate": "Obtain [Power:Arg1] Temporary {STR}. Obtain Keyflare equal to Erica's Keyflare Regen. Dispel self {Weakness} state. Add 1 \"Strike\" with {Exhaust} attached by Erica to your hand. Whenever a card enters the {overlay:Ultra Space}, transform into {derived:Retract: Mecha}."
+      }
+    }
+  ],
+  "ownerAwakenerName": "Erica"
+}

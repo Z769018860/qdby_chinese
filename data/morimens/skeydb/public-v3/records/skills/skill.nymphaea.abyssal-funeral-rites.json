@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.nymphaea.abyssal-funeral-rites",
+  "name": "Abyssal Funeral Rites",
+  "route": {
+    "slug": "abyssal-funeral-rites",
+    "canonicalPath": "/database/awakeners/nymphaea/skills/abyssal-funeral-rites"
+  },
+  "ownerAwakenerId": "awakener-0037",
+  "slot": "OverExalt",
+  "cardFamily": "exalt",
+  "cardTypes": ["over_exalt"],
+  "descriptionTemplate": "Increases the {Poison} effect caused by Nymphaea by 50% for 3 turns.",
+  "descriptionArgs": {},
+  "cardKeywords": [],
+  "ownerAwakenerName": "Nymphaea"
+}

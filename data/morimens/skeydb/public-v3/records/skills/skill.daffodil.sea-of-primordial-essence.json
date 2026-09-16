@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.daffodil.sea-of-primordial-essence",
+  "name": "Sea of Primordial Essence",
+  "route": {
+    "slug": "sea-of-primordial-essence",
+    "canonicalPath": "/database/awakeners/daffodil/skills/sea-of-primordial-essence"
+  },
+  "ownerAwakenerId": "awakener-0012",
+  "slot": "Exalt",
+  "cardFamily": "exalt",
+  "cardTypes": ["exalt"],
+  "descriptionTemplate": "Deal [Damage:Arg1] DMG to all enemies; which enjoys a [Arg4]× {STR} bonus. Create one custom {derived:Thousand Mirage} and place it into hand. If it is not an {Ultra Round} and there is no {derived:Thousand Mirage} in the {overlay:Ultra Space}, copy it into the {overlay:Ultra Space} (considered as triggering {overlay:Dimension Shuttle} once); otherwise, place one {derived:Insight} into hand.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["50", "60", "70", "80", "90", "100"],
+      "stat": "ATK",
+      "suffix": "%"
+    },
+    "Arg4": {
+      "kind": "fixed",
+      "value": "3"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "100",
+  "lore": "It was the Infinite Substance Sea, from which, legend has it, all organic matter on the planet originated.\nAn endless array of faces floated in the gray ocean, brimming with laughter or compassion.",
+  "ownerAwakenerName": "Daffodil"
+}

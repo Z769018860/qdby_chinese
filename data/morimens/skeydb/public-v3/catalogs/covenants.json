@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 3,
+  "scope": "covenants",
+  "kind": "covenant",
+  "recordCount": 21,
+  "records": [
+    {
+      "kind": "covenant",
+      "id": "covenant-0001",
+      "name": "Deus Ex Machina",
+      "route": {
+        "slug": "deus-ex-machina",
+        "canonicalPath": "/database/covenants/deus-ex-machina"
+      },
+      "assets": {
+        "icon": "asset-covenant-0001-icon"
+      },
+      "lineupToken": "k",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0002",
+      "name": "Re-evolution",
+      "route": {
+        "slug": "re-evolution",
+        "canonicalPath": "/database/covenants/re-evolution"
+      },
+      "assets": {
+        "icon": "asset-covenant-0002-icon"
+      },
+      "lineupToken": "m",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0003",
+      "name": "Scarlet Embrace",
+      "route": {
+        "slug": "scarlet-embrace",
+        "canonicalPath": "/database/covenants/scarlet-embrace"
+      },
+      "assets": {
+        "icon": "asset-covenant-0003-icon"
+      },
+      "lineupToken": "t",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0004",
+      "name": "Crimson Pulse",
+      "route": {
+        "slug": "crimson-pulse",
+        "canonicalPath": "/database/covenants/crimson-pulse"
+      },
+      "assets": {
+        "icon": "asset-covenant-0004-icon"
+      },
+      "lineupToken": "h",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0005",
+      "name": "Twisted Twins: Black",
+      "route": {
+        "slug": "twisted-twins-black",
+        "canonicalPath": "/database/covenants/twisted-twins-black"
+      },
+      "assets": {
+        "icon": "asset-covenant-0005-icon"
+      },
+      "lineupToken": "B",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0006",
+      "name": "Burial Ground's Sighs",
+      "route": {
+        "slug": "burial-grounds-sighs",
+        "canonicalPath": "/database/covenants/burial-grounds-sighs"
+      },
+      "assets": {
+        "icon": "asset-covenant-0006-icon"
+      },
+      "lineupToken": "D",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0007",
+      "name": "Twisted Twins: White",
+      "route": {
+        "slug": "twisted-twins-white",
+        "canonicalPath": "/database/covenants/twisted-twins-white"
+      },
+      "assets": {
+        "icon": "asset-covenant-0007-icon"
+      },
+      "lineupToken": "s",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0008",
+      "name": "Cursed Rabbit",
+      "route": {
+        "slug": "cursed-rabbit",
+        "canonicalPath": "/database/covenants/cursed-rabbit"
+      },
+      "assets": {
+        "icon": "asset-covenant-0008-icon"
+      },
+      "lineupToken": "e",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0009",
+      "name": "Paradox",
+      "route": {
+        "slug": "paradox",
+        "canonicalPath": "/database/covenants/paradox"
+      },
+      "assets": {
+        "icon": "asset-covenant-0009-icon"
+      },
+      "lineupToken": "f",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0010",
+      "name": "Photosynthesis Ritual",
+      "route": {
+        "slug": "photosynthesis-ritual",
+        "canonicalPath": "/database/covenants/photosynthesis-ritual"
+      },
+      "assets": {
+        "icon": "asset-covenant-0010-icon"
+      },
+      "lineupToken": "l",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0011",
+      "name": "Returnal Line",
+      "route": {
+        "slug": "returnal-line",
+        "canonicalPath": "/database/covenants/returnal-line"
+      },
+      "assets": {
+        "icon": "asset-covenant-0011-icon"
+      },
+      "lineupToken": "d",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0012",
+      "name": "Ring of Chamber 36",
+      "route": {
+        "slug": "ring-of-chamber-36",
+        "canonicalPath": "/database/covenants/ring-of-chamber-36"
+      },
+      "assets": {
+        "icon": "asset-covenant-0012-icon"
+      },
+      "lineupToken": "r",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0013",
+      "name": "Life Drain",
+      "route": {
+        "slug": "life-drain",
+        "canonicalPath": "/database/covenants/life-drain"
+      },
+      "assets": {
+        "icon": "asset-covenant-0013-icon"
+      },
+      "lineupToken": "n",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0014",
+      "name": "April Tribute",
+      "route": {
+        "slug": "april-tribute",
+        "canonicalPath": "/database/covenants/april-tribute"
+      },
+      "assets": {
+        "icon": "asset-covenant-0014-icon"
+      },
+      "lineupToken": "b",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0015",
+      "name": "Organic Form",
+      "route": {
+        "slug": "organic-form",
+        "canonicalPath": "/database/covenants/organic-form"
+      },
+      "assets": {
+        "icon": "asset-covenant-0015-icon"
+      },
+      "lineupToken": "g",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0016",
+      "name": "Sweet Slug",
+      "route": {
+        "slug": "sweet-slug",
+        "canonicalPath": "/database/covenants/sweet-slug"
+      },
+      "assets": {
+        "icon": "asset-covenant-0016-icon"
+      },
+      "lineupToken": "p",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0017",
+      "name": "Dream of Medicine",
+      "route": {
+        "slug": "dream-of-medicine",
+        "canonicalPath": "/database/covenants/dream-of-medicine"
+      },
+      "assets": {
+        "icon": "asset-covenant-0017-icon"
+      },
+      "lineupToken": "o",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0018",
+      "name": "Feast from Afar",
+      "route": {
+        "slug": "feast-from-afar",
+        "canonicalPath": "/database/covenants/feast-from-afar"
+      },
+      "assets": {
+        "icon": "asset-covenant-0018-icon"
+      },
+      "lineupToken": "A",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0019",
+      "name": "Unstained Chronicle",
+      "route": {
+        "slug": "unstained-chronicle",
+        "canonicalPath": "/database/covenants/unstained-chronicle"
+      },
+      "assets": {
+        "icon": "asset-covenant-0019-icon"
+      },
+      "lineupToken": "v",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0020",
+      "name": "Steppenwolf",
+      "route": {
+        "slug": "steppenwolf",
+        "canonicalPath": "/database/covenants/steppenwolf"
+      },
+      "assets": {
+        "icon": "asset-covenant-0020-icon"
+      },
+      "lineupToken": "w",
+      "setBonuses": [3, 6]
+    },
+    {
+      "kind": "covenant",
+      "id": "covenant-0021",
+      "name": "Cocoon of the Maiden",
+      "route": {
+        "slug": "cocoon-of-the-maiden",
+        "canonicalPath": "/database/covenants/cocoon-of-the-maiden"
+      },
+      "assets": {
+        "icon": "asset-covenant-0021-icon"
+      },
+      "lineupToken": "C",
+      "setBonuses": [3, 6]
+    }
+  ]
+}

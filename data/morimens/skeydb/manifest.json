@@ -3,19 +3,92 @@
     "repository": "dansa/SKeyDB",
     "ref": "main",
     "commit": "27064cd13285f1c49737d6266d17a1c382faffa8",
-    "syncedAt": "2026-09-16T15:46:13.406Z",
+    "syncedAt": "2026-09-16T15:58:16.815Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {
     "awakeners": 60,
     "portraits": 60,
     "cards": 60,
-    "publicV3Records": null
+    "publicV3Records": 1976
   },
-  "scopes": null,
+  "scopes": {
+    "awakeners": {
+      "kind": "awakener",
+      "catalog": "catalogs/awakeners.json",
+      "recordPattern": "records/awakeners/{id}.json",
+      "count": 60
+    },
+    "wheels": {
+      "kind": "wheel",
+      "catalog": "catalogs/wheels.json",
+      "recordPattern": "records/wheels/{id}.json",
+      "count": 143
+    },
+    "relics": {
+      "kind": "relic",
+      "catalog": "catalogs/relics.json",
+      "recordPattern": "records/relics/{id}.json",
+      "count": 306
+    },
+    "orisons": {
+      "kind": "orison",
+      "catalog": "catalogs/orisons.json",
+      "recordPattern": "records/orisons/{id}.json",
+      "count": 24
+    },
+    "covenants": {
+      "kind": "covenant",
+      "catalog": "catalogs/covenants.json",
+      "recordPattern": "records/covenants/{id}.json",
+      "count": 21
+    },
+    "posses": {
+      "kind": "posse",
+      "catalog": "catalogs/posses.json",
+      "recordPattern": "records/posses/{id}.json",
+      "count": 62
+    },
+    "skills": {
+      "kind": "skill",
+      "catalog": "catalogs/skills.json",
+      "recordPattern": "records/skills/{id}.json",
+      "count": 420
+    },
+    "derived-skills": {
+      "kind": "derivedSkill",
+      "catalog": "catalogs/derived-skills.json",
+      "recordPattern": "records/derived-skills/{id}.json",
+      "count": 207
+    },
+    "talents": {
+      "kind": "talent",
+      "catalog": "catalogs/talents.json",
+      "recordPattern": "records/talents/{id}.json",
+      "count": 226
+    },
+    "enlightens": {
+      "kind": "enlighten",
+      "catalog": "catalogs/enlightens.json",
+      "recordPattern": "records/enlightens/{id}.json",
+      "count": 300
+    },
+    "overlays": {
+      "kind": "overlay",
+      "catalog": "catalogs/overlays.json",
+      "recordPattern": "records/overlays/{id}.json",
+      "count": 151
+    },
+    "awakener-builds": {
+      "kind": "awakenerBuild",
+      "catalog": "catalogs/awakener-builds.json",
+      "recordPattern": "records/awakener-builds/{id}.json",
+      "count": 56
+    }
+  },
   "paths": {
     "compactAwakeners": "data/morimens/skeydb/awakeners.json",
-    "publicV3": null,
+    "publicV3": "data/morimens/skeydb/public-v3",
     "portraits": "assets/morimens/portraits",
     "cards": "assets/morimens/cards",
     "wheels": "assets/morimens/wheels",

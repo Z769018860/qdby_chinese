@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.thais.ad-matrem-vocatus",
+  "name": "Ad Matrem Vocatus",
+  "route": {
+    "slug": "ad-matrem-vocatus",
+    "canonicalPath": "/database/awakeners/thais/skills/ad-matrem-vocatus"
+  },
+  "ownerAwakenerId": "awakener-0048",
+  "slot": "Rouse",
+  "cardFamily": "rouse",
+  "cardTypes": ["rouse"],
+  "descriptionTemplate": "Thais gains [Energy:Arg1] Aliemus. {Rouse}: Immediately gain 1 {derived:Scion of Purity}. Whenever a Posse is used, transform an {Embryo} in hand into a {derived:Scion of Purity}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["25", "30", "35", "40", "45", "50"]
+    }
+  },
+  "cardKeywords": [
+    {
+      "id": "mechanic.retain"
+    }
+  ],
+  "cost": "3",
+  "lore": "Nurture, be born, proliferate.\nIn the gradually dissolving reality, in the dimming world, in the soon-to-be-born void.\nYour existence is the fruit of Mother's sacrifice and the cause of Mother's continuity.\nHoly children, be reborn in the new world—be reborn in that pure, fear-obliterated new world.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.thais.the-birthing-deep.skill.thais.ad-matrem-vocatus",
+      "operation": "replace_description",
+      "upgraderId": "enlighten.thais.the-birthing-deep",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "AbsoluteAxiom",
+      "ownerAwakenerId": "awakener-0048",
+      "ownerAwakenerName": "Thais",
+      "patch": {
+        "descriptionTemplate": "Thais gains [Energy:Arg1] Aliemus. {Rouse}: Immediately gain 1 {derived:Scion of Purity}. Whenever a Posse is released, transform 1 {Embryo} in hand into 1 {derived:Scion of Purity}. {Ritual of Abundance} additionally places 1 extra copy into hand."
+      }
+    }
+  ],
+  "ownerAwakenerName": "Thais"
+}

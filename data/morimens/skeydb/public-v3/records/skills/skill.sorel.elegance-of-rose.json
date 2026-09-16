@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.sorel.elegance-of-rose",
+  "name": "Elegance of Rose",
+  "route": {
+    "slug": "elegance-of-rose",
+    "canonicalPath": "/database/awakeners/sorel/skills/elegance-of-rose"
+  },
+  "ownerAwakenerId": "awakener-0046",
+  "slot": "Skill1",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Randomly deal [Damage:Arg1] DMG [Arg3] {plural:[Arg3]|time|times}. Restore [Heal:Arg2] HP at turn end.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["16", "19.2", "22.4", "25.6", "28.8", "32"],
+      "stat": "ATK",
+      "suffix": "%"
+    },
+    "Arg2": {
+      "kind": "scaling",
+      "values": ["10", "12", "14", "16", "18", "20"],
+      "stat": "CON",
+      "suffix": "%"
+    },
+    "Arg3": {
+      "kind": "fixed",
+      "value": "4"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "2",
+  "lore": "People admired her beauty and envied her charm, but no one paid attention to a budding flower.\nSwaying uncertainly in the wilderness, it was at the mercy of others, used as a bargaining chip for the gardener's advancement.\nOnly when she blossomed before the crown did people realize they had been pierced and bled.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.sorel.vintage-nectar.skill.sorel.elegance-of-rose",
+      "operation": "mixed",
+      "upgraderId": "enlighten.sorel.vintage-nectar",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E2",
+      "ownerAwakenerId": "awakener-0046",
+      "ownerAwakenerName": "Sorel",
+      "patch": {
+        "descriptionTemplate": "Randomly deal [Damage:Arg1] DMG [Arg3] {plural:[Arg3]|time|times}. For each instance of DMG dealt, Temporarily Crit. Rate +5%. Restore [Heal:Arg2] HP at turn end",
+        "descriptionArgs": {
+          "Arg1": {
+            "kind": "scaling",
+            "values": ["20", "24", "28", "32", "36", "40"],
+            "stat": "ATK",
+            "suffix": "%"
+          },
+          "Arg2": {
+            "kind": "scaling",
+            "values": ["10", "12", "14", "16", "18", "20"],
+            "stat": "CON",
+            "suffix": "%"
+          },
+          "Arg3": {
+            "kind": "fixed",
+            "value": "4"
+          }
+        }
+      }
+    }
+  ],
+  "ownerAwakenerName": "Sorel"
+}

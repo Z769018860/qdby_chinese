@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.doresain.netherward-path",
+  "name": "Netherward Path",
+  "route": {
+    "slug": "netherward-path",
+    "canonicalPath": "/database/awakeners/doresain/skills/netherward-path"
+  },
+  "ownerAwakenerId": "awakener-0014",
+  "slot": "Skill2",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Lose 10% Current HP, deal [Damage:Arg1] DMG to all enemies and inflict 1 turn of {Vulnerable}.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["50", "60", "70", "80", "90", "100"],
+      "stat": "ATK",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "1",
+  "lore": "In the dark, Doresain opened his eyes again.\nNo sentiment. No hatred. Only the exquisite pleasure of a borrowed body, of teeth meeting meat.\nHe had always known where this path would lead.",
+  "ownerAwakenerName": "Doresain"
+}

@@ -1,0 +1,419 @@
+{
+  "schemaVersion": 3,
+  "kind": "awakener",
+  "id": "awakener-0029",
+  "name": "Lily",
+  "route": {
+    "slug": "lily",
+    "canonicalPath": "/database/awakeners/lily"
+  },
+  "assets": {
+    "icon": "asset-awakener-0029-icon"
+  },
+  "numericId": 29,
+  "ingameId": "C10",
+  "lineupToken": "v",
+  "realm": "CHAOS",
+  "rarity": "SSR",
+  "type": "WARDEN",
+  "availabilityType": "LIMITED_FADED_LEGACY",
+  "releaseDate": "2024-01-31",
+  "faction": "Hybrid",
+  "aliases": ["lily"],
+  "searchTags": ["Poison", "Death Resistance", "Heal", "Strike"],
+  "primaryScalingBase": 20,
+  "baseStatsLv1": {
+    "CON": 38,
+    "ATK": 28,
+    "DEF": 38
+  },
+  "substatsLv1": {
+    "CritRate": 5,
+    "CritDamage": 50,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 15,
+    "RealmMastery": 0,
+    "SigilYield": 0,
+    "DamageAmplification": 1.6,
+    "DeathResistance": 2.8
+  },
+  "statScaling": {
+    "CON": 1.8,
+    "ATK": 1.3,
+    "DEF": 1.8
+  },
+  "substatScaling": {
+    "CritRate": 0,
+    "CritDamage": 0,
+    "AliemusRegen": 0,
+    "KeyflareRegen": 0,
+    "RealmMastery": 0,
+    "SigilYield": 0,
+    "DamageAmplification": 1.6,
+    "DeathResistance": 2.8
+  },
+  "profile": {
+    "title": "Lily",
+    "birthday": "15-Jun",
+    "voiceActor": "Mori Erika",
+    "gender": "Female",
+    "height": "4'4.2''",
+    "weight": "340lbs",
+    "gnosticIndex": "27.6",
+    "storySections": [
+      {
+        "kind": "introduction",
+        "title": "Basic Information",
+        "unlockCondition": "Awakener Level 1",
+        "content": "Yearning for an entity she calls \"Mommy\", this girl obediently follows the commands of her \"Master\".\n\nHer true name lost to the world, she is now known only by the form she inhabits: a delicate white filament, reminiscent of a lily, blooming at the center of a giant black eyeball made of sludge. Hence, they named her Lily."
+      },
+      {
+        "kind": "story",
+        "title": "Story: I",
+        "unlockCondition": "Affinity Level 3",
+        "content": "When trying to query records of Lily Oswood, Erica triggered 81 error alerts. As someone who was once forgotten by the world, Lily's birth records and medical history have turned into a handful of black sludge.\n\nBut we can still observe her silver shape through special instruments: delicate twists, resembling strands of intertwined hair—more accurately, like a child's lanugo.\n\nIt is particularly noteworthy that Lily always expresses a special attachment to linkers, and perhaps identifying herself as \"mother\" rather than calling herself a \"companion\" or \"master\" may help to bridge a quicker relationship with her"
+      },
+      {
+        "kind": "story",
+        "title": "Story: II",
+        "unlockCondition": "Affinity Level 5",
+        "content": "The aftereffects of incomplete awakening, coupled with the psychological impact of switching Links, have caused significant regression in Lily's character and mentality. Her silence on campus is evident to all.\n\nApart from staying close to the Keeper and Awakener Lotan, Lily is rarely seen alone around the campus. She doesn't attend classes nor join other Awakeners in their games. When not in battle, she quietly awaits orders in her dorm.\n\nLily's room window faces the Silver Key Tomb at the back of the campus. As the sun sets, she stands by the window, staring blankly at the tomb bathed in faint yellow light.\n\nThe Silver Key-shaped tombstones cast long shadows in the setting sun, and Lily stands in silence, just like the tombstones outside."
+      },
+      {
+        "kind": "story",
+        "title": "Story: III",
+        "unlockCondition": "Affinity Level 7",
+        "content": "\"Mommy, Mommy, I didn't cry when I got the shot!\"\n\n\"You're so brave!\"\n\n\"Because I knew Mommy was coming back! It didn't hurt at all!\"\n\n...\n\n\"Master, give me an order.\"\n\n\"Lie down on the operating table; the operation will start in fifteen minutes. Did you take your medicine on time?\"\n\n\"I did, Master.\"\n\n\"I'll cut you here.  It doesn't hurt, right?\"\n\n\"... It doesn't hurt, Master.\""
+      },
+      {
+        "kind": "story",
+        "title": "Story: IV",
+        "unlockCondition": "Affinity Level 9",
+        "content": "If only she had not awakened, those who are lost in the abyss should not gaze directly at the dazzling sun wheel.  \n\nShe should be a numb experiment material, someone buried by this world, and should not possess the perception of pain or the desire to be loved.  \n\nHer mother's lingering attachment created the tragedy of her life, while Lily is still caught in the confusion of \"whether to obey the arrangement of the world.\"  \n\nPerhaps one day, she will find the answer from someone who defies fate"
+      },
+      {
+        "kind": "story",
+        "title": "Story: V",
+        "unlockCondition": "Affinity Level 10",
+        "content": "The small soul, which should have been lost to the river of history, relied on her mother's wish, the abundant spiritual energy from establishing the magic circle with @1@2@1, and the fusion with the giant creature frozen beneath Elworth, resurrecting as the monster \"Lily\".\n\nDue to incomplete awakening, Lily at the beginning had no consciousness, merely a combat doll that obeyed orders.\n\nFrancis Oswood, a member of the Sculptors' Association, used Lily as a prototype to conduct illegal experiments lasting @2 years. From Francis's diary, it was known that Lily's state back then was extremely unstable, often going out of control and causing localized destruction, which forced Francis to frequently change residences.\n\nWith the intake of the gnosis elixir and the implantation of the silver chip, Lily regained her perception and some memories on an undocumented day. After some twists and turns, Francis took over the almost bankrupt Lai Hospital and transformed it into a testing ground.\n\nDuring the \"Hellhound\" incident in Lai Town No. L-776, her mother, Francis Oswood, was trapped in her self-created anomalous dimension and lost contact."
+      }
+    ],
+    "voiceLines": {
+      "daily": [
+        {
+          "id": "voice-5185",
+          "title": "Awaken",
+          "content": "Master... I need orders. Please give me orders."
+        },
+        {
+          "id": "voice-6359",
+          "title": "Upgrade: I",
+          "content": "Lily has grown bigger."
+        },
+        {
+          "id": "voice-6358",
+          "title": "Upgrade: II",
+          "content": "The pustules are happy, too."
+        },
+        {
+          "id": "voice-6357",
+          "title": "Upgrade: III",
+          "content": "Thank you, Master."
+        },
+        {
+          "id": "voice-6633",
+          "title": "Enlighten: Observe",
+          "unlockCondition": "Unlocks at Enlighten Level 1",
+          "content": "Are these... for me? Can I eat? Really?"
+        },
+        {
+          "id": "voice-5684",
+          "title": "Enlighten: Ponder",
+          "unlockCondition": "Unlocks at Enlighten Level 2",
+          "content": "I'm stuffed... My stomach is full.\nWill Lily become stronger after this ritual?"
+        },
+        {
+          "id": "voice-5681",
+          "title": "Enlighten: Reflect",
+          "unlockCondition": "Unlocks at Enlighten Level 3",
+          "content": "They are chirping happily. Thank you, Master."
+        },
+        {
+          "id": "voice-5659",
+          "title": "Enlighten: Insight",
+          "unlockCondition": "Unlocks at Enlighten Level 7",
+          "content": "Mommy, would you like to pet them? They're said to be very soft."
+        },
+        {
+          "id": "voice-5683",
+          "title": "Enlighten: Elevate",
+          "unlockCondition": "Unlocks at Enlighten Level 11",
+          "content": "I'm happy by your side, Mommy."
+        },
+        {
+          "id": "voice-5682",
+          "title": "Enlighten: Florish",
+          "unlockCondition": "Unlocks at Enlighten Level 15",
+          "content": "A warm and fuzzy feeling in my chest... Lily, Lily is so happy, the tears are...\nMommy, let's celebrate together."
+        },
+        {
+          "id": "voice-5202",
+          "title": "Affinity: I",
+          "unlockCondition": "Unlocks at Affinity Level 2",
+          "content": "Any order for me, Master?\n\"Don't walk outside with the pustules. People will be scared,\" you say?\nUnderstood. Lily will hide them right away."
+        },
+        {
+          "id": "voice-5200",
+          "title": "Affinity: II",
+          "unlockCondition": "Unlocks at Affinity Level 4",
+          "content": "No tearing up food, No crushing the cafeteria's seats... Okay. Lily won't do it again."
+        },
+        {
+          "id": "voice-5201",
+          "title": "Affinity: III",
+          "unlockCondition": "Unlocks at Affinity Level 6",
+          "content": "Can I call you Mommy?"
+        },
+        {
+          "id": "voice-5552",
+          "title": "Affinity: IV",
+          "unlockCondition": "Unlocks at Affinity Level 8",
+          "content": "Not all Mommies are the same. Some are good, and some are bad.\nYou are a good Mommy."
+        },
+        {
+          "id": "voice-5204",
+          "title": "Affinity: V",
+          "unlockCondition": "Unlocks at Affinity Level 10",
+          "content": "Mommy, can I sleep next to you? When I'm alone, I have dark, scary dreams. My hands and feet would fall off... It really, really hurts..."
+        },
+        {
+          "id": "voice-6226",
+          "title": "Chat: Touch",
+          "content": "Hmm...? Mommy, uppies? ...You're so warm..."
+        },
+        {
+          "id": "voice-6471",
+          "title": "Chat: About Her Smile",
+          "content": "Do you want me to smile?\nAm I... smiling now?"
+        },
+        {
+          "id": "voice-6192",
+          "title": "Chat: About Daffodil",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Daffodil\"",
+          "content": "Yes. Lily remembers. Lily stayed at her house when Mommy was out."
+        },
+        {
+          "id": "voice-5350",
+          "title": "Chat: About Helot",
+          "unlockCondition": "Unlocks after acquiring Awakener \"Helot\"",
+          "content": "She gives me the angry look, always. But for some reason, she feels... familiar. Safe. Is it because she feels like Mommy?"
+        },
+        {
+          "id": "voice-5639",
+          "title": "Chat: About Dissolution",
+          "content": "Is it an enemy? Please order me to attack.\nYour enemy is the black slime... Then... Am I also your enemy?"
+        },
+        {
+          "id": "voice-5745",
+          "title": "Chat: About Mythag",
+          "content": "What are... friends? Master? Mommy?"
+        },
+        {
+          "id": "voice-6626",
+          "title": "Chat: What I Like",
+          "content": "I love Mommy!"
+        },
+        {
+          "id": "voice-6588",
+          "title": "Chat: What I Hate",
+          "content": "Green pepper... nasty."
+        },
+        {
+          "id": "voice-5109",
+          "title": "Chat: About the Keeper",
+          "content": "You are my Master... My Mommy."
+        }
+      ],
+      "battle": [
+        {
+          "id": "voice-6360",
+          "title": "Investigation Begins",
+          "content": "Do I crush them?"
+        },
+        {
+          "id": "voice-5452",
+          "title": "Investigation Success",
+          "content": "Instruction complete... Ah. I've made a mess again..."
+        },
+        {
+          "id": "voice-6642",
+          "title": "Investigation Halted",
+          "content": "Mommy... It hurts... Mommy..."
+        },
+        {
+          "id": "voice-6102",
+          "title": "Strike: I",
+          "content": "Go."
+        },
+        {
+          "id": "voice-6101",
+          "title": "Strike: II",
+          "content": "This is an order."
+        },
+        {
+          "id": "voice-5143",
+          "title": "Defense: I",
+          "content": "Slower."
+        },
+        {
+          "id": "voice-6268",
+          "title": "Hit: I",
+          "content": "(Yelp)"
+        },
+        {
+          "id": "voice-6267",
+          "title": "Hit: II",
+          "content": "(Groan)"
+        },
+        {
+          "id": "voice-6266",
+          "title": "Hit: III",
+          "content": "(Yelp)"
+        },
+        {
+          "id": "voice-6293",
+          "title": "Skill: I",
+          "content": "Ready."
+        },
+        {
+          "id": "voice-6554",
+          "title": "Skill: II",
+          "content": "Lily will protect."
+        },
+        {
+          "id": "voice-5774",
+          "title": "Rouse",
+          "content": "No... D-Don't leave me!"
+        },
+        {
+          "id": "voice-5766",
+          "title": "Exalt",
+          "content": "Lily will seize the future... Tekeli—Li!"
+        },
+        {
+          "id": "voice-54623",
+          "title": "Over-Exalt",
+          "content": "I am... the one who tears the chains! Tekeli—Li!"
+        }
+      ],
+      "traphase": [
+        {
+          "id": "traphase-100066",
+          "title": "Opening",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Is this how it's done? Lily understands."
+        },
+        {
+          "id": "traphase-100091",
+          "title": "Chat: About Aigis",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "My pustules... They like you, Aigis.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0029",
+              "lineId": "traphase-100091"
+            },
+            {
+              "awakenerId": "awakener-0003",
+              "lineId": "traphase-100135"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99964",
+          "title": "Chat: About Helot",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "A familiar scent... It's nice. I feel so safe around you.",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0029",
+              "lineId": "traphase-99964"
+            },
+            {
+              "awakenerId": "awakener-0023",
+              "lineId": "traphase-100043"
+            }
+          ]
+        },
+        {
+          "id": "traphase-99788",
+          "title": "Chat: About Aurita",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "My pustules... are not jellyfish...",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0005",
+              "lineId": "traphase-99894"
+            },
+            {
+              "awakenerId": "awakener-0029",
+              "lineId": "traphase-99788"
+            }
+          ]
+        },
+        {
+          "id": "traphase-100212",
+          "title": "Chat: About Nymphaea",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Yes. I believe you...",
+          "exchange": [
+            {
+              "awakenerId": "awakener-0037",
+              "lineId": "traphase-99938"
+            },
+            {
+              "awakenerId": "awakener-0029",
+              "lineId": "traphase-100212"
+            }
+          ]
+        },
+        {
+          "id": "traphase-100182",
+          "title": "Thinking",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Lily will do as you say, Master."
+        },
+        {
+          "id": "traphase-100218",
+          "title": "Urging",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "My pustules are getting agitated."
+        },
+        {
+          "id": "traphase-99804",
+          "title": "Fatal Blow",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Lily will protect you!"
+        },
+        {
+          "id": "traphase-100209",
+          "title": "Blunder",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Did I do it wrong...?"
+        },
+        {
+          "id": "traphase-99770",
+          "title": "Death",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Lily... can't stand up again..."
+        },
+        {
+          "id": "traphase-127017",
+          "title": "Chat: About Xu",
+          "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+          "content": "Lily. Likes mother."
+        }
+      ]
+    }
+  }
+}

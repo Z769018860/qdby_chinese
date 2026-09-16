@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 3,
+  "kind": "enlighten",
+  "id": "enlighten.saya.must-be-what-they-call-love",
+  "name": "Must be What They Call Love",
+  "route": {
+    "slug": "must-be-what-they-call-love",
+    "canonicalPath": "/database/awakeners/saya/enlightens/must-be-what-they-call-love"
+  },
+  "ownerAwakenerId": "awakener-0057",
+  "slot": "E3",
+  "descriptionTemplate": "{Viscera Blossoms} additionally inflicts {Corrosion} equal to 0.5% of the target's Max HP. For each {Gynoecium} stack consumed by {Song of Saya}, draw 1 additional card upon playing {Viscera Blossoms} next time.",
+  "descriptionArgs": {},
+  "ownerAwakenerName": "Saya"
+}

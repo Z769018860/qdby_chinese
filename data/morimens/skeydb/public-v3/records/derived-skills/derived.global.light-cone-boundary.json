@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 3,
+  "kind": "derivedSkill",
+  "id": "derived.global.light-cone-boundary",
+  "name": "Light Cone Boundary",
+  "route": {
+    "slug": "light-cone-boundary",
+    "canonicalPath": "/database/derived-skills/light-cone-boundary"
+  },
+  "cardFamily": "buff",
+  "cardTypes": ["buff"],
+  "descriptionTemplate": "Max out Keyflare and all Awakeners' Aliemus.",
+  "descriptionArgs": {},
+  "cardKeywords": [
+    {
+      "id": "mechanic.exhaust"
+    }
+  ],
+  "cost": "0"
+}

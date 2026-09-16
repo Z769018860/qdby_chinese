@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 3,
+  "kind": "enlighten",
+  "id": "enlighten.nautila.vroom-vroom",
+  "name": "Vroom Vroom!",
+  "route": {
+    "slug": "vroom-vroom",
+    "canonicalPath": "/database/awakeners/nautila/enlightens/vroom-vroom"
+  },
+  "ownerAwakenerId": "awakener-0036",
+  "slot": "OverExalt",
+  "descriptionTemplate": "Current Shield +50%, ignore the Shield Limit. {Counter} Trigger Rate is increased to 500%.",
+  "descriptionArgs": {},
+  "ownerAwakenerName": "Nautila"
+}

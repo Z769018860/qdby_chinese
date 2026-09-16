@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 3,
+  "kind": "skill",
+  "id": "skill.aigis.decomposition",
+  "name": "Decomposition",
+  "route": {
+    "slug": "decomposition",
+    "canonicalPath": "/database/awakeners/aigis/skills/decomposition"
+  },
+  "ownerAwakenerId": "awakener-0003",
+  "slot": "Skill2",
+  "cardFamily": "command",
+  "cardTypes": ["skill"],
+  "descriptionTemplate": "Deal [Damage:Arg1] DMG, which enjoys a 2× {STR} bonus. If the target is {Vulnerable}, refund the Arithmetica Cost of the card and draw 1 card.",
+  "descriptionArgs": {
+    "Arg1": {
+      "kind": "scaling",
+      "values": ["80", "96", "112", "128", "144", "160"],
+      "stat": "ATK",
+      "suffix": "%"
+    }
+  },
+  "cardKeywords": [],
+  "cost": "3",
+  "lore": "Objects stared at by Aigis's dolls will begin to colorize and fibrotize from the point of gaze. Over time, the area may even transform into a substance resembling colorful yarn, which is then absorbed by the dolls. If the gaze is not blocked in time, the object may completely disassemble and become part of the doll.\n\nIt has been observed that only Aigis herself remains unaffected by the dolls' gaze.",
+  "upgrades": [
+    {
+      "id": "upgrade.enlighten.aigis.sugary-aroma.skill.aigis.decomposition",
+      "operation": "mixed",
+      "upgraderId": "enlighten.aigis.sugary-aroma",
+      "upgraderType": "enlighten",
+      "upgraderSlot": "E2",
+      "ownerAwakenerId": "awakener-0003",
+      "ownerAwakenerName": "Aigis",
+      "patch": {
+        "descriptionTemplate": "Deal [Damage:Arg1] DMG, enjoys a 2× {STR} bonus. If the target is {Vulnerable}, refund the Arithmetica used for this card and draw 1 card. For each stack of {Vulnerable} on the target, increase the Final DMG of {Decomposition} by [Arg2]%, up to 500%.",
+        "descriptionArgs": {
+          "Arg1": {
+            "kind": "scaling",
+            "values": ["80", "96", "112", "128", "144", "160"],
+            "stat": "ATK",
+            "suffix": "%"
+          },
+          "Arg2": {
+            "kind": "fixed",
+            "value": "5",
+            "suffix": "%"
+          }
+        }
+      }
+    }
+  ],
+  "ownerAwakenerName": "Aigis"
+}
