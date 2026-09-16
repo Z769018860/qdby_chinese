@@ -2,6 +2,11 @@ name: Sync Morimens SKeyDB
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/sync_morimens_skeydb.mjs"
+      - ".github/workflows/sync-morimens-skeydb.yml"
   schedule:
     - cron: "23 3 * * *"
 
