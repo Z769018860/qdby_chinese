@@ -1,56 +1,4836 @@
 {
-  "fetchedAt": "2026-09-16T18:48:11.484Z",
+  "fetchedAt": "2026-09-16T18:50:41.375Z",
   "results": [
     {
       "target": "https://eremora.com/leaderboard/abyss/__data.json",
       "status": 200,
-      "length": 52075,
+      "length": 52076,
+      "direct": {
+        "status": 403,
+        "url": "https://eremora.com/leaderboard/abyss/__data.json",
+        "length": 5616,
+        "prefix": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"content-security-policy\" content=\"default-src &#39;none&#39;; script-src &#39;nonce-pQfidW440hwEXLVhmEJ6dN&#39; &#39;unsafe-eval&#39; https://challenges.cloudflare.com; script-s"
+      },
+      "documentTypes": [
+        {
+          "type": "data",
+          "id": null,
+          "nodes": 2,
+          "dataLength": null
+        }
+      ],
+      "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":12,\"frame\":17,\"dzone_season\":21},1,100759759,\"杨枝甘钰\",525,null,\"AbyssChallenge\",\"\",{\"id\":13,\"name\":14,\"image\":15,\"quality\":16},132672,\"Coalsie I\",\"portraits/Portrait_Minihead_PlayerAvatar_S_020.webp\",\"Orange\",{\"id\":18,\"name\":19,\"image\":20,\"quality\":16},54579,\"Silver Matrix\",\"icon/Icon_PortraitFrame_02.webp\",68,{\"rank\":23,\"uid\":24,\"name\":25,\"raw_name\":25,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":26,\"frame\":30,\"dzone_season\":21},2,100034764,\"茉莉奶柏\",{\"id\":27,\"name\":28,\"image\":29,\"quality\":16},72892,\"By the Silver Key: Caraboo\",\"portraits/Portrait_Minihead_PlayerAvatar_A_B11.webp\",{\"id\":31,\"name\":32,\"image\":33,\"quality\":16},140187,\"Sprout of Love\",\"icon",
       "summary": {
-        "rootCount": 0,
-        "arrays": [],
-        "objectCount": 0,
-        "objectSamples": [],
-        "rankRange": null,
-        "scalars": []
+        "rootCount": 2,
+        "arrays": [
+          {
+            "path": "$.history.archive.board.rows",
+            "length": 100,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100068321,
+                "name": "轻钢QAQ",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100759759,
+                "name": "轻钰QAQ",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100167859,
+                "name": "金发女人I型",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100239011,
+                "name": "温朵二人转",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.board.rows",
+            "length": 50,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100759759,
+                "name": "杨枝甘钰",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100068321,
+                "name": "柠檬红鼠",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100167859,
+                "name": "潶糖乌龙",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100716237,
+                "name": "Uxia",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.history.samples",
+            "length": 32,
+            "sample": []
+          }
+        ],
+        "objectCount": 150,
+        "objectSamples": [
+          {
+            "path": "$.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100759759,
+              "name": "杨枝甘钰",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100068321,
+              "name": "柠檬红鼠",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100167859,
+              "name": "潶糖乌龙",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100389537,
+              "name": "火",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100625068,
+              "name": "ぽん（接代打）",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100549287,
+              "name": "梦里云泽",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100729018,
+              "name": "归还人海",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100472749,
+              "name": "临",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 475
+            }
+          },
+          {
+            "path": "$.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 101242531,
+              "name": "T-rex",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 100115791,
+              "name": "阿柒",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 100723055,
+              "name": "0312",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100069133,
+              "name": "A奶龙批发朝朝",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100553277,
+              "name": "볼빵빵판다곰",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100209833,
+              "name": "飞鸟不在之夜",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100794539,
+              "name": "白酒兰华",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100850936,
+              "name": "Hymn",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 100132555,
+              "name": "倥偬",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 101096882,
+              "name": "я'аргул",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 100414382,
+              "name": "早春雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100216202,
+              "name": "子夜微雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101278486,
+              "name": "Coliner",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100727427,
+              "name": "Cinna",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 101302214,
+              "name": "Koishi",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 101133442,
+              "name": "Jocolat",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 100842776,
+              "name": "我要玩深海啊啊",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100471605,
+              "name": "久岛鸥",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 101703341,
+              "name": "NoeL",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100184916,
+              "name": "i娜TV",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100331782,
+              "name": "舅舅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100649339,
+              "name": "是澜阿口牙！",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100828755,
+              "name": "融寒",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100857457,
+              "name": "Enjel",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 100450986,
+              "name": "SchwarzGallert",
+              "score": 455
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100068321,
+              "name": "轻钢QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100759759,
+              "name": "轻钰QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100167859,
+              "name": "金发女人I型",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100239011,
+              "name": "温朵二人转",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100069034,
+              "name": "萨摩不耶",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100023693,
+              "name": "狮子原爽",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 100807061,
+              "name": "WhaleLeap",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 100424295,
+              "name": "A9zz",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100750934,
+              "name": "错误",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100271975,
+              "name": "璃亓",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100164401,
+              "name": "西维斯特",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100714760,
+              "name": "轻珏AQA",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100106464,
+              "name": "可爱",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 101184755,
+              "name": "Anicillia",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100183070,
+              "name": "A鸭批mikel852",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100564628,
+              "name": "明枝欢",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100616389,
+              "name": "诗中少女",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 101143204,
+              "name": "Angbak",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 101019782,
+              "name": "Shenhua",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100411119,
+              "name": "奥安安",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100201387,
+              "name": "John",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100559441,
+              "name": "dlshan",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100001171,
+              "name": "落尘书生",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 101499787,
+              "name": "龍肆",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 100279093,
+              "name": "‎",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 101073278,
+              "name": "Rukia",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100000703,
+              "name": "黄金女皇",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100981868,
+              "name": "myls",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 100650203,
+              "name": "Sylvester",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 101129857,
+              "name": "龢利长眠于此",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100810864,
+              "name": "OnE",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100429960,
+              "name": "逹芙黛爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100088782,
+              "name": "维C斯特",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100300379,
+              "name": "bian",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100588516,
+              "name": "达达尼昂",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 101404812,
+              "name": "晴海千花",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[50]",
+            "value": {
+              "rank": 51,
+              "uid": 101079194,
+              "name": "Stravaig",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[51]",
+            "value": {
+              "rank": 52,
+              "uid": 101725009,
+              "name": "猪一只喵",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[52]",
+            "value": {
+              "rank": 53,
+              "uid": 101046572,
+              "name": "雾羽织影",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[53]",
+            "value": {
+              "rank": 54,
+              "uid": 100603505,
+              "name": "再也不播。。。",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[54]",
+            "value": {
+              "rank": 55,
+              "uid": 100396568,
+              "name": "索洛维茨",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[55]",
+            "value": {
+              "rank": 56,
+              "uid": 100377370,
+              "name": "Bari",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[56]",
+            "value": {
+              "rank": 57,
+              "uid": 100386165,
+              "name": "荼蘼",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[57]",
+            "value": {
+              "rank": 58,
+              "uid": 100037260,
+              "name": "Nikke戰神Iv",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[58]",
+            "value": {
+              "rank": 59,
+              "uid": 100102966,
+              "name": "千寻",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[59]",
+            "value": {
+              "rank": 60,
+              "uid": 100655478,
+              "name": "麻木似水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[60]",
+            "value": {
+              "rank": 61,
+              "uid": 101185426,
+              "name": "冥心",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[61]",
+            "value": {
+              "rank": 62,
+              "uid": 101925094,
+              "name": "棺人痴",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[62]",
+            "value": {
+              "rank": 63,
+              "uid": 100764697,
+              "name": "02",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[63]",
+            "value": {
+              "rank": 64,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[64]",
+            "value": {
+              "rank": 65,
+              "uid": 100082465,
+              "name": "传说之下",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[65]",
+            "value": {
+              "rank": 66,
+              "uid": 101094633,
+              "name": "Slash",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[66]",
+            "value": {
+              "rank": 67,
+              "uid": 100584615,
+              "name": "和成天下",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[67]",
+            "value": {
+              "rank": 68,
+              "uid": 100597447,
+              "name": "NeNemoNe",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[68]",
+            "value": {
+              "rank": 69,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[69]",
+            "value": {
+              "rank": 70,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 490
+            }
+          }
+        ],
+        "rankRange": {
+          "min": 1,
+          "max": 100,
+          "distinct": 100
+        },
+        "scalars": [
+          {
+            "path": "$.history.seasons[0].period",
+            "value": 68
+          },
+          {
+            "path": "$.history.seasons[1].period",
+            "value": 69
+          },
+          {
+            "path": "$.history.seasons[2].period",
+            "value": 67
+          },
+          {
+            "path": "$.history.seasons[3].period",
+            "value": 66
+          }
+        ]
       }
     },
     {
       "target": "https://eremora.com/leaderboard/abyss/__data.json?page=2",
       "status": 200,
-      "length": 52082,
+      "length": 52083,
+      "direct": {
+        "status": 200,
+        "url": "https://eremora.com/leaderboard/abyss/__data.json?page=2",
+        "length": 51986,
+        "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,"
+      },
+      "documentTypes": [
+        {
+          "type": "data",
+          "id": null,
+          "nodes": 2,
+          "dataLength": null
+        }
+      ],
+      "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":12,\"frame\":17,\"dzone_season\":21},1,100759759,\"杨枝甘钰\",525,null,\"AbyssChallenge\",\"\",{\"id\":13,\"name\":14,\"image\":15,\"quality\":16},132672,\"Coalsie I\",\"portraits/Portrait_Minihead_PlayerAvatar_S_020.webp\",\"Orange\",{\"id\":18,\"name\":19,\"image\":20,\"quality\":16},54579,\"Silver Matrix\",\"icon/Icon_PortraitFrame_02.webp\",68,{\"rank\":23,\"uid\":24,\"name\":25,\"raw_name\":25,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":26,\"frame\":30,\"dzone_season\":21},2,100034764,\"茉莉奶柏\",{\"id\":27,\"name\":28,\"image\":29,\"quality\":16},72892,\"By the Silver Key: Caraboo\",\"portraits/Portrait_Minihead_PlayerAvatar_A_B11.webp\",{\"id\":31,\"name\":32,\"image\":33,\"quality\":16},140187,\"Sprout of Love\",\"icon",
       "summary": {
-        "rootCount": 0,
-        "arrays": [],
-        "objectCount": 0,
-        "objectSamples": [],
-        "rankRange": null,
-        "scalars": []
+        "rootCount": 2,
+        "arrays": [
+          {
+            "path": "$.history.archive.board.rows",
+            "length": 100,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100068321,
+                "name": "轻钢QAQ",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100759759,
+                "name": "轻钰QAQ",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100167859,
+                "name": "金发女人I型",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100239011,
+                "name": "温朵二人转",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.board.rows",
+            "length": 50,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100759759,
+                "name": "杨枝甘钰",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100068321,
+                "name": "柠檬红鼠",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100167859,
+                "name": "潶糖乌龙",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100716237,
+                "name": "Uxia",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.history.samples",
+            "length": 32,
+            "sample": []
+          }
+        ],
+        "objectCount": 150,
+        "objectSamples": [
+          {
+            "path": "$.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100759759,
+              "name": "杨枝甘钰",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100068321,
+              "name": "柠檬红鼠",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100167859,
+              "name": "潶糖乌龙",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100389537,
+              "name": "火",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100625068,
+              "name": "ぽん（接代打）",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100549287,
+              "name": "梦里云泽",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100729018,
+              "name": "归还人海",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100472749,
+              "name": "临",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 475
+            }
+          },
+          {
+            "path": "$.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 101242531,
+              "name": "T-rex",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 100115791,
+              "name": "阿柒",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 100723055,
+              "name": "0312",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100069133,
+              "name": "A奶龙批发朝朝",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100553277,
+              "name": "볼빵빵판다곰",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100209833,
+              "name": "飞鸟不在之夜",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100794539,
+              "name": "白酒兰华",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100850936,
+              "name": "Hymn",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 100132555,
+              "name": "倥偬",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 101096882,
+              "name": "я'аргул",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 100414382,
+              "name": "早春雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100216202,
+              "name": "子夜微雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101278486,
+              "name": "Coliner",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100727427,
+              "name": "Cinna",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 101302214,
+              "name": "Koishi",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 101133442,
+              "name": "Jocolat",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 100842776,
+              "name": "我要玩深海啊啊",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100471605,
+              "name": "久岛鸥",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 101703341,
+              "name": "NoeL",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100184916,
+              "name": "i娜TV",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100331782,
+              "name": "舅舅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100649339,
+              "name": "是澜阿口牙！",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100828755,
+              "name": "融寒",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100857457,
+              "name": "Enjel",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 100450986,
+              "name": "SchwarzGallert",
+              "score": 455
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100068321,
+              "name": "轻钢QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100759759,
+              "name": "轻钰QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100167859,
+              "name": "金发女人I型",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100239011,
+              "name": "温朵二人转",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100069034,
+              "name": "萨摩不耶",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100023693,
+              "name": "狮子原爽",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 100807061,
+              "name": "WhaleLeap",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 100424295,
+              "name": "A9zz",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100750934,
+              "name": "错误",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100271975,
+              "name": "璃亓",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100164401,
+              "name": "西维斯特",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100714760,
+              "name": "轻珏AQA",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100106464,
+              "name": "可爱",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 101184755,
+              "name": "Anicillia",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100183070,
+              "name": "A鸭批mikel852",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100564628,
+              "name": "明枝欢",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100616389,
+              "name": "诗中少女",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 101143204,
+              "name": "Angbak",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 101019782,
+              "name": "Shenhua",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100411119,
+              "name": "奥安安",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100201387,
+              "name": "John",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100559441,
+              "name": "dlshan",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100001171,
+              "name": "落尘书生",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 101499787,
+              "name": "龍肆",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 100279093,
+              "name": "‎",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 101073278,
+              "name": "Rukia",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100000703,
+              "name": "黄金女皇",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100981868,
+              "name": "myls",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 100650203,
+              "name": "Sylvester",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 101129857,
+              "name": "龢利长眠于此",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100810864,
+              "name": "OnE",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100429960,
+              "name": "逹芙黛爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100088782,
+              "name": "维C斯特",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100300379,
+              "name": "bian",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100588516,
+              "name": "达达尼昂",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 101404812,
+              "name": "晴海千花",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[50]",
+            "value": {
+              "rank": 51,
+              "uid": 101079194,
+              "name": "Stravaig",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[51]",
+            "value": {
+              "rank": 52,
+              "uid": 101725009,
+              "name": "猪一只喵",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[52]",
+            "value": {
+              "rank": 53,
+              "uid": 101046572,
+              "name": "雾羽织影",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[53]",
+            "value": {
+              "rank": 54,
+              "uid": 100603505,
+              "name": "再也不播。。。",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[54]",
+            "value": {
+              "rank": 55,
+              "uid": 100396568,
+              "name": "索洛维茨",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[55]",
+            "value": {
+              "rank": 56,
+              "uid": 100377370,
+              "name": "Bari",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[56]",
+            "value": {
+              "rank": 57,
+              "uid": 100386165,
+              "name": "荼蘼",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[57]",
+            "value": {
+              "rank": 58,
+              "uid": 100037260,
+              "name": "Nikke戰神Iv",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[58]",
+            "value": {
+              "rank": 59,
+              "uid": 100102966,
+              "name": "千寻",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[59]",
+            "value": {
+              "rank": 60,
+              "uid": 100655478,
+              "name": "麻木似水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[60]",
+            "value": {
+              "rank": 61,
+              "uid": 101185426,
+              "name": "冥心",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[61]",
+            "value": {
+              "rank": 62,
+              "uid": 101925094,
+              "name": "棺人痴",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[62]",
+            "value": {
+              "rank": 63,
+              "uid": 100764697,
+              "name": "02",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[63]",
+            "value": {
+              "rank": 64,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[64]",
+            "value": {
+              "rank": 65,
+              "uid": 100082465,
+              "name": "传说之下",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[65]",
+            "value": {
+              "rank": 66,
+              "uid": 101094633,
+              "name": "Slash",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[66]",
+            "value": {
+              "rank": 67,
+              "uid": 100584615,
+              "name": "和成天下",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[67]",
+            "value": {
+              "rank": 68,
+              "uid": 100597447,
+              "name": "NeNemoNe",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[68]",
+            "value": {
+              "rank": 69,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[69]",
+            "value": {
+              "rank": 70,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 490
+            }
+          }
+        ],
+        "rankRange": {
+          "min": 1,
+          "max": 100,
+          "distinct": 100
+        },
+        "scalars": [
+          {
+            "path": "$.history.seasons[0].period",
+            "value": 68
+          },
+          {
+            "path": "$.history.seasons[1].period",
+            "value": 69
+          },
+          {
+            "path": "$.history.seasons[2].period",
+            "value": 67
+          },
+          {
+            "path": "$.history.seasons[3].period",
+            "value": 66
+          }
+        ]
       }
     },
     {
       "target": "https://eremora.com/leaderboard/abyss/__data.json?limit=1000",
       "status": 200,
-      "length": 52086,
+      "length": 52087,
+      "direct": {
+        "status": 200,
+        "url": "https://eremora.com/leaderboard/abyss/__data.json?limit=1000",
+        "length": 51986,
+        "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,"
+      },
+      "documentTypes": [
+        {
+          "type": "data",
+          "id": null,
+          "nodes": 2,
+          "dataLength": null
+        }
+      ],
+      "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":12,\"frame\":17,\"dzone_season\":21},1,100759759,\"杨枝甘钰\",525,null,\"AbyssChallenge\",\"\",{\"id\":13,\"name\":14,\"image\":15,\"quality\":16},132672,\"Coalsie I\",\"portraits/Portrait_Minihead_PlayerAvatar_S_020.webp\",\"Orange\",{\"id\":18,\"name\":19,\"image\":20,\"quality\":16},54579,\"Silver Matrix\",\"icon/Icon_PortraitFrame_02.webp\",68,{\"rank\":23,\"uid\":24,\"name\":25,\"raw_name\":25,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":26,\"frame\":30,\"dzone_season\":21},2,100034764,\"茉莉奶柏\",{\"id\":27,\"name\":28,\"image\":29,\"quality\":16},72892,\"By the Silver Key: Caraboo\",\"portraits/Portrait_Minihead_PlayerAvatar_A_B11.webp\",{\"id\":31,\"name\":32,\"image\":33,\"quality\":16},140187,\"Sprout of Love\",\"icon",
       "summary": {
-        "rootCount": 0,
-        "arrays": [],
-        "objectCount": 0,
-        "objectSamples": [],
-        "rankRange": null,
-        "scalars": []
+        "rootCount": 2,
+        "arrays": [
+          {
+            "path": "$.history.archive.board.rows",
+            "length": 100,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100068321,
+                "name": "轻钢QAQ",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100759759,
+                "name": "轻钰QAQ",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100167859,
+                "name": "金发女人I型",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100239011,
+                "name": "温朵二人转",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.board.rows",
+            "length": 50,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100759759,
+                "name": "杨枝甘钰",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100068321,
+                "name": "柠檬红鼠",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100167859,
+                "name": "潶糖乌龙",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100716237,
+                "name": "Uxia",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.history.samples",
+            "length": 32,
+            "sample": []
+          }
+        ],
+        "objectCount": 150,
+        "objectSamples": [
+          {
+            "path": "$.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100759759,
+              "name": "杨枝甘钰",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100068321,
+              "name": "柠檬红鼠",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100167859,
+              "name": "潶糖乌龙",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100389537,
+              "name": "火",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100625068,
+              "name": "ぽん（接代打）",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100549287,
+              "name": "梦里云泽",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100729018,
+              "name": "归还人海",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100472749,
+              "name": "临",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 475
+            }
+          },
+          {
+            "path": "$.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 101242531,
+              "name": "T-rex",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 100115791,
+              "name": "阿柒",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 100723055,
+              "name": "0312",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100069133,
+              "name": "A奶龙批发朝朝",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100553277,
+              "name": "볼빵빵판다곰",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100209833,
+              "name": "飞鸟不在之夜",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100794539,
+              "name": "白酒兰华",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100850936,
+              "name": "Hymn",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 100132555,
+              "name": "倥偬",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 101096882,
+              "name": "я'аргул",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 100414382,
+              "name": "早春雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100216202,
+              "name": "子夜微雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101278486,
+              "name": "Coliner",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100727427,
+              "name": "Cinna",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 101302214,
+              "name": "Koishi",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 101133442,
+              "name": "Jocolat",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 100842776,
+              "name": "我要玩深海啊啊",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100471605,
+              "name": "久岛鸥",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 101703341,
+              "name": "NoeL",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100184916,
+              "name": "i娜TV",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100331782,
+              "name": "舅舅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100649339,
+              "name": "是澜阿口牙！",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100828755,
+              "name": "融寒",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100857457,
+              "name": "Enjel",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 100450986,
+              "name": "SchwarzGallert",
+              "score": 455
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100068321,
+              "name": "轻钢QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100759759,
+              "name": "轻钰QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100167859,
+              "name": "金发女人I型",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100239011,
+              "name": "温朵二人转",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100069034,
+              "name": "萨摩不耶",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100023693,
+              "name": "狮子原爽",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 100807061,
+              "name": "WhaleLeap",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 100424295,
+              "name": "A9zz",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100750934,
+              "name": "错误",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100271975,
+              "name": "璃亓",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100164401,
+              "name": "西维斯特",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100714760,
+              "name": "轻珏AQA",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100106464,
+              "name": "可爱",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 101184755,
+              "name": "Anicillia",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100183070,
+              "name": "A鸭批mikel852",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100564628,
+              "name": "明枝欢",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100616389,
+              "name": "诗中少女",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 101143204,
+              "name": "Angbak",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 101019782,
+              "name": "Shenhua",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100411119,
+              "name": "奥安安",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100201387,
+              "name": "John",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100559441,
+              "name": "dlshan",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100001171,
+              "name": "落尘书生",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 101499787,
+              "name": "龍肆",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 100279093,
+              "name": "‎",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 101073278,
+              "name": "Rukia",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100000703,
+              "name": "黄金女皇",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100981868,
+              "name": "myls",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 100650203,
+              "name": "Sylvester",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 101129857,
+              "name": "龢利长眠于此",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100810864,
+              "name": "OnE",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100429960,
+              "name": "逹芙黛爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100088782,
+              "name": "维C斯特",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100300379,
+              "name": "bian",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100588516,
+              "name": "达达尼昂",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 101404812,
+              "name": "晴海千花",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[50]",
+            "value": {
+              "rank": 51,
+              "uid": 101079194,
+              "name": "Stravaig",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[51]",
+            "value": {
+              "rank": 52,
+              "uid": 101725009,
+              "name": "猪一只喵",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[52]",
+            "value": {
+              "rank": 53,
+              "uid": 101046572,
+              "name": "雾羽织影",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[53]",
+            "value": {
+              "rank": 54,
+              "uid": 100603505,
+              "name": "再也不播。。。",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[54]",
+            "value": {
+              "rank": 55,
+              "uid": 100396568,
+              "name": "索洛维茨",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[55]",
+            "value": {
+              "rank": 56,
+              "uid": 100377370,
+              "name": "Bari",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[56]",
+            "value": {
+              "rank": 57,
+              "uid": 100386165,
+              "name": "荼蘼",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[57]",
+            "value": {
+              "rank": 58,
+              "uid": 100037260,
+              "name": "Nikke戰神Iv",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[58]",
+            "value": {
+              "rank": 59,
+              "uid": 100102966,
+              "name": "千寻",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[59]",
+            "value": {
+              "rank": 60,
+              "uid": 100655478,
+              "name": "麻木似水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[60]",
+            "value": {
+              "rank": 61,
+              "uid": 101185426,
+              "name": "冥心",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[61]",
+            "value": {
+              "rank": 62,
+              "uid": 101925094,
+              "name": "棺人痴",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[62]",
+            "value": {
+              "rank": 63,
+              "uid": 100764697,
+              "name": "02",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[63]",
+            "value": {
+              "rank": 64,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[64]",
+            "value": {
+              "rank": 65,
+              "uid": 100082465,
+              "name": "传说之下",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[65]",
+            "value": {
+              "rank": 66,
+              "uid": 101094633,
+              "name": "Slash",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[66]",
+            "value": {
+              "rank": 67,
+              "uid": 100584615,
+              "name": "和成天下",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[67]",
+            "value": {
+              "rank": 68,
+              "uid": 100597447,
+              "name": "NeNemoNe",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[68]",
+            "value": {
+              "rank": 69,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[69]",
+            "value": {
+              "rank": 70,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 490
+            }
+          }
+        ],
+        "rankRange": {
+          "min": 1,
+          "max": 100,
+          "distinct": 100
+        },
+        "scalars": [
+          {
+            "path": "$.history.seasons[0].period",
+            "value": 68
+          },
+          {
+            "path": "$.history.seasons[1].period",
+            "value": 69
+          },
+          {
+            "path": "$.history.seasons[2].period",
+            "value": 67
+          },
+          {
+            "path": "$.history.seasons[3].period",
+            "value": 66
+          }
+        ]
       }
     },
     {
       "target": "https://eremora.com/leaderboard/abyss/__data.json?offset=50&limit=50",
       "status": 200,
-      "length": 52094,
+      "length": 52095,
+      "direct": {
+        "status": 200,
+        "url": "https://eremora.com/leaderboard/abyss/__data.json?offset=50&limit=50",
+        "length": 51986,
+        "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,"
+      },
+      "documentTypes": [
+        {
+          "type": "data",
+          "id": null,
+          "nodes": 2,
+          "dataLength": null
+        }
+      ],
+      "prefix": "{\"type\":\"data\",\"nodes\":[{\"type\":\"data\",\"data\":[{\"mediaBase\":1,\"mediaThumbnails\":2},\"https://media.eremora.com/media/90a58fb3327e\",true],\"uses\":{}},{\"type\":\"data\",\"data\":[{\"slug\":1,\"board\":2,\"history\":441,\"loadError\":9},\"abyss\",{\"rows\":3},[4,22,34,47,56,65,76,86,95,102,114,120,129,139,145,154,160,169,178,184,195,204,214,224,233,242,251,258,267,274,283,292,298,304,313,323,329,338,344,350,360,370,376,385,394,400,410,419,425,434],{\"rank\":5,\"uid\":6,\"name\":7,\"raw_name\":7,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":12,\"frame\":17,\"dzone_season\":21},1,100759759,\"杨枝甘钰\",525,null,\"AbyssChallenge\",\"\",{\"id\":13,\"name\":14,\"image\":15,\"quality\":16},132672,\"Coalsie I\",\"portraits/Portrait_Minihead_PlayerAvatar_S_020.webp\",\"Orange\",{\"id\":18,\"name\":19,\"image\":20,\"quality\":16},54579,\"Silver Matrix\",\"icon/Icon_PortraitFrame_02.webp\",68,{\"rank\":23,\"uid\":24,\"name\":25,\"raw_name\":25,\"score\":8,\"level\":9,\"type\":10,\"note\":9,\"state\":11,\"avatar\":26,\"frame\":30,\"dzone_season\":21},2,100034764,\"茉莉奶柏\",{\"id\":27,\"name\":28,\"image\":29,\"quality\":16},72892,\"By the Silver Key: Caraboo\",\"portraits/Portrait_Minihead_PlayerAvatar_A_B11.webp\",{\"id\":31,\"name\":32,\"image\":33,\"quality\":16},140187,\"Sprout of Love\",\"icon",
       "summary": {
-        "rootCount": 0,
-        "arrays": [],
-        "objectCount": 0,
-        "objectSamples": [],
-        "rankRange": null,
-        "scalars": []
+        "rootCount": 2,
+        "arrays": [
+          {
+            "path": "$.history.archive.board.rows",
+            "length": 100,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100068321,
+                "name": "轻钢QAQ",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100759759,
+                "name": "轻钰QAQ",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100167859,
+                "name": "金发女人I型",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100239011,
+                "name": "温朵二人转",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.board.rows",
+            "length": 50,
+            "sample": [
+              {
+                "rank": 1,
+                "uid": 100759759,
+                "name": "杨枝甘钰",
+                "score": 525
+              },
+              {
+                "rank": 2,
+                "uid": 100034764,
+                "name": "茉莉奶柏",
+                "score": 525
+              },
+              {
+                "rank": 3,
+                "uid": 100068321,
+                "name": "柠檬红鼠",
+                "score": 525
+              },
+              {
+                "rank": 4,
+                "uid": 100167859,
+                "name": "潶糖乌龙",
+                "score": 525
+              },
+              {
+                "rank": 5,
+                "uid": 100716237,
+                "name": "Uxia",
+                "score": 525
+              }
+            ]
+          },
+          {
+            "path": "$.history.samples",
+            "length": 32,
+            "sample": []
+          }
+        ],
+        "objectCount": 150,
+        "objectSamples": [
+          {
+            "path": "$.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100759759,
+              "name": "杨枝甘钰",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100068321,
+              "name": "柠檬红鼠",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100167859,
+              "name": "潶糖乌龙",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100389537,
+              "name": "火",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100625068,
+              "name": "ぽん（接代打）",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100549287,
+              "name": "梦里云泽",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100729018,
+              "name": "归还人海",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100472749,
+              "name": "临",
+              "score": 480
+            }
+          },
+          {
+            "path": "$.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 475
+            }
+          },
+          {
+            "path": "$.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 101242531,
+              "name": "T-rex",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 100115791,
+              "name": "阿柒",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 100723055,
+              "name": "0312",
+              "score": 470
+            }
+          },
+          {
+            "path": "$.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100069133,
+              "name": "A奶龙批发朝朝",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100553277,
+              "name": "볼빵빵판다곰",
+              "score": 465
+            }
+          },
+          {
+            "path": "$.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100209833,
+              "name": "飞鸟不在之夜",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100794539,
+              "name": "白酒兰华",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100850936,
+              "name": "Hymn",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 100132555,
+              "name": "倥偬",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 101096882,
+              "name": "я'аргул",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 100414382,
+              "name": "早春雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100216202,
+              "name": "子夜微雪",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101278486,
+              "name": "Coliner",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100727427,
+              "name": "Cinna",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 101302214,
+              "name": "Koishi",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 101133442,
+              "name": "Jocolat",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 100842776,
+              "name": "我要玩深海啊啊",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100471605,
+              "name": "久岛鸥",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 101703341,
+              "name": "NoeL",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100184916,
+              "name": "i娜TV",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100331782,
+              "name": "舅舅",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100649339,
+              "name": "是澜阿口牙！",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100828755,
+              "name": "融寒",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100857457,
+              "name": "Enjel",
+              "score": 460
+            }
+          },
+          {
+            "path": "$.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 100450986,
+              "name": "SchwarzGallert",
+              "score": 455
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[0]",
+            "value": {
+              "rank": 1,
+              "uid": 100068321,
+              "name": "轻钢QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[1]",
+            "value": {
+              "rank": 2,
+              "uid": 100759759,
+              "name": "轻钰QAQ",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[2]",
+            "value": {
+              "rank": 3,
+              "uid": 100167859,
+              "name": "金发女人I型",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[3]",
+            "value": {
+              "rank": 4,
+              "uid": 100034764,
+              "name": "茉莉奶柏",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[4]",
+            "value": {
+              "rank": 5,
+              "uid": 100239011,
+              "name": "温朵二人转",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[5]",
+            "value": {
+              "rank": 6,
+              "uid": 100069034,
+              "name": "萨摩不耶",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[6]",
+            "value": {
+              "rank": 7,
+              "uid": 100023693,
+              "name": "狮子原爽",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[7]",
+            "value": {
+              "rank": 8,
+              "uid": 100807061,
+              "name": "WhaleLeap",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[8]",
+            "value": {
+              "rank": 9,
+              "uid": 100424295,
+              "name": "A9zz",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[9]",
+            "value": {
+              "rank": 10,
+              "uid": 100074390,
+              "name": "leah1",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[10]",
+            "value": {
+              "rank": 11,
+              "uid": 100750934,
+              "name": "错误",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[11]",
+            "value": {
+              "rank": 12,
+              "uid": 100716237,
+              "name": "Uxia",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[12]",
+            "value": {
+              "rank": 13,
+              "uid": 100537613,
+              "name": "画南鸢",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[13]",
+            "value": {
+              "rank": 14,
+              "uid": 100271975,
+              "name": "璃亓",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[14]",
+            "value": {
+              "rank": 15,
+              "uid": 100164401,
+              "name": "西维斯特",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[15]",
+            "value": {
+              "rank": 16,
+              "uid": 100714760,
+              "name": "轻珏AQA",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[16]",
+            "value": {
+              "rank": 17,
+              "uid": 100106464,
+              "name": "可爱",
+              "score": 525
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[17]",
+            "value": {
+              "rank": 18,
+              "uid": 100997496,
+              "name": "Mumei",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[18]",
+            "value": {
+              "rank": 19,
+              "uid": 101184755,
+              "name": "Anicillia",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[19]",
+            "value": {
+              "rank": 20,
+              "uid": 100183070,
+              "name": "A鸭批mikel852",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[20]",
+            "value": {
+              "rank": 21,
+              "uid": 100564628,
+              "name": "明枝欢",
+              "score": 520
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[21]",
+            "value": {
+              "rank": 22,
+              "uid": 100616389,
+              "name": "诗中少女",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[22]",
+            "value": {
+              "rank": 23,
+              "uid": 100284474,
+              "name": "<#DCCS>安抚物",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[23]",
+            "value": {
+              "rank": 24,
+              "uid": 100202375,
+              "name": "YANA",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[24]",
+            "value": {
+              "rank": 25,
+              "uid": 101143204,
+              "name": "Angbak",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[25]",
+            "value": {
+              "rank": 26,
+              "uid": 101019782,
+              "name": "Shenhua",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[26]",
+            "value": {
+              "rank": 27,
+              "uid": 100411119,
+              "name": "奥安安",
+              "score": 515
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[27]",
+            "value": {
+              "rank": 28,
+              "uid": 100201387,
+              "name": "John",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[28]",
+            "value": {
+              "rank": 29,
+              "uid": 100559441,
+              "name": "dlshan",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[29]",
+            "value": {
+              "rank": 30,
+              "uid": 100001171,
+              "name": "落尘书生",
+              "score": 510
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[30]",
+            "value": {
+              "rank": 31,
+              "uid": 100848374,
+              "name": "Iceza",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[31]",
+            "value": {
+              "rank": 32,
+              "uid": 101499787,
+              "name": "龍肆",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[32]",
+            "value": {
+              "rank": 33,
+              "uid": 100279093,
+              "name": "‎",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[33]",
+            "value": {
+              "rank": 34,
+              "uid": 101073278,
+              "name": "Rukia",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[34]",
+            "value": {
+              "rank": 35,
+              "uid": 100000703,
+              "name": "黄金女皇",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[35]",
+            "value": {
+              "rank": 36,
+              "uid": 101051873,
+              "name": "梅贝尔",
+              "score": 505
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[36]",
+            "value": {
+              "rank": 37,
+              "uid": 101253891,
+              "name": "萨摩开播了",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[37]",
+            "value": {
+              "rank": 38,
+              "uid": 100981868,
+              "name": "myls",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[38]",
+            "value": {
+              "rank": 39,
+              "uid": 100018361,
+              "name": "瑪爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[39]",
+            "value": {
+              "rank": 40,
+              "uid": 100830349,
+              "name": "Flares",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[40]",
+            "value": {
+              "rank": 41,
+              "uid": 100650203,
+              "name": "Sylvester",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[41]",
+            "value": {
+              "rank": 42,
+              "uid": 101129857,
+              "name": "龢利长眠于此",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[42]",
+            "value": {
+              "rank": 43,
+              "uid": 100779621,
+              "name": "雅",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[43]",
+            "value": {
+              "rank": 44,
+              "uid": 100103475,
+              "name": "洛水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[44]",
+            "value": {
+              "rank": 45,
+              "uid": 100810864,
+              "name": "OnE",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[45]",
+            "value": {
+              "rank": 46,
+              "uid": 100429960,
+              "name": "逹芙黛爾",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[46]",
+            "value": {
+              "rank": 47,
+              "uid": 100088782,
+              "name": "维C斯特",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[47]",
+            "value": {
+              "rank": 48,
+              "uid": 100300379,
+              "name": "bian",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[48]",
+            "value": {
+              "rank": 49,
+              "uid": 100588516,
+              "name": "达达尼昂",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[49]",
+            "value": {
+              "rank": 50,
+              "uid": 101404812,
+              "name": "晴海千花",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[50]",
+            "value": {
+              "rank": 51,
+              "uid": 101079194,
+              "name": "Stravaig",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[51]",
+            "value": {
+              "rank": 52,
+              "uid": 101725009,
+              "name": "猪一只喵",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[52]",
+            "value": {
+              "rank": 53,
+              "uid": 101046572,
+              "name": "雾羽织影",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[53]",
+            "value": {
+              "rank": 54,
+              "uid": 100603505,
+              "name": "再也不播。。。",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[54]",
+            "value": {
+              "rank": 55,
+              "uid": 100396568,
+              "name": "索洛维茨",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[55]",
+            "value": {
+              "rank": 56,
+              "uid": 100377370,
+              "name": "Bari",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[56]",
+            "value": {
+              "rank": 57,
+              "uid": 100386165,
+              "name": "荼蘼",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[57]",
+            "value": {
+              "rank": 58,
+              "uid": 100037260,
+              "name": "Nikke戰神Iv",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[58]",
+            "value": {
+              "rank": 59,
+              "uid": 100102966,
+              "name": "千寻",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[59]",
+            "value": {
+              "rank": 60,
+              "uid": 100655478,
+              "name": "麻木似水",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[60]",
+            "value": {
+              "rank": 61,
+              "uid": 101185426,
+              "name": "冥心",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[61]",
+            "value": {
+              "rank": 62,
+              "uid": 101925094,
+              "name": "棺人痴",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[62]",
+            "value": {
+              "rank": 63,
+              "uid": 100764697,
+              "name": "02",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[63]",
+            "value": {
+              "rank": 64,
+              "uid": 101182528,
+              "name": "Helleios",
+              "score": 500
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[64]",
+            "value": {
+              "rank": 65,
+              "uid": 100082465,
+              "name": "传说之下",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[65]",
+            "value": {
+              "rank": 66,
+              "uid": 101094633,
+              "name": "Slash",
+              "score": 495
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[66]",
+            "value": {
+              "rank": 67,
+              "uid": 100584615,
+              "name": "和成天下",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[67]",
+            "value": {
+              "rank": 68,
+              "uid": 100597447,
+              "name": "NeNemoNe",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[68]",
+            "value": {
+              "rank": 69,
+              "uid": 100731273,
+              "name": "Bepis",
+              "score": 490
+            }
+          },
+          {
+            "path": "$.history.archive.board.rows[69]",
+            "value": {
+              "rank": 70,
+              "uid": 100787681,
+              "name": "루니안",
+              "score": 490
+            }
+          }
+        ],
+        "rankRange": {
+          "min": 1,
+          "max": 100,
+          "distinct": 100
+        },
+        "scalars": [
+          {
+            "path": "$.history.seasons[0].period",
+            "value": 68
+          },
+          {
+            "path": "$.history.seasons[1].period",
+            "value": 69
+          },
+          {
+            "path": "$.history.seasons[2].period",
+            "value": 67
+          },
+          {
+            "path": "$.history.seasons[3].period",
+            "value": 66
+          }
+        ]
       }
     }
   ]
