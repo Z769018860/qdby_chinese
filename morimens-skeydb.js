@@ -67,8 +67,8 @@
   }
   function render(rec,random=false){
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
-    const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';portrait.alt=`${loc.name} ${isZh()?'角色卡面':'character card'}`;portrait.style.objectPosition='center 18%'}
-    const avatar=$('skeydbAvatar');if(avatar){const src=assetFor(rec,'portrait');avatar.src=src;avatar.hidden=!src;avatar.dataset.awakenerId=rec.id;avatar.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';avatar.alt=`${loc.name} ${isZh()?'头像':'portrait'}`}
+    const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';portrait.alt=`${loc.name} ${isZh()?'角色卡面':'character card'}`;portrait.style.objectPosition='center 18%';portrait.onerror=()=>{portrait.onerror=null;const fallback=rec.assets?.card||'';if(fallback)portrait.src=`${fallback}?v=${assetVersion()}`}}
+    const avatar=$('skeydbAvatar');if(avatar){const src=assetFor(rec,'portrait');avatar.src=src;avatar.hidden=!src;avatar.dataset.awakenerId=rec.id;avatar.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';avatar.alt=`${loc.name} ${isZh()?'头像':'portrait'}`;avatar.onerror=()=>{avatar.onerror=null;const fallback=rec.assets?.portrait||'';if(fallback)avatar.src=`${fallback}?v=${assetVersion()}`}}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · ${ART_SLUG_GUARD[rec.id]||rec.assetSlug||''} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
