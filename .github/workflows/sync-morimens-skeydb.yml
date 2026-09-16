@@ -10,13 +10,6 @@ on:
       - "scripts/sync_morimens_huiji_jina.mjs"
       - "scripts/validate_morimens_data.mjs"
       - "data/morimens/huiji/identity.zh-CN.json"
-      - "morimens-tools.js"
-      - "morimens-data.js"
-      - "morimens-skeydb.js"
-      - "morimens-i18n.js"
-      - "morimens-calculator-skeydb.js"
-      - "morimens-calculator-stats.js"
-      - "morimens-dtide.js"
       - ".github/workflows/sync-morimens-skeydb.yml"
   schedule:
     - cron: "23 3 * * *"
@@ -26,7 +19,7 @@ permissions:
 
 concurrency:
   group: sync-morimens-all
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   sync:
