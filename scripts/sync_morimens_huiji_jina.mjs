@@ -6,7 +6,8 @@ const JINA='https://r.jina.ai/https://morimens.huijiwiki.com';
 const OUT_DIR='data/morimens/huiji';
 const SKEYDB_FILE='data/morimens/skeydb/awakeners.json';
 const IDENTITY_FILE='data/morimens/huiji/identity.zh-CN.json';
-const UA='qdby-chinese-morimens-sync/2.1';
+const ZH_FILE=`${OUT_DIR}/zh-CN.json`;
+const UA='qdby-chinese-morimens-sync/2.2';
 const API_ENDPOINTS=['https://cdn.huijiwiki.com/morimens/api.php','https://morimens.huijiwiki.com/api.php'];
 const PROFILE_LABELS={'姓名':'name','英文名':'englishName','界域':'realm','稀有度':'rarity','类型':'type','生日':'birthday','性别':'gender','身高':'height','体重':'weight','诺斯指数':'gnosticIndex','声优':'voiceActor','获取途径':'obtain','所属势力':'faction','阵营':'faction','别称':'aliases'};
 const VOICE_HINT=/(唤醒|获得提升|升级|启灵|同调|好感|调查|打击|防御|受击|技能|灵知觉醒|狂气爆发|闲话|闲聊|触摸|触碰|关于|登录|主页|攻击|死亡|胜利|失败|语音|初见)/;
@@ -19,8 +20,10 @@ function clean(s=''){
   return decodeHtml(String(s)).replace(/!\[[^\]]*\]\([^)]*\)/g,' ').replace(/\[([^\]]+)\]\([^)]*\)/g,'$1').replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]+>/g,' ').replace(/[\*_`#>~]/g,'').replace(/\s+/g,' ').trim();
 }
 function normalize(s=''){return String(s).toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'')}
+function hasChineseVoice(record){return Array.isArray(record?.voiceLines)&&record.voiceLines.some(x=>x?.content&&/[\u3400-\u9fff]/.test(x.content))}
 async function saveJson(file,data){await mkdir(path.dirname(file),{recursive:true});await writeFile(file,JSON.stringify(data,null,2)+'\n')}
 async function readJson(file){return JSON.parse(await readFile(file,'utf8'))}
+async function readJsonOr(file,fallback){try{return await readJson(file)}catch{return fallback}}
 
 async function fetchJson(url,retries=2){
   let last;
@@ -30,11 +33,11 @@ async function fetchJson(url,retries=2){
   }
   throw last;
 }
-async function fetchText(url,retries=2){
+async function fetchText(url,retries=3){
   let last;
   for(let i=0;i<retries;i++){
     try{const r=await fetch(url,{headers:{'User-Agent':UA,'Accept':'text/plain'},signal:AbortSignal.timeout(15000)});if(r.ok)return await r.text();last=new Error(`${url}: HTTP ${r.status}`);if(r.status!==429&&r.status<500)break}catch(e){last=e}
-    if(i+1<retries)await new Promise(r=>setTimeout(r,800*(i+1)));
+    if(i+1<retries)await new Promise(r=>setTimeout(r,1200*Math.pow(2,i)));
   }
   throw last;
 }
@@ -70,22 +73,29 @@ function skillTablesFrom(rows){
 }
 function mergeUniqueRows(a,b){const out=[],seen=new Set();for(const row of [...a,...b]){const k=row.join('\0');if(!seen.has(k)){seen.add(k);out.push(row)}}return out}
 
-const skeydb=await readJson(SKEYDB_FILE),identity=await readJson(IDENTITY_FILE);const sourceById=new Map((skeydb.records||[]).map(r=>[r.id,r])),seeds=identity.records||[],identityErrors=[];
+const skeydb=await readJson(SKEYDB_FILE),identity=await readJson(IDENTITY_FILE),previous=await readJsonOr(ZH_FILE,{records:[]});
+const sourceById=new Map((skeydb.records||[]).map(r=>[r.id,r])),previousById=new Map((previous.records||[]).map(r=>[r.skeydbId,r])),seeds=identity.records||[],identityErrors=[];
 for(const seed of seeds){const rec=sourceById.get(seed.skeydbId);if(!rec)identityErrors.push(`unknown SKeyDB id ${seed.skeydbId} (${seed.name})`);else if(normalize(rec.name)!==normalize(seed.englishName)&&!(rec.aliases||[]).some(x=>normalize(x)===normalize(seed.englishName)))identityErrors.push(`${seed.skeydbId}: SKeyDB=${rec.name}, identity=${seed.englishName}`)}
 if(seeds.length!==(skeydb.records||[]).length)identityErrors.push(`identity coverage ${seeds.length}/${(skeydb.records||[]).length}`);if(identityErrors.length)throw new Error(`Static Morimens identity map invalid: ${identityErrors.join('; ')}`);
 
 async function enrich(seed){
-  const rec=sourceById.get(seed.skeydbId),url=`${WIKI}/wiki/${encodeURIComponent(seed.name)}`;
+  const rec=sourceById.get(seed.skeydbId),url=`${WIKI}/wiki/${encodeURIComponent(seed.name)}`,cached=previousById.get(seed.skeydbId);
+  if(process.env.MORIMENS_REFRESH_ALL!=='1'&&cached&&normalize(cached.englishName)===normalize(seed.englishName)&&hasChineseVoice(cached)){
+    return {...cached,skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,source:{...(cached.source||{}),url},syncStatus:'cached'};
+  }
   try{
     const page=await fetchPage(seed.name),rows=mergeUniqueRows(htmlRows(page.html),markdownRows(page.wikitext)),profile=profileFrom(rows,seed.name,`${page.wikitext}\n${page.html}`);
     const parsedEnglish=normalize(profile.englishName||''),expected=normalize(seed.englishName);if(parsedEnglish&&parsedEnglish!==expected&&!(rec.aliases||[]).some(x=>normalize(x)===parsedEnglish))throw new Error(`English identity mismatch: page=${profile.englishName}, expected=${seed.englishName}`);
-    const voices=voiceLinesFrom(rows);return {skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,profile:{...profile,name:seed.name,englishName:seed.englishName},voiceLines:voices.length?voices:(seed.fallbackVoiceLines||[]),skillTables:skillTablesFrom(rows),source:{url,mode:page.transport,endpoint:page.endpoint},syncStatus:'ok'};
-  }catch(error){return {skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,profile:{name:seed.name,englishName:seed.englishName},voiceLines:seed.fallbackVoiceLines||[],skillTables:[],source:{url,mode:'static-identity'},syncStatus:'fallback',syncError:String(error)}}
+    const voices=voiceLinesFrom(rows);return {skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,profile:{...profile,name:seed.name,englishName:seed.englishName},voiceLines:voices.length?voices:(cached?.voiceLines?.length?cached.voiceLines:(seed.fallbackVoiceLines||[])),skillTables:skillTablesFrom(rows),source:{url,mode:page.transport,endpoint:page.endpoint},syncStatus:'ok'};
+  }catch(error){
+    if(cached&&hasChineseVoice(cached))return {...cached,skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,source:{...(cached.source||{}),url},syncStatus:'cached'};
+    return {skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,profile:{name:seed.name,englishName:seed.englishName},voiceLines:seed.fallbackVoiceLines||[],skillTables:[],source:{url,mode:'static-identity'},syncStatus:'fallback',syncError:String(error)};
+  }
 }
 
-const records=[];const BATCH=6;for(let i=0;i<seeds.length;i+=BATCH){records.push(...await Promise.all(seeds.slice(i,i+BATCH).map(enrich)));if(i+BATCH<seeds.length)await new Promise(r=>setTimeout(r,200))}
-const bySkeydbId=Object.fromEntries(records.map(r=>[r.skeydbId,r])),failed=records.filter(r=>r.syncStatus!=='ok').map(r=>({title:r.name,skeydbId:r.skeydbId,error:r.syncError}));
-const voiceRecords=records.filter(r=>r.voiceLines?.length).length,enriched=records.length-failed.length,jinaRecords=records.filter(r=>r.source?.mode==='jina-reader').length;
-const source={site:'忘却前夜中文维基',url:`${WIKI}/`,transport:'MediaWiki API / Jina Reader + stable local identity map',syncedAt:new Date().toISOString(),license:'CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders'};
-const payload={source,count:records.length,mapped:records.length,enriched,jinaRecords,voiceRecords,failed,unmapped:[],records,bySkeydbId};await saveJson(`${OUT_DIR}/zh-CN.json`,payload);await saveJson(`${OUT_DIR}/manifest.json`,{source,status:failed.length?'partial':'ok',counts:{targets:seeds.length,pages:records.length,mapped:records.length,enriched,jinaRecords,voiceRecords,failed:failed.length},paths:{identity:IDENTITY_FILE,zhCN:`${OUT_DIR}/zh-CN.json`}});
-console.log(`Morimens zh-CN: identities ${records.length}/${(skeydb.records||[]).length}; enriched ${enriched}; Jina ${jinaRecords}; Chinese voice records ${voiceRecords}; fallbacks ${failed.length}.`);
+const records=[];const BATCH=4;for(let i=0;i<seeds.length;i+=BATCH){records.push(...await Promise.all(seeds.slice(i,i+BATCH).map(enrich)));if(i+BATCH<seeds.length)await new Promise(r=>setTimeout(r,350))}
+const bySkeydbId=Object.fromEntries(records.map(r=>[r.skeydbId,r])),failed=records.filter(r=>r.syncStatus==='fallback').map(r=>({title:r.name,skeydbId:r.skeydbId,error:r.syncError}));
+const voiceRecords=records.filter(hasChineseVoice).length,enriched=records.filter(r=>r.syncStatus==='ok'||r.syncStatus==='cached').length,jinaRecords=records.filter(r=>r.source?.mode==='jina-reader').length,cachedRecords=records.filter(r=>r.syncStatus==='cached').length;
+const source={site:'忘却前夜中文维基',url:`${WIKI}/`,transport:'MediaWiki API / Jina Reader + persistent verified cache + stable local identity map',syncedAt:new Date().toISOString(),license:'CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders'};
+const payload={source,count:records.length,mapped:records.length,enriched,jinaRecords,cachedRecords,voiceRecords,failed,unmapped:[],records,bySkeydbId};await saveJson(ZH_FILE,payload);await saveJson(`${OUT_DIR}/manifest.json`,{source,status:failed.length?'partial':'ok',counts:{targets:seeds.length,pages:records.length,mapped:records.length,enriched,jinaRecords,cachedRecords,voiceRecords,failed:failed.length},paths:{identity:IDENTITY_FILE,zhCN:ZH_FILE}});
+console.log(`Morimens zh-CN: identities ${records.length}/${(skeydb.records||[]).length}; enriched/cached ${enriched}; cached ${cachedRecords}; Jina ${jinaRecords}; Chinese voice records ${voiceRecords}; fallbacks ${failed.length}.`);
