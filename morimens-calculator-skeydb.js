@@ -103,10 +103,10 @@
   }
 
   async function loadCatalogs(){
-    const [wheels,covenants]=await Promise.all([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants')]);wheelCatalog=wheels?.records||[];covenantCatalog=covenants?.records||[];
+    const [wr,cr]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants')]);wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];
     const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML='<option value="">无 / None</option>';for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${w.name} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
     const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无 / None</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
-    setText('skeydbBuildText',`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add('ok');syncWheelDuplicates();
+    const missing=[wr,cr].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
   function syncWheelDuplicates(){
     const a=$('fateSelect'),b=$('fateSelect2');if(!a||!b)return;const av=a.value,bv=b.value;
@@ -185,7 +185,7 @@
 
   async function boot(){
     ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
-    try{await loadCatalogs();await loadAwakener();window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 配装数据加载失败');$('skeydbBuildDot')?.classList.add('bad')}
+    try{await loadCatalogs();await loadAwakener();window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
   }
   if(window.MorimensData?.db&&window.MorimensRepository)boot();else window.addEventListener('morimens-data-ready',boot,{once:true});
 })();
