@@ -20,7 +20,7 @@ permissions:
 
 concurrency:
   group: sync-morimens-all
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   sync:
