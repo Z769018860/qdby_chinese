@@ -1,0 +1,400 @@
+{
+  "fetchedAt": "2026-09-16T19:00:03.659Z",
+  "results": [
+    {
+      "url": "https://eremora.com/api/rank?board=abyss&start=1&end=50",
+      "status": 403,
+      "length": 5658,
+      "parseOk": false,
+      "parseError": "SyntaxError: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON",
+      "rowCount": 0,
+      "rowKeys": [],
+      "first": null,
+      "last": null,
+      "topKeys": [],
+      "headers": {
+        "origin-agent-cluster": "?1"
+      }
+    },
+    {
+      "url": "https://eremora.com/api/rank?board=abyss&start=51&end=100",
+      "status": 200,
+      "length": 19982,
+      "parseOk": true,
+      "parseError": null,
+      "rowCount": 50,
+      "rowKeys": [
+        "rank",
+        "uid",
+        "name",
+        "raw_name",
+        "score",
+        "level",
+        "type",
+        "note",
+        "state",
+        "avatar",
+        "frame",
+        "dzone_season"
+      ],
+      "first": {
+        "rank": 51,
+        "uid": 100450986,
+        "name": "SchwarzGallert",
+        "raw_name": "SchwarzGallert",
+        "score": 455,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 127056,
+          "name": "Collector's Stamp: Doresain",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_Style_Stamp_B10.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54579,
+          "name": "Silver Matrix",
+          "image": "icon/Icon_PortraitFrame_02.webp",
+          "quality": "Orange"
+        },
+        "dzone_season": 69
+      },
+      "last": {
+        "rank": 100,
+        "uid": 100807061,
+        "name": "WhaleLeap",
+        "raw_name": "WhaleLeap",
+        "score": 450,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 72861,
+          "name": "By the Silver Key: Juliette",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_A_Julliette.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54579,
+          "name": "Silver Matrix",
+          "image": "icon/Icon_PortraitFrame_02.webp",
+          "quality": "Orange"
+        },
+        "dzone_season": 69
+      },
+      "topKeys": [
+        "rows"
+      ],
+      "headers": {
+        "cf-cache-status": "DYNAMIC"
+      }
+    },
+    {
+      "url": "https://eremora.com/api/rank?board=abyss&start=101&end=150",
+      "status": 200,
+      "length": 19955,
+      "parseOk": true,
+      "parseError": null,
+      "rowCount": 50,
+      "rowKeys": [
+        "rank",
+        "uid",
+        "name",
+        "raw_name",
+        "score",
+        "level",
+        "type",
+        "note",
+        "state",
+        "avatar",
+        "frame",
+        "dzone_season"
+      ],
+      "first": {
+        "rank": 101,
+        "uid": 100610824,
+        "name": "Fen",
+        "raw_name": "Fen",
+        "score": 450,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 72851,
+          "name": "By the Silver Key: N",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_A_N.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54579,
+          "name": "Silver Matrix",
+          "image": "icon/Icon_PortraitFrame_02.webp",
+          "quality": "Orange"
+        },
+        "dzone_season": 69
+      },
+      "last": {
+        "rank": 150,
+        "uid": 100437410,
+        "name": "Gazima",
+        "raw_name": "Gazima",
+        "score": 450,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 144521,
+          "name": "Collector's Stamp: Helot",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_Style_Stamp_B05.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54582,
+          "name": "Mythag's Keeper",
+          "image": "icon/Icon_PortraitFrame_01.webp",
+          "quality": "Purple"
+        },
+        "dzone_season": 69
+      },
+      "topKeys": [
+        "rows"
+      ],
+      "headers": {
+        "cf-cache-status": "DYNAMIC"
+      }
+    },
+    {
+      "url": "https://eremora.com/api/rank?board=abyss&start=151&end=200",
+      "status": 200,
+      "length": 19869,
+      "parseOk": true,
+      "parseError": null,
+      "rowCount": 50,
+      "rowKeys": [
+        "rank",
+        "uid",
+        "name",
+        "raw_name",
+        "score",
+        "level",
+        "type",
+        "note",
+        "state",
+        "avatar",
+        "frame",
+        "dzone_season"
+      ],
+      "first": {
+        "rank": 151,
+        "uid": 100607245,
+        "name": "夢遊",
+        "raw_name": "夢遊",
+        "score": 450,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 25119,
+          "name": "Lily",
+          "image": "portraits/Portrait_Minihead_Awaker_C10_AF.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 79412,
+          "name": "Dimensional Laurels",
+          "image": "icon/Icon_PortraitFrame_05.webp",
+          "quality": "Orange"
+        },
+        "dzone_season": 68
+      },
+      "last": {
+        "rank": 200,
+        "uid": 100722683,
+        "name": "清野凛",
+        "raw_name": "清野凛",
+        "score": 450,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 140418,
+          "name": "The Rose's Psalm",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_S_012.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54579,
+          "name": "Silver Matrix",
+          "image": "icon/Icon_PortraitFrame_02.webp",
+          "quality": "Orange"
+        },
+        "dzone_season": 69
+      },
+      "topKeys": [
+        "rows"
+      ],
+      "headers": {
+        "cf-cache-status": "DYNAMIC"
+      }
+    },
+    {
+      "url": "https://eremora.com/api/rank?board=abyss&start=451&end=500",
+      "status": 200,
+      "length": 19828,
+      "parseOk": true,
+      "parseError": null,
+      "rowCount": 50,
+      "rowKeys": [
+        "rank",
+        "uid",
+        "name",
+        "raw_name",
+        "score",
+        "level",
+        "type",
+        "note",
+        "state",
+        "avatar",
+        "frame",
+        "dzone_season"
+      ],
+      "first": {
+        "rank": 451,
+        "uid": 101077574,
+        "name": "Beam",
+        "raw_name": "Beam",
+        "score": 400,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 54493,
+          "name": "By the Silver Key: Leigh",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_A_B08.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54582,
+          "name": "Mythag's Keeper",
+          "image": "icon/Icon_PortraitFrame_01.webp",
+          "quality": "Purple"
+        },
+        "dzone_season": 69
+      },
+      "last": {
+        "rank": 500,
+        "uid": 100805095,
+        "name": "不沾雪",
+        "raw_name": "不沾雪",
+        "score": 400,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 145301,
+          "name": "By the Silver Key: Lotan: Cetarchon",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_A_C04EX.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54582,
+          "name": "Mythag's Keeper",
+          "image": "icon/Icon_PortraitFrame_01.webp",
+          "quality": "Purple"
+        },
+        "dzone_season": 69
+      },
+      "topKeys": [
+        "rows"
+      ],
+      "headers": {
+        "cf-cache-status": "DYNAMIC"
+      }
+    },
+    {
+      "url": "https://eremora.com/api/rank?board=abyss&start=951&end=1000",
+      "status": 200,
+      "length": 19589,
+      "parseOk": true,
+      "parseError": null,
+      "rowCount": 50,
+      "rowKeys": [
+        "rank",
+        "uid",
+        "name",
+        "raw_name",
+        "score",
+        "level",
+        "type",
+        "note",
+        "state",
+        "avatar",
+        "frame",
+        "dzone_season"
+      ],
+      "first": {
+        "rank": 951,
+        "uid": 102056356,
+        "name": "小小潇潇",
+        "raw_name": "小小潇潇",
+        "score": 370,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 77941,
+          "name": "Pollux",
+          "image": "portraits/Portrait_Minihead_Awaker_D14_NF.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54582,
+          "name": "Mythag's Keeper",
+          "image": "icon/Icon_PortraitFrame_01.webp",
+          "quality": "Purple"
+        },
+        "dzone_season": 69
+      },
+      "last": {
+        "rank": 1000,
+        "uid": 101071484,
+        "name": "Лилит",
+        "raw_name": "Лилит",
+        "score": 370,
+        "level": null,
+        "type": "AbyssChallenge",
+        "note": null,
+        "state": "",
+        "avatar": {
+          "id": 72908,
+          "name": "By the Silver Key: Brown",
+          "image": "portraits/Portrait_Minihead_PlayerAvatar_A_Brown.webp",
+          "quality": "Orange"
+        },
+        "frame": {
+          "id": 54582,
+          "name": "Mythag's Keeper",
+          "image": "icon/Icon_PortraitFrame_01.webp",
+          "quality": "Purple"
+        },
+        "dzone_season": 69
+      },
+      "topKeys": [
+        "rows"
+      ],
+      "headers": {
+        "cf-cache-status": "DYNAMIC"
+      }
+    }
+  ]
+}
