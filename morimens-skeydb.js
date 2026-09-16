@@ -1,14 +1,26 @@
 (()=>{
   const DATA_URL='data/morimens/skeydb/awakeners.json';
   const ZH_URL='data/morimens/huiji/zh-CN.json';
-  let db=null,zhDb=null,current=null,quoteIndex=0;
+  const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json';
+  let db=null,zhDb=null,identityDb=null,current=null,quoteIndex=0;
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const todayKey=()=>new Date().toLocaleDateString('sv-SE');
   const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const language=()=>localStorage.getItem('morimens.language')||'zh-CN';
   const isZh=()=>language()==='zh-CN';
-  const zhFor=rec=>zhDb?.bySkeydbId?.[rec?.id]||null;
+  const normalize=s=>String(s||'').toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
+  const realms={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维'};
+  const types={ASSAULT:'伤害型',WARDEN:'防御型',CHORUS:'辅助型'};
+
+  function identityFor(rec){return identityDb?.bySkeydbId?.[rec?.id]||null}
+  function zhFor(rec){
+    if(!rec)return null;
+    const seed=identityFor(rec),live=zhDb?.bySkeydbId?.[rec.id];
+    if(live&&normalize(live.englishName)===normalize(rec.name))return seed?{...seed,...live,profile:{...(seed.profile||{}),...(live.profile||{})},voiceLines:live.voiceLines?.length?live.voiceLines:(seed.voiceLines||seed.fallbackVoiceLines||[])}:live;
+    if(live)console.warn('Ignored mismatched Morimens zh mapping',rec.id,rec.name,live.name,live.englishName);
+    return seed;
+  }
 
   function ensureUi(){
     const visual=$('fortuneVisual');
@@ -16,59 +28,63 @@
     const body=document.querySelector('.fortuneBody');if(body&&!$('skeydbProfile')){const box=document.createElement('div');box.id='skeydbProfile';box.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px';body.insertBefore(box,body.querySelector('.fortuneMeta'))}
     const actions=document.querySelector('.fortuneActions');if(actions&&!$('skeydbQuoteBtn')){const b=document.createElement('button');b.id='skeydbQuoteBtn';b.type='button';b.className='ghostBtn';b.textContent='换一句角色台词';b.addEventListener('click',()=>{if(!current)return;quoteIndex++;renderQuote(current)});actions.insertBefore(b,actions.lastElementChild)}
     const tags=document.querySelector('.heroTags');if(tags&&!$('skeydbStatus')){const s=document.createElement('span');s.className='tag';s.id='skeydbStatus';s.textContent='SKeyDB / Wiki：等待同步快照';tags.appendChild(s)}
-    const sources=document.querySelector('.sourceList');if(sources&&!$('skeydbAttribution')){
-      const note=document.createElement('div');note.id='skeydbAttribution';note.className='sourceItem';sources.appendChild(note);
-    }
+    const sources=document.querySelector('.sourceList');if(sources&&!$('skeydbAttribution')){const note=document.createElement('div');note.id='skeydbAttribution';note.className='sourceItem';sources.appendChild(note)}
   }
 
   function allQuotes(rec){
-    const zh=zhFor(rec);if(isZh()&&zh?.voiceLines?.length)return zh.voiceLines.filter(x=>x?.content);
+    const zh=zhFor(rec);
+    if(isZh()){
+      const q=(zh?.voiceLines?.length?zh.voiceLines:zh?.fallbackVoiceLines)||[];
+      return q.filter(x=>x?.content);
+    }
     return rec?.profile?.voiceLines?.filter(x=>x?.content)||[];
   }
   function localizedProfile(rec){
-    const zh=zhFor(rec);if(isZh()&&zh)return {name:zh.name||rec.name,rarity:zh.profile?.rarity||rec.rarity,realm:zh.profile?.realm||rec.realm,type:zh.profile?.type||rec.type,faction:zh.profile?.faction||rec.faction,birthday:zh.profile?.birthday||rec.profile?.birthday,voiceActor:zh.profile?.voiceActor||rec.profile?.voiceActor};
+    const zh=zhFor(rec);
+    if(isZh())return {name:zh?.name||rec.name,rarity:zh?.profile?.rarity||rec.rarity,realm:zh?.profile?.realm||realms[rec.realm]||rec.realm,type:zh?.profile?.type||types[rec.type]||rec.type,faction:zh?.profile?.faction||rec.faction,birthday:zh?.profile?.birthday||rec.profile?.birthday,voiceActor:zh?.profile?.voiceActor||rec.profile?.voiceActor};
     return {name:rec.name,rarity:rec.rarity,realm:rec.realm,type:rec.type,faction:rec.faction,birthday:rec.profile?.birthday,voiceActor:rec.profile?.voiceActor};
   }
   function renderQuote(rec){
-    const q=allQuotes(rec);const box=$('fortuneQuote');if(!box)return;
-    if(!q.length){box.textContent=isZh()?'该角色当前同步数据没有可用台词。':'No synchronized voice line is available for this character.';return}
+    const q=allQuotes(rec),box=$('fortuneQuote');if(!box)return;
+    if(!q.length){box.textContent=isZh()?'该角色的中文语音快照尚未同步；不会再用其他角色或英文台词替代。':'No synchronized voice line is available for this character.';return}
     const item=q[((quoteIndex%q.length)+q.length)%q.length];box.innerHTML=`<strong>${escape(item.title||(isZh()?'角色语音':'Voice line'))}</strong><br>“${escape(item.content)}”`;
   }
   function renderSourceStatus(){
-    if($('skeydbStatus'))$('skeydbStatus').textContent=isZh()?`数据：SKeyDB ${db?.source?.commit?.slice(0,8)||'—'} · 中文 Wiki ${zhDb?.mapped??0}/${db?.count??0}`:`Data: SKeyDB ${db?.source?.commit?.slice(0,8)||'—'} · Huiji zh-CN ${zhDb?.mapped??0}/${db?.count??0}`;
-    const a=$('skeydbAttribution');if(a)a.innerHTML=isZh()?'<strong>数据来源：</strong>英文结构化数据与数值来自 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a>；中文版名称、资料、文本优先遵循 <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">忘却前夜中文维基</a> 的每日同步快照。两者原创内容分别遵循其 CC BY-NC-SA 4.0 条款；游戏图片和游戏原文仍属于相应权利方。':'<strong>Sources:</strong> English structured data and numeric records are synchronized from <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a>. Chinese localization is synchronized from the <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">Morimens Chinese HuijiWiki</a>. Project-authored data follows the applicable CC BY-NC-SA 4.0 terms; game-owned art and text remain property of their respective rights holders.';
+    const mapped=zhDb?.mapped??identityDb?.records?.length??0,voices=zhDb?.voiceRecords??0;
+    if($('skeydbStatus'))$('skeydbStatus').textContent=isZh()?`数据：SKeyDB ${db?.source?.commit?.slice(0,8)||'—'} · 中文身份 ${mapped}/${db?.count??0} · 中文语音 ${voices}`:`Data: SKeyDB ${db?.source?.commit?.slice(0,8)||'—'} · zh-CN identities ${mapped}/${db?.count??0}`;
+    const a=$('skeydbAttribution');if(a)a.innerHTML=isZh()?'<strong>数据来源：</strong>角色 ID、数值与本地卡面来自 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a>；中文角色名与中文语音按 <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">忘却前夜中文维基</a> 页面校对。角色名、卡面、头像始终通过同一个 SKeyDB awakener ID 绑定，禁止按列表顺序关联。':'<strong>Sources:</strong> IDs, numeric data and local character art come from <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a>; Chinese identity and voice text are checked against the <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">Morimens Chinese HuijiWiki</a>.';
   }
   function render(rec,random=false){
-    current=rec;const loc=localizedProfile(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,allQuotes(rec).length);
-    const portrait=$('fortunePortrait');if(portrait){portrait.src=rec.assets?.card||rec.assets?.portrait||'';portrait.hidden=!portrait.src;portrait.alt=`${loc.name} ${isZh()?'角色卡面':'character card'}`;portrait.style.objectPosition='center 18%'}
-    const avatar=$('skeydbAvatar');if(avatar){avatar.src=rec.assets?.portrait||rec.assets?.card||'';avatar.hidden=!avatar.src;avatar.alt=`${loc.name} ${isZh()?'头像':'portrait'}`}
-    if($('fortuneName'))$('fortuneName').textContent=loc.name;
-    if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
+    if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
+    const portrait=$('fortunePortrait');if(portrait){const src=rec.assets?.card||rec.assets?.portrait||'';portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.alt=`${loc.name} ${isZh()?'角色卡面':'character card'}`;portrait.style.objectPosition='center 18%'}
+    const avatar=$('skeydbAvatar');if(avatar){const src=rec.assets?.portrait||rec.assets?.card||'';avatar.src=src;avatar.hidden=!src;avatar.dataset.awakenerId=rec.id;avatar.alt=`${loc.name} ${isZh()?'头像':'portrait'}`}
+    if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}
+    if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
     const labels=isZh()?['稀有度','界域','类型','阵营','生日','声优']:['Rarity','Realm','Type','Faction','Birthday','Voice actor'];
     const values=[loc.rarity,loc.realm,loc.type,loc.faction,loc.birthday,loc.voiceActor];
     const p=$('skeydbProfile');if(p)p.innerHTML=labels.map((k,i)=>[k,values[i]]).filter(x=>x[1]).map(([k,v])=>`<div style="padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf">${escape(k)}<strong style="display:block;color:#e5e7eb;margin-top:3px">${escape(v)}</strong></div>`).join('');
-    const wiki=$('wikiBtn');const zh=zhFor(rec);if(wiki&&zh?.source?.url)wiki.href=zh.source.url;
+    const wiki=$('wikiBtn'),zh=zhFor(rec);if(wiki){const title=zh?.name||loc.name;wiki.href=zh?.source?.url||`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(title)}`}
     renderSourceStatus();
   }
   function renderToday(){if(!db?.records?.length)return;render(db.records[hash(todayKey())%db.records.length])}
   function renderRandom(){if(!db?.records?.length)return;render(db.records[Math.floor(Math.random()*db.records.length)],true)}
 
+  async function getJson(url,label){const r=await fetch(`${url}?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${label} HTTP ${r.status}`);return r.json()}
   async function boot(){
     ensureUi();
     try{
-      const [enResult,zhResult]=await Promise.allSettled([
-        fetch(`${DATA_URL}?v=${Date.now()}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`SKeyDB HTTP ${r.status}`);return r.json()}),
-        fetch(`${ZH_URL}?v=${Date.now()}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`Huiji HTTP ${r.status}`);return r.json()})
-      ]);
-      if(enResult.status!=='fulfilled')throw enResult.reason;db=enResult.value;if(zhResult.status==='fulfilled')zhDb=zhResult.value;else console.warn('Chinese Huiji snapshot unavailable',zhResult.reason);
-      window.MorimensData={db,zhDb,language,zhFor,localizedProfile};
+      const [enResult,zhResult,idResult]=await Promise.allSettled([getJson(DATA_URL,'SKeyDB'),getJson(ZH_URL,'Huiji'),getJson(IDENTITY_URL,'identity')]);
+      if(enResult.status!=='fulfilled')throw enResult.reason;db=enResult.value;
+      if(idResult.status==='fulfilled'){identityDb=idResult.value;identityDb.bySkeydbId=Object.fromEntries((identityDb.records||[]).map(x=>[x.skeydbId,x]))}else console.warn('Chinese identity map unavailable',idResult.reason);
+      if(zhResult.status==='fulfilled'&&zhResult.value&&typeof zhResult.value==='object')zhDb=zhResult.value;else console.warn('Chinese Huiji snapshot unavailable',zhResult.reason);
+      window.MorimensData={db,zhDb,identityDb,language,zhFor,localizedProfile};
       const fortune=$('fortuneBtn'),reroll=$('rerollBtn');
       if(fortune)fortune.addEventListener('click',e=>{e.stopImmediatePropagation();renderToday()},{capture:true});
       if(reroll)reroll.addEventListener('click',e=>{e.stopImmediatePropagation();renderRandom()},{capture:true});
       window.addEventListener('morimens-language-change',()=>{if(current)render(current);else renderToday()});
       renderToday();window.dispatchEvent(new CustomEvent('morimens-data-ready'));
-    }catch(err){console.warn('SKeyDB snapshot unavailable',err);if($('skeydbStatus'))$('skeydbStatus').textContent=isZh()?'SKeyDB：快照尚未生成，暂用旧数据':'SKeyDB snapshot unavailable; using legacy data'}
+    }catch(err){console.warn('SKeyDB snapshot unavailable',err);if($('skeydbStatus'))$('skeydbStatus').textContent=isZh()?'SKeyDB：快照加载失败':'SKeyDB snapshot unavailable'}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,0));else setTimeout(boot,0);
 })();
