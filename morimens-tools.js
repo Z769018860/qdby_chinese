@@ -24,6 +24,7 @@
     await import(`./morimens-skeydb.js?v=${Date.now()}`);
     await import(`./morimens-i18n.js?v=${Date.now()}`);
     await import(`./morimens-calculator-skeydb.js?v=${Date.now()}`);
+    await import(`./morimens-calculator-stats.js?v=${Date.now()}`);
   }catch(err){
     console.error("Morimens loader failed",err);
     const box=document.createElement("div");
