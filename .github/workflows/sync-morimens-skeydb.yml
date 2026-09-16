@@ -31,7 +31,7 @@ jobs:
         run: node scripts/sync_morimens_skeydb.mjs
       - name: Commit synchronized snapshot
         run: |
-          if git diff --quiet -- data/morimens/skeydb assets/morimens; then
+          if [ -z "$(git status --porcelain -- data/morimens/skeydb assets/morimens)" ]; then
             echo "SKeyDB snapshot is unchanged."
             exit 0
           fi
