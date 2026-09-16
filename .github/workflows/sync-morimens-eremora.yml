@@ -8,6 +8,7 @@ on:
       - "scripts/discover_eremora_leaderboard.mjs"
       - "scripts/eremora_sveltekit.mjs"
       - "scripts/sync_morimens_eremora.mjs"
+      - "scripts/sync_morimens_eremora_rank_index.mjs"
       - "scripts/postprocess_morimens_eremora.mjs"
       - "morimens-dtide.js"
       - ".github/workflows/sync-morimens-eremora.yml"
@@ -24,7 +25,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,6 +38,7 @@ jobs:
           node --check scripts/discover_eremora_leaderboard.mjs
           node --check scripts/eremora_sveltekit.mjs
           node --check scripts/sync_morimens_eremora.mjs
+          node --check scripts/sync_morimens_eremora_rank_index.mjs
           node --check scripts/postprocess_morimens_eremora.mjs
           node --check morimens-dtide.js
       - name: Discover Eremora public data
@@ -49,6 +51,11 @@ jobs:
         run: node scripts/sync_morimens_eremora.mjs
       - name: Precompute rank, difficulty and enlightenment analytics
         run: node scripts/postprocess_morimens_eremora.mjs
+      - name: Sync Eremora Top 1000 rank index
+        env:
+          EREMORA_RANK_TARGET: "1000"
+          EREMORA_RANK_DELAY_MS: "1100"
+        run: node scripts/sync_morimens_eremora_rank_index.mjs
       - name: Commit Eremora snapshots
         run: |
           if [ -z "$(git status --porcelain -- data/morimens/eremora)" ]; then
