@@ -11,7 +11,6 @@ on:
       - "scripts/sync_morimens_eremora_rank_index.mjs"
       - "scripts/sync_morimens_eremora_usage.mjs"
       - "scripts/postprocess_morimens_eremora.mjs"
-      - "morimens-dtide.js"
       - ".github/workflows/sync-morimens-eremora.yml"
   schedule:
     - cron: "11 4 * * *"
