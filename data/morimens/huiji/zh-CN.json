@@ -2,17 +2,348 @@
   "source": {
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
-    "transport": "MediaWiki API / Jina Reader + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-16T17:21:19.089Z",
+    "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
+    "syncedAt": "2026-09-16T17:30:45.930Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 60,
   "mapped": 60,
-  "enriched": 60,
+  "enriched": 5,
   "jinaRecords": 58,
-  "cachedRecords": 35,
-  "voiceRecords": 59,
-  "failed": [],
+  "cachedRecords": 5,
+  "voiceRecords": 6,
+  "failed": [
+    {
+      "title": "「24」",
+      "skeydbId": "awakener-0001",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "阿格里帕",
+      "skeydbId": "awakener-0002",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "艾继丝",
+      "skeydbId": "awakener-0003",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "艾尔瓦",
+      "skeydbId": "awakener-0004",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "奥瑞塔",
+      "skeydbId": "awakener-0005",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "凯刻斯",
+      "skeydbId": "awakener-0006",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "卡茜亚",
+      "skeydbId": "awakener-0007",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "卡斯托尔",
+      "skeydbId": "awakener-0008",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "希莱斯特",
+      "skeydbId": "awakener-0009",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "克莱门汀",
+      "skeydbId": "awakener-0010",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "克珀珊特",
+      "skeydbId": "awakener-0011",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "达芙黛尔",
+      "skeydbId": "awakener-0012",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "朵尔",
+      "skeydbId": "awakener-0013",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "杜勒赛因",
+      "skeydbId": "awakener-0014",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "菲茵特",
+      "skeydbId": "awakener-0016",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "法洛思",
+      "skeydbId": "awakener-0017",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "熔毁·朵尔",
+      "skeydbId": "awakener-0018",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "血链·希洛",
+      "skeydbId": "awakener-0019",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "环行·拉蒙娜",
+      "skeydbId": "awakener-0020",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "戈利亚",
+      "skeydbId": "awakener-0021",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "哈姆林",
+      "skeydbId": "awakener-0022",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "希洛",
+      "skeydbId": "awakener-0023",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "奥尔拉",
+      "skeydbId": "awakener-0024",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "詹金",
+      "skeydbId": "awakener-0025",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "珈伦",
+      "skeydbId": "awakener-0026",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "雷娅",
+      "skeydbId": "awakener-0028",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "莉莉",
+      "skeydbId": "awakener-0029",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "莉兹",
+      "skeydbId": "awakener-0030",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "萝坦",
+      "skeydbId": "awakener-0031",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "弥利亚姆",
+      "skeydbId": "awakener-0032",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "茉夏",
+      "skeydbId": "awakener-0033",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "墨菲",
+      "skeydbId": "awakener-0034",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "诞妄·墨菲",
+      "skeydbId": "awakener-0035",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "诺缔拉",
+      "skeydbId": "awakener-0036",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "宁菲亚",
+      "skeydbId": "awakener-0037",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "奥吉尔",
+      "skeydbId": "awakener-0038",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "潘狄娅",
+      "skeydbId": "awakener-0039",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "皮克曼",
+      "skeydbId": "awakener-0040",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "波吕克斯",
+      "skeydbId": "awakener-0041",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "拉蒙娜",
+      "skeydbId": "awakener-0042",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "莱克",
+      "skeydbId": "awakener-0043",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "萨尔瓦多",
+      "skeydbId": "awakener-0044",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "珊",
+      "skeydbId": "awakener-0045",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "索蕾尔",
+      "skeydbId": "awakener-0046",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "塔薇",
+      "skeydbId": "awakener-0047",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "汀克特",
+      "skeydbId": "awakener-0049",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "图鲁",
+      "skeydbId": "awakener-0050",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "尤乌哈希",
+      "skeydbId": "awakener-0051",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "旺达",
+      "skeydbId": "awakener-0052",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "徐",
+      "skeydbId": "awakener-0054",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "莫丝",
+      "skeydbId": "awakener-0055",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "沙耶",
+      "skeydbId": "awakener-0057",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "庞托斯",
+      "skeydbId": "awakener-0058",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "蚀灭·萝坦",
+      "skeydbId": "awakener-0059",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "卡拉布",
+      "skeydbId": "awakener-0060",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    }
+  ],
   "unmapped": [],
   "records": [
     {
@@ -25,19 +356,14 @@
         "name": "「24」",
         "englishName": "\"24\""
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0002",
@@ -49,19 +375,14 @@
         "name": "阿格里帕",
         "englishName": "Agrippa"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%A0%BC%E9%87%8C%E5%B8%95",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%A0%BC%E9%87%8C%E5%B8%95"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0003",
@@ -73,19 +394,14 @@
         "name": "艾继丝",
         "englishName": "Aigis"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%BB%A7%E4%B8%9D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%BB%A7%E4%B8%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0004",
@@ -97,19 +413,14 @@
         "name": "艾尔瓦",
         "englishName": "Alva"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0005",
@@ -121,19 +432,14 @@
         "name": "奥瑞塔",
         "englishName": "Aurita"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0006",
@@ -145,12 +451,7 @@
         "name": "凯刻斯",
         "englishName": "Caecus"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -336,7 +637,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%87%AF%E5%88%BB%E6%96%AF"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0007",
@@ -348,19 +649,14 @@
         "name": "卡茜亚",
         "englishName": "Casiah"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0008",
@@ -372,19 +668,14 @@
         "name": "卡斯托尔",
         "englishName": "Castor"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0009",
@@ -396,12 +687,7 @@
         "name": "希莱斯特",
         "englishName": "Celeste"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -590,7 +876,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0010",
@@ -602,19 +888,14 @@
         "name": "克莱门汀",
         "englishName": "Clementine"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0011",
@@ -626,19 +907,14 @@
         "name": "克珀珊特",
         "englishName": "Corposant"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0012",
@@ -651,13 +927,192 @@
         "englishName": "Daffodil"
       },
       "voiceLines": [],
-      "skillTables": [],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "无限通道",
+              "「基础打击」享受 2 倍 力量 加成，获得 跃迁：获得 1 点算力。「基础防御」获得等同于攻击力 1% 的 力量（效果随「防御」的等级提升，满级时为 2%），获得 跃迁：获得 1 点算力。"
+            ],
+            [
+              "",
+              "贪婪灰雾",
+              "达芙黛尔以任意方式击杀敌人后，使队伍在本次关卡中暴击率永久提高 5%。"
+            ],
+            [
+              "",
+              "原质沉淀",
+              "每打出 1 张「 灵感」就使达芙黛尔获得 2 点狂气，获得等同于 1% 攻击力的 力量，每回合最多触发 5 次。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0013",
@@ -669,19 +1124,14 @@
         "name": "朵尔",
         "englishName": "Doll"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0014",
@@ -695,8 +1145,8 @@
       },
       "voiceLines": [
         {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
+          "title": "唤醒",
+          "content": "啊，多么令人刻骨铭心的香味……我已经迫不及待想要迎接你进入我的圣殿了。"
         }
       ],
       "skillTables": [],
@@ -705,7 +1155,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9D%9C%E5%8B%92%E8%B5%9B%E5%9B%A0"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0015",
@@ -718,10 +1168,6 @@
         "englishName": "Erica"
       },
       "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
         {
           "title": "唤醒",
           "content": "自动人偶艾瑞卡，躯干编号EA307881，电机编号MF311028。很高兴为你效劳。"
@@ -737,50 +1183,6 @@
         {
           "title": "获得提升·三",
           "content": "机体性能已经提升。"
-        },
-        {
-          "title": "启灵·远眺",
-          "content": "这是为调查任务而做的准备吗？我明白了。 （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "检测到强力电流，即将进行机体维护……修正，为什么没有过热？ （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "每次仪式后，胸口部位都会检测到高热，但那里并没有能源相关部件。你知道为什么吗？ （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "自上次启灵仪式后，我在休眠状态时会看到残破的画面。在里面，我拥有着如你一般的血肉之躯，也会滴落泪水。这，是梦吗？ （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "经过仔细分析，我断定我在休眠状态时看到的并非传统意义上的梦境，而是我可悲的血肉身躯就应该摧毁的记忆。至于那如过载一般烧灼的热度，或许是被称为「不甘」的情感。 （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "我看到了，一切都该在永恒的电流中死亡抱抱抱抱歉，模块似乎——警告，警告，非艾瑞卡意识活动增强，请销毁销毁销……你好，请问有什么需要我帮助的吗？ （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "如需查询资料，请完整说明档案名称，模糊搜索功能暂不可用。 （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "调查任务平均危险指数为7，平均医疗损耗为炼金补充剂8瓶，平均尸体善后时长为十小时。 结论：守密人的工作非常危险，在行动中请注意安全。 （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "正在查询教师档案：艾瑞卡·蕾菲尔，银芯机械与自动化专业讲师，已故——你想要查询的不是这个吗？好的，正在重新检索关键词「艾瑞卡」。 （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "「信赖」、「服从」、「奴隶」、「恋情」、「尊敬」……语言模块重建与学习中，还请守密人多多指教。 （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "艾瑞卡目前处于待机状态，机体将于一小时十五分钟后完成冷却，想启动就拿你的心脏来交换是否紧急启动？……权限验证中……守密人最高权限验证完毕。你好，守密人。 （同调率等级到达10解锁）"
         },
         {
           "title": "闲话·触摸",
@@ -857,19 +1259,14 @@
         "name": "菲茵特",
         "englishName": "Faint"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8F%B2%E8%8C%B5%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8F%B2%E8%8C%B5%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0017",
@@ -881,19 +1278,14 @@
         "name": "法洛思",
         "englishName": "Faros"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0018",
@@ -905,19 +1297,14 @@
         "name": "熔毁·朵尔",
         "englishName": "Doll: Inferno"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%86%94%E6%AF%81%C2%B7%E6%9C%B5%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%86%94%E6%AF%81%C2%B7%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0019",
@@ -929,19 +1316,14 @@
         "name": "血链·希洛",
         "englishName": "Helot: Catena"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%A1%80%E9%93%BE%C2%B7%E5%B8%8C%E6%B4%9B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A1%80%E9%93%BE%C2%B7%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0020",
@@ -953,19 +1335,14 @@
         "name": "环行·拉蒙娜",
         "englishName": "Ramona: Timeworn"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0021",
@@ -977,19 +1354,14 @@
         "name": "戈利亚",
         "englishName": "Goliath"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0022",
@@ -1001,19 +1373,14 @@
         "name": "哈姆林",
         "englishName": "Hameln"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%93%88%E5%A7%86%E6%9E%97",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%93%88%E5%A7%86%E6%9E%97"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0023",
@@ -1025,19 +1392,14 @@
         "name": "希洛",
         "englishName": "Helot"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0024",
@@ -1049,19 +1411,14 @@
         "name": "奥尔拉",
         "englishName": "Horla"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0025",
@@ -1073,12 +1430,7 @@
         "name": "詹金",
         "englishName": "Jenkin"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -1264,7 +1616,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0026",
@@ -1276,19 +1628,14 @@
         "name": "珈伦",
         "englishName": "Karen"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0027",
@@ -1301,10 +1648,6 @@
         "englishName": "Kathigu-Ra"
       },
       "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
         {
           "title": "唤醒",
           "content": "小家伙遇到麻烦了？那么遵循召唤，凯蒂古拉将带着毁灭而来。让所有麻烦都——“碰”的灰飞烟灭。"
@@ -1320,50 +1663,6 @@
         {
           "title": "获得提升·三",
           "content": "来吧，让我们把一切，烧成灰！"
-        },
-        {
-          "title": "启灵·远眺",
-          "content": "想让火焰更炽热一些么？ （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "聆听吧，这群星融化的悲嚎。 （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "力量的味道，要不要找些倒霉蛋试试手呢？ （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "那些难以名状的存在正在侵蚀这个世界，你将不可避免的与其为敌。不过这并无关系，因为吾会在你身后。 （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "吾的视野更加清晰了，吾看到了藏于深渊下的东西……为了你们，吾必须要更强大的力量…… （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "吾即是火，是焰，是永燃不止的混沌……吾会将大家……带回家…… （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "在残酷的世界中追求拯救么？加油吧，充满希望的小家伙。 （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "成功的狩猎后总是需要一场庆功宴，一起来吧，尝尝我烤的骆驼肉和刚搞到的龙舌兰酒。等下，小家伙你好像不能饮酒……那来喝我特制的果汁吧 （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "来，这些拿去玩吧，说是从什么遗迹里挖到的禁忌藏品。我对这些沾染祂们气息的东西不感兴趣，本想直接烧掉，但想着或许对你有用，就给你带过来了。 你问我怎么来的？当然是某些人「自愿」送给我的，放心吧，保证来路「干净」。 （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "无需将自己逼得太紧，我的守密人。虽然我知晓这是一条刻不容缓的曲折之路，稍有不慎就会万劫不复。但若继续如此，总有一天你会因心力交瘁而倒下。如果有需要的话，就找我聊聊吧，以家人的身份。 （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "来守密人，坐过来点，现在显得太生分了。 你知道么，当第一次见到你时，我从未想过有朝一日，可以在你这里卸下那被称作残忍和冷酷的外壳。有些可笑对吧，凶名赫赫的爆燃之主，却渴望得到一位可以倾诉真心的家人。 答应我，如果那天你撑不住了……就在心里呼唤吾之名讳，吾会带着你一同，前往吾之国度。虽然这只能延缓一切的到来，但起码在最后的时刻，你可以在吾怀里，好好地休息一下了。 （同调率等级到达10解锁）"
         },
         {
           "title": "闲话·触摸",
@@ -1667,19 +1966,14 @@
         "name": "雷娅",
         "englishName": "Leigh"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0029",
@@ -1691,19 +1985,14 @@
         "name": "莉莉",
         "englishName": "Lily"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0030",
@@ -1715,19 +2004,14 @@
         "name": "莉兹",
         "englishName": "Liz"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0031",
@@ -1739,19 +2023,14 @@
         "name": "萝坦",
         "englishName": "Lotan"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0032",
@@ -1763,19 +2042,14 @@
         "name": "弥利亚姆",
         "englishName": "Miryam"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0033",
@@ -1787,19 +2061,14 @@
         "name": "茉夏",
         "englishName": "Mouchette"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0034",
@@ -1811,12 +2080,7 @@
         "name": "墨菲",
         "englishName": "Murphy"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -2005,7 +2269,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0035",
@@ -2017,19 +2281,14 @@
         "name": "诞妄·墨菲",
         "englishName": "Murphy: Fauxborn"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0036",
@@ -2041,12 +2300,7 @@
         "name": "诺缔拉",
         "englishName": "Nautila"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -2232,7 +2486,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0037",
@@ -2244,12 +2498,7 @@
         "name": "宁菲亚",
         "englishName": "Nymphaea"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -2454,7 +2703,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0038",
@@ -2466,16 +2715,7 @@
         "name": "奥吉尔",
         "englishName": "Ogier"
       },
-      "voiceLines": [
-        {
-          "title": "形态切换 本源降临形态拥有以下特性︰ ● 本源降临是唤醒体的第二形态。",
-          "content": "文件:负誓·奥吉尔无底.png"
-        },
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -2665,7 +2905,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0039",
@@ -2677,12 +2917,7 @@
         "name": "潘狄娅",
         "englishName": "Pandia"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -2887,7 +3122,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0040",
@@ -2899,19 +3134,14 @@
         "name": "皮克曼",
         "englishName": "Pickman"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0041",
@@ -2923,19 +3153,14 @@
         "name": "波吕克斯",
         "englishName": "Pollux"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0042",
@@ -2947,12 +3172,7 @@
         "name": "拉蒙娜",
         "englishName": "Ramona"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -3138,7 +3358,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0043",
@@ -3150,19 +3370,14 @@
         "name": "莱克",
         "englishName": "Ryker"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0044",
@@ -3174,19 +3389,14 @@
         "name": "萨尔瓦多",
         "englishName": "Salvador"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0045",
@@ -3198,12 +3408,7 @@
         "name": "珊",
         "englishName": "Sanga"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -3402,7 +3607,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0046",
@@ -3414,19 +3619,14 @@
         "name": "索蕾尔",
         "englishName": "Sorel"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0047",
@@ -3438,19 +3638,14 @@
         "name": "塔薇",
         "englishName": "Tawil"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0048",
@@ -3483,10 +3678,6 @@
           "content": "消耗算力：1"
         },
         {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
-        {
           "title": "唤醒",
           "content": "我的脉管中奔涌着求生的意志，它尖叫着，驱使着我将血洒在星球的每一寸土地上……啊啊，让您听了如此多牢骚，见笑了。我是泰旖丝，您呼唤我，是已经做好与我相融的准备了吗？"
         },
@@ -3501,50 +3692,6 @@
         {
           "title": "获得提升·三",
           "content": "您如此慷慨，不胜感激……"
-        },
-        {
-          "title": "启灵·远眺",
-          "content": "要摸摸看吗？我的心脏正因您的存在而跳动着。 （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "我好高兴……您是如此的偏袒、偏心我。 （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "其他人可是会为了您的偏心而生气的哦。 （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "难道您也渴望着我吗？ （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "让我的爱意变得更为深厚，这就是您欲望的体现吗？ （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "为我付出如此之多，您的爱意，已然与我的水乳交融…… （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "不沉溺于我的爱意中试试吗？您将我唤醒，难道不就是为了我怀中的温度吗？ （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "您为什么总是躲着我呢？是害羞了吗？真可爱，您这副不敢直面欲望的样子…… （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "不想和来路不明的女人纠缠不清吗，好吧，好吧。尼尼微的亡国君，意图通天的示拿之人，幼发拉底圣树下被剥夺意志的少女……您想从哪里开始听起呢？ （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "既然作为您的使徒被唤醒，那么除了您的平安喜乐外，我别无所求，这是我的愿…唔啊……啊……果然，存续，存续，存续，存续，活下去…… （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "我一直都在等待毁灭的降临，却从未想过还有“抗争”这一选择……您愿意带着灵魂如此浅薄的我跨越湮灭吗？在死里逃生的世界里，也依旧给予我救赎…… （同调率等级到达10解锁）"
         },
         {
           "title": "闲话·触摸",
@@ -3643,10 +3790,6 @@
           "content": "靠近我、拥抱我、品尝我……不要忘了我。 （通关「调查行动」第7章后解锁）"
         },
         {
-          "title": "调查开始",
-          "content": "胜利后，请让我取走用于繁衍后代的材料吧。"
-        },
-        {
           "title": "调查成功",
           "content": "这么快就结束了？……我的兴致才刚被挑起呢。"
         },
@@ -3695,28 +3838,12 @@
           "content": "会太粗暴吗？"
         },
         {
-          "title": "特殊技能·一",
-          "content": "看过来！"
-        },
-        {
-          "title": "特殊技能·二",
-          "content": "乖孩子"
-        },
-        {
-          "title": "特殊技能·三",
-          "content": "唉！"
-        },
-        {
           "title": "灵知觉醒",
           "content": "长大吧——"
         },
         {
           "title": "狂气爆发",
           "content": "繁衍吧，生长吧，我的小树苗。"
-        },
-        {
-          "title": "超限狂气爆发",
-          "content": "加入我的仪式吧，成为我的种子！"
         },
         {
           "title": "死亡",
@@ -3745,10 +3872,6 @@
         {
           "title": "闲话·关于沙耶",
           "content": "哎呀，和姐姐我同源的力量，是个可爱的孩子呢。"
-        },
-        {
-          "title": "唤醒体别称= 羊妈、嗓子有痰 【嗓子有痰】{{黑幕",
-          "content": "内部}}官方外号 、丰穰之息 【丰穰之息】{{黑幕"
         },
         {
           "title": "技能1（右）效果1=选择一名其他唤醒体，使自身与该唤醒体均获得 15 点狂气。获得 [攻击力3%] 点（启灵1：获得 [攻击力4.5%] 点）{{词条",
@@ -3821,66 +3944,6 @@
         {
           "title": "灵知觉醒效果6=泰旖丝获得 50 点狂气。{{词条",
           "content": "灵知觉醒}}：立刻获得 1 张{{词条"
-        },
-        {
-          "title": "启灵1效果=「古老的爱抚」获得的{{词条",
-          "content": "力量}}提高 '''50'''%，「圣血的本能」选择效果翻倍。"
-        },
-        {
-          "title": "启灵3效果=血肉界域每回合自动获得的{{词条",
-          "content": "胚胎融合}}提高 '''50'''%，「基础打击」和「基础防御」获得等同于攻击力 '''3''' % 的{{词条"
-        },
-        {
-          "title": "启灵4效果={{属性",
-          "content": "狂气回充等级}} +0.4 {{属性"
-        },
-        {
-          "title": "启灵5效果={{属性",
-          "content": "狂气回充等级}} +0.8 {{属性"
-        },
-        {
-          "title": "启灵6效果={{属性",
-          "content": "狂气回充等级}} +1.2 {{属性"
-        },
-        {
-          "title": "启灵7效果={{属性",
-          "content": "狂气回充等级}} +1.6 {{属性"
-        },
-        {
-          "title": "启灵8效果={{属性",
-          "content": "狂气回充等级}} +2.0 {{属性"
-        },
-        {
-          "title": "启灵9效果={{属性",
-          "content": "狂气回充等级}} +2.4 {{属性"
-        },
-        {
-          "title": "启灵10效果={{属性",
-          "content": "狂气回充等级}} +2.8 {{属性"
-        },
-        {
-          "title": "启灵11效果={{属性",
-          "content": "狂气回充等级}} +3.2 {{属性"
-        },
-        {
-          "title": "启灵12效果={{属性",
-          "content": "狂气回充等级}} +3.6 {{属性"
-        },
-        {
-          "title": "启灵13效果={{属性",
-          "content": "狂气回充等级}} +4.0 {{属性"
-        },
-        {
-          "title": "启灵14效果={{属性",
-          "content": "狂气回充等级}} +4.4 {{属性"
-        },
-        {
-          "title": "启灵15效果={{属性",
-          "content": "狂气回充等级}} +4.8 {{属性"
-        },
-        {
-          "title": "<!-- 打击、防御、受击分别各额外提供两个栏位，如果有多余的请注释掉，有需要额外的复制格式并更改数字填写（例：",
-          "content": "打击·三语音=xxxx） --"
         }
       ],
       "skillTables": [
@@ -4469,19 +4532,14 @@
         "name": "汀克特",
         "englishName": "Tinct"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0050",
@@ -4493,12 +4551,7 @@
         "name": "图鲁",
         "englishName": "Tulu"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -4687,7 +4740,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0051",
@@ -4699,19 +4752,14 @@
         "name": "尤乌哈希",
         "englishName": "Uvhash"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0052",
@@ -4723,19 +4771,14 @@
         "name": "旺达",
         "englishName": "Wanda"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0053",
@@ -4771,19 +4814,14 @@
         "name": "徐",
         "englishName": "Xu"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0055",
@@ -4795,19 +4833,14 @@
         "name": "莫丝",
         "englishName": "Vortice"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0056",
@@ -4820,10 +4853,6 @@
         "englishName": "Arachne"
       },
       "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
         {
           "title": "唤醒",
           "content": "命运的舞台之上，众生在各自的因果中静候登场，万般悲欢在齿轮转动间悄然成章……帷幕已启，守密人，你我之间的故事，至此便要开始了。"
@@ -4841,50 +4870,6 @@
           "content": "无尽的命运之网，我已窥见全貌。"
         },
         {
-          "title": "启灵·远眺",
-          "content": "帷幕已为你敞开，命运的剧本静待开启。告诉我，您更愿步入哪一重命定的轨迹？是悲恸的终局，抑或欢愉的序章？ （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "若您钟情于喜剧，《仲夏夜之梦》是不错的选择。我尤爱迫克那些狡黠的谵语，精灵的嬉笑间，总藏着命运不经意泄露的密语。 （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "若您愿步入悲剧的殿堂，请容我为您呈上《安提戈涅》。于神律与尘世的对峙间，她每一步都踏在命运纺就的丝线上，直至踏入石墓深沉的阴影。正因这桎梏不可挣脱，她那渺小身躯里迸发的意志，才如长夜中的孤焰般灼目。 （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "我本以为世间再无选择能令我惊讶……您对戏剧的品味，让我印象深刻。 （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "承蒙您一路相伴于幕起幕落之间。未来，我定不负所期，为您奉上更动人心魄的戏剧之夜。 （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "凡是过往，皆为序章。你我的新篇，正等待着您的书写，守密人。 （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "命运的丝线总在暗处连接……您惊动了这根丝线，也惊动了我。 （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "命运之线本在我掌心流转有序……直到您的出现，让它们的轨迹生出未曾预料的涟漪。 （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "剧院新排了一出浪漫喜剧，我已在命运的席位上，为您留了一隅空座。我将在每个命运交织的长夜里，静候与你相逢的星光。 （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "如果您允许……我想为您编织一幕只属于您和我的双人剧。无需观众，不必彩排……我只是期待着，当您站在光下时，那根我无法看清的丝线，将有着怎样令人惊叹的跃动。 （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "你与我，那两根无法看清的命运丝线，早已紧紧相缠、无分彼此，编织成囚笼与道路。我无法看清囚笼的边际，也无法看清道路的终点。这正是这段故事里，最令人着迷的部分。 （同调率等级到达10解锁）"
-        },
-        {
           "title": "闲话·触摸",
           "content": "如此执着于拨动命运的纺线……您，也想要窥见属于自己的篇章？"
         },
@@ -4899,10 +4884,6 @@
         {
           "title": "闲话·关于哈姆林",
           "content": "我曾听过他的演奏，那美妙的旋律，让人灵魂震颤……或许，该邀请他为我的新戏谱一曲命运的交响？ （获得唤醒体「哈姆林」后解锁）"
-        },
-        {
-          "title": "闲话·关于汀克特",
-          "content": "如此有天赋的歌者，天赐的嗓音，清澈又灼热，仿佛源自命运之声……若能请来我的剧院，想必即使是最挑剔的观众也会感到惊喜。 （获得唤醒体「汀克特」后解锁）"
         },
         {
           "title": "闲话·关于塔薇",
@@ -4955,7 +4936,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0057",
@@ -4967,19 +4948,14 @@
         "name": "沙耶",
         "englishName": "Saya"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0058",
@@ -4991,19 +4967,14 @@
         "name": "庞托斯",
         "englishName": "Pontos"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0059",
@@ -5015,19 +4986,14 @@
         "name": "蚀灭·萝坦",
         "englishName": "Lotan: Cetarchon"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0060",
@@ -5039,19 +5005,14 @@
         "name": "卡拉布",
         "englishName": "Caraboo"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     }
   ],
   "bySkeydbId": {
@@ -5065,19 +5026,14 @@
         "name": "「24」",
         "englishName": "\"24\""
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0002": {
       "skeydbId": "awakener-0002",
@@ -5089,19 +5045,14 @@
         "name": "阿格里帕",
         "englishName": "Agrippa"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%A0%BC%E9%87%8C%E5%B8%95",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%A0%BC%E9%87%8C%E5%B8%95"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0003": {
       "skeydbId": "awakener-0003",
@@ -5113,19 +5064,14 @@
         "name": "艾继丝",
         "englishName": "Aigis"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%BB%A7%E4%B8%9D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E7%BB%A7%E4%B8%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0004": {
       "skeydbId": "awakener-0004",
@@ -5137,19 +5083,14 @@
         "name": "艾尔瓦",
         "englishName": "Alva"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0005": {
       "skeydbId": "awakener-0005",
@@ -5161,19 +5102,14 @@
         "name": "奥瑞塔",
         "englishName": "Aurita"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0006": {
       "skeydbId": "awakener-0006",
@@ -5185,12 +5121,7 @@
         "name": "凯刻斯",
         "englishName": "Caecus"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -5376,7 +5307,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%87%AF%E5%88%BB%E6%96%AF"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0007": {
       "skeydbId": "awakener-0007",
@@ -5388,19 +5319,14 @@
         "name": "卡茜亚",
         "englishName": "Casiah"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0008": {
       "skeydbId": "awakener-0008",
@@ -5412,19 +5338,14 @@
         "name": "卡斯托尔",
         "englishName": "Castor"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0009": {
       "skeydbId": "awakener-0009",
@@ -5436,12 +5357,7 @@
         "name": "希莱斯特",
         "englishName": "Celeste"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -5630,7 +5546,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0010": {
       "skeydbId": "awakener-0010",
@@ -5642,19 +5558,14 @@
         "name": "克莱门汀",
         "englishName": "Clementine"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0011": {
       "skeydbId": "awakener-0011",
@@ -5666,19 +5577,14 @@
         "name": "克珀珊特",
         "englishName": "Corposant"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0012": {
       "skeydbId": "awakener-0012",
@@ -5691,13 +5597,192 @@
         "englishName": "Daffodil"
       },
       "voiceLines": [],
-      "skillTables": [],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "无限通道",
+              "「基础打击」享受 2 倍 力量 加成，获得 跃迁：获得 1 点算力。「基础防御」获得等同于攻击力 1% 的 力量（效果随「防御」的等级提升，满级时为 2%），获得 跃迁：获得 1 点算力。"
+            ],
+            [
+              "",
+              "贪婪灰雾",
+              "达芙黛尔以任意方式击杀敌人后，使队伍在本次关卡中暴击率永久提高 5%。"
+            ],
+            [
+              "",
+              "原质沉淀",
+              "每打出 1 张「 灵感」就使达芙黛尔获得 2 点狂气，获得等同于 1% 攻击力的 力量，每回合最多触发 5 次。"
+            ],
+            [
+              "",
+              "展开人格深化",
+              "",
+              "---",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0013": {
       "skeydbId": "awakener-0013",
@@ -5709,19 +5794,14 @@
         "name": "朵尔",
         "englishName": "Doll"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0014": {
       "skeydbId": "awakener-0014",
@@ -5735,8 +5815,8 @@
       },
       "voiceLines": [
         {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
+          "title": "唤醒",
+          "content": "啊，多么令人刻骨铭心的香味……我已经迫不及待想要迎接你进入我的圣殿了。"
         }
       ],
       "skillTables": [],
@@ -5745,7 +5825,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9D%9C%E5%8B%92%E8%B5%9B%E5%9B%A0"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0015": {
       "skeydbId": "awakener-0015",
@@ -5758,10 +5838,6 @@
         "englishName": "Erica"
       },
       "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
         {
           "title": "唤醒",
           "content": "自动人偶艾瑞卡，躯干编号EA307881，电机编号MF311028。很高兴为你效劳。"
@@ -5777,50 +5853,6 @@
         {
           "title": "获得提升·三",
           "content": "机体性能已经提升。"
-        },
-        {
-          "title": "启灵·远眺",
-          "content": "这是为调查任务而做的准备吗？我明白了。 （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "检测到强力电流，即将进行机体维护……修正，为什么没有过热？ （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "每次仪式后，胸口部位都会检测到高热，但那里并没有能源相关部件。你知道为什么吗？ （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "自上次启灵仪式后，我在休眠状态时会看到残破的画面。在里面，我拥有着如你一般的血肉之躯，也会滴落泪水。这，是梦吗？ （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "经过仔细分析，我断定我在休眠状态时看到的并非传统意义上的梦境，而是我可悲的血肉身躯就应该摧毁的记忆。至于那如过载一般烧灼的热度，或许是被称为「不甘」的情感。 （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "我看到了，一切都该在永恒的电流中死亡抱抱抱抱歉，模块似乎——警告，警告，非艾瑞卡意识活动增强，请销毁销毁销……你好，请问有什么需要我帮助的吗？ （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "如需查询资料，请完整说明档案名称，模糊搜索功能暂不可用。 （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "调查任务平均危险指数为7，平均医疗损耗为炼金补充剂8瓶，平均尸体善后时长为十小时。 结论：守密人的工作非常危险，在行动中请注意安全。 （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "正在查询教师档案：艾瑞卡·蕾菲尔，银芯机械与自动化专业讲师，已故——你想要查询的不是这个吗？好的，正在重新检索关键词「艾瑞卡」。 （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "「信赖」、「服从」、「奴隶」、「恋情」、「尊敬」……语言模块重建与学习中，还请守密人多多指教。 （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "艾瑞卡目前处于待机状态，机体将于一小时十五分钟后完成冷却，想启动就拿你的心脏来交换是否紧急启动？……权限验证中……守密人最高权限验证完毕。你好，守密人。 （同调率等级到达10解锁）"
         },
         {
           "title": "闲话·触摸",
@@ -5897,19 +5929,14 @@
         "name": "菲茵特",
         "englishName": "Faint"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8F%B2%E8%8C%B5%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8F%B2%E8%8C%B5%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0017": {
       "skeydbId": "awakener-0017",
@@ -5921,19 +5948,14 @@
         "name": "法洛思",
         "englishName": "Faros"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0018": {
       "skeydbId": "awakener-0018",
@@ -5945,19 +5967,14 @@
         "name": "熔毁·朵尔",
         "englishName": "Doll: Inferno"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%86%94%E6%AF%81%C2%B7%E6%9C%B5%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%86%94%E6%AF%81%C2%B7%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0019": {
       "skeydbId": "awakener-0019",
@@ -5969,19 +5986,14 @@
         "name": "血链·希洛",
         "englishName": "Helot: Catena"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%A1%80%E9%93%BE%C2%B7%E5%B8%8C%E6%B4%9B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A1%80%E9%93%BE%C2%B7%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0020": {
       "skeydbId": "awakener-0020",
@@ -5993,19 +6005,14 @@
         "name": "环行·拉蒙娜",
         "englishName": "Ramona: Timeworn"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8E%AF%E8%A1%8C%C2%B7%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0021": {
       "skeydbId": "awakener-0021",
@@ -6017,19 +6024,14 @@
         "name": "戈利亚",
         "englishName": "Goliath"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0022": {
       "skeydbId": "awakener-0022",
@@ -6041,19 +6043,14 @@
         "name": "哈姆林",
         "englishName": "Hameln"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%93%88%E5%A7%86%E6%9E%97",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%93%88%E5%A7%86%E6%9E%97"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0023": {
       "skeydbId": "awakener-0023",
@@ -6065,19 +6062,14 @@
         "name": "希洛",
         "englishName": "Helot"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0024": {
       "skeydbId": "awakener-0024",
@@ -6089,19 +6081,14 @@
         "name": "奥尔拉",
         "englishName": "Horla"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0025": {
       "skeydbId": "awakener-0025",
@@ -6113,12 +6100,7 @@
         "name": "詹金",
         "englishName": "Jenkin"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -6304,7 +6286,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0026": {
       "skeydbId": "awakener-0026",
@@ -6316,19 +6298,14 @@
         "name": "珈伦",
         "englishName": "Karen"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0027": {
       "skeydbId": "awakener-0027",
@@ -6341,10 +6318,6 @@
         "englishName": "Kathigu-Ra"
       },
       "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
         {
           "title": "唤醒",
           "content": "小家伙遇到麻烦了？那么遵循召唤，凯蒂古拉将带着毁灭而来。让所有麻烦都——“碰”的灰飞烟灭。"
@@ -6360,50 +6333,6 @@
         {
           "title": "获得提升·三",
           "content": "来吧，让我们把一切，烧成灰！"
-        },
-        {
-          "title": "启灵·远眺",
-          "content": "想让火焰更炽热一些么？ （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "聆听吧，这群星融化的悲嚎。 （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "力量的味道，要不要找些倒霉蛋试试手呢？ （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "那些难以名状的存在正在侵蚀这个世界，你将不可避免的与其为敌。不过这并无关系，因为吾会在你身后。 （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "吾的视野更加清晰了，吾看到了藏于深渊下的东西……为了你们，吾必须要更强大的力量…… （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "吾即是火，是焰，是永燃不止的混沌……吾会将大家……带回家…… （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "在残酷的世界中追求拯救么？加油吧，充满希望的小家伙。 （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "成功的狩猎后总是需要一场庆功宴，一起来吧，尝尝我烤的骆驼肉和刚搞到的龙舌兰酒。等下，小家伙你好像不能饮酒……那来喝我特制的果汁吧 （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "来，这些拿去玩吧，说是从什么遗迹里挖到的禁忌藏品。我对这些沾染祂们气息的东西不感兴趣，本想直接烧掉，但想着或许对你有用，就给你带过来了。 你问我怎么来的？当然是某些人「自愿」送给我的，放心吧，保证来路「干净」。 （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "无需将自己逼得太紧，我的守密人。虽然我知晓这是一条刻不容缓的曲折之路，稍有不慎就会万劫不复。但若继续如此，总有一天你会因心力交瘁而倒下。如果有需要的话，就找我聊聊吧，以家人的身份。 （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "来守密人，坐过来点，现在显得太生分了。 你知道么，当第一次见到你时，我从未想过有朝一日，可以在你这里卸下那被称作残忍和冷酷的外壳。有些可笑对吧，凶名赫赫的爆燃之主，却渴望得到一位可以倾诉真心的家人。 答应我，如果那天你撑不住了……就在心里呼唤吾之名讳，吾会带着你一同，前往吾之国度。虽然这只能延缓一切的到来，但起码在最后的时刻，你可以在吾怀里，好好地休息一下了。 （同调率等级到达10解锁）"
         },
         {
           "title": "闲话·触摸",
@@ -6707,19 +6636,14 @@
         "name": "雷娅",
         "englishName": "Leigh"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0029": {
       "skeydbId": "awakener-0029",
@@ -6731,19 +6655,14 @@
         "name": "莉莉",
         "englishName": "Lily"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0030": {
       "skeydbId": "awakener-0030",
@@ -6755,19 +6674,14 @@
         "name": "莉兹",
         "englishName": "Liz"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0031": {
       "skeydbId": "awakener-0031",
@@ -6779,19 +6693,14 @@
         "name": "萝坦",
         "englishName": "Lotan"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0032": {
       "skeydbId": "awakener-0032",
@@ -6803,19 +6712,14 @@
         "name": "弥利亚姆",
         "englishName": "Miryam"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0033": {
       "skeydbId": "awakener-0033",
@@ -6827,19 +6731,14 @@
         "name": "茉夏",
         "englishName": "Mouchette"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0034": {
       "skeydbId": "awakener-0034",
@@ -6851,12 +6750,7 @@
         "name": "墨菲",
         "englishName": "Murphy"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -7045,7 +6939,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0035": {
       "skeydbId": "awakener-0035",
@@ -7057,19 +6951,14 @@
         "name": "诞妄·墨菲",
         "englishName": "Murphy: Fauxborn"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0036": {
       "skeydbId": "awakener-0036",
@@ -7081,12 +6970,7 @@
         "name": "诺缔拉",
         "englishName": "Nautila"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -7272,7 +7156,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0037": {
       "skeydbId": "awakener-0037",
@@ -7284,12 +7168,7 @@
         "name": "宁菲亚",
         "englishName": "Nymphaea"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -7494,7 +7373,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0038": {
       "skeydbId": "awakener-0038",
@@ -7506,16 +7385,7 @@
         "name": "奥吉尔",
         "englishName": "Ogier"
       },
-      "voiceLines": [
-        {
-          "title": "形态切换 本源降临形态拥有以下特性︰ ● 本源降临是唤醒体的第二形态。",
-          "content": "文件:负誓·奥吉尔无底.png"
-        },
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -7705,7 +7575,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0039": {
       "skeydbId": "awakener-0039",
@@ -7717,12 +7587,7 @@
         "name": "潘狄娅",
         "englishName": "Pandia"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -7927,7 +7792,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0040": {
       "skeydbId": "awakener-0040",
@@ -7939,19 +7804,14 @@
         "name": "皮克曼",
         "englishName": "Pickman"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0041": {
       "skeydbId": "awakener-0041",
@@ -7963,19 +7823,14 @@
         "name": "波吕克斯",
         "englishName": "Pollux"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%A2%E5%90%95%E5%85%8B%E6%96%AF"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0042": {
       "skeydbId": "awakener-0042",
@@ -7987,12 +7842,7 @@
         "name": "拉蒙娜",
         "englishName": "Ramona"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -8178,7 +8028,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0043": {
       "skeydbId": "awakener-0043",
@@ -8190,19 +8040,14 @@
         "name": "莱克",
         "englishName": "Ryker"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0044": {
       "skeydbId": "awakener-0044",
@@ -8214,19 +8059,14 @@
         "name": "萨尔瓦多",
         "englishName": "Salvador"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%A8%E5%B0%94%E7%93%A6%E5%A4%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0045": {
       "skeydbId": "awakener-0045",
@@ -8238,12 +8078,7 @@
         "name": "珊",
         "englishName": "Sanga"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -8442,7 +8277,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0046": {
       "skeydbId": "awakener-0046",
@@ -8454,19 +8289,14 @@
         "name": "索蕾尔",
         "englishName": "Sorel"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0047": {
       "skeydbId": "awakener-0047",
@@ -8478,19 +8308,14 @@
         "name": "塔薇",
         "englishName": "Tawil"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A1%94%E8%96%87"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0048": {
       "skeydbId": "awakener-0048",
@@ -8523,10 +8348,6 @@
           "content": "消耗算力：1"
         },
         {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
-        {
           "title": "唤醒",
           "content": "我的脉管中奔涌着求生的意志，它尖叫着，驱使着我将血洒在星球的每一寸土地上……啊啊，让您听了如此多牢骚，见笑了。我是泰旖丝，您呼唤我，是已经做好与我相融的准备了吗？"
         },
@@ -8541,50 +8362,6 @@
         {
           "title": "获得提升·三",
           "content": "您如此慷慨，不胜感激……"
-        },
-        {
-          "title": "启灵·远眺",
-          "content": "要摸摸看吗？我的心脏正因您的存在而跳动着。 （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "我好高兴……您是如此的偏袒、偏心我。 （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "其他人可是会为了您的偏心而生气的哦。 （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "难道您也渴望着我吗？ （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "让我的爱意变得更为深厚，这就是您欲望的体现吗？ （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "为我付出如此之多，您的爱意，已然与我的水乳交融…… （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "不沉溺于我的爱意中试试吗？您将我唤醒，难道不就是为了我怀中的温度吗？ （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "您为什么总是躲着我呢？是害羞了吗？真可爱，您这副不敢直面欲望的样子…… （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "不想和来路不明的女人纠缠不清吗，好吧，好吧。尼尼微的亡国君，意图通天的示拿之人，幼发拉底圣树下被剥夺意志的少女……您想从哪里开始听起呢？ （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "既然作为您的使徒被唤醒，那么除了您的平安喜乐外，我别无所求，这是我的愿…唔啊……啊……果然，存续，存续，存续，存续，活下去…… （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "我一直都在等待毁灭的降临，却从未想过还有“抗争”这一选择……您愿意带着灵魂如此浅薄的我跨越湮灭吗？在死里逃生的世界里，也依旧给予我救赎…… （同调率等级到达10解锁）"
         },
         {
           "title": "闲话·触摸",
@@ -8683,10 +8460,6 @@
           "content": "靠近我、拥抱我、品尝我……不要忘了我。 （通关「调查行动」第7章后解锁）"
         },
         {
-          "title": "调查开始",
-          "content": "胜利后，请让我取走用于繁衍后代的材料吧。"
-        },
-        {
           "title": "调查成功",
           "content": "这么快就结束了？……我的兴致才刚被挑起呢。"
         },
@@ -8735,28 +8508,12 @@
           "content": "会太粗暴吗？"
         },
         {
-          "title": "特殊技能·一",
-          "content": "看过来！"
-        },
-        {
-          "title": "特殊技能·二",
-          "content": "乖孩子"
-        },
-        {
-          "title": "特殊技能·三",
-          "content": "唉！"
-        },
-        {
           "title": "灵知觉醒",
           "content": "长大吧——"
         },
         {
           "title": "狂气爆发",
           "content": "繁衍吧，生长吧，我的小树苗。"
-        },
-        {
-          "title": "超限狂气爆发",
-          "content": "加入我的仪式吧，成为我的种子！"
         },
         {
           "title": "死亡",
@@ -8785,10 +8542,6 @@
         {
           "title": "闲话·关于沙耶",
           "content": "哎呀，和姐姐我同源的力量，是个可爱的孩子呢。"
-        },
-        {
-          "title": "唤醒体别称= 羊妈、嗓子有痰 【嗓子有痰】{{黑幕",
-          "content": "内部}}官方外号 、丰穰之息 【丰穰之息】{{黑幕"
         },
         {
           "title": "技能1（右）效果1=选择一名其他唤醒体，使自身与该唤醒体均获得 15 点狂气。获得 [攻击力3%] 点（启灵1：获得 [攻击力4.5%] 点）{{词条",
@@ -8861,66 +8614,6 @@
         {
           "title": "灵知觉醒效果6=泰旖丝获得 50 点狂气。{{词条",
           "content": "灵知觉醒}}：立刻获得 1 张{{词条"
-        },
-        {
-          "title": "启灵1效果=「古老的爱抚」获得的{{词条",
-          "content": "力量}}提高 '''50'''%，「圣血的本能」选择效果翻倍。"
-        },
-        {
-          "title": "启灵3效果=血肉界域每回合自动获得的{{词条",
-          "content": "胚胎融合}}提高 '''50'''%，「基础打击」和「基础防御」获得等同于攻击力 '''3''' % 的{{词条"
-        },
-        {
-          "title": "启灵4效果={{属性",
-          "content": "狂气回充等级}} +0.4 {{属性"
-        },
-        {
-          "title": "启灵5效果={{属性",
-          "content": "狂气回充等级}} +0.8 {{属性"
-        },
-        {
-          "title": "启灵6效果={{属性",
-          "content": "狂气回充等级}} +1.2 {{属性"
-        },
-        {
-          "title": "启灵7效果={{属性",
-          "content": "狂气回充等级}} +1.6 {{属性"
-        },
-        {
-          "title": "启灵8效果={{属性",
-          "content": "狂气回充等级}} +2.0 {{属性"
-        },
-        {
-          "title": "启灵9效果={{属性",
-          "content": "狂气回充等级}} +2.4 {{属性"
-        },
-        {
-          "title": "启灵10效果={{属性",
-          "content": "狂气回充等级}} +2.8 {{属性"
-        },
-        {
-          "title": "启灵11效果={{属性",
-          "content": "狂气回充等级}} +3.2 {{属性"
-        },
-        {
-          "title": "启灵12效果={{属性",
-          "content": "狂气回充等级}} +3.6 {{属性"
-        },
-        {
-          "title": "启灵13效果={{属性",
-          "content": "狂气回充等级}} +4.0 {{属性"
-        },
-        {
-          "title": "启灵14效果={{属性",
-          "content": "狂气回充等级}} +4.4 {{属性"
-        },
-        {
-          "title": "启灵15效果={{属性",
-          "content": "狂气回充等级}} +4.8 {{属性"
-        },
-        {
-          "title": "<!-- 打击、防御、受击分别各额外提供两个栏位，如果有多余的请注释掉，有需要额外的复制格式并更改数字填写（例：",
-          "content": "打击·三语音=xxxx） --"
         }
       ],
       "skillTables": [
@@ -9509,19 +9202,14 @@
         "name": "汀克特",
         "englishName": "Tinct"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B1%80%E5%85%8B%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0050": {
       "skeydbId": "awakener-0050",
@@ -9533,12 +9221,7 @@
         "name": "图鲁",
         "englishName": "Tulu"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [
         {
           "section": "技能",
@@ -9727,7 +9410,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0051": {
       "skeydbId": "awakener-0051",
@@ -9739,19 +9422,14 @@
         "name": "尤乌哈希",
         "englishName": "Uvhash"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0052": {
       "skeydbId": "awakener-0052",
@@ -9763,19 +9441,14 @@
         "name": "旺达",
         "englishName": "Wanda"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0053": {
       "skeydbId": "awakener-0053",
@@ -9811,19 +9484,14 @@
         "name": "徐",
         "englishName": "Xu"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0055": {
       "skeydbId": "awakener-0055",
@@ -9835,19 +9503,14 @@
         "name": "莫丝",
         "englishName": "Vortice"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0056": {
       "skeydbId": "awakener-0056",
@@ -9860,10 +9523,6 @@
         "englishName": "Arachne"
       },
       "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        },
         {
           "title": "唤醒",
           "content": "命运的舞台之上，众生在各自的因果中静候登场，万般悲欢在齿轮转动间悄然成章……帷幕已启，守密人，你我之间的故事，至此便要开始了。"
@@ -9881,50 +9540,6 @@
           "content": "无尽的命运之网，我已窥见全貌。"
         },
         {
-          "title": "启灵·远眺",
-          "content": "帷幕已为你敞开，命运的剧本静待开启。告诉我，您更愿步入哪一重命定的轨迹？是悲恸的终局，抑或欢愉的序章？ （启灵等级达到1解锁）"
-        },
-        {
-          "title": "启灵·凝视",
-          "content": "若您钟情于喜剧，《仲夏夜之梦》是不错的选择。我尤爱迫克那些狡黠的谵语，精灵的嬉笑间，总藏着命运不经意泄露的密语。 （启灵等级达到2解锁）"
-        },
-        {
-          "title": "启灵·深思",
-          "content": "若您愿步入悲剧的殿堂，请容我为您呈上《安提戈涅》。于神律与尘世的对峙间，她每一步都踏在命运纺就的丝线上，直至踏入石墓深沉的阴影。正因这桎梏不可挣脱，她那渺小身躯里迸发的意志，才如长夜中的孤焰般灼目。 （启灵等级达到3解锁）"
-        },
-        {
-          "title": "启灵·体悟",
-          "content": "我本以为世间再无选择能令我惊讶……您对戏剧的品味，让我印象深刻。 （启灵等级达到7解锁）"
-        },
-        {
-          "title": "启灵·构筑",
-          "content": "承蒙您一路相伴于幕起幕落之间。未来，我定不负所期，为您奉上更动人心魄的戏剧之夜。 （启灵等级达到11解锁）"
-        },
-        {
-          "title": "启灵·绽放",
-          "content": "凡是过往，皆为序章。你我的新篇，正等待着您的书写，守密人。 （启灵等级达到15解锁）"
-        },
-        {
-          "title": "同调率·一",
-          "content": "命运的丝线总在暗处连接……您惊动了这根丝线，也惊动了我。 （同调率等级到达2解锁）"
-        },
-        {
-          "title": "同调率·二",
-          "content": "命运之线本在我掌心流转有序……直到您的出现，让它们的轨迹生出未曾预料的涟漪。 （同调率等级到达4解锁）"
-        },
-        {
-          "title": "同调率·三",
-          "content": "剧院新排了一出浪漫喜剧，我已在命运的席位上，为您留了一隅空座。我将在每个命运交织的长夜里，静候与你相逢的星光。 （同调率等级到达6解锁）"
-        },
-        {
-          "title": "同调率·四",
-          "content": "如果您允许……我想为您编织一幕只属于您和我的双人剧。无需观众，不必彩排……我只是期待着，当您站在光下时，那根我无法看清的丝线，将有着怎样令人惊叹的跃动。 （同调率等级到达8解锁）"
-        },
-        {
-          "title": "同调率·五",
-          "content": "你与我，那两根无法看清的命运丝线，早已紧紧相缠、无分彼此，编织成囚笼与道路。我无法看清囚笼的边际，也无法看清道路的终点。这正是这段故事里，最令人着迷的部分。 （同调率等级到达10解锁）"
-        },
-        {
           "title": "闲话·触摸",
           "content": "如此执着于拨动命运的纺线……您，也想要窥见属于自己的篇章？"
         },
@@ -9939,10 +9554,6 @@
         {
           "title": "闲话·关于哈姆林",
           "content": "我曾听过他的演奏，那美妙的旋律，让人灵魂震颤……或许，该邀请他为我的新戏谱一曲命运的交响？ （获得唤醒体「哈姆林」后解锁）"
-        },
-        {
-          "title": "闲话·关于汀克特",
-          "content": "如此有天赋的歌者，天赐的嗓音，清澈又灼热，仿佛源自命运之声……若能请来我的剧院，想必即使是最挑剔的观众也会感到惊喜。 （获得唤醒体「汀克特」后解锁）"
         },
         {
           "title": "闲话·关于塔薇",
@@ -9995,7 +9606,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0057": {
       "skeydbId": "awakener-0057",
@@ -10007,19 +9618,14 @@
         "name": "沙耶",
         "englishName": "Saya"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0058": {
       "skeydbId": "awakener-0058",
@@ -10031,19 +9637,14 @@
         "name": "庞托斯",
         "englishName": "Pontos"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0059": {
       "skeydbId": "awakener-0059",
@@ -10055,19 +9656,14 @@
         "name": "蚀灭·萝坦",
         "englishName": "Lotan: Cetarchon"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0060": {
       "skeydbId": "awakener-0060",
@@ -10079,19 +9675,14 @@
         "name": "卡拉布",
         "englishName": "Caraboo"
       },
-      "voiceLines": [
-        {
-          "title": "调查等级达到25解锁",
-          "content": "调查等级达到35解锁"
-        }
-      ],
+      "voiceLines": [],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     }
   }
 }
