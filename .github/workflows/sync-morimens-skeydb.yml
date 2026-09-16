@@ -8,7 +8,6 @@ on:
       - "scripts/sync_morimens_skeydb.mjs"
       - "scripts/sync_morimens_huiji.mjs"
       - "scripts/sync_morimens_huiji_jina.mjs"
-      - "scripts/discover_eremora_leaderboard.mjs"
       - "scripts/validate_morimens_data.mjs"
       - "data/morimens/huiji/identity.zh-CN.json"
       - "morimens-tools.js"
@@ -17,6 +16,7 @@ on:
       - "morimens-i18n.js"
       - "morimens-calculator-skeydb.js"
       - "morimens-calculator-stats.js"
+      - "morimens-dtide.js"
       - ".github/workflows/sync-morimens-skeydb.yml"
   schedule:
     - cron: "23 3 * * *"
@@ -60,7 +60,6 @@ jobs:
         run: |
           node --check scripts/sync_morimens_skeydb.mjs
           node --check scripts/sync_morimens_huiji_jina.mjs
-          node --check scripts/discover_eremora_leaderboard.mjs
           node --check scripts/validate_morimens_data.mjs
           node --check morimens-tools.js
           node --check morimens-data.js
@@ -68,6 +67,7 @@ jobs:
           node --check morimens-i18n.js
           node --check morimens-calculator-skeydb.js
           node --check morimens-calculator-stats.js
+          node --check morimens-dtide.js
 
       - name: Sync SKeyDB full public data and assets
         run: node scripts/sync_morimens_skeydb.mjs
@@ -75,21 +75,18 @@ jobs:
       - name: Sync Chinese localization from HuijiWiki
         run: node scripts/sync_morimens_huiji_jina.mjs
 
-      - name: Discover Eremora leaderboard endpoints
-        run: node scripts/discover_eremora_leaderboard.mjs
-
       - name: Validate character identity and art mappings
         run: node scripts/validate_morimens_data.mjs
 
       - name: Commit synchronized snapshots
         run: |
-          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/huiji data/morimens/eremora assets/morimens)" ]; then
+          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/huiji assets/morimens)" ]; then
             echo "Morimens snapshots are unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/morimens/skeydb data/morimens/huiji data/morimens/eremora assets/morimens
-          git commit -m "chore: refresh Morimens SKeyDB, Huiji and Eremora snapshots"
+          git add data/morimens/skeydb data/morimens/huiji assets/morimens
+          git commit -m "chore: refresh Morimens SKeyDB and Huiji snapshots"
           git pull --rebase origin main
           git push origin HEAD:main
