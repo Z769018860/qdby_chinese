@@ -60,6 +60,7 @@ jobs:
       - name: Sync Top 1000 public D-Zone usage records
         env:
           EREMORA_USAGE_TARGET: "1000"
+          EREMORA_USAGE_SEASONS: "69,68,67,66"
           EREMORA_USAGE_MAX_FETCH: "1000"
           EREMORA_USAGE_BATCH_SIZE: "3"
           EREMORA_USAGE_BATCH_DELAY_MS: "2200"
