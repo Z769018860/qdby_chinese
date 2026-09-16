@@ -2,8 +2,10 @@
   try{
     const urls=[
       "morimens-v03/part1.b64",
-      "morimens-v03/part2.b64",
-      "morimens-v03/part3.b64",
+      "morimens-v03/part2a.b64",
+      "morimens-v03/part2b.b64",
+      "morimens-v03/part3a.b64",
+      "morimens-v03/part3b.b64",
       "morimens-v03/part4.b64",
       "morimens-v03/part5a.b64",
       "morimens-v03/part5b.b64",
