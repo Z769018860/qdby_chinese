@@ -30,7 +30,7 @@
     const index=await json(url);
     if(index.format==='gzip-base64-chunked-v1'){
       const texts=await Promise.all(index.chunks.map(jsonText));
-      const parts=texts.map(text=>{const bin=atob(text.trim()),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return bytes});
+      const parts=texts.map(text=>{const encoded=text.replace(/[^A-Za-z0-9+/=_-]/g,'').replace(/-/g,'+').replace(/_/g,'/'),padded=encoded+'='.repeat((4-encoded.length%4)%4),bin=atob(padded),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return bytes});
       const bytes=new Uint8Array(parts.reduce((sum,part)=>sum+part.length,0));let offset=0;for(const part of parts){bytes.set(part,offset);offset+=part.length}
       const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
       const decoded=JSON.parse(await new Response(stream).text());
