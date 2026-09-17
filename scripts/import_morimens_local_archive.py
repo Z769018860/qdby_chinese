@@ -8,7 +8,9 @@ paths similar to ``.../u/<uid>/challenges/dzone/<season>/__data.json``.
 This script deliberately replaces the repository raw directory for the target
 season, then invokes ``process_morimens_raw1000_v2.py`` to rebuild the
 structured season/user/stat files while retaining historical seasons contained
-inside each profile payload.
+inside each profile payload.  Finally it repacks the current structured season
+with ``pack_morimens_local_usage.py`` so the chunk index, cache revision and
+manifest metadata are updated together.
 
 Example:
     python scripts/import_morimens_local_archive.py D:/morimens-top1000.zip \
@@ -117,7 +119,23 @@ def main() -> int:
         "--raw-dir", str(raw_dir.relative_to(root)),
     ]
     print("[RUN]", " ".join(cmd))
-    return subprocess.call(cmd, cwd=root)
+    process_rc = subprocess.call(cmd, cwd=root)
+
+    season_file = root / f"data/morimens/eremora/seasons/{args.season}.json"
+    if season_file.is_file():
+        pack_cmd = [
+            sys.executable,
+            str(root / "scripts/pack_morimens_local_usage.py"),
+            "--root", str(root),
+            "--season", str(args.season),
+            "--chunk-size", "700000",
+        ]
+        print("[RUN]", " ".join(pack_cmd))
+        pack_rc = subprocess.call(pack_cmd, cwd=root)
+        if pack_rc:
+            return pack_rc
+
+    return process_rc
 
 
 if __name__ == "__main__":
