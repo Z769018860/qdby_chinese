@@ -112,18 +112,9 @@
       </section>
     </div>
 
-    <section class="panel">
-      <div class="panelHead"><div><h2>数据来源与同步策略</h2><p class="panelLead">为了不把数十 MB 的游戏资源直接塞进静态站点，页面采用“客户端资源定位术语 + 中文维基实时读取数值 + 本地 fallback”的方式。</p></div><span class="statusPill">客户端资源 + 中文维基</span></div>
-      <div class="sourceList">
-        <div class="sourceItem"><strong>客户端：</strong>上传的 UnityFS Bundle 可确认战斗/技能相关 Lua 和 <code>Damage / Power / Vulnerability</code> 配置术语；<code>_ab_info.json</code> 同时给出了大量 AssetBundle 与资源路径映射。</div>
-        <div class="sourceItem"><strong>角色技能：</strong>运行时请求角色维基页并扫描技能表，抽取每一级描述中的 <code>[攻击力*XX%]</code>。多段伤害或特殊派生伤害会保留原描述，避免把多个系数错误合并。</div>
-        <div class="sourceItem"><strong>命轮 / 密契：</strong>运行时读取对应页面，自动解析“伤害强效、暴击率、暴击伤害”等明确百分比；条件型 6 件套必须由玩家手动确认条件已满足。</div>
-        <div class="sourceItem"><strong>离线 fallback：</strong>内置少量已核对样例：莱克「肆意豪赌」Lv1~6、神王·图鲁「打击」Lv1~5、血链·希洛「缚身锁链」Lv1、萝坦「混沌之兽」Lv1、艾继丝「万古之眸」Lv1；命轮“陨日”“虔诚的伟力”和密契“四月礼赞”。</div>
-      </div>
-    </section>
   </main>
-  <footer class="wrap footer">《忘却前夜》相关角色、图片和文本版权归原权利方所有。本页为非商业个人工具；维基内容请以原页面与其授权说明为准。伤害公式仍在通过客户端脚本与 BattleLog 逐步校准。</footer>
+  <footer class="wrap footer">忘却前夜工具箱 · 粉丝向免费工具</footer>
 
-<script src="morimens-tools.js?v=20260917.7"></script>
+<script src="morimens-tools.js?v=20260917.8"></script>
 </body>
 </html>
