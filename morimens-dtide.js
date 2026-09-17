@@ -178,6 +178,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function matchesFilters(row){
     const rankCap=Number($('dtideRankScope').value||50);if(rankCap&&(!Number.isFinite(Number(row.record.rank))||Number(row.record.rank)>rankCap))return false;
     const difficulty=$('dtideDifficulty').value;if(difficulty!=='all'&&row.difficulty!==difficulty)return false;
+    const totalScoreMin=Number($('dtideTotalScore')?.value||0);if(totalScoreMin&&Number(row.record.score||0)<totalScoreMin)return false;
     const ct=$('dtideClearType').value;if(ct!=='all'&&ct!==row.team.clearType)return false;
     const include=getSelectedValues('dtideCharacters'),exclude=getSelectedValues('dtideExcludeCharacters'),keys=row.team.members.map(m=>String(memberKey(m))),mode=$('dtideCharacterMode').value;if(include.length&&!(mode==='all'?include.every(x=>keys.includes(x)):include.some(x=>keys.includes(x))))return false;if(exclude.some(x=>keys.includes(x)))return false;
     const targets=include.length?row.team.members.filter(m=>include.includes(String(memberKey(m)))):row.team.members;
