@@ -3,7 +3,7 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-17T08:49:23.817Z",
+    "syncedAt": "2026-09-16T21:05:29.486Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "status": "partial",
@@ -11,14 +11,16 @@
     "targets": 60,
     "pages": 60,
     "mapped": 60,
-    "enriched": 14,
-    "jinaRecords": 59,
+    "enriched": 12,
+    "jinaRecords": 60,
     "cachedRecords": 4,
-    "voiceRecords": 22,
-    "failed": 46
+    "voiceRecords": 16,
+    "wheelNames": 143,
+    "failed": 48
   },
   "paths": {
     "identity": "data/morimens/huiji/identity.zh-CN.json",
-    "zhCN": "data/morimens/huiji/zh-CN.json"
+    "zhCN": "data/morimens/huiji/zh-CN.json",
+    "wheelsZhCN": "data/morimens/huiji/wheels.zh-CN.json"
   }
 }
