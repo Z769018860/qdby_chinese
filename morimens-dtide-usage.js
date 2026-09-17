@@ -21,7 +21,7 @@
   function flatten(records=usage?.records||[]){const out=[];for(const record of records)for(const wave of record.waves||[])for(const team of wave.teams||[])out.push({record,wave,team,difficulty:difficultyOf(team,wave)});return out}
   function scopedRows({cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave=$('dtideWave')?.value||'all',clearType=$('dtideClearType')?.value||'all'}={}){
     return flatten().filter(x=>{
-      const rank=Number(x.record.rank);if(!Number.isFinite(rank)||rank>cap)return false;
+      const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;
       if(difficulty!=='all'&&x.difficulty!==difficulty)return false;
       if(wave!=='all'&&Number(x.wave.wave)!==Number(wave))return false;
       if(clearType!=='all'&&x.team.clearType!==clearType)return false;
@@ -36,10 +36,12 @@
     return {teamCount,slots,characters:finish(chars),enlight:finish(enlight)};
   }
   function coverage(cap){
-    const s=usageStats?.rankTiers?.[String(cap)];if(s)return {covered:Number(s.covered||0),expected:Number(s.expected||cap),complete:!!s.complete};
-    const records=usage?.records||[],ranks=new Set(records.map(x=>Number(x.rank)).filter(x=>Number.isFinite(x)&&x<=cap));if(!ranks.size&&records.length)return {covered:records.length,expected:records.length,complete:false};return {covered:ranks.size,expected:cap,complete:ranks.size>=cap};
+    const records=usage?.records||[],rankValues=records.map(x=>Number(x.rank)).filter(Number.isFinite);
+    if(!rankValues.length&&records.length)return {covered:records.length,expected:records.length,complete:false,historical:true};
+    const stat=usageStats?.rankTiers?.[String(cap)];if(stat)return {covered:Number(stat.covered||0),expected:Number(stat.expected||cap),complete:!!stat.complete,historical:false};
+    const ranks=new Set(rankValues.filter(x=>x<=cap));return {covered:ranks.size,expected:cap,complete:ranks.size>=cap,historical:false};
   }
-  function coverageLabel(cap){const c=coverage(cap);return `Top ${cap} · ${c.covered}/${c.expected}${c.complete?'':' 样本'}`}
+  function coverageLabel(cap){const c=coverage(cap);return c.historical?`历史本地样本 · ${c.covered} 条`:`Top ${cap} · ${c.covered}/${c.expected}${c.complete?'':' 样本'}`}
 
   function ensureEnlightPanel(){
     if($('dtideUsageEnlight'))return $('dtideUsageEnlight');const host=$('dtideEquipment');if(!host)return null;
@@ -47,15 +49,31 @@
   }
   function renderCoverage(){
     const cap=Number($('dtideRankScope')?.value||50),c=coverage(cap),box=$('dtideCoverageWarn');if(!box)return;
-    box.innerHTML=c.complete?`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已覆盖 ${c.covered}/${c.expected} 名玩家；出场率按该榜单范围的公开 D-Zone 配队计算。</div>`:`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已回填 <b>${c.covered}/${c.expected}</b> 名玩家。以下百分比为当前有效样本，不会标记为完整 Top ${cap}；每日任务会继续补齐缺失记录。</div>`;
-    const sel=$('dtideRankScope');if(sel)for(const opt of sel.options){const n=Number(opt.value),cc=coverage(n);opt.textContent=`Top ${n} · ${cc.covered}/${cc.expected}${cc.complete?'':'（回填中）'}`}
+    box.innerHTML=c.historical?`<div class="dtideNotice">该期没有完整榜单排名索引，当前统计使用已有的 <b>${c.covered}</b> 条本地历史用户记录，不再错误显示为 0/1000。</div>`:c.complete?`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已覆盖 ${c.covered}/${c.expected} 名玩家；出场率按该榜单范围的公开 D-Zone 配队计算。</div>`:`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已回填 <b>${c.covered}/${c.expected}</b> 名玩家。以下百分比为当前有效样本。</div>`;
+    const sel=$('dtideRankScope');if(sel)for(const opt of sel.options){const n=Number(opt.value),cc=coverage(n);opt.textContent=cc.historical?`历史样本 · ${cc.covered} 条`:`Top ${n} · ${cc.covered}/${cc.expected}${cc.complete?'':'（回填中）'}`}
   }
   function renderSummary(){
     const g=group(scopedRows()),cap=Number($('dtideRankScope')?.value||50),c=coverage(cap),difficulty=$('dtideDifficulty')?.value||'all';
     if($('dtideSummary'))$('dtideSummary').innerHTML=[['榜单覆盖',`${c.covered}/${c.expected}`],['当前范围',`Top ${cap}`],['难度',diffZh[difficulty]||difficulty],['统计队伍',g.teamCount]].map(([a,b])=>`<div class="dtideStat"><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join('');
     if($('dtideStatus'))$('dtideStatus').textContent=`第 ${activeSeason} 期 · ${diffZh[difficulty]||difficulty} · ${coverageLabel(cap)}`;
   }
-  function renderUsage(){const g=group(scopedRows()),mode=$('dtideRateMode')?.value||'team',host=$('dtideUsage');if(!host)return;host.innerHTML=g.characters.slice(0,24).map(c=>`<div class="dtideUsage"><div class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span><b>${esc(c.name)}</b><small>${c.count} 支队伍出现</small></span></div><strong>${pct(mode==='slot'?c.slotRatePct:c.teamRatePct)}</strong></div>`).join('')||'<div class="dtideEmpty">当前口径暂无公开配队。</div>'}
+  function itemName(x){return String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别')}
+  function characterDetails(key){
+    const rows=scopedRows(),mates=new Map(),wheels=new Map(),covenants=new Map();let appearances=0;
+    const bump=(map,name)=>{if(!name)return;const k=String(name),v=map.get(k)||{name:k,count:0};v.count++;map.set(k,v)};
+    for(const {team} of rows){const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;appearances++;
+      const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,characterInfo(m).name)}
+      for(const x of target.wheels||target.weapons||[])bump(wheels,itemName(x));
+      for(const x of target.covenants||target.suits||[])bump(covenants,itemName(x));
+    }
+    const finish=map=>[...map.values()].map(x=>({...x,ratePct:appearances?x.count/appearances*100:0})).sort((a,b)=>b.count-a.count).slice(0,5);
+    return {appearances,teammates:finish(mates),wheels:finish(wheels),covenants:finish(covenants)};
+  }
+  function renderUsage(){
+    const g=group(scopedRows()),mode=$('dtideRateMode')?.value||'team',host=$('dtideUsage');if(!host)return;
+    host.innerHTML=g.characters.slice(0,24).map(c=>`<button type="button" class="dtideUsage" data-usage-character="${esc(c.key)}" aria-expanded="false"><div class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span><b>${esc(c.name)}</b><small>${c.count} 支队伍出现 · 点击展开详情</small></span></div><strong>${pct(mode==='slot'?c.slotRatePct:c.teamRatePct)}</strong></button>`).join('')||'<div class="dtideEmpty">当前口径暂无公开配队。</div>';
+    host.onclick=e=>{const card=e.target.closest('[data-usage-character]');if(!card)return;const old=host.querySelector('.dtideInlineDetail'),same=old?.dataset.for===card.dataset.usageCharacter;host.querySelectorAll('[data-usage-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;const d=characterDetails(card.dataset.usageCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div><b>${esc(x.name)}</b><small>${x.count} 次同队/采用</small></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">暂无数据</div>'}</div></div>`;const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.dataset.for=card.dataset.usageCharacter;detail.innerHTML=`<div class="dtideGearSummary"><div><small>该角色样本</small><b>${d.appearances} 支队伍</b></div></div>`+section('Top 5 队友出场率',d.teammates)+section('命轮出场率',d.wheels)+section('密契出场率',d.covenants);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')};
+  }
   function renderMatrix(){
     const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team';
     const all=scopedRows({cap,difficulty,wave:'all',clearType:ct}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b),groups=new Map(waves.map(w=>[w,group(all.filter(x=>Number(x.wave.wave)===w))])),union=new Map();
