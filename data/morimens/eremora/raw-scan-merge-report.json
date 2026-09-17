@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-09-17",
+  "sourceFiles": ["usage-69.json", "usage-69-349-failures.json"],
+  "rawRecordCount": 651,
+  "rawUniqueUidCount": 651,
+  "retryFailureCount": 349,
+  "retryFileRecordCount": 651,
+  "retryRecordNewUidCount": 0,
+  "fieldCoverage": {"members": 14300, "wheels": 0, "covenants": 0, "tokens": 3575, "creations": 0, "enlightenment": 14300},
+  "mergeAction": "未写入新字段；逐字段合并结果为空。raw 与当前651条记录的UID集合及字段覆盖一致。",
+  "missingFromRaw": ["命轮", "密契", "造物"],
+  "nextAction": "需要提供按UID保存的原始__data.json/HTML归档，或使用授权的数据导出重新获取；失败队列不能作为用户详情。"
+}
