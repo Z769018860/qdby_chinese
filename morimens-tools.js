@@ -18,7 +18,22 @@
     }));
     const binary=atob(parts.join(""));
     const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
-    const code=new TextDecoder("utf-8").decode(bytes);
+    let code=new TextDecoder("utf-8").decode(bytes);
+    // The packed legacy bundle still contains its original Wiki-based fortune
+    // renderer.  Its asynchronous roster refresh can finish after the SKeyDB
+    // renderer and overwrite the selected awakener's Chinese name (most
+    // visibly with 杜勒赛因).  Keep the legacy calculator UI bootstrap, but
+    // give the ID-aligned SKeyDB module exclusive ownership of Daily Fortune.
+    window.MorimensFortuneDataOwner="skeydb";
+    code=code
+      .replace(
+        "if(rerollSalt===0)renderFortune(false)",
+        "if(rerollSalt===0&&!window.MorimensFortuneDataOwner)renderFortune(false)"
+      )
+      .replace(
+        "calculate();renderFortune(false);loadCategoryOptions",
+        "calculate();if(!window.MorimensFortuneDataOwner)renderFortune(false);loadCategoryOptions"
+      );
     (0,eval)(code);
     await import(`./morimens-data.js?v=${Date.now()}`);
     await import(`./morimens-skeydb.js?v=${Date.now()}`);
