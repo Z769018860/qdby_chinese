@@ -29,9 +29,14 @@ function enlightTier(member={}){
 }
 function add(map,key,meta={}){if(key==null||key==='')return;const k=String(key),v=map.get(k)||{key:k,count:0,...meta};v.count++;map.set(k,v)}
 function flatten(records=[]){
-  const rows=[];
-  for(const record of records)for(const wave of record.waves||[])for(const team of wave.teams||[])rows.push({record,wave,team});
-  return rows;
+  const unique=new Map();
+  const richness=team=>(team.token?8:0)+(team.creations?.length||0)*3+(team.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);
+  for(const record of records)for(const wave of record.waves||[])for(const team of wave.teams||[]){
+    const difficulty=team.difficulty||wave.difficulty||'unknown',members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(',');
+    const key=[record.uid||record.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record,wave,team},old=unique.get(key);
+    if(!old||richness(team)>richness(old.team))unique.set(key,row);
+  }
+  return [...unique.values()];
 }
 function usage(rows=[]){
   const chars=new Map(),wheels=new Map(),covenants=new Map(),enlight=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0;
