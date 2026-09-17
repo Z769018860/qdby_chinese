@@ -91,9 +91,14 @@
     </section>
   `}
 
-  async function waitMorimensData(){if(window.MorimensData?.db?.records)return;await new Promise(resolve=>{const t=setTimeout(resolve,5000);window.addEventListener('morimens-data-ready',()=>{clearTimeout(t);resolve()},{once:true})})}
-  function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
-  function characterInfo(key,fallback={}){const rec=awakenerMap.get(key)||Array.from(awakenerMap.values()).find(x=>x.ingameId===key)||null;if(!rec)return {name:displayCharacterName(fallback.canonicalName,fallback.name,key),image:fallback.image||'',id:key,ingameId:fallback.ingameId};const loc=window.MorimensData?.localizedProfile?.(rec);return {name:displayCharacterName(loc?.name,fallback.canonicalName,fallback.name,rec.name,key),image:rec.assets?.portrait||fallback.image||'',id:rec.id,ingameId:rec.ingameId||fallback.ingameId}}
+  async function waitMorimensData(){if(window.MorimensData?.db?.records&&window.MorimensData?.identityDb?.bySkeydbId)return;await new Promise(resolve=>{const t=setTimeout(resolve,5000);window.addEventListener('morimens-data-ready',()=>{clearTimeout(t);resolve()},{once:true})})}
+  function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
+  function characterInfo(key,fallback={}){
+    const data=window.MorimensData,liveRecords=data?.db?.records||[];
+    const rec=liveRecords.find(x=>x.id===key||x.ingameId===key||x.ingameId===fallback.ingameId)||awakenerMap.get(key)||Array.from(awakenerMap.values()).find(x=>x.ingameId===key)||null;
+    const id=rec?.id||fallback.skeydbId||(/^awakener-\d+$/i.test(String(key||''))?key:null),identity=data?.identityDb?.bySkeydbId?.[id]||data?.zhDb?.bySkeydbId?.[id],loc=rec&&data?.localizedProfile?.(rec);
+    return {name:displayCharacterName(identity?.name,loc?.name,fallback.canonicalName,fallback.name,rec?.name),image:rec?.assets?.portrait||fallback.image||'',id:id||key,ingameId:rec?.ingameId||fallback.ingameId};
+  }
   function wheelName(item){return window.MorimensData?.localizedEntity?.('wheel',item)?.name||item?.name||item?.id||'未知命轮'}
   const memberKey=m=>m.skeydbId||m.ingameId||m.id||m.name;
   function difficultyOf(team){const raw=String(team?.difficulty||team?.stageName||'').toLowerCase();for(const d of difficultyOrder)if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
