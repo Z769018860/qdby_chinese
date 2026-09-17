@@ -2,7 +2,11 @@ name: Repair Morimens Eremora Missing Details
 
 on:
   schedule:
-    - cron: "17 */3 * * *"
+    - cron: "17 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/repair-morimens-eremora.yml"
   workflow_dispatch:
     inputs:
       season:
