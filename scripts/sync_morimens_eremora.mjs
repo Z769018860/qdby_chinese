@@ -6,7 +6,8 @@ import {
 } from './eremora_sveltekit.mjs';
 
 const ORIGIN='https://eremora.com';
-const OUT_DIR='data/morimens/eremora';
+const BASE_DIR='data/morimens/eremora';
+const OUT_DIR=process.env.EREMORA_OUTPUT_DIR||BASE_DIR;
 const SEASON_DIR=path.join(OUT_DIR,'seasons');
 const STATS_DIR=path.join(OUT_DIR,'stats');
 const AWAKENERS_FILE='data/morimens/skeydb/awakeners.json';
@@ -149,7 +150,7 @@ await mkdir(SEASON_DIR,{recursive:true});await mkdir(STATS_DIR,{recursive:true})
 const awakeners=await readJson(AWAKENERS_FILE,{records:[]}),byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
 let finalEntries=[];
 if(LOCAL_SYNC){
-  const cached=await readJson(path.join(OUT_DIR,'usage',`${LOCAL_SEASON}.json`),{records:[]});
+  const cached=await readJson(path.join(BASE_DIR,'usage',`${LOCAL_SEASON}.json`),{records:[]});
   finalEntries=(cached.records||[]).map(x=>({rank:num(x.rank),player:x.player||'',uid:String(x.uid||''),score:num(x.score),url:x.url||`${ORIGIN}/u/${x.uid}/challenges/dzone/${LOCAL_SEASON}`,seasonId:LOCAL_SEASON})).filter(x=>x.uid).sort((a,b)=>(a.rank??9999)-(b.rank??9999)).slice(0,MAX_RECORDS);
   console.log(`Local incremental mode: season=${LOCAL_SEASON}, cached leaderboard targets=${finalEntries.length}`);
 }else{
@@ -159,9 +160,10 @@ if(LOCAL_SYNC){
 }
 if(!finalEntries.length)throw new Error('No D-Zone leaderboard records found.');
 const currentSeason=Math.max(...finalEntries.map(x=>x.seasonId)),currentEntries=finalEntries.filter(x=>x.seasonId===currentSeason);
-const oldCurrent=await readJson(path.join(SEASON_DIR,`${currentSeason}.json`),{records:[]}),oldByUid=new Map((oldCurrent.records||[]).map(x=>[String(x.uid),x]));
+const outputSeasonFile=path.join(SEASON_DIR,`${currentSeason}.json`),baseSeasonFile=path.join(BASE_DIR,'seasons',`${currentSeason}.json`);
+const oldCurrent=await readJson(outputSeasonFile,await readJson(baseSeasonFile,{records:[]})),oldByUid=new Map((oldCurrent.records||[]).map(x=>[String(x.uid),x]));
 const currentRecords=LOCAL_SYNC?currentEntries.map(x=>oldByUid.get(String(x.uid))).filter(Boolean):[],failures=[],historyBySeason=new Map(),entriesToFetch=LOCAL_SYNC?currentEntries.filter(x=>!oldByUid.has(String(x.uid))):currentEntries;
-const checkpoint=async processed=>{if(!LOCAL_SYNC)return;const records=[...new Map(currentRecords.map(x=>[String(x.uid),x])).values()].sort((a,b)=>(a.rank??9999)-(b.rank??9999));const doc={...oldCurrent,source:{...(oldCurrent.source||{}),syncedAt:new Date().toISOString(),transport:'local direct incremental Eremora SvelteKit __data.json'},seasonId:currentSeason,leaderboardEntryCount:currentEntries.length,recordCount:records.length,complete:false,coverageMode:'local-incremental',failures:[...failures],records};await saveJson(path.join(SEASON_DIR,`${currentSeason}.json`),doc);await saveJson(path.join(STATS_DIR,`${currentSeason}.json`),buildStats(doc));console.log(`Local checkpoint: processed=${processed}/${entriesToFetch.length}, detailed=${records.length}/${currentEntries.length}, failed=${failures.length}`)};
+const checkpoint=async processed=>{if(!LOCAL_SYNC)return;const records=[...new Map(currentRecords.map(x=>[String(x.uid),x])).values()].sort((a,b)=>(a.rank??9999)-(b.rank??9999));const doc={...oldCurrent,source:{...(oldCurrent.source||{}),syncedAt:new Date().toISOString(),transport:'local direct incremental Eremora SvelteKit __data.json'},seasonId:currentSeason,leaderboardEntryCount:currentEntries.length,recordCount:records.length,complete:false,coverageMode:'local-incremental',failures:[...failures],records};await saveJson(outputSeasonFile,doc);await saveJson(path.join(STATS_DIR,`${currentSeason}.json`),buildStats(doc));await saveJson(path.join(OUT_DIR,'progress.json'),{seasonId:currentSeason,target:currentEntries.length,startedWith:currentEntries.length-entriesToFetch.length,processed,completed:records.length,remaining:Math.max(0,currentEntries.length-records.length),failed:failures.length,finished:false,updatedAt:new Date().toISOString()});console.log(`Local checkpoint: processed=${processed}/${entriesToFetch.length}, detailed=${records.length}/${currentEntries.length}, failed=${failures.length}`)};
 for(let i=0;i<entriesToFetch.length;i+=BATCH_SIZE){
   const batch=entriesToFetch.slice(i,i+BATCH_SIZE),results=await Promise.all(batch.map(async entry=>{
     try{
@@ -201,4 +203,5 @@ const currentStats=await readJson(path.join(STATS_DIR,`${currentSeason}.json`),{
 const fieldCoverage={character:true,wave:true,level:true,progressionLabel:true,enlightenLevel:!!currentStats.coverage?.enlightenment,wheels:!!currentStats.coverage?.wheels,covenants:!!currentStats.coverage?.covenants,creations:!!currentStats.coverage?.creations};
 const manifest={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailEndpointTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,syncedAt:new Date().toISOString(),transport:'Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page'},currentSeason,availableSeasons:snapshots,discoveredSeasonIds:discovered,pendingBackfillSeasonIds:snapshots.filter(x=>!x.complete).map(x=>x.seasonId),current:{leaderboardEntries:currentEntries.length,records:currentRecords.length,complete:currentSeasonDoc.complete,failures:failures.length},fieldCoverage,notes:['当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。','命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。','历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。']};
 await saveJson(path.join(OUT_DIR,'manifest.json'),manifest);
+if(LOCAL_SYNC)await saveJson(path.join(OUT_DIR,'progress.json'),{seasonId:currentSeason,target:currentEntries.length,completed:currentRecords.length,remaining:Math.max(0,currentEntries.length-currentRecords.length),failed:failures.length,finished:currentRecords.length===currentEntries.length&&failures.length===0,updatedAt:new Date().toISOString()});
 console.log(`Eremora D-Zone season ${currentSeason}: leaderboard=${currentEntries.length}, records=${currentRecords.length}, failures=${failures.length}, complete=${currentSeasonDoc.complete}; raw fields: enlight=${fieldCoverage.enlightenLevel}, wheels=${fieldCoverage.wheels}, covenants=${fieldCoverage.covenants}, creations=${fieldCoverage.creations}; seasons=${snapshots.map(x=>`${x.seasonId}:${x.recordCount}${x.complete?'✓':'~'}`).join(', ')}`);
