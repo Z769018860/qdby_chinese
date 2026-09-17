@@ -6,8 +6,8 @@
   const diffs=['normal','hard','nightmare','madness'];
   const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
   const enlightZh={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
-  const zhGear={'April Tribute':'四月礼赞',"Burial Ground's Sighs":'墓地叹息','Cocoon of the Maiden':'少女之茧','Crimson Pulse':'猩红之悸','Cursed Rabbit':'诅咒兔','Deus Ex Machina':'机械降神','Dream of Medicine':'医药之梦','Feast from Afar':'远方盛宴','Life Drain':'生命汲取','Organic Form':'有机形态','Paradox':'悖论','Photosynthesis Ritual':'光合作用仪式','Re-evolution':'再衍化','Returnal Line':'返还之线','Ring of Chamber 36':'三十六室之环','Scarlet Embrace':'猩红拥抱','Steppenwolf':'荒原狼','Sweet Slug':'甜蜜蛞蝓','Twisted Twins: Black':'扭曲双子·黑','Twisted Twins: White':'扭曲双子·白','Unstained Chronicle':'无垢纪事','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
-  let manifest=null,usage=null,usageStats=null,detailUsage=null,activeSeason=null,bound=false;
+  const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
+  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,activeSeason=null,bound=false;
 
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>String(team?.difficulty||wave?.difficulty||'unknown').toLowerCase();
@@ -60,6 +60,7 @@
   }
   function itemName(x){const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别');return x?.zhName||x?.nameZh||zhGear[raw]||raw}
   const heatStyle=rate=>{const t=Math.max(0,Math.min(1,Number(rate||0)/35)),h=Math.round(215-215*t),a=(.08+.34*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
+  function localGearImage(kind,url){const file=String(url||'').split('/').pop()?.split('?')[0];if(!file)return '';return kind==='wheel'?`assets/morimens/wheels/${file}`:`assets/morimens/covenants/Icon/${file}`}
   function filteredDetailRows(){
     const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave=$('dtideWave')?.value||'all';
     return flatten(detailUsage?.records||[]).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(wave!=='all'&&Number(x.wave.wave)!==Number(wave))return false;return true});
@@ -83,8 +84,9 @@
     if(entity==='character'){
       const all=scopedRows({cap,difficulty,wave:'all',clearType:ct});waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);groups=new Map(waves.map(w=>[w,group(all.filter(x=>Number(x.wave.wave)===w))]));const union=new Map();for(const [,g] of groups)for(const c of g.characters)union.set(c.key,c);rows=[...union.values()].map(c=>({...c,total:waves.reduce((sum,w)=>sum+(groups.get(w)?.characters.find(x=>x.key===c.key)?.count||0),0)}));
     }else{
-      const all=flatten(detailUsage?.records||[]).filter(x=>{const rank=Number(x.record.rank);return !(Number.isFinite(rank)&&rank>cap)&&(difficulty==='all'||x.difficulty===difficulty)});waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
-      groups=new Map(waves.map(w=>{const wr=all.filter(x=>Number(x.wave.wave)===w),map=new Map();for(const {team} of wr){const seen=new Set();for(const m of team.members||[])for(const item of entity==='wheel'?(m.wheels||m.weapons||[]):(m.covenants||m.suits||[])){const key=String(item?.id||item?.name||'');if(!key||seen.has(key))continue;seen.add(key);const hit=map.get(key)||{key,name:itemName(item),image:item?.image||'',count:0};hit.count++;map.set(key,hit)}}return {teamCount:wr.length,items:[...map.values()].map(x=>({...x,teamRatePct:wr.length?x.count/wr.length*100:0}))}}));const union=new Map();for(const [,g] of groups)for(const x of g.items)union.set(x.key,x);rows=[...union.values()].map(x=>({...x,total:waves.reduce((sum,w)=>sum+(groups.get(w)?.items.find(y=>y.key===x.key)?.count||0),0)}));
+      const source=detailStats?.waves||{};waves=Object.keys(source).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+      groups=new Map(waves.map(w=>{const bucket=source[String(w)]?.[difficulty==='all'?'all':difficulty]||source[String(w)]?.all||{},raw=entity==='wheel'?(bucket.wheels||[]):(bucket.covenants||[]);return {teamCount:Number(bucket.teamCount||0),items:raw.map(x=>({...x,key:String(x.key||x.id||x.name),name:itemName(x),image:localGearImage(entity,x.image)}))}}));
+      const union=new Map();for(const [,g] of groups)for(const x of g.items)union.set(x.key,x);rows=[...union.values()].map(x=>({...x,total:waves.reduce((sum,w)=>sum+(groups.get(w)?.items.find(y=>y.key===x.key)?.count||0),0)}));
     }
     const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false,getHit=(w,key)=>entity==='character'?groups.get(w)?.characters.find(x=>x.key===key):groups.get(w)?.items.find(x=>x.key===key);
     rows.sort((a,b)=>{const av=sortKey==='total'?a.total:(getHit(Number(sortKey),a.key)?.count||0),bv=sortKey==='total'?b.total:(getHit(Number(sortKey),b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
@@ -119,6 +121,7 @@
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
       usage=await json((current||entry).path);
       detailUsage=current?await json(entry.path).catch(()=>({records:[]})):usage;
+      detailStats=await json(entry.statsPath).catch(()=>null);
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
       activeSeason=Number(id);renderAll();return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
