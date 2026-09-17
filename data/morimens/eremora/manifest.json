@@ -99,7 +99,7 @@
     "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-09-17T01:37:23.794Z",
+    "generatedAt": "2026-09-17T12:31:08.180Z",
     "rankScopes": [
       50,
       200,
