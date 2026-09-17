@@ -60,7 +60,7 @@
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope">${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
         <div class="dtideField"><label>难度</label><select id="dtideDifficulty"><option value="all">全部难度</option>${difficultyOrder.map(x=>`<option value="${x}">${difficultyZh[x]}</option>`).join('')}</select></div>
-        <div class="dtideField"><label>波次</label><select id="dtideWave"><option value="all">全部波次</option></select></div><input id="dtideEntityType" type="hidden" value="character">
+        <div class="dtideField"><label>融灾总得分</label><select id="dtideTotalScore"><option value="0">全部分数</option><option value="300">300 分以上</option><option value="400">400 分以上</option><option value="500">500 分以上</option><option value="600">600 分以上</option><option value="700">700 分以上</option></select></div><input id="dtideWave" type="hidden" value="all"><input id="dtideEntityType" type="hidden" value="character">
         <input id="dtideClearType" type="hidden" value="all">
         <input id="dtideRateMode" type="hidden" value="team">
       </div>
@@ -100,7 +100,7 @@
   }
   function wheelName(item){return window.MorimensData?.localizedEntity?.('wheel',item)?.name||item?.name||item?.id||'未知命轮'}
   const memberKey=m=>m.skeydbId||m.ingameId||m.id||m.name;
-  function difficultyOf(team){const raw=String(team?.difficulty||team?.stageName||'').toLowerCase();for(const d of difficultyOrder)if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
+  function difficultyOf(team,wave){const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'').toLowerCase();for(const d of difficultyOrder)if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
   function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(ms==='AA'||ms==='LAW12')return 'law12';if(ms==='OE'||ms==='OVERLIMIT')return 'overlimit';return 'e3'}
   function maxRankAvailable(){const rs=(season?.records||[]).map(r=>Number(r.rank)).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
   function getSelectedValues(id){return Array.from($(id)?.selectedOptions||[]).map(x=>x.value).filter(Boolean)}
@@ -108,17 +108,18 @@
     const unique=new Map();
     const richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((sum,m)=>sum+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);
     for(const record of season?.records||[])for(const wave of record.waves||[])for(const team of wave.teams||[]){
-      const difficulty=difficultyOf(team),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(',');
+      const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(',');
       const key=[record.uid||record.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record,wave,team,difficulty},old=unique.get(key);
       if(!old||richness(team)>richness(old.team))unique.set(key,row);
     }
     return [...unique.values()];
   }
-  function scopedRows({wave=$('dtideWave')?.value||'all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=Number($('dtideRankScope')?.value||50)}={}){return flattenTeams().filter(x=>{
+  function scopedRows({wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=Number($('dtideRankScope')?.value||50),scoreMin=Number($('dtideTotalScore')?.value||0)}={}){return flattenTeams().filter(x=>{
     if(rankCap&&(!Number.isFinite(Number(x.record.rank))||Number(x.record.rank)>rankCap))return false;
     if(wave!=='all'&&Number(wave)!==Number(x.wave.wave))return false;
     if(ct!=='all'&&ct!==x.team.clearType)return false;
     if(difficulty!=='all'&&difficulty!==x.difficulty)return false;
+    if(scoreMin&&Number(x.record.score||0)<scoreMin)return false;
     return true;
   })}
   function countRate(map,key,meta={}){if(key==null||key==='')return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
@@ -177,7 +178,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function matchesFilters(row){
     const rankCap=Number($('dtideRankScope').value||50);if(rankCap&&(!Number.isFinite(Number(row.record.rank))||Number(row.record.rank)>rankCap))return false;
     const difficulty=$('dtideDifficulty').value;if(difficulty!=='all'&&row.difficulty!==difficulty)return false;
-    const wave=$('dtideWave').value,ct=$('dtideClearType').value;if(wave!=='all'&&Number(wave)!==Number(row.wave.wave))return false;if(ct!=='all'&&ct!==row.team.clearType)return false;
+    const ct=$('dtideClearType').value;if(ct!=='all'&&ct!==row.team.clearType)return false;
     const include=getSelectedValues('dtideCharacters'),exclude=getSelectedValues('dtideExcludeCharacters'),keys=row.team.members.map(m=>String(memberKey(m))),mode=$('dtideCharacterMode').value;if(include.length&&!(mode==='all'?include.every(x=>keys.includes(x)):include.some(x=>keys.includes(x))))return false;if(exclude.some(x=>keys.includes(x)))return false;
     const targets=include.length?row.team.members.filter(m=>include.includes(String(memberKey(m)))):row.team.members;
     const minLv=Number($('dtideLevelMin').value||0),maxLv=Number($('dtideLevelMax').value||0);if(minLv&&targets.some(m=>m.level==null||Number(m.level)<minLv))return false;if(maxLv&&targets.some(m=>m.level==null||Number(m.level)>maxLv))return false;
