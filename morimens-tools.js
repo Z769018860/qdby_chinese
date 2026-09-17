@@ -15,9 +15,27 @@ function setupMorimensCgSlideshow(){
 }
 setupMorimensCgSlideshow();
 
+function setupMorimensMascotToggle(){
+  const button=document.getElementById("morimensMascotToggle"),image=document.getElementById("morimensMascot"),hint=document.getElementById("morimensMascotHint");
+  if(!button||!image)return;
+  const characters=[
+    {name:"杜勒赛因",src:"assets/morimens/mascots/duersaiyin.gif"},
+    {name:"卡拉布",src:"assets/morimens/mascots/kalabu.gif"}
+  ];
+  let index=0;
+  for(const character of characters){const preload=new Image();preload.src=character.src}
+  button.addEventListener("click",()=>{
+    index=1-index;const current=characters[index],next=characters[1-index];
+    image.src=current.src;image.alt=current.name;
+    if(hint)hint.textContent=`${current.name} · 点击切换角色`;
+    button.setAttribute("aria-label",`当前为${current.name}，点击切换为${next.name}`);
+  });
+}
+setupMorimensMascotToggle();
+
 (async()=>{
   try{
-    const assetVersion="20260917.9";
+    const assetVersion="20260917.10";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
