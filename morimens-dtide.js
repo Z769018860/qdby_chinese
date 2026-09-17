@@ -1,5 +1,6 @@
 (()=>{
   const $=id=>document.getElementById(id);
+  const nativeAtob=window.atob.bind(window);window.atob=value=>nativeAtob(String(value).replace(/[^A-Za-z0-9+/=_-]/g,'').replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-String(value).replace(/[^A-Za-z0-9+/=_-]/g,'').length%4)%4));
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
