@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260918.12";
+  const assetVersion="20260918.13";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
