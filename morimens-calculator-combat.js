@@ -14,7 +14,7 @@
       first.querySelector('.formGrid')?.insertAdjacentElement('afterend',stats);
     }
     const block=document.createElement('div');block.className='builderBlock';block.id='combatModel';block.innerHTML=`
-      <div class="builderTitle"><span>⑤ 敌方属性与异常伤害</span><small>SKeyDB 状态定义</small></div>
+      <div class="builderTitle"><span>⑥ 敌方属性与异常伤害</span><small>SKeyDB 状态定义</small></div>
       <div class="formGrid">
         <div class="field"><label for="enemyDefense">敌方防御力</label><input id="enemyDefense" type="number" min="0" step="1" value="0"></div>
         <div class="field"><label for="defenseMode">防御换算</label><select id="defenseMode"><option value="manual">使用手动实测系数</option><option value="curve">可校准曲线 K ÷ (K + DEF)</option></select></div>
@@ -36,7 +36,7 @@
     renderTriplet();calculate();setTimeout(()=>{renderTriplet();calculate()},500);
   }
   function renderTriplet(){
-    const rec=window.MorimensCharacterSync?.record;const level=clamp(n('skeydbCharacterLevel',90),1,90);if(!rec)return;
+    const rec=window.MorimensCharacterSync?.record,levelInput=$('charLevel')||$('skeydbCharacterLevel'),level=clamp(Number.parseFloat(levelInput?.value)||90,1,90);if(!rec)return;
     if($('combatCon'))$('combatCon').textContent=fmt(statAt(rec,'CON',level));
     if($('combatAtk'))$('combatAtk').textContent=fmt(statAt(rec,'ATK',level));
     if($('combatDef'))$('combatDef').textContent=fmt(statAt(rec,'DEF',level));
@@ -63,7 +63,7 @@
     const label={normal:'非暴击',crit:'暴击',expected:'期望'}[mode];
     $('resultLabel').textContent=`${$('charSelect')?.selectedOptions?.[0]?.textContent||'角色'} · ${label}总伤害`;
     $('resultNumber').textContent=fmt(total);$('normalLine').textContent=`非暴击直伤：${fmt(normal)}`;$('critLine').textContent=`暴击直伤：${fmt(crit)}`;$('expectedLine').textContent=`期望直伤：${fmt(expected)}`;
-    $('formula').textContent=`[(ATK ${fmt(attack)} × 技能 ${coef.toFixed(3)} + 力量 ${fmt(strength)}) × ${hits}] × 基伤 ${(1+n('baseBonus')/100).toFixed(3)} × 强效 ${(1+n('powerBonus')/100).toFixed(3)} × 易伤 ${(1+(n('vulnerability')+($('buffVuln')?.checked?50:0))/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；异常追加 = 已消耗层数 × 3`;
+    $('formula').textContent=`[(ATK ${fmt(attack)} × 技能 ${coef.toFixed(3)} + 力量 ${fmt(strength)}) × ${hits}] × 基伤 ${(1+n('baseBonus')/100).toFixed(3)} × 强效 ${(1+n('powerBonus')/100).toFixed(3)} × 易伤 ${(1+(n('vulnerability')+($('buffVuln')?.checked?50:0))/100).toFixed(3)} × 终伤 ${(1+n('finalBonus')/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；异常追加 = 已消耗层数 × 3`;
     const rows=[['技能基础项',baseRaw],['基础伤害转化后',base],['伤害强效转化后',powered],['易伤与最终增伤后',final],['敌方防御与加固后直伤',direct],['侵蚀追加生命损失',corrosionDamage],['旧日余烬追加生命损失',embersDamage],['本次合计',total]];
     $('breakdown').innerHTML=rows.map(([a,b])=>`<div class="step"><span>${esc(a)}</span><strong>${fmt(b)}</strong></div>`).join('');
     if($('combatConversion'))$('combatConversion').innerHTML=`攻击侧：基伤 <b>${fmt(baseRaw)}</b> → 强效后 <b>${fmt(powered)}</b>；暴击率 <b>${(critRate*100).toFixed(1)}%</b>，暴伤 <b>${(critMult*100).toFixed(1)}%</b>。敌方：DEF <b>${fmt(enemyDef)}</b>，防御系数 <b>${(defenseCoef*100).toFixed(1)}%</b>，加固后系数 <b>${(fortifyCoef*100).toFixed(1)}%</b>。`;
