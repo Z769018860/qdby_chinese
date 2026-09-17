@@ -55,7 +55,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">每日同步 Eremora D-Zone（融灾）结构化挑战记录；出场率可按榜单 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂四档难度分别统计。</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：显示当前结构化融灾数据的同步时间；出场率可按榜单 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂四档难度分别统计。</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope">${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
@@ -66,7 +66,7 @@
       </div>
       <div class="dtideStatGrid" id="dtideSummary"></div>
       <div id="dtideCoverageWarn" class="dtideCoverageWarn"></div>
-      <div class="dtideSection"><h3 id="dtideMatrixTitle">角色逐波出场率</h3><div class="dtideLeaderboardTabs" role="tablist" aria-label="出场率榜单类型"><button type="button" class="dtideLeaderboardTab" data-dtide-entity="character" role="tab" aria-selected="true">角色榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="wheel" role="tab" aria-selected="false">命轮榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="creation" role="tab" aria-selected="false">造物榜单</button></div><div class="dtideScroll" id="dtideMatrix"></div></div>
+      <div class="dtideSection"><h3 id="dtideMatrixTitle">角色逐波出场率</h3><div class="dtideLeaderboardTabs" role="tablist" aria-label="出场率榜单类型"><button type="button" class="dtideLeaderboardTab" data-dtide-entity="character" role="tab" aria-selected="true">角色榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="wheel" role="tab" aria-selected="false">命轮榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="creation" role="tab" aria-selected="false">造物榜单</button><label class="dtideCreationFilter"><input type="checkbox" id="dtideCreationFilter"> 筛选造物</label></div><div class="dtideScroll" id="dtideMatrix"></div></div>
     </section>
     <section class="panel">
       <div class="panelHead"><div><h2>搜索配队</h2><p class="panelLead">筛选条件作用于公开的融灾队伍记录；选择角色后可进一步查看其常用队友、命轮与密契。</p></div><span class="statusPill" id="dtideFilterCoverage">字段覆盖检查中</span></div>
