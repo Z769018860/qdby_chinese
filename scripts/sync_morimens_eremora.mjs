@@ -90,6 +90,7 @@ function normalizeMember(build,mediaBase,byIngame){
   };
 }
 function normalizeToken(token,mediaBase){if(!token||typeof token!=='object')return null;return {id:token.id??null,name:fixMojibake(token.name||''),image:mediaUrl(mediaBase,token.image),rarity:fixMojibake(token.rarity||'')}}
+function normalizeCreation(relic,mediaBase){if(!relic||typeof relic!=='object')return null;return {id:relic.id??null,name:fixMojibake(relic.name||String(relic.id??'')),image:mediaUrl(mediaBase,relic.image),quality:fixMojibake(relic.quality||''),desc:fixMojibake(relic.desc||'')}}
 function normalizeActivity(activityItem,entry,decoded,byIngame){
   const node=activityItem.node,activity=node.activity||{},mediaBase=findMediaBase(decoded),header=findProfileHeader(decoded)||{};
   const stageRows=[];
@@ -97,10 +98,11 @@ function normalizeActivity(activityItem,entry,decoded,byIngame){
     if(!stageRec?.team||!Array.isArray(stageRec.team.awakers))continue;
     const stage=stageRec.stage||{},stageName=fixMojibake(stage.name||''),wave=num(stageName.match(/Wave\s*(\d+)/i)?.[1]);if(!wave)continue;
     const members=stageRec.team.awakers.map(x=>normalizeMember(x,mediaBase,byIngame));
-    stageRows.push({wave,madness:num(stage.rec_level),stageId:stage.id??stageRec.team.stage_tid??null,stageName,score:num(stageRec.score),clearType:stageRec.extra?'extra':'clear',extraPass:!!stageRec.extra_pass,groupTid:stageRec.group_tid??null,token:normalizeToken(stageRec.team.keeper_skill,mediaBase),wid:stageRec.team.wid??null,battleUuid:stageRec.team.battle_uuid??null,members});
+    const creations=(Array.isArray(stageRec.team.result?.relics)?stageRec.team.result.relics:[]).map(x=>normalizeCreation(x,mediaBase)).filter(Boolean);
+    stageRows.push({wave,madness:num(stage.rec_level),stageId:stage.id??stageRec.team.stage_tid??null,stageName,score:num(stageRec.score),clearType:stageRec.extra?'extra':'clear',extraPass:!!stageRec.extra_pass,groupTid:stageRec.group_tid??null,token:normalizeToken(stageRec.team.keeper_skill,mediaBase),creations,wid:stageRec.team.wid??null,battleUuid:stageRec.team.battle_uuid??null,members});
   }
   const wavesMap=new Map();
-  for(const s of stageRows){const w=wavesMap.get(s.wave)||{wave:s.wave,madness:s.madness,teams:[]};w.madness??=s.madness;w.teams.push({clearType:s.clearType,score:s.score,extraPass:s.extraPass,groupTid:s.groupTid,stageId:s.stageId,stageName:s.stageName,token:s.token,wid:s.wid,battleUuid:s.battleUuid,members:s.members});wavesMap.set(s.wave,w)}
+  for(const s of stageRows){const w=wavesMap.get(s.wave)||{wave:s.wave,madness:s.madness,teams:[]};w.madness??=s.madness;w.teams.push({clearType:s.clearType,score:s.score,extraPass:s.extraPass,groupTid:s.groupTid,stageId:s.stageId,stageName:s.stageName,token:s.token,creations:s.creations,wid:s.wid,battleUuid:s.battleUuid,members:s.members});wavesMap.set(s.wave,w)}
   const waves=[...wavesMap.values()].sort((a,b)=>a.wave-b.wave),computedScore=stageRows.reduce((sum,x)=>sum+(x.score||0),0);
   const start=num(activity.start),end=num(activity.end),iso=d=>d?new Date(d*1000).toISOString().slice(0,10):null;
   return {rank:entry?.rank??null,player:fixMojibake(header.name||entry?.player||''),uid:String(header.uid??entry?.uid??''),score:entry?.score??computedScore,currentScore:computedScore,leaderboardScore:entry?.score??null,url:entry?.url||`${ORIGIN}/u/${header.uid}/challenges/dzone/${activityItem.period}`,seasonId:activityItem.period,period:start&&end?`${iso(start)} – ${iso(end)}`:null,activity:{id:activity.id??null,tid:node.activity_tid??null,name:fixMojibake(activity.name||'Dissoluted Abyss'),start,end,maxScore:num(node.max_score),stageCount:num(node.stage_count)||stageRows.length},waves,fetchedAt:new Date().toISOString(),sourceTransport:'Eremora SvelteKit __data.json'};
@@ -113,9 +115,10 @@ function mergeRecord(oldRec,newRec){
 
 function addCount(map,key,meta={}){if(key===null||key===undefined||key==='')return;const cur=map.get(String(key))||{key:String(key),count:0,...meta};cur.count++;map.set(String(key),cur)}
 function ratesFromTeams(teams){
-  const char=new Map(),token=new Map(),wheel=new Map(),covenant=new Map(),byCharacter=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0;
+  const char=new Map(),token=new Map(),creation=new Map(),wheel=new Map(),covenant=new Map(),byCharacter=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0,creationSlots=0;
   for(const team of teams){
     const seenChars=new Set(),seenWheels=new Set(),seenCov=new Set();addCount(token,team.token?.id??team.token?.name,{id:team.token?.id??null,name:team.token?.name||null,image:team.token?.image||null});
+    const seenCreations=new Set();for(const r of team.creations||[]){creationSlots++;const rk=r.id??r.name;if(rk==null||seenCreations.has(String(rk)))continue;seenCreations.add(String(rk));addCount(creation,rk,{id:r.id??null,name:r.name||String(rk),image:r.image||null,quality:r.quality||null})}
     for(const m of team.members||[]){
       memberSlots++;const ck=m.skeydbId||m.ingameId||m.id||m.name;
       if(ck&&!seenChars.has(String(ck))){seenChars.add(String(ck));addCount(char,ck,{id:m.skeydbId||null,ingameId:m.ingameId||null,name:m.canonicalName||m.name,image:m.image||null})}
@@ -127,14 +130,14 @@ function ratesFromTeams(teams){
   }
   const n=teams.length||1,finish=map=>[...map.values()].map(x=>({...x,teamRate:x.count/n,teamRatePct:Number((x.count/n*100).toFixed(2))})).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN'));
   const byCharOut=[...byCharacter.values()].map(x=>({key:x.key,id:x.id,ingameId:x.ingameId,name:x.name,image:x.image,appearances:x.appearances,level:{min:x.levels.length?Math.min(...x.levels):null,max:x.levels.length?Math.max(...x.levels):null,avg:x.levels.length?Number((x.levels.reduce((a,b)=>a+b,0)/x.levels.length).toFixed(2)):null},enlighten:{min:x.enlightenment.length?Math.min(...x.enlightenment):null,max:x.enlightenment.length?Math.max(...x.enlightenment):null,avg:x.enlightenment.length?Number((x.enlightenment.reduce((a,b)=>a+b,0)/x.enlightenment.length).toFixed(2)):null,milestones:[...x.milestones.values()].sort((a,b)=>b.count-a.count)},wheels:[...x.wheels.values()].map(v=>({...v,ratePct:Number((v.count/x.appearances*100).toFixed(2))})).sort((a,b)=>b.count-a.count),covenants:[...x.covenants.values()].map(v=>({...v,ratePct:Number((v.count/x.appearances*100).toFixed(2))})).sort((a,b)=>b.count-a.count)})).sort((a,b)=>b.appearances-a.appearances);
-  return {teamCount:teams.length,memberSlots,wheelSlots,covenantSlots,characters:finish(char),tokens:finish(token),wheels:finish(wheel),covenants:finish(covenant),byCharacter:byCharOut};
+  return {teamCount:teams.length,memberSlots,wheelSlots,covenantSlots,creationSlots,characters:finish(char),tokens:finish(token),creations:finish(creation),wheels:finish(wheel),covenants:finish(covenant),byCharacter:byCharOut};
 }
 function buildStats(season){
   const allTeams=[],byWave={};
   for(const rec of season.records||[])for(const wave of rec.waves||[]){byWave[wave.wave]??={all:[],clear:[],extra:[]};for(const team of wave.teams||[]){byWave[wave.wave].all.push(team);if(team.clearType==='extra')byWave[wave.wave].extra.push(team);else byWave[wave.wave].clear.push(team);allTeams.push(team)}}
   const waves=Object.fromEntries(Object.entries(byWave).map(([w,g])=>[w,{all:ratesFromTeams(g.all),clear:ratesFromTeams(g.clear),extra:ratesFromTeams(g.extra)}]));
   const all=ratesFromTeams(allTeams),hasEnlighten=all.byCharacter.some(x=>x.enlighten.max!=null),equipAvailable=all.wheelSlots>0||all.covenantSlots>0;
-  return {seasonId:season.seasonId,generatedAt:new Date().toISOString(),recordCount:season.records.length,waves,all,equipment:{available:equipAvailable,wheelSlots:all.wheelSlots,covenantSlots:all.covenantSlots,note:equipAvailable?'命轮来自 Eremora 原始 weapons 字段；密契来自 trinkets / suits 字段。':'本期原始记录没有可统计的命轮或密契字段。'},coverage:{enlightenment:hasEnlighten,wheels:all.wheelSlots>0,covenants:all.covenantSlots>0}};
+  return {seasonId:season.seasonId,generatedAt:new Date().toISOString(),recordCount:season.records.length,waves,all,equipment:{available:equipAvailable,wheelSlots:all.wheelSlots,covenantSlots:all.covenantSlots,creationSlots:all.creationSlots,note:equipAvailable?'命轮来自 Eremora 原始 weapons 字段；密契来自 trinkets / suits 字段；造物来自 team.result.relics。':'本期原始记录没有可统计的命轮或密契字段。'},coverage:{enlightenment:hasEnlighten,wheels:all.wheelSlots>0,covenants:all.covenantSlots>0,creations:all.creationSlots>0}};
 }
 
 await mkdir(SEASON_DIR,{recursive:true});await mkdir(STATS_DIR,{recursive:true});
@@ -179,8 +182,7 @@ const seasonFiles=(await readdir(SEASON_DIR)).filter(x=>/^\d+\.json$/.test(x)),s
 for(const f of seasonFiles){const s=await readJson(path.join(SEASON_DIR,f));if(s)snapshots.push({seasonId:s.seasonId,period:s.period||null,recordCount:s.recordCount||0,leaderboardEntryCount:s.leaderboardEntryCount??null,complete:!!s.complete,coverageMode:s.coverageMode||'snapshot',path:`data/morimens/eremora/seasons/${s.seasonId}.json`,statsPath:`data/morimens/eremora/stats/${s.seasonId}.json`})}
 snapshots.sort((a,b)=>b.seasonId-a.seasonId);
 const currentStats=await readJson(path.join(STATS_DIR,`${currentSeason}.json`),{}),discovered=uniq([currentSeason,...historyBySeason.keys(),...snapshots.map(x=>x.seasonId)]).map(Number).sort((a,b)=>b-a);
-const fieldCoverage={character:true,wave:true,level:true,progressionLabel:true,enlightenLevel:!!currentStats.coverage?.enlightenment,wheels:!!currentStats.coverage?.wheels,covenants:!!currentStats.coverage?.covenants};
+const fieldCoverage={character:true,wave:true,level:true,progressionLabel:true,enlightenLevel:!!currentStats.coverage?.enlightenment,wheels:!!currentStats.coverage?.wheels,covenants:!!currentStats.coverage?.covenants,creations:!!currentStats.coverage?.creations};
 const manifest={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailEndpointTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,syncedAt:new Date().toISOString(),transport:'Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page'},currentSeason,availableSeasons:snapshots,discoveredSeasonIds:discovered,pendingBackfillSeasonIds:snapshots.filter(x=>!x.complete).map(x=>x.seasonId),current:{leaderboardEntries:currentEntries.length,records:currentRecords.length,complete:currentSeasonDoc.complete,failures:failures.length},fieldCoverage,notes:['当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。','命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。','历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。']};
 await saveJson(path.join(OUT_DIR,'manifest.json'),manifest);
-console.log(`Eremora D-Zone season ${currentSeason}: leaderboard=${currentEntries.length}, records=${currentRecords.length}, failures=${failures.length}, complete=${currentSeasonDoc.complete}; raw fields: enlight=${fieldCoverage.enlightenLevel}, wheels=${fieldCoverage.wheels}, covenants=${fieldCoverage.covenants}; seasons=${snapshots.map(x=>`${x.seasonId}:${x.recordCount}${x.complete?'✓':'~'}`).join(', ')}`);
-
+console.log(`Eremora D-Zone season ${currentSeason}: leaderboard=${currentEntries.length}, records=${currentRecords.length}, failures=${failures.length}, complete=${currentSeasonDoc.complete}; raw fields: enlight=${fieldCoverage.enlightenLevel}, wheels=${fieldCoverage.wheels}, covenants=${fieldCoverage.covenants}, creations=${fieldCoverage.creations}; seasons=${snapshots.map(x=>`${x.seasonId}:${x.recordCount}${x.complete?'✓':'~'}`).join(', ')}`);
