@@ -1,0 +1,11 @@
+{
+  "format": "gzip-base64-chunked-v1",
+  "seasonId": 63,
+  "recordCount": 2,
+  "source": "local detailed __data.json import",
+  "chunks": [
+    "data/morimens/eremora/usage/63-local-gzip/chunk-000.b64"
+  ],
+  "chunkSize": 700000,
+  "compressedBytes": 13254
+}
