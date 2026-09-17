@@ -9,7 +9,7 @@
   const enlightKeys=['low','e3plus3','plus4plus11','plus12'];
   const enlightColors={low:'#7b8798',e3plus3:'#d9a441',plus4plus11:'#62b7ff',plus12:'#d978d0',unknown:'#5f6b7a'};
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
-  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,bound=false,dataVersion='1',gearByName=new Map();
+  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,bound=false,dataVersion='1',gearByName=new Map(),rankByUid=new Map();
 
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>{const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'unknown').toLowerCase();return diffs.find(d=>new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))||'unknown'};
@@ -40,7 +40,8 @@
     const chunks=await Promise.all(index.chunks.map(json));return {...index,records:chunks.flatMap(x=>x.records||[])};
   }
   async function jsonText(url){const r=await fetch(versioned(url),{cache:'force-cache'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.text()}
-  function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records)for(const wave of record.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[record.uid||record.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}return [...unique.values()]}
+  function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankByUid.get(String(record.uid)),normalized=Number.isFinite(rank)?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
+  async function loadRankMap(id){rankByUid=new Map();try{const r=await fetch(versioned(`data/morimens/eremora/rank-index/${id}.json`),{cache:'force-cache'});if(!r.ok)return;const raw=(await r.text()).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,' '),doc=JSON.parse(raw);for(const x of doc.rows||[])if(x?.uid!=null&&Number.isFinite(Number(x.rank)))rankByUid.set(String(x.uid),Number(x.rank))}catch(e){console.warn('rank index unavailable',id,e)}}
   function scopedRows({cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave='all',clearType=$('dtideClearType')?.value||'all',scoreMin=Number($('dtideTotalScore')?.value||0)}={}){
     return flatten().filter(x=>{
       const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;
@@ -179,7 +180,7 @@
     if(!entry){usage=null;usageStats=null;return false}
     try{
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
-      usage=await dataset((current||entry).path);
+      await loadRankMap(id);usage=await dataset((current||entry).path);
       detailUsage=usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
