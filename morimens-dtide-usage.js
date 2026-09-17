@@ -11,6 +11,29 @@
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
   let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,bound=false,dataVersion='1',gearByName=new Map(),rankByUid=new Map();
 
+  function scoreRange(){
+    const raw=String($('dtideTotalScore')?.value||'all');
+    if(raw==='all'||raw==='0')return null;
+    const [lo,hi]=raw.split(':').map(Number);
+    if(Number.isFinite(lo)&&Number.isFinite(hi))return [lo,hi];
+    const min=Number(raw);return Number.isFinite(min)&&min>0?[min,Infinity]:null;
+  }
+  function scoreMatches(record){
+    const range=scoreRange();if(!range)return true;
+    const score=Number(record?.score);return Number.isFinite(score)&&score>=range[0]&&score<=range[1];
+  }
+  function rankOf(record){
+    const mapped=rankByUid.get(String(record?.uid??''));
+    if(Number.isFinite(mapped)&&mapped>0)return mapped;
+    const raw=Number(record?.rank);return Number.isFinite(raw)&&raw>0?raw:null;
+  }
+  function rankMatches(record,cap){
+    if(!cap)return true;
+    const rank=rankOf(record);if(rank!=null)return rank<=cap;
+    const current=Number(activeSeason)===Number(manifest?.currentSeason);
+    return !current&&rankByUid.size===0;
+  }
+
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>{const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'unknown').toLowerCase();return diffs.find(d=>new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))||'unknown'};
   const enlightOf=m=>{const p=Number(m?.potencyLevel);if(Number.isFinite(p))return p<=2?'low':p<=6?'e3plus3':p<=14?'plus4plus11':'plus12';const n=Number(m?.enlightenCount);if(Number.isFinite(n))return n<=2?'low':n===3?'e3plus3':n===4?'plus4plus11':'plus12';return /AA/i.test(String(m?.progression||''))?'plus12':/OE/i.test(String(m?.progression||''))?'plus4plus11':/E[0-2]/i.test(String(m?.progression||''))?'low':'e3plus3'};
@@ -37,13 +60,22 @@
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     return loader.loadDataset(url);
   }
-  function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankByUid.get(String(record.uid)),normalized=Number.isFinite(rank)?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
-  async function loadRankMap(id){rankByUid=new Map();try{const r=await fetch(versioned(`data/morimens/eremora/rank-index/${id}.json`),{cache:'force-cache'});if(!r.ok)return;const raw=(await r.text()).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,' '),doc=JSON.parse(raw);for(const x of doc.rows||[])if(x?.uid!=null&&Number.isFinite(Number(x.rank)))rankByUid.set(String(x.uid),Number(x.rank))}catch(e){console.warn('rank index unavailable',id,e)}}
-  function scopedRows({cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave='all',clearType=$('dtideClearType')?.value||'all',scoreMin=Number($('dtideTotalScore')?.value||0)}={}){
+  function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankOf(record),normalized=rank!=null&&record.rank!==rank?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
+  async function loadRankMap(id){
+    rankByUid=new Map();
+    if(Number(id)!==Number(manifest?.currentSeason))return rankByUid;
+    const loader=window.MorimensDtideDataLoader;
+    const path=manifest?.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`;
+    if(!loader?.loadRankMap)return rankByUid;
+    try{rankByUid=await loader.loadRankMap(path,{revision:dataVersion,fresh:true})}
+    catch(e){console.warn('rank index unavailable',id,e);rankByUid=new Map()}
+    return rankByUid;
+  }
+  function scopedRows({cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave='all',clearType=$('dtideClearType')?.value||'all'}={}){
     return flatten().filter(x=>{
-      const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;
+      if(!rankMatches(x.record,cap))return false;
       if(difficulty!=='all'&&x.difficulty!==difficulty)return false;
-      if(scoreMin&&Number(x.record.score||0)<scoreMin)return false;
+      if(!scoreMatches(x.record))return false;
       if(wave!=='all'&&Number(x.wave.wave)!==Number(wave))return false;
       if(clearType!=='all'&&x.team.clearType!==clearType)return false;
       return true;
@@ -63,7 +95,7 @@
     return `<div class="dtideEnlightBar" title="${esc(title)}" aria-label="${esc(title)}">${items.map(x=>`<span style="width:${x.count/total*100}%;background:${enlightColors[x.key]}"></span>`).join('')}</div>`;
   }
   function coverage(cap){
-    const records=usage?.records||[],rankValues=records.map(x=>Number(x.rank)).filter(Number.isFinite);
+    const records=usage?.records||[],rankValues=records.map(rankOf).filter(Number.isFinite);
     const distinctRanks=new Set(rankValues);
     if(records.length&&distinctRanks.size<Math.min(10,records.length)){const covered=Math.min(records.length,cap);return {covered,expected:cap,complete:covered>=cap,historical:false}}
     if(!rankValues.length&&records.length)return {covered:records.length,expected:records.length,complete:false,historical:true};
@@ -93,24 +125,24 @@
   function localGearImage(kind,url,name=''){const raw=String(url||''),file=raw.split('/').pop()?.split('?')[0]||gearByName.get(String(name).replace(/^"|"$/g,''))?.file||'';if(!file)return '';if(kind==='wheel')return `assets/morimens/wheels/${file}`;if(kind==='covenant')return `assets/morimens/covenants/Icon/${file.replace('_Box.webp','.webp')}`;if(kind==='creation')return `assets/morimens/relics/${file}`;if(kind==='token')return raw.replace('/icon/','/thumb/icon/');return ''}
   function tokenImage(name){for(const {team} of flatten(detailUsage?.records||[])){const token=team.token;if(token&&itemName(token)===name&&token.image)return String(token.image).replace('/icon/','/thumb/icon/')}return ''}
   function filteredDetailRows(){
-    const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',scoreMin=Number($('dtideTotalScore')?.value||0);
-    return flatten(detailUsage?.records||[]).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(scoreMin&&Number(x.record.score||0)<scoreMin)return false;return true});
+    const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all';
+    return flatten(detailUsage?.records||[]).filter(x=>{if(!rankMatches(x.record,cap))return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(!scoreMatches(x.record))return false;return true});
   }
   function wheelGroup(rows){
     const map=new Map();
     for(const {team} of rows){const seen=new Set();for(const member of team.members||[])for(const wheel of member.wheels||member.weapons||[]){const key=String(wheel.id??wheel.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=wheel.image||'',item=map.get(key)||{key,id:wheel.id??null,name:wheelName(wheel),image:localGearImage('wheel',remote,wheel.name),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
-    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>!$('dtideCreationFilter')?.checked||(x.teamRatePct<100&&!/^维度影像(?:：|$)/.test(String(x.name||'')))).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
+    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
   function creationGroup(rows){
     const map=new Map();
     for(const {team} of rows){const seen=new Set();for(const creation of team.creations||[]){const key=String(creation.id??creation.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=creation.image||'',item=map.get(key)||{key,id:creation.id??null,name:itemName(creation),image:localGearImage('creation',remote,creation.name),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
-    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>!$('dtideCreationFilter')?.checked||(x.teamRatePct<100&&!/^维度影像(?:：|$)/.test(String(x.name||'')))).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
+    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>{if(!$('dtideCreationFilter')?.checked)return true;const name=String(x.name||'').replace(/^"|"$/g,'').trim();return x.teamRatePct<100&&!/^维度影像(?:：|$)/.test(name)&&!/^(?:锈蚀钥匙|Rusted Key)$/i.test(name)}).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
   const entityGroup=(rows,entity)=>entity==='character'?group(rows):entity==='creation'?creationGroup(rows):wheelGroup(rows);
   function rowsFor(records,{cap,difficulty,clearType}){
-    const scoreMin=Number($('dtideTotalScore')?.value||0);return flatten(records).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(scoreMin&&Number(x.record.score||0)<scoreMin)return false;if(clearType!=='all'&&x.team.clearType!==clearType)return false;return true});
+    return flatten(records).filter(x=>{if(!rankMatches(x.record,cap))return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(!scoreMatches(x.record))return false;if(clearType!=='all'&&x.team.clearType!==clearType)return false;return true});
   }
   function rankedRows(records,entity,{cap,difficulty,clearType,sortKey,asc}){
     const all=rowsFor(records,{cap,difficulty,clearType}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
@@ -177,11 +209,10 @@
     if(!entry){usage=null;usageStats=null;return false}
     try{
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
-      await loadRankMap(id);usage=await dataset((current||entry).path);
+      activeSeason=Number(id);await loadRankMap(id);usage=await dataset((current||entry).path);
       detailUsage=usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
-      activeSeason=Number(id);
       const previousEntry=(manifest.availableSeasons||[]).filter(x=>Number(x.seasonId)<activeSeason).sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))[0]||null;
       previousSeasonId=previousEntry?Number(previousEntry.seasonId):null;previousUsage=null;previousDetailUsage=null;
       if(previousEntry){previousUsage=await dataset(previousEntry.path).catch(()=>null);previousDetailUsage=previousUsage}
@@ -191,7 +222,7 @@
   function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode','dtideSort','dtideCreationFilter'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;requestAnimationFrame(renderMatrix)});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
-    try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
+    try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
       const note=$('dtideCoverageNote');if(note)note.insertAdjacentHTML('beforeend',` <strong>Top1000 出场率层：</strong>当前使用增量缓存 ${esc(String(manifest.usageIndex.recordCount||usage.recordCount||0))}/${esc(String(manifest.usageIndex.target||1000))} 名公开榜单玩家。`);
     }
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
