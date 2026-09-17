@@ -42,7 +42,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: pip
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
       - name: Install Python dependencies
         run: |
@@ -53,8 +57,14 @@ jobs:
       - name: Validate repair inputs
         run: |
           test -s "data/morimens/eremora/rank-index/${EREMORA_REPAIR_SEASON}.json"
-          test -s "data/morimens/eremora/retry-uids/${EREMORA_REPAIR_SEASON}.txt" || true
           python -m py_compile scripts/repair_morimens_github.py
+          python - <<'PY'
+          import json, os, pathlib
+          season=os.environ['EREMORA_REPAIR_SEASON']
+          x=json.loads(pathlib.Path(f'data/morimens/eremora/rank-index/{season}.json').read_text(encoding='utf-8'))
+          assert len(x.get('rows',[])) >= 1000, f'incomplete rank index: {len(x.get("rows",[]))}'
+          print('rank index:',len(x.get('rows',[])))
+          PY
 
       - name: Repair next batch
         run: python scripts/repair_morimens_github.py
@@ -70,23 +80,29 @@ jobs:
           season=os.environ['EREMORA_REPAIR_SEASON']
           retry=pathlib.Path(f'data/morimens/eremora/retry-uids/{season}.txt')
           uids=[x.strip() for x in retry.read_text(encoding='utf-8').splitlines() if x.strip()] if retry.exists() else []
-          print('remaining retry UIDs:', len(uids))
+          print('remaining retry UIDs:',len(uids))
           p=pathlib.Path(f'data/morimens/eremora/repair-progress/{season}.json')
           if p.exists():
               x=json.loads(p.read_text(encoding='utf-8'))
-              print('success this run:', len(x.get('successThisRun',[])))
-              print('failed this run:', len(x.get('failedThisRun',[])))
+              print('success this run:',len(x.get('successThisRun',[])))
+              print('failed this run:',len(x.get('failedThisRun',[])))
           PY
 
-      - name: Commit repaired data and retry state
+      - name: Commit successful repairs
         run: |
-          if [ -z "$(git status --porcelain -- data/morimens/eremora)" ]; then
-            echo "No Eremora repair changes in this run."
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/morimens/eremora
+          git add "data/morimens/eremora/retry-uids" || true
+          git add "data/morimens/eremora/raw-repair" || true
+          git add "data/morimens/eremora/users" || true
+          git add "data/morimens/eremora/seasons" || true
+          git add "data/morimens/eremora/stats" || true
+          if git diff --cached --quiet; then
+            echo "No successful repair data changed in this run; leaving retry state unchanged."
+            git restore "data/morimens/eremora/repair-progress" 2>/dev/null || true
+            exit 0
+          fi
+          git add "data/morimens/eremora/repair-progress" || true
           git commit -m "chore: continue Eremora missing-detail repair"
           for attempt in 1 2 3 4 5; do
             git pull --rebase origin main
