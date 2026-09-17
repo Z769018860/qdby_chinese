@@ -1,6 +1,6 @@
 (async()=>{
   try{
-    const assetVersion="20260917.7";
+    const assetVersion="20260917.8";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
