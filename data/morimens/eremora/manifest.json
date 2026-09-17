@@ -241,7 +241,7 @@
       "coveragePct": 91,
       "complete": false
     },
-    "syncedAt": "2026-09-17T22:12:10.683Z",
+    "syncedAt": "2026-09-17T22:12:56.517Z",
     "format": "gzip-base64-chunked-v1",
     "chunks": 30,
     "chunkSize": 350000,
@@ -256,4 +256,4 @@
     "structuredIndex": "data/morimens/eremora/top1000/69.json",
     "updatedBy": "scripts/process_morimens_raw1000.py"
   }
-}\n
+}
