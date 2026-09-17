@@ -19,6 +19,19 @@
     return {name:loc?.name||rec?.name||m?.canonicalName||m?.name||key,image:rec?.assets?.portrait||m?.image||''};
   }
   async function json(url){const r=await fetch(`${url}${url.includes('?')?'&':'?'}v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.json()}
+  async function dataset(url){
+    const index=await json(url);
+    if(index.format==='gzip-base64-chunked-v1'){
+      const texts=await Promise.all(index.chunks.map(jsonText));
+      const bin=atob(texts.join('')),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+      const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+      const decoded=JSON.parse(await new Response(stream).text());
+      return {...index,records:decoded.records||[]};
+    }
+    if(!Array.isArray(index.chunks))return index;
+    const chunks=await Promise.all(index.chunks.map(json));return {...index,records:chunks.flatMap(x=>x.records||[])};
+  }
+  async function jsonText(url){const r=await fetch(`${url}${url.includes('?')?'&':'?'}v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.text()}
   function flatten(records=usage?.records||[]){const out=[];for(const record of records)for(const wave of record.waves||[])for(const team of wave.teams||[])out.push({record,wave,team,difficulty:difficultyOf(team,wave)});return out}
   function scopedRows({cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave=$('dtideWave')?.value||'all',clearType=$('dtideClearType')?.value||'all'}={}){
     return flatten().filter(x=>{
@@ -140,7 +153,7 @@
     if(!entry){usage=null;usageStats=null;return false}
     try{
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
-      usage=await json((current||entry).path);
+      usage=await dataset((current||entry).path);
       detailUsage=current?await json(entry.path).catch(()=>({records:[]})):usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
