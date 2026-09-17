@@ -37,7 +37,7 @@
   }
   function coverage(cap){
     const s=usageStats?.rankTiers?.[String(cap)];if(s)return {covered:Number(s.covered||0),expected:Number(s.expected||cap),complete:!!s.complete};
-    const ranks=new Set((usage?.records||[]).map(x=>Number(x.rank)).filter(x=>Number.isFinite(x)&&x<=cap));return {covered:ranks.size,expected:cap,complete:ranks.size>=cap};
+    const records=usage?.records||[],ranks=new Set(records.map(x=>Number(x.rank)).filter(x=>Number.isFinite(x)&&x<=cap));if(!ranks.size&&records.length)return {covered:records.length,expected:records.length,complete:false};return {covered:ranks.size,expected:cap,complete:ranks.size>=cap};
   }
   function coverageLabel(cap){const c=coverage(cap);return `Top ${cap} · ${c.covered}/${c.expected}${c.complete?'':' 样本'}`}
 
@@ -84,7 +84,7 @@
 
   function fallbackStats(records){
     const ranks=(records||[]).map(x=>Number(x.rank)).filter(Number.isFinite),maxRank=ranks.length?Math.max(...ranks):0;
-    const rankTiers={};for(const cap of rankCaps){const covered=ranks.filter(x=>x<=cap).length;rankTiers[String(cap)]={covered,expected:cap,complete:covered>=cap}}
+    const rankTiers={};const historical=!ranks.length&&records?.length;for(const cap of rankCaps){const covered=historical?records.length:ranks.filter(x=>x<=cap).length;rankTiers[String(cap)]={covered,expected:historical?records.length:cap,complete:false}}
     return {seasonId:activeSeason,generatedAt:new Date().toISOString(),rankTiers,maxRankAvailable:maxRank}
   }
   async function loadForSeason(id){
