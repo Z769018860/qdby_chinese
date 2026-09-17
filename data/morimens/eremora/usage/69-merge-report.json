@@ -1,0 +1,36 @@
+{
+  "source": "data/morimens/eremora/usage/69.json",
+  "output": "data/morimens/eremora/usage/69.json",
+  "recordCount": 651,
+  "fieldCoverage": {
+    "records": 651,
+    "members": 15144,
+    "wheels": 1487,
+    "tokens": 3786,
+    "creations": 0,
+    "covenants": 743,
+    "enlightenment": 15144
+  },
+  "seasonCoverage": {
+    "69": {
+      "records": 650,
+      "members": 15124,
+      "wheels": 1487,
+      "tokens": 3781,
+      "creations": 0,
+      "covenants": 743
+    },
+    "68": {
+      "records": 1,
+      "members": 20,
+      "wheels": 0,
+      "tokens": 5,
+      "creations": 0,
+      "covenants": 0
+    }
+  },
+  "missingFields": [
+    "creations"
+  ],
+  "note": "Missing fields are not inferred; provide raw records containing them to fill them."
+}
