@@ -16,7 +16,7 @@ on:
       batch_size:
         description: "Maximum users to retry in this run"
         required: false
-        default: "10"
+        default: "20"
 
 permissions:
   contents: write
@@ -31,7 +31,7 @@ jobs:
     timeout-minutes: 110
     env:
       EREMORA_REPAIR_SEASON: ${{ github.event.inputs.season || '69' }}
-      EREMORA_REPAIR_BATCH: ${{ github.event.inputs.batch_size || '10' }}
+      EREMORA_REPAIR_BATCH: ${{ github.event.inputs.batch_size || '20' }}
       EREMORA_REPAIR_TIMEOUT: "75"
       EREMORA_REPAIR_DELAY_MIN: "6"
       EREMORA_REPAIR_DELAY_MAX: "12"
@@ -70,6 +70,24 @@ jobs:
           print('rank index:',len(x.get('rows',[])))
           PY
 
+      - name: Ensure failed users rotate through the queue
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/repair_morimens_github.py')
+          s=p.read_text(encoding='utf-8')
+          old="remaining=list(dict.fromkeys(failed+rest))"
+          new="remaining=list(dict.fromkeys(rest+failed))"
+          if old in s:
+              p.write_text(s.replace(old,new),encoding='utf-8')
+              print('Patched retry queue: failed UIDs now rotate to the tail.')
+          elif new in s:
+              print('Retry queue rotation already patched.')
+          else:
+              raise SystemExit('Expected retry queue line not found')
+          PY
+          python -m py_compile scripts/repair_morimens_github.py
+
       - name: Repair next batch
         run: python scripts/repair_morimens_github.py
 
@@ -96,13 +114,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "scripts/repair_morimens_github.py" || true
           git add "data/morimens/eremora/retry-uids" || true
           git add "data/morimens/eremora/raw-repair" || true
           git add "data/morimens/eremora/users" || true
           git add "data/morimens/eremora/seasons" || true
           git add "data/morimens/eremora/stats" || true
           if git diff --cached --quiet; then
-            echo "No successful repair data changed in this run; leaving retry state unchanged."
+            echo "No successful repair data changed in this run."
             git restore "data/morimens/eremora/repair-progress" 2>/dev/null || true
             exit 0
           fi
