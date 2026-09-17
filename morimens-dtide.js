@@ -53,7 +53,6 @@
       <div class="dtideStatGrid" id="dtideSummary"></div>
       <div id="dtideCoverageWarn" class="dtideCoverageWarn"></div>
       <div class="dtideSection"><h3>角色逐波出场率</h3><div class="dtideScroll" id="dtideMatrix"></div></div>
-      <div class="dtideSection"><h3>角色出场率榜单（点击角色展开详细配置）</h3><div class="dtideUsageCards" id="dtideUsage"></div></div>
       <div class="dtideSection"><div class="dtideSubhead"><h3 style="margin:0">命轮 / 密契 / 启灵分布</h3><div class="dtideField" style="min-width:240px"><label>按角色查看配装</label><select id="dtideEquipCharacter"><option value="">全部角色</option></select></div></div><div id="dtideEquipment"></div></div>
     </section>
     <section class="panel">
@@ -127,11 +126,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function renderUsage(){const g=currentGroup(),mode=$('dtideRateMode').value;$('dtideUsage').innerHTML=g.characters.slice(0,18).map((c,i)=>{const info=characterInfo(c.id||c.ingameId||c.key),rate=mode==='slot'?(g.memberSlots?c.count/g.memberSlots*100:0):c.teamRatePct,tm=c.teammates?.[0];return `<button class="dtideUsage" type="button" data-character-index="${i}" title="点击展开该角色的 Top5 队友、命轮和密契出场率"><div class="dtideChar">${info.image?`<img src="${esc(info.image)}" alt="">`:''}<span><b>${esc(info.name||c.name)}</b><small>${c.count} 次 · 展开 Top5 队友 / 命轮 / 密契</small></span></div><strong>${pct(rate)}</strong></button>`}).join('')||'<div class="dtideEmpty">无角色统计。</div>'}
   function compareTable(columns,groups){
     const union=new Map();for(const g of groups)for(const c of g.characters)union.set(c.key,c);const rows=[...union.values()].map(c=>({...c,total:groups.reduce((s,g)=>s+(g.characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total).slice(0,40);if(!rows.length)return '<div class="dtideEmpty">暂无记录。</div>';return `<table class="dtideTable"><thead><tr><th>角色</th>${columns.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(c=>{const info=characterInfo(c.id||c.ingameId||c.key);return `<tr><td>${esc(info.name||c.name)}</td>${groups.map(g=>{const hit=g.characters.find(x=>x.key===c.key);return `<td class="dtideRate">${pct(hit?.teamRatePct||0)}</td>`}).join('')}</tr>`}).join('')}</tbody></table>`}
-  function renderComparisons(){
-    const wave=$('dtideWave').value,ct=$('dtideClearType').value,difficulty=$('dtideDifficulty').value,rankCap=Number($('dtideRankScope').value||50);
-    const rankGroups=rankCaps.map(cap=>currentGroup({wave,ct,difficulty,rankCap:cap}));$('dtideRankCompare').innerHTML=compareTable(rankCaps.map(x=>`Top ${x}`),rankGroups);
-    const diffGroups=difficultyOrder.map(d=>currentGroup({wave,ct,difficulty:d,rankCap}));$('dtideDifficultyCompare').innerHTML=compareTable(difficultyOrder.map(d=>difficultyZh[d]),diffGroups);
-  }
+  function renderComparisons(){return}
   function renderEquipment(){
     const g=currentGroup(),coverage=manifest.fieldCoverage||{},key=$('dtideEquipCharacter').value;if(!coverage.wheels&&!coverage.covenants){$('dtideEquipment').innerHTML='<div class="dtideNotice">当前快照尚未由结构化 __data.json 重建；下一次同步后会自动启用命轮、密契与启灵统计。</div>';return}
     const section=(title,arr,rateKey='teamRatePct',denom='支队伍')=>`<h4 style="margin:10px 0 7px;font-size:12px">${title}</h4><div class="dtideUsageCards">${(arr||[]).slice(0,24).map(x=>`<div class="dtideUsage"><div><b>${esc(x.name||x.key)}</b><small>${x.count} ${denom}</small></div><strong>${pct(x[rateKey])}</strong></div>`).join('')||'<div class="dtideEmpty">暂无</div>'}</div>`;
