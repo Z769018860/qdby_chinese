@@ -3,7 +3,7 @@
     "site": "Eremora",
     "rankIndex": "data/morimens/eremora/rank-index/69.json",
     "detailTransport": "public challenge pages via Jina Reader",
-    "syncedAt": "2026-09-17T12:36:02.545Z"
+    "syncedAt": "2026-09-17T12:36:18.514Z"
   },
   "seasonId": 69,
   "target": 1000,
@@ -18,8 +18,8 @@
   "refresh": {
     "historical": false,
     "requested": 25,
-    "completed": 1,
-    "failed": 1,
+    "completed": 2,
+    "failed": 2,
     "staleDays": 7
   },
   "failures": [
@@ -27,12 +27,17 @@
       "rank": 1,
       "uid": "100759759",
       "error": "Error: direct: direct __data HTTP 403 (Cloudflare protection); reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 2,
+      "uid": "100034764",
+      "error": "Error: direct: direct __data HTTP 403 (Cloudflare protection); reader: season mismatch: wanted 69, page=0"
     }
   ],
   "records": [],
   "progress": {
-    "completed": 1,
+    "completed": 2,
     "target": 25,
-    "updatedAt": "2026-09-17T12:36:02.545Z"
+    "updatedAt": "2026-09-17T12:36:18.514Z"
   }
 }
