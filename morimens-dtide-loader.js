@@ -3,6 +3,7 @@
 
   const datasetCache=new Map();
   const jsonCache=new Map();
+  const rankCache=new Map();
   const nativeAtob=window.atob.bind(window);
   const absolute=url=>new URL(url,document.baseURI).href;
 
@@ -45,6 +46,56 @@
     return task;
   }
 
+  function sanitizeJsonStringControls(text){
+    let out='',inString=false,escaped=false;
+    for(let i=0;i<text.length;i++){
+      const ch=text[i],code=text.charCodeAt(i);
+      if(inString){
+        if(escaped){out+=ch;escaped=false;continue}
+        if(ch==='\\'){out+=ch;escaped=true;continue}
+        if(ch==='"'){out+=ch;inString=false;continue}
+        if(code<0x20){out+=' ';continue}
+        out+=ch;
+      }else{
+        out+=ch;
+        if(ch==='"')inString=true;
+      }
+    }
+    return out;
+  }
+
+  function rankMapFromText(text){
+    const map=new Map();
+    const addRows=doc=>{
+      for(const row of doc?.rows||[]){
+        const uid=String(row?.uid??''),rank=Number(row?.rank);
+        if(uid&&Number.isFinite(rank)&&rank>0)map.set(uid,rank);
+      }
+    };
+    try{addRows(JSON.parse(text))}catch(_){
+      try{addRows(JSON.parse(sanitizeJsonStringControls(text)))}catch(__){}
+    }
+    if(map.size)return map;
+    const rankThenUid=/"rank"\s*:\s*(\d+)\s*,\s*"uid"\s*:\s*"?([0-9]+)"?/g;
+    for(const m of text.matchAll(rankThenUid)){
+      const rank=Number(m[1]),uid=String(m[2]||'');
+      if(uid&&Number.isFinite(rank)&&rank>0)map.set(uid,rank);
+    }
+    return map;
+  }
+
+  async function loadRankMap(url,{revision='',fresh=true}={}){
+    const target=versioned(url,revision);
+    if(!fresh&&rankCache.has(target))return rankCache.get(target);
+    const task=(async()=>{
+      const text=await fetchText(url,{revision,fresh});
+      const map=rankMapFromText(text);
+      if(!map.size)throw new Error(`${url}: no usable rank rows`);
+      return map;
+    })().catch(error=>{rankCache.delete(target);throw error});
+    rankCache.set(target,task);
+    return task;
+  }
   function decodeBase64(text){
     const encoded=String(text||'')
       .replace(/[^A-Za-z0-9+/=_-]/g,'')
@@ -136,7 +187,8 @@
   function clear(url){
     if(url)datasetCache.delete(absolute(url));
     else datasetCache.clear();
+    if(!url)rankCache.clear();
   }
 
-  window.MorimensDtideDataLoader={loadDataset,loadJson,fetchText,clear};
+  window.MorimensDtideDataLoader={loadDataset,loadJson,loadRankMap,fetchText,clear};
 })();
