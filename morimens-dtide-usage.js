@@ -66,9 +66,9 @@
   }
   function characterDetails(key){
     const mateRows=scopedRows(),gearRows=filteredDetailRows(),mates=new Map(),wheels=new Map(),covenants=new Map();let appearances=0,gearAppearances=0;
-    const bump=(map,name)=>{if(!name)return;const k=String(name),v=map.get(k)||{name:k,count:0};v.count++;map.set(k,v)};
-    for(const {team} of mateRows){const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;appearances++;const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,characterInfo(m).name)}}
-    for(const {team} of gearRows){const target=(team.members||[]).find(m=>memberKey(m)===String(key));if(!target)continue;gearAppearances++;for(const x of target.wheels||target.weapons||[])bump(wheels,itemName(x));for(const x of target.covenants||target.suits||[])bump(covenants,itemName(x))}
+    const bump=(map,item)=>{const name=typeof item==='string'?item:itemName(item);if(!name)return;const k=String(item?.id||item?.name||name),v=map.get(k)||{name,image:item?.image||'',count:0};v.count++;map.set(k,v)};
+    for(const {team} of mateRows){const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;appearances++;const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,{name:characterInfo(m).name,image:characterInfo(m).image})}}
+    for(const {team} of gearRows){const target=(team.members||[]).find(m=>memberKey(m)===String(key));if(!target)continue;gearAppearances++;for(const x of target.wheels||target.weapons||[])bump(wheels,x);for(const x of target.covenants||target.suits||[])bump(covenants,x)}
     const finish=(map,denom)=>[...map.values()].map(x=>({...x,ratePct:denom?x.count/denom*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN')).slice(0,5);
     return {appearances,gearAppearances,teammates:finish(mates,appearances),wheels:finish(wheels,gearAppearances),covenants:finish(covenants,gearAppearances)};
   }
