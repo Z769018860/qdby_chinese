@@ -30,15 +30,28 @@
     const main=document.querySelector('main.wrap'),hero=main?.querySelector('.hero'),grid=main?.querySelector('.grid2');if(!main||!hero||!grid||$('morimensTabs'))return;
     const standalone=document.body.dataset.morimensStandalone||'';
     const source=Array.from(main.children).find(x=>x!==hero&&x!==grid&&x.matches?.('section.panel'))||null;
-    const tabs=document.createElement('nav');tabs.id='morimensTabs';tabs.className='morimensTabs';tabs.setAttribute('role','tablist');tabs.innerHTML='<button class="morimensTab" id="morimensDtideTab" role="tab" aria-selected="true" aria-controls="morimensDtidePanel">融灾榜单</button><button class="morimensTab" id="morimensCalcTab" role="tab" aria-selected="false" aria-controls="morimensCalcPanel">伤害计算器</button><button class="morimensTab" id="morimensFortuneTab" role="tab" aria-selected="false" aria-controls="morimensFortunePanel">每日签</button>';
+    const tabs=document.createElement('nav');tabs.id='morimensTabs';tabs.className='morimensTabs';tabs.setAttribute('role','tablist');tabs.innerHTML='<button class="morimensTab" id="morimensDtideTab" role="tab" aria-selected="true" aria-controls="morimensDtidePanel">融灾榜单</button><button class="morimensTab" id="morimensCalcTab" role="tab" aria-selected="false" aria-controls="morimensCalcPanel">伤害计算器</button><button class="morimensTab" id="morimensFortuneTab" role="tab" aria-selected="false" aria-controls="morimensFortunePanel">每日签</button><button class="morimensTab" id="morimensAboutTab" role="tab" aria-selected="false" aria-controls="morimensAboutPanel">关于</button>';
     const calc=document.createElement('div');calc.id='morimensCalcPanel';calc.setAttribute('role','tabpanel');calc.appendChild(grid.querySelector('[aria-labelledby="calcTitle"]'));
     const fortune=document.createElement('div');fortune.id='morimensFortunePanel';fortune.setAttribute('role','tabpanel');fortune.hidden=true;fortune.appendChild(grid.querySelector('.fortuneCard'));
     if(standalone==='calc'||standalone==='fortune'){hero.remove();main.querySelector('.topbar')?.remove();grid.remove();if(standalone==='calc'){main.appendChild(calc)}else{main.appendChild(fortune);fortune.hidden=false}return;}
     if(source)calc.appendChild(source);
-    const dtide=document.createElement('div');dtide.id='morimensDtidePanel';dtide.setAttribute('role','tabpanel');dtide.innerHTML=panelHtml();hero.after(tabs,dtide,calc,fortune);$('morimensBootShell')?.remove();document.body.classList.remove('morimensBooting');dtide.querySelector('.dtideLeaderboardTabs')?.addEventListener('click',e=>{const tab=e.target.closest('[data-dtide-entity]');if(!tab)return;const field=$('dtideEntityType'),entity=tab.dataset.dtideEntity;if(!field||field.value===entity)return;dtide.querySelectorAll('[data-dtide-entity]').forEach(x=>x.setAttribute('aria-selected',String(x===tab)));field.value=entity;const title=$('dtideMatrixTitle'),host=$('dtideMatrix'),label=entity==='wheel'?'命轮':'角色';if(title)title.textContent=label+'逐波出场率';if(host)host.setAttribute('aria-busy','true');requestAnimationFrame(()=>field.dispatchEvent(new Event('change',{bubbles:true})))});
-    const activate=name=>{const isD=name==='dtide',isC=name==='calc';for(const [id,on] of [['morimensDtideTab',isD],['morimensCalcTab',isC],['morimensFortuneTab',!isD&&!isC]])$(id).setAttribute('aria-selected',String(on));dtide.hidden=!isD;calc.hidden=!isC;fortune.hidden=isD||isC;if(isD){history.replaceState(null,'','#dtide');loadOnce()}else if(location.hash==='#dtide')history.replaceState(null,'',location.pathname+location.search)};
-    $('morimensDtideTab').addEventListener('click',()=>activate('dtide'));$('morimensCalcTab').addEventListener('click',()=>activate('calc'));$('morimensFortuneTab').addEventListener('click',()=>activate('fortune'));activate(location.hash==='#calc'?'calc':location.hash==='#fortune'?'fortune':'dtide');
+    const dtide=document.createElement('div');dtide.id='morimensDtidePanel';dtide.setAttribute('role','tabpanel');dtide.innerHTML=panelHtml();
+    const about=document.createElement('div');about.id='morimensAboutPanel';about.setAttribute('role','tabpanel');about.hidden=true;about.innerHTML=aboutHtml();
+    hero.after(tabs,dtide,calc,fortune,about);$('morimensBootShell')?.remove();document.body.classList.remove('morimensBooting');dtide.querySelector('.dtideLeaderboardTabs')?.addEventListener('click',e=>{const tab=e.target.closest('[data-dtide-entity]');if(!tab)return;const field=$('dtideEntityType'),entity=tab.dataset.dtideEntity;if(!field||field.value===entity)return;dtide.querySelectorAll('[data-dtide-entity]').forEach(x=>x.setAttribute('aria-selected',String(x===tab)));field.value=entity;const title=$('dtideMatrixTitle'),host=$('dtideMatrix'),label=entity==='wheel'?'命轮':'角色';if(title)title.textContent=label+'逐波出场率';if(host)host.setAttribute('aria-busy','true');requestAnimationFrame(()=>field.dispatchEvent(new Event('change',{bubbles:true})))});
+    const activate=name=>{const isD=name==='dtide',isC=name==='calc',isF=name==='fortune',isA=name==='about';for(const [id,on] of [['morimensDtideTab',isD],['morimensCalcTab',isC],['morimensFortuneTab',isF],['morimensAboutTab',isA]])$(id).setAttribute('aria-selected',String(on));dtide.hidden=!isD;calc.hidden=!isC;fortune.hidden=!isF;about.hidden=!isA;history.replaceState(null,'',`#${name}`);if(isD)loadOnce()};
+    $('morimensDtideTab').addEventListener('click',()=>activate('dtide'));$('morimensCalcTab').addEventListener('click',()=>activate('calc'));$('morimensFortuneTab').addEventListener('click',()=>activate('fortune'));$('morimensAboutTab').addEventListener('click',()=>activate('about'));activate(['#calc','#fortune','#about'].includes(location.hash)?location.hash.slice(1):'dtide');
   }
+
+  function aboutHtml(){return `
+    <section class="panel" aria-labelledby="morimensAboutTitle">
+      <div class="panelHead"><div><p class="eyebrow">ABOUT · CREDITS</p><h2 id="morimensAboutTitle">关于忘却前夜工具箱</h2><p class="panelLead">本工具箱为《忘却前夜》玩家制作的粉丝向项目，免费使用，不进行任何商业化运营。</p></div><span class="statusPill">非官方 · 非商业</span></div>
+      <div class="sourceList">
+        <div class="sourceItem"><strong>数据与资料来源</strong><br>感谢 <a href="https://eremora.com/leaderboard/abyss" target="_blank" rel="noopener noreferrer">Eremora</a> 提供融灾榜单与挑战记录；感谢 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a> 提供角色、技能、命轮及密契等结构化数据；感谢 <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">忘却前夜中文维基</a> 提供中文名称、资料与文本参考。</div>
+        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>
+        <div class="sourceItem"><strong>制作者</strong><br>B站：<a href="https://space.bilibili.com/95687310?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">@青灯不弈</a></div>
+      </div>
+    </section>
+  `}
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
@@ -76,7 +89,6 @@
       <div class="dtideActions"><button class="primaryBtn" id="dtideSearch" type="button">搜索配队</button><button class="ghostBtn" id="dtideReset" type="button">清空筛选</button></div>
       <div class="dtideSection"><div class="dtideResults" id="dtideResults"></div><div class="dtidePager" id="dtidePager"></div></div>
     </section>
-    <section class="panel"><div class="sourceList"><div class="sourceItem"><strong>结构化数据源：</strong><code>/u/{uid}/challenges/dzone/{season}/__data.json</code>（Eremora SvelteKit server-load 数据）。难度直接由 D-Zone stage 名称 / catalog 的 Normal、Hard、Nightmare、Madness 映射为普通、困难、噩梦、癫狂。</div><div class="sourceItem" id="dtideCoverageNote"><strong>字段真实性：</strong>榜单范围只有在快照实际抓取到相应排名时才视为完整；不会拿 Top50 样本冒充 Top200/500/1000。</div></div></section>
   `}
 
   async function waitMorimensData(){if(window.MorimensData?.db?.records)return;await new Promise(resolve=>{const t=setTimeout(resolve,5000);window.addEventListener('morimens-data-ready',()=>{clearTimeout(t);resolve()},{once:true})})}
