@@ -1,0 +1,18 @@
+{
+  "seasonId": 69,
+  "rawFileCount": 1000,
+  "rawArchiveBytes": 101789064,
+  "parsedUserCount": 475,
+  "failedUserCount": 525,
+  "blocked403Count": 482,
+  "non403FailureCount": 43,
+  "availableSeasons": [
+    {"seasonId": 69, "recordCount": 475},
+    {"seasonId": 68, "recordCount": 469},
+    {"seasonId": 67, "recordCount": 132},
+    {"seasonId": 66, "recordCount": 135},
+    {"seasonId": 65, "recordCount": 104},
+    {"seasonId": 64, "recordCount": 1}
+  ],
+  "note": "Counts are from the uploaded raw.zip processed on 2026-09-17. 482 raw files are Cloudflare 403 pages, so the archive is not yet a complete 1000-user detail snapshot. Use scripts/sync_morimens_raw1000_git_v2.cmd to import the archive locally, merge structured records with existing repository data, generate retry-uids, and push the raw archive plus structured outputs."
+}
