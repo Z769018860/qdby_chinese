@@ -1,0 +1,49 @@
+{
+  "source": {
+    "kind": "local-eremora-sveltekit-dump",
+    "archive": "db37dde0-6e51-4155-a799-2d76e34c563f.zip",
+    "sha256": "41e23dd4beccb3f265cbccfb5a02b872e414d603ed1e4be6f27042e138999840",
+    "inputFiles": 1000,
+    "format": "Eremora /u/{uid}/challenges/dzone/69/__data.json"
+  },
+  "parse": {
+    "successfulUsers": 997,
+    "failedUsers": 3,
+    "failedUids": ["100936437", "101085584", "101527146"],
+    "failureReason": "the downloaded SvelteKit payload contains an upstream error response / no usable profile challenge chunk"
+  },
+  "historicalCoverage": {
+    "63": 2,
+    "64": 1,
+    "65": 179,
+    "66": 247,
+    "67": 243,
+    "68": 902,
+    "69": 910
+  },
+  "catalogCoverage": {
+    "awakers": 60,
+    "wheels": 143,
+    "trinkets": 126,
+    "suits": 21,
+    "keeperTokens": 54,
+    "relics": 239
+  },
+  "normalizedMapping": {
+    "character": "team.awakers[]",
+    "enlightenment": "team.awakers[].enlightenment / potency_level",
+    "wheel": "team.awakers[].weapons[]",
+    "trinket": "team.awakers[].trinkets[]",
+    "suit": "team.awakers[].suits[]",
+    "keeperToken": "team.keeper_skill",
+    "relic": "team.result.relics[]",
+    "fullTeam": "team.awakers[]",
+    "battle": "team.battle_uuid"
+  },
+  "notes": [
+    "The 1000 downloaded files contain historical D-Zone records in addition to season 69; the observed range is seasons 63-69.",
+    "The three failed UIDs should be redownloaded and merged later; they are not synthesized.",
+    "Raw SvelteKit data should be parsed line-by-line using ASCII LF, then hydrated from its devalue/index-reference representation before normalization.",
+    "This report describes the local archive supplied by the project owner and is intended to replace the previous partial-coverage raw snapshot workflow once the archive is imported into a Git checkout."
+  ]
+}
