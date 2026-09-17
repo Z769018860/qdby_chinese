@@ -265,11 +265,12 @@
       "coveragePct": 91,
       "complete": false
     },
-    "syncedAt": "2026-09-17T21:59:21.165Z",
+    "syncedAt": "2026-09-17T23:20:00.000Z",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 12,
-    "chunkSize": 900000,
-    "chunkBytes": 10482653
+    "chunks": 15,
+    "chunkSize": 700000,
+    "chunkBytes": 10482653,
+    "revision": "a1ccbec4e97d67dffe1334133b559df135c99b5d"
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -281,4 +282,3 @@
     "updatedBy": "scripts/process_morimens_raw1000.py"
   }
 }
-
