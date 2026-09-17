@@ -102,13 +102,13 @@
   function wheelGroup(rows){
     const map=new Map();
     for(const {team} of rows){const seen=new Set();for(const member of team.members||[])for(const wheel of member.wheels||member.weapons||[]){const key=String(wheel.id??wheel.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=wheel.image||'',item=map.get(key)||{key,id:wheel.id??null,name:wheelName(wheel),image:localGearImage('wheel',remote,wheel.name),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
-    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
+    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>!$('dtideCreationFilter')?.checked||(x.teamRatePct<100&&!/^维度影像(?:：|$)/.test(String(x.name||'')))).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
   function creationGroup(rows){
     const map=new Map();
     for(const {team} of rows){const seen=new Set();for(const creation of team.creations||[]){const key=String(creation.id??creation.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=creation.image||'',item=map.get(key)||{key,id:creation.id??null,name:itemName(creation),image:localGearImage('creation',remote,creation.name),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
-    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
+    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>!$('dtideCreationFilter')?.checked||(x.teamRatePct<100&&!/^维度影像(?:：|$)/.test(String(x.name||'')))).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
   const entityGroup=(rows,entity)=>entity==='character'?group(rows):entity==='creation'?creationGroup(rows):wheelGroup(rows);
@@ -191,7 +191,7 @@
       renderAll();return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
   }
-  function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode','dtideSort'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;requestAnimationFrame(renderMatrix)});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
+  function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode','dtideSort','dtideCreationFilter'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;requestAnimationFrame(renderMatrix)});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
     try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-cache'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
