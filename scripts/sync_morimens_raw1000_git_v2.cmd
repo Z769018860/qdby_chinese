@@ -107,10 +107,14 @@ if not "%PROC_RC%"=="0" (
   echo [WARN] Retry UIDs: data\morimens\eremora\retry-uids\%SEASON%.txt
 )
 
-echo [4/7] Summary...
+echo [4/8] Packing cache-safe D-Zone dataset...
+python scripts\pack_morimens_local_usage.py --root "%CD%" --season %SEASON% --chunk-size 700000
+if errorlevel 1 (echo [ERROR] Failed to pack D-Zone dataset.& pause& exit /b 1)
+
+echo [5/8] Summary...
 python -c "import json,pathlib; p=pathlib.Path(r'data/morimens/eremora/top1000/%SEASON%.json'); x=json.loads(p.read_text(encoding='utf-8')); print('[INFO] raw=',x.get('rawFileCount'),' parsed=',x.get('parsedUserCount'),' failed=',x.get('failedUserCount'))"
 
-echo [5/7] Staging raw archive + structured outputs...
+echo [6/8] Staging raw archive + structured outputs...
 git add "data/morimens/eremora/raw-archives/%SEASON%/top1000-raw.zip"
 git add "data/morimens/eremora/users/%SEASON%"
 git add "data/morimens/eremora/top1000/%SEASON%.json"
@@ -119,8 +123,10 @@ git add "data/morimens/eremora/retry-uids/%SEASON%.txt"
 git add "data/morimens/eremora/seasons"
 git add "data/morimens/eremora/stats"
 git add "data/morimens/eremora/manifest.json"
+git add "data/morimens/eremora/usage/%SEASON%-local-gzip"
 git add "scripts/process_morimens_raw1000.py"
 git add "scripts/process_morimens_raw1000_v2.py"
+git add "scripts/pack_morimens_local_usage.py"
 git add "scripts/sync_morimens_raw1000_git_v2.cmd"
 
 git diff --cached --quiet
@@ -130,12 +136,12 @@ if not errorlevel 1 (
   exit /b 0
 )
 
-echo [6/7] Commit...
+echo [7/8] Commit...
 git status --short
 git commit -m "data: import Eremora Top1000 raw and structured season %SEASON%"
 if errorlevel 1 (echo [ERROR] git commit failed.& pause& exit /b 1)
 
-echo [7/7] Push...
+echo [8/8] Push...
 for /l %%A in (1,1,5) do (
   git pull --rebase --autostash origin main
   if not errorlevel 1 (
