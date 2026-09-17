@@ -60,7 +60,7 @@
   }
   function itemName(x){const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别');return x?.zhName||x?.nameZh||zhGear[raw]||raw}
   const heatStyle=rate=>{const t=Math.max(0,Math.min(1,Number(rate||0)/35)),h=Math.round(215-215*t),a=(.08+.34*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
-  function localGearImage(kind,url){const file=String(url||'').split('/').pop()?.split('?')[0];if(!file)return '';return kind==='wheel'?`assets/morimens/wheels/${file}`:`assets/morimens/covenants/Icon/${file}`}
+  function localGearImage(kind,url){const file=String(url||'').split('/').pop()?.split('?')[0];if(!file)return '';return kind==='wheel'?`assets/morimens/wheels/${file}`:`assets/morimens/covenants/Icon/${file.replace('_Box.webp','.webp')}`}
   function filteredDetailRows(){
     const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave=$('dtideWave')?.value||'all';
     return flatten(detailUsage?.records||[]).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(wave!=='all'&&Number(x.wave.wave)!==Number(wave))return false;return true});
