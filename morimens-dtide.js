@@ -9,7 +9,30 @@
   const difficultyZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
   const enlightOrder=['e3','overlimit','law12'];
   const enlightZh={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
-  let manifest=null,season=null,stats=null,awakenerMap=new Map(),filtersReady=false,searchPerformed=false;
+  let manifest=null,season=null,stats=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
+
+  function scoreRange(){
+    const raw=String($('dtideTotalScore')?.value||'all');
+    if(raw==='all'||raw==='0')return null;
+    const [lo,hi]=raw.split(':').map(Number);
+    if(Number.isFinite(lo)&&Number.isFinite(hi))return [lo,hi];
+    const min=Number(raw);return Number.isFinite(min)&&min>0?[min,Infinity]:null;
+  }
+  function scoreMatches(record){
+    const range=scoreRange();if(!range)return true;
+    const score=Number(record?.score);return Number.isFinite(score)&&score>=range[0]&&score<=range[1];
+  }
+  function rankOf(record){
+    const mapped=rankByUid.get(String(record?.uid??''));
+    if(Number.isFinite(mapped)&&mapped>0)return mapped;
+    const raw=Number(record?.rank);return Number.isFinite(raw)&&raw>0?raw:null;
+  }
+  function rankMatches(record,cap){
+    if(!cap)return true;
+    const rank=rankOf(record);if(rank!=null)return rank<=cap;
+    const current=Number(season?.seasonId)===Number(manifest?.currentSeason);
+    return !current&&rankByUid.size===0;
+  }
 
   function injectStyle(){
     if($('morimensDtideStyle'))return;
@@ -61,7 +84,7 @@
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope">${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
         <div class="dtideField"><label>难度</label><select id="dtideDifficulty"><option value="all">全部难度</option>${difficultyOrder.map(x=>`<option value="${x}">${difficultyZh[x]}</option>`).join('')}</select></div>
-        <div class="dtideField"><label>融灾总得分</label><select id="dtideTotalScore"><option value="0">全部分数</option><option value="300">300 分以上</option><option value="400">400 分以上</option><option value="500">500 分以上</option><option value="600">600 分以上</option><option value="700">700 分以上</option></select></div><input id="dtideWave" type="hidden" value="all"><input id="dtideEntityType" type="hidden" value="character">
+        <div class="dtideField"><label>融灾总得分</label><select id="dtideTotalScore"><option value="all">全部分数</option><option value="520:525">520–525 分</option><option value="510:519">510–519 分</option><option value="500:509">500–509 分</option><option value="490:499">490–499 分</option><option value="480:489">480–489 分</option><option value="470:479">470–479 分</option><option value="460:469">460–469 分</option><option value="450:459">450–459 分</option><option value="440:449">440–449 分</option><option value="430:439">430–439 分</option><option value="420:429">420–429 分</option><option value="410:419">410–419 分</option><option value="400:409">400–409 分</option><option value="390:399">390–399 分</option><option value="380:389">380–389 分</option><option value="370:379">370–379 分</option><option value="360:369">360–369 分</option><option value="350:359">350–359 分</option></select></div><input id="dtideWave" type="hidden" value="all"><input id="dtideEntityType" type="hidden" value="character">
         <input id="dtideClearType" type="hidden" value="all">
         <input id="dtideRateMode" type="hidden" value="team">
       </div>
@@ -103,24 +126,24 @@
   const memberKey=m=>m.skeydbId||m.ingameId||m.id||m.name;
   function difficultyOf(team,wave){const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'').toLowerCase();for(const d of difficultyOrder)if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
   function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(ms==='AA'||ms==='LAW12')return 'law12';if(ms==='OE'||ms==='OVERLIMIT')return 'overlimit';return 'e3'}
-  function maxRankAvailable(){const rs=(season?.records||[]).map(r=>Number(r.rank)).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
+  function maxRankAvailable(){const rs=rankByUid.size?[...rankByUid.values()]:(season?.records||[]).map(rankOf).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
   function getSelectedValues(id){return Array.from($(id)?.selectedOptions||[]).map(x=>x.value).filter(Boolean)}
   function flattenTeams(){
     const unique=new Map();
     const richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((sum,m)=>sum+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);
-    for(const record of season?.records||[])for(const wave of record.waves||[])for(const team of wave.teams||[]){
+    for(const record of season?.records||[]){const mappedRank=rankOf(record),normalized=mappedRank!=null&&record.rank!==mappedRank?{...record,rank:mappedRank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){
       const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(',');
-      const key=[record.uid||record.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record,wave,team,difficulty},old=unique.get(key);
+      const key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);
       if(!old||richness(team)>richness(old.team))unique.set(key,row);
-    }
+    }}
     return [...unique.values()];
   }
-  function scopedRows({wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=Number($('dtideRankScope')?.value||50),scoreMin=Number($('dtideTotalScore')?.value||0)}={}){return flattenTeams().filter(x=>{
-    if(rankCap&&(!Number.isFinite(Number(x.record.rank))||Number(x.record.rank)>rankCap))return false;
+  function scopedRows({wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=Number($('dtideRankScope')?.value||50)}={}){return flattenTeams().filter(x=>{
+    if(!rankMatches(x.record,rankCap))return false;
     if(wave!=='all'&&Number(wave)!==Number(x.wave.wave))return false;
     if(ct!=='all'&&ct!==x.team.clearType)return false;
     if(difficulty!=='all'&&difficulty!==x.difficulty)return false;
-    if(scoreMin&&Number(x.record.score||0)<scoreMin)return false;
+    if(!scoreMatches(x.record))return false;
     return true;
   })}
   function countRate(map,key,meta={}){if(key==null||key==='')return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
@@ -177,9 +200,9 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
 
   function matchesFilters(row){
-    const rankCap=Number($('dtideRankScope').value||50);if(rankCap&&(!Number.isFinite(Number(row.record.rank))||Number(row.record.rank)>rankCap))return false;
+    const rankCap=Number($('dtideRankScope').value||50);if(!rankMatches(row.record,rankCap))return false;
     const difficulty=$('dtideDifficulty').value;if(difficulty!=='all'&&row.difficulty!==difficulty)return false;
-    const totalScoreMin=Number($('dtideTotalScore')?.value||0);if(totalScoreMin&&Number(row.record.score||0)<totalScoreMin)return false;
+    if(!scoreMatches(row.record))return false;
     const ct=$('dtideClearType').value;if(ct!=='all'&&ct!==row.team.clearType)return false;
     const include=getSelectedValues('dtideCharacters'),exclude=getSelectedValues('dtideExcludeCharacters'),keys=row.team.members.map(m=>String(memberKey(m))),mode=$('dtideCharacterMode').value;if(include.length&&!(mode==='all'?include.every(x=>keys.includes(x)):include.some(x=>keys.includes(x))))return false;if(exclude.some(x=>keys.includes(x)))return false;
     const targets=include.length?row.team.members.filter(m=>include.includes(String(memberKey(m)))):row.team.members;
@@ -216,19 +239,22 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     const revision=manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
-    const [loadedSeason,loadedStats]=await Promise.all([
+    const rankPath=Number(id)===Number(manifest.currentSeason)?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`):null;
+    const [loadedSeason,loadedStats,loadedRanks]=await Promise.all([
       loader.loadDataset(current.path),
-      loader.loadJson(current.statsPath,{revision,fresh:true})
+      loader.loadJson(current.statsPath,{revision,fresh:true}),
+      rankPath&&loader.loadRankMap?loader.loadRankMap(rankPath,{revision,fresh:true}).catch(error=>{console.warn('rank index unavailable',id,error);return new Map()}):Promise.resolve(new Map())
     ]);
     season=loadedSeason;
     stats=loadedStats;
+    rankByUid=loadedRanks;
     const waves=[...new Set(flattenTeams().map(x=>Number(x.wave.wave)))].sort((a,b)=>a-b);
     $('dtideWave').innerHTML='<option value="all">全部波次</option>'+waves.map(w=>`<option value="${w}">Wave ${w}</option>`).join('');
     populateFilters();
     renderAll();
   }
   async function loadOnce(){
-    if(manifest)return;try{await waitMorimensData();for(const r of window.MorimensData?.db?.records||[]){awakenerMap.set(r.id,r);if(r.ingameId)awakenerMap.set(r.ingameId,r)}const r=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!r.ok)throw new Error(`manifest HTTP ${r.status}`);manifest=await r.json();const sel=$('dtideSeason');if(!sel)throw new Error('期次选择器尚未挂载');sel.innerHTML=(manifest.availableSeasons||[]).map(s=>`<option value="${s.seasonId}">第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}</option>`).join('');if(!sel.options.length)throw new Error('暂无融灾快照');sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);await loadSeason(sel.value);const pending=manifest.pendingBackfillSeasonIds||[];const note=$('dtideCoverageNote');if(note)note.innerHTML=`<strong>字段真实性：</strong>${esc((manifest.notes||[]).join(' '))}${pending.length?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:''}`;sel.addEventListener('change',()=>loadSeason(sel.value).catch(showError));for(const id of ['dtideRankScope','dtideDifficulty','dtideWave','dtideClearType','dtideRateMode','dtideSort'])$(id)?.addEventListener('change',renderAll);$('dtideEquipCharacter')?.addEventListener('change',renderEquipment);$('dtideSearch')?.addEventListener('click',renderResults);$('dtideReset')?.addEventListener('click',resetFilters);$('dtideUsage')?.addEventListener('click',e=>{const card=e.target.closest('[data-character-index]');if(!card)return;const c=currentGroup().characters[Number(card.dataset.characterIndex)];if(!c)return;document.querySelectorAll('.dtideInlineDetail').forEach(x=>x.remove());const block=(title,arr)=>'<h4>'+title+'</h4><div class="dtideUsageCards">'+((arr||[]).slice(0,5).map(x=>'<div class="dtideUsage"><div><b>'+esc(x.name||x.key)+'</b><small>'+x.count+' 次</small></div><strong>'+pct(x.ratePct||x.teamRatePct)+'</strong></div>').join('')||'<div class="dtideEmpty">暂无数据</div>')+'</div>';const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.innerHTML=block('Top5 队友出场率',c.teammates)+block('命轮出场率',c.wheels)+block('密契出场率',c.covenants);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')})}catch(e){showError(e)}
+    if(manifest)return;try{await waitMorimensData();for(const r of window.MorimensData?.db?.records||[]){awakenerMap.set(r.id,r);if(r.ingameId)awakenerMap.set(r.ingameId,r)}const r=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!r.ok)throw new Error(`manifest HTTP ${r.status}`);manifest=await r.json();const sel=$('dtideSeason');if(!sel)throw new Error('期次选择器尚未挂载');sel.innerHTML=(manifest.availableSeasons||[]).map(s=>`<option value="${s.seasonId}">第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}</option>`).join('');if(!sel.options.length)throw new Error('暂无融灾快照');sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);await loadSeason(sel.value);const pending=manifest.pendingBackfillSeasonIds||[];const note=$('dtideCoverageNote');if(note)note.innerHTML=`<strong>字段真实性：</strong>${esc((manifest.notes||[]).join(' '))}${pending.length?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:''}`;sel.addEventListener('change',()=>loadSeason(sel.value).catch(showError));for(const id of ['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideWave','dtideClearType','dtideRateMode','dtideSort'])$(id)?.addEventListener('change',renderAll);$('dtideEquipCharacter')?.addEventListener('change',renderEquipment);$('dtideSearch')?.addEventListener('click',renderResults);$('dtideReset')?.addEventListener('click',resetFilters);$('dtideUsage')?.addEventListener('click',e=>{const card=e.target.closest('[data-character-index]');if(!card)return;const c=currentGroup().characters[Number(card.dataset.characterIndex)];if(!c)return;document.querySelectorAll('.dtideInlineDetail').forEach(x=>x.remove());const block=(title,arr)=>'<h4>'+title+'</h4><div class="dtideUsageCards">'+((arr||[]).slice(0,5).map(x=>'<div class="dtideUsage"><div><b>'+esc(x.name||x.key)+'</b><small>'+x.count+' 次</small></div><strong>'+pct(x.ratePct||x.teamRatePct)+'</strong></div>').join('')||'<div class="dtideEmpty">暂无数据</div>')+'</div>';const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.innerHTML=block('Top5 队友出场率',c.teammates)+block('命轮出场率',c.wheels)+block('密契出场率',c.covenants);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')})}catch(e){showError(e)}
   }
   function showError(e){console.warn('D-Zone analytics failed',e);if($('dtideStatus'))$('dtideStatus').textContent='融灾数据加载失败';if($('dtideResults'))$('dtideResults').innerHTML=`<div class="dtideNotice">${esc(e?.message||e)}</div>`}
   function boot(){injectStyle();setupTabs();window.addEventListener('morimens-language-change',()=>{if($('morimensBuilderTab')){$('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';$('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard'}relocalizeControls()})}
