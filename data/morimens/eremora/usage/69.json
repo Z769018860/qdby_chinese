@@ -1,0 +1,38 @@
+{
+  "source": {
+    "site": "Eremora",
+    "rankIndex": "data/morimens/eremora/rank-index/69.json",
+    "detailTransport": "public challenge pages via Jina Reader",
+    "syncedAt": "2026-09-17T12:36:02.545Z"
+  },
+  "seasonId": 69,
+  "target": 1000,
+  "rankIndexCount": 1000,
+  "recordCount": 0,
+  "coverage": {
+    "expected": 1000,
+    "covered": 0,
+    "coveragePct": 0,
+    "complete": false
+  },
+  "refresh": {
+    "historical": false,
+    "requested": 25,
+    "completed": 1,
+    "failed": 1,
+    "staleDays": 7
+  },
+  "failures": [
+    {
+      "rank": 1,
+      "uid": "100759759",
+      "error": "Error: direct: direct __data HTTP 403 (Cloudflare protection); reader: season mismatch: wanted 69, page=0"
+    }
+  ],
+  "records": [],
+  "progress": {
+    "completed": 1,
+    "target": 25,
+    "updatedAt": "2026-09-17T12:36:02.545Z"
+  }
+}
