@@ -19,6 +19,8 @@ const BATCH=Math.max(1,Math.min(4,Number(process.env.EREMORA_USAGE_BATCH_SIZE||3
 const DELAY=Math.max(1800,Number(process.env.EREMORA_USAGE_BATCH_DELAY_MS||2200));
 const CHECKPOINT_EVERY=Math.max(1,Number(process.env.EREMORA_USAGE_CHECKPOINT_EVERY||10));
 const STALE_DAYS=Math.max(1,Number(process.env.EREMORA_USAGE_STALE_DAYS||7));
+const MAX_403=Math.max(1,Number(process.env.EREMORA_USAGE_MAX_403||3));
+let forbidden403=0, stopDueTo403=false;
 const UA='qdby-chinese-eremora-usage-sync/1.0 (+https://github.com/Z769018860/qdby_chinese)';
 const DIFFICULTY_ZH={normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
 const ENLIGHT_ZH={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
@@ -87,6 +89,7 @@ async function fetchDirectUsage(uid,seasonId,row,byIngame){
   const url=ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId+'/__data.json';
   const response=await fetch(url,{headers:{'user-agent':UA,accept:'application/json'},redirect:'follow',signal:AbortSignal.timeout(30000)});
   const text=await response.text();
+  if(response.status===403){forbidden403++;if(forbidden403>=MAX_403)stopDueTo403=true;throw new Error('direct __data HTTP 403 (Cloudflare protection)')}
   if(!response.ok||!text.startsWith('{"type"'))throw new Error('direct __data HTTP '+response.status);
   const decoded=decodeSvelteData(text);let profile=null,mediaBase='';
   walk(decoded.root,value=>{if(!profile&&Array.isArray(value?.teams)&&value.teams.length)profile=value;if(!mediaBase&&typeof value?.mediaBase==='string')mediaBase=value.mediaBase});
@@ -96,7 +99,7 @@ async function fetchDirectUsage(uid,seasonId,row,byIngame){
 }
 async function fetchUsageRecord(uid,seasonId,row,byIngame){
   try{return await fetchDirectUsage(uid,seasonId,row,byIngame)}
-  catch(directError){try{return parseUsagePage(await fetchReader(ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId),row,seasonId,byIngame)}catch(readerError){throw new Error('direct: '+directError.message+'; reader: '+readerError.message)}}
+  catch(directError){if(stopDueTo403)throw new Error('stopped after repeated HTTP 403; checkpoint retained');try{return parseUsagePage(await fetchReader(ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId),row,seasonId,byIngame)}catch(readerError){throw new Error('direct: '+directError.message+'; reader: '+readerError.message)}}
 }
 async function syncSeason(seasonId){
   const historical=seasonId!==currentSeason;
@@ -110,7 +113,7 @@ async function syncSeason(seasonId){
   for(const row of sourceRows){const oldRec=cache.get(String(row.uid)),changed=!oldRec||oldRec.rankFingerprint!==fingerprint(row),stale=!historical&&oldRec?.fetchedAt?now-Date.parse(oldRec.fetchedAt)>staleMs:false,retry=failedBefore.has(String(row.uid));if(!oldRec||retry||changed||stale)queue.push({row,priority:!oldRec?0:retry?1:changed?2:3,age:oldRec?.fetchedAt?Date.parse(oldRec.fetchedAt):0})}
   queue.sort((a,b)=>a.priority-b.priority||a.age-b.age||a.row.rank-b.row.rank);const selected=queue.slice(0,MAX_FETCH),failures=[];
   console.log(`Eremora season ${seasonId}: fixed=${historical}, rows=${sourceRows.length}, cached=${cache.size}, retryQueue=${queue.length}, selected=${selected.length}`);
-  for(let i=0;i<selected.length;i+=BATCH){const batch=selected.slice(i,i+BATCH);const results=await Promise.all(batch.map(async({row})=>{let last;try{return {ok:true,row,record:await fetchUsageRecord(row.uid,seasonId,row,byIngame)}}catch(e){last=e}return {ok:false,row,error:String(last||'unknown error')}}));for(const result of results){if(result.ok)cache.set(String(result.row.uid),result.record);else failures.push({rank:result.row.rank,uid:String(result.row.uid),error:result.error})}
+  for(let i=0;i<selected.length&&!stopDueTo403;i+=BATCH){const batch=selected.slice(i,i+BATCH);const results=await Promise.all(batch.map(async({row})=>{let last;try{return {ok:true,row,record:await fetchUsageRecord(row.uid,seasonId,row,byIngame)}}catch(e){last=e}return {ok:false,row,error:String(last||'unknown error')}}));for(const result of results){if(result.ok)cache.set(String(result.row.uid),result.record);else failures.push({rank:result.row.rank,uid:String(result.row.uid),error:result.error})}
     const valid=[...cache.values()].filter(x=>sourceRows.some(row=>String(row.uid)===String(x.uid))).sort((a,b)=>a.rank-b.rank),expected=sourceRows.length,covered=new Set(valid.map(x=>x.rank)).size;
     await saveJson(outPath,{source:{site:'Eremora',rankIndex:rankPath,detailTransport:'public challenge pages via Jina Reader',syncedAt:new Date().toISOString()},seasonId,target:TARGET,rankIndexCount:sourceRows.length,recordCount:valid.length,coverage:{expected,covered,coveragePct:Number((covered/expected*100).toFixed(2)),complete:covered===expected},refresh:{historical,requested:selected.length,completed:Math.min(i+BATCH,selected.length),failed:failures.length,staleDays:historical?null:STALE_DAYS},failures,records:valid,progress:{completed:Math.min(i+BATCH,selected.length),target:selected.length,updatedAt:new Date().toISOString()}});
     console.log(`Eremora season ${seasonId} progress: ${Math.min(i+BATCH,selected.length)}/${selected.length}, cached=${valid.length}, failed=${failures.length}`);
@@ -120,3 +123,4 @@ async function syncSeason(seasonId){
 }
 const results=[];for(const seasonId of seasonIds)results.push(await syncSeason(seasonId));
 console.log('Eremora multi-season incremental sync complete:',JSON.stringify(results));
+
