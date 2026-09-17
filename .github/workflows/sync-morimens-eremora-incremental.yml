@@ -1,0 +1,36 @@
+name: Incremental Eremora missing users
+on:
+  workflow_dispatch:
+    inputs:
+      max_fetch: {description: "本次最多处理用户数", required: false, default: "25"}
+      batch_size: {description: "每批请求数，建议1", required: false, default: "1"}
+permissions: {contents: write}
+concurrency: {group: eremora-incremental, cancel-in-progress: false}
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - name: Incremental sync with cache and 403 circuit breaker
+        env:
+          EREMORA_USAGE_SEASONS: "69"
+          EREMORA_USAGE_TARGET: "1000"
+          EREMORA_USAGE_MAX_FETCH: ${{ inputs.max_fetch }}
+          EREMORA_USAGE_BATCH_SIZE: ${{ inputs.batch_size }}
+          EREMORA_USAGE_BATCH_DELAY_MS: "12000"
+          EREMORA_USAGE_CHECKPOINT_EVERY: "1"
+          EREMORA_USAGE_MAX_403: "3"
+        run: node scripts/sync_morimens_eremora_usage.mjs
+      - name: Push checkpoint
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/morimens/eremora
+          git diff --cached --quiet || git commit -m "chore: checkpoint Eremora incremental sync"
+          git pull --rebase origin main
+          git push origin HEAD:main
