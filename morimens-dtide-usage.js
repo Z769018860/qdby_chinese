@@ -12,11 +12,12 @@
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>String(team?.difficulty||wave?.difficulty||'unknown').toLowerCase();
   const enlightOf=m=>m?.enlightTier||(/AA/i.test(String(m?.progression||''))?'law12':/OE/i.test(String(m?.progression||''))?'overlimit':'e3');
+  function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
   function characterInfo(m){
     const key=m?.skeydbId||m?.ingameId||memberKey(m),db=window.MorimensData?.db?.records||[];
     const rec=db.find(x=>x.id===key||x.ingameId===key||x.ingameId===m?.ingameId);
     const loc=rec&&window.MorimensData?.localizedProfile?.(rec);
-    return {name:loc?.name||rec?.name||m?.canonicalName||m?.name||key,image:rec?.assets?.portrait||m?.image||''};
+    return {name:displayCharacterName(loc?.name,m?.canonicalName,m?.name,rec?.name,key),image:rec?.assets?.portrait||m?.image||''};
   }
   const versioned=url=>`${url}${url.includes('?')?'&':'?'}v=${encodeURIComponent(dataVersion)}`;
   async function json(url){const r=await fetch(versioned(url),{cache:'force-cache'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.json()}
