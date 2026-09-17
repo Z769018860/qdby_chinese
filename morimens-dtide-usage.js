@@ -59,6 +59,7 @@
     if($('dtideStatus'))$('dtideStatus').textContent=`第 ${activeSeason} 期 · ${diffZh[difficulty]||difficulty} · ${coverageLabel(cap)}`;
   }
   function itemName(x){const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别');return x?.zhName||x?.nameZh||zhGear[raw]||raw}
+  function wheelName(x){return window.MorimensData?.localizedEntity?.('wheel',x)?.name||itemName(x)}
   const heatStyle=rate=>{const t=Math.max(0,Math.min(1,Number(rate||0)/35)),h=Math.round(215-215*t),a=(.08+.34*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
   function localGearImage(kind,url){const raw=String(url||''),file=raw.split('/').pop()?.split('?')[0];if(!file)return '';if(kind==='wheel')return `assets/morimens/wheels/${file}`;if(kind==='covenant')return `assets/morimens/covenants/Icon/${file.replace('_Box.webp','.webp')}`;if(kind==='creation')return `assets/morimens/relics/${file}`;if(kind==='token')return raw.replace('/icon/','/thumb/icon/');return ''}
   function tokenImage(name){for(const {team} of flatten(detailUsage?.records||[])){const token=team.token;if(token&&itemName(token)===name&&token.image)return String(token.image).replace('/icon/','/thumb/icon/')}return ''}
@@ -68,7 +69,7 @@
   }
   function wheelGroup(rows){
     const map=new Map();
-    for(const {team} of rows){const seen=new Set();for(const member of team.members||[])for(const wheel of member.wheels||member.weapons||[]){const key=String(wheel.id??wheel.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=wheel.image||'',item=map.get(key)||{key,id:wheel.id??null,name:itemName(wheel),image:localGearImage('wheel',remote),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
+    for(const {team} of rows){const seen=new Set();for(const member of team.members||[])for(const wheel of member.wheels||member.weapons||[]){const key=String(wheel.id??wheel.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=wheel.image||'',item=map.get(key)||{key,id:wheel.id??null,name:wheelName(wheel),image:localGearImage('wheel',remote),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
     const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
@@ -94,7 +95,7 @@
   }
   function characterDetails(key){
     const mateRows=scopedRows(),gearRows=filteredDetailRows(),mates=new Map(),wheels=new Map(),covenants=new Map(),tokens=new Map(),creations=new Map();let appearances=0,gearAppearances=0;
-    const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:itemName(item);if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
+    const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:(kind==='wheel'?wheelName(item):itemName(item));if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
     for(const {team} of mateRows){const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;appearances++;if(team.token)bump(tokens,team.token,'token');for(const x of team.creations||[])bump(creations,x,'creation');const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,{name:characterInfo(m).name,image:characterInfo(m).image})}}
     for(const {team} of gearRows){const target=(team.members||[]).find(m=>memberKey(m)===String(key));if(!target)continue;gearAppearances++;for(const x of target.wheels||target.weapons||[])bump(wheels,x,'wheel');for(const x of target.covenants||target.suits||[])bump(covenants,x,'covenant')}
     const finish=(map,denom)=>[...map.values()].map(x=>({...x,ratePct:denom?x.count/denom*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN')).slice(0,5);
@@ -153,7 +154,7 @@
   function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideWave','dtideClearType','dtideRateMode','dtideSort'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;renderMatrix()});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
-    try{manifest=await json('data/morimens/eremora/manifest.json');bind();const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
+    try{manifest=await json('data/morimens/eremora/manifest.json');bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
       const note=$('dtideCoverageNote');if(note)note.insertAdjacentHTML('beforeend',` <strong>Top1000 出场率层：</strong>当前使用增量缓存 ${esc(String(manifest.usageIndex.recordCount||usage.recordCount||0))}/${esc(String(manifest.usageIndex.target||1000))} 名公开榜单玩家。`);
     }
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
