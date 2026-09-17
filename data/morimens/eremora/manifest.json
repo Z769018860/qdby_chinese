@@ -230,7 +230,7 @@
   },
   "usageIndex": {
     "seasonId": 69,
-    "path": "data/morimens/eremora/usage/69-local-gzip/index.json",
+    "path": "data/morimens/eremora/usage/69-local-gzip-v2/index.json",
     "statsPath": "data/morimens/eremora/stats/69.json",
     "target": 1000,
     "rankIndexCount": 1000,
@@ -241,10 +241,10 @@
       "coveragePct": 91,
       "complete": false
     },
-    "syncedAt": "2026-09-17T21:59:21.165Z",
+    "syncedAt": "2026-09-17T22:04:35.811Z",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 12,
-    "chunkSize": 900000,
+    "chunks": 30,
+    "chunkSize": 350000,
     "chunkBytes": 10482653
   },
   "rawTop1000Import": {
@@ -256,5 +256,4 @@
     "structuredIndex": "data/morimens/eremora/top1000/69.json",
     "updatedBy": "scripts/process_morimens_raw1000.py"
   }
-}
-
+}\n
