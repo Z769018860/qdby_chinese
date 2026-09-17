@@ -6,7 +6,7 @@
   const diffs=['normal','hard','nightmare','madness'];
   const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
   const enlightZh={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
-  let manifest=null,usage=null,usageStats=null,activeSeason=null,bound=false;
+  let manifest=null,usage=null,usageStats=null,detailUsage=null,activeSeason=null,bound=false;
 
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>String(team?.difficulty||wave?.difficulty||'unknown').toLowerCase();
@@ -58,16 +58,17 @@
     if($('dtideStatus'))$('dtideStatus').textContent=`第 ${activeSeason} 期 · ${diffZh[difficulty]||difficulty} · ${coverageLabel(cap)}`;
   }
   function itemName(x){return String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别')}
+  function filteredDetailRows(){
+    const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave=$('dtideWave')?.value||'all';
+    return flatten(detailUsage?.records||[]).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(wave!=='all'&&Number(x.wave.wave)!==Number(wave))return false;return true});
+  }
   function characterDetails(key){
-    const rows=scopedRows(),mates=new Map(),wheels=new Map(),covenants=new Map();let appearances=0;
+    const mateRows=scopedRows(),gearRows=filteredDetailRows(),mates=new Map(),wheels=new Map(),covenants=new Map();let appearances=0,gearAppearances=0;
     const bump=(map,name)=>{if(!name)return;const k=String(name),v=map.get(k)||{name:k,count:0};v.count++;map.set(k,v)};
-    for(const {team} of rows){const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;appearances++;
-      const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,characterInfo(m).name)}
-      for(const x of target.wheels||target.weapons||[])bump(wheels,itemName(x));
-      for(const x of target.covenants||target.suits||[])bump(covenants,itemName(x));
-    }
-    const finish=map=>[...map.values()].map(x=>({...x,ratePct:appearances?x.count/appearances*100:0})).sort((a,b)=>b.count-a.count).slice(0,5);
-    return {appearances,teammates:finish(mates),wheels:finish(wheels),covenants:finish(covenants)};
+    for(const {team} of mateRows){const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;appearances++;const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,characterInfo(m).name)}}
+    for(const {team} of gearRows){const target=(team.members||[]).find(m=>memberKey(m)===String(key));if(!target)continue;gearAppearances++;for(const x of target.wheels||target.weapons||[])bump(wheels,itemName(x));for(const x of target.covenants||target.suits||[])bump(covenants,itemName(x))}
+    const finish=(map,denom)=>[...map.values()].map(x=>({...x,ratePct:denom?x.count/denom*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN')).slice(0,5);
+    return {appearances,gearAppearances,teammates:finish(mates,appearances),wheels:finish(wheels,gearAppearances),covenants:finish(covenants,gearAppearances)};
   }
   function renderUsage(){
     const g=group(scopedRows()),mode=$('dtideRateMode')?.value||'team',host=$('dtideUsage');if(!host)return;
@@ -78,12 +79,13 @@
     const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team';
     const all=scopedRows({cap,difficulty,wave:'all',clearType:ct}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b),groups=new Map(waves.map(w=>[w,group(all.filter(x=>Number(x.wave.wave)===w))])),union=new Map();
     for(const [,g] of groups)for(const c of g.characters)union.set(c.key,c);
-    const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false;
-    const rows=[...union.values()].map(c=>({...c,total:waves.reduce((s,w)=>s+(groups.get(w)?.characters.find(x=>x.key===c.key)?.count||0),0)}));
+    const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false,rows=[...union.values()].map(c=>({...c,total:waves.reduce((sum,w)=>sum+(groups.get(w)?.characters.find(x=>x.key===c.key)?.count||0),0)}));
     rows.sort((a,b)=>{const av=sortKey==='total'?a.total:(groups.get(Number(sortKey))?.characters.find(x=>x.key===a.key)?.count||0),bv=sortKey==='total'?b.total:(groups.get(Number(sortKey))?.characters.find(x=>x.key===b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
     const arrow=k=>k===sortKey?(asc?' ↑':' ↓'):' ↕',host=$('dtideMatrix');if(!host)return;if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无记录。</div>';return}
-    host.innerHTML=`<table class="dtideTable"><thead><tr><th>角色</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}" title="点击切换升降序">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total" title="点击切换升降序">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map(c=>`<tr><td><div class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></div></td>${waves.map(w=>{const g=groups.get(w),hit=g?.characters.find(x=>x.key===c.key),rate=mode==='slot'?(hit?.slotRatePct||0):(hit?.teamRatePct||0);return `<td class="dtideRate">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
-    host.onclick=e=>{const btn=e.target.closest('[data-sort-key]');if(!btn)return;const key=String(btn.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix()};
+    host.innerHTML=`<table class="dtideTable"><thead><tr><th>角色</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map(c=>`<tr data-character-row="${esc(c.key)}"><td><button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button></td>${waves.map(w=>{const g=groups.get(w),hit=g?.characters.find(x=>x.key===c.key),rate=mode==='slot'?(hit?.slotRatePct||0):(hit?.teamRatePct||0);return `<td class="dtideRate">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
+    host.onclick=e=>{const sort=e.target.closest('[data-sort-key]');if(sort){const key=String(sort.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix();return}
+      const btn=e.target.closest('[data-matrix-character]');if(!btn)return;const tbody=btn.closest('tbody'),old=tbody.querySelector('.dtideMatrixDetailRow'),same=old?.dataset.for===btn.dataset.matrixCharacter;tbody.querySelectorAll('[data-matrix-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;
+      const d=characterDetails(btn.dataset.matrixCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div><b>${esc(x.name)}</b><small>${x.count} 次</small></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">当前详细样本暂无记录</div>'}</div></div>`,tr=document.createElement('tr');tr.className='dtideMatrixDetailRow';tr.dataset.for=btn.dataset.matrixCharacter;tr.innerHTML=`<td colspan="${waves.length+2}"><div class="dtideInlineDetail"><div class="dtideGearSummary"><div><small>队友统计样本</small><b>${d.appearances} 支队伍</b></div><div><small>配装详细样本</small><b>${d.gearAppearances} 支队伍</b></div></div>${section('Top 5 队友配置出场率',d.teammates)}${section('命轮出场率',d.wheels)}${section('密契出场率',d.covenants)}</div></td>`;btn.closest('tr').insertAdjacentElement('afterend',tr);btn.setAttribute('aria-expanded','true')};
   }
   function compareTable(labels,groups){
     const union=new Map();for(const g of groups)for(const c of g.characters)union.set(c.key,c);const rows=[...union.values()].map(c=>({...c,total:groups.reduce((s,g)=>s+(g.characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total).slice(0,50);if(!rows.length)return '<div class="dtideEmpty">暂无记录。</div>';
@@ -111,6 +113,7 @@
     try{
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
       usage=await json((current||entry).path);
+      detailUsage=current?await json(entry.path).catch(()=>({records:[]})):usage;
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
       activeSeason=Number(id);renderAll();return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
