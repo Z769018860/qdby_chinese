@@ -45,18 +45,18 @@
   function damageCoefficient(skill,level){const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)}
   function maxSkillLevel(skill){let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
   const characterLevelControl=()=>$('charLevel')||$('skeydbCharacterLevel');
-  function fillZeroToFive(select,label){
-    if(!select)return;const previous=Math.min(5,Math.max(0,Number(select.value)||0));select.innerHTML='';
-    for(let i=0;i<=5;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`${i} · ${i===0?'未启用':label+' '+i}`;option.selected=i===previous;select.appendChild(option)}
+  function fillRange(select,label,max){
+    if(!select)return;const previous=Math.min(max,Math.max(0,Number(select.value)||0));select.innerHTML='';
+    for(let i=0;i<=max;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`${i} · ${i===0?'未启用':label+' '+i}`;option.selected=i===previous;select.appendChild(option)}
   }
   function normalizeProgressionControls(){
     const legacy=$('charLevel'),duplicate=$('skeydbCharacterLevel');
     if(legacy&&duplicate&&legacy!==duplicate)duplicate.closest('.field')?.remove();
     const level=characterLevelControl();
     if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`Lv.${i}`;option.selected=i===previous;level.appendChild(option)}}
-    fillZeroToFive($('innerSpirit'),'内在灵格');
-    if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>灵塑阶段 0–5；当前仅记录阶段，不在缺少明确数值时推测加成。</small>';inner.insertAdjacentElement('afterend',wrap)}}
-    fillZeroToFive($('characterSculpt'),'灵塑');
+    fillRange($('innerSpirit'),'内在灵格',5);
+    if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>灵塑阶段 0–10；当前仅记录阶段，不在缺少明确数值时推测加成。</small>';inner.insertAdjacentElement('afterend',wrap)}}
+    fillRange($('characterSculpt'),'灵塑',10);
   }
 
   function ensureCharacterLevel(){
