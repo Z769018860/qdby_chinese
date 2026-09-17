@@ -61,6 +61,8 @@
   }
   function coverage(cap){
     const records=usage?.records||[],rankValues=records.map(x=>Number(x.rank)).filter(Number.isFinite);
+    const distinctRanks=new Set(rankValues);
+    if(records.length&&distinctRanks.size<Math.min(10,records.length)){const covered=Math.min(records.length,cap);return {covered,expected:cap,complete:covered>=cap,historical:false}}
     if(!rankValues.length&&records.length)return {covered:records.length,expected:records.length,complete:false,historical:true};
     const stat=usageStats?.rankTiers?.[String(cap)];if(stat)return {covered:Number(stat.covered||0),expected:Number(stat.expected||cap),complete:!!stat.complete,historical:false};
     const ranks=new Set(rankValues.filter(x=>x<=cap));return {covered:ranks.size,expected:cap,complete:ranks.size>=cap,historical:false};
