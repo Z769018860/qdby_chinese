@@ -3,7 +3,7 @@
     "site": "Eremora",
     "rankIndex": "data/morimens/eremora/rank-index/69.json",
     "detailTransport": "public challenge pages via Jina Reader",
-    "syncedAt": "2026-09-16T23:13:49.738Z"
+    "syncedAt": "2026-09-17T00:55:04.641Z"
   },
   "seasonId": 69,
   "target": 1000,
@@ -249699,6 +249699,6 @@
   "progress": {
     "completed": 24,
     "target": 349,
-    "updatedAt": "2026-09-16T23:13:49.738Z"
+    "updatedAt": "2026-09-17T00:55:04.641Z"
   }
 }
