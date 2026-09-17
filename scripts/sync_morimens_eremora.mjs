@@ -10,6 +10,8 @@ const OUT_DIR='data/morimens/eremora';
 const SEASON_DIR=path.join(OUT_DIR,'seasons');
 const STATS_DIR=path.join(OUT_DIR,'stats');
 const AWAKENERS_FILE='data/morimens/skeydb/awakeners.json';
+const LOCAL_SYNC=process.env.EREMORA_LOCAL_SYNC==='1';
+const LOCAL_SEASON=Math.max(1,Number(process.env.EREMORA_LOCAL_SEASON||69));
 const MAX_RECORDS=Math.max(1,Number(process.env.EREMORA_MAX_RECORDS||1000));
 const BATCH_SIZE=Math.max(1,Math.min(4,Number(process.env.EREMORA_BATCH_SIZE||2)));
 const BATCH_DELAY=Math.max(1200,Number(process.env.EREMORA_BATCH_DELAY_MS||2600));
@@ -17,7 +19,10 @@ const UA='qdby-chinese-eremora-sync/2.0 (+https://github.com/Z769018860/qdby_chi
 
 async function readJson(file,fallback=null){try{return JSON.parse(await readFile(file,'utf8'))}catch{return fallback}}
 async function saveJson(file,data){await mkdir(path.dirname(file),{recursive:true});await writeFile(file,JSON.stringify(data,null,2)+'\n')}
-async function fetchText(target,retries=5){return (await fetchViaJina(target,{ua:UA,retries})).text}
+async function fetchText(target,retries=5){
+  if(!LOCAL_SYNC)return (await fetchViaJina(target,{ua:UA,retries})).text;
+  let last;for(let i=0;i<retries;i++){try{const r=await fetch(target,{headers:{'user-agent':UA,'accept':'application/json,text/plain,*/*','accept-language':'zh-CN,zh;q=0.9,en;q=0.7'},redirect:'follow',signal:AbortSignal.timeout(55000)}),text=await r.text();if(r.ok&&text&&!/Just a moment|Verify you are human|Attention Required/i.test(text))return text;last=new Error(`${target}: HTTP ${r.status} (${text.slice(0,120).replace(/\s+/g,' ')})`)}catch(error){last=error}if(i+1<retries)await sleep(Math.min(30000,3000*Math.pow(2,i)))}throw last||new Error(`Unable to fetch ${target}`)
+}
 
 function parseLeaderboard(md=''){
   const linkRe=/\[((?:\d+\s+)?(?:!\[[^\]]*\]\([^)]+\)\s*)*)([^\]]*?)\]\((https:\/\/eremora\.com\/u\/(\d+)\/challenges\/dzone\/(\d+))\)/g;
@@ -142,14 +147,23 @@ function buildStats(season){
 
 await mkdir(SEASON_DIR,{recursive:true});await mkdir(STATS_DIR,{recursive:true});
 const awakeners=await readJson(AWAKENERS_FILE,{records:[]}),byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
-let leaderboardMd,structuredMd='';try{structuredMd=await fetchText(`${ORIGIN}/leaderboard/abyss/__data.json`)}catch(error){console.warn('Structured leaderboard unavailable:',String(error))}
-try{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard/abyss`)}catch{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard`)}
-const entries=parseStructuredLeaderboard(structuredMd);const finalEntries=entries.length?entries:parseLeaderboard(leaderboardMd);if(!finalEntries.length)throw new Error('No D-Zone leaderboard records found.');
+let finalEntries=[];
+if(LOCAL_SYNC){
+  const cached=await readJson(path.join(OUT_DIR,'usage',`${LOCAL_SEASON}.json`),{records:[]});
+  finalEntries=(cached.records||[]).map(x=>({rank:num(x.rank),player:x.player||'',uid:String(x.uid||''),score:num(x.score),url:x.url||`${ORIGIN}/u/${x.uid}/challenges/dzone/${LOCAL_SEASON}`,seasonId:LOCAL_SEASON})).filter(x=>x.uid).sort((a,b)=>(a.rank??9999)-(b.rank??9999)).slice(0,MAX_RECORDS);
+  console.log(`Local incremental mode: season=${LOCAL_SEASON}, cached leaderboard targets=${finalEntries.length}`);
+}else{
+  let leaderboardMd,structuredMd='';try{structuredMd=await fetchText(`${ORIGIN}/leaderboard/abyss/__data.json`)}catch(error){console.warn('Structured leaderboard unavailable:',String(error))}
+  try{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard/abyss`)}catch{leaderboardMd=await fetchText(`${ORIGIN}/leaderboard`)}
+  const entries=parseStructuredLeaderboard(structuredMd);finalEntries=entries.length?entries:parseLeaderboard(leaderboardMd);
+}
+if(!finalEntries.length)throw new Error('No D-Zone leaderboard records found.');
 const currentSeason=Math.max(...finalEntries.map(x=>x.seasonId)),currentEntries=finalEntries.filter(x=>x.seasonId===currentSeason);
 const oldCurrent=await readJson(path.join(SEASON_DIR,`${currentSeason}.json`),{records:[]}),oldByUid=new Map((oldCurrent.records||[]).map(x=>[String(x.uid),x]));
-const currentRecords=[],failures=[],historyBySeason=new Map();
-for(let i=0;i<currentEntries.length;i+=BATCH_SIZE){
-  const batch=currentEntries.slice(i,i+BATCH_SIZE),results=await Promise.all(batch.map(async entry=>{
+const currentRecords=LOCAL_SYNC?currentEntries.map(x=>oldByUid.get(String(x.uid))).filter(Boolean):[],failures=[],historyBySeason=new Map(),entriesToFetch=LOCAL_SYNC?currentEntries.filter(x=>!oldByUid.has(String(x.uid))):currentEntries;
+const checkpoint=async processed=>{if(!LOCAL_SYNC)return;const records=[...new Map(currentRecords.map(x=>[String(x.uid),x])).values()].sort((a,b)=>(a.rank??9999)-(b.rank??9999));const doc={...oldCurrent,source:{...(oldCurrent.source||{}),syncedAt:new Date().toISOString(),transport:'local direct incremental Eremora SvelteKit __data.json'},seasonId:currentSeason,leaderboardEntryCount:currentEntries.length,recordCount:records.length,complete:false,coverageMode:'local-incremental',failures:[...failures],records};await saveJson(path.join(SEASON_DIR,`${currentSeason}.json`),doc);await saveJson(path.join(STATS_DIR,`${currentSeason}.json`),buildStats(doc));console.log(`Local checkpoint: processed=${processed}/${entriesToFetch.length}, detailed=${records.length}/${currentEntries.length}, failed=${failures.length}`)};
+for(let i=0;i<entriesToFetch.length;i+=BATCH_SIZE){
+  const batch=entriesToFetch.slice(i,i+BATCH_SIZE),results=await Promise.all(batch.map(async entry=>{
     try{
       const detailUrl=`${entry.url}/__data.json`,decoded=decodeSvelteData(await fetchText(detailUrl));
       const activities=findDzoneActivities(decoded),currentActivity=activities.find(x=>x.period===entry.seasonId);
@@ -163,8 +177,10 @@ for(let i=0;i<currentEntries.length;i+=BATCH_SIZE){
     if(r.ok){currentRecords.push(r.current);for(const h of r.history){if(!historyBySeason.has(h.seasonId))historyBySeason.set(h.seasonId,new Map());historyBySeason.get(h.seasonId).set(String(h.uid),h)}}
     else{failures.push({uid:r.entry.uid,url:r.entry.url,error:r.error});const cached=oldByUid.get(String(r.entry.uid));if(cached)currentRecords.push(cached)}
   }
-  if(i+BATCH_SIZE<currentEntries.length)await sleep(BATCH_DELAY);
+  await checkpoint(Math.min(i+BATCH_SIZE,entriesToFetch.length));
+  if(i+BATCH_SIZE<entriesToFetch.length)await sleep(BATCH_DELAY);
 }
+if(LOCAL_SYNC)for(const x of oldCurrent.records||[])if(!currentRecords.some(r=>String(r.uid)===String(x.uid))&&currentEntries.some(e=>String(e.uid)===String(x.uid)))currentRecords.push(x);
 currentRecords.sort((a,b)=>(a.rank??9999)-(b.rank??9999)||(b.score??0)-(a.score??0));
 const currentPeriod=currentRecords.find(x=>x.period)?.period||null,currentComplete=failures.length===0&&currentRecords.length===currentEntries.length&&currentEntries.length>=Math.min(50,MAX_RECORDS);
 const currentSeasonDoc={source:{site:'Eremora',url:`${ORIGIN}/leaderboard/abyss`,detailTemplate:`${ORIGIN}/u/{uid}/challenges/dzone/{season}/__data.json`,transport:'Eremora SvelteKit __data.json server-load stream via Jina Reader',syncedAt:new Date().toISOString()},seasonId:currentSeason,period:currentPeriod,leaderboardEntryCount:currentEntries.length,recordCount:currentRecords.length,complete:currentComplete,coverageMode:'current-leaderboard',failures,records:currentRecords};
