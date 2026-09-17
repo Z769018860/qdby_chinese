@@ -87,7 +87,16 @@
   function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(ms==='AA'||ms==='LAW12')return 'law12';if(ms==='OE'||ms==='OVERLIMIT')return 'overlimit';return 'e3'}
   function maxRankAvailable(){const rs=(season?.records||[]).map(r=>Number(r.rank)).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
   function getSelectedValues(id){return Array.from($(id)?.selectedOptions||[]).map(x=>x.value).filter(Boolean)}
-  function flattenTeams(){const rows=[];for(const r of season?.records||[])for(const w of r.waves||[])for(const t of w.teams||[])rows.push({record:r,wave:w,team:t,difficulty:difficultyOf(t)});return rows}
+  function flattenTeams(){
+    const unique=new Map();
+    const richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((sum,m)=>sum+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);
+    for(const record of season?.records||[])for(const wave of record.waves||[])for(const team of wave.teams||[]){
+      const difficulty=difficultyOf(team),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(',');
+      const key=[record.uid||record.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record,wave,team,difficulty},old=unique.get(key);
+      if(!old||richness(team)>richness(old.team))unique.set(key,row);
+    }
+    return [...unique.values()];
+  }
   function scopedRows({wave=$('dtideWave')?.value||'all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=Number($('dtideRankScope')?.value||50)}={}){return flattenTeams().filter(x=>{
     if(rankCap&&(!Number.isFinite(Number(x.record.rank))||Number(x.record.rank)>rankCap))return false;
     if(wave!=='all'&&Number(wave)!==Number(x.wave.wave))return false;
