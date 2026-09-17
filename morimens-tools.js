@@ -40,6 +40,7 @@
     await import(`./morimens-i18n.js?v=${Date.now()}`);
     await import(`./morimens-calculator-skeydb.js?v=${Date.now()}`);
     await import(`./morimens-calculator-stats.js?v=${Date.now()}`);
+    await import(`./morimens-calculator-combat.js?v=${Date.now()}`);
     await import(`./morimens-dtide.js?v=${Date.now()}`);
     await import(`./morimens-dtide-usage.js?v=${Date.now()}`);
   }catch(err){
