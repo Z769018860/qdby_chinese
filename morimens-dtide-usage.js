@@ -6,6 +6,7 @@
   const diffs=['normal','hard','nightmare','madness'];
   const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
   const enlightZh={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
+  const enlightColors={e3:'#d9a441',overlimit:'#62b7ff',law12:'#d978d0',unknown:'#5f6b7a'};
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
   let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,bound=false,dataVersion='1';
 
@@ -48,9 +49,15 @@
   function add(map,key,meta={}){if(!key)return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
   function group(rows){
     const chars=new Map(),enlight=new Map();let slots=0;
-    for(const {team} of rows){const seen=new Set();for(const m of team.members||[]){slots++;const key=memberKey(m);if(key&&!seen.has(key)){seen.add(key);const info=characterInfo(m);add(chars,key,{name:info.name,image:info.image,ingameId:m.ingameId||null,skeydbId:m.skeydbId||null})}const e=enlightOf(m);add(enlight,e,{name:enlightZh[e]||e})}}
+    for(const {team} of rows){const seen=new Set();for(const m of team.members||[]){slots++;const key=memberKey(m),e=enlightOf(m);if(key&&!seen.has(key)){seen.add(key);const info=characterInfo(m);add(chars,key,{name:info.name,image:info.image,ingameId:m.ingameId||null,skeydbId:m.skeydbId||null,enlightCounts:{}});const character=chars.get(String(key));character.enlightCounts[e]=(character.enlightCounts[e]||0)+1}add(enlight,e,{name:enlightZh[e]||e})}}
     const teamCount=rows.length,finish=map=>[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0,slotRatePct:slots?x.count/slots*100:0})).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN'));
     return {teamCount,slots,characters:finish(chars),enlight:finish(enlight)};
+  }
+  function enlightBar(character){
+    const counts=character?.enlightCounts||{},items=['e3','overlimit','law12'].map(key=>({key,count:Number(counts[key]||0)})).filter(x=>x.count>0),total=items.reduce((sum,x)=>sum+x.count,0);
+    if(!total)return '<div class="dtideEnlightBar" title="启灵数据缺失"><span style="width:100%;background:#5f6b7a"></span></div>';
+    const title=items.map(x=>`${enlightZh[x.key]} ${pct(x.count/total*100)}`).join(' · ');
+    return `<div class="dtideEnlightBar" title="${esc(title)}" aria-label="${esc(title)}">${items.map(x=>`<span style="width:${x.count/total*100}%;background:${enlightColors[x.key]}"></span>`).join('')}</div>`;
   }
   function coverage(cap){
     const records=usage?.records||[],rankValues=records.map(x=>Number(x.rank)).filter(Number.isFinite);
@@ -96,6 +103,7 @@
     const all=rowsFor(records,{cap,difficulty,clearType}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
     const groups=new Map(waves.map(w=>[w,entity==='character'?group(all.filter(x=>Number(x.wave.wave)===w)):wheelGroup(all.filter(x=>Number(x.wave.wave)===w))]));
     const union=new Map();for(const [,g] of groups)for(const x of entity==='character'?g.characters:g.items)union.set(x.key,x);
+    if(entity==='character'){const totals=new Map(group(all).characters.map(x=>[x.key,x]));for(const [key,item] of union){const total=totals.get(key);if(total)item.enlightCounts=total.enlightCounts}}
     const indexes=new Map([...groups].map(([w,g])=>[w,new Map((entity==='character'?g.characters:g.items).map(x=>[x.key,x]))])),hit=(w,key)=>indexes.get(w)?.get(key);
     const rows=[...union.values()].map(x=>({...x,total:waves.reduce((sum,w)=>sum+(hit(w,x.key)?.count||0),0)}));
     rows.sort((a,b)=>{const av=sortKey==='total'?a.total:(hit(Number(sortKey),a.key)?.count||0),bv=sortKey==='total'?b.total:(hit(Number(sortKey),b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
@@ -128,7 +136,7 @@
     const current=rankedRows(currentRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),{rows,waves,hit:getHit}=current;
     const prior=rankedRows(previousRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),previousRanks=new Map(prior.rows.map((x,i)=>[x.key,i+1]));
     const arrow=k=>k===sortKey?(asc?' ↑':' ↓'):' ↕',host=$('dtideMatrix'),label=entity==='character'?'角色':'命轮';if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent=label+'逐波出场率';if(!host)return;host.removeAttribute('aria-busy');if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无'+label+'详细数据。</div>';return}
-    host.innerHTML=`<table class="dtideTable"><thead><tr><th>${label}</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map((c,i)=>`<tr><td><div class="dtideRankedItem"><span class="dtideRankMark"><b>${i+1}</b>${rankChange(i+1,previousRanks.get(c.key))}</span>${entity==='character'?`<button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button>`:`<div class="dtideChar">${c.image?`<img class="dtideGearIcon" src="${esc(c.image)}" data-fallback="${esc(c.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span>${esc(c.name)}</span></div>`}</div></td>${waves.map(w=>{const hit=getHit(w,c.key),rate=hit?.teamRatePct||0;return `<td class="dtideRate dtideHeat" style="${heatStyle(rate)}">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
+    host.innerHTML=`<table class="dtideTable"><thead><tr><th>${label}</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map((c,i)=>`<tr><td><div class="dtideRankedItem"><span class="dtideRankMark"><b>${i+1}</b>${rankChange(i+1,previousRanks.get(c.key))}</span>${entity==='character'?`<button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button>${enlightBar(c)}`:`<div class="dtideChar">${c.image?`<img class="dtideGearIcon" src="${esc(c.image)}" data-fallback="${esc(c.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span>${esc(c.name)}</span></div>`}</div></td>${waves.map(w=>{const hit=getHit(w,c.key),rate=hit?.teamRatePct||0;return `<td class="dtideRate dtideHeat" style="${heatStyle(rate)}">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
     host.onclick=e=>{const sort=e.target.closest('[data-sort-key]');if(sort){const key=String(sort.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix();return}const btn=e.target.closest('[data-matrix-character]');if(!btn)return;const tbody=btn.closest('tbody'),old=tbody.querySelector('.dtideMatrixDetailRow'),same=old?.dataset.for===btn.dataset.matrixCharacter;tbody.querySelectorAll('[data-matrix-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;const d=characterDetails(btn.dataset.matrixCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div class="dtideChar">${x.image?`<img class="dtideGearIcon" src="${esc(x.image)}" data-fallback="${esc(x.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span><b>${esc(x.name)}</b><small>${x.count} 次</small></span></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">当前详细样本暂无记录</div>'}</div></div>`,tr=document.createElement('tr');tr.className='dtideMatrixDetailRow';tr.dataset.for=btn.dataset.matrixCharacter;tr.innerHTML=`<td colspan="${waves.length+2}"><div class="dtideInlineDetail">${section('Top 5 队友配置出场率',d.teammates)}${section('命轮出场率',d.wheels)}${section('密契出场率',d.covenants)}</div></td>`;btn.closest('tr').insertAdjacentElement('afterend',tr);btn.setAttribute('aria-expanded','true')};
   }
   function compareTable(labels,groups){
@@ -141,8 +149,7 @@
     if($('dtideDifficultyCompare'))$('dtideDifficultyCompare').innerHTML=compareTable(diffs.map(x=>diffZh[x]),diffs.map(x=>group(scopedRows({cap,difficulty:x,wave,clearType:ct}))));
   }
   function renderEnlight(){
-    const g=group(scopedRows()),box=ensureEnlightPanel();if(!box)return;
-    box.innerHTML=`<div class="dtideNotice" style="margin-bottom:9px"><b>启灵分组口径：</b>E0～E3 → 最高三启；OE → 最高超限；AA → 最高+12法则。这里按当前 Top / 难度 / 波次筛选统计角色槽位。</div><div class="dtideUsageCards">${['e3','overlimit','law12'].map(k=>{const x=g.enlight.find(v=>v.key===k);return `<div class="dtideUsage"><div><b>${enlightZh[k]}</b><small>${x?.count||0} 个角色槽位</small></div><strong>${pct(g.slots?(x?.count||0)/g.slots*100:0)}</strong></div>`}).join('')}</div>`;
+    $('dtideUsageEnlight')?.remove();
   }
   function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight()})}
 
@@ -176,3 +183,4 @@
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+
