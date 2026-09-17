@@ -19,8 +19,8 @@ function setupMorimensMascotToggle(){
   const button=document.getElementById("morimensMascotToggle"),image=document.getElementById("morimensMascot");
   if(!button||!image)return;
   const characters=[
-    {name:"杜勒赛因",src:"assets/morimens/mascots/duersaiyin.gif"},
-    {name:"卡拉布",src:"assets/morimens/mascots/kalabu.gif"}
+    {name:"杜勒赛因",src:"assets/morimens/mascots/duersaiyin.gif?v=20260917.13"},
+    {name:"卡拉布",src:"assets/morimens/mascots/kalabu.gif?v=20260917.13"}
   ];
   let index=0;
   for(const character of characters){const preload=new Image();preload.src=character.src}
@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-    const assetVersion="20260917.12";
+    const assetVersion="20260917.13";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
