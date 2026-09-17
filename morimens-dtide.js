@@ -52,7 +52,7 @@
       </div>
       <div class="dtideStatGrid" id="dtideSummary"></div>
       <div id="dtideCoverageWarn" class="dtideCoverageWarn"></div>
-      <div class="dtideSection"><h3 id="dtideMatrixTitle">角色逐波出场率</h3><div class="dtideLeaderboardTabs" role="tablist" aria-label="出场率榜单类型"><button type="button" class="dtideLeaderboardTab" data-dtide-entity="character" role="tab" aria-selected="true">角色榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="wheel" role="tab" aria-selected="false">命轮榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="covenant" role="tab" aria-selected="false">密契榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="token" role="tab" aria-selected="false">钥令榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="creation" role="tab" aria-selected="false">造物榜单</button></div><div class="dtideScroll" id="dtideMatrix"></div></div>
+      <div class="dtideSection"><h3 id="dtideMatrixTitle">角色逐波出场率</h3><div class="dtideLeaderboardTabs" role="tablist" aria-label="出场率榜单类型"><button type="button" class="dtideLeaderboardTab" data-dtide-entity="character" role="tab" aria-selected="true">角色榜单</button><button type="button" class="dtideLeaderboardTab" data-dtide-entity="wheel" role="tab" aria-selected="false">命轮榜单</button></div><div class="dtideScroll" id="dtideMatrix"></div></div>
       <div class="dtideSection"><div class="dtideSubhead"><h3 style="margin:0">命轮 / 密契 / 启灵分布</h3><div class="dtideField" style="min-width:240px"><label>按角色查看配装</label><select id="dtideEquipCharacter"><option value="">全部角色</option></select></div></div><div id="dtideEquipment"></div></div>
     </section>
     <section class="panel">
