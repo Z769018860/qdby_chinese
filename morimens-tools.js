@@ -1,6 +1,23 @@
+function setupMorimensCgSlideshow(){
+  const layers=[document.getElementById("morimensCgA"),document.getElementById("morimensCgB")];
+  if(layers.some(layer=>!layer))return;
+  const images=Array.from({length:10},(_,index)=>`assets/morimens/cg/cg-${String(index+1).padStart(2,"0")}.webp`);
+  let index=Math.abs(new Date().getDate()-1)%images.length,active=0,timer=null;
+  layers[0].style.backgroundImage=`url("${images[index]}")`;
+  const schedule=()=>{clearTimeout(timer);timer=setTimeout(showNext,12000)};
+  const showNext=()=>{
+    if(document.hidden){schedule();return}
+    const nextIndex=(index+1)%images.length,nextLayer=layers[1-active],preload=new Image();
+    preload.onload=()=>{nextLayer.style.backgroundImage=`url("${images[nextIndex]}")`;requestAnimationFrame(()=>{nextLayer.classList.add("isActive");layers[active].classList.remove("isActive");active=1-active;index=nextIndex;schedule()})};
+    preload.onerror=schedule;preload.src=images[nextIndex];
+  };
+  if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)schedule();
+}
+setupMorimensCgSlideshow();
+
 (async()=>{
   try{
-    const assetVersion="20260917.8";
+    const assetVersion="20260917.9";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
