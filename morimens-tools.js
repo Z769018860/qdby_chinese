@@ -1,5 +1,6 @@
 (async()=>{
   try{
+    const assetVersion="20260917.5";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
@@ -11,11 +12,14 @@
       "morimens-v03/part5b.b64",
       "morimens-v03/part6.b64"
     ];
-    const parts=await Promise.all(urls.map(async u=>{
-      const r=await fetch(u,{cache:"no-store"});
+    const legacyParts=Promise.all(urls.map(async u=>{
+      const r=await fetch(u,{cache:"force-cache"});
       if(!r.ok) throw new Error(`${u}: HTTP ${r.status}`);
       return (await r.text()).replace(/\s+/g,"");
     }));
+    await import(`./morimens-dtide.js?v=${assetVersion}`);
+    await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+    const parts=await legacyParts;
     const binary=atob(parts.join(""));
     const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
     let code=new TextDecoder("utf-8").decode(bytes);
@@ -35,15 +39,15 @@
         "calculate();if(!window.MorimensFortuneDataOwner)renderFortune(false);loadCategoryOptions"
       );
     (0,eval)(code);
-    await import(`./morimens-data.js?v=${Date.now()}`);
-    await import(`./morimens-skeydb.js?v=${Date.now()}`);
-    await import(`./morimens-i18n.js?v=${Date.now()}`);
-    await import(`./morimens-calculator-skeydb.js?v=${Date.now()}`);
-    await import(`./morimens-calculator-stats.js?v=${Date.now()}`);
-    await import(`./morimens-calculator-combat.js?v=${Date.now()}`);
-    await import(`./morimens-dtide.js?v=${Date.now()}`);
-    await import(`./morimens-dtide-usage.js?v=${Date.now()}`);
+    await import(`./morimens-data.js?v=${assetVersion}`);
+    await import(`./morimens-skeydb.js?v=${assetVersion}`);
+    await import(`./morimens-i18n.js?v=${assetVersion}`);
+    await import(`./morimens-calculator-skeydb.js?v=${assetVersion}`);
+    await import(`./morimens-calculator-stats.js?v=${assetVersion}`);
+    await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
+    await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
   }catch(err){
+    document.body.classList.remove("morimensBooting");
     console.error("Morimens loader failed",err);
     const box=document.createElement("div");
     box.style.cssText="position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;padding:12px 14px;border-radius:12px;background:#7f1d1d;color:#fff;font:14px/1.6 system-ui";
