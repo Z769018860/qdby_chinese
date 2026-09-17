@@ -7,7 +7,7 @@
   const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
   const enlightZh={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
-  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,activeSeason=null,bound=false;
+  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,bound=false;
 
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>String(team?.difficulty||wave?.difficulty||'unknown').toLowerCase();
@@ -72,6 +72,26 @@
     const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
+  function rowsFor(records,{cap,difficulty,clearType}){
+    return flatten(records).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(clearType!=='all'&&x.team.clearType!==clearType)return false;return true});
+  }
+  function rankedRows(records,entity,{cap,difficulty,clearType,sortKey,asc}){
+    const all=rowsFor(records,{cap,difficulty,clearType}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
+    const groups=new Map(waves.map(w=>[w,entity==='character'?group(all.filter(x=>Number(x.wave.wave)===w)):wheelGroup(all.filter(x=>Number(x.wave.wave)===w))]));
+    const union=new Map();for(const [,g] of groups)for(const x of entity==='character'?g.characters:g.items)union.set(x.key,x);
+    const hit=(w,key)=>entity==='character'?groups.get(w)?.characters.find(x=>x.key===key):groups.get(w)?.items.find(x=>x.key===key);
+    const rows=[...union.values()].map(x=>({...x,total:waves.reduce((sum,w)=>sum+(hit(w,x.key)?.count||0),0)}));
+    rows.sort((a,b)=>{const av=sortKey==='total'?a.total:(hit(Number(sortKey),a.key)?.count||0),bv=sortKey==='total'?b.total:(hit(Number(sortKey),b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
+    return {rows,waves,groups,hit};
+  }
+  function rankChange(currentRank,previousRank){
+    if(!previousSeasonId)return '<small class="dtideRankSame">—</small>';
+    if(!previousRank)return `<small class="dtideRankNew" title="第 ${previousSeasonId} 期未上榜">NEW</small>`;
+    const delta=previousRank-currentRank;
+    if(delta>0)return `<small class="dtideRankUp" title="较第 ${previousSeasonId} 期上升 ${delta} 名">▲ ${delta}</small>`;
+    if(delta<0)return `<small class="dtideRankDown" title="较第 ${previousSeasonId} 期下降 ${Math.abs(delta)} 名">▼ ${Math.abs(delta)}</small>`;
+    return `<small class="dtideRankSame" title="较第 ${previousSeasonId} 期排名不变">＝</small>`;
+  }
   function characterDetails(key){
     const mateRows=scopedRows(),gearRows=filteredDetailRows(),mates=new Map(),wheels=new Map(),covenants=new Map(),tokens=new Map(),creations=new Map();let appearances=0,gearAppearances=0;
     const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:itemName(item);if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
@@ -87,18 +107,11 @@
   }
   function renderMatrix(){
     const cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';
-    let waves=[],groups=new Map(),rows=[];
-    if(entity==='character'){
-      const all=scopedRows({cap,difficulty,wave:'all',clearType:ct});waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);groups=new Map(waves.map(w=>[w,group(all.filter(x=>Number(x.wave.wave)===w))]));const union=new Map();for(const [,g] of groups)for(const c of g.characters)union.set(c.key,c);rows=[...union.values()].map(c=>({...c,total:waves.reduce((sum,w)=>sum+(groups.get(w)?.characters.find(x=>x.key===c.key)?.count||0),0)}));
-    }else{
-      const all=flatten(detailUsage?.records||[]).filter(x=>{const rank=Number(x.record.rank);if(Number.isFinite(rank)&&rank>cap)return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(ct!=='all'&&x.team.clearType!==ct)return false;return true});
-      waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);groups=new Map(waves.map(w=>[w,wheelGroup(all.filter(x=>Number(x.wave.wave)===w))]));
-      const union=new Map();for(const [,g] of groups)for(const x of g.items)union.set(x.key,x);rows=[...union.values()].map(x=>({...x,total:waves.reduce((sum,w)=>sum+(groups.get(w)?.items.find(y=>y.key===x.key)?.count||0),0)}));
-    }
-    const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false,getHit=(w,key)=>entity==='character'?groups.get(w)?.characters.find(x=>x.key===key):groups.get(w)?.items.find(x=>x.key===key);
-    rows.sort((a,b)=>{const av=sortKey==='total'?a.total:(getHit(Number(sortKey),a.key)?.count||0),bv=sortKey==='total'?b.total:(getHit(Number(sortKey),b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
+    const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false,currentRecords=entity==='character'?(usage?.records||[]):(detailUsage?.records||[]),previousRecords=entity==='character'?(previousUsage?.records||[]):(previousDetailUsage?.records||[]);
+    const current=rankedRows(currentRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),{rows,waves,hit:getHit}=current;
+    const prior=rankedRows(previousRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),previousRanks=new Map(prior.rows.map((x,i)=>[x.key,i+1]));
     const arrow=k=>k===sortKey?(asc?' ↑':' ↓'):' ↕',host=$('dtideMatrix'),label=entity==='character'?'角色':'命轮';if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent=label+'逐波出场率';if(!host)return;if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无'+label+'详细数据。</div>';return}
-    host.innerHTML=`<table class="dtideTable"><thead><tr><th>${label}</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map(c=>`<tr><td>${entity==='character'?`<button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button>`:`<div class="dtideChar">${c.image?`<img class="dtideGearIcon" src="${esc(c.image)}" data-fallback="${esc(c.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span>${esc(c.name)}</span></div>`}</td>${waves.map(w=>{const hit=getHit(w,c.key),rate=hit?.teamRatePct||0;return `<td class="dtideRate dtideHeat" style="${heatStyle(rate)}">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
+    host.innerHTML=`<table class="dtideTable"><thead><tr><th>${label}</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map((c,i)=>`<tr><td><div class="dtideRankedItem"><span class="dtideRankMark"><b>${i+1}</b>${rankChange(i+1,previousRanks.get(c.key))}</span>${entity==='character'?`<button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button>`:`<div class="dtideChar">${c.image?`<img class="dtideGearIcon" src="${esc(c.image)}" data-fallback="${esc(c.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span>${esc(c.name)}</span></div>`}</div></td>${waves.map(w=>{const hit=getHit(w,c.key),rate=hit?.teamRatePct||0;return `<td class="dtideRate dtideHeat" style="${heatStyle(rate)}">${pct(rate)}</td>`}).join('')}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
     host.onclick=e=>{const sort=e.target.closest('[data-sort-key]');if(sort){const key=String(sort.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix();return}const btn=e.target.closest('[data-matrix-character]');if(!btn)return;const tbody=btn.closest('tbody'),old=tbody.querySelector('.dtideMatrixDetailRow'),same=old?.dataset.for===btn.dataset.matrixCharacter;tbody.querySelectorAll('[data-matrix-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;const d=characterDetails(btn.dataset.matrixCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div class="dtideChar">${x.image?`<img class="dtideGearIcon" src="${esc(x.image)}" data-fallback="${esc(x.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span><b>${esc(x.name)}</b><small>${x.count} 次</small></span></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">当前详细样本暂无记录</div>'}</div></div>`,tr=document.createElement('tr');tr.className='dtideMatrixDetailRow';tr.dataset.for=btn.dataset.matrixCharacter;tr.innerHTML=`<td colspan="${waves.length+2}"><div class="dtideInlineDetail">${section('Top 5 队友配置出场率',d.teammates)}${section('命轮出场率',d.wheels)}${section('密契出场率',d.covenants)}</div></td>`;btn.closest('tr').insertAdjacentElement('afterend',tr);btn.setAttribute('aria-expanded','true')};
   }
   function compareTable(labels,groups){
@@ -130,7 +143,11 @@
       detailUsage=current?await json(entry.path).catch(()=>({records:[]})):usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
-      activeSeason=Number(id);renderAll();return true
+      activeSeason=Number(id);
+      const previousEntry=(manifest.availableSeasons||[]).filter(x=>Number(x.seasonId)<activeSeason).sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))[0]||null;
+      previousSeasonId=previousEntry?Number(previousEntry.seasonId):null;previousUsage=null;previousDetailUsage=null;
+      if(previousEntry){previousUsage=await json(previousEntry.path).catch(()=>null);previousDetailUsage=previousUsage}
+      renderAll();return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
   }
   function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideWave','dtideClearType','dtideRateMode','dtideSort'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;renderMatrix()});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
