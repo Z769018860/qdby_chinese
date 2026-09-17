@@ -15,8 +15,11 @@
     "data/morimens/eremora/usage/69-local-gzip/chunk-008.b64",
     "data/morimens/eremora/usage/69-local-gzip/chunk-009.b64",
     "data/morimens/eremora/usage/69-local-gzip/chunk-010.b64",
-    "data/morimens/eremora/usage/69-local-gzip/chunk-011.b64"
+    "data/morimens/eremora/usage/69-local-gzip/chunk-011.b64",
+    "data/morimens/eremora/usage/69-local-gzip/chunk-012.b64",
+    "data/morimens/eremora/usage/69-local-gzip/chunk-013.b64",
+    "data/morimens/eremora/usage/69-local-gzip/chunk-014.b64"
   ],
-  "chunkSize": 900000,
+  "chunkSize": 700000,
   "compressedBytes": 10482653
 }
