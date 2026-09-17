@@ -56,7 +56,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：显示当前结构化融灾数据的同步时间；出场率可按榜单 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂四档难度分别统计。</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月17日 23:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope">${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
