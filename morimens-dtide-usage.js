@@ -22,24 +22,21 @@
     return {name:displayCharacterName(loc?.name,m?.canonicalName,m?.name,rec?.name,key),image:rec?.assets?.portrait||m?.image||''};
   }
   const versioned=url=>`${url}${url.includes('?')?'&':'?'}v=${encodeURIComponent(dataVersion)}`;
-  async function json(url){const r=await fetch(versioned(url),{cache:'force-cache'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.json()}
+  async function json(url,{fresh=false}={}){
+    const loader=window.MorimensDtideDataLoader;
+    if(loader?.loadJson)return loader.loadJson(url,{revision:dataVersion,fresh});
+    const r=await fetch(versioned(url),{cache:fresh?'no-store':'force-cache'});
+    if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);
+    return r.json();
+  }
   async function loadGearCatalog(){
     try{const [wheels,relics,assets]=await Promise.all([json('data/morimens/skeydb/public-v3/indexes/search-wheels.json'),json('data/morimens/skeydb/public-v3/indexes/search-relics.json'),json('data/morimens/skeydb/public-v3/indexes/assets.json')]);for(const row of [...(wheels.records||[]),...(relics.records||[])]){const assetId=assets.entities?.[row.id]?.icon,asset=assets.assets?.[assetId],file=asset?.assetId?`${asset.assetId}.webp`:'';for(const name of [row.name,...(row.aliases||[])])if(name)gearByName.set(String(name).replace(/^"|"$/g,''),{file,kind:row.kind})}}catch(e){console.warn('gear catalog unavailable',e)}
   }
   async function dataset(url){
-    const index=await json(url);
-    if(index.format==='gzip-base64-chunked-v1'){
-      const texts=await Promise.all(index.chunks.map(jsonText));
-      const parts=texts.map(text=>{const encoded=text.replace(/[^A-Za-z0-9+/=_-]/g,'').replace(/-/g,'+').replace(/_/g,'/'),padded=encoded+'='.repeat((4-encoded.length%4)%4),bin=atob(padded),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return bytes});
-      const bytes=new Uint8Array(parts.reduce((sum,part)=>sum+part.length,0));let offset=0;for(const part of parts){bytes.set(part,offset);offset+=part.length}
-      const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-      const decoded=JSON.parse(await new Response(stream).text());
-      return {...index,records:decoded.records||[]};
-    }
-    if(!Array.isArray(index.chunks))return index;
-    const chunks=await Promise.all(index.chunks.map(json));return {...index,records:chunks.flatMap(x=>x.records||[])};
+    const loader=window.MorimensDtideDataLoader;
+    if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
+    return loader.loadDataset(url);
   }
-  async function jsonText(url){const r=await fetch(versioned(url),{cache:'force-cache'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.text()}
   function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankByUid.get(String(record.uid)),normalized=Number.isFinite(rank)?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
   async function loadRankMap(id){rankByUid=new Map();try{const r=await fetch(versioned(`data/morimens/eremora/rank-index/${id}.json`),{cache:'force-cache'});if(!r.ok)return;const raw=(await r.text()).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,' '),doc=JSON.parse(raw);for(const x of doc.rows||[])if(x?.uid!=null&&Number.isFinite(Number(x.rank)))rankByUid.set(String(x.uid),Number(x.rank))}catch(e){console.warn('rank index unavailable',id,e)}}
   function scopedRows({cap=Number($('dtideRankScope')?.value||50),difficulty=$('dtideDifficulty')?.value||'all',wave='all',clearType=$('dtideClearType')?.value||'all',scoreMin=Number($('dtideTotalScore')?.value||0)}={}){
@@ -187,14 +184,14 @@
       activeSeason=Number(id);
       const previousEntry=(manifest.availableSeasons||[]).filter(x=>Number(x.seasonId)<activeSeason).sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))[0]||null;
       previousSeasonId=previousEntry?Number(previousEntry.seasonId):null;previousUsage=null;previousDetailUsage=null;
-      if(previousEntry){previousUsage=await json(previousEntry.path).catch(()=>null);previousDetailUsage=previousUsage}
+      if(previousEntry){previousUsage=await dataset(previousEntry.path).catch(()=>null);previousDetailUsage=previousUsage}
       renderAll();return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
   }
   function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode','dtideSort','dtideCreationFilter'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;requestAnimationFrame(renderMatrix)});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});bound=true}
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
-    try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-cache'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
+    try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
       const note=$('dtideCoverageNote');if(note)note.insertAdjacentHTML('beforeend',` <strong>Top1000 出场率层：</strong>当前使用增量缓存 ${esc(String(manifest.usageIndex.recordCount||usage.recordCount||0))}/${esc(String(manifest.usageIndex.target||1000))} 名公开榜单玩家。`);
     }
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
