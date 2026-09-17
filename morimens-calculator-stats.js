@@ -40,7 +40,7 @@
       if(anchor){box=document.createElement('div');box.id='skeydbProgressSync';box.className='desc';box.style.marginTop='9px';anchor.insertAdjacentElement('afterend',box)}
     }
     if(box){
-      const level=Math.max(1,Math.min(90,Number($('skeydbCharacterLevel')?.value)||90));
+      const level=Math.max(1,Math.min(90,Number(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90));
       const atk=Math.floor(num(rec.baseStatsLv1?.ATK)+num(rec.statScaling?.ATK)*(level-1)+1e-7);
       const parts=[
         `${localizedName(rec)} · ${rec.id}`,
@@ -68,7 +68,7 @@
       setTimeout(updateCharacterStats,80);
     },true);
     $('charSelect')?.addEventListener('change',()=>setTimeout(updateCharacterStats,80));
-    $('skeydbCharacterLevel')?.addEventListener('input',()=>setTimeout(updateCharacterStats,20));
+    const level=$('charLevel')||$('skeydbCharacterLevel');level?.addEventListener('input',()=>setTimeout(updateCharacterStats,20));level?.addEventListener('change',()=>setTimeout(updateCharacterStats,20));
   }
 
   function boot(){
