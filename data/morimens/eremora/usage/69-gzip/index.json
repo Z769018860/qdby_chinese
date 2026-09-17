@@ -1,0 +1,405 @@
+{
+  "source": {
+    "site": "Eremora",
+    "rankIndex": "data/morimens/eremora/rank-index/69.json",
+    "detailTransport": "public challenge pages via Jina Reader",
+    "syncedAt": "2026-09-17T00:57:18.916Z"
+  },
+  "seasonId": 69,
+  "target": 1000,
+  "rankIndexCount": 1000,
+  "recordCount": 651,
+  "coverage": {
+    "expected": 1000,
+    "covered": 651,
+    "coveragePct": 65.1,
+    "complete": false
+  },
+  "refresh": {
+    "historical": false,
+    "requested": 349,
+    "completed": 72,
+    "failed": 72,
+    "staleDays": 7
+  },
+  "failures": [
+    {
+      "rank": 109,
+      "uid": "100373130",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 116,
+      "uid": "100251741",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 127,
+      "uid": "100028732",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 137,
+      "uid": "100490375",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 139,
+      "uid": "100833631",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 141,
+      "uid": "100962319",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 147,
+      "uid": "100794335",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 149,
+      "uid": "101218049",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 154,
+      "uid": "100647774",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 155,
+      "uid": "100207851",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 194,
+      "uid": "100198260",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 196,
+      "uid": "101160582",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 204,
+      "uid": "100033478",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 213,
+      "uid": "100930016",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 217,
+      "uid": "100551971",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 221,
+      "uid": "101215288",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 227,
+      "uid": "101100385",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 231,
+      "uid": "100632914",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 239,
+      "uid": "100791382",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 270,
+      "uid": "101118138",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 272,
+      "uid": "101316115",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 276,
+      "uid": "100038490",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 285,
+      "uid": "100828028",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 298,
+      "uid": "101179423",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 311,
+      "uid": "100540706",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 312,
+      "uid": "101886244",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 323,
+      "uid": "100660672",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 337,
+      "uid": "100555078",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 345,
+      "uid": "100700212",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 376,
+      "uid": "101127653",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 398,
+      "uid": "100981349",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 406,
+      "uid": "100996946",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 428,
+      "uid": "100984270",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 454,
+      "uid": "101077574",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 464,
+      "uid": "101393465",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 474,
+      "uid": "100936437",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 503,
+      "uid": "100805095",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 510,
+      "uid": "101151719",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 519,
+      "uid": "100410259",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 527,
+      "uid": "101621246",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 529,
+      "uid": "101269917",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 550,
+      "uid": "100444743",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 566,
+      "uid": "100659716",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 570,
+      "uid": "101251325",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 576,
+      "uid": "100988963",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 577,
+      "uid": "100428806",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 579,
+      "uid": "101983392",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 594,
+      "uid": "100567328",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 596,
+      "uid": "100541677",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 608,
+      "uid": "101748859",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 628,
+      "uid": "100267140",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 630,
+      "uid": "102108986",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 641,
+      "uid": "101717698",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 665,
+      "uid": "101051341",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 680,
+      "uid": "101079995",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 687,
+      "uid": "100669642",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 695,
+      "uid": "100597171",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 709,
+      "uid": "101898357",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 710,
+      "uid": "101966091",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 711,
+      "uid": "101344937",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 712,
+      "uid": "102193485",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 713,
+      "uid": "100406920",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 714,
+      "uid": "101746870",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 715,
+      "uid": "100684325",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 716,
+      "uid": "101214104",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 717,
+      "uid": "101137127",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 718,
+      "uid": "101621350",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 719,
+      "uid": "102128115",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 720,
+      "uid": "100403188",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 721,
+      "uid": "102029959",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 722,
+      "uid": "101710360",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    },
+    {
+      "rank": 723,
+      "uid": "101898700",
+      "error": "Error: direct: direct __data HTTP 403; reader: season mismatch: wanted 69, page=0"
+    }
+  ],
+  "progress": {
+    "completed": 72,
+    "target": 349,
+    "updatedAt": "2026-09-17T00:57:18.917Z"
+  },
+  "format": "gzip-base64-chunked-v1",
+  "compressedBytes": 582431,
+  "chunkBytes": 80000,
+  "chunks": [
+    "data/morimens/eremora/usage/69-gzip/001.b64",
+    "data/morimens/eremora/usage/69-gzip/002.b64",
+    "data/morimens/eremora/usage/69-gzip/003.b64",
+    "data/morimens/eremora/usage/69-gzip/004.b64",
+    "data/morimens/eremora/usage/69-gzip/005.b64",
+    "data/morimens/eremora/usage/69-gzip/006.b64",
+    "data/morimens/eremora/usage/69-gzip/007.b64",
+    "data/morimens/eremora/usage/69-gzip/008.b64"
+  ]
+}
