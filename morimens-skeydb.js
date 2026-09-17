@@ -2,7 +2,8 @@
   const DATA_URL='data/morimens/skeydb/awakeners.json';
   const ZH_URL='data/morimens/huiji/zh-CN.json';
   const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json';
-  let db=null,zhDb=null,identityDb=null,current=null,quoteIndex=0;
+  const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json';
+  let db=null,zhDb=null,identityDb=null,wheelZhDb=null,current=null,quoteIndex=0;
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const todayKey=()=>new Date().toLocaleDateString('sv-SE');
@@ -56,6 +57,15 @@
     if(isZh())return {name:zh?.name||rec.name,rarity:zh?.profile?.rarity||rec.rarity,realm:zh?.profile?.realm||realms[rec.realm]||rec.realm,type:zh?.profile?.type||types[rec.type]||rec.type,faction:zh?.profile?.faction||rec.faction,birthday:zh?.profile?.birthday||rec.profile?.birthday,voiceActor:zh?.profile?.voiceActor||rec.profile?.voiceActor};
     return {name:rec.name,rarity:rec.rarity,realm:rec.realm,type:rec.type,faction:rec.faction,birthday:rec.profile?.birthday,voiceActor:rec.profile?.voiceActor};
   }
+  function localizedEntity(kind,item){
+    if(!item)return {name:''};
+    if(kind==='awakener')return {...item,...localizedProfile(item),englishName:item.name};
+    if(kind==='wheel'){
+      const raw=String(item.name||item.englishName||item.label||''),row=wheelZhDb?.bySkeydbId?.[item.id]||wheelZhDb?.byEnglishName?.[raw]||wheelZhDb?.records?.find(x=>normalize(x.englishName)===normalize(raw));
+      return {...item,name:isZh()?(row?.name||raw):(row?.englishName||raw),englishName:row?.englishName||raw,zhName:row?.name||null,localizationId:row?.skeydbId||null};
+    }
+    return {...item,name:String(item.name||item.label||item.id||'')};
+  }
   function renderQuote(rec){
     const q=allQuotes(rec),box=$('fortuneQuote');if(!box)return;
     if(!q.length){box.textContent=isZh()?'该角色的中文语音快照尚未同步；不会再用其他角色或英文台词替代。':'No synchronized voice line is available for this character.';return}
@@ -87,11 +97,12 @@
   async function boot(){
     ensureUi();
     try{
-      const [enResult,zhResult,idResult]=await Promise.allSettled([getJson(DATA_URL,'SKeyDB'),getJson(ZH_URL,'Huiji'),getJson(IDENTITY_URL,'identity')]);
+      const [enResult,zhResult,idResult,wheelZhResult]=await Promise.allSettled([getJson(DATA_URL,'SKeyDB'),getJson(ZH_URL,'Huiji'),getJson(IDENTITY_URL,'identity'),getJson(WHEEL_ZH_URL,'wheel identity')]);
       if(enResult.status!=='fulfilled')throw enResult.reason;db=enResult.value;
       if(idResult.status==='fulfilled'){identityDb=idResult.value;identityDb.bySkeydbId=Object.fromEntries((identityDb.records||[]).map(x=>[x.skeydbId,x]))}else console.warn('Chinese identity map unavailable',idResult.reason);
       if(zhResult.status==='fulfilled'&&zhResult.value&&typeof zhResult.value==='object')zhDb=zhResult.value;else console.warn('Chinese Huiji snapshot unavailable',zhResult.reason);
-      window.MorimensData={db,zhDb,identityDb,language,zhFor,localizedProfile,assetFor};
+      if(wheelZhResult.status==='fulfilled')wheelZhDb=wheelZhResult.value;else console.warn('Chinese wheel identity map unavailable',wheelZhResult.reason);
+      window.MorimensData={db,zhDb,identityDb,wheelZhDb,language,zhFor,localizedProfile,localizedEntity,assetFor};
       const fortune=$('fortuneBtn'),reroll=$('rerollBtn');
       if(fortune)fortune.addEventListener('click',e=>{e.stopImmediatePropagation();renderToday()},{capture:true});
       if(reroll)reroll.addEventListener('click',e=>{e.stopImmediatePropagation();renderRandom()},{capture:true});
