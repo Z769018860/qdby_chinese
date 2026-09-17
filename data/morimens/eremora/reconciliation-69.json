@@ -1,0 +1,28 @@
+"generatedAt": "2026-09-17",
+  "seasonId": 69,
+  "rankIndexUniqueUids": 1000,
+  "structuredUniqueUids": 651,
+  "rankAndStructuredIntersection": 651,
+  "missingDetailUidCount": 349,
+  "rawStructuredRecordCount": 651,
+  "rawAddedUniqueUidCount": 0,
+  "rawFileCount": 1000,
+  "rawParsedUserCount": 475,
+  "rawFailedUserCount": 525,
+  "rawBlocked403Count": 482,
+  "rawNon403FailureCount": 43,
+  "retryRun": {
+    "historical": false,
+    "requested": 349,
+    "completed": 24,
+    "failed": 24,
+    "staleDays": 7
+  },
+  "conclusion": "当前合并后的结构化用户详情仍为651个唯一UID；349个榜单UID尚未补入。",
+  "nextPlan": [
+    "优先从本地raw归档按UID导入并去重，避免再次访问Eremora。",
+    "将失败记录按403限流、无赛季数据、解析失败、赛季不匹配分类。",
+    "对仍缺失UID使用获得授权的浏览器导出或官方接口，低并发、指数退避、断点写入。",
+    "每批完成后重建统计，直到结构化UID与榜单UID均为1000。"
+  ]
+}
