@@ -44,13 +44,27 @@
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
   function damageCoefficient(skill,level){const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)}
   function maxSkillLevel(skill){let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
+  const characterLevelControl=()=>$('charLevel')||$('skeydbCharacterLevel');
+  function fillZeroToFive(select,label){
+    if(!select)return;const previous=Math.min(5,Math.max(0,Number(select.value)||0));select.innerHTML='';
+    for(let i=0;i<=5;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`${i} · ${i===0?'未启用':label+' '+i}`;option.selected=i===previous;select.appendChild(option)}
+  }
+  function normalizeProgressionControls(){
+    const legacy=$('charLevel'),duplicate=$('skeydbCharacterLevel');
+    if(legacy&&duplicate&&legacy!==duplicate)duplicate.closest('.field')?.remove();
+    const level=characterLevelControl();
+    if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`Lv.${i}`;option.selected=i===previous;level.appendChild(option)}}
+    fillZeroToFive($('innerSpirit'),'内在灵格');
+    if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>灵塑阶段 0–5；当前仅记录阶段，不在缺少明确数值时推测加成。</small>';inner.insertAdjacentElement('afterend',wrap)}}
+    fillZeroToFive($('characterSculpt'),'灵塑');
+  }
 
   function ensureCharacterLevel(){
-    if($('skeydbCharacterLevel'))return;
-    const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;
-    const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="skeydbCharacterLevel">角色等级 / Character Lv.</label><input id="skeydbCharacterLevel" type="number" min="1" max="90" step="1" value="90"><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';
-    anchor.parentNode.insertBefore(wrap,anchor.nextSibling);
-    $('skeydbCharacterLevel').addEventListener('input',()=>{if(currentAwakener){$('attack').dataset.autoAttack='1';applyCharacterStats()}},{capture:true});
+    if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级 / Character Lv.</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
+    normalizeProgressionControls();
+    const level=characterLevelControl(),sync=()=>{if(currentAwakener){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
+    level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
+    for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();$('calcBtn')?.click()},{capture:true});
     $('attack')?.addEventListener('input',()=>{if(!applyingAuto)$('attack').dataset.autoAttack='0'});
   }
   function ensureSecondWheelUi(){
@@ -76,7 +90,7 @@
     for(const rec of db.records){const opt=document.createElement('option');opt.dataset.awakenerId=rec.id;opt.value=rec.id;opt.textContent=labelForAwakener(rec);opt.selected=rec.id===previous;select.appendChild(opt)}
   }
   function applyCharacterStats(){
-    if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number($('skeydbCharacterLevel')?.value)||90));
+    if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number(characterLevelControl()?.value)||90));
     const base=num(currentAwakener.baseStatsLv1?.ATK),growth=num(currentAwakener.statScaling?.ATK);const atk=Math.floor(base+growth*(level-1)+1e-7);
     const input=$('attack');if(input&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(atk);input.dataset.autoAttack='1';applyingAuto=false}
     const cr=num(currentAwakener.substatsLv1?.CritRate),cd=num(currentAwakener.substatsLv1?.CritDamage);
@@ -86,6 +100,7 @@
   }
   async function loadAwakener(){
     const id=selectedAwakenerId(),rec=recordById(id);if(!rec)return;currentAwakener=rec;
+    normalizeProgressionControls();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(rec)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
     applyCharacterStats();
@@ -190,7 +205,7 @@
 
   async function boot(){
     ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
-    try{await loadCatalogs();await loadAwakener();window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
+    try{await loadCatalogs();await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
   }
   if(window.MorimensData?.db&&window.MorimensRepository)boot();else window.addEventListener('morimens-data-ready',boot,{once:true});
 })();
