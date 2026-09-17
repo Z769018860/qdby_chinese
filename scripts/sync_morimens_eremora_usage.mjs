@@ -62,7 +62,7 @@ function parseUsagePage(md,row,seasonId,byIngame){
   return {rank:row.rank,uid:String(row.uid),player:title||row.name||'',score:row.score,currentScore,leaderboardScore,dzoneSeason:seasonId,url:`${ORIGIN}/u/${row.uid}/challenges/dzone/${seasonId}`,rankFingerprint:fingerprint(row),fetchedAt:new Date().toISOString(),waves};
 }
 function add(map,key,meta={}){if(key==null||key==='')return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
-function flatten(records=[]){const rows=[];for(const r of records)for(const w of r.waves||[])for(const t of w.teams||[])rows.push({record:r,wave:w,team:t,difficulty:t.difficulty||w.difficulty||'unknown'});return rows}
+function flatten(records=[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records)for(const wave of record.waves||[])for(const team of wave.teams||[]){const difficulty=team.difficulty||wave.difficulty||'unknown',members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[record.uid||record.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}return [...unique.values()]}
 function usage(rows=[]){
   const chars=new Map(),tokens=new Map(),enlight=new Map();let memberSlots=0;
   for(const {team} of rows){const seen=new Set();add(tokens,team.token?.name,{name:team.token?.name});for(const m of team.members||[]){memberSlots++;const k=m.skeydbId||m.ingameId||m.name;if(k&&!seen.has(String(k))){seen.add(String(k));add(chars,k,{id:m.skeydbId||null,ingameId:m.ingameId||null,name:m.canonicalName||m.name,image:m.image||null})}add(enlight,m.enlightTier||enlightTier(m.progression),{name:ENLIGHT_ZH[m.enlightTier||enlightTier(m.progression)]})}}
@@ -123,4 +123,3 @@ async function syncSeason(seasonId){
 }
 const results=[];for(const seasonId of seasonIds)results.push(await syncSeason(seasonId));
 console.log('Eremora multi-season incremental sync complete:',JSON.stringify(results));
-
