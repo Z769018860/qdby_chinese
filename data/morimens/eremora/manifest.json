@@ -11,8 +11,8 @@
     {
       "seasonId": 69,
       "period": "2026-09-14 – 2026-09-28",
-      "recordCount": 38,
-      "leaderboardEntryCount": 38,
+      "recordCount": 910,
+      "leaderboardEntryCount": 1000,
       "complete": false,
       "coverageMode": "current-leaderboard",
       "path": "data/morimens/eremora/seasons/69.json",
@@ -21,42 +21,62 @@
     {
       "seasonId": 68,
       "period": "2026-08-31 – 2026-09-14",
-      "recordCount": 33,
+      "recordCount": 902,
       "leaderboardEntryCount": null,
       "complete": false,
       "coverageMode": "profile-history-partial",
-      "path": "data/morimens/eremora/seasons/68.json",
+      "path": "data/morimens/eremora/usage/68-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/68.json"
     },
     {
       "seasonId": 67,
       "period": "2026-08-17 – 2026-08-31",
-      "recordCount": 28,
+      "recordCount": 243,
       "leaderboardEntryCount": null,
       "complete": false,
       "coverageMode": "profile-history-partial",
-      "path": "data/morimens/eremora/seasons/67.json",
+      "path": "data/morimens/eremora/usage/67-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/67.json"
     },
     {
       "seasonId": 66,
       "period": "2026-08-03 – 2026-08-17",
-      "recordCount": 28,
+      "recordCount": 247,
       "leaderboardEntryCount": null,
       "complete": false,
       "coverageMode": "profile-history-partial",
-      "path": "data/morimens/eremora/seasons/66.json",
+      "path": "data/morimens/eremora/usage/66-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/66.json"
     },
     {
       "seasonId": 65,
       "period": "2026-07-20 – 2026-08-03",
-      "recordCount": 24,
+      "recordCount": 179,
       "leaderboardEntryCount": null,
       "complete": false,
       "coverageMode": "profile-history-partial",
-      "path": "data/morimens/eremora/seasons/65.json",
+      "path": "data/morimens/eremora/usage/65-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/65.json"
+    },
+    {
+      "seasonId": 64,
+      "period": "2026-07-06 – 2026-07-20",
+      "recordCount": 1,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
+      "path": "data/morimens/eremora/usage/64-local-gzip/index.json",
+      "statsPath": "data/morimens/eremora/stats/64.json"
+    },
+    {
+      "seasonId": 63,
+      "period": "2026-06-22 – 2026-07-06",
+      "recordCount": 2,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
+      "path": "data/morimens/eremora/usage/63-local-gzip/index.json",
+      "statsPath": "data/morimens/eremora/stats/63.json"
     }
   ],
   "discoveredSeasonIds": [
@@ -64,18 +84,22 @@
     68,
     67,
     66,
-    65
+    65,
+    64,
+    63
   ],
   "pendingBackfillSeasonIds": [
     69,
     68,
     67,
     66,
-    65
+    65,
+    64,
+    63
   ],
   "current": {
-    "leaderboardEntries": 38,
-    "records": 38,
+    "leaderboardEntries": 1000,
+    "records": 910,
     "complete": false,
     "failures": 5
   },
@@ -230,7 +254,7 @@
   },
   "usageIndex": {
     "seasonId": 69,
-    "path": "data/morimens/eremora/usage/69-local-gzip-v2/index.json",
+    "path": "data/morimens/eremora/usage/69-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/69.json",
     "target": 1000,
     "rankIndexCount": 1000,
@@ -241,10 +265,10 @@
       "coveragePct": 91,
       "complete": false
     },
-    "syncedAt": "2026-09-18T12:00:00.000Z",
+    "syncedAt": "2026-09-17T21:59:21.165Z",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 30,
-    "chunkSize": 350000,
+    "chunks": 12,
+    "chunkSize": 900000,
     "chunkBytes": 10482653
   },
   "rawTop1000Import": {
@@ -257,3 +281,4 @@
     "updatedBy": "scripts/process_morimens_raw1000.py"
   }
 }
+
