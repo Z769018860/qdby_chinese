@@ -93,13 +93,13 @@
     "当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。",
     "命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。",
     "历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。",
-    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
-    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
     "榜单索引：Eremora 客户端“Show more”实际调用 /api/rank?board=abyss&start={start}&end={end}，本站按 50 条一页同步至 Top 1000；若 1–50 接口被 Cloudflare 拦截则回退同次渲染榜单快照，仅缺失名次为 0 时标记完整。",
-    "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。"
+    "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。",
+    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
+    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-09-16T21:46:45.367Z",
+    "generatedAt": "2026-09-17T01:01:26.015Z",
     "rankScopes": [
       50,
       200,
