@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260918.10";
+  const assetVersion="20260918.11";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
@@ -53,6 +53,7 @@ setupMorimensMascotToggle();
       if(!r.ok) throw new Error(`${u}: HTTP ${r.status}`);
       return (await r.text()).replace(/\s+/g,"");
     }));
+    await import(`./morimens-dtide-loader.js?v=${assetVersion}`);
     await import(`./morimens-dtide.js?v=${assetVersion}`);
     await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
     const parts=await legacyParts;
