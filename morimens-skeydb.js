@@ -2,7 +2,7 @@
   const DATA_URL='data/morimens/skeydb/awakeners.json';
   const ZH_URL='data/morimens/huiji/zh-CN.json';
   const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json';
-  const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json';
+  const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json?v=20260918.35';
   const USAGE_MANIFEST_URL='data/morimens/eremora/manifest.json';
   let db=null,zhDb=null,identityDb=null,wheelZhDb=null,wheelCatalog=[],wheelAssets=null,usageStats=null,current=null,quoteIndex=0;
   const $=id=>document.getElementById(id);
@@ -74,9 +74,14 @@
     const pool=owned.length?owned:(realm.length?realm:wheelCatalog);
     return pool[hash(`${todayKey()}-${rec.id}-wheel`)%pool.length];
   }
+  function canonicalWheel(wheel){
+    if(!wheel)return null;
+    const zh=wheelZhDb?.bySkeydbId?.[wheel.id],assetKey=wheel.assets?.icon,asset=assetKey&&wheelAssets?.assets?.[assetKey];
+    if(zh?.skeydbId!==wheel.id||asset?.ownerId!==wheel.id){console.warn('Rejected unbound wheel metadata',wheel.id,zh?.skeydbId,asset?.ownerId);return null}
+    return {...wheel,displayName:isZh()?zh.name:(zh.englishName||wheel.name),englishName:zh.englishName||wheel.name,assetId:asset.assetId};
+  }
   function wheelArtFor(wheel){
-    const key=wheel?.assets?.icon,entry=key&&wheelAssets?.assets?.[key],assetId=entry?.assetId;
-    return assetId?`assets/morimens/wheels/${assetId}.webp?v=${assetVersion()}`:'';
+    return wheel?.assetId?`assets/morimens/wheels/${wheel.assetId}.webp?v=${assetVersion()}`:'';
   }
   function usageFor(rec){
     const rows=usageStats?.characters||[],target=normalize(rec?.name),index=rows.findIndex(row=>normalize(row.name)===target||(rec?.aliases||[]).some(alias=>normalize(alias)===normalize(row.name)));
@@ -98,7 +103,7 @@
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
     const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=localSlugFor(rec);portrait.alt=`${loc.name} ${isZh()?'完整角色立绘':'full character illustration'}`;portrait.onerror=()=>{portrait.hidden=true}}
     const realmBadge=$('fortuneRealmBadge'),realmIcon=$('fortuneRealmIcon'),realmName=$('fortuneRealmName'),realmKey=Object.keys(realms).find(key=>String(rec.realm||'').toUpperCase()===key)||Object.keys(realms).find(key=>realms[key]===loc.realm);if(realmBadge&&realmIcon&&realmName&&realmKey){realmIcon.hidden=false;realmIcon.src=`assets/morimens/realms-svg/Icon_Career2_${realmIcons[realmKey]}.svg`;realmIcon.alt=`${loc.realm}界域`;realmName.textContent=loc.realm;realmBadge.hidden=false;realmIcon.onerror=()=>{realmIcon.hidden=true;let fallback=realmBadge.querySelector('.fortuneRealmFallback');if(!fallback){fallback=document.createElement('span');fallback.className='fortuneRealmFallback';realmBadge.insertBefore(fallback,realmName)}fallback.textContent=realmMarks[realmKey]||'域';fallback.title=`${loc.realm}界域`}}else if(realmBadge)realmBadge.hidden=true;
-    const wheel=wheelFor(rec),wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel'),wheelArt=wheelArtFor(wheel);const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=wheelArt;wheelImage.hidden=!wheelArt;wheelImage.dataset.wheelId=wheel?.id||'';wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
+    const wheel=canonicalWheel(wheelFor(rec)),wheelName=wheel?.displayName||(isZh()?'命轮数据校验失败':'Wheel data unavailable'),wheelArt=wheelArtFor(wheel);const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=wheelArt;wheelImage.hidden=!wheelArt;wheelImage.dataset.wheelId=wheel?.id||'';wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}const mascot=$('morimensMascot');if(mascot){mascot.alt=loc.name;mascot.title=loc.name}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
