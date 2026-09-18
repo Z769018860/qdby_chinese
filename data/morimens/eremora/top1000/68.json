@@ -1,0 +1,9009 @@
+{
+  "seasonId": 68,
+  "rankIndexCount": 1000,
+  "parsedUserCount": 1000,
+  "failedUserCount": 0,
+  "source": "dzone-season-83308-top1000-slim.json(4).gz",
+  "users": [
+    {
+      "uid": "100068321",
+      "rank": 1,
+      "player": "轻钢QAQ",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100759759",
+      "rank": 2,
+      "player": "轻钰QAQ",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100167859",
+      "rank": 3,
+      "player": "金发女人I型",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100034764",
+      "rank": 4,
+      "player": "茉莉奶柏",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100239011",
+      "rank": 5,
+      "player": "温朵二人转",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100069034",
+      "rank": 6,
+      "player": "萨摩不耶",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100023693",
+      "rank": 7,
+      "player": "狮子原爽",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100807061",
+      "rank": 8,
+      "player": "WhaleLeap",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100424295",
+      "rank": 9,
+      "player": "A9zz",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100074390",
+      "rank": 10,
+      "player": "leah1",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100750934",
+      "rank": 11,
+      "player": "错误",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100716237",
+      "rank": 12,
+      "player": "Uxia",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100537613",
+      "rank": 13,
+      "player": "画南鸢",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100271975",
+      "rank": 14,
+      "player": "璃亓",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100164401",
+      "rank": 15,
+      "player": "西维斯特",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100714760",
+      "rank": 16,
+      "player": "轻珏AQA",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100106464",
+      "rank": 17,
+      "player": "可爱",
+      "score": 525,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100997496",
+      "rank": 18,
+      "player": "Mumei",
+      "score": 520,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101184755",
+      "rank": 19,
+      "player": "Anicillia",
+      "score": 520,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100183070",
+      "rank": 20,
+      "player": "A鸭批mikel852",
+      "score": 520,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100564628",
+      "rank": 21,
+      "player": "明枝欢",
+      "score": 520,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100616389",
+      "rank": 22,
+      "player": "诗中少女",
+      "score": 515,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100284474",
+      "rank": 23,
+      "player": "<#DCCS>安抚物",
+      "score": 515,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100202375",
+      "rank": 24,
+      "player": "YANA",
+      "score": 515,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101143204",
+      "rank": 25,
+      "player": "Angbak",
+      "score": 515,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101019782",
+      "rank": 26,
+      "player": "Shenhua",
+      "score": 515,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100411119",
+      "rank": 27,
+      "player": "奥安安",
+      "score": 515,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100201387",
+      "rank": 28,
+      "player": "John",
+      "score": 510,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100559441",
+      "rank": 29,
+      "player": "dlshan",
+      "score": 510,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100001171",
+      "rank": 30,
+      "player": "落尘书生",
+      "score": 510,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100848374",
+      "rank": 31,
+      "player": "Iceza",
+      "score": 505,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101499787",
+      "rank": 32,
+      "player": "龍肆",
+      "score": 505,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100279093",
+      "rank": 33,
+      "player": "‎",
+      "score": 505,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101073278",
+      "rank": 34,
+      "player": "Rukia",
+      "score": 505,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100000703",
+      "rank": 35,
+      "player": "黄金女皇",
+      "score": 505,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101051873",
+      "rank": 36,
+      "player": "梅贝尔",
+      "score": 505,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101253891",
+      "rank": 37,
+      "player": "萨摩开播了",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100981868",
+      "rank": 38,
+      "player": "myls",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100018361",
+      "rank": 39,
+      "player": "瑪爾",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100830349",
+      "rank": 40,
+      "player": "Flares",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100650203",
+      "rank": 41,
+      "player": "Sylvester",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101129857",
+      "rank": 42,
+      "player": "龢利长眠于此",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100779621",
+      "rank": 43,
+      "player": "雅",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100103475",
+      "rank": 44,
+      "player": "洛水",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100810864",
+      "rank": 45,
+      "player": "OnE",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100429960",
+      "rank": 46,
+      "player": "逹芙黛爾",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100088782",
+      "rank": 47,
+      "player": "维C斯特",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100300379",
+      "rank": 48,
+      "player": "bian",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100588516",
+      "rank": 49,
+      "player": "达达尼昂",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101404812",
+      "rank": 50,
+      "player": "晴海千花",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101079194",
+      "rank": 51,
+      "player": "Stravaig",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101725009",
+      "rank": 52,
+      "player": "猪一只喵",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101046572",
+      "rank": 53,
+      "player": "雾羽织影",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100603505",
+      "rank": 54,
+      "player": "再也不播。。。",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100396568",
+      "rank": 55,
+      "player": "索洛维茨",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100377370",
+      "rank": 56,
+      "player": "Bari",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100386165",
+      "rank": 57,
+      "player": "荼蘼",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100037260",
+      "rank": 58,
+      "player": "Nikke戰神Iv",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100102966",
+      "rank": 59,
+      "player": "千寻",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100655478",
+      "rank": 60,
+      "player": "麻木似水",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101185426",
+      "rank": 61,
+      "player": "冥心",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101925094",
+      "rank": 62,
+      "player": "棺人痴",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100764697",
+      "rank": 63,
+      "player": "02",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101182528",
+      "rank": 64,
+      "player": "Helleios",
+      "score": 500,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100082465",
+      "rank": 65,
+      "player": "传说之下",
+      "score": 495,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101094633",
+      "rank": 66,
+      "player": "Slash",
+      "score": 495,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100584615",
+      "rank": 67,
+      "player": "和成天下",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100597447",
+      "rank": 68,
+      "player": "NeNemoNe",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100731273",
+      "rank": 69,
+      "player": "Bepis",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100787681",
+      "rank": 70,
+      "player": "루니안",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101356671",
+      "rank": 71,
+      "player": "非偌",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100021999",
+      "rank": 72,
+      "player": "瀧Taki",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101330727",
+      "rank": 73,
+      "player": "苍姝姀",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101096882",
+      "rank": 74,
+      "player": "я'аргул",
+      "score": 490,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101094561",
+      "rank": 75,
+      "player": "Spooky",
+      "score": 485,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100480397",
+      "rank": 76,
+      "player": "田伯光开发廊",
+      "score": 485,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100012472",
+      "rank": 77,
+      "player": "明昭晞",
+      "score": 485,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100569561",
+      "rank": 78,
+      "player": "弥海鲨",
+      "score": 485,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101022365",
+      "rank": 79,
+      "player": "Exo",
+      "score": 485,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101052569",
+      "rank": 80,
+      "player": "Amirganj",
+      "score": 485,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101278486",
+      "rank": 81,
+      "player": "Coliner",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100695550",
+      "rank": 82,
+      "player": "艾瑞卡？",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100440131",
+      "rank": 83,
+      "player": "岛屿的奇幻漂流",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100589592",
+      "rank": 84,
+      "player": "心境",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100372533",
+      "rank": 85,
+      "player": "西維斯特",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101050645",
+      "rank": 86,
+      "player": "邮宝得鉴",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100886362",
+      "rank": 87,
+      "player": "绿绿绿箩",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101525961",
+      "rank": 88,
+      "player": "Painke",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101012262",
+      "rank": 89,
+      "player": "Sinclair",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100794539",
+      "rank": 90,
+      "player": "白酒兰华",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100028052",
+      "rank": 91,
+      "player": "SoLiz",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100522703",
+      "rank": 92,
+      "player": "迷路的Pika",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100679383",
+      "rank": 93,
+      "player": "雪亭",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100004053",
+      "rank": 94,
+      "player": "Tapiru",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100831543",
+      "rank": 95,
+      "player": "吃瓜小海",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101079783",
+      "rank": 96,
+      "player": "月华往来",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101097358",
+      "rank": 97,
+      "player": "LuffyOMG",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100104278",
+      "rank": 98,
+      "player": "Potatis土豆",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101165253",
+      "rank": 99,
+      "player": "Chie",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100748055",
+      "rank": 100,
+      "player": "Ninsiana",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101345676",
+      "rank": 101,
+      "player": "不知尘世",
+      "score": 480,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100673301",
+      "rank": 102,
+      "player": "护林",
+      "score": 475,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100625068",
+      "rank": 103,
+      "player": "ぽん（接代打）",
+      "score": 475,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100586325",
+      "rank": 104,
+      "player": "Reficul",
+      "score": 475,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100757358",
+      "rank": 105,
+      "player": "云高火落",
+      "score": 475,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100020854",
+      "rank": 106,
+      "player": "雾汐Mistide",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101033866",
+      "rank": 107,
+      "player": "헌원빈",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100132555",
+      "rank": 108,
+      "player": "倥偬",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100514883",
+      "rank": 109,
+      "player": "Zyocuh",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100976218",
+      "rank": 110,
+      "player": "惑星",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100162235",
+      "rank": 111,
+      "player": "晚上吃鱼",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101133442",
+      "rank": 112,
+      "player": "Jocolat",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100355830",
+      "rank": 113,
+      "player": "中井和哉",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100016159",
+      "rank": 114,
+      "player": "独涯小姐姐",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100552496",
+      "rank": 115,
+      "player": "WAWA",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100482102",
+      "rank": 116,
+      "player": "tartarus",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100184916",
+      "rank": 117,
+      "player": "i娜TV",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100718021",
+      "rank": 118,
+      "player": "缪缪",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101009672",
+      "rank": 119,
+      "player": "Sylvester",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101058874",
+      "rank": 120,
+      "player": "明渊",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100962319",
+      "rank": 121,
+      "player": "PolkaRain",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100331782",
+      "rank": 122,
+      "player": "舅舅",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100228983",
+      "rank": 123,
+      "player": "维斯塔森",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101851555",
+      "rank": 124,
+      "player": "Kizuno",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100614826",
+      "rank": 125,
+      "player": "<#f8ax>小四",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100758026",
+      "rank": 126,
+      "player": "幽白",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101060567",
+      "rank": 127,
+      "player": "dar",
+      "score": 470,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100216202",
+      "rank": 128,
+      "player": "子夜微雪",
+      "score": 465,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100447821",
+      "rank": 129,
+      "player": "Eli",
+      "score": 465,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100351167",
+      "rank": 130,
+      "player": "Tokuli.Li",
+      "score": 465,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100951679",
+      "rank": 131,
+      "player": "那一片银杏",
+      "score": 465,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100411504",
+      "rank": 132,
+      "player": "艾默瑞斯",
+      "score": 465,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100729730",
+      "rank": 133,
+      "player": "Ignes",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101074259",
+      "rank": 134,
+      "player": "moonie",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101066017",
+      "rank": 135,
+      "player": "AbsK",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100723055",
+      "rank": 136,
+      "player": "0312",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100649339",
+      "rank": 137,
+      "player": "是澜阿口牙！",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100251741",
+      "rank": 138,
+      "player": "理智溶解中",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100204141",
+      "rank": 139,
+      "player": "樱木冢",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100551332",
+      "rank": 140,
+      "player": "Maykia",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100934300",
+      "rank": 141,
+      "player": "梨子、藜藿",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100223381",
+      "rank": 142,
+      "player": "尖尖",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100100801",
+      "rank": 143,
+      "player": "Nemo",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100872328",
+      "rank": 144,
+      "player": "淸淸梓燃",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100566008",
+      "rank": 145,
+      "player": "土豆",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100004215",
+      "rank": 146,
+      "player": "Rosennel",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100764725",
+      "rank": 147,
+      "player": "游世妄想",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100189939",
+      "rank": 148,
+      "player": "小安舊仔",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100664717",
+      "rank": 149,
+      "player": "Rozu",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100214259",
+      "rank": 150,
+      "player": "Kieren",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100857457",
+      "rank": 151,
+      "player": "Enjel",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100250555",
+      "rank": 152,
+      "player": "表里如一",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100725682",
+      "rank": 153,
+      "player": "봉이",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100594311",
+      "rank": 154,
+      "player": "桜丘緋夜梨",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101072749",
+      "rank": 155,
+      "player": "Ted",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100102502",
+      "rank": 156,
+      "player": "血白",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101000674",
+      "rank": 157,
+      "player": "C维斯特",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101082451",
+      "rank": 158,
+      "player": "Ester",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100811732",
+      "rank": 159,
+      "player": "艾梅菈尔德",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101160582",
+      "rank": 160,
+      "player": "Shieru",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100525405",
+      "rank": 161,
+      "player": "克伦汀",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100163026",
+      "rank": 162,
+      "player": "大城内人",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101054197",
+      "rank": 163,
+      "player": "忒伊亚",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101205245",
+      "rank": 164,
+      "player": "早起咕咕头",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100612137",
+      "rank": 165,
+      "player": "aiko",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101373736",
+      "rank": 166,
+      "player": "莉奥诺拉",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100873731",
+      "rank": 167,
+      "player": "梨奈",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101908007",
+      "rank": 168,
+      "player": "Violet",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100681504",
+      "rank": 169,
+      "player": "云华",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100829965",
+      "rank": 170,
+      "player": "TheAL",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100203562",
+      "rank": 171,
+      "player": "卿铭",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100948856",
+      "rank": 172,
+      "player": "机长sama",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100723476",
+      "rank": 173,
+      "player": "Jad",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101074574",
+      "rank": 174,
+      "player": "Sylvester",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100572419",
+      "rank": 175,
+      "player": "睡大觉.z",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100376556",
+      "rank": 176,
+      "player": "屯屯鼠",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100795037",
+      "rank": 177,
+      "player": "nina",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100883246",
+      "rank": 178,
+      "player": "Kinbote",
+      "score": 460,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100774329",
+      "rank": 179,
+      "player": "皮九",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100234071",
+      "rank": 180,
+      "player": "哦没事",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101108974",
+      "rank": 181,
+      "player": "琅琅",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100301539",
+      "rank": 182,
+      "player": "泠泠",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100594335",
+      "rank": 183,
+      "player": "彩果儿",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101877246",
+      "rank": 184,
+      "player": "宥真",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100274628",
+      "rank": 185,
+      "player": "莫莱",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100975298",
+      "rank": 186,
+      "player": "Oswald",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100471605",
+      "rank": 187,
+      "player": "久岛鸥",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101107950",
+      "rank": 188,
+      "player": "Guava",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100107819",
+      "rank": 189,
+      "player": "QiKu",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100405323",
+      "rank": 190,
+      "player": "Yoroha_NULL",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101247720",
+      "rank": 191,
+      "player": "5152722",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100842776",
+      "rank": 192,
+      "player": "我要玩深海啊啊",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100610824",
+      "rank": 193,
+      "player": "Fen",
+      "score": 455,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100424712",
+      "rank": 194,
+      "player": "摩卡小空",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101293414",
+      "rank": 195,
+      "player": "晴天雲",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101012860",
+      "rank": 196,
+      "player": "牢立誓",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100098217",
+      "rank": 197,
+      "player": "伊卡洛斯",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101006341",
+      "rank": 198,
+      "player": "泠鳶",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100630930",
+      "rank": 199,
+      "player": "柒瑾年",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100201972",
+      "rank": 200,
+      "player": "一条躺尸的咸鱼",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100560436",
+      "rank": 201,
+      "player": "秋弥",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100372270",
+      "rank": 202,
+      "player": "苏稣",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101163792",
+      "rank": 203,
+      "player": "慧音酱w",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100804972",
+      "rank": 204,
+      "player": "<#R34>Aurora",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100545082",
+      "rank": 205,
+      "player": "容嬷嬷",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100389537",
+      "rank": 206,
+      "player": "火",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100366990",
+      "rank": 207,
+      "player": "姜酒",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100794335",
+      "rank": 208,
+      "player": "37",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100607245",
+      "rank": 209,
+      "player": "夢遊",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100069133",
+      "rank": 210,
+      "player": "A奶龙批发朝朝",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100534680",
+      "rank": 211,
+      "player": "Reisen乌冬",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100127271",
+      "rank": 212,
+      "player": "天林",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100083956",
+      "rank": 213,
+      "player": "すごい!つよい!",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100722449",
+      "rank": 214,
+      "player": "幻滅",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100672636",
+      "rank": 215,
+      "player": "莱西",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100774354",
+      "rank": 216,
+      "player": "爱丽丝道格拉斯",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100373130",
+      "rank": 217,
+      "player": "卿城",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101218049",
+      "rank": 218,
+      "player": "MythagDog",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100483859",
+      "rank": 219,
+      "player": "枣儿",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100314241",
+      "rank": 220,
+      "player": "哈根校猫该达斯",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101261027",
+      "rank": 221,
+      "player": "GothGf",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100552474",
+      "rank": 222,
+      "player": "谁会赢啊",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100435061",
+      "rank": 223,
+      "player": "万象森罗",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100840985",
+      "rank": 224,
+      "player": "Reol",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100782088",
+      "rank": 225,
+      "player": "南慌慌",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100220131",
+      "rank": 226,
+      "player": "掛彩小童",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101148845",
+      "rank": 227,
+      "player": "狄法",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101080373",
+      "rank": 228,
+      "player": "Fibrinogen",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100549106",
+      "rank": 229,
+      "player": "Boooluu",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100772630",
+      "rank": 230,
+      "player": "蜘蛛大人的紡輪",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100673109",
+      "rank": 231,
+      "player": "Ryker",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101062885",
+      "rank": 232,
+      "player": "Yun",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101010217",
+      "rank": 233,
+      "player": "莉奥诺拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100545481",
+      "rank": 234,
+      "player": "胡桃",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100414382",
+      "rank": 235,
+      "player": "早春雪",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101538149",
+      "rank": 236,
+      "player": "小小娃娃",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100326670",
+      "rank": 237,
+      "player": "索菲",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100075491",
+      "rank": 238,
+      "player": "tgtg",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100461793",
+      "rank": 239,
+      "player": "燐舞曲",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100850936",
+      "rank": 240,
+      "player": "Hymn",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101329555",
+      "rank": 241,
+      "player": "Bocchi",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101106569",
+      "rank": 242,
+      "player": "Lens",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101096195",
+      "rank": 243,
+      "player": "Asator",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100355714",
+      "rank": 244,
+      "player": "百洛晓",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101780987",
+      "rank": 245,
+      "player": "由乃",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100619602",
+      "rank": 246,
+      "player": "观水观澜",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100365102",
+      "rank": 247,
+      "player": "尘埃",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100935400",
+      "rank": 248,
+      "player": "静木知秋风",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100222604",
+      "rank": 249,
+      "player": "三七",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100406384",
+      "rank": 250,
+      "player": "invincible",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100834213",
+      "rank": 251,
+      "player": "一方通行",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100632957",
+      "rank": 252,
+      "player": "盲枭",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100571498",
+      "rank": 253,
+      "player": "世界",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100242173",
+      "rank": 254,
+      "player": "威廉别似好嘛",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100454371",
+      "rank": 255,
+      "player": "无声铃鹿第一快",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100472749",
+      "rank": 256,
+      "player": "临",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100329726",
+      "rank": 257,
+      "player": "花岚",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100547388",
+      "rank": 258,
+      "player": "小涛",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100211592",
+      "rank": 259,
+      "player": "江枢衍",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100597264",
+      "rank": 260,
+      "player": "星见",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100471040",
+      "rank": 261,
+      "player": "馬鮫魚",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100554791",
+      "rank": 262,
+      "player": "薄荷味的可可",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100549335",
+      "rank": 263,
+      "player": "灰泽螨Hazel",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100473501",
+      "rank": 264,
+      "player": "甜菜",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100554748",
+      "rank": 265,
+      "player": "薇娅",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100514840",
+      "rank": 266,
+      "player": "yoyi",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101375891",
+      "rank": 267,
+      "player": "outsider",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100222720",
+      "rank": 268,
+      "player": "鸿玉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100193406",
+      "rank": 269,
+      "player": "coffin",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100415562",
+      "rank": 270,
+      "player": "客舍",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100739646",
+      "rank": 271,
+      "player": "kira",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100636024",
+      "rank": 272,
+      "player": "格尔曼斯帕罗",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101009906",
+      "rank": 273,
+      "player": "爱睡觉的觉皇",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100820697",
+      "rank": 274,
+      "player": "Челис",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100423854",
+      "rank": 275,
+      "player": "Loe",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101329030",
+      "rank": 276,
+      "player": "呃。。。",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100207442",
+      "rank": 277,
+      "player": "x.",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100620271",
+      "rank": 278,
+      "player": "成堇",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100618404",
+      "rank": 279,
+      "player": "Loading",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100668137",
+      "rank": 280,
+      "player": "AegisX",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100750661",
+      "rank": 281,
+      "player": "瓦伦 尼古拉斯",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100804183",
+      "rank": 282,
+      "player": "Rosmontis",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100033478",
+      "rank": 283,
+      "player": "400的MAN",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100800097",
+      "rank": 284,
+      "player": "东",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100335615",
+      "rank": 285,
+      "player": "莱克的鹰竟吃兔",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100544276",
+      "rank": 286,
+      "player": "阿诺德",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100562821",
+      "rank": 287,
+      "player": "阿尔兹海默症",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100032934",
+      "rank": 288,
+      "player": "黑山羊",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100566513",
+      "rank": 289,
+      "player": "心如止水",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100863376",
+      "rank": 290,
+      "player": "Rainbow",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100451254",
+      "rank": 291,
+      "player": "散华",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100017903",
+      "rank": 292,
+      "player": "翊雲飛",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101737224",
+      "rank": 293,
+      "player": "安娜贝尔",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100042906",
+      "rank": 294,
+      "player": "空心菜君",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100033105",
+      "rank": 295,
+      "player": "弗恩",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101105333",
+      "rank": 296,
+      "player": "Sophie",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101228739",
+      "rank": 297,
+      "player": "莉奥诺拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101185357",
+      "rank": 298,
+      "player": "Southpaw",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101865027",
+      "rank": 299,
+      "player": "灰烬魔女",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100753294",
+      "rank": 300,
+      "player": "Isaac",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100616275",
+      "rank": 301,
+      "player": "银锁",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101360149",
+      "rank": 302,
+      "player": "莉诺·梅亚",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100519441",
+      "rank": 303,
+      "player": "Yorshka",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100786036",
+      "rank": 304,
+      "player": "莉奥诺拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101162953",
+      "rank": 305,
+      "player": "Skaazi",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101188627",
+      "rank": 306,
+      "player": "Skynony",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100671166",
+      "rank": 307,
+      "player": "莉奧諾拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100225305",
+      "rank": 308,
+      "player": "Shunia",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100751711",
+      "rank": 309,
+      "player": "爱塞莉丝",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100544263",
+      "rank": 310,
+      "player": "早川秋泽日",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100580447",
+      "rank": 311,
+      "player": "向日葵",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100433439",
+      "rank": 312,
+      "player": "Vesstela",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101126483",
+      "rank": 313,
+      "player": "赞美太阳",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100206902",
+      "rank": 314,
+      "player": "海豹球",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100829186",
+      "rank": 315,
+      "player": "Noir",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100352259",
+      "rank": 316,
+      "player": "Tairitsu",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100643599",
+      "rank": 317,
+      "player": "Ritsuka",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100000287",
+      "rank": 318,
+      "player": "Arriba",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100828755",
+      "rank": 319,
+      "player": "融寒",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100821516",
+      "rank": 320,
+      "player": "Buntou",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100325016",
+      "rank": 321,
+      "player": "厭~",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101551178",
+      "rank": 322,
+      "player": "Humphrey",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101030630",
+      "rank": 323,
+      "player": "Woedica",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101301384",
+      "rank": 324,
+      "player": "王德发",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100410597",
+      "rank": 325,
+      "player": "原盖就是区",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100987406",
+      "rank": 326,
+      "player": "FINAMORE",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100833647",
+      "rank": 327,
+      "player": "CIKI",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101166781",
+      "rank": 328,
+      "player": "缘空",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100573738",
+      "rank": 329,
+      "player": "KHeath",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101290464",
+      "rank": 330,
+      "player": "Clickrain",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100405731",
+      "rank": 331,
+      "player": "莉奥诺拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100534127",
+      "rank": 332,
+      "player": "伯尧",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101325599",
+      "rank": 333,
+      "player": "十月陨萚",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100130050",
+      "rank": 334,
+      "player": "叶柒",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100140309",
+      "rank": 335,
+      "player": "暮青霜",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100643252",
+      "rank": 336,
+      "player": "亚特兰",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101069404",
+      "rank": 337,
+      "player": "龙鸣虚无",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100784153",
+      "rank": 338,
+      "player": "瑷",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100302455",
+      "rank": 339,
+      "player": "安哥拉兔",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100550974",
+      "rank": 340,
+      "player": "레오노라",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100756090",
+      "rank": 341,
+      "player": "CaligUv",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101226994",
+      "rank": 342,
+      "player": "原来是汤圆呀",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100565746",
+      "rank": 343,
+      "player": "kikyo.",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101703341",
+      "rank": 344,
+      "player": "NoeL",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101349167",
+      "rank": 345,
+      "player": "尘",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100696290",
+      "rank": 346,
+      "player": "Denia",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100558548",
+      "rank": 347,
+      "player": "安歌",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100558123",
+      "rank": 348,
+      "player": "西维斯特",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100470056",
+      "rank": 349,
+      "player": "伊卡洛斯",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101261829",
+      "rank": 350,
+      "player": "刀锋之誓",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100405548",
+      "rank": 351,
+      "player": "ibaems1t",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101747978",
+      "rank": 352,
+      "player": "盼风归",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100761124",
+      "rank": 353,
+      "player": "我船獨自升級",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101512563",
+      "rank": 354,
+      "player": "Anby",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101394587",
+      "rank": 355,
+      "player": "默童",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101752171",
+      "rank": 356,
+      "player": "atem",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101095596",
+      "rank": 357,
+      "player": "Leonora",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100149079",
+      "rank": 358,
+      "player": "小煤球一世",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100610131",
+      "rank": 359,
+      "player": "Camelot",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100468285",
+      "rank": 360,
+      "player": "用戶名不存在",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101036812",
+      "rank": 361,
+      "player": "虫二",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100435218",
+      "rank": 362,
+      "player": "莉奥诺拉123321",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100754027",
+      "rank": 363,
+      "player": "Kkkk丶",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100001283",
+      "rank": 364,
+      "player": "银烛秋光",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100662989",
+      "rank": 365,
+      "player": "Shining",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101257882",
+      "rank": 366,
+      "player": "Camil",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100029341",
+      "rank": 367,
+      "player": "鸟柏",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100616897",
+      "rank": 368,
+      "player": "蹦蹦",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100166475",
+      "rank": 369,
+      "player": "逐光",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101097663",
+      "rank": 370,
+      "player": "Ppep",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100496172",
+      "rank": 371,
+      "player": "索霖",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100459425",
+      "rank": 372,
+      "player": "格索托",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101102750",
+      "rank": 373,
+      "player": "Tomato",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101311386",
+      "rank": 374,
+      "player": "HoumuraHana",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100568677",
+      "rank": 375,
+      "player": "如鸾",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100507445",
+      "rank": 376,
+      "player": "琳",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100879063",
+      "rank": 377,
+      "player": "晨岚",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100839610",
+      "rank": 378,
+      "player": "卡特",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100624889",
+      "rank": 379,
+      "player": "song of saya",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102039338",
+      "rank": 380,
+      "player": "萬丈高樓買不起",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100361769",
+      "rank": 381,
+      "player": "左一",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101271969",
+      "rank": 382,
+      "player": "夜雨月明",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100025754",
+      "rank": 383,
+      "player": "西維斯特",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100102231",
+      "rank": 384,
+      "player": "西蒙II刘易斯",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100001377",
+      "rank": 385,
+      "player": "海尤拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100621997",
+      "rank": 386,
+      "player": "Nylon no Ito",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100928858",
+      "rank": 387,
+      "player": "bb8612",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100742032",
+      "rank": 388,
+      "player": "拉蒙娜的星怒",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100493318",
+      "rank": 389,
+      "player": "莉奧諾拉",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100727427",
+      "rank": 390,
+      "player": "Cinna",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100838107",
+      "rank": 391,
+      "player": "夜貓NightCat",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100801853",
+      "rank": 392,
+      "player": "eyuyu",
+      "score": 450,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100337677",
+      "rank": 393,
+      "player": "妃妮克丝",
+      "score": 445,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101167790",
+      "rank": 394,
+      "player": "找不到从良理由",
+      "score": 445,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100804586",
+      "rank": 395,
+      "player": "Closetom",
+      "score": 445,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101322427",
+      "rank": 396,
+      "player": "Jin",
+      "score": 445,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101361657",
+      "rank": 397,
+      "player": "Bobice",
+      "score": 445,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100553277",
+      "rank": 398,
+      "player": "볼빵빵판다곰",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101242531",
+      "rank": 399,
+      "player": "T-rex",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100627440",
+      "rank": 400,
+      "player": "Hune",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101197541",
+      "rank": 401,
+      "player": "Ellezard",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100775934",
+      "rank": 402,
+      "player": "封不觉",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101328293",
+      "rank": 403,
+      "player": "parmreggiano",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101114623",
+      "rank": 404,
+      "player": "黑Death",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100797680",
+      "rank": 405,
+      "player": "nutanonymous",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100239790",
+      "rank": 406,
+      "player": "阿貓不想上班",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100576392",
+      "rank": 407,
+      "player": "奥莉薇拉",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100224322",
+      "rank": 408,
+      "player": "「N」",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100418576",
+      "rank": 409,
+      "player": "帝者战神",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101300830",
+      "rank": 410,
+      "player": "墨菲宝宝",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101379271",
+      "rank": 411,
+      "player": "Yurann",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100647344",
+      "rank": 412,
+      "player": "浮生界",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101824400",
+      "rank": 413,
+      "player": "BAPHO",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100038490",
+      "rank": 414,
+      "player": "amber",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100432536",
+      "rank": 415,
+      "player": "Astra",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100716831",
+      "rank": 416,
+      "player": "懒人",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101960109",
+      "rank": 417,
+      "player": "寒聿",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101100385",
+      "rank": 418,
+      "player": "末日指挥官",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100932729",
+      "rank": 419,
+      "player": "Bacon8en",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100336921",
+      "rank": 420,
+      "player": "莉奧諾拉",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101118802",
+      "rank": 421,
+      "player": "Grateful Crane",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100672768",
+      "rank": 422,
+      "player": "晨曦",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101237129",
+      "rank": 423,
+      "player": "Lionora",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101000021",
+      "rank": 424,
+      "player": "Кристо",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100913776",
+      "rank": 425,
+      "player": "Sylvester",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101165589",
+      "rank": 426,
+      "player": "Triche",
+      "score": 440,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100474016",
+      "rank": 427,
+      "player": "风夜",
+      "score": 435,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100970201",
+      "rank": 428,
+      "player": "aeik",
+      "score": 435,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100682661",
+      "rank": 429,
+      "player": "Geekz",
+      "score": 435,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100010333",
+      "rank": 430,
+      "player": "GoliCus",
+      "score": 435,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101215288",
+      "rank": 431,
+      "player": "yxlepamplemous",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100833631",
+      "rank": 432,
+      "player": "儿波莉尔",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101783767",
+      "rank": 433,
+      "player": "上好佳",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100071588",
+      "rank": 434,
+      "player": "幽璃",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100043185",
+      "rank": 435,
+      "player": "烏克蘭爆炸山羊",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101774551",
+      "rank": 436,
+      "player": "蚂蚁",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101182120",
+      "rank": 437,
+      "player": "yog",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100892282",
+      "rank": 438,
+      "player": "Ezril",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100451005",
+      "rank": 439,
+      "player": "伊蘭德",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100592145",
+      "rank": 440,
+      "player": "？！供供！？",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101180936",
+      "rank": 441,
+      "player": "怀庆",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101118138",
+      "rank": 442,
+      "player": "Oliwia",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100731830",
+      "rank": 443,
+      "player": "Argnos",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101095927",
+      "rank": 444,
+      "player": "Doktah",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101908754",
+      "rank": 445,
+      "player": "莉奥诺拉",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100239571",
+      "rank": 446,
+      "player": "见字如面",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101081596",
+      "rank": 447,
+      "player": "莉奥诺拉",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100791382",
+      "rank": 448,
+      "player": "Uxie",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100991997",
+      "rank": 449,
+      "player": "孤槿独栀",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101544150",
+      "rank": 450,
+      "player": "祁易",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100000214",
+      "rank": 451,
+      "player": "琉璃",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100458620",
+      "rank": 452,
+      "player": "玖柒",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101097092",
+      "rank": 453,
+      "player": "네로",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100565398",
+      "rank": 454,
+      "player": "水平线之间",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101087638",
+      "rank": 455,
+      "player": "Lui",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100504078",
+      "rank": 456,
+      "player": "于朦胧沉寃昭雪",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100760538",
+      "rank": 457,
+      "player": "西维斯特",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100998717",
+      "rank": 458,
+      "player": "Calamity",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100991854",
+      "rank": 459,
+      "player": "리오노라",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100828937",
+      "rank": 460,
+      "player": "jimmy525521",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101045779",
+      "rank": 461,
+      "player": "Lightz",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100204699",
+      "rank": 462,
+      "player": "貳拾柒",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101878358",
+      "rank": 463,
+      "player": "Frowny",
+      "score": 430,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100309538",
+      "rank": 464,
+      "player": "黑天鹅",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100357783",
+      "rank": 465,
+      "player": "明透",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100371436",
+      "rank": 466,
+      "player": "挽梦",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100390428",
+      "rank": 467,
+      "player": "<#a5f >淵",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100840649",
+      "rank": 468,
+      "player": "iak.rm",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100662059",
+      "rank": 469,
+      "player": "露西艾拉",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100930016",
+      "rank": 470,
+      "player": "Kaly",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100821927",
+      "rank": 471,
+      "player": "茉夏大魔王",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100905865",
+      "rank": 472,
+      "player": "BlooD",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100991451",
+      "rank": 473,
+      "player": "从心",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100544075",
+      "rank": 474,
+      "player": "에프넬",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100829106",
+      "rank": 475,
+      "player": "御坂大魔王",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100131032",
+      "rank": 476,
+      "player": "糖醋排骨",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101903702",
+      "rank": 477,
+      "player": "Aeriff",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101540935",
+      "rank": 478,
+      "player": "江心月白",
+      "score": 425,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100525621",
+      "rank": 479,
+      "player": "缘",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101008478",
+      "rank": 480,
+      "player": "浜名八事",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101246919",
+      "rank": 481,
+      "player": "1one1y",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101946777",
+      "rank": 482,
+      "player": "叶藏",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101547579",
+      "rank": 483,
+      "player": "JOHNKAFKA",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101708459",
+      "rank": 484,
+      "player": "坠岚",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100317749",
+      "rank": 485,
+      "player": "小安、",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100978157",
+      "rank": 486,
+      "player": "调律者",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100840959",
+      "rank": 487,
+      "player": "Rest6",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100897706",
+      "rank": 488,
+      "player": "Deva.",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100978983",
+      "rank": 489,
+      "player": "Lacie",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100629974",
+      "rank": 490,
+      "player": "실비아",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100730835",
+      "rank": 491,
+      "player": "西維斯特",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101160171",
+      "rank": 492,
+      "player": "PsycheFu",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100316509",
+      "rank": 493,
+      "player": "Mino",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100812859",
+      "rank": 494,
+      "player": "奶丝兔米球",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100074350",
+      "rank": 495,
+      "player": "哈魯",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101315539",
+      "rank": 496,
+      "player": "雪山小蛋糕",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100560954",
+      "rank": 497,
+      "player": "skvr3",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100602509",
+      "rank": 498,
+      "player": "雪乃qwq",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100450896",
+      "rank": 499,
+      "player": "Censini",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101062934",
+      "rank": 500,
+      "player": "无名星",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100258814",
+      "rank": 501,
+      "player": "够把猫",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101281586",
+      "rank": 502,
+      "player": "FreshMeat",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101207468",
+      "rank": 503,
+      "player": "ブリボン",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100108617",
+      "rank": 504,
+      "player": "Fumizuk1",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101017120",
+      "rank": 505,
+      "player": "GenoWhirl",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100866172",
+      "rank": 506,
+      "player": "澪墓",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100552338",
+      "rank": 507,
+      "player": "냥초",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100234899",
+      "rank": 508,
+      "player": "大欢",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100553347",
+      "rank": 509,
+      "player": "岚",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100333136",
+      "rank": 510,
+      "player": "看了看這裡",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100391812",
+      "rank": 511,
+      "player": "查莉兹",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102228461",
+      "rank": 512,
+      "player": "西维斯特",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100362989",
+      "rank": 513,
+      "player": "147",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101221917",
+      "rank": 514,
+      "player": "Sylvester",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100314546",
+      "rank": 515,
+      "player": "荡漾",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101512129",
+      "rank": 516,
+      "player": "西维斯特",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100687560",
+      "rank": 517,
+      "player": "QvQ",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101772783",
+      "rank": 518,
+      "player": "Nazoric",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100503547",
+      "rank": 519,
+      "player": "亞當喵",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101093141",
+      "rank": 520,
+      "player": "防己",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100618317",
+      "rank": 521,
+      "player": "商商",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100409334",
+      "rank": 522,
+      "player": "东山未央",
+      "score": 420,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100739319",
+      "rank": 523,
+      "player": "家有萌鸟",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101089338",
+      "rank": 524,
+      "player": "Varino",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100785022",
+      "rank": 525,
+      "player": "深海重度依赖",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101171625",
+      "rank": 526,
+      "player": "Orius",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100711743",
+      "rank": 527,
+      "player": "川川矿渣",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100886886",
+      "rank": 528,
+      "player": "listless",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101819965",
+      "rank": 529,
+      "player": "慕旸",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101676162",
+      "rank": 530,
+      "player": "细数罪恶",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100435705",
+      "rank": 531,
+      "player": "慕靈",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101184959",
+      "rank": 532,
+      "player": "Valerie",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101755704",
+      "rank": 533,
+      "player": "得鹿梦鱼",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100597545",
+      "rank": 534,
+      "player": "贤狼赫萝",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100966703",
+      "rank": 535,
+      "player": "墨绫_",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101332053",
+      "rank": 536,
+      "player": "Name",
+      "score": 415,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101241566",
+      "rank": 537,
+      "player": "是你啊静静",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100919437",
+      "rank": 538,
+      "player": "啊哦嗯呐呗",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100541426",
+      "rank": 539,
+      "player": "西維斯特",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100924875",
+      "rank": 540,
+      "player": "Noah",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101807968",
+      "rank": 541,
+      "player": "brisingr",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100928422",
+      "rank": 542,
+      "player": "风语",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100851982",
+      "rank": 543,
+      "player": "亮",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100591741",
+      "rank": 544,
+      "player": "y1ngmy",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101737888",
+      "rank": 545,
+      "player": "乐仔",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100548618",
+      "rank": 546,
+      "player": "레오",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100125280",
+      "rank": 547,
+      "player": "西維斯特",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101718715",
+      "rank": 548,
+      "player": "Fury",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101081946",
+      "rank": 549,
+      "player": "Xaeyo",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100609184",
+      "rank": 550,
+      "player": "Banana",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101138980",
+      "rank": 551,
+      "player": "Zheshon",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100507894",
+      "rank": 552,
+      "player": "Twagave",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101151487",
+      "rank": 553,
+      "player": "第三芳馨",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101088536",
+      "rank": 554,
+      "player": "Askar",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101746155",
+      "rank": 555,
+      "player": "藤田琴音",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101227960",
+      "rank": 556,
+      "player": "西維斯特",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101566641",
+      "rank": 557,
+      "player": "Jay",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101222998",
+      "rank": 558,
+      "player": "로드선",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101227015",
+      "rank": 559,
+      "player": "Haaselia",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101768747",
+      "rank": 560,
+      "player": "Cancer",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101160125",
+      "rank": 561,
+      "player": "Augustus",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100633401",
+      "rank": 562,
+      "player": "니야",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100737076",
+      "rank": 563,
+      "player": "lutya",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100444915",
+      "rank": 564,
+      "player": "曦寒",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101380568",
+      "rank": 565,
+      "player": "21LUXsan",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100821339",
+      "rank": 566,
+      "player": "克洛瓦",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100649619",
+      "rank": 567,
+      "player": "槐花",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100888711",
+      "rank": 568,
+      "player": "小菊兒",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101056306",
+      "rank": 569,
+      "player": "宇宙巡警洋洋子",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101152344",
+      "rank": 570,
+      "player": "vessiah",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101094857",
+      "rank": 571,
+      "player": "Leonora",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100439468",
+      "rank": 572,
+      "player": "受里受气小野寺",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100254259",
+      "rank": 573,
+      "player": "间宫卓司",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100143233",
+      "rank": 574,
+      "player": "鳴神海步",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100730064",
+      "rank": 575,
+      "player": "双鸟囚羽",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101774873",
+      "rank": 576,
+      "player": "LSaynor",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101621246",
+      "rank": 577,
+      "player": "莉奥诺拉",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102098712",
+      "rank": 578,
+      "player": "JMB",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100915375",
+      "rank": 579,
+      "player": "鏽雨",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101231948",
+      "rank": 580,
+      "player": "Tomori",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101222379",
+      "rank": 581,
+      "player": "1123",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101293884",
+      "rank": 582,
+      "player": "流变拾光",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101530686",
+      "rank": 583,
+      "player": "CaTaTa",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100038844",
+      "rank": 584,
+      "player": "因芬涅提傑洛",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100446026",
+      "rank": 585,
+      "player": "明日撞邪",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100964498",
+      "rank": 586,
+      "player": "云影长歌",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101935538",
+      "rank": 587,
+      "player": "莉奥诺拉",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100263892",
+      "rank": 588,
+      "player": "灵感菇噜噜",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101159499",
+      "rank": 589,
+      "player": "Archalian",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101421459",
+      "rank": 590,
+      "player": "Akari",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100664892",
+      "rank": 591,
+      "player": "伊芙利特",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101080391",
+      "rank": 592,
+      "player": "Axilled",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100974737",
+      "rank": 593,
+      "player": "Urien",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100552965",
+      "rank": 594,
+      "player": "loliholic",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101344520",
+      "rank": 595,
+      "player": "FairlySadPanda",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100392736",
+      "rank": 596,
+      "player": "伏克丝",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100398975",
+      "rank": 597,
+      "player": "TastyBaby",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101123166",
+      "rank": 598,
+      "player": "Yora",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100888006",
+      "rank": 599,
+      "player": "Yhaiye",
+      "score": 410,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101126227",
+      "rank": 600,
+      "player": "别夏花",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101294928",
+      "rank": 601,
+      "player": "糸弥",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100678189",
+      "rank": 602,
+      "player": "冰鸩汐鸹丫",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101263116",
+      "rank": 603,
+      "player": "Taliesin",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101329503",
+      "rank": 604,
+      "player": "风信子",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100628835",
+      "rank": 605,
+      "player": "大音希声",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101232236",
+      "rank": 606,
+      "player": "David",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101034228",
+      "rank": 607,
+      "player": "Sylvester",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101437414",
+      "rank": 608,
+      "player": "Lucas",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100836346",
+      "rank": 609,
+      "player": "Enodia",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101269433",
+      "rank": 610,
+      "player": "芝士丁真",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100511727",
+      "rank": 611,
+      "player": "奇异值分解",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100018665",
+      "rank": 612,
+      "player": "莉奧諾拉",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101264956",
+      "rank": 613,
+      "player": "Ren",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100756146",
+      "rank": 614,
+      "player": "clack",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101049142",
+      "rank": 615,
+      "player": "Kakena",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101361793",
+      "rank": 616,
+      "player": "Æsir",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100051324",
+      "rank": 617,
+      "player": "君云梵",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101183794",
+      "rank": 618,
+      "player": "Atom",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100652322",
+      "rank": 619,
+      "player": "茜格",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101886244",
+      "rank": 620,
+      "player": "suzu鈴",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101127653",
+      "rank": 621,
+      "player": "リオノラ",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100481380",
+      "rank": 622,
+      "player": "阿软",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101363500",
+      "rank": 623,
+      "player": "狼囹",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100610965",
+      "rank": 624,
+      "player": "龙牙秋水",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100071237",
+      "rank": 625,
+      "player": "阿尔嘉",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101994727",
+      "rank": 626,
+      "player": "德普",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101373407",
+      "rank": 627,
+      "player": "Baroh",
+      "score": 405,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100981349",
+      "rank": 628,
+      "player": "Liviのり",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101404992",
+      "rank": 629,
+      "player": "Denyess",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100436868",
+      "rank": 630,
+      "player": "叠嶂扶影",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101055627",
+      "rank": 631,
+      "player": "源儿",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100823645",
+      "rank": 632,
+      "player": "银昂",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100769385",
+      "rank": 633,
+      "player": "RyanCogs",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100599055",
+      "rank": 634,
+      "player": "Reimu",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100442275",
+      "rank": 635,
+      "player": "MiuMiu缪",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100594952",
+      "rank": 636,
+      "player": "水里游鱼",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100416238",
+      "rank": 637,
+      "player": "原神",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100549097",
+      "rank": 638,
+      "player": "迷离",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100569381",
+      "rank": 639,
+      "player": "저별님",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100212442",
+      "rank": 640,
+      "player": "伯爵大人",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100646109",
+      "rank": 641,
+      "player": "ito",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100676961",
+      "rank": 642,
+      "player": "yoone",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101243947",
+      "rank": 643,
+      "player": "萝卜！",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101080068",
+      "rank": 644,
+      "player": "洛哈尔特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101802518",
+      "rank": 645,
+      "player": "Po",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100351985",
+      "rank": 646,
+      "player": "丹陽",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100418685",
+      "rank": 647,
+      "player": "Binah",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100825191",
+      "rank": 648,
+      "player": "游飞雨",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101354539",
+      "rank": 649,
+      "player": "Kazuyashin",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101029756",
+      "rank": 650,
+      "player": "Blecnes",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101488351",
+      "rank": 651,
+      "player": "uugly",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101864053",
+      "rank": 652,
+      "player": "квейтр",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101142186",
+      "rank": 653,
+      "player": "Mada",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101231464",
+      "rank": 654,
+      "player": "Mnem",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101143799",
+      "rank": 655,
+      "player": "Nei",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101074325",
+      "rank": 656,
+      "player": "TweighT",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101643849",
+      "rank": 657,
+      "player": "Damien Ashe",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101085584",
+      "rank": 658,
+      "player": "括约机",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100936437",
+      "rank": 659,
+      "player": "小唯",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101115082",
+      "rank": 660,
+      "player": "Venena",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101549990",
+      "rank": 661,
+      "player": "Tinyherb",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100828620",
+      "rank": 662,
+      "player": "ShlzUku",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100625826",
+      "rank": 663,
+      "player": "时卿",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102014900",
+      "rank": 664,
+      "player": "블랙라쿤",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100580696",
+      "rank": 665,
+      "player": "鏡",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100347296",
+      "rank": 666,
+      "player": "梦见",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100693490",
+      "rank": 667,
+      "player": "zeal00",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101367892",
+      "rank": 668,
+      "player": "루루",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101316115",
+      "rank": 669,
+      "player": "유로파",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100670155",
+      "rank": 670,
+      "player": "哈尼斯大鱼",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101183559",
+      "rank": 671,
+      "player": "오레타",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101187980",
+      "rank": 672,
+      "player": "雨有晴时",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101023974",
+      "rank": 673,
+      "player": "西維斯特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101899844",
+      "rank": 674,
+      "player": "Aish",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100956623",
+      "rank": 675,
+      "player": "Frost",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101271917",
+      "rank": 676,
+      "player": "Legalex",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101734953",
+      "rank": 677,
+      "player": "寂",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101884822",
+      "rank": 678,
+      "player": "Gemini Yuki",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100589887",
+      "rank": 679,
+      "player": "Daphne",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101251325",
+      "rank": 680,
+      "player": "心是用来碎的",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100012930",
+      "rank": 681,
+      "player": "布奇",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100728236",
+      "rank": 682,
+      "player": "HakUwU",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101567529",
+      "rank": 683,
+      "player": "Leonora",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101125292",
+      "rank": 684,
+      "player": "Tilia Roberts",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101184894",
+      "rank": 685,
+      "player": "Sacha",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100048467",
+      "rank": 686,
+      "player": "藤丸立香",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101513748",
+      "rank": 687,
+      "player": "guss",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101898893",
+      "rank": 688,
+      "player": "Tenshin",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100858476",
+      "rank": 689,
+      "player": "音月",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101048085",
+      "rank": 690,
+      "player": "Leonora",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101539526",
+      "rank": 691,
+      "player": "MeanReversion",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101521160",
+      "rank": 692,
+      "player": "Summer",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100798924",
+      "rank": 693,
+      "player": "无用之人",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101129728",
+      "rank": 694,
+      "player": "Robberta",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101188797",
+      "rank": 695,
+      "player": "修修怪侠士",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100850701",
+      "rank": 696,
+      "player": "HILLER",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100727470",
+      "rank": 697,
+      "player": "Penguin2nd",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101260222",
+      "rank": 698,
+      "player": "lve",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101215496",
+      "rank": 699,
+      "player": "纭鋆郓",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101688213",
+      "rank": 700,
+      "player": "Gravitytaker",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101209634",
+      "rank": 701,
+      "player": "Tsun",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101159542",
+      "rank": 702,
+      "player": "Arven",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101014481",
+      "rank": 703,
+      "player": "Ambrose",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100579428",
+      "rank": 704,
+      "player": "haxer",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101153574",
+      "rank": 705,
+      "player": "西维斯特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101117245",
+      "rank": 706,
+      "player": "千",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100724032",
+      "rank": 707,
+      "player": "莉奥诺拉",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100603099",
+      "rank": 708,
+      "player": "匂坂郁纪",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100628428",
+      "rank": 709,
+      "player": "千秋雪",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101157445",
+      "rank": 710,
+      "player": "Laura",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101105595",
+      "rank": 711,
+      "player": "Guang",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100625829",
+      "rank": 712,
+      "player": "原之蓝白",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100459853",
+      "rank": 713,
+      "player": "今晚月美",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101889927",
+      "rank": 714,
+      "player": "라샤",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101714689",
+      "rank": 715,
+      "player": "居然天",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101506286",
+      "rank": 716,
+      "player": "シノ",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101324881",
+      "rank": 717,
+      "player": "Mushisho",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101853130",
+      "rank": 718,
+      "player": "Leonora",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100007182",
+      "rank": 719,
+      "player": "暗魔師",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101842747",
+      "rank": 720,
+      "player": "迷城蝶恋",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100737488",
+      "rank": 721,
+      "player": "珏心",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101399239",
+      "rank": 722,
+      "player": "清风",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100552875",
+      "rank": 723,
+      "player": "三字经丶",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101890394",
+      "rank": 724,
+      "player": "克珀珊特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100332836",
+      "rank": 725,
+      "player": "虛幻人生",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101711073",
+      "rank": 726,
+      "player": "Hd",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101921740",
+      "rank": 727,
+      "player": "Sanga ToT",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100983544",
+      "rank": 728,
+      "player": "Thirsty4food",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102102464",
+      "rank": 729,
+      "player": "lilis",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101273693",
+      "rank": 730,
+      "player": "Luunalii",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100649076",
+      "rank": 731,
+      "player": "想成为魔法校猫",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101115268",
+      "rank": 732,
+      "player": "静寂长夏",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100508219",
+      "rank": 733,
+      "player": "舛舛",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100410065",
+      "rank": 734,
+      "player": "洛伦",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100005172",
+      "rank": 735,
+      "player": "艾潔諾",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101138774",
+      "rank": 736,
+      "player": "Leon",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100627033",
+      "rank": 737,
+      "player": "郴持伟亿煞志堑",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100849371",
+      "rank": 738,
+      "player": "제이원",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101316289",
+      "rank": 739,
+      "player": "艾許",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100756081",
+      "rank": 740,
+      "player": "Azathoth",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100625227",
+      "rank": 741,
+      "player": "勺裁斯谷夷靡",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100656809",
+      "rank": 742,
+      "player": "淮序",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101281518",
+      "rank": 743,
+      "player": "Maxene",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100426029",
+      "rank": 744,
+      "player": "西維斯特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101585318",
+      "rank": 745,
+      "player": "Lucy",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100585708",
+      "rank": 746,
+      "player": "无水碳酸铜",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101326315",
+      "rank": 747,
+      "player": "比你更帅的人",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101202697",
+      "rank": 748,
+      "player": "星雪(网卡红温",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100259582",
+      "rank": 749,
+      "player": "傲娇的艾特酱",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100536619",
+      "rank": 750,
+      "player": "抹茶布丁",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100728265",
+      "rank": 751,
+      "player": "Nakor",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100654828",
+      "rank": 752,
+      "player": "papo",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101931204",
+      "rank": 753,
+      "player": "지직",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100698939",
+      "rank": 754,
+      "player": "Icya",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101298049",
+      "rank": 755,
+      "player": "下分且白给x",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101320066",
+      "rank": 756,
+      "player": "Qu1eT",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101118451",
+      "rank": 757,
+      "player": "Styrian",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102054804",
+      "rank": 758,
+      "player": "Sylvester",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101950672",
+      "rank": 759,
+      "player": "AngbakF2P",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101161451",
+      "rank": 760,
+      "player": "Sabrina",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101285716",
+      "rank": 761,
+      "player": "晴天有雨",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101679821",
+      "rank": 762,
+      "player": "헤스티로",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101021588",
+      "rank": 763,
+      "player": "AM_S",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101264888",
+      "rank": 764,
+      "player": "瓦伦希娜",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101176516",
+      "rank": 765,
+      "player": "\\_(*_*)_/",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101018292",
+      "rank": 766,
+      "player": "克萝蒂雅",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101965229",
+      "rank": 767,
+      "player": "沧岚喵",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100760848",
+      "rank": 768,
+      "player": "园非",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100153221",
+      "rank": 769,
+      "player": "Anafe",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101305801",
+      "rank": 770,
+      "player": "莉奧諾拉",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100659716",
+      "rank": 771,
+      "player": "加加",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100808344",
+      "rank": 772,
+      "player": "리오노라",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101884276",
+      "rank": 773,
+      "player": "Maelle",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101226292",
+      "rank": 774,
+      "player": "剛剛好的約翰",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101788954",
+      "rank": 775,
+      "player": "柊",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100202584",
+      "rank": 776,
+      "player": "Nanting",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100243003",
+      "rank": 777,
+      "player": "诸昏",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101256221",
+      "rank": 778,
+      "player": "Sylvester",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101164684",
+      "rank": 779,
+      "player": "A牵丝引命批发",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101233437",
+      "rank": 780,
+      "player": "Syhue",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100752012",
+      "rank": 781,
+      "player": "西維斯特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101710249",
+      "rank": 782,
+      "player": "Sephiria",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100028785",
+      "rank": 783,
+      "player": "莉櫻",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101266347",
+      "rank": 784,
+      "player": "Coalanna",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101327214",
+      "rank": 785,
+      "player": "Celestial",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101251008",
+      "rank": 786,
+      "player": "actuallyblob",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100873639",
+      "rank": 787,
+      "player": "十三月ㄧ日",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101099289",
+      "rank": 788,
+      "player": "Hanna",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101136702",
+      "rank": 789,
+      "player": "Ælegy",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100102320",
+      "rank": 790,
+      "player": "西維斯特",
+      "score": 400,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100494748",
+      "rank": 791,
+      "player": "Door",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100589823",
+      "rank": 792,
+      "player": "Lation",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101341781",
+      "rank": 793,
+      "player": "Eys",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101153504",
+      "rank": 794,
+      "player": "冰封洛天依",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100299565",
+      "rank": 795,
+      "player": "阿图撒斯",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101820907",
+      "rank": 796,
+      "player": "Ataraxxa",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100757518",
+      "rank": 797,
+      "player": "弔澈",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101351489",
+      "rank": 798,
+      "player": "Zy",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101174368",
+      "rank": 799,
+      "player": "莉奥诺拉",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101187213",
+      "rank": 800,
+      "player": "杰克",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101365985",
+      "rank": 801,
+      "player": "西維斯特",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101025338",
+      "rank": 802,
+      "player": "Maurice",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101101170",
+      "rank": 803,
+      "player": "姬姬",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101064406",
+      "rank": 804,
+      "player": "Crowlov",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100548841",
+      "rank": 805,
+      "player": "万舒雅",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100797203",
+      "rank": 806,
+      "player": "原来是咖啡",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101360073",
+      "rank": 807,
+      "player": "Leonora",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101744012",
+      "rank": 808,
+      "player": "Penelope",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100654736",
+      "rank": 809,
+      "player": "紫镜",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100921243",
+      "rank": 810,
+      "player": "Dumbface",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101887817",
+      "rank": 811,
+      "player": "Y&M",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100827962",
+      "rank": 812,
+      "player": "Айрис",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101635815",
+      "rank": 813,
+      "player": "Номи",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101815130",
+      "rank": 814,
+      "player": "莉奥诺拉",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101242615",
+      "rank": 815,
+      "player": "Sylvester",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100635438",
+      "rank": 816,
+      "player": "Somnus",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100613840",
+      "rank": 817,
+      "player": "莉奧諾拉",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101018372",
+      "rank": 818,
+      "player": "Sylvester",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100327438",
+      "rank": 819,
+      "player": "尼涅尔",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101007765",
+      "rank": 820,
+      "player": "泣の罪",
+      "score": 395,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101106685",
+      "rank": 821,
+      "player": "牧师",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101527146",
+      "rank": 822,
+      "player": "豆卸忘",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100537246",
+      "rank": 823,
+      "player": "鹿霓",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100399610",
+      "rank": 824,
+      "player": "Pony",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100555078",
+      "rank": 825,
+      "player": "入川之潼",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100223850",
+      "rank": 826,
+      "player": "阿塔尼卡",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100816161",
+      "rank": 827,
+      "player": "Notty",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100142066",
+      "rank": 828,
+      "player": "焕笙",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100511405",
+      "rank": 829,
+      "player": "uw这个萌",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100515144",
+      "rank": 830,
+      "player": "随心",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100567506",
+      "rank": 831,
+      "player": "景则",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101529013",
+      "rank": 832,
+      "player": "四月裂帛",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100219378",
+      "rank": 833,
+      "player": "常也",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101713884",
+      "rank": 834,
+      "player": "<#0a0L>Lilith",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100826593",
+      "rank": 835,
+      "player": "Eko",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100551840",
+      "rank": 836,
+      "player": "망령",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100523902",
+      "rank": 837,
+      "player": "离歌",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101198315",
+      "rank": 838,
+      "player": "LoveShortHair",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100716601",
+      "rank": 839,
+      "player": "EtoileCha",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101620674",
+      "rank": 840,
+      "player": "莉奥诺拉",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101309955",
+      "rank": 841,
+      "player": "予一楠",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101265647",
+      "rank": 842,
+      "player": "冥苏",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101173893",
+      "rank": 843,
+      "player": "西維斯特",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101885606",
+      "rank": 844,
+      "player": "安",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101782293",
+      "rank": 845,
+      "player": "莉奥诺拉",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100746450",
+      "rank": 846,
+      "player": "离玥",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101338636",
+      "rank": 847,
+      "player": "Nqu",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101823463",
+      "rank": 848,
+      "player": "白雲映水",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100963702",
+      "rank": 849,
+      "player": "uivs",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100660672",
+      "rank": 850,
+      "player": "黎枫时",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101384380",
+      "rank": 851,
+      "player": "Isa",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101322856",
+      "rank": 852,
+      "player": "柒柒",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101685175",
+      "rank": 853,
+      "player": "西特不乐",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100210489",
+      "rank": 854,
+      "player": "门捷列夫",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101271264",
+      "rank": 855,
+      "player": "Date",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100959474",
+      "rank": 856,
+      "player": "菲兹",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101242774",
+      "rank": 857,
+      "player": "KafkaFuura",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101269917",
+      "rank": 858,
+      "player": "Isaak",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101270445",
+      "rank": 859,
+      "player": "Algaiemann",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101036221",
+      "rank": 860,
+      "player": "Frosticus",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101930574",
+      "rank": 861,
+      "player": "Povidlo",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101388919",
+      "rank": 862,
+      "player": "Anastrom",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100328113",
+      "rank": 863,
+      "player": "破碎之灰",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102026875",
+      "rank": 864,
+      "player": "Mono",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101250955",
+      "rank": 865,
+      "player": "Lilith",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102003469",
+      "rank": 866,
+      "player": "就抓罗坦",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100630422",
+      "rank": 867,
+      "player": "단테",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101366809",
+      "rank": 868,
+      "player": "Feam",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100934339",
+      "rank": 869,
+      "player": "Fantom",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100884814",
+      "rank": 870,
+      "player": "眭苜",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101250235",
+      "rank": 871,
+      "player": "loveca",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101332421",
+      "rank": 872,
+      "player": "Vortex",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100558762",
+      "rank": 873,
+      "player": "米法罗亚",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100818473",
+      "rank": 874,
+      "player": "SILVA",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102094542",
+      "rank": 875,
+      "player": "Kunagisa",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100667800",
+      "rank": 876,
+      "player": "Nimas",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101801388",
+      "rank": 877,
+      "player": "木槿",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100620426",
+      "rank": 878,
+      "player": "Siren",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101034429",
+      "rank": 879,
+      "player": "Shu",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101851701",
+      "rank": 880,
+      "player": "진아원",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100739045",
+      "rank": 881,
+      "player": "小黑魔王",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101686984",
+      "rank": 882,
+      "player": "크라이시스",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101986086",
+      "rank": 883,
+      "player": "Gale",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100542379",
+      "rank": 884,
+      "player": "日落即誓",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100801391",
+      "rank": 885,
+      "player": "莲",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102121862",
+      "rank": 886,
+      "player": "Camil",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100212927",
+      "rank": 887,
+      "player": "Doctor",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100315767",
+      "rank": 888,
+      "player": "目",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100949673",
+      "rank": 889,
+      "player": "Lorelei",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100793374",
+      "rank": 890,
+      "player": "拂晓",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100765354",
+      "rank": 891,
+      "player": "kurisu",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100411425",
+      "rank": 892,
+      "player": "云狩",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100683379",
+      "rank": 893,
+      "player": "希維",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101260797",
+      "rank": 894,
+      "player": "nobid",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100606495",
+      "rank": 895,
+      "player": "错金银",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100991285",
+      "rank": 896,
+      "player": "花树",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100588871",
+      "rank": 897,
+      "player": "YURI",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100791993",
+      "rank": 898,
+      "player": "ヘコ",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101238148",
+      "rank": 899,
+      "player": "Lurtz",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100874066",
+      "rank": 900,
+      "player": "井蛙知夏虫",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101198857",
+      "rank": 901,
+      "player": "walzy",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100497298",
+      "rank": 902,
+      "player": "梅瑶瑶",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101893466",
+      "rank": 903,
+      "player": "雪团",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101347399",
+      "rank": 904,
+      "player": "残响",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101199632",
+      "rank": 905,
+      "player": "WhoAmI",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101395371",
+      "rank": 906,
+      "player": "GularWei",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101878418",
+      "rank": 907,
+      "player": "降临的灰灰",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100690257",
+      "rank": 908,
+      "player": "悠夜",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100644807",
+      "rank": 909,
+      "player": "竹影",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100868179",
+      "rank": 910,
+      "player": "雨夜",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101265096",
+      "rank": 911,
+      "player": "Ixyll",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100080488",
+      "rank": 912,
+      "player": "1111",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101020027",
+      "rank": 913,
+      "player": "nerm",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101187453",
+      "rank": 914,
+      "player": "Signora",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100438820",
+      "rank": 915,
+      "player": "RIP",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101155643",
+      "rank": 916,
+      "player": "Roz",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100243541",
+      "rank": 917,
+      "player": "蟲眼子",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101152011",
+      "rank": 918,
+      "player": "西维斯特",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100975324",
+      "rank": 919,
+      "player": "Unpotaotable",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100973819",
+      "rank": 920,
+      "player": "duck.ahn",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100361748",
+      "rank": 921,
+      "player": "戈莉菲",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100800643",
+      "rank": 922,
+      "player": "Heiway",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101105048",
+      "rank": 923,
+      "player": "Elysia",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101553729",
+      "rank": 924,
+      "player": "Liper",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101123024",
+      "rank": 925,
+      "player": "Zarles0",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101305192",
+      "rank": 926,
+      "player": "洛玉茶",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100505491",
+      "rank": 927,
+      "player": "白船",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101062031",
+      "rank": 928,
+      "player": "水星",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102046702",
+      "rank": 929,
+      "player": "Blind_FaNG",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100889615",
+      "rank": 930,
+      "player": "Farroven",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100007157",
+      "rank": 931,
+      "player": "RAY",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101761766",
+      "rank": 932,
+      "player": "Ponlee",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101864546",
+      "rank": 933,
+      "player": "MLEL",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100830250",
+      "rank": 934,
+      "player": "솔담",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100455180",
+      "rank": 935,
+      "player": "张忆溪",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101847576",
+      "rank": 936,
+      "player": "Noah",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101297041",
+      "rank": 937,
+      "player": "奈亞拉托提普",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101217044",
+      "rank": 938,
+      "player": "做0也精彩",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100550633",
+      "rank": 939,
+      "player": "Klau克劳",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100916612",
+      "rank": 940,
+      "player": "莉奥诺拉",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101758745",
+      "rank": 941,
+      "player": "Serene",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101883719",
+      "rank": 942,
+      "player": "Leonora",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100241919",
+      "rank": 943,
+      "player": "幸轨",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100988963",
+      "rank": 944,
+      "player": "梅梅尔",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101849829",
+      "rank": 945,
+      "player": "Samr0niko",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100726351",
+      "rank": 946,
+      "player": "Berutear",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101229120",
+      "rank": 947,
+      "player": "Rin",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101915656",
+      "rank": 948,
+      "player": "Mikuni",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100213895",
+      "rank": 949,
+      "player": "洛洛",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101020015",
+      "rank": 950,
+      "player": "弥尔顿",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101797814",
+      "rank": 951,
+      "player": "酥雪漾春雨",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100838288",
+      "rank": 952,
+      "player": "honeybee",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "102157124",
+      "rank": 953,
+      "player": "Sylvester",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101834436",
+      "rank": 954,
+      "player": "茜",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100007433",
+      "rank": 955,
+      "player": "希望皮克曼超我",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100676796",
+      "rank": 956,
+      "player": "優格穌吐司",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101346356",
+      "rank": 957,
+      "player": "丰川祥子",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101113743",
+      "rank": 958,
+      "player": "哦咧咧哦啦啦",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100670458",
+      "rank": 959,
+      "player": "青圭",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101783815",
+      "rank": 960,
+      "player": "Ayo",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101236092",
+      "rank": 961,
+      "player": "佚名",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101162662",
+      "rank": 962,
+      "player": "宁宴",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101526278",
+      "rank": 963,
+      "player": "Juniper",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101096521",
+      "rank": 964,
+      "player": "Blank",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101234345",
+      "rank": 965,
+      "player": "凡尔纳",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101091353",
+      "rank": 966,
+      "player": "00341",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101267962",
+      "rank": 967,
+      "player": "芝士小鱼",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100550397",
+      "rank": 968,
+      "player": "一色喵喵球",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100764008",
+      "rank": 969,
+      "player": "安博丽亚",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100910195",
+      "rank": 970,
+      "player": "Shany3n",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101247577",
+      "rank": 971,
+      "player": "Yue",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101386150",
+      "rank": 972,
+      "player": "111",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100227764",
+      "rank": 973,
+      "player": "織枝",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100660171",
+      "rank": 974,
+      "player": "Matu",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101563321",
+      "rank": 975,
+      "player": "大日人",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100553959",
+      "rank": 976,
+      "player": "Hio",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101790219",
+      "rank": 977,
+      "player": "燒杯杯",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100549209",
+      "rank": 978,
+      "player": "벨리아스",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100317772",
+      "rank": 979,
+      "player": "西維斯特",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100793797",
+      "rank": 980,
+      "player": "Sylvester",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101194483",
+      "rank": 981,
+      "player": "Njord",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101056872",
+      "rank": 982,
+      "player": "Leonora",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100000832",
+      "rank": 983,
+      "player": "西维斯特",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101082442",
+      "rank": 984,
+      "player": "Isaac",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100859906",
+      "rank": 985,
+      "player": "Liana",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101176882",
+      "rank": 986,
+      "player": "Lain.",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101410441",
+      "rank": 987,
+      "player": "Blackout",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101038173",
+      "rank": 988,
+      "player": "Jorch",
+      "score": 390,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101301777",
+      "rank": 989,
+      "player": "Yorun-leusan",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100788747",
+      "rank": 990,
+      "player": "西维斯特",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101420093",
+      "rank": 991,
+      "player": "Anni",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101519008",
+      "rank": 992,
+      "player": "Clearhart",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101711035",
+      "rank": 993,
+      "player": "诹访子",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101139446",
+      "rank": 994,
+      "player": "Koalnia",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101721107",
+      "rank": 995,
+      "player": "珀玛",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100973746",
+      "rank": 996,
+      "player": "Leonora",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101748859",
+      "rank": 997,
+      "player": "nathan",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "101149091",
+      "rank": 998,
+      "player": "<#000w>无淚",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100089644",
+      "rank": 999,
+      "player": "傻得渾然天成",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    },
+    {
+      "uid": "100336382",
+      "rank": 1000,
+      "player": "特洛伊",
+      "score": 385,
+      "seasons": [
+        68
+      ]
+    }
+  ]
+}

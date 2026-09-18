@@ -21,12 +21,13 @@
     {
       "seasonId": 68,
       "period": "2026-08-31 – 2026-09-14",
-      "recordCount": 902,
-      "leaderboardEntryCount": null,
-      "complete": false,
-      "coverageMode": "profile-history-partial",
+      "recordCount": 1000,
+      "leaderboardEntryCount": 1000,
+      "complete": true,
+      "coverageMode": "author-top1000-complete",
       "path": "data/morimens/eremora/usage/68-local-gzip/index.json",
-      "statsPath": "data/morimens/eremora/stats/68.json"
+      "statsPath": "data/morimens/eremora/stats/68.json",
+      "revision": "26f7532a789e50d68a1c536cf8967c382b546ffe068615bb68db2e1c52298e5a"
     },
     {
       "seasonId": 67,
@@ -266,11 +267,11 @@
       "complete": false
     },
     "syncedAt": "2026-09-17T23:20:00.000Z",
+    "revision": "a1ccbec4e97d67dffe1334133b559df135c99b5d",
     "format": "gzip-base64-chunked-v1",
     "chunks": 15,
     "chunkSize": 700000,
-    "chunkBytes": 10482653,
-    "revision": "a1ccbec4e97d67dffe1334133b559df135c99b5d"
+    "chunkBytes": 10482653
   },
   "rawTop1000Import": {
     "seasonId": 69,
