@@ -1,4 +1,5 @@
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {gunzipSync} from 'node:zlib';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 const run=promisify(execFile);
@@ -20,6 +21,7 @@ const DELAY=Math.max(1800,Number(process.env.EREMORA_USAGE_BATCH_DELAY_MS||2200)
 const CHECKPOINT_EVERY=Math.max(1,Number(process.env.EREMORA_USAGE_CHECKPOINT_EVERY||10));
 const STALE_DAYS=Math.max(1,Number(process.env.EREMORA_USAGE_STALE_DAYS||7));
 const MAX_403=Math.max(1,Number(process.env.EREMORA_USAGE_MAX_403||3));
+const CROSS_SEASON=process.env.EREMORA_USAGE_CROSS_SEASON==='1';
 let forbidden403=0, stopDueTo403=false;
 const UA='qdby-chinese-eremora-usage-sync/1.0 (+https://github.com/Z769018860/qdby_chinese)';
 const DIFFICULTY_ZH={normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
@@ -85,6 +87,18 @@ const awakeners=await readJson(AWAKENERS,{records:[]});
 const byIngame=new Map((awakeners.records||[]).filter(x=>x.ingameId).map(x=>[String(x.ingameId).toUpperCase(),x]));
 try{await run('git',['config','user.name','github-actions[bot]']);await run('git',['config','user.email','41898282+github-actions[bot]@users.noreply.github.com'])}catch{}
 
+async function loadChunkedRecords(seasonId){
+  const candidates=[path.join(USAGE_DIR,seasonId+'-local-gzip/index.json'),path.join(USAGE_DIR,seasonId+'-local-gzip-v2/index.json')];
+  for(const indexPath of candidates){
+    const index=await readJson(indexPath,null); if(!index?.chunks?.length) continue;
+    try{const encoded=(await Promise.all(index.chunks.map(x=>readFile(x,'utf8')))).join('');
+      const raw=JSON.parse(gunzipSync(Buffer.from(encoded,'base64')).toString('utf8'));
+      return Array.isArray(raw)?raw:(raw.records||raw.rows||[]);
+    }catch(error){console.warn('Unable to decode historical chunk export',indexPath,String(error))}
+  }
+  return [];
+}
+
 async function fetchDirectUsage(uid,seasonId,row,byIngame){
   const url=ORIGIN+'/u/'+uid+'/challenges/dzone/'+seasonId+'/__data.json';
   const response=await fetch(url,{headers:{'user-agent':UA,accept:'application/json'},redirect:'follow',signal:AbortSignal.timeout(30000)});
@@ -106,6 +120,19 @@ async function syncSeason(seasonId){
   const rankPath=historical?path.join(ROOT,'seasons',`${seasonId}.json`):(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${seasonId}.json`);
   const rankDoc=await readJson(rankPath,{});
   const sourceRows=(rankDoc.rows||rankDoc.records||[]).filter(r=>Number(r.rank)<=TARGET).sort((a,b)=>a.rank-b.rank);
+  if(!sourceRows.length){
+    const recovered=await loadChunkedRecords(seasonId);
+    sourceRows.push(...recovered.map((r,i)=>({...r,rank:Number(r.rank)||i+1,uid:String(r.uid||r.user_id||'')})).filter(r=>r.uid).slice(0,TARGET));
+  }
+  const baseCount=sourceRows.length;
+  if(CROSS_SEASON && seasonId===currentSeason){
+    const known=new Set(sourceRows.map(r=>String(r.uid)));
+    for(const prior of seasonIds.filter(x=>x!==currentSeason)) for(const r of await loadChunkedRecords(prior)){
+      const uid=String(r.uid||r.user_id||''); if(!uid||known.has(uid)) continue;
+      known.add(uid); sourceRows.push({...r,uid,rank:100000+sourceRows.length,sourceSeason:prior,crossSeason:true});
+    }
+    console.log(`season ${seasonId}: added ${sourceRows.length-baseCount} cross-season players for backfill`);
+  }
   if(!sourceRows.length){console.warn(`season ${seasonId}: no cached rank rows at ${rankPath}`);return {seasonId,recordCount:0,failed:0}}
   const outPath=path.join(USAGE_DIR,`${seasonId}.json`),old=await readJson(outPath,{records:[]});
   const cache=new Map((old.records||[]).map(x=>[String(x.uid),x])),failedBefore=new Set((old.failures||[]).map(x=>String(x.uid)));
