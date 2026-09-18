@@ -71,10 +71,11 @@
     }
     return {...item,name:String(item.name||item.label||item.id||'')};
   }
-  function wheelFor(rec){
+  function wheelFor(rec,random=false){
     if(!wheelCatalog.length)return null;
     // 命轮每日签独立抽取，不再按角色归属或界域筛选。
-    return wheelCatalog[hash(`${todayKey()}-wheel`)%wheelCatalog.length];
+    const index=random?Math.floor(Math.random()*wheelCatalog.length):hash(`${todayKey()}-wheel`)%wheelCatalog.length;
+    return wheelCatalog[index];
   }
   function canonicalWheel(wheel){
     if(!wheel)return null;
@@ -105,7 +106,7 @@
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
     const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=localSlugFor(rec);portrait.alt=`${loc.name} ${isZh()?'完整角色立绘':'full character illustration'}`;portrait.onerror=()=>{portrait.hidden=true}}
     const realmBadge=$('fortuneRealmBadge'),realmIcon=$('fortuneRealmIcon'),realmName=$('fortuneRealmName'),realmKey=Object.keys(realms).find(key=>String(rec.realm||'').toUpperCase()===key)||Object.keys(realms).find(key=>realms[key]===loc.realm);if(realmBadge&&realmIcon&&realmName&&realmKey){realmIcon.hidden=false;realmIcon.src=`assets/morimens/realms-svg/Icon_Career2_${realmIcons[realmKey]}.svg`;realmIcon.alt=`${loc.realm}界域`;realmName.textContent=loc.realm;realmBadge.hidden=false;realmIcon.onerror=()=>{realmIcon.hidden=true;let fallback=realmBadge.querySelector('.fortuneRealmFallback');if(!fallback){fallback=document.createElement('span');fallback.className='fortuneRealmFallback';realmBadge.insertBefore(fallback,realmName)}fallback.textContent=realmMarks[realmKey]||'域';fallback.title=`${loc.realm}界域`}}else if(realmBadge)realmBadge.hidden=true;
-    const wheel=canonicalWheel(wheelFor(rec)),wheelName=wheel?.displayName||(isZh()?'命轮数据校验失败':'Wheel data unavailable'),wheelArt=wheelArtFor(wheel);const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=wheelArt;wheelImage.hidden=!wheelArt;wheelImage.dataset.wheelId=wheel?.id||'';wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
+    const wheel=canonicalWheel(wheelFor(rec,random)),wheelName=wheel?.displayName||(isZh()?'命轮数据校验失败':'Wheel data unavailable'),wheelArt=wheelArtFor(wheel);const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=wheelArt;wheelImage.hidden=!wheelArt;wheelImage.dataset.wheelId=wheel?.id||'';wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}const mascot=$('morimensMascot');if(mascot){mascot.alt=loc.name;mascot.title=loc.name}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
