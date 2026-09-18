@@ -83,7 +83,7 @@
   function translateDynamicControls(){
     const quote=document.getElementById('skeydbQuoteBtn');if(quote)quote.textContent=lang===ZH?'换一句角色台词':'Another Voice Line';
     const wiki=document.getElementById('wikiBtn');if(wiki)wiki.textContent=lang===ZH?'查看中文维基':'Open Chinese Wiki';
-    document.documentElement.lang=lang;document.title=lang===ZH?'忘却前夜伤害计算 & 每日签':'Morimens Damage Calculator & Daily Fortune';
+    document.documentElement.lang=lang;document.title=lang===ZH?'忘忘看报 · Morimens Weekly':'Morimens Weekly';
   }
   function updateSwitch(){const zh=document.getElementById('langZh'),en=document.getElementById('langEn');if(!zh||!en)return;zh.setAttribute('aria-pressed',String(lang===ZH));en.setAttribute('aria-pressed',String(lang===EN))}
   function setLanguage(next){if(next!==ZH&&next!==EN)return;lang=next;localStorage.setItem(KEY,lang);updateSwitch();translateTree();window.dispatchEvent(new CustomEvent('morimens-language-change',{detail:{language:lang}}))}
@@ -98,3 +98,4 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
+
