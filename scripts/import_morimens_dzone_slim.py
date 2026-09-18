@@ -193,6 +193,11 @@ def main() -> int:
     ], check=True)
     manifest = base.load_json(data_root / "manifest.json", {})
     generated_usage = manifest.get("usageIndex") or {}
+    packed_index_path = root / str(generated_usage.get("path") or "")
+    packed_index = base.load_json(packed_index_path, {})
+    if isinstance(packed_index, dict):
+        packed_index["source"] = "author-provided D-Zone Top1000 slim export"
+        base.save_json(packed_index_path, packed_index)
     for entry in manifest.get("availableSeasons") or []:
         if isinstance(entry, dict) and int(entry.get("seasonId") or -1) == season:
             entry.update({
@@ -206,6 +211,19 @@ def main() -> int:
             })
     if int(manifest.get("currentSeason") or -1) != season and isinstance(current_usage_before, dict):
         manifest["usageIndex"] = current_usage_before
+    manifest["pendingBackfillSeasonIds"] = [
+        value for value in manifest.get("pendingBackfillSeasonIds") or []
+        if int(value) != season
+    ]
+    for coverage in (manifest.get("analytics") or {}).get("coverage") or []:
+        if isinstance(coverage, dict) and int(coverage.get("seasonId") or -1) == season:
+            coverage["maxRankAvailable"] = expected
+            coverage["difficulty"] = {
+                "recognizedTeams": sum(len(w.get("teams") or []) for r in records for w in r.get("waves") or []),
+                "totalTeams": sum(len(w.get("teams") or []) for r in records for w in r.get("waves") or []),
+                "complete": True,
+            }
+            coverage["rankScopes"] = {str(limit): expected >= limit for limit in (50, 200, 500, 1000)}
     base.save_json(data_root / "manifest.json", manifest)
     # The packed browser dataset is canonical; avoid committing an oversized
     # uncompressed intermediate that exceeds GitHub's single-file limit.
