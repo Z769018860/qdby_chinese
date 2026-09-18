@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-09-18T18:15:23.094Z",
+  "branch": "preview",
+  "purpose": "使用当前浏览器会话核验已有玩家在固定历史赛季的可访问性；不处理69期",
+  "uid": "100069133",
+  "seasons": {
+    "63": {
+      "accessible": true,
+      "note": "页面进入赛季页，但当前会话未显示可提取挑战记录"
+    },
+    "64": {
+      "accessible": true,
+      "note": "页面进入赛季页，但当前会话未显示可提取挑战记录"
+    },
+    "65": {
+      "accessible": true,
+      "currentScore": 425,
+      "note": "页面正常加载历史挑战"
+    },
+    "66": {
+      "accessible": true,
+      "currentScore": 425,
+      "note": "页面正常加载历史挑战"
+    },
+    "67": {
+      "accessible": true,
+      "currentScore": 90,
+      "note": "页面正常加载，部分波次显示 No record"
+    },
+    "68": {
+      "accessible": true,
+      "currentScore": 450,
+      "note": "页面正常加载历史挑战"
+    }
+  },
+  "conclusion": "固定历史赛季可通过当前会话访问；后续应按已有UID逐期提取并按 uid+seasonId 合并，不能将69期数据混入本次补充。",
+  "limitations": [
+    "浏览器会话 cookies 不会写入仓库或GitHub Actions",
+    "本报告是访问核验，不伪造未提取的队伍明细"
+  ]
+}
