@@ -1,11 +1,13 @@
 // 融灾榜单增强：界域/类型筛选 + 命轮叠位比例条 + 启灵比例颜色同步
 (function(){
+  // 使用 wiki 对应界域资源映射，不再使用临时 domain-1/domain-2 图标
   const DOMAIN_ICON={
-    "界域一":"images/domain/domain-1.png",
-    "界域二":"images/domain/domain-2.png",
-    "界域三":"images/domain/domain-3.png",
-    "界域四":"images/domain/domain-4.png"
+    "星辰界":"assets/morimens/domain/星辰界.png",
+    "深渊界":"assets/morimens/domain/深渊界.png",
+    "幻梦界":"assets/morimens/domain/幻梦界.png",
+    "永恒界":"assets/morimens/domain/永恒界.png"
   };
+
   const TYPE_COLOR={
     "防御型":"#6fb3ae",
     "辅助型":"#d7a85b",
@@ -17,7 +19,7 @@
     return {
       ...row,
       normalizedName:name,
-      domain:row.domain||row.realm||"全部",
+      domain:row.domain||row.realm||row.world||"全部",
       type:row.type||row.roleType||row.category||"全部"
     };
   }
@@ -37,7 +39,7 @@
     wrap.className="morimensRateBar";
     const span=document.createElement("span");
     span.style.width=Math.max(0,Math.min(100,Number(rate)||0))+"%";
-    if(color)span.style.background=color;
+    span.style.background=color||"linear-gradient(90deg,#6fb3ae,#e0bd82)";
     wrap.appendChild(span);
     return wrap;
   }
@@ -47,6 +49,7 @@
     img.className="morimensDomainIcon";
     img.src=DOMAIN_ICON[domain]||"";
     img.alt=domain||"";
+    img.onerror=()=>img.style.display="none";
     return img;
   }
 
@@ -56,8 +59,8 @@
     s.id="morimensRankEnhancerStyle";
     s.textContent=`
       .morimensRateBar{height:8px;width:100%;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px}
-      .morimensRateBar span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#6fb3ae,#e0bd82)}
-      .morimensDomainIcon{width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-right:6px}
+      .morimensRateBar span{display:block;height:100%;border-radius:99px}
+      .morimensDomainIcon{width:24px;height:24px;object-fit:contain;vertical-align:middle;margin-right:6px}
       .morimensTypeTag{display:inline-block;padding:3px 8px;border-radius:99px;border:1px solid rgba(255,255,255,.2);font-size:11px}
       .morimensAwakenFill{border-radius:8px;padding:3px 6px}
     `;
@@ -69,7 +72,7 @@
     node.dataset.domain=x.domain;
     node.dataset.type=x.type;
     const icon=createDomainIcon(x.domain);
-    if(icon.src)node.appendChild(icon);
+    node.appendChild(icon);
     const tag=document.createElement("span");
     tag.className="morimensTypeTag";
     tag.textContent=x.type;
