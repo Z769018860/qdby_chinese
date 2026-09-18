@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260918.30";
+  const assetVersion="20260918.31";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -68,6 +68,18 @@ setupMorimensMascotToggle();
     // give the ID-aligned SKeyDB module exclusive ownership of Daily Fortune.
     window.MorimensFortuneDataOwner="skeydb";
     code=code
+      .replace(
+        /  const fortune=document\.querySelector\('\.fortuneCard'\);if\(fortune\)fortune\.innerHTML=`[\s\S]*?`;\n}/,
+        "}"
+      )
+      .replace(
+        '$(`fortuneBtn`).addEventListener("click",()=>renderFortune(false));$(`rerollBtn`).addEventListener("click",()=>renderFortune(true))',
+        ''
+      )
+      .replace(
+        /function renderFortuneProfile\([\s\S]*?\n(?=function bind\()/,
+        ''
+      )
       .replace(
         "if(rerollSalt===0)renderFortune(false)",
         "if(rerollSalt===0&&!window.MorimensFortuneDataOwner)renderFortune(false)"
