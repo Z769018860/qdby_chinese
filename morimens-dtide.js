@@ -158,12 +158,20 @@
     flatTeamsCache=[...unique.values()];
     return flatTeamsCache;
   }
-  function scopedRows({wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=selectedRankCap()}={}){return flattenTeams().filter(x=>{
+  function activeAwakenerMembers(team){
+    const realms=[...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(b=>String(b.dataset.realm));
+    const roles=[...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(b=>String(b.dataset.role));
+    const members=team?.members||[];
+    return members.filter(m=>(!realms.length||realms.includes(String(m.realm)))&&(!roles.length||roles.includes(String(m.role))));
+  }
+  function scopedRows({wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=selectedRankCap()}={}){return flattenTeams().map(x=>{
+    const filteredMembers=activeAwakenerMembers(x.team);return filteredMembers.length===x.team.members?.length?x:{...x,team:{...x.team,members:filteredMembers}};
+  }).filter(x=>{
     if(!rankMatches(x.record,rankCap))return false;
     if(wave!=='all'&&Number(wave)!==Number(x.wave.wave))return false;
     if(ct!=='all'&&ct!==x.team.clearType)return false;
     if(difficulty!=='all'&&difficulty!==x.difficulty)return false;
-    const realms=[...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(b=>b.dataset.realm),roles=[...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(b=>b.dataset.role),members=x.team.members||[];if(realms.length&&!members.some(m=>realms.includes(String(m.realm))))return false;if(roles.length&&!members.some(m=>roles.includes(String(m.role))))return false;
+    if(!(x.team.members||[]).length)return false;
     if(!scoreMatches(x.record))return false;
     return true;
   })}
@@ -239,8 +247,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(!scoreMatches(row.record))return false;
     const ct=$('dtideClearType').value;if(ct!=='all'&&ct!==row.team.clearType)return false;
     const include=getSelectedValues('dtideCharacters'),exclude=getSelectedValues('dtideExcludeCharacters'),keys=row.team.members.map(m=>String(memberKey(m))),mode=$('dtideCharacterMode').value;if(include.length&&!(mode==='all'?include.every(x=>keys.includes(x)):include.some(x=>keys.includes(x))))return false;if(exclude.some(x=>keys.includes(x)))return false;
-    const targets=include.length?row.team.members.filter(m=>include.includes(String(memberKey(m)))):row.team.members;
-    const activeRealms=[...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(x=>x.dataset.realm),activeRoles=[...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(x=>x.dataset.role);if(activeRealms.length&&!targets.some(m=>activeRealms.includes(String(m.realm))))return false;if(activeRoles.length&&!targets.some(m=>activeRoles.includes(String(m.role))))return false;
+    const realmRoleTargets=activeAwakenerMembers(row.team),targets=include.length?realmRoleTargets.filter(m=>include.includes(String(memberKey(m)))):realmRoleTargets;if(!targets.length)return false;
     const minLv=Number($('dtideLevelMin').value||0),maxLv=Number($('dtideLevelMax').value||0);if(minLv&&targets.some(m=>m.level==null||Number(m.level)<minLv))return false;if(maxLv&&targets.some(m=>m.level==null||Number(m.level)>maxLv))return false;
     const prog=$('dtideProgression').value;if(prog&&!targets.some(m=>enlightClass(m)===prog))return false;
     const borrowed=$('dtideBorrowed').value,hasBorrow=row.team.members.some(m=>m.borrowed);if(borrowed==='yes'&&!hasBorrow)return false;if(borrowed==='no'&&hasBorrow)return false;
