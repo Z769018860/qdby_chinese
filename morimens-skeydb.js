@@ -38,7 +38,6 @@
   }
 
   function ensureUi(){
-    const body=document.querySelector('.fortuneBody');if(body&&!$('skeydbProfile')){const box=document.createElement('div');box.id='skeydbProfile';box.style.cssText='display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px';body.insertBefore(box,body.querySelector('.fortuneMeta'))}
     const actions=document.querySelector('.fortuneActions');if(actions&&!$('skeydbQuoteBtn')){const b=document.createElement('button');b.id='skeydbQuoteBtn';b.type='button';b.className='ghostBtn';b.textContent='换一句角色台词';b.addEventListener('click',()=>{if(!current)return;quoteIndex++;renderQuote(current)});actions.insertBefore(b,actions.lastElementChild)}
     const tags=document.querySelector('.heroTags');if(tags&&!$('skeydbStatus')){const s=document.createElement('span');s.className='tag';s.id='skeydbStatus';s.textContent='SKeyDB / Wiki：等待同步快照';tags.appendChild(s)}
     const sources=document.querySelector('.sourceList');if(sources&&!$('skeydbAttribution')){const note=document.createElement('div');note.id='skeydbAttribution';note.className='sourceItem';sources.appendChild(note)}
@@ -83,13 +82,14 @@
     const realmBadge=$('fortuneRealmBadge'),realmIcon=$('fortuneRealmIcon'),realmName=$('fortuneRealmName'),realmKey=Object.keys(realms).find(key=>String(rec.realm||'').toUpperCase()===key)||Object.keys(realms).find(key=>realms[key]===loc.realm);if(realmBadge&&realmIcon&&realmName&&realmKey){realmIcon.src=`assets/morimens/realms/Icon_Career2_${realmIcons[realmKey]}.webp?v=${assetVersion()}`;realmIcon.alt=loc.realm;realmName.textContent=loc.realm;realmBadge.hidden=false;realmIcon.onerror=()=>{realmIcon.hidden=true}}else if(realmBadge)realmBadge.hidden=true;
     const wheel=wheelCatalog.length?wheelCatalog[hash(`${todayKey()}-${rec.id}-wheel`)%wheelCatalog.length]:null,wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel');const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=`assets/morimens/wheels/${WHEEL_ARTS[hash(`${todayKey()}-${rec.id}`)%WHEEL_ARTS.length]}?v=${assetVersion()}`;wheelImage.hidden=false;wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}const mascot=$('morimensMascot');if(mascot){mascot.alt=loc.name;mascot.title=loc.name}
-    if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · ${ART_SLUG_GUARD[rec.id]||rec.assetSlug||''} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
+    if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
     const seed=hash(`${todayKey()}-${rec.id}`),keywords=[loc.realm,loc.type,wheelName,quotes[quoteIndex]?.title||'角色语音'].filter(Boolean).slice(0,4);if($('fortuneStat'))$('fortuneStat').textContent=`× ${(1+(seed%36)/100).toFixed(2)}`;if($('fortuneKeyword'))$('fortuneKeyword').textContent=keywords.join(' · ');
     const labels=isZh()?['稀有度','界域','类型','阵营','生日','声优']:['Rarity','Realm','Type','Faction','Birthday','Voice actor'];
     const values=[loc.rarity,loc.realm,loc.type,loc.faction,loc.birthday,loc.voiceActor];
     const p=$('skeydbProfile');if(p)p.innerHTML=labels.map((k,i)=>[k,values[i]]).filter(x=>x[1]).map(([k,v])=>`<div style="padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf">${escape(k)}<strong style="display:block;color:#e5e7eb;margin-top:3px">${escape(v)}</strong></div>`).join('');
     const wiki=$('wikiBtn'),zh=zhFor(rec);if(wiki){const title=zh?.name||loc.name;wiki.href=zh?.source?.url||`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(title)}`}
+    window.dispatchEvent(new CustomEvent('morimens-fortune-render',{detail:{id:rec.id,name:loc.name,realm:loc.realm,type:loc.type,wheelName,quoteTitle:quotes[quoteIndex]?.title||''}}));
     renderSourceStatus();
   }
   function renderToday(){if(!db?.records?.length)return;render(db.records[hash(todayKey())%db.records.length])}
@@ -115,4 +115,3 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,0));else setTimeout(boot,0);
 })();
-
