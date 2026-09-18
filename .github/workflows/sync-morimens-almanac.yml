@@ -1,0 +1,54 @@
+name: Sync Morimens Daily Almanac
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/sync_morimens_almanac.py"
+      - ".github/workflows/sync-morimens-almanac.yml"
+  schedule:
+    - cron: "10 0 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-morimens-almanac
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate Beijing-date almanac snapshot
+        run: |
+          python -m pip install --disable-pip-version-check lunar-python==1.4.8
+          python scripts/sync_morimens_almanac.py
+          python -m json.tool data/morimens/almanac/today.json >/dev/null
+
+      - name: Commit snapshot
+        run: |
+          if git diff --quiet -- data/morimens/almanac/today.json; then
+            echo "Today's almanac snapshot is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/morimens/almanac/today.json
+          git commit -m "chore: refresh Morimens daily almanac"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 8))
+          done
+          exit 1
