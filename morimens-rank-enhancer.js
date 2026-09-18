@@ -1,12 +1,15 @@
-// 融灾榜单增强：界域/类型筛选 + 命轮叠位比例条 + 启灵比例颜色同步
+// 融灾榜单增强：正确界域映射 + 类型全部筛选 + 比例条组件
 (function(){
-  // 使用 wiki 对应界域资源映射，不再使用临时 domain-1/domain-2 图标
+  // 忘却前夜 Wiki 界域
   const DOMAIN_ICON={
-    "星辰界":"assets/morimens/domain/星辰界.png",
-    "深渊界":"assets/morimens/domain/深渊界.png",
-    "幻梦界":"assets/morimens/domain/幻梦界.png",
-    "永恒界":"assets/morimens/domain/永恒界.png"
+    "混沌":"assets/morimens/domain/chaos.png",
+    "深海":"assets/morimens/domain/deepsea.png",
+    "血肉":"assets/morimens/domain/flesh.png",
+    "超维":"assets/morimens/domain/hyperdimension.png"
   };
+
+  const DOMAINS=["全部","混沌","深海","血肉","超维"];
+  const TYPES=["全部","防御型","辅助型","伤害型"];
 
   const TYPE_COLOR={
     "防御型":"#6fb3ae",
@@ -25,11 +28,14 @@
   }
 
   window.MorimensRankFilter={
+    domains:DOMAINS,
+    types:TYPES,
     normalize:normalizeAwakener,
-    filter(list,domain,type){
+    filter(list,domain="全部",type="全部"){
       return (list||[]).filter(item=>{
         const x=normalizeAwakener(item);
-        return (!domain||domain==="全部"||x.domain===domain)&&(!type||type==="全部"||x.type===type);
+        return (domain==="全部"||x.domain===domain)&&
+               (type==="全部"||x.type===type);
       });
     }
   };
@@ -47,9 +53,17 @@
   function createDomainIcon(domain){
     const img=document.createElement("img");
     img.className="morimensDomainIcon";
-    img.src=DOMAIN_ICON[domain]||"";
     img.alt=domain||"";
-    img.onerror=()=>img.style.display="none";
+    const src=DOMAIN_ICON[domain];
+    if(!src){
+      img.style.display="none";
+      return img;
+    }
+    img.loading="lazy";
+    img.src=src;
+    img.onerror=()=>{
+      img.style.display="none";
+    };
     return img;
   }
 
@@ -71,8 +85,7 @@
     const x=normalizeAwakener(row);
     node.dataset.domain=x.domain;
     node.dataset.type=x.type;
-    const icon=createDomainIcon(x.domain);
-    node.appendChild(icon);
+    node.appendChild(createDomainIcon(x.domain));
     const tag=document.createElement("span");
     tag.className="morimensTypeTag";
     tag.textContent=x.type;
@@ -82,6 +95,7 @@
 
   window.MorimensRankEnhancer={
     createBar,
+    createDomainIcon,
     injectStyle,
     renderAwakenerMeta,
     TYPE_COLOR,
