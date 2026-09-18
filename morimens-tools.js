@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260918.29";
+  const assetVersion="20260918.30";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -93,5 +93,4 @@ setupMorimensMascotToggle();
     document.body.appendChild(box);
   }
 })();
-
 
