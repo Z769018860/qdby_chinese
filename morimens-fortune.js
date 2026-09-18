@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
-  const cacheKey='morimens.daily-fortune.v6';
+  const cacheKey='morimens.daily-fortune.v7';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
@@ -68,6 +68,14 @@
     try{const response=await fetch(`data/morimens/almanac/today.json?v=${dateKey()}`,{cache:'no-cache'});if(!response.ok)return;const data=await response.json();if(data?.date!==dateKey())return;renderAlmanac(data);try{localStorage.setItem(key,JSON.stringify(data))}catch{}}catch{}
   }
   try{const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');if(cached?.date===dateKey())render(cached,{cached:true})}catch{}
-  window.addEventListener('morimens-fortune-render',event=>{const data=build(event.detail||{});render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}});
+  let fortuneEventReceived=false;
+  window.addEventListener('morimens-fortune-render',event=>{fortuneEventReceived=true;const data=build(event.detail||{});render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}});
+  // SKeyDB/Wiki 同步失败时也立即给出本地结果，避免页面一直停留在“等待启示”。
+  setTimeout(()=>{
+    if(fortuneEventReceived)return;
+    const fallbackDetail={id:'local-fallback',name:'守密人',realm:'未知界域',type:'唤醒体',wheelName:'命运之轮',wheelRealm:'未知界域',wheelRarity:'R',wheelKeywords:['理智','观测'],usage:{}};
+    const data=build(fallbackDetail);render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}
+    if($('fortuneSync'))$('fortuneSync').textContent='⚠ 同步暂不可用 · 已使用本地头像签词';
+  },1200);
   loadAlmanac();
 })();
