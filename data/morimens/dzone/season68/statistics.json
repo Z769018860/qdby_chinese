@@ -1,0 +1,6 @@
+{
+  "season_id":68,
+  "description":"Season 68 aggregated statistics generated from author provided top1000 data",
+  "includes":["score_distribution","awakener_appearance","team_frequency"],
+  "status":"structured aggregation pending full player chunk import"
+}
