@@ -3,7 +3,8 @@
   const ZH_URL='data/morimens/huiji/zh-CN.json';
   const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json';
   const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json';
-  let db=null,zhDb=null,identityDb=null,wheelZhDb=null,wheelCatalog=[],current=null,quoteIndex=0;
+  const USAGE_MANIFEST_URL='data/morimens/eremora/manifest.json';
+  let db=null,zhDb=null,identityDb=null,wheelZhDb=null,wheelCatalog=[],wheelAssets=null,usageStats=null,current=null,quoteIndex=0;
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const todayKey=()=>new Date().toLocaleDateString('sv-SE');
@@ -16,7 +17,6 @@
   const realmMarks={CHAOS:'混',AEQUOR:'海',CARO:'血',ULTRA:'维'};
   const types={ASSAULT:'伤害型',WARDEN:'防御型',CHORUS:'辅助型'};
   const ART_SLUG_GUARD={'awakener-0014':'doresain','awakener-0053':'winkle'};
-  const WHEEL_ARTS=['Weapon_Full_C01.webp','Weapon_Full_B01.webp','Weapon_Full_C10.webp','Weapon_Full_D05.webp','Weapon_Full_JP08.webp','Weapon_Full_O03.webp','Weapon_Full_SR02.webp','Weapon_Full_ZL01.webp'];
 
   function identityFor(rec){return identityDb?.bySkeydbId?.[rec?.id]||null}
   function zhFor(rec){
@@ -67,6 +67,23 @@
     }
     return {...item,name:String(item.name||item.label||item.id||'')};
   }
+  function wheelFor(rec){
+    if(!wheelCatalog.length)return null;
+    const owned=wheelCatalog.filter(w=>w.ownerAwakenerId===rec.id);
+    const realm=wheelCatalog.filter(w=>w.realm===rec.realm&&w.rarity==='SSR');
+    const pool=owned.length?owned:(realm.length?realm:wheelCatalog);
+    return pool[hash(`${todayKey()}-${rec.id}-wheel`)%pool.length];
+  }
+  function wheelArtFor(wheel){
+    const key=wheel?.assets?.icon,entry=key&&wheelAssets?.assets?.[key],assetId=entry?.assetId;
+    return assetId?`assets/morimens/wheels/${assetId}.webp?v=${assetVersion()}`:'';
+  }
+  function usageFor(rec){
+    const rows=usageStats?.characters||[],target=normalize(rec?.name),index=rows.findIndex(row=>normalize(row.name)===target||(rec?.aliases||[]).some(alias=>normalize(alias)===normalize(row.name)));
+    if(index<0)return {season:usageStats?.seasonId||69,count:0,rate:0,rank:null,total:rows.length,sample:usageStats?.teamCount||0};
+    const row=rows[index],sample=Number(usageStats?.teamCount||0),rate=sample?Number(row.count||0)/sample*100:0;
+    return {season:usageStats?.seasonId||69,count:Number(row.count||0),rate,rank:index+1,total:rows.length,sample};
+  }
   function renderQuote(rec){
     const q=allQuotes(rec),box=$('fortuneQuote');if(!box)return;
     if(!q.length){box.textContent=isZh()?'该角色的中文语音快照尚未同步；不会再用其他角色或英文台词替代。':'No synchronized voice line is available for this character.';return}
@@ -81,7 +98,7 @@
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
     const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=localSlugFor(rec);portrait.alt=`${loc.name} ${isZh()?'完整角色立绘':'full character illustration'}`;portrait.onerror=()=>{portrait.hidden=true}}
     const realmBadge=$('fortuneRealmBadge'),realmIcon=$('fortuneRealmIcon'),realmName=$('fortuneRealmName'),realmKey=Object.keys(realms).find(key=>String(rec.realm||'').toUpperCase()===key)||Object.keys(realms).find(key=>realms[key]===loc.realm);if(realmBadge&&realmIcon&&realmName&&realmKey){realmIcon.hidden=false;realmIcon.src=`assets/morimens/realms-svg/Icon_Career2_${realmIcons[realmKey]}.svg`;realmIcon.alt=`${loc.realm}界域`;realmName.textContent=loc.realm;realmBadge.hidden=false;realmIcon.onerror=()=>{realmIcon.hidden=true;let fallback=realmBadge.querySelector('.fortuneRealmFallback');if(!fallback){fallback=document.createElement('span');fallback.className='fortuneRealmFallback';realmBadge.insertBefore(fallback,realmName)}fallback.textContent=realmMarks[realmKey]||'域';fallback.title=`${loc.realm}界域`}}else if(realmBadge)realmBadge.hidden=true;
-    const wheel=wheelCatalog.length?wheelCatalog[hash(`${todayKey()}-${rec.id}-wheel`)%wheelCatalog.length]:null,wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel');const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=`assets/morimens/wheels/${WHEEL_ARTS[hash(`${todayKey()}-${rec.id}`)%WHEEL_ARTS.length]}?v=${assetVersion()}`;wheelImage.hidden=false;wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
+    const wheel=wheelFor(rec),wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel'),wheelArt=wheelArtFor(wheel);const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=wheelArt;wheelImage.hidden=!wheelArt;wheelImage.dataset.wheelId=wheel?.id||'';wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}const mascot=$('morimensMascot');if(mascot){mascot.alt=loc.name;mascot.title=loc.name}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
@@ -90,22 +107,25 @@
     const values=[loc.rarity,loc.realm,loc.type,loc.faction,loc.birthday,loc.voiceActor];
     const p=$('skeydbProfile');if(p)p.innerHTML=labels.map((k,i)=>[k,values[i]]).filter(x=>x[1]).map(([k,v])=>`<div style="padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf">${escape(k)}<strong style="display:block;color:#e5e7eb;margin-top:3px">${escape(v)}</strong></div>`).join('');
     const wiki=$('wikiBtn'),zh=zhFor(rec);if(wiki){const title=zh?.name||loc.name;wiki.href=zh?.source?.url||`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(title)}`}
-    window.dispatchEvent(new CustomEvent('morimens-fortune-render',{detail:{id:rec.id,name:loc.name,realm:loc.realm,type:loc.type,wheelName,quoteTitle:quotes[quoteIndex]?.title||''}}));
+    window.dispatchEvent(new CustomEvent('morimens-fortune-render',{detail:{id:rec.id,name:loc.name,realm:loc.realm,type:loc.type,wheelId:wheel?.id||'',wheelName,usage:usageFor(rec),quoteTitle:quotes[quoteIndex]?.title||''}}));
     renderSourceStatus();
   }
   function renderToday(){if(!db?.records?.length)return;render(db.records[hash(todayKey())%db.records.length])}
   function renderRandom(){if(!db?.records?.length)return;render(db.records[Math.floor(Math.random()*db.records.length)],true)}
 
   async function getJson(url,label){const key=`morimens-snapshot:${url}`,cached=sessionStorage.getItem(key);try{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${label} HTTP ${r.status}`);const value=await r.json();try{sessionStorage.setItem(key,JSON.stringify(value))}catch{}return value}catch(error){if(cached){try{return JSON.parse(cached)}catch{}}throw error}}
+  async function getCurrentUsageStats(){const manifest=await getJson(USAGE_MANIFEST_URL,'usage manifest'),season=manifest?.currentSeason,entry=(manifest?.availableSeasons||[]).find(x=>Number(x.seasonId)===Number(season)),path=entry?.statsPath||`data/morimens/eremora/stats/${season}.json`;return getJson(path,'usage stats')}
   async function boot(){
     ensureUi();
     try{
-      const [enResult,zhResult,idResult,wheelZhResult,wheelResult]=await Promise.allSettled([getJson(DATA_URL,'SKeyDB'),getJson(ZH_URL,'Huiji'),getJson(IDENTITY_URL,'identity'),getJson(WHEEL_ZH_URL,'wheel identity'),window.MorimensRepository?.catalog('wheels')]);
+      const [enResult,zhResult,idResult,wheelZhResult,wheelResult,wheelAssetsResult,usageResult]=await Promise.allSettled([getJson(DATA_URL,'SKeyDB'),getJson(ZH_URL,'Huiji'),getJson(IDENTITY_URL,'identity'),getJson(WHEEL_ZH_URL,'wheel identity'),window.MorimensRepository?.catalog('wheels'),window.MorimensRepository?.index('assets'),getCurrentUsageStats()]);
       if(enResult.status!=='fulfilled')throw enResult.reason;db=enResult.value;
       if(idResult.status==='fulfilled'){identityDb=idResult.value;identityDb.bySkeydbId=Object.fromEntries((identityDb.records||[]).map(x=>[x.skeydbId,x]))}else console.warn('Chinese identity map unavailable',idResult.reason);
       if(zhResult.status==='fulfilled'&&zhResult.value&&typeof zhResult.value==='object')zhDb=zhResult.value;else console.warn('Chinese Huiji snapshot unavailable',zhResult.reason);
       if(wheelZhResult.status==='fulfilled')wheelZhDb=wheelZhResult.value;else console.warn('Chinese wheel identity map unavailable',wheelZhResult.reason);
       if(wheelResult.status==='fulfilled')wheelCatalog=wheelResult.value?.records||[];
+      if(wheelAssetsResult.status==='fulfilled')wheelAssets=wheelAssetsResult.value;
+      if(usageResult.status==='fulfilled')usageStats=usageResult.value;else console.warn('Morimens usage stats unavailable',usageResult.reason);
       window.MorimensData={db,zhDb,identityDb,wheelZhDb,language,zhFor,localizedProfile,localizedEntity,assetFor};
       const fortune=$('fortuneBtn'),reroll=$('rerollBtn');
       if(fortune)fortune.addEventListener('click',e=>{e.stopImmediatePropagation();renderToday()},{capture:true});
