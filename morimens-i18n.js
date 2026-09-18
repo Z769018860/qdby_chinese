@@ -2,7 +2,7 @@
   const KEY='morimens.language';
   const ZH='zh-CN',EN='en';
   const dict={
-    '← 返回个人工具箱':'← Back to Toolbox',
+    '← 返回个人工具箱':'← Back to Toolbox','忘忘看报':'Wangwang Report',
     '忘却前夜伤害计算 & 每日签':'Morimens Damage Calculator & Daily Fortune',
     '角色、技能和每日签资料改为优先读取由 GitHub Actions 从 SKeyDB 同步到本站的静态快照；角色卡面与头像也保存为本站本地静态资源，避免灰机图片接口失效。伤害公式仍保留客户端日志校准层。':'Character, skill, and Daily Fortune data now prioritize static snapshots synchronized from SKeyDB by GitHub Actions. Character cards and portraits are mirrored locally, while damage formulas retain the client-log calibration layer.',
     '角色 → 技能自动倍率':'Character → skill auto scaling',
