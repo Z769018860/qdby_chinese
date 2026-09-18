@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
-  const cacheKey='morimens.daily-fortune.v3';
+  const cacheKey='morimens.daily-fortune.v4';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
@@ -33,7 +33,9 @@
     const wheelKeywords=[wheelKeywordPool[(seed>>>2)%wheelKeywordPool.length],wheelKeywordPool[(seed>>>7)%wheelKeywordPool.length]].filter((x,i,a)=>a.indexOf(x)===i);
     const keywords=[detail.realm,detail.type,detail.wheelRealm,detail.wheelRarity,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
-    const signPool=themedSignTexts[sign]||[signTexts[sign]],signText=signPool[(seed>>>21)%signPool.length];
+    const signPool=themedSignTexts[sign]||[signTexts[sign]],themedText=signPool[(seed>>>21)%signPool.length];
+    // 优先使用 Wiki 中“闲话·关于守密人”等头像/档案语句；没有同步内容时才使用主题化签词。
+    const signText=detail.quoteContent||themedText;
     return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
