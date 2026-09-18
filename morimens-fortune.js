@@ -2,11 +2,20 @@
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
-  const cacheKey='morimens.daily-fortune.v2';
+  const cacheKey='morimens.daily-fortune.v3';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
   const signTexts={大吉:'星轨正合，今日所行皆有回响。',上吉:'潮声引路，把握时机便能乘势而上。',中吉:'灯火未熄，稳步前行自有所得。',小吉:'微光在侧，适合完成眼前的小目标。',平:'风浪未定，守成比冒进更为合适。',小凶:'雾色渐浓，宜留余力并谨慎选择。',凶:'暗潮将至，今日更适合整备与等待。'};
+  const themedSignTexts={
+    大吉:['旧日星门在雾海中开启，唤醒体的灵知与命轮共鸣，今日适合直面深潜者的低语。','克苏鲁的潮汐退去片刻，忘却前夜的残光为你照亮道路，关键一击将得到回响。'],
+    上吉:['命轮映出群星裂隙，唤醒体循着微弱灵知前行，融灾中的暗潮会为坚定者让路。','在忘却前夜的钟声再次响起前，收拢力量、顺势出牌，古老梦境将留下馈赠。'],
+    中吉:['雾中的低语尚未成形，唤醒体宜以稳健节奏探索，命轮的微光足以守住今日航线。','旧神注视着沉默的牌面，别急于追逐深渊；完成眼前一步，便能从忘却中拾回线索。'],
+    小吉:['星尘落在命轮边缘，适合让唤醒体完成一件小事；不要惊动尚在沉睡的克苏鲁梦魇。','忘却前夜仍有微光，谨慎积攒资源与灵知，今日的小幅推进会成为下一次觉醒的引线。'],
+    平:['深海低语与命轮回声彼此抵消，唤醒体宜先观察再行动，暂缓把筹码投入未知的门扉。','克苏鲁的阴影掠过牌面，今日没有必须追逐的答案；守住阵线，等待忘却前夜翻页。'],
+    小凶:['命轮出现不稳定的裂纹，唤醒体应避免连续冒进；深潜之前先确认退路，别回应陌生低语。','旧神的梦境正在涨潮，今天更适合校准配装、收束灵知，避开高代价的未知仪式。'],
+    凶:['克苏鲁的潮声压过了星轨，唤醒体不宜强行叩开深渊之门；保存力量，等待命轮重新转动。','忘却前夜的雾幕尚未散去，今日先守住已有的线索与资源，不要让未知低语替你做决定。']
+  };
   const challengePool=['完成一次融灾挑战','使用今日界域完成一场战斗','不借用助战完成一场战斗','使用今日唤醒体完成一场战斗','完成一次高难关卡','尝试一套不同的命轮配置'];
   const recommendPool=['适合挑战高难融灾','适合整理命轮与密契配置','适合推进未完成关卡','适合积累强化资源','适合尝试新的界域队伍','适合完成日常与周常'];
   const almanacMap=[[/出行|移徙|赴任|入宅/,'推进探索或未完成关卡'],[/交易|纳财|开市|立券/,'刷取资源并整理仓库'],[/修造|动土|安床|竖柱/,'强化唤醒体、命轮与密契'],[/祈福|祭祀|求嗣/,'完成签到并尝试一次抽取'],[/会友|嫁娶|纳采|宴会/,'使用好友助战或调整配队'],[/求医|治病/,'补足防御与续航配置'],[/沐浴|扫舍|解除/,'清理日常和低消耗任务'],[/栽种|牧养|纳畜/,'培养角色并积累养成资源'],[/安葬|破土|启钻/,'暂缓高风险重开，优先收尾旧目标']];
@@ -24,7 +33,8 @@
     const wheelKeywords=[wheelKeywordPool[(seed>>>2)%wheelKeywordPool.length],wheelKeywordPool[(seed>>>7)%wheelKeywordPool.length]].filter((x,i,a)=>a.indexOf(x)===i);
     const keywords=[detail.realm,detail.type,detail.wheelRealm,detail.wheelRarity,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
-    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText:signTexts[sign],usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
+    const signPool=themedSignTexts[sign]||[signTexts[sign]],signText=signPool[(seed>>>21)%signPool.length];
+    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
     if(!data)return;
