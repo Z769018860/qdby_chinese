@@ -10,7 +10,7 @@ const ZH_FILE=`${OUT_DIR}/zh-CN.json`;
 const UA='qdby-chinese-morimens-sync/2.3';
 const API_ENDPOINTS=['https://cdn.huijiwiki.com/morimens/api.php','https://morimens.huijiwiki.com/api.php'];
 const PROFILE_LABELS={'姓名':'name','英文名':'englishName','界域':'realm','稀有度':'rarity','类型':'type','生日':'birthday','性别':'gender','身高':'height','体重':'weight','诺斯指数':'gnosticIndex','声优':'voiceActor','获取途径':'obtain','所属势力':'faction','阵营':'faction','别称':'aliases'};
-const VOICE_TITLE=/^(?:唤醒|获得提升(?:[·・:：\s-]*(?:一|二|三|四|I{1,4}|IV|V))?|升级(?:[·・:：\s-]*(?:一|二|三|四|I{1,4}|IV|V))?|启灵[·・:：\s-].+|同调率[·・:：\s-].+|好感度?[·・:：\s-].+|闲话[·・:：\s-]?.*|闲聊[·・:：\s-]?.*|触摸|触碰|关于.+|登录.*|主页.*|调查(?:开始|成功|中止|失败)|打击.*|防御.*|技能.*|灵知觉醒.*|狂气爆发.*|受击.*|死亡.*|胜利.*|失败.*|初见.*)$/i;
+const VOICE_TITLE=/^(?:角色语音[·・:：\s-]*|初次见面|编入队伍|助战|待机|问候|早安|午安|晚安|唤醒|获得提升(?:[·・:：\s-]*(?:一|二|三|四|I{1,4}|IV|V))?|升级(?:[·・:：\s-]*(?:一|二|三|四|I{1,4}|IV|V))?|启灵[·・:：\s-].+|同调率[·・:：\s-].+|好感度?[·・:：\s-].+|闲话[·・:：\s-]?.*|闲聊[·・:：\s-]?.*|触摸|触碰|关于.+|登录.*|主页.*|调查(?:开始|成功|中止|失败)|打击.*|防御.*|技能.*|灵知觉醒.*|狂气爆发.*|受击.*|死亡.*|胜利.*|失败.*|初见.*)$/i;
 const INVALID_VOICE_TITLE=/(?:调查|守密人)?等级达到\s*\d+\s*解锁|升格条件|等级|升级材料|材料|属性|人格深化|天赋|解锁条件/i;
 
 function decodeHtml(s=''){
@@ -70,18 +70,18 @@ function markdownRows(md=''){
 function markdownVoiceSection(md=''){
   const lines=String(md).split(/\r?\n/);let start=-1,startLevel=3;
   for(let i=0;i<lines.length;i++){
-    const m=lines[i].match(/^\s*(#{2,5})\s*语音(?:\s|$)/);if(m){start=i+1;startLevel=m[1].length;break}
+    const m=lines[i].match(/^\s*(#{2,5})\s*(?:角色)?(?:语音|台词)(?:\s|$)/);if(m){start=i+1;startLevel=m[1].length;break}
   }
-  if(start<0){for(let i=0;i<lines.length;i++){if(/^\s*语音\s*$/.test(clean(lines[i]))){start=i+1;break}}}
+  if(start<0){for(let i=0;i<lines.length;i++){if(/^(?:角色)?(?:语音|台词)$/.test(clean(lines[i]))){start=i+1;break}}}
   if(start<0)return '';
   let end=lines.length;
   for(let i=start;i<lines.length;i++){
-    const h=lines[i].match(/^\s*(#{1,5})\s+(.+)$/);if(h&&h[1].length<=startLevel&&!/^语音(?:\s|$)/.test(clean(h[2]))){end=i;break}
+    const h=lines[i].match(/^\s*(#{1,5})\s+(.+)$/);if(h&&h[1].length<=startLevel&&!/^(?:角色)?(?:语音|台词)(?:\s|$)/.test(clean(h[2]))){end=i;break}
   }
   return lines.slice(start,end).join('\n');
 }
 function htmlVoiceSection(html=''){
-  const source=String(html);const heading=/<h([2-5])\b[^>]*>[\s\S]*?语音[\s\S]*?<\/h\1>/ig;let m;
+  const source=String(html);const heading=/<h([2-5])\b[^>]*>[\s\S]*?(?:角色)?(?:语音|台词)[\s\S]*?<\/h\1>/ig;let m;
   while((m=heading.exec(source))){
     const level=Number(m[1]),start=heading.lastIndex;const next=new RegExp(`<h[1-${level}]\\b`,'ig');next.lastIndex=start;const n=next.exec(source);return source.slice(start,n?n.index:source.length)
   }
