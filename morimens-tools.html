@@ -23,6 +23,7 @@
     .hero{border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible!important}.hero:after{display:none!important}.hero h1{font-family:"STSong","Songti SC","SimSun","Noto Serif SC","Source Han Serif SC",serif;font-size:clamp(44px,6vw,76px);line-height:1;font-weight:900;letter-spacing:.16em;color:#f7f7f3;-webkit-text-stroke:.35px rgba(255,255,255,.62);text-shadow:0 1px 0 rgba(255,255,255,.28),0 2px 2px rgba(0,0,0,.88),0 6px 12px rgba(0,0,0,.78),0 0 20px rgba(245,247,250,.16);filter:contrast(1.12);white-space:nowrap}.panel h2,.dtideSection h3,.builderTitle{font-family:"STKaiti","KaiTi","Noto Serif SC","Source Han Serif SC",serif;letter-spacing:.035em}.heroMascot img{animation:none}
     .fortuneArtPanel{padding:0;border:0;border-radius:0;background:transparent}.fortuneArtPanel figcaption{display:none}.fortuneArtPanel img{height:350px}.fortuneRealmBadge{display:flex;align-items:center;justify-content:center;gap:7px;min-height:28px;margin:-2px 0 8px;color:#e7cf9d;font-size:13px;font-weight:700}.fortuneRealmBadge img{width:22px!important;height:22px!important;object-fit:contain!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))!important}
   </style>
+  <link rel="stylesheet" href="morimens-fortune.css?v=20260918.30">
 </head>
 <body class="morimensBooting">
   <div class="cgBackdrop isActive" id="morimensCgA" aria-hidden="true"></div><div class="cgBackdrop" id="morimensCgB" aria-hidden="true"></div><div class="cgBackdropVeil" aria-hidden="true"></div><div class="morimensDemoBadge">demo</div>
@@ -112,17 +113,28 @@
         <div class="note"><strong>当前精度边界：</strong>技能倍率、命轮/密契明确属性以及“易伤 +50% / 虚弱 -25%”来自公开游戏资料，可自动带入；客户端 AssetBundle 中能确认 <code>BattleApi.lua</code>、<code>SkillProcessed.lua</code>、<code>PVPSkillProcessed.lua</code>、<code>Damage</code>、<code>Power</code>、<code>Vulnerability</code> 等对象，但上传版本的 Lua 内容仍为字节码/封装状态。因此“力量插入位置、最终伤害/Power/易伤的精确先后、防御公式”仍保留为实验层级，页面会明确展示每一步。</div>
       </section>
 
-      <section class="panel fortuneCard" aria-labelledby="fortuneTitle">
-        <div class="fortuneVisual" id="fortuneVisual"><figure class="fortuneArtPanel"><img class="portrait" id="fortunePortrait" alt="" hidden><div class="fortuneRealmBadge" id="fortuneRealmBadge" hidden><img id="fortuneRealmIcon" alt=""><span id="fortuneRealmName"></span></div></figure><figure class="fortuneArtPanel"><img class="fortuneWheelArt" id="fortuneWheelPortrait" alt="" hidden></figure></div>
-        <div class="fortuneBody"><div class="fortuneDate" id="fortuneDate"></div><h2 id="fortuneTitle" class="fortuneName">今日唤醒体</h2><span class="fortuneLevel" id="fortuneLevel">等待抽签</span><p class="fortuneText" id="fortuneText">每天按日期固定生成一名唤醒体与一支娱乐签；同一天刷新页面不会改变结果。</p><div class="fortuneQuote" id="fortuneQuote">点击“生成今日签”开始。</div><div class="fortuneMeta"><div>幸运乘区<strong id="fortuneStat">—</strong></div><div>今日关键词<strong id="fortuneKeyword">—</strong></div></div><div class="fortuneActions"><button class="primaryBtn" id="fortuneBtn" type="button">生成今日签</button><button class="ghostBtn" id="rerollBtn" type="button">随机再抽一次</button><a class="ghostBtn" id="wikiBtn" href="https://morimens.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5" target="_blank" rel="noopener noreferrer">查看角色维基</a></div></div>
+      <section class="panel fortuneCard fortuneReport" aria-labelledby="fortuneReportTitle">
+        <header class="fortuneReportHead"><div><p>DAILY FATE ARCHIVE</p><h2 id="fortuneReportTitle">今日命运报告</h2></div><div><time class="fortuneDate" id="fortuneDate"></time><span class="fortuneSync" id="fortuneSync">读取本地快照…</span></div></header>
+        <div class="fortuneVisual" id="fortuneVisual">
+          <figure class="fortuneArtPanel fortuneCharacter"><div class="fortuneArtFrame"><img class="portrait" id="fortunePortrait" alt="" hidden></div><figcaption><strong id="fortuneName">今日唤醒体</strong><span class="fortuneRealmBadge" id="fortuneRealmBadge" hidden><img id="fortuneRealmIcon" alt=""><span id="fortuneRealmName"></span></span></figcaption></figure>
+          <figure class="fortuneArtPanel fortuneWheel"><div class="fortuneArtFrame"><img class="fortuneWheelArt" id="fortuneWheelPortrait" alt="" hidden></div><figcaption><small>今日命轮</small><strong id="fortuneWheelName">命轮</strong><span id="fortuneWheelKeywords"></span></figcaption></figure>
+        </div>
+        <div class="fortuneBody">
+          <section class="fortuneBlock"><h3>今日关键词</h3><div class="fortuneKeywords" id="fortuneKeyword"><span>等待生成</span></div></section>
+          <section class="fortuneBlock"><h3>今日幸运乘区</h3><div class="fortuneLuckGrid" id="fortuneLuckGrid"></div><strong class="fortuneTotal" id="fortuneStat">—</strong></section>
+          <div class="fortuneReportGrid"><section class="fortuneBlock"><h3>今日推荐</h3><div id="fortuneRecommend">根据今日唤醒体与命轮生成</div></section><section class="fortuneBlock"><h3>今日挑战</h3><div id="fortuneChallenge">完成一次融灾挑战</div></section></div>
+          <section class="fortuneBlock fortuneQuoteBlock"><h3>角色语录</h3><div class="fortuneQuote" id="fortuneQuote">正在读取角色语音快照…</div></section>
+          <span class="fortuneLevel" id="fortuneLevel">每日固定结果</span><p class="fortuneText" id="fortuneText">每日结果由日期、唤醒体、界域、类型与命轮共同生成；同一天刷新不会改变。</p>
+          <div class="fortuneActions"><button class="primaryBtn" id="fortuneBtn" type="button">查看今日运势</button><button class="ghostBtn" id="rerollBtn" type="button">随机再抽一次</button><a class="ghostBtn" id="wikiBtn" href="https://morimens.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5" target="_blank" rel="noopener noreferrer">查看角色维基</a></div>
+        </div>
       </section>
     </div>
 
   </main>
   <footer class="wrap footer"><div>© 2026 青灯不弈 · 忘忘看报</div><div>粉丝向免费工具；《忘却前夜》相关角色、图片与游戏素材版权归原权利方所有。</div></footer>
 
-      <script src="morimens-tools.js?v=20260918.27"></script>
+      <script src="morimens-fortune.js?v=20260918.30"></script>
+      <script src="morimens-tools.js?v=20260918.30"></script>
 </body>
 </html>
-
 
