@@ -23,7 +23,7 @@
     .hero{border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible!important}.hero:after{display:none!important}.hero h1{font-family:"STSong","Songti SC","SimSun","Noto Serif SC","Source Han Serif SC",serif;font-size:clamp(44px,6vw,76px);line-height:1;font-weight:900;letter-spacing:.16em;color:#f7f7f3;-webkit-text-stroke:.35px rgba(255,255,255,.62);text-shadow:0 1px 0 rgba(255,255,255,.28),0 2px 2px rgba(0,0,0,.88),0 6px 12px rgba(0,0,0,.78),0 0 20px rgba(245,247,250,.16);filter:contrast(1.12);white-space:nowrap}.panel h2,.dtideSection h3,.builderTitle{font-family:"STKaiti","KaiTi","Noto Serif SC","Source Han Serif SC",serif;letter-spacing:.035em}.heroMascot img{animation:none}
     .fortuneArtPanel{padding:0;border:0;border-radius:0;background:transparent}.fortuneArtPanel figcaption{display:none}.fortuneArtPanel img{height:350px}.fortuneRealmBadge{display:flex;align-items:center;justify-content:center;gap:7px;min-height:28px;margin:-2px 0 8px;color:#e7cf9d;font-size:13px;font-weight:700}.fortuneRealmBadge img{width:22px!important;height:22px!important;object-fit:contain!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))!important}
   </style>
-  <link rel="stylesheet" href="morimens-fortune.css?v=20260918.34">
+  <link rel="stylesheet" href="morimens-fortune.css?v=20260918.35">
 </head>
 <body class="morimensBooting">
   <div class="cgBackdrop isActive" id="morimensCgA" aria-hidden="true"></div><div class="cgBackdrop" id="morimensCgB" aria-hidden="true"></div><div class="cgBackdropVeil" aria-hidden="true"></div><div class="morimensDemoBadge">demo</div>
@@ -120,11 +120,12 @@
           <figure class="fortuneArtPanel fortuneWheel"><div class="fortuneArtFrame"><img class="fortuneWheelArt" id="fortuneWheelPortrait" alt="" hidden></div><figcaption><small>今日命轮</small><strong id="fortuneWheelName">命轮</strong><span id="fortuneWheelKeywords"></span></figcaption></figure>
         </div>
         <div class="fortuneBody">
+          <section class="fortuneOracle" aria-live="polite"><span>DAILY OMEN</span><strong id="fortuneLevel">等待启示</strong><p id="fortuneSignText">正在结合当期出场率解读今日签词……</p><div id="fortuneTarotName">塔罗 · 命运之轮</div></section>
           <section class="fortuneBlock"><h3>今日关键词</h3><div class="fortuneKeywords" id="fortuneKeyword"><span>等待生成</span></div></section>
           <section class="fortuneBlock"><h3>今日幸运乘区</h3><div class="fortuneLuckGrid" id="fortuneLuckGrid"></div><strong class="fortuneTotal" id="fortuneStat">—</strong></section>
           <div class="fortuneReportGrid"><section class="fortuneBlock"><h3>今日推荐</h3><div id="fortuneRecommend">根据今日唤醒体与命轮生成</div></section><section class="fortuneBlock"><h3>今日挑战</h3><div id="fortuneChallenge">完成一次融灾挑战</div></section></div>
           <section class="fortuneBlock fortuneQuoteBlock"><h3>角色语录</h3><div class="fortuneQuote" id="fortuneQuote">正在读取角色语音快照…</div></section>
-          <span class="fortuneLevel" id="fortuneLevel">每日固定结果</span><p class="fortuneText" id="fortuneText">签级结合当前融灾期唤醒体出场率排名与当日运势生成，仅供娱乐；角色、命轮名称和立绘均按同一数据 ID 绑定。</p>
+          <p class="fortuneText" id="fortuneText">签级结合当前融灾期唤醒体出场率排名与当日运势生成，仅供娱乐；角色、命轮名称和立绘均按同一数据 ID 绑定。</p>
           <div class="fortuneActions"><button class="primaryBtn" id="fortuneBtn" type="button">查看今日运势</button><button class="ghostBtn" id="rerollBtn" type="button">随机再抽一次</button><a class="ghostBtn" id="wikiBtn" href="https://morimens.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5" target="_blank" rel="noopener noreferrer">查看角色维基</a></div>
         </div>
       </section>
@@ -133,8 +134,7 @@
   </main>
   <footer class="wrap footer"><div>© 2026 青灯不弈 · 忘忘看报</div><div>粉丝向免费工具；《忘却前夜》相关角色、图片与游戏素材版权归原权利方所有。</div></footer>
 
-      <script src="morimens-fortune.js?v=20260918.34"></script>
-      <script src="morimens-tools.js?v=20260918.34"></script>
+      <script src="morimens-fortune.js?v=20260918.35"></script>
+      <script src="morimens-tools.js?v=20260918.35"></script>
 </body>
 </html>
-
