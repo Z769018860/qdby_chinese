@@ -242,7 +242,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     }));
     if(!headers.length||!body.length)throw new Error('当前筛选条件下没有可下载的表格');
     const title=season?.legacy?'旧版融灾高难出场率（来源：@却尘）':`第 ${season?.seasonId||''} 期 · ${$('dtideMatrixTitle')?.textContent||'融灾榜单'}`;
-    const status=season?.legacy?`排序：${headers.find((_,i)=>table.querySelectorAll('thead th')[i]?.querySelector('[data-legacy-sort]')?.textContent?.includes('↓'))?.lines.join(' ')||'当前排序'}`:`${$('dtideDifficulty')?.selectedOptions[0]?.textContent||''} · ${$('dtideRankScope')?.selectedOptions[0]?.textContent||''} · ${$('dtideTotalScore')?.selectedOptions[0]?.textContent||''} · ${$('dtideRateMode')?.selectedOptions[0]?.textContent||''}`;
+    const selectedLabel=id=>$(id)?.selectedOptions?.[0]?.textContent?.trim()||'';
+    const status=season?.legacy?`排序：${headers.find((_,i)=>table.querySelectorAll('thead th')[i]?.querySelector('[data-legacy-sort]')?.textContent?.includes('↓'))?.lines.join(' ')||'当前排序'}`:[selectedLabel('dtideDifficulty'),selectedLabel('dtideRankScope'),selectedLabel('dtideTotalScore'),$('dtideRateMode')?.value==='slot'?'角色槽位率':'队伍出场率'].filter(Boolean).join(' · ');
     button.disabled=true;button.textContent='正在生成图片…';
     try{
       const pad=36,nameWidth=240,colWidths=headers.map((h,i)=>i===0?nameWidth:Math.max(114,Math.min(205,Math.max(...h.lines.map(s=>s.length),0)*13+28))),width=pad*2+colWidths.reduce((a,b)=>a+b,0),rowHeight=46,headerY=142,headerHeight=78,footerHeight=108;
