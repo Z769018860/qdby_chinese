@@ -18,8 +18,8 @@
   const realmIcons={Chaos:'Icon_Career2_Hundun.webp',Aequor:'Icon_Career2_Shenhai.webp',Caro:'Icon_Career2_Xuerou.webp',Ultra:'Icon_Career2_Chaowei.webp'};
   const roleOrder=['Warden','Chorus','Assault'];
   const roleZh={Warden:'防御型',Chorus:'辅助型',Assault:'伤害型'};
-  const realmMediaBase='https://media.eremora.com/media/90a58fb3327e/thumb/icon/';
-  const realmIconSrc=name=>realmMediaBase+(realmIcons[name]||'Icon_Career2_Hundun.webp');
+  const realmIconSrc=name=>'assets/morimens/realms-svg/'+(realmIcons[name]||'Icon_Career2_Hundun.webp').replace(/\.webp$/i,'.svg');
+  function localAsset(src,kind){const raw=String(src||'');if(!raw)return '';const file=raw.split(/[\\/]/).pop().split('?')[0];if(kind==='wheel'&&/^Weapon_(Full|Mini)_/.test(file))return 'assets/morimens/wheels/'+(file.startsWith('Weapon_Mini_')?'Mini/':'')+file;if(kind==='covenant'&&/^Icon_Trinket_/.test(file))return 'assets/morimens/covenants/Icon/'+file;return raw;}
   let manifest=null,season=null,stats=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
   let flatTeamsCache=null,seasonLoadToken=0,renderFrame=0;
 
@@ -211,6 +211,13 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       const arrow=k=>k===sortKey?(asc?' ↑':' ↓'):' ↕',ratioBar=wheel=>{const total=wheel.stacks.reduce((sum,x)=>sum+x.count,0)||1;return `<div class="dtideRatioBar" title="${wheel.stacks.map(x=>`${wheelStackZh[x.key]} ${pct(x.count/total*100)}`).join(' · ')}">${wheel.stacks.filter(x=>x.count>0).map(x=>`<span style="width:${x.count/total*100}%;background:${wheelStackColors[x.key]}"></span>`).join('')}</div>`},host=$('dtideMatrix');if(!host)return;if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无命轮记录。</div>';return}
       host.innerHTML=`<table class="dtideTable"><thead><tr><th>命轮</th><th>叠位比例</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}" title="点击切换升降序">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="total" title="点击切换升降序">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map(wheel=>`<tr><td><div class="dtideChar">${wheel.image?`<img class="dtideGearIcon" src="${esc(wheel.image)}" alt="">`:''}<span>${esc(wheel.name||wheel.key)}</span></div></td><td>${ratioBar(wheel)}</td>${waves.map(w=>{const hit=(groups.get(w)?.wheels||[]).find(x=>x.key===wheel.key);return `<td class="dtideRate">${pct(hit?.teamRatePct||0)}</td>`}).join('')}<td>${wheel.total}</td></tr>`).join('')}</tbody></table>`;
       host.onclick=e=>{const btn=e.target.closest('[data-sort-key]');if(!btn)return;const key=String(btn.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix()};return;
+    }
+    if(entity==='creation'){
+      const creations=new Map();
+      for(const {team} of all)for(const item of team.creations||[]){const key=String(item.id??item.name??'');if(!key)continue;const old=creations.get(key)||{key,name:item.name||key,image:item.image||'',count:0};old.count++;if(!old.image&&item.image)old.image=item.image;creations.set(key,old)}
+      const rows=[...creations.values()].sort((a,b)=>b.count-a.count),total=all.length||1;
+      host.innerHTML=`<table class="dtideTable"><thead><tr><th>造物</th><th>出场比例</th><th>总出现</th></tr></thead><tbody>${rows.map(x=>`<tr><td><div class="dtideChar">${x.image?`<img class="dtideGearIcon" src="${esc(localAsset(x.image,'creation'))}" alt="" onerror="this.hidden=true">`:''}<span>${esc(x.name)}</span></div></td><td class="dtideRate">${pct(x.count/total*100)}</td><td>${x.count}</td></tr>`).join('')}</tbody></table>`||'<div class="dtideEmpty">当前口径暂无造物记录。</div>';
+      return;
     }
     const union=new Map();
     for(const [,g] of groups)for(const c of g.characters)union.set(c.key,c);
