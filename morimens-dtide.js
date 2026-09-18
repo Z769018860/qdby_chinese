@@ -1,7 +1,8 @@
 (()=>{
   const $=id=>document.getElementById(id);
   const nativeAtob=window.atob.bind(window);window.atob=value=>{const clean=String(value).replace(/[^A-Za-z0-9+/_-]/g,'').replace(/-/g,'+').replace(/_/g,'/');return nativeAtob(clean+'='.repeat((4-clean.length%4)%4))};
-  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const esc=s=>String(decodeMojibake(s)??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const decodeMojibake=value=>{const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(c=>c.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}};
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const rankCaps=[50,200,500,1000];
@@ -359,3 +360,4 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function boot(){injectStyle();setupTabs();document.addEventListener('click',e=>{const choice=e.target.closest('.dtideCharacterChoice');if(choice){const selected=choice.classList.toggle('isSelected');choice.setAttribute('aria-pressed',String(selected));return}const chip=e.target.closest('.dtideFilterChip');if(!chip)return;chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender()});window.addEventListener('morimens-language-change',()=>{if($('morimensBuilderTab')){$('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';$('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard'}relocalizeControls()})}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
+
