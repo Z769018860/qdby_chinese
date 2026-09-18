@@ -1,4 +1,5 @@
 (()=>{
+  if(window.MorimensDtideRenderer==='matrix-v2')return;
   const $=id=>document.getElementById(id);
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
