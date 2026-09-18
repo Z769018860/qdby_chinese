@@ -20,9 +20,9 @@
   function scoreRange(){
     const raw=String($('dtideTotalScore')?.value||'all');
     if(raw==='all'||raw==='0')return null;
-    const [lo,hi]=raw.split(':').map(Number);
-    if(Number.isFinite(lo)&&Number.isFinite(hi))return [lo,hi];
-    const min=Number(raw);return Number.isFinite(min)&&min>0?[min,Infinity]:null;
+    const parts=raw.split(':');
+    if(parts.length===2){const lo=parts[0]===''?-Infinity:Number(parts[0]),hi=parts[1]===''?Infinity:Number(parts[1]);if(!Number.isNaN(lo)&&!Number.isNaN(hi))return [lo,hi]}
+    const exact=Number(raw);return Number.isFinite(exact)&&exact>=0?[exact,exact]:null;
   }
   function scoreMatches(record){
     const range=scoreRange();if(!range)return true;
@@ -246,6 +246,7 @@
   async function loadForSeason(id){
     const entry=manifest?.availableSeasons?.find(x=>String(x.seasonId)===String(id));
     if(!entry){usage=null;usageStats=null;return false}
+    if(entry.legacy||entry.coverageMode==='legacy-spreadsheet'){usage=null;usageStats=null;detailUsage=null;detailStats=null;return false}
     try{
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
       activeSeason=Number(id);await loadRankMap(id);usage=await dataset((current||entry).path);
@@ -279,4 +280,3 @@
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
-
