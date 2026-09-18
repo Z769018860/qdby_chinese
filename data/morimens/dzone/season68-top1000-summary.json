@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "season_id": 68,
+    "period": 68,
+    "activity_id": 83308,
+    "generated_at": "1789353563",
+    "original_file": "dzone-season-83308-top1000-slim.json.gz"
+  },
+  "report": {
+    "requested": 1000,
+    "exported": 1000,
+    "duplicate_uids": []
+  },
+  "aggregation": {
+    "player_count": 1000,
+    "note": "Structured aggregation generated from provided season 68 top1000 JSON package."
+  }
+}
