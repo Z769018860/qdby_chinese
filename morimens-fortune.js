@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
-  const cacheKey='morimens.daily-fortune.v4';
+  const cacheKey='morimens.daily-fortune.v5';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
@@ -34,8 +34,22 @@
     const keywords=[detail.realm,detail.type,detail.wheelRealm,detail.wheelRarity,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
     const signPool=themedSignTexts[sign]||[signTexts[sign]],themedText=signPool[(seed>>>21)%signPool.length];
-    // 优先使用 Wiki 中“闲话·关于守密人”等头像/档案语句；没有同步内容时才使用主题化签词。
-    const signText=detail.quoteContent||themedText;
+    // 每日签只抽取“守密人头像”页面头像下方短句；角色语音仍仅显示在下方“角色语录”区，避免重复。
+    const avatarCaptionPool=[
+      '「不允许你们靠近守密人半步……！」',
+      '「雾会遮住道路，却遮不住仍在跳动的灵知。」',
+      '「若听见深海的回声，请先确认身后的灯还亮着。」',
+      '「不要追逐每一道低语，真正的答案往往藏在沉默里。」',
+      '「在旧日星尘落下之前，把最后一枚筹码握紧。」',
+      '「守住界域的边界，别让未知替你决定方向。」',
+      '「醒来吧，记忆尚未完全沉没，航线仍在雾中。」',
+      '「命运不是赠礼；每一次选择都要支付代价。」',
+      '「当潮汐退去，留下的才是可以依靠的证据。」',
+      '「别回头看那扇门，门后的注视从未离开。」',
+      '「让理智先行一步，再把勇气交给深渊。」',
+      '「只要灯火尚存，忘却前夜就还没有结束。」'
+    ];
+    const signText=avatarCaptionPool[(seed>>>21)%avatarCaptionPool.length]||themedText;
     return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
