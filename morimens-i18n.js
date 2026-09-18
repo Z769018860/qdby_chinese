@@ -2,7 +2,7 @@
   const KEY='morimens.language';
   const ZH='zh-CN',EN='en';
   const dict={
-    '← 返回个人工具箱':'← Back to Toolbox','忘忘看报':'Wangwang Report',
+    '← 返回个人工具箱':'← Back to Toolbox','忘忘看报':'Morimens Weekly',
     '忘却前夜伤害计算 & 每日签':'Morimens Damage Calculator & Daily Fortune',
     '角色、技能和每日签资料改为优先读取由 GitHub Actions 从 SKeyDB 同步到本站的静态快照；角色卡面与头像也保存为本站本地静态资源，避免灰机图片接口失效。伤害公式仍保留客户端日志校准层。':'Character, skill, and Daily Fortune data now prioritize static snapshots synchronized from SKeyDB by GitHub Actions. Character cards and portraits are mirrored locally, while damage formulas retain the client-log calibration layer.',
     '角色 → 技能自动倍率':'Character → skill auto scaling',
@@ -32,12 +32,12 @@
     '稀有度':'Rarity','界域':'Realm','类型':'Type','阵营':'Faction','生日':'Birthday','声优':'Voice actor',
     '融灾榜单':'D-Zone Leaderboard','伤害计算器':'Damage Calculator','更新日志':'Changelog','关于':'About',
     '公告：':'Notice:','目前只有融灾榜单在维护，其他标签为预留。因为数据更新不稳定，正在与 Eremora 作者沟通合作，所以暂时为 demo 版本。所有数据仅供娱乐，转载请说明来源。':'Only the D-Zone leaderboard is actively maintained; the other tabs are previews. Data synchronization is still being stabilized with the Eremora author, so this remains a demo. Data is for entertainment only; please credit the source when reposting.',
-    '关于忘忘看报':'About Wangwang Report','本工具箱为《忘却前夜》玩家制作的粉丝向项目，免费使用，不进行任何商业化运营。':'This fan-made Morimens toolbox is free to use and has no commercial operation.','非官方 · 非商业':'Unofficial · Non-commercial',
+    '关于忘忘看报':'About Morimens Weekly','本工具箱为《忘却前夜》玩家制作的粉丝向项目，免费使用，不进行任何商业化运营。':'This fan-made Morimens toolbox is free to use and has no commercial operation.','非官方 · 非商业':'Unofficial · Non-commercial',
     '数据与资料来源':'Data & Sources','特别说明':'Disclaimer','GitHub · 半成品 MMA 工具':'GitHub · Work-in-progress MMA Tool','制作者':'Creator',
     '感谢 Eremora 提供融灾榜单与挑战记录；感谢 dansa/SKeyDB 提供角色、技能、命轮及密契等结构化数据；感谢 忘却前夜中文维基 提供中文名称、资料与文本参考。':'Thanks to Eremora for D-Zone rankings and challenge records, dansa/SKeyDB for structured character, skill, wheel, and covenant data, and the Chinese Morimens Wiki for localized names and reference material.',
     '本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。':'This is not an official product and has no affiliation or commercial relationship with the game publisher or the data sites above. All Morimens characters, images, text, and assets belong to their respective rights holders. This site is for community reference only.',
     '如果有大佬愿意继续做，可以提供一点微不足道的帮助：':'Contributions to continue this work are welcome:','B站：':'Bilibili: ',
-    '记录忘忘看报的重要功能与重大更新。':'Major features and updates for Wangwang Report.','持续更新':'Updated continuously','当前已有功能':'Current Features',
+    '记录忘忘看报的重要功能与重大更新。':'Major features and updates for Morimens Weekly.','持续更新':'Updated continuously','当前已有功能':'Current Features',
     '2026-09-18 · 搜索与国际化':'2026-09-18 · Search & Internationalization','搜索配队的角色选择改为支持桌面端和移动端的头像多选；新增波次筛选；实装整页中英文切换；新增更新日志标签。':'Character selection in Team Search now uses multi-select portraits on desktop and mobile; added wave filtering, full-page Chinese/English switching, and a Changelog tab.',
     '2026-09-18 · 榜单体验':'2026-09-18 · Leaderboard Experience','恢复旧版稳定页面；增加界域与唤醒体类型筛选、命轮叠位比例条、角色详细启灵颜色、固定范围助战率热力图，并优化多次切换后的缓存与渲染。':'Restored the stable classic layout; added realm and awakener-type filters, wheel stack ratio bars, colored Enlighten details, a fixed-scale assist-rate heatmap, and more reliable caching and rendering after repeated switching.',
     '2026-09-17 · 数据与详情':'2026-09-17 · Data & Details','接入多期融灾数据，提供角色、命轮、造物逐波出场率；角色可展开查看启灵、常用队伍、命轮与密契；角色立绘、命轮和造物可跳转中文维基。':'Added multi-season D-Zone data and per-wave character, wheel, and creation rates. Character rows expand to Enlighten, common teams, wheels, and covenants; character art, wheels, and creations link to the Chinese Wiki.',
