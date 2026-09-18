@@ -14,11 +14,12 @@
   const wheelStackZh={stack0_2:'0～2叠',stack3_11:'3叠～+11',stack12:'+12'};
   const wheelStackColors={stack0_2:'#8c97a8',stack3_11:'#62b7ff',stack12:'#d978d0'};
   const realmOrder=['Chaos','Aequor','Caro','Ultra'];
-  const realmZh={Chaos:'混沌',Aequor:'深海',Caro:'血肉',Ultra:'超越'};
+  const realmZh={Chaos:'混沌',Aequor:'深海',Caro:'血肉',Ultra:'超维'};
   const realmIcons={Chaos:'Icon_Career2_Hundun.webp',Aequor:'Icon_Career2_Shenhai.webp',Caro:'Icon_Career2_Xuerou.webp',Ultra:'Icon_Career2_Chaowei.webp'};
   const roleOrder=['Warden','Chorus','Assault'];
   const roleZh={Warden:'防御型',Chorus:'辅助型',Assault:'伤害型'};
-  const realmIconSrc=name=>`data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#182234" stroke="#d9b36c" stroke-width="2"/><path d="M16 5 25 16 16 27 7 16Z" fill="${name==='Chaos'?'#b86b76':name==='Aequor'?'#58a9d1':name==='Caro'?'#a86b86':'#9879cf'}" opacity=".9"/><circle cx="16" cy="16" r="4" fill="#f7e8bd"/></svg>`)}`;
+  const realmMediaBase='https://media.eremora.com/media/90a58fb3327e/thumb/icon/';
+  const realmIconSrc=name=>realmMediaBase+(realmIcons[name]||'Icon_Career2_Hundun.webp');
   let manifest=null,season=null,stats=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
   let flatTeamsCache=null,seasonLoadToken=0,renderFrame=0;
 
