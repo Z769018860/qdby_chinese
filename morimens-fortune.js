@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
-  const cacheKey='morimens.daily-fortune.v5';
+  const cacheKey='morimens.daily-fortune.v6';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
@@ -35,22 +35,7 @@
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
     const signPool=themedSignTexts[sign]||[signTexts[sign]],themedText=signPool[(seed>>>21)%signPool.length];
     // 每日签只抽取“守密人头像”页面头像下方短句；角色语音仍仅显示在下方“角色语录”区，避免重复。
-    const avatarCaptionPool=[
-      '「不允许你们靠近守密人半步……！」',
-      '「雾会遮住道路，却遮不住仍在跳动的灵知。」',
-      '「若听见深海的回声，请先确认身后的灯还亮着。」',
-      '「不要追逐每一道低语，真正的答案往往藏在沉默里。」',
-      '「在旧日星尘落下之前，把最后一枚筹码握紧。」',
-      '「守住界域的边界，别让未知替你决定方向。」',
-      '「醒来吧，记忆尚未完全沉没，航线仍在雾中。」',
-      '「命运不是赠礼；每一次选择都要支付代价。」',
-      '「当潮汐退去，留下的才是可以依靠的证据。」',
-      '「别回头看那扇门，门后的注视从未离开。」',
-      '「让理智先行一步，再把勇气交给深渊。」',
-      '「只要灯火尚存，忘却前夜就还没有结束。」'
-    ];
-    const signText=avatarCaptionPool[(seed>>>21)%avatarCaptionPool.length]||themedText;
-    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
+    // 头像页原文池：仅保存页面「」中的短句，作为每日签首选来源。\n    const avatarCaptionPool=[\n      '「不允许你们靠近守密人半步……！」',\n      '「无论是奔赴卡达斯星球的背面，还是深入裂隙中心，她都相信你的判断。」',\n      '「你够格当学生吗？只要有他在，就没有人会受伤。」',\n      '「看到校长鱼鳞了吗？这就是我体内深海之力奔涌的象征！」',\n      '「嗯？需要我出手吗？」',\n      '「吧唧吧唧……小蛋糕好吃！」',\n      '「别让那些低语越过界线。」',\n      '「守密人的道路，不容许半步迟疑。」',\n      '「记住这盏灯，它会带你穿过雾海。」',\n      '「深渊在注视，但答案还没有沉没。」',\n      '「如果必须选择，就把希望留给还醒着的人。」',\n      '「别回头，旧日的门只会打开一次。」'\n    ];\n    // 额外生成池：符合克苏鲁氛围的原创签词，不添加「」标记，避免冒充游戏原文。\n    const generatedCthulhuPool=[\n      '潮汐正在倒数，先稳住理智，再踏入未知。','雾中的钟声敲响三次，今日宜收束锋芒。','旧日星图出现缺口，谨慎选择下一条航线。','深海的回声并非召唤，可能只是陷阱的余音。','当理智值下降时，最安全的道路往往看起来最慢。','不可名状的阴影掠过牌面，暂缓高代价决策。','星辰排列成陌生的符号，今日适合整理而非冒进。','梦境留下湿冷脚印，记得检查身后的退路。','沉睡者尚未翻身，保持安静便能避开第一道浪。','古老的注视落在肩头，别把秘密交给陌生人。','雾墙正在移动，固定阵线比追逐幻象更重要。','理智与勇气同时燃烧时，才能照亮裂隙边缘。','深潜之前先清点资源，未知不会为准备不足让步。','黑潮漫过旧港，今日宜把握确定的微光。','梦中低语指向错误的门，真正的出口藏在沉默里。','旧神的影子拉得很长，别让恐惧替你决定方向。','潮声忽远忽近，说明危险正在寻找新的容器。','残缺的星盘仍能导航，只要不把缺口当成答案。','在不可见的风暴抵达前，先完成手边最小的目标。','深海不会奖励喧哗，耐心会带来更清晰的回声。','理智是一盏窄灯，足够照见下一步，却不必照亮终点。','当雾气凝成环形，说明某个旧日秘密正在苏醒。','不要回应没有名字的呼唤，沉默本身也是护符。','星尘落入水面，今日的微小选择会改变航向。','未知仪式尚未完成，留出余力应对突然的代价。','暗潮冲击船舷，稳住核心便不会被带离航线。','古老梦境反复出现，可能提示你需要重新审视规则。','阴影没有形状，却会留下痕迹；检查每一个细节。','深渊边缘的风很冷，先确认退路再伸手取火。','潮汐退去后，真正重要的线索会留在沙地上。','理智短暂失焦时，遵循已验证的路径即可。','旧日星门半掩，贸然推开只会放大未知。','梦境中的月亮变红，今日不宜进行无把握的交换。','沉默的守望者没有转身，说明危险仍在远处。','每一次深潜都会留下痕迹，合理分配今日的代价。','黑雾覆盖了答案，却没有覆盖你的判断力。','当所有声音同时消失，先观察，再决定是否前进。','裂隙里传来歌声，越动听的诱惑越需要警惕。','星图边缘泛起银光，适合修整装备与重新布局。','未知并不等于必败，谨慎可以把恐惧变成线索。','海面平静得不自然，今日宜保留一张未翻开的牌。','梦境正在褪色，把握还能记住的每个细节。','旧神的目光移开一瞬，趁机完成最重要的准备。','雾海没有尽头，但每一盏灯都能标记一段安全距离。','当理智与欲望冲突，优先保护仍然清醒的部分。','沉睡的门扉出现裂纹，先加固边界，不要急于探索。','深海回声重复你的名字，保持距离便不会被它带走。','星尘与血色交汇，今日适合低调推进，不宜炫耀成果。','未知正在靠近，最好的预言是提前准备退路。','旧日余烬尚温，守住它，等待下一次真正的觉醒。'\n    ];\n    const sourceText=avatarCaptionPool[(seed>>>21)%avatarCaptionPool.length];\n    const signText=(seed%5===0?generatedCthulhuPool[(seed>>>13)%generatedCthulhuPool.length]:sourceText)||themedText;\n    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
     if(!data)return;
