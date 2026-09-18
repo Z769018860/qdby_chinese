@@ -9,6 +9,17 @@
   "currentSeason": 69,
   "availableSeasons": [
     {
+      "seasonId": "legacy-high-difficulty",
+      "period": "旧版融灾高难出场率",
+      "recordCount": 59,
+      "leaderboardEntryCount": null,
+      "complete": true,
+      "coverageMode": "legacy-spreadsheet",
+      "path": "legacy-high-difficulty.json",
+      "statsPath": "legacy-high-difficulty.json",
+      "source": "却尘"
+    },
+    {
       "seasonId": 69,
       "period": "2026-09-14 – 2026-09-28",
       "recordCount": 910,

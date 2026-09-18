@@ -231,7 +231,20 @@
 
 const dtideHeatStyle=(rate,max=0)=>{const safeMax=Math.max(Number(max)||0,Number.EPSILON),t=Math.max(0,Math.min(1,Number(rate||0)/safeMax)),h=Math.round(215-215*t),a=(.52*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
 function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'total-desc';const m=spec.match(/^wave(\d+)-(asc|desc)$/);let av=a.total||a.count||0,bv=b.total||b.count||0;if(m){const w=Number(m[1]),g=groups?.get(w),find=x=>g?.characters?.find(y=>y.key===x.key)?.count||0;av=find(a);bv=find(b)}const d=bv-av;return spec.endsWith('-asc')?-d:d||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')}
+  function renderLegacyMatrix(){
+    const host=$('dtideMatrix'),legacy=season?.legacyRates;if(!host||!legacy)return false;
+    const rows=legacy.flatMap((period,index)=>Object.entries(period.rates||{}).map(([name,rate])=>({name,rate:Number(rate)||0,wave:index+1,label:period.label}))),max=Math.max(...rows.map(x=>x.rate),0),names=[...new Set(rows.map(x=>x.name))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+    const periods=legacy.map((x,i)=>({wave:i+1,label:x.label}));
+    const cell=(name,w)=>rows.find(x=>x.name===name&&x.wave===w)?.rate||0;
+    host.innerHTML=`<table class="dtideTable"><thead><tr><th>角色</th>${periods.map(x=>`<th>第${x.wave}期<br><small>${esc(x.label)}</small></th>`).join('')}<th>平均出场率</th></tr></thead><tbody>${names.map(name=>{const info=characterInfo(name,{name,skeydbId:season.characterMap?.[name]?.skeydbId,image:season.characterMap?.[name]?.image});const vals=periods.map(x=>cell(name,x.wave)),avg=vals.reduce((a,b)=>a+b,0)/(vals.length||1);return `<tr><td><div class="dtideRankedItem"><span class="dtideChar">${info.image?`<img src="${esc(info.image)}" alt="" loading="lazy">`:''}<span>${esc(info.name||name)}</span></span></div></td>${vals.map(v=>`<td class="dtideRate dtideHeat" style="${dtideHeatStyle(v,max)}">${pct(v)}</td>`).join('')}<td class="dtideRate">${pct(avg)}</td></tr>`}).join('')}</tbody></table>`;
+    if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='角色逐期高难出场率';
+    if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率 · 来源：却尘';
+    if($('dtideSummary'))$('dtideSummary').innerHTML=[['数据来源','却尘'],['统计角色',names.length],['统计期次',periods.length],['指标','高难出场率']].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');
+    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML=`<div class="dtideNotice">旧版融灾高难出场率数据来源：<a href="${esc(season.sourceUrl)}" target="_blank" rel="noopener noreferrer">在线文档</a>。</div>`;
+    return true;
+  }
   function renderMatrix(){
+    if(season?.legacy&&renderLegacyMatrix())return;
     const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';
     const analysis=currentAnalysis(),all=analysis.rows,waves=analysis.waves,groups=analysis.groups,host=$('dtideMatrix');if(!host)return;
     const legend=$('dtideRatioLegend');
