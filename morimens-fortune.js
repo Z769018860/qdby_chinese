@@ -49,7 +49,7 @@
       '「让理智先行一步，再把勇气交给深渊。」',
       '「只要灯火尚存，忘却前夜就还没有结束。」'
     ];
-    const signText=avatarCaptionPool[(seed>>>21)%avatarCaptionPool.length]||themedText;
+    const signText=(avatarCaptionPool[(seed>>>21)%avatarCaptionPool.length]||themedText).replace(/「[^」]*限时纪行[^」]*」/g,'').trim()||themedText;
     return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
