@@ -157,7 +157,9 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
     parser.add_argument("--root", default=".")
-    parser.add_argument("--chunk-size", type=int, default=700_000)
+    # Keep each Base64 text file comfortably below connector/content API
+    # response limits.  A 180 KiB binary slice becomes roughly 240 KiB text.
+    parser.add_argument("--chunk-size", type=int, default=180_000)
     args = parser.parse_args()
     root = Path(args.root).resolve()
     source = Path(args.input).resolve()

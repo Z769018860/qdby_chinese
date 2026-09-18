@@ -119,7 +119,7 @@
     "历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。",
     "榜单索引：Eremora 客户端“Show more”实际调用 /api/rank?board=abyss&start={start}&end={end}，本站按 50 条一页同步至 Top 1000；若 1–50 接口被 Cloudflare 拦截则回退同次渲染榜单快照，仅缺失名次为 0 时标记完整。",
     "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。",
-    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
+    "启灵分组按原始数据保留 E0、E1、E2、E3、OE、AA 六类；筛选、图例、分布横条和角色详情使用同一分类与颜色。",
     "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
     "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。"
   ],
@@ -151,16 +151,28 @@
     ],
     "enlightenmentGroups": [
       {
+        "id": "e0",
+        "label": "E0"
+      },
+      {
+        "id": "e1",
+        "label": "E1"
+      },
+      {
+        "id": "e2",
+        "label": "E2"
+      },
+      {
         "id": "e3",
-        "label": "最高三启"
+        "label": "E3"
       },
       {
-        "id": "overlimit",
-        "label": "最高超限"
+        "id": "oe",
+        "label": "OE"
       },
       {
-        "id": "law12",
-        "label": "最高+12法则"
+        "id": "aa",
+        "label": "AA"
       }
     ],
     "coverage": [
