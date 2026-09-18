@@ -73,10 +73,8 @@
   }
   function wheelFor(rec){
     if(!wheelCatalog.length)return null;
-    const owned=wheelCatalog.filter(w=>w.ownerAwakenerId===rec.id);
-    const realm=wheelCatalog.filter(w=>w.realm===rec.realm&&w.rarity==='SSR');
-    const pool=owned.length?owned:(realm.length?realm:wheelCatalog);
-    return pool[hash(`${todayKey()}-${rec.id}-wheel`)%pool.length];
+    // 命轮每日签独立抽取，不再按角色归属或界域筛选。
+    return wheelCatalog[hash(`${todayKey()}-wheel`)%wheelCatalog.length];
   }
   function canonicalWheel(wheel){
     if(!wheel)return null;
@@ -116,7 +114,7 @@
     const values=[loc.rarity,loc.realm,loc.type,loc.faction,loc.birthday,loc.voiceActor];
     const p=$('skeydbProfile');if(p)p.innerHTML=labels.map((k,i)=>[k,values[i]]).filter(x=>x[1]).map(([k,v])=>`<div style="padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:11px;color:#8f9caf">${escape(k)}<strong style="display:block;color:#e5e7eb;margin-top:3px">${escape(v)}</strong></div>`).join('');
     const wiki=$('wikiBtn'),zh=zhFor(rec);if(wiki){const title=zh?.name||loc.name;wiki.href=zh?.source?.url||`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(title)}`}
-    window.dispatchEvent(new CustomEvent('morimens-fortune-render',{detail:{id:rec.id,name:loc.name,realm:loc.realm,type:loc.type,wheelId:wheel?.id||'',wheelName,usage:usageFor(rec),quoteTitle:quotes[quoteIndex]?.title||''}}));
+    window.dispatchEvent(new CustomEvent('morimens-fortune-render',{detail:{id:rec.id,name:loc.name,realm:loc.realm,type:loc.type,wheelId:wheel?.id||'',wheelName,wheelRealm:wheel?.realm||'',wheelRarity:wheel?.rarity||'',wheelKeywords:wheel?.keywords||[],usage:usageFor(rec),quoteTitle:quotes[quoteIndex]?.title||''}}));
     renderSourceStatus();
   }
   function renderToday(){if(!db?.records?.length)return;render(db.records[hash(todayKey())%db.records.length])}

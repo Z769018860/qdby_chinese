@@ -14,9 +14,15 @@
   let almanacToday=null;
 
   function build(detail){
-    const seed=hash(`${dateKey()}-${detail.id}-${detail.wheelName}`),usage=detail.usage||{},rankScore=usage.rank&&usage.total>1?100*(usage.total-usage.rank)/(usage.total-1):50,dailyScore=30+seed%71,fortuneScore=Math.round(rankScore*.68+dailyScore*.32),sign=fortuneScore>=88?'大吉':fortuneScore>=76?'上吉':fortuneScore>=64?'中吉':fortuneScore>=52?'小吉':fortuneScore>=40?'平':fortuneScore>=28?'小凶':'凶',scores={战斗:Math.min(100,Math.round(45+fortuneScore*.45+(seed>>>3)%12)),抽取:Math.min(100,Math.round(35+fortuneScore*.4+(seed>>>7)%18)),探索:Math.min(100,Math.round(42+fortuneScore*.43+(seed>>>11)%15)),强化:Math.min(100,Math.round(40+fortuneScore*.42+(seed>>>15)%16))};
+    const seed=hash(`${dateKey()}-${detail.id}-${detail.wheelName}`),usage=detail.usage||{},rankScore=usage.rank&&usage.total>1?100*(usage.total-usage.rank)/(usage.total-1):50,dailyScore=30+seed%71;
+    // 命轮独立抽取后，其稀有度、界域和词条共同参与今日签级。
+    const rarityBonus=detail.wheelRarity==='SSR'?14:detail.wheelRarity==='SR'?8:detail.wheelRarity==='R'?4:0;
+    const realmBonus=detail.wheelRealm?((hash(detail.wheelRealm)%9)+2):0;
+    const keywordBonus=Math.min(6,(detail.wheelKeywords||[]).filter(Boolean).length*2);
+    const wheelScore=rarityBonus+realmBonus+keywordBonus;
+    const fortuneScore=Math.min(100,Math.round(rankScore*.55+dailyScore*.25+wheelScore*.2)),sign=fortuneScore>=88?'大吉':fortuneScore>=76?'上吉':fortuneScore>=64?'中吉':fortuneScore>=52?'小吉':fortuneScore>=40?'平':fortuneScore>=28?'小凶':'凶',scores={战斗:Math.min(100,Math.round(45+fortuneScore*.45+(seed>>>3)%12)),抽取:Math.min(100,Math.round(35+fortuneScore*.4+(seed>>>7)%18)),探索:Math.min(100,Math.round(42+fortuneScore*.43+(seed>>>11)%15)),强化:Math.min(100,Math.round(40+fortuneScore*.42+(seed>>>15)%16))};
     const wheelKeywords=[wheelKeywordPool[(seed>>>2)%wheelKeywordPool.length],wheelKeywordPool[(seed>>>7)%wheelKeywordPool.length]].filter((x,i,a)=>a.indexOf(x)===i);
-    const keywords=[detail.realm,detail.type,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
+    const keywords=[detail.realm,detail.type,detail.wheelRealm,detail.wheelRarity,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
     return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText:signTexts[sign],usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
