@@ -3,28 +3,15 @@
   "seasonId": 68,
   "recordCount": 1000,
   "source": "author-provided D-Zone Top1000 slim export",
-  "revision": "26f7532a789e50d68a1c536cf8967c382b546ffe068615bb68db2e1c52298e5a",
-  "generatedAt": "2026-09-18T03:02:17.813558Z",
+  "revision": "ace444766f8f6c54e1385319cd41649eded5178c16fe68c4b8313a73d5a35b50",
+  "generatedAt": "2026-09-18T03:20:29.238041Z",
   "chunks": [
     "data/morimens/eremora/usage/68-local-gzip/chunk-000.b64",
     "data/morimens/eremora/usage/68-local-gzip/chunk-001.b64",
     "data/morimens/eremora/usage/68-local-gzip/chunk-002.b64",
     "data/morimens/eremora/usage/68-local-gzip/chunk-003.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-004.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-005.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-006.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-007.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-008.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-009.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-010.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-011.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-012.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-013.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-014.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-015.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-016.b64",
-    "data/morimens/eremora/usage/68-local-gzip/chunk-017.b64"
+    "data/morimens/eremora/usage/68-local-gzip/chunk-004.b64"
   ],
   "chunkSize": 700000,
-  "compressedBytes": 12264580
+  "compressedBytes": 3195530
 }

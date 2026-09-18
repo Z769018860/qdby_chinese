@@ -51,7 +51,39 @@ def member(row: dict, catalog: dict) -> dict:
     for item, original in zip(normalized.get("covenants") or [], row.get("suits") or []):
         item["image"] = media_path(original.get("image")) or item.get("image")
     normalized["covenant"] = (normalized.get("covenants") or [None])[0]
-    return normalized
+    # The leaderboard never renders equipment attributes, full enlightenment
+    # descriptions, combat stats or trinket rows.  Keeping them made a single
+    # season expand to hundreds of MB and froze the browser during JSON.parse.
+    # Preserve only fields consumed by morimens-dtide.js.
+    return {
+        "id": normalized.get("id"),
+        "name": normalized.get("name"),
+        "canonicalName": normalized.get("canonicalName"),
+        "skeydbId": normalized.get("skeydbId"),
+        "ingameId": normalized.get("ingameId"),
+        "image": normalized.get("image"),
+        "realm": normalized.get("realm"),
+        "role": normalized.get("role"),
+        "rarity": normalized.get("rarity"),
+        "level": normalized.get("level"),
+        "potencyLevel": normalized.get("potencyLevel"),
+        "breakLevel": normalized.get("breakLevel"),
+        "enlightenLevel": normalized.get("enlightenLevel"),
+        "enlightenCount": normalized.get("enlightenCount"),
+        "enlightenMilestone": normalized.get("enlightenMilestone"),
+        "progression": normalized.get("progression"),
+        "wheels": [
+            {key: item.get(key) for key in ("id", "name", "image", "rarity", "slot", "level", "enhanceLevel", "breakLevel")}
+            for item in normalized.get("wheels") or []
+        ],
+        "covenants": [
+            {key: item.get(key) for key in ("id", "name", "image", "count")}
+            for item in normalized.get("covenants") or []
+        ],
+        "covenantScore": normalized.get("covenantScore"),
+        "borrowed": normalized.get("borrowed"),
+        "assistUid": normalized.get("assistUid"),
+    }
 
 
 def record(item: dict, season: int, period: str, catalog: dict) -> dict:
