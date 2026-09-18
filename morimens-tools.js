@@ -36,7 +36,8 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260918.16";
+  const assetVersion="20260918.17";
+    window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
@@ -82,9 +83,7 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-skeydb.js?v=${assetVersion}`);
     await import(`./morimens-calculator-stats.js?v=${assetVersion}`);
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
-    // morimens-dtide.js is the sole owner of the D-Zone controls and matrix.
-    // Loading the retired usage layer here registered a second set of change
-    // handlers which restored the legacy table after filters were toggled.
+    await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
   }catch(err){
     document.body.classList.remove("morimensBooting");
     console.error("Morimens loader failed",err);
