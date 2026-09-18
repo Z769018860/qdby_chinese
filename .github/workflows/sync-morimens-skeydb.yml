@@ -75,13 +75,13 @@ jobs:
 
       - name: Commit synchronized snapshots
         run: |
-          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/huiji assets/morimens)" ]; then
+          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/huiji data/morimens/almanac assets/morimens)" ]; then
             echo "Morimens snapshots are unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/morimens/skeydb data/morimens/huiji assets/morimens
+          git add data/morimens/skeydb data/morimens/huiji data/morimens/almanac assets/morimens
           git commit -m "chore: refresh Morimens SKeyDB and Huiji snapshots"
           for attempt in 1 2 3 4 5 6; do
             git fetch origin main
