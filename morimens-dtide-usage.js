@@ -121,8 +121,62 @@
     if($('dtideSummary'))$('dtideSummary').innerHTML=[['榜单覆盖',!cap?`${c.covered} 条`:`${c.covered}/${c.expected}`],['当前范围',rankScopeLabel(cap)],['难度',diffZh[difficulty]||difficulty],['统计队伍',g.teamCount]].map(([a,b])=>`<div class="dtideStat"><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join('');
     if($('dtideStatus'))$('dtideStatus').textContent=`第 ${activeSeason} 期 · ${diffZh[difficulty]||difficulty} · ${coverageLabel(cap)}`;
   }
-  const creationZh={'"Chaos Ring"':'「混沌指轮」','Chaos Ring':'「混沌指轮」','Rusted Key':'锈蚀钥匙','Forgotten Loom+':'遗忘织机+','Chronometric Device+':'计时装置+','Black Candle':'黑色蜡烛','Omen Ritual Bird':'预兆仪式鸟','Foreign Stamp Album+':'异国邮票册+','Vitality Injection+':'活性注射器+','Vitality Injection':'活性注射器','Blessed Blood+':'祝福之血+','Blessed Blood':'祝福之血','Weeping Pipe+':'哭泣烟斗+','Weeping Pipe':'哭泣烟斗','Octahedron Dice':'八面骰','Lucky Windcoat':'幸运风衣','Malignant Child+':'恶性之子+','Malignant Child':'恶性之子','Solar Disc+':'太阳圆盘+','Solar Disc':'太阳圆盘','Rite of Spring+':'春之祭+','Rite of Spring':'春之祭','Big Mouth Button':'大嘴纽扣','Crimson Brooch+':'猩红胸针+','Crimson Brooch':'猩红胸针','Proto Battery+':'原型电池+','Proto Battery':'原型电池','Kaleidoscope+':'万花筒+','Kaleidoscope':'万花筒','Preserved Butterfly+':'封存蝴蝶+','Preserved Butterfly':'封存蝴蝶','Forsaken Blood':'遗弃之血','Relic of the Past+':'往昔遗物+','Relic of the Past':'往昔遗物','Celestial Astrolabe+':'天体星盘+','Celestial Astrolabe':'天体星盘'};
-  function itemName(x){const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别'),clean=raw.replace(/^"|"$/g,'');if(/^Dimensional Image:/i.test(clean))return `维度影像：${clean.replace(/^Dimensional Image:\s*/i,'')}`;return x?.zhName||x?.nameZh||creationZh[raw]||creationZh[clean]||zhGear[raw]||gearByName.get(clean)?.zhName||raw}
+  const creationZh={
+    'Chaos Ring':'「混沌指轮」','Ultra Ring':'「超维指轮」','Aequor Ring':'「深海指轮」','Caro Ring':'「血肉指轮」','Rusted Key':'锈蚀钥匙',
+    "Serpent's Husk":'怪蛇残蜕','Vitality Injection':'活性注射器','Forgotten Loom':'蒙尘缝纫机','Guardian Hand':'守护之手','Truth Unbound':'知无不言',
+    'Laurel Cufflinks':'桂叶袖扣','Mythag Insignia':'弥萨格徽章','Kaleidoscope':'万花筒','Weeping Pipe':'哭泣烟斗','Blessed Blood':'恩赐之血',
+    'Rite of Spring':'春之祭','Relic of the Past':'过往的贡物','Malignant Child':'恶童','Filigree Agate':'缠丝玛瑙','Solar Disc':'太阳圆盘',
+    'Crimson Brooch':'红宝石胸针','Chronometric Device':'精密计时器','Black Candle':'黑烛','Fleeting Beauty':'美丽瞬间','Foreign Stamp Album':'异乡邮票夹',
+    'Omen Ritual Bird':'厄运仪式鸟','Proto Battery':'原型电池','Celestial Astrolabe':'秘典星象仪','Octahedron Dice':'八面骰','Rhind Papyrus':'莱茵德纸草书',
+    'Preserved Butterfly':'蝴蝶标本','Lucky Windcoat':'高档幸运风衣','Highest Honor':'无上荣宠','Plague Record':'瘟疫诊断书',"Voyager's Parasol":'旅行阳伞',
+    'Silent Prelude':'寂静序曲','Vision Corrector':'视力矫正器','Big Mouth Button':'大嘴纽扣','Forgotten Prelude':'先贤断章','Putney Morning Post':'普特尼晨报',
+    'Tilted Scales':'失衡的天平','True North Compass':'定向罗盘','Our Home':'我们的家','Silver Tongue':'伶牙俐齿','Easter Moment':'彩蛋时间',
+    'Radium Jawbone':'镭射颌骨','Iron Lock':'重锁',"Lucky Rabbit's Paw":'幸运兔脚','Tiny Music Box':'小八音盒','Forsaken Blood':'被遗忘者之血',
+    'Mute Jukebox':'失声唱机','Phantom Hand':'妙手空空','Nameless Appendage':'无名附肢','Rusty Lancet':'锈蚀柳叶刀',"Veil of the Nameless Deity":'无名之神的面纱',
+    'Chant of the Tides':'海眷歌谣','Spatial Deflector':'空间偏折仪','Severed Head Worm':'裂头蚴','Nettle Vest':'刺荨麻背心','Time Scarab':'时间之虫',
+    'Hyperstring Pocketwatch':'超弦怀表','Safe Passage':'安全出口','Bloody Pebble':'染血鹅卵石','Brand-New Wallet':'崭新的钱包',"Harford's Elixir":'哈福德灵药',
+    'Ritual Dagger':'遗落的祭祀刀','Neurotoxin':'神经毒素',"Alfonso's Artifact":'阿方索之器','Uncanny Salve':'可疑的药膏','Rusted Saw':'锈蚀钢锯',
+    'Differential Engine':'银白差分机',"Deceased's Chrono":'故人的怀表',"Doctor's Case":'医生手提箱','Arcane Gloves':'缄默手套','Gilded Reverie':'金色梦乡',
+    'Other Tongue':'异种喉舌','In Twilight':'在夕光里','Yellow Snail':'小黄螺','Luminous Hourglass':'辉光沙漏','Lemurian Delight':'螺湮的欢愉',
+    'Arcana Archive':'阿尔卡纳记录',"Hierophant's Staff":'祭司权杖','Arcana Relic':'阿尔卡纳遗物','Stellar Brew':'群星之酒','Submersible Helm':'潜水头盔',
+    'Dearest Babe':'亲爱的宝贝',"Prophet's Lamp":'先知的许愿灯','Trigon Prism':'三棱镜',"Trickster's Hat":'诡术礼帽','Wriggling Cord':'蠕动的脐带',
+    'Eerie Hook':'古怪钩爪',"☆Lady's Purse☆":'☆淑女手袋☆','Mind Engraving':'意识铭刻','Wailing Bell':'蛊惑风铃','Nightmare Manifest':'噩梦表象',
+    'Salvific Limb':'救济之肢','Jade Imprint':'翠玉拓印',"Pathwalker's Remains":'行道之骸','Sacred Agony':'苦痛圣腕','Swarm Mind':'虫群意识'
+  };
+  function cleanCreationText(value){
+    return String(value??'').replace(/^"|"$/g,'').replace(/â/g,'☆').trim();
+  }
+  function localizedAwakenerName(rawName){
+    const clean=cleanCreationText(rawName),needle=clean.toLowerCase().replace(/[“”"]/g,'');
+    const db=window.MorimensData?.db?.records||[];
+    const rec=db.find(row=>{
+      const values=[row?.name,row?.slug,row?.assetSlug,...(row?.aliases||[])].filter(Boolean).map(x=>String(x).toLowerCase().replace(/[“”"]/g,''));
+      return values.includes(needle);
+    });
+    const loc=rec&&window.MorimensData?.localizedProfile?.(rec);
+    return displayCharacterName(loc?.name,rec?.name,clean);
+  }
+  function itemName(x){
+    const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别');
+    let clean=cleanCreationText(raw);
+    if(x?.zhName||x?.nameZh)return x.zhName||x.nameZh;
+    if(/^Dimensional Image:/i.test(clean)){
+      const owner=clean.replace(/^Dimensional Image:\s*/i,'').trim();
+      return `维度影像·${localizedAwakenerName(owner)}`;
+    }
+    const prefixMatch=clean.match(/^(Blessed:|Sinful:|Painted)\s*(.+)$/i);
+    if(prefixMatch){
+      const prefix=/^Blessed:/i.test(prefixMatch[1])?'受祝·':/^Sinful:/i.test(prefixMatch[1])?'负罪·':'彩绘·';
+      clean=cleanCreationText(prefixMatch[2]);
+      const plus=clean.endsWith('+'),base=plus?clean.slice(0,-1):clean,translated=creationZh[base]||zhGear[base]||base;
+      return prefix+translated+(plus?'+':'');
+    }
+    const plus=clean.endsWith('+'),base=plus?clean.slice(0,-1):clean;
+    const translated=creationZh[base]||creationZh[clean]||zhGear[base]||zhGear[clean]||gearByName.get(clean)?.zhName||gearByName.get(base)?.zhName;
+    if(translated)return translated+(plus&&!String(translated).endsWith('+')?'+':'');
+    if(/^\d+$/.test(clean))return `未识别造物 #${clean}`;
+    return clean;
+  }
   function wheelName(x){return window.MorimensData?.localizedEntity?.('wheel',x)?.name||itemName(x)}
   const heatStyle=rate=>{const t=Math.max(0,Math.min(1,Number(rate||0)/35)),h=Math.round(215-215*t),a=(.08+.34*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
   function localGearImage(kind,url,name=''){const raw=String(url||''),file=raw.split('/').pop()?.split('?')[0]||gearByName.get(String(name).replace(/^"|"$/g,''))?.file||'';if(!file)return '';if(kind==='wheel')return `assets/morimens/wheels/${file}`;if(kind==='covenant')return `assets/morimens/covenants/Icon/${file.replace('_Box.webp','.webp')}`;if(kind==='creation')return `assets/morimens/relics/${file}`;if(kind==='token')return raw.replace('/icon/','/thumb/icon/');return ''}
@@ -208,7 +262,7 @@
     const prior=rankedRows(previousRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),previousRanks=new Map(prior.rows.map((x,i)=>[x.key,i+1]));
     const arrow=k=>k===sortKey?(asc?' ↑':' ↓'):' ↕',host=$('dtideMatrix'),label=entity==='character'?'角色':entity==='creation'?'造物':'命轮';if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent=label+'逐波出场率';if(!host)return;host.removeAttribute('aria-busy');if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无'+label+'详细数据。</div>';return}
     const legend=entity==='character'?`<div class="dtideEnlightLegend">${enlightKeys.map(k=>`<span><i style="background:${enlightColors[k]}"></i>${enlightZh[k]}</span>`).join('')}</div>`:'';
-    host.innerHTML=`<table class="dtideTable"><thead><tr><th><div class="dtideEntityHead"><span>${label}</span>${legend}</div></th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}${entity==='character'?`<th><button type="button" class="dtideSortHead" data-sort-key="assist">助战使用率${arrow('assist')}</button></th>`:''}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map((c,i)=>`<tr><td><div class="dtideRankedItem"><span class="dtideRankMark"><b>${i+1}</b>${rankChange(i+1,previousRanks.get(c.key))}</span>${entity==='character'?`<button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button>${enlightBar(c)}`:`<div class="dtideChar">${c.image?`<img class="dtideGearIcon" src="${esc(c.image)}" data-fallback="${esc(c.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span>${esc(c.name)}</span></div>`}</div></td>${waves.map(w=>{const hit=getHit(w,c.key),rate=hit?.teamRatePct||0;return `<td class="dtideRate dtideHeat" style="${heatStyle(rate)}">${pct(rate)}</td>`}).join('')}${entity==='character'?`<td class="dtideRate">${pct(c.assistRatePct||0)}</td>`:''}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
+    host.innerHTML=`<table class="dtideTable"><thead><tr><th><div class="dtideEntityHead"><span>${label}</span>${legend}</div></th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}">Wave ${w}${arrow(String(w))}</button></th>`).join('')}${entity==='character'?`<th><button type="button" class="dtideSortHead" data-sort-key="assist">助战使用率${arrow('assist')}</button></th>`:''}<th><button type="button" class="dtideSortHead" data-sort-key="total">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map((c,i)=>`<tr><td><div class="dtideRankedItem"><span class="dtideRankMark"><b>${i+1}</b>${rankChange(i+1,previousRanks.get(c.key))}</span>${entity==='character'?`<button type="button" class="dtideMatrixCharacter" data-matrix-character="${esc(c.key)}" aria-expanded="false"><span class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span>${esc(c.name)}</span></span></button>${enlightBar(c)}`:`<div class="dtideChar">${c.image?`<img class="dtideGearIcon" src="${esc(c.image)}" data-fallback="${esc(c.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span>${esc(c.name)}</span></div>`}</div></td>${waves.map(w=>{const hit=getHit(w,c.key),rate=hit?.teamRatePct||0;return `<td class="dtideRate dtideHeat" style="${heatStyle(rate)}">${pct(rate)}</td>`}).join('')}${entity==='character'?`<td class="dtideRate dtideHeat" style="${heatStyle(c.assistRatePct||0)}">${pct(c.assistRatePct||0)}</td>`:''}<td>${c.total}</td></tr>`).join('')}</tbody></table>`;
     host.onclick=e=>{const sort=e.target.closest('[data-sort-key]');if(sort){const key=String(sort.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix();return}const btn=e.target.closest('[data-matrix-character]');if(!btn)return;const tbody=btn.closest('tbody'),old=tbody.querySelector('.dtideMatrixDetailRow'),same=old?.dataset.for===btn.dataset.matrixCharacter;tbody.querySelectorAll('[data-matrix-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;const d=characterDetails(btn.dataset.matrixCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div class="dtideChar">${x.image?`<img class="dtideGearIcon" src="${esc(x.image)}" data-fallback="${esc(x.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span><b>${esc(x.name)}</b><small>${x.count} 次</small></span></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">当前详细样本暂无记录</div>'}</div></div>`,tr=document.createElement('tr');tr.className='dtideMatrixDetailRow';tr.dataset.for=btn.dataset.matrixCharacter;tr.innerHTML=`<td colspan="${waves.length+(entity==='character'?3:2)}"><div class="dtideInlineDetail">${section('Top 5 队友配置出场率',d.teammates)}${section('命轮出场率',d.wheels)}${section('密契出场率',d.covenants)}${characterInsightHtml(d)}</div></td>`;btn.closest('tr').insertAdjacentElement('afterend',tr);btn.setAttribute('aria-expanded','true')};
   }
   function compareTable(labels,groups){
