@@ -25,9 +25,10 @@
     return seed;
   }
   function assetVersion(){return encodeURIComponent(db?.source?.syncedAt||db?.source?.commit||'current')}
+  function localSlugFor(rec){return String(ART_SLUG_GUARD[rec?.id]||rec?.assetSlug||'').split(/[\\/]/).pop().replace(/\.[^.]+$/,'').trim()}
   function assetFor(rec,kind){
     if(!rec)return '';
-    const guarded=ART_SLUG_GUARD[rec.id];
+    const guarded=localSlugFor(rec);
     let raw='';
     if(guarded)raw=`assets/morimens/${kind==='card'?'cards':'portraits'}/${guarded}.webp`;
     else raw=rec.assets?.[kind]||rec.assets?.[kind==='card'?'portrait':'card']||'';
@@ -77,8 +78,8 @@
   }
   function render(rec,random=false){
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
-    const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'portrait');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=ART_SLUG_GUARD[rec.id]||rec.assetSlug||'';portrait.alt=`${loc.name} ${isZh()?'角色立绘':'full character portrait'}`;portrait.onerror=()=>{portrait.onerror=null;const fallback=rec.assets?.portrait||'';if(fallback)portrait.src=`${fallback}?v=${assetVersion()}`}}
-    const wheel=wheelCatalog.length?wheelCatalog[hash(`${todayKey()}-${rec.id}-wheel`)%wheelCatalog.length]:null,wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel');const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=`assets/morimens/wheels/${WHEEL_ARTS[hash(`${todayKey()}-${rec.id}`)%WHEEL_ARTS.length]}?v=${assetVersion()}`;wheelImage.hidden=false;wheelImage.alt=`${wheelName} ${isZh()?'命轮立绘':'full wheel portrait'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}if($('fortuneWheelLabel'))$('fortuneWheelLabel').textContent=wheelName;
+    const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=localSlugFor(rec);portrait.alt=`${loc.name} ${isZh()?'完整角色立绘':'full character illustration'}`;portrait.onerror=()=>{portrait.hidden=true}}
+    const wheel=wheelCatalog.length?wheelCatalog[hash(`${todayKey()}-${rec.id}-wheel`)%wheelCatalog.length]:null,wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel');const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=`assets/morimens/wheels/${WHEEL_ARTS[hash(`${todayKey()}-${rec.id}`)%WHEEL_ARTS.length]}?v=${assetVersion()}`;wheelImage.hidden=false;wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
     if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · ${ART_SLUG_GUARD[rec.id]||rec.assetSlug||''} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
@@ -112,3 +113,4 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,0));else setTimeout(boot,0);
 })();
+
