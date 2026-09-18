@@ -21,11 +21,12 @@ function clean(s=''){
   return decodeHtml(String(s)).replace(/!\[[^\]]*\]\([^)]*\)/g,' ').replace(/\[([^\]]+)\]\([^)]*\)/g,'$1').replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]+>/g,' ').replace(/[\*_`#>~]/g,'').replace(/\s+/g,' ').trim();
 }
 function normalize(s=''){return String(s).toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'')}
-function isRealVoiceLine(line){
+function isVoiceLineCandidate(line){
   const title=clean(line?.title),content=clean(line?.content);
-  return !!(title&&content&&VOICE_TITLE.test(title)&&!INVALID_VOICE_TITLE.test(title)&&content.length>=2&&content.length<=700&&/[\u3400-\u9fff]/.test(content)&&!INVALID_VOICE_TITLE.test(content));
+  return !!(title&&content&&!INVALID_VOICE_TITLE.test(title)&&content.length>=2&&content.length<=700&&/[\u3400-\u9fff]/.test(content)&&!INVALID_VOICE_TITLE.test(content));
 }
-function hasChineseVoice(record){return Array.isArray(record?.voiceLines)&&record.voiceLines.some(isRealVoiceLine)}
+function isRealVoiceLine(line){return isVoiceLineCandidate(line)&&VOICE_TITLE.test(clean(line?.title))}
+function hasChineseVoice(record){return Array.isArray(record?.voiceLines)&&record.voiceLines.some(isVoiceLineCandidate)}
 async function saveJson(file,data){await mkdir(path.dirname(file),{recursive:true});await writeFile(file,JSON.stringify(data,null,2)+'\n')}
 async function readJson(file){return JSON.parse(await readFile(file,'utf8'))}
 async function readJsonOr(file,fallback){try{return await readJson(file)}catch{return fallback}}
@@ -90,8 +91,8 @@ function profileFrom(rows,title,text=''){
   const p={name:title};for(const row of rows){if(row.length<2)continue;const key=clean(row[0]).replace(/\s/g,''),field=PROFILE_LABELS[key];if(field&&!p[field])p[field]=clean(row.slice(1).join(' / '))}
   if(!p.englishName){const m=String(text).match(/(?:英文名|English\s*Name)\s*(?:\||[=：:])\s*([^\n|<]{1,80})/i);if(m)p.englishName=clean(m[1])}return p;
 }
-function voiceLinesFrom(rows){
-  const out=[],seen=new Set();for(const row of rows){if(row.length<2)continue;const item={title:clean(row[0]),content:clean(row[1])};if(!isRealVoiceLine(item))continue;const k=`${item.title}\0${item.content}`;if(seen.has(k))continue;seen.add(k);out.push(item)}return out.slice(0,160);
+function voiceLinesFrom(rows,relaxed=false){
+  const out=[],seen=new Set();for(const row of rows){if(row.length<2)continue;const item={title:clean(row[0]),content:clean(row[1])};if(!(relaxed?isVoiceLineCandidate(item):isRealVoiceLine(item)))continue;const k=`${item.title}\0${item.content}`;if(seen.has(k))continue;seen.add(k);out.push(item)}return out.slice(0,160);
 }
 function skillTablesFrom(rows){
   const out=[];let current=null;for(const row of rows){const joined=row.join('|');if(/等级/.test(joined)&&/(描述|效果)/.test(joined)){if(current)out.push(current);current={section:'技能',rows:[row]};continue}if(current){current.rows.push(row);if(current.rows.length>=40){out.push(current);current=null}}}if(current)out.push(current);return out.slice(0,16);
@@ -106,15 +107,15 @@ if(seeds.length!==(skeydb.records||[]).length)identityErrors.push(`identity cove
 async function enrich(seed){
   const rec=sourceById.get(seed.skeydbId),url=`${WIKI}/wiki/${encodeURIComponent(seed.name)}`,cached=previousById.get(seed.skeydbId);
   if(process.env.MORIMENS_REFRESH_ALL!=='1'&&cached&&normalize(cached.englishName)===normalize(seed.englishName)&&hasChineseVoice(cached)){
-    return {...cached,voiceLines:(cached.voiceLines||[]).filter(isRealVoiceLine),skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,source:{...(cached.source||{}),url},syncStatus:'cached'};
+    return {...cached,voiceLines:(cached.voiceLines||[]).filter(isVoiceLineCandidate),skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,source:{...(cached.source||{}),url},syncStatus:'cached'};
   }
   try{
     const page=await fetchPage(seed.name),fullRows=mergeUniqueRows(htmlRows(page.html),markdownRows(page.wikitext)),voiceRows=mergeUniqueRows(htmlRows(htmlVoiceSection(page.html)),markdownRows(markdownVoiceSection(page.wikitext))),profile=profileFrom(fullRows,seed.name,`${page.wikitext}\n${page.html}`);
     const parsedEnglish=normalize(profile.englishName||''),expected=normalize(seed.englishName);if(parsedEnglish&&parsedEnglish!==expected&&!(rec.aliases||[]).some(x=>normalize(x)===parsedEnglish))throw new Error(`English identity mismatch: page=${profile.englishName}, expected=${seed.englishName}`);
-    const voices=voiceLinesFrom(voiceRows),cachedVoices=(cached?.voiceLines||[]).filter(isRealVoiceLine),fallback=(seed.fallbackVoiceLines||[]).filter(isRealVoiceLine);
+    const sectionVoices=voiceLinesFrom(voiceRows,true),pageVoices=voiceLinesFrom(fullRows),voices=sectionVoices.length?sectionVoices:pageVoices,cachedVoices=(cached?.voiceLines||[]).filter(isVoiceLineCandidate),fallback=(seed.fallbackVoiceLines||[]).filter(isVoiceLineCandidate);
     return {skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,profile:{...profile,name:seed.name,englishName:seed.englishName},voiceLines:voices.length?voices:(cachedVoices.length?cachedVoices:fallback),skillTables:skillTablesFrom(fullRows),source:{url,mode:page.transport,endpoint:page.endpoint},syncStatus:voices.length?'ok':'no-voice'};
   }catch(error){
-    const cachedVoices=(cached?.voiceLines||[]).filter(isRealVoiceLine),fallback=(seed.fallbackVoiceLines||[]).filter(isRealVoiceLine);
+    const cachedVoices=(cached?.voiceLines||[]).filter(isVoiceLineCandidate),fallback=(seed.fallbackVoiceLines||[]).filter(isVoiceLineCandidate);
     if(cachedVoices.length)return {...cached,voiceLines:cachedVoices,skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,source:{...(cached.source||{}),url},syncStatus:'cached'};
     return {skeydbId:seed.skeydbId,ingameId:rec.ingameId,slug:rec.slug,name:seed.name,englishName:seed.englishName,profile:{name:seed.name,englishName:seed.englishName},voiceLines:fallback,skillTables:[],source:{url,mode:'static-identity'},syncStatus:fallback.length?'fallback-voice':'fallback',syncError:String(error)};
   }
