@@ -64,9 +64,7 @@
     const pickYi=picks(yi,'yi'),pickJi=picks(ji,'ji');
     const yiText=pickYi.length?pickYi.map(x=>`「${x}」${translateAlmanac(x)}`).join('；'):'稳步完成日常任务';
     const jiText=pickJi.length?pickJi.map(x=>`「${x}」`).join('、'):'高消耗尝试';
-    if($('fortuneRecommend'))$('fortuneRecommend').textContent=`黄历宜：${yiText}`;
-    if($('fortuneChallenge'))$('fortuneChallenge').textContent=`今日忌 ${jiText}；避免对应的冒进操作，优先完成低风险目标`;
-    if($('fortuneSync'))$('fortuneSync').textContent=`✓ 每日黄历${cached?'缓存':'已同步'} · ${almanac.lunarDate||almanac.date}${almanac.ganZhi?' · '+almanac.ganZhi:''}`;
+    // 黄历仅用于同步状态，不覆盖“今日推荐”和“今日挑战”卡片。\n    if($('fortuneSync'))$('fortuneSync').textContent=`✓ 每日黄历${cached?'缓存':'已同步'} · ${almanac.lunarDate||almanac.date}${almanac.ganZhi?' · '+almanac.ganZhi:''}`;
   }
   async function loadAlmanac(){
     const key='morimens.daily-almanac.v1';try{const cached=JSON.parse(localStorage.getItem(key)||'null');if(cached?.date===dateKey())renderAlmanac(cached,{cached:true})}catch{}
