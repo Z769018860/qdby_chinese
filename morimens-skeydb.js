@@ -12,6 +12,7 @@
   const isZh=()=>language()==='zh-CN';
   const normalize=s=>String(s||'').toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
   const realms={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维'};
+  const realmIcons={CHAOS:'Hundun',AEQUOR:'Shenhai',CARO:'Xuerou',ULTRA:'Chaowei'};
   const types={ASSAULT:'伤害型',WARDEN:'防御型',CHORUS:'辅助型'};
   const ART_SLUG_GUARD={'awakener-0014':'doresain','awakener-0053':'winkle'};
   const WHEEL_ARTS=['Weapon_Full_C01.webp','Weapon_Full_B01.webp','Weapon_Full_C10.webp','Weapon_Full_D05.webp','Weapon_Full_JP08.webp','Weapon_Full_O03.webp','Weapon_Full_SR02.webp','Weapon_Full_ZL01.webp'];
@@ -79,8 +80,9 @@
   function render(rec,random=false){
     if(!rec)return;current=rec;const loc=localizedProfile(rec),quotes=allQuotes(rec);quoteIndex=hash(`${todayKey()}-${rec.id}`)%Math.max(1,quotes.length);
     const portrait=$('fortunePortrait');if(portrait){const src=assetFor(rec,'card');portrait.src=src;portrait.hidden=!src;portrait.dataset.awakenerId=rec.id;portrait.dataset.assetSlug=localSlugFor(rec);portrait.alt=`${loc.name} ${isZh()?'完整角色立绘':'full character illustration'}`;portrait.onerror=()=>{portrait.hidden=true}}
+    const realmBadge=$('fortuneRealmBadge'),realmIcon=$('fortuneRealmIcon'),realmName=$('fortuneRealmName'),realmKey=Object.keys(realms).find(key=>String(rec.realm||'').toUpperCase()===key)||Object.keys(realms).find(key=>realms[key]===loc.realm);if(realmBadge&&realmIcon&&realmName&&realmKey){realmIcon.src=`assets/morimens/realms/Icon_Career2_${realmIcons[realmKey]}.webp?v=${assetVersion()}`;realmIcon.alt=loc.realm;realmName.textContent=loc.realm;realmBadge.hidden=false;realmIcon.onerror=()=>{realmIcon.hidden=true}}else if(realmBadge)realmBadge.hidden=true;
     const wheel=wheelCatalog.length?wheelCatalog[hash(`${todayKey()}-${rec.id}-wheel`)%wheelCatalog.length]:null,wheelName=wheel?localizedEntity('wheel',wheel).name:(isZh()?'命轮':'Wheel');const wheelImage=$('fortuneWheelPortrait');if(wheelImage){wheelImage.src=`assets/morimens/wheels/${WHEEL_ARTS[hash(`${todayKey()}-${rec.id}`)%WHEEL_ARTS.length]}?v=${assetVersion()}`;wheelImage.hidden=false;wheelImage.alt=`${wheelName} ${isZh()?'完整命轮立绘':'full wheel illustration'}`;wheelImage.onerror=()=>{wheelImage.hidden=true}}
-    if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}
+    if($('fortuneName')){$('fortuneName').textContent=loc.name;$('fortuneName').dataset.awakenerId=rec.id}const mascot=$('morimensMascot');if(mascot){mascot.alt=loc.name;mascot.title=loc.name}
     if($('fortuneDate'))$('fortuneDate').textContent=`${todayKey()} · ${rec.id} · ${ART_SLUG_GUARD[rec.id]||rec.assetSlug||''} · SKeyDB ${db.source?.commit?.slice(0,8)||''}${random?(isZh()?' · 随机再抽':' · Reroll'):''}`;
     renderQuote(rec);
     const seed=hash(`${todayKey()}-${rec.id}`),keywords=[loc.realm,loc.type,wheelName,quotes[quoteIndex]?.title||'角色语音'].filter(Boolean).slice(0,4);if($('fortuneStat'))$('fortuneStat').textContent=`× ${(1+(seed%36)/100).toFixed(2)}`;if($('fortuneKeyword'))$('fortuneKeyword').textContent=keywords.join(' · ');
