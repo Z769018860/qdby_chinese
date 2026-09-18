@@ -21,7 +21,7 @@
   const realmIconSrc=name=>'assets/morimens/realms-svg/'+(realmIcons[name]||'Icon_Career2_Hundun.webp').replace(/\.webp$/i,'.svg');
   function localAsset(src,kind){const raw=String(src||'');if(!raw)return '';const file=raw.split(/[\\/]/).pop().split('?')[0];if(kind==='wheel'&&/^Weapon_(Full|Mini)_/.test(file))return 'assets/morimens/wheels/'+(file.startsWith('Weapon_Mini_')?'Mini/':'')+file;if(kind==='creation'&&/^Icon_Creation_/.test(file))return 'assets/morimens/relics/'+file;if(kind==='covenant'&&/^Icon_Trinket_/.test(file))return 'assets/morimens/covenants/Icon/'+file;if(kind==='portrait'&&raw.startsWith('assets/'))return raw;return raw;}
   let manifest=null,season=null,stats=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
-  let flatTeamsCache=null,seasonLoadToken=0,renderFrame=0;
+  let flatTeamsCache=null,analysisCache=null,seasonAssistHeatMax=0,seasonLoadToken=0,renderFrame=0;
 
   function scoreRange(){
     const raw=String($('dtideTotalScore')?.value||'all');
@@ -177,6 +177,10 @@
     if(!scoreMatches(x.record))return false;
     return true;
   })}
+  function analysisKey(){
+    const realms=[...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(x=>x.dataset.realm).sort(),roles=[...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(x=>x.dataset.role).sort();
+    return [season?.seasonId,$('dtideRankScope')?.value,$('dtideDifficulty')?.value,$('dtideTotalScore')?.value,$('dtideClearType')?.value,realms.join(','),roles.join(',')].join('|');
+  }
   function countRate(map,key,meta={}){if(key==null||key==='')return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
   function computeGroup(rows){
     const chars=new Map(),wheels=new Map(),covs=new Map(),byChar=new Map(),enlight=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0;
@@ -188,7 +192,17 @@
     const wheelRows=finish(wheels).map(w=>({...w,stacks:[...(w.stacks||new Map()).values()].map(x=>({...x,ratePct:w.count?x.count/w.count*100:0}))}));
     return {teamCount,memberSlots,wheelSlots,covenantSlots,characters:finish(chars),wheels:wheelRows,covenants:finish(covs),enlight:finish(enlight),byCharacter:bc};
   }
-  function currentGroup(overrides={}){return computeGroup(scopedRows(overrides))}
+  function currentAnalysis(){
+    const key=analysisKey();if(analysisCache?.key===key)return analysisCache;
+    const rows=scopedRows(),waves=[...new Set(rows.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b),groups=new Map(waves.map(w=>[w,computeGroup(rows.filter(x=>Number(x.wave.wave)===w))])),group=computeGroup(rows);
+    analysisCache={key,rows,waves,groups,group};return analysisCache;
+  }
+  function currentGroup(overrides={}){return Object.keys(overrides).length?computeGroup(scopedRows(overrides)):currentAnalysis().group}
+  function fullSeasonAssistHeatMax(){
+    const counts=new Map();
+    for(const {team} of flattenTeams())for(const m of team.members||[]){const key=String(memberKey(m));if(!key)continue;const x=counts.get(key)||{count:0,borrowed:0};x.count++;if(m.borrowed)x.borrowed++;counts.set(key,x)}
+    return Math.max(0,...[...counts.values()].map(x=>x.count?x.borrowed/x.count*100:0));
+  }
 
   function renderCoverage(){
     const cap=selectedRankCap(),max=maxRankAvailable(),box=$('dtideCoverageWarn');
@@ -202,7 +216,7 @@ const dtideHeatStyle=(rate,max=0)=>{const safeMax=Math.max(Number(max)||0,Number
 function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'total-desc';const m=spec.match(/^wave(\d+)-(asc|desc)$/);let av=a.total||a.count||0,bv=b.total||b.count||0;if(m){const w=Number(m[1]),g=groups?.get(w),find=x=>g?.characters?.find(y=>y.key===x.key)?.count||0;av=find(a);bv=find(b)}const d=bv-av;return spec.endsWith('-asc')?-d:d||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')}
   function renderMatrix(){
     const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';
-    const all=scopedRows({rankCap:cap,difficulty,wave:'all',ct}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b),groups=new Map(waves.map(w=>[w,computeGroup(all.filter(x=>Number(x.wave.wave)===w))])),host=$('dtideMatrix');if(!host)return;
+    const analysis=currentAnalysis(),all=analysis.rows,waves=analysis.waves,groups=analysis.groups,host=$('dtideMatrix');if(!host)return;
     const legend=$('dtideRatioLegend');
     if(legend){if(entity==='creation'){legend.innerHTML='';legend.removeAttribute('aria-label')}else{const order=entity==='wheel'?wheelStackOrder:enlightOrder,labels=entity==='wheel'?wheelStackZh:enlightZh,colors=entity==='wheel'?wheelStackColors:enlightColors;legend.innerHTML=order.map(key=>`<span><i style="background:${colors[key]}"></i>${labels[key]}</span>`).join('');legend.setAttribute('aria-label',entity==='wheel'?'命轮叠位颜色图例':'启灵颜色图例')}}
     if(entity==='wheel'){
@@ -223,7 +237,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const union=new Map();
     for(const [,g] of groups)for(const c of g.characters)union.set(c.key,c);
     const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false;
-    const totals=new Map(computeGroup(all).characters.map(x=>[x.key,x]));const rows=[...union.values()].map(c=>{const t=totals.get(c.key);return {...c,borrowedCount:t?.borrowedCount||0,assistRatePct:t?.assistRatePct||0,total:waves.reduce((s,w)=>s+(groups.get(w)?.characters.find(x=>x.key===c.key)?.count||0),0)}});const assistHeatMax=Math.max(0,...rows.map(x=>Number(x.assistRatePct)||0));
+    const totals=new Map(analysis.group.characters.map(x=>[x.key,x]));const rows=[...union.values()].map(c=>{const t=totals.get(c.key);return {...c,borrowedCount:t?.borrowedCount||0,assistRatePct:t?.assistRatePct||0,total:waves.reduce((s,w)=>s+(groups.get(w)?.characters.find(x=>x.key===c.key)?.count||0),0)}});const assistHeatMax=seasonAssistHeatMax;
     rows.sort((a,b)=>{const av=sortKey==='total'?a.total:sortKey==='assist'?(a.assistRatePct||0):(groups.get(Number(sortKey))?.characters.find(x=>x.key===a.key)?.count||0),bv=sortKey==='total'?b.total:sortKey==='assist'?(b.assistRatePct||0):(groups.get(Number(sortKey))?.characters.find(x=>x.key===b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
     const arrow=k=>k===sortKey?(asc?' ↑':' ↓'):' ↕';if(!rows.length){host.innerHTML='<div class="dtideEmpty">当前口径暂无记录。</div>';return}
     const enlightBar=c=>{let items=enlightOrder.map(key=>(Array.isArray(c.enlight)?c.enlight:[]).find(x=>(x.key||x.id)===key)).filter(x=>x&&Number(x.count)>0);if(!items.length)items=[{key:"unknown",name:"启灵数据缺失",count:c.count||1}];const total=items.reduce((s,x)=>s+Number(x.count||0),0)||1;return `<div class="dtideEnlightBar" title="${items.map(x=>`${enlightZh[x.key]||x.name||'未知'} ${pct(Number(x.count||0)/total*100)}`).join(' · ')}">${items.map(x=>{const key=x.key||x.id||'unknown';return `<span style="width:${Number(x.count||0)/total*100}%;background:${enlightColors[key]||enlightColors.unknown}"></span>`}).join('')}</div>`};
@@ -270,9 +284,9 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const all=flattenTeams().filter(matchesFilters),limit=200,rows=all.slice(0,limit);$('dtideResults').innerHTML=rows.map(({record,wave,team,difficulty})=>`<article class="dtideResult"><div class="dtideResultHead"><b>#${esc(record.rank??'—')} ${esc(record.player)} · Wave ${wave.wave} · ${esc(difficultyZh[difficulty]||difficultyZh.unknown)} · ${team.clearType==='extra'?'Extra Clear':'Clear'} · ${esc(record.score??'—')} 分</b><a href="${esc(record.url)}" target="_blank" rel="noopener noreferrer">查看 Eremora 原记录</a></div><div class="dtideMembers">${team.members.map(m=>{const info=characterInfo(m.skeydbId||m.ingameId||memberKey(m),m),wn=(m.wheels||[]).map(wheelName).filter(Boolean).join(' / '),cn=(m.covenants||((m.covenant)?[m.covenant]:[])).map(x=>x.name).filter(Boolean).join(' / '),ec=enlightClass(m);return `<div class="dtideMember">${info.image?`<img class="dtideMemberAvatar" src="${esc(info.image)}" alt="" loading="lazy">`:''}<b>${esc(info.name||m.canonicalName||m.name)}</b><small>Lv.${esc(m.level??'—')} · ${esc(enlightZh[ec])}${m.covenantScore!=null?` · 密契评分 ${esc(m.covenantScore)}`:''}</small>${wn?`<small class="dtideGear">命轮：${esc(wn)}</small>`:''}${cn?`<small class="dtideGear">密契：${esc(cn)}</small>`:''}${m.borrowed?'<small class="dtideBorrow">借用助战</small>':''}</div>`}).join('')}</div></article>`).join('')||'<div class="dtideEmpty">没有符合这些条件的配队。</div>';$('dtidePager').textContent=`匹配 ${all.length} 支队伍${all.length>limit?` · 当前显示前 ${limit} 支`:''}`;
   }
   function renderSearchPrompt(){if(!$('dtideResults')||!$('dtidePager'))return;$('dtideResults').innerHTML='<div class="dtideEmpty">设置筛选条件后点击“搜索配队”查看结果。</div>';$('dtidePager').textContent=''}
-  function resetFilters(){for(const id of ['dtideLevelMin','dtideLevelMax','dtideCovenantScoreMin','dtideCovenantScoreMax','dtideScoreMin','dtideRankMax'])$(id).value='';for(const id of ['dtideProgression','dtideBorrowed','dtideWheel','dtideCovenant'])$(id).value='';for(const id of ['dtideCharacters','dtideExcludeCharacters'])for(const o of $(id).options)o.selected=false;document.querySelectorAll('.dtideFilterChip.isActive').forEach(x=>x.classList.remove('isActive'));$('dtideCharacterMode').value='all';searchPerformed=false;renderSearchPrompt()}
+  function resetFilters(){for(const id of ['dtideLevelMin','dtideLevelMax','dtideCovenantScoreMin','dtideCovenantScoreMax','dtideScoreMin','dtideRankMax'])$(id).value='';for(const id of ['dtideProgression','dtideBorrowed','dtideWheel','dtideCovenant'])$(id).value='';for(const id of ['dtideCharacters','dtideExcludeCharacters'])for(const o of $(id).options)o.selected=false;document.querySelectorAll('.dtideFilterChip.isActive').forEach(x=>x.classList.remove('isActive'));$('dtideCharacterMode').value='all';analysisCache=null;searchPerformed=false;renderSearchPrompt();scheduleRender()}
   function enlightenmentDetailBlock(arr){const items=[...(arr||[])].sort((a,b)=>enlightOrder.indexOf(a.key)-enlightOrder.indexOf(b.key));return '<h4>详细启灵比例</h4><div class="dtideUsageCards">'+(items.map(x=>{const key=x.key||'unknown',color=enlightColors[key]||enlightColors.unknown;return `<div class="dtideUsage dtideEnlightItem" style="--dtide-enlight-color:${color};--dtide-enlight-fill:${color}55"><div><b>${esc(enlightZh[key]||x.name||'未知')}</b><small>${x.count} 次</small></div><strong>${pct(x.ratePct)}</strong></div>`}).join('')||'<div class="dtideEmpty">暂无启灵数据</div>')+'</div>'}
-  function renderAll(){renderSummary();renderMatrix();renderUsage();renderComparisons();if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt()}
+  function renderAll(){renderSummary();renderMatrix();renderUsage();renderComparisons();if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt();$('dtideMatrix')?.removeAttribute('aria-busy')}
   function scheduleRender(){cancelAnimationFrame(renderFrame);renderFrame=requestAnimationFrame(()=>{renderFrame=0;if(season&&filtersReady)renderAll()})}
   function relocalizeControls(){
     for(const id of ['dtideCharacters','dtideExcludeCharacters','dtideEquipCharacter'])for(const option of $(id)?.options||[]){if(!option.value)continue;option.textContent=characterInfo(option.value).name}
@@ -283,6 +297,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
 
   async function loadSeason(id){
     const loadToken=++seasonLoadToken;
+    cancelAnimationFrame(renderFrame);renderFrame=0;
     searchPerformed=false;
     filtersReady=false;
     $('dtideStatus').textContent='正在载入期次…';
@@ -306,6 +321,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     stats=loadedStats;
     rankByUid=loadedRanks;
     flatTeamsCache=null;
+    analysisCache=null;
+    seasonAssistHeatMax=fullSeasonAssistHeatMax();
     const waves=[...new Set(flattenTeams().map(x=>Number(x.wave.wave)))].sort((a,b)=>a-b);
     $('dtideWave').innerHTML='<option value="all">全部波次</option>'+waves.map(w=>`<option value="${w}">Wave ${w}</option>`).join('');
     populateFilters();
@@ -316,6 +333,6 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(manifest)return;try{await waitMorimensData();for(const r of window.MorimensData?.db?.records||[]){awakenerMap.set(r.id,r);if(r.ingameId)awakenerMap.set(r.ingameId,r)}const r=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!r.ok)throw new Error(`manifest HTTP ${r.status}`);manifest=await r.json();const sel=$('dtideSeason');if(!sel)throw new Error('期次选择器尚未挂载');sel.innerHTML=(manifest.availableSeasons||[]).map(s=>`<option value="${s.seasonId}">第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}</option>`).join('');if(!sel.options.length)throw new Error('暂无融灾快照');sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);await loadSeason(sel.value);const pending=manifest.pendingBackfillSeasonIds||[];const note=$('dtideCoverageNote');if(note)note.innerHTML=`<strong>字段真实性：</strong>${esc((manifest.notes||[]).join(' '))}${pending.length?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:''}`;sel.addEventListener('change',()=>{const requested=sel.value;loadSeason(requested).catch(error=>{if(sel.value===requested)showError(error)})});for(const id of ['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideWave','dtideClearType','dtideRateMode','dtideSort','dtideEntityType'])$(id)?.addEventListener('change',scheduleRender);$('dtideEquipCharacter')?.addEventListener('change',renderEquipment);$('dtideSearch')?.addEventListener('click',renderResults);$('dtideReset')?.addEventListener('click',resetFilters);$('dtideUsage')?.addEventListener('click',e=>{const card=e.target.closest('[data-character-index]');if(!card)return;const c=currentGroup().characters[Number(card.dataset.characterIndex)];if(!c)return;document.querySelectorAll('.dtideInlineDetail').forEach(x=>x.remove());const block=(title,arr)=>'<h4>'+title+'</h4><div class="dtideUsageCards">'+((arr||[]).slice(0,5).map(x=>'<div class="dtideUsage"><div><b>'+esc(x.name||x.key)+'</b><small>'+x.count+' 次</small></div><strong>'+pct(x.ratePct||x.teamRatePct)+'</strong></div>').join('')||'<div class="dtideEmpty">暂无数据</div>')+'</div>';const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.innerHTML=block('Top5 队友出场率',c.teammates)+enlightenmentDetailBlock(c.enlight)+block('命轮出场率',c.wheels)+block('密契出场率',c.covenants);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')})}catch(e){showError(e)}
   }
   function showError(e){console.warn('D-Zone analytics failed',e);if($('dtideStatus'))$('dtideStatus').textContent='融灾数据加载失败';if($('dtideResults'))$('dtideResults').innerHTML=`<div class="dtideNotice">${esc(e?.message||e)}</div>`}
-  function boot(){injectStyle();setupTabs();document.addEventListener('click',e=>{const chip=e.target.closest('.dtideFilterChip');if(!chip)return;chip.classList.toggle('isActive');if(filtersReady)renderAll()});window.addEventListener('morimens-language-change',()=>{if($('morimensBuilderTab')){$('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';$('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard'}relocalizeControls()})}
+  function boot(){injectStyle();setupTabs();document.addEventListener('click',e=>{const chip=e.target.closest('.dtideFilterChip');if(!chip)return;chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender()});window.addEventListener('morimens-language-change',()=>{if($('morimensBuilderTab')){$('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';$('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard'}relocalizeControls()})}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
