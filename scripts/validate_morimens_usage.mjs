@@ -9,8 +9,12 @@ const json = async file => JSON.parse(await readFile(file, 'utf8'));
 for (const season of seasons) {
   const dir = path.join(root, `usage/${season}-local-gzip`);
   const index = await json(path.join(dir, 'index.json'));
-  const encoded = (await Promise.all(index.chunks.map(file => readFile(path.join(root, '..', '..', '..', file), 'utf8')))).join('');
-  const decoded = JSON.parse(gunzipSync(Buffer.from(encoded, 'base64')).toString('utf8'));
+  // Each chunk is independently Base64-encoded; decode first, then restore
+  // the original gzip byte stream. Concatenating the Base64 text is invalid
+  // when a chunk boundary is not aligned to a 4-character block.
+  const encodedChunks = await Promise.all(index.chunks.map(file => readFile(path.join(root, '..', '..', '..', file), 'utf8')));
+  const compressed = Buffer.concat(encodedChunks.map(value => Buffer.from(value.replace(/\s+/g, ''), 'base64')));
+  const decoded = JSON.parse(gunzipSync(compressed).toString('utf8'));
   const records = Array.isArray(decoded) ? decoded : decoded.records || [];
   const uids = records.map(row => String(row?.uid || '')).filter(Boolean);
   const unique = new Set(uids);
