@@ -252,10 +252,22 @@
       detailUsage=usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
       try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
+      // Do not block the first render on the previous season.  Historical
+      // datasets can be tens of megabytes and are only needed for the
+      // comparison/rank-change panels.
       const previousEntry=(manifest.availableSeasons||[]).filter(x=>Number(x.seasonId)<activeSeason).sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))[0]||null;
       previousSeasonId=previousEntry?Number(previousEntry.seasonId):null;previousUsage=null;previousDetailUsage=null;
-      if(previousEntry){previousUsage=await dataset(previousEntry.path).catch(()=>null);previousDetailUsage=previousUsage}
-      renderAll();return true
+      renderAll();
+      if(previousEntry){
+        setTimeout(async()=>{
+          if(Number(activeSeason)!==Number(id)||previousUsage)return;
+          previousUsage=await dataset(previousEntry.path).catch(()=>null);
+          previousDetailUsage=previousUsage;
+          renderComparisons();
+          renderMatrix();
+        },0);
+      }
+      return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
   }
   function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode','dtideSort','dtideCreationFilter'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;requestAnimationFrame(renderMatrix)});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});document.addEventListener('click',e=>{if(!e.target.closest('#dtideRealmFilters .dtideFilterChip,#dtideRoleFilters .dtideFilterChip'))return;queueMicrotask(renderAll)});bound=true}
@@ -267,5 +279,4 @@
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
-
 
