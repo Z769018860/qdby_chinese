@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260918.22";
+  const assetVersion="20260918.23";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
