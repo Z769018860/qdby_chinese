@@ -31,7 +31,8 @@
     const wheelScore=rarityBonus+realmBonus+keywordBonus;
     const fortuneScore=Math.min(100,Math.round(rankScore*.55+dailyScore*.25+wheelScore*.2)),sign=fortuneScore>=88?'大吉':fortuneScore>=76?'上吉':fortuneScore>=64?'中吉':fortuneScore>=52?'小吉':fortuneScore>=40?'平':fortuneScore>=28?'小凶':'凶',scores={战斗:Math.min(100,Math.round(45+fortuneScore*.45+(seed>>>3)%12)),抽取:Math.min(100,Math.round(35+fortuneScore*.4+(seed>>>7)%18)),探索:Math.min(100,Math.round(42+fortuneScore*.43+(seed>>>11)%15)),强化:Math.min(100,Math.round(40+fortuneScore*.42+(seed>>>15)%16))};
     const wheelKeywords=[wheelKeywordPool[(seed>>>2)%wheelKeywordPool.length],wheelKeywordPool[(seed>>>7)%wheelKeywordPool.length]].filter((x,i,a)=>a.indexOf(x)===i);
-    const keywords=[detail.realm,detail.type,detail.wheelRealm,detail.wheelRarity,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
+    const keywordSets={大吉:['理智回稳','观测清晰','行动窗口','资源充足'],上吉:['稳步推进','线索浮现','风险可控','节奏良好'],中吉:['谨慎探索','信息整理','局势平衡','保留余力'],小吉:['微光指引','小幅推进','低耗试探','保持观察'],平:['静观其变','稳住阵线','整理线索','避免冒进'],小凶:['风险上升','收束行动','检查退路','降低消耗'],凶:['暂缓深潜','保存理智','避开未知','等待转机']};
+    const keywords=(keywordSets[sign]||keywordSets.平).slice(0,4);
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
     const signPool=themedSignTexts[sign]||[signTexts[sign]],themedText=signPool[(seed>>>21)%signPool.length];
     // 每次签词固定抽取一条头像页原文和一条原创克苏鲁签词；角色语音不参与。
