@@ -1,6 +1,7 @@
 (()=>{
   const $=id=>document.getElementById(id);
-  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const esc=s=>String(decodeMojibake(s)??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const decodeMojibake=value=>{const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(c=>c.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}};
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const rankCaps=[50,200,500,1000];
   const diffs=['normal','hard','nightmare','madness'];
@@ -44,7 +45,7 @@
   const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
   const difficultyOf=(team,wave)=>{const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'unknown').toLowerCase();return diffs.find(d=>new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))||'unknown'};
   const enlightOf=m=>{const p=Number(m?.potencyLevel);if(Number.isFinite(p))return p<=2?'low':p<=6?'e3plus3':p<=14?'plus4plus11':'plus12';const n=Number(m?.enlightenCount);if(Number.isFinite(n))return n<=2?'low':n===3?'e3plus3':n===4?'plus4plus11':'plus12';return /AA/i.test(String(m?.progression||''))?'plus12':/OE/i.test(String(m?.progression||''))?'plus4plus11':/E[0-2]/i.test(String(m?.progression||''))?'low':'e3plus3'};
-  function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
+  function displayCharacterName(...values){return values.map(decodeMojibake).find(value=>{const name=String(value||'').trim();return name&&!/^(awakener|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
   function characterInfo(m){
     const key=m?.skeydbId||m?.ingameId||memberKey(m),db=window.MorimensData?.db?.records||[];
     const rec=db.find(x=>x.id===key||x.ingameId===key||x.ingameId===m?.ingameId);
@@ -266,4 +267,5 @@
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+
 
