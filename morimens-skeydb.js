@@ -47,11 +47,15 @@
   function allQuotes(rec){
     const zh=zhFor(rec);
     if(isZh()){
-      const q=(zh?.voiceLines?.length?zh.voiceLines:zh?.fallbackVoiceLines)||[];
-      
-      return q.filter(x=>x?.content);
+      // Wiki voice lines are preferred, but SKeyDB stores the source voice
+      // archive under profile.voiceLines.  Keep both paths so a missing or
+      // partially synced Wiki record never leaves the daily report empty.
+      const wikiQuotes=zh?.voiceLines?.length?zh.voiceLines:(zh?.fallbackVoiceLines||[]);
+      const skeydbQuotes=rec?.profile?.voiceLines||[];
+      const q=wikiQuotes.length?wikiQuotes:skeydbQuotes;
+      return q.filter(x=>x?.content).map(x=>({...x,title:x.title|| (isZh()?'角色语音':'Voice line')}));
     }
-    return rec?.profile?.voiceLines?.filter(x=>x?.content)||[];
+    return rec?.profile?.voiceLines?.filter(x=>x?.content).map(x=>({...x,title:x.title||'Voice line'}))||[];
   }
   function localizedProfile(rec){
     const zh=zhFor(rec);
@@ -91,7 +95,7 @@
   }
   function renderQuote(rec){
     const q=allQuotes(rec),box=$('fortuneQuote');if(!box)return;
-    if(!q.length){box.textContent=isZh()?'该角色的中文语音快照尚未同步；不会再用其他角色或英文台词替代。':'No synchronized voice line is available for this character.';return}
+    if(!q.length){box.textContent=isZh()?'该角色暂未找到可用语音内容。':'No synchronized voice line is available for this character.';return}
     const item=q[((quoteIndex%q.length)+q.length)%q.length];box.innerHTML=`<strong>${escape(item.title||(isZh()?'角色语音':'Voice line'))}</strong><br>“${escape(item.content)}”`;
   }
   function renderSourceStatus(){
