@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
-  const cacheKey='morimens.daily-fortune.v6';
+  const cacheKey='morimens.daily-fortune.v5';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
@@ -31,8 +31,7 @@
     const wheelScore=rarityBonus+realmBonus+keywordBonus;
     const fortuneScore=Math.min(100,Math.round(rankScore*.55+dailyScore*.25+wheelScore*.2)),sign=fortuneScore>=88?'大吉':fortuneScore>=76?'上吉':fortuneScore>=64?'中吉':fortuneScore>=52?'小吉':fortuneScore>=40?'平':fortuneScore>=28?'小凶':'凶',scores={战斗:Math.min(100,Math.round(45+fortuneScore*.45+(seed>>>3)%12)),抽取:Math.min(100,Math.round(35+fortuneScore*.4+(seed>>>7)%18)),探索:Math.min(100,Math.round(42+fortuneScore*.43+(seed>>>11)%15)),强化:Math.min(100,Math.round(40+fortuneScore*.42+(seed>>>15)%16))};
     const wheelKeywords=[wheelKeywordPool[(seed>>>2)%wheelKeywordPool.length],wheelKeywordPool[(seed>>>7)%wheelKeywordPool.length]].filter((x,i,a)=>a.indexOf(x)===i);
-    const keywordSets={大吉:['理智回稳','观测清晰','行动窗口','资源充足'],上吉:['稳步推进','线索浮现','风险可控','节奏良好'],中吉:['谨慎探索','信息整理','局势平衡','保留余力'],小吉:['微光指引','小幅推进','低耗试探','保持观察'],平:['静观其变','稳住阵线','整理线索','避免冒进'],小凶:['风险上升','收束行动','检查退路','降低消耗'],凶:['暂缓深潜','保存理智','避开未知','等待转机']};
-    const keywords=(keywordSets[sign]||keywordSets.平).slice(0,4);
+    const keywords=[detail.realm,detail.type,detail.wheelRealm,detail.wheelRarity,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
     const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
     const signPool=themedSignTexts[sign]||[signTexts[sign]],themedText=signPool[(seed>>>21)%signPool.length];
     // 每日签只抽取“守密人头像”页面头像下方短句；角色语音仍仅显示在下方“角色语录”区，避免重复。
@@ -51,14 +50,14 @@
       '「只要灯火尚存，忘却前夜就还没有结束。」'
     ];
     const signText=avatarCaptionPool[(seed>>>21)%avatarCaptionPool.length]||themedText;
-    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,avatarCaption,cthulhuSign,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
+    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
     if(!data)return;
     if($('fortuneWheelName'))$('fortuneWheelName').textContent=data.wheelName||'命轮';
     if($('fortuneWheelKeywords'))$('fortuneWheelKeywords').textContent=(data.wheelKeywords||[]).join(' · ');
     if($('fortuneLevel'))$('fortuneLevel').textContent=`${data.sign||'平'}签`;
-    if($('fortuneSignText'))$('fortuneSignText').innerHTML=data.avatarCaption&&data.cthulhuSign?`${esc(data.avatarCaption)}<br><span class="fortuneCthulhuSign">${esc(data.cthulhuSign)}</span>`:esc(data.signText||signTexts.平);
+    if($('fortuneSignText'))$('fortuneSignText').textContent=data.signText||signTexts.平;
     if($('fortuneTarotName'))$('fortuneTarotName').textContent=`塔罗 · ${data.tarotName||'命运之轮'}`;
     if($('fortuneKeyword'))$('fortuneKeyword').innerHTML=(data.keywords||[]).map(x=>`<span>${esc(x)}</span>`).join('');
     if($('fortuneLuckGrid'))$('fortuneLuckGrid').innerHTML=Object.entries(data.scores||{}).map(([name,value])=>{const stars=Math.max(1,Math.min(5,Math.round(value/20)));return `<div class="fortuneLuckItem"><header><span>${esc(name)}</span><b>+${Math.max(5,Math.round((value-45)/2))}%</b></header><div class="fortuneStars" aria-label="${stars} 星">${[1,2,3,4,5].map(i=>`<span class="${i<=stars?'isOn':''}">★</span>`).join('')}</div></div>`}).join('');
@@ -84,17 +83,6 @@
     try{const response=await fetch(`data/morimens/almanac/today.json?v=${dateKey()}`,{cache:'no-cache'});if(!response.ok)return;const data=await response.json();if(data?.date!==dateKey())return;renderAlmanac(data);try{localStorage.setItem(key,JSON.stringify(data))}catch{}}catch{}
   }
   try{const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');if(cached?.date===dateKey())render(cached,{cached:true})}catch{}
-  let fortuneEventReceived=false;
-  window.addEventListener('morimens-fortune-render',event=>{fortuneEventReceived=true;const data=build(event.detail||{});render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}});
-  // 立即渲染本地结果；真实 SKeyDB 事件到达后会覆盖它。
-  try{
-    const initial=build({id:'local-initial',name:'守密人',realm:'',type:'',wheelName:'命运之轮',wheelRealm:'',wheelRarity:'R',wheelKeywords:[],usage:{}});
-    render(initial);
-    if($('fortuneSync'))$('fortuneSync').textContent='✓ 本地签词已加载，等待数据快照覆盖';
-  }catch(error){console.warn('local fortune render failed',error)}
-  setTimeout(()=>{
-    if(fortuneEventReceived)return;
-    if($('fortuneSync'))$('fortuneSync').textContent='⚠ 数据快照未同步，已使用本地签词';
-  },1200);
+  window.addEventListener('morimens-fortune-render',event=>{const data=build(event.detail||{});render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}});
   loadAlmanac();
 })();
