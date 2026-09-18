@@ -13,22 +13,23 @@
   let almanacToday=null;
 
   function build(detail){
-    const seed=hash(`${dateKey()}-${detail.id}-${detail.wheelName}`),scores={战斗:55+seed%46,抽取:50+(seed>>>4)%51,探索:50+(seed>>>9)%51,强化:50+(seed>>>14)%51};
+    const seed=hash(`${dateKey()}-${detail.id}-${detail.wheelName}`),usage=detail.usage||{},rankScore=usage.rank&&usage.total>1?100*(usage.total-usage.rank)/(usage.total-1):50,dailyScore=30+seed%71,fortuneScore=Math.round(rankScore*.68+dailyScore*.32),sign=fortuneScore>=88?'大吉':fortuneScore>=76?'上吉':fortuneScore>=64?'中吉':fortuneScore>=52?'小吉':fortuneScore>=40?'平':fortuneScore>=28?'小凶':'凶',scores={战斗:Math.min(100,Math.round(45+fortuneScore*.45+(seed>>>3)%12)),抽取:Math.min(100,Math.round(35+fortuneScore*.4+(seed>>>7)%18)),探索:Math.min(100,Math.round(42+fortuneScore*.43+(seed>>>11)%15)),强化:Math.min(100,Math.round(40+fortuneScore*.42+(seed>>>15)%16))};
     const wheelKeywords=[wheelKeywordPool[(seed>>>2)%wheelKeywordPool.length],wheelKeywordPool[(seed>>>7)%wheelKeywordPool.length]].filter((x,i,a)=>a.indexOf(x)===i);
     const keywords=[detail.realm,detail.type,...wheelKeywords,'幸运'].filter(Boolean).slice(0,5);
-    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
+    const usageText=usage.rank?`第 ${usage.season||69} 期出场率 ${Number(usage.rate||0).toFixed(1)}% · 第 ${usage.rank}/${usage.total}`:'当期出场率暂无记录';
+    return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
     if(!data)return;
     if($('fortuneWheelName'))$('fortuneWheelName').textContent=data.wheelName||'命轮';
     if($('fortuneWheelKeywords'))$('fortuneWheelKeywords').textContent=(data.wheelKeywords||[]).join(' · ');
-    if($('fortuneLevel'))$('fortuneLevel').textContent=`今日塔罗 · ${data.tarotName||'命运之轮'}`;
+    if($('fortuneLevel'))$('fortuneLevel').textContent=`${data.sign||'平'}签 · ${data.tarotName||'命运之轮'}`;
     if($('fortuneKeyword'))$('fortuneKeyword').innerHTML=(data.keywords||[]).map(x=>`<span>${esc(x)}</span>`).join('');
     if($('fortuneLuckGrid'))$('fortuneLuckGrid').innerHTML=Object.entries(data.scores||{}).map(([name,value])=>{const stars=Math.max(1,Math.min(5,Math.round(value/20)));return `<div class="fortuneLuckItem"><header><span>${esc(name)}</span><b>+${Math.max(5,Math.round((value-45)/2))}%</b></header><div class="fortuneStars" aria-label="${stars} 星">${[1,2,3,4,5].map(i=>`<span class="${i<=stars?'isOn':''}">★</span>`).join('')}</div></div>`}).join('');
     const avg=Object.values(data.scores||{}).reduce((a,b)=>a+b,0)/Math.max(1,Object.keys(data.scores||{}).length);if($('fortuneStat'))$('fortuneStat').textContent=`综合 × ${(1+avg/500).toFixed(2)}`;
-    if($('fortuneRecommend'))$('fortuneRecommend').textContent=data.recommend||'适合稳步推进今日目标';
+    if($('fortuneRecommend'))$('fortuneRecommend').textContent=`${data.usageText||''}${data.usageText?'；':''}${data.recommend||'适合稳步推进今日目标'}`;
     if($('fortuneChallenge'))$('fortuneChallenge').textContent=data.challenge||'完成一次融灾挑战';
-    if($('fortuneSync'))$('fortuneSync').textContent=cached?'✓ 已从今日缓存显示':'✓ 本地快照已更新';
+    if($('fortuneSync'))$('fortuneSync').textContent=cached?'✓ 今日签缓存 · 出场率已纳入':'✓ 当期出场率已纳入签级';
     if(almanacToday)renderAlmanac(almanacToday,{cached});
   }
   function renderAlmanac(almanac,{cached=false}={}){
