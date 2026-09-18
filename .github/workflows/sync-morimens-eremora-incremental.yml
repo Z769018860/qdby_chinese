@@ -17,8 +17,8 @@ jobs:
         with: {node-version: 22}
       - name: Incremental sync with cache and 403 circuit breaker
         env:
-          EREMORA_USAGE_SEASONS: "69,68,67,66,65,64,63"
-          EREMORA_USAGE_CROSS_SEASON: "1"
+          EREMORA_USAGE_SEASONS: "68,67,66,65,64,63"
+          EREMORA_USAGE_CROSS_SEASON: "0"
           EREMORA_USAGE_TARGET: "1000"
           EREMORA_USAGE_MAX_FETCH: ${{ inputs.max_fetch }}
           EREMORA_USAGE_BATCH_SIZE: ${{ inputs.batch_size }}
