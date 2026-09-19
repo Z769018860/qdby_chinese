@@ -5,7 +5,7 @@ MoriMens 第 69 期 Top1000 自动下载器。
 
 流程：
   1. 读取 cookies.txt，创建带 Cookie 的 Session。
-  2. 自动调用 Eremora 榜单接口：
+  2. 使用独立匿名 Session 自动调用 Eremora 榜单接口：
        /api/rank?board=abyss&start={start}&end={end}
      按 50 名一页抓取当前 Abyss Top1000 UID；不使用 dzone_season 过滤榜单行。
   3. 将 Top1000 详情 URL 按排名写入 urls.txt。
@@ -175,6 +175,31 @@ def load_session() -> requests.Session:
     return session
 
 
+def load_rank_session() -> requests.Session:
+    """
+    榜单接口使用独立匿名 Session。
+    Eremora 的 /api/rank 是公开接口；与详情下载 Cookie Session 分离，
+    避免登录 Cookie / Cloudflare 会话造成 500 名以后重复返回旧分页。
+    """
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    session.headers.update({
+        "Accept": "application/json, text/plain, */*",
+        "Referer": f"{ORIGIN}/leaderboard/abyss",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+    })
+    try:
+        session.get(
+            f"{ORIGIN}/leaderboard/abyss",
+            timeout=min(TIMEOUT, 20),
+            allow_redirects=True,
+        )
+    except requests.RequestException:
+        pass
+    return session
+
+
 def sleep_after_429(context: str) -> None:
     print(f"{context} HTTP 429 限流")
     print(f"  → 暂停 {RATE_LIMIT_WAIT // 60} 分钟，然后重试同一请求")
@@ -238,6 +263,24 @@ def request_json_with_policy(
     raise RuntimeError(f"{context} 请求失败: {url}")
 
 
+def request_rank_payload(
+    rank_session: requests.Session,
+    cookie_session: requests.Session,
+    url: str,
+    *,
+    context: str,
+) -> tuple[requests.Response, Any]:
+    """
+    榜单优先使用匿名 Session；匿名 403 时只回退一次 Cookie Session。
+    详情下载仍严格遵守“403 立即停止整个下载流程”。
+    """
+    try:
+        return request_json_with_policy(rank_session, url, context=context)
+    except ForbiddenStop:
+        print(f"{context} 匿名榜单请求 403，尝试 Cookie Session 回退")
+        return request_json_with_policy(cookie_session, url, context=context)
+
+
 def _parse_rank_page_rows(payload: Any, start: int, end: int) -> tuple[dict[int, str], dict[str, int]]:
     rows = payload.get("rows") if isinstance(payload, dict) else payload
     if not isinstance(rows, list):
@@ -289,7 +332,8 @@ def _parse_rank_page_rows(payload: Any, start: int, end: int) -> tuple[dict[int,
 
 
 def fetch_rank_page(
-    session: requests.Session,
+    rank_session: requests.Session,
+    cookie_session: requests.Session,
     start: int,
     end: int,
 ) -> dict[int, str]:
@@ -306,8 +350,9 @@ def fetch_rank_page(
             "_": f"{int(time.time() * 1000)}-{validate_attempt}-{random.randint(1000, 9999)}",
         }
         url = f"{RANK_API}?{urlencode(params)}"
-        _response, payload = request_json_with_policy(
-            session,
+        _response, payload = request_rank_payload(
+            rank_session,
+            cookie_session,
             url,
             context=f"[榜单 {start}-{end}]",
         )
@@ -343,10 +388,25 @@ def fetch_rank_page(
         if returned:
             returned_desc = f"{returned[0]}-{returned[-1]} / {len(returned)} 条"
         else:
-            # 如果 API 返回了 rows，但全都落在错误区间，这里明确显示“0 条有效”。
+            # 如果 API 返回了 rows，但全都落在错误区间，打印原始 rank 范围便于诊断。
             raw_rows = payload.get("rows") if isinstance(payload, dict) else payload
             raw_count = len(raw_rows) if isinstance(raw_rows, list) else 0
-            returned_desc = f"0 条有效（原始 rows={raw_count}）"
+            raw_ranks = []
+            if isinstance(raw_rows, list):
+                for raw_row in raw_rows:
+                    if not isinstance(raw_row, dict):
+                        continue
+                    try:
+                        raw_ranks.append(int(raw_row.get("rank")))
+                    except (TypeError, ValueError):
+                        pass
+            raw_desc = (
+                f"{min(raw_ranks)}-{max(raw_ranks)}"
+                if raw_ranks else "未知"
+            )
+            returned_desc = (
+                f"0 条有效（原始 rows={raw_count}，原始 rank={raw_desc}）"
+            )
 
         last_error = RuntimeError(
             f"榜单 {start}-{end} 页面校验失败：返回 {returned_desc}，"
@@ -365,14 +425,17 @@ def fetch_rank_page(
     raise last_error or RuntimeError(f"榜单 {start}-{end} 获取失败")
 
 
-def fetch_top1000_urls(session: requests.Session) -> list[str]:
+def fetch_top1000_urls(
+    rank_session: requests.Session,
+    cookie_session: requests.Session,
+) -> list[str]:
     print(f"\n===== 获取当前 Abyss Top {TOP_N} UID（详情目标赛季 {SEASON}） =====")
 
     by_rank: dict[int, str] = {}
 
     for start in range(1, TOP_N + 1, PAGE_SIZE):
         end = min(TOP_N, start + PAGE_SIZE - 1)
-        page = fetch_rank_page(session, start, end)
+        page = fetch_rank_page(rank_session, cookie_session, start, end)
 
         overlap = set(by_rank) & set(page)
         if overlap:
@@ -544,10 +607,11 @@ def download_one(
 
 def main() -> int:
     session = load_session()
+    rank_session = load_rank_session()
     os.makedirs(SAVE_DIR, exist_ok=True)
 
     try:
-        urls = fetch_top1000_urls(session)
+        urls = fetch_top1000_urls(rank_session, session)
     except ForbiddenStop as exc:
         print(f"\n[停止] {exc}")
         print("检测到 403，按配置立即停止，不继续生成/下载数据。")
