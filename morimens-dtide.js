@@ -276,10 +276,15 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     }finally{button.disabled=false;button.textContent='下载图片'}
   }
   function legacyDetailExtras(name,periods){
-    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).slice(0,10),assist=data.assistRates||{};
+    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).slice(0,10),assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0);
     const teamHtml=teams.length?teams.map((team,index)=>'<div style="display:grid;grid-template-columns:30px repeat(4,minmax(0,1fr)) 42px;gap:6px;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(166,193,224,.12)"><b style="color:#e7b65c">#'+(index+1)+'</b>'+team.characters.map((role)=>{const meta=characterInfo(role,{name:role,skeydbId:season.characterMap?.[role]?.skeydbId,ingameId:season.characterMap?.[role]?.ingameId,image:season.characterMap?.[role]?.image});return '<span style="display:flex;align-items:center;gap:5px;min-width:0;color:#dbe8f7;font-size:12px"><span class="dtideChar" style="width:28px;height:28px;flex:0 0 28px"><img src="'+esc(meta.image||'')+'" alt="" loading="lazy"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(meta.name||role)+'</span></span>'}).join('')+'<small style="color:#b6c9df;text-align:right">'+Number(team.count||0)+' 次</small></div>').join(''):'<div style="padding:10px;color:#9fb0c4">暂无配队数据</div>';
     const assistHtml=periods.map(p=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:5px 8px;border-bottom:1px solid rgba(166,193,224,.1)"><span>'+esc(p.date)+'【'+esc(p.realm)+'】</span><strong>'+((Number(assist[p.label]||0)*100).toFixed(2))+'%</strong></div>').join('');
     return '<div class="dtideLegacyExtra" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:12px;margin-top:12px;text-align:left"><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">Top10 配队</strong>'+teamHtml+'</section><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">每期助战使用率</strong>'+assistHtml+'</section></div>';
+  }
+  function legacyWheelInfo(name){
+    const data=window.MorimensData||{},pools=[data.wheels,data.db?.wheels,data.relics,data.catalog?.wheels,data.entityDb?.wheels].filter(Boolean);
+    for(const pool of pools){const items=Array.isArray(pool)?pool:Object.values(pool);for(const item of items){const label=wheelName(item);if(label===name||item?.name===name||item?.id===name)return {image:item.image||item.icon||item.assets?.icon||item.assets?.image||''}}}
+    return {image:''};
   }
   function renderLegacyWheelMatrix(){
     const host=$('dtideMatrix'),legacy=season?.legacyRates;if(!host||!legacy)return false;
@@ -290,7 +295,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     names.sort((a,b)=>{const d=value(a,sortKey)-value(b,sortKey);return (ascending?d:-d)||a.localeCompare(b,'zh-CN')});
     const realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'},rate=v=>Number.isFinite(Number(v))?((Number(v)*100).toFixed(2)+'%'):'—',arrow=key=>sortKey===key?(ascending?' ↑':' ↓'):' ↕',head=(label,key)=>'<button type="button" class="dtideSortHead" data-legacy-sort="'+key+'">'+label+arrow(key)+'</button>';
     const max=Math.max(...names.flatMap(n=>periods.map(p=>value(n,p.wave))),0);
-    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>value(name,p.wave)),avg=value(name,'avg');return '<tr><td><div class="dtideRankedItem"><span>'+esc(name)+'</span></div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
+    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>value(name,p.wave)),avg=value(name,'avg');return '<tr><td><div class="dtideRankedItem"><span class="dtideChar" style="width:32px;height:32px">'+(legacyWheelInfo(name).image?'<img src="'+esc(legacyWheelInfo(name).image)+'" alt="" loading="lazy">':'')+'</span><span>'+esc(name)+'</span></div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
     host.onclick=e=>{const button=e.target.closest('[data-legacy-sort]');if(!button)return;const key=button.dataset.legacySort;if(window.__legacyMatrixSort===key)window.__legacyMatrixAscending=!window.__legacyMatrixAscending;else{window.__legacyMatrixSort=key;window.__legacyMatrixAscending=false}renderLegacyMatrix()};
     if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='命轮逐期高难出场率';
     if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率（来源：@却尘）';
@@ -346,7 +351,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='角色逐期高难出场率';
     if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率（来源：@却尘）';
     if($('dtideSummary'))$('dtideSummary').innerHTML=[['数据来源','却尘'],['统计角色',names.length],['统计期次',periods.length],['指标','高难出场率']].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');
-    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML=`<div class="dtideNotice">旧版融灾高难出场率数据来源：<a href="${esc(season.sourceUrl)}" target="_blank" rel="noopener noreferrer">在线文档</a>。</div>`;
+    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML=`<div class="dtideNotice">旧版融灾高难出场率数据来源：<a href="${esc(season.sourceUrl)}" target="_blank" rel="noopener noreferrer">在线文档</a>。<br><small>出场率计算：使用次数 ÷ 统计人数；命轮因每队包含 10 个命轮，按命轮使用次数 ÷ 总队伍数 ÷ 10 计算。</small></div>`;
     return true;
   }
   function renderMatrix(){
