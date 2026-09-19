@@ -313,8 +313,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       detail.className='dtideLegacyDetailRow';
       detail.innerHTML=`<td colspan="${periods.length+2}"><div class="dtideLegacyDetail"><strong>${esc(name)} · 各期出场率排名变化</strong><svg role="img" aria-label="${esc(name)}各期排名折线图"></svg></div></td>`;
       row.after(detail);
-      const mapped=season.characterMap?.[name]||{},character=characterInfo(name,{name,skeydbId:mapped.skeydbId,ingameId:mapped.ingameId,image:mapped.image}),cg=character.art||character.image||'';
-      if(/^assets\/morimens\/(?:portraits|cards)\/[a-z0-9-]+\.webp$/.test(cg)){const card=cg.replace('/portraits/','/cards/');detail.querySelector('.dtideLegacyDetail').style.setProperty('--legacy-cg',`url("${card}")`)}
+      const mapped=season.characterMap?.[name]||{},character=characterInfo(name,{name,skeydbId:mapped.skeydbId,ingameId:mapped.ingameId,image:mapped.image}),cg=String(character.art||character.image||'').trim();
+      if(cg){const card=cg.replace('/portraits/','/cards/');detail.querySelector('.dtideLegacyDetail').style.setProperty('--legacy-cg',`url("${card.replace(/"/g,'\\\"')}")`)}
       drawChart(detail,name,row.closest('table'));
     };
     if(host.__legacyResizeHandler)window.removeEventListener('resize',host.__legacyResizeHandler);
