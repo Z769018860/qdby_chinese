@@ -14,6 +14,11 @@
   <header class="wrap">
     <div class="hero">
       <div class="title">
+        <div class="siteVisitCounter" aria-label="网站访问统计">
+          <span class="siteVisitItem">今日访问 <strong class="site-visit-today-count">—</strong></span>
+          <span class="siteVisitDivider" aria-hidden="true">·</span>
+          <span class="siteVisitItem">总访问 <strong class="site-visit-total-count">—</strong></span>
+        </div>
         <div class="titleRow">
         <div class="stickers" aria-hidden="true">
           <img class="sticker" src="assets/sticker-1.gif" alt="" />
@@ -39,6 +44,9 @@
         </a>
         <a class="chip" href="#toolboxTitle">
           <span>🧰 个人工具箱</span>
+        </a>
+        <a class="chip" href="#messageTitle">
+          <span>💬 留言板</span>
         </a>
       </nav>
     </div>
@@ -308,5 +316,6 @@
         }
       });
   </script>
+  <script src="site-analytics.js" defer></script>
 </body>
 </html>
