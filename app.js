@@ -1,10 +1,12 @@
 // app.js (ESM)
 // Data source: ./data.json
 
-const LIKE_STORAGE_KEY = "qdby.likes.v1";
+const LIKE_VOTE_STORAGE_KEY = "qdby.like-votes.v2";
 const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
 const API_BASE = "/api";
-const state = { data: [], likes: {}, messages: [], storageOK: true, onlineOK: false };
+const WALINE_SERVER = "https://textbox.qingdengbuyi.top";
+const WALINE_LIKE_PREFIX = "/__qdby_home_likes__/";
+const state = { data: [], likes: {}, liked: new Set(), messages: [], storageOK: true, onlineOK: false };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -92,7 +94,6 @@ async function tryLoadRemoteState(){
   try{
     const remote = await apiJson('/state', { cache: 'no-store' });
     if(remote && typeof remote === 'object'){
-      state.likes = remote.likes && typeof remote.likes === 'object' ? remote.likes : state.likes;
       state.messages = Array.isArray(remote.messages) ? remote.messages : state.messages;
       state.onlineOK = true;
       return true;
@@ -103,16 +104,61 @@ async function tryLoadRemoteState(){
   return false;
 }
 
-async function postLikeRemote(id){
-  const payload = await apiJson('/like', {
-    method: 'POST',
-    body: JSON.stringify({ id }),
-  });
-  if(payload && payload.likes && typeof payload.likes === 'object'){
-    state.likes = payload.likes;
+function walineLikePath(id){
+  return `${WALINE_LIKE_PREFIX}${encodeURIComponent(safeText(id).trim())}`;
+}
+
+function parseWalineCounterPayload(payload){
+  if(payload && payload.errno){
+    throw new Error(payload.errmsg || `Waline errno ${payload.errno}`);
   }
-  state.onlineOK = true;
-  return payload;
+  return Array.isArray(payload?.data) ? payload.data : [];
+}
+
+async function fetchWalineLikeCounts(ids){
+  const cleanIds = [...new Set(ids.map((id)=>safeText(id).trim()).filter(Boolean))];
+  const nextLikes = Object.fromEntries(cleanIds.map((id)=>[id, 0]));
+  const chunkSize = 40;
+
+  for(let start = 0; start < cleanIds.length; start += chunkSize){
+    const chunk = cleanIds.slice(start, start + chunkSize);
+    const paths = chunk.map(walineLikePath);
+    const url = `${WALINE_SERVER}/api/article?path=${encodeURIComponent(paths.join(','))}&type=reaction0&lang=zh-CN`;
+    const response = await fetch(url, { cache: 'no-store' });
+    if(!response.ok){ throw new Error(`Waline like GET HTTP ${response.status}`); }
+
+    const rows = parseWalineCounterPayload(await response.json());
+    chunk.forEach((id, index)=>{
+      const value = Number(rows[index]?.reaction0 || 0);
+      nextLikes[id] = Number.isFinite(value) && value > 0 ? value : 0;
+    });
+  }
+
+  state.likes = nextLikes;
+  return nextLikes;
+}
+
+async function updateWalineLike(id, action){
+  const response = await fetch(`${WALINE_SERVER}/api/article?lang=zh-CN`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      path: walineLikePath(id),
+      type: 'reaction0',
+      action,
+    }),
+  });
+  if(!response.ok){ throw new Error(`Waline like POST HTTP ${response.status}`); }
+
+  const rows = parseWalineCounterPayload(await response.json());
+  const value = Number(rows[0]?.reaction0);
+  if(Number.isFinite(value)){
+    state.likes[id] = Math.max(0, value);
+    return state.likes[id];
+  }
+
+  const refreshed = await fetchWalineLikeCounts([id]);
+  return Number(refreshed[id] || 0);
 }
 
 async function postMessageRemote(author, text){
@@ -127,31 +173,37 @@ async function postMessageRemote(author, text){
   return payload;
 }
 
-function loadLikes(){
+function loadLikedIds(){
   try{
-    const raw = getLocalItem(LIKE_STORAGE_KEY);
-    if(!raw){ return {}; }
+    const raw = getLocalItem(LIKE_VOTE_STORAGE_KEY);
+    if(!raw){ return new Set(); }
     const parsed = JSON.parse(raw);
-    if(parsed && typeof parsed === "object"){ return parsed; }
+    if(Array.isArray(parsed)){ return new Set(parsed.map((id)=>safeText(id).trim()).filter(Boolean)); }
   }catch(_err){
-    // ignore malformed cache
+    // ignore malformed local vote state
   }
-  return {};
+  return new Set();
 }
 
-function saveLikes(){
-  setLocalItem(LIKE_STORAGE_KEY, JSON.stringify(state.likes));
+function saveLikedIds(){
+  return setLocalItem(LIKE_VOTE_STORAGE_KEY, JSON.stringify([...state.liked]));
+}
+
+function isLiked(id){
+  return state.liked.has(safeText(id).trim());
+}
+
+function setLiked(id, liked){
+  const key = safeText(id).trim();
+  if(!key){ return; }
+  if(liked){ state.liked.add(key); }
+  else{ state.liked.delete(key); }
+  saveLikedIds();
 }
 
 function getLikeCount(id){
   const n = Number(state.likes[id] || 0);
   return Number.isFinite(n) && n > 0 ? n : 0;
-}
-
-function addLike(id){
-  if(!id){ return; }
-  state.likes[id] = getLikeCount(id) + 1;
-  saveLikes();
 }
 
 
@@ -386,8 +438,8 @@ function rowHtml(r){
         <div class="name">${safeText(r["汉化名"]) || "—"}</div>
         <div class="mini">${safeText(r["要素"])}</div>
         <div class="likeRow">
-          <button class="likeBtn" type="button" data-like-id="${r.__id}" aria-label="给 ${safeText(r["汉化名"]) || "这部作品"} 点赞">
-            👍 点赞
+          <button class="likeBtn${isLiked(r.__id) ? " isLiked" : ""}" type="button" data-like-id="${r.__id}" aria-pressed="${String(isLiked(r.__id))}" aria-label="给 ${safeText(r["汉化名"]) || "这部作品"} 点赞">
+            ${isLiked(r.__id) ? "👍 已赞" : "👍 点赞"}
           </button>
           <span class="likeCount" data-like-count="${r.__id}">${getLikeCount(r.__id)}</span>
         </div>
@@ -496,14 +548,29 @@ function wireControls(){
     const likeBtn = e.target.closest("button[data-like-id]");
     if(likeBtn){
       const id = likeBtn.getAttribute("data-like-id");
+      if(!id || likeBtn.disabled){ return; }
+
+      const wasLiked = isLiked(id);
+      likeBtn.disabled = true;
+      likeBtn.removeAttribute("title");
+
       try{
-        await postLikeRemote(id);
-      }catch(_err){
-        state.onlineOK = false;
-        addLike(id);
+        await updateWalineLike(id, wasLiked ? 'desc' : 'inc');
+        setLiked(id, !wasLiked);
+
+        const likedNow = isLiked(id);
+        likeBtn.classList.toggle("isLiked", likedNow);
+        likeBtn.setAttribute("aria-pressed", String(likedNow));
+        likeBtn.textContent = likedNow ? "👍 已赞" : "👍 点赞";
+
+        const countEl = el.tbody.querySelector(`[data-like-count="${CSS.escape(id)}"]`);
+        if(countEl){ countEl.textContent = String(getLikeCount(id)); }
+      }catch(error){
+        console.error("Waline like sync failed:", error);
+        likeBtn.title = "点赞同步失败，请稍后重试";
+      }finally{
+        likeBtn.disabled = false;
       }
-      const countEl = el.tbody.querySelector(`[data-like-count="${id}"]`);
-      if(countEl){ countEl.textContent = String(getLikeCount(id)); }
     }
   });
 
@@ -596,7 +663,8 @@ async function loadData(){
 
 async function main(){
   state.storageOK = canUseLocalStorage();
-  state.likes = loadLikes();
+  state.likes = {};
+  state.liked = loadLikedIds();
   state.messages = loadMessages();
   await tryLoadRemoteState();
   wireControls();
@@ -604,6 +672,14 @@ async function main(){
   await loadData();
   fillFilters();
   render();
+
+  try{
+    await fetchWalineLikeCounts(state.data.map((item)=>item.__id));
+    render();
+  }catch(error){
+    console.error("Waline like count load failed:", error);
+  }
+
   renderMessages();
   if(el.messageStatus && !state.onlineOK){
     el.messageStatus.textContent = "当前处于离线留言模式：会先显示并尝试保存在本地。";
