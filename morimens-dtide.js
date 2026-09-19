@@ -21,7 +21,7 @@
   const roleZh={Warden:'防御型',Chorus:'辅助型',Assault:'伤害型'};
   const realmIconSrc=name=>'assets/morimens/realms-svg/'+(realmIcons[name]||'Icon_Career2_Hundun.webp').replace(/\.webp$/i,'.svg');
   function localAsset(src,kind){const raw=String(src||'');if(!raw)return '';const file=raw.split(/[\\/]/).pop().split('?')[0];if(kind==='wheel'&&/^Weapon_(Full|Mini)_/.test(file))return 'assets/morimens/wheels/'+(file.startsWith('Weapon_Mini_')?'Mini/':'')+file;if(kind==='creation'&&/^Icon_Creation_/.test(file))return 'assets/morimens/relics/'+file;if(kind==='covenant'&&/^Icon_Trinket_/.test(file))return 'assets/morimens/covenants/Icon/'+file;if(kind==='portrait'&&raw.startsWith('assets/'))return raw;return raw;}
-  let manifest=null,season=null,stats=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
+  let manifest=null,season=null,stats=null,legacyStructured=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
   let flatTeamsCache=null,analysisCache=null,seasonAssistHeatMax=0,seasonLoadToken=0,renderFrame=0;
 
   function scoreRange(){
@@ -275,6 +275,29 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`融灾榜单-${season?.legacy?'旧版':season?.seasonId||'当前'}-${$('dtideEntityType')?.value||'角色'}.png`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
     }finally{button.disabled=false;button.textContent='下载图片'}
   }
+  function legacyDetailExtras(name,periods){
+    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).slice(0,10),assist=data.assistRates||{};
+    const teamHtml=teams.length?teams.map((team,index)=>'<div style="display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;padding:7px 10px;border-bottom:1px solid rgba(166,193,224,.12)"><b style="color:#e7b65c">#'+(index+1)+'</b><span>'+team.characters.map(esc).join(' / ')+'</span><small style="color:#b6c9df">'+team.wheels.map(esc).join(' · ')+' · '+Number(team.count||0)+' 次</small></div>').join(''):'<div style="padding:10px;color:#9fb0c4">暂无配队数据</div>';
+    const assistHtml=periods.map(p=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:5px 8px;border-bottom:1px solid rgba(166,193,224,.1)"><span>'+esc(p.date)+'【'+esc(p.realm)+'】</span><strong>'+((Number(assist[p.label]||0)*100).toFixed(2))+'%</strong></div>').join('');
+    return '<div class="dtideLegacyExtra" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:12px;margin-top:12px;text-align:left"><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">Top10 配队</strong>'+teamHtml+'</section><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">每期助战使用率</strong>'+assistHtml+'</section></div>';
+  }
+  function renderLegacyWheelMatrix(){
+    const host=$('dtideMatrix'),legacy=season?.legacyRates,entity=$('dtideEntityType')?.value||'character';if(!host||!legacy)return false;
+    if(entity==='wheel')return renderLegacyWheelMatrix();
+    const periodDisplay=[['4.13-4.26','混沌'],['4.27-5.10','超维'],['5.11-5.24','深海'],['5.25-6.7','血肉'],['6.7-6.21','超维'],['6.22-7.5','深海'],['7.6-7.19','血肉'],['7.20-8.2','混沌'],['8.3-8.16','深海']];
+    const periods=legacy.map((x,i)=>({wave:i+1,label:x.label,date:periodDisplay[i]?.[0]||x.label,realm:periodDisplay[i]?.[1]||''}));
+    const wheels=legacyStructured?.wheels||{},names=Object.keys(wheels);
+    const sortKey=window.__legacyMatrixSort||'avg',ascending=Boolean(window.__legacyMatrixAscending),value=(name,key)=>key==='avg'?Number(wheels[name]?.average||0):Number(wheels[name]?.rates?.[periods[Number(key)-1]?.label]||0);
+    names.sort((a,b)=>{const d=value(a,sortKey)-value(b,sortKey);return (ascending?d:-d)||a.localeCompare(b,'zh-CN')});
+    const realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'},rate=v=>Number.isFinite(Number(v))?((Number(v)*100).toFixed(2)+'%'):'—',arrow=key=>sortKey===key?(ascending?' ↑':' ↓'):' ↕',head=(label,key)=>'<button type="button" class="dtideSortHead" data-legacy-sort="'+key+'">'+label+arrow(key)+'</button>';
+    const max=Math.max(...names.flatMap(n=>periods.map(p=>value(n,p.wave))),0);
+    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>value(name,p.wave)),avg=value(name,'avg');return '<tr><td><div class="dtideRankedItem"><span>'+esc(name)+'</span></div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
+    host.onclick=e=>{const button=e.target.closest('[data-legacy-sort]');if(!button)return;const key=button.dataset.legacySort;if(window.__legacyMatrixSort===key)window.__legacyMatrixAscending=!window.__legacyMatrixAscending;else{window.__legacyMatrixSort=key;window.__legacyMatrixAscending=false}renderLegacyMatrix()};
+    if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='命轮逐期高难出场率';
+    if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率（来源：@却尘）';
+    if($('dtideSummary'))$('dtideSummary').innerHTML=[['数据来源','却尘'],['统计命轮',names.length],['统计期次',periods.length],['指标','高难出场率']].map(([a,b])=>'<div class="dtideStat"><small>'+a+'</small><strong>'+esc(b)+'</strong></div>').join('');
+    return true;
+  }
   function renderLegacyMatrix(){
     const host=$('dtideMatrix'),legacy=season?.legacyRates;if(!host||!legacy)return false;
     const allLegacyNames=[...new Set(legacy.flatMap(period=>Object.keys(period.rates||{})))],names=allLegacyNames.filter(name=>awakeningMatchesFilters(legacyAwakenerMeta(name))).sort((a,b)=>a.localeCompare(b,'zh-CN'));
@@ -431,15 +454,17 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     const revision=current.revision||manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
     const rankPath=entry.legacy||entry.coverageMode==='legacy-spreadsheet'?null:(Number(id)===Number(manifest.currentSeason)?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`):`data/morimens/eremora/rank-index/${id}.json`);
-    const [loadedSeason,loadedStats,loadedRanks]=await Promise.all([
+    const [loadedSeason,loadedStats,loadedRanks,loadedLegacyStructured]=await Promise.all([
       loader.loadDataset(current.path),
       loader.loadJson(current.statsPath,{revision,fresh:true}),
-      rankPath&&loader.loadRankMap?loader.loadRankMap(rankPath,{revision,fresh:true}).catch(error=>{console.warn('rank index unavailable',id,error);return new Map()}):Promise.resolve(new Map())
+      rankPath&&loader.loadRankMap?loader.loadRankMap(rankPath,{revision,fresh:true}).catch(error=>{console.warn('rank index unavailable',id,error);return new Map()}):Promise.resolve(new Map()),
+      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v1',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null)
     ]);
     if(loadToken!==seasonLoadToken)return;
     season=loadedSeason;
     stats=loadedStats;
     rankByUid=loadedRanks;
+    legacyStructured=loadedLegacyStructured;
     flatTeamsCache=null;
     analysisCache=null;
     seasonAssistHeatMax=fullSeasonAssistHeatMax();
