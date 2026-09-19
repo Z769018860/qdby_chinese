@@ -176,6 +176,17 @@ tbody tr:hover{ background:#fcfcff; }
   cursor:pointer;
 }
 .likeBtn:hover{ transform:translateY(-1px); }
+.likeBtn.isLiked{
+  border-color:#f59e0b;
+  background:#fff7ed;
+  color:#c2410c;
+  box-shadow:0 0 0 2px rgba(245,158,11,.08);
+}
+.likeBtn:disabled{
+  opacity:.58;
+  cursor:wait;
+  transform:none;
+}
 .likeCount{
   min-width:24px;
   padding:2px 8px;
