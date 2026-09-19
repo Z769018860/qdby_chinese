@@ -52,8 +52,9 @@
       body:JSON.stringify({path:votePath(id),type,action})
     });
     if(!response.ok)throw new Error('Waline counter HTTP '+response.status);
-    const data=parsePayload(await response.json())[0]||{};
-    return {likes:Math.max(0,num(data.reaction0)),dislikes:Math.max(0,num(data.reaction1))};
+    parsePayload(await response.json());
+    const refreshed=await getCounters([id]);
+    return refreshed.get(id)||{likes:0,dislikes:0};
   }
 
   function injectStyle(){
