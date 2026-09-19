@@ -27,7 +27,11 @@
   }
 
   function commentItem(image) {
-    return image.closest('.wl-item') || image.closest('.wl-card') || image.parentElement;
+    // Waline v3 CommentCard.vue:
+    // .wl-card-item
+    //   ├─ .wl-user > .wl-user-avatar
+    //   └─ .wl-card > .wl-head > .wl-nick
+    return image.closest('.wl-card-item');
   }
 
   function getNickname(image) {
@@ -35,9 +39,9 @@
     return normalizeNickname(item?.querySelector('.wl-nick')?.textContent);
   }
 
-  function isVerifiedUser(image) {
+  function isAdministrator(image) {
     const user = image.closest('.wl-user');
-    return Boolean(user?.querySelector('.verified-icon, [class*="verified"]'));
+    return Boolean(user?.querySelector('.administrator-icon'));
   }
 
   function collectAnonymousImages() {
@@ -48,8 +52,8 @@
       const host = document.querySelector(selector);
       if (!host) continue;
 
-      host.querySelectorAll('.wl-cards .wl-user img').forEach((image) => {
-        if (!(image instanceof HTMLImageElement) || seen.has(image) || isVerifiedUser(image)) return;
+      host.querySelectorAll('.wl-card-item .wl-user-avatar').forEach((image) => {
+        if (!(image instanceof HTMLImageElement) || seen.has(image) || isAdministrator(image)) return;
         seen.add(image);
         result.push(image);
       });
@@ -58,60 +62,26 @@
     return result;
   }
 
-  function buildNicknameAvatarMap(images) {
-    const nicknames = [...new Set(images.map(getNickname))];
-
-    // Deterministic order makes the same visible nickname set receive the same
-    // collision resolution regardless of comment DOM order.
-    nicknames.sort((a, b) => {
-      const ha = hashString(a);
-      const hb = hashString(b);
-      return ha - hb || a.localeCompare(b);
-    });
-
-    const mapping = new Map();
-    const used = new Set();
-
-    for (const nickname of nicknames) {
-      const preferred = hashString(nickname) % avatarURLs.length;
-      let index = preferred;
-
-      // Keep different nicknames on different avatars for as long as the pool
-      // still has unused avatars. Only reuse after all avatars are occupied.
-      if (used.size < avatarURLs.length) {
-        for (let offset = 0; offset < avatarURLs.length; offset += 1) {
-          const candidate = (preferred + offset) % avatarURLs.length;
-          if (!used.has(candidate)) {
-            index = candidate;
-            break;
-          }
-        }
-      }
-
-      mapping.set(nickname, index);
-      used.add(index);
-    }
-
-    return mapping;
+  function avatarIndexForNickname(nickname) {
+    // The mapping depends only on the normalized nickname.
+    // This guarantees the same nickname always receives the same avatar
+    // on both guestbooks and across refreshes/devices.
+    return hashString(`qdby-waline-nickname:${nickname}`) % avatarURLs.length;
   }
 
   function assignAvatars() {
     if (!avatarURLs.length) return;
 
-    const images = collectAnonymousImages();
-    const nicknameAvatarMap = buildNicknameAvatarMap(images);
-
-    for (const image of images) {
+    for (const image of collectAnonymousImages()) {
       const nickname = getNickname(image);
-      const index = nicknameAvatarMap.get(nickname);
-      if (index == null) continue;
-
+      const index = avatarIndexForNickname(nickname);
       const next = avatarURLs[index];
+
       if (next && image.src !== next) image.src = next;
 
       image.dataset.qdbyAnonymousAvatar = 'true';
-      image.dataset.qdbyAvatarIndex = String(index);
       image.dataset.qdbyAvatarNickname = nickname;
+      image.dataset.qdbyAvatarIndex = String(index);
       image.referrerPolicy = 'no-referrer';
     }
   }
@@ -131,6 +101,7 @@
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const manifest = await response.json();
       const files = Array.isArray(manifest?.avatars) ? manifest.avatars : [];
+
       avatarURLs = files
         .filter((name) => typeof name === 'string' && name.trim())
         .map((name) => new URL(encodeURIComponent(name.trim()), avatarBaseURL).href);
@@ -138,6 +109,7 @@
       if (!avatarURLs.length) throw new Error('Anonymous avatar pool is empty');
 
       assignAvatars();
+
       observer = new MutationObserver((mutations) => {
         if (mutations.some((mutation) => mutation.addedNodes.length > 0)) queueScan();
       });
