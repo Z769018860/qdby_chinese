@@ -3,6 +3,7 @@
   const esc=s=>String(decodeMojibake(s)??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const decodeMojibake=value=>{const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(c=>c.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}};
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
+  const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const rankCaps=[50,200,500,1000];
   const diffs=['normal','hard','nightmare','madness'];
   const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
@@ -132,7 +133,8 @@
   }
   const creationZh={'"Chaos Ring"':'「混沌指轮」','Chaos Ring':'「混沌指轮」','Rusted Key':'锈蚀钥匙','Forgotten Loom+':'遗忘织机+','Chronometric Device+':'计时装置+','Black Candle':'黑色蜡烛','Omen Ritual Bird':'预兆仪式鸟','Foreign Stamp Album+':'异国邮票册+','Vitality Injection+':'活性注射器+','Vitality Injection':'活性注射器','Blessed Blood+':'祝福之血+','Blessed Blood':'祝福之血','Weeping Pipe+':'哭泣烟斗+','Weeping Pipe':'哭泣烟斗','Octahedron Dice':'八面骰','Lucky Windcoat':'幸运风衣','Malignant Child+':'恶性之子+','Malignant Child':'恶性之子','Solar Disc+':'太阳圆盘+','Solar Disc':'太阳圆盘','Rite of Spring+':'春之祭+','Rite of Spring':'春之祭','Big Mouth Button':'大嘴纽扣','Crimson Brooch+':'猩红胸针+','Crimson Brooch':'猩红胸针','Proto Battery+':'原型电池+','Proto Battery':'原型电池','Kaleidoscope+':'万花筒+','Kaleidoscope':'万花筒','Preserved Butterfly+':'封存蝴蝶+','Preserved Butterfly':'封存蝴蝶','Forsaken Blood':'遗弃之血','Relic of the Past+':'往昔遗物+','Relic of the Past':'往昔遗物','Celestial Astrolabe+':'天体星盘+','Celestial Astrolabe':'天体星盘'};
   function dimensionalImageName(clean){const english=clean.replace(/^Dimensional Image:\s*/i,'').trim(),rec=(window.MorimensData?.db?.records||[]).find(x=>String(x.name||'').toLowerCase()===english.toLowerCase()),name=rec?window.MorimensData?.localizedProfile?.(rec)?.name:english;return `维度影像：${name}`}
-  function itemName(x){const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别'),clean=raw.replace(/^"|"$/g,''),plus=/\+$/.test(clean),base=clean.replace(/\+$/,'');if(/^Dimensional Image:/i.test(clean))return dimensionalImageName(clean);const translated=x?.zhName||x?.nameZh||covenantZh[clean]||creationZhOfficial[clean]||creationZhOfficial[base]||(plus&&creationZhOfficial[base]?`${creationZhOfficial[base]}+`:null)||creationZh[raw]||creationZh[clean]||zhGear[raw]||gearByName.get(clean)?.zhName;return translated?`${translated}${plus&&!String(translated).endsWith('+')?'+':''}`:raw}
+  function itemName(x){const raw=String(x?.name||x?.canonicalName||x?.label||x?.id||x?.ingameId||x||'未识别'),clean=raw.replace(/^"|"$/g,''),plus=/\+$/.test(clean),base=clean.replace(/\+$/,'');if(/^Dimensional Image:/i.test(clean))return dimensionalImageName(clean);const translated=x?.zhName||x?.nameZh||creationZhOfficial[clean]||creationZhOfficial[base]||(plus&&creationZhOfficial[base]?`${creationZhOfficial[base]}+`:null)||creationZh[raw]||creationZh[clean]||zhGear[raw]||gearByName.get(clean)?.zhName;return translated?`${translated}${plus&&!String(translated).endsWith('+')?'+':''}`:raw}
+  function covenantName(x){const en=String(x?.name||x?.canonicalName||x?.label||x?.id||x||'未识别').replace(/^"|"$/g,'').trim();return zh()?(covenantZh[en]||en):en}
   const wikiUrl=name=>`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(String(name||'').replace(/^「|」$/g,''))}`;
   function wheelName(x){return window.MorimensData?.localizedEntity?.('wheel',x)?.name||itemName(x)}
   const heatStyle=(rate,max=35)=>{const t=Math.max(0,Math.min(1,Number(rate||0)/max)),h=Math.round(215-215*t),a=(.08+.34*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
@@ -181,7 +183,7 @@
   function characterDetails(key){
     const mateRows=scopedRows(),gearRows=filteredDetailRows(),mates=new Map(),wheels=new Map(),covenants=new Map(),tokens=new Map(),creations=new Map(),enlightment=new Map(),squads=new Map();
     let appearances=0,gearAppearances=0,completeSquadAppearances=0,profile=null;
-    const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:(kind==='wheel'?wheelName(item):itemName(item));if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote,(typeof item==='string'?item:(item?.name||item?.canonicalName||item?.label||item?.id||name))):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
+    const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:(kind==='wheel'?wheelName(item):kind==='covenant'?covenantName(item):itemName(item));if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote,(typeof item==='string'?item:(item?.name||item?.canonicalName||item?.label||item?.id||name))):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
     for(const {team} of mateRows){
       const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;
       appearances++;
