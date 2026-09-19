@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的汉化小结</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 </head>
 <body>
   <div class="bgLayer bgLeft" aria-hidden="true"></div>
@@ -108,7 +109,7 @@
     <section class="statement panel statementCard" aria-labelledby="statementTitle">
       <h2 id="statementTitle">个人声明</h2>
       <p class="panelLead">请先阅读以下说明，感谢理解与支持。</p>
-      <p class="redNote">此网站为静态网页所以留言和点赞都是做了玩的，想留言请在其他平台给我留言非常感谢</p>
+      <p class="redNote">点赞仍为站内互动展示；留言板已接入 Waline，可正常跨设备留言。</p>
       <p>非专业汉化人员，全部为爱发电，部分有授权部分没有，没有的大部分是联系不上作者或者付费作品。</p>
       <p>请勿倒卖二传商用，看到有人这么干请勤点举报，谢谢帮忙。</p>
       <p>本意是安利些无汉化的小众游戏，可能会有少量撞坑情况，可以自由选择汉化版本。</p>
@@ -151,22 +152,9 @@
 
       <section class="panel messageCard" aria-labelledby="messageTitle">
         <h2 id="messageTitle">匿名留言板</h2>
-        <p class="panelLead">欢迎留言交流，昵称可留空。</p>
-        <form id="messageForm" class="messageForm">
-          <div class="messageGrid">
-            <div class="control">
-              <label for="messageName">昵称（可留空）</label>
-              <input id="messageName" name="name" type="text" maxlength="20" placeholder="匿名" />
-            </div>
-            <div class="control span2 messageInputWrap">
-              <label for="messageText">留言内容</label>
-              <textarea id="messageText" name="text" maxlength="300" placeholder="写点想说的吧（最多 300 字）" required></textarea>
-            </div>
-          </div>
-          <button type="submit" class="messageSubmit">发布留言</button>
-          <p class="messageStatus muted" id="messageStatus" role="status" aria-live="polite"></p>
-        </form>
-        <ul id="messageList" class="messageList" aria-live="polite"></ul>
+        <p class="panelLead">已接入 Waline 留言服务，昵称和邮箱均可留空。</p>
+        <div id="waline" aria-live="polite"></div>
+        <p id="walineFallback" class="messageStatus muted" role="status" aria-live="polite"></p>
       </section>
 
       <section class="panel toolboxCard" aria-labelledby="toolboxTitle">
@@ -276,6 +264,7 @@
         <li><time datetime="2026-09-05">2026-09-05</time>：工具箱新增剑网3莫问平沙招式表共享入口。</li>
         <li><time datetime="2026-09-16">2026-09-16</time>：新增忘却前夜伤害乘区计算与每日签工具。</li>
         <li><time datetime="2026-09-19">2026-09-19</time>：忘忘看报新增角色、命轮、造物及旧版融灾榜单实时下载图片功能，并加入网址与 copyright@青灯不弈 水印。</li>
+        <li><time datetime="2026-09-20">2026-09-20</time>：主页留言板改用 Waline 在线留言服务。</li>
       </ul>
     </section>
 
@@ -292,5 +281,32 @@
   </footer>
 
   <script type="module" src="app.js"></script>
+  <script type="module">
+    const walineRoot = document.querySelector('#waline');
+    const walineFallback = document.querySelector('#walineFallback');
+
+    import('https://unpkg.com/@waline/client@v3/dist/waline.js')
+      .then(({ init }) => {
+        init({
+          el: '#waline',
+          serverURL: 'https://textbox.qingdengbuyi.top/',
+          lang: 'zh-CN',
+          meta: ['nick', 'mail', 'link'],
+          requiredMeta: [],
+          login: 'enable',
+          wordLimit: 300,
+          pageSize: 10,
+          commentSorting: 'latest',
+        });
+      })
+      .catch((error) => {
+        console.error('Waline load failed:', error);
+        if (walineRoot) walineRoot.hidden = true;
+        if (walineFallback) {
+          walineFallback.textContent = '留言板加载失败，请稍后刷新页面重试。';
+          walineFallback.classList.add('warn');
+        }
+      });
+  </script>
 </body>
 </html>
