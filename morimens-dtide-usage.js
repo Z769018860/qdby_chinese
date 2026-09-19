@@ -161,9 +161,9 @@
     return flatten(records).filter(x=>{if(!rankMatches(x.record,cap))return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(!scoreMatches(x.record))return false;if(clearType!=='all'&&x.team.clearType!==clearType)return false;return true});
   }
   function rankedRows(records,entity,{cap,difficulty,clearType,sortKey,asc}){
-    const all=rowsFor(records,{cap,difficulty,clearType}),waves=[...new Set(all.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
+    const all=rowsFor(records,{cap,difficulty,clearType}),universeRows=rowsFor(records,{cap,difficulty:'all',clearType}),waves=[...new Set(universeRows.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
     const groups=new Map(waves.map(w=>[w,entityGroup(all.filter(x=>Number(x.wave.wave)===w),entity)]));
-    const union=new Map();for(const [,g] of groups)for(const x of entity==='character'?g.characters:g.items)union.set(x.key,x);
+    const universe=entityGroup(universeRows,entity),union=new Map();for(const x of entity==='character'?universe.characters:universe.items)union.set(x.key,x);
     if(entity==='character'){const totals=new Map(group(all).characters.map(x=>[x.key,x]));for(const [key,item] of union){const total=totals.get(key);if(total){item.enlightCounts=total.enlightCounts;item.borrowedCount=total.borrowedCount||0;item.assistRatePct=total.assistRatePct||0}}}
     const indexes=new Map([...groups].map(([w,g])=>[w,new Map((entity==='character'?g.characters:g.items).map(x=>[x.key,x]))])),hit=(w,key)=>indexes.get(w)?.get(key);
     const rows=[...union.values()].map(x=>{const row={...x,total:waves.reduce((sum,w)=>sum+(hit(w,x.key)?.count||0),0)};if(entity==='wheel'){row.stackCounts={};for(const w of waves){const counts=hit(w,x.key)?.stackCounts||{};for(const key of wheelStackKeys)row.stackCounts[key]=(row.stackCounts[key]||0)+Number(counts[key]||0)}const firstImage=waves.map(w=>hit(w,x.key)).find(item=>item?.image);if(firstImage){row.image=firstImage.image;row.fallbackImage=firstImage.fallbackImage||row.fallbackImage}}return row});
