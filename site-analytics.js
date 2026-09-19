@@ -1,5 +1,5 @@
 (() => {
-  const SERVER_URL = 'https://textbox.qingdengbuyi.top/';
+  const SERVER_URL = 'https://textbox.qingdengbuyi.top';
   const TOTAL_PATH = '/__qdby_site_views__/total';
 
   function shanghaiDateKey() {
@@ -14,8 +14,9 @@
   }
 
   const TODAY_PATH = `/__qdby_site_views__/day/${shanghaiDateKey()}`;
+  const API_URL = `${SERVER_URL}/api/article`;
 
-  function ensureTarget(selector, path) {
+  function ensureTarget(selector) {
     let target = document.querySelector(selector);
     if (!target) {
       target = document.createElement('span');
@@ -23,35 +24,55 @@
       target.hidden = true;
       document.body.appendChild(target);
     }
-    document.querySelectorAll(selector).forEach((el) => {
-      el.dataset.path = path;
-      if (!el.textContent.trim()) el.textContent = '—';
+    return Array.from(document.querySelectorAll(selector));
+  }
+
+  function render(selector, value) {
+    for (const el of ensureTarget(selector)) {
+      el.textContent = Number.isFinite(Number(value)) ? String(Number(value)) : '—';
+    }
+  }
+
+  function extractTime(payload) {
+    if (payload && payload.errno) throw new Error(payload.errmsg || `Waline errno ${payload.errno}`);
+    const data = payload?.data;
+    if (Array.isArray(data) && data.length) {
+      const time = Number(data[0]?.time);
+      if (Number.isFinite(time)) return time;
+    }
+    if (data && typeof data === 'object') {
+      const time = Number(data.time);
+      if (Number.isFinite(time)) return time;
+    }
+    throw new Error('Waline pageview response has no time field');
+  }
+
+  async function increment(path) {
+    const response = await fetch(`${API_URL}?lang=zh-CN`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path, type: 'time', action: 'inc' }),
+      cache: 'no-store',
     });
+    if (!response.ok) throw new Error(`Waline pageview HTTP ${response.status}`);
+    return extractTime(await response.json());
   }
 
   async function boot() {
-    ensureTarget('.site-visit-total-count', TOTAL_PATH);
-    ensureTarget('.site-visit-today-count', TODAY_PATH);
+    ensureTarget('.site-visit-total-count');
+    ensureTarget('.site-visit-today-count');
 
     try {
-      const { pageviewCount } = await import('https://unpkg.com/@waline/client@v3/dist/pageview.js');
-      pageviewCount({
-        serverURL: SERVER_URL,
-        path: TOTAL_PATH,
-        selector: '.site-visit-total-count',
-        update: true,
-      });
-      pageviewCount({
-        serverURL: SERVER_URL,
-        path: TODAY_PATH,
-        selector: '.site-visit-today-count',
-        update: true,
-      });
+      const [total, today] = await Promise.all([
+        increment(TOTAL_PATH),
+        increment(TODAY_PATH),
+      ]);
+      render('.site-visit-total-count', total);
+      render('.site-visit-today-count', today);
     } catch (error) {
       console.error('Site visit counter failed:', error);
-      document.querySelectorAll('.site-visit-total-count,.site-visit-today-count').forEach((el) => {
-        if (!el.hidden) el.textContent = '—';
-      });
+      render('.site-visit-total-count', NaN);
+      render('.site-visit-today-count', NaN);
     }
   }
 
