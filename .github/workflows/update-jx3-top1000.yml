@@ -3,7 +3,7 @@ name: Update JX3 Top1000 data
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "17 0 * * *"
 
 permissions:
   contents: write
