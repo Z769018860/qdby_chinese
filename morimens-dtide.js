@@ -282,7 +282,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     return '<div class="dtideLegacyExtra" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:12px;margin-top:12px;text-align:left"><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">Top10 配队</strong>'+teamHtml+'</section><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">每期助战使用率</strong>'+assistHtml+'</section></div>';
   }
   function legacyWheelInfo(name){
-    const data=window.MorimensData||{},pools=[data.wheels,data.db?.wheels,data.relics,data.catalog?.wheels,data.entityDb?.wheels].filter(Boolean);
+    const data=window.MorimensData||{},localized=data.localizedEntity?.('wheel',{name}),pools=[data.wheels,data.db?.wheels,data.relics,data.catalog?.wheels,data.entityDb?.wheels,localized].filter(Boolean);
     for(const pool of pools){const items=Array.isArray(pool)?pool:Object.values(pool);for(const item of items){const label=wheelName(item);if(label===name||item?.name===name||item?.id===name)return {image:item.image||item.icon||item.assets?.icon||item.assets?.image||''}}}
     return {image:''};
   }
@@ -351,7 +351,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='角色逐期高难出场率';
     if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率（来源：@却尘）';
     if($('dtideSummary'))$('dtideSummary').innerHTML=[['数据来源','却尘'],['统计角色',names.length],['统计期次',periods.length],['指标','高难出场率']].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');
-    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML=`<div class="dtideNotice">旧版融灾高难出场率数据来源：<a href="${esc(season.sourceUrl)}" target="_blank" rel="noopener noreferrer">在线文档</a>。<br><small>出场率计算：使用次数 ÷ 统计人数；命轮因每队包含 10 个命轮，按命轮使用次数 ÷ 总队伍数 ÷ 10 计算。</small></div>`;
+    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML=`<div class="dtideNotice">旧版融灾高难出场率数据来源：<a href="${esc(season.sourceUrl)}" target="_blank" rel="noopener noreferrer">在线文档</a>。<br><small>出场率计算：使用次数 ÷ 统计人数；命轮按每人 10 队折算，使用次数 ÷（总队伍数 ÷ 10）计算。</small></div>`;
     return true;
   }
   function renderMatrix(){
