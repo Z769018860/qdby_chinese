@@ -424,6 +424,30 @@ tbody tr:hover{ background:#fcfcff; }
   font-size:20px;
   flex-shrink:0;
 }
+
+#waline{
+  margin-top:12px;
+  --waline-theme-color:#334155;
+  --waline-active-color:#111827;
+  --waline-color:#374151;
+  --waline-bg-color:#ffffff;
+  --waline-bg-color-light:#f8fafc;
+  --waline-bg-color-hover:#f1f5f9;
+  --waline-border-color:#e2e8f0;
+  --waline-disable-bg-color:#f8fafc;
+  --waline-disable-color:#94a3b8;
+  --waline-info-bg-color:#f8fafc;
+  --waline-info-color:#64748b;
+  --waline-border:1px solid var(--waline-border-color);
+  --waline-box-shadow:none;
+}
+#waline .wl-panel{
+  border-radius:14px;
+}
+#waline .wl-card{
+  border-radius:12px;
+}
+
 .messageGrid{
   display:grid;
   grid-template-columns:1fr;
