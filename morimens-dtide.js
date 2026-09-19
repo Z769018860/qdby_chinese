@@ -111,6 +111,27 @@
       </div>
     </section>
   `}
+  async function resolveGuestbookPath(){
+    const server='https://textbox.qingdengbuyi.top';
+    try{
+      const response=await fetch(server+'/api/comment?type=recent&count=50',{cache:'no-store'});
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      const payload=await response.json();
+      if(payload&&payload.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
+      const rows=Array.isArray(payload?.data)?payload.data:Array.isArray(payload?.data?.data)?payload.data.data:[];
+      const counts=new Map();
+      for(const row of rows){
+        const path=String(row?.url||row?.path||'').trim();
+        if(!path||path.startsWith('/__qdby_site_views__/'))continue;
+        counts.set(path,(counts.get(path)||0)+1);
+      }
+      for(const path of ['/','/index.html','/guestbook','/comments','/message'])if(counts.has(path))return path;
+      return [...counts.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'/';
+    }catch(error){
+      console.warn('Waline guestbook path discovery failed, fallback to /',error);
+      return '/';
+    }
+  }
   async function initComments(){
     if(commentsLoaded||commentsLoading)return;
     commentsLoading=true;
@@ -119,13 +140,13 @@
       if(!document.querySelector('link[data-morimens-waline]')){
         const link=document.createElement('link');link.rel='stylesheet';link.href='https://unpkg.com/@waline/client@v3/dist/waline.css';link.dataset.morimensWaline='true';document.head.appendChild(link);
       }
-      const {init}=await import('https://unpkg.com/@waline/client@v3/dist/waline.js');
-      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top/',path:'/',lang:'zh-CN',meta:['nick','mail','link'],requiredMeta:[],login:'enable',wordLimit:300,pageSize:10,commentSorting:'latest'});
+      const [{init},guestbookPath]=await Promise.all([import('https://unpkg.com/@waline/client@v3/dist/waline.js'),resolveGuestbookPath()]);
+      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:'zh-CN',meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
       commentsLoaded=true;
       if(status)status.remove();
     }catch(error){
       console.error('Waline load failed',error);
-      if(status){status.textContent='留言板加载失败，请稍后刷新页面后重试。';status.classList.remove('loading');status.classList.add('error')}
+      if(status){status.innerHTML='留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';status.classList.remove('loading');status.classList.add('error')}
     }finally{commentsLoading=false}
   }
 
