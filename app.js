@@ -117,7 +117,8 @@ function parseWalineCounterPayload(payload){
 
 async function fetchWalineLikeCounts(ids){
   const cleanIds = [...new Set(ids.map((id)=>safeText(id).trim()).filter(Boolean))];
-  const nextLikes = Object.fromEntries(cleanIds.map((id)=>[id, 0]));
+  const nextLikes = { ...state.likes };
+  cleanIds.forEach((id)=>{ nextLikes[id] = 0; });
   const chunkSize = 40;
 
   for(let start = 0; start < cleanIds.length; start += chunkSize){
