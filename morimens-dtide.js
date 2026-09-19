@@ -156,7 +156,7 @@
   function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
   function characterInfo(key,fallback={}){
     const data=window.MorimensData,liveRecords=data?.db?.records||[];
-    const rec=liveRecords.find(x=>x.id===key||x.ingameId===key||x.ingameId===fallback.ingameId)||awakenerMap.get(key)||Array.from(awakenerMap.values()).find(x=>x.ingameId===key)||null;
+    const rec=liveRecords.find(x=>x.id===key||x.ingameId===key||x.id===fallback.skeydbId||x.ingameId===fallback.ingameId)||awakenerMap.get(key)||awakenerMap.get(fallback.skeydbId)||Array.from(awakenerMap.values()).find(x=>x.ingameId===key||x.id===fallback.skeydbId)||null;
     const id=rec?.id||fallback.skeydbId||(/^awakener-\d+$/i.test(String(key||''))?key:null),identity=data?.identityDb?.bySkeydbId?.[id]||data?.zhDb?.bySkeydbId?.[id],loc=rec&&data?.localizedProfile?.(rec);
     const portrait=rec&&data?.assetFor?.(rec,'portrait'),card=rec&&data?.assetFor?.(rec,'card');
     return {name:displayCharacterName(identity?.name,loc?.name,fallback.canonicalName,fallback.name,rec?.name),image:portrait||localAsset(rec?.assets?.portrait||fallback.image||'','portrait'),art:card||portrait||localAsset(rec?.assets?.card||rec?.assets?.portrait||fallback.image||'','portrait'),id:id||key,ingameId:rec?.ingameId||fallback.ingameId};
