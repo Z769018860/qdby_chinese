@@ -78,10 +78,8 @@
 
       scan(document);
       observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          for (const node of mutation.addedNodes) {
-            if (node.nodeType === Node.ELEMENT_NODE) scan(node);
-          }
+        if (mutations.some((mutation) => mutation.addedNodes.length > 0)) {
+          scan(document);
         }
       });
       observer.observe(document.body, { childList: true, subtree: true });
