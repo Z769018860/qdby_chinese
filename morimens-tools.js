@@ -91,6 +91,7 @@ setupMorimensMascotToggle();
     (0,eval)(code);
     await import(`./morimens-data.js?v=${assetVersion}`);
     await import(`./morimens-skeydb.js?v=${assetVersion}`);
+    await import(`./morimens-love-ranking.js?v=${assetVersion}`);
     await import(`./morimens-i18n.js?v=${assetVersion}`);
     await import(`./morimens-calculator-skeydb.js?v=${assetVersion}`);
     await import(`./morimens-calculator-stats.js?v=${assetVersion}`);
