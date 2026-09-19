@@ -1,7 +1,8 @@
 (() => {
+  const VERSION = '20260920.4';
   const script = document.currentScript;
   const scriptURL = script?.src || new URL('waline-anonymous-avatars.js', location.href).href;
-  const manifestURL = new URL('assets/waline-avatars/manifest.json', scriptURL);
+  const manifestURL = new URL(`assets/waline-avatars/manifest.json?v=${VERSION}`, scriptURL);
   const avatarBaseURL = new URL('assets/waline-avatars/', scriptURL);
   const ROOT_SELECTORS = ['#waline', '#morimensWaline'];
   let avatarURLs = [];
@@ -27,10 +28,6 @@
   }
 
   function commentItem(image) {
-    // Waline v3 CommentCard.vue:
-    // .wl-card-item
-    //   ├─ .wl-user > .wl-user-avatar
-    //   └─ .wl-card > .wl-head > .wl-nick
     return image.closest('.wl-card-item');
   }
 
@@ -62,27 +59,69 @@
     return result;
   }
 
-  function avatarIndexForNickname(nickname) {
-    // The mapping depends only on the normalized nickname.
-    // This guarantees the same nickname always receives the same avatar
-    // on both guestbooks and across refreshes/devices.
-    return hashString(`qdby-waline-nickname:${nickname}`) % avatarURLs.length;
+  function buildNicknameAvatarMap(images) {
+    const nicknames = [...new Set(images.map(getNickname))];
+
+    // Stable deterministic order. Different nicknames get different avatars
+    // while unused avatars remain in the pool.
+    nicknames.sort((a, b) => {
+      const ha = hashString(`qdby-waline-nickname:${a}`);
+      const hb = hashString(`qdby-waline-nickname:${b}`);
+      return ha - hb || a.localeCompare(b);
+    });
+
+    const mapping = new Map();
+    const used = new Set();
+
+    for (const nickname of nicknames) {
+      const preferred = hashString(`qdby-waline-nickname:${nickname}`) % avatarURLs.length;
+      let index = preferred;
+
+      if (used.size < avatarURLs.length) {
+        for (let offset = 0; offset < avatarURLs.length; offset += 1) {
+          const candidate = (preferred + offset) % avatarURLs.length;
+          if (!used.has(candidate)) {
+            index = candidate;
+            break;
+          }
+        }
+      }
+
+      mapping.set(nickname, index);
+      used.add(index);
+    }
+
+    return mapping;
+  }
+
+  function applyImage(image, nickname, index) {
+    const next = avatarURLs[index];
+    if (!next) return;
+
+    // Vue may rewrite src when the comment card re-renders. Keep the custom
+    // avatar authoritative and remove srcset so the browser cannot choose
+    // Waline's original avatar candidate.
+    if (image.getAttribute('src') !== next) image.setAttribute('src', next);
+    if (image.srcset) image.removeAttribute('srcset');
+
+    image.dataset.qdbyAnonymousAvatar = 'true';
+    image.dataset.qdbyAvatarNickname = nickname;
+    image.dataset.qdbyAvatarIndex = String(index);
+    image.dataset.qdbyAvatarVersion = VERSION;
+    image.referrerPolicy = 'no-referrer';
   }
 
   function assignAvatars() {
     if (!avatarURLs.length) return;
 
-    for (const image of collectAnonymousImages()) {
+    const images = collectAnonymousImages();
+    const nicknameAvatarMap = buildNicknameAvatarMap(images);
+
+    for (const image of images) {
       const nickname = getNickname(image);
-      const index = avatarIndexForNickname(nickname);
-      const next = avatarURLs[index];
-
-      if (next && image.src !== next) image.src = next;
-
-      image.dataset.qdbyAnonymousAvatar = 'true';
-      image.dataset.qdbyAvatarNickname = nickname;
-      image.dataset.qdbyAvatarIndex = String(index);
-      image.referrerPolicy = 'no-referrer';
+      const index = nicknameAvatarMap.get(nickname);
+      if (index == null) continue;
+      applyImage(image, nickname, index);
     }
   }
 
@@ -93,6 +132,15 @@
       scanQueued = false;
       assignAvatars();
     });
+  }
+
+  function inspect() {
+    return collectAnonymousImages().map((image) => ({
+      nickname: getNickname(image),
+      index: image.dataset.qdbyAvatarIndex || null,
+      version: image.dataset.qdbyAvatarVersion || null,
+      src: image.getAttribute('src'),
+    }));
   }
 
   async function loadPool() {
@@ -111,9 +159,31 @@
       assignAvatars();
 
       observer = new MutationObserver((mutations) => {
-        if (mutations.some((mutation) => mutation.addedNodes.length > 0)) queueScan();
+        const relevant = mutations.some((mutation) => {
+          if (mutation.type === 'childList') return mutation.addedNodes.length > 0;
+          if (mutation.type === 'characterData') return true;
+          if (mutation.type === 'attributes') {
+            const target = mutation.target;
+            return target instanceof HTMLImageElement &&
+              target.classList.contains('wl-user-avatar') &&
+              mutation.attributeName === 'src';
+          }
+          return false;
+        });
+        if (relevant) queueScan();
       });
-      observer.observe(document.body, { childList: true, subtree: true });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: ['src'],
+      });
+
+      // One delayed pass covers Waline/Vue hydration after the initial mount.
+      setTimeout(assignAvatars, 250);
+      setTimeout(assignAvatars, 1000);
     } catch (error) {
       console.error('Waline anonymous avatar pool failed:', error);
     }
@@ -126,7 +196,9 @@
   }
 
   window.QDBYWalineAnonymousAvatars = {
+    version: VERSION,
     refresh: assignAvatars,
+    inspect,
     disconnect: () => observer?.disconnect(),
   };
 })();
