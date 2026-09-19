@@ -276,7 +276,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     }finally{button.disabled=false;button.textContent='下载图片'}
   }
   function legacyDetailExtras(name,periods){
-    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).filter(team=>Array.isArray(team.characters)&&team.characters.length===4).slice(0,10),assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0),realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'};
+    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).filter(team=>Array.isArray(team.characters)&&team.characters.length===4).slice(0,10),assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0),realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'},periodByLabel=new Map((legacyStructured?.periods||[]).map(p=>[String(p.label),p]));
     const squads=teams.map((team,index)=>{
       const members=(team.characters||[]).map(role=>{
         const meta=characterInfo(role,{name:role,skeydbId:season.characterMap?.[role]?.skeydbId,ingameId:season.characterMap?.[role]?.ingameId,image:season.characterMap?.[role]?.image});
@@ -284,9 +284,10 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       });
       const targetIndex=members.findIndex(member=>member.role===name);
       if(targetIndex>0)members.unshift(...members.splice(targetIndex,1));
-      return '<div class="dtideSquadRow"><span class="dtideSquadRank">'+(index+1)+'</span><div class="dtideSquadMembers">'+members.map(member=>'<div class="dtideSquadMember">'+(member.image?'<img src="'+esc(member.image)+'" alt="" loading="lazy">':'')+'<span title="'+esc(member.name)+'">'+esc(member.name)+'</span></div>').join('')+'</div><div class="dtideSquadRate"><b>'+(teamTotal?(Number(team.count||0)/teamTotal*100).toFixed(1)+'%':'—')+'</b><small>'+Number(team.count||0)+' 次</small></div></div>';
+      const periodMeta=periodByLabel.get(String(team.period||'')),periodCharacterTeams=Math.round(Number(periodMeta?.roleRates?.[name]||0)*Number(periodMeta?.teamCount||0)),denominator=periodCharacterTeams>0?periodCharacterTeams:teamTotal,rate=denominator?Number(team.count||0)/denominator*100:null;
+      return '<div class="dtideSquadRow"><span class="dtideSquadRank">'+(index+1)+'</span><div class="dtideSquadMembers">'+members.map(member=>'<div class="dtideSquadMember">'+(member.image?'<img src="'+esc(member.image)+'" alt="" loading="lazy">':'')+'<span title="'+esc(member.name)+'">'+esc(member.name)+'</span></div>').join('')+'</div><div class="dtideSquadRate" title="'+esc((team.period?team.period+' · ':'')+Number(team.count||0)+' / '+(denominator||0)+' 支含该角色队伍')+'"><b>'+(rate!=null?rate.toFixed(1)+'%':'—')+'</b><small>'+(team.period?esc(team.period)+' · ':'')+Number(team.count||0)+' 次</small></div></div>';
     }).join('')||'<div class="dtideEmpty">暂无配队数据</div>';
-    const assistHtml=periods.map(p=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:6px 8px;border-bottom:1px solid rgba(166,193,224,.1)"><span>'+esc(p.date)+' <b class="dtideAssistRealm" style="color:'+(realmColor[p.realm]||'#dbe8f7')+'">【'+esc(p.realm)+'】</b></span><strong>'+((Number(assist[p.label]||0)*100).toFixed(2))+'%</strong></div>').join('');
+    const assistPeriods=periods.filter(p=>Number(p.teamCount||0)>0),assistHtml=assistPeriods.map(p=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:6px 8px;border-bottom:1px solid rgba(166,193,224,.1)"><span>'+esc(p.date)+' <b class="dtideAssistRealm" style="color:'+(realmColor[p.realm]||'#dbe8f7')+'">【'+esc(p.realm)+'】</b></span><strong>'+((Number(assist[p.label]||0)*100).toFixed(2))+'%</strong></div>').join('');
     return '<div class="dtideLegacyExtra" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:12px;margin:12px 12px 16px;text-align:left"><section class="dtideInsightPanel" style="min-width:0;background:rgba(12,20,33,.94)"><h4>常用配队 Top 10 <small>完整四人队</small></h4><div class="dtideSquadList">'+squads+'</div></section><section class="dtideInsightPanel" style="min-width:0;background:rgba(12,20,33,.94)"><h4>每期助战使用率</h4><div class="dtideAssistRows">'+assistHtml+'</div></section></div>';
   }
   function legacyWheelCell(name,wheel){
