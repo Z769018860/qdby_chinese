@@ -10,7 +10,7 @@
   "availableSeasons": [
     {
       "seasonId": "legacy-high-difficulty",
-      "period": "旧版融灾高难出场率",
+      "period": "旧版融灾425出场率",
       "recordCount": 59,
       "leaderboardEntryCount": null,
       "complete": true,
