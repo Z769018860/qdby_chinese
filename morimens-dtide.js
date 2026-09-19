@@ -184,8 +184,11 @@
     const realms=[...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(b=>String(b.dataset.realm));
     const roles=[...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(b=>String(b.dataset.role));
     const members=team?.members||[];
-    return members.filter(m=>(!realms.length||realms.includes(String(m.realm)))&&(!roles.length||roles.includes(String(m.role))));
+    const same=(value,choices)=>{if(!choices.length)return true;const raw=String(value||'').toLowerCase();return choices.some(choice=>{const target=String(choice).toLowerCase();return raw===target||raw===({chaos:'chaos',aequor:'aequor',caro:'caro',ultra:'ultra',warden:'warden',chorus:'chorus',assault:'assault'}[target]||target)})};
+    return members.filter(m=>same(m.realm,realms)&&same(m.role||m.type,roles));
   }
+  function awakeningMatchesFilters(member){return activeAwakenerMembers({members:[member]}).length>0}
+  function legacyAwakenerMeta(name){const mapped=season?.characterMap?.[name]||{},rec=Array.from(awakenerMap.values()).find(x=>x.id===mapped.skeydbId||x.ingameId===mapped.ingameId||x.name===name||x.canonicalName===name);return {...mapped,...rec,...characterInfo(name,{name,skeydbId:mapped.skeydbId,ingameId:mapped.ingameId,image:mapped.image})}}
   function scopedRows({wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',rankCap=selectedRankCap()}={}){return flattenTeams().map(x=>{
     const filteredMembers=activeAwakenerMembers(x.team);return filteredMembers.length===x.team.members?.length?x:{...x,team:{...x.team,members:filteredMembers}};
   }).filter(x=>{
@@ -274,8 +277,9 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function renderLegacyMatrix(){
     const host=$('dtideMatrix'),legacy=season?.legacyRates;if(!host||!legacy)return false;
-    const rows=legacy.flatMap((period,index)=>Object.entries(period.rates||{}).map(([name,rate])=>({name,rate:Number(rate)||0,wave:index+1,label:period.label}))),max=Math.max(...rows.map(x=>x.rate),0),names=[...new Set(rows.map(x=>x.name))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
-    const periodDisplay=[['4.13-4.26','混沌'],['4.27-5.10','超维'],['5.11-5.24','深海'],['5.25-6.7','血肉'],['6.7-6.21','超维'],['6.22-7.5','深海'],['7.6-7.19','血肉'],['7.20-8.2','混沌'],['7.3-8.16','深海']];
+    const allLegacyNames=[...new Set(legacy.flatMap(period=>Object.keys(period.rates||{})))],names=allLegacyNames.filter(name=>awakeningMatchesFilters(legacyAwakenerMeta(name))).sort((a,b)=>a.localeCompare(b,'zh-CN'));
+    const rows=legacy.flatMap((period,index)=>Object.entries(period.rates||{}).map(([name,rate])=>({name,rate:Number(rate)||0,wave:index+1,label:period.label}))),max=Math.max(...rows.map(x=>x.rate),0);
+    const periodDisplay=[['4.13-4.26','混沌'],['4.27-5.10','超维'],['5.11-5.24','深海'],['5.25-6.7','血肉'],['6.7-6.21','超维'],['6.22-7.5','深海'],['7.6-7.19','血肉'],['7.20-8.2','混沌'],['8.3-8.16','深海']];
     const periods=legacy.map((x,i)=>({wave:i+1,label:x.label,date:periodDisplay[i]?.[0]||x.label,realm:periodDisplay[i]?.[1]||''}));
     const cell=(name,w)=>rows.find(x=>x.name===name&&x.wave===w)?.rate||0;
     const sortKey=window.__legacyMatrixSort||'avg',ascending=Boolean(window.__legacyMatrixAscending),value=(name,key)=>key==='avg'?periods.reduce((sum,p)=>sum+cell(name,p.wave),0)/(periods.length||1):cell(name,Number(key));
