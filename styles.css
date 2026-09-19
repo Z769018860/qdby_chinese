@@ -748,3 +748,26 @@ header, main, footer{ position:relative; z-index:1; }
 @media (max-width: 720px){
   .toolGrid{ grid-template-columns:1fr; }
 }
+
+.siteVisitCounter{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin:0 0 10px;
+  padding:6px 10px;
+  border:1px solid rgba(99,102,241,.18);
+  border-radius:999px;
+  background:rgba(255,255,255,.72);
+  box-shadow:0 6px 18px rgba(17,24,39,.05);
+  color:#64748b;
+  font-size:12px;
+  line-height:1;
+}
+.siteVisitItem{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.siteVisitItem strong{color:#334155;font-size:12px;font-variant-numeric:tabular-nums}
+.siteVisitDivider{color:#cbd5e1}
+@media (max-width:580px){
+  .siteVisitCounter{font-size:11px;padding:6px 9px}
+  .siteVisitItem strong{font-size:11px}
+}
