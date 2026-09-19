@@ -36,7 +36,8 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260919.50";
+  const assetVersion="20260919.51";
+    window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
       "morimens-v03/part2a.b64",
@@ -96,6 +97,20 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
+    const switchLeaderboardRenderer=()=>{
+      const isLegacy=seasonSelect?.value==='legacy-high-difficulty';
+      if(isLegacy){
+        delete window.MorimensDtideRenderer;
+      }else{
+        window.MorimensDtideRenderer='legacy';
+      }
+    };
+    seasonSelect?.addEventListener('change',()=>{
+      const before=seasonSelect.value;
+      switchLeaderboardRenderer();
+      if(before==='legacy-high-difficulty')window.dispatchEvent(new CustomEvent('morimens-dtide-renderer-change'));
+    });
+    switchLeaderboardRenderer();
   }catch(err){
     document.body.classList.remove("morimensBooting");
     console.error("Morimens loader failed",err);
@@ -105,3 +120,4 @@ setupMorimensMascotToggle();
     document.body.appendChild(box);
   }
 })();
+
