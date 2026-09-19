@@ -7,7 +7,7 @@ MoriMens 第 69 期 Top1000 自动下载器。
   1. 读取 cookies.txt，创建带 Cookie 的 Session。
   2. 自动调用 Eremora 榜单接口：
        /api/rank?board=abyss&start={start}&end={end}
-     按 50 名一页抓取第 69 期 Top1000 UID。
+     按 50 名一页抓取当前 Abyss Top1000 UID；不使用 dzone_season 过滤榜单行。
   3. 将 Top1000 详情 URL 按排名写入 urls.txt。
   4. 逐条下载 __data.json：
        - HTTP 429：暂停 10 分钟，然后重试同一请求；429 不消耗普通重试次数。
@@ -41,6 +41,7 @@ import requests
 SEASON = 69
 TOP_N = 1000
 PAGE_SIZE = 50
+PAGE_VALIDATE_RETRY = 4
 
 ORIGIN = "https://eremora.com"
 RANK_API = f"{ORIGIN}/api/rank"
@@ -65,6 +66,8 @@ HEADERS = {
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": f"{ORIGIN}/leaderboard/abyss",
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache",
 }
 
 
@@ -235,86 +238,180 @@ def request_json_with_policy(
     raise RuntimeError(f"{context} 请求失败: {url}")
 
 
-def fetch_top1000_urls(session: requests.Session) -> list[str]:
-    print(f"\n===== 获取第 {SEASON} 期 Top {TOP_N} UID =====")
+def _parse_rank_page_rows(payload: Any, start: int, end: int) -> tuple[dict[int, str], dict[str, int]]:
+    rows = payload.get("rows") if isinstance(payload, dict) else payload
+    if not isinstance(rows, list):
+        raise RuntimeError(f"榜单 {start}-{end} 返回格式异常：缺少 rows 数组")
 
-    by_rank: dict[int, str] = {}
-    uid_to_rank: dict[str, int] = {}
+    page: dict[int, str] = {}
+    season_meta: dict[str, int] = {}
 
-    for start in range(1, TOP_N + 1, PAGE_SIZE):
-        end = min(TOP_N, start + PAGE_SIZE - 1)
-        query = urlencode({"board": "abyss", "start": start, "end": end})
-        url = f"{RANK_API}?{query}"
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+
+        try:
+            rank = int(row.get("rank"))
+        except (TypeError, ValueError):
+            continue
+
+        uid_raw = row.get("uid")
+        if uid_raw is None:
+            continue
+        uid = str(uid_raw).strip()
+        if not uid or not uid.isdigit():
+            continue
+
+        # 只接受本次请求区间内的名次。
+        # 注意：dzone_season 不是“当前榜单所属赛季”的可靠过滤条件。
+        # Eremora 当前 Abyss 榜单中可能出现 dzone_season=68 的玩家，
+        # 但其 rank 仍然属于当前榜单。因此这里只记录该字段用于诊断，
+        # 不再因为它不是 69 而丢弃 UID。
+        if not (start <= rank <= end):
+            continue
+
+        raw_season = row.get("dzone_season", row.get("dzoneSeason"))
+        if raw_season is not None:
+            try:
+                key = str(int(raw_season))
+            except (TypeError, ValueError):
+                key = "unknown"
+            season_meta[key] = season_meta.get(key, 0) + 1
+
+        if rank in page and page[rank] != uid:
+            raise RuntimeError(
+                f"榜单 {start}-{end} 同一 rank={rank} 返回多个 UID："
+                f"{page[rank]} / {uid}"
+            )
+        page[rank] = uid
+
+    return page, season_meta
+
+
+def fetch_rank_page(
+    session: requests.Session,
+    start: int,
+    end: int,
+) -> dict[int, str]:
+    expected_ranks = set(range(start, end + 1))
+    last_error = None
+
+    for validate_attempt in range(1, PAGE_VALIDATE_RETRY + 1):
+        # Eremora/Cloudflare 偶尔会对不同 start/end 返回重复旧页。
+        # 加一个无语义 cache-buster，并同时发送 no-cache 请求头。
+        params = {
+            "board": "abyss",
+            "start": start,
+            "end": end,
+            "_": f"{int(time.time() * 1000)}-{validate_attempt}-{random.randint(1000, 9999)}",
+        }
+        url = f"{RANK_API}?{urlencode(params)}"
         _response, payload = request_json_with_policy(
             session,
             url,
             context=f"[榜单 {start}-{end}]",
         )
 
-        rows = payload.get("rows") if isinstance(payload, dict) else payload
-        if not isinstance(rows, list):
+        try:
+            page, season_meta = _parse_rank_page_rows(payload, start, end)
+        except RuntimeError as exc:
+            last_error = exc
+            page = {}
+            season_meta = {}
+
+        actual_ranks = set(page)
+        missing = sorted(expected_ranks - actual_ranks)
+        extra = sorted(actual_ranks - expected_ranks)
+        unique_uids = set(page.values())
+
+        if (
+            actual_ranks == expected_ranks
+            and len(page) == (end - start + 1)
+            and len(unique_uids) == len(page)
+        ):
+            meta_text = (
+                ", ".join(f"dzone_season={k}:{v}" for k, v in sorted(season_meta.items()))
+                if season_meta else "无 dzone_season 元数据"
+            )
+            print(
+                f"[榜单 {start}-{end}] 有效 {len(page)} 条 "
+                f"({meta_text})"
+            )
+            return page
+
+        returned = sorted(actual_ranks)
+        if returned:
+            returned_desc = f"{returned[0]}-{returned[-1]} / {len(returned)} 条"
+        else:
+            # 如果 API 返回了 rows，但全都落在错误区间，这里明确显示“0 条有效”。
+            raw_rows = payload.get("rows") if isinstance(payload, dict) else payload
+            raw_count = len(raw_rows) if isinstance(raw_rows, list) else 0
+            returned_desc = f"0 条有效（原始 rows={raw_count}）"
+
+        last_error = RuntimeError(
+            f"榜单 {start}-{end} 页面校验失败：返回 {returned_desc}，"
+            f"缺失 {len(missing)} 个名次"
+            + (f"，异常名次 {extra[:10]}" if extra else "")
+        )
+        print(
+            f"[榜单 {start}-{end}] 疑似重复页/缓存旧页，"
+            f"第 {validate_attempt}/{PAGE_VALIDATE_RETRY} 次校验失败："
+            f"{last_error}"
+        )
+
+        if validate_attempt < PAGE_VALIDATE_RETRY:
+            time.sleep(max(DELAY * 2, 2.0) + random.uniform(0, 0.5))
+
+    raise last_error or RuntimeError(f"榜单 {start}-{end} 获取失败")
+
+
+def fetch_top1000_urls(session: requests.Session) -> list[str]:
+    print(f"\n===== 获取当前 Abyss Top {TOP_N} UID（详情目标赛季 {SEASON}） =====")
+
+    by_rank: dict[int, str] = {}
+
+    for start in range(1, TOP_N + 1, PAGE_SIZE):
+        end = min(TOP_N, start + PAGE_SIZE - 1)
+        page = fetch_rank_page(session, start, end)
+
+        overlap = set(by_rank) & set(page)
+        if overlap:
             raise RuntimeError(
-                f"榜单 {start}-{end} 返回格式异常：缺少 rows 数组"
+                f"榜单分页发生 rank 重叠：{sorted(overlap)[:20]}"
             )
 
-        accepted = 0
-        for row in rows:
-            if not isinstance(row, dict):
-                continue
+        by_rank.update(page)
+        print(
+            f"[榜单 {start}-{end}] 写入 {len(page)} 条，"
+            f"Top{TOP_N} 累计 {len(by_rank)} 条"
+        )
 
-            try:
-                rank = int(row.get("rank"))
-            except (TypeError, ValueError):
-                continue
-
-            uid_raw = row.get("uid")
-            if uid_raw is None:
-                continue
-            uid = str(uid_raw).strip()
-            if not uid or not uid.isdigit():
-                continue
-
-            season_raw = row.get("dzone_season", row.get("dzoneSeason"))
-            if season_raw is not None:
-                try:
-                    row_season = int(season_raw)
-                except (TypeError, ValueError):
-                    row_season = None
-                if row_season is not None and row_season != SEASON:
-                    continue
-
-            if not (1 <= rank <= TOP_N):
-                continue
-
-            old_rank = uid_to_rank.get(uid)
-            if old_rank is not None and old_rank != rank:
-                keep = min(old_rank, rank)
-                drop = max(old_rank, rank)
-                by_rank.pop(drop, None)
-                by_rank[keep] = uid
-                uid_to_rank[uid] = keep
-            else:
-                by_rank[rank] = uid
-                uid_to_rank[uid] = rank
-            accepted += 1
-
-        print(f"[榜单 {start}-{end}] 接收 {accepted} 条，第 {SEASON} 期累计 {len(by_rank)} 条")
         if end < TOP_N:
             time.sleep(DELAY + random.uniform(0, 0.25))
 
     missing = [rank for rank in range(1, TOP_N + 1) if rank not in by_rank]
-    unique_uids = {uid for uid in by_rank.values()}
 
-    if missing or len(by_rank) != TOP_N or len(unique_uids) != TOP_N:
+    uid_ranks: dict[str, list[int]] = {}
+    for rank, uid in by_rank.items():
+        uid_ranks.setdefault(uid, []).append(rank)
+    duplicate_uids = {
+        uid: ranks for uid, ranks in uid_ranks.items() if len(ranks) > 1
+    }
+
+    if missing or len(by_rank) != TOP_N or duplicate_uids:
         sample = ", ".join(map(str, missing[:30]))
         if len(missing) > 30:
             sample += ", ..."
+        dup_sample = list(duplicate_uids.items())[:10]
         raise RuntimeError(
             f"Top{TOP_N} UID 不完整：名次={len(by_rank)}/{TOP_N}，"
-            f"唯一 UID={len(unique_uids)}/{TOP_N}，缺失名次: {sample or '无'}。"
-            "为避免生成不完整 urls.txt，本次停止。"
+            f"唯一 UID={len(uid_ranks)}/{TOP_N}，"
+            f"缺失名次: {sample or '无'}，"
+            f"重复 UID: {dup_sample or '无'}。"
+            "为避免生成错误 urls.txt，本次停止。"
         )
 
+    # 榜单 UID 来自“当前 Abyss Top1000”，详情 URL 明确固定到第 69 期。
     urls = [
         DETAIL_URL_TEMPLATE.format(uid=by_rank[rank], season=SEASON)
         for rank in range(1, TOP_N + 1)
