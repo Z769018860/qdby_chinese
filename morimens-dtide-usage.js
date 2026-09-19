@@ -143,8 +143,8 @@
   function wheelRatioBar(wheel){const counts=wheel?.stackCounts||{},total=wheelStackKeys.reduce((sum,key)=>sum+Number(counts[key]||0),0);if(!total)return '<div class="dtideRatioBar" title="暂无叠位数据"></div>';const title=wheelStackKeys.map(key=>`${wheelStackZh[key]} ${pct(Number(counts[key]||0)/total*100)}`).join(' · ');return `<div class="dtideRatioBar" title="${esc(title)}" aria-label="${esc(title)}">${wheelStackKeys.filter(key=>Number(counts[key]||0)>0).map(key=>`<span style="width:${Number(counts[key]||0)/total*100}%;background:${wheelStackColors[key]}"></span>`).join('')}</div>`}
   function tokenImage(name){for(const {team} of flatten(detailUsage?.records||[])){const token=team.token;if(token&&itemName(token)===name&&token.image)return String(token.image).replace('/icon/','/thumb/icon/')}return ''}
   function filteredDetailRows(){
-    const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all';
-    return flatten(detailUsage?.records||[]).filter(x=>{if(!rankMatches(x.record,cap))return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(!scoreMatches(x.record))return false;return true});
+    const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',clearType=$('dtideClearType')?.value||'all';
+    return flatten(detailUsage?.records||[]).filter(x=>{if(!rankMatches(x.record,cap))return false;if(difficulty!=='all'&&x.difficulty!==difficulty)return false;if(clearType!=='all'&&x.team.clearType!==clearType)return false;if(!scoreMatches(x.record))return false;return true});
   }
   function wheelGroup(rows){
     const map=new Map();
@@ -189,7 +189,6 @@
       appearances++;
       if(!profile){const info=characterInfo(target);profile={key:String(key),name:info.name,image:info.image||target.image||'',art:info.art||info.image||target.image||'',wikiUrl:info.wikiUrl}}
       const ek=enlightOf(target),ev=enlightment.get(ek)||{key:ek,name:enlightZh[ek]||ek,count:0};ev.count++;enlightment.set(ek,ev);
-      if(team.token)bump(tokens,team.token,'token');for(const x of team.creations||[])bump(creations,x,'creation');
       const seen=new Set();for(const m of members){const mk=memberKey(m);if(!mk||mk===String(key)||seen.has(mk))continue;seen.add(mk);bump(mates,{name:characterInfo(m).name,image:characterInfo(m).image})}
       const squad=[],squadSeen=new Set();
       for(const m of members){const mk=memberKey(m);if(!mk||squadSeen.has(mk))continue;squadSeen.add(mk);const info=characterInfo(m);squad.push({key:mk,name:info.name,image:info.image||m.image||''})}
@@ -200,11 +199,11 @@
         const sv=squads.get(squadKey)||{key:squadKey,members:ordered,count:0};sv.count++;squads.set(squadKey,sv);
       }
     }
-    for(const {team} of gearRows){const target=(team.members||[]).find(m=>memberKey(m)===String(key));if(!target)continue;gearAppearances++;for(const x of target.wheels||target.weapons||[])bump(wheels,x,'wheel');for(const x of target.covenants||target.suits||[])bump(covenants,x,'covenant')}
-    const finish=(map,denom)=>[...map.values()].map(x=>({...x,ratePct:denom?x.count/denom*100:0})).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')).slice(0,5);
+    for(const {team} of gearRows){const target=(team.members||[]).find(m=>memberKey(m)===String(key));if(!target)continue;gearAppearances++;for(const x of target.wheels||target.weapons||[])bump(wheels,x,'wheel');for(const x of target.covenants||target.suits||[])bump(covenants,x,'covenant');if(team.token)bump(tokens,team.token,'token');for(const x of team.creations||[])bump(creations,x,'creation')}
+    const finish=(map,denom,filter=null)=>[...map.values()].map(x=>({...x,ratePct:denom?x.count/denom*100:0})).filter(x=>!filter||filter(x)).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')).slice(0,5),usefulCreation=x=>{const n=String(x.name||'').replace(/^"|"$/g,'').trim();return x.ratePct<99.999&&!/^(?:锈蚀钥匙|Rusted Key)$/i.test(n)};
     const enlight=[...enlightment.values()].map(x=>({...x,ratePct:appearances?x.count/appearances*100:0})).sort((a,b)=>b.count-a.count||enlightKeys.indexOf(a.key)-enlightKeys.indexOf(b.key));
     const teamCompositions=[...squads.values()].map(x=>({...x,ratePct:completeSquadAppearances?x.count/completeSquadAppearances*100:0})).sort((a,b)=>b.count-a.count||a.members.map(m=>m.name).join('/').localeCompare(b.members.map(m=>m.name).join('/'),'zh-CN')).slice(0,5);
-    return {appearances,gearAppearances,completeSquadAppearances,profile,enlight,teamCompositions,teammates:finish(mates,appearances),wheels:finish(wheels,gearAppearances),covenants:finish(covenants,gearAppearances),tokens:finish(tokens,appearances),creations:finish(creations,appearances)};
+    return {appearances,gearAppearances,completeSquadAppearances,profile,enlight,teamCompositions,teammates:finish(mates,appearances),wheels:finish(wheels,gearAppearances),covenants:finish(covenants,gearAppearances),tokens:finish(tokens,gearAppearances),creations:finish(creations,gearAppearances,usefulCreation)};
   }
   function characterInsightHtml(d){
     const p=d.profile||{},enlight=(d.enlight||[]).map(x=>{const color=enlightColors[x.key]||enlightColors.unknown;return `<div class="dtideInsightEnlightRow" style="--dtide-enlight-color:${color}"><span>${esc(x.name)}</span><small>${x.count} 次</small><b>${pct(x.ratePct)}</b></div>`}).join('')||'<div class="dtideEmpty">暂无启灵数据</div>';
