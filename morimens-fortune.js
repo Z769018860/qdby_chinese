@@ -20,7 +20,7 @@
   const recommendPool=['适合挑战高难融灾','适合整理命轮与密契配置','适合推进未完成关卡','适合积累强化资源','适合尝试新的界域队伍','适合完成日常与周常','殴打弥萨格校猫','画同人图','水dc和频道'];
   const almanacMap=[[/出行|移徙|赴任|入宅/,'推进探索或未完成关卡'],[/交易|纳财|开市|立券/,'刷取资源并整理仓库'],[/修造|动土|安床|竖柱/,'强化唤醒体、命轮与密契'],[/祈福|祭祀|求嗣/,'完成签到并尝试一次抽取'],[/会友|嫁娶|纳采|宴会/,'使用好友助战或调整配队'],[/求医|治病/,'补足防御与续航配置'],[/沐浴|扫舍|解除/,'清理日常和低消耗任务'],[/栽种|牧养|纳畜/,'培养角色并积累养成资源'],[/安葬|破土|启钻/,'暂缓高风险重开，优先收尾旧目标']];
   const translateAlmanac=item=>almanacMap.find(([pattern])=>pattern.test(item))?.[1]||'稳步完成日常与融灾任务';
-  let almanacToday=null,visitorSalt='',latestDetail=null;
+  let almanacToday=null,visitorSalt='',latestDetail=null,latestReportData=null;
 
   function build(detail){
     const now=new Date(),timeBucket=now.toISOString().slice(0,13)+'-'+String(Math.floor(now.getUTCMinutes()/30)).padStart(2,'0'),visitorContext=visitorSalt+'|'+timeBucket+'|'+Intl.DateTimeFormat().resolvedOptions().timeZone+'|'+now.getTimezoneOffset()+'|'+(navigator.language||'')+'|'+screen.width+'x'+screen.height;
@@ -72,6 +72,7 @@
     const key='morimens.daily-almanac.v1';try{const cached=JSON.parse(localStorage.getItem(key)||'null');if(cached?.date===dateKey())renderAlmanac(cached,{cached:true})}catch{}
     try{const response=await fetch(`data/morimens/almanac/today.json?v=${dateKey()}`,{cache:'no-cache'});if(!response.ok)return;const data=await response.json();if(data?.date!==dateKey())return;renderAlmanac(data);try{localStorage.setItem(key,JSON.stringify(data))}catch{}}catch{}
   }
+  const downloadButton=$('downloadFortuneReportBtn');if(downloadButton){downloadButton.addEventListener('click',async()=>{downloadButton.disabled=true;downloadButton.textContent='正在生成…';try{await downloadFortuneReport(downloadButton)}catch(error){console.error('下载今日签失败',error);alert(error.message)}finally{downloadButton.disabled=false;downloadButton.textContent='下载今日签'}})}
   try{const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');if(cached?.date===dateKey())render(cached,{cached:true})}catch{}
   window.addEventListener('morimens-fortune-render',event=>{latestDetail=event.detail||{};const data=build(latestDetail);render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}});
   (async()=>{try{const response=await fetch('https://api64.ipify.org?format=json',{cache:'no-store',signal:AbortSignal.timeout(2500)});if(response.ok){const payload=await response.json();visitorSalt=String(payload.ip||'')}}catch(error){visitorSalt='local-'+hash((navigator.userAgent||'')+'|'+(navigator.language||'')+'|'+screen.width+'x'+screen.height)}if(latestDetail){const data=build(latestDetail);render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}}})();
