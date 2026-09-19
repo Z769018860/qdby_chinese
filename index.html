@@ -293,15 +293,49 @@
     const walineRoot = document.querySelector('#waline');
     const walineFallback = document.querySelector('#walineFallback');
 
-    import('https://unpkg.com/@waline/client@v3/dist/waline.js')
-      .then(({ init }) => {
+    const WALINE_SERVER = 'https://textbox.qingdengbuyi.top';
+
+    async function resolveGuestbookPath() {
+      try {
+        const response = await fetch(`${WALINE_SERVER}/api/comment?type=recent&count=50`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = await response.json();
+        if (payload && payload.errno) throw new Error(payload.errmsg || `Waline errno ${payload.errno}`);
+        const rows = Array.isArray(payload?.data)
+          ? payload.data
+          : Array.isArray(payload?.data?.data)
+            ? payload.data.data
+            : [];
+        const counts = new Map();
+        for (const row of rows) {
+          const path = String(row?.url || row?.path || '').trim();
+          if (!path || path.startsWith('/__qdby_site_views__/')) continue;
+          counts.set(path, (counts.get(path) || 0) + 1);
+        }
+        const preferred = ['/', '/index.html', '/guestbook', '/comments', '/message'];
+        for (const path of preferred) {
+          if (counts.has(path)) return path;
+        }
+        return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || '/';
+      } catch (error) {
+        console.warn('Waline guestbook path discovery failed, fallback to /', error);
+        return '/';
+      }
+    }
+
+    Promise.all([
+      import('https://unpkg.com/@waline/client@v3/dist/waline.js'),
+      resolveGuestbookPath(),
+    ])
+      .then(([{ init }, guestbookPath]) => {
         init({
           el: '#waline',
-          serverURL: 'https://textbox.qingdengbuyi.top/',
+          serverURL: WALINE_SERVER,
+          path: guestbookPath,
           lang: 'zh-CN',
           meta: ['nick', 'mail', 'link'],
           requiredMeta: [],
-          login: 'enable',
+          login: 'disable',
           wordLimit: 300,
           pageSize: 10,
           commentSorting: 'latest',
@@ -311,7 +345,7 @@
         console.error('Waline load failed:', error);
         if (walineRoot) walineRoot.hidden = true;
         if (walineFallback) {
-          walineFallback.textContent = '留言板加载失败，请稍后刷新页面重试。';
+          walineFallback.innerHTML = '留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';
           walineFallback.classList.add('warn');
         }
       });
