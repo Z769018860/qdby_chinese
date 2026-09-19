@@ -79,9 +79,18 @@
       .loveRankChar{display:flex;align-items:center;gap:10px;min-width:0}.loveRankAvatar{width:48px;height:48px;border-radius:12px;object-fit:cover;background:#101827;border:1px solid rgba(255,255,255,.08);flex:none}
       .loveRankName{min-width:0}.loveRankName strong{display:block;color:#eef3fa;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.loveRankName small{display:block;margin-top:4px;color:#7f8da1;font-size:9px}
       .loveRankScore{text-align:center}.loveRankScore strong{display:block;font:900 20px/1 system-ui;font-variant-numeric:tabular-nums}.loveRankScore small{display:block;margin-top:4px;color:#8190a3;font-size:9px}.loveRankScore.isPositive strong{color:#f0bd79}.loveRankScore.isNegative strong{color:#72b3ed}.loveRankScore.isZero strong{color:#a8b3c1}
-      .loveRankActions{display:flex;align-items:center;justify-content:flex-end;gap:7px}.loveVoteBtn{min-width:72px;border:1px solid rgba(148,163,184,.2);border-radius:10px;padding:8px 10px;background:rgba(10,17,28,.7);color:#bac5d2;cursor:pointer;font:700 11px/1 inherit;white-space:nowrap}.loveVoteBtn:hover{border-color:rgba(213,177,118,.48);color:#f1ddb5}.loveVoteBtn[data-vote="like"].isActive{border-color:rgba(231,166,83,.7);background:rgba(213,151,67,.17);color:#ffd79b}.loveVoteBtn[data-vote="dislike"].isActive{border-color:rgba(86,157,224,.7);background:rgba(62,120,181,.17);color:#9bd0ff}.loveVoteBtn:disabled{opacity:.45;cursor:wait}
+      .loveRankActions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+      .loveVoteBtn{display:inline-flex;align-items:center;gap:6px;border:0;padding:0;background:transparent;color:#e1e7ef;cursor:pointer;font:800 12px/1 inherit;white-space:nowrap;transition:transform .15s ease,filter .15s ease,opacity .15s ease}
+      .loveVoteBtn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+      .loveVoteBtn:focus-visible{outline:2px solid rgba(213,177,118,.65);outline-offset:3px;border-radius:10px}
+      .loveVoteBtn:disabled{opacity:.45;cursor:wait;transform:none}
+      .loveVoteArtwork{display:block;object-fit:contain;pointer-events:none;user-select:none}
+      .loveVoteLike .loveVoteArtwork{width:44px;height:44px}
+      .loveVoteDislike .loveVoteArtwork{width:112px;height:40px}
+      .loveVoteCount{display:inline-block;min-width:18px;text-align:left;color:#e7edf5;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+      .loveVoteBtn.isActive .loveVoteCount{color:#f2ddb5}
       .loveRankEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
-      @media(max-width:680px){.loveRankRow{grid-template-columns:36px minmax(0,1fr);gap:8px}.loveRankPlace{grid-row:1/3}.loveRankScore{text-align:left;padding-left:58px}.loveRankActions{grid-column:2;justify-content:flex-start;padding-left:58px}.loveRankAvatar{width:44px;height:44px}.loveVoteBtn{min-width:64px;padding:7px 9px}}
+      @media(max-width:680px){.loveRankRow{grid-template-columns:36px minmax(0,1fr);gap:8px}.loveRankPlace{grid-row:1/3}.loveRankScore{text-align:left;padding-left:58px}.loveRankActions{grid-column:2;justify-content:flex-start;padding-left:58px;gap:8px}.loveRankAvatar{width:44px;height:44px}.loveVoteLike .loveVoteArtwork{width:40px;height:40px}.loveVoteDislike .loveVoteArtwork{width:98px;height:36px}.loveVoteCount{font-size:11px}}
     `;
     document.head.appendChild(style);
   }
@@ -111,7 +120,7 @@
         <div class="loveRankPlace">#${index+1}</div>
         <div class="loveRankChar">${r.image?`<img class="loveRankAvatar" src="${esc(r.image)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:''}<div class="loveRankName"><strong>${esc(r.name)}</strong><small>${esc(r.englishName)}</small></div></div>
         <div class="loveRankScore ${scoreClass(r.score)}"><strong>${r.score>0?'+':''}${r.score}</strong><small>👍 ${r.likes} · 👎 ${r.dislikes}</small></div>
-        <div class="loveRankActions"><button type="button" class="loveVoteBtn ${selected==='like'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="like" aria-pressed="${selected==='like'}">👍 赞 ${r.likes}</button><button type="button" class="loveVoteBtn ${selected==='dislike'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="dislike" aria-pressed="${selected==='dislike'}">👎 踩 ${r.dislikes}</button></div>
+        <div class="loveRankActions"><button type="button" class="loveVoteBtn loveVoteLike ${selected==='like'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="like" aria-pressed="${selected==='like'}" aria-label="${selected==='like'?'取消点赞':'点赞'}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='like'?'like-on.png':'like-off.png'}" alt=""><span class="loveVoteCount">${r.likes}</span></button><button type="button" class="loveVoteBtn loveVoteDislike ${selected==='dislike'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="dislike" aria-pressed="${selected==='dislike'}" aria-label="${selected==='dislike'?'取消拉黑':'拉黑'}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='dislike'?'dislike-on.png':'dislike-off.png'}" alt=""><span class="loveVoteCount">${r.dislikes}</span></button></div>
       </div>`;
     }).join('');
     const status=$('morimensLoveRankingStatus');
