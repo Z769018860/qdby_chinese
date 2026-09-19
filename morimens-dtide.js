@@ -276,31 +276,40 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     }finally{button.disabled=false;button.textContent='下载图片'}
   }
   function legacyDetailExtras(name,periods){
-    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).slice(0,10),assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0);
+    const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).filter(team=>Array.isArray(team.characters)&&team.characters.length===4).slice(0,10),assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0);
     const squads=teams.map((team,index)=>{
-      const roles=[name,...(team.characters||[]).filter(role=>role!==name)];
-      return '<div class="dtideSquadRow"><span class="dtideSquadRank">'+(index+1)+'</span><div class="dtideSquadMembers">'+roles.map(role=>{
+      const members=(team.characters||[]).map(role=>{
         const meta=characterInfo(role,{name:role,skeydbId:season.characterMap?.[role]?.skeydbId,ingameId:season.characterMap?.[role]?.ingameId,image:season.characterMap?.[role]?.image});
-        return '<div class="dtideSquadMember">'+(meta.image?'<img src="'+esc(meta.image)+'" alt="" loading="lazy">':'')+'<span title="'+esc(meta.name||role)+'">'+esc(meta.name||role)+'</span></div>';
-      }).join('')+'</div><div class="dtideSquadRate"><b>'+(teamTotal?(Number(team.count||0)/teamTotal*100).toFixed(1)+'%':'—')+'</b><small>'+Number(team.count||0)+' 次</small></div></div>';
+        return {role,name:meta.name||role,image:meta.image||''};
+      });
+      const targetIndex=members.findIndex(member=>member.role===name);
+      if(targetIndex>0)members.unshift(...members.splice(targetIndex,1));
+      return '<div class="dtideSquadRow"><span class="dtideSquadRank">'+(index+1)+'</span><div class="dtideSquadMembers">'+members.map(member=>'<div class="dtideSquadMember">'+(member.image?'<img src="'+esc(member.image)+'" alt="" loading="lazy">':'')+'<span title="'+esc(member.name)+'">'+esc(member.name)+'</span></div>').join('')+'</div><div class="dtideSquadRate"><b>'+(teamTotal?(Number(team.count||0)/teamTotal*100).toFixed(1)+'%':'—')+'</b><small>'+Number(team.count||0)+' 次</small></div></div>';
     }).join('')||'<div class="dtideEmpty">暂无配队数据</div>';
     const assistHtml=periods.map(p=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:5px 8px;border-bottom:1px solid rgba(166,193,224,.1)"><span>'+esc(p.date)+'【'+esc(p.realm)+'】</span><strong>'+((Number(assist[p.label]||0)*100).toFixed(2))+'%</strong></div>').join('');
     return '<div class="dtideLegacyExtra" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:12px;margin:12px 12px 16px;text-align:left"><section class="dtideInsightPanel" style="min-width:0;background:rgba(12,20,33,.94)"><h4>常用配队 Top 10 <small>完整四人队</small></h4><div class="dtideSquadList">'+squads+'</div></section><section class="dtideInsightPanel" style="min-width:0;background:rgba(12,20,33,.94)"><h4>每期助战使用率</h4>'+assistHtml+'</section></div>';
   }
+  function legacyWheelCell(name,wheel){
+    const source=String(wheel?.image||''),image=localAsset(source,'wheel');
+    return '<span class="dtideChar">'+(image?'<img class="dtideGearIcon" src="'+esc(image)+'" data-fallback="'+esc(source)+'" referrerpolicy="no-referrer" loading="lazy" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=\'\'}else{this.hidden=true}" alt="">':'')+'<span>'+esc(name)+'</span></span>';
+  }
   function renderLegacyWheelMatrix(){
     const host=$('dtideMatrix'),legacy=season?.legacyRates;if(!host||!legacy)return false;
-    const periods=legacyStructured?.periods?.filter(p=>Number(p.teamCount)>0).map((p,i)=>({wave:i+1,label:p.key,date:p.label,realm:p.realm}))||[];
-    const wheels=legacyStructured?.wheels||{},names=Object.keys(wheels).filter(name=>name.trim()&&!/空/.test(name)&&wheels[name]?.image);
-    const sortKey=window.__legacyMatrixSort||'avg',ascending=Boolean(window.__legacyMatrixAscending),value=(name,key)=>key==='avg'?Number(wheels[name]?.average||0):Number(wheels[name]?.rates?.[periods[Number(key)-1]?.label]||0);
+    const periods=(legacyStructured?.periods||[]).filter(p=>Number(p.teamCount)>0).map((p,i)=>({wave:i+1,label:p.key,key:p.key,date:p.label,realm:p.realm,teamCount:Number(p.teamCount)||0,wheelRates:p.wheelRates||{}}));
+    const wheels=legacyStructured?.wheels||{};
+    const periodRate=(name,period)=>Number(period?.wheelRates?.[name]??wheels[name]?.rates?.[period?.key]??0)||0;
+    const weightedAverage=name=>{let weighted=0,people=0;for(const period of periods){const population=period.teamCount/10;if(population<=0)continue;weighted+=periodRate(name,period)*population;people+=population}return people?weighted/people:0};
+    const names=Object.keys(wheels).filter(name=>{const clean=String(name).trim();return clean&&!/^(?:[（(]?\s*(?:空|empty|null|undefined)\s*[）)]?)$/i.test(clean)&&Boolean(wheels[name]?.image)&&periods.some(period=>periodRate(name,period)>0)});
+    const sortKey=window.__legacyMatrixSort||'avg',ascending=Boolean(window.__legacyMatrixAscending),value=(name,key)=>key==='avg'?weightedAverage(name):periodRate(name,periods[Number(key)-1]);
     names.sort((a,b)=>{const d=value(a,sortKey)-value(b,sortKey);return (ascending?d:-d)||a.localeCompare(b,'zh-CN')});
     const realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'},rate=v=>Number.isFinite(Number(v))?((Number(v)*100).toFixed(2)+'%'):'—',arrow=key=>sortKey===key?(ascending?' ↑':' ↓'):' ↕',head=(label,key)=>'<button type="button" class="dtideSortHead" data-legacy-sort="'+key+'">'+label+arrow(key)+'</button>';
-    const max=Math.max(...names.flatMap(n=>periods.map(p=>value(n,p.wave))),0);
-    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>value(name,p.wave)),avg=value(name,'avg'),image=wheels[name].image;return '<tr><td><div class="dtideRankedItem"><span class="dtideChar" style="width:32px;height:32px"><img class="dtideGearIcon" src="'+esc(image)+'" alt="" loading="lazy"></span><span>'+esc(name)+'</span></div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
+    const max=Math.max(...names.flatMap(n=>periods.map(p=>periodRate(n,p))),0);
+    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>periodRate(name,p)),avg=weightedAverage(name);return '<tr><td><div class="dtideRankedItem">'+legacyWheelCell(name,wheels[name])+'</div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
     host.onclick=e=>{const button=e.target.closest('[data-legacy-sort]');if(!button)return;const key=button.dataset.legacySort;if(window.__legacyMatrixSort===key)window.__legacyMatrixAscending=!window.__legacyMatrixAscending;else{window.__legacyMatrixSort=key;window.__legacyMatrixAscending=false}renderLegacyMatrix()};
     if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='命轮逐期高难出场率';
     if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率（来源：@却尘）';
     if($('dtideSummary'))$('dtideSummary').innerHTML=[['数据来源','却尘'],['统计命轮',names.length],['统计期次',periods.length],['指标','高难出场率']].map(([a,b])=>'<div class="dtideStat"><small>'+a+'</small><strong>'+esc(b)+'</strong></div>').join('');
-    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML='<div class="dtideNotice">命轮出场率：该期命轮使用次数 ÷（队伍总数 ÷ 10）× 100%；首期未提供命轮配队数据，不参与统计。</div>';
+    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML='<div class="dtideNotice">命轮出场率按“该期命轮总使用次数 ÷ 统计总人数”计算；统计总人数 = 队伍总数 ÷ 10。平均出场率按各期统计人数加权，首期无命轮数据，不参与统计。</div>';
     return true;
   }
   function renderLegacyMatrix(){
@@ -464,7 +473,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       loader.loadDataset(current.path),
       loader.loadJson(current.statsPath,{revision,fresh:true}),
       rankPath&&loader.loadRankMap?loader.loadRankMap(rankPath,{revision,fresh:true}).catch(error=>{console.warn('rank index unavailable',id,error);return new Map()}):Promise.resolve(new Map()),
-      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v6',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null)
+      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v7',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null)
     ]);
     if(loadToken!==seasonLoadToken)return;
     season=loadedSeason;
