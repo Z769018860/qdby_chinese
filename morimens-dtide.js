@@ -277,29 +277,30 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function legacyDetailExtras(name,periods){
     const data=legacyStructured?.characters?.[name]||{},teams=(data.topTeams||[]).slice(0,10),assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0);
-    const teamHtml=teams.length?teams.map((team,index)=>'<div style="display:grid;grid-template-columns:30px repeat(4,minmax(0,1fr)) 42px;gap:6px;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(166,193,224,.12)"><b style="color:#e7b65c">#'+(index+1)+'</b>'+team.characters.map((role)=>{const meta=characterInfo(role,{name:role,skeydbId:season.characterMap?.[role]?.skeydbId,ingameId:season.characterMap?.[role]?.ingameId,image:season.characterMap?.[role]?.image});return '<span style="display:flex;align-items:center;gap:5px;min-width:0;color:#dbe8f7;font-size:12px"><span class="dtideChar" style="width:28px;height:28px;flex:0 0 28px"><img src="'+esc(meta.image||'')+'" alt="" loading="lazy"></span><span style="white-space:normal;overflow:visible;word-break:break-all;text-align:center;line-height:1.2">'+esc(meta.name||role)+'</span></span>'}).join('')+'<small style="color:#b6c9df;text-align:right"><strong style="color:#f2d28b">'+(teamTotal?((Number(team.count||0)/teamTotal*100).toFixed(1)+'%'):'—')+'</strong><br>'+Number(team.count||0)+' 次</small></div>').join(''):'<div style="padding:10px;color:#9fb0c4">暂无配队数据</div>';
+    const squads=teams.map((team,index)=>{
+      const roles=[name,...(team.characters||[]).filter(role=>role!==name)];
+      return '<div class="dtideSquadRow"><span class="dtideSquadRank">'+(index+1)+'</span><div class="dtideSquadMembers">'+roles.map(role=>{
+        const meta=characterInfo(role,{name:role,skeydbId:season.characterMap?.[role]?.skeydbId,ingameId:season.characterMap?.[role]?.ingameId,image:season.characterMap?.[role]?.image});
+        return '<div class="dtideSquadMember">'+(meta.image?'<img src="'+esc(meta.image)+'" alt="" loading="lazy">':'')+'<span title="'+esc(meta.name||role)+'">'+esc(meta.name||role)+'</span></div>';
+      }).join('')+'</div><div class="dtideSquadRate"><b>'+(teamTotal?(Number(team.count||0)/teamTotal*100).toFixed(1)+'%':'—')+'</b><small>'+Number(team.count||0)+' 次</small></div></div>';
+    }).join('')||'<div class="dtideEmpty">暂无配队数据</div>';
     const assistHtml=periods.map(p=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:5px 8px;border-bottom:1px solid rgba(166,193,224,.1)"><span>'+esc(p.date)+'【'+esc(p.realm)+'】</span><strong>'+((Number(assist[p.label]||0)*100).toFixed(2))+'%</strong></div>').join('');
-    return '<div class="dtideLegacyExtra" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:12px;margin-top:12px;text-align:left"><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">Top10 配队</strong>'+teamHtml+'</section><section style="border:1px solid rgba(166,193,224,.16);border-radius:10px;overflow:hidden;background:rgba(10,20,35,.45)"><strong style="display:block;padding:9px 10px;color:#f2d28b">每期助战使用率</strong>'+assistHtml+'</section></div>';
-  }
-  function legacyWheelInfo(name){
-    const data=window.MorimensData||{},localized=data.localizedEntity?.('wheel',{name}),direct=localized?.image||localized?.icon||localized?.assets?.icon||localized?.assets?.image||'';if(direct)return {image:direct};
-    const seen=new Set(),walk=(value,depth=0)=>{if(!value||depth>7||seen.has(value))return '';if(typeof value!=='object')return '';seen.add(value);const label=value.name||value.title||value.displayName;if(label===name){return value.image||value.icon||value.assets?.icon||value.assets?.image||value.asset||''}for(const child of Object.values(value)){const hit=walk(child,depth+1);if(hit)return hit}return ''};
-    return {image:walk(data)};
+    return '<div class="dtideLegacyExtra" style="position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:12px;margin:12px 12px 16px;text-align:left"><section class="dtideInsightPanel" style="min-width:0;background:rgba(12,20,33,.94)"><h4>常用配队 Top 10 <small>完整四人队</small></h4><div class="dtideSquadList">'+squads+'</div></section><section class="dtideInsightPanel" style="min-width:0;background:rgba(12,20,33,.94)"><h4>每期助战使用率</h4>'+assistHtml+'</section></div>';
   }
   function renderLegacyWheelMatrix(){
     const host=$('dtideMatrix'),legacy=season?.legacyRates;if(!host||!legacy)return false;
-    const periodDisplay=[['4.13-4.26','混沌'],['4.27-5.10','超维'],['5.11-5.24','深海'],['5.25-6.7','血肉'],['6.7-6.21','超维'],['6.22-7.5','深海'],['7.6-7.19','血肉'],['7.20-8.2','混沌'],['8.3-8.16','深海']];
-    const periods=legacy.map((x,i)=>({wave:i+1,label:legacyStructured?.periods?.[i]?.key||x.label,date:legacyStructured?.periods?.[i]?.label||periodDisplay[i]?.[0]||x.label,realm:legacyStructured?.periods?.[i]?.realm||periodDisplay[i]?.[1]||''}));
-    const wheels=legacyStructured?.wheels||{},names=Object.keys(wheels).filter(name=>String(name).trim());
+    const periods=legacyStructured?.periods?.filter(p=>Number(p.teamCount)>0).map((p,i)=>({wave:i+1,label:p.key,date:p.label,realm:p.realm}))||[];
+    const wheels=legacyStructured?.wheels||{},names=Object.keys(wheels).filter(name=>name.trim()&&!/空/.test(name)&&wheels[name]?.image);
     const sortKey=window.__legacyMatrixSort||'avg',ascending=Boolean(window.__legacyMatrixAscending),value=(name,key)=>key==='avg'?Number(wheels[name]?.average||0):Number(wheels[name]?.rates?.[periods[Number(key)-1]?.label]||0);
     names.sort((a,b)=>{const d=value(a,sortKey)-value(b,sortKey);return (ascending?d:-d)||a.localeCompare(b,'zh-CN')});
     const realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'},rate=v=>Number.isFinite(Number(v))?((Number(v)*100).toFixed(2)+'%'):'—',arrow=key=>sortKey===key?(ascending?' ↑':' ↓'):' ↕',head=(label,key)=>'<button type="button" class="dtideSortHead" data-legacy-sort="'+key+'">'+label+arrow(key)+'</button>';
     const max=Math.max(...names.flatMap(n=>periods.map(p=>value(n,p.wave))),0);
-    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>value(name,p.wave)),avg=value(name,'avg');return '<tr><td><div class="dtideRankedItem"><span class="dtideChar" style="width:32px;height:32px">'+(legacyWheelInfo(name).image?'<img class="dtideGearIcon" src="'+esc(localAsset(legacyWheelInfo(name).image,'wheel'))+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'</span><span>'+esc(name)+'</span></div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
+    host.innerHTML='<table class="dtideTable"><thead><tr><th>命轮</th>'+periods.map(x=>'<th>'+head('<strong>'+esc(x.date)+'</strong><br><small style="color:'+(realmColor[x.realm]||'#fff')+';font-weight:800">【'+esc(x.realm)+'】</small>',x.wave)+'</th>').join('')+'<th>'+head('平均出场率','avg')+'</th></tr></thead><tbody>'+names.map(name=>{const vals=periods.map(p=>value(name,p.wave)),avg=value(name,'avg'),image=wheels[name].image;return '<tr><td><div class="dtideRankedItem"><span class="dtideChar" style="width:32px;height:32px"><img class="dtideGearIcon" src="'+esc(image)+'" alt="" loading="lazy"></span><span>'+esc(name)+'</span></div></td>'+vals.map(v=>'<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(v,max)+';color:#fff;font-weight:800">'+rate(v)+'</td>').join('')+'<td class="dtideRate" style="color:#fff;font-weight:800">'+rate(avg)+'</td></tr>'}).join('')+'</tbody></table>';
     host.onclick=e=>{const button=e.target.closest('[data-legacy-sort]');if(!button)return;const key=button.dataset.legacySort;if(window.__legacyMatrixSort===key)window.__legacyMatrixAscending=!window.__legacyMatrixAscending;else{window.__legacyMatrixSort=key;window.__legacyMatrixAscending=false}renderLegacyMatrix()};
     if($('dtideMatrixTitle'))$('dtideMatrixTitle').textContent='命轮逐期高难出场率';
     if($('dtideStatus'))$('dtideStatus').textContent='旧版融灾高难出场率（来源：@却尘）';
     if($('dtideSummary'))$('dtideSummary').innerHTML=[['数据来源','却尘'],['统计命轮',names.length],['统计期次',periods.length],['指标','高难出场率']].map(([a,b])=>'<div class="dtideStat"><small>'+a+'</small><strong>'+esc(b)+'</strong></div>').join('');
+    if($('dtideCoverageWarn'))$('dtideCoverageWarn').innerHTML='<div class="dtideNotice">命轮出场率：该期命轮使用次数 ÷（队伍总数 ÷ 10）× 100%；首期未提供命轮配队数据，不参与统计。</div>';
     return true;
   }
   function renderLegacyMatrix(){
@@ -463,7 +464,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       loader.loadDataset(current.path),
       loader.loadJson(current.statsPath,{revision,fresh:true}),
       rankPath&&loader.loadRankMap?loader.loadRankMap(rankPath,{revision,fresh:true}).catch(error=>{console.warn('rank index unavailable',id,error);return new Map()}):Promise.resolve(new Map()),
-      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v1',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null)
+      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v6',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null)
     ]);
     if(loadToken!==seasonLoadToken)return;
     season=loadedSeason;
