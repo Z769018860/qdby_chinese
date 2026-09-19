@@ -181,7 +181,7 @@
   function characterDetails(key){
     const mateRows=scopedRows(),gearRows=filteredDetailRows(),mates=new Map(),wheels=new Map(),covenants=new Map(),tokens=new Map(),creations=new Map(),enlightment=new Map(),squads=new Map();
     let appearances=0,gearAppearances=0,completeSquadAppearances=0,profile=null;
-    const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:(kind==='wheel'?wheelName(item):itemName(item));if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote,name):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
+    const bump=(map,item,kind='')=>{const name=typeof item==='string'?item:(kind==='wheel'?wheelName(item):itemName(item));if(!name)return;const k=String(item?.id||item?.name||name),remote=item?.image||'',v=map.get(k)||{name,image:kind?localGearImage(kind,remote,(typeof item==='string'?item:(item?.name||item?.canonicalName||item?.label||item?.id||name))):remote,fallbackImage:kind?remote:'',count:0};v.count++;map.set(k,v)};
     for(const {team} of mateRows){
       const members=team.members||[],target=members.find(m=>memberKey(m)===String(key));if(!target)continue;
       appearances++;
