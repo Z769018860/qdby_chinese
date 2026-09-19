@@ -73,8 +73,9 @@
     try{const response=await fetch(`data/morimens/almanac/today.json?v=${dateKey()}`,{cache:'no-cache'});if(!response.ok)return;const data=await response.json();if(data?.date!==dateKey())return;renderAlmanac(data);try{localStorage.setItem(key,JSON.stringify(data))}catch{}}catch{}
   }
   async function downloadFortuneReport(button){
+    if(document.fonts?.ready)await document.fonts.ready;
     const data=latestReportData;if(!data)throw new Error('请先生成今日签');
-    const width=760,pad=34,canvas=document.createElement('canvas');canvas.width=width;canvas.height=1600;const ctx=canvas.getContext('2d');if(!ctx)throw new Error('浏览器不支持图片导出');
+    const width=760,pad=34,canvas=document.createElement('canvas');canvas.width=width;canvas.height=1600;const ctx=canvas.getContext('2d');if(!ctx)throw new Error('浏览器不支持图片导出');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
     const paper={x:18,y:18,w:width-36};ctx.fillStyle='#273743';ctx.fillRect(0,0,width,canvas.height);ctx.fillStyle='#f0efe8';ctx.fillRect(paper.x,paper.y,paper.w,canvas.height-36);ctx.strokeStyle='#a4a69f';ctx.lineWidth=2;ctx.strokeRect(paper.x,paper.y,paper.w,canvas.height-36);ctx.strokeStyle='rgba(65,70,67,.35)';ctx.lineWidth=1;ctx.strokeRect(paper.x+11,paper.y+11,paper.w-22,canvas.height-58);
     const wrap=(text,max,fn)=>{let line='';for(const ch of String(text||'—')){if(ctx.measureText(line+ch).width>max){fn(line);line=''}line+=ch}if(line)fn(line)};
     ctx.textAlign='center';ctx.fillStyle='#333b3e';ctx.font='bold 27px "Noto Serif SC","Songti SC",serif';ctx.fillText('今日运势报告',width/2,78);ctx.fillStyle='#737a75';ctx.font='12px system-ui,sans-serif';ctx.fillText('DAILY FATE ARCHIVE  ·  '+(data.date||dateKey()),width/2,103);ctx.strokeStyle='rgba(65,70,67,.35)';ctx.beginPath();ctx.moveTo(80,125);ctx.lineTo(width-80,125);ctx.stroke();
