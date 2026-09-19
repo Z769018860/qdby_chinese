@@ -38,8 +38,22 @@
     return `${raw}${raw.includes('?')?'&':'?'}v=${assetVersion()}`;
   }
 
+  async function downloadFortune(){
+    if(!current)throw new Error('请先生成今日签');
+    const canvas=document.createElement('canvas'),width=900,pad=54;canvas.width=width;canvas.height=1080;
+    const ctx=canvas.getContext('2d');if(!ctx)throw new Error('浏览器不支持图片导出');
+    const gradient=ctx.createLinearGradient(0,0,width,canvas.height);gradient.addColorStop(0,'#172333');gradient.addColorStop(1,'#0b111b');ctx.fillStyle=gradient;ctx.fillRect(0,0,width,canvas.height);
+    ctx.fillStyle='rgba(213,177,118,.12)';ctx.fillRect(0,0,width,8);ctx.fillStyle='#f1d69f';ctx.font='bold 30px system-ui,sans-serif';ctx.fillText('忘忘看报 · 今日签',pad,65);
+    ctx.fillStyle='#9eabba';ctx.font='18px system-ui,sans-serif';ctx.fillText($('fortuneDate')?.textContent||todayKey(),pad,101);
+    const imageSrc=$('fortunePortrait')?.currentSrc||$('fortunePortrait')?.src||'';if(imageSrc&&!$('fortunePortrait')?.hidden){try{const img=new Image();img.crossOrigin='anonymous';img.src=imageSrc;await img.decode();ctx.save();ctx.globalAlpha=.42;ctx.drawImage(img,430,30,400,500);ctx.restore()}catch{}}
+    ctx.fillStyle='#f5f8ff';ctx.font='bold 48px system-ui,sans-serif';ctx.fillText($('fortuneTitle')?.textContent||'今日唤醒体',pad,190);
+    ctx.fillStyle='#e7cf9d';ctx.font='bold 24px system-ui,sans-serif';ctx.fillText($('fortuneLevel')?.textContent||'今日签',pad,235);
+    const lines=[$('fortuneText')?.textContent||'',$('fortuneQuote')?.innerText||'','今日宜：'+($('fortuneGood')?.textContent||'—'),'今日忌：'+($('fortuneBad')?.textContent||'—'),'幸运乘区：'+($('fortuneStat')?.textContent||'—'),'今日关键词：'+($('fortuneKeyword')?.textContent||'—')].filter(Boolean);let y=310;ctx.font='22px system-ui,sans-serif';for(const line of lines){const chars=String(line).split('');let buf='';for(const ch of chars){if(ctx.measureText(buf+ch).width>width-pad*2){ctx.fillText(buf,pad,y);y+=36;buf=''}buf+=ch}if(buf){ctx.fillText(buf,pad,y);y+=42}y+=10}
+    ctx.textAlign='right';ctx.fillStyle='#b8c5d6';ctx.font='16px system-ui,sans-serif';ctx.fillText('https://qingdengbuyi.top/morimens-tools.html#dtide',width-pad,canvas.height-54);ctx.fillStyle='#f1d69f';ctx.font='bold 17px system-ui,sans-serif';ctx.fillText('copyright@青灯不弈',width-pad,canvas.height-25);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw new Error('图片生成失败');const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='今日签-'+todayKey()+'.png';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+  }
   function ensureUi(){
-    const actions=document.querySelector('.fortuneActions');if(actions&&!$('skeydbQuoteBtn')){const b=document.createElement('button');b.id='skeydbQuoteBtn';b.type='button';b.className='ghostBtn';b.textContent='换一句角色台词';b.addEventListener('click',()=>{if(!current)return;quoteIndex++;renderQuote(current)});actions.insertBefore(b,actions.lastElementChild)}
+    const actions=document.querySelector('.fortuneActions');if(actions&&!$('skeydbQuoteBtn')){const b=document.createElement('button');b.id='skeydbQuoteBtn';b.type='button';b.className='ghostBtn';b.textContent='换一句角色台词';b.addEventListener('click',()=>{if(!current)return;quoteIndex++;renderQuote(current)});actions.insertBefore(b,actions.lastElementChild)}const download=$('downloadFortuneBtn');if(download&&!download.dataset.bound){download.dataset.bound='1';download.addEventListener('click',async()=>{download.disabled=true;download.textContent='正在生成…';try{await downloadFortune()}catch(error){console.error('下载今日签失败',error);alert(error.message)}finally{download.disabled=false;download.textContent='下载今日签'}})}
     const tags=document.querySelector('.heroTags');if(tags&&!$('skeydbStatus')){const s=document.createElement('span');s.className='tag';s.id='skeydbStatus';s.textContent='SKeyDB / Wiki：等待同步快照';tags.appendChild(s)}
     const sources=document.querySelector('.sourceList');if(sources&&!$('skeydbAttribution')){const note=document.createElement('div');note.id='skeydbAttribution';note.className='sourceItem';sources.appendChild(note)}
   }
