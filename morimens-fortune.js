@@ -45,7 +45,7 @@
     return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
-    if(!data)return;
+    if(!data)return;latestReportData=data;
     if($('fortuneWheelName'))$('fortuneWheelName').textContent=data.wheelName||'命轮';
     if($('fortuneWheelKeywords'))$('fortuneWheelKeywords').textContent=(data.wheelKeywords||[]).join(' · ');
     if($('fortuneLevel'))$('fortuneLevel').textContent=`${data.sign||'平'}签`;
