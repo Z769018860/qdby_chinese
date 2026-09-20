@@ -459,6 +459,64 @@ tbody tr:hover{ background:#fcfcff; }
   border-radius:12px;
 }
 
+/* Waline custom emoji: larger picker thumbnails and readable inline emojis */
+#waline .wl-emoji-popup{
+  max-width:min(620px, calc(100vw - 48px));
+}
+#waline .wl-emoji-popup .wl-tab-wrapper{
+  max-height:280px;
+  padding:10px;
+}
+#waline .wl-emoji-popup .wl-tab-wrapper > button{
+  width:56px;
+  height:56px;
+  margin:3px;
+  line-height:56px;
+  border-radius:8px;
+}
+#waline .wl-emoji-popup .wl-emoji{
+  width:48px !important;
+  height:48px !important;
+  max-width:48px !important;
+  max-height:48px !important;
+  object-fit:contain;
+}
+#waline .wl-emoji-popup .wl-emoji-preview{
+  width:96px !important;
+  height:96px !important;
+  max-width:96px !important;
+  max-height:96px !important;
+  object-fit:contain;
+}
+#waline .wl-content .wl-emoji,
+#waline .wl-preview .wl-emoji{
+  width:auto !important;
+  height:2.2em !important;
+  max-width:4.4em !important;
+  max-height:2.2em !important;
+  vertical-align:-0.52em;
+  object-fit:contain;
+}
+@media (max-width: 640px){
+  #waline .wl-emoji-popup .wl-tab-wrapper > button{
+    width:50px;
+    height:50px;
+    line-height:50px;
+  }
+  #waline .wl-emoji-popup .wl-emoji{
+    width:44px !important;
+    height:44px !important;
+    max-width:44px !important;
+    max-height:44px !important;
+  }
+  #waline .wl-emoji-popup .wl-emoji-preview{
+    width:84px !important;
+    height:84px !important;
+    max-width:84px !important;
+    max-height:84px !important;
+  }
+}
+
 .messageGrid{
   display:grid;
   grid-template-columns:1fr;
