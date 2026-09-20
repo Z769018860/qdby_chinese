@@ -203,7 +203,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月20日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月21日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope"><option value="all" selected>全部范围（含未知排名）</option>${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
@@ -571,17 +571,30 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     const revision=current.revision||manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
+    const overlay=Number(id)===Number(manifest.currentSeason)&&manifest.currentOverlay?.path?manifest.currentOverlay:null;
+    const overlayRevision=overlay?.revision||overlay?.updatedAt||revision;
     const rankPath=entry.legacy||entry.coverageMode==='legacy-spreadsheet'?null:(Number(id)===Number(manifest.currentSeason)?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`):`data/morimens/eremora/rank-index/${id}.json`);
-    const [loadedSeason,loadedStats,loadedRanks,loadedLegacyStructured]=await Promise.all([
+    const [loadedSeason,loadedStats,loadedRanks,loadedLegacyStructured,loadedOverlay,loadedOverlayRanks]=await Promise.all([
       loader.loadDataset(current.path),
       loader.loadJson(current.statsPath,{revision,fresh:true}),
       rankPath&&loader.loadRankMap?loader.loadRankMap(rankPath,{revision,fresh:true}).catch(error=>{console.warn('rank index unavailable',id,error);return new Map()}):Promise.resolve(new Map()),
-      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v7',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null)
+      entry.legacy||entry.coverageMode==='legacy-spreadsheet'?loader.loadJson('data/morimens/eremora/legacy-structured.json',{revision:'legacy-structured-v7',fresh:true}).catch(error=>{console.warn('legacy structured data unavailable',error);return null}):Promise.resolve(null),
+      overlay?.path?loader.loadDataset(overlay.path).catch(error=>{console.warn('current season Top500 delta unavailable',error);return null}):Promise.resolve(null),
+      overlay?.rankPath&&loader.loadRankMap?loader.loadRankMap(overlay.rankPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('current season Top500 rank override unavailable',error);return new Map()}):Promise.resolve(new Map())
     ]);
     if(loadToken!==seasonLoadToken)return;
-    season=loadedSeason;
+    const mergedRanks=new Map(loadedRanks||[]);
+    for(const [uid,rank] of loadedOverlayRanks||[])mergedRanks.set(String(uid),rank);
+    rankByUid=mergedRanks;
+    if(loadedOverlay?.records?.length){
+      const mergedRecords=new Map();let anonymousRecord=0;
+      for(const record of loadedSeason?.records||[]){const uid=String(record?.uid??'');mergedRecords.set(uid||`__base_${anonymousRecord++}`,record)}
+      for(const record of loadedOverlay.records){const uid=String(record?.uid??'');if(uid)mergedRecords.set(uid,record)}
+      const effectiveRank=record=>{const mapped=rankByUid.get(String(record?.uid??'')),raw=Number(record?.rank);return Number.isFinite(mapped)?mapped:(Number.isFinite(raw)?raw:999999)};
+      const records=[...mergedRecords.values()].sort((a,b)=>effectiveRank(a)-effectiveRank(b));
+      season={...loadedSeason,records,recordCount:records.length,deltaRecordCount:loadedOverlay.records.length,dataUpdatedAt:overlay?.updatedAt||loadedOverlay.updatedAt||null};
+    }else season=loadedSeason;
     stats=loadedStats;
-    rankByUid=loadedRanks;
     legacyStructured=loadedLegacyStructured;
     flatTeamsCache=null;
     analysisCache=null;

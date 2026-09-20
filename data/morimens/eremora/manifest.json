@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-09-16T21:46:44.303Z",
+    "syncedAt": "2026-09-21T01:00:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 69,
@@ -16,7 +16,8 @@
       "complete": false,
       "coverageMode": "current-leaderboard",
       "path": "data/morimens/eremora/seasons/69.json",
-      "statsPath": "data/morimens/eremora/stats/69.json"
+      "statsPath": "data/morimens/eremora/stats/69.json",
+      "dataUpdatedAt": "2026-09-21T01:00:00+08:00"
     },
     {
       "seasonId": 68,
@@ -121,7 +122,8 @@
     "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。",
     "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。",
     "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
-    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
+    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
+    "第69期 Top500 于 2026-09-21 01:00 增量更新：按下载日志仅覆盖“更新/新建”UID，大小一致记录保留原详情；Top500 排名使用同批 CSV 覆盖。无法解析的新快照不删除原有有效详情。"
   ],
   "analytics": {
     "generatedAt": "2026-09-20T10:49:14.590Z",
@@ -309,5 +311,25 @@
     "parseFailureCount": 106,
     "structuredIndex": "data/morimens/eremora/top1000/69.json",
     "updatedBy": "scripts/process_morimens_raw1000.py"
+  },
+  "currentOverlay": {
+    "seasonId": 69,
+    "scope": 500,
+    "path": "data/morimens/eremora/updates/69-top500-20260921/index.json",
+    "rankPath": "data/morimens/eremora/updates/69-top500-20260921/ranks.json",
+    "reportPath": "data/morimens/eremora/updates/69-top500-20260921/report.json",
+    "updatedAt": "2026-09-21T01:00:00+08:00",
+    "revision": "e112e29c9a547f3517987f449d3d5991cdae023b4fc44bc4217dd722d369994f",
+    "deltaUidCount": 453,
+    "parsedDeltaRecordCount": 432,
+    "rankCount": 500,
+    "mergeMode": "replace-by-uid"
+  },
+  "top500RankOverride": {
+    "seasonId": 69,
+    "scope": 500,
+    "path": "data/morimens/eremora/updates/69-top500-20260921/ranks.json",
+    "count": 500,
+    "updatedAt": "2026-09-21T01:00:00+08:00"
   }
 }

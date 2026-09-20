@@ -2,24 +2,14 @@
   "format": "gzip-base64-chunked-v1",
   "seasonId": 69,
   "scope": 500,
-  "recordCount": 451,
+  "recordCount": 432,
   "updatedAt": "2026-09-21T01:00:00+08:00",
-  "revision": "302becc1408728468ff9f56f77528a83f7f42f7a09f7170fe9a6e110cbe53cb1",
+  "revision": "e112e29c9a547f3517987f449d3d5991cdae023b4fc44bc4217dd722d369994f",
   "chunks": [
     "data/morimens/eremora/updates/69-top500-20260921/chunk-000.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-001.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-002.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-003.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-004.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-005.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-006.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-007.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-008.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-009.b64",
-    "data/morimens/eremora/updates/69-top500-20260921/chunk-010.b64"
+    "data/morimens/eremora/updates/69-top500-20260921/chunk-001.b64"
   ],
-  "chunkSize": 120000,
-  "compressedBytes": 1303581,
-  "source": "author-provided Top500 __data.json archive + ranking CSV",
-  "rankPath": "data/morimens/eremora/updates/69-top500-20260921/ranks.json"
+  "chunkSize": 200000,
+  "compressedBytes": 385327,
+  "source": "2026-09-21 Top500 delta from downloader log; only 更新/新建 UIDs"
 }
