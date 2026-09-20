@@ -1,5 +1,5 @@
 (() => {
-  const VERSION = '20260920.4';
+  const VERSION = '20260920.5';
   const script = document.currentScript;
   const scriptURL = script?.src || new URL('waline-anonymous-avatars.js', location.href).href;
   const manifestURL = new URL(`assets/waline-avatars/manifest.json?v=${VERSION}`, scriptURL);
@@ -59,39 +59,8 @@
     return result;
   }
 
-  function buildNicknameAvatarMap(images) {
-    const nicknames = [...new Set(images.map(getNickname))];
-
-    // Stable deterministic order. Different nicknames get different avatars
-    // while unused avatars remain in the pool.
-    nicknames.sort((a, b) => {
-      const ha = hashString(`qdby-waline-nickname:${a}`);
-      const hb = hashString(`qdby-waline-nickname:${b}`);
-      return ha - hb || a.localeCompare(b);
-    });
-
-    const mapping = new Map();
-    const used = new Set();
-
-    for (const nickname of nicknames) {
-      const preferred = hashString(`qdby-waline-nickname:${nickname}`) % avatarURLs.length;
-      let index = preferred;
-
-      if (used.size < avatarURLs.length) {
-        for (let offset = 0; offset < avatarURLs.length; offset += 1) {
-          const candidate = (preferred + offset) % avatarURLs.length;
-          if (!used.has(candidate)) {
-            index = candidate;
-            break;
-          }
-        }
-      }
-
-      mapping.set(nickname, index);
-      used.add(index);
-    }
-
-    return mapping;
+  function avatarIndexForNickname(nickname) {
+    return hashString(`qdby-waline-nickname:${nickname}`) % avatarURLs.length;
   }
 
   function applyImage(image, nickname, index) {
@@ -114,14 +83,9 @@
   function assignAvatars() {
     if (!avatarURLs.length) return;
 
-    const images = collectAnonymousImages();
-    const nicknameAvatarMap = buildNicknameAvatarMap(images);
-
-    for (const image of images) {
+    for (const image of collectAnonymousImages()) {
       const nickname = getNickname(image);
-      const index = nicknameAvatarMap.get(nickname);
-      if (index == null) continue;
-      applyImage(image, nickname, index);
+      applyImage(image, nickname, avatarIndexForNickname(nickname));
     }
   }
 
