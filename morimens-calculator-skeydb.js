@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
   const recordCache=new Map();
-  let currentAwakener=null,currentSkills=[],currentSkill=null;
+  let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[];
   let wheelCatalog=[],covenantCatalog=[],currentWheels=[null,null],currentCovenant=null;
   let applyingAuto=false;
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
@@ -71,8 +71,8 @@
     const level=characterLevelControl();
     if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`Lv.${i}`;option.selected=i===previous;level.appendChild(option)}}
     fillRange($('innerSpirit'),'内在灵格',5);
-    if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>灵塑阶段 0–10；当前仅记录阶段，不在缺少明确数值时推测加成。</small>';inner.insertAdjacentElement('afterend',wrap)}}
-    fillRange($('characterSculpt'),'灵塑',10);
+    if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。</small>';inner.insertAdjacentElement('afterend',wrap)}}
+    if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辉统治环境启用灵塑效果</label><small>灵塑天赋说明明确限定在“星辉统治”关卡；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
   }
 
   function ensureCharacterLevel(){
@@ -80,7 +80,8 @@
     normalizeProgressionControls();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
-    for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();$('calcBtn')?.click()},{capture:true});
+    for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    $('soulforgeActive')?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     $('attack')?.addEventListener('input',()=>{if(!applyingAuto)$('attack').dataset.autoAttack='0'});
   }
   function ensureSecondWheelUi(){
@@ -105,20 +106,75 @@
     const previous=selectedAwakenerId()||currentAwakener?.id||db.records[0].id;select.innerHTML='';
     for(const rec of db.records){const opt=document.createElement('option');opt.dataset.awakenerId=rec.id;opt.value=rec.id;opt.textContent=labelForAwakener(rec);opt.selected=rec.id===previous;select.appendChild(opt)}
   }
+  function progressionState(){
+    const engine=window.MorimensFormulaEngine;
+    if(!engine)return {bonusLevels:0,soulforgePct:0,gnosticLevel:0,soulforgeLevel:0,gnosticMax:0,soulforgeMax:0,flatAtkDamagePct:0,baseDamagePct:0};
+    return engine.resolveProgression(
+      currentTalents,
+      Number($('innerSpirit')?.value)||0,
+      Number($('characterSculpt')?.value)||0,
+      $('soulforgeActive')?.checked!==false
+    );
+  }
+  function configureProgressionControls(){
+    const engine=window.MorimensFormulaEngine;
+    const state=engine?engine.resolveProgression(currentTalents,0,0,true):null;
+    const inner=$('innerSpirit'),sculpt=$('characterSculpt');
+    const innerMax=state?.gnosticMax||0,sculptMax=state?.soulforgeMax||0;
+    if(inner){
+      const previous=Math.min(innerMax,Math.max(0,Number(inner.value)||0));
+      inner.innerHTML='';
+      for(let i=0;i<=innerMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 内在灵格 ${i}`;o.selected=i===previous;inner.appendChild(o)}
+      if(!innerMax)inner.innerHTML='<option value="0">0 · 无内在灵格数据</option>';
+    }
+    if(sculpt){
+      const previous=Math.min(sculptMax,Math.max(0,Number(sculpt.value)||0));
+      sculpt.innerHTML='';
+      for(let i=0;i<=sculptMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 灵塑 ${i}`;o.selected=i===previous;sculpt.appendChild(o)}
+      if(!sculptMax)sculpt.innerHTML='<option value="0">0 · 无灵塑数据</option>';
+    }
+  }
+  function renderProgressionSummary(stats,progression){
+    const box=$('charStatsSummary');if(!box)return;
+    const chips=[
+      `ATK ${Math.round(stats.ATK)}`,
+      `CON ${Math.round(stats.CON)}`,
+      `DEF ${Math.round(stats.DEF)}`
+    ];
+    if(progression.gnosticLevel)chips.push(`内在灵格 ${progression.gnosticLevel}：基础属性等级 +${progression.bonusLevels}`);
+    if(progression.soulforgeLevel){
+      chips.push(`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
+      if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外 +攻击力×${progression.flatAtkDamagePct}%`);
+      if(progression.baseDamagePct)chips.push(`灵塑专属：基础伤害 +${progression.baseDamagePct}%`);
+    }
+    box.innerHTML=chips.map(x=>`<span class="chip">${escape(x)}</span>`).join('');
+    window.MorimensProgressionSync=progression;
+  }
+
   function applyCharacterStats(){
     if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number(characterLevelControl()?.value)||90));
-    const engine=window.MorimensFormulaEngine;
-    const atk=engine?engine.primaryStat(currentAwakener,'ATK',level):Math.floor(num(currentAwakener.baseStatsLv1?.ATK)+num(currentAwakener.statScaling?.ATK)*(level-1)+1e-7);
-    const input=$('attack');if(input&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(atk);input.dataset.autoAttack='1';applyingAuto=false}
-    const cr=num(currentAwakener.substatsLv1?.CritRate),cd=num(currentAwakener.substatsLv1?.CritDamage);
+    const engine=window.MorimensFormulaEngine,progression=progressionState();
+    const stats=engine?engine.statsWithProgression(currentAwakener,level,progression):{
+      ATK:Math.floor(num(currentAwakener.baseStatsLv1?.ATK)+num(currentAwakener.statScaling?.ATK)*(level-1)+1e-7),
+      CON:Math.floor(num(currentAwakener.baseStatsLv1?.CON)+num(currentAwakener.statScaling?.CON)*(level-1)+1e-7),
+      DEF:Math.floor(num(currentAwakener.baseStatsLv1?.DEF)+num(currentAwakener.statScaling?.DEF)*(level-1)+1e-7),
+      CritRate:num(currentAwakener.substatsLv1?.CritRate),CritDamage:num(currentAwakener.substatsLv1?.CritDamage)
+    };
+    const input=$('attack');if(input&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(stats.ATK);input.dataset.autoAttack='1';applyingAuto=false}
+    const cr=num(stats.CritRate),cd=num(stats.CritDamage);
     if($('critRate')&&!$('critRate').dataset.manualInitialized)$('critRate').dataset.manualBase=String(cr);
     if($('critDamage')&&!$('critDamage').dataset.manualInitialized)$('critDamage').dataset.manualBase=String(100+cd);
+    renderProgressionSummary(stats,progression);
+    window.MorimensProgressionStats=stats;
     applyAutoBonuses();
+    window.dispatchEvent(new CustomEvent('morimens-progression-change',{detail:{stats,progression}}));
   }
   async function loadAwakener(){
     const id=selectedAwakenerId(),compact=recordById(id);if(!compact)return;
     currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
+    currentTalents=await window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]);
     normalizeProgressionControls();
+    configureProgressionControls();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(rec)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
     applyCharacterStats();
