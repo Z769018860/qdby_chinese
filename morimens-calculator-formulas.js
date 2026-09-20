@@ -112,6 +112,73 @@
     return num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0);
   }
 
+  function talentByFamily(talents,family){
+    return (talents||[]).find(t=>String(t?.family||'')===family)||null;
+  }
+
+  function resolveProgression(talents,gnosticLevel=0,soulforgeLevel=0,soulforgeEnabled=true){
+    const gnostic=talentByFamily(talents,'gnostic_potential');
+    const soulforge=talentByFamily(talents,'soulforge_aptitude');
+    const gMax=Math.max(0,Math.floor(num(gnostic?.maxLevel,0)));
+    const sMax=Math.max(0,Math.floor(num(soulforge?.maxLevel,0)));
+    const gLevel=Math.min(gMax,Math.max(0,Math.floor(num(gnosticLevel,0))));
+    const sLevel=Math.min(sMax,Math.max(0,Math.floor(num(soulforgeLevel,0))));
+    const bonusLevels=gLevel>0?num(resolveArg(gnostic?.descriptionArgs?.Arg1,gLevel,{}),0):0;
+    const soulforgePct=soulforgeEnabled&&sLevel>0?num(resolveArg(soulforge?.descriptionArgs?.Arg1,sLevel,{}),0):0;
+    const keyflare=soulforgeEnabled&&sLevel>0?num(resolveArg(soulforge?.descriptionArgs?.Arg2,sLevel,{}),0):0;
+    const resolvedSoulforgeArgs={};
+    if(soulforgeEnabled&&sLevel>0){
+      for(const [key,arg] of Object.entries(soulforge?.descriptionArgs||{})){
+        const value=resolveArg(arg,sLevel,{});
+        if(value!==null)resolvedSoulforgeArgs[key]=value;
+      }
+    }
+    const template=String(soulforge?.descriptionTemplate||'');
+    let flatAtkDamagePct=0;
+    const flatAtkMatch=template.match(/DMG\s*\+\[([^\]]+)\]%\s+of\s+(?:her|his|their|the Awakener's)\s+ATK/i);
+    if(flatAtkMatch&&soulforgeEnabled&&sLevel>0){
+      const key=flatAtkMatch[1].includes(':')?flatAtkMatch[1].split(':').pop():flatAtkMatch[1];
+      flatAtkDamagePct=num(resolvedSoulforgeArgs[key],0);
+    }
+    let baseDamagePct=0;
+    const baseDmgMatch=template.match(/Base DMG(?: caused by [^.]+)?\s*\+\[([^\]]+)\]%/i);
+    if(baseDmgMatch&&soulforgeEnabled&&sLevel>0){
+      const key=baseDmgMatch[1].includes(':')?baseDmgMatch[1].split(':').pop():baseDmgMatch[1];
+      baseDamagePct=num(resolvedSoulforgeArgs[key],0);
+    }
+    return {
+      gnosticTalent:gnostic,
+      soulforgeTalent:soulforge,
+      gnosticLevel:gLevel,
+      soulforgeLevel:sLevel,
+      gnosticMax:gMax,
+      soulforgeMax:sMax,
+      bonusLevels,
+      soulforgePct,
+      keyflare,
+      flatAtkDamagePct,
+      baseDamagePct,
+      resolvedSoulforgeArgs,
+      soulforgeEnabled:Boolean(soulforgeEnabled)
+    };
+  }
+
+  function statsWithProgression(rec,level,progression={},psycheSurgeOffset=0){
+    return {
+      ATK:primaryStat(rec,'ATK',level,progression.bonusLevels||0,progression.soulforgePct||0),
+      DEF:primaryStat(rec,'DEF',level,progression.bonusLevels||0,progression.soulforgePct||0),
+      CON:primaryStat(rec,'CON',level,progression.bonusLevels||0,progression.soulforgePct||0),
+      CritRate:substat(rec,'CritRate',level,psycheSurgeOffset),
+      CritDamage:substat(rec,'CritDamage',level,psycheSurgeOffset),
+      AliemusRegen:substat(rec,'AliemusRegen',level,psycheSurgeOffset),
+      KeyflareRegen:substat(rec,'KeyflareRegen',level,psycheSurgeOffset),
+      RealmMastery:substat(rec,'RealmMastery',level,psycheSurgeOffset),
+      SigilYield:substat(rec,'SigilYield',level,psycheSurgeOffset),
+      DamageAmplification:substat(rec,'DamageAmplification',level,psycheSurgeOffset),
+      DeathResistance:substat(rec,'DeathResistance',level,psycheSurgeOffset)
+    };
+  }
+
   function resolveTentacle({
     mode='standard',
     stance='surging',
@@ -136,7 +203,7 @@
   }
 
   window.MorimensFormulaEngine={
-    primaryStat,substat,contextFor,resolveArg,directAtkCoefficient,tentacleBonusCoefficient,triggeredTentaclePercent,resolveTentacle,
+    primaryStat,substat,contextFor,resolveArg,directAtkCoefficient,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
     source:{
       primary:'SKeyDB src/domain/awakener-level-scaling.ts',
       descriptionArgs:'SKeyDB src/domain/description-args.ts + public-description-args.ts',
