@@ -9,17 +9,6 @@
   "currentSeason": 69,
   "availableSeasons": [
     {
-      "seasonId": "legacy-high-difficulty",
-      "period": "旧版融灾425出场率",
-      "recordCount": 59,
-      "leaderboardEntryCount": null,
-      "complete": true,
-      "coverageMode": "legacy-spreadsheet",
-      "path": "legacy-high-difficulty.json",
-      "statsPath": "legacy-high-difficulty.json",
-      "source": "却尘"
-    },
-    {
       "seasonId": 69,
       "period": "2026-09-14 – 2026-09-28",
       "recordCount": 910,
@@ -32,13 +21,12 @@
     {
       "seasonId": 68,
       "period": "2026-08-31 – 2026-09-14",
-      "recordCount": 1000,
-      "leaderboardEntryCount": 1000,
-      "complete": true,
-      "coverageMode": "author-top1000-complete",
+      "recordCount": 902,
+      "leaderboardEntryCount": null,
+      "complete": false,
+      "coverageMode": "profile-history-partial",
       "path": "data/morimens/eremora/usage/68-local-gzip/index.json",
-      "statsPath": "data/morimens/eremora/stats/68.json",
-      "revision": "ace444766f8f6c54e1385319cd41649eded5178c16fe68c4b8313a73d5a35b50"
+      "statsPath": "data/morimens/eremora/stats/68.json"
     },
     {
       "seasonId": 67,
@@ -102,6 +90,7 @@
   ],
   "pendingBackfillSeasonIds": [
     69,
+    68,
     67,
     66,
     65,
@@ -130,12 +119,12 @@
     "历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。",
     "榜单索引：Eremora 客户端“Show more”实际调用 /api/rank?board=abyss&start={start}&end={end}，本站按 50 条一页同步至 Top 1000；若 1–50 接口被 Cloudflare 拦截则回退同次渲染榜单快照，仅缺失名次为 0 时标记完整。",
     "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。",
-    "启灵按 0～2启、3启～+3、+4～+11、+12 四档展示；筛选、图例、分布横条和角色详情使用同一分类与颜色。命轮榜单按 0～2叠、3叠～+11、+12 展示叠位比例。",
-    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
-    "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。"
+    "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。",
+    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
+    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-09-17T14:30:44.39Z",
+    "generatedAt": "2026-09-20T10:49:14.590Z",
     "rankScopes": [
       50,
       200,
@@ -162,44 +151,25 @@
     ],
     "enlightenmentGroups": [
       {
-        "id": "e0_2",
-        "label": "0～2启"
+        "id": "e3",
+        "label": "最高三启"
       },
       {
-        "id": "e3_plus3",
-        "label": "3启～+3"
+        "id": "overlimit",
+        "label": "最高超限"
       },
       {
-        "id": "plus4_11",
-        "label": "+4～+11"
-      },
-      {
-        "id": "plus12",
-        "label": "+12"
+        "id": "law12",
+        "label": "最高+12法则"
       }
     ],
     "coverage": [
       {
         "seasonId": 69,
-        "maxRankAvailable": 48,
-        "difficulty": {
-          "recognizedTeams": 186,
-          "totalTeams": 211,
-          "complete": false
-        },
-        "rankScopes": {
-          "50": false,
-          "200": false,
-          "500": false,
-          "1000": false
-        }
-      },
-      {
-        "seasonId": 68,
         "maxRankAvailable": 1000,
         "difficulty": {
-          "recognizedTeams": 5876,
-          "totalTeams": 5876,
+          "recognizedTeams": 5593,
+          "totalTeams": 5593,
           "complete": true
         },
         "rankScopes": {
@@ -210,11 +180,26 @@
         }
       },
       {
+        "seasonId": 68,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 5073,
+          "totalTeams": 5073,
+          "complete": true
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
         "seasonId": 67,
         "maxRankAvailable": 0,
         "difficulty": {
           "recognizedTeams": 0,
-          "totalTeams": 152,
+          "totalTeams": 1596,
           "complete": false
         },
         "rankScopes": {
@@ -229,7 +214,7 @@
         "maxRankAvailable": 0,
         "difficulty": {
           "recognizedTeams": 0,
-          "totalTeams": 240,
+          "totalTeams": 2212,
           "complete": false
         },
         "rankScopes": {
@@ -244,7 +229,37 @@
         "maxRankAvailable": 0,
         "difficulty": {
           "recognizedTeams": 0,
-          "totalTeams": 205,
+          "totalTeams": 1597,
+          "complete": false
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
+        "seasonId": 64,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 0,
+          "totalTeams": 10,
+          "complete": false
+        },
+        "rankScopes": {
+          "50": false,
+          "200": false,
+          "500": false,
+          "1000": false
+        }
+      },
+      {
+        "seasonId": 63,
+        "maxRankAvailable": 0,
+        "difficulty": {
+          "recognizedTeams": 0,
+          "totalTeams": 12,
           "complete": false
         },
         "rankScopes": {
@@ -280,19 +295,18 @@
       "coveragePct": 91,
       "complete": false
     },
-    "syncedAt": "2026-09-17T23:20:00.000Z",
-    "revision": "a1ccbec4e97d67dffe1334133b559df135c99b5d",
+    "syncedAt": "2026-09-17T21:59:21.165Z",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 15,
-    "chunkSize": 700000,
+    "chunks": 12,
+    "chunkSize": 900000,
     "chunkBytes": 10482653
   },
   "rawTop1000Import": {
     "seasonId": 69,
     "rawPath": "data/morimens/eremora/raw/69",
-    "rawFileCount": 1000,
-    "parsedUserCount": 910,
-    "parseFailureCount": 90,
+    "rawFileCount": 1107,
+    "parsedUserCount": 1001,
+    "parseFailureCount": 106,
     "structuredIndex": "data/morimens/eremora/top1000/69.json",
     "updatedBy": "scripts/process_morimens_raw1000.py"
   }
