@@ -26,7 +26,9 @@
   function currentFormulaContext(){
     const level=Math.max(1,Math.min(90,Number(characterLevelControl()?.value)||90));
     const engine=window.MorimensFormulaEngine;
-    const base=currentAwakener&&engine?engine.contextFor(currentAwakener,level):{};
+    const base=currentAwakener&&engine
+      ?engine.statsWithProgression(currentAwakener,level,progressionState())
+      :{};
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
     return base;
   }
