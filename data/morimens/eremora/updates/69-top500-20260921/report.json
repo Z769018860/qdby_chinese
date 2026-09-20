@@ -40,5 +40,10 @@
     "100672768"
   ],
   "rankCount": 500,
-  "rankUniqueUidCount": 500
+  "rankUniqueUidCount": 500,
+  "baseRecordCount": 1007,
+  "newParsedAddedCount": 19,
+  "recoveredPreviousParseFailureCount": 9,
+  "netAddedRecordCount": 28,
+  "mergedRecordCount": 1035
 }
