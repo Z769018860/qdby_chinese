@@ -112,7 +112,8 @@
     const distinctRanks=new Set(rankValues);
     if(records.length&&distinctRanks.size<Math.min(10,records.length)){const covered=Math.min(records.length,cap);return {covered,expected:cap,complete:covered>=cap,historical:false}}
     if(!rankValues.length&&records.length)return {covered:records.length,expected:records.length,complete:false,historical:true};
-    const stat=usageStats?.rankTiers?.[String(cap)];if(stat)return {covered:Number(stat.covered||0),expected:Number(stat.expected||cap),complete:!!stat.complete,historical:false};
+    const stat=usageStats?.rankTiers?.[String(cap)];
+    if(stat&&Number.isFinite(Number(stat.covered)))return {covered:Number(stat.covered),expected:Number(stat.expected||cap),complete:!!stat.complete,historical:false};
     const ranks=new Set(rankValues.filter(x=>x<=cap));return {covered:ranks.size,expected:cap,complete:ranks.size>=cap,historical:false};
   }
   function coverageLabel(cap){const c=coverage(cap);if(!cap)return `全部范围 · ${c.covered} 条`;return c.historical?`历史本地样本 · ${c.covered} 条`:`Top ${cap} · ${c.covered}/${c.expected}${c.complete?'':' 样本'}`}

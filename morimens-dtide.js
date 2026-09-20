@@ -195,7 +195,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月17日 23:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月20日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope"><option value="all" selected>全部范围（含未知排名）</option>${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
