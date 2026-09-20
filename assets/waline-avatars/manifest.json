@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "mode": "deterministic-nickname-hash",
+  "version": 3,
+  "mode": "selectable-hidden-nickname-token-with-deterministic-fallback",
   "avatars": [
     "160px-PlayerAvatar_A_Albino.png",
     "160px-PlayerAvatar_A_Alistair.png",
@@ -219,5 +219,7 @@
     "PlayerAvatar_Style_Stamp_F.png",
     "site_avatar_morimens_l.png",
     "剧情角色-莱特头像.png"
-  ]
+  ],
+  "storageKey": "qdby.waline.avatar.v1",
+  "selection": "first visit random; manual selection or submit persists locally; tagged comments keep the chosen avatar across viewers"
 }
