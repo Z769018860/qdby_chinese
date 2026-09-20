@@ -136,7 +136,7 @@
   function renderToday(){if(!db?.records?.length)return;render(db.records[hash(todayKey())%db.records.length])}
   function renderRandom(){if(!db?.records?.length)return;render(db.records[Math.floor(Math.random()*db.records.length)],true)}
 
-  async function getJson(url,label){const key=`morimens-snapshot:${url}`,cached=sessionStorage.getItem(key);try{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${label} HTTP ${r.status}`);const value=await r.json();try{sessionStorage.setItem(key,JSON.stringify(value))}catch{}return value}catch(error){if(cached){try{return JSON.parse(cached)}catch{}}throw error}}
+  async function getJson(url,label){const key=`morimens-snapshot:${url}`,cached=sessionStorage.getItem(key);try{const cacheMode=String(url).includes('/skeydb/')?'no-store':'force-cache';const r=await fetch(url,{cache:cacheMode});if(!r.ok)throw new Error(`${label} HTTP ${r.status}`);const value=await r.json();try{sessionStorage.setItem(key,JSON.stringify(value))}catch{}return value}catch(error){if(cached){try{return JSON.parse(cached)}catch{}}throw error}}
   async function getCurrentUsageStats(){const manifest=await getJson(USAGE_MANIFEST_URL,'usage manifest'),season=manifest?.currentSeason,entry=(manifest?.availableSeasons||[]).find(x=>Number(x.seasonId)===Number(season)),path=entry?.statsPath||`data/morimens/eremora/stats/${season}.json`;return getJson(path,'usage stats')}
   async function boot(){
     ensureUi();
