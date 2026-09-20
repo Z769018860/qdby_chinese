@@ -55,12 +55,13 @@ async function assetExists(kind,file){return exists(path.join(OUT_ASSETS,kind,fi
 const compact=[];
 for(const rec of records){
   const slug=rec?.route?.slug||normalizeAssetSlug(rec.name);const assetSlug=assetSlugFromRecord(rec);const file=`${assetSlug}.webp`;
-  const voiceLines=[...(rec.profile?.voiceLines?.daily||[]),...(rec.profile?.voiceLines?.battle||[])];
+  const voiceLines=[...(rec.profile?.voiceLines?.daily||[]),...(rec.profile?.voiceLines?.battle||[]),...(rec.profile?.voiceLines?.traphase||[])];
   compact.push({
     id:rec.id,numericId:rec.numericId,ingameId:rec.ingameId,name:rec.name,slug,assetSlug,aliases:rec.aliases||[],
     realm:rec.realm,rarity:rec.rarity,type:rec.type,faction:rec.faction,releaseDate:rec.releaseDate,
+    availabilityType:rec.availabilityType||'',lineupToken:rec.lineupToken||'',searchTags:rec.searchTags||[],primaryScalingBase:rec.primaryScalingBase,
     baseStatsLv1:rec.baseStatsLv1,substatsLv1:rec.substatsLv1,statScaling:rec.statScaling,substatScaling:rec.substatScaling,
-    profile:{title:rec.profile?.title||rec.name,birthday:rec.profile?.birthday||'',voiceActor:rec.profile?.voiceActor||'',gender:rec.profile?.gender||rec.gender||'',height:rec.profile?.height||'',weight:rec.profile?.weight||'',gnosticIndex:rec.profile?.gnosticIndex||'',voiceLines},
+    profile:{title:rec.profile?.title||rec.name,birthday:rec.profile?.birthday||'',voiceActor:rec.profile?.voiceActor||'',gender:rec.profile?.gender||rec.gender||'',height:rec.profile?.height||'',weight:rec.profile?.weight||'',gnosticIndex:rec.profile?.gnosticIndex||'',storySections:rec.profile?.storySections||[],voiceLines},
     skills:skillsByOwner.get(rec.id)||[],
     assets:{portrait:await assetExists('portraits',file)?`${OUT_ASSETS}/portraits/${file}`:null,card:await assetExists('cards',file)?`${OUT_ASSETS}/cards/${file}`:null}
   });
