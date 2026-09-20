@@ -94,7 +94,9 @@
     const legacy=$('charLevel'),duplicate=$('skeydbCharacterLevel');
     if(legacy&&duplicate&&legacy!==duplicate)duplicate.closest('.field')?.remove();
     const level=characterLevelControl();
-    if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`Lv.${i}`;option.selected=i===previous;level.appendChild(option)}}
+    if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`等级 ${i}`;option.selected=i===previous;level.appendChild(option)}}
+    const innerField=$('innerSpirit')?.closest('.field');
+    if(innerField){const label=innerField.querySelector('label');if(label)label.textContent='内在灵格';let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}note.textContent='按 SKeyDB“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式。'}
     fillRange($('innerSpirit'),'内在灵格',5);
     if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。</small>';inner.insertAdjacentElement('afterend',wrap)}}
     if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辉统治环境启用灵塑效果</label><small>灵塑天赋说明明确限定在“星辉统治”关卡；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
@@ -162,17 +164,28 @@
   function renderProgressionSummary(stats,progression){
     const box=$('charStatsSummary');if(!box)return;
     const chips=[
-      `ATK ${Math.round(stats.ATK)}`,
-      `CON ${Math.round(stats.CON)}`,
-      `DEF ${Math.round(stats.DEF)}`
+      `攻击力 ${Math.round(stats.ATK)}`,
+      `体质 ${Math.round(stats.CON)}`,
+      `防御力 ${Math.round(stats.DEF)}`
     ];
     if(progression.gnosticLevel)chips.push(`内在灵格 ${progression.gnosticLevel}：基础属性等级 +${progression.bonusLevels}`);
     if(progression.soulforgeLevel){
       chips.push(`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
-      if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外 +攻击力×${progression.flatAtkDamagePct}%`);
+      if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外增加攻击力的 ${progression.flatAtkDamagePct}%`);
       if(progression.baseDamagePct)chips.push(`灵塑专属：基础伤害 +${progression.baseDamagePct}%`);
     }
     box.innerHTML=chips.map(x=>`<span class="chip">${escape(x)}</span>`).join('');
+
+    let desc=$('progressionDesc');
+    if(!desc){desc=document.createElement('div');desc.id='progressionDesc';desc.className='desc';desc.style.marginTop='8px';box.insertAdjacentElement('afterend',desc)}
+    const details=[];
+    if(progression.gnosticTalent&&progression.gnosticLevel){
+      details.push(`<strong>内在灵格：</strong>${escape(zhText(renderTemplate(progression.gnosticTalent,progression.gnosticLevel)))}`);
+    }
+    if(progression.soulforgeTalent&&progression.soulforgeLevel){
+      details.push(`<strong>灵塑：</strong>${escape(zhText(renderTemplate(progression.soulforgeTalent,progression.soulforgeLevel)))}`);
+    }
+    desc.innerHTML=details.length?details.join('<br><br>'):'内在灵格与灵塑均为 0，当前不产生额外成长加成。';
     window.MorimensProgressionSync=progression;
   }
 
