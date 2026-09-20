@@ -325,15 +325,16 @@
 
     Promise.all([
       import('https://unpkg.com/@waline/client@v3/dist/waline.js'),
+      import('./waline-morimens-emoji.js?v=20260920.1'),
       resolveGuestbookPath(),
     ])
-      .then(([{ init }, guestbookPath]) => {
+      .then(([{ init }, { MORIMENS_EMOJI_PRESET }, guestbookPath]) => {
         init({
           el: '#waline',
           serverURL: WALINE_SERVER,
           path: guestbookPath,
           lang: 'zh-CN',
-          emoji: ['/assets/waline-emojis/morimens'],
+          emoji: [MORIMENS_EMOJI_PRESET],
           meta: ['nick', 'mail', 'link'],
           requiredMeta: [],
           login: 'disable',
