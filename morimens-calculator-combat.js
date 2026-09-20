@@ -139,11 +139,14 @@
 
     const tentacle=tentacleState();
     const skillSync=window.MorimensSkillSync||{};
+    const progression=window.MorimensProgressionSync||window.MorimensCharacterSync?.progression||{};
     const skillTentacleCoef=Math.max(0,Number(skillSync.tentacleCoefficient)||0)/100;
     const skillTriggerPct=skillSync.triggeredTentaclePercent===null||skillSync.triggeredTentaclePercent===undefined?0:Math.max(0,Number(skillSync.triggeredTentaclePercent))/100;
+    const soulforgeFlat=progression.soulforgeEnabled?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
+    const soulforgeBasePct=progression.soulforgeEnabled?Math.max(0,Number(progression.baseDamagePct)||0):0;
 
-    const activeBaseRaw=(attack*coef+strength+tentacle.attack*skillTentacleCoef)*hits;
-    const base=activeBaseRaw*(1+n('baseBonus')/100);
+    const activeBaseRaw=(attack*coef+strength+tentacle.attack*skillTentacleCoef+soulforgeFlat)*hits;
+    const base=activeBaseRaw*(1+(n('baseBonus')+soulforgeBasePct)/100);
     const powered=base*(1+n('powerBonus')/100);
     const vulnerabilityPct=n('vulnerability')+($('buffVuln')?.checked?50:0);
     const vuln=powered*(1+vulnerabilityPct/100);
@@ -180,12 +183,14 @@
     $('critLine').textContent=`暴击直伤：${fmt(crit)}`;
     $('expectedLine').textContent=`期望直伤：${fmt(expected)}`;
 
-    const activeParts=[`ATK ${fmt(attack)} × 技能 ${coef.toFixed(3)}`,`力量 ${fmt(strength)}`];
+    const activeParts=[`攻击 ${fmt(attack)} × 技能 ${coef.toFixed(3)}`,`力量 ${fmt(strength)}`];
     if(skillTentacleCoef)activeParts.push(`触腕 ${fmt(tentacle.attack)} × ${skillTentacleCoef.toFixed(3)}`);
-    $('formula').textContent=`[(${activeParts.join(' + ')}) × ${hits}] × 基伤 ${(1+n('baseBonus')/100).toFixed(3)} × 强效 ${(1+n('powerBonus')/100).toFixed(3)} × 易伤 ${(1+vulnerabilityPct/100).toFixed(3)} × 终伤 ${(1+n('finalBonus')/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；触腕单次 = 基础 ${fmt(tentacle.base)} × 姿态 ${tentacle.stanceMult.toFixed(3)} × 精通 ${tentacle.masteryMult.toFixed(4)} × 额外增幅 ${tentacle.extraMult.toFixed(3)}。`;
+    if(soulforgeFlat)activeParts.push(`灵塑专属 ${fmt(attack)} × ${(progression.flatAtkDamagePct/100).toFixed(3)}`);
+    $('formula').textContent=`[(${activeParts.join(' + ')}) × ${hits}] × 基础伤害 ${(1+(n('baseBonus')+soulforgeBasePct)/100).toFixed(3)} × 伤害强效 ${(1+n('powerBonus')/100).toFixed(3)} × 易伤 ${(1+vulnerabilityPct/100).toFixed(3)} × 终伤 ${(1+n('finalBonus')/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；触腕单次 = 基础 ${fmt(tentacle.base)} × 姿态 ${tentacle.stanceMult.toFixed(3)} × 精通 ${tentacle.masteryMult.toFixed(4)} × 额外增幅 ${tentacle.extraMult.toFixed(3)}。`;
 
     const rows=[
-      ['技能基础项（含技能触腕加成）',activeBaseRaw],
+      ['技能基础项（含触腕与可确认的灵塑专属加成）',activeBaseRaw],
+      ['灵塑额外攻击力伤害',soulforgeFlat*hits],
       ['基础伤害转化后',base],
       ['伤害强效转化后',powered],
       ['易伤与最终增伤后',final],
@@ -204,7 +209,7 @@
       const model=$('tentacleMode')?.value==='benthos'?'深渊深海':'普通深海';
       $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 最终界域精通 <b>${n('realmMastery').toFixed(1)}</b><br>机制基础触腕 <b>${fmt(tentacle.base)}</b> → 当前单次触腕 <b>${fmt(tentacle.attack)}</b> → 目标修正后 <b>${fmt(oneTentacle)}</b>。${$('tentacleStance')?.value==='raging'&&$('tentacleMode')?.value!=='benthos'?` 普通怒涛主动伤害后触发倍率：<b>${tentacle.ragingTriggerPct}%</b>。`:''}${skillTentacleCoef?` 当前技能额外享受 <b>${(skillTentacleCoef*100).toFixed(1)}%</b> 触腕伤害加成。`:''}${skillTriggerPct?` 当前技能额外触发 <b>${(skillTriggerPct*100).toFixed(1)}%</b> 触腕伤害。`:''}`;
     }
-    if($('combatConversion'))$('combatConversion').innerHTML=`攻击侧：基伤 <b>${fmt(activeBaseRaw)}</b> → 强效后 <b>${fmt(powered)}</b>；暴击率 <b>${(critRate*100).toFixed(1)}%</b>，暴伤 <b>${(critMult*100).toFixed(1)}%</b>。敌方：DEF <b>${fmt(enemyDef)}</b>，防御系数 <b>${(defenseCoef*100).toFixed(1)}%</b>，加固后系数 <b>${(fortifyCoef*100).toFixed(1)}%</b>。`;
+    if($('combatConversion'))$('combatConversion').innerHTML=`攻击侧：基础伤害 <b>${fmt(activeBaseRaw)}</b> → 伤害强效后 <b>${fmt(powered)}</b>；暴击率 <b>${(critRate*100).toFixed(1)}%</b>，暴击伤害 <b>${(critMult*100).toFixed(1)}%</b>。敌方：防御 <b>${fmt(enemyDef)}</b>，防御系数 <b>${(defenseCoef*100).toFixed(1)}%</b>，加固后系数 <b>${(fortifyCoef*100).toFixed(1)}%</b>。${progression.gnosticLevel?` 内在灵格 <b>${progression.gnosticLevel}</b> 已按基础属性等级 +${progression.bonusLevels} 计入。`:''}${progression.soulforgeLevel?` 灵塑 <b>${progression.soulforgeLevel}</b>：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?' 已计入':' 当前未启用'}。`:''}`;
   }
 
   function resetEnemy(){
