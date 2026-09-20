@@ -23,8 +23,20 @@
     const key=`${scope}:${id}`;if(recordCache.has(key))return recordCache.get(key);
     const p=window.MorimensRepository.record(scope,id);recordCache.set(key,p);try{return await p}catch(e){recordCache.delete(key);throw e}
   }
+  function currentFormulaContext(){
+    const level=Math.max(1,Math.min(90,Number(characterLevelControl()?.value)||90));
+    const engine=window.MorimensFormulaEngine;
+    const base=currentAwakener&&engine?engine.contextFor(currentAwakener,level):{};
+    if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
+    return base;
+  }
   function argValue(arg,level=1){
     if(!arg)return null;
+    const engine=window.MorimensFormulaEngine;
+    if(engine){
+      const value=engine.resolveArg(arg,level,currentFormulaContext());
+      return value===null?null:String(value);
+    }
     if(Array.isArray(arg.values)&&arg.values.length)return arg.values[Math.min(Math.max(level-1,0),arg.values.length-1)];
     if(arg.value!==undefined)return arg.value;
     if(arg.base!==undefined){const base=num(arg.base),gain=num(arg.gainPerLevel);return String(base+gain*Math.max(0,level-1))}
@@ -42,7 +54,11 @@
     return text.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1');
   }
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
-  function damageCoefficient(skill,level){const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)}
+  function damageCoefficient(skill,level){
+    const engine=window.MorimensFormulaEngine;
+    if(engine)return engine.directAtkCoefficient(skill,level,currentFormulaContext());
+    const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)
+  }
   function maxSkillLevel(skill){let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
   const characterLevelControl=()=>$('charLevel')||$('skeydbCharacterLevel');
   function fillRange(select,label,max){
@@ -91,7 +107,8 @@
   }
   function applyCharacterStats(){
     if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number(characterLevelControl()?.value)||90));
-    const base=num(currentAwakener.baseStatsLv1?.ATK),growth=num(currentAwakener.statScaling?.ATK);const atk=Math.floor(base+growth*(level-1)+1e-7);
+    const engine=window.MorimensFormulaEngine;
+    const atk=engine?engine.primaryStat(currentAwakener,'ATK',level):Math.floor(num(currentAwakener.baseStatsLv1?.ATK)+num(currentAwakener.statScaling?.ATK)*(level-1)+1e-7);
     const input=$('attack');if(input&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(atk);input.dataset.autoAttack='1';applyingAuto=false}
     const cr=num(currentAwakener.substatsLv1?.CritRate),cd=num(currentAwakener.substatsLv1?.CritDamage);
     if($('critRate')&&!$('critRate').dataset.manualInitialized)$('critRate').dataset.manualBase=String(cr);
@@ -117,9 +134,25 @@
     if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
   }
   function updateSkillLevel(){
-    if(!currentSkill)return;const level=Number($('skillLevel')?.value)||1,coef=damageCoefficient(currentSkill,level);if($('skillCoef'))$('skillCoef').value=String(coef);
+    if(!currentSkill)return;
+    const level=Number($('skillLevel')?.value)||1;
+    const ctx=currentFormulaContext();
+    const engine=window.MorimensFormulaEngine;
+    const coef=damageCoefficient(currentSkill,level);
+    const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
+    const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
+    if($('skillCoef'))$('skillCoef').value=String(coef);
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
-    if($('skillCoeffSummary'))$('skillCoeffSummary').textContent=coef?`ATK × ${coef}% · ${currentSkill.id}`:`该技能没有直接 ATK 伤害倍率 · ${currentSkill.id}`;
+    if($('skillCoeffSummary')){
+      const parts=[];
+      if(coef)parts.push(`ATK × ${Number(coef).toFixed(2)}%`);
+      if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
+      if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
+      $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
+    }
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx};
+    window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
+    $('calcBtn')?.click();
   }
 
   async function loadCatalogs(){
