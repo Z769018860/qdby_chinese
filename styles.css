@@ -488,13 +488,22 @@ tbody tr:hover{ background:#fcfcff; }
   max-height:96px !important;
   object-fit:contain;
 }
-#waline .wl-content .wl-emoji,
 #waline .wl-preview .wl-emoji{
   width:auto !important;
   height:2.2em !important;
   max-width:4.4em !important;
   max-height:2.2em !important;
   vertical-align:-0.52em;
+  object-fit:contain;
+}
+/* Sent comment emojis are deliberately larger than editor preview emojis. */
+#waline .wl-card .wl-content .wl-emoji{
+  width:auto !important;
+  height:64px !important;
+  max-width:128px !important;
+  max-height:64px !important;
+  margin:4px 6px !important;
+  vertical-align:middle !important;
   object-fit:contain;
 }
 @media (max-width: 640px){
@@ -514,6 +523,11 @@ tbody tr:hover{ background:#fcfcff; }
     height:84px !important;
     max-width:84px !important;
     max-height:84px !important;
+  }
+  #waline .wl-card .wl-content .wl-emoji{
+    height:56px !important;
+    max-width:112px !important;
+    max-height:56px !important;
   }
 }
 
