@@ -1,9 +1,14 @@
 // Generated from assets/waline-emojis/morimens/info.json.
 // Pass this object directly to Waline so the emoji tab does not depend on
 // a secondary info.json fetch at runtime.
+const MORIMENS_EMOJI_FOLDER = new URL(
+  './assets/waline-emojis/morimens/',
+  import.meta.url,
+).href.replace(/\/$/, '');
+
 export const MORIMENS_EMOJI_PRESET = Object.freeze({
   "name": "忘却前夜",
-  "folder": "/assets/waline-emojis/morimens",
+  "folder": MORIMENS_EMOJI_FOLDER,
   "prefix": "",
   "type": "png",
   "icon": "site_avatar_morimens_l",
