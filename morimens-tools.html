@@ -56,10 +56,10 @@
               <div class="field full"><label for="charSelect">角色</label><select id="charSelect"></select></div>
               <div class="field"><label for="skillSelect">技能</label><select id="skillSelect"><option value="">先选择角色</option></select></div>
               <div class="field"><label for="skillLevel">技能等级</label><select id="skillLevel"><option value="1">1</option></select></div>
-              <div class="field"><label for="attack">有效攻击力</label><input id="attack" type="number" min="0" step="1" value="1000"><small>当前仍手填；后续可接角色等级/启灵/灵知深化。</small></div>
+              <div class="field"><label for="attack">有效攻击力</label><input id="attack" type="number" min="0" step="1" value="1000"><small>默认按 SKeyDB：ceil((primaryScalingBase + Lv) × statScaling) 自动带入；手动修改后停止覆盖。</small></div>
               <div class="field"><label for="strength">力量 / 临时力量</label><input id="strength" type="number" step="0.1" value="0"><small>按“主动伤害基础项 + 力量”实验处理，可由刻印自动带入。</small></div>
             </div>
-            <div class="desc" id="skillDesc">选择角色后会尝试从中文维基实时读取技能表，并提取“攻击力*XX%”倍率。</div>
+            <div class="desc" id="skillDesc">选择角色后从本地 SKeyDB public-v3 读取完整技能记录，并解析 ATK、界域精通与触腕伤害倍率。</div><div class="desc" id="skillCoeffSummary" style="margin-top:7px">等待解析技能伤害公式…</div>
             <div class="syncLine"><span class="syncDot" id="charSyncDot"></span><span id="charSyncStatus">尚未请求角色页面</span></div>
           </div>
 
@@ -143,7 +143,7 @@
   <footer class="wrap footer"><div>© 2026 青灯不弈 · 忘忘看报</div><div>粉丝向免费工具；<a href="https://morimens.qookkagames.com/" target="_blank" rel="noopener noreferrer">《忘却前夜》</a>相关角色、图片与游戏素材版权归原权利方所有。</div></footer>
 
       <script src="morimens-fortune.js?v=20260919.66"></script>
-      <script src="morimens-tools.js?v=20260921.81"></script>
+      <script src="morimens-tools.js?v=20260921.82"></script>
   <script src="waline-anonymous-avatars.js?v=20260920.5" defer></script>
   <script src="site-analytics.js" defer></script>
 </body>
