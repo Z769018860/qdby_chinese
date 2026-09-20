@@ -21,10 +21,10 @@
     {
       "seasonId": 68,
       "period": "2026-08-31 – 2026-09-14",
-      "recordCount": 902,
-      "leaderboardEntryCount": null,
-      "complete": false,
-      "coverageMode": "profile-history-partial",
+      "recordCount": 1000,
+      "leaderboardEntryCount": 1000,
+      "complete": true,
+      "coverageMode": "leaderboard-complete",
       "path": "data/morimens/eremora/usage/68-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/68.json"
     },
