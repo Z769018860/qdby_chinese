@@ -106,7 +106,7 @@
 
   function triggeredTentaclePercent(skill,rank,ctx){
     const t=String(skill?.descriptionTemplate||'');
-    const m=t.match(/(?:trigger|command|causes?)\s+(?:\d+|all)?\s*Tentacle[^.\n]*?(?:dealing|deal)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i);
+    const m=t.match(/(?:trigger|command|causes?)\s+1\s+Tentacle[^.\n]*?(?:dealing|deal)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i);
     if(!m)return null;
     const name=m[1].includes(':')?m[1].split(':').pop():m[1];
     return num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0);
