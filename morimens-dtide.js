@@ -156,8 +156,8 @@
       if(!document.querySelector('link[data-morimens-waline]')){
         const link=document.createElement('link');link.rel='stylesheet';link.href='https://unpkg.com/@waline/client@v3/dist/waline.css';link.dataset.morimensWaline='true';document.head.appendChild(link);
       }
-      const [{init},guestbookPath]=await Promise.all([import('https://unpkg.com/@waline/client@v3/dist/waline.js'),resolveGuestbookPath()]);
-      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:'zh-CN',emoji:['/assets/waline-emojis/morimens'],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
+      const [{init},{MORIMENS_EMOJI_PRESET},guestbookPath]=await Promise.all([import('https://unpkg.com/@waline/client@v3/dist/waline.js'),import('./waline-morimens-emoji.js?v=20260920.1'),resolveGuestbookPath()]);
+      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:'zh-CN',emoji:[MORIMENS_EMOJI_PRESET],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
       commentsLoaded=true;
       if(status)status.remove();
     }catch(error){
