@@ -45,6 +45,13 @@
   function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
   const slotZh={Strike:'打击',Defense:'防御',Rouse:'灵知觉醒',Skill1:'技能卡一',Skill2:'技能卡二',Exalt:'狂气爆发',OverExalt:'超限爆发'};const slotOrder={Strike:1,Defense:2,Rouse:3,Skill1:4,Skill2:5,Exalt:6,OverExalt:7};
   const phraseZh=[
+    [/This talent is only effective in the (?:\\{)?星辰篇(?:\\})? stages\\./gi,'该天赋仅在「星辰篇」关卡中生效。'],
+    [/This Awakener's/gi,'该唤醒体的'],[/The Awakener's/gi,'该唤醒体的'],[/Awakener/gi,'唤醒体'],
+    [/upon their first (?:\\{)?Rouse(?:\\})?/gi,'首次进行灵知觉醒时'],[/they gain/gi,'并获得'],
+    [/Keyflare Regen Level/gi,'银钥充能等级'],[/Keyflare Regen/gi,'银钥充能'],[/Keyflare/gi,'银钥能量'],
+    [/Aliemus/gi,'狂气'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
+    [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'流血'],
+    [/Leap/gi,'跃迁'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
     [/Tentacle DMG/gi,'触腕伤害'],[/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
     [/Crit\. Rate/gi,'暴击率'],[/Crit\. DMG/gi,'暴击伤害'],[/Final DMG/gi,'最终伤害'],[/Base DMG/gi,'基础伤害'],
     [/Max HP/gi,'最大生命'],[/HP Recovery/gi,'生命回复'],[/Arithmetica Cost/gi,'算术值消耗'],
@@ -59,7 +66,7 @@
     [/enemy/gi,'敌人'],[/Turn/gi,'回合'],[/Battle/gi,'战斗'],[/Temporary/gi,'临时'],[/Permanent/gi,'永久'],
     [/Surging Tides/gi,'涨潮'],[/Tranquil Sea/gi,'静海'],[/Raging Waves/gi,'怒涛'],[/Benthos: Aequor/gi,'深渊深海'],
     [/Aequor Realm/gi,'深海界域'],[/Aequor/gi,'深海'],[/Chaos/gi,'混沌'],[/Caro/gi,'血肉'],[/Ultra/gi,'超维'],
-    [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/Astral Reign/gi,'星辉统治'],
+    [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/星辰篇/gi,'星辰篇'],
     [/Rouse/gi,'灵知觉醒'],[/Over-?Exalt/gi,'超限爆发'],[/Exalt/gi,'狂气爆发'],[/Defense/gi,'防御'],[/Strike/gi,'打击'],
     [/Shield/gi,'护盾'],[/Damage/gi,'伤害'],[/DMG/gi,'伤害'],[/ATK/gi,'攻击力'],[/DEF/gi,'防御'],[/CON/gi,'体质'],
     [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
@@ -68,8 +75,21 @@
   ];
   function zhText(value){
     let out=String(value||'');
+    if(currentAwakener?.name){
+      const cn=labelForAwakener(currentAwakener);
+      if(cn&&cn!==currentAwakener.name)out=out.split(currentAwakener.name).join(cn);
+    }
     for(const [re,to] of phraseZh)out=out.replace(re,to);
-    return out.replace(/\s+/g,' ').replace(/\s+([，。；：])/g,'$1').trim();
+    return out
+      .replace(/\bof (?:her|his|their)\b/gi,'')
+      .replace(/\b(?:her|his|their)\b/gi,'该唤醒体的')
+      .replace(/\band\b/gi,'并且')
+      .replace(/\bwith\b/gi,'并具有')
+      .replace(/\bby\b/gi,'提高')
+      .replace(/\bfrom\b/gi,'来自')
+      .replace(/\s+/g,' ')
+      .replace(/\s+([，。；：])/g,'$1')
+      .trim();
   }
   function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
   function renderTemplate(record,level=1){
@@ -99,7 +119,7 @@
     if(innerField){const label=innerField.querySelector('label');if(label)label.textContent='内在灵格';let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}note.textContent='按 SKeyDB“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式。'}
     fillRange($('innerSpirit'),'内在灵格',5);
     if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。</small>';inner.insertAdjacentElement('afterend',wrap)}}
-    if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辉统治环境启用灵塑效果</label><small>灵塑天赋说明明确限定在“星辉统治”关卡；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
+    if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辰篇关卡环境启用灵塑效果</label><small>灵塑天赋仅在“星辰篇”关卡生效；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
   }
 
   function ensureCharacterLevel(){
