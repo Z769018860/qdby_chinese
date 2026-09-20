@@ -11,7 +11,7 @@
     {
       "seasonId": 69,
       "period": "2026-09-14 – 2026-09-28",
-      "recordCount": 1007,
+      "recordCount": 1035,
       "leaderboardEntryCount": 1000,
       "complete": false,
       "coverageMode": "current-leaderboard",
@@ -100,9 +100,12 @@
   ],
   "current": {
     "leaderboardEntries": 1000,
-    "records": 910,
+    "records": 1035,
     "complete": false,
-    "failures": 5
+    "failures": 5,
+    "baseRecords": 1007,
+    "overlayParsedRecords": 432,
+    "newlyMergedRecords": 28
   },
   "fieldCoverage": {
     "character": true,
@@ -123,7 +126,8 @@
     "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。",
     "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
     "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
-    "第69期 Top500 于 2026-09-21 01:00 增量更新：按下载日志仅覆盖“更新/新建”UID，大小一致记录保留原详情；Top500 排名使用同批 CSV 覆盖。无法解析的新快照不删除原有有效详情。"
+    "第69期 Top500 于 2026-09-21 01:00 增量更新：按下载日志仅覆盖“更新/新建”UID，大小一致记录保留原详情；Top500 排名使用同批 CSV 覆盖。无法解析的新快照不删除原有有效详情。",
+    "第69期 2026-09-21 01:00 Top500 增量合并后共 1035 条可用记录：基础 1007 条，本次净增 28 条（19 条新建可解析记录 + 9 条此前解析失败但本次恢复的记录）；其余增量按 UID 覆盖，不重复计数。"
   ],
   "analytics": {
     "generatedAt": "2026-09-20T10:49:14.590Z",
@@ -290,7 +294,7 @@
     "statsPath": "data/morimens/eremora/stats/69.json",
     "target": 1000,
     "rankIndexCount": 1000,
-    "recordCount": 910,
+    "recordCount": 1007,
     "coverage": {
       "expected": 1000,
       "covered": 910,
@@ -323,7 +327,12 @@
     "deltaUidCount": 453,
     "parsedDeltaRecordCount": 432,
     "rankCount": 500,
-    "mergeMode": "replace-by-uid"
+    "mergeMode": "replace-by-uid",
+    "baseRecordCount": 1007,
+    "mergedRecordCount": 1035,
+    "newlyMergedRecordCount": 28,
+    "newParsedCount": 19,
+    "recoveredPreviousParseFailureCount": 9
   },
   "top500RankOverride": {
     "seasonId": 69,
