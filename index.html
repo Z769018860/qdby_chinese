@@ -160,7 +160,7 @@
 
       <section class="panel messageCard" aria-labelledby="messageTitle">
         <h2 id="messageTitle">匿名留言板</h2>
-        <p class="panelLead">已接入 Waline 留言服务，昵称和邮箱均可留空。</p>
+        <p class="panelLead">已接入 Waline 留言服务，昵称和邮箱均可留空；评论每 10 条自动分页。</p>
         <div id="waline" aria-live="polite"></div>
         <p id="walineFallback" class="messageStatus muted" role="status" aria-live="polite"></p>
       </section>
@@ -352,7 +352,7 @@
         }
       });
   </script>
-  <script src="waline-anonymous-avatars.js?v=20260921.1" defer></script>
+  <script src="waline-anonymous-avatars.js?v=20260921.1" defer></script>\n  <script src="waline-pagination.js?v=20260921.1" defer></script>
   <script src="site-analytics.js" defer></script>
 </body>
 </html>
