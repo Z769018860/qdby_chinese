@@ -116,7 +116,8 @@
     applyAutoBonuses();
   }
   async function loadAwakener(){
-    const id=selectedAwakenerId(),rec=recordById(id);if(!rec)return;currentAwakener=rec;
+    const id=selectedAwakenerId(),compact=recordById(id);if(!compact)return;
+    currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
     normalizeProgressionControls();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(rec)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
