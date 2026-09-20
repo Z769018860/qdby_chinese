@@ -1,12 +1,26 @@
 (()=>{
   const $=id=>document.getElementById(id);
   const num=(v,f=0)=>{const n=Number.parseFloat(v);return Number.isFinite(n)?n:f};
-  const state={userEdited:{critRate:false,critDamage:false,powerBonus:false},lastAwakenerId:null};
+  const state={userEdited:{critRate:false,critDamage:false,powerBonus:false,realmMastery:false},lastAwakenerId:null};
 
   function data(){return window.MorimensData}
   function selectedId(){return $('charSelect')?.selectedOptions?.[0]?.dataset?.awakenerId||$('charSelect')?.value||null}
   function currentRecord(){const id=selectedId();return data()?.db?.records?.find(x=>x.id===id)||null}
   function localizedName(rec){return data()?.zhFor?.(rec)?.name||data()?.identityDb?.bySkeydbId?.[rec?.id]?.name||rec?.name||''}
+  function level(){return Math.max(1,Math.min(90,Number(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90))}
+  function statsFor(rec){
+    const engine=window.MorimensFormulaEngine,lv=level();
+    if(engine)return engine.contextFor(rec,lv);
+    return {
+      ATK:Math.floor(num(rec?.baseStatsLv1?.ATK)+num(rec?.statScaling?.ATK)*(lv-1)+1e-7),
+      CON:Math.floor(num(rec?.baseStatsLv1?.CON)+num(rec?.statScaling?.CON)*(lv-1)+1e-7),
+      DEF:Math.floor(num(rec?.baseStatsLv1?.DEF)+num(rec?.statScaling?.DEF)*(lv-1)+1e-7),
+      CritRate:num(rec?.substatsLv1?.CritRate),
+      CritDamage:num(rec?.substatsLv1?.CritDamage,50),
+      DamageAmplification:num(rec?.substatsLv1?.DamageAmplification),
+      RealmMastery:num(rec?.substatsLv1?.RealmMastery)
+    };
+  }
 
   function setAutoBase(id,nextBase,userKey){
     const el=$(id);if(!el||state.userEdited[userKey])return;
@@ -20,17 +34,24 @@
   async function updateCharacterStats(){
     const rec=currentRecord();if(!rec)return;
     state.lastAwakenerId=rec.id;
-    const sub=rec.substatsLv1||{};
-    setAutoBase('critRate',num(sub.CritRate), 'critRate');
-    setAutoBase('critDamage',100+num(sub.CritDamage,50), 'critDamage');
-    setAutoBase('powerBonus',num(sub.DamageAmplification), 'powerBonus');
+    const resolved=statsFor(rec);
+    setAutoBase('critRate',num(resolved.CritRate),'critRate');
+    setAutoBase('critDamage',100+num(resolved.CritDamage,50),'critDamage');
+    setAutoBase('powerBonus',num(resolved.DamageAmplification),'powerBonus');
+    setAutoBase('realmMastery',num(resolved.RealmMastery),'realmMastery');
 
-    let skills=[],enlightens=[],talents=[];
+    if($('attack')&&$('attack').dataset.autoAttack!=='0')$('attack').value=String(resolved.ATK);
+    if($('combatCon'))$('combatCon').textContent=Math.round(resolved.CON).toLocaleString('zh-CN');
+    if($('combatAtk'))$('combatAtk').textContent=Math.round(resolved.ATK).toLocaleString('zh-CN');
+    if($('combatDef'))$('combatDef').textContent=Math.round(resolved.DEF).toLocaleString('zh-CN');
+
+    let skills=[],enlightens=[],talents=[],derived=[];
     try{
-      [skills,enlightens,talents]=await Promise.all([
+      [skills,enlightens,talents,derived]=await Promise.all([
         window.MorimensRepository.recordsForAwakener('skills',rec.id),
         window.MorimensRepository.recordsForAwakener('enlightens',rec.id),
-        window.MorimensRepository.recordsForAwakener('talents',rec.id)
+        window.MorimensRepository.recordsForAwakener('talents',rec.id),
+        window.MorimensRepository.recordsForAwakener('derived-skills',rec.id).catch(()=>[])
       ]);
     }catch(error){console.warn('Morimens progression catalog sync failed',error)}
 
@@ -40,40 +61,46 @@
       if(anchor){box=document.createElement('div');box.id='skeydbProgressSync';box.className='desc';box.style.marginTop='9px';anchor.insertAdjacentElement('afterend',box)}
     }
     if(box){
-      const level=Math.max(1,Math.min(90,Number(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90));
-      const atk=Math.floor(num(rec.baseStatsLv1?.ATK)+num(rec.statScaling?.ATK)*(level-1)+1e-7);
       const parts=[
         `${localizedName(rec)} · ${rec.id}`,
-        `Lv.${level} ATK ${atk}`,
-        `暴击率 ${num(sub.CritRate).toFixed(1)}%`,
-        `暴击伤害 ${(100+num(sub.CritDamage,50)).toFixed(1)}%`,
-        `伤害强效 ${num(sub.DamageAmplification).toFixed(1)}%`,
-        `界域精通 ${num(sub.RealmMastery).toFixed(1)}`,
+        `Lv.${level()} ATK ${resolved.ATK}`,
+        `暴击率 ${num(resolved.CritRate).toFixed(1)}%`,
+        `暴击伤害 ${(100+num(resolved.CritDamage,50)).toFixed(1)}%`,
+        `伤害强效 ${num(resolved.DamageAmplification).toFixed(1)}%`,
+        `界域精通 ${num(resolved.RealmMastery).toFixed(1)}`,
         `技能 ${skills.length}`,
-        `启灵效果 ${enlightens.length}`,
+        `衍生技能 ${derived.length}`,
+        `启灵 ${enlightens.length}`,
         `天赋 ${talents.length}`
       ];
       box.textContent=`SKeyDB 数值同步：${parts.join(' · ')}`;
     }
-    window.MorimensCharacterSync={record:rec,skills,enlightens,talents};
+    window.MorimensCharacterSync={record:rec,skills,enlightens,talents,derived,finalStats:resolved,update:updateCharacterStats};
+    window.dispatchEvent(new CustomEvent('morimens-character-stats',{detail:{record:rec,stats:resolved}}));
   }
 
   function bindUserTracking(){
-    for(const [id,key] of [['critRate','critRate'],['critDamage','critDamage'],['powerBonus','powerBonus']]){
-      $(id)?.addEventListener('input',()=>{state.userEdited[key]=true},{capture:false});
+    for(const [id,key] of [['critRate','critRate'],['critDamage','critDamage'],['powerBonus','powerBonus'],['realmMastery','realmMastery']]){
+      $(id)?.addEventListener('input',()=>{state.userEdited[key]=true});
     }
     document.addEventListener('click',event=>{
       if(event.target?.id!=='resetBtn')return;
-      state.userEdited={critRate:false,critDamage:false,powerBonus:false};
+      state.userEdited={critRate:false,critDamage:false,powerBonus:false,realmMastery:false};
       setTimeout(updateCharacterStats,80);
     },true);
     $('charSelect')?.addEventListener('change',()=>setTimeout(updateCharacterStats,80));
-    const level=$('charLevel')||$('skeydbCharacterLevel');level?.addEventListener('input',()=>setTimeout(updateCharacterStats,20));level?.addEventListener('change',()=>setTimeout(updateCharacterStats,20));
+    const lv=$('charLevel')||$('skeydbCharacterLevel');
+    lv?.addEventListener('input',()=>setTimeout(updateCharacterStats,20));
+    lv?.addEventListener('change',()=>setTimeout(updateCharacterStats,20));
   }
 
   function boot(){
-    bindUserTracking();setTimeout(updateCharacterStats,120);
+    bindUserTracking();
+    setTimeout(updateCharacterStats,120);
     window.addEventListener('morimens-language-change',()=>setTimeout(updateCharacterStats,20));
+    window.addEventListener('morimens-calculator-ui-ready',()=>setTimeout(updateCharacterStats,0));
   }
-  if(window.MorimensData?.db&&window.MorimensRepository)boot();else window.addEventListener('morimens-data-ready',()=>setTimeout(boot,0),{once:true});
+  window.MorimensStatsSync={updateCharacterStats,statsFor};
+  if(window.MorimensData?.db&&window.MorimensRepository)boot();
+  else window.addEventListener('morimens-data-ready',()=>setTimeout(boot,0),{once:true});
 })();
