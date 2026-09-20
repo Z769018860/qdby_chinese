@@ -44,8 +44,33 @@
   }
   function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
   const slotZh={Strike:'打击',Defense:'防御',Rouse:'灵知觉醒',Skill1:'技能卡一',Skill2:'技能卡二',Exalt:'狂气爆发',OverExalt:'超限爆发'};const slotOrder={Strike:1,Defense:2,Rouse:3,Skill1:4,Skill2:5,Exalt:6,OverExalt:7};
-  const termZh={'Defense':'防御','Strike':'打击','Skill':'技能','Rouse':'灵知觉醒','Exalt':'启灵','Over Exalt':'超限爆发','Damage':'伤害','Gain':'获得','Shield':'护盾','Crit':'暴击','DMG':'伤害','ATK':'攻击力'};
-  function zhText(value){let out=String(value||'');for(const [a,b] of Object.entries(termZh))out=out.replace(new RegExp(`\\b${a}\\b`,'gi'),b);return out}
+  const phraseZh=[
+    [/Tentacle DMG/gi,'触腕伤害'],[/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
+    [/Crit\. Rate/gi,'暴击率'],[/Crit\. DMG/gi,'暴击伤害'],[/Final DMG/gi,'最终伤害'],[/Base DMG/gi,'基础伤害'],
+    [/Max HP/gi,'最大生命'],[/HP Recovery/gi,'生命回复'],[/Arithmetica Cost/gi,'算术值消耗'],
+    [/all enemies/gi,'全体敌人'],[/highest HP enemy/gi,'生命最高的敌人'],[/Draw Pile/gi,'抽牌堆'],[/Discard Pile/gi,'弃牌堆'],
+    [/at turn end/gi,'回合结束时'],[/at turn start/gi,'回合开始时'],[/at battle start/gi,'战斗开始时'],
+    [/this turn/gi,'本回合'],[/this battle/gi,'本场战斗'],[/each turn/gi,'每回合'],[/per turn/gi,'每回合'],
+    [/first Command Card/gi,'第一张指令卡'],[/Command Card/gi,'指令卡'],[/cards?/gi,'卡牌'],
+    [/dealing Active DMG/gi,'造成主动伤害后'],[/Active DMG/gi,'主动伤害'],[/deals?/gi,'造成'],[/causes?/gi,'造成'],
+    [/obtains?/gi,'获得'],[/gains?/gi,'获得'],[/increase(?:s|d)?/gi,'提高'],[/reduce(?:s|d)?/gi,'降低'],
+    [/generate(?:s|d)?/gi,'生成'],[/trigger(?:s|ed)?/gi,'触发'],[/shuffle/gi,'洗入'],[/draw/gi,'抽取'],
+    [/into hand/gi,'置入手牌'],[/into the top of your Draw Pile/gi,'置于抽牌堆顶'],[/to all enemies/gi,'对全体敌人'],
+    [/enemy/gi,'敌人'],[/Turn/gi,'回合'],[/Battle/gi,'战斗'],[/Temporary/gi,'临时'],[/Permanent/gi,'永久'],
+    [/Surging Tides/gi,'涨潮'],[/Tranquil Sea/gi,'静海'],[/Raging Waves/gi,'怒涛'],[/Benthos: Aequor/gi,'深渊深海'],
+    [/Aequor Realm/gi,'深海界域'],[/Aequor/gi,'深海'],[/Chaos/gi,'混沌'],[/Caro/gi,'血肉'],[/Ultra/gi,'超维'],
+    [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/Astral Reign/gi,'星辉统治'],
+    [/Rouse/gi,'灵知觉醒'],[/Over-?Exalt/gi,'超限爆发'],[/Exalt/gi,'狂气爆发'],[/Defense/gi,'防御'],[/Strike/gi,'打击'],
+    [/Shield/gi,'护盾'],[/Damage/gi,'伤害'],[/DMG/gi,'伤害'],[/ATK/gi,'攻击力'],[/DEF/gi,'防御'],[/CON/gi,'体质'],
+    [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
+    [/equal to/gi,'等同于'],[/additional/gi,'额外'],[/first/gi,'首次'],[/current/gi,'当前'],[/after/gi,'之后'],
+    [/before/gi,'之前'],[/when/gi,'当'],[/if/gi,'若'],[/for every/gi,'每'],[/times/gi,'次'],[/time/gi,'次']
+  ];
+  function zhText(value){
+    let out=String(value||'');
+    for(const [re,to] of phraseZh)out=out.replace(re,to);
+    return out.replace(/\s+/g,' ').replace(/\s+([，。；：])/g,'$1').trim();
+  }
   function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
   function renderTemplate(record,level=1){
     let text=record?.descriptionTemplate||record?.description||'';
@@ -76,7 +101,7 @@
   }
 
   function ensureCharacterLevel(){
-    if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级 / Character Lv.</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
+    if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
     normalizeProgressionControls();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
@@ -87,12 +112,12 @@
   function ensureSecondWheelUi(){
     const first=$('fateSelect');if(!first||$('fateSelect2'))return;
     const field=first.closest('.field');if(!field)return;field.classList.remove('full');
-    const second=document.createElement('div');second.className='field';second.innerHTML='<label for="fateSelect2">命轮 2 / Wheel 2</label><select id="fateSelect2"><option value="">无 / None</option></select>';
+    const second=document.createElement('div');second.className='field';second.innerHTML='<label for="fateSelect2">命轮 2</label><select id="fateSelect2"><option value="">无</option></select>';
     field.parentNode.insertBefore(second,field.nextSibling);
     const l1=document.createElement('div');l1.className='field';l1.innerHTML='<label for="fateLevel1">命轮 1 效果档位</label><select id="fateLevel1"><option value="1">1</option></select>';
     const l2=document.createElement('div');l2.className='field';l2.innerHTML='<label for="fateLevel2">命轮 2 效果档位</label><select id="fateLevel2"><option value="1">1</option></select>';
     second.parentNode.insertBefore(l1,second.nextSibling);second.parentNode.insertBefore(l2,l1.nextSibling);
-    first.previousElementSibling&&(first.previousElementSibling.textContent='命轮 1 / Wheel 1');
+    first.previousElementSibling&&(first.previousElementSibling.textContent='命轮 1');
     $('fateSelect2').addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(1)},{capture:true});
     $('fateLevel1').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses()},{capture:true});
     $('fateLevel2').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses()},{capture:true});
@@ -202,7 +227,7 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillCoeffSummary')){
       const parts=[];
-      if(coef)parts.push(`ATK × ${Number(coef).toFixed(2)}%`);
+      if(coef)parts.push(`攻击力 × ${Number(coef).toFixed(2)}%`);
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
@@ -215,7 +240,7 @@
   async function loadCatalogs(){
     const [wr,cr]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants')]);wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];
     const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${labelForWheel(w)} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
-    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无 / None</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
+    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
     const missing=[wr,cr].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
   function syncWheelDuplicates(){
