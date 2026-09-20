@@ -594,6 +594,12 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       const records=[...mergedRecords.values()].sort((a,b)=>effectiveRank(a)-effectiveRank(b));
       season={...loadedSeason,records,recordCount:records.length,deltaRecordCount:loadedOverlay.records.length,dataUpdatedAt:overlay?.updatedAt||loadedOverlay.updatedAt||null};
     }else season=loadedSeason;
+    const seasonOption=[...($('dtideSeason')?.options||[])].find(option=>String(option.value)===String(id));
+    if(seasonOption&&Number.isFinite(Number(season?.recordCount))&&!(entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty')){
+      const loadedRecordCount=Number(season.recordCount);
+      entry.recordCount=loadedRecordCount;
+      seasonOption.textContent=`第 ${entry.seasonId} 期 · ${loadedRecordCount} 条${entry.complete?' · 完整':' · 部分'}`;
+    }
     stats=loadedStats;
     legacyStructured=loadedLegacyStructured;
     flatTeamsCache=null;
