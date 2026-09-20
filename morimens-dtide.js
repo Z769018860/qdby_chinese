@@ -157,7 +157,7 @@
         const link=document.createElement('link');link.rel='stylesheet';link.href='https://unpkg.com/@waline/client@v3/dist/waline.css';link.dataset.morimensWaline='true';document.head.appendChild(link);
       }
       const [{init},guestbookPath]=await Promise.all([import('https://unpkg.com/@waline/client@v3/dist/waline.js'),resolveGuestbookPath()]);
-      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:'zh-CN',meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
+      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:'zh-CN',emoji:['/assets/waline-emojis/morimens'],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
       commentsLoaded=true;
       if(status)status.remove();
     }catch(error){
@@ -170,6 +170,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-20 · 留言板头像与表情</strong><br>匿名头像池扩展为全部已上传角色头像，并改为按昵称固定映射；主页与忘忘看报留言板接入《忘却前夜》自定义表情包。</div>
         <div class="sourceItem"><strong>2026-09-20 · 爱的节奏榜</strong><br>新增全角色赞踩榜：按“赞 − 踩”净分实时排序，使用热力图显示正负热度，投票数据通过 Waline 在线计数跨设备同步。</div>
         <div class="sourceItem"><strong>2026-09-20 · 留言板</strong><br>新增“留言板”标签，接入 Waline 在线留言服务，并按忘忘看报的深色玻璃质感与金色强调色进行样式适配。</div>
         <div class="sourceItem"><strong>2026-09-20 · 旧版融灾425榜单</strong><br>旧版融灾高难出场率统一更名为“旧版融灾425出场率”；旧版数据没有造物榜单，点击“造物榜单”时改为显示空状态，不再错误复用角色榜单。</div>
