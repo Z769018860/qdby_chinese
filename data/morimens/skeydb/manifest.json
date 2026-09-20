@@ -2,28 +2,28 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "e4f5cf9d1ea7b1020e7f4d45fa56fa77c6452ddb",
-    "syncedAt": "2026-09-18T12:42:27.615Z",
+    "commit": "a2ff07765b2e0c78af827577f881054dbe224d8d",
+    "syncedAt": "2026-09-20T23:35:02.494Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {
-    "awakeners": 60,
-    "portraits": 60,
-    "cards": 60,
-    "publicV3Records": 1976
+    "awakeners": 61,
+    "portraits": 61,
+    "cards": 61,
+    "publicV3Records": 2003
   },
   "scopes": {
     "awakeners": {
       "kind": "awakener",
       "catalog": "catalogs/awakeners.json",
       "recordPattern": "records/awakeners/{id}.json",
-      "count": 60
+      "count": 61
     },
     "wheels": {
       "kind": "wheel",
       "catalog": "catalogs/wheels.json",
       "recordPattern": "records/wheels/{id}.json",
-      "count": 143
+      "count": 146
     },
     "relics": {
       "kind": "relic",
@@ -47,37 +47,37 @@
       "kind": "posse",
       "catalog": "catalogs/posses.json",
       "recordPattern": "records/posses/{id}.json",
-      "count": 62
+      "count": 63
     },
     "skills": {
       "kind": "skill",
       "catalog": "catalogs/skills.json",
       "recordPattern": "records/skills/{id}.json",
-      "count": 420
+      "count": 427
     },
     "derived-skills": {
       "kind": "derivedSkill",
       "catalog": "catalogs/derived-skills.json",
       "recordPattern": "records/derived-skills/{id}.json",
-      "count": 207
+      "count": 210
     },
     "talents": {
       "kind": "talent",
       "catalog": "catalogs/talents.json",
       "recordPattern": "records/talents/{id}.json",
-      "count": 226
+      "count": 230
     },
     "enlightens": {
       "kind": "enlighten",
       "catalog": "catalogs/enlightens.json",
       "recordPattern": "records/enlightens/{id}.json",
-      "count": 300
+      "count": 305
     },
     "overlays": {
       "kind": "overlay",
       "catalog": "catalogs/overlays.json",
       "recordPattern": "records/overlays/{id}.json",
-      "count": 151
+      "count": 154
     },
     "awakener-builds": {
       "kind": "awakenerBuild",
