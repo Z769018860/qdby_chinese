@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260921.83";
+  const assetVersion="20260921.84";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -87,6 +87,13 @@ setupMorimensMascotToggle();
       .replace(
         "calculate();renderFortune(false);loadCategoryOptions",
         "calculate();if(!window.MorimensFortuneDataOwner)renderFortune(false);loadCategoryOptions"
+      )
+      // The packed v0.3 bundle still contains the old Wiki-owned calculator.
+      // Keep only its DOM bootstrap (upgradeUI); SKeyDB modules below own
+      // character/skill selection, coefficients, stats and calculate events.
+      .replace(
+        /async function init\(\)\{upgradeUI\(\);populateCharacters\(\);bind\(\);loadCharacter\(\);calculate\(\);renderFortune\(false\);loadCategoryOptions[\s\S]*?await loadCharacterRoster\(\)\}\s*init\(\);/,
+        "async function init(){upgradeUI()}\ninit();"
       );
     (0,eval)(code);
     await import(`./morimens-data.js?v=${assetVersion}`);
