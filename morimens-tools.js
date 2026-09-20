@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260921.80";
+  const assetVersion="20260921.81";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -93,6 +93,7 @@ setupMorimensMascotToggle();
     await import(`./morimens-skeydb.js?v=${assetVersion}`);
     await import(`./morimens-love-ranking.js?v=${assetVersion}`);
     await import(`./morimens-i18n.js?v=${assetVersion}`);
+    await import(`./morimens-calculator-formulas.js?v=${assetVersion}`);
     await import(`./morimens-calculator-skeydb.js?v=${assetVersion}`);
     await import(`./morimens-calculator-stats.js?v=${assetVersion}`);
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
