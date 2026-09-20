@@ -8,8 +8,10 @@
   function currentLevel(){return clamp(Number.parseFloat(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90,1,90)}
   function currentRecord(){return window.MorimensCharacterSync?.record||window.MorimensData?.db?.records?.find(x=>x.id===$('charSelect')?.value)||null}
   function resolvedStats(){
+    if(window.MorimensProgressionStats)return window.MorimensProgressionStats;
+    if(window.MorimensCharacterSync?.finalStats)return window.MorimensCharacterSync.finalStats;
     const rec=currentRecord(),engine=window.MorimensFormulaEngine;
-    return rec&&engine?engine.contextFor(rec,currentLevel()):(window.MorimensCharacterSync?.finalStats||{});
+    return rec&&engine?engine.contextFor(rec,currentLevel()):{};
   }
 
   function inject(){
@@ -18,7 +20,7 @@
     if(first){
       const stats=document.createElement('div');
       stats.id='characterTriplet';stats.className='combatStats';
-      stats.innerHTML='<div><small>体质 CON</small><strong id="combatCon">—</strong></div><div><small>攻击 ATK</small><strong id="combatAtk">—</strong></div><div><small>防御 DEF</small><strong id="combatDef">—</strong></div>';
+      stats.innerHTML='<div><small>体质</small><strong id="combatCon">—</strong></div><div><small>攻击力</small><strong id="combatAtk">—</strong></div><div><small>防御力</small><strong id="combatDef">—</strong></div>';
       first.querySelector('.formGrid')?.insertAdjacentElement('afterend',stats);
     }
 
@@ -28,11 +30,11 @@
     const realm=document.createElement('div');
     realm.className='builderBlock';realm.id='realmTentacleModel';
     realm.innerHTML=`
-      <div class="builderTitle"><span>⑥ 界域精通与触腕伤害</span><small>SKeyDB public-v3 公式</small></div>
+      <div class="builderTitle"><span>⑥ 界域精通与触腕伤害</span><small>SKeyDB 数据公式</small></div>
       <div class="formGrid">
-        <div class="field"><label for="realmMastery">最终界域精通</label><input id="realmMastery" type="number" min="0" step="0.1" value="0"><small>默认按角色等级和 SKeyDB substatScaling 自动带入，可手动覆盖。</small></div>
-        <div class="field"><label for="tentacleMode">深海体系</label><select id="tentacleMode"><option value="standard">普通深海 Aequor</option><option value="benthos">深渊深海 Benthos: Aequor</option></select></div>
-        <div class="field"><label for="tentacleStance">触腕姿态</label><select id="tentacleStance"><option value="surging">涨潮 Surging Tides · 100%</option><option value="tranquil">静海 Tranquil Sea · 50%</option><option value="raging">怒涛 Raging Waves · 125%</option></select></div>
+        <div class="field"><label for="realmMastery">最终界域精通</label><input id="realmMastery" type="number" min="0" step="0.1" value="0"><small>默认按角色等级与 SKeyDB 副属性成长规则自动带入，可手动覆盖。</small></div>
+        <div class="field"><label for="tentacleMode">深海体系</label><select id="tentacleMode"><option value="standard">普通深海</option><option value="benthos">深渊深海</option></select></div>
+        <div class="field"><label for="tentacleStance">触腕姿态</label><select id="tentacleStance"><option value="surging">涨潮 · 100%</option><option value="tranquil">静海 · 50%</option><option value="raging">怒涛 · 125%</option></select></div>
         <div class="field" id="standardTentacleField"><label for="currentTentacleDamage">当前基础触腕伤害</label><input id="currentTentacleDamage" type="number" min="0" step="1" value="0"><small>普通深海的基础值 SKeyDB 未公开统一生成公式，直接填游戏触腕图标当前数值。</small></div>
         <div class="field" id="benthosHpField" hidden><label for="teamMaxHp">队伍最大生命</label><input id="teamMaxHp" type="number" min="0" step="1" value="0"><small>深渊深海：基础触腕伤害 = 队伍最大生命 × 5%。</small></div>
         <div class="field"><label for="tentacleExtraBonus">额外触腕伤害增幅 %</label><input id="tentacleExtraBonus" type="number" step="0.1" value="0"><small>用于命轮、技能、遗物等已经折算后的额外触腕增幅。</small></div>
@@ -44,15 +46,15 @@
         <label class="check"><input id="includeTurnEndTentacle" type="checkbox"><span>把回合末触腕攻击计入总伤害<small>默认只展示，不与当前技能伤害强行合并。</small></span></label>
       </div>
       <div class="combatReadout" id="tentacleReadout"></div>
-      <details class="formulaSource"><summary>SKeyDB 计算公式与来源</summary><div id="tentacleFormulaSource"></div></details>`;
+      <details class="formulaSource"><summary>SKeyDB 计算公式与数据来源</summary><div id="tentacleFormulaSource"></div></details>`;
 
     const enemy=document.createElement('div');
     enemy.className='builderBlock';enemy.id='combatModel';
     enemy.innerHTML=`
-      <div class="builderTitle"><span>⑦ 敌方属性与异常伤害</span><small>SKeyDB 状态定义</small></div>
+      <div class="builderTitle"><span>⑦ 敌方属性与异常伤害</span><small>SKeyDB 状态规则</small></div>
       <div class="formGrid">
         <div class="field"><label for="enemyDefense">敌方防御力</label><input id="enemyDefense" type="number" min="0" step="1" value="0"></div>
-        <div class="field"><label for="defenseMode">防御换算</label><select id="defenseMode"><option value="manual">使用手动实测系数</option><option value="curve">可校准曲线 K ÷ (K + DEF)</option></select></div>
+        <div class="field"><label for="defenseMode">防御换算</label><select id="defenseMode"><option value="manual">使用手动实测系数</option><option value="curve">可校准曲线 K ÷ (K + 防御)</option></select></div>
         <div class="field"><label for="defenseConstant">防御常数 K</label><input id="defenseConstant" type="number" min="1" step="1" value="1000"><small>仅用于可校准曲线；SKeyDB 未公开官方防御常数。</small></div>
         <div class="field"><label for="fortressStacks">加固层数</label><input id="fortressStacks" type="number" min="0" max="100" step="1" value="0"><small>每层承伤降低 1%。</small></div>
         <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>主动伤害消耗等量侵蚀，追加消耗量 300% 的生命损失。</small></div>
@@ -120,12 +122,14 @@
   function renderFormulaSource(){
     const box=$('tentacleFormulaSource');if(!box)return;
     box.innerHTML=`
-      <div class="formulaRow"><b>角色主属性</b><br><code>ceil((primaryScalingBase + Lv + bonusLv) × statScaling)</code><br>SKeyDB：<code>src/domain/awakener-level-scaling.ts</code></div>
-      <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>additive: Base + RealmMastery × multiplier</code><br><code>scale_base: Base × (1 + RealmMastery × multiplier / 100)</code><br>SKeyDB：<code>src/domain/description-args.ts</code></div>
-      <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛主动伤害后的额外触发倍率：<code>50% + floor(最终界域精通 / 50) × 1%</code>。<br>SKeyDB：<code>overlay.global.surging-tides / tranquil-sea / raging-waves</code></div>
-      <div class="formulaRow"><b>深渊深海 Benthos</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code><br>怒涛：<code>基础触腕 × 125% × (1 + 界域精通 × 0.025% × 纯队倍率)</code>；纯深海/混沌队的界域精通效果 ×2。<br>SKeyDB：<code>overlay.global.divine-realm-aequor(.json) / divine-realm-aequor-mastery</code></div>
-      <div class="formulaRow"><b>Primordia（SKeyDB 公式引擎）</b><br>进攻类效果（含触腕伤害）：<code>ceil(Base × (1 + RealmMastery × 0.1% × 纯混沌倍率))</code>；纯混沌时倍率 ×2。工具的技能参数解析已支持该 public-v3 computed 结构。</div>
-      <div class="formulaRow"><b>说明</b><br>普通深海的“初始/当前触腕伤害”在 SKeyDB public-v3 中只有机制说明，没有公开统一基础生成式，因此不臆造；请填游戏界面当前触腕伤害。深渊深海的 5% Max HP 基础式则由 SKeyDB 明确给出。</div>
+      <div class="formulaRow"><b>角色主属性</b><br><code>向上取整((基础成长值 + 角色等级 + 内在灵格提供的基础属性等级) × 属性成长率)</code><br>随后再乘以灵塑提供的主属性百分比并向上取整。数据来源：<code>awakener-level-scaling.ts</code>。</div>
+      <div class="formulaRow"><b>内在灵格</b><br>SKeyDB 的“内在灵格”天赋先把当前等级解析为“基础属性等级 +N”，然后同时作用于体质、攻击、防御三个主属性；不是简单把天赋说明里显示的属性数字直接相加。</div>
+      <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辉统治”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
+      <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
+      <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在主动伤害后的额外触发倍率：<code>50% + 向下取整(最终界域精通 / 50) × 1%</code>。</div>
+      <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code><br>怒涛：<code>基础触腕 × 125% × (1 + 界域精通 × 0.025% × 纯队倍率)</code>；全队仅由深海/混沌唤醒体组成时，界域精通效果翻倍。</div>
+      <div class="formulaRow"><b>原初混沌精通</b><br>进攻类效果（包含触腕伤害）：<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>；纯混沌队时倍率翻倍。</div>
+      <div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前只公开普通深海的机制与姿态倍率，没有给出统一的“初始触腕伤害”生成式，所以工具不会自行猜测；请填写游戏界面当前显示的基础触腕伤害。深渊深海的“队伍最大生命 × 5%”则有明确数据依据。</div>
     `;
   }
 
