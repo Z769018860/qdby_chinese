@@ -304,21 +304,23 @@
     return out;
   }
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final'])target[k]+=num(b[k])}
-  function wheelDescription(rec,slot){if(!rec)return '';const stage=Math.min(12,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return zhText(renderTemplate(rec,stage+1))}
+  function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(12,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,stage+1)}
+  function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
     const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
   }
 
   async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses()}
-  function renderEffect(effect){let text=effect?.descriptionTemplate||'';text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=effect?.descriptionArgs?.[name],v=argValue(arg,1);return v===null?name:`${v}${arg?.suffix||''}`});return text}
+  function renderEffectRaw(effect){let text=effect?.descriptionTemplate||'';text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=effect?.descriptionArgs?.[name],v=argValue(arg,1);return v===null?name:`${v}${arg?.suffix||''}`});return text}
+  function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后从 SKeyDB 读取完整 3 / 6 件套效果。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
   function recomputeGearBonuses(){
     const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
-    currentWheels.forEach((w,i)=>{if(w)sumBonus(next,numericBonusesFromText(wheelDescription(w,i),false))});
-    if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffect(e),e.set<6||allow))}}
+    currentWheels.forEach((w,i)=>{if(w)sumBonus(next,numericBonusesFromText(wheelDescriptionRaw(w,i),false))});
+    if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),e.set<6||allow))}}
     Object.assign(auto,next);applyAutoBonuses();renderAutoSummary();
   }
 
@@ -348,8 +350,9 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
+    if($('innerSpirit'))$('innerSpirit').value='0';if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0)}
-    if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();$('calcBtn')?.click();
+    if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();updateSkillLevel();$('calcBtn')?.click();
   }
   function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=`${labelForWheel(wheel)} · ${wheel.rarity||''} ${wheel.realm||''}`}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses()}
 
