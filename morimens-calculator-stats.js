@@ -80,9 +80,10 @@
   }
 
   function bindUserTracking(){
-    for(const [id,key] of [['critRate','critRate'],['critDamage','critDamage'],['powerBonus','powerBonus'],['realmMastery','realmMastery']]){
+    for(const [id,key] of [['critRate','critRate'],['critDamage','critDamage'],['powerBonus','powerBonus']]){
       $(id)?.addEventListener('input',()=>{state.userEdited[key]=true});
     }
+    document.addEventListener('input',event=>{if(event.target?.id==='realmMastery')state.userEdited.realmMastery=true});
     document.addEventListener('click',event=>{
       if(event.target?.id!=='resetBtn')return;
       state.userEdited={critRate:false,critDamage:false,powerBonus:false,realmMastery:false};
