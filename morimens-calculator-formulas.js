@@ -93,7 +93,7 @@
   function tentacleBonusCoefficient(skill,rank,ctx){
     const t=String(skill?.descriptionTemplate||'');
     const patterns=[
-      /(?:equal to|with (?:a|an)|enjoys? (?:a|an)?|receives? (?:a|an)?|gains? (?:a|an)?)\s*\[(?:TentaclePower:)?([^\]]+)\]%?\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
+      /(?:equal to|with (?:a|an)|enjoys? (?:a|an)?|receives? (?:a|an)?)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
       /\[([^\]]+)\]%\s*\{Tentacle DMG\}\s*(?:bonus|Bonus)/i
     ];
     for(const re of patterns){
