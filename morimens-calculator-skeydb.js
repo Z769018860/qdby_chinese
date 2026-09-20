@@ -226,6 +226,8 @@
     $('contractSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadCovenant()},{capture:true});
     $('contractPieces')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses()},{capture:true});
     $('contractConditional')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses()},{capture:true});
+    document.addEventListener('input',e=>{if(e.target?.id==='realmMastery')queueMicrotask(updateSkillLevel)},{capture:true});
+    document.addEventListener('change',e=>{if(e.target?.id==='realmMastery')queueMicrotask(updateSkillLevel)},{capture:true});
     $('calcBtn')?.addEventListener('click',()=>{recomputeGearBonuses()},{capture:true});
     $('resetBtn')?.addEventListener('click',e=>{e.stopImmediatePropagation();resetBuild()},{capture:true});
   }
