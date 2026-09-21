@@ -89,7 +89,7 @@
       tentacleMode:baseRealms.includes('AEQUOR')?(hasMode(modes,'benthos')?'benthos':'standard'):null,
       tentacleMasteryMultiplier:masteryEffectMultiplier.AEQUOR,
       startingTentacleMultiplier:pureEffects.AEQUOR?2:1,
-      aequorChaosBaseTentacleBonusPct:chaosCoexistence&&otherRealm==='AEQUOR'?chaosCount:0,
+      aequorChaosBaseTentacleBonusPct:0,
       notes:[]
     };
 
@@ -175,7 +175,9 @@
     }
 
     if(chaosCoexistence&&otherRealm==='AEQUOR'){
-      out.notes.push(`混沌×深海：每名混沌唤醒体使基础触腕额外增加队伍最大生命 1%，当前合计 +${out.aequorChaosBaseTentacleBonusPct}% 最大生命。`);
+      out.notes.push(hasMode(modes,'benthos')
+        ?'混沌×深渊深海：按 Benthos 公开记录，基础触腕伤害固定为队伍最大生命 5%；不额外叠加未公开的混沌触腕基础。'
+        :'混沌×普通深海：当前 SKeyDB 未公开“每名混沌额外增加队伍最大生命百分比到基础触腕”的可验证公式，因此不自动附加该项。');
     }
     if(chaosCoexistence&&otherRealm==='CARO'){
       out.notes.push(`混沌×血肉：每名混沌唤醒体回合结束积累 2% 最大生命的猩红熔炉；混沌角色释放狂气爆发时胚胎融合 +25%。`);
