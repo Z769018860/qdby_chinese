@@ -457,7 +457,7 @@
     const wrap=document.createElement('div');wrap.id='rouseStateBlock';wrap.className='field full calcResourceField isCalculated';wrap.style.marginTop='8px';
     wrap.innerHTML='<label class="inlineCheck"><input id="rouseActive" type="checkbox"> 灵知觉醒已发动</label><small id="rouseStateNote">角色在灵知觉醒前后可能具有不同效果。勾选后，计算器会启用已明确接入的灵知觉醒乘区；不会自动猜测需要额外战斗时序的资源。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
-    $('rouseActive')?.addEventListener('change',()=>{renderRouseSummary();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    $('rouseActive')?.addEventListener('change',()=>{renderRouseSummary();renderCharacterResourceControls(false);updateSkillLevel();$('calcBtn')?.click()},{capture:true});
   }
   function renderRouseSummary(){
     ensureRouseUi();
@@ -492,7 +492,7 @@
       {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'Satiety / 饱足',min:0,max:50,calculated:true,description:'每层提高卡拉布狂气爆发的基础伤害与护盾。伤害计算只把打出前已有的饱足计入本次基础伤害；供奉转化出的饱足不回溯放大已开始结算的本次爆发。'}
     ],
     'awakener-0018':[
-      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:true,requiredEnlighten:'AbsoluteAxiom',description:'最终法则的灵知觉醒：每层 Finale 使 Doll: Inferno 的伤害强效 +8%。只有同时开启“灵知觉醒已发动”时，这个乘区才会进入计算。'},
+      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒：每层 Finale 使全队伤害强效 +8%。当前角色为 Doll: Inferno 时会直接进入最终伤害公式；只有同时开启“灵知觉醒已发动”时生效。'},
       {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'Finale Form 已生效',type:'checkbox',calculated:true,description:'只在实际进入 Finale Form 后勾选。会启用已明确接入的 Finale Form 中毒触发；未勾选时不会把条件分支误算成常驻效果。'}
     ],
     'awakener-0014':[
@@ -503,11 +503,11 @@
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
       {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成',inputLabel:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次赎罪苦痛；基础为 200% ATK，并会按本次探索已完成战斗数自动提高。'},
-      {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。'}
+      {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。只有“赎罪苦痛生效”时该开关才有意义。'}
     ],
     'awakener-0010':[
-      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本次移除 Symbiosis / 共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：Lifeform Reconstruction 每移除 1 层共生，使克莱门汀本场基础伤害 +3%。基础上限 10；E3 为 15；最终法则下灵知觉醒可提高到 20。'},
-      {key:'clementineFirstCommandRouse',label:'当前是本回合第一张指令卡',type:'checkbox',calculated:true,description:'仅在“灵知觉醒已发动”时生效。Call of Shaggai：每回合第一张指令卡的伤害、护盾、回复、狂气和银钥效果额外触发 2 次；伤害计算器只重复当前可解析的伤害/状态事件。'}
+      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本场累计已移除 Symbiosis / 共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：每移除 1 层共生，克莱门汀在本场战斗中的基础伤害累计 +3%。这里填写本场累计已移除层数，而不是仅填写当前这一次；输入上限随 E3 / 最终法则变化。'},
+      {key:'clementineFirstCommandRouse',label:'当前是本回合第一张指令卡',type:'checkbox',calculated:true,dependsOnControl:'rouseActive',description:'仅在“灵知觉醒已发动”时生效。Call of Shaggai：每回合第一张指令卡的伤害、护盾、回复、狂气和银钥效果额外触发 2 次；伤害计算器只重复当前可解析的伤害/状态事件。'}
     ],
     'awakener-0058':[
       {overlayId:'overlay.pontos.pack-hunt',key:'packHuntStacks',label:'Pack Hunt / 群猎',min:0,max:9,calculated:true,description:'有至少 1 层时，下一张 Gaunt 消耗 1 层并额外触发 1 次；伤害计算会让 Slay-Gaunt 的固定伤害额外结算 1 次。'}
@@ -537,7 +537,7 @@
       {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，All-In! 基础伤害 +0.5%。'}
     ],
     'awakener-0024':[
-      {overlayId:'overlay.horla.emotion',coversOverlayIds:['overlay.horla.anger','overlay.horla.fear','overlay.horla.grief','overlay.horla.happiness'],key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒会提高全队最终伤害；恐惧会提高力量/反击/中毒生成；悲伤与喜悦主要影响回复/资源。'},
+      {overlayId:'overlay.horla.emotion',coversOverlayIds:['overlay.horla.anger','overlay.horla.fear','overlay.horla.grief','overlay.horla.happiness'],key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒的全队最终伤害已自动计入；恐惧的中毒/反击生成已自动计入。恐惧对“获得力量”的增幅属于跨卡状态生成，当前不会反推既有力量，请把实际获得后的力量填入上方“力量 / 临时力量”。悲伤与喜悦主要影响回复/资源，不改变本次直接伤害。'},
       {overlayId:'overlay.horla.metaphor',key:'angerMetaphorStacks',label:'愤怒隐喻',min:0,max:3,calculated:true,description:'Snarl Psalm 会消耗全部愤怒隐喻；每层额外造成 2 段伤害。'},
       {overlayId:'overlay.horla.metaphor',key:'griefMetaphorStacks',label:'悲伤隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'happinessMetaphorStacks',label:'喜悦隐喻',min:0,max:3,calculated:false},
@@ -624,6 +624,11 @@
     }
     return Number.isFinite(Number(spec?.max))?Number(spec.max):999;
   }
+  function resourceDependencyEnabled(spec,values={}){
+    if(spec?.dependsOn&&Number(values[spec.dependsOn])<=0)return false;
+    if(spec?.dependsOnControl&&$(spec.dependsOnControl)?.checked!==true)return false;
+    return true;
+  }
   function characterResourceValues(){
     const values={awakenerId:currentAwakener?.id||null};
     const specsByKey=new Map(currentResourceSpecs().map(spec=>[spec.key,spec]));
@@ -661,16 +666,18 @@
       const labelHtml=overlay?termHtml(overlay.name,spec.label):escape(spec.label);
       if(spec.type==='checkbox'){
         const checked=Number(previous[spec.key])>0;
+        const dependentOff=!resourceDependencyEnabled(spec,previous);
         wrap.classList.add('full');
-        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
+        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+' '+(dependentOff?'disabled':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }else if(spec.type==='select'){
         const selected=String(previous[spec.key]??'');
+        const dependentOff=!resourceDependencyEnabled(spec,previous);
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
-        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
+        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'" '+(dependentOff?'disabled':'')+'>'+options+'</select><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }else{
         const max=effectiveResourceMax(spec);const fallback=Number.isFinite(Number(spec.min))?Number(spec.min):0;const value=Math.min(max,Math.max(fallback,Number(previous[spec.key])||fallback));
         const inputLabel=spec.inputLabel||spec.label+'数量';
-        const dependentOff=spec.dependsOn&&Number(previous[spec.dependsOn])<=0;
+        const dependentOff=!resourceDependencyEnabled(spec,previous);
         wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }
       block.appendChild(wrap);
@@ -679,9 +686,9 @@
     const syncDependencies=()=>{
       const values=characterResourceValues();
       for(const spec of currentResourceSpecs()){
-        if(!spec.dependsOn)continue;
+        if(!spec.dependsOn&&!spec.dependsOnControl)continue;
         const input=block.querySelector('[data-resource-key="'+CSS.escape(spec.key)+'"]');
-        if(input)input.disabled=Number(values[spec.dependsOn])<=0;
+        if(input)input.disabled=!resourceDependencyEnabled(spec,values);
       }
     };
     block.querySelectorAll('[data-resource-key]').forEach(el=>{
@@ -1416,7 +1423,7 @@
       }
       if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&vulnerableStacks()>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${vulnerableStacks()} 层：E2 Decomposition 最终伤害 +${Math.min(500,vulnerableStacks()*5)}%`);
       if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike')parts.push(`Predetermined Strike 力量倍率：基础 3× + 本场 Posse ${Math.floor(Number(resources.ramonaPosseUses)||0)} 次`);
-      if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本次移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：E2+ 基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
+      if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本场累计移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：E2+ 基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
       if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&Number(resources.clementineFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('灵知觉醒：本回合第一张指令卡的可解析伤害效果额外触发 2 次');
       if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom')parts.push('最终法则灵知觉醒：每个可解析伤害公式的段数 +1');
       if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy')parts.push(`饱足 ${Math.floor(Number(resources.satietyStacks)||0)} 层；供奉 ${Math.floor(Number(resources.offeringStacks)||0)} 层（供奉增加本次段数；转化后的饱足不回溯本次基础伤害）`);
