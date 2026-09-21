@@ -341,7 +341,16 @@
     if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`等级 ${i}`;option.selected=i===previous;level.appendChild(option)}}
     const innerField=$('innerSpirit')?.closest('.field');
     if(innerField){const label=innerField.querySelector('label');if(label)label.textContent='内在灵格';let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}note.textContent='按“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式；限定唤醒体固定为 5 且不可调整，常驻/福利唤醒体可按实际进度选择。'}
-    fillRange($('innerSpirit'),'内在灵格',5);
+    const normalizedInner=$('innerSpirit');
+    if(normalizedInner&&isLimitedAwakener()){
+      normalizedInner.innerHTML='<option value="5">5 · 内在灵格 5（限定固定）</option>';
+      normalizedInner.value='5';
+      normalizedInner.disabled=true;
+      normalizedInner.title='限定唤醒体的内在灵格固定为 5，不可调整';
+    }else{
+      fillRange(normalizedInner,'内在灵格',5);
+      if(normalizedInner){normalizedInner.disabled=false;normalizedInner.title=''}
+    }
     if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。</small>';inner.insertAdjacentElement('afterend',wrap)}}
     if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辰篇关卡环境启用灵塑效果</label><small>灵塑天赋仅在“星辰篇”关卡生效；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
   }
