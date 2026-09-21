@@ -359,8 +359,13 @@
       if(/(?:\{Leap\}|\{Aftershock\}|\bIf\b|\bWhen\b|\bWhenever\b|\bUpon\b|\bAfter\b|\bFor each\b)[^.\n]{0,220}\[Damage:[^\]]+\]/i.test(text)){
         messages.push('检测到条件 Damage Event：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把 Leap/If/When 分支高算。');
       }
-      if(/\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\bthat\s+deals?\s+\[Damage:[^\]]+\]/i.test(text)){
-        messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接 Damage 公式：该倍率属于生成卡，不计入当前卡本次伤害。');
+      const hasIndirectDamageDefinition=/\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\bthat\s+deals?\s+\[Damage:[^\]]+\]/i.test(text);
+      if(hasIndirectDamageDefinition){
+        needsHitOverride=false;minHits=null;maxHits=null;
+        for(let i=messages.length-1;i>=0;i--){
+          if(/段数|额外段数|额外.*instance|实际伤害段数/.test(messages[i]))messages.splice(i,1);
+        }
+        messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接 Damage 公式：该倍率与段数属于生成卡，不计入当前卡本次伤害；请直接选择对应派生卡计算。');
       }
 
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
