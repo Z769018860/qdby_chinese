@@ -60,7 +60,8 @@
         <div class="field"><label for="currentPoison">当前 Poison / 中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Poison”等即时中毒触发。</small></div>
         <div class="field"><label for="currentBleed">当前 Bleed / 流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Bleed”和本回合末流血结算。</small></div>
         <div class="field"><label for="currentCounter">当前 Counter / 反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Counter”事件。</small></div>
-        <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
+        <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
+        <div class="field"><label for="corrosionLossMultiplier">侵蚀生命损失倍率 %</label><input id="corrosionLossMultiplier" type="number" min="0" step="1" value="300"><small>SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。</small></div>
         <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
@@ -83,7 +84,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','embersAmount','includePoisonTurnEnd','includeBleedTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includePoisonTurnEnd','includeBleedTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -180,7 +181,7 @@
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
+      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
     `;
   }
 
@@ -338,6 +339,7 @@
     const groupDamage=new Map();
     let corrosionRemaining=Math.max(0,n('corrosionAmount'));
     let embersRemaining=Math.max(0,n('embersAmount'));
+    const corrosionLossMultiplier=Math.max(0,n('corrosionLossMultiplier',300))/100;
     let corrosionDamage=0,embersDamage=0;
     let poisonAdded=0,bleedAdded=0,counterAdded=0;
     const initialPoison=Math.max(0,n('currentPoison'));
@@ -356,7 +358,7 @@
       const corrosionUsed=Math.min(corrosionRemaining,event.damage*removalRate);
       if(corrosionUsed>0){
         corrosionRemaining-=corrosionUsed;
-        const reaction={id:event.id+'-corrosion',type:'reaction',reaction:'corrosion',sourceEventId:event.id,label:`侵蚀追加生命损失（${removalRate===1?'等量':'其他伤害 50%'}消费）`,consumed:corrosionUsed,damage:corrosionUsed*3};
+        const reaction={id:event.id+'-corrosion',type:'reaction',reaction:'corrosion',sourceEventId:event.id,label:`侵蚀追加生命损失（${removalRate===1?'等量':'其他伤害 50%'}消费，×${(corrosionLossMultiplier*100).toFixed(0)}%）`,consumed:corrosionUsed,damage:corrosionUsed*corrosionLossMultiplier};
         corrosionDamage+=reaction.damage;events.push(reaction);
       }
       const embersUsed=Math.min(embersRemaining,event.damage*removalRate);
@@ -479,6 +481,13 @@
       const stacks=initialBleed+bleedAdded;
       pushDamageEvent(pureEvent(stacks,'Bleed · 回合末 Pure DMG（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
     }
+    const turnEndProcessed=includeTurnEnd||$('includePoisonTurnEnd')?.checked===true||includeBleedTurnEnd;
+    const corrosionBeforeTurnEndClear=corrosionRemaining;
+    const embersBeforeTurnReset=embersRemaining;
+    if(turnEndProcessed){
+      corrosionRemaining=0;
+      embersRemaining=0;
+    }
   
     const activeEvents=events.filter(x=>x.type==='active');
     const pierceEvents=events.filter(x=>x.type==='pierce');
@@ -510,7 +519,7 @@
     $('critLine').textContent=`可暴击 Active/Pierce 暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击 Active/Pierce 期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Vulnerable / Weakness 按 SKeyDB 只作用于 Active 与 Tentacle；Pierce 不套这两项。Pure / Fixed / Poison / Bleed / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费。`;
+    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Vulnerable / Weakness 按 SKeyDB 只作用于 Active 与 Tentacle；Pierce 不套这两项。Pure / Fixed / Poison / Bleed / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -533,8 +542,10 @@
     if(!includeTurnEnd&&turnEndCount>0)rows.push(['回合末触腕预览（未计入总伤害）',projectedTurnEnd]);
     rows.push(['侵蚀追加生命损失合计',corrosionDamage]);
     rows.push(['旧日余烬追加生命损失合计',embersDamage]);
-    rows.push(['侵蚀剩余',corrosionRemaining]);
-    rows.push(['旧日余烬剩余',embersRemaining]);
+    if(turnEndProcessed&&corrosionBeforeTurnEndClear>0)rows.push(['侵蚀回合末清空前剩余',corrosionBeforeTurnEndClear]);
+    if(turnEndProcessed&&embersBeforeTurnReset>0)rows.push(['旧日余烬回合重置前剩余',embersBeforeTurnReset]);
+    rows.push(['侵蚀最终剩余',corrosionRemaining]);
+    rows.push(['旧日余烬最终剩余',embersRemaining]);
     rows.push(['最终 Poison 层数',initialPoison+poisonAdded]);
     rows.push(['最终 Bleed 层数',includeBleedTurnEnd?0:initialBleed+bleedAdded]);
     rows.push(['本次新增 Counter',counterAdded]);
@@ -570,7 +581,7 @@
         poison:poisonTotal,bleed:bleedTotal,counter:counterTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
       status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent},
-      remaining:{corrosion:corrosionRemaining,embers:embersRemaining}
+      remaining:{corrosion:corrosionRemaining,embers:embersRemaining,corrosionBeforeTurnEndClear,embersBeforeTurnReset,turnEndProcessed}
     };
   }
 
@@ -579,7 +590,7 @@
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
       tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,fortressStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
-      corrosionAmount:0,embersAmount:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
+      corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
     if($('propagationConsumeEmbryo'))$('propagationConsumeEmbryo').checked=false;
