@@ -348,7 +348,8 @@
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const skillFinalPct=Math.max(0,Number(source.skillFinalDamageBonusPct)||0);
       const afterFinal=afterVulnerability*(1+(finalPct+skillFinalPct)/100)*(type==='active'?weakCoef:1);
-      const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult;
+      const resourceDamageMultiplier=Number.isFinite(Number(source.resourceDamageMultiplier))?Math.max(0,Number(source.resourceDamageMultiplier)):1;
+      const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult*resourceDamageMultiplier;
       const forceCrit=source.guaranteedCrit===true||$('forceCritAll')?.checked===true;
       const eventCritRate=clamp((forceCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
       const baseEventCritMult=Math.max(0,activeCritMult+Math.max(0,Number(source.critDamageBonus)||0)/100);
@@ -367,6 +368,7 @@
         tentacleBonusCoefficient:sourceTentacleCoef*100,
         skillBaseDamageBonusPct:skillBasePct,
         skillFinalDamageBonusPct:skillFinalPct,
+        resourceDamageMultiplier,
         counterBonusCoefficient:sourceCounterCoef*100,
         counterContribution,
         critRateBonus:Number(source.critRateBonus)||0,
