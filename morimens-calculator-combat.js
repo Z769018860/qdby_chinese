@@ -522,6 +522,13 @@
     }
 
     let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,bleedIndex=0,corrosionIndex=0,counterIndex=0;
+    function applyCharacterResourceAfterDamage(event,source){
+      const bleedPct=Math.max(0,Number(source?.onDamageBleedPct)||0);
+      if(!(event?.damage>0)||bleedPct<=0)return;
+      const amount=event.damage*bleedPct/100*realmStatusOutputMult;
+      bleedAdded+=amount;
+      events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:`罪印附加流血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
+    }
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
         if(source.type==='pierce'&&source.basis==='tentacle'){
@@ -536,13 +543,14 @@
         if(source.type==='active'||source.type==='pierce'){
           const event=scaledEvent(source,repeat,scaledIndex++);
           pushDamageEvent(event);
+          applyCharacterResourceAfterDamage(event,source);
           if(event.type==='active'&&$('tentacleStance')?.value==='raging'&&event.damage>0){
             pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · 主动伤害后触腕',`raging-${++tentacleIndex}`));
           }
           continue;
         }
         if(source.type==='fixed'){
-          pushDamageEvent(fixedEvent(source,`fixed-${++pureIndex}`));
+          const event=fixedEvent(source,`fixed-${++pureIndex}`);pushDamageEvent(event);applyCharacterResourceAfterDamage(event,source);
           continue;
         }
         if(source.type==='pure'){
@@ -557,7 +565,7 @@
           if(minimum>0)raw=Math.max(raw,minimum);
           const basisLabel=source.basis==='actorCurrentHp'?'角色当前生命':'目标最大生命';
           const floorLabel=minPct>0?` · 最低为角色最大生命 ${minPct.toFixed(2)}%`:'';
-          pushDamageEvent(pureEvent(raw,`纯粹伤害 · ${basisLabel} ${pct.toFixed(2)}%${floorLabel}`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent,minActorMaxHpPercent:minPct,minimum}));
+          const event=pureEvent(raw,`纯粹伤害 · ${basisLabel} ${pct.toFixed(2)}%${floorLabel}`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent,minActorMaxHpPercent:minPct,minimum});pushDamageEvent(event);applyCharacterResourceAfterDamage(event,source);
           continue;
         }
         if(source.type==='poison'&&source.action==='apply'){
