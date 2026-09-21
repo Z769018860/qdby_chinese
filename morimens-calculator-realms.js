@@ -207,17 +207,34 @@
     const current=resolveMode(sel.value);
     if(current&&MODE_META[current]?.base===firstBase)sel.value='';
   }
+  function setRealmConditionalControl(wrapId,inputIds,active,{clear=false}={}){
+    const wrap=$(wrapId);
+    if(wrap){
+      wrap.hidden=!active;
+      wrap.setAttribute('aria-disabled',active?'false':'true');
+    }
+    for(const id of inputIds){
+      const el=$(id);if(!el)continue;
+      el.disabled=!active;
+      if(!active&&clear){
+        if(el.type==='checkbox'||el.type==='radio')el.checked=false;
+        else if(el.tagName==='SELECT')el.selectedIndex=0;
+        else el.value='';
+      }
+    }
+  }
   function updateVisibility(){
     syncSecondaryOptions();
     const s=state();
     const propagation=s.modes.includes('propagation');
     const singularity=s.modes.includes('singularity');
     const normalUltra=s.modes.includes('ultra');
-    if($('propagationConsumeWrap'))$('propagationConsumeWrap').hidden=!propagation;
-    if($('propagationApplyWrap'))$('propagationApplyWrap').hidden=!propagation;
-    if($('singularityDimensionWrap'))$('singularityDimensionWrap').hidden=!singularity;
-    if($('ultraRoundWrap'))$('ultraRoundWrap').hidden=!normalUltra;
+    setRealmConditionalControl('propagationConsumeWrap',['propagationConsumeEmbryo'],propagation,{clear:true});
+    setRealmConditionalControl('propagationApplyWrap',['propagationApplyFiesta'],propagation);
+    setRealmConditionalControl('singularityDimensionWrap',['singularityDimensionShuttle'],singularity,{clear:true});
+    setRealmConditionalControl('ultraRoundWrap',['ultraRoundActive'],normalUltra,{clear:true});
     if($('realmChaosCountWrap'))$('realmChaosCountWrap').hidden=!s.chaosCoexistence;
+    if($('realmChaosCount'))$('realmChaosCount').disabled=!s.chaosCoexistence;
   }
   function render(){
     updateVisibility();
