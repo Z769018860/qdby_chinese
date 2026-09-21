@@ -372,7 +372,7 @@
     if($('skillCoeffSummary')){
       const parts=[];
       if(damageEvents.length){
-        const labels={active:'主动',pierce:'穿透',pure:'纯粹',poison:'中毒',counter:'反击'};
+        const labels={active:'主动',pierce:'穿透',pure:'纯粹',fixed:'固定',poison:'中毒',counter:'反击'};
         parts.push(`Damage Events ${damageEvents.length} 个：${damageEvents.map(x=>{
           const name=labels[x.type]||x.type;
           if(x.coefficient!==undefined)return name+' '+Number(x.coefficient).toFixed(2)+'%';
