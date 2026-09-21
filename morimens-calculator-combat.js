@@ -718,7 +718,7 @@
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`伤害事件：主动 / 穿透 / 触腕伤害使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；穿透伤害无视屏障。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。易伤 / 虚弱按 SKeyDB 只作用于主动伤害与触腕伤害；穿透伤害不套这两项。纯粹 / 固定 / 中毒 / 流血 / 反击不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀 / 旧日余烬按 SKeyDB：主动 / 触腕伤害等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。献祭属于自身承受伤害：回合末每层造成 1 点自身伤害并移除 50% 层数，不计入对敌总伤害；延迟献祭在下回合开始转为献祭。`;
+    $('formula').textContent=`伤害事件：主动 / 穿透 / 触腕伤害使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；穿透伤害无视屏障。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。易伤 / 虚弱按 SKeyDB 只作用于主动伤害与触腕伤害；穿透伤害不套这两项。纯粹 / 固定 / 中毒 / 流血 / 反击不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀 / 旧日余烬按 SKeyDB：主动 / 触腕伤害等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。敌方献祭只在会改变对敌伤害时进入事件链；诞生仪式与伤害转献祭效果按对应规则计入。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
