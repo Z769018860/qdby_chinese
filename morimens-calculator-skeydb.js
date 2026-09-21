@@ -66,6 +66,7 @@
     base.psycheSurgeOffset=psycheSurgeLevel();
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     base.rouseActive=rouseActive();
+    base.VulnerableStacks=Math.max(0,Math.floor(num($('targetVulnerableStacks')?.value,0)));
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
     base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
     const realm=window.MorimensRealmEngine?.state?.();
@@ -425,12 +426,12 @@
       {key:'singularityWarpActive',label:'Singularity Warp 已触发',type:'checkbox',calculated:false,description:'标记本次 Exalt 是否满足 Singularity Warp；额外效果依具体 Exalt 文本处理。'}
     ],
     'awakener-0060':[
-      {overlayId:'overlay.caraboo.offering',key:'offeringStacks',label:'Offering / 供奉',min:0,max:5,calculated:false},
-      {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'Satiety / 饱足',min:0,max:50,calculated:false}
+      {overlayId:'overlay.caraboo.offering',key:'offeringStacks',label:'Offering / 供奉',min:0,max:5,calculated:true,description:'卡拉布的狂气爆发会消耗全部供奉；每层使本次狂气爆发额外增加 1 段，并在结算后转化为等量饱足。'},
+      {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'Satiety / 饱足',min:0,max:50,calculated:true,description:'每层提高卡拉布狂气爆发的基础伤害与护盾。伤害计算只把打出前已有的饱足计入本次基础伤害；供奉转化出的饱足不回溯放大已开始结算的本次爆发。'}
     ],
     'awakener-0018':[
       {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:false,description:'10 层 Finale 时获得衍生卡 Illusion’s End。'},
-      {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'Finale Form 生效',type:'checkbox',calculated:false,description:'Finale Form 会改变 Doll: Inferno 的特定技能；当前作为形态状态记录。'}
+      {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'Finale Form 已生效',type:'checkbox',calculated:true,description:'只在实际进入 Finale Form 后勾选。会启用已明确接入的 Finale Form 中毒触发；未勾选时不会把条件分支误算成常驻效果。'}
     ],
     'awakener-0014':[
       {overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true},
@@ -442,11 +443,16 @@
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次赎罪苦痛；基础为 200% ATK，并会按本次探索已完成战斗数自动提高。'},
       {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。'}
     ],
+    'awakener-0010':[
+      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本次移除 Symbiosis / 共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：Lifeform Reconstruction 每移除 1 层共生，使克莱门汀本场基础伤害 +3%。基础上限 10；E3 为 15；最终法则下灵知觉醒可提高到 20。'},
+      {key:'clementineFirstCommandRouse',label:'当前是本回合第一张指令卡',type:'checkbox',calculated:true,description:'仅在“灵知觉醒已发动”时生效。Call of Shaggai：每回合第一张指令卡的伤害、护盾、回复、狂气和银钥效果额外触发 2 次；伤害计算器只重复当前可解析的伤害/状态事件。'}
+    ],
     'awakener-0058':[
       {overlayId:'overlay.pontos.pack-hunt',key:'packHuntStacks',label:'Pack Hunt / 群猎',min:0,max:9,calculated:true,description:'有至少 1 层时，下一张 Gaunt 消耗 1 层并额外触发 1 次；伤害计算会让 Slay-Gaunt 的固定伤害额外结算 1 次。'}
     ],
     'awakener-0020':[
-      {overlayId:'overlay.ramona-timeworn.negentropy',key:'negentropyStacks',label:'Negentropy / 负熵',min:0,max:3,calculated:false,description:'3 层可使 Ramona: Timeworn 的指令卡触发 Loop 效果；不同卡的 Loop 效果不同，当前保留为战斗状态。'}
+      {key:'ramonaPosseUses',label:'本场已使用 Posse 次数',min:0,max:99,calculated:true,description:'Predetermined Strike：本场每使用 1 次 Posse，其力量倍率 +1。基础力量倍率由 SKeyDB 的“STR is 3× more effective”解析。'},
+      {overlayId:'overlay.ramona-timeworn.negentropy',key:'negentropyStacks',label:'Negentropy / 负熵',min:0,max:3,calculated:false,description:'3 层可使指令卡触发 Loop；Loop 生成或选择的派生效果请直接选择对应派生卡计算。'}
     ],
     'awakener-0040':[
       {overlayId:'overlay.pickman.creativity',key:'creativityStacks',label:'Creativity / 创造力',min:0,max:10,calculated:false},
@@ -538,6 +544,12 @@
     return (resourceSpecs[currentAwakener?.id]||[]).filter(spec=>resourceRequirementMet(spec)&&spec.calculated===true);
   }
   function effectiveResourceMax(spec){
+    if(spec?.key==='symbiosisRemovedStacks'){
+      const slot=selectedEnlightenSlot();
+      if(slot==='AbsoluteAxiom')return 20;
+      if(ENLIGHTEN_ORDER.indexOf(slot)>=ENLIGHTEN_ORDER.indexOf('E3'))return 15;
+      return 10;
+    }
     if(spec?.key==='spellboundStacks'){
       const slot=selectedEnlightenSlot();
       if(slot==='AbsoluteAxiom')return 15;
