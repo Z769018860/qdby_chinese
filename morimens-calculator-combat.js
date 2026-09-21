@@ -165,8 +165,8 @@
     const stats=resolvedStats();
     const attackRaw=Math.max(0,n('attack'));
     const attack=attackRaw*Math.max(0,Number(realm.atkMultiplier)||1);
-    const effectiveDef=Math.max(0,num(stats.DEF))*Math.max(0,Number(realm.defMultiplier)||1);
-    const effectiveCon=Math.max(0,num(stats.CON));
+    const effectiveDef=Math.max(0,Number(stats.DEF)||0)*Math.max(0,Number(realm.defMultiplier)||1);
+    const effectiveCon=Math.max(0,Number(stats.CON)||0);
     const sequenceRepeat=Math.max(1,Math.floor(n('hitCount',1)));
   
     let strength=n('strength');
