@@ -97,8 +97,12 @@
     base.KeyflareRegen=num(base.KeyflareRegen,0)+num(auto.keyflareRegen,0);
     base.SigilYield=num(base.SigilYield,0)+num(auto.sigilYield,0);
     base.DeathResistance=num(base.DeathResistance,0)+num(auto.deathResistance,0);
-    base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     Object.assign(base,characterResourceValues());
+    if(currentAwakener?.id==='awakener-0001'){
+      const overExaltUses=Math.max(0,Math.floor(num(base.twentyFourOverExaltPriorUses,0)));
+      base.RealmMastery=Math.max(0,num(base.RealmMastery,0))+24*overExaltUses;
+    }
+    base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     base.psycheSurgeOffset=psycheSurgeLevel();
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     base.rouseActive=rouseActive();
@@ -524,8 +528,11 @@
   const resourceSpecs={
     'awakener-0001':[
       {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:true,showInCalculator:true,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的人格会参与已能可靠还原的伤害分支：躁狂人格会增加「Frenzied Slash」的伤害段数；最终法则且灵知觉醒已发动时，指令卡人格加成按文本翻倍；若启用维度影像，躁狂人格在回合开始获得的临时暴击率与暴击伤害也会计入。其余多目标、后续状态或资源效果仅在可可靠解析时计入，避免高算。'},
-      {key:'twistedCarrionPriorUses',label:'本场此前已释放「扭曲腐肉狂欢」次数',min:0,max:99,calculated:true,description:'该狂气爆发每次释放后使自身基础伤害在本场 +20%。这里填写本次释放之前已经释放的次数；当前这次新增的 +20% 不回溯放大本次已经开始结算的伤害。'},
-      {key:'twentyFourTripleNextCommandActive',label:'超限后：当前是下一张三次生效的指令卡',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发「畸变的解剖」后，“24”的下一张指令卡生效 3 次。仅在当前计算的确实是那一张指令卡时勾选；计算器会把可解析的伤害/状态事件额外重复 2 次。'}
+      {key:'twistedCarrionPriorUses',label:'本场此前已释放「扭曲腐肉狂欢」次数',min:0,max:99,calculated:true,description:'该狂气爆发每次释放结束后，使「扭曲腐肉狂欢」在本场后续释放的基础伤害累计 +20%。第 1 次为 +0%，第 2 次 +20%，第 3 次 +40%，依此类推；当前这次新增的 +20% 不回溯放大本次伤害。'},
+      {key:'twentyFourOverExaltPriorUses',label:'本场此前已释放「畸变的解剖」次数',min:0,max:99,calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发每次释放后获得 24 点界域精通。这里填写当前技能结算前已经释放过的超限爆发次数；有效界域精通会增加 24 × 次数，并参与深海/血肉/超维/原初等已接入的界域精通公式。当前正在释放的这次超限不会反向放大其已经开始结算的基础爆发伤害。'},
+      {key:'twentyFourTripleNextCommandActive',label:'超限后：当前是下一张三次生效的指令卡',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发「畸变的解剖」后，“24”的下一张指令卡生效 3 次。仅在当前计算的确实是那一张指令卡时勾选；计算器会把可解析的伤害/状态事件额外重复 2 次。'},
+      {key:'twentyFourRousePosseUses',label:'灵知觉醒后本场已释放钥令次数（混沌）',min:0,max:99,calculated:true,dependsOnControl:'rouseActive',description:'灵知觉醒的混沌效果：每释放 1 次钥令，“24”的狂气爆发最终伤害提高对应技能等级的 25%–50%。这里填写当前爆发前已经释放的次数。'},
+      {key:'twentyFourRouseArithmeticaConsumed',label:'灵知觉醒后累计消耗算力（血肉）',min:0,max:999,calculated:true,dependsOnControl:'rouseActive',description:'灵知觉醒的血肉效果：每消耗 1 点算力，“24”获得相当于攻击力 2%–4% 的力量。这里填写当前技能结算前已经累计消耗的算力；计算器会把生成的力量加入本次及后续伤害。'}
     ],
     'awakener-0056':[
       {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命',min:0,max:5,calculated:false,description:'织命层数；启灵3上限为 5，启灵3前上限为 3。用于「奇点折跃」后的「无尽线缕」追击。'},
@@ -947,6 +954,41 @@
       return next;
     });
     mapped=applyGenericRouseEffects(mapped);
+    if(currentAwakener?.id==='awakener-0001'&&rouseActive()){
+      const realmState=window.MorimensRealmEngine?.state?.()||{};
+      const realms=new Set(realmState.baseRealms||[]);
+      const rouse=resolvedRouseSkill();
+      const rank=rouseRank();
+      const rouseArg=key=>Math.max(0,num(argValue(rouse?.descriptionArgs?.[key],rank),0));
+      if(realms.has('CHAOS')&&baseSkillId==='skill.24.twisted-carrion-revel'){
+        const posseUses=Math.max(0,Math.floor(Number(resources.twentyFourRousePosseUses)||0));
+        const perUse=rouseArg('StateArg1');
+        const bonus=posseUses*perUse;
+        if(bonus>0)mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
+          ?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·混沌：已释放钥令 '+posseUses+' 次，狂气爆发最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          :event);
+      }
+      if(realms.has('AEQUOR')){
+        const tentacleBonus=rouseArg('StateArg2');
+        mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
+          ?{...event,tentacleBonusCoefficient:(Number(event.tentacleBonusCoefficient)||0)+tentacleBonus,onDamagePoisonPct:(Number(event.onDamagePoisonPct)||0)+10,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·深海：触腕伤害加成 '+tentacleBonus.toFixed(0)+'%，并附加本次伤害 10% 的中毒'].filter(Boolean).join('；')}
+          :event);
+        if(baseSkillId==='skill.24.twisted-carrion-revel'){
+          mapped.push({id:'24-rouse-aequor-poison-trigger',index:mapped.length,position:9990,groupId:'24-rouse-aequor-poison-trigger',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:'灵知觉醒·深海：狂气爆发额外触发 50% 中毒'});
+        }
+      }
+      if(realms.has('CARO')&&baseSkillId==='skill.24.twisted-carrion-revel'){
+        mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
+          ?{...event,strengthMultiplier:(Number.isFinite(Number(event.strengthMultiplier))?Number(event.strengthMultiplier):(event.type==='active'?1:0))+3,usesStrength:true,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·血肉：狂气爆发额外享受 300% 力量加成'].filter(Boolean).join('；')}
+          :event);
+      }
+      if(realms.has('ULTRA')){
+        const counterBonus=rouseArg('StateArg5');
+        mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
+          ?{...event,counterBonusCoefficient:(Number(event.counterBonusCoefficient)||0)+counterBonus,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·超维：反击伤害加成 '+counterBonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          :event);
+      }
+    }
     if(currentAwakener?.id==='awakener-0001'&&baseSkillId==='skill.24.frenzied-slash'&&String(resources.personaState||'depressed')==='manic'){
       const rank=Math.max(1,Number($('skillLevel')?.value)||1);
       const rendered=String(renderTemplate(currentSkill,rank)||'');
@@ -1467,9 +1509,15 @@
         $('skillActualHits').title=range||'填写本次实际伤害段数';
       }
     }
-    let generatedStrength=0,generatedShield=0;
+    let generatedStrength=0,generatedShield=0,characterStrengthBonus=0;
     const generatedBaseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
     const generatedResources=characterResourceValues();
+    if(currentAwakener?.id==='awakener-0001'&&rouseActive()&&(window.MorimensRealmEngine?.state?.().baseRealms||[]).includes('CARO')){
+      const rouse=resolvedRouseSkill(),rank=rouseRank();
+      const perPointPct=Math.max(0,num(argValue(rouse?.descriptionArgs?.StateArg3,rank),0));
+      const consumed=Math.max(0,Math.floor(Number(generatedResources.twentyFourRouseArithmeticaConsumed)||0));
+      characterStrengthBonus=Math.max(0,num(ctx?.ATK,0))*perPointPct/100*consumed;
+    }
     if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'){
       const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
       const fiammaStacks=Number(generatedResources.fiammaActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'?Math.min(3,Math.max(1,Math.floor(Number(generatedResources.fiammaStacks)||1))):0;
@@ -1518,6 +1566,19 @@
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       const resources=characterResourceValues();
+      if(currentAwakener?.id==='awakener-0001'){
+        const prior=Math.max(0,Math.floor(Number(resources.twistedCarrionPriorUses)||0));
+        if(prior>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.24.twisted-carrion-revel')parts.push(`「扭曲腐肉狂欢」本场成长：此前 ${prior} 次，本次基础伤害 +${prior*20}%`);
+        const overUses=Math.max(0,Math.floor(Number(resources.twentyFourOverExaltPriorUses)||0));
+        if(overUses>0)parts.push(`此前超限 ${overUses} 次：有效界域精通额外 +${overUses*24}`);
+        if(rouseActive()){
+          const realms=window.MorimensRealmEngine?.state?.().baseRealms||[];
+          if(realms.includes('CHAOS')&&Number(resources.twentyFourRousePosseUses)>0)parts.push('灵知觉醒·混沌：钥令次数已计入狂气爆发最终伤害');
+          if(realms.includes('AEQUOR'))parts.push('灵知觉醒·深海：触腕伤害加成、10% 中毒及爆发 50% 中毒触发已计入');
+          if(realms.includes('CARO'))parts.push(`灵知觉醒·血肉：累计算力生成力量约 ${characterStrengthBonus.toFixed(1)}；爆发额外 300% 力量加成已计入`);
+          if(realms.includes('ULTRA'))parts.push('灵知觉醒·超维：反击伤害加成已计入');
+        }
+      }
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：对应狂气爆发的暴击伤害加成翻倍');
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 出血`);
@@ -1568,7 +1629,7 @@
     const syncResources=characterResourceValues();
     const characterDamageAmpBonusPct=currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'
       ?8*Math.min(10,Math.max(0,Math.floor(Number(syncResources.finaleStacks)||0))):0;
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:syncResources,rouseActive:rouseActive(),characterDamageAmpBonusPct,generatedStrength,generatedShield,signatureRelic:signatureRelicEnabled()?{id:currentSignatureRelic?.id||'',mods:signatureSkillMods}:null,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:syncResources,rouseActive:rouseActive(),characterDamageAmpBonusPct,characterStrengthBonus,generatedStrength,generatedShield,signatureRelic:signatureRelicEnabled()?{id:currentSignatureRelic?.id||'',mods:signatureSkillMods}:null,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
