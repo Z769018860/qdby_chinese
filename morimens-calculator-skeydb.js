@@ -414,7 +414,9 @@
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
       {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
-      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'勾选后，当前指令卡额外造成一次 200% ATK 主动伤害。适用于本回合首张指令卡，或圣心第 3 次打出后使下一张指令卡获得赎罪苦痛的情况。'}
+      {key:'polluxRouseActive',label:'Path of Ablution / Rouse 已生效',type:'checkbox',calculated:true,description:'Rouse 生效时，Sacred Heart 额外施加等于本次伤害 100% 的流血。'},
+      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次 200% ATK 的赎罪苦痛。'},
+      {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。'}
     ],
     'awakener-0058':[
       {overlayId:'overlay.pontos.pack-hunt',key:'packHuntStacks',label:'Pack Hunt / 群猎',min:0,max:9,calculated:true,description:'有至少 1 层时，下一张 Gaunt 消耗 1 层并额外触发 1 次；伤害计算会让 Slay-Gaunt 的固定伤害额外结算 1 次。'}
@@ -597,6 +599,10 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0&&['active','pierce','fixed','pure'].includes(next.type)){
         next.onDamageBleedPct=Math.max(0,Number(resources.sinMarkStacks)||0);
       }
+      if(currentAwakener?.id==='awakener-0041'&&baseSkillId==='derived.pollux.sacred-heart'&&Number(resources.polluxRouseActive)>0&&(next.type==='active'||next.type==='pierce')){
+        next.onDamageBleedPct=(Number(next.onDamageBleedPct)||0)+100;
+        next.resourceEffectLabel='Rouse：圣心额外施加等于本次伤害 100% 的流血';
+      }
       if(currentAwakener?.id==='awakener-0041'&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&Number(resources.polluxCommandFinalBonusPct)>0&&(next.type==='active'||next.type==='pierce')){
         const bonus=Math.max(0,Math.min(100,Number(resources.polluxCommandFinalBonusPct)||0));
         next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
@@ -688,15 +694,18 @@
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
-      mapped.push({
-        id:'pollux-atonement-by-pain',index:mapped.length,position:9999,groupId:'pollux-atonement',
-        type:'active',source:'resource',coefficient:200,stat:'ATK',hit:1,hitCount:1,
-        strengthMultiplier:0,tentacleBonusCoefficient:0,counterBonusCoefficient:0,
-        critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
-        usesStrength:false,guaranteedCrit:false,activeSource:true,
-        onDamageBleedPct:Math.max(0,Number(resources.sinMarkStacks)||0),
-        resourceEffectLabel:'赎罪苦痛：额外 200% ATK 伤害'
-      });
+      const count=Number(resources.atonementByPainDouble)>0?2:1;
+      for(let i=0;i<count;i++){
+        mapped.push({
+          id:'pollux-atonement-by-pain-'+String(i+1),index:mapped.length,position:9999+i*0.0001,groupId:'pollux-atonement-'+String(i+1),
+          type:'active',source:'resource',coefficient:200,stat:'ATK',hit:1,hitCount:1,
+          strengthMultiplier:0,tentacleBonusCoefficient:0,counterBonusCoefficient:0,
+          critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
+          usesStrength:false,guaranteedCrit:false,activeSource:true,
+          onDamageBleedPct:Math.max(0,Number(resources.sinMarkStacks)||0),
+          resourceEffectLabel:'赎罪苦痛：第 '+String(i+1)+' 次 200% ATK 伤害'
+        });
+      }
     }
     return mapped;
   }
@@ -949,6 +958,8 @@
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxRouseActive)>0)parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × 200% ATK`);
       if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`Pack Hunt ${Number(resources.packHuntStacks)} 层：本张 Gaunt 额外触发 1 次（消耗 1 层）`);
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标 Spellbound ${Number(resources.spellboundStacks)} 层：Enthrall 按层结算纯粹伤害/中毒触发`);
