@@ -177,7 +177,7 @@
       box.innerHTML='<div class="autoSummary">'+chips.join('')+'</div><div style="margin-top:7px">'+s.notes.map(esc).join('<br>')+'</div>';
     }
     const pill=document.querySelector('[aria-labelledby="calcTitle"] .statusPill');
-    if(pill)pill.textContent='v0.7 · 敌人等级 / Typed Damage Events';
+    if(pill)pill.textContent='v0.8 · 公式审计 / Typed Damage Events';
     window.MorimensRealmState=s;
     const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
     if(signature!==lastRealmSignature){lastRealmSignature=signature;window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}))}
