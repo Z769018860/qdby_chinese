@@ -147,6 +147,17 @@
     'overlay.24.realm-and-persona':'探索开始时，「24」进入抑郁人格状态。{Chaos}·抑郁：获得 [StateArg1] 银钥能量；下一次钥令生效 2 次。{Chaos}·躁狂：造成 3 段伤害，并使「24」造成的所有伤害提高 [StateArg2]。{Aequor}·抑郁：对目标施加 {Weakness} 和 {Vulnerable}，持续 2 回合，并生成 1 只触腕，其 {Tentacle DMG} +[StateArg3]。{Aequor}·躁狂：本段伤害享受 [StateArg4]% {Tentacle DMG} 加成，并对全体敌人施加等同于伤害 30% 的 {Poison}。{Caro}·抑郁：{Embryo Fusion} +[Blood:StateArg5]，积累 [StateArg6] {Crimson Furnace}。{Caro}·躁狂：伤害享受 6 倍 {STR▼} 加成，并对目标施加等同于伤害 200% 的 {Bleed}，同时获得 [StateArg7] {STR▼}。{Ultra}·抑郁：将 2 张 {derived:Insight} 加入手牌，临时使目标的 {STR▼} 降低 [StateArg8]。{Ultra}·躁狂：获得等同于所造成伤害 15% 的 {Counter}，随后对其他敌人造成等量 {Pure DMG}。本回合每打出 1 张 {derived:Insight}，该伤害提高 [StateArg9]，最多 [StateArg10]。'
   };
   const sentenceZh=[
+    [/Gain 1 Arithmetica in the first turn of each battle, and gain an additional 1 Arithmetica every 4 turns during boss battles\./gi,'每场战斗首回合获得 1 点算力；首领战中每 4 回合额外获得 1 点算力。'],
+    [/At turn start, obtain a Shield equal to ([^,]+?) DEF and (.+?) equal to ([^,]+?) ATK, generating ([^,]+?) temporary Tentacles that last for ([^.!?]+?) turns?\./gi,'回合开始时，获得等同于 $1 防御力的护盾，以及等同于 $3 攻击力的 $2；并生成 $4 只临时触腕，持续 $5 回合。'],
+    [/After ([^,.]+?) plays a card/gi,'$1 打出卡牌后'],
+    [/Every 1% (.+?) ([^,]+?) and (?:her|his|their) equipped WoD & Covenant have, increase (?:her|his|their) Base DMG by ([^ ]+) and Shield by ([^.!?]+)\./gi,'$2 与其装备的命轮、密契每拥有 1% $1，基础伤害提高 $3，护盾提高 $4。'],
+    [/For each 1 Realm Mastery Attributes? ([^,]+?) possesses, the (.+?) DMG from (.+?) \+([^.!?]+)\./gi,'$1 每拥有 1 点界域精通，$3 的 $2 伤害 +$4。'],
+    [/Any lineup that includes (.+?) Awakener gains/gi,'任何包含 $1 唤醒体的队伍获得'],
+    [/can select from all available Posses when releasing the second Posse/gi,'释放第二次钥令时可从所有可用钥令中选择'],
+    [/the selected Posse will trigger twice/gi,'所选钥令会触发两次'],
+    [/Inflict 3× that much (.+?) instead in Boss Battles/gi,'首领战中改为施加 3 倍等量的 $1'],
+    [/draws? ([^,.]+?) cards?/gi,'抽取 $1 张卡牌'],
+    [/discards? ([^,.]+?) random cards?/gi,'随机弃置 $1 张卡牌'],
     [/At the start of the exploration/gi,'探索开始时'],
     [/At the start of each battle/gi,'每场战斗开始时'],
     [/At the start of odd turns/gi,'奇数回合开始时'],
@@ -324,7 +335,7 @@
     break:'突破',through:'',restrictions:'限制',form:'组成',symbiotic:'协同',right:'合适',rely:'依赖',possesses:'拥有',equipped:'装备',
     considered:'视为',ignores:'无视',ignore:'无视',last:'持续',accumulate:'积累',accumulates:'积累',accumulating:'积累',stacking:'叠加',
     enjoy:'享受',enjoys:'享受',expire:'失效',expires:'失效',expired:'失效',halved:'减半',greater:'大于',than:'',able:'可以',
-    depressed:'抑郁',manic:'躁狂',persona:'人格',crit:'暴击',critical:'暴击',scaling:'缩放',guide:'说明',intent:'意图',attack:'攻击',against:'对',therefore:'因此',odd:'奇数',even:'偶数',except:'除',plus:'加'
+    depressed:'抑郁',manic:'躁狂',persona:'人格',crit:'暴击',critical:'暴击',scaling:'缩放',guide:'说明',intent:'意图',attack:'攻击',against:'对',therefore:'因此',odd:'奇数',even:'偶数',except:'除',plus:'加',twice:'两次',much:'等量'
   }));
   function protectKnownSkillNames(text){
     const protectedTerms=[];
@@ -381,6 +392,7 @@
       .replace(/\s+([，。；：！？])/g,'$1')
       .replace(/([（“「])\s+/g,'$1')
       .replace(/\s+([）”」])/g,'$1')
+      .replace(/([\u3400-\u9fff])\s+(?=[\u3400-\u9fff])/g,'$1')
       .trim();
   }
   function localizedSkillName(skill){
