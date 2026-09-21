@@ -324,10 +324,24 @@
         if(i>=start)start=i+1;
       }
       let prefix=text.slice(start,p);
-      // SKeyDB often wraps scoped mechanics as "[{Devour}: ...]". Once that bracket
-      // is closed, the following main-card text must not inherit the inner condition.
-      const closedScope=prefix.lastIndexOf(']');
-      if(closedScope>=0)prefix=prefix.slice(closedScope+1);
+      // SKeyDB sometimes wraps a mechanic in an outer scope such as
+      // "[{Devour}: Grant [Energy:Arg1] Aliemus.] Deal [Damage:Arg2]...".
+      // Only discard a genuinely closed OUTER mechanic scope. A plain [Arg1]
+      // token must never erase an earlier If/When/Each-stack condition.
+      const scopeOpen=/\[\{(?:Devour|Leap|Aftershock|Resonance[^}]*)\}\s*:/gi;
+      let lastClosedScopeEnd=-1,scopeMatch;
+      while((scopeMatch=scopeOpen.exec(prefix))){
+        let depth=0,end=-1;
+        for(let i=scopeMatch.index;i<prefix.length;i++){
+          if(prefix[i]==='[')depth++;
+          else if(prefix[i]===']'){
+            depth--;
+            if(depth===0){end=i;break}
+          }
+        }
+        if(end>=0)lastClosedScopeEnd=Math.max(lastClosedScopeEnd,end);
+      }
+      if(lastClosedScopeEnd>=0)prefix=prefix.slice(lastClosedScopeEnd+1);
       const rules=[
         [/\{Devour\}\s*:/i,'Devour'],
         [/\{Leap\}\s*:/i,'Leap'],
