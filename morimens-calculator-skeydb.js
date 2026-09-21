@@ -951,6 +951,21 @@
   function scaledBattleBonuses(source,count){
     const out={};for(const key of Object.keys(source||{})){if(key!=='skipped')out[key]=num(source[key])*Math.max(0,count)}return out;
   }
+  function cumulativeWheelBattleScopedLayers(text){
+    const out=emptyScopedDamageLayers();
+    const normalized=String(text||'').replace(/Crit\./gi,'Crit');
+    for(const raw of normalized.split(/(?<=[.!?。；;])\s+(?=(?:[\"“{(]?[A-Z0-9]|[\u3400-\u9fff]))/)){
+      const s=raw.trim();if(!s)continue;
+      if(!/(?:after|at\s+the\s+end\s+of)\s+(?:each|the)\s+battle(?!\s+begins?)(?:\s+ends?)?/i.test(s))continue;
+      mergeScopedDamageLayers(out,scopedDamageLayersFromText(s,true));
+    }
+    return out;
+  }
+  function scaledScopedDamageLayers(source,count){
+    const out=emptyScopedDamageLayers(),times=Math.max(0,count);
+    for(const metric of ['base','final'])for(const scope of DAMAGE_SCOPE_KEYS)out[metric][scope]=num(source?.[metric]?.[scope],0)*times;
+    return out;
+  }
   function hasNumericBattleBonus(source){return Object.entries(source||{}).some(([k,v])=>k!=='skipped'&&Math.abs(num(v))>1e-9)}
   function battleGrowthSources(){
     const sources=[];
@@ -2280,7 +2295,10 @@
       sumBonus(next,numericBonusesFromText(wheelText,false));
       mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(wheelText,false));
       const battleBonus=cumulativeWheelBattleBonuses(wheelText);
-      if(completedBattles()>0&&hasNumericBattleBonus(battleBonus))sumBonus(next,scaledBattleBonuses(battleBonus,completedBattles()));
+      if(completedBattles()>0&&hasNumericBattleBonus(battleBonus)){
+        sumBonus(next,scaledBattleBonuses(battleBonus,completedBattles()));
+        mergeScopedDamageLayers(scopedLayers,scaledScopedDamageLayers(cumulativeWheelBattleScopedLayers(wheelText),completedBattles()));
+      }
       const main=wheelMainstatValue(w,i);
       if(main){
         wheelMainstatSummary.push({wheel:w,...main});
