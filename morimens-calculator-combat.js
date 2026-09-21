@@ -909,8 +909,7 @@
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱：${weakStacks>0?weakStacks+' 层（当前伤害仍只应用一次 -25%）':'无'}。角色专属伤害强效：+${characterDamageAmpBonusPct.toFixed(1)}%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
-    if(skillSync.skill?.ownerAwakenerId==='awakener-0019')$('formula').textContent+=' 血链·希洛校准：攻击力×技能倍率先依次乘局外/通用基伤、局内基伤、打击/大招/指令卡基伤、灵塑基伤、觉醒基伤与伤害强效，之后再加力量项；随后乘暴击、易伤、技能类型终伤、通用最终伤害与其他最终乘区。力量不再错误地受到伤害强效二次放大。';
+    $('formula').textContent=`通用伤害口径：A = 攻击力 × 技能倍率 × 各基础伤害目标池 × 伤害强效；B = A + 力量 × 力量倍率 + 其他加算伤害；C = B × 自身状态修正 × 各最终伤害目标池；D = C × 敌方承伤状态 × 等级/加固/界域等环境系数，最后按暴击/非暴击/期望模式结算。相同作用目标的基础伤害/最终伤害先相加为同一池，不同作用目标的池彼此相乘。伤害强效只作用于攻击力×技能倍率形成的基础伤害部分，不作用于力量或其他加算项。当前等级系数 ${levelFactor.toFixed(3)}；加固 ×${fortifyCoef.toFixed(3)}；界域输出 ×${realmDamageOutputMult.toFixed(3)}。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层，主动/触腕 ×1.5）':'否'}；虚弱：${weakStacks>0?weakStacks+' 层（主动/触腕 ×0.75，仅应用一次）':'无'}。SKeyDB 明确：固定伤害不能暴击、不属于基础伤害且不吃最终伤害；纯粹伤害不能暴击，也不视为对应唤醒体造成的伤害。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -919,20 +918,35 @@
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
-    const helotAudit=events.find(event=>event.damageLayerAudit)?.damageLayerAudit||null;
-    if(helotAudit){
+    const damageAudit=events.find(event=>event.damageLayerAudit)?.damageLayerAudit||null;
+    if(damageAudit){
       const auditRows=[];
-      auditRows.push(['血链校准 · 局外/通用基伤系数',1+helotAudit.genericBasePct/100]);
-      if(helotAudit.skillBasePct>0)auditRows.push(['血链校准 · 技能专属基伤系数',1+helotAudit.skillBasePct/100]);
-      for(const layer of helotAudit.baseLayers||[])auditRows.push(['血链校准 · '+layer.label+'系数',1+Number(layer.pct||0)/100]);
-      auditRows.push(['血链校准 · 伤害强效系数',1+helotAudit.powerPct/100]);
-      auditRows.push(['血链校准 · 力量倍率',helotAudit.strengthMultiplier]);
-      if(helotAudit.strengthFlatAdd>0)auditRows.push(['血链校准 · 本次额外力量',helotAudit.strengthFlatAdd]);
-      auditRows.push(['血链校准 · 易伤系数',1+helotAudit.vulnerabilityPct/100]);
-      auditRows.push(['血链校准 · 通用最终伤害系数',1+helotAudit.genericFinalPct/100]);
-      if(helotAudit.skillFinalPct>0)auditRows.push(['血链校准 · 技能专属终伤系数',1+helotAudit.skillFinalPct/100]);
-      for(const layer of helotAudit.finalLayers||[])auditRows.push(['血链校准 · '+layer.label+'系数',1+Number(layer.pct||0)/100]);
-      auditRows.push(['血链校准 · 其他最终乘区',helotAudit.other]);
+      const factor=pct=>pctFactor(pct);
+      auditRows.push(['乘区校验 · 通用/未分组基伤系数',factor(damageAudit.genericBasePct)]);
+      if(Math.abs(damageAudit.soulforgeBasePct)>1e-9)auditRows.push(['乘区校验 · 灵塑角色基伤系数',factor(damageAudit.soulforgeBasePct)]);
+      for(const layer of damageAudit.scopedBaseLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      if(Math.abs(damageAudit.skillBasePct)>1e-9)auditRows.push(['乘区校验 · 当前技能基伤系数',factor(damageAudit.skillBasePct)]);
+      for(const layer of damageAudit.customBaseLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      auditRows.push(['乘区校验 · 伤害强效系数',factor(damageAudit.powerPct)]);
+      auditRows.push(['乘区校验 · 力量倍率',damageAudit.strengthMultiplier]);
+      if(Math.abs(damageAudit.strengthFlatAdd)>1e-9)auditRows.push(['乘区校验 · 本次额外力量',damageAudit.strengthFlatAdd]);
+      if(Math.abs(damageAudit.additivePart)>1e-9)auditRows.push(['乘区校验 · 其他加算项',damageAudit.additivePart]);
+      if(Math.abs(damageAudit.outgoingStateMult-1)>1e-9)auditRows.push(['乘区校验 · 自身状态修正',damageAudit.outgoingStateMult]);
+      auditRows.push(['乘区校验 · 通用/未分组终伤系数',factor(damageAudit.genericFinalPct)]);
+      for(const layer of damageAudit.scopedFinalLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      if(Math.abs(damageAudit.skillFinalPct)>1e-9)auditRows.push(['乘区校验 · 当前技能终伤系数',factor(damageAudit.skillFinalPct)]);
+      for(const layer of damageAudit.customFinalLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      if(Math.abs(damageAudit.enemyStateMult-1)>1e-9)auditRows.push(['乘区校验 · 敌方承伤状态',damageAudit.enemyStateMult]);
+      auditRows.push(['乘区校验 · 等级系数',damageAudit.levelFactor]);
+      if(Math.abs(damageAudit.fortifyCoef-1)>1e-9)auditRows.push(['乘区校验 · 加固系数',damageAudit.fortifyCoef]);
+      if(Math.abs(damageAudit.realmDamageOutputMult-1)>1e-9)auditRows.push(['乘区校验 · 界域输出系数',damageAudit.realmDamageOutputMult]);
+      if(Math.abs(damageAudit.other-1)>1e-9)auditRows.push(['乘区校验 · 其他独立乘区',damageAudit.other]);
+      if(Math.abs(damageAudit.resourceDamageMultiplier-1)>1e-9)auditRows.push(['乘区校验 · 角色资源独立系数',damageAudit.resourceDamageMultiplier]);
+      auditRows.push(['阶段A · 基伤乘区后',damageAudit.stages?.baseAfterPools||0]);
+      auditRows.push(['阶段A · 伤害强效后',damageAudit.stages?.amplifiedBase||0]);
+      auditRows.push(['阶段B · 加入力量/加算项后',damageAudit.stages?.withAdditions||0]);
+      auditRows.push(['阶段C · 自身状态与最终伤害后',damageAudit.stages?.afterFinal||0]);
+      auditRows.push(['阶段D · 敌方状态/环境后（暴击前）',damageAudit.stages?.beforeCrit||0]);
       rows.unshift(...auditRows);
     }
     rows.unshift(['敌人估算最大生命',enemyMaxHp]);
