@@ -1410,7 +1410,7 @@
         mapped.push({id:'xu-enthrall-poison-resource',index:mapped.length,position:9998,groupId:'xu-enthrall-poison-resource',type:'poison',action:'trigger',source:'resource',basis:'currentPoisonPercent',percent:40*stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：触发 '+(40*stacks)+'% 中毒'});
       }
     }
-    if(currentAwakener?.id==='awakener-0019'&&Number(resources.helotSanguineTurnActive)>0){
+    if(currentAwakener?.id==='awakener-0019'&&(baseSkillId==='skill.helot-catena.sanguine-fetters'||Number(resources.helotSanguineTurnActive)>0)){
       const exalt=currentSkills.find(skill=>skill.id==='skill.helot-catena.sanguine-fetters');
       const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
       const bleedPct=Math.max(0,num(argValue(resolveSkillEnlighten(exalt)?.descriptionArgs?.Arg2,rank),0));
@@ -1418,7 +1418,7 @@
         mapped=mapped.map(event=>event.type==='active'?{
           ...event,
           onDamageBleedPct:(Number(event.onDamageBleedPct)||0)+bleedPct,
-          resourceEffectLabel:[event.resourceEffectLabel,'「缚身锁链」本回合效果：主动伤害附加 '+bleedPct.toFixed(0)+'% 流血'].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,(baseSkillId==='skill.helot-catena.sanguine-fetters'?'「缚身锁链」本次效果：':'「缚身锁链」本回合效果：')+'主动伤害附加 '+bleedPct.toFixed(0)+'% 流血'].filter(Boolean).join('；')
         }:event);
       }
     }
@@ -1807,6 +1807,18 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`当前指令卡最终伤害额外加成 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
       if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('灵知觉醒：「圣心」额外施加等于本次伤害 100% 的出血');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`苦痛救赎：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% 攻击力`);
+      if(currentAwakener?.id==='awakener-0019'){
+        const firstDirect=damageEvents.find(x=>x.type==='active'||x.type==='pierce');
+        if(firstDirect?.separateDamageLayers){
+          const baseLayers=(firstDirect.baseDamageMultipliers||[]).map(x=>x.label+' +'+Number(x.pct).toFixed(1)+'%').join('；');
+          const finalLayers=(firstDirect.finalDamageMultipliers||[]).map(x=>x.label+' +'+Number(x.pct).toFixed(1)+'%').join('；');
+          parts.push('血链公式校准：攻击力基伤乘区分层相乘；伤害强效只作用攻击力基伤；力量在强效之后相加'+(baseLayers?'；'+baseLayers:'')+(finalLayers?'；'+finalLayers:''));
+          if(baseSkillId==='skill.helot-catena.sanguine-fetters'&&progressionState()?.soulforgeEnabled&&progressionState()?.soulforgeLevel>0)parts.push('「缚身锁链」灵塑专属基础伤害与力量倍率已计入');
+          if(baseSkillId==='skill.helot-catena.strike'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E1'))parts.push('启灵1：打击 +15% 暴击率 / +15% 暴击伤害已计入');
+          if(baseSkillId==='skill.helot-catena.hatred-unleashed')parts.push('「恨意宣泄」攻击力百分比力量已加入本次伤害'+(Number(resources.helotHatredBelowHalfHp)>0?'（生命低于50%，启灵2翻倍）':''));
+          if(baseSkillId==='derived.helot-catena.bloodthirsty-flail')parts.push('「嗜血链球」5×力量加成与目标当前流血 30% 触发已计入');
+        }
+      }
       if(currentAwakener?.id==='awakener-0019'&&Number(resources.helotSanguineTurnActive)>0){
         const exalt=currentSkills.find(skill=>skill.id==='skill.helot-catena.sanguine-fetters');
         const bleedPct=Math.max(0,num(argValue(resolveSkillEnlighten(exalt)?.descriptionArgs?.Arg2,Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1))),0));
