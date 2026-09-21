@@ -93,7 +93,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeEnemySacrificeTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','targetVulnerableStacks','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeEnemySacrificeTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -190,7 +190,7 @@
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 对应「无光之底」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>伤害事件</b><br>SKeyDB 的易伤/虚弱只修正主动伤害与触腕伤害；穿透伤害即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为主动伤害或穿透伤害；目标最大生命百分比会生成纯粹伤害；中毒支持“按伤害施加”和“触发 X% 中毒”；反击支持“触发 X% 反击”。侵蚀/旧日余烬：主动伤害/触腕伤害按伤害等量消费；穿透/纯粹/固定/中毒/流血/反击 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置；是否推进到回合末由“结算到本回合结束”总开关统一控制。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方防御常数，因此不采用手工防御/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个等级/生命值样本的对数拟合；普通伤害的等级系数使用 SKeyDB 关卡成长曲线做相对等级归一化，明确属于通用比较模型而非官方防御公式。</div><div class="formulaRow"><b>敌方献祭 / 诞生仪式</b><br>敌方献祭在回合末造成伤害并进入对敌事件链；诞生仪式会把对应伤害转化为敌方献祭。这里只保留会改变对敌伤害的献祭相关计算。</div><div class="formulaRow"><b>纯粹伤害 / 中毒 / 流血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒回合末造成等于层数的纯粹伤害；流血回合末造成等于层数的纯粹伤害并随后移除；反击触发时造成等于反击层数的纯粹伤害。这些状态伤害不套通用等级系数，仍受明确的加固承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
+      <div class="formulaRow"><b>伤害事件与状态范围</b><br><b>主动伤害 / 触腕伤害：</b>受易伤与虚弱影响。<b>穿透伤害：</b>同时削减护盾与生命、不可免疫并无视屏障，但不受易伤/虚弱影响。<b>纯粹伤害：</b>不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果。<b>固定伤害：</b>不能暴击、不属于基础伤害，不受最终伤害或类似加成影响。侵蚀/旧日余烬对主动/触腕按伤害等量消费，对其他伤害按 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方防御常数，因此不采用手工防御/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个等级/生命值样本的对数拟合；普通伤害的等级系数使用 SKeyDB 关卡成长曲线做相对等级归一化，明确属于通用比较模型而非官方防御公式。</div><div class="formulaRow"><b>敌方献祭 / 诞生仪式</b><br>敌方献祭在回合末造成伤害并进入对敌事件链；诞生仪式会把对应伤害转化为敌方献祭。这里只保留会改变对敌伤害的献祭相关计算。</div><div class="formulaRow"><b>纯粹伤害 / 中毒 / 流血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒回合末造成等于层数的纯粹伤害；流血回合末造成等于层数的纯粹伤害并随后移除；反击触发时造成等于反击层数的纯粹伤害。这些状态伤害不套通用等级系数，仍受明确的加固承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
     `;
   }
 
@@ -292,7 +292,8 @@
   
     const basePct=n('baseBonus')+soulforgeBasePct;
     const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0);
-    const vulnerabilityPct=n('vulnerability')+($('buffVuln')?.checked?50:0);
+    const vulnerableStacks=Math.max(0,Math.floor(n('targetVulnerableStacks')));
+    const vulnerabilityPct=n('vulnerability')+(vulnerableStacks>0?50:0);
     const weakCoef=$('buffWeak')?.checked?.75:1;
     const finalPct=n('finalBonus')+Math.max(0,Number(realm.finalDamageBonus)||0);
     const fortifyCoef=clamp(1-Math.max(0,n('fortressStacks'))/100,0,1);
@@ -508,8 +509,12 @@
       return Math.max(0,amount);
     }
 
+    const includeTurnEndSettlement=$('includeTurnEndSettlement')?.checked!==false;
     let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,bleedIndex=0,corrosionIndex=0,counterIndex=0;
     function applyCharacterResourceAfterDamage(event,source){
+      // SKeyDB Pure DMG is not considered damage dealt by the corresponding Awakener,
+      // so "when this Awakener deals damage" attachments (e.g. Sin Mark Bleed) do not trigger from it.
+      if(event?.type==='pure')return;
       const bleedPct=Math.max(0,Number(source?.onDamageBleedPct)||0);
       if(!(event?.damage>0)||bleedPct<=0)return;
       const amount=event.damage*bleedPct/100*realmStatusOutputMult;
@@ -519,6 +524,7 @@
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
         if(source.turnUnique===true&&repeat>0)continue;
+        if(source.turnEndOnly===true&&!includeTurnEndSettlement)continue;
         if(source.type==='pierce'&&source.basis==='tentacle'){
           const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
           for(let i=0;i<count;i++){
@@ -638,7 +644,6 @@
       }
     }
 
-    const includeTurnEndSettlement=$('includeTurnEndSettlement')?.checked!==false;
     const includeTurnEnd=includeTurnEndSettlement&&$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
     const turnEndCount=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
     if(includeTurnEnd){
@@ -718,7 +723,7 @@
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`伤害事件：主动 / 穿透 / 触腕伤害使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；穿透伤害无视屏障。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。易伤 / 虚弱按 SKeyDB 只作用于主动伤害与触腕伤害；穿透伤害不套这两项。纯粹 / 固定 / 中毒 / 流血 / 反击不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀 / 旧日余烬按 SKeyDB：主动 / 触腕伤害等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。敌方献祭只在会改变对敌伤害时进入事件链；诞生仪式与伤害转献祭效果按对应规则计入。`;
+    $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。易伤层数为 ${vulnerableStacks}：只要 ≥1 层，主动/触腕承伤按 SKeyDB +50%，该 +50% 不随层数叠加；虚弱只让主动/触腕造成伤害 -25%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -803,7 +808,7 @@
     const values={
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
-      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
+      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,targetVulnerableStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
       actorMaxHp:0,actorCurrentHp:'',
       corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,enemySacrificeAmount:0,birthRitualStacks:0,sacrificeOnDamagePct:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
