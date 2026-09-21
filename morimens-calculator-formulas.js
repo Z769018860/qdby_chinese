@@ -202,6 +202,24 @@
       return 0;
     }
 
+    function damageCritBonuses(skill,template,tokenEnd,rank,ctx){
+      const text=String(template||'');
+      const local=text.slice(tokenEnd,Math.min(text.length,tokenEnd+260));
+      let critRateBonus=0,critDamageBonus=0;
+      const resolveToken=token=>Math.max(0,num(resolveTemplateArg(skill,token,rank,ctx),0));
+
+      let match=text.match(/This\s+(?:card|hit)['’]s\s+Crit\.\s*Rate\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      if(match)critRateBonus=match[1]!==undefined?resolveToken(match[1]):num(match[2],0);
+
+      match=local.match(/which\s+enjoys?\s+an?\s+additional\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+Crit\.\s*Rate\s+and\s+Crit\.\s*DMG\s+bonus/i);
+      if(match){
+        const value=match[1]!==undefined?resolveToken(match[1]):num(match[2],0);
+        critRateBonus=Math.max(critRateBonus,value);
+        critDamageBonus=Math.max(critDamageBonus,value);
+      }
+      return {critRateBonus,critDamageBonus};
+    }
+
     function damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type){
       const text=String(template||'');
       const localRaw=text.slice(tokenEnd,Math.min(text.length,tokenEnd+260));
@@ -308,6 +326,7 @@
         const coefficient=num(resolveArg(skill?.descriptionArgs?.[argName],rank,ctx),0);
         const count=actualHitOverride??inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
         const type=damageTokenType(template,tokenEnd);
+        const critBonuses=damageCritBonuses(skill,template,tokenEnd,rank,ctx);
         const groupId=`damage-group-${++groupIndex}`;
         primaryGroups.push({groupId,position:tokenStart});
         for(let hit=0;hit<count;hit++){
@@ -325,6 +344,8 @@
             hitCount:count,
             strengthMultiplier:damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type),
             tentacleBonusCoefficient:damageTentacleBonusCoefficient(skill,template,tokenEnd,rank,ctx),
+            critRateBonus:critBonuses.critRateBonus,
+            critDamageBonus:critBonuses.critDamageBonus,
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
             guaranteedCrit:/guaranteed\s+Critical\s+DMG/i.test(template.slice(tokenEnd,tokenEnd+120)),
             activeSource:type==='active'
