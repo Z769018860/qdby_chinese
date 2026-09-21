@@ -18,7 +18,7 @@
     pure:{glyph:'✦',label:'纯粹伤害'},
     fixed:{glyph:'◆',label:'固定伤害'},
     poison:{icon:'IconS_Buff_006.webp',label:'中毒'},
-    bleed:{icon:'IconS_Buff_022.webp',label:'流血'},
+    bleed:{icon:'IconS_Buff_022.webp',label:'出血'},
     corrosion:{icon:'IconS_Buff_070.webp',label:'侵蚀'},
     counter:{icon:'IconS_Buff_019.webp',label:'反击'},
     sacrifice:{icon:'IconS_Buff_041.webp',label:'献祭'},
@@ -33,7 +33,7 @@
     if(/诞生仪式/.test(text))return 'birthRitual';
     if(/旧日余烬/.test(text))return 'embers';
     if(/中毒/.test(text))return 'poison';
-    if(/流血/.test(text))return 'bleed';
+    if(/出血/.test(text))return 'bleed';
     if(/侵蚀/.test(text))return 'corrosion';
     if(/反击/.test(text))return 'counter';
     if(/献祭/.test(text))return 'sacrifice';
@@ -126,21 +126,21 @@
         <div class="field"><label for="fortressStacks">加固层数</label><input id="fortressStacks" type="number" min="0" max="100" step="1" value="0"><small>SKeyDB：每层使受到的伤害降低 1%。</small></div>
         <div class="field"><label class="inlineCheck"><input id="forceCritAll" type="checkbox"> 本次可暴击伤害强制暴击</label><small>用于“当前角色伤害始终暴击”等已激活战斗态；技能文本自身写明“必定暴击”时无需勾选。</small></div>
         <div class="field"><label for="currentPoison">当前中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“触发 X% 中毒”等即时中毒触发。</small></div>
-        <div class="field"><label for="currentBleed">当前流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“触发 X% 流血”和本回合末流血结算。</small></div>
+        <div class="field"><label for="currentBleed">当前出血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“触发 X% 出血”和本回合末出血结算。</small></div>
         <div class="field"><label for="currentCounter">当前反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“触发 X% 反击”事件。</small></div>
         <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于 Pure DMG 保底"><small>SKeyDB 未公开通用 CON→Max HP 换算；仅在技能的 Pure DMG 最低值等伤害公式明确依赖角色最大生命时填写。</small></div>
         <div class="field"><label for="actorCurrentHp">当前角色当前生命</label><input id="actorCurrentHp" type="number" min="0" step="1" placeholder="留空按最大生命"><small>用于 Doresain 等“按当前 HP 百分比造成 Pure DMG”的效果；留空时按当前为满生命处理。</small></div>
         <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
         <div class="field"><label for="corrosionLossMultiplier">侵蚀生命损失倍率 %</label><input id="corrosionLossMultiplier" type="number" min="0" step="1" value="300"><small>SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。</small></div>
-        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；穿透 / 纯粹 / 固定 / 中毒 / 流血 / 反击等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
+        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；穿透 / 纯粹 / 固定 / 中毒 / 出血 / 反击等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
         <div class="field"><label for="enemySacrificeAmount">敌方当前献祭层数</label><input id="enemySacrificeAmount" type="number" min="0" step="0.1" value="0"><small>回合末每层造成 1 点伤害并移除 50%；该伤害计入对敌总伤害，并按“其他伤害”触发侵蚀/旧日余烬。</small></div>
         <div class="field"><label for="birthRitualStacks">敌方已有诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的主动伤害 / 触腕伤害的 1% 转化为献祭；所选技能本身即时施加的层数会自动叠加，上限 75 层，回合末移除。</small></div>
         <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的「潮汐圣礼」灵知觉醒、遗物等持续战斗态。灵塑的同类效果会自动叠加；默认作用于角色自身主动 / 穿透 / 固定伤害，独立触腕通过诞生仪式计算。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
-        <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕 / 中毒 / 流血，并在最后清空侵蚀、重置旧日余烬；关闭可只查看本次卡牌的即时结果。</small></span></label>
+        <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕 / 中毒 / 出血，并在最后清空侵蚀、重置旧日余烬；关闭可只查看本次卡牌的即时结果。</small></span></label>
         <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入回合末中毒<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的纯粹伤害。</small></span></label>
-        <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入回合末流血<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的纯粹伤害，并随后移除。</small></span></label>
+        <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入回合末出血<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的纯粹伤害，并随后移除。</small></span></label>
         <label class="check"><input id="includeEnemySacrificeTurnEnd" type="checkbox" checked><span>计入敌方献祭回合末伤害<small>每层造成 1 点对敌伤害，受敌方加固影响；结算后敌方献祭减半。</small></span></label>
       </div>
       <div class="combatReadout" id="enemyLevelReadout"></div>
@@ -287,7 +287,7 @@
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>晦暝·深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 对应「无光之底」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>伤害事件与状态范围</b><br><b>主动伤害 / 触腕伤害：</b>受易伤与虚弱影响。<b>穿透伤害：</b>同时削减护盾与生命、不可免疫并无视屏障，但不受易伤/虚弱影响。<b>纯粹伤害：</b>不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果。<b>固定伤害：</b>不能暴击、不属于基础伤害，不受最终伤害或类似加成影响。侵蚀/旧日余烬对主动/触腕按伤害等量消费，对其他伤害按 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方防御常数，因此不采用手工防御/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个等级/生命值样本的对数拟合；普通伤害的等级系数使用 SKeyDB 关卡成长曲线做相对等级归一化，明确属于通用比较模型而非官方防御公式。</div><div class="formulaRow"><b>敌方献祭 / 诞生仪式</b><br>敌方献祭在回合末造成伤害并进入对敌事件链；诞生仪式会把对应伤害转化为敌方献祭。这里只保留会改变对敌伤害的献祭相关计算。</div><div class="formulaRow"><b>纯粹伤害 / 中毒 / 流血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒回合末造成等于层数的纯粹伤害；流血回合末造成等于层数的纯粹伤害并随后移除；反击触发时造成等于反击层数的纯粹伤害。这些状态伤害不套通用等级系数，仍受明确的加固承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；晦暝·深海则严格使用队伍最大生命 ×5%。</div>
+      <div class="formulaRow"><b>伤害事件与状态范围</b><br><b>主动伤害 / 触腕伤害：</b>受易伤与虚弱影响。<b>穿透伤害：</b>同时削减护盾与生命、不可免疫并无视屏障，但不受易伤/虚弱影响。<b>纯粹伤害：</b>不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果。<b>固定伤害：</b>不能暴击、不属于基础伤害，不受最终伤害或类似加成影响。侵蚀/旧日余烬对主动/触腕按伤害等量消费，对其他伤害按 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方防御常数，因此不采用手工防御/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个等级/生命值样本的对数拟合；普通伤害的等级系数使用 SKeyDB 关卡成长曲线做相对等级归一化，明确属于通用比较模型而非官方防御公式。</div><div class="formulaRow"><b>敌方献祭 / 诞生仪式</b><br>敌方献祭在回合末造成伤害并进入对敌事件链；诞生仪式会把对应伤害转化为敌方献祭。这里只保留会改变对敌伤害的献祭相关计算。</div><div class="formulaRow"><b>纯粹伤害 / 中毒 / 出血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒回合末造成等于层数的纯粹伤害；出血回合末造成等于层数的纯粹伤害并随后移除；反击触发时造成等于反击层数的纯粹伤害。这些状态伤害不套通用等级系数，仍受明确的加固承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；晦暝·深海则严格使用队伍最大生命 ×5%。</div>
     `;
   }
 
@@ -628,7 +628,7 @@
       if(!(event?.damage>0)||bleedPct<=0)return;
       const amount=event.damage*bleedPct/100*realmStatusOutputMult;
       bleedAdded+=amount;
-      events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:`罪印附加流血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
+      events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:`罪印附加出血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
     }
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
@@ -723,8 +723,8 @@
           events.push({
             id:`bleed-apply-${++bleedIndex}`,type:'bleed',action:'apply',
             label:source.basis==='sourceDamage'
-              ?`流血施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
-              :`流血施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+              ?`出血施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
+              :`出血施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
@@ -732,7 +732,7 @@
         if(source.type==='bleed'&&source.action==='trigger'){
           const stacks=initialBleed+bleedAdded;
           const raw=stacks*Math.max(0,Number(source.percent)||0)/100;
-          pushDamageEvent(pureEvent(raw,`流血触发 ${Number(source.percent||0).toFixed(2)}%`,`bleed-trigger-${++bleedIndex}`,'bleed',{action:'trigger',stacks,percent:source.percent}));
+          pushDamageEvent(pureEvent(raw,`出血触发 ${Number(source.percent||0).toFixed(2)}%`,`bleed-trigger-${++bleedIndex}`,'bleed',{action:'trigger',stacks,percent:source.percent}));
           continue;
         }
         if(source.type==='counter'&&source.action==='gain'){
@@ -767,7 +767,7 @@
     const includeBleedTurnEnd=includeTurnEndSettlement&&$('includeBleedTurnEnd')?.checked===true;
     if(includeBleedTurnEnd&&(initialBleed+bleedAdded)>0){
       const stacks=initialBleed+bleedAdded;
-      pushDamageEvent(pureEvent(stacks,'流血 · 回合末纯粹伤害（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
+      pushDamageEvent(pureEvent(stacks,'出血 · 回合末纯粹伤害（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
     }
     const sacrificeSourceDamage=events
       // "DMG dealt by Murphy: Fauxborn" is attributed to the Awakener herself.
@@ -838,7 +838,7 @@
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
       if((event.type==='poison'||event.type==='bleed'||event.type==='corrosion'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
-      const tags={active:'主动伤害',pierce:'穿透伤害',tentacle:'触腕伤害',pure:'纯粹伤害',fixed:'固定伤害',poison:'中毒',bleed:'流血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
+      const tags={active:'主动伤害',pierce:'穿透伤害',tentacle:'触腕伤害',pure:'纯粹伤害',fixed:'固定伤害',poison:'中毒',bleed:'出血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
@@ -851,7 +851,7 @@
     rows.push(['纯粹伤害合计',pureTotal]);
     rows.push(['固定伤害合计',fixedTotal]);
     rows.push(['中毒伤害合计',poisonTotal]);
-    rows.push(['流血伤害合计',bleedTotal]);
+    rows.push(['出血伤害合计',bleedTotal]);
     rows.push(['反击伤害合计',counterTotal]);
     rows.push(['敌方献祭回合末伤害',sacrificeTotal]);
     rows.push(['敌方初始献祭',initialEnemySacrifice]);
@@ -874,7 +874,7 @@
     rows.push(['侵蚀最终剩余',corrosionRemaining]);
     rows.push(['旧日余烬最终剩余',embersRemaining]);
     rows.push(['最终中毒层数',initialPoison+poisonAdded]);
-    rows.push(['最终流血层数',includeBleedTurnEnd?0:initialBleed+bleedAdded]);
+    rows.push(['最终出血层数',includeBleedTurnEnd?0:initialBleed+bleedAdded]);
     rows.push(['本次新增反击',counterAdded]);
     rows.push(['最终反击',counterCurrent]);
     rows.push(['本次对敌合计',total]);
@@ -885,7 +885,7 @@
       {kind:'pure',label:'纯粹伤害',value:pureTotal},
       {kind:'fixed',label:'固定伤害',value:fixedTotal},
       {kind:'poison',label:'中毒',value:poisonTotal},
-      {kind:'bleed',label:'流血',value:bleedTotal},
+      {kind:'bleed',label:'出血',value:bleedTotal},
       {kind:'counter',label:'反击',value:counterTotal},
       {kind:'sacrifice',label:'献祭',value:sacrificeTotal},
       {kind:'corrosion',label:'侵蚀追加生命损失',value:corrosionDamage},
@@ -913,7 +913,7 @@
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${fixedPoisonInflictionMult!==1?`；固定中毒施加 ×<b>${fixedPoisonInflictionMult.toFixed(2)}</b>`:''}${poisonTriggerMult!==1?`；中毒触发 ×<b>${poisonTriggerMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 流血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${fixedPoisonInflictionMult!==1?`；固定中毒施加 ×<b>${fixedPoisonInflictionMult.toFixed(2)}</b>`:''}${poisonTriggerMult!==1?`；中毒触发 ×<b>${poisonTriggerMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 出血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
     }
     window.MorimensDamageEvents={
       mode,
