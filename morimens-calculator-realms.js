@@ -260,7 +260,7 @@
   function inject(){
     if($('realmEnvironmentModel')||!$('calcBtn'))return;
     const builder=$('calcBtn').closest('.panel')?.querySelector('.builder');if(!builder)return;
-    const block=document.createElement('div');block.className='builderBlock';block.id='realmEnvironmentModel';
+    const block=document.createElement('div');block.className='builderBlock calcSection calcSectionRealm';block.id='realmEnvironmentModel';
     block.innerHTML=[
       '<div class="builderTitle"><span>⑥ 队伍界域</span><small>最多两个不同界域</small></div>',
       '<div class="formGrid">',
