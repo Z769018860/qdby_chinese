@@ -206,7 +206,8 @@
             stat:skill?.descriptionArgs?.[argName]?.stat||'ATK',
             hit:hit+1,
             hitCount:count,
-            activeSource:true
+            usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
+            activeSource:type==='active'
           });
         }
       }
@@ -252,6 +253,53 @@
           id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
           type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
           sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+        });
+      }
+
+      for(const match of template.matchAll(/inflict\s+\[\{Poison\}:([^\]]+)\][^.!?]*?\{Poison\}/gi)){
+        const argName=match[1],arg=skill?.descriptionArgs?.[argName];
+        const value=num(resolveArg(arg,rank,ctx),0);
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'poison',action:'apply',source:'skill',
+          basis:arg?.stat?'statPercent':'flat',
+          stat:arg?.stat||null,amount:arg?.stat?null:value,percent:arg?.stat?value:null,
+          activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/\{Poison\}\s+equal to\s+\[([^\]]+)\]%?\s+(?:of\s+)?DMG dealt/gi)){
+        const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:gain|obtain)\s+\[Counterattack:([^\]]+)\][^.!?]*?\{Counter\}/gi)){
+        const argName=match[1],arg=skill?.descriptionArgs?.[argName];
+        const value=num(resolveArg(arg,rank,ctx),0);
+        events.push({
+          id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'counter',action:'gain',source:'skill',
+          basis:arg?.stat?'statPercent':'flat',
+          stat:arg?.stat||null,amount:arg?.stat?null:value,percent:arg?.stat?value:null,
+          activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:gain|obtain)\s+\{(?:Temporary )?Counter\}\s+equal to\s+\[([^\]]+)\]%?\s+(?:of\s+)?DMG dealt/gi)){
+        const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
+        events.push({
+          id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'counter',action:'gain',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:gain|obtain)\s+\{(?:Temporary )?Counter\}\s+equal to\s+\[([^\]]+)\]%?\s+of\s+(ATK|DEF|CON)/gi)){
+        const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
+        events.push({
+          id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'counter',action:'gain',source:'skill',basis:'statPercent',
+          stat:String(match[2]).toUpperCase(),percent,activeSource:false
         });
       }
 
@@ -348,7 +396,8 @@
     const t=String(skill?.descriptionTemplate||'');
     const patterns=[
       /(?:equal to|with (?:a|an)|enjoys? (?:a|an)?|receives? (?:a|an)?)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
-      /\[([^\]]+)\]%\s*\{Tentacle DMG\}\s*(?:bonus|Bonus)/i
+      /\[([^\]]+)\]%\s*\{Tentacle DMG\}\s*(?:bonus|Bonus)/i,
+      /(?:gain|gaining|gains)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i
     ];
     for(const re of patterns){
       const m=t.match(re);if(!m)continue;
@@ -441,7 +490,6 @@
     masteryEffectMultiplier=1,
     extraBaseMaxHpPct=0,
     extraBonusPct=0,
-    benthosRagingPct=100
   }={}){
     const mastery=num(realmMastery,0),masteryMultFactor=Math.max(0,num(masteryEffectMultiplier,1));
     const effectiveMastery=mastery*masteryMultFactor;
@@ -451,12 +499,12 @@
     let stanceMult=1;
     if(mode==='standard'&&stance==='tranquil')stanceMult=0.5;
     if(mode==='standard'&&stance==='raging')stanceMult=1.25;
-    if(mode==='benthos'&&stance==='raging')stanceMult=Math.max(0,num(benthosRagingPct,100))/100;
+    if(mode==='benthos'&&stance==='raging')stanceMult=1.25;
     let masteryMult=1;
     if(mode==='benthos'&&stance==='raging')masteryMult=1+effectiveMastery*0.00025;
     const extraMult=1+num(extraBonusPct)/100;
     const attack=base*stanceMult*masteryMult*extraMult;
-    const ragingTriggerPct=mode==='benthos'?100:(50+effectiveMastery*0.02);
+    const ragingTriggerPct=mode==='benthos'?100:(50+Math.floor(effectiveMastery/50));
     const turnEndAllowed=!(mode==='benthos'&&stance==='tranquil');
     return {base,coexistenceBase,stanceMult,masteryMult,masteryEffectMultiplier:masteryMultFactor,effectiveMastery,extraMult,attack,ragingTriggerPct,turnEndAllowed};
   }
