@@ -147,27 +147,38 @@
   function calculate(){
     if(!$('combatModel')||!$('resultNumber'))return;
     renderTriplet();
-    const attack=Math.max(0,n('attack'));
+    const realm=window.MorimensRealmEngine?.state?.()||{atkMultiplier:1,defMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,propagationFiestaStacks:0,propagationApplies:false,label:'普通界域'};
+    const attackRaw=Math.max(0,n('attack'));
+    const attack=attackRaw*Math.max(0,Number(realm.atkMultiplier)||1);
     const coef=Math.max(0,n('skillCoef'))/100;
     const hits=Math.max(1,Math.floor(n('hitCount',1)));
-    let strength=n('strength');if($('buffBrute')?.checked)strength+=8;if($('buffBurst')?.checked)strength+=66;
-
+    let strength=n('strength');
+    if($('buffBrute')?.checked)strength+=8;
+    if($('buffBurst')?.checked)strength+=66;
+    const strengthDown=Math.max(0,n('strengthDown'));
+    const netStrength=strength-strengthDown;
+  
     const tentacle=tentacleState();
+    const tentacleWithStrength=Math.max(0,tentacle.attack+netStrength*0.5);
     const skillSync=window.MorimensSkillSync||{};
     const progression=window.MorimensProgressionSync||window.MorimensCharacterSync?.progression||{};
     const skillTentacleCoef=Math.max(0,Number(skillSync.tentacleCoefficient)||0)/100;
     const skillTriggerPct=skillSync.triggeredTentaclePercent===null||skillSync.triggeredTentaclePercent===undefined?0:Math.max(0,Number(skillSync.triggeredTentaclePercent))/100;
+    const propagationTentacleEffectMult=realm.propagationApplies?1+Math.max(0,Number(realm.propagationFiestaStacks)||0)/100:1;
     const soulforgeFlat=progression.soulforgeEnabled?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
     const soulforgeBasePct=progression.soulforgeEnabled?Math.max(0,Number(progression.baseDamagePct)||0):0;
-
-    const activeBaseRaw=(attack*coef+strength+tentacle.attack*skillTentacleCoef+soulforgeFlat)*hits;
-    const base=activeBaseRaw*(1+(n('baseBonus')+soulforgeBasePct)/100);
-    const powered=base*(1+n('powerBonus')/100);
+  
+    const activeBaseRaw=(attack*coef+netStrength+tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult+soulforgeFlat)*hits;
+    const basePct=n('baseBonus')+soulforgeBasePct;
+    const base=activeBaseRaw*(1+basePct/100);
+    const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0);
+    const powered=base*(1+powerPct/100);
     const vulnerabilityPct=n('vulnerability')+($('buffVuln')?.checked?50:0);
     const vuln=powered*(1+vulnerabilityPct/100);
     const weakCoef=$('buffWeak')?.checked?.75:1;
-    const final=vuln*(1+n('finalBonus')/100)*weakCoef;
-
+    const finalPct=n('finalBonus')+Math.max(0,Number(realm.finalDamageBonus)||0);
+    const final=vuln*(1+finalPct/100)*weakCoef;
+  
     const enemyDef=Math.max(0,n('enemyDefense')),k=Math.max(1,n('defenseConstant',1000));
     const defenseCoef=$('defenseMode')?.value==='curve'?k/(k+enemyDef):Math.max(0,n('defenseFactor',100))/100;
     const fortifyCoef=clamp(1-Math.max(0,n('fortressStacks'))/100,0,1);
@@ -177,54 +188,60 @@
     const crit=normal*critMult,expected=normal*(1-critRate)+crit*critRate;
     const mode=document.querySelector('.modeBtn[aria-pressed="true"]')?.dataset?.mode||'expected';
     const direct={normal,crit,expected}[mode]??expected;
-
-    // SKeyDB explicitly states Vulnerable/Weakness affect Active and Tentacle DMG.
-    // DMG Amplification is kept as the generic damage-amplification multiplier; card-specific
-    // Base/Final DMG bonuses are not silently applied to standalone Tentacle attacks.
-    const tentacleTargetMult=(1+n('powerBonus')/100)*(1+vulnerabilityPct/100)*weakCoef*defenseCoef*fortifyCoef*other;
-    const oneTentacle=tentacle.attack*tentacleTargetMult;
+  
+    const tentacleTargetMult=(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*defenseCoef*fortifyCoef*other;
+    const oneTentacle=tentacleWithStrength*tentacleTargetMult;
     const skillTriggered=skillTriggerPct>0?oneTentacle*skillTriggerPct:0;
-    const turnEndTentacle=oneTentacle*Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
-    const includeTurnEnd=$('includeTurnEndTentacle')?.checked===true;
-
-    const corrosionUsed=Math.min(Math.max(0,n('corrosionAmount')),direct),embersUsed=Math.min(Math.max(0,n('embersAmount')),direct);
+    const stanceTriggered=$('tentacleStance')?.value==='raging'&&activeBaseRaw>0?oneTentacle*Math.max(0,Number(tentacle.ragingTriggerPct)||0)/100:0;
+    const rawTurnEnd=oneTentacle*Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
+    const turnEndTentacle=tentacle.turnEndAllowed===false?0:rawTurnEnd;
+    const includeTurnEnd=$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
+  
+    const reactiveBase=direct+skillTriggered+stanceTriggered+(includeTurnEnd?turnEndTentacle:0);
+    const corrosionUsed=Math.min(Math.max(0,n('corrosionAmount')),Math.max(0,reactiveBase));
+    const embersUsed=Math.min(Math.max(0,n('embersAmount')),Math.max(0,reactiveBase));
     const corrosionDamage=corrosionUsed*3,embersDamage=embersUsed*3;
-    const total=direct+skillTriggered+(includeTurnEnd?turnEndTentacle:0)+corrosionDamage+embersDamage;
-
+    const total=direct+skillTriggered+stanceTriggered+(includeTurnEnd?turnEndTentacle:0)+corrosionDamage+embersDamage;
+  
     const label={normal:'非暴击',crit:'暴击',expected:'期望'}[mode];
     $('resultLabel').textContent=`${$('charSelect')?.selectedOptions?.[0]?.textContent||'角色'} · ${label}总伤害`;
     $('resultNumber').textContent=fmt(total);
     $('normalLine').textContent=`非暴击直伤：${fmt(normal)}`;
     $('critLine').textContent=`暴击直伤：${fmt(crit)}`;
     $('expectedLine').textContent=`期望直伤：${fmt(expected)}`;
-
-    const activeParts=[`攻击 ${fmt(attack)} × 技能 ${coef.toFixed(3)}`,`力量 ${fmt(strength)}`];
-    if(skillTentacleCoef)activeParts.push(`触腕 ${fmt(tentacle.attack)} × ${skillTentacleCoef.toFixed(3)}`);
+  
+    const activeParts=[`攻击 ${fmt(attackRaw)} × 界域攻击 ${(Number(realm.atkMultiplier)||1).toFixed(3)} × 技能 ${coef.toFixed(3)}`,`净力量 ${fmt(netStrength)}`];
+    if(skillTentacleCoef)activeParts.push(`触腕 ${fmt(tentacleWithStrength)} × ${skillTentacleCoef.toFixed(3)}${realm.propagationApplies?` × 狂欢 ${propagationTentacleEffectMult.toFixed(3)}`:''}`);
     if(soulforgeFlat)activeParts.push(`灵塑专属 ${fmt(attack)} × ${(progression.flatAtkDamagePct/100).toFixed(3)}`);
-    $('formula').textContent=`[(${activeParts.join(' + ')}) × ${hits}] × 基础伤害 ${(1+(n('baseBonus')+soulforgeBasePct)/100).toFixed(3)} × 伤害强效 ${(1+n('powerBonus')/100).toFixed(3)} × 易伤 ${(1+vulnerabilityPct/100).toFixed(3)} × 终伤 ${(1+n('finalBonus')/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；触腕单次 = 基础 ${fmt(tentacle.base)} × 姿态 ${tentacle.stanceMult.toFixed(3)} × 精通 ${tentacle.masteryMult.toFixed(4)} × 额外增幅 ${tentacle.extraMult.toFixed(3)}。`;
-
+    $('formula').textContent=`[(${activeParts.join(' + ')}) × ${hits}] × 基础伤害 ${(1+basePct/100).toFixed(3)} × 伤害强效 ${(1+powerPct/100).toFixed(3)} × 易伤 ${(1+vulnerabilityPct/100).toFixed(3)} × 终伤 ${(1+finalPct/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；触腕单次 = (机制触腕 ${fmt(tentacle.attack)} + 净力量×50%) × 目标乘区。`;
+  
     const rows=[
+      ['界域修正后攻击力',attack],
       ['技能基础项（含触腕与可确认的灵塑专属加成）',activeBaseRaw],
       ['灵塑额外攻击力伤害',soulforgeFlat*hits],
       ['基础伤害转化后',base],
-      ['伤害强效转化后',powered],
+      ['团队/角色伤害强效转化后',powered],
       ['易伤与最终增伤后',final],
       ['敌方防御与加固后直伤',direct],
-      ['当前单次触腕伤害（目标修正后）',oneTentacle],
+      ['当前单次触腕伤害（含 50% 净力量）',oneTentacle],
       ['当前技能触发的额外触腕',skillTriggered],
+      ['怒涛主动伤害后触腕',stanceTriggered],
       ['回合末全部触腕',turnEndTentacle],
       ['侵蚀追加生命损失',corrosionDamage],
       ['旧日余烬追加生命损失',embersDamage],
       ['本次合计',total]
     ];
     $('breakdown').innerHTML=rows.map(([a,b])=>`<div class="step"><span>${esc(a)}${a==='回合末全部触腕'&&!includeTurnEnd?'（未计入总伤害）':''}</span><strong>${fmt(b)}</strong></div>`).join('');
-
-    const stance={surging:'涨潮 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||'';
+  
+    const tmode=effectiveTentacleMode();
+    const stance=tmode==='benthos'
+      ?({surging:'涨潮 100%',tranquil:'静海（回合末不攻击）',raging:`怒涛 ${n('benthosRagingPct',100).toFixed(1)}% 基础倍率`}[$('tentacleStance')?.value]||'')
+      :({surging:'涨潮 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||'');
     if($('tentacleReadout')){
-      const model=$('tentacleMode')?.value==='benthos'?'深渊深海':'普通深海';
-      $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 最终界域精通 <b>${n('realmMastery').toFixed(1)}</b><br>机制基础触腕 <b>${fmt(tentacle.base)}</b> → 当前单次触腕 <b>${fmt(tentacle.attack)}</b> → 目标修正后 <b>${fmt(oneTentacle)}</b>。${$('tentacleStance')?.value==='raging'&&$('tentacleMode')?.value!=='benthos'?` 普通怒涛主动伤害后触发倍率：<b>${tentacle.ragingTriggerPct}%</b>。`:''}${skillTentacleCoef?` 当前技能额外享受 <b>${(skillTentacleCoef*100).toFixed(1)}%</b> 触腕伤害加成。`:''}${skillTriggerPct?` 当前技能额外触发 <b>${(skillTriggerPct*100).toFixed(1)}%</b> 触腕伤害。`:''}`;
+      const model=tmode==='benthos'?'深渊深海':'普通深海 / 普通触腕';
+      $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 最终界域精通 <b>${n('realmMastery').toFixed(1)}</b><br>机制基础触腕 <b>${fmt(tentacle.base)}</b> → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 目标修正后 <b>${fmt(oneTentacle)}</b>。${$('tentacleStance')?.value==='raging'?` 主动伤害后额外触发：<b>${fmt(stanceTriggered)}</b>（${tentacle.ragingTriggerPct}%）。`:''}${tentacle.turnEndAllowed===false?' 当前姿态禁止回合末触腕攻击。':''}${skillTentacleCoef?` 当前技能额外享受 <b>${(skillTentacleCoef*100).toFixed(1)}%</b> 触腕伤害加成。`:''}${skillTriggerPct?` 当前技能额外触发 <b>${(skillTriggerPct*100).toFixed(1)}%</b> 触腕伤害。`:''}`;
     }
-    if($('combatConversion'))$('combatConversion').innerHTML=`攻击侧：基础伤害 <b>${fmt(activeBaseRaw)}</b> → 伤害强效后 <b>${fmt(powered)}</b>；暴击率 <b>${(critRate*100).toFixed(1)}%</b>，暴击伤害 <b>${(critMult*100).toFixed(1)}%</b>。敌方：防御 <b>${fmt(enemyDef)}</b>，防御系数 <b>${(defenseCoef*100).toFixed(1)}%</b>，加固后系数 <b>${(fortifyCoef*100).toFixed(1)}%</b>。${progression.gnosticLevel?` 内在灵格 <b>${progression.gnosticLevel}</b> 已按基础属性等级 +${progression.bonusLevels} 计入。`:''}${progression.soulforgeLevel?` 灵塑 <b>${progression.soulforgeLevel}</b>：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?' 已计入':' 当前未启用'}。`:''}`;
+    if($('combatConversion'))$('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>，团队伤害强效额外 <b>+${Math.max(0,Number(realm.teamDamageAmp)||0).toFixed(0)}%</b>。攻击侧：基础伤害 <b>${fmt(activeBaseRaw)}</b> → 强效后 <b>${fmt(powered)}</b>；暴击率 <b>${(critRate*100).toFixed(1)}%</b>，暴击伤害 <b>${(critMult*100).toFixed(1)}%</b>。敌方：防御 <b>${fmt(enemyDef)}</b>，防御系数 <b>${(defenseCoef*100).toFixed(1)}%</b>，加固后系数 <b>${(fortifyCoef*100).toFixed(1)}%</b>。${progression.gnosticLevel?` 内在灵格 <b>${progression.gnosticLevel}</b> 已按基础属性等级 +${progression.bonusLevels} 计入。`:''}${progression.soulforgeLevel?` 灵塑 <b>${progression.soulforgeLevel}</b>：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?' 已计入':' 当前未启用'}。`:''}`;
   }
 
   function resetEnemy(){
