@@ -7,7 +7,7 @@
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
-  const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心'};
+  const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄'};
   const zhCovenants={
     'Deus Ex Machina':'机械降神',
     'Re-evolution':'再衍化',
@@ -118,6 +118,7 @@
     [/Death Resistance/gi,'死亡抵抗'],[/Sigil Yield/gi,'黑印掉落'],[/Team Unique/gi,'队伍唯一'],[/wielder/gi,'装备者'],[/exploration/gi,'探索'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
     [/Pierce DMG/gi,'穿透伤害'],[/Pure DMG/gi,'纯粹伤害'],[/Fixed DMG/gi,'固定伤害'],[/Active DMG/gi,'主动伤害'],[/Tentacle DMG/gi,'触腕伤害'],
     [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'流血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
+    [/Spellbound/gi,'痴醉'],[/Betroth/gi,'相许'],[/Enthrall/gi,'夺魄'],[/Emotion/gi,'情绪'],[/Metaphor/gi,'隐喻'],
     [/Leap/gi,'跃迁'],[/Aftershock/gi,'余震'],[/Devour/gi,'吞噬'],[/Resonance/gi,'共鸣'],[/Ritual/gi,'仪式'],[/Stealing|Steal/gi,'窃取'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
     [/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
     [/Crit\. Rate/gi,'暴击率'],[/Crit\. DMG/gi,'暴击伤害'],[/Final DMG/gi,'最终伤害'],[/Base DMG/gi,'基础伤害'],
@@ -393,7 +394,7 @@
 
   const resourceSpecs={
     'awakener-0001':[
-      {key:'personaState',label:'当前人格',type:'select',calculated:false,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的 Realm and Persona 状态。不同人格会改变对应界域触发效果；当前作为战斗状态记录，不跨技能猜测触发时序。'}
+      {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:false,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的人格状态。不同人格会改变对应界域触发效果；当前作为战斗状态记录，不跨技能猜测触发时序。'}
     ],
     'awakener-0056':[
       {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命者',min:0,max:5,calculated:false,description:'织命者层数；E3 上限为 5，E3 前上限为 3。用于 Singularity Warp 后的 Infinite Threads 追击。'},
@@ -444,7 +445,7 @@
       {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，All-In! 基础伤害 +0.5%。'}
     ],
     'awakener-0024':[
-      {key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒会提高全队最终伤害；恐惧会提高力量/反击/中毒生成；悲伤与喜悦主要影响回复/资源。'},
+      {overlayId:'overlay.horla.emotion',coversOverlayIds:['overlay.horla.anger','overlay.horla.fear','overlay.horla.grief','overlay.horla.happiness'],key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒会提高全队最终伤害；恐惧会提高力量/反击/中毒生成；悲伤与喜悦主要影响回复/资源。'},
       {overlayId:'overlay.horla.metaphor',key:'angerMetaphorStacks',label:'愤怒隐喻',min:0,max:3,calculated:true,description:'Snarl Psalm 会消耗全部愤怒隐喻；每层额外造成 2 段伤害。'},
       {overlayId:'overlay.horla.metaphor',key:'griefMetaphorStacks',label:'悲伤隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'happinessMetaphorStacks',label:'喜悦隐喻',min:0,max:3,calculated:false},
@@ -459,7 +460,8 @@
       {overlayId:'overlay.wanda.murmurs',key:'murmursActive',label:'低语状态生效',type:'checkbox',calculated:true,description:'主动伤害降低 60%；E2 后降低 65%，同时攻击次数翻倍。'}
     ],
     'awakener-0054':[
-      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标 Spellbound',min:0,max:10,calculated:true,description:'Enthrall 移除全部 Spellbound；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。E3 前实际上限为 5。'}
+      {overlayId:'overlay.xu.enthrall',coversOverlayIds:['overlay.xu.betroth'],key:'xuChoice',label:'当前痴醉选择',type:'select',calculated:false,options:[['','未选择'],['betroth','相许'],['enthrall','夺魄']],description:'「夜雾下的情誓」的二选一状态：相许施加痴醉，夺魄移除痴醉并按层结算纯粹伤害/中毒。'},
+      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标痴醉',min:0,max:15,calculated:true,description:'夺魄会移除全部痴醉；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。基础上限 5，E3 上限 10，最终法则上限 15。'}
     ],
     'awakener-0027':[
       {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:false},
@@ -491,24 +493,35 @@
   }
   function inferredResourceSpec(overlay){
     if(!overlay?.id)return null;
-    const text=String(renderTemplate(resolveOverlayEnlighten(overlay),1)||'');
-    if(!/\bstacks?\b/i.test(text))return null;
-    let max=inferredOverlayStackMax(overlay);
-    if(max===null){const exact=text.match(/(?:have|has|reach(?:es)?|at)\s+(\d+)\s+stacks?/i);if(exact)max=Math.max(1,Math.floor(Number(exact[1])||0))}
-    return {
-      overlayId:overlay.id,
-      key:'overlay_'+String(overlay.id).replace(/[^a-z0-9]+/gi,'_').replace(/^_|_$/g,'').toLowerCase(),
-      label:zhText(overlay.name||'角色状态'),
-      min:0,max:max??999,calculated:false,
-      description:max===null?zhText(renderTemplate(resolveOverlayEnlighten(overlay),1))+' 当前 SKeyDB 未给出明确上限，计算器暂以 999 作为输入保护上限。':undefined
-    };
+    const resolved=resolveOverlayEnlighten(overlay);
+    const text=String(renderTemplate(resolved,1)||'');
+    const key='overlay_'+String(overlay.id).replace(/[^a-z0-9]+/gi,'_').replace(/^_|_$/g,'').toLowerCase();
+    if(/\bstacks?\b/i.test(text)){
+      let max=inferredOverlayStackMax(overlay);
+      if(max===null){const exact=text.match(/(?:have|has|reach(?:es)?|at)\s+(\d+)\s+stacks?/i);if(exact)max=Math.max(1,Math.floor(Number(exact[1])||0))}
+      return {overlayId:overlay.id,key,label:zhText(overlay.name||'角色状态'),min:0,max:max??999,calculated:false,description:max===null?zhText(text)+' 当前 SKeyDB 未给出明确上限，计算器暂以 999 作为输入保护上限。':undefined};
+    }
+    if(String(overlay.overlayType||'').toLowerCase()==='mechanic'){
+      return {overlayId:overlay.id,key,label:zhText(overlay.name||'角色状态')+' 生效',type:'checkbox',calculated:false,description:zhText(text)||'角色专属状态/机制。'};
+    }
+    return null;
   }
   function resourceRequirementMet(spec){if(!spec?.requiredEnlighten)return true;const current=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot());const need=ENLIGHTEN_ORDER.indexOf(spec.requiredEnlighten);return current>=need&&need>=0}
   function currentResourceSpecs(){
     const known=(resourceSpecs[currentAwakener?.id]||[]).filter(resourceRequirementMet);
-    const knownIds=new Set(known.map(x=>x.overlayId));
+    const knownIds=new Set();
+    for(const spec of known){if(spec.overlayId)knownIds.add(spec.overlayId);for(const id of spec.coversOverlayIds||[])knownIds.add(id)}
     const inferred=(currentOverlays||[]).filter(x=>!knownIds.has(x.id)).map(inferredResourceSpec).filter(Boolean);
     return [...known,...inferred];
+  }
+  function effectiveResourceMax(spec){
+    if(spec?.key==='spellboundStacks'){
+      const slot=selectedEnlightenSlot();
+      if(slot==='AbsoluteAxiom')return 15;
+      if(ENLIGHTEN_ORDER.indexOf(slot)>=ENLIGHTEN_ORDER.indexOf('E3'))return 10;
+      return 5;
+    }
+    return Number.isFinite(Number(spec?.max))?Number(spec.max):999;
   }
   function characterResourceValues(){
     const values={awakenerId:currentAwakener?.id||null};
@@ -519,7 +532,7 @@
       else{
         const spec=specsByKey.get(el.dataset.resourceKey)||{};
         const min=Number.isFinite(Number(spec.min))?Number(spec.min):0;
-        const max=Number.isFinite(Number(spec.max))?Number(spec.max):Number.POSITIVE_INFINITY;
+        const max=effectiveResourceMax(spec);
         const value=Math.min(max,Math.max(min,num(el.value,min)));
         values[el.dataset.resourceKey]=value;
         if(String(el.value)!==String(value))el.value=String(value);
@@ -553,9 +566,9 @@
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
         wrap.innerHTML='<label>'+escape(spec.label)+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
       }else{
-        const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
+        const max=effectiveResourceMax(spec);const value=Math.min(max,Math.max(spec.min,Number(previous[spec.key])||0));
         const inputLabel=spec.inputLabel||spec.label+'数量';
-        wrap.innerHTML='<label>'+escape(inputLabel)+'</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
+        wrap.innerHTML='<label>'+escape(inputLabel)+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
       }
       block.appendChild(wrap);
     }
@@ -683,7 +696,7 @@
       const overlay=resolvedOverlay('overlay.xu.spellbound');
       const rendered=String(renderTemplate(overlay,1)||'');
       const capMatch=rendered.match(/Stacks up to\s*(\d+)/i);
-      const cap=capMatch?Math.max(1,Number(capMatch[1])||5):5;
+      const cap=selectedEnlightenSlot()==='AbsoluteAxiom'?15:(capMatch?Math.max(1,Number(capMatch[1])||5):5);
       const stacks=Math.min(cap,Math.max(0,Math.floor(Number(resources.spellboundStacks)||0)));
       if(stacks>0){
         mapped.push({id:'xu-enthrall-pure-resource',index:mapped.length,position:9997,groupId:'xu-enthrall-pure-resource',type:'pure',source:'resource',basis:'targetMaxHp',percent:stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：纯粹伤害'});
@@ -967,7 +980,8 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × 200% ATK`);
       if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`Pack Hunt ${Number(resources.packHuntStacks)} 层：本张 Gaunt 额外触发 1 次（消耗 1 层）`);
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
-      if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标 Spellbound ${Number(resources.spellboundStacks)} 层：Enthrall 按层结算纯粹伤害/中毒触发`);
+      if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
+      if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('赎罪苦痛：当前指令卡额外造成 200% ATK 伤害');
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
