@@ -71,8 +71,10 @@
     };
     const masteryEffectMultiplier={
       CHAOS:1,
-      AEQUOR:pureEffects.AEQUOR?2:1,
-      CARO:pureEffects.CARO?2:1,
+      // Current public SKeyDB does not define normal Pure Aequor/Caro mastery doubling.
+      // Benthos/Propagation apply their own explicit Aequor-or-Chaos / Caro-or-Chaos doubling below.
+      AEQUOR:1,
+      CARO:1,
       ULTRA:pureEffects.ULTRA?2:1
     };
 
@@ -88,7 +90,7 @@
       ultraRoundActive:false,damageOutputMultiplier:1,statusOutputMultiplier:1,
       tentacleMode:baseRealms.includes('AEQUOR')?(hasMode(modes,'benthos')?'benthos':'standard'):null,
       tentacleMasteryMultiplier:masteryEffectMultiplier.AEQUOR,
-      startingTentacleMultiplier:pureEffects.AEQUOR?2:1,
+      startingTentacleMultiplier:1,
       aequorChaosBaseTentacleBonusPct:0,
       notes:[]
     };
@@ -138,7 +140,7 @@
       out.startingTentacleMultiplier=1;
       out.notes.push(`深渊深海：基础触腕为队伍最大生命 5%，团队伤害强效 +${doubled?100:50}%，怒涛界域精通效果 ×${out.tentacleMasteryMultiplier}；按 Lightless Bottom 记录，至纯不会额外获得初始触腕。`);
     }else if(baseRealms.includes('AEQUOR')){
-      out.notes.push(`普通深海：界域精通效果 ×${out.tentacleMasteryMultiplier}${out.startingTentacleMultiplier===2?'，至纯效果使初始触腕数翻倍':''}。`);
+      out.notes.push('普通深海：Raging Waves 使用最终界域精通计算触腕触发比例；当前公开 SKeyDB 未定义普通至纯深海的精通或起始触腕翻倍，因此不自动附加。');
     }
 
     if(hasMode(modes,'singularity')){
