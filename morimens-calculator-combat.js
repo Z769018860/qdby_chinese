@@ -1,6 +1,11 @@
 (()=>{
   const $=id=>document.getElementById(id);
   const n=(id,f=0)=>{const v=Number.parseFloat($(id)?.value);return Number.isFinite(v)?v:f};
+  const vulnerableStackCount=()=>{
+    if($('targetVulnerable')?.checked!==true)return 0;
+    const raw=Number.parseFloat($('targetVulnerableStacks')?.value);
+    return Number.isFinite(raw)&&raw>0?Math.max(1,Math.floor(raw)):1;
+  };
   const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
   const fmt=v=>Math.round(Number(v)||0).toLocaleString('zh-CN');
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -147,7 +152,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','targetVulnerableStacks','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeEnemySacrificeTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','targetVulnerable','targetVulnerableStacks','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeEnemySacrificeTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -346,7 +351,7 @@
   
     const basePct=n('baseBonus')+soulforgeBasePct;
     const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0);
-    const vulnerableStacks=Math.max(0,Math.floor(n('targetVulnerableStacks')));
+    const vulnerableStacks=vulnerableStackCount();
     const vulnerabilityPct=n('vulnerability')+(vulnerableStacks>0?50:0);
     const weakCoef=$('buffWeak')?.checked?.75:1;
     const finalPct=n('finalBonus')+Math.max(0,Number(realm.finalDamageBonus)||0);
@@ -777,7 +782,7 @@
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。易伤层数为 ${vulnerableStacks}：只要 ≥1 层，主动/触腕承伤按 SKeyDB +50%，该 +50% 不随层数叠加；虚弱只让主动/触腕造成伤害 -25%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
+    $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱只让主动/触腕造成伤害 -25%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -875,7 +880,7 @@
     const values={
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
-      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,targetVulnerableStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
+      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,targetVulnerableStacks:'',currentPoison:0,currentBleed:0,currentCounter:0,
       actorMaxHp:0,actorCurrentHp:'',
       corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,enemySacrificeAmount:0,birthRitualStacks:0,sacrificeOnDamagePct:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
@@ -886,6 +891,8 @@
     if($('ultraRoundActive'))$('ultraRoundActive').checked=false;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
     if($('forceCritAll'))$('forceCritAll').checked=false;
+    if($('targetVulnerable'))$('targetVulnerable').checked=false;
+    if($('targetVulnerableStacks'))$('targetVulnerableStacks').disabled=true;
     if($('includeTurnEndSettlement'))$('includeTurnEndSettlement').checked=true;
     if($('includePoisonTurnEnd'))$('includePoisonTurnEnd').checked=true;
     if($('includeBleedTurnEnd'))$('includeBleedTurnEnd').checked=true;
