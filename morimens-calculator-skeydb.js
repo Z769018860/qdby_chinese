@@ -10,6 +10,7 @@
   const zhSkillNames={
     'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄',
     'skill.24.aberrant-vivisection':'畸变的解剖',
+    'skill.aigis.a-small-wish':'小小愿望','skill.aigis.decomposition':'石质分解','skill.aigis.eye-of-eternity':'万古之眸',
     'skill.clementine.call-of-shaggai':'妖虫的呼唤','skill.clementine.pain-extraction':'痛苦榨取','skill.clementine.soulsalve':'精神抚慰',
     'skill.doll-inferno.terminal-of-truth-and-abyss':'终点，真理与深渊之门','skill.doll-inferno.soulblight':'灵魂瘟疫',
     'skill.helot-catena.sanguine-fetters':'缚身锁链','skill.helot-catena.hatred-unleashed':'恨意宣泄','skill.helot-catena.crimson-shackles':'鲜血链条','skill.helot-catena.reapers-declaration':'索魂者宣言',
