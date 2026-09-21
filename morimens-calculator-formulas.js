@@ -251,16 +251,17 @@
       const out={baseDamagePct:0,finalDamagePct:0,critRatePct:0,critDamagePct:0,hitMultiplier:1,hitAdd:0,hitSet:null,fixedDamageMultiplier:1};
       if(markerIndex<0)return out;
       const effect=text.slice(markerIndex+marker.length);
+      const normalizedEffect=effect.replace(/Crit\./gi,'Crit');
       const value=(token,literal)=>token!==undefined?Math.max(0,num(resolveTemplateArg(skill,token,rank,ctx),0)):Math.max(0,num(literal,0));
 
-      const inThis=(effect.match(/In\s+this\s+Exalt\s*:\s*([^.!?]*)/i)||[])[1]||'';
+      const inThis=(normalizedEffect.match(/In\s+this\s+Exalt\s*:\s*([^!?\n]*)/i)||[])[1]||'';
       let m=inThis.match(/Base DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
       if(m)out.baseDamagePct=Math.max(out.baseDamagePct,value(m[1],m[2]));
       m=inThis.match(/Final DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
       if(m)out.finalDamagePct=Math.max(out.finalDamagePct,value(m[1],m[2]));
-      m=inThis.match(/Crit\.? Rate\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      m=inThis.match(/Crit\.?\s*Rate\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
       if(m)out.critRatePct=Math.max(out.critRatePct,value(m[1],m[2]));
-      m=inThis.match(/Crit\.? DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      m=inThis.match(/Crit\.?\s*DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
       if(m)out.critDamagePct=Math.max(out.critDamagePct,value(m[1],m[2]));
 
       if(/\{Fixed DMG\}\s+dealt\s+is\s+tripled/i.test(effect))out.fixedDamageMultiplier=3;
