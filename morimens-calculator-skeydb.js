@@ -397,7 +397,7 @@
       {key:'evernightPriorPlays',label:'本回合已打出永夜',min:0,max:20,calculated:true,requiredEnlighten:'E3',description:'E3 起：第二张及后续「永夜」额外享受 100% 力量加成。这里填写本次永夜之前，本回合已经打出的永夜次数。'}
     ],
     'awakener-0041':[
-      {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100,calculated:true},
+      {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'勾选后，当前指令卡额外造成一次 200% ATK 主动伤害。适用于本回合首张指令卡，或圣心第 3 次打出后使下一张指令卡获得赎罪苦痛的情况。'}
     ],
     'awakener-0061':[
@@ -477,10 +477,18 @@
   }
   function characterResourceValues(){
     const values={awakenerId:currentAwakener?.id||null};
+    const specsByKey=new Map(currentResourceSpecs().map(spec=>[spec.key,spec]));
     document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{
       if(el.type==='checkbox')values[el.dataset.resourceKey]=el.checked?1:0;
       else if(el.tagName==='SELECT')values[el.dataset.resourceKey]=el.value;
-      else values[el.dataset.resourceKey]=Math.max(0,num(el.value,0));
+      else{
+        const spec=specsByKey.get(el.dataset.resourceKey)||{};
+        const min=Number.isFinite(Number(spec.min))?Number(spec.min):0;
+        const max=Number.isFinite(Number(spec.max))?Number(spec.max):Number.POSITIVE_INFINITY;
+        const value=Math.min(max,Math.max(min,num(el.value,min)));
+        values[el.dataset.resourceKey]=value;
+        if(String(el.value)!==String(value))el.value=String(value);
+      }
     });
     window.MorimensCharacterResources=values;
     return values;
