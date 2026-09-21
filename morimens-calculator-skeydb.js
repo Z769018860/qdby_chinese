@@ -67,6 +67,9 @@
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     base.rouseActive=rouseActive();
     base.VulnerableStacks=Math.max(0,Math.floor(num($('targetVulnerableStacks')?.value,0)));
+    if(currentAwakener?.id==='awakener-0018'&&base.rouseActive&&selectedEnlightenSlot()==='AbsoluteAxiom'){
+      base.DamageAmplification=num(base.DamageAmplification,0)+8*Math.min(10,Math.max(0,Math.floor(num(base.finaleStacks,0))));
+    }
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
     base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
     const realm=window.MorimensRealmEngine?.state?.();
@@ -430,7 +433,7 @@
       {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'Satiety / 饱足',min:0,max:50,calculated:true,description:'每层提高卡拉布狂气爆发的基础伤害与护盾。伤害计算只把打出前已有的饱足计入本次基础伤害；供奉转化出的饱足不回溯放大已开始结算的本次爆发。'}
     ],
     'awakener-0018':[
-      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:false,description:'10 层 Finale 时获得衍生卡 Illusion’s End。'},
+      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:true,requiredEnlighten:'AbsoluteAxiom',description:'最终法则的灵知觉醒：每层 Finale 使 Doll: Inferno 的伤害强效 +8%。只有同时开启“灵知觉醒已发动”时，这个乘区才会进入计算。'},
       {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'Finale Form 已生效',type:'checkbox',calculated:true,description:'只在实际进入 Finale Form 后勾选。会启用已明确接入的 Finale Form 中毒触发；未勾选时不会把条件分支误算成常驻效果。'}
     ],
     'awakener-0014':[
@@ -698,6 +701,11 @@
       if(event.type!=='active'&&event.type!=='pierce')return event;
       const next={...event};const labels=[];
       for(const sentence of sentences){
+        const realmTag=sentence.match(/\{(Chaos|Aequor|Caro|Ultra)\}\s*:/i)?.[1]?.toUpperCase()||null;
+        if(realmTag){
+          const activeRealms=window.MorimensRealmEngine?.state?.().baseRealms||[];
+          if(!activeRealms.includes(realmTag))continue;
+        }
         const direct=sentence.split(/\b(?:after|before|whenever|each time|for each|for every|every time|at turn|at the start|at the end|when|while|until|next)\b/i)[0].trim();
         if(!direct||!currentSkillMatchesRouseScope(direct))continue;
         let m;
@@ -787,6 +795,12 @@
       return next;
     });
     mapped=applyGenericRouseEffects(mapped);
+    if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0){
+      const bonus=8*Math.min(10,Math.max(0,Math.floor(Number(resources.finaleStacks)||0)));
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
+        ?{...event,resourceDamageAmpBonusPct:(Number(event.resourceDamageAmpBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+        :event);
+    }
     if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy'){
       const rank=Math.max(1,Number($('skillLevel')?.value)||1);
       const satiety=Math.min(50,Math.max(0,Math.floor(Number(resources.satietyStacks)||0)));
@@ -809,6 +823,18 @@
         const percent=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg3,rank),0));
         if(percent>0)mapped.push({id:'doll-finale-rouse-poison',index:mapped.length,position:9993,groupId:'doll-finale-rouse-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent,turnEndOnly:true,activeSource:false,resourceEffectLabel:'Finale Form：回合结束触发 '+percent.toFixed(0)+'% 中毒'});
       }
+    }
+    if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'){
+      const damageTypes=new Set(['active','pierce','pure','fixed']);
+      const seenGroups=new Set(),extras=[];
+      for(const event of mapped){
+        if(!damageTypes.has(event.type))continue;
+        const key=event.groupId||event.id;
+        if(!key||seenGroups.has(key))continue;
+        seenGroups.add(key);
+        extras.push({...event,id:String(event.id||'damage')+'-clementine-aa-extra',index:mapped.length+extras.length,position:(Number(event.position)||0)+0.00004,groupId:String(key)+'-clementine-aa-extra',resourceEffectLabel:'最终法则灵知觉醒：该伤害效果段数 +1'});
+      }
+      mapped.push(...extras);
     }
     if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&Number(resources.clementineFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       const rouse=resolvedRouseSkill();
@@ -1373,14 +1399,14 @@
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
-    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();refreshBattleProgressionUi();
+    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。主属性按 SKeyDB 成长表读取；可可靠解析的基础伤害、伤害强效、暴击、界域精通与状态倍率自动计入；条件型效果在未确认触发时只展示、不强算。';recomputeGearBonuses();refreshBattleProgressionUi();
   }
 
   async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses();updateSkillLevel()}
   function renderEffectRaw(effect){return renderTemplate(effect,1)}
   function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
-    if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套计算；条件型效果需要额外确认。';recomputeGearBonuses();return}
+    if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套读取：无条件效果直接计入；需要敌人生命区间、特定状态、回合时点等额外条件的效果，只有勾选“额外条件已满足”后才尝试解析。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
   const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回充等级',KEYFLARE_REGEN:'银钥充能等级',SIGIL_YIELD:'黑印掉落',DEATH_RESISTANCE:'死亡抵抗'};
