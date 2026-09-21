@@ -1927,6 +1927,29 @@
     }
     return out;
   }
+  function emptyScopedDamageLayers(){return {base:{strike:0,command:0,exalt:0},final:{strike:0,command:0,exalt:0}}}
+  function mergeScopedDamageLayers(target,source){
+    for(const metric of ['base','final'])for(const scope of ['strike','command','exalt'])target[metric][scope]+=num(source?.[metric]?.[scope],0);
+    return target;
+  }
+  function scopedDamageLayersFromText(text,allowConditional=false){
+    const out=emptyScopedDamageLayers();
+    const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
+    for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
+      const s=raw.trim();if(!s)continue;
+      if(isConditional(s)&&!allowConditional)continue;
+      const scopes=[];
+      if(/(?:["“]?Strike["”]?(?: Commands?)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}["“]?Strike["”]?)/i.test(s)&&skillMatchesScope(currentSkill,'strike'))scopes.push('strike');
+      if(/(?:Command Cards?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Command Cards?)/i.test(s)&&skillMatchesScope(currentSkill,'command'))scopes.push('command');
+      if(/(?:Exalt(?:['’]s)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Exalt)/i.test(s)&&skillMatchesScope(currentSkill,'exalt'))scopes.push('exalt');
+      if(!scopes.length)continue;
+      let m=s.match(/Base DMG[^+%]{0,100}\+\s*([\d.]+)%/i)||s.match(/\+\s*([\d.]+)%\s*Base DMG/i);
+      if(m)for(const scope of new Set(scopes))out.base[scope]+=num(m[1],0);
+      m=s.match(/Final DMG[^+%]{0,100}\+\s*([\d.]+)%/i)||s.match(/\+\s*([\d.]+)%\s*Final DMG/i);
+      if(m)for(const scope of new Set(scopes))out.final[scope]+=num(m[1],0);
+    }
+    return out;
+  }
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration'])target[k]+=num(b[k])}
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function applyWheelDirectSkillEffects(events){
@@ -2167,11 +2190,13 @@
   }
   function recomputeGearBonuses(){
     const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
+    const scopedLayers=emptyScopedDamageLayers();
     let nextRealmMastery=0;wheelMainstatSummary=[];
     currentWheels.forEach((w,i)=>{
       if(!w)return;
       const wheelText=wheelDescriptionRaw(w,i);
       sumBonus(next,numericBonusesFromText(wheelText,false));
+      mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(wheelText,false));
       const battleBonus=cumulativeWheelBattleBonuses(wheelText);
       if(completedBattles()>0&&hasNumericBattleBonus(battleBonus))sumBonus(next,scaledBattleBonuses(battleBonus,completedBattles()));
       const main=wheelMainstatValue(w,i);
@@ -2187,10 +2212,10 @@
         else if(main.key==='DEATH_RESISTANCE')next.deathResistance+=main.value;
       }
     });
-    if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),allow))}}
+    if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6){const raw=renderEffectRaw(e);sumBonus(next,numericBonusesFromText(raw,allow));mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(raw,allow))}}}
     const signatureSafe=signatureRelicSafeGlobalBonuses();
     if(signatureRelicEnabled())sumBonus(next,signatureSafe.bonus);
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureStrengthFlat:signatureSafe.strengthFlat,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null};renderSignatureRelic();renderAutoSummary();
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureStrengthFlat:signatureSafe.strengthFlat,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null,scopedDamageLayers:scopedLayers};renderSignatureRelic();renderAutoSummary();
   }
 
   function initManualTracking(){
