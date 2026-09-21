@@ -514,7 +514,7 @@
           sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
         });
       }
-      for(const match of template.matchAll(/trigger(?:s|ed)?\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?\{Bleed\}/gi)){
+      for(const match of template.matchAll(/trigger(?:s|ed)?\s+(?:(?:the\s+)?target['’]s\s+)?(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?\{Bleed\}/gi)){
         const percent=match[1]!==undefined
           ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
           :num(match[2],0);
