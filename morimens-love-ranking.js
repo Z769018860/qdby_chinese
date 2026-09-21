@@ -98,6 +98,7 @@
   function resolveCharacters(){
     const data=window.MorimensData;
     const records=Array.isArray(data?.db?.records)?data.db.records:[];
+    if(!records.length)return [];
     const characters=records.map(rec=>{
       const loc=data.localizedProfile?.(rec)||{};
       const image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
