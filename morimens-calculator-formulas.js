@@ -279,7 +279,7 @@
         m=setRe.exec(effect);
         if(m)out.hitSet=Math.max(1,Math.floor(num(m[1],1)));
         const baseReA=new RegExp('Base DMG of\\s+(?:\\{)?'+escaped+'(?:\\})?\\s*\\+(?:\\[([^\\]]+)\\]|(\\d+(?:\\.\\d+)?))%','i');
-        const baseReB=new RegExp('(?:\\{)?'+escaped+'(?:\\})?\\s+Base DMG\\s*\\+(?:\\[([^\\]]+)\\]|(\\d+(?:\\.\\d+)?))%','i');
+        const baseReB=new RegExp('(?:\\{)?'+escaped+'(?:\\})?\\s+Base DMG(?:\\s+and\\s+[^+.!?]{1,80})?\\s*\\+(?:\\[([^\\]]+)\\]|(\\d+(?:\\.\\d+)?))%','i');
         m=baseReA.exec(effect)||baseReB.exec(effect);
         if(m)out.baseDamagePct=Math.max(out.baseDamagePct,value(m[1],m[2]));
       }
