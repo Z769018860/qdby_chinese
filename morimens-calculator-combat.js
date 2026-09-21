@@ -531,6 +531,7 @@
       if(source.type==='poison'||source.type==='counter'||source.type==='bleed')amount*=realmStatusOutputMult;
       if(source.type==='poison'&&source.action==='apply'){amount*=poisonInflictionMult;if(source.basis==='flat'||source.basis==='statPercent'||source.basis==='targetMaxHpPercent')amount*=fixedPoisonInflictionMult}
       if(source.type==='counter'&&source.action==='gain')amount*=counterGenerationMult;
+      if(Number.isFinite(Number(source.resourceStatusMultiplier)))amount*=Math.max(0,Number(source.resourceStatusMultiplier));
       return Math.max(0,amount);
     }
 
@@ -544,6 +545,7 @@
     }
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
+        if(source.turnUnique===true&&repeat>0)continue;
         if(source.type==='pierce'&&source.basis==='tentacle'){
           const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
           for(let i=0;i<count;i++){
