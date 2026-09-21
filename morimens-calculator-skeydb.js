@@ -111,14 +111,14 @@
     [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
     [/equal to/gi,'等同于'],[/equal amount/gi,'等量'],[/additional/gi,'额外'],[/each hit/gi,'每段伤害'],[/instances?/gi,'段'],[/hits?/gi,'段'],[/chance/gi,'概率'],[/played|playing/gi,'打出'],[/first/gi,'首次'],[/current/gi,'当前'],[/after/gi,'之后'],
     [/Each stack of/gi,'每层'],[/Each point of/gi,'每点'],[/For each/gi,'每'],[/For every/gi,'每'],[/Every/gi,'每'],[/Each/gi,'每'],
-    [/Randomly/gi,'随机'],[/random/gi,'随机'],[/all Tentacles/gi,'所有触腕'],[/Tentacles?/gi,'触腕'],
-    [/Non-Derived/gi,'非衍生'],[/Derived/gi,'衍生'],[/effects?/gi,'效果'],[/points?/gi,'点'],
-    [/DMG taken/gi,'受到的伤害'],[/damage taken/gi,'受到的伤害'],[/dealt/gi,'造成'],[/taken/gi,'受到'],
-    [/remov(?:e|es|ed)/gi,'移除'],[/consum(?:e|es|ed)/gi,'消耗'],[/switch(?:es|ed)?/gi,'切换'],[/stance/gi,'姿态'],
-    [/up to/gi,'最多'],[/maximum/gi,'最大'],[/minimum/gi,'最小'],[/amount/gi,'数值'],[/bonus/gi,'加成'],
-    [/in hand/gi,'在手牌中'],[/hand/gi,'手牌'],[/play(?:s|ed|ing)?/gi,'打出'],[/uses?|using/gi,'使用'],
-    [/below/gi,'低于'],[/above/gi,'高于'],[/until/gi,'直到'],[/during/gi,'在'],[/while/gi,'当'],[/only/gi,'仅'],[/always/gi,'始终'],
-    [/without/gi,'不具有'],[/instead/gi,'改为'],[/same/gi,'相同'],[/next/gi,'下次'],[/more/gi,'更多'],[/less/gi,'更少'],
+    [/\bRandomly\b/gi,'随机'],[/\brandom\b/gi,'随机'],[/all Tentacles/gi,'所有触腕'],[/Tentacles?/gi,'触腕'],
+    [/\bNon-Derived\b/gi,'非衍生'],[/\bDerived\b/gi,'衍生'],[/\beffects?\b/gi,'效果'],[/\bpoints?\b/gi,'点'],
+    [/DMG taken/gi,'受到的伤害'],[/damage taken/gi,'受到的伤害'],[/\bdealt\b/gi,'造成'],[/\btaken\b/gi,'受到'],
+    [/\bremov(?:e|es|ed)\b/gi,'移除'],[/\bconsum(?:e|es|ed)\b/gi,'消耗'],[/\bswitch(?:es|ed)?\b/gi,'切换'],[/\bstance\b/gi,'姿态'],
+    [/up to/gi,'最多'],[/\bmaximum\b/gi,'最大'],[/\bminimum\b/gi,'最小'],[/\bamount\b/gi,'数值'],[/\bbonus\b/gi,'加成'],
+    [/in hand/gi,'在手牌中'],[/\bhand\b/gi,'手牌'],[/\bplay(?:s|ed|ing)?\b/gi,'打出'],[/\b(?:uses?|using)\b/gi,'使用'],
+    [/\bbelow\b/gi,'低于'],[/\babove\b/gi,'高于'],[/\buntil\b/gi,'直到'],[/\bduring\b/gi,'在'],[/\bwhile\b/gi,'当'],[/\bonly\b/gi,'仅'],[/\balways\b/gi,'始终'],
+    [/\bwithout\b/gi,'不具有'],[/\binstead\b/gi,'改为'],[/\bsame\b/gi,'相同'],[/\bnext\b/gi,'下次'],[/\bmore\b/gi,'更多'],[/\bless\b/gi,'更少'],
     [/before/gi,'之前'],[/when/gi,'当'],[/if/gi,'若'],[/times/gi,'次'],[/time/gi,'次']
   ];
   function zhText(value){
