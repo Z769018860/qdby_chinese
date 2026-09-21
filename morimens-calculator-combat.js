@@ -552,10 +552,10 @@
         eventCritRate,
         eventCritMult,
         baseRaw,
-        afterBase,
+        afterBase:core.baseAfterPools,
         strengthPart,
         tentacleContribution,
-        raw,
+        raw:core.withAdditions,
         ignoresBarrier:type==='pierce',
         activeSource:true,
         ...critState
