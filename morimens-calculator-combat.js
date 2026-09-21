@@ -153,7 +153,7 @@
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；至纯深海或普通混沌×深海共生时，界域精通效果倍率为 2。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>Damage Events</b><br><code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Counter 等其他伤害按伤害的 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Counter 触发时造成等于反击层数的 Pure DMG。三者不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
+      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Counter 等其他伤害按伤害的 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Counter 触发时造成等于反击层数的 Pure DMG。三者不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
     `;
   }
 
@@ -227,19 +227,20 @@
       return attack;
     }
     function scaledEvent(source,repeatIndex,eventIndex){
+      const type=source.type==='pierce'?'pierce':'active';
       const coeff=Math.max(0,Number(source.coefficient)||0)/100;
-      const strengthPart=(source.type==='active'||source.usesStrength===true)?netStrength:0;
+      const strengthPart=(type==='active'||source.usesStrength===true)?netStrength:0;
       const raw=statValue(source.stat)*coeff
         +strengthPart
         +tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult
         +soulforgeFlat;
       const afterBase=raw*(1+basePct/100);
       const afterPower=afterBase*(1+powerPct/100);
-      const afterVulnerability=afterPower*(1+vulnerabilityPct/100);
-      const afterFinal=afterVulnerability*(1+finalPct/100)*weakCoef;
+      // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
+      const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
+      const afterFinal=afterVulnerability*(1+finalPct/100)*(type==='active'?weakCoef:1);
       const normal=afterFinal*levelFactor*fortifyCoef*other;
       const critState=selectCrit(normal,activeCritRate,activeCritMult);
-      const type=source.type==='pierce'?'pierce':'active';
       return {
         id:`skill-${repeatIndex+1}-${eventIndex+1}`,
         type,
@@ -265,7 +266,8 @@
     function tentaclePierceEvent(percent,label,id){
       const scale=Math.max(0,Number(percent)||0)/100;
       const raw=tentacleWithStrength*scale;
-      const normal=raw*(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*levelFactor*fortifyCoef*other;
+      // This event is Pierce DMG even though its basis is Tentacle DMG, so Vulnerable/Weakness do not apply.
+      const normal=raw*(1+powerPct/100)*levelFactor*fortifyCoef*other;
       const critState=selectCrit(normal,tentacleCritRate,tentacleCritMult);
       return {id,type:'pierce',source:'tentacle',basis:'tentacle',label,percent:Number(percent)||0,raw,ignoresBarrier:true,activeSource:false,...critState};
     }
@@ -442,7 +444,7 @@
     $('critLine').textContent=`可暴击 Active/Pierce 暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击 Active/Pierce 期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Pure / Fixed / Poison / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费。`;
+    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Vulnerable / Weakness 按 SKeyDB 只作用于 Active 与 Tentacle；Pierce 不套这两项。Pure / Fixed / Poison / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
