@@ -110,7 +110,16 @@
     [/Shield/gi,'护盾'],[/Damage/gi,'伤害'],[/DMG/gi,'伤害'],[/ATK/gi,'攻击力'],[/DEF/gi,'防御'],[/CON/gi,'体质'],
     [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
     [/equal to/gi,'等同于'],[/equal amount/gi,'等量'],[/additional/gi,'额外'],[/each hit/gi,'每段伤害'],[/instances?/gi,'段'],[/hits?/gi,'段'],[/chance/gi,'概率'],[/played|playing/gi,'打出'],[/first/gi,'首次'],[/current/gi,'当前'],[/after/gi,'之后'],
-    [/before/gi,'之前'],[/when/gi,'当'],[/if/gi,'若'],[/for every/gi,'每'],[/times/gi,'次'],[/time/gi,'次']
+    [/Each stack of/gi,'每层'],[/Each point of/gi,'每点'],[/For each/gi,'每'],[/For every/gi,'每'],[/Every/gi,'每'],[/Each/gi,'每'],
+    [/Randomly/gi,'随机'],[/random/gi,'随机'],[/all Tentacles/gi,'所有触腕'],[/Tentacles?/gi,'触腕'],
+    [/Non-Derived/gi,'非衍生'],[/Derived/gi,'衍生'],[/effects?/gi,'效果'],[/points?/gi,'点'],
+    [/DMG taken/gi,'受到的伤害'],[/damage taken/gi,'受到的伤害'],[/dealt/gi,'造成'],[/taken/gi,'受到'],
+    [/remov(?:e|es|ed)/gi,'移除'],[/consum(?:e|es|ed)/gi,'消耗'],[/switch(?:es|ed)?/gi,'切换'],[/stance/gi,'姿态'],
+    [/up to/gi,'最多'],[/maximum/gi,'最大'],[/minimum/gi,'最小'],[/amount/gi,'数值'],[/bonus/gi,'加成'],
+    [/in hand/gi,'在手牌中'],[/hand/gi,'手牌'],[/play(?:s|ed|ing)?/gi,'打出'],[/uses?|using/gi,'使用'],
+    [/below/gi,'低于'],[/above/gi,'高于'],[/until/gi,'直到'],[/during/gi,'在'],[/while/gi,'当'],[/only/gi,'仅'],[/always/gi,'始终'],
+    [/without/gi,'不具有'],[/instead/gi,'改为'],[/same/gi,'相同'],[/next/gi,'下次'],[/more/gi,'更多'],[/less/gi,'更少'],
+    [/before/gi,'之前'],[/when/gi,'当'],[/if/gi,'若'],[/times/gi,'次'],[/time/gi,'次']
   ];
   function zhText(value){
     let out=String(value||'');
@@ -124,6 +133,7 @@
     return out
       .replace(/\bof (?:her|his|their)\b/gi,'')
       .replace(/\b(?:her|his|their)\b/gi,'该唤醒体的')
+      .replace(/['’]s\b/g,'的')
       .replace(/\band\b/gi,'并且')
       .replace(/\bwith\b/gi,'并具有')
       .replace(/\bby\b/gi,'提高')
