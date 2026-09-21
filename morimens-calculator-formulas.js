@@ -341,6 +341,7 @@
         [/\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy|\w+['’]s\s+turn)\b/i,'After trigger'],
         [/\bbefore\b/i,'Before'],
         [/\beach time\b/i,'Each time'],
+        [/\beach\s+(?:stack|point|charge|mark|sigil|tentacle|card)\b[^,.!?;]{0,80}\b(?:removed|consumed|spent|lost|gained|played|used|triggered)?/i,'按资源数量'],
         [/\bfor (?:each|every)\b/i,'For each/every'],
         [/\bat (?:the )?(?:turn|battle) (?:start|end)\b/i,'回合/战斗时点'],
         [/\bwithin this turn\b/i,'本回合条件']
@@ -410,7 +411,7 @@
         messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接 Damage 公式：该倍率与段数属于生成卡，不计入当前卡本次伤害；请直接选择对应派生卡计算。');
       }
 
-      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
+      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\beach\s+(?:stack|point|charge|mark|sigil|tentacle|card)\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
         messages.push('检测到条件式中毒 / 反击 / 流血 / 侵蚀：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
       }
