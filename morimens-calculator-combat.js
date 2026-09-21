@@ -245,10 +245,13 @@
   }
 
   function resetEnemy(){
-    const values={realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,tentacleExtraBonus:0,tentacleCount:1,tentacleAttackTimes:1,enemyDefense:0,defenseMode:'manual',defenseConstant:1000,fortressStacks:0,corrosionAmount:0,embersAmount:0};
+    const values={realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,tentacleExtraBonus:0,strengthDown:0,benthosRagingPct:100,tentacleCount:1,tentacleAttackTimes:1,enemyDefense:0,defenseMode:'manual',defenseConstant:1000,fortressStacks:0,corrosionAmount:0,embersAmount:0,realmMode:'auto'};
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
-    if($('benthosPureTeam'))$('benthosPureTeam').checked=false;
+    if($('realmPureTeam'))$('realmPureTeam').checked=false;
+    if($('propagationConsumeEmbryo'))$('propagationConsumeEmbryo').checked=false;
+    if($('propagationApplyFiesta'))$('propagationApplyFiesta').checked=true;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
+    window.MorimensRealmEngine?.render?.();
     toggleTentacleMode();
     setTimeout(()=>window.MorimensStatsSync?.updateCharacterStats?.(),20);
     calculate();
