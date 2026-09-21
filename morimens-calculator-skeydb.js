@@ -2118,6 +2118,9 @@
     if(!signatureRelicEnabled())return {bonus,strengthFlat};
     const rendered=signatureRelicRaw();
     sumBonus(bonus,numericBonusesFromText(rendered,false));
+    const scoped= scopedDamageLayersFromText(rendered,false);
+    bonus.base-=DAMAGE_SCOPE_KEYS.reduce((sum,key)=>sum+num(scoped.base?.[key],0),0);
+    bonus.final-=DAMAGE_SCOPE_KEYS.reduce((sum,key)=>sum+num(scoped.final?.[key],0),0);
     const normalized=rendered.replace(/Crit\./gi,'Crit');
     for(const sentence of normalized.split(/(?<=[!?])\s+|\.\s+(?=(?:At|The|When|Whenever|After|Before|For|Each|If|Drawing|Playing|Place|Gain)\b)/)){
       const line=sentence.trim();if(!line)continue;
@@ -2293,7 +2296,7 @@
     if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6){const raw=renderEffectRaw(e);sumBonus(next,numericBonusesFromText(raw,allow));mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(raw,allow))}}}
     const signatureSafe=signatureRelicSafeGlobalBonuses();
     if(signatureRelicEnabled())sumBonus(next,signatureSafe.bonus);
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureStrengthFlat:signatureSafe.strengthFlat,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null,scopedDamageLayers:scopedLayers};renderSignatureRelic();renderAutoSummary();
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureStrengthFlat:signatureSafe.strengthFlat,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null,scopedDamageLayers:scopedLayers,damageScopeKeys:[...DAMAGE_SCOPE_KEYS]};renderSignatureRelic();renderAutoSummary();
   }
 
   function initManualTracking(){
