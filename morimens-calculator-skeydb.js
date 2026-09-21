@@ -610,7 +610,7 @@
     const normalized=String(text||'').replace(/Crit\./gi,'Crit');
     for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
       const s=raw.trim();if(!s)continue;
-      if(!/(?:after|at\s+the\s+end\s+of)\s+(?:each|the)\s+battle(?:\s+ends?)?/i.test(s))continue;
+      if(!/(?:after|at\s+the\s+end\s+of)\s+(?:each|the)\s+battle(?!\s+begins?)(?:\s+ends?)?/i.test(s))continue;
       sumBonus(out,numericBonusesFromText(s,true));
     }
     return out;
