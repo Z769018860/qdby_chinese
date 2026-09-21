@@ -1,0 +1,220 @@
+name: Export S69 score 500-525 teams
+
+on:
+  push:
+    branches:
+      - preview
+    paths:
+      - .github/workflows/export-s69-score-500-525.yml
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview
+          fetch-depth: 0
+
+      - name: Export structured teams
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const zlib = require('zlib');
+
+          function loadDataset(indexPath) {
+            const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+            if (index.format !== 'gzip-base64-chunked-v1') {
+              if (Array.isArray(index.records)) return {...index, records:index.records};
+              throw new Error('Unsupported dataset format: ' + index.format);
+            }
+            const parts = [];
+            for (const chunkPath of index.chunks || []) {
+              const encoded = fs.readFileSync(chunkPath, 'utf8')
+                .replace(/[^A-Za-z0-9+/=_-]/g, '')
+                .replace(/-/g, '+')
+                .replace(/_/g, '/');
+              parts.push(Buffer.from(encoded, 'base64'));
+            }
+            const gz = Buffer.concat(parts);
+            if (index.compressedBytes && gz.length !== Number(index.compressedBytes)) {
+              throw new Error(indexPath + ': gzip byte mismatch expected=' + index.compressedBytes + ' actual=' + gz.length);
+            }
+            const decoded = JSON.parse(zlib.gunzipSync(gz).toString('utf8'));
+            return {...index, ...decoded, records:Array.isArray(decoded.records)?decoded.records:[]};
+          }
+
+          function loadRankMap(path) {
+            const doc = JSON.parse(fs.readFileSync(path, 'utf8'));
+            return new Map((doc.rows || []).map(row => [String(row.uid ?? ''), Number(row.rank)]).filter(([uid,rank]) => uid && Number.isFinite(rank) && rank > 0));
+          }
+
+          function mergeUsageByUid(base, overlay) {
+            const merged = new Map();
+            let anonymous = 0;
+            for (const record of base.records || []) {
+              const uid = String(record?.uid ?? '');
+              merged.set(uid || '__base_' + (anonymous++), record);
+            }
+            for (const record of overlay?.records || []) {
+              const uid = String(record?.uid ?? '');
+              if (uid) merged.set(uid, record);
+            }
+            return [...merged.values()];
+          }
+
+          function difficultyOf(team, wave) {
+            const diffs = ['normal','hard','nightmare','madness'];
+            const raw = String(team?.difficulty || team?.stageName || wave?.difficulty || wave?.stageName || 'unknown').toLowerCase();
+            return diffs.find(d => new RegExp('(?:^|[^a-z])' + d + '(?:$|[^a-z])','i').test(raw)) || 'unknown';
+          }
+
+          function memberKey(m) {
+            return String(m?.skeydbId || m?.ingameId || m?.id || m?.canonicalName || m?.name || '').trim().toLowerCase();
+          }
+
+          function richness(team) {
+            return (team?.token ? 8 : 0)
+              + (team?.creations?.length || 0) * 3
+              + (team?.members || []).reduce((n,m) =>
+                  n + (m?.wheels?.length || m?.weapons?.length || 0) * 4
+                    + (m?.covenants?.length || m?.suits?.length || (m?.covenant ? 1 : 0)) * 4
+                    + (m?.covenantScore != null ? 2 : 0)
+                    + (m?.level != null ? 1 : 0)
+                    + (m?.enlightenment?.length || 0), 0);
+          }
+
+          const manifest = JSON.parse(fs.readFileSync('data/morimens/eremora/manifest.json','utf8'));
+          const baseIndex = manifest?.usageIndex?.path || 'data/morimens/eremora/usage/69-local-gzip/index.json';
+          const overlayIndex = manifest?.currentOverlay?.path || 'data/morimens/eremora/updates/69-top500-20260922/index.json';
+          const rankBasePath = manifest?.rankIndex?.path || 'data/morimens/eremora/rank-index/69.json';
+          const rankOverlayPath = manifest?.currentOverlay?.rankPath || 'data/morimens/eremora/updates/69-top500-20260922/ranks.json';
+
+          const base = loadDataset(baseIndex);
+          const overlay = loadDataset(overlayIndex);
+          const merged = mergeUsageByUid(base, overlay);
+
+          const rankMap = loadRankMap(rankBasePath);
+          for (const [uid,rank] of loadRankMap(rankOverlayPath)) rankMap.set(uid, rank);
+
+          const filteredRecords = merged
+            .filter(record => {
+              const score = Number(record?.score);
+              return Number.isFinite(score) && score >= 500 && score <= 525;
+            })
+            .map(record => {
+              const uid = String(record?.uid ?? '');
+              const mappedRank = rankMap.get(uid);
+              return Number.isFinite(mappedRank) && mappedRank > 0 && record.rank !== mappedRank
+                ? {...record, rank:mappedRank}
+                : record;
+            })
+            .sort((a,b) => (Number(a.rank)||999999) - (Number(b.rank)||999999) || (Number(b.score)||0) - (Number(a.score)||0));
+
+          // Match the webpage's team de-duplication key and keep the richer duplicate.
+          const uniqueTeams = new Map();
+          for (let recordIndex=0; recordIndex<filteredRecords.length; recordIndex++) {
+            const record = filteredRecords[recordIndex];
+            for (let waveIndex=0; waveIndex<(record.waves||[]).length; waveIndex++) {
+              const wave = record.waves[waveIndex];
+              for (let teamIndex=0; teamIndex<(wave.teams||[]).length; teamIndex++) {
+                const team = wave.teams[teamIndex];
+                const difficulty = difficultyOf(team,wave);
+                const members = (team.members||[]).map(memberKey).filter(Boolean).sort().join(',');
+                const key = [record.uid || record.rank || '', wave.wave || '', team.clearType || '', difficulty, members].join('|');
+                const row = {
+                  uid: record.uid ?? null,
+                  rank: record.rank ?? null,
+                  player: record.player ?? null,
+                  totalScore: record.score ?? null,
+                  currentScore: record.currentScore ?? null,
+                  leaderboardScore: record.leaderboardScore ?? null,
+                  seasonId: record.seasonId ?? 69,
+                  period: record.period ?? null,
+                  sourceUrl: record.url ?? null,
+                  activity: record.activity ?? null,
+                  wave: {
+                    wave: wave.wave ?? null,
+                    madness: wave.madness ?? null,
+                    difficulty: wave.difficulty ?? null,
+                    stageName: wave.stageName ?? null
+                  },
+                  difficulty,
+                  team
+                };
+                const old = uniqueTeams.get(key);
+                if (!old || richness(team) > richness(old.team)) uniqueTeams.set(key,row);
+              }
+            }
+          }
+
+          const teams = [...uniqueTeams.values()].sort((a,b) =>
+            (Number(a.rank)||999999) - (Number(b.rank)||999999)
+            || (Number(a.wave?.wave)||999) - (Number(b.wave?.wave)||999)
+            || String(a.difficulty).localeCompare(String(b.difficulty))
+          );
+
+          const scoreDistribution = {};
+          const difficultyDistribution = {};
+          const waveDistribution = {};
+          for (const record of filteredRecords) {
+            const k = String(record.score);
+            scoreDistribution[k] = (scoreDistribution[k] || 0) + 1;
+          }
+          for (const row of teams) {
+            difficultyDistribution[row.difficulty] = (difficultyDistribution[row.difficulty] || 0) + 1;
+            const k = String(row.wave?.wave ?? 'unknown');
+            waveDistribution[k] = (waveDistribution[k] || 0) + 1;
+          }
+
+          const output = {
+            metadata: {
+              title: '忘忘看报 第69期 500-525分队伍结构化导出',
+              seasonId: 69,
+              scoreRange: {min:500,max:525,inclusive:true},
+              generatedAt: new Date().toISOString(),
+              dataSnapshotUpdatedAt: manifest?.source?.syncedAt || manifest?.availableSeasons?.find(x=>Number(x.seasonId)===69)?.dataUpdatedAt || null,
+              source: manifest?.source || null,
+              mergePolicy: '网页当前口径：基础 usage 数据按 UID 与 currentOverlay 合并，overlay 覆盖同 UID；Top500 排名使用 2026-09-22 rank override；队伍按网页 flatten() 键去重并保留信息更完整的重复项。',
+              baseIndex,
+              overlayIndex,
+              rankBasePath,
+              rankOverlayPath,
+              baseRecordCount: base.records?.length || 0,
+              overlayRecordCount: overlay.records?.length || 0,
+              mergedRecordCount: merged.length
+            },
+            summary: {
+              matchedPlayerRecords: filteredRecords.length,
+              deduplicatedTeams: teams.length,
+              scoreDistribution,
+              difficultyDistribution,
+              waveDistribution
+            },
+            records: filteredRecords,
+            teams
+          };
+
+          fs.mkdirSync('exports', {recursive:true});
+          const outPath = 'exports/morimens-s69-score-500-525-teams.json';
+          fs.writeFileSync(outPath, JSON.stringify(output,null,2) + '\n', 'utf8');
+          console.log(JSON.stringify(output.summary,null,2));
+          console.log('wrote', outPath, fs.statSync(outPath).size, 'bytes');
+          NODE
+
+      - name: Commit export
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add exports/morimens-s69-score-500-525-teams.json
+          if git diff --cached --quiet; then
+            echo "No export changes"
+          else
+            git commit -m "data: export S69 score 500-525 teams"
+            git push origin HEAD:preview
+          fi
