@@ -125,6 +125,7 @@
     const fateConditional=$('fateConditional')?.closest('.check');if(fateConditional){const grid=fateConditional.parentElement;fateConditional.remove();if(grid&&!grid.children.length)grid.remove()}
     $('fateRankSummary')?.remove();$('fateRankText')?.remove();
     const conditions=$('skillConditionList')?.closest('.conditionBox');if(conditions)conditions.remove();
+    const damageMode=$('skillDamageMode')?.closest('.field');if(damageMode)damageMode.hidden=true;
   }
   function normalizeProgressionControls(){
     removeLegacyDeadControls();
@@ -139,15 +140,72 @@
     if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辰篇关卡环境启用灵塑效果</label><small>灵塑天赋仅在“星辰篇”关卡生效；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
   }
 
+  const ENLIGHTEN_ORDER=['E1','E2','E3','OverExalt','AbsoluteAxiom'];
+  function selectedEnlightenSlot(){return $('charEnlighten')?.value||null}
+  function activeEnlightens(){
+    const selected=selectedEnlightenSlot();if(!selected)return [];
+    const max=ENLIGHTEN_ORDER.indexOf(selected);if(max<0)return [];
+    return currentEnlightens.filter(x=>{const i=ENLIGHTEN_ORDER.indexOf(x.slot);return i>=0&&i<=max});
+  }
+  function cloneRecord(record){return record?JSON.parse(JSON.stringify(record)):record}
+  function applyEnlightenPatch(record,upgrade){
+    const patch=upgrade?.patch||{};let next=record;
+    if(patch.descriptionTemplate!==undefined)next={...next,descriptionTemplate:patch.descriptionTemplate};
+    if(patch.descriptionArgs)next={...next,descriptionArgs:{...(next.descriptionArgs||{}),...cloneRecord(patch.descriptionArgs)}};
+    if(patch.argSubstatBonuses){
+      const args=cloneRecord(next.descriptionArgs||{});
+      for(const [key,bonus] of Object.entries(patch.argSubstatBonuses)){if(args[key])args[key]={...args[key],substatBonus:{...bonus}}}
+      next={...next,descriptionArgs:args};
+    }
+    if(Array.isArray(patch.cardKeywords))next={...next,cardKeywords:cloneRecord(patch.cardKeywords)};
+    if(Array.isArray(patch.removeCardKeywordIds)){const remove=new Set(patch.removeCardKeywordIds);next={...next,cardKeywords:(next.cardKeywords||[]).filter(x=>!remove.has(x.id))}}
+    return next;
+  }
+  function resolveSkillEnlighten(baseSkill){
+    if(!baseSkill)return baseSkill;let next=cloneRecord(baseSkill);
+    const activeIds=new Set(activeEnlightens().map(x=>x.id));
+    for(const upgrade of baseSkill.upgrades||[]){
+      if(upgrade?.upgraderType!=='enlighten'||!activeIds.has(upgrade.upgraderId)||upgrade.operation==='link_only')continue;
+      next=applyEnlightenPatch(next,upgrade);
+    }
+    return next;
+  }
+  function ensureEnlightenUi(){
+    if($('charEnlighten'))return;
+    const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
+    const wrap=document.createElement('div');wrap.className='field';
+    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3；存在绝对公理时可选 AA。</small>';
+    anchor.insertAdjacentElement('afterend',wrap);
+    const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
+    $('charEnlighten').addEventListener('change',()=>{renderEnlightenSummary();applySkill();$('calcBtn')?.click()},{capture:true});
+  }
+  function configureEnlightenControl(){
+    ensureEnlightenUi();const sel=$('charEnlighten');if(!sel)return;const prev=sel.value;
+    sel.innerHTML='<option value="">E0 · 未启灵</option>';
+    for(const slot of ['E1','E2','E3']){if(!currentEnlightens.some(x=>x.slot===slot))continue;const o=document.createElement('option');o.value=slot;o.textContent=slot;o.selected=prev===slot;sel.appendChild(o)}
+    if(currentEnlightens.some(x=>x.slot==='AbsoluteAxiom')){const o=document.createElement('option');o.value='AbsoluteAxiom';o.textContent='AA · 绝对公理';o.selected=prev==='AbsoluteAxiom';sel.appendChild(o)}
+    if(!Array.from(sel.options).some(o=>o.value===prev))sel.value='';renderEnlightenSummary();
+  }
+  function renderEnlightenSummary(){
+    const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
+    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(x.slot==='AbsoluteAxiom'?'AA':x.slot)+' · '+escape(zhText(x.name||''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
+  }
+  function ensureFormulaContextUi(){
+    if($('formulaContextBlock'))return;
+    const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
+    const block=document.createElement('div');block.id='formulaContextBlock';block.className='conditionBox';block.style.marginTop='10px';
+    block.innerHTML='<strong>SKeyDB 公式上下文</strong><div class="formGrid" style="margin-top:8px"><div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数</label><input id="formulaOwnedPosseCount" type="number" min="0" step="1" value="0"></div><div class="field"><label for="formulaWheelRefinementLevel">公式命轮精炼层级</label><select id="formulaWheelRefinementLevel"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><small>命轮自身说明会自动使用各自档位覆盖此值。</small></div></div><small>完整上下文：accountLevel / ownedPosseCount / wheelRefinementLevel / realmMasteryFinal / primordiaAllChaosTeam。</small>';
+    anchor.insertAdjacentElement('afterend',block);
+    for(const id of ['formulaAccountLevel','formulaOwnedPosseCount','formulaWheelRefinementLevel'])$(id)?.addEventListener('change',()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()},{capture:true});
+  }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
-    normalizeProgressionControls();
+    normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
     for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     $('soulforgeActive')?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     $('autoCharacterStats')?.addEventListener('change',()=>{if($('autoCharacterStats').checked){$('attack').dataset.autoAttack='1';applyCharacterStats()}else $('attack').dataset.autoAttack='0'},{capture:true});
-    $('skillDamageMode')?.addEventListener('change',()=>{updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     $('attack')?.addEventListener('input',()=>{if(!applyingAuto)$('attack').dataset.autoAttack='0'});
   }
   function ensureSecondWheelUi(){
