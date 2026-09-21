@@ -22,7 +22,9 @@
       ||(window.MorimensCharacterSync?.record?.id===id?window.MorimensCharacterSync.record:null)||null;
   }
   function inferNormalMode(){
-    const realm=String(currentRecord()?.realm||'').toUpperCase();
+    const record=currentRecord();
+    if(record?.id==='awakener-0061')return 'primordia';
+    const realm=String(record?.realm||'').toUpperCase();
     return realm==='AEQUOR'?'aequor':realm==='CARO'?'caro':realm==='CHAOS'?'chaos':realm==='ULTRA'?'ultra':'chaos';
   }
   function resolveMode(raw){
