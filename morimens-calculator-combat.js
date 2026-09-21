@@ -319,6 +319,7 @@
     const levelFactor=Math.max(0,Number(enemyProfile.levelFactor)||1);
   
     let strength=n('strength');
+    strength+=Math.max(0,Number(window.MorimensGearEffects?.signatureStrengthFlat)||0);
     if($('buffBrute')?.checked)strength+=8;
     if($('buffBurst')?.checked)strength+=66;
     const strengthDown=Math.max(0,n('strengthDown'));
