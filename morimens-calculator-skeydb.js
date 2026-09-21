@@ -499,7 +499,7 @@
     ],
     'awakener-0056':[
       {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命者',min:0,max:5,calculated:false,description:'织命者层数；E3 上限为 5，E3 前上限为 3。用于 Singularity Warp 后的 Infinite Threads 追击。'},
-      {key:'singularityWarpActive',label:'Singularity Warp 已触发',type:'checkbox',calculated:false,description:'标记本次 Exalt 是否满足 Singularity Warp；额外效果依具体 Exalt 文本处理。'}
+      {key:'singularityWarpActive',label:'奇点折跃已触发',type:'checkbox',calculated:false,description:'标记本次狂气爆发是否满足「奇点折跃」；额外效果按对应狂气爆发文本处理。'}
     ],
     'awakener-0060':[
       {overlayId:'overlay.caraboo.offering',key:'offeringStacks',label:'供奉',min:0,max:5,calculated:true,description:'卡拉布的狂气爆发会消耗全部供奉；每层使本次狂气爆发额外增加 1 段，并在结算后转化为等量饱足。'},
@@ -528,22 +528,22 @@
     ],
     'awakener-0020':[
       {key:'ramonaPosseUses',label:'本场已使用钥令次数',min:0,max:99,calculated:true,description:'「命定之剑」：本场每使用 1 次钥令，力量倍率 +1；基础力量倍率为 3 倍。'},
-      {overlayId:'overlay.ramona-timeworn.negentropy',key:'negentropyStacks',label:'Negentropy / 负熵',min:0,max:3,calculated:false,description:'3 层可使指令卡触发 Loop；Loop 生成或选择的派生效果请直接选择对应派生卡计算。'}
+      {overlayId:'overlay.ramona-timeworn.negentropy',key:'negentropyStacks',label:'负熵',min:0,max:3,calculated:false,description:'3 层可使指令卡触发回环；回环生成或选择的派生效果请直接选择对应派生卡计算。'}
     ],
     'awakener-0040':[
-      {overlayId:'overlay.pickman.creativity',key:'creativityStacks',label:'Creativity / 创造力',min:0,max:10,calculated:false},
-      {overlayId:'overlay.pickman.fantasia',key:'fantasiaStacks',label:'Fantasia / 幻想',min:0,max:999,calculated:false,description:'SKeyDB 未给出 Fantasia 明确总上限，暂以 999 作为输入保护上限。'}
+      {overlayId:'overlay.pickman.creativity',key:'creativityStacks',label:'创意',min:0,max:10,calculated:false},
+      {overlayId:'overlay.pickman.fantasia',key:'fantasiaStacks',label:'幻想',min:0,max:999,calculated:false,description:'SKeyDB 未给出「幻想」明确总上限，暂以 999 作为输入保护上限。'}
     ],
     'awakener-0057':[
-      {overlayId:'overlay.saya.gynoecium',key:'gynoeciumStacks',label:'Gynoecium',min:0,max:4,calculated:false,description:'可被 Saya 的 Exalt 消耗以强化效果，最多 4 层。'}
+      {overlayId:'overlay.saya.gynoecium',key:'gynoeciumStacks',label:'Gynoecium',min:0,max:4,calculated:false,description:'可被沙耶的狂气爆发消耗以强化效果，最多 4 层。'}
     ],
     'awakener-0055':[
-      {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'Vortex Reload',min:0,max:999,calculated:false,description:'其他唤醒体释放 Exalt 后消耗 1 层并追击 Vortex! Shell!；这一层本身只决定是否产生追击，直接计算追击伤害时请选中派生卡 Vortex! Shell!。'},
+      {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'涡流装填',min:0,max:999,calculated:false,description:'其他唤醒体释放狂气爆发后消耗 1 层并追击「涡！流！弹！」；这一层本身只决定是否产生追击，直接计算追击伤害时请选中派生卡「涡！流！弹！」。'},
       {key:'vortexShellDoubleRemaining',label:'超限双触发剩余「涡！流！弹！」次数',min:0,max:5,calculated:true,requiredEnlighten:'OverExalt',description:'释放超限爆发后，接下来 5 次「涡！流！弹！」均触发 2 次。若当前仍在这 5 次范围内填写 1–5；当前选择「涡！流！弹！」时会自动把可解析事件额外结算 1 次。'}
     ],
     'awakener-0061':[
       {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后每层最终伤害增幅由 33% 提高至 50%。'},
-      {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'Guilt / 罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'}
+      {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'}
     ],
     'awakener-0032':[
       {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执妄转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执妄转化，本场战斗弥利亚姆基础伤害 +15%。'}
@@ -920,7 +920,7 @@
       mapped=repeatRepresentedCardEvents(mapped,2,'超限状态：下一张指令卡共生效 3 次','24-overexalt');
     }
     if(currentAwakener?.id==='awakener-0055'&&baseSkillId==='derived.vortice.vortex-shell'&&Number(resources.vortexShellDoubleRemaining)>0){
-      mapped=repeatRepresentedCardEvents(mapped,1,'超限状态：Vortex! Shell! 本次触发 2 次','vortice-overexalt');
+      mapped=repeatRepresentedCardEvents(mapped,1,'超限状态：「涡！流！弹！」本次触发 2 次','vortice-overexalt');
     }
     if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0){
       const bonus=8*Math.min(10,Math.max(0,Math.floor(Number(resources.finaleStacks)||0)));
@@ -944,11 +944,11 @@
     if(currentAwakener?.id==='awakener-0018'&&Number(resources.finaleFormActive)>0){
       const rank=Math.max(1,Number($('skillLevel')?.value)||1);
       if(baseSkillId==='skill.doll-inferno.terminal-of-truth-and-abyss'){
-        mapped.push({id:'doll-finale-terminal-poison',index:mapped.length,position:9992,groupId:'doll-finale-terminal-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:'Finale Form：狂气爆发额外触发 50% 中毒'});
+        mapped.push({id:'doll-finale-terminal-poison',index:mapped.length,position:9992,groupId:'doll-finale-terminal-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:'终末形态：狂气爆发额外触发 50% 中毒'});
       }
       if(baseSkillId==='skill.doll-inferno.soulblight'){
         const percent=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg3,rank),0));
-        if(percent>0)mapped.push({id:'doll-finale-rouse-poison',index:mapped.length,position:9993,groupId:'doll-finale-rouse-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent,turnEndOnly:true,activeSource:false,resourceEffectLabel:'Finale Form：回合结束触发 '+percent.toFixed(0)+'% 中毒'});
+        if(percent>0)mapped.push({id:'doll-finale-rouse-poison',index:mapped.length,position:9993,groupId:'doll-finale-rouse-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent,turnEndOnly:true,activeSource:false,resourceEffectLabel:'终末形态：回合结束触发 '+percent.toFixed(0)+'% 中毒'});
       }
     }
     if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'){
@@ -994,13 +994,13 @@
         groupId:'castor-onyx-plume-corrosion',type:'corrosion',action:'apply',source:'talent',
         basis:'statPercent',stat:'ATK',percent:840,activeSource:false,turnUnique:true,
         resourceStatusMultiplier:(1+damageAmp/100)*explorationMult,
-        resourceEffectLabel:'净化之羽：首张黑羽施加 840% ATK 侵蚀；伤害强效与已完成战斗成长已计入'
+        resourceEffectLabel:'净化之羽：首张黑羽施加 840% 攻击力 侵蚀；伤害强效与已完成战斗成长已计入'
       });
     }
     if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0&&['derived.pontos.raid-gaunt','derived.pontos.vex-gaunt','derived.pontos.slay-gaunt'].includes(baseSkillId)){
       if(baseSkillId==='derived.pontos.slay-gaunt'){
         const fixed=mapped.filter(event=>event.type==='fixed');
-        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:'Pack Hunt：消耗 1 层，Slay-Gaunt 固定伤害额外触发 1 次'}));
+        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:'Pack Hunt：消耗 1 层，「猎杀之魇」固定伤害额外触发 1 次'}));
         mapped.push(...clones);
       }
     }
@@ -1048,7 +1048,7 @@
     }
     if(currentAwakener?.id==='awakener-0043'&&baseSkillId==='skill.ryker.all-in'&&Number(resources.blackSigilsConsumed)>0){
       const bonus=0.5*Math.max(0,Number(resources.blackSigilsConsumed)||0);
-      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:'确定收益：All-In! 基础伤害 +'+bonus.toFixed(1)+'%'}:event);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:'确定收益：对应技能基础伤害 +'+bonus.toFixed(1)+'%'}:event);
     }
     if(currentAwakener?.id==='awakener-0024'&&baseSkillId==='skill.horla.snarl-psalm'&&Number(resources.angerMetaphorStacks)>0){
       const stacks=Math.min(3,Math.max(0,Math.floor(Number(resources.angerMetaphorStacks)||0)));
@@ -1115,7 +1115,7 @@
         mapped=mapped.map(event=>event.type==='active'?{
           ...event,
           onDamageBleedPct:(Number(event.onDamageBleedPct)||0)+bleedPct,
-          resourceEffectLabel:[event.resourceEffectLabel,'血色桎梏本回合效果：主动伤害附加 '+bleedPct.toFixed(0)+'% 流血'].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,'「缚身锁链」本回合效果：主动伤害附加 '+bleedPct.toFixed(0)+'% 流血'].filter(Boolean).join('；')
         }:event);
       }
     }
@@ -1136,7 +1136,7 @@
           mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
             ...event,
             skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+50,
-            resourceEffectLabel:[event.resourceEffectLabel,'E2 · 活焰 3 层：Solarflare 基础伤害 +50%'].filter(Boolean).join('；')
+            resourceEffectLabel:[event.resourceEffectLabel,'启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%'].filter(Boolean).join('；')
           }:event);
         }
       }
@@ -1146,7 +1146,7 @@
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
           ...event,
           skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+baseBonus,
-          resourceEffectLabel:[event.resourceEffectLabel,'E3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,'启灵3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join('；')
         }:event);
       }
     }
@@ -1165,7 +1165,7 @@
           critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
           usesStrength:false,guaranteedCrit:false,activeSource:true,
           onDamageBleedPct:Math.max(0,Number(resources.sinMarkStacks)||0),
-          resourceEffectLabel:'赎罪苦痛：第 '+String(i+1)+' 次 '+(200*(1+0.20*finishedBattles)).toFixed(0)+'% ATK 伤害'+(finishedBattles>0?'（已完成 '+finishedBattles+' 场）':'')
+          resourceEffectLabel:'苦痛救赎：第 '+String(i+1)+' 次 '+(200*(1+0.20*finishedBattles)).toFixed(0)+'% 攻击力 伤害'+(finishedBattles>0?'（已完成 '+finishedBattles+' 场）':'')
         });
       }
     }
@@ -1405,7 +1405,7 @@
       const messages=[...(runtimeHints.messages||[])];
       if(signatureRelicEnabled()&&signatureSkillMods?.notes?.length)messages.push(...signatureSkillMods.notes);
       if(currentSkill?.overExaltEffectId){
-        messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外 Pure/状态事件会自动叠加。');
+        messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外纯粹伤害/状态事件会自动叠加。');
         const overText=String(currentSkill.descriptionTemplate||'').split('{Over-Exalt}:')[1]||'';
         if(/(?:all Awakeners|this turn|for the next|lasting|temporarily increase)/i.test(overText))messages.push('该超限还包含团队/回合持续状态；这类效果不反向追溯到本次基础狂气爆发伤害，避免因结算时序不明而高算。');
       }
@@ -1472,47 +1472,47 @@
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       const resources=characterResourceValues();
-      if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：Necrotic Gala 暴击伤害加成翻倍');
+      if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：对应狂气爆发的暴击伤害加成翻倍');
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
-      if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
-      if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
-      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% ATK`);
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`当前指令卡最终伤害额外加成 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
+      if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('灵知觉醒：「圣心」额外施加等于本次伤害 100% 的流血');
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`苦痛救赎：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% 攻击力`);
       if(currentAwakener?.id==='awakener-0019'&&Number(resources.helotSanguineTurnActive)>0){
         const exalt=currentSkills.find(skill=>skill.id==='skill.helot-catena.sanguine-fetters');
         const bleedPct=Math.max(0,num(argValue(resolveSkillEnlighten(exalt)?.descriptionArgs?.Arg2,Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1))),0));
-        parts.push(`血色桎梏本回合效果：主动伤害附加 ${bleedPct.toFixed(0)}% 流血`);
+        parts.push(`「缚身锁链」本回合效果：主动伤害附加 ${bleedPct.toFixed(0)}% 流血`);
       }
       if(currentAwakener?.id==='awakener-0027'){
         const fiammaStacks=Number(resources.fiammaActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
         if(fiammaStacks>0){
           const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
           parts.push(`活焰 ${fiammaStacks}/3 层：本卡最终伤害 +${fiammaStacks*(30+(absoluteRouse?30:0))}%${absoluteRouse?'（灵知觉醒 + 最终法则）':''}`);
-          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.solarflare')parts.push('E2 · 活焰 3 层：Solarflare 基础伤害 +50%');
-          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.last-stand-salvo')parts.push('E2 · 活焰 3 层：Last Stand Salvo 额外获得 3% ATK 力量；属于后续卡牌状态，不回溯本卡伤害');
+          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.solarflare')parts.push('启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%');
+          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.last-stand-salvo')parts.push('E2 · 活焰 3 层：Last Stand Salvo 额外获得 3% 攻击力 力量；属于后续卡牌状态，不回溯本卡伤害');
           if(fiammaStacks===3&&rouseActive())parts.push('灵知觉醒：3 层活焰卡使用后返回手牌；这里只计算本次使用，不自动重复整张卡');
         }
-        if(Number(resources.combustStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E3'))parts.push(`E3 · 燃烧 ${Math.min(10,Math.floor(Number(resources.combustStacks)||0))} 层：本场基础伤害 +${Math.min(10,Math.floor(Number(resources.combustStacks)||0))*5}%`);
+        if(Number(resources.combustStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E3'))parts.push(`启灵3 · 燃烧 ${Math.min(10,Math.floor(Number(resources.combustStacks)||0))} 层：本场基础伤害 +${Math.min(10,Math.floor(Number(resources.combustStacks)||0))*5}%`);
       }
-      if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&vulnerableStacks()>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${vulnerableStacks()} 层：E2 Decomposition 最终伤害 +${Math.min(500,vulnerableStacks()*5)}%`);
-      if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike')parts.push(`Predetermined Strike 力量倍率：基础 3× + 本场 Posse ${Math.floor(Number(resources.ramonaPosseUses)||0)} 次`);
-      if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本场累计移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：E2+ 基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
+      if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&vulnerableStacks()>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${vulnerableStacks()} 层：启灵2对应技能最终伤害 +${Math.min(500,vulnerableStacks()*5)}%`);
+      if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike')parts.push(`「命定之剑」力量倍率：基础 3× + 本场钥令 ${Math.floor(Number(resources.ramonaPosseUses)||0)} 次`);
+      if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本场累计移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：启灵2及以上：基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
       if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&Number(resources.clementineFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('灵知觉醒：本回合第一张指令卡的可解析伤害效果额外触发 2 次');
       if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom')parts.push('最终法则灵知觉醒：每个可解析伤害公式的段数 +1');
       if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy')parts.push(`饱足 ${Math.floor(Number(resources.satietyStacks)||0)} 层；供奉 ${Math.floor(Number(resources.offeringStacks)||0)} 层（供奉增加本次段数；转化后的饱足不回溯本次基础伤害）`);
-      if(currentAwakener?.id==='awakener-0018'&&Number(resources.finaleFormActive)>0)parts.push('Finale Form 已开启：只计入已明确接入的形态条件伤害');
-      if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0)parts.push(`最终法则灵知觉醒：Finale ${Math.floor(Number(resources.finaleStacks)||0)} 层 → 伤害强效 +${8*Math.floor(Number(resources.finaleStacks)||0)}%`);
-      if(currentAwakener?.id==='awakener-0018'&&currentSkill?.overExaltEffectId&&Number(resources.finaleFormActive)>0)parts.push('⚠ 超限 Finale Form 的“每消耗 10 狂气额外触发 3% 中毒”依赖实际消耗狂气，当前未自动计入');
+      if(currentAwakener?.id==='awakener-0018'&&Number(resources.finaleFormActive)>0)parts.push('终末形态已开启：只计入已明确接入的形态条件伤害');
+      if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0)parts.push(`最终法则灵知觉醒：终末 ${Math.floor(Number(resources.finaleStacks)||0)} 层 → 伤害强效 +${8*Math.floor(Number(resources.finaleStacks)||0)}%`);
+      if(currentAwakener?.id==='awakener-0018'&&currentSkill?.overExaltEffectId&&Number(resources.finaleFormActive)>0)parts.push('⚠ 超限终末形态的“每消耗 10 狂气额外触发 3% 中毒”依赖实际消耗狂气，当前未自动计入');
       if(currentAwakener?.id==='awakener-0041'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：波吕克斯基础伤害 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0008'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：卡斯托尔侵蚀施加量 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：克莱门汀 E2 基础伤害 +${25*completedBattles()}%`);
-      if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`Pack Hunt ${Number(resources.packHuntStacks)} 层：本张 Gaunt 额外触发 1 次（消耗 1 层）`);
+      if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`群猎 ${Number(resources.packHuntStacks)} 层：本张对应「魇」衍生卡额外触发 1 次（消耗 1 层）`);
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0)parts.push(`暗潮 ${Number(resources.undertowStacks)} 层：指令卡最终伤害/暴伤已按当前启灵阶段计入`);
       if(currentAwakener?.id==='awakener-0061'&&rouseActive()&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.ogier-oathbound.sin-stained-spear')parts.push(selectedEnlightenSlot()==='AbsoluteAxiom'?'灵知觉醒 + 最终法则：染罪之枪基础伤害 +100%、总力量加成 500%，并施加等量侵蚀':'灵知觉醒：染罪之枪命中后施加等量侵蚀');
-      if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'&&generatedStrength>0)parts.push(`Last Stand Salvo 本次生成力量约 ${generatedStrength.toFixed(1)}；活焰对“获得力量”的增幅与 3 层 E2 额外 3% ATK 已按当前状态计入。该力量只影响后续卡牌，不回溯本卡伤害。`);
+      if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'&&generatedStrength>0)parts.push(`「末路枪声」本次生成力量约 ${generatedStrength.toFixed(1)}；活焰对“获得力量”的增幅与 3 层 E2 额外 3% 攻击力 已按当前状态计入。该力量只影响后续卡牌，不回溯本卡伤害。`);
       if(currentAwakener?.id==='awakener-0061'&&generatedStrength>0)parts.push(`本次爆发生成力量约 ${generatedStrength.toFixed(1)}${currentSkill?.overExaltEffectId?'（超限三倍已计入）':''}；护盾约 ${generatedShield.toFixed(1)}。生成的力量属于后续卡牌状态，请在后续伤害计算中填入“力量”。`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
