@@ -5,7 +5,7 @@
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
   let wheelCatalog=[],covenantCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
-  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,counterGeneration:0};
+  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhCovenants={
     'Deus Ex Machina':'机械降神',
@@ -596,31 +596,58 @@
     const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();return}
     currentWheels[slot]=id?await fetchRecord('wheels',id):null;const levelSel=$(`fateLevel${slot+1}`);if(levelSel)levelSel.value='0';fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();
   }
-  function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
+  function isConditional(sentence){
+    return /\b(if|when|whenever|after|before|next|per |for each|for every|every time|each time|at the start|at turn|upon|once|during|while|until|first|chance|stacks?|current realm|realm includes|boss battle)\b/i.test(sentence);
+  }
+  function bonusScopeAllows(sentence,key){
+    const slot=String(currentSkill?.slot||'');
+    const isExalt=slot==='Exalt'||slot==='OverExalt';
+    const isStrike=slot==='Strike';
+    const isCommand=currentSkill&&currentSkill.kind!=='derivedSkill';
+    const metric=key==='base'?'Base DMG':key==='final'?'Final DMG':key==='critRate'?'Crit(?:\\.? Rate)':key==='critDamage'?'Crit(?:\\.? DMG)':null;
+    if(!metric)return true;
+    const metricRe=new RegExp(metric,'i');
+    if(!metricRe.test(sentence))return true;
+    const compact=String(sentence||'').replace(/\\s+/g,' ');
+    const exaltScoped=new RegExp(`(?:Exalt(?:'s)?[^.;]{0,55}${metric}|${metric}[^.;]{0,55}Exalt)`,'i').test(compact);
+    if(exaltScoped&&!isExalt)return false;
+    const strikeScoped=new RegExp(`(?:(?:"?Strike"?(?: Commands?)?)[^.;]{0,55}${metric}|${metric}[^.;]{0,55}(?:"?Strike"?(?: Commands?)))`,'i').test(compact);
+    if(strikeScoped&&!isStrike)return false;
+    const commandScoped=new RegExp(`(?:Command Cards?[^.;]{0,55}${metric}|${metric}[^.;]{0,55}Command Cards?)`,'i').test(compact);
+    if(commandScoped&&!isCommand)return false;
+    return true;
+  }
   function numericBonusesFromText(text,allowConditional=false){
-    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,counterGeneration:0,skipped:[]};
+    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0,skipped:[]};
     const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
     for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
       const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
       let m;
-      if((m=s.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i)))out.base+=num(m[1]);
+      const paired=s.match(/\+\s*([\d.]+)%\s*Base DMG\s+and\s+Crit\.?\s*DMG/i);
+      if(paired){
+        if(bonusScopeAllows(s,'base'))out.base+=num(paired[1]);
+        if(bonusScopeAllows(s,'critDamage'))out.critDamage+=num(paired[1]);
+      }
+      if((m=s.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))&&bonusScopeAllows(s,'base'))out.base+=num(m[1]);
       if((m=s.match(/(?:Damage Amplification|DMG Amplification|DMG Amp)[^+%]*\+\s*([\d.]+)%/i)))out.power+=num(m[1]);
-      if((m=s.match(/Crit\.? Rate[^+%]*\+\s*([\d.]+)%/i)))out.critRate+=num(m[1]);
-      if((m=s.match(/Crit\.? DMG[^+%]*\+\s*([\d.]+)%/i)))out.critDamage+=num(m[1]);
+      if((m=s.match(/Crit\.? Rate[^+%]*\+\s*([\d.]+)%/i))&&bonusScopeAllows(s,'critRate'))out.critRate+=num(m[1]);
+      if((m=s.match(/Crit\.? DMG[^+%]*\+\s*([\d.]+)%/i))&&bonusScopeAllows(s,'critDamage'))out.critDamage+=num(m[1]);
       if((m=s.match(/Vulnerab(?:le|ility)[^+%]*\+\s*([\d.]+)%/i)))out.vulnerability+=num(m[1]);
-      if((m=s.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i)))out.final+=num(m[1]);
+      if((m=s.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))&&bonusScopeAllows(s,'final'))out.final+=num(m[1]);
       if((m=s.match(/Realm Mastery[^+\d]*\+\s*([\d.]+)/i)))out.realmMastery+=num(m[1]);
       if((m=s.match(/Aliemus Regen(?: Lv\.)?[^+\d]*\+\s*([\d.]+)/i)))out.aliemusRegen+=num(m[1]);
       if((m=s.match(/Keyflare Regen(?: Lv\.)?[^+\d]*\+\s*([\d.]+)/i)))out.keyflareRegen+=num(m[1]);
       if((m=s.match(/Sigil Yield[^+\d]*\+\s*([\d.]+)%?/i)))out.sigilYield+=num(m[1]);
       if((m=s.match(/Death Resistance[^+\d]*\+\s*([\d.]+)%?/i)))out.deathResistance+=num(m[1]);
-      if((m=s.match(/Poison(?: Infliction)?[^+%]*\+\s*([\d.]+)%/i)))out.poisonInfliction+=num(m[1]);
-      if((m=s.match(/Counter(?: Generation)?[^+%]*\+\s*([\d.]+)%/i)))out.counterGeneration+=num(m[1]);
-      const both=s.match(/Crit\.? Rate and Crit\.? DMG(?: increase)? by\s*([\d.]+)%/i);if(both){out.critRate+=num(both[1]);out.critDamage+=num(both[1])}
+      if((m=s.match(/Fixed\s+Poison\s+Infliction[^+%]*\+\s*([\d.]+)%/i)))out.fixedPoisonInfliction+=num(m[1]);
+      else if((m=s.match(/Poison\s+Infliction[^+%]*\+\s*([\d.]+)%/i)))out.poisonInfliction+=num(m[1]);
+      if((m=s.match(/Poison\s+Trigger[^+%]*\+\s*([\d.]+)%/i)))out.poisonTrigger+=num(m[1]);
+      if((m=s.match(/Counter\s+Generation[^+%]*\+\s*([\d.]+)%/i)))out.counterGeneration+=num(m[1]);
+      const both=s.match(/Crit\.? Rate and Crit\.? DMG(?: increase)? by\s*([\d.]+)%/i);if(both){if(bonusScopeAllows(s,'critRate'))out.critRate+=num(both[1]);if(bonusScopeAllows(s,'critDamage'))out.critDamage+=num(both[1])}
     }
     return out;
   }
-  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance','poisonInfliction','counterGeneration'])target[k]+=num(b[k])}
+  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration'])target[k]+=num(b[k])}
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
@@ -634,7 +661,7 @@
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后从 SKeyDB 读取完整 3 / 6 件套效果。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
-  const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回复',KEYFLARE_REGEN:'银钥充能',SIGIL_YIELD:'印记产出',DEATH_RESISTANCE:'死亡抗性'};
+  const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回充等级',KEYFLARE_REGEN:'银钥充能等级',SIGIL_YIELD:'黑印掉落',DEATH_RESISTANCE:'死亡抵抗'};
   function wheelMainstatValue(rec,slot){
     const source=gameplayMathMeta?.wheelMainstatScaling;if(!rec||!source)return null;
     const seriesKey=rec.mainstatSeriesKey||`${rec.rarity}:${rec.mainstatKey}`;
@@ -654,7 +681,7 @@
     gearRealmMasteryAuto=nextValue;
   }
   function recomputeGearBonuses(){
-    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,counterGeneration:0};
+    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
     let nextRealmMastery=0;wheelMainstatSummary=[];
     currentWheels.forEach((w,i)=>{
       if(!w)return;
@@ -673,7 +700,7 @@
       }
     });
     if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),e.set<6||allow))}}
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery};renderAutoSummary();
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery};renderAutoSummary();
   }
 
   function initManualTracking(){
@@ -686,8 +713,9 @@
   }
   function renderAutoSummary(){
     const box=$('autoSummary');if(!box)return;
-    const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['counterGeneration','反击生成']];
-    const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}%</span>`);
+    const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['fixedPoisonInfliction','固定中毒施加'],['poisonTrigger','中毒触发'],['counterGeneration','反击生成']];
+    const percentKeys=new Set(['base','power','critRate','critDamage','vulnerability','final','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration']);
+    const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}${percentKeys.has(k)?'%':''}</span>`);
     for(const x of wheelMainstatSummary){
       const suffix=['CRIT_RATE','CRIT_DMG','DMG_AMP','SIGIL_YIELD','DEATH_RESISTANCE'].includes(x.key)?'%':'';
       rows.push(`<span class="chip">${escape(labelForWheel(x.wheel))} ${wheelEnhanceLabel(x.level)} · ${wheelMainstatLabels[x.key]||x.key} +${x.value.toFixed(2)}${suffix}</span>`);

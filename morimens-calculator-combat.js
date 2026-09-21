@@ -293,6 +293,8 @@
     const fixedStatusEffectMult=1+Math.max(0,Number(realm.fixedPoisonCounterBonusPct)||0)/100;
     const gearEffects=window.MorimensGearEffects||{};
     const poisonInflictionMult=1+Math.max(0,Number(gearEffects.poisonInflictionPct)||0)/100;
+    const fixedPoisonInflictionMult=1+Math.max(0,Number(gearEffects.fixedPoisonInflictionPct)||0)/100;
+    const poisonTriggerMult=1+Math.max(0,Number(gearEffects.poisonTriggerPct)||0)/100;
     const counterGenerationMult=1+Math.max(0,Number(gearEffects.counterGenerationPct)||0)/100;
     const soulforgeFlat=progression.soulforgeEnabled
       ?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
@@ -492,7 +494,7 @@
       if((source.type==='poison'||source.type==='counter')&&source.basis!=='sourceDamage')amount*=fixedStatusEffectMult;
       // Normal Ultra Round explicitly reduces generated Poison / Counter / Bleed by 25%.
       if(source.type==='poison'||source.type==='counter'||source.type==='bleed')amount*=realmStatusOutputMult;
-      if(source.type==='poison'&&source.action==='apply')amount*=poisonInflictionMult;
+      if(source.type==='poison'&&source.action==='apply'){amount*=poisonInflictionMult;if(source.basis==='flat'||source.basis==='statPercent'||source.basis==='targetMaxHpPercent')amount*=fixedPoisonInflictionMult}
       if(source.type==='counter'&&source.action==='gain')amount*=counterGenerationMult;
       return Math.max(0,amount);
     }
@@ -548,6 +550,7 @@
           let effectivePercent=basePercent;
           if(guaranteed||mode==='crit')effectivePercent=critPercent;
           else if(mode==='expected')effectivePercent=basePercent+(critPercent-basePercent)*critChance;
+          effectivePercent*=poisonTriggerMult;
           const raw=stacks*effectivePercent/100;
           const label=critPercent!==basePercent
             ?`中毒触发 ${effectivePercent.toFixed(2)}%（基础 ${basePercent.toFixed(2)}% / 暴击 ${critPercent.toFixed(2)}%）`
@@ -764,13 +767,13 @@
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 流血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${fixedPoisonInflictionMult!==1?`；固定中毒施加 ×<b>${fixedPoisonInflictionMult.toFixed(2)}</b>`:''}${poisonTriggerMult!==1?`；中毒触发 ×<b>${poisonTriggerMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 流血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
     }
     window.MorimensDamageEvents={
       mode,
       enemyProfile:{...enemyProfile,maxHp:enemyMaxHp,maxHpSource:enemyMaxHpSource,estimatedMaxHp:enemyProfile.estimatedMaxHp},
       realmOutput:{damage:realmDamageOutputMult,status:realmStatusOutputMult,fixedPoisonCounter:fixedStatusEffectMult},
-      gearOutput:{poisonInfliction:poisonInflictionMult,counterGeneration:counterGenerationMult},
+      gearOutput:{poisonInfliction:poisonInflictionMult,fixedPoisonInfliction:fixedPoisonInflictionMult,poisonTrigger:poisonTriggerMult,counterGeneration:counterGenerationMult},
       sourceSkillEvents,
       events,
       totals:{
