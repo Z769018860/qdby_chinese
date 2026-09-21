@@ -348,7 +348,7 @@
     wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
-    $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderCharacterResourceControls(false);renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
+    $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderCharacterResourceControls(false);refreshBattleProgressionUi();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
     ensurePsycheSurgeUi();
   }
   function ensurePsycheSurgeUi(){
@@ -603,9 +603,46 @@
     }
     return out;
   }
+  function explorationBattleIndex(){return Math.max(1,Math.min(99,Math.floor(num($('explorationBattleIndex')?.value,1))))}
+  function completedBattles(){return Math.max(0,explorationBattleIndex()-1)}
+  function cumulativeWheelBattleBonuses(text){
+    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
+    const normalized=String(text||'').replace(/Crit\./gi,'Crit');
+    for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
+      const s=raw.trim();if(!s)continue;
+      if(!/(?:after|at\s+the\s+end\s+of)\s+(?:each|the)\s+battle(?:\s+ends?)?/i.test(s))continue;
+      sumBonus(out,numericBonusesFromText(s,true));
+    }
+    return out;
+  }
+  function scaledBattleBonuses(source,count){
+    const out={};for(const key of Object.keys(source||{})){if(key!=='skipped')out[key]=num(source[key])*Math.max(0,count)}return out;
+  }
+  function hasNumericBattleBonus(source){return Object.entries(source||{}).some(([k,v])=>k!=='skipped'&&Math.abs(num(v))>1e-9)}
+  function battleGrowthSources(){
+    const sources=[];
+    if(currentAwakener?.id==='awakener-0041')sources.push('波吕克斯：每完成 1 场，基础伤害 +20%，赎罪苦痛伤害效果 +20%');
+    if(currentAwakener?.id==='awakener-0008')sources.push('卡斯托尔：每完成 1 场，本次探索中的侵蚀施加量 +20%');
+    if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey'))sources.push('克莱门汀 E2：每完成 1 场，基础伤害 +25%');
+    currentWheels.forEach((wheel,slot)=>{
+      if(!wheel)return;
+      const bonus=cumulativeWheelBattleBonuses(wheelDescriptionRaw(wheel,slot));
+      if(hasNumericBattleBonus(bonus))sources.push('命轮「'+labelForWheel(wheel)+'」：存在每场战斗累计伤害乘区');
+    });
+    return sources;
+  }
+  function refreshBattleProgressionUi(){
+    const field=$('battleIndexField'),note=$('battleGrowthNote');if(!field)return;
+    const sources=battleGrowthSources();field.hidden=sources.length===0;
+    if(note)note.textContent=sources.length
+      ?'填写当前正在进行的场次；第 1 场 = 尚未完成战斗，第 3 场 = 已完成 2 场。当前生效：'+sources.join('；')
+      :'当前角色 / 命轮没有按完成战斗数累计的伤害乘区。';
+  }
+
   function applyCharacterResourceEffects(events){
     const resources=characterResourceValues();
     const baseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
+    const finishedBattles=completedBattles();
     let mapped=(events||[]).map(event=>{
       const next={...event};
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
@@ -629,8 +666,29 @@
         next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
         next.resourceEffectLabel='Ablaze/Alight：指令卡最终伤害 +'+bonus.toFixed(1)+'%';
       }
+      if(finishedBattles>0&&currentAwakener?.id==='awakener-0041'&&(next.type==='active'||next.type==='pierce')){
+        const bonus=20*finishedBattles;
+        next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
+        next.resourceEffectLabel=[next.resourceEffectLabel,'探索成长：已完成 '+finishedBattles+' 场，基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+      }
+      if(finishedBattles>0&&currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&(next.type==='active'||next.type==='pierce')){
+        const bonus=25*finishedBattles;
+        next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
+        next.resourceEffectLabel=[next.resourceEffectLabel,'灵魂疗愈之旅：已完成 '+finishedBattles+' 场，基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+      }
       return next;
     });
+    if(currentAwakener?.id==='awakener-0008'&&baseSkillId==='derived.castor.onyx-plume'){
+      const damageAmp=Math.max(0,num(currentFormulaContext().DamageAmplification,0));
+      const explorationMult=1+0.20*finishedBattles;
+      mapped.push({
+        id:'castor-onyx-plume-corrosion',index:mapped.length,position:9991,
+        groupId:'castor-onyx-plume-corrosion',type:'corrosion',action:'apply',source:'talent',
+        basis:'statPercent',stat:'ATK',percent:840,activeSource:false,turnUnique:true,
+        resourceStatusMultiplier:(1+damageAmp/100)*explorationMult,
+        resourceEffectLabel:'净化之羽：首张黑羽施加 840% ATK 侵蚀；伤害强效与已完成战斗成长已计入'
+      });
+    }
     if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0&&['derived.pontos.raid-gaunt','derived.pontos.vex-gaunt','derived.pontos.slay-gaunt'].includes(baseSkillId)){
       if(baseSkillId==='derived.pontos.slay-gaunt'){
         const fixed=mapped.filter(event=>event.type==='fixed');
@@ -748,12 +806,12 @@
       for(let i=0;i<count;i++){
         mapped.push({
           id:'pollux-atonement-by-pain-'+String(i+1),index:mapped.length,position:9999+i*0.0001,groupId:'pollux-atonement-'+String(i+1),
-          type:'active',source:'resource',coefficient:200,stat:'ATK',hit:1,hitCount:1,
+          type:'active',source:'resource',coefficient:200*(1+0.20*finishedBattles),stat:'ATK',hit:1,hitCount:1,
           strengthMultiplier:0,tentacleBonusCoefficient:0,counterBonusCoefficient:0,
           critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
           usesStrength:false,guaranteedCrit:false,activeSource:true,
           onDamageBleedPct:Math.max(0,Number(resources.sinMarkStacks)||0),
-          resourceEffectLabel:'赎罪苦痛：第 '+String(i+1)+' 次 200% ATK 伤害'
+          resourceEffectLabel:'赎罪苦痛：第 '+String(i+1)+' 次 '+(200*(1+0.20*finishedBattles)).toFixed(0)+'% ATK 伤害'+(finishedBattles>0?'（已完成 '+finishedBattles+' 场）':'')
         });
       }
     }
@@ -764,10 +822,12 @@
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
     const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
-    block.innerHTML='<div class="field full"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。公式上下文只保留账号等级；命轮精炼直接读取命轮控件。</small></div>';
+    block.innerHTML='<div class="field full"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。公式上下文只保留账号等级；命轮精炼直接读取命轮控件。</small></div><div class="field full" id="battleIndexField" hidden><label for="explorationBattleIndex">当前探索：第几场战斗</label><input id="explorationBattleIndex" type="number" min="1" max="99" step="1" value="1"><small id="battleGrowthNote">仅在角色或命轮存在跨战斗累计伤害乘区时显示。</small></div>';
     anchor.insertAdjacentElement('afterend',block);
     const refreshFormulaContext=()=>{renderWheelsAndBonuses();renderCovenantAndBonuses();updateSkillLevel()};
     $('formulaAccountLevel')?.addEventListener('input',refreshFormulaContext,{capture:true});
+    $('explorationBattleIndex')?.addEventListener('input',()=>{refreshBattleProgressionUi();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    refreshBattleProgressionUi();
     $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
   }
   function ensureCharacterLevel(){
@@ -920,6 +980,7 @@
     configureEnlightenControl(switchedCharacter);
     configurePsycheSurgeControl(switchedCharacter);
     renderCharacterResourceControls(switchedCharacter);
+    refreshBattleProgressionUi();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
     applyCharacterStats();
@@ -1033,7 +1094,10 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxRouseActive)>0)parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
-      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × 200% ATK`);
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% ATK`);
+      if(currentAwakener?.id==='awakener-0041'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：波吕克斯基础伤害 +${20*completedBattles()}%`);
+      if(currentAwakener?.id==='awakener-0008'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：卡斯托尔侵蚀施加量 +${20*completedBattles()}%`);
+      if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：克莱门汀 E2 基础伤害 +${25*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`Pack Hunt ${Number(resources.packHuntStacks)} 层：本张 Gaunt 额外触发 1 次（消耗 1 层）`);
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
@@ -1165,14 +1229,14 @@
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
-    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
+    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();refreshBattleProgressionUi();
   }
 
   async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses();updateSkillLevel()}
   function renderEffectRaw(effect){return renderTemplate(effect,1)}
   function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
-    if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后从 SKeyDB 读取完整 3 / 6 件套效果。';recomputeGearBonuses();return}
+    if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套计算；条件型效果需要额外确认。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
   const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回充等级',KEYFLARE_REGEN:'银钥充能等级',SIGIL_YIELD:'黑印掉落',DEATH_RESISTANCE:'死亡抵抗'};
@@ -1199,7 +1263,10 @@
     let nextRealmMastery=0;wheelMainstatSummary=[];
     currentWheels.forEach((w,i)=>{
       if(!w)return;
-      sumBonus(next,numericBonusesFromText(wheelDescriptionRaw(w,i),false));
+      const wheelText=wheelDescriptionRaw(w,i);
+      sumBonus(next,numericBonusesFromText(wheelText,false));
+      const battleBonus=cumulativeWheelBattleBonuses(wheelText);
+      if(completedBattles()>0&&hasNumericBattleBonus(battleBonus))sumBonus(next,scaledBattleBonuses(battleBonus,completedBattles()));
       const main=wheelMainstatValue(w,i);
       if(main){
         wheelMainstatSummary.push({wheel:w,...main});
@@ -1213,7 +1280,7 @@
         else if(main.key==='DEATH_RESISTANCE')next.deathResistance+=main.value;
       }
     });
-    if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),e.set<6||allow))}}
+    if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),Number(e.set)<6||allow))}}
     Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery};renderAutoSummary();
   }
 
@@ -1245,7 +1312,6 @@
     $('skillLevel')?.addEventListener('change',e=>{e.stopImmediatePropagation();updateSkillLevel()},{capture:true});
     $('fateSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(0)},{capture:true});
     $('contractSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadCovenant()},{capture:true});
-    $('contractPieces')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses();updateSkillLevel()},{capture:true});
     $('contractConditional')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses();updateSkillLevel()},{capture:true});
     const formulaReactiveFields=new Set(['critRate','critDamage','powerBonus','realmMastery']);
     document.addEventListener('input',e=>{if(formulaReactiveFields.has(e.target?.id))queueMicrotask(updateSkillLevel)},{capture:true});
@@ -1254,7 +1320,7 @@
     $('resetBtn')?.addEventListener('click',e=>{e.stopImmediatePropagation();resetBuild()},{capture:true});
   }
   async function resetBuild(){
-    if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
+    if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractConditional'))$('contractConditional').checked=false;if($('explorationBattleIndex'))$('explorationBattleIndex').value='1';currentCovenant=null;refreshBattleProgressionUi();
     if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
