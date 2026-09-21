@@ -495,10 +495,10 @@
     'awakener-0001':[
       {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:false,showInCalculator:true,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的狂气爆发会按当前人格与界域触发额外效果并切换人格。该分支同时包含多目标伤害、目标力量降低、状态施加与触腕/中毒等不同结算时序；当前先显式记录人格，但不把这些复杂分支静默折算进当前目标伤害，避免高算。'},
       {key:'twistedCarrionPriorUses',label:'本场此前已释放「扭曲腐肉狂欢」次数',min:0,max:99,calculated:true,description:'该狂气爆发每次释放后使自身基础伤害在本场 +20%。这里填写本次释放之前已经释放的次数；当前这次新增的 +20% 不回溯放大本次已经开始结算的伤害。'},
-      {key:'twentyFourTripleNextCommandActive',label:'超限后：当前是下一张三次生效的指令卡',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发 Aberrant Vivisection 后，“24”的下一张指令卡生效 3 次。仅在当前计算的确实是那一张指令卡时勾选；计算器会把可解析的伤害/状态事件额外重复 2 次。'}
+      {key:'twentyFourTripleNextCommandActive',label:'超限后：当前是下一张三次生效的指令卡',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发「畸变的解剖」后，“24”的下一张指令卡生效 3 次。仅在当前计算的确实是那一张指令卡时勾选；计算器会把可解析的伤害/状态事件额外重复 2 次。'}
     ],
     'awakener-0056':[
-      {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命者',min:0,max:5,calculated:false,description:'织命者层数；E3 上限为 5，E3 前上限为 3。用于 Singularity Warp 后的 Infinite Threads 追击。'},
+      {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命',min:0,max:5,calculated:false,description:'织命层数；启灵3上限为 5，启灵3前上限为 3。用于「奇点折跃」后的「无尽线缕」追击。'},
       {key:'singularityWarpActive',label:'奇点折跃已触发',type:'checkbox',calculated:false,description:'标记本次狂气爆发是否满足「奇点折跃」；额外效果按对应狂气爆发文本处理。'}
     ],
     'awakener-0060':[
@@ -883,7 +883,7 @@
         const bonus=Math.min(500,stacks*5);
         if(bonus>0){
           next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
-          next.resourceEffectLabel=[next.resourceEffectLabel,'易伤 '+stacks+' 层：Decomposition 最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+          next.resourceEffectLabel=[next.resourceEffectLabel,'易伤 '+stacks+' 层：对应技能最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
         }
       }
       if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike'&&Number(resources.ramonaPosseUses)>0&&(next.type==='active'||next.type==='pierce')){
@@ -1074,10 +1074,10 @@
       const effectiveStacks=stacks*(1+0.4*boost);
       const progression=progressionState();
       const extraAmp=progression.soulforgeEnabled&&progression.soulforgeLevel>0?Math.max(0,Number(progression.resolvedSoulforgeArgs?.Arg5)||0):0;
-      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,resourceFlatDamage:(Number(event.resourceFlatDamage)||0)+2*effectiveStacks,resourceFlatDamageAmpBonusPct:(Number(event.resourceFlatDamageAmpBonusPct)||0)+extraAmp,resourceEffectLabel:'Endure '+stacks.toFixed(0)+'：独立伤害增加 '+(2*effectiveStacks).toFixed(0)+(extraAmp>0?'（额外伤害强效 +'+extraAmp.toFixed(1)+'%）':'')}:event);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,resourceFlatDamage:(Number(event.resourceFlatDamage)||0)+2*effectiveStacks,resourceFlatDamageAmpBonusPct:(Number(event.resourceFlatDamageAmpBonusPct)||0)+extraAmp,resourceEffectLabel:'忍耐 '+stacks.toFixed(0)+'：独立伤害增加 '+(2*effectiveStacks).toFixed(0)+(extraAmp>0?'（额外伤害强效 +'+extraAmp.toFixed(1)+'%）':'')}:event);
     }
     if(currentAwakener?.id==='awakener-0052'&&baseSkillId==='skill.wanda.spine-needle-chains'&&Number(resources.dreamlureStacks)>=5){
-      mapped=cloneExtraDamageEvents(mapped,2,'梦诱≥5：跃迁成功，额外 2 段伤害');
+      mapped=cloneExtraDamageEvents(mapped,2,'梦引≥5：跃迁成功，额外 2 段伤害');
     }
     if(currentAwakener?.id==='awakener-0052'&&Number(resources.murmursActive)>0){
       const overlay=resolvedOverlay('overlay.wanda.murmurs');
