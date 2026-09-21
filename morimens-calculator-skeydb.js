@@ -4,8 +4,8 @@
   const recordCache=new Map();
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
   let wheelCatalog=[],covenantCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
-  let applyingAuto=false,wheelRealmMasteryAuto=0,wheelMainstatSummary=[];
-  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
+  let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
+  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhCovenants={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸'};
 
@@ -34,6 +34,10 @@
     if($('powerBonus'))base.DamageAmplification=num($('powerBonus').value,base.DamageAmplification||0);
     if($('critRate'))base.CritRate=num($('critRate').value,base.CritRate||0);
     if($('critDamage'))base.CritDamage=Math.max(0,num($('critDamage').value,100+num(base.CritDamage,50))-100);
+    base.AliemusRegen=num(base.AliemusRegen,0)+num(auto.aliemusRegen,0);
+    base.KeyflareRegen=num(base.KeyflareRegen,0)+num(auto.keyflareRegen,0);
+    base.SigilYield=num(base.SigilYield,0)+num(auto.sigilYield,0);
+    base.DeathResistance=num(base.DeathResistance,0)+num(auto.deathResistance,0);
     base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
@@ -416,9 +420,9 @@
     const el=$('realmMastery');if(!el||!currentAwakener)return;
     const next=num(nextBase,0),previousId=el.dataset.characterBaseAwakener||'';
     const previousBase=Number.parseFloat(el.dataset.characterBase);
-    const shownBase=num(el.value)-wheelRealmMasteryAuto;
+    const shownBase=num(el.value)-gearRealmMasteryAuto;
     const followedPrevious=!Number.isFinite(previousBase)||Math.abs(previousBase-shownBase)<1e-7;
-    if(previousId!==currentAwakener.id||followedPrevious){applyingAuto=true;el.value=String(Math.round((next+wheelRealmMasteryAuto)*1000)/1000);applyingAuto=false}
+    if(previousId!==currentAwakener.id||followedPrevious){applyingAuto=true;el.value=String(Math.round((next+gearRealmMasteryAuto)*1000)/1000);applyingAuto=false}
     el.dataset.characterBase=String(next);el.dataset.characterBaseAwakener=currentAwakener.id;
   }
 
@@ -571,7 +575,7 @@
   }
   function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
   function numericBonusesFromText(text,allowConditional=false){
-    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,skipped:[]};
+    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,skipped:[]};
     const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
     for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
       const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
@@ -582,11 +586,16 @@
       if((m=s.match(/Crit\.? DMG[^+%]*\+\s*([\d.]+)%/i)))out.critDamage+=num(m[1]);
       if((m=s.match(/Vulnerab(?:le|ility)[^+%]*\+\s*([\d.]+)%/i)))out.vulnerability+=num(m[1]);
       if((m=s.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i)))out.final+=num(m[1]);
+      if((m=s.match(/Realm Mastery[^+\d]*\+\s*([\d.]+)/i)))out.realmMastery+=num(m[1]);
+      if((m=s.match(/Aliemus Regen(?: Lv\.)?[^+\d]*\+\s*([\d.]+)/i)))out.aliemusRegen+=num(m[1]);
+      if((m=s.match(/Keyflare Regen(?: Lv\.)?[^+\d]*\+\s*([\d.]+)/i)))out.keyflareRegen+=num(m[1]);
+      if((m=s.match(/Sigil Yield[^+\d]*\+\s*([\d.]+)%?/i)))out.sigilYield+=num(m[1]);
+      if((m=s.match(/Death Resistance[^+\d]*\+\s*([\d.]+)%?/i)))out.deathResistance+=num(m[1]);
       const both=s.match(/Crit\.? Rate and Crit\.? DMG(?: increase)? by\s*([\d.]+)%/i);if(both){out.critRate+=num(both[1]);out.critDamage+=num(both[1])}
     }
     return out;
   }
-  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final'])target[k]+=num(b[k])}
+  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance'])target[k]+=num(b[k])}
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
@@ -610,17 +619,17 @@
     const growthSteps=Math.max(0,level-Math.max(0,Math.floor(num(source.growthStartLevel,4)))+1);
     return {key:rec.mainstatKey,value:scalar(series.baseValue)+scalar(series.perLevel)*growthSteps,level,seriesKey};
   }
-  function applyWheelRealmMastery(nextValue){
+  function applyGearRealmMastery(nextValue){
     const el=$('realmMastery');nextValue=num(nextValue,0);
-    if(!el){wheelRealmMasteryAuto=nextValue;return}
+    if(!el){gearRealmMasteryAuto=nextValue;return}
     applyingAuto=true;
     const shown=num(el.value);
-    el.value=String(Math.round((shown-wheelRealmMasteryAuto+nextValue)*1000)/1000);
+    el.value=String(Math.round((shown-gearRealmMasteryAuto+nextValue)*1000)/1000);
     applyingAuto=false;
-    wheelRealmMasteryAuto=nextValue;
+    gearRealmMasteryAuto=nextValue;
   }
   function recomputeGearBonuses(){
-    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
+    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0};
     let nextRealmMastery=0;wheelMainstatSummary=[];
     currentWheels.forEach((w,i)=>{
       if(!w)return;
@@ -632,10 +641,14 @@
         else if(main.key==='CRIT_DMG')next.critDamage+=main.value;
         else if(main.key==='DMG_AMP')next.power+=main.value;
         else if(main.key==='REALM_MASTERY')nextRealmMastery+=main.value;
+        else if(main.key==='ALIEMUS_REGEN')next.aliemusRegen+=main.value;
+        else if(main.key==='KEYFLARE_REGEN')next.keyflareRegen+=main.value;
+        else if(main.key==='SIGIL_YIELD')next.sigilYield+=main.value;
+        else if(main.key==='DEATH_RESISTANCE')next.deathResistance+=main.value;
       }
     });
     if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),e.set<6||allow))}}
-    Object.assign(auto,next);applyAutoBonuses();applyWheelRealmMastery(nextRealmMastery);renderAutoSummary();
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);renderAutoSummary();
   }
 
   function initManualTracking(){
