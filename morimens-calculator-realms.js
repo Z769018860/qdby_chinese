@@ -37,7 +37,13 @@
     return second?[first,second]:[first];
   }
   function mastery(){
-    return Math.max(0,num($('realmMastery')?.value,window.MorimensCharacterSync?.finalStats?.RealmMastery||0));
+    const base=Math.max(0,num($('realmMastery')?.value,window.MorimensCharacterSync?.finalStats?.RealmMastery||0));
+    const resources=window.MorimensCharacterResources||{};
+    const currentId=$('charSelect')?.value||window.MorimensCharacterSync?.record?.id||'';
+    const overExaltBonus=currentId==='awakener-0001'
+      ?24*Math.max(0,Math.floor(num(resources.twentyFourOverExaltPriorUses,0)))
+      :0;
+    return base+overExaltBonus;
   }
   function isExalt(){
     const slot=String(window.MorimensSkillSync?.skill?.slot||'');
@@ -57,6 +63,8 @@
 
   function state(){
     const modes=selectedModes(),baseRealms=basesOf(modes),rm=mastery();
+    const baseRm=Math.max(0,num($('realmMastery')?.value,window.MorimensCharacterSync?.finalStats?.RealmMastery||0));
+    const temporaryRealmMastery=Math.max(0,rm-baseRm);
     const isDual=baseRealms.length===2,isPure=baseRealms.length===1;
     const indivisible=hasMode(modes,'primordia');
     const normalChaos=hasMode(modes,'chaos')&&!indivisible;
@@ -84,7 +92,7 @@
     const out={
       modes,baseRealms,isDual,isPure,indivisible,normalChaos,chaosCoexistence,chaosCount,otherRealm,
       label:isPure?`至纯${describeBases(baseRealms)}`:`${describeBases(baseRealms)}双界域`,
-      realmMastery:rm,pureEffects,masteryEffectMultiplier,
+      realmMastery:rm,baseRealmMastery:baseRm,temporaryRealmMastery,pureEffects,masteryEffectMultiplier,
       atkMultiplier:1,defMultiplier:1,maxHpMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,
       primordiaAllChaosTeam:false,primordiaUtilityMultiplier:1,primordiaOffensiveMultiplier:1,
       propagationFiestaStacks:0,propagationApplies:false,
@@ -98,6 +106,7 @@
       notes:[]
     };
 
+    if(temporaryRealmMastery>0)out.notes.push(`“24”此前超限提供临时/战斗内界域精通 +${temporaryRealmMastery.toFixed(0)}；当前有效界域精通 ${rm.toFixed(1)}。`);
     if(indivisible){
       out.notes.push('原初·混沌「不可分割界域」生效：其他界域不触发至纯、双倍界域精通或双倍伤害强效。');
     }else if(chaosCoexistence){
@@ -242,6 +251,7 @@
     if(box){
       const chips=[
         '<span class="chip">'+esc(s.label)+'</span>',
+        '<span class="chip">有效界域精通 '+s.realmMastery.toFixed(1)+(s.temporaryRealmMastery>0?'（含 +'+s.temporaryRealmMastery.toFixed(0)+'）':'')+'</span>',
         s.isDual?'<span class="chip">双界域</span>':'<span class="chip">至纯界域</span>',
         s.indivisible?'<span class="chip">不可分割界域</span>':'',
         s.atkMultiplier!==1?'<span class="chip">攻击 ×'+s.atkMultiplier.toFixed(2)+'</span>':'',
@@ -257,7 +267,7 @@
     const pill=document.querySelector('[aria-labelledby="calcTitle"] .statusPill');
     if(pill)pill.textContent='SKeyDB public-v3 · 公式审计版';
     window.MorimensRealmState=s;
-    const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,singularityBeaconStacks:s.singularityBeaconStacks,damageOutputMultiplier:s.damageOutputMultiplier,statusOutputMultiplier:s.statusOutputMultiplier,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
+    const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,realmMastery:s.realmMastery,temporaryRealmMastery:s.temporaryRealmMastery,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,singularityBeaconStacks:s.singularityBeaconStacks,damageOutputMultiplier:s.damageOutputMultiplier,statusOutputMultiplier:s.statusOutputMultiplier,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
     if(signature!==lastRealmSignature){lastRealmSignature=signature;window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}))}
     return s;
   }
