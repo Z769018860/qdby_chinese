@@ -275,18 +275,24 @@
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const afterFinal=afterVulnerability*(1+finalPct/100)*(type==='active'?weakCoef:1);
       const normal=afterFinal*levelFactor*fortifyCoef*other;
-      const critState=selectCrit(normal,source.guaranteedCrit?1:activeCritRate,activeCritMult,source.guaranteedCrit===true);
+      const eventCritRate=clamp((source.guaranteedCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
+      const eventCritMult=Math.max(0,activeCritMult+Math.max(0,Number(source.critDamageBonus)||0)/100);
+      const critState=selectCrit(normal,eventCritRate,eventCritMult,source.guaranteedCrit===true);
       return {
         id:`skill-${repeatIndex+1}-${eventIndex+1}`,
         type,
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`)+(source.guaranteedCrit?' · 必定暴击':''),
+        label:(type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`)+(source.guaranteedCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
         tentacleBonusCoefficient:sourceTentacleCoef*100,
+        critRateBonus:Number(source.critRateBonus)||0,
+        critDamageBonus:Number(source.critDamageBonus)||0,
+        eventCritRate,
+        eventCritMult,
         baseRaw,
         afterBase,
         strengthPart,
