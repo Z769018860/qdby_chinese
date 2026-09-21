@@ -682,24 +682,25 @@
   function applyGenericRouseEffects(events){
     if(!rouseActive())return events||[];
     const text=rouseRenderedText();if(!text)return events||[];
-    const sentences=text.split(/(?<=[.!?])\s+/).filter(Boolean);
+    const sentences=text.split(/(?<=[.!?;])\s+/).filter(Boolean);
     let mapped=(events||[]).map(event=>{
       if(event.type!=='active'&&event.type!=='pierce')return event;
       const next={...event};const labels=[];
       for(const sentence of sentences){
-        if(!currentSkillMatchesRouseScope(sentence))continue;
+        const direct=sentence.split(/\b(?:after|before|whenever|each time|for each|for every|every time|at turn|at the start|at the end|when|while|until|next)\b/i)[0].trim();
+        if(!direct||!currentSkillMatchesRouseScope(direct))continue;
         let m;
-        if(/(?:DMG|damage)\s+always\s+critically\s+hits/i.test(sentence)||/always\s+deals?\s+Critical/i.test(sentence)){next.guaranteedCrit=true;labels.push('灵知觉醒：必定暴击')}
-        if((m=sentence.match(/Crit\.?\s*Rate\s+and\s+Crit\.?\s*DMG\s*\+\s*([\d.]+)%/i))){
+        if(/(?:DMG|damage)\s+always\s+critically\s+hits/i.test(direct)||/always\s+deals?\s+Critical/i.test(direct)){next.guaranteedCrit=true;labels.push('灵知觉醒：必定暴击')}
+        if((m=direct.match(/Crit\.?\s*Rate\s+and\s+Crit\.?\s*DMG\s*\+\s*([\d.]+)%/i))){
           next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);
           next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);
           labels.push('灵知觉醒：暴击率/暴伤 +'+m[1]+'%');
         }else{
-          if((m=sentence.match(/Crit\.?\s*Rate[^+%]*\+\s*([\d.]+)%/i))){next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴击率 +'+m[1]+'%')}
-          if((m=sentence.match(/Crit\.?\s*DMG[^+%]*\+\s*([\d.]+)%/i))){next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴伤 +'+m[1]+'%')}
+          if((m=direct.match(/Crit\.?\s*Rate[^+%]*\+\s*([\d.]+)%/i))){next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴击率 +'+m[1]+'%')}
+          if((m=direct.match(/Crit\.?\s*DMG[^+%]*\+\s*([\d.]+)%/i))){next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴伤 +'+m[1]+'%')}
         }
-        if((m=sentence.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：基础伤害 +'+m[1]+'%')}
-        if((m=sentence.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：最终伤害 +'+m[1]+'%')}
+        if((m=direct.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：基础伤害 +'+m[1]+'%')}
+        if((m=direct.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：最终伤害 +'+m[1]+'%')}
       }
       if(labels.length)next.resourceEffectLabel=[next.resourceEffectLabel,...new Set(labels)].filter(Boolean).join('；');
       return next;
@@ -1398,11 +1399,11 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractConditional'))$('contractConditional').checked=false;if($('explorationBattleIndex'))$('explorationBattleIndex').value='1';currentCovenant=null;refreshBattleProgressionUi();
-    if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
+    if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('rouseActive'))$('rouseActive').checked=false;if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
-  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses()}
+  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary()}
 
   async function boot(){
     ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
