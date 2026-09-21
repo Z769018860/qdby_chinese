@@ -196,7 +196,7 @@
     }
     document.addEventListener('input',e=>{if(e.target?.closest?.('.panel')&&e.target?.id!=='fortuneBtn')queueMicrotask(calculate)});
     document.addEventListener('change',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
-    $('calcBtn')?.addEventListener('click',()=>queueMicrotask(calculate));
+    $('calcBtn')?.addEventListener('click',()=>queueMicrotask(safeCalculate));
     document.querySelectorAll('.modeBtn[data-mode]').forEach(button=>button.addEventListener('click',()=>{
       setResultMode(button.dataset.mode);
       queueMicrotask(calculate);
@@ -1047,6 +1047,18 @@
     };
   }
 
+  function safeCalculate(){
+    try{
+      return calculate();
+    }catch(error){
+      console.error('Morimens damage calculation failed',error);
+      if($('resultLabel'))$('resultLabel').textContent='伤害计算失败';
+      if($('resultNumber'))$('resultNumber').textContent='—';
+      if($('formula'))$('formula').textContent='计算过程中发生异常：'+String(error?.message||error)+'。请刷新后重试；如果持续出现，请保留当前配装与技能信息用于排查。';
+      return null;
+    }
+  }
+
   function resetEnemy(){
     const values={
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
@@ -1073,10 +1085,10 @@
     window.MorimensRealmEngine?.render?.();
     toggleTentacleMode();
     setTimeout(()=>window.MorimensStatsSync?.updateCharacterStats?.(),20);
-    calculate();
+    safeCalculate();
   }
 
-  window.MorimensCombatCalculator={calculate,renderTriplet,tentacleState,renderFormulaSource};
+  window.MorimensCombatCalculator={calculate:safeCalculate,calculateUnsafe:calculate,renderTriplet,tentacleState,renderFormulaSource};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inject,0));else setTimeout(inject,0);
-  window.addEventListener('morimens-data-ready',()=>setTimeout(()=>{renderTriplet();calculate()},100));
+  window.addEventListener('morimens-data-ready',()=>setTimeout(()=>{renderTriplet();safeCalculate()},100));
 })();
