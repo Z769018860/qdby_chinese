@@ -33,7 +33,7 @@
     if($('critDamage'))base.CritDamage=Math.max(0,num($('critDamage').value,100+num(base.CritDamage,50))-100);
     base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
-    base.ownedPosseCount=Math.max(0,posseCatalog.length);
+    base.ownedPosseCount=Math.max(0,Math.min(50,Math.floor(num($('formulaOwnedPosseCount')?.value,0))));
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
     base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
     const realm=window.MorimensRealmEngine?.state?.();
@@ -256,9 +256,11 @@
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
     const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
-    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>仅用于依赖账号等级的 SKeyDB 公式；造物数量与命轮精炼不再重复填写。</small></div>';
+    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于 Forbidden Lore / 研究深度等依赖账号等级的 SKeyDB 公式。</small></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数量</label><input id="formulaOwnedPosseCount" type="number" min="0" max="50" step="1" value="0"><small>SKeyDB 按实际已拥有数量计算并最多计 50；不再把数据库目录总数误当成玩家持有数。</small></div>';
     anchor.insertAdjacentElement('afterend',block);
-    $('formulaAccountLevel')?.addEventListener('change',()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()},{capture:true});
+    const refreshFormulaContext=()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()};
+    $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
+    $('formulaOwnedPosseCount')?.addEventListener('change',refreshFormulaContext,{capture:true});
   }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
