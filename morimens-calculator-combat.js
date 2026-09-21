@@ -218,7 +218,7 @@
     const tentacleWithStrength=Math.max(0,tentacle.attack+netStrength*0.5);
     const skillSync=window.MorimensSkillSync||{};
     const progression=window.MorimensProgressionSync||window.MorimensCharacterSync?.progression||{};
-    const sourceSkillEvents=Array.isArray(skillSync.damageEvents)&&skillSync.damageEvents.length
+    const sourceSkillEvents=Array.isArray(skillSync.damageEvents)
       ?skillSync.damageEvents
       :[{id:'active-legacy',index:0,type:'active',source:'legacy',coefficient:Math.max(0,n('skillCoef')),stat:'ATK',hit:1,hitCount:1,activeSource:true}];
     const skillTentacleCoef=Math.max(0,Number(skillSync.tentacleCoefficient)||0)/100;
