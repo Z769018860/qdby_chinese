@@ -39,12 +39,12 @@ jobs:
       - name: Commit local icons
         shell: bash
         run: |
-          if git diff --quiet -- assets/morimens/skeydb-icons; then
+          git add assets/morimens/skeydb-icons
+          if git diff --cached --quiet; then
             echo "SKeyDB icons already match the pinned source."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/morimens/skeydb-icons
           git commit -m "assets: vendor Morimens SKeyDB status icons"
           git push origin HEAD:preview
