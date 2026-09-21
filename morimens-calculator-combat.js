@@ -69,7 +69,7 @@
         <div class="field"><label for="corrosionLossMultiplier">侵蚀生命损失倍率 %</label><input id="corrosionLossMultiplier" type="number" min="0" step="1" value="300"><small>SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。</small></div>
         <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
         <div class="field"><label for="enemySacrificeAmount">敌方当前献祭层数</label><input id="enemySacrificeAmount" type="number" min="0" step="0.1" value="0"><small>回合末每层造成 1 点伤害并移除 50%；该伤害计入对敌总伤害，并按“其他伤害”触发侵蚀/旧日余烬。</small></div>
-        <div class="field"><label for="birthRitualStacks">Birth Ritual / 诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的 Active / Tentacle DMG 的 1% 转化为献祭；上限 75 层，回合末移除。</small></div>
+        <div class="field"><label for="birthRitualStacks">敌方已有 Birth Ritual / 诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的 Active / Tentacle DMG 的 1% 转化为献祭；所选技能本身即时施加的层数会自动叠加，上限 75 层，回合末移除。</small></div>
         <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的 Murphy: Fauxborn「Tidal Sacrament / 潮汐圣礼」Rouse、遗物等持续战斗态。灵塑的同类效果会自动叠加，不必重复填写。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
@@ -204,6 +204,25 @@
     const raw=String(match[1]),key=raw.includes(':')?raw.split(':').pop():raw;
     const value=window.MorimensFormulaEngine?.resolveArg?.(talent.descriptionArgs?.[key],progression.soulforgeLevel,{});
     return Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
+  }
+
+  function selectedSkillBirthRitualStacks(){
+    const sync=window.MorimensSkillSync||{},skill=sync.skill||{};
+    const text=String(skill.descriptionTemplate||'');
+    const patterns=[
+      /Inflict\s+\+?(\d+(?:\.\d+)?)\s+stacks?\s+of\s+\{Birth Ritual\}/i,
+      /Inflict\s+\[([^\]]+)\]\s+\{plural:[^}]*\|stack\|stacks\}\s+of\s+\{Birth Ritual\}/i
+    ];
+    for(const re of patterns){
+      const m=text.match(re);if(!m)continue;
+      if(m[1]!==undefined&&/^\d/.test(String(m[1]))&&re===patterns[0])return Math.max(0,Number(m[1])||0);
+      const raw=m[1];if(raw!==undefined){
+        const key=String(raw).includes(':')?String(raw).split(':').pop():String(raw);
+        const value=window.MorimensFormulaEngine?.resolveArg?.(skill.descriptionArgs?.[key],sync.level||1,sync.context||{});
+        if(Number.isFinite(Number(value)))return Math.max(0,Number(value));
+      }
+    }
+    return 0;
   }
 
   function selectedSkillDelayedSacrificePct(){
@@ -415,7 +434,12 @@
     const skillDelayedSacrificePct=selectedSkillDelayedSacrificePct();
     const skillDelayedSacrificeAdded=actorMaxHp>0?actorMaxHp*skillDelayedSacrificePct/100*sequenceRepeat:0;
     const initialEnemySacrifice=Math.max(0,n('enemySacrificeAmount'));
-    const birthRitualStacks=clamp(Math.floor(n('birthRitualStacks')),0,75);
+    const initialBirthRitualStacks=clamp(Math.floor(n('birthRitualStacks')),0,75);
+    const skillBirthRitualPerPlay=Math.max(0,selectedSkillBirthRitualStacks());
+    const finalBirthRitualStacks=clamp(initialBirthRitualStacks+skillBirthRitualPerPlay*sequenceRepeat,0,75);
+    const averageBirthRitualStacksForSkill=sequenceRepeat>0
+      ?clamp(initialBirthRitualStacks+skillBirthRitualPerPlay*(sequenceRepeat+1)/2,0,75)
+      :initialBirthRitualStacks;
     const manualDamageToSacrificePct=Math.max(0,n('sacrificeOnDamagePct'));
     const soulforgeDamageToSacrifice=soulforgeDamageToSacrificePct(progression);
 
@@ -597,12 +621,17 @@
     const sacrificeSourceDamage=events
       .filter(x=>['active','pierce','tentacle','fixed'].includes(x.type)&&x.damage>0)
       .reduce((sum,x)=>sum+(Number(x.damage)||0),0);
-    const birthRitualSourceDamage=events
-      .filter(x=>(x.type==='active'||x.type==='tentacle')&&x.damage>0)
+    const birthRitualSkillDamage=events
+      .filter(x=>(x.type==='active'||x.type==='tentacle')&&x.damage>0&&!String(x.id||'').startsWith('turn-end-'))
+      .reduce((sum,x)=>sum+(Number(x.damage)||0),0);
+    const birthRitualTurnEndTentacleDamage=events
+      .filter(x=>x.type==='tentacle'&&x.damage>0&&String(x.id||'').startsWith('turn-end-'))
       .reduce((sum,x)=>sum+(Number(x.damage)||0),0);
     const damageToSacrificePct=manualDamageToSacrificePct+soulforgeDamageToSacrifice;
     const sacrificeFromDamage=sacrificeSourceDamage*damageToSacrificePct/100;
-    const sacrificeFromBirthRitual=birthRitualSourceDamage*birthRitualStacks/100;
+    const sacrificeFromBirthRitual=
+      birthRitualSkillDamage*averageBirthRitualStacksForSkill/100+
+      birthRitualTurnEndTentacleDamage*finalBirthRitualStacks/100;
     const enemySacrificeBeforeTurnEnd=initialEnemySacrifice+sacrificeFromDamage+sacrificeFromBirthRitual;
     const includeEnemySacrificeTurnEnd=includeTurnEndSettlement&&$('includeEnemySacrificeTurnEnd')?.checked!==false;
     if(includeEnemySacrificeTurnEnd&&enemySacrificeBeforeTurnEnd>0){
@@ -681,7 +710,10 @@
     rows.push(['伤害转化献祭比例',damageToSacrificePct]);
     if(soulforgeDamageToSacrifice>0)rows.push(['其中：灵塑自动伤害→献祭 %',soulforgeDamageToSacrifice]);
     if(manualDamageToSacrificePct>0)rows.push(['其中：手动持续状态伤害→献祭 %',manualDamageToSacrificePct]);
-    if(birthRitualStacks>0)rows.push(['诞生仪式新增献祭',sacrificeFromBirthRitual]);
+    if(initialBirthRitualStacks>0)rows.push(['敌方已有诞生仪式层数',initialBirthRitualStacks]);
+    if(skillBirthRitualPerPlay>0)rows.push(['所选技能每次即时施加诞生仪式',skillBirthRitualPerPlay]);
+    if(finalBirthRitualStacks>0)rows.push(['本次伤害序列后诞生仪式层数',finalBirthRitualStacks]);
+    if(finalBirthRitualStacks>0)rows.push(['诞生仪式新增献祭',sacrificeFromBirthRitual]);
     if(damageToSacrificePct>0)rows.push(['伤害转化新增献祭',sacrificeFromDamage]);
     rows.push(['敌方回合末结算前献祭',enemySacrificeBeforeTurnEnd]);
     rows.push(['敌方最终献祭',enemySacrificeRemaining]);
@@ -737,7 +769,7 @@
         active:activeTotal,pierce:pierceTotal,tentacle:tentacleTotal,pure:pureTotal,fixed:fixedTotal,
         poison:poisonTotal,bleed:bleedTotal,counter:counterTotal,sacrifice:sacrificeTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
-      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,corrosionInitial:initialCorrosion,corrosionAdded,corrosionFinal:corrosionRemaining,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent,sacrificeInitial:initialSacrifice,sacrificeSelfDamage,sacrificeFinal:sacrificeRemaining,delayedSacrificeInitial:initialDelayedSacrifice,delayedSacrificeAdded:skillDelayedSacrificeAdded,delayedSacrificeFinal,sacrificeForChecks,enemySacrificeInitial:initialEnemySacrifice,enemySacrificeFromDamage:sacrificeFromDamage,enemySacrificeFromBirthRitual:sacrificeFromBirthRitual,enemySacrificeBeforeTurnEnd,enemySacrificeDamage:sacrificeTotal,enemySacrificeFinal:enemySacrificeRemaining,damageToSacrificePct,birthRitualStacks},
+      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,corrosionInitial:initialCorrosion,corrosionAdded,corrosionFinal:corrosionRemaining,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent,sacrificeInitial:initialSacrifice,sacrificeSelfDamage,sacrificeFinal:sacrificeRemaining,delayedSacrificeInitial:initialDelayedSacrifice,delayedSacrificeAdded:skillDelayedSacrificeAdded,delayedSacrificeFinal,sacrificeForChecks,enemySacrificeInitial:initialEnemySacrifice,enemySacrificeFromDamage:sacrificeFromDamage,enemySacrificeFromBirthRitual:sacrificeFromBirthRitual,enemySacrificeBeforeTurnEnd,enemySacrificeDamage:sacrificeTotal,enemySacrificeFinal:enemySacrificeRemaining,damageToSacrificePct,birthRitualStacks:finalBirthRitualStacks,birthRitualInitial:initialBirthRitualStacks,birthRitualSkillPerPlay:skillBirthRitualPerPlay,birthRitualAverageForSkill:averageBirthRitualStacksForSkill},
       remaining:{corrosion:corrosionRemaining,embers:embersRemaining,corrosionBeforeTurnEndClear,embersBeforeTurnReset,turnEndProcessed,includeTurnEndSettlement}
     };
   }
