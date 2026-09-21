@@ -13,6 +13,12 @@
     .siteVisitItem{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.siteVisitItem strong{color:#ead7b5;font-size:11px;font-variant-numeric:tabular-nums}.siteVisitDivider{color:#526073}.back{display:inline-flex;padding:7px 11px;border-radius:999px;color:#d7dee8;background:rgba(8,12,19,.44);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);text-decoration:none;font-size:13px}.back:hover{color:#fff;border-color:rgba(224,189,130,.45)}.hero{margin:16px 0 18px;padding:38px 32px;border:1px solid rgba(224,189,130,.25);border-radius:28px;background:linear-gradient(135deg,rgba(22,28,39,.68),rgba(8,13,21,.54));box-shadow:var(--shadow);backdrop-filter:blur(18px) saturate(1.12);-webkit-backdrop-filter:blur(18px) saturate(1.12);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-100px;top:-160px;border:1px solid rgba(213,177,118,.18);box-shadow:0 0 80px rgba(213,177,118,.1)}.eyebrow{margin:0 0 8px;color:var(--accent);font-weight:800;letter-spacing:.18em;font-size:12px}.hero h1{font-size:clamp(32px,5vw,58px);margin:0;line-height:1.05;text-shadow:0 3px 24px rgba(0,0,0,.5)}.lead{max-width:900px;color:#c9d2dd;line-height:1.8;margin:14px 0 0}.heroTags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.tag,.chip{padding:6px 10px;border:1px solid rgba(213,177,118,.26);border-radius:999px;color:#e4d2b3;font-size:12px;background:rgba(17,23,34,.4)}
     .grid2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(330px,.7fr);gap:20px;align-items:start}.panel{background:linear-gradient(160deg,rgba(18,25,37,.72),rgba(8,13,21,.62));border:1px solid rgba(197,211,229,.18);border-radius:var(--radius);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.035);padding:24px;margin-bottom:20px;backdrop-filter:blur(20px) saturate(1.08);-webkit-backdrop-filter:blur(20px) saturate(1.08)}.panel h2{font-size:20px;margin:0}.panelHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.panelLead{color:var(--muted);font-size:13px;line-height:1.7;margin:7px 0 0}.statusPill{font-size:11px;padding:5px 9px;border-radius:999px;border:1px solid rgba(213,177,118,.32);color:#ead7b5;background:rgba(63,48,31,.35)}
     .builder{margin-top:17px;display:grid;gap:12px}.builderBlock{border:1px solid rgba(148,163,184,.14);border-radius:15px;padding:14px;background:rgba(255,255,255,.025)}.builderTitle{font-size:13px;font-weight:800;color:#ead9b9;margin-bottom:10px;display:flex;gap:8px;align-items:center;justify-content:space-between}.builderTitle small{font-weight:500;color:#7f8da1}.formGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#aeb8c7}.field input,.field select{width:100%;height:42px;border:1px solid var(--line);border-radius:11px;background:#111827;color:#eef2f7;padding:0 11px;outline:none}.field input:focus,.field select:focus{border-color:#9b825e;box-shadow:0 0 0 3px rgba(213,177,118,.1)}.field small{color:#78869a;font-size:10px;line-height:1.45}.desc{margin-top:9px;padding:10px 11px;border-radius:10px;background:rgba(2,6,23,.28);color:#aeb8c7;font-size:11px;line-height:1.65;min-height:34px}.desc strong{color:#e6d2aa}.syncLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:9px;font-size:11px;color:#8190a4}.syncDot{width:7px;height:7px;border-radius:50%;background:#64748b}.syncDot.ok{background:#5bb98c}.syncDot.warn{background:#d7a85b}.syncDot.bad{background:#c75e68}
+    .calcSection{--calc-accent:148,163,184;position:relative;overflow:hidden;border-color:rgba(var(--calc-accent),.30);box-shadow:inset 3px 0 0 rgba(var(--calc-accent),.55)}
+    .calcSection:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(var(--calc-accent),.075),transparent 42%)}
+    .calcSection>.builderTitle,.calcSection>.formGrid,.calcSection>.checkGrid,.calcSection>.desc,.calcSection>.autoSummary,.calcSection>.syncLine,.calcSection>.combatReadout,.calcSection>.formulaSource,.calcSection>.combatStats{position:relative;z-index:1}
+    .calcSection .builderTitle>span{color:rgba(var(--calc-accent),.96)}
+    .calcSectionCharacter{--calc-accent:88,196,190}.calcSectionGear{--calc-accent:214,172,92}.calcSectionBuff{--calc-accent:205,112,166}.calcSectionDamage{--calc-accent:229,139,83}.calcSectionRealm{--calc-accent:154,126,225}.calcSectionTentacle{--calc-accent:82,157,219}.calcSectionEnemy{--calc-accent:211,105,105}
+    .calcResourceField{padding:8px 9px;border:1px solid rgba(148,163,184,.12);border-radius:10px}.calcResourceField.isCalculated{border-color:rgba(88,196,190,.30);background:rgba(88,196,190,.055)}.calcResourceField.isStateOnly{background:rgba(148,163,184,.035)}.calcResourceField.isCalculated>label{color:#8ed8d3}
     .checkGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.check{display:flex;gap:9px;align-items:flex-start;border:1px solid #293548;border-radius:11px;padding:10px;background:#111827}.check input{margin-top:2px}.check span{font-size:12px;line-height:1.45}.check small{display:block;color:#77869a;margin-top:3px}.autoSummary{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.autoSummary .chip{font-size:11px;padding:5px 8px}
     .advanced{margin-top:12px}.advanced summary{cursor:pointer;color:#aeb8c7;font-size:12px}.advanced .formGrid{margin-top:10px}.switchRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.modeBtn,.primaryBtn,.ghostBtn{border:1px solid var(--line);border-radius:11px;background:#141c29;color:#dce4ee;padding:9px 13px;cursor:pointer;font:inherit}.modeBtn[aria-pressed="true"]{border-color:#a28558;background:rgba(213,177,118,.12);color:#f4dfb9}.primaryBtn{border:0;background:linear-gradient(135deg,#8d6a43,#c29b60);color:#10141b;font-weight:900;box-shadow:0 8px 22px rgba(194,155,96,.18)}.ghostBtn:hover,.modeBtn:hover{border-color:#64748b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
     .resultHero{margin-top:18px;padding:18px;border-radius:16px;background:linear-gradient(135deg,rgba(143,52,65,.22),rgba(111,179,174,.12));border:1px solid rgba(213,177,118,.17)}.resultLabel{font-size:12px;color:#aab5c4}.resultNumber{font-size:clamp(31px,7vw,52px);font-weight:900;line-height:1.05;margin-top:4px;letter-spacing:.02em}.resultSub{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:#c2ccd8;font-size:12px}.formula{margin-top:14px;padding:13px;border:1px dashed #475569;border-radius:13px;background:rgba(2,6,23,.25);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.8;color:#d2dae5;word-break:break-word}.breakdown{display:grid;gap:8px;margin-top:13px}.step{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:12px}.step span{color:#aeb8c7}.step strong{color:#f1e0bf;font-variant-numeric:tabular-nums}.note{margin-top:14px;padding:12px 13px;border-radius:12px;background:rgba(143,52,65,.10);border:1px solid rgba(143,52,65,.28);font-size:12px;line-height:1.7;color:#c9d1dc}.note strong{color:#f0d7a8}
@@ -51,7 +57,7 @@
         <div class="panelHead"><div><h2 id="calcTitle">伤害配装计算器</h2><p class="panelLead">角色、技能、命轮、密契和增益效果负责自动带值；内在灵格、灵塑、界域精通以及触腕伤害均按本地 SKeyDB 数据公式计算。普通深海未公开的基础触腕数值与尚未还原的官方防御曲线保留手动输入。</p></div><span class="statusPill">SKeyDB public-v3 · 公式审计版</span></div>
 
         <div class="builder">
-          <div class="builderBlock">
+          <div class="builderBlock calcSection calcSectionCharacter">
             <div class="builderTitle"><span>① 角色与技能</span><small id="charSyncText">等待同步</small></div>
             <div class="formGrid">
               <div class="field full"><label for="charSelect">角色</label><select id="charSelect"></select></div>
@@ -64,7 +70,7 @@
             <div class="syncLine"><span class="syncDot" id="charSyncDot"></span><span id="charSyncStatus">尚未请求角色页面</span></div>
           </div>
 
-          <div class="builderBlock">
+          <div class="builderBlock calcSection calcSectionGear">
             <div class="builderTitle"><span>② 命轮</span><small>固有属性自动计入</small></div>
             <div class="formGrid">
               <div class="field full"><label for="fateSelect">命轮</label><select id="fateSelect"><option value="">无</option><option>陨日</option><option>虔诚的伟力</option></select></div>
@@ -72,7 +78,7 @@
             <div class="desc" id="fateDesc">选择命轮后读取页面的主属性。条件型特性不会在无法确认触发条件时强制计入。</div>
           </div>
 
-          <div class="builderBlock">
+          <div class="builderBlock calcSection calcSectionGear">
             <div class="builderTitle"><span>③ 密契</span><small>3 / 6 件套分开处理</small></div>
             <div class="formGrid">
               <div class="field"><label for="contractSelect">密契</label><select id="contractSelect"><option value="">无</option><option>四月礼赞</option><option>荒原狼</option><option>猩红之悸</option><option>再衍化</option></select></div>
@@ -82,10 +88,10 @@
             <div class="desc" id="contractDesc">选择密契后显示 3 件套 / 6 件套原始效果，并只自动解析明确写出的暴击率、暴击伤害、伤害强效等百分比。</div>
           </div>
 
-          <div class="builderBlock">
-            <div class="builderTitle"><span>④ 增益 / 减益</span><small>可叠加</small></div>
+          <div class="builderBlock calcSection calcSectionBuff">
+            <div class="builderTitle"><span>④ 增益 / 减益</span><small>标准状态快捷开关</small></div>
             <div class="checkGrid">
-              <label class="check"><input id="buffVuln" type="checkbox"><span>目标：易伤<small>仅主动伤害 / 触腕伤害承受 +50%</small></span></label>
+              <label class="check"><input id="buffVuln" type="checkbox"><span>目标：易伤（1 层）<small>SKeyDB：仅主动伤害 / 触腕伤害承受 +50%；穿透、纯粹、固定伤害不受影响。</small></span></label>
               <label class="check"><input id="buffWeak" type="checkbox"><span>自身：虚弱<small>仅主动伤害 / 触腕伤害造成 -25%</small></span></label>
               <label class="check"><input id="buffBrute" type="checkbox"><span>刻印：蛮力<small>获得 8 点力量</small></span></label>
               <label class="check"><input id="buffBurst" type="checkbox"><span>刻印：高级爆发<small>获得 66 点临时力量</small></span></label>
@@ -93,13 +99,12 @@
             <div class="autoSummary" id="autoSummary"></div>
           </div>
 
-          <div class="builderBlock" id="damageMultipliers">
+          <div class="builderBlock calcSection calcSectionDamage" id="damageMultipliers">
             <div class="builderTitle"><span>⑤ 核心伤害乘区</span><small>手动值会与命轮、密契自动值相加</small></div>
             <div class="formGrid">
               <div class="field"><label for="baseBonus">基础伤害 / 基伤增幅 %</label><input id="baseBonus" type="number" step="0.1" value="0"></div>
               <div class="field"><label for="powerBonus">伤害强效 %</label><input id="powerBonus" type="number" step="0.1" value="0"></div>
               <div class="field"><label for="finalBonus">最终伤害 / 终伤增幅 %</label><input id="finalBonus" type="number" step="0.1" value="0"></div>
-              <div class="field"><label for="vulnerability">易伤 %</label><input id="vulnerability" type="number" step="0.1" value="0"></div>
             </div>
           </div>
         </div>
@@ -110,6 +115,7 @@
             <div class="field"><label for="skillCoef">技能倍率 %</label><input id="skillCoef" type="number" min="0" step="0.1" value="200"></div>
             <div class="field"><label for="critRate">基础 / 手动暴击率 %</label><input id="critRate" type="number" min="0" max="100" step="0.1" value="0"></div>
             <div class="field"><label for="critDamage">基础暴击伤害倍率 %</label><input id="critDamage" type="number" min="0" step="0.1" value="150"><small>装备的“暴击伤害 +X%”会自动加到该倍率上。</small></div>
+            <div class="field"><label for="vulnerability">额外 / 自定义易伤修正 %</label><input id="vulnerability" type="number" step="0.1" value="0"><small>标准易伤请使用上方快捷开关；仅在遗物/特殊规则改变易伤幅度时填写额外修正。只作用于主动与触腕伤害。</small></div>
             
             <div class="field"><label for="otherMultiplier">其他独立乘区 ×</label><input id="otherMultiplier" type="number" min="0" step="0.01" value="1"></div>
           </div>
