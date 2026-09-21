@@ -211,12 +211,11 @@
 
   function triggeredTentaclePercent(skill,rank,ctx){
     const t=String(skill?.descriptionTemplate||'');
-    const m=t.match(/(?:trigger|command|causes?)\s+1\s+Tentacle[^.\n]*?(?:dealing|deal)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i);
-    if(!m)return null;
-    const name=m[1].includes(':')?m[1].split(':').pop():m[1];
-    return num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0);
+    const explicit=t.match(/(?:trigger|command|causes?)\s+1\s+Tentacle[^.\n]*?(?:dealing|deal)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i);
+    if(explicit){const name=explicit[1].includes(':')?explicit[1].split(':').pop():explicit[1];return num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0)}
+    if(/(?:trigger|command)\s+1\s+Tentacle\s+(?:to\s+)?attack/i.test(t))return 100;
+    return null;
   }
-
   function talentByFamily(talents,family){
     return (talents||[]).find(t=>String(t?.family||'')===family)||null;
   }
@@ -290,26 +289,28 @@
     currentTentacle=0,
     teamMaxHp=0,
     realmMastery=0,
-    allAequorChaos=false,
+    masteryEffectMultiplier=1,
+    extraBaseMaxHpPct=0,
     extraBonusPct=0,
     benthosRagingPct=100
   }={}){
-    const mastery=num(realmMastery,0);
-    const pure=allAequorChaos?2:1;
-    const base=mode==='benthos'?Math.max(0,num(teamMaxHp))*0.05:Math.max(0,num(currentTentacle));
+    const mastery=num(realmMastery,0),masteryMultFactor=Math.max(0,num(masteryEffectMultiplier,1));
+    const effectiveMastery=mastery*masteryMultFactor;
+    const hp=Math.max(0,num(teamMaxHp));
+    const coexistenceBase=hp*Math.max(0,num(extraBaseMaxHpPct,0))/100;
+    const base=(mode==='benthos'?hp*0.05:Math.max(0,num(currentTentacle)))+coexistenceBase;
     let stanceMult=1;
     if(mode==='standard'&&stance==='tranquil')stanceMult=0.5;
     if(mode==='standard'&&stance==='raging')stanceMult=1.25;
     if(mode==='benthos'&&stance==='raging')stanceMult=Math.max(0,num(benthosRagingPct,100))/100;
     let masteryMult=1;
-    if(mode==='benthos'&&stance==='raging')masteryMult=1+mastery*0.00025*pure;
+    if(mode==='benthos'&&stance==='raging')masteryMult=1+effectiveMastery*0.00025;
     const extraMult=1+num(extraBonusPct)/100;
     const attack=base*stanceMult*masteryMult*extraMult;
-    const ragingTriggerPct=mode==='benthos'?100:(50+Math.floor(Math.max(0,mastery)/50));
+    const ragingTriggerPct=mode==='benthos'?100:(50+effectiveMastery*0.02);
     const turnEndAllowed=!(mode==='benthos'&&stance==='tranquil');
-    return {base,stanceMult,masteryMult,extraMult,attack,ragingTriggerPct,turnEndAllowed};
+    return {base,coexistenceBase,stanceMult,masteryMult,masteryEffectMultiplier:masteryMultFactor,effectiveMastery,extraMult,attack,ragingTriggerPct,turnEndAllowed};
   }
-
   window.MorimensFormulaEngine={
     primaryStat,substat,contextFor,setGameplayMathMetadata,publicFormulaContext,resolveScaledBaseFormula,resolveArg,damageEvents,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
     source:{
