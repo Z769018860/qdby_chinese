@@ -113,7 +113,7 @@
           <div class="builderBlock calcSection calcSectionDamage" id="damageMultipliers">
             <div class="builderTitle"><span>⑤ 核心伤害乘区</span><small>同作用目标先相加，不同目标乘区彼此相乘</small></div>
             <div class="formGrid">
-              <div class="field"><label for="baseBonus">通用基础伤害增幅 %</label><input id="baseBonus" type="number" step="0.1" value="0"><small>手动值视为通用基础伤害池。命轮 / 密契中的“打击、指令卡、狂气爆发、指定技能”等基础伤害会按各自目标池单独汇总，并与本池相乘。</small></div>
+              <div class="field"><label for="baseBonus">通用基础伤害增幅 %</label><input id="baseBonus" type="number" step="0.1" value="0"><small>手动值视为通用基础伤害池。字段里自动值仍会合计展示，但实际计算会把命轮 / 密契中的“角色、打击、指令卡、狂气爆发、追击、指定技能”等拆回各自目标池：同池先相加，不同池再相乘。</small></div>
               <div class="field"><label for="powerBonus">伤害强效 %</label><input id="powerBonus" type="number" step="0.1" value="0"><small>所有伤害强效来源相加为同一乘区；只作用于“攻击力 × 技能倍率 × 基础伤害乘区”，不会放大力量或其他加算伤害。</small></div>
               <div class="field"><label for="finalBonus">通用最终伤害增幅 %</label><input id="finalBonus" type="number" step="0.1" value="0"><small>手动值视为通用最终伤害池。打击终伤、指令卡终伤、狂气爆发终伤、指定技能终伤等按各自目标池汇总后再彼此相乘。</small></div>
             </div>
