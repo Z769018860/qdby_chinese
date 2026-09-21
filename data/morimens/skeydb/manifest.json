@@ -2,15 +2,15 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "a2ff07765b2e0c78af827577f881054dbe224d8d",
-    "syncedAt": "2026-09-20T23:35:02.494Z",
+    "commit": "d4c5a90f24a7e95745a92b8d1098aff77d6f1510",
+    "syncedAt": "2026-09-21T11:49:31.298Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {
     "awakeners": 61,
     "portraits": 61,
     "cards": 61,
-    "publicV3Records": 2003
+    "publicV3Records": 2005
   },
   "scopes": {
     "awakeners": {
@@ -29,7 +29,7 @@
       "kind": "relic",
       "catalog": "catalogs/relics.json",
       "recordPattern": "records/relics/{id}.json",
-      "count": 306
+      "count": 307
     },
     "orisons": {
       "kind": "orison",
@@ -77,7 +77,7 @@
       "kind": "overlay",
       "catalog": "catalogs/overlays.json",
       "recordPattern": "records/overlays/{id}.json",
-      "count": 154
+      "count": 155
     },
     "awakener-builds": {
       "kind": "awakenerBuild",
