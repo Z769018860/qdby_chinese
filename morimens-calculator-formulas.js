@@ -314,7 +314,12 @@
       // and must not silently change the default event.
       const local=localRaw.split(/[.!?]/,1)[0];
       let multiplier=type==='active'?1:0;
-      let match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*[×x]\s*\{STR\}\s+bonus/i);
+      let match=local.match(/\{STR\}\s+is\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))\s*[×x]\s+more\s+effective/i);
+      if(match){
+        const value=match[1]!==undefined?num(resolveTemplateArg(skill,match[1],rank,ctx),multiplier):num(match[2],multiplier);
+        return Math.max(0,value);
+      }
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*[×x]\s*\{STR\}\s+bonus/i);
       if(match)return Math.max(0,num(match[1],multiplier));
       match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?\[([^\]]+)\]%\s*\{STR\}\s+bonus/i);
       if(match)return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100);
@@ -404,6 +409,7 @@
         [/\{Leap\}\s*:/i,'Leap'],
         [/\{Aftershock\}\s*:/i,'Aftershock'],
         [/\{Resonance[^}]*\}\s*:/i,'Resonance'],
+        [/\{Finale Form\}\s*:/i,'Finale Form'],
         [/\bsubsequent\b/i,'后续使用'],
         [/\bwhenever\b/i,'Whenever'],
         [/\bwhen\b/i,'When'],
@@ -485,6 +491,9 @@
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\beach\s+(?:stack|point|charge|mark|sigil|tentacle|card)\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
         messages.push('检测到条件式中毒 / 反击 / 流血 / 侵蚀：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
+      }
+      if(/\{Finale Form\}\s*:/i.test(text)){
+        messages.push('检测到 Finale Form 条件分支：未开启对应角色形态时不计入；已接入的 Finale Form 伤害会由角色状态开关单独加入。');
       }
       if(/Tentacle\s+(?:performs?|makes?)\s+(?:an?\s+)?attack[^.]*?(?:gain|gains)\s+\{Counter\}[^.]*?DMG dealt/i.test(text)){
         messages.push('检测到“触腕立即攻击并按本次伤害获得反击”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
