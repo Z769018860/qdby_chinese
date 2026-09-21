@@ -163,11 +163,23 @@
 
     function inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx){
       const text=String(template||'');
-      const tail=text.slice(tokenEnd,tokenEnd+180);
+      const rawTail=text.slice(tokenEnd,tokenEnd+180);
+      const tail=rawTail.replace(/^\s*\{(?:Pierce DMG|Pure DMG|Fixed DMG)\}\s*/i,'');
       const after=tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*\{plural:\[[^\]]+\]\|time\|times\}/i)
         ||tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*(?:times?|hits?)/i);
       if(after){
         const value=resolveTemplateArg(skill,after[1],rank,ctx);
+        return Math.max(1,Math.floor(num(value,1)));
+      }
+      const wordMatch=tail.match(/^\s*(?:DMG|damage)?\s*(once|twice|one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s*(?:times?|hits?)/i);
+      if(wordMatch){
+        const words={once:1,twice:2,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};
+        const raw=String(wordMatch[1]).toLowerCase();
+        return Math.max(1,Math.floor(words[raw]??num(raw,1)));
+      }
+      const later=rawTail.match(/^[^.]{0,120}([^~])\[([^\]]+)\]\s*\{plural:\[[^\]]+\]\|time\|times\}/i);
+      if(later){
+        const value=resolveTemplateArg(skill,later[2],rank,ctx);
         return Math.max(1,Math.floor(num(value,1)));
       }
       const head=text.slice(Math.max(0,tokenStart-80),tokenStart);
@@ -207,6 +219,7 @@
             hit:hit+1,
             hitCount:count,
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
+            guaranteedCrit:/guaranteed\s+Critical\s+DMG/i.test(template.slice(tokenEnd,tokenEnd+120)),
             activeSource:type==='active'
           });
         }
