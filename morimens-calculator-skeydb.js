@@ -28,6 +28,9 @@
     const engine=window.MorimensFormulaEngine;
     const base=currentAwakener&&engine?engine.statsWithProgression(currentAwakener,level,progressionState()):{};
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
+    if($('powerBonus'))base.DamageAmplification=num($('powerBonus').value,base.DamageAmplification||0);
+    if($('critRate'))base.CritRate=num($('critRate').value,base.CritRate||0);
+    if($('critDamage'))base.CritDamage=Math.max(0,num($('critDamage').value,100+num(base.CritDamage,50))-100);
     base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     base.ownedPosseCount=Math.max(0,posseCatalog.length);
