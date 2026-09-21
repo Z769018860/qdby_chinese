@@ -1801,10 +1801,10 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`苦痛救赎：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% 攻击力`);
       if(currentAwakener?.id==='awakener-0019'){
         const firstDirect=damageEvents.find(x=>x.type==='active'||x.type==='pierce');
-        if(firstDirect?.separateDamageLayers){
+        if(firstDirect){
           const baseLayers=(firstDirect.baseDamageMultipliers||[]).map(x=>x.label+' +'+Number(x.pct).toFixed(1)+'%').join('；');
           const finalLayers=(firstDirect.finalDamageMultipliers||[]).map(x=>x.label+' +'+Number(x.pct).toFixed(1)+'%').join('；');
-          parts.push('血链公式校准：攻击力基伤乘区分层相乘；伤害强效只作用攻击力基伤；力量在强效之后相加'+(baseLayers?'；'+baseLayers:'')+(finalLayers?'；'+finalLayers:''));
+          parts.push('血链专项效果已接入通用乘区模型：伤害强效仅作用基础伤害，力量在其后相加；相同目标加成同池相加，不同目标池相乘'+(baseLayers?'；角色专属：'+baseLayers:'')+(finalLayers?'；角色专属：'+finalLayers:''));
           if(baseSkillId==='skill.helot-catena.sanguine-fetters'&&progressionState()?.soulforgeEnabled&&progressionState()?.soulforgeLevel>0)parts.push('「缚身锁链」灵塑专属基础伤害与力量倍率已计入');
           if(baseSkillId==='skill.helot-catena.strike'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E1'))parts.push('启灵1：打击 +15% 暴击率 / +15% 暴击伤害已计入');
           if(baseSkillId==='skill.helot-catena.hatred-unleashed')parts.push('「恨意宣泄」攻击力百分比力量已加入本次伤害'+(Number(resources.helotHatredBelowHalfHp)>0?'（生命低于50%，启灵2翻倍）':''));
