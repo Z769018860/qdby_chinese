@@ -340,6 +340,18 @@
       match=text.match(/\{STR\}\s+takes\s+\[([^\]]+)\]\s*[×x]\s+effect\s+on\s+[^.]+/i)
         ||text.match(/\{STR\}\s+multiplies\s+the\s+effect\s+by\s+\[([^\]]+)\]\s+on\s+[^.]+/i);
       if(match)return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),multiplier));
+      // SKeyDB also places the modifier in the immediately following sentence:
+      // "This DMG enjoys/receives a [Arg]x STR bonus".
+      // Stop before the next damage token so a later event cannot donate its bonus.
+      let follow=localRaw;
+      const nextDamage=follow.search(/\[Damage:/i);
+      if(nextDamage>=0)follow=follow.slice(0,nextDamage);
+      match=follow.match(/(?:This|The)\s+DMG(?:\s+dealt)?\s+(?:enjoys?|receives?)\s+(?:an?\s+)?(additional\s+)?(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))\s*(%|[×x])\s*\{STR\}\s+bonus/i);
+      if(match){
+        const value=match[2]!==undefined?num(resolveTemplateArg(skill,match[2],rank,ctx),0):num(match[3],0);
+        const scaled=match[4]==='%'?value/100:value;
+        return Math.max(0,match[1]?multiplier+scaled:scaled);
+      }
       return multiplier;
     }
     function damageTokenType(template,tokenEnd){
