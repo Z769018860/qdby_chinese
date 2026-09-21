@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260922.19";
+  const assetVersion="20260922.20";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -104,7 +104,8 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-skeydb.js?v=${assetVersion}`);
     await import(`./morimens-calculator-stats.js?v=${assetVersion}`);
     await import(`./morimens-calculator-realms.js?v=${assetVersion}`);
-    await import(`./morimens-calculator-combat.js?v=${assetVersion}`);\n    await import(`./morimens-calculator-export.js?v=${assetVersion}`);
+    await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
+    try{await import(`./morimens-calculator-export.js?v=${assetVersion}`)}catch(exportError){console.error("Damage report exporter failed to load",exportError)}
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
     const switchLeaderboardRenderer=()=>{
