@@ -254,7 +254,10 @@
     function scaledEvent(source,repeatIndex,eventIndex){
       const type=source.type==='pierce'?'pierce':'active';
       const coeff=Math.max(0,Number(source.coefficient)||0)/100;
-      const strengthPart=(type==='active'||source.usesStrength===true)?netStrength:0;
+      const strengthMultiplier=Number.isFinite(Number(source.strengthMultiplier))
+        ?Math.max(0,Number(source.strengthMultiplier))
+        :(type==='active'?1:(source.usesStrength===true?1:0));
+      const strengthPart=netStrength*strengthMultiplier;
       const raw=statValue(source.stat)*coeff
         +strengthPart
         +tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult
@@ -275,6 +278,7 @@
         label:(type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`)+(source.guaranteedCrit?' · 必定暴击':''),
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
+        strengthMultiplier,
         raw,
         ignoresBarrier:type==='pierce',
         activeSource:true,
