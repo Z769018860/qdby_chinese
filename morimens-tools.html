@@ -55,8 +55,8 @@
     <div class="grid2">
       <section class="panel" aria-labelledby="calcTitle">
         <div class="sourceItem" style="margin-bottom:14px"><strong>主要数据源于：</strong><a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer"><strong>SKeyDB</strong></a></div>
-        <div class="panelHead"><div><h2 id="calcTitle">伤害配装计算器</h2><p class="panelLead">角色、技能、命轮、密契和增益效果负责自动带值；内在灵格、灵塑、界域精通以及触腕伤害均按本地 SKeyDB 数据公式计算。普通深海未公开的基础触腕数值与尚未还原的官方防御曲线保留手动输入。</p></div><span class="statusPill">SKeyDB public-v3 · 公式审计版</span></div>
-        <div class="calcBetaNotice"><strong>测试版说明：</strong>目前是测试版本，尽可能做了角色乘区同步，可能有各种问题欢迎反馈。</div>
+        <div class="panelHead"><div><h2 id="calcTitle">伤害配装计算器</h2><p class="panelLead">角色基础属性、技能与衍生卡、命轮、密契、启灵、灵知觉醒及已接入的角色专属状态会从本地 SKeyDB public-v3 读取并换算。无法从公开数据可靠还原的战斗时序、条件资源、普通深海基础触腕值与官方敌方防御曲线不会擅自补值。</p></div><span class="statusPill">SKeyDB public-v3 · 公式审计版</span></div>
+        <div class="calcBetaNotice"><strong>测试版说明：</strong>目前是测试版本，尽可能做了角色乘区同步，可能有各种问题欢迎反馈。该页面是单次技能/事件计算器，不是完整战斗模拟器；需要“本回合第几张牌、已完成几场战斗、当前资源层数、特定形态”等条件时，只有页面明确提供输入并标注“已接入伤害计算”的项目才会自动计入。</div>
 
         <div class="builder">
           <div class="builderBlock calcSection calcSectionCharacter">
@@ -66,7 +66,7 @@
               <div class="field"><label for="skillSelect">技能</label><select id="skillSelect"><option value="">先选择角色</option></select></div>
               <div class="field"><label for="skillLevel">技能等级</label><select id="skillLevel"><option value="1">1</option></select></div>
               <div class="field"><label for="attack">有效攻击力</label><input id="attack" type="number" min="0" step="1" value="1000"><small>默认按 SKeyDB 主属性成长公式自动带入；内在灵格与灵塑也会继续作用于该数值。手动修改后停止自动覆盖。</small></div>
-              <div class="field"><label for="strength">力量 / 临时力量</label><input id="strength" type="number" step="0.1" value="0"><small>按“主动伤害基础项 + 力量”实验处理，可由刻印自动带入。</small></div>
+              <div class="field"><label for="strength">力量 / 临时力量</label><input id="strength" type="number" step="0.1" value="0"><small>主动伤害默认每 1 点力量增加 1 点伤害；若 SKeyDB 明确写 2×、3× 或额外 X% 力量加成，则按该伤害事件自己的力量倍率计算。穿透伤害只有在技能文本明确享受力量时才加入力量。</small></div>
             </div>
             <div class="desc" id="skillDesc">选择角色后从本地 SKeyDB 数据读取完整技能记录，并解析攻击力、界域精通与触腕伤害倍率。</div><div class="desc" id="skillCoeffSummary" style="margin-top:7px">等待解析技能伤害公式…</div>
             <div class="syncLine"><span class="syncDot" id="charSyncDot"></span><span id="charSyncStatus">尚未请求角色页面</span></div>
@@ -77,7 +77,7 @@
             <div class="formGrid">
               <div class="field full"><label for="fateSelect">命轮</label><select id="fateSelect"><option value="">无</option><option>陨日</option><option>虔诚的伟力</option></select></div>
             </div>
-            <div class="desc" id="fateDesc">选择命轮后读取页面的主属性。条件型特性不会在无法确认触发条件时强制计入。</div>
+            <div class="desc" id="fateDesc">可装备两个不同命轮。主属性按 SKeyDB 命轮成长表读取；文本中可可靠解析的基础伤害、伤害强效、暴击、界域精通及状态倍率会自动计入，条件型效果在无法确认触发条件时只展示、不强制加入。</div>
           </div>
 
           <div class="builderBlock calcSection calcSectionGear">
@@ -92,10 +92,12 @@
           <div class="builderBlock calcSection calcSectionBuff">
             <div class="builderTitle"><span>④ 增益 / 减益</span><small>标准状态快捷开关</small></div>
             <div class="checkGrid">
-              <label class="check"><input id="buffVuln" type="checkbox"><span>目标：易伤（1 层）<small>SKeyDB：仅主动伤害 / 触腕伤害承受 +50%；穿透、纯粹、固定伤害不受影响。</small></span></label>
               <label class="check"><input id="buffWeak" type="checkbox"><span>自身：虚弱<small>仅主动伤害 / 触腕伤害造成 -25%</small></span></label>
               <label class="check"><input id="buffBrute" type="checkbox"><span>刻印：蛮力<small>获得 8 点力量</small></span></label>
               <label class="check"><input id="buffBurst" type="checkbox"><span>刻印：高级爆发<small>获得 66 点临时力量</small></span></label>
+            </div>
+            <div class="formGrid" style="margin-top:10px">
+              <div class="field full"><label for="targetVulnerableStacks">目标易伤层数</label><input id="targetVulnerableStacks" type="number" min="0" max="999" step="1" value="0"><small>0 层表示没有易伤；≥1 层时按 SKeyDB 启用“主动伤害 / 触腕伤害承受 +50%”，这个 +50% 本身不随层数叠加。个别技能会额外读取当前易伤层数，例如 Aigis E2 的 Decomposition。</small></div>
             </div>
             <div class="autoSummary" id="autoSummary"></div>
           </div>
@@ -116,7 +118,7 @@
             <div class="field"><label for="skillCoef">技能倍率 %</label><input id="skillCoef" type="number" min="0" step="0.1" value="200"></div>
             <div class="field"><label for="critRate">基础 / 手动暴击率 %</label><input id="critRate" type="number" min="0" max="100" step="0.1" value="0"></div>
             <div class="field"><label for="critDamage">基础暴击伤害倍率 %</label><input id="critDamage" type="number" min="0" step="0.1" value="150"><small>装备的“暴击伤害 +X%”会自动加到该倍率上。</small></div>
-            <div class="field"><label for="vulnerability">额外 / 自定义易伤修正 %</label><input id="vulnerability" type="number" step="0.1" value="0"><small>标准易伤请使用上方快捷开关；仅在遗物/特殊规则改变易伤幅度时填写额外修正。只作用于主动与触腕伤害。</small></div>
+            <div class="field"><label for="vulnerability">额外 / 自定义易伤修正 %</label><input id="vulnerability" type="number" step="0.1" value="0"><small>标准易伤由上方“目标易伤层数”自动给出 +50%；这里仅填写遗物、特殊规则或手动校准产生的额外承伤修正。与标准易伤一样，只作用于主动伤害与触腕伤害。</small></div>
             
             <div class="field"><label for="otherMultiplier">其他独立乘区 ×</label><input id="otherMultiplier" type="number" min="0" step="0.01" value="1"></div>
           </div>
