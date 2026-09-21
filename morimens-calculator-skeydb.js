@@ -815,15 +815,12 @@
   }
   function currentSkillMatchesRouseScope(sentence){
     const text=String(sentence||'');
-    const classifications=effectiveCardClassifications(currentSkill);
-    const slot=String(currentSkill?.slot||'').toLowerCase();
-    const family=String(currentSkill?.cardFamily||'').toLowerCase();
     const name=String(currentSkill?.name||'');
     const scopes=[];
-    if(/["“]?Strike["”]?/i.test(text))scopes.push(slot==='strike'||classifications.includes('strike')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('strike'));
-    if(/["“]?Defense["”]?/i.test(text))scopes.push(slot==='defense'||classifications.includes('defense')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('defense'));
-    if(/Command Cards?/i.test(text))scopes.push(family==='command');
-    if(/Exalt/i.test(text)&&!/Rouse/i.test(text))scopes.push(slot==='exalt'||slot==='overexalt');
+    if(/["“]?Strike["”]?/i.test(text))scopes.push(skillMatchesScope(currentSkill,'strike'));
+    if(/["“]?Defense["”]?/i.test(text))scopes.push(skillMatchesScope(currentSkill,'defense'));
+    if(/Command Cards?/i.test(text))scopes.push(skillMatchesScope(currentSkill,'command'));
+    if(/Exalt/i.test(text)&&!/Rouse/i.test(text))scopes.push(skillMatchesScope(currentSkill,'exalt'));
     if(name&&text.toLowerCase().includes(name.toLowerCase()))scopes.push(true);
     return scopes.length?scopes.some(Boolean):true;
   }
@@ -1473,16 +1470,21 @@
     const runtimeHints=engine?.damageRuntimeHints?.(currentSkill,level,baseCtx)||{needsHitOverride:false,messages:[]};
     const requestedHits=Math.max(0,Math.floor(num($('skillActualHits')?.value,0)));
     const damageTokenCount=(String(currentSkill?.descriptionTemplate||'').match(/\[Damage:[^\]]+\]/gi)||[]).length;
-    const baseSignature=applySignatureRelicSkillMods(applyCharacterResourceEffects(engine?engine.damageEvents(currentSkill,level,baseCtx):[]));
+    const baseWheel=applyWheelDirectSkillEffects(applyCharacterResourceEffects(engine?engine.damageEvents(currentSkill,level,baseCtx):[]));
+    const baseSignature=applySignatureRelicSkillMods(baseWheel.events);
     const baseDamageEvents=baseSignature.events;
     const hasAutomaticDamage=baseDamageEvents.some(x=>['active','pierce','pure','fixed'].includes(x.type));
     const canOverrideHits=runtimeHints.needsHitOverride&&damageTokenCount===1&&hasAutomaticDamage;
     const ctx=currentFormulaContext(canOverrideHits&&requestedHits>0?{actualHitCount:requestedHits}:{});
+    const wheelResult=canOverrideHits&&requestedHits>0&&engine
+      ?applyWheelDirectSkillEffects(applyCharacterResourceEffects(engine.damageEvents(currentSkill,level,ctx)))
+      :baseWheel;
     const signatureResult=canOverrideHits&&requestedHits>0&&engine
-      ?applySignatureRelicSkillMods(applyCharacterResourceEffects(engine.damageEvents(currentSkill,level,ctx)))
+      ?applySignatureRelicSkillMods(wheelResult.events)
       :baseSignature;
     const damageEvents=signatureResult.events;
     const signatureSkillMods=signatureResult.mods;
+    const wheelSkillNotes=wheelResult.notes||[];
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
     const directParts=damageEvents.filter(x=>Number.isFinite(Number(x.coefficient))).map(x=>Number(x.coefficient));
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
@@ -1492,6 +1494,7 @@
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
       if(signatureRelicEnabled()&&signatureSkillMods?.notes?.length)messages.push(...signatureSkillMods.notes);
+      if(wheelSkillNotes.length)messages.push(...wheelSkillNotes);
       if(currentSkill?.overExaltEffectId){
         messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外纯粹伤害/状态事件会自动叠加。');
         const overText=String(currentSkill.descriptionTemplate||'').split('{Over-Exalt}:')[1]||'';
@@ -1565,6 +1568,7 @@
       }
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
+      if(wheelSkillNotes.length)parts.push(...wheelSkillNotes);
       const resources=characterResourceValues();
       if(currentAwakener?.id==='awakener-0001'){
         const prior=Math.max(0,Math.floor(Number(resources.twistedCarrionPriorUses)||0));
@@ -1672,21 +1676,33 @@
   function effectiveCardClassifications(skill){
     const values=new Set((skill?.countsAs||[]).map(x=>String(x).toLowerCase()));
     const text=String(skill?.descriptionTemplate||'');
-    if(/(?:counts?\s+as|considered\s+as)\s+(?:a\s+)?["“]?strike["”]?/i.test(text))values.add('strike');
-    if(/(?:counts?\s+as|considered\s+as)\s+(?:a\s+)?["“]?defense["”]?/i.test(text))values.add('defense');
+    for(const scope of ['strike','defense','pursuit','exalt']){
+      const re=new RegExp('(?:counts?\\s+as|considered\\s+as)\\s+(?:a\\s+)?["“]?'+scope+'["”]?','i');
+      if(re.test(text))values.add(scope);
+    }
     return [...values];
   }
+  function skillMatchesScope(skill,scope){
+    if(!skill)return false;
+    const target=String(scope||'').toLowerCase();
+    const slot=String(skill.slot||'').toLowerCase();
+    const countsAs=effectiveCardClassifications(skill);
+    const cardTypes=(skill.cardTypes||[]).map(x=>String(x).toLowerCase());
+    const family=String(skill.cardFamily||'').toLowerCase();
+    if(target==='exalt')return slot==='exalt'||slot==='overexalt'||Boolean(skill.overExaltEffectId)||countsAs.includes('exalt')||cardTypes.includes('exalt');
+    if(target==='strike')return slot==='strike'||countsAs.includes('strike')||cardTypes.includes('strike');
+    if(target==='defense')return slot==='defense'||countsAs.includes('defense')||cardTypes.includes('defense');
+    if(target==='pursuit')return slot==='pursuit'||countsAs.includes('pursuit')||cardTypes.includes('pursuit')||family==='pursuit';
+    if(target==='command')return family==='command'||countsAs.includes('command')||cardTypes.includes('command');
+    return slot===target||countsAs.includes(target)||cardTypes.includes(target)||family===target;
+  }
   function bonusScopeAllows(sentence,key){
-    const slot=String(currentSkill?.slot||'').toLowerCase();
-    const countsAs=effectiveCardClassifications(currentSkill);
-    const cardTypes=(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase());
-    const family=String(currentSkill?.cardFamily||'').toLowerCase();
     const currentScopes={
-      exalt:slot==='exalt'||slot==='overexalt'||cardTypes.includes('exalt'),
-      strike:slot==='strike'||countsAs.includes('strike')||cardTypes.includes('strike'),
-      defense:slot==='defense'||countsAs.includes('defense')||cardTypes.includes('defense'),
-      pursuit:slot==='pursuit'||cardTypes.includes('pursuit'),
-      command:family==='command'
+      exalt:skillMatchesScope(currentSkill,'exalt'),
+      strike:skillMatchesScope(currentSkill,'strike'),
+      defense:skillMatchesScope(currentSkill,'defense'),
+      pursuit:skillMatchesScope(currentSkill,'pursuit'),
+      command:skillMatchesScope(currentSkill,'command')
     };
     const metric=key==='base'?'Base DMG':key==='final'?'Final DMG':key==='critRate'?'Crit(?:\\.? Rate)':key==='critDamage'?'Crit(?:\\.? DMG)':null;
     if(!metric)return true;
@@ -1745,6 +1761,47 @@
   }
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration'])target[k]+=num(b[k])}
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
+  function applyWheelDirectSkillEffects(events){
+    let mapped=(events||[]).map(event=>({...event}));
+    const notes=[];
+    const prepend=[],append=[];
+    currentWheels.forEach((wheel,slotIndex)=>{
+      if(!wheel)return;
+      const raw=String(wheelDescriptionRaw(wheel,slotIndex)||'').replace(/\s+/g,' ');
+      const wheelName=labelForWheel(wheel);
+      let m;
+      // Direct per-card poison is deterministic for the selected card and can be represented
+      // without assuming prior turns/stacks. This also works for Derived cards that count as Strike/Defense.
+      const scopedPoison=raw.match(/["“]?(Strike|Defense)["”]?\s*s?\s+inflicts?\s+\{?Poison\}?\s+equal to\s+([\d.]+)%\s+of\s+(?:(?:the\s+wielder['’]s)|their)\s+(ATK|DEF)/i);
+      if(scopedPoison){
+        const scope=scopedPoison[1].toLowerCase();
+        if(skillMatchesScope(currentSkill,scope)){
+          const percent=num(scopedPoison[2]),stat=String(scopedPoison[3]).toUpperCase();
+          append.push({id:`wheel-${wheel.id}-poison`,index:0,position:9998,type:'poison',action:'apply',source:'wheel',basis:'statPercent',stat,percent,activeSource:false,resourceEffectLabel:`命轮「${wheelName}」：${scope==='strike'?'打击':'防御'}附加中毒`});
+          notes.push(`命轮「${wheelName}」：当前${scope==='strike'?'打击':'防御'}附加 ${stat} × ${percent}% 中毒`);
+        }
+      }
+      // Gift-of-Decay style "first Poison, then resolve Exalt" must precede the Exalt's own events,
+      // so an Exalt that triggers Poison sees the newly applied stacks.
+      m=raw.match(/As part of (?:the )?wielder['’]s Exalt,\s*first inflict\s+\{?Poison\}?\s+equal to\s+([\d.]+)%\s+of\s+(?:the )?wielder['’]s\s+(ATK|DEF)/i);
+      if(m&&skillMatchesScope(currentSkill,'exalt')){
+        const percent=num(m[1]),stat=String(m[2]).toUpperCase();
+        prepend.push({id:`wheel-${wheel.id}-pre-exalt-poison`,index:0,position:-9998,type:'poison',action:'apply',source:'wheel',basis:'statPercent',stat,percent,activeSource:false,resourceEffectLabel:`命轮「${wheelName}」：狂气爆发前置中毒`});
+        notes.push(`命轮「${wheelName}」：狂气爆发前先施加 ${stat} × ${percent}% 中毒`);
+      }
+      // Some Wheels add a flat ATK-derived component to every Active-DMG event.
+      m=raw.match(/Active DMG\s*\+\s*(?:an\s+amount\s+)?equal to\s+(?:the )?wielder['’]s\s+ATK\s*[×x*]\s*([\d.]+)%/i);
+      if(m){
+        const percent=num(m[1]);
+        mapped=mapped.map(event=>event.type==='active'?{...event,resourceFlatAtkPercent:(Number(event.resourceFlatAtkPercent)||0)+percent,resourceEffectLabel:[event.resourceEffectLabel,`命轮「${wheelName}」：主动伤害额外 +ATK×${percent}%`].filter(Boolean).join('；')}:event);
+        notes.push(`命轮「${wheelName}」：每个主动伤害事件额外增加 ATK × ${percent}%`);
+      }
+    });
+    if(prepend.length||append.length){
+      mapped=[...prepend,...mapped,...append].map((event,index)=>({...event,index}));
+    }
+    return {events:mapped,notes};
+  }
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function wheelDescriptionRich(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderRichRecord(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function renderWheelsAndBonuses(){
@@ -1822,9 +1879,10 @@
     const referencesSkill=fragment=>{
       const refs=[...String(fragment||'').matchAll(/\{([^}]+)\}/g)].map(m=>String(m[1]).replace(/^(?:derived|overlay):/i,'').toLowerCase());
       if(skillName&&refs.some(x=>x===skillName||skillName.includes(x)||x.includes(skillName)))return true;
-      if(slot==='strike'&&/["“]Strike["”]/i.test(fragment))return true;
-      if(slot==='defense'&&/["“]Defense["”]/i.test(fragment))return true;
-      if((slot==='exalt'||slot==='overexalt')&&/\bExalt\b/i.test(fragment))return true;
+      if(skillMatchesScope(currentSkill,'strike')&&/["“]Strike["”]/i.test(fragment))return true;
+      if(skillMatchesScope(currentSkill,'defense')&&/["“]Defense["”]/i.test(fragment))return true;
+      if(skillMatchesScope(currentSkill,'exalt')&&/\bExalt\b/i.test(fragment))return true;
+      if(skillMatchesScope(currentSkill,'pursuit')&&/\bPursuit\b/i.test(fragment))return true;
       return false;
     };
     const conditional=/\b(?:if|when|whenever|after|before|every|each|first|second|third|once|within|stack(?:s|ing)?|trigger(?:s|ed|ing)?|accumulat(?:e|es|ed|ing)|consume(?:s|d|ing)|loses?|deals?\s+DMG\s+\[)\b/i;
