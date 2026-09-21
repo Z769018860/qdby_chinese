@@ -188,6 +188,25 @@
       return 1;
     }
 
+    function damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type){
+      const text=String(template||'');
+      const local=text.slice(tokenEnd,Math.min(text.length,tokenEnd+220));
+      let multiplier=type==='active'?1:0;
+      let match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*[×x]\s*\{STR\}\s+bonus/i);
+      if(match)return Math.max(0,num(match[1],multiplier));
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+\[([^\]]+)\]%\s+\{Tentacle DMG\}\s+and\s+\{STR\}\s+bonus/i);
+      if(match){
+        const extra=num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100;
+        return Math.max(0,multiplier+extra);
+      }
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+\[([^\]]+)\]%\s+\{STR\}\s+bonus/i);
+      if(match)return Math.max(0,multiplier+num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100);
+      // Some cards place the STR multiplier in a following sentence instead of beside [Damage].
+      match=text.match(/\{STR\}\s+takes\s+\[([^\]]+)\]\s*[×x]\s+effect\s+on\s+[^.]+/i)
+        ||text.match(/\{STR\}\s+multiplies\s+the\s+effect\s+by\s+\[([^\]]+)\]\s+on\s+[^.]+/i);
+      if(match)return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),multiplier));
+      return multiplier;
+    }
     function damageTokenType(template,tokenEnd){
       const tail=String(template||'').slice(tokenEnd,tokenEnd+80);
       return /^\s*\{Pierce DMG\}/i.test(tail)?'pierce':'active';
@@ -218,6 +237,7 @@
             stat:skill?.descriptionArgs?.[argName]?.stat||'ATK',
             hit:hit+1,
             hitCount:count,
+            strengthMultiplier:damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type),
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
             guaranteedCrit:/guaranteed\s+Critical\s+DMG/i.test(template.slice(tokenEnd,tokenEnd+120)),
             activeSource:type==='active'
