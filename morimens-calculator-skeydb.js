@@ -4,7 +4,7 @@
   const recordCache=new Map();
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
   let wheelCatalog=[],covenantCatalog=[],posseCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
-  let applyingAuto=false;
+  let applyingAuto=false,wheelRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhCovenants={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸'};
@@ -422,8 +422,8 @@
   }
   async function loadWheel(slot){
     const sel=$(slot===0?'fateSelect':'fateSelect2'),id=sel?.value;
-    const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();return}
-    currentWheels[slot]=id?await fetchRecord('wheels',id):null;const levelSel=$(`fateLevel${slot+1}`);if(levelSel)levelSel.value='0';fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();
+    const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();return}
+    currentWheels[slot]=id?await fetchRecord('wheels',id):null;const levelSel=$(`fateLevel${slot+1}`);if(levelSel)levelSel.value='0';fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();
   }
   function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
   function numericBonusesFromText(text,allowConditional=false){
@@ -455,11 +455,42 @@
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后从 SKeyDB 读取完整 3 / 6 件套效果。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
+  const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回复',KEYFLARE_REGEN:'银钥充能',SIGIL_YIELD:'印记产出',DEATH_RESISTANCE:'死亡抗性'};
+  function wheelMainstatValue(rec,slot){
+    const source=gameplayMathMeta?.wheelMainstatScaling;if(!rec||!source)return null;
+    const seriesKey=rec.mainstatSeriesKey||`${rec.rarity}:${rec.mainstatKey}`;
+    const series=(source.series||[]).find(x=>x.seriesKey===seriesKey);if(!series)return null;
+    const scalar=v=>num(String(v??'').replace('%',''),0);
+    const level=Math.max(0,Math.min(15,Math.floor(num($(`fateLevel${slot+1}`)?.value,0))));
+    const growthSteps=Math.max(0,level-Math.max(0,Math.floor(num(source.growthStartLevel,4)))+1);
+    return {key:rec.mainstatKey,value:scalar(series.baseValue)+scalar(series.perLevel)*growthSteps,level,seriesKey};
+  }
+  function applyWheelRealmMastery(nextValue){
+    const el=$('realmMastery');nextValue=num(nextValue,0);
+    if(!el){wheelRealmMasteryAuto=nextValue;return}
+    applyingAuto=true;
+    const shown=num(el.value);
+    el.value=String(Math.round((shown-wheelRealmMasteryAuto+nextValue)*1000)/1000);
+    applyingAuto=false;
+    wheelRealmMasteryAuto=nextValue;
+  }
   function recomputeGearBonuses(){
     const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
-    currentWheels.forEach((w,i)=>{if(w)sumBonus(next,numericBonusesFromText(wheelDescriptionRaw(w,i),false))});
+    let nextRealmMastery=0;wheelMainstatSummary=[];
+    currentWheels.forEach((w,i)=>{
+      if(!w)return;
+      sumBonus(next,numericBonusesFromText(wheelDescriptionRaw(w,i),false));
+      const main=wheelMainstatValue(w,i);
+      if(main){
+        wheelMainstatSummary.push({wheel:w,...main});
+        if(main.key==='CRIT_RATE')next.critRate+=main.value;
+        else if(main.key==='CRIT_DMG')next.critDamage+=main.value;
+        else if(main.key==='DMG_AMP')next.power+=main.value;
+        else if(main.key==='REALM_MASTERY')nextRealmMastery+=main.value;
+      }
+    });
     if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),e.set<6||allow))}}
-    Object.assign(auto,next);applyAutoBonuses();renderAutoSummary();
+    Object.assign(auto,next);applyAutoBonuses();applyWheelRealmMastery(nextRealmMastery);renderAutoSummary();
   }
 
   function initManualTracking(){
@@ -471,7 +502,17 @@
     applyingAuto=false;
   }
   function renderAutoSummary(){
-    const box=$('autoSummary');if(!box)return;const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害']];const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}%</span>`);rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);if(currentCovenant)rows.push(`<span class="chip">密契：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</span>`);box.innerHTML=rows.join('')}
+    const box=$('autoSummary');if(!box)return;
+    const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害']];
+    const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}%</span>`);
+    for(const x of wheelMainstatSummary){
+      const suffix=['CRIT_RATE','CRIT_DMG','DMG_AMP','SIGIL_YIELD','DEATH_RESISTANCE'].includes(x.key)?'%':'';
+      rows.push(`<span class="chip">${escape(labelForWheel(x.wheel))} ${wheelEnhanceLabel(x.level)} · ${wheelMainstatLabels[x.key]||x.key} +${x.value.toFixed(2)}${suffix}</span>`);
+    }
+    rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);
+    if(currentCovenant)rows.push(`<span class="chip">密契：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</span>`);
+    box.innerHTML=rows.join('')
+  }
 
   function bindCapture(){
     $('charSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadAwakener()},{capture:true});
