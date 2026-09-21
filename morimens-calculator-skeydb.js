@@ -557,7 +557,11 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
-      if(currentSkill?.overExaltEffectId)messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外 Pure/状态事件会自动叠加，依赖战斗资源或条件的效果仍保持保守提示。');
+      if(currentSkill?.overExaltEffectId){
+        messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外 Pure/状态事件会自动叠加。');
+        const overText=String(currentSkill.descriptionTemplate||'').split('{Over-Exalt}:')[1]||'';
+        if(/(?:all Awakeners|this turn|for the next|lasting|temporarily increase)/i.test(overText))messages.push('该超限还包含团队/回合持续状态；这类效果不反向追溯到本次基础狂气爆发伤害，避免因结算时序不明而高算。');
+      }
       if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立伤害公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
       if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push('当前唯一伤害公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。');
       $('skillRuntimeBlock').hidden=messages.length===0;
