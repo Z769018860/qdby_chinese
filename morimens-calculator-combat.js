@@ -73,6 +73,46 @@
     return rec&&engine?engine.contextFor(rec,currentLevel()):{};
   }
 
+  function setResultMode(mode){
+    const selected=['expected','crit','normal'].includes(mode)?mode:'expected';
+    document.querySelectorAll('.modeBtn[data-mode]').forEach(button=>{
+      button.setAttribute('aria-pressed',button.dataset.mode===selected?'true':'false');
+    });
+  }
+  function syncFloatingResult(){
+    const pairs=[
+      ['resultLabel','floatingResultLabel'],
+      ['resultNumber','floatingResultNumber'],
+      ['normalLine','floatingNormalLine'],
+      ['critLine','floatingCritLine'],
+      ['expectedLine','floatingExpectedLine']
+    ];
+    for(const [sourceId,targetId] of pairs){
+      const source=$(sourceId),target=$(targetId);
+      if(source&&target)target.textContent=source.textContent||'';
+    }
+  }
+  let floatingResultRaf=0;
+  function updateFloatingResultVisibility(){
+    if(floatingResultRaf)return;
+    floatingResultRaf=requestAnimationFrame(()=>{
+      floatingResultRaf=0;
+      const floating=$('calcFloatingOutput'),dock=$('calcResultDock'),panel=$('calcTitle')?.closest('.panel');
+      if(!floating||!dock||!panel||panel.offsetParent===null){if(floating)floating.hidden=true;return}
+      const panelRect=panel.getBoundingClientRect(),dockRect=dock.getBoundingClientRect();
+      const topGuard=48,bottomGuard=12;
+      const panelVisible=panelRect.bottom>topGuard&&panelRect.top<window.innerHeight-bottomGuard;
+      const dockVisible=dockRect.bottom>topGuard&&dockRect.top<window.innerHeight-bottomGuard;
+      floating.hidden=!panelVisible||dockVisible;
+      if(floating.hidden)return;
+      const left=Math.max(10,panelRect.left);
+      const right=Math.min(window.innerWidth-10,panelRect.right);
+      floating.style.left=left+'px';
+      floating.style.width=Math.max(240,right-left)+'px';
+      syncFloatingResult();
+    });
+  }
+
   function inject(){
     if($('combatModel')||!$('calcBtn'))return;
     const first=$('charSelect')?.closest('.builderBlock');
@@ -160,7 +200,12 @@
     document.addEventListener('input',e=>{if(e.target?.closest?.('.panel')&&e.target?.id!=='fortuneBtn')queueMicrotask(calculate)});
     document.addEventListener('change',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
     $('calcBtn')?.addEventListener('click',()=>queueMicrotask(calculate));
-    document.querySelectorAll('.modeBtn').forEach(button=>button.addEventListener('click',()=>queueMicrotask(calculate)));
+    document.querySelectorAll('.modeBtn[data-mode]').forEach(button=>button.addEventListener('click',()=>{
+      setResultMode(button.dataset.mode);
+      queueMicrotask(calculate);
+    }));
+    window.addEventListener('scroll',updateFloatingResultVisibility,{passive:true});
+    window.addEventListener('resize',updateFloatingResultVisibility,{passive:true});
     document.addEventListener('click',event=>{if(event.target?.id==='resetBtn')setTimeout(resetEnemy,30)},true);
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(calculate));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
@@ -173,7 +218,8 @@
     };
     for(const id of ['buffWeak','buffBrute','buffBurst','targetVulnerable'])$(id)?.addEventListener('change',syncOptionalStackInputs);
     syncOptionalStackInputs();
-    toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();
+    setResultMode(document.querySelector('.modeBtn[aria-pressed="true"]')?.dataset?.mode||'expected');
+    toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();updateFloatingResultVisibility();
     window.dispatchEvent(new CustomEvent('morimens-calculator-ui-ready'));
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
   }
@@ -821,6 +867,8 @@
     $('normalLine').textContent=`可暴击主动/穿透伤害的非暴击合计：${fmt(activeNormal)}`;
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
+    syncFloatingResult();
+    updateFloatingResultVisibility();
   
     $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱：${weakStacks>0?weakStacks+' 层（当前伤害仍只应用一次 -25%）':'无'}。角色专属伤害强效：+${characterDamageAmpBonusPct.toFixed(1)}%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
   
