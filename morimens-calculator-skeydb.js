@@ -30,8 +30,9 @@
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
     base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
-    base.ownedPosseCount=Math.max(0,Math.floor(num($('formulaOwnedPosseCount')?.value,posseCatalog.length)));
-    base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.floor(num($('formulaWheelRefinementLevel')?.value,0))));
+    base.ownedPosseCount=Math.max(0,posseCatalog.length);
+    const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
+    base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
     const realm=window.MorimensRealmEngine?.state?.();
     if(realm){
       base.primordiaAllChaosTeam=realm.primordiaAllChaosTeam===true;
@@ -201,10 +202,10 @@
   function ensureFormulaContextUi(){
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
-    const block=document.createElement('div');block.id='formulaContextBlock';block.className='conditionBox';block.style.marginTop='10px';
-    block.innerHTML='<strong>SKeyDB 公式上下文</strong><div class="formGrid" style="margin-top:8px"><div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数</label><input id="formulaOwnedPosseCount" type="number" min="0" step="1" value="0"></div><div class="field"><label for="formulaWheelRefinementLevel">公式命轮精炼层级</label><select id="formulaWheelRefinementLevel"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><small>命轮自身说明会自动使用各自档位覆盖此值。</small></div></div><small>完整上下文：accountLevel / ownedPosseCount / wheelRefinementLevel / realmMasteryFinal / primordiaAllChaosTeam。</small><div id="formulaContextReadout" class="combatReadout" style="margin-top:8px"></div>';
+    const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
+    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>仅用于依赖账号等级的 SKeyDB 公式；造物数量与命轮精炼不再重复填写。</small></div>';
     anchor.insertAdjacentElement('afterend',block);
-    for(const id of ['formulaAccountLevel','formulaOwnedPosseCount','formulaWheelRefinementLevel'])$(id)?.addEventListener('change',()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()},{capture:true});
+    $('formulaAccountLevel')?.addEventListener('change',()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()},{capture:true});
   }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
@@ -338,7 +339,6 @@
     if(!currentSkill)return;
     const level=Number($('skillLevel')?.value)||1;
     const ctx=currentFormulaContext();
-    const contextBox=$('formulaContextReadout');if(contextBox)contextBox.textContent=`账号 ${ctx.accountLevel} · 造物 ${ctx.ownedPosseCount} · 命轮公式精炼 ${ctx.wheelRefinementLevel??'—'} · 最终界域精通 ${Number(ctx.realmMasteryFinal||0).toFixed(1)} · 原初纯混沌 ${ctx.primordiaAllChaosTeam?'是':'否'}`;
     const engine=window.MorimensFormulaEngine;
     const damageEvents=engine?engine.damageEvents(currentSkill,level,ctx):[];
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
@@ -371,7 +371,6 @@
     const [wr,cr,pr,gm]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants'),window.MorimensRepository.catalog('posses'),window.MorimensRepository.gameplayMath()]);
     wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];posseCatalog=pr.status==='fulfilled'?(pr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
     window.MorimensFormulaEngine?.setGameplayMathMetadata?.(gameplayMathMeta);ensureFormulaContextUi();
-    if($('formulaOwnedPosseCount')){$('formulaOwnedPosseCount').max=String(posseCatalog.length);if(!Number($('formulaOwnedPosseCount').value))$('formulaOwnedPosseCount').value=String(posseCatalog.length)}
     if(gameplayMathMeta?.accountLevelCurve&&$('formulaAccountLevel')){$('formulaAccountLevel').min=String(gameplayMathMeta.accountLevelCurve.minLevel||1);$('formulaAccountLevel').max=String(gameplayMathMeta.accountLevelCurve.maxLevel||100)}
     const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${labelForWheel(w)} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
     const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
