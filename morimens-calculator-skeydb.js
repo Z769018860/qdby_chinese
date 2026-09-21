@@ -8,6 +8,20 @@
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄'};
+  const SKEYDB_ICON_COMMIT='d4c5a90f24a7e95745a92b8d1098aff77d6f1510';
+  const SKEYDB_ICON_BASE='https://raw.githubusercontent.com/dansa/SKeyDB/'+SKEYDB_ICON_COMMIT+'/src/assets/icons/';
+  const globalTermMeta={
+    'STR':['力量','IconS_Buff_021.webp','heal'],'Temporary STR':['临时力量','IconS_Buff_021.webp','heal'],'STR▼':['力量降低','IconS_Buff_037.webp','affliction'],
+    'Vulnerable':['易伤','IconS_Buff_003.webp','damage'],'Weakness':['虚弱','IconS_Buff_005.webp','affliction'],'Poison':['中毒','IconS_Buff_006.webp','affliction'],
+    'Counter':['反击','IconS_Buff_019.webp','shield'],'Bleed':['流血','IconS_Buff_022.webp','damage'],'Corrosion':['侵蚀','IconS_Buff_070.webp','affliction'],
+    'Fortress':['护垒','IconS_Buff_046.webp','shield'],'Sacrifice':['献祭','IconS_Buff_041.webp','shield'],'Delayed Sacrifice':['延迟献祭','IconS_Buff_042.webp','shield'],
+    'Ancient Embers':['旧日余烬','IconS_Buff_025.webp','affliction'],'Birth Ritual':['诞生仪式','IconS_Buff_079.webp','shield'],
+    'Pure DMG':['纯粹伤害',null,'misc','✦'],'Fixed DMG':['固定伤害',null,'misc','◆'],'Pierce DMG':['穿透伤害',null,'misc','↯'],'Tentacle DMG':['触腕伤害',null,'misc','≋'],
+    'Active DMG':['主动伤害',null,'damage','✧'],'Base DMG':['基础伤害',null,'damage','◇'],'Final DMG':['最终伤害',null,'damage','↑'],
+    'Rouse':['灵知觉醒',null,'light','✦'],'Exalt':['狂气爆发',null,'light','✦'],'Over-Exalt':['超限爆发',null,'light','✦'],
+    'Devour':['吞噬',null,'light','◉'],'Leap':['跃迁',null,'light','↗'],'Aftershock':['余震',null,'light','↻']
+  };
+
   const zhCovenants={
     'Deus Ex Machina':'机械降神',
     'Re-evolution':'再衍化',
@@ -221,7 +235,7 @@
     appendGroup(isEnglish()?'Derived Utility / State Cards':'衍生辅助 / 状态卡',derivedUtility);
     if(wanted)select.value=wanted;
   }
-  function renderTemplate(record,level=1,ctxExtra={}){
+  function renderTemplatePreserveTerms(record,level=1,ctxExtra={}){
     let text=record?.descriptionTemplate||record?.description||'';
     const formatted=(match,name,offset,source)=>{
       const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;
@@ -232,7 +246,43 @@
     text=text.replace(/\[\{([^}]+)\}:([^\]]+)\]/g,(match,kind,name,offset,source)=>formatted(match,name,offset,source));
     text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(match,kind,name,offset,source)=>formatted(match,name,offset,source));
     text=text.replace(/\[([^\]]+)\]/g,(match,name,offset,source)=>formatted(match,name,offset,source));
-    return text.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1');
+    text=text.replace(/\{plural:([^|{}]+)\|([^|{}]+)\|([^{}]+)\}/g,(m,value,singular,plural)=>Math.abs(num(value,2)-1)<1e-9?singular:plural);
+    return text.replace(/\n/g,' ');
+  }
+  function renderTemplate(record,level=1,ctxExtra={}){
+    return renderTemplatePreserveTerms(record,level,ctxExtra).replace(/\{([^}]+)\}/g,'$1');
+  }
+  function termMeta(token){
+    const raw=String(token||'').trim();
+    const clean=raw.replace(/^(?:overlay|derived):/i,'').trim();
+    const global=globalTermMeta[raw]||globalTermMeta[clean];
+    if(global)return {label:isEnglish()?clean:global[0],icon:global[1],color:global[2],glyph:global[3]||null};
+    const overlay=(currentOverlays||[]).find(x=>String(x.name||'').toLowerCase()===clean.toLowerCase());
+    if(overlay){
+      const label=isEnglish()?clean:clean;
+      const icon=overlay.iconId?String(overlay.iconId)+'.webp':null;
+      return {label,icon,color:overlay.textColor||'misc',glyph:null};
+    }
+    return {label:clean,color:'misc',icon:null,glyph:/DMG|Damage/i.test(clean)?'◇':null};
+  }
+  function termHtml(token,displayLabel){
+    const meta=termMeta(token),label=displayLabel||meta.label;
+    const visual=meta.icon
+      ?'<img class="skeyTermIcon" src="'+escape(SKEYDB_ICON_BASE+meta.icon)+'" alt="" decoding="async" onerror="this.remove()">'
+      :(meta.glyph?'<span class="skeyTermGlyph" aria-hidden="true">'+escape(meta.glyph)+'</span>':'');
+    return '<span class="skeyTerm skeyTerm-'+escape(meta.color||'misc')+'" title="'+escape(String(token||''))+'">'+visual+'<span>'+escape(label)+'</span></span>';
+  }
+  function renderRichRecord(record,level=1,ctxExtra={}){
+    let text=renderTemplatePreserveTerms(record,level,ctxExtra),terms=[];
+    text=text.replace(/\{([^{}]+)\}/g,(m,token)=>{const i=terms.push(token)-1;return '@@MTERM'+i+'@@'});
+    let html=escape(zhText(text));
+    return html.replace(/@@MTERM(\d+)@@/g,(m,n)=>termHtml(terms[Number(n)]||''));
+  }
+  function ensureTermIconStyle(){
+    if($('morimensSkeyTermStyle'))return;
+    const style=document.createElement('style');style.id='morimensSkeyTermStyle';
+    style.textContent='.skeyTerm{display:inline-flex;align-items:center;gap:3px;vertical-align:-0.12em;white-space:nowrap;font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}.skeyTermIcon{width:1.08em;height:1.08em;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}.skeyTermGlyph{display:inline-grid;place-items:center;width:1.05em;height:1.05em;border:1px solid currentColor;border-radius:50%;font-size:.7em;line-height:1}.skeyTerm-heal{color:#83d6a6}.skeyTerm-affliction{color:#c5a4ef}.skeyTerm-damage{color:#eab07e}.skeyTerm-shield{color:#8fc5e8}.skeyTerm-light{color:#ecd28c}.skeyTerm-misc{color:#bac4d4}.calcResourceField label .skeyTerm{font-size:1em}';
+    document.head.appendChild(style);
   }
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
   function damageCoefficient(skill,level){
@@ -388,7 +438,7 @@
   }
   function renderEnlightenSummary(){
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
-    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
+    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+renderRichRecord(x,1)).join('<br><br>'):'E0：当前不应用启灵升级。';
   }
   function rouseActive(){return $('rouseActive')?.checked===true}
   function currentRouseSkill(){return currentSkills.find(x=>x.slot==='Rouse')||null}
@@ -405,8 +455,8 @@
     const note=$('rouseStateNote');if(!note)return;
     const rouse=currentRouseSkill();
     const state=rouseActive()?'已发动':'未发动';
-    const desc=rouse?zhText(renderTemplate(resolveSkillEnlighten(rouse),1)):'当前角色的灵知觉醒技能资料尚未加载。';
-    note.textContent='当前：'+state+'。'+desc+(rouseActive()?' · 已明确接入的伤害乘区会参与计算。':' · 灵知觉醒后的专属效果不会参与计算。');
+    const desc=rouse?renderRichRecord(resolveSkillEnlighten(rouse),1):escape('当前角色的灵知觉醒技能资料尚未加载。');
+    note.innerHTML='<strong>当前：'+escape(state)+'。</strong>'+desc+escape(rouseActive()?' · 已明确接入的伤害乘区会参与计算。':' · 灵知觉醒后的专属效果不会参与计算。');
   }
   function ensureSkillRuntimeUi(){
     if($('skillRuntimeBlock'))return;
@@ -594,19 +644,20 @@
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
       const wrap=document.createElement('div');wrap.className='field calcResourceField isCalculated';
-      const description=spec.description||(overlay?zhText(renderTemplate(overlay,1)):'角色专属战斗资源。');
+      const descriptionHtml=spec.description?escape(spec.description):(overlay?renderRichRecord(overlay,1):escape('角色专属战斗资源。'));
+      const labelHtml=overlay?termHtml(overlay.name,spec.label):escape(spec.label);
       if(spec.type==='checkbox'){
         const checked=Number(previous[spec.key])>0;
         wrap.classList.add('full');
-        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+escape(spec.label)+'</label><small>'+escape(description)+' · 已接入伤害计算。'+'</small>';
+        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }else if(spec.type==='select'){
         const selected=String(previous[spec.key]??'');
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
-        wrap.innerHTML='<label>'+escape(spec.label)+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+escape(description)+' · 已接入伤害计算。</small>';
+        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }else{
         const max=effectiveResourceMax(spec);const value=Math.min(max,Math.max(spec.min,Number(previous[spec.key])||0));
         const inputLabel=spec.inputLabel||spec.label+'数量';
-        wrap.innerHTML='<label>'+escape(inputLabel)+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+' · 已接入伤害计算。'+'</small>';
+        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }
       block.appendChild(wrap);
     }
@@ -731,6 +782,7 @@
     let extra=0,m=text.match(/["“]?Strike["”]?[^.]{0,120}?(?:deals?|triggers?)\s+(\d+)\s+additional\s+instances?\s+of\s+DMG/i);
     if(currentIsStrike&&m)extra=Math.max(extra,Number(m[1])||0);
     m=text.match(/hit count\s*\+\s*(\d+)\s*(?:times?|hits?)?/i);if(m)extra=Math.max(extra,Number(m[1])||0);
+    m=text.match(/DMG instances?\s*\+\s*(\d+)/i);if(m)extra=Math.max(extra,Number(m[1])||0);
     if(extra>0)mapped=cloneExtraDamageEvents(mapped,extra,'灵知觉醒：额外 '+extra+' 段伤害');
     return mapped;
   }
@@ -1090,10 +1142,10 @@
     if(!desc){desc=document.createElement('div');desc.id='progressionDesc';desc.className='desc';desc.style.marginTop='8px';box.insertAdjacentElement('afterend',desc)}
     const details=[];
     if(progression.gnosticTalent&&progression.gnosticLevel){
-      details.push(`<strong>内在灵格：</strong>${escape(zhText(renderTemplate(progression.gnosticTalent,progression.gnosticLevel)))}`);
+      details.push(`<strong>内在灵格：</strong>${renderRichRecord(progression.gnosticTalent,progression.gnosticLevel)}`);
     }
     if(progression.soulforgeTalent&&progression.soulforgeLevel){
-      details.push(`<strong>灵塑：</strong>${escape(zhText(renderTemplate(progression.soulforgeTalent,progression.soulforgeLevel)))}`);
+      details.push(`<strong>灵塑：</strong>${renderRichRecord(progression.soulforgeTalent,progression.soulforgeLevel)}`);
     }
     desc.innerHTML=details.length?details.join('<br><br>'):'内在灵格与灵塑均为 0，当前不产生额外成长加成。';
     window.MorimensProgressionSync=progression;
@@ -1202,7 +1254,7 @@
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
     const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
     if($('skillCoef'))$('skillCoef').value=String(coef);
-    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(localizedSkillName(currentSkill))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
+    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(localizedSkillName(currentSkill))}</strong> · ${renderRichRecord(currentSkill,level)}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
       if(currentSkill?.overExaltEffectId){
@@ -1410,8 +1462,9 @@
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration'])target[k]+=num(b[k])}
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
+  function wheelDescriptionRich(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderRichRecord(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function renderWheelsAndBonuses(){
-    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。主属性按 SKeyDB 成长表读取；可可靠解析的基础伤害、伤害强效、暴击、界域精通与状态倍率自动计入；条件型效果在未确认触发时只展示、不强算。';recomputeGearBonuses();refreshBattleProgressionUi();
+    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${wheelDescriptionRich(w,i)}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。主属性按 SKeyDB 成长表读取；可可靠解析的基础伤害、伤害强效、暴击、界域精通与状态倍率自动计入；条件型效果在未确认触发时只展示、不强算。';recomputeGearBonuses();refreshBattleProgressionUi();
   }
 
   async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses();updateSkillLevel()}
@@ -1419,7 +1472,7 @@
   function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套读取：无条件效果直接计入；需要敌人生命区间、特定状态、回合时点等额外条件的效果，只有勾选“额外条件已满足”后才尝试解析。';recomputeGearBonuses();return}
-    const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${escape(renderEffect(e))}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
+    const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${renderRichRecord(e,1)}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
   const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回充等级',KEYFLARE_REGEN:'银钥充能等级',SIGIL_YIELD:'黑印掉落',DEATH_RESISTANCE:'死亡抵抗'};
   function wheelMainstatValue(rec,slot){
@@ -1510,7 +1563,7 @@
   function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary()}
 
   async function boot(){
-    ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
+    ensureTermIconStyle();ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
     window.addEventListener('morimens-realm-change',()=>{if(currentSkill)queueMicrotask(updateSkillLevel)});
     try{await loadCatalogs();await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
   }
