@@ -269,7 +269,7 @@
       (m?.ingameId&&(x.ingameId===m.ingameId||x.id===m.ingameId))||
       (m?.id&&(x.id===m.id||x.ingameId===m.id))
     );
-    if(rec?.id)return `id:${rec.id}`;
+    if(rec?.id)return String(rec.id);
     const canonical=String(m?.canonicalName||m?.name||'').normalize('NFKC').replace(/\s+/g,' ').trim().toLowerCase();
     if(canonical&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(canonical))return `name:${canonical}`;
     return raw?`raw:${raw.toLowerCase()}`:'';
@@ -307,7 +307,7 @@
     const unique=new Map();
     const richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((sum,m)=>sum+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);
     for(const record of season?.records||[]){const mappedRank=rankOf(record),normalized=mappedRank!=null&&record.rank!==mappedRank?{...record,rank:mappedRank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){
-      const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(',');
+      const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(filterMemberKey).filter(Boolean).sort().join(',');
       const key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);
       if(!old||richness(team)>richness(old.team))unique.set(key,row);
     }}
@@ -341,11 +341,11 @@
   function countRate(map,key,meta={}){if(key==null||key==='')return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
   function computeGroup(rows){
     const chars=new Map(),wheels=new Map(),covs=new Map(),byChar=new Map(),enlight=new Map();let memberSlots=0,wheelSlots=0,covenantSlots=0;
-    for(const {team} of rows){const seenC=new Set(),seenW=new Set(),seenS=new Set();for(const m of team.members||[]){memberSlots++;const ck=String(memberKey(m)),ec=enlightClass(m);countRate(enlight,ec,{name:enlightZh[ec]});if(!seenC.has(ck)){seenC.add(ck);countRate(chars,ck,{id:m.skeydbId||null,ingameId:m.ingameId||null,name:characterInfo(ck,m).name,image:m.image||null,borrowedCount:0});const cv=chars.get(ck);if(!cv.image&&m.image)cv.image=m.image;if(m.borrowed)cv.borrowedCount=(cv.borrowedCount||0)+1}let bc=byChar.get(ck);if(!bc){bc={key:ck,id:m.skeydbId||null,ingameId:m.ingameId||null,name:characterInfo(ck,m).name,image:m.image||null,appearances:0,levels:[],enlight:new Map(),wheels:new Map(),covs:new Map()};byChar.set(ck,bc)}else if(!bc.image&&m.image)bc.image=m.image;bc.appearances++;if(m.level!=null)bc.levels.push(Number(m.level));countRate(bc.enlight,ec,{name:enlightZh[ec]});for(const w of m.wheels||[]){wheelSlots++;const wk=w.id??w.name;if(wk==null)continue;const wheelKey=String(wk);if(!seenW.has(wheelKey)){seenW.add(wheelKey);countRate(wheels,wheelKey,{id:w.id??null,name:wheelName(w),image:w.image||null,stacks:new Map()});const wheel=wheels.get(wheelKey),stackKey=wheelStackClass(w);if(!wheel.image&&w.image)wheel.image=w.image;countRate(wheel.stacks,stackKey,{name:wheelStackZh[stackKey]})}countRate(bc.wheels,wk,{id:w.id??null,name:wheelName(w),image:w.image||null})}for(const c of m.covenants||((m.covenant)?[m.covenant]:[])){covenantSlots++;const sk=c.id??c.name;if(sk==null)continue;if(!seenS.has(String(sk))){seenS.add(String(sk));countRate(covs,sk,{id:c.id??null,name:covenantName(c),image:c.image||null})}countRate(bc.covs,sk,{id:c.id??null,name:covenantName(c),image:c.image||null})}}}
+    for(const {team} of rows){const seenC=new Set(),seenW=new Set(),seenS=new Set();for(const m of team.members||[]){memberSlots++;const ck=filterMemberKey(m),ec=enlightClass(m);if(!ck)continue;countRate(enlight,ec,{name:enlightZh[ec]});const firstAppearance=!seenC.has(ck);if(firstAppearance){seenC.add(ck);countRate(chars,ck,{id:m.skeydbId||null,ingameId:m.ingameId||null,name:characterInfo(m.skeydbId||m.ingameId||m.id||m.canonicalName||m.name,m).name,image:m.image||null,borrowedCount:0});const cv=chars.get(ck);if(!cv.image&&m.image)cv.image=m.image;if(m.borrowed)cv.borrowedCount=(cv.borrowedCount||0)+1}let bc=byChar.get(ck);if(!bc){bc={key:ck,id:m.skeydbId||null,ingameId:m.ingameId||null,name:characterInfo(m.skeydbId||m.ingameId||m.id||m.canonicalName||m.name,m).name,image:m.image||null,appearances:0,levels:[],enlight:new Map(),wheels:new Map(),covs:new Map()};byChar.set(ck,bc)}else{if(!bc.id&&m.skeydbId)bc.id=m.skeydbId;if(!bc.ingameId&&m.ingameId)bc.ingameId=m.ingameId;if(!bc.image&&m.image)bc.image=m.image}if(firstAppearance){bc.appearances++;if(m.level!=null)bc.levels.push(Number(m.level));countRate(bc.enlight,ec,{name:enlightZh[ec]})}for(const w of m.wheels||[]){wheelSlots++;const wk=w.id??w.name;if(wk==null)continue;const wheelKey=String(wk);if(!seenW.has(wheelKey)){seenW.add(wheelKey);countRate(wheels,wheelKey,{id:w.id??null,name:wheelName(w),image:w.image||null,stacks:new Map()});const wheel=wheels.get(wheelKey),stackKey=wheelStackClass(w);if(!wheel.image&&w.image)wheel.image=w.image;countRate(wheel.stacks,stackKey,{name:wheelStackZh[stackKey]})}countRate(bc.wheels,wk,{id:w.id??null,name:wheelName(w),image:w.image||null})}for(const c of m.covenants||((m.covenant)?[m.covenant]:[])){covenantSlots++;const sk=c.id??c.name;if(sk==null)continue;if(!seenS.has(String(sk))){seenS.add(String(sk));countRate(covs,sk,{id:c.id??null,name:covenantName(c),image:c.image||null})}countRate(bc.covs,sk,{id:c.id??null,name:covenantName(c),image:c.image||null})}}}
     const teamCount=rows.length,finish=map=>[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0,assistRatePct:x.count?(Number(x.borrowedCount||0)/x.count*100):0})).sort((a,b)=>b.count-a.count);
-    const teammateCounts=new Map();for(const {team} of rows){const keys=[...new Set((team.members||[]).map(memberKey))];for(const a of keys)for(const b of keys)if(a&&b&&a!==b){const m=teammateCounts.get(a)||new Map();m.set(b,(m.get(b)||0)+1);teammateCounts.set(a,m)}}
+    const teammateCounts=new Map();for(const {team} of rows){const keys=[...new Set((team.members||[]).map(filterMemberKey).filter(Boolean))];for(const a of keys)for(const b of keys)if(a!==b){const m=teammateCounts.get(a)||new Map();m.set(b,(m.get(b)||0)+1);teammateCounts.set(a,m)}}
     const byCharacter=byChar;
-    const bc=[...byCharacter.values()].map(x=>({...x,level:{min:x.levels.length?Math.min(...x.levels):null,max:x.levels.length?Math.max(...x.levels):null,avg:x.levels.length?x.levels.reduce((a,b)=>a+b,0)/x.levels.length:null},teammates:[...(teammateCounts.get(x.key)||new Map())].map(([key,count])=>({key,count,ratePct:x.appearances?count/x.appearances*100:0,name:characterInfo(key).name})).sort((a,b)=>b.count-a.count),enlight:[...x.enlight.values()].map(v=>({...v,ratePct:x.appearances?v.count/x.appearances*100:0})).sort((a,b)=>b.count-a.count),wheels:[...x.wheels.values()].map(v=>({...v,ratePct:x.appearances?v.count/x.appearances*100:0})).sort((a,b)=>b.count-a.count),covenants:[...x.covs.values()].map(v=>({...v,ratePct:x.appearances?v.count/x.appearances*100:0})).sort((a,b)=>b.count-a.count)})).sort((a,b)=>b.appearances-a.appearances);
+    const bc=[...byCharacter.values()].map(x=>({...x,level:{min:x.levels.length?Math.min(...x.levels):null,max:x.levels.length?Math.max(...x.levels):null,avg:x.levels.length?x.levels.reduce((a,b)=>a+b,0)/x.levels.length:null},teammates:[...(teammateCounts.get(x.key)||new Map())].map(([key,count])=>({key,count,ratePct:x.appearances?count/x.appearances*100:0,name:characterInfo(String(key).replace(/^(?:name|raw):/,''),{name:String(key).replace(/^(?:name|raw):/,'')}).name})).sort((a,b)=>b.count-a.count),enlight:[...x.enlight.values()].map(v=>({...v,ratePct:x.appearances?v.count/x.appearances*100:0})).sort((a,b)=>b.count-a.count),wheels:[...x.wheels.values()].map(v=>({...v,ratePct:x.appearances?v.count/x.appearances*100:0})).sort((a,b)=>b.count-a.count),covenants:[...x.covs.values()].map(v=>({...v,ratePct:x.appearances?v.count/x.appearances*100:0})).sort((a,b)=>b.count-a.count)})).sort((a,b)=>b.appearances-a.appearances);
     const wheelRows=finish(wheels).map(w=>({...w,stacks:[...(w.stacks||new Map()).values()].map(x=>({...x,ratePct:w.count?x.count/w.count*100:0}))}));
     return {teamCount,memberSlots,wheelSlots,covenantSlots,characters:finish(chars),wheels:wheelRows,covenants:finish(covs),enlight:finish(enlight),byCharacter:bc};
   }
@@ -357,7 +357,7 @@
   function currentGroup(overrides={}){return Object.keys(overrides).length?computeGroup(scopedRows(overrides)):currentAnalysis().group}
   function fullSeasonAssistHeatMax(){
     const counts=new Map();
-    for(const {team} of flattenTeams())for(const m of team.members||[]){const key=String(memberKey(m));if(!key)continue;const x=counts.get(key)||{count:0,borrowed:0};x.count++;if(m.borrowed)x.borrowed++;counts.set(key,x)}
+    for(const {team} of flattenTeams())for(const m of team.members||[]){const key=filterMemberKey(m);if(!key)continue;const x=counts.get(key)||{count:0,borrowed:0};x.count++;if(m.borrowed)x.borrowed++;counts.set(key,x)}
     return Math.max(0,...[...counts.values()].map(x=>x.count?x.borrowed/x.count*100:0));
   }
 
@@ -366,6 +366,15 @@
     if(!cap)box.innerHTML='<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>';
     else{const complete=max>=cap;box.innerHTML=complete?'':`<div class="dtideNotice">当前快照实际抓取到的最高榜单名次为 <b>#${esc(max||'—')}</b>。Top ${cap} 统计目前属于不完整样本。</div>`}
     for(const opt of $('dtideRankScope').options){if(opt.value==='all'||opt.value==='0'){opt.textContent='全部范围（含未知排名）';continue}const n=Number(opt.value),ok=max>=n;opt.textContent=`Top ${n}${ok?'':' · 当前样本不足'}`}
+  }
+  function identityNormalizationSummary(){
+    const aliases=new Map();
+    for(const {team} of flattenTeams())for(const m of team.members||[]){
+      const canonical=filterMemberKey(m),raw=String(memberKey(m)||'');if(!canonical||!raw)continue;
+      const set=aliases.get(canonical)||new Set();set.add(raw);aliases.set(canonical,set);
+    }
+    const merged=[...aliases.values()].filter(set=>set.size>1).length;
+    return {characters:aliases.size,mergedAliases:merged};
   }
   function renderSummary(){const g=currentGroup(),coverage=manifest.fieldCoverage||{},cap=selectedRankCap(),max=maxRankAvailable();$('dtideSummary').innerHTML=[['榜单样本',`${season.recordCount} 条 / 最深 #${max||'—'}`],['当前范围',rankScopeLabel(cap)],['统计队伍',g.teamCount],['角色槽位',g.memberSlots]].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');$('dtideStatus').textContent=`第 ${season.seasonId} 期 · ${difficultyZh[$('dtideDifficulty').value]||'全部难度'} · ${rankScopeLabel(cap)}`;$('dtideFilterCoverage').textContent=`等级 ✓ · 启灵 ${coverage.enlightenLevel?'✓':'—'} · 命轮 ${coverage.wheels?'✓':'—'} · 密契 ${coverage.covenants?'✓':'—'}`;renderCoverage()}
 
@@ -571,7 +580,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       if(!old)chars.set(k,{...info,fallback:m.canonicalName||m.name||sourceKey,sourceKey});
       else if(!old.image&&info.image)old.image=info.image;
     }
-    for(const rec of currentSeasonRosterSupplements()){const k=String(rec.id);if(chars.has(k))continue;const info=characterInfo(rec.id,rec);chars.set(k,{...info,fallback:rec.name||rec.id,sourceKey:rec.id})}
+    for(const rec of currentSeasonRosterSupplements()){const k=filterMemberKey({skeydbId:rec.id,ingameId:rec.ingameId,name:rec.name});if(!k||chars.has(k))continue;const info=characterInfo(rec.id,rec);chars.set(k,{...info,fallback:rec.name||rec.id,sourceKey:rec.id})}
     const choices=[...chars.entries()].sort((a,b)=>(a[1].name||a[1].fallback).localeCompare(b[1].name||b[1].fallback,'zh-CN')).map(([k,v])=>`<button type="button" class="dtideCharacterChoice" data-character-key="${esc(k)}" data-character-source="${esc(v.sourceKey||'')}" aria-pressed="false" title="${esc(v.name||v.fallback)}">${v.image?`<img src="${esc(v.image)}" alt="" loading="lazy" onerror="this.hidden=true">`:''}<span class="dtideCharacterChoiceName">${esc(v.name||v.fallback)}</span></button>`).join('');$('dtideCharacters').innerHTML=choices;$('dtideExcludeCharacters').innerHTML=choices;
     const scoreValues=[...new Set(flattenTeams().map(({record})=>Number(record?.score)).filter(Number.isFinite))].sort((a,b)=>b-a);const scoreRanges=[['500:525','500–525 分'],['450:495','450–495 分'],['400:445','400–445 分'],[':399','400（不含）以下']];$('dtideTotalScore').innerHTML='<option value="all">全部分数</option>'+scoreRanges.map(([value,label])=>`<option value="${value}">${label}</option>`).join('')+scoreValues.map(score=>`<option value="${score}">${score} 分</option>`).join('');const coverage=manifest.fieldCoverage||{};$('dtideProgression').disabled=!coverage.enlightenLevel;$('dtideWheel').disabled=!coverage.wheels;$('dtideCovenant').disabled=!coverage.covenants;
     const wheelNames=new Map(),covNames=new Map();for(const {team} of flattenTeams())for(const m of team.members||[]){for(const item of m.wheels||[])wheelNames.set(String(item.id??item.name),wheelName(item));for(const item of m.covenants||((m.covenant)?[m.covenant]:[]))covNames.set(String(item.id??item.name),covenantName(item))}
