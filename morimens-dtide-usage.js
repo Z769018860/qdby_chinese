@@ -76,6 +76,16 @@
     const name=displayCharacterName(loc?.name,m?.canonicalName,m?.name,rec?.name,fallbackKey),source=rec&&window.MorimensData?.zhFor?.(rec)?.source;
     return {name,image:rec?.assets?.portrait||m?.image||'',art:rec?.assets?.card||rec?.assets?.portrait||m?.image||'',wikiUrl:source?.url||`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(name)}`};
   }
+  function characterRecord(m){
+    const key=memberKey(m),db=window.MorimensData?.db?.records||[];
+    return db.find(x=>x.id===key||x.ingameId===m?.ingameId||x.id===m?.skeydbId)||null;
+  }
+  function characterDimensions(m){
+    const rec=characterRecord(m);
+    const realm=m?.realm??rec?.realm??rec?.realmId??rec?.domain??null;
+    const role=m?.role??rec?.role??rec?.roleId??rec?.type??null;
+    return {realm:realm==null?null:String(realm),role:role==null?null:String(role)};
+  }
   const versioned=url=>`${url}${url.includes('?')?'&':'?'}v=${encodeURIComponent(dataVersion)}`;
   async function json(url,{fresh=false}={}){
     const loader=window.MorimensDtideDataLoader;
@@ -134,7 +144,31 @@
   function add(map,key,meta={}){if(!key)return;const k=String(key),x=map.get(k)||{key:k,count:0,...meta};x.count++;map.set(k,x)}
   function group(rows){
     const chars=new Map(),enlight=new Map();let slots=0;
-    for(const {team} of rows){const seen=new Set();for(const m of team.members||[]){slots++;const key=memberKey(m),e=enlightOf(m);if(key&&!seen.has(key)){seen.add(key);const info=characterInfo(m);add(chars,key,{name:info.name,image:info.image,ingameId:m.ingameId||null,skeydbId:m.skeydbId||null,enlightCounts:{},borrowedCount:0,realms:new Set(),roles:new Set()});const character=chars.get(String(key));character.enlightCounts[e]=(character.enlightCounts[e]||0)+1;if(m.realm!=null)character.realms.add(String(m.realm));if(m.role!=null)character.roles.add(String(m.role));if(m.borrowed)character.borrowedCount=(character.borrowedCount||0)+1}add(enlight,e,{name:enlightZh[e]||e})}}
+    for(const {team} of rows){
+      const seen=new Set();
+      for(const m of team.members||[]){
+        const key=memberKey(m);if(!key)continue;
+        slots++;
+        const e=enlightOf(m),dims=characterDimensions(m);
+        if(!seen.has(key)){
+          seen.add(key);
+          const info=characterInfo(m),rec=characterRecord(m);
+          add(chars,key,{name:info.name,image:info.image,ingameId:m.ingameId||rec?.ingameId||null,skeydbId:rec?.id||m.skeydbId||null,enlightCounts:{},borrowedCount:0,realms:new Set(),roles:new Set()});
+          const character=chars.get(String(key));
+          character.enlightCounts[e]=(character.enlightCounts[e]||0)+1;
+          if(dims.realm)character.realms.add(dims.realm);
+          if(dims.role)character.roles.add(dims.role);
+          if(m.borrowed)character.borrowedCount=(character.borrowedCount||0)+1;
+        }else{
+          const character=chars.get(String(key));
+          if(character){
+            if(dims.realm)character.realms.add(dims.realm);
+            if(dims.role)character.roles.add(dims.role);
+          }
+        }
+        add(enlight,e,{name:enlightZh[e]||e});
+      }
+    }
     const teamCount=rows.length,finish=map=>[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0,slotRatePct:slots?x.count/slots*100:0,assistRatePct:x.count?(Number(x.borrowedCount||0)/x.count*100):0})).sort((a,b)=>b.count-a.count||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN'));
     return {teamCount,slots,characters:finish(chars),enlight:finish(enlight)};
   }
@@ -209,7 +243,7 @@
     const all=rowsFor(records,{cap,difficulty,clearType}),universeRows=rowsFor(records,{cap,difficulty:'all',clearType}),waves=[...new Set(universeRows.map(x=>Number(x.wave.wave)).filter(Number.isFinite))].sort((a,b)=>a-b);
     const groups=new Map(waves.map(w=>[w,entityGroup(all.filter(x=>Number(x.wave.wave)===w),entity)]));
     const universe=entityGroup(universeRows,entity),union=new Map();for(const x of entity==='character'?universe.characters:universe.items)union.set(x.key,x);
-    if(entity==='character'){for(const rec of window.MorimensData?.db?.records||[]){const key=String(rec.id||rec.skeydbId||rec.ingameId||'');if(!key||union.has(key))continue;const info=characterInfo({skeydbId:rec.id,ingameId:rec.ingameId,name:rec.name}),realm=rec.realm??rec.realmId??rec.domain,role=rec.role??rec.roleId??rec.type;union.set(key,{key,name:info.name,image:info.image,ingameId:rec.ingameId||null,skeydbId:rec.id||null,count:0,teamRatePct:0,slotRatePct:0,assistRatePct:0,enlightCounts:{},borrowedCount:0,realms:new Set(realm==null?[]:[String(realm)]),roles:new Set(role==null?[]:[String(role)])})}const totals=new Map(group(all).characters.map(x=>[x.key,x]));for(const [key,item] of union){const total=totals.get(key);if(total){item.enlightCounts=total.enlightCounts;item.borrowedCount=total.borrowedCount||0;item.assistRatePct=total.assistRatePct||0}}}
+    if(entity==='character'){for(const rec of window.MorimensData?.db?.records||[]){const key=String(rec.id||rec.skeydbId||rec.ingameId||'');if(!key)continue;const info=characterInfo({skeydbId:rec.id,ingameId:rec.ingameId,name:rec.name}),realm=rec.realm??rec.realmId??rec.domain,role=rec.role??rec.roleId??rec.type;if(!union.has(key))union.set(key,{key,name:info.name,image:info.image,ingameId:rec.ingameId||null,skeydbId:rec.id||null,count:0,teamRatePct:0,slotRatePct:0,assistRatePct:0,enlightCounts:{},borrowedCount:0,realms:new Set(),roles:new Set()});const item=union.get(key);if(realm!=null)item.realms.add(String(realm));if(role!=null)item.roles.add(String(role));if(!item.name)item.name=info.name;if(!item.image)item.image=info.image}const totals=new Map(group(all).characters.map(x=>[x.key,x]));for(const [key,item] of union){const total=totals.get(key);if(total){item.enlightCounts=total.enlightCounts;item.borrowedCount=total.borrowedCount||0;item.assistRatePct=total.assistRatePct||0;for(const realm of total.realms||[])item.realms.add(realm);for(const role of total.roles||[])item.roles.add(role)}}}
     const indexes=new Map([...groups].map(([w,g])=>[w,new Map((entity==='character'?g.characters:g.items).map(x=>[x.key,x]))])),hit=(w,key)=>indexes.get(w)?.get(key);
     const rows=[...union.values()].map(x=>{const row={...x,total:waves.reduce((sum,w)=>sum+(hit(w,x.key)?.count||0),0)};if(entity==='wheel'){row.stackCounts={};for(const w of waves){const counts=hit(w,x.key)?.stackCounts||{};for(const key of wheelStackKeys)row.stackCounts[key]=(row.stackCounts[key]||0)+Number(counts[key]||0)}const firstImage=waves.map(w=>hit(w,x.key)).find(item=>item?.image);if(firstImage){row.image=firstImage.image;row.fallbackImage=firstImage.fallbackImage||row.fallbackImage}}return row});
     rows.sort((a,b)=>{const av=sortKey==='total'?a.total:sortKey==='assist'?(a.assistRatePct||0):(hit(Number(sortKey),a.key)?.count||0),bv=sortKey==='total'?b.total:sortKey==='assist'?(b.assistRatePct||0):(hit(Number(sortKey),b.key)?.count||0),d=bv-av;return (asc?-d:d)||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')});
@@ -321,6 +355,7 @@
         overlayUsage=await dataset(manifest.currentOverlay.path).catch(error=>{console.warn('usage layer current overlay unavailable',error);return null});
       }
       usage=mergeUsageByUid(baseUsage,overlayUsage);
+      if(overlayUsage?.records?.length)console.info('D-Zone usage overlay merged',{base:baseUsage?.records?.length||0,overlay:overlayUsage.records.length,effective:usage?.records?.length||0});
       detailUsage=usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
       if(overlayUsage?.records?.length)usageStats=fallbackStats(usage?.records||[]);
