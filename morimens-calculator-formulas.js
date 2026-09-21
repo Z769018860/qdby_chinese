@@ -53,7 +53,7 @@
     return {
       ...ctx,
       accountLevel:clamp(Math.floor(num(ctx.accountLevel,50)),1,100),
-      ownedPosseCount:Math.max(0,Math.floor(num(ctx.ownedPosseCount,0))),
+      ownedPosseCount:clamp(Math.floor(num(ctx.ownedPosseCount,0)),0,50),
       wheelRefinementLevel:ctx.wheelRefinementLevel===undefined?undefined:clamp(Math.floor(num(ctx.wheelRefinementLevel,0)),0,3),
       realmMasteryFinal:Math.max(0,num(ctx.realmMasteryFinal,ctx.RealmMastery||0)),
       primordiaAllChaosTeam:ctx.primordiaAllChaosTeam===true
