@@ -85,9 +85,22 @@
     return String(template||'').match(re)?.[1]||null;
   }
 
+  function directAtkCoefficients(skill,rank,ctx){
+    const template=String(skill?.descriptionTemplate||'');
+    const out=[];
+    for(const match of template.matchAll(/\\[Damage:([^\\]]+)\\]/gi)){
+      const name=match[1];
+      out.push(num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0));
+    }
+    return out;
+  }
+
   function directAtkCoefficient(skill,rank,ctx){
-    const name=tokenArgName(skill?.descriptionTemplate,'Damage');
-    return name?num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0):0;
+    return directAtkCoefficients(skill,rank,ctx)[0]||0;
+  }
+
+  function directAtkCoefficientSum(skill,rank,ctx){
+    return directAtkCoefficients(skill,rank,ctx).reduce((sum,value)=>sum+num(value,0),0);
   }
 
   function tentacleBonusCoefficient(skill,rank,ctx){
@@ -186,24 +199,27 @@
     teamMaxHp=0,
     realmMastery=0,
     allAequorChaos=false,
-    extraBonusPct=0
+    extraBonusPct=0,
+    benthosRagingPct=100
   }={}){
     const mastery=num(realmMastery,0);
     const pure=allAequorChaos?2:1;
     const base=mode==='benthos'?Math.max(0,num(teamMaxHp))*0.05:Math.max(0,num(currentTentacle));
     let stanceMult=1;
-    if(stance==='tranquil')stanceMult=0.5;
-    if(stance==='raging')stanceMult=1.25;
+    if(mode==='standard'&&stance==='tranquil')stanceMult=0.5;
+    if(mode==='standard'&&stance==='raging')stanceMult=1.25;
+    if(mode==='benthos'&&stance==='raging')stanceMult=Math.max(0,num(benthosRagingPct,100))/100;
     let masteryMult=1;
     if(mode==='benthos'&&stance==='raging')masteryMult=1+mastery*0.00025*pure;
     const extraMult=1+num(extraBonusPct)/100;
     const attack=base*stanceMult*masteryMult*extraMult;
     const ragingTriggerPct=mode==='benthos'?100:(50+Math.floor(Math.max(0,mastery)/50));
-    return {base,stanceMult,masteryMult,extraMult,attack,ragingTriggerPct};
+    const turnEndAllowed=!(mode==='benthos'&&stance==='tranquil');
+    return {base,stanceMult,masteryMult,extraMult,attack,ragingTriggerPct,turnEndAllowed};
   }
 
   window.MorimensFormulaEngine={
-    primaryStat,substat,contextFor,resolveArg,directAtkCoefficient,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
+    primaryStat,substat,contextFor,resolveArg,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
     source:{
       primary:'SKeyDB src/domain/awakener-level-scaling.ts',
       descriptionArgs:'SKeyDB src/domain/description-args.ts + public-description-args.ts',
