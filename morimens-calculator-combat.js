@@ -145,7 +145,7 @@
       .combatStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
       .combatStats>div,.combatReadout,.formulaSource{padding:10px 12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(2,6,23,.25)}
       .combatStats small{display:block;color:#8290a4;font-size:10px}.combatStats strong{display:block;margin-top:3px;color:#f1e0bf;font-size:18px}
-      .combatReadout{margin-top:10px;color:#aeb8c7;font-size:11px;line-height:1.75}.combatReadout b{color:#f1e0bf}
+      .combatReadout{margin-top:10px;color:#aeb8c7;font-size:11px;line-height:1.75}.combatReadout b{color:#f1e0bf}.realmFeatureLocked input:disabled,.realmFeatureLocked select:disabled{opacity:.48;cursor:not-allowed}.realmFeatureLocked .combatReadout{border-color:rgba(148,163,184,.24);background:rgba(2,6,23,.36)}
       .formulaSource{margin-top:10px;color:#98a5b7;font-size:11px;line-height:1.75}.formulaSource summary{cursor:pointer;color:#d9c09a;font-weight:700}.formulaSource code{color:#f1e0bf;white-space:normal}
       .formulaSource .formulaRow{margin-top:7px;padding-top:7px;border-top:1px dashed rgba(148,163,184,.14)}
       .breakdownLabel{display:inline-flex;align-items:center;gap:7px;min-width:0}.breakdownIcon{width:18px;height:18px;object-fit:contain;flex:0 0 18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.38))}.breakdownGlyph{display:inline-grid;place-items:center;width:18px;height:18px;flex:0 0 18px;border:1px solid rgba(229,196,142,.5);border-radius:50%;color:#f0d7a7;font-size:11px;line-height:1}.damageComposition{margin:0 0 12px;padding:12px;border:1px solid rgba(229,196,142,.2);border-radius:12px;background:rgba(14,20,31,.42)}.damageCompositionTitle{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}.damageCompositionTitle strong{color:#f2dfbb;font-size:13px}.damageCompositionTitle small{color:#8492a6;font-size:10px}.damageCompositionGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}.damageCompositionItem{min-width:0}.damageCompositionHead{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:center;gap:6px;font-size:11px;color:#bac5d4}.damageCompositionHead strong{color:#f1e0bf;font-variant-numeric:tabular-nums}.damageCompositionTrack{height:4px;margin:5px 0 2px 24px;border-radius:999px;background:rgba(148,163,184,.12);overflow:hidden}.damageCompositionTrack i{display:block;height:100%;border-radius:inherit;background:currentColor;color:#d9b776}.damageCompositionItem>small{display:block;margin-left:24px;color:#7f8da1;font-size:9px}
@@ -624,6 +624,7 @@
         if(source.turnUnique===true&&repeat>0)continue;
         if(source.turnEndOnly===true&&!includeTurnEndSettlement)continue;
         if(source.type==='pierce'&&source.basis==='tentacle'){
+          if(tentacle.available===false)continue;
           const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
           for(let i=0;i<count;i++){
             const event=tentaclePierceEvent(source.percent,`触腕穿透伤害 ${i+1}`,`tentacle-pierce-${++tentacleIndex}`);
@@ -636,7 +637,7 @@
           const event=scaledEvent(source,repeat,scaledIndex++);
           pushDamageEvent(event);
           applyCharacterResourceAfterDamage(event,source);
-          if(event.type==='active'&&$('tentacleStance')?.value==='raging'&&event.damage>0){
+          if(tentacle.available!==false&&event.type==='active'&&$('tentacleStance')?.value==='raging'&&event.damage>0){
             pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · 主动伤害后触腕',`raging-${++tentacleIndex}`));
           }
           continue;
@@ -887,10 +888,14 @@
       :({surging:'潮涌 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||'');
     const oneTentacle=tentacleEvent(100,'单次触腕预览','preview');
     if($('tentacleReadout')){
-      const model=tmode==='benthos'?'深渊深海':'普通深海 / 普通触腕';
-      const coexist=tentacle.coexistenceBase?`，混沌共生额外基础触腕 ${fmt(tentacle.coexistenceBase)}`:'';
-      const pureNote=(realm.startingTentacleMultiplier||1)>1?'；至纯深海使初始触腕数翻倍（当前触腕数仍以手动输入为准）':'';
-      $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 界域精通效果倍率 <b>×${Number(tentacle.masteryEffectMultiplier||1).toFixed(1)}</b>${tentacle.ragingWheelBonusPct?` · 怒涛命轮临时精通 <b>+${Number(tentacle.ragingWheelBonusPct).toFixed(1)}%</b>（${fmt(tentacle.baseRealmMastery)} → ${fmt(tentacle.realmMasteryForStance)}）`:''}<br>机制基础触腕 <b>${fmt(tentacle.base)}</b>${coexist} → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 当前模式单次伤害 <b>${fmt(oneTentacle.damage)}</b>。触腕暴击率 <b>${(tentacleCritRate*100).toFixed(1)}%</b> / 暴击伤害 <b>${(tentacleCritMult*100).toFixed(1)}%</b>${pureNote}。`;
+      if(tentacle.available===false){
+        $('tentacleReadout').innerHTML='当前队伍未选择 <b>深海 / 深渊深海</b> 界域，触腕相关输入已禁用，本次伤害不会生成或结算触腕事件。';
+      }else{
+        const model=tmode==='benthos'?'深渊深海':'普通深海 / 普通触腕';
+        const coexist=tentacle.coexistenceBase?`，混沌共生额外基础触腕 ${fmt(tentacle.coexistenceBase)}`:'';
+        const pureNote=(realm.startingTentacleMultiplier||1)>1?'；至纯深海使初始触腕数翻倍（当前触腕数仍以手动输入为准）':'';
+        $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 界域精通效果倍率 <b>×${Number(tentacle.masteryEffectMultiplier||1).toFixed(1)}</b>${tentacle.ragingWheelBonusPct?` · 怒涛命轮临时精通 <b>+${Number(tentacle.ragingWheelBonusPct).toFixed(1)}%</b>（${fmt(tentacle.baseRealmMastery)} → ${fmt(tentacle.realmMasteryForStance)}）`:''}<br>机制基础触腕 <b>${fmt(tentacle.base)}</b>${coexist} → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 当前模式单次伤害 <b>${fmt(oneTentacle.damage)}</b>。触腕暴击率 <b>${(tentacleCritRate*100).toFixed(1)}%</b> / 暴击伤害 <b>${(tentacleCritMult*100).toFixed(1)}%</b>${pureNote}。`;
+      }
     }
     if($('enemyLevelReadout')){
       $('enemyLevelReadout').innerHTML=`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 最大生命 <b>${fmt(enemyMaxHp)}</b>（${enemyMaxHpSource}）<br><small>${enemyMaxHpInput>0?'目标最大生命百分比效果使用手动值。':'默认最大生命由 SKeyDB D-Zone 60–69 期共 1665 个等级/生命值样本作对数拟合。'} 等级承伤系数不是官方防御公式。</small>`;
