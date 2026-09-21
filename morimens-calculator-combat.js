@@ -415,6 +415,10 @@
       if(stat==='CON')return effectiveCon;
       return attack;
     }
+    function statLabel(stat){
+      const labels={ATK:'攻击力',CON:'体质',DEF:'防御力',RealmMastery:'界域精通',CritRate:'暴击率',CritDamage:'暴击伤害',DamageAmplification:'伤害强效'};
+      return labels[String(stat||'')]||String(stat||'数值');
+    }
     function scaledEvent(source,repeatIndex,eventIndex){
       const type=source.type==='pierce'?'pierce':'active';
       const coeff=Math.max(0,Number(source.coefficient)||0)/100;
@@ -522,7 +526,7 @@
       raw*=fixedDamageMultiplier;
       const damage=raw*fortifyCoef*realmDamageOutputMult;
       return {
-        id,type:'fixed',source:'skill',label:'Fixed DMG'+(scopedFixedPct>0?` · 灵塑 +${scopedFixedPct.toFixed(2)}%`:''),basis:source.basis,
+        id,type:'fixed',source:'skill',label:'固定伤害'+(scopedFixedPct>0?` · 灵塑 +${scopedFixedPct.toFixed(2)}%`:''),basis:source.basis,
         percent:source.percent,amount:source.amount,stat:source.stat||null,scopedFixedDamagePct:scopedFixedPct,fixedDamageMultiplier,
         raw,normal:damage,crit:damage,expected:damage,damage,
         canCrit:false,fixed:true
@@ -679,7 +683,7 @@
             id:`poison-apply-${++poisonIndex}`,type:'poison',action:'apply',
             label:source.basis==='sourceDamage'
               ?`中毒施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
-              :`中毒施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+              :`中毒施加 · ${source.stat?statLabel(source.stat)+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
@@ -712,7 +716,7 @@
               ?`侵蚀施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
               :source.basis==='targetMaxHpPercent'
                 ?`侵蚀施加 · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`
-                :`侵蚀施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+                :`侵蚀施加 · ${source.stat?statLabel(source.stat)+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
@@ -724,7 +728,7 @@
             id:`bleed-apply-${++bleedIndex}`,type:'bleed',action:'apply',
             label:source.basis==='sourceDamage'
               ?`出血施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
-              :`出血施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+              :`出血施加 · ${source.stat?statLabel(source.stat)+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
