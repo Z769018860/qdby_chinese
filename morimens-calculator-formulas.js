@@ -268,7 +268,11 @@
         const i=text.lastIndexOf(sep,Math.max(0,p-1));
         if(i>=start)start=i+1;
       }
-      const prefix=text.slice(start,p);
+      let prefix=text.slice(start,p);
+      // SKeyDB often wraps scoped mechanics as "[{Devour}: ...]". Once that bracket
+      // is closed, the following main-card text must not inherit the inner condition.
+      const closedScope=prefix.lastIndexOf(']');
+      if(closedScope>=0)prefix=prefix.slice(closedScope+1);
       const rules=[
         [/\{Devour\}\s*:/i,'Devour'],
         [/\{Leap\}\s*:/i,'Leap'],
@@ -338,6 +342,9 @@
       }
       if(/\{Leap\}\s*:[^.]*?(?:DMG|\{STR\}|\{Tentacle DMG\})/i.test(text)){
         messages.push('技能含“跃迁”条件伤害/STR/触腕修正；当前默认不把跃迁条件强行计入。');
+      }
+      if(/(?:\{Leap\}|\{Aftershock\}|\bIf\b|\bWhen\b|\bWhenever\b|\bUpon\b|\bAfter\b|\bFor each\b)[^.\n]{0,220}\[Damage:[^\]]+\]/i.test(text)){
+        messages.push('检测到条件 Damage Event：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把 Leap/If/When 分支高算。');
       }
 
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
@@ -648,13 +655,11 @@
       }
 
       for(const event of events){
-        if(event.type==='poison'||event.type==='counter'||event.type==='bleed'||event.type==='corrosion'){
+        if(['active','pierce','pure','fixed','poison','counter','bleed','corrosion'].includes(event.type)){
           Object.assign(event,eventConditionalContext(template,event.position));
         }
       }
-      const automaticEvents=events.filter(event=>!(
-        (event.type==='poison'||event.type==='counter'||event.type==='bleed'||event.type==='corrosion')&&event.conditional
-      ));
+      const automaticEvents=events.filter(event=>!event.conditional);
       const seenEventKeys=new Set();
       const deduped=automaticEvents.filter(event=>{
         const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.sourceGroupId||'',event.argName||'',event.hit??'',event.percent??'',event.coefficient??''].join('|');
