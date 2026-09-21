@@ -21,7 +21,7 @@
   const roleZh={Warden:'防御型',Chorus:'辅助型',Assault:'伤害型'};
   const realmIconSrc=name=>'assets/morimens/realms-svg/'+(realmIcons[name]||'Icon_Career2_Hundun.webp').replace(/\.webp$/i,'.svg');
   function localAsset(src,kind){const raw=String(src||'');if(!raw)return '';const file=raw.split(/[\\/]/).pop().split('?')[0];if(kind==='wheel'&&/^Weapon_(Full|Mini)_/.test(file))return 'assets/morimens/wheels/'+(file.startsWith('Weapon_Mini_')?'Mini/':'')+file;if(kind==='creation'&&/^Icon_Creation_/.test(file))return 'assets/morimens/relics/'+file;if(kind==='covenant'&&/^Icon_Trinket_/.test(file))return 'assets/morimens/covenants/Icon/'+file;if(kind==='portrait'&&raw.startsWith('assets/'))return raw;return raw;}
-  let manifest=null,season=null,stats=null,legacyStructured=null,awakenerMap=new Map(),rankByUid=new Map(),filtersReady=false,searchPerformed=false;
+  let manifest=null,season=null,stats=null,legacyStructured=null,awakenerMap=new Map(),rankByUid=new Map(),rankOverrideByUid=new Map(),rankOverrideScope=0,filtersReady=false,searchPerformed=false;
   let flatTeamsCache=null,analysisCache=null,seasonAssistHeatMax=0,seasonLoadToken=0,renderFrame=0;
   const currentSeasonRosterSupplementIds=['awakener-0061'];
   function currentSeasonRosterSupplements(){
@@ -48,8 +48,12 @@
   }
   function rankMatches(record,cap){
     if(!cap)return true;
-    const rank=rankOf(record);if(rank!=null)return rank<=cap;
     const current=Number(season?.seasonId)===Number(manifest?.currentSeason);
+    if(current&&rankOverrideScope&&cap<=rankOverrideScope){
+      const override=rankOverrideByUid.get(String(record?.uid??''));
+      return Number.isFinite(override)&&override>0&&override<=cap;
+    }
+    const rank=rankOf(record);if(rank!=null)return rank<=cap;
     return !current&&rankByUid.size===0;
   }
   function selectedRankCap(){const raw=String($('dtideRankScope')?.value||'all');return raw==='all'||raw==='0'?0:(Number(raw)||0)}
@@ -212,7 +216,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月21日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月22日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope"><option value="all" selected>全部范围（含未知排名）</option>${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
@@ -611,7 +615,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const borrowed=$('dtideBorrowed').value,hasBorrow=row.team.members.some(m=>m.borrowed);if(borrowed==='yes'&&!hasBorrow)return false;if(borrowed==='no'&&hasBorrow)return false;
     const wheel=$('dtideWheel').value,cov=$('dtideCovenant').value;if(wheel&&!targets.some(m=>(m.wheels||[]).some(x=>String(x.id??x.name)===wheel)))return false;if(cov&&!targets.some(m=>(m.covenants||((m.covenant)?[m.covenant]:[])).some(x=>String(x.id??x.name)===cov)))return false;
     const csmin=$('dtideCovenantScoreMin').value===''?null:Number($('dtideCovenantScoreMin').value),csmax=$('dtideCovenantScoreMax').value===''?null:Number($('dtideCovenantScoreMax').value);if(csmin!=null&&targets.some(m=>m.covenantScore==null||Number(m.covenantScore)<csmin))return false;if(csmax!=null&&targets.some(m=>m.covenantScore==null||Number(m.covenantScore)>csmax))return false;
-    const smin=Number($('dtideScoreMin').value||0),rmax=Number($('dtideRankMax').value||0);if(smin&&(row.record.score||0)<smin)return false;if(rmax&&(!row.record.rank||row.record.rank>rmax))return false;return true;
+    const smin=Number($('dtideScoreMin').value||0),rmax=Number($('dtideRankMax').value||0);if(smin&&(row.record.score||0)<smin)return false;if(rmax&&!rankMatches(row.record,rmax))return false;return true;
   }
   function replayCodeOf(team){return String(team?.battleUuid||team?.battle_uuid||'').trim()}
   async function copyReplayCode(button){
@@ -677,8 +681,10 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       overlay?.rankPath&&loader.loadRankMap?loader.loadRankMap(overlay.rankPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('current season Top500 rank override unavailable',error);return new Map()}):Promise.resolve(new Map())
     ]);
     if(loadToken!==seasonLoadToken)return;
+    rankOverrideByUid=new Map(loadedOverlayRanks||[]);
+    rankOverrideScope=Number(overlay?.scope)||0;
     const mergedRanks=new Map(loadedRanks||[]);
-    for(const [uid,rank] of loadedOverlayRanks||[])mergedRanks.set(String(uid),rank);
+    for(const [uid,rank] of rankOverrideByUid)mergedRanks.set(String(uid),rank);
     rankByUid=mergedRanks;
     if(loadedOverlay?.records?.length){
       const mergedRecords=new Map();let anonymousRecord=0;
