@@ -13,7 +13,7 @@
     'skill.aigis.a-small-wish':'小小愿望','skill.aigis.decomposition':'石质分解','skill.aigis.eye-of-eternity':'万古之眸',
     'skill.clementine.call-of-shaggai':'妖虫的呼唤','skill.clementine.pain-extraction':'痛苦榨取','skill.clementine.soulsalve':'精神抚慰',
     'skill.doll-inferno.terminal-of-truth-and-abyss':'终点，真理与深渊之门','skill.doll-inferno.soulblight':'灵魂瘟疫',
-    'skill.helot-catena.sanguine-fetters':'缚身锁链','skill.helot-catena.hatred-unleashed':'恨意宣泄','skill.helot-catena.crimson-shackles':'鲜血链条','skill.helot-catena.reapers-declaration':'索魂者宣言',
+    'skill.helot-catena.sanguine-fetters':'缚身锁链','skill.helot-catena.hatred-unleashed':'恨意宣泄','skill.helot-catena.crimson-shackles':'鲜血链条','skill.helot-catena.reapers-declaration':'索魂者宣言','derived.helot-catena.bloodthirsty-flail':'嗜血链球',
     'skill.kathigu-ra.karmic-embers':'业火重燃','skill.kathigu-ra.last-stand-salvo':'末路枪声','skill.kathigu-ra.solarflare':'千兆耀斑',
     'skill.lily.strike-to-protect':'报偿打击',
     'skill.ramona-timeworn.entropy-undone':'熵增逆转','skill.ramona-timeworn.predetermined-strike':'命定之剑',
@@ -772,7 +772,12 @@
       {key:'xuFirstCommandRouse',label:'最终法则：当前是本回合第一张指令卡',type:'checkbox',calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则灵知觉醒：徐每回合打出的第一张指令卡额外生效 1 次。仅在这张卡确实是本回合第一张指令卡时勾选。'}
     ],
     'awakener-0019':[
-      {key:'helotSanguineTurnActive',label:'「缚身锁链」本回合出血效果已生效',type:'checkbox',calculated:true,description:'「缚身锁链」发动后，本回合血链·希洛每次造成主动伤害都会附加出血。仅在确实已经发动狂气爆发且仍处于同一回合时勾选；出血比例按「缚身锁链」当前等级读取（1–6 级为 75%–100%）。'}
+      {key:'helotInBattleBaseDamagePct',label:'额外局内基础伤害增幅',inputLabel:'额外局内基础伤害增幅 %',min:0,max:9999,calculated:true,description:'对应血链伤害公式中的「局内基伤」。只填写当前战斗中已经生效、且没有被下方“索魂者宣言回合成长”或装备自动解析重复记录的基础伤害增幅。该项作为独立基础伤害乘区计算。'},
+      {key:'helotRouseTurnStarts',label:'索魂者宣言已触发回合开始次数',min:0,max:99,calculated:true,dependsOnControl:'rouseActive',description:'灵知觉醒「索魂者宣言」每次回合开始都会使血链·希洛本场基础伤害提高当前技能等级对应的 10%–15%。填写已经触发的次数；同一来源的多次成长先累加，再作为「觉醒基伤」独立乘区。'},
+      {key:'helotHatredBelowHalfHp',label:'「恨意宣泄」当前生命低于 50%',type:'checkbox',calculated:true,requiredEnlighten:'E2',description:'启灵2：生命低于 50% 时，「恨意宣泄」本次获得的力量翻倍。开启后会把攻击力百分比力量按双倍加入本次伤害公式。'},
+      {key:'helotOverExaltBuffActive',label:'超限爆发暴伤 +35% 已生效',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'「缚恨」发动后血链·希洛暴击伤害 +35%。只有该超限状态当前确实生效时勾选，不会因为解锁 +4 自动常驻。'},
+      {key:'helotTemporaryEnhanceStacks',label:'当前指令卡临时强化层数',min:0,max:50,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则强化后的「索魂者宣言」：释放狂气爆发后，手牌中每种不同指令卡获得 50 层临时强化。每层使本卡最终伤害 +2%；这里填写当前卡实际持有的层数，最多 50。'},
+      {key:'helotSanguineTurnActive',label:'「缚身锁链」本回合出血效果已生效',type:'checkbox',calculated:true,description:'「缚身锁链」发动后，本回合血链·希洛每次造成主动伤害都会附加出血。计算「缚身锁链」自身时会自动计入，不需要重复勾选；计算同回合后续卡牌时再勾选。出血比例按「缚身锁链」当前等级读取（1–6 级为 75%–100%）。'}
     ],
     'awakener-0027':[
       {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:true,requiredEnlighten:'E3',description:'启灵3后，每获得 1 层燃烧，本场战斗基础伤害 +5%；按当前累计层数计算，最高输入 10 层。'},
@@ -1622,7 +1627,7 @@
     currentSkill=resolvedSkill?.slot==='OverExalt'?composeOverExaltSkill(resolvedSkill):resolvedSkill;
     if(previousSkillId&&previousSkillId!==currentSkill.id&&$('skillActualHits'))$('skillActualHits').value='';
     const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
-    if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=isEnglish()?`Lv.${i}`:`等级 ${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
+    if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=isEnglish()?`Lv.${i}`:`等级 ${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}recomputeGearBonuses();updateSkillLevel();
   }
   function updateSkillLevel(){
     if(!currentSkill)return;
