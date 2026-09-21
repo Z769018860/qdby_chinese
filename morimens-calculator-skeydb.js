@@ -376,8 +376,14 @@
   }
 
   const resourceSpecs={
-    'awakener-0014':[{overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true}],
-    'awakener-0041':[{overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100,calculated:true}]
+    'awakener-0014':[
+      {overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true},
+      {key:'evernightPriorPlays',label:'本回合已打出永夜',min:0,max:20,calculated:true,requiredEnlighten:'E3',description:'E3 起：第二张及后续「永夜」额外享受 100% 力量加成。这里填写本次永夜之前，本回合已经打出的永夜次数。'}
+    ],
+    'awakener-0041':[
+      {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100,calculated:true},
+      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'勾选后，当前指令卡额外造成一次 200% ATK 主动伤害。适用于本回合首张指令卡，或圣心第 3 次打出后使下一张指令卡获得赎罪苦痛的情况。'}
+    ]
   };
   function resolveOverlayEnlighten(baseOverlay){
     if(!baseOverlay)return baseOverlay;
@@ -412,15 +418,16 @@
       min:0,max:max??999,calculated:false
     };
   }
+  function resourceRequirementMet(spec){if(!spec?.requiredEnlighten)return true;const current=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot());const need=ENLIGHTEN_ORDER.indexOf(spec.requiredEnlighten);return current>=need&&need>=0}
   function currentResourceSpecs(){
-    const known=resourceSpecs[currentAwakener?.id]||[];
+    const known=(resourceSpecs[currentAwakener?.id]||[]).filter(resourceRequirementMet);
     const knownIds=new Set(known.map(x=>x.overlayId));
     const inferred=(currentOverlays||[]).filter(x=>!knownIds.has(x.id)).map(inferredResourceSpec).filter(Boolean);
     return [...known,...inferred];
   }
   function characterResourceValues(){
     const values={awakenerId:currentAwakener?.id||null};
-    document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{values[el.dataset.resourceKey]=Math.max(0,num(el.value,0))});
+    document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{values[el.dataset.resourceKey]=el.type==='checkbox'?(el.checked?1:0):Math.max(0,num(el.value,0))});
     window.MorimensCharacterResources=values;
     return values;
   }
@@ -438,10 +445,16 @@
     block.innerHTML='';
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
-      const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
       const wrap=document.createElement('div');wrap.className='field';
-      const description=overlay?.descriptionTemplate?zhText(overlay.descriptionTemplate):'角色专属战斗资源。';
-      wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
+      const description=spec.description||(overlay?zhText(renderTemplate(overlay,1)):'角色专属战斗资源。');
+      if(spec.type==='checkbox'){
+        const checked=Number(previous[spec.key])>0;
+        wrap.classList.add('full');
+        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+escape(spec.label)+'</label><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
+      }else{
+        const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
+        wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
+      }
       block.appendChild(wrap);
     }
     block.hidden=false;
@@ -454,17 +467,33 @@
   function applyCharacterResourceEffects(events){
     const resources=characterResourceValues();
     const baseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
-    return (events||[]).map(event=>{
+    const mapped=(events||[]).map(event=>{
       const next={...event};
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
         next.doubleCritDamageBonus=true;
         next.resourceEffectLabel='残骸 3 层：本次暴击伤害加成翻倍';
+      }
+      if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='derived.doresain.evernights-revel'&&Number(resources.evernightPriorPlays)>0&&(next.type==='active'||next.type==='pierce')){
+        next.strengthMultiplier=Math.max(0,Number(next.strengthMultiplier)||0)+1;
+        next.usesStrength=true;
+        next.resourceEffectLabel='后续永夜：额外 100% 力量加成';
       }
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0&&['active','pierce','fixed','pure'].includes(next.type)){
         next.onDamageBleedPct=Math.max(0,Number(resources.sinMarkStacks)||0);
       }
       return next;
     });
+    if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
+      mapped.push({
+        id:'pollux-atonement-by-pain',index:mapped.length,position:9999,groupId:'pollux-atonement',
+        type:'active',source:'resource',coefficient:200,stat:'ATK',hit:1,hitCount:1,
+        strengthMultiplier:0,tentacleBonusCoefficient:0,counterBonusCoefficient:0,
+        critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
+        usesStrength:false,guaranteedCrit:false,activeSource:true,
+        resourceEffectLabel:'赎罪苦痛：额外 200% ATK 伤害'
+      });
+    }
+    return mapped;
   }
 
   function ensureFormulaContextUi(){
@@ -712,7 +741,9 @@
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       const resources=characterResourceValues();
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：Necrotic Gala 暴击伤害加成翻倍');
+      if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&baseSkillId==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('赎罪苦痛：当前指令卡额外造成 200% ATK 伤害');
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
       else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该伤害事件');
