@@ -128,8 +128,8 @@
         <div class="field"><label for="currentPoison">当前中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“触发 X% 中毒”等即时中毒触发。</small></div>
         <div class="field"><label for="currentBleed">当前出血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“触发 X% 出血”和本回合末出血结算。</small></div>
         <div class="field"><label for="currentCounter">当前反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“触发 X% 反击”事件。</small></div>
-        <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于 Pure DMG 保底"><small>SKeyDB 未公开通用 CON→Max HP 换算；仅在技能的 Pure DMG 最低值等伤害公式明确依赖角色最大生命时填写。</small></div>
-        <div class="field"><label for="actorCurrentHp">当前角色当前生命</label><input id="actorCurrentHp" type="number" min="0" step="1" placeholder="留空按最大生命"><small>用于 Doresain 等“按当前 HP 百分比造成 Pure DMG”的效果；留空时按当前为满生命处理。</small></div>
+        <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于纯粹伤害保底"><small>SKeyDB 未公开通用“体质→最大生命”换算；仅在技能的纯粹伤害最低值等伤害公式明确依赖角色最大生命时填写。</small></div>
+        <div class="field"><label for="actorCurrentHp">当前角色当前生命</label><input id="actorCurrentHp" type="number" min="0" step="1" placeholder="留空按最大生命"><small>用于杜勒赛因等“按当前生命值百分比造成纯粹伤害”的效果；留空时按当前为满生命处理。</small></div>
         <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
         <div class="field"><label for="corrosionLossMultiplier">侵蚀生命损失倍率 %</label><input id="corrosionLossMultiplier" type="number" min="0" step="1" value="300"><small>SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。</small></div>
         <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；穿透 / 纯粹 / 固定 / 中毒 / 出血 / 反击等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
@@ -463,7 +463,7 @@
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'')+(source.doubleCritDamageBonus?' · 残骸效果已启用':'')+(source.counterBonusCoefficient?` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`:'')+(resourceFlatAtkPercent?` · 命轮额外 ATK×${resourceFlatAtkPercent.toFixed(1)}%`:'') ,
+        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'')+(source.doubleCritDamageBonus?' · 残骸效果已启用':'')+(source.counterBonusCoefficient?` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`:'')+(resourceFlatAtkPercent?` · 命轮额外攻击力×${resourceFlatAtkPercent.toFixed(1)}%`:'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
