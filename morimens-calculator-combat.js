@@ -178,25 +178,43 @@
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
   }
 
+  function aequorRealmSelected(realm=window.MorimensRealmEngine?.state?.()){
+    if(Array.isArray(realm?.baseRealms))return realm.baseRealms.includes('AEQUOR');
+    return Boolean(realm?.tentacleMode);
+  }
   function effectiveTentacleMode(){
     const realm=window.MorimensRealmEngine?.state?.();
+    if(Array.isArray(realm?.baseRealms)&&!realm.baseRealms.includes('AEQUOR'))return null;
     return realm?.tentacleMode||$('tentacleMode')?.value||'standard';
   }
   function toggleTentacleMode(){
     const realm=window.MorimensRealmEngine?.state?.()||{};
-    const forced=realm.tentacleMode;
-    if($('tentacleMode')){if(forced)$('tentacleMode').value=forced;$('tentacleMode').disabled=Boolean(forced)}
-    const benthos=effectiveTentacleMode()==='benthos';
-    const needsHp=benthos||Number(realm.aequorChaosBaseTentacleBonusPct)>0;
-    if($('standardTentacleField'))$('standardTentacleField').hidden=benthos;
+    const aequorActive=aequorRealmSelected(realm);
+    const forced=aequorActive?realm.tentacleMode:null;
+    const tentacleControlIds=['tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle'];
+    for(const id of tentacleControlIds){
+      const el=$(id);if(!el)continue;
+      el.disabled=!aequorActive||(id==='tentacleMode'&&Boolean(forced));
+    }
+    if(!aequorActive&&$('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
+    if($('realmTentacleModel')){
+      $('realmTentacleModel').classList.toggle('realmFeatureLocked',!aequorActive);
+      $('realmTentacleModel').dataset.realmFeature=aequorActive?'active':'locked';
+    }
+    if($('tentacleMode')&&forced)$('tentacleMode').value=forced;
+    const benthos=aequorActive&&effectiveTentacleMode()==='benthos';
+    const needsHp=aequorActive&&(benthos||Number(realm.aequorChaosBaseTentacleBonusPct)>0);
+    if($('standardTentacleField'))$('standardTentacleField').hidden=!aequorActive||benthos;
     if($('benthosHpField'))$('benthosHpField').hidden=!needsHp;
     if($('teamMaxHpNote')){
       $('teamMaxHpNote').textContent=benthos
         ?'深渊深海：基础触腕 = 队伍最大生命 × 5%；不会额外叠加未公开的混沌基础触腕。'
         :'普通深海：当前 SKeyDB 未公开额外的混沌基础触腕公式，不自动附加。';
     }
+    if(!aequorActive&&$('tentacleReadout')){
+      $('tentacleReadout').innerHTML='当前队伍未选择 <b>深海 / 深渊深海</b> 界域，触腕相关输入已禁用，本次伤害不会生成或结算触腕事件。';
+    }
   }
-
   function renderTriplet(){
     const rec=currentRecord();if(!rec)return;
     const stats=resolvedStats(),realm=window.MorimensRealmEngine?.state?.()||{};
