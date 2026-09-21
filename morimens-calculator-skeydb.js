@@ -587,7 +587,7 @@
       }else if(spec.type==='select'){
         const selected=String(previous[spec.key]??'');
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
-        wrap.innerHTML='<label>'+escape(spec.label)+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
+        wrap.innerHTML='<label>'+escape(spec.label)+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+escape(description)+' · 已接入伤害计算。</small>';
       }else{
         const max=effectiveResourceMax(spec);const value=Math.min(max,Math.max(spec.min,Number(previous[spec.key])||0));
         const inputLabel=spec.inputLabel||spec.label+'数量';
