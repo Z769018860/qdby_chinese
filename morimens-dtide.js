@@ -264,13 +264,21 @@
   function filterMemberKey(m){
     const raw=String(m?.skeydbId||m?.ingameId||m?.id||m?.canonicalName||m?.name||'').trim();
     const records=window.MorimensData?.db?.records||[];
-    const rec=records.find(x=>
+    const normalizeName=value=>String(value||'').normalize('NFKC').replace(/\s+/g,' ').trim().toLowerCase();
+    let rec=records.find(x=>
       (m?.skeydbId&&(x.id===m.skeydbId||x.ingameId===m.skeydbId))||
       (m?.ingameId&&(x.ingameId===m.ingameId||x.id===m.ingameId))||
       (m?.id&&(x.id===m.id||x.ingameId===m.id))
     );
+    const canonical=normalizeName(m?.canonicalName||m?.name);
+    if(!rec&&canonical&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(canonical)){
+      rec=records.find(x=>{
+        const identity=window.MorimensData?.identityDb?.bySkeydbId?.[x.id];
+        const localized=window.MorimensData?.localizedProfile?.(x);
+        return [x.name,identity?.name,localized?.name].some(name=>normalizeName(name)===canonical);
+      });
+    }
     if(rec?.id)return String(rec.id);
-    const canonical=String(m?.canonicalName||m?.name||'').normalize('NFKC').replace(/\s+/g,' ').trim().toLowerCase();
     if(canonical&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(canonical))return `name:${canonical}`;
     return raw?`raw:${raw.toLowerCase()}`:'';
   }
@@ -691,6 +699,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const waves=[...new Set(flattenTeams().map(x=>Number(x.wave.wave)))].sort((a,b)=>a-b);
     $('dtideSearchWave').innerHTML='<option value="all">全部波次</option>'+waves.map(w=>`<option value="${w}">Wave ${w}</option>`).join('');
     populateFilters();
+    const identitySummary=identityNormalizationSummary();
+    if(identitySummary.mergedAliases>0)console.info('D-Zone character identity aliases merged',identitySummary);
     renderAll();
     if(matrix)matrix.removeAttribute('aria-busy');
   }
