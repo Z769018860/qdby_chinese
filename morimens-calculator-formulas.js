@@ -253,6 +253,9 @@
       let match=text.match(/This\s+(?:card|hit)['’]s\s+Crit\.\s*Rate\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
       if(match)critRateBonus=match[1]!==undefined?resolveToken(match[1]):num(match[2],0);
 
+      match=text.match(/This\s+card\s+gains?\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+Crit\.\s*Rate/i);
+      if(match)critRateBonus=Math.max(critRateBonus,match[1]!==undefined?resolveToken(match[1]):num(match[2],0));
+
       match=local.match(/which\s+enjoys?\s+an?\s+additional\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+Crit\.\s*Rate\s+and\s+Crit\.\s*DMG\s+bonus/i);
       if(match){
         const value=match[1]!==undefined?resolveToken(match[1]):num(match[2],0);
