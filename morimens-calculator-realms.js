@@ -3,6 +3,7 @@
   const num=(v,f=0)=>{const n=Number.parseFloat(v);return Number.isFinite(n)?n:f};
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const EPS=1e-9;
+  let lastRealmSignature='';
   const MODE_META={
     chaos:{base:'CHAOS',label:'普通混沌'},
     primordia:{base:'CHAOS',label:'原初混沌 · Primordia: Chaos',advanced:true},
@@ -177,7 +178,8 @@
     const pill=document.querySelector('[aria-labelledby="calcTitle"] .statusPill');
     if(pill)pill.textContent='v0.6 · 双界域 / 至纯 / Damage Events';
     window.MorimensRealmState=s;
-    window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}));
+    const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
+    if(signature!==lastRealmSignature){lastRealmSignature=signature;window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}))}
     return s;
   }
   function options(includeAuto=false){
