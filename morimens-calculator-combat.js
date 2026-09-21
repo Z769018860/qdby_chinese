@@ -90,6 +90,7 @@
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(calculate));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
     window.addEventListener('morimens-realm-change',()=>queueMicrotask(()=>{toggleTentacleMode();renderTriplet();calculate()}));
+    const hitField=$('hitCount')?.closest('.field');if(hitField){const label=hitField.querySelector('label');if(label)label.textContent='手动重复事件序列次数';let note=hitField.querySelector('small');if(!note){note=document.createElement('small');hitField.appendChild(note)}note.textContent='多段技能已由 SKeyDB Damage Events 自动拆分；这里仅用于额外重复整套事件，通常保持 1。'}
     toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();
     window.dispatchEvent(new CustomEvent('morimens-calculator-ui-ready'));
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
@@ -151,11 +152,17 @@
   function calculate(){
     if(!$('combatModel')||!$('resultNumber'))return;
     renderTriplet();
-    const realm=window.MorimensRealmEngine?.state?.()||{atkMultiplier:1,defMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,propagationFiestaStacks:0,propagationApplies:false,label:'普通界域'};
+    const realm=window.MorimensRealmEngine?.state?.()||{
+      atkMultiplier:1,defMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,
+      propagationFiestaStacks:0,propagationApplies:false,label:'普通界域'
+    };
+    const stats=resolvedStats();
     const attackRaw=Math.max(0,n('attack'));
     const attack=attackRaw*Math.max(0,Number(realm.atkMultiplier)||1);
-    const coef=Math.max(0,n('skillCoef'))/100;
-    const hits=Math.max(1,Math.floor(n('hitCount',1)));
+    const effectiveDef=Math.max(0,num(stats.DEF))*Math.max(0,Number(realm.defMultiplier)||1);
+    const effectiveCon=Math.max(0,num(stats.CON));
+    const sequenceRepeat=Math.max(1,Math.floor(n('hitCount',1)));
+  
     let strength=n('strength');
     if($('buffBrute')?.checked)strength+=8;
     if($('buffBurst')?.checked)strength+=66;
@@ -166,86 +173,178 @@
     const tentacleWithStrength=Math.max(0,tentacle.attack+netStrength*0.5);
     const skillSync=window.MorimensSkillSync||{};
     const progression=window.MorimensProgressionSync||window.MorimensCharacterSync?.progression||{};
+    const sourceSkillEvents=Array.isArray(skillSync.damageEvents)&&skillSync.damageEvents.length
+      ?skillSync.damageEvents
+      :[{id:'active-legacy',index:0,type:'active',source:'legacy',coefficient:Math.max(0,n('skillCoef')),stat:'ATK',hit:1,hitCount:1}];
     const skillTentacleCoef=Math.max(0,Number(skillSync.tentacleCoefficient)||0)/100;
-    const skillTriggerPct=skillSync.triggeredTentaclePercent===null||skillSync.triggeredTentaclePercent===undefined?0:Math.max(0,Number(skillSync.triggeredTentaclePercent))/100;
-    const propagationTentacleEffectMult=realm.propagationApplies?1+Math.max(0,Number(realm.propagationFiestaStacks)||0)/100:1;
-    const soulforgeFlat=progression.soulforgeEnabled?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
-    const soulforgeBasePct=progression.soulforgeEnabled?Math.max(0,Number(progression.baseDamagePct)||0):0;
+    const skillTriggerPct=skillSync.triggeredTentaclePercent===null||skillSync.triggeredTentaclePercent===undefined
+      ?0:Math.max(0,Number(skillSync.triggeredTentaclePercent))/100;
+    const propagationTentacleEffectMult=realm.propagationApplies
+      ?1+Math.max(0,Number(realm.propagationFiestaStacks)||0)/100:1;
+    const soulforgeFlat=progression.soulforgeEnabled
+      ?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
+    const soulforgeBasePct=progression.soulforgeEnabled
+      ?Math.max(0,Number(progression.baseDamagePct)||0):0;
   
-    const activeBaseRaw=(attack*coef+netStrength+tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult+soulforgeFlat)*hits;
     const basePct=n('baseBonus')+soulforgeBasePct;
-    const base=activeBaseRaw*(1+basePct/100);
     const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0);
-    const powered=base*(1+powerPct/100);
     const vulnerabilityPct=n('vulnerability')+($('buffVuln')?.checked?50:0);
-    const vuln=powered*(1+vulnerabilityPct/100);
     const weakCoef=$('buffWeak')?.checked?.75:1;
     const finalPct=n('finalBonus')+Math.max(0,Number(realm.finalDamageBonus)||0);
-    const final=vuln*(1+finalPct/100)*weakCoef;
-  
     const enemyDef=Math.max(0,n('enemyDefense')),k=Math.max(1,n('defenseConstant',1000));
-    const defenseCoef=$('defenseMode')?.value==='curve'?k/(k+enemyDef):Math.max(0,n('defenseFactor',100))/100;
+    const defenseCoef=$('defenseMode')?.value==='curve'
+      ?k/(k+enemyDef):Math.max(0,n('defenseFactor',100))/100;
     const fortifyCoef=clamp(1-Math.max(0,n('fortressStacks'))/100,0,1);
     const other=Math.max(0,n('otherMultiplier',1));
-    const normal=final*defenseCoef*fortifyCoef*other;
-    const critRate=clamp(n('critRate')/100,0,1),critMult=Math.max(0,n('critDamage',150))/100;
-    const crit=normal*critMult,expected=normal*(1-critRate)+crit*critRate;
+    const activeCritRate=clamp(n('critRate')/100,0,1);
+    const activeCritMult=Math.max(0,n('critDamage',150))/100;
+    const tentacleCritRate=clamp(n('tentacleCritRate')/100,0,1);
+    const tentacleCritMult=Math.max(0,n('tentacleCritDamage',150))/100;
     const mode=document.querySelector('.modeBtn[aria-pressed="true"]')?.dataset?.mode||'expected';
-    const direct={normal,crit,expected}[mode]??expected;
   
-    const tentacleTargetMult=(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*defenseCoef*fortifyCoef*other;
-    const oneTentacle=tentacleWithStrength*tentacleTargetMult;
-    const skillTriggered=skillTriggerPct>0?oneTentacle*skillTriggerPct:0;
-    const stanceTriggered=$('tentacleStance')?.value==='raging'&&activeBaseRaw>0?oneTentacle*Math.max(0,Number(tentacle.ragingTriggerPct)||0)/100:0;
-    const rawTurnEnd=oneTentacle*Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
-    const turnEndTentacle=tentacle.turnEndAllowed===false?0:rawTurnEnd;
+    function selectCrit(normal,rate,mult){
+      const crit=normal*mult,expected=normal*(1-rate)+crit*rate;
+      return {normal,crit,expected,damage:({normal,crit,expected}[mode]??expected)};
+    }
+    function statValue(stat){
+      if(stat==='DEF')return effectiveDef;
+      if(stat==='CON')return effectiveCon;
+      return attack;
+    }
+    function activeEvent(source,repeatIndex,eventIndex){
+      const coeff=Math.max(0,Number(source.coefficient)||0)/100;
+      const raw=statValue(source.stat)*coeff
+        +netStrength
+        +tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult
+        +soulforgeFlat;
+      const afterBase=raw*(1+basePct/100);
+      const afterPower=afterBase*(1+powerPct/100);
+      const afterVulnerability=afterPower*(1+vulnerabilityPct/100);
+      const afterFinal=afterVulnerability*(1+finalPct/100)*weakCoef;
+      const normal=afterFinal*defenseCoef*fortifyCoef*other;
+      const critState=selectCrit(normal,activeCritRate,activeCritMult);
+      return {
+        id:`skill-${repeatIndex+1}-${eventIndex+1}`,
+        type:'active',
+        source:'skill',
+        label:`主动伤害 ${eventIndex+1}`,
+        coefficient:Number(source.coefficient)||0,
+        stat:source.stat||'ATK',
+        raw,
+        ...critState
+      };
+    }
+    function tentacleEvent(percent,label,id){
+      const scale=Math.max(0,Number(percent)||0)/100;
+      const raw=tentacleWithStrength*scale;
+      const normal=raw*(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*defenseCoef*fortifyCoef*other;
+      const critState=selectCrit(normal,tentacleCritRate,tentacleCritMult);
+      return {id,type:'tentacle',source:'tentacle',label,percent:Number(percent)||0,raw,...critState};
+    }
+  
+    const events=[];
+    let corrosionRemaining=Math.max(0,n('corrosionAmount'));
+    let embersRemaining=Math.max(0,n('embersAmount'));
+    let corrosionDamage=0,embersDamage=0;
+  
+    function pushDamageEvent(event){
+      events.push(event);
+      if((event.type!=='active'&&event.type!=='tentacle')||!(event.damage>0))return;
+      const corrosionUsed=Math.min(corrosionRemaining,event.damage);
+      if(corrosionUsed>0){
+        corrosionRemaining-=corrosionUsed;
+        const reaction={id:event.id+'-corrosion',type:'reaction',reaction:'corrosion',sourceEventId:event.id,label:'侵蚀追加生命损失',consumed:corrosionUsed,damage:corrosionUsed*3};
+        corrosionDamage+=reaction.damage;events.push(reaction);
+      }
+      const embersUsed=Math.min(embersRemaining,event.damage);
+      if(embersUsed>0){
+        embersRemaining-=embersUsed;
+        const reaction={id:event.id+'-embers',type:'reaction',reaction:'embers',sourceEventId:event.id,label:'旧日余烬追加生命损失',consumed:embersUsed,damage:embersUsed*3};
+        embersDamage+=reaction.damage;events.push(reaction);
+      }
+    }
+  
+    let activeIndex=0,tentacleIndex=0;
+    for(let repeat=0;repeat<sequenceRepeat;repeat++){
+      for(const source of sourceSkillEvents){
+        if(source.type!=='active')continue;
+        const active=activeEvent(source,repeat,activeIndex++);
+        pushDamageEvent(active);
+        if($('tentacleStance')?.value==='raging'&&active.damage>0){
+          pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · 主动伤害后触腕',`raging-${++tentacleIndex}`));
+        }
+      }
+      if(skillTriggerPct>0){
+        pushDamageEvent(tentacleEvent(skillTriggerPct*100,'技能触发触腕',`skill-tentacle-${++tentacleIndex}`));
+      }
+    }
+  
     const includeTurnEnd=$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
+    const turnEndCount=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
+    if(includeTurnEnd){
+      for(let i=0;i<turnEndCount;i++)pushDamageEvent(tentacleEvent(100,`回合末触腕 ${i+1}`,`turn-end-${++tentacleIndex}`));
+    }
   
-    const reactiveBase=direct+skillTriggered+stanceTriggered+(includeTurnEnd?turnEndTentacle:0);
-    const corrosionUsed=Math.min(Math.max(0,n('corrosionAmount')),Math.max(0,reactiveBase));
-    const embersUsed=Math.min(Math.max(0,n('embersAmount')),Math.max(0,reactiveBase));
-    const corrosionDamage=corrosionUsed*3,embersDamage=embersUsed*3;
-    const total=direct+skillTriggered+stanceTriggered+(includeTurnEnd?turnEndTentacle:0)+corrosionDamage+embersDamage;
+    const activeEvents=events.filter(x=>x.type==='active');
+    const tentacleEvents=events.filter(x=>x.type==='tentacle');
+    const activeNormal=activeEvents.reduce((s,x)=>s+x.normal,0);
+    const activeCrit=activeEvents.reduce((s,x)=>s+x.crit,0);
+    const activeExpected=activeEvents.reduce((s,x)=>s+x.expected,0);
+    const direct=activeEvents.reduce((s,x)=>s+x.damage,0);
+    const tentacleTotal=tentacleEvents.reduce((s,x)=>s+x.damage,0);
+    const total=events.reduce((s,x)=>s+(Number(x.damage)||0),0);
+    const projectedTurnEndNormal=tentacleEvent(100,'回合末触腕预览','preview').damage*turnEndCount;
   
     const label={normal:'非暴击',crit:'暴击',expected:'期望'}[mode];
     $('resultLabel').textContent=`${$('charSelect')?.selectedOptions?.[0]?.textContent||'角色'} · ${label}总伤害`;
     $('resultNumber').textContent=fmt(total);
-    $('normalLine').textContent=`非暴击直伤：${fmt(normal)}`;
-    $('critLine').textContent=`暴击直伤：${fmt(crit)}`;
-    $('expectedLine').textContent=`期望直伤：${fmt(expected)}`;
+    $('normalLine').textContent=`主动事件非暴击合计：${fmt(activeNormal)}`;
+    $('critLine').textContent=`主动事件暴击合计：${fmt(activeCrit)}`;
+    $('expectedLine').textContent=`主动事件期望合计：${fmt(activeExpected)}`;
   
-    const activeParts=[`攻击 ${fmt(attackRaw)} × 界域攻击 ${(Number(realm.atkMultiplier)||1).toFixed(3)} × 技能 ${coef.toFixed(3)}`,`净力量 ${fmt(netStrength)}`];
-    if(skillTentacleCoef)activeParts.push(`触腕 ${fmt(tentacleWithStrength)} × ${skillTentacleCoef.toFixed(3)}${realm.propagationApplies?` × 狂欢 ${propagationTentacleEffectMult.toFixed(3)}`:''}`);
-    if(soulforgeFlat)activeParts.push(`灵塑专属 ${fmt(attack)} × ${(progression.flatAtkDamagePct/100).toFixed(3)}`);
-    $('formula').textContent=`[(${activeParts.join(' + ')}) × ${hits}] × 基础伤害 ${(1+basePct/100).toFixed(3)} × 伤害强效 ${(1+powerPct/100).toFixed(3)} × 易伤 ${(1+vulnerabilityPct/100).toFixed(3)} × 终伤 ${(1+finalPct/100).toFixed(3)} × 防御 ${defenseCoef.toFixed(3)} × 加固 ${fortifyCoef.toFixed(3)}；触腕单次 = (机制触腕 ${fmt(tentacle.attack)} + 净力量×50%) × 目标乘区。`;
+    $('formula').textContent=`Damage Events：${activeEvents.length} 个主动伤害事件 + ${tentacleEvents.length} 个触腕事件。每个主动事件分别执行 基础伤害 × ${(1+basePct/100).toFixed(3)} → 伤害强效 × ${(1+powerPct/100).toFixed(3)} → 易伤 × ${(1+vulnerabilityPct/100).toFixed(3)} → 最终伤害 × ${(1+finalPct/100).toFixed(3)} → 防御 × ${defenseCoef.toFixed(3)} → 加固 × ${fortifyCoef.toFixed(3)}；侵蚀/旧日余烬在每个 Active/Tentacle 事件后依次消费。`;
   
-    const rows=[
-      ['界域修正后攻击力',attack],
-      ['技能基础项（含触腕与可确认的灵塑专属加成）',activeBaseRaw],
-      ['灵塑额外攻击力伤害',soulforgeFlat*hits],
-      ['基础伤害转化后',base],
-      ['团队/角色伤害强效转化后',powered],
-      ['易伤与最终增伤后',final],
-      ['敌方防御与加固后直伤',direct],
-      ['当前单次触腕伤害（含 50% 净力量）',oneTentacle],
-      ['当前技能触发的额外触腕',skillTriggered],
-      ['怒涛主动伤害后触腕',stanceTriggered],
-      ['回合末全部触腕',turnEndTentacle],
-      ['侵蚀追加生命损失',corrosionDamage],
-      ['旧日余烬追加生命损失',embersDamage],
-      ['本次合计',total]
-    ];
-    $('breakdown').innerHTML=rows.map(([a,b])=>`<div class="step"><span>${esc(a)}${a==='回合末全部触腕'&&!includeTurnEnd?'（未计入总伤害）':''}</span><strong>${fmt(b)}</strong></div>`).join('');
+    const rows=events.map((event,index)=>{
+      if(event.type==='reaction'){
+        return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
+      }
+      const detail=event.type==='active'
+        ?`${event.label} · ${event.stat}×${Number(event.coefficient).toFixed(2)}%`
+        :`${event.label}${event.percent!==undefined?' · '+Number(event.percent).toFixed(2)+'%':''}`;
+      return [`${index+1}. ${detail}`,event.damage];
+    });
+    rows.unshift(['界域修正后攻击力',attack]);
+    rows.push(['主动伤害事件合计',direct]);
+    rows.push(['触腕事件合计',tentacleTotal]);
+    if(!includeTurnEnd&&turnEndCount>0)rows.push(['回合末触腕预览（未计入总伤害）',projectedTurnEndNormal]);
+    rows.push(['侵蚀追加生命损失合计',corrosionDamage]);
+    rows.push(['旧日余烬追加生命损失合计',embersDamage]);
+    rows.push(['侵蚀剩余',corrosionRemaining]);
+    rows.push(['旧日余烬剩余',embersRemaining]);
+    rows.push(['本次合计',total]);
+    $('breakdown').innerHTML=rows.map(([a,b])=>`<div class="step"><span>${esc(a)}</span><strong>${fmt(b)}</strong></div>`).join('');
   
     const tmode=effectiveTentacleMode();
     const stance=tmode==='benthos'
       ?({surging:'涨潮 100%',tranquil:'静海（回合末不攻击）',raging:`怒涛 ${n('benthosRagingPct',100).toFixed(1)}% 基础倍率`}[$('tentacleStance')?.value]||'')
       :({surging:'涨潮 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||'');
+    const oneTentacle=tentacleEvent(100,'单次触腕预览','preview');
     if($('tentacleReadout')){
       const model=tmode==='benthos'?'深渊深海':'普通深海 / 普通触腕';
-      $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 最终界域精通 <b>${n('realmMastery').toFixed(1)}</b><br>机制基础触腕 <b>${fmt(tentacle.base)}</b> → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 目标修正后 <b>${fmt(oneTentacle)}</b>。${$('tentacleStance')?.value==='raging'?` 主动伤害后额外触发：<b>${fmt(stanceTriggered)}</b>（${tentacle.ragingTriggerPct}%）。`:''}${tentacle.turnEndAllowed===false?' 当前姿态禁止回合末触腕攻击。':''}${skillTentacleCoef?` 当前技能额外享受 <b>${(skillTentacleCoef*100).toFixed(1)}%</b> 触腕伤害加成。`:''}${skillTriggerPct?` 当前技能额外触发 <b>${(skillTriggerPct*100).toFixed(1)}%</b> 触腕伤害。`:''}`;
+      const coexist=tentacle.coexistenceBase?`，混沌共生额外基础触腕 ${fmt(tentacle.coexistenceBase)}`:'';
+      const pureNote=(realm.startingTentacleMultiplier||1)>1?'；至纯深海使初始触腕数翻倍（当前触腕数仍以手动输入为准）':'';
+      $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 界域精通效果倍率 <b>×${Number(tentacle.masteryEffectMultiplier||1).toFixed(1)}</b><br>机制基础触腕 <b>${fmt(tentacle.base)}</b>${coexist} → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 当前模式单次伤害 <b>${fmt(oneTentacle.damage)}</b>。触腕暴击率 <b>${(tentacleCritRate*100).toFixed(1)}%</b> / 暴击伤害 <b>${(tentacleCritMult*100).toFixed(1)}%</b>${pureNote}。`;
     }
-    if($('combatConversion'))$('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>，团队伤害强效额外 <b>+${Math.max(0,Number(realm.teamDamageAmp)||0).toFixed(0)}%</b>。攻击侧：基础伤害 <b>${fmt(activeBaseRaw)}</b> → 强效后 <b>${fmt(powered)}</b>；暴击率 <b>${(critRate*100).toFixed(1)}%</b>，暴击伤害 <b>${(critMult*100).toFixed(1)}%</b>。敌方：防御 <b>${fmt(enemyDef)}</b>，防御系数 <b>${(defenseCoef*100).toFixed(1)}%</b>，加固后系数 <b>${(fortifyCoef*100).toFixed(1)}%</b>。${progression.gnosticLevel?` 内在灵格 <b>${progression.gnosticLevel}</b> 已按基础属性等级 +${progression.bonusLevels} 计入。`:''}${progression.soulforgeLevel?` 灵塑 <b>${progression.soulforgeLevel}</b>：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?' 已计入':' 当前未启用'}。`:''}`;
+    if($('combatConversion')){
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>，团队伤害强效额外 <b>+${Math.max(0,Number(realm.teamDamageAmp)||0).toFixed(0)}%</b>。本技能解析 <b>${sourceSkillEvents.length}</b> 个原始主动伤害事件，手动事件序列重复 <b>${sequenceRepeat}</b> 次；最终执行 <b>${activeEvents.length}</b> 个 Active 与 <b>${tentacleEvents.length}</b> 个 Tentacle 事件。启灵：<b>${esc(skillSync.enlightenSlot||'E0')}</b>。`;
+    }
+    window.MorimensDamageEvents={
+      mode,
+      sourceSkillEvents,
+      events,
+      totals:{active:direct,tentacle:tentacleTotal,corrosion:corrosionDamage,embers:embersDamage,total},
+      remaining:{corrosion:corrosionRemaining,embers:embersRemaining}
+    };
   }
 
   function resetEnemy(){
