@@ -1776,16 +1776,40 @@
     return {events:next,mods};
   }
   function renderSignatureRelic(){
-    const box=$('signatureRelicDesc'),toggle=$('signatureRelicEnabled');
+    const box=$('signatureRelicDesc'),toggle=$('signatureRelicEnabled'),status=$('signatureRelicStatus'),applied=$('signatureRelicApplied');
     if(toggle)toggle.disabled=!currentSignatureRelic;
     if(!currentSignatureRelic){
       window.MorimensSignatureRelic={enabled:false,record:null,text:'',skillMods:null};
-      if(box)box.textContent='当前角色在本地 SKeyDB 中没有匹配到专属造物（维度影像）。';
+      if(status)status.textContent='未匹配';
+      if(box)box.textContent='当前角色在本地 SKeyDB 中没有匹配到维度影像。';
+      if(applied){applied.classList.remove('isActive');applied.textContent='未启用，不计入伤害。'}
       return;
     }
     const enabled=signatureRelicEnabled(),skillMods=signatureRelicSkillMods();
-    const relicDisplayName=isEnglish()?(currentSignatureRelic.name||'Signature Relic'):'当前角色专属造物（维度影像）';
-    if(box)box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(relicDisplayName)}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“装备”就常驻生效。${enabled&&skillMods.notes.length?' 当前技能：'+escape(skillMods.notes.join('；')):''}</small>`;
+    const relicRawName=currentSignatureRelic.name||'Dimensional Image';
+    const relicDisplayName=isEnglish()?relicRawName:'当前角色维度影像';
+    if(status)status.textContent=(enabled?'已启用 · ':'已匹配 · ')+relicRawName;
+    if(box)box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(relicDisplayName)}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“启用”就常驻生效。</small>`;
+
+    if(applied){
+      applied.classList.toggle('isActive',enabled);
+      if(!enabled){
+        applied.textContent='未启用，不计入伤害。';
+      }else{
+        const safe=signatureRelicSafeGlobalBonuses();
+        const labels={base:'基础伤害',power:'伤害强效',critRate:'暴击率',critDamage:'暴击伤害',vulnerability:'易伤',final:'最终伤害',realmMastery:'界域精通',aliemusRegen:'狂气回充',keyflareRegen:'银钥充能',sigilYield:'黑印掉落',deathResistance:'死亡抵抗',poisonInfliction:'中毒施加',fixedPoisonInfliction:'固定中毒施加',poisonTrigger:'中毒触发',counterGeneration:'反击生成'};
+        const parts=[];
+        for(const [key,label] of Object.entries(labels)){
+          const value=Number(safe.bonus?.[key])||0;
+          if(Math.abs(value)>1e-9)parts.push(label+' +'+Number(value.toFixed(2))+(key==='realmMastery'||key==='aliemusRegen'||key==='keyflareRegen'?'':'%'));
+        }
+        if(Number(safe.strengthFlat)>0)parts.push('回合开始力量 +'+Number(Number(safe.strengthFlat).toFixed(2)));
+        if(skillMods.notes.length)parts.push(...skillMods.notes);
+        applied.textContent=parts.length
+          ?'已计入：'+parts.join('；')
+          :'已启用。当前维度影像对所选技能没有可直接安全计入的伤害项；条件型效果不会自动强算。';
+      }
+    }
     window.MorimensSignatureRelic={enabled,record:currentSignatureRelic,text:signatureRelicRaw(),skillMods};
   }
   async function loadSignatureRelic(reset=false){
@@ -1885,7 +1909,7 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractConditional'))$('contractConditional').checked=false;if($('signatureRelicEnabled'))$('signatureRelicEnabled').checked=false;if($('targetVulnerable'))$('targetVulnerable').checked=false;if($('targetVulnerableStacks')){$('targetVulnerableStacks').value='';$('targetVulnerableStacks').disabled=true}if($('explorationBattleIndex'))$('explorationBattleIndex').value='1';currentCovenant=null;refreshBattleProgressionUi();
-    if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('rouseActive'))$('rouseActive').checked=false;if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
+    if($('innerSpirit')){$('innerSpirit').value=isLimitedAwakener()?'5':'0'}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('rouseActive'))$('rouseActive').checked=false;if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
