@@ -261,6 +261,13 @@
       const critState=selectCrit(normal,tentacleCritRate,tentacleCritMult);
       return {id,type:'tentacle',source:'tentacle',label,percent:Number(percent)||0,raw,activeSource:false,...critState};
     }
+    function tentaclePierceEvent(percent,label,id){
+      const scale=Math.max(0,Number(percent)||0)/100;
+      const raw=tentacleWithStrength*scale;
+      const normal=raw*(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*levelFactor*fortifyCoef*other;
+      const critState=selectCrit(normal,tentacleCritRate,tentacleCritMult);
+      return {id,type:'pierce',source:'tentacle',basis:'tentacle',label,percent:Number(percent)||0,raw,ignoresBarrier:true,activeSource:false,...critState};
+    }
     function pureEvent(raw,label,id,type='pure',extra={}){
       const beforeFortress=Math.max(0,Number(raw)||0);
       const damage=beforeFortress*fortifyCoef;
@@ -301,6 +308,13 @@
     let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,counterIndex=0;
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
+        if(source.type==='pierce'&&source.basis==='tentacle'){
+          const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
+          for(let i=0;i<count;i++){
+            pushDamageEvent(tentaclePierceEvent(source.percent,`触腕 Pierce DMG ${i+1}`,`tentacle-pierce-${++tentacleIndex}`));
+          }
+          continue;
+        }
         if(source.type==='active'||source.type==='pierce'){
           const event=scaledEvent(source,repeat,scaledIndex++);
           pushDamageEvent(event);
