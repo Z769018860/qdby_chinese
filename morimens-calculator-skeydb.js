@@ -7,12 +7,24 @@
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
-  const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄'};
+  const zhSkillNames={
+    'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄',
+    'skill.24.aberrant-vivisection':'畸变的解剖',
+    'skill.clementine.call-of-shaggai':'妖虫的呼唤','skill.clementine.pain-extraction':'痛苦榨取','skill.clementine.soulsalve':'精神抚慰',
+    'skill.doll-inferno.terminal-of-truth-and-abyss':'终点，真理与深渊之门','skill.doll-inferno.soulblight':'灵魂瘟疫',
+    'skill.helot-catena.sanguine-fetters':'缚身锁链','skill.helot-catena.hatred-unleashed':'恨意宣泄','skill.helot-catena.crimson-shackles':'鲜血链条','skill.helot-catena.reapers-declaration':'索魂者宣言',
+    'skill.kathigu-ra.karmic-embers':'业火重燃','skill.kathigu-ra.last-stand-salvo':'末路枪声','skill.kathigu-ra.solarflare':'千兆耀斑',
+    'skill.lily.strike-to-protect':'报偿打击',
+    'skill.ramona-timeworn.entropy-undone':'熵增逆转','skill.ramona-timeworn.predetermined-strike':'命定之剑',
+    'skill.vortice.abyssal-vortex-cannon':'深渊！漩涡！炮！','skill.vortice.here-it-goes':'漩涡来了！','skill.vortice.reload':'装填！','derived.vortice.vortex-shell':'涡！流！弹！',
+    'skill.wanda.spine-needle-chains':'脊刺锁链'
+  };
   const SKEYDB_ICON_BASE='assets/morimens/skeydb-icons/';
   const uniqueTermZh={
     'Satiety':'饱足','Offering':'供奉','Corpse':'残骸','Sin Mark':'罪印','Symbiosis':'共生','Pack Hunt':'群猎','Negentropy':'负熵',
-    'Undertow':'暗潮','Guilt':'罪责','Endure':'坚忍','Dreamlure':'梦诱','Murmurs':'低语','Spellbound':'痴醉','Enthrall':'夺魄',
-    'Weaver':'织命者','Creativity':'创造力','Fantasia':'幻想','Combust':'燃烧','Birth Ritual':'诞生仪式','Life Seal':'生命封印'
+    'Undertow':'暗潮','Guilt':'罪责','Endure':'忍耐','Dreamlure':'梦引','Murmurs':'低语','Spellbound':'痴醉','Enthrall':'夺魄',
+    'Weaver':'织命','Creativity':'创意','Fantasia':'幻想','Combust':'燃烧','Birth Ritual':'诞生仪式','Life Seal':'生命封印',
+    'Finale':'终末','Finale Form':'终末形态','Fiamma':'活焰','Vortex Reload':'涡流装填'
   };
     const globalTermMeta={
     'STR':['力量','IconS_Buff_021.webp','heal'],'Temporary STR':['临时力量','IconS_Buff_021.webp','heal'],'STR▼':['力量降低','IconS_Buff_037.webp','affliction'],
@@ -320,7 +332,7 @@
     const level=characterLevelControl();
     if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`等级 ${i}`;option.selected=i===previous;level.appendChild(option)}}
     const innerField=$('innerSpirit')?.closest('.field');
-    if(innerField){const label=innerField.querySelector('label');if(label)label.textContent='内在灵格';let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}note.textContent='按 SKeyDB“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式；限定唤醒体默认 5，常驻/福利唤醒体默认 0，可手动调整。'}
+    if(innerField){const label=innerField.querySelector('label');if(label)label.textContent='内在灵格';let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}note.textContent='按“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式；限定唤醒体固定为 5 且不可调整，常驻/福利唤醒体可按实际进度选择。'}
     fillRange($('innerSpirit'),'内在灵格',5);
     if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。</small>';inner.insertAdjacentElement('afterend',wrap)}}
     if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辰篇关卡环境启用灵塑效果</label><small>灵塑天赋仅在“星辰篇”关卡生效；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
@@ -419,7 +431,7 @@
     if($('psycheSurgeLevel'))return;
     const anchor=$('charEnlighten')?.closest('.field');if(!anchor)return;
     const wrap=document.createElement('div');wrap.className='field';
-    wrap.innerHTML='<label for="psycheSurgeLevel">启灵后副属性成长</label><select id="psycheSurgeLevel"></select><small>对应 SKeyDB Psyche Surge（E3+Z）0–12 档：继续按角色自身 substatScaling 增加暴击率、暴击伤害、伤害强效、回充等副属性；与“灵塑”是两套独立成长。</small>';
+    wrap.innerHTML='<label for="psycheSurgeLevel">启灵后副属性成长</label><select id="psycheSurgeLevel"></select><small>启灵3后可选择 0–12 档副属性成长：继续按角色自身副属性成长系数增加暴击率、暴击伤害、伤害强效、回充等属性；与“灵塑”是两套独立成长。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const sel=$('psycheSurgeLevel');
     for(let i=0;i<=12;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 无额外副属性成长':String(i)+' · E3 + '+String(i);sel.appendChild(o)}
@@ -429,7 +441,7 @@
   function configurePsycheSurgeControl(reset=false){
     const sel=$('psycheSurgeLevel');if(!sel)return;const unlocked=psycheSurgeUnlocked();
     if(reset||!unlocked)sel.value='0';sel.disabled=!unlocked;
-    sel.title=unlocked?'E3 后可按实际 Psyche Surge 档位选择 0–12':'达到 E3 后解锁该成长档';
+    sel.title=unlocked?'启灵3后可按实际副属性成长档位选择 0–12':'达到 E3 后解锁该成长档';
   }
   function enlightenSlotLabel(slot){
     if(slot==='OverExalt')return '+4 · 超限';
@@ -1204,20 +1216,21 @@
     const previous=selectedAwakenerId()||currentAwakener?.id||db.records[0].id;select.innerHTML='';
     for(const rec of db.records){const opt=document.createElement('option');opt.dataset.awakenerId=rec.id;opt.value=rec.id;opt.textContent=labelForAwakener(rec);opt.selected=rec.id===previous;select.appendChild(opt)}
   }
+  function isLimitedAwakener(rec=currentAwakener){
+    return String(rec?.availabilityType||'').toUpperCase().startsWith('LIMITED_');
+  }
+  function effectiveGnosticLevel(){
+    return isLimitedAwakener()?5:(Number($('innerSpirit')?.value)||0);
+  }
   function progressionState(){
     const engine=window.MorimensFormulaEngine;
     if(!engine)return {bonusLevels:0,soulforgePct:0,gnosticLevel:0,soulforgeLevel:0,gnosticMax:0,soulforgeMax:0,flatAtkDamagePct:0,baseDamagePct:0};
     return engine.resolveProgression(
       currentTalents,
-      Number($('innerSpirit')?.value)||0,
+      effectiveGnosticLevel(),
       Number($('characterSculpt')?.value)||0,
       $('soulforgeActive')?.checked!==false
     );
-  }
-  function defaultGnosticLevel(maxLevel){
-    const max=Math.max(0,Math.floor(Number(maxLevel)||0));
-    const availability=String(currentAwakener?.availabilityType||'').toUpperCase();
-    return availability.startsWith('LIMITED_')?Math.min(5,max):0;
   }
   function configureProgressionControls(resetCharacterSpecific=false){
     const engine=window.MorimensFormulaEngine;
@@ -1225,11 +1238,20 @@
     const inner=$('innerSpirit'),sculpt=$('characterSculpt');
     const innerMax=state?.gnosticMax||0,sculptMax=state?.soulforgeMax||0;
     if(inner){
-      const selectedDefault=defaultGnosticLevel(innerMax);
+      const limited=isLimitedAwakener();
       inner.innerHTML='';
-      for(let i=0;i<=innerMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 内在灵格 ${i}`;o.selected=i===selectedDefault;inner.appendChild(o)}
-      if(!innerMax)inner.innerHTML='<option value="0">0 · 无内在灵格数据</option>';
-      else inner.value=String(selectedDefault);
+      if(limited&&innerMax>=5){
+        inner.innerHTML='<option value="5">5 · 内在灵格 5（限定固定）</option>';
+        inner.value='5';
+        inner.disabled=true;
+        inner.title='限定唤醒体的内在灵格固定为 5，不可调整';
+      }else{
+        for(let i=0;i<=innerMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 内在灵格 ${i}`;inner.appendChild(o)}
+        if(!innerMax)inner.innerHTML='<option value="0">0 · 无内在灵格数据</option>';
+        inner.value='0';
+        inner.disabled=!innerMax;
+        inner.title='';
+      }
     }
     if(sculpt){
       const previous=resetCharacterSpecific?0:Math.min(sculptMax,Math.max(0,Number(sculpt.value)||0));
@@ -1249,7 +1271,7 @@
       `伤害强效 ${num(stats.DamageAmplification).toFixed(1)}%`
     ];
     if(progression.gnosticLevel)chips.push(`内在灵格 ${progression.gnosticLevel}：基础属性等级 +${progression.bonusLevels}`);
-    if(progression.psycheSurgeLevel)chips.push(`启灵后副属性成长 ${progression.psycheSurgeLevel} 档：按角色 substatScaling 继续成长`);
+    if(progression.psycheSurgeLevel)chips.push(`启灵后副属性成长 ${progression.psycheSurgeLevel} 档：按角色副属性成长系数继续成长`);
     if(progression.soulforgeLevel){
       chips.push(`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
       if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外增加攻击力的 ${progression.flatAtkDamagePct}%`);
