@@ -70,7 +70,7 @@
         <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
         <div class="field"><label for="enemySacrificeAmount">敌方当前献祭层数</label><input id="enemySacrificeAmount" type="number" min="0" step="0.1" value="0"><small>回合末每层造成 1 点伤害并移除 50%；该伤害计入对敌总伤害，并按“其他伤害”触发侵蚀/旧日余烬。</small></div>
         <div class="field"><label for="birthRitualStacks">敌方已有 Birth Ritual / 诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的 Active / Tentacle DMG 的 1% 转化为献祭；所选技能本身即时施加的层数会自动叠加，上限 75 层，回合末移除。</small></div>
-        <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的 Murphy: Fauxborn「Tidal Sacrament / 潮汐圣礼」Rouse、遗物等持续战斗态。灵塑的同类效果会自动叠加，不必重复填写。</small></div>
+        <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的 Murphy: Fauxborn「Tidal Sacrament / 潮汐圣礼」Rouse、遗物等持续战斗态。灵塑的同类效果会自动叠加；默认作用于角色自身 Active / Pierce / Fixed，独立触腕通过诞生仪式计算。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
         <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕/Poison/Bleed，并在最后清空 Corrosion、重置 Ancient Embers；关闭可只查看本次卡牌的即时结果。</small></span></label>
@@ -619,7 +619,9 @@
       pushDamageEvent(pureEvent(stacks,'Bleed · 回合末 Pure DMG（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
     }
     const sacrificeSourceDamage=events
-      .filter(x=>['active','pierce','tentacle','fixed'].includes(x.type)&&x.damage>0)
+      // "DMG dealt by Murphy: Fauxborn" is attributed to the Awakener herself.
+      // Independent Tentacle attacks are not silently attributed to her; Birth Ritual handles Tentacle DMG explicitly.
+      .filter(x=>['active','pierce','fixed'].includes(x.type)&&x.damage>0)
       .reduce((sum,x)=>sum+(Number(x.damage)||0),0);
     const birthRitualSkillDamage=events
       .filter(x=>(x.type==='active'||x.type==='tentacle')&&x.damage>0&&!String(x.id||'').startsWith('turn-end-'))
