@@ -348,6 +348,8 @@
   
     const events=[];
     const groupDamage=new Map();
+    const groupCritChance=new Map();
+    const groupGuaranteedCrit=new Map();
     const initialCorrosion=Math.max(0,n('corrosionAmount'));
     let corrosionRemaining=initialCorrosion;
     let corrosionAdded=0;
@@ -365,6 +367,12 @@
       if(event.groupId&&event.damage>0){
         const key=groupKey(event.repeatIndex??0,event.groupId);
         groupDamage.set(key,(groupDamage.get(key)||0)+event.damage);
+        if(event.type==='active'||event.type==='pierce'){
+          const p=clamp(Number(event.eventCritRate)||0,0,1);
+          const previous=groupCritChance.get(key)||0;
+          groupCritChance.set(key,1-(1-previous)*(1-p));
+          if(event.forcedCrit===true||p>=1)groupGuaranteedCrit.set(key,true);
+        }
       }
       if(!(event.damage>0)||event.type==='reaction')return;
       const removalRate=(event.type==='active'||event.type==='tentacle')?1:0.5;
@@ -445,8 +453,19 @@
         }
         if(source.type==='poison'&&source.action==='trigger'){
           const stacks=initialPoison+poisonAdded;
-          const raw=stacks*Math.max(0,Number(source.percent)||0)/100;
-          pushDamageEvent(pureEvent(raw,`Poison 触发 ${Number(source.percent||0).toFixed(2)}%`,`poison-trigger-${++poisonIndex}`,'poison',{action:'trigger',stacks,percent:source.percent}));
+          const basePercent=Math.max(0,Number(source.percent)||0);
+          const critPercent=Number.isFinite(Number(source.critPercent))?Math.max(0,Number(source.critPercent)):basePercent;
+          const key=groupKey(repeat,source.sourceGroupId);
+          const critChance=source.sourceGroupId?(groupCritChance.get(key)||0):activeCritRate;
+          const guaranteed=source.sourceGroupId?groupGuaranteedCrit.get(key)===true:false;
+          let effectivePercent=basePercent;
+          if(guaranteed||mode==='crit')effectivePercent=critPercent;
+          else if(mode==='expected')effectivePercent=basePercent+(critPercent-basePercent)*critChance;
+          const raw=stacks*effectivePercent/100;
+          const label=critPercent!==basePercent
+            ?`Poison 触发 ${effectivePercent.toFixed(2)}%（基础 ${basePercent.toFixed(2)}% / 暴击 ${critPercent.toFixed(2)}%）`
+            :`Poison 触发 ${basePercent.toFixed(2)}%`;
+          pushDamageEvent(pureEvent(raw,label,`poison-trigger-${++poisonIndex}`,'poison',{action:'trigger',stacks,percent:effectivePercent,basePercent,critPercent,critChance}));
           continue;
         }
         if(source.type==='corrosion'&&source.action==='apply'){
