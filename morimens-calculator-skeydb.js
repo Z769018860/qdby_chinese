@@ -1732,6 +1732,7 @@
     }
     let generatedStrength=0,generatedShield=0,characterStrengthBonus=0;
     const generatedBaseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
+    const baseSkillId=generatedBaseSkillId;
     const generatedResources=characterResourceValues();
     if(currentAwakener?.id==='awakener-0001'&&rouseActive()&&(window.MorimensRealmEngine?.state?.().baseRealms||[]).includes('CARO')){
       const rouse=resolvedRouseSkill(),rank=rouseRank();
