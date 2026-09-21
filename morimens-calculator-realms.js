@@ -173,7 +173,7 @@
       if(out.ultraRoundActive){
         out.damageOutputMultiplier*=0.75;
         out.statusOutputMultiplier*=0.75;
-        out.notes.push('普通超维回合：本回合造成的伤害、中毒、反击、流血等效果按 SKeyDB ×75%。');
+        out.notes.push('普通超维回合：本回合造成的伤害、中毒、反击、出血等效果按 SKeyDB ×75%。');
       }else{
         out.notes.push(`普通超维：界域精通效果 ×${out.masteryEffectMultiplier.ULTRA}；未勾选超维回合，不应用 -25% 输出修正。`);
       }
@@ -287,14 +287,14 @@
       '<div class="field" id="propagationConsumeWrap" hidden><label class="inlineCheck"><input id="propagationConsumeEmbryo" type="checkbox"> 本回合已首次消耗「繁育·胚胎」</label><small>额外获得基础 40 层繁育狂热，并受繁育·血肉精通加成。</small></div>',
       '<div class="field full" id="propagationApplyWrap" hidden><label class="inlineCheck"><input id="propagationApplyFiesta" type="checkbox" checked> 将繁育狂热用于本次狂气爆发</label><small>只对狂气爆发/超限爆发自动计入最终伤害。</small></div>',
       '<div class="field full" id="singularityDimensionWrap" hidden><label class="inlineCheck"><input id="singularityDimensionShuttle" type="checkbox"> 本卡获得“维度穿梭”的 25 层奇点信标</label><small>用于本回合第一张触发“维度穿梭”的指令卡，或带有该 25 层信标的复制卡。界域精通会同步放大层数。</small></div>',
-      '<div class="field full" id="ultraRoundWrap" hidden><label class="inlineCheck"><input id="ultraRoundActive" type="checkbox"> 当前处于普通超维回合</label><small>普通超维：本回合伤害、中毒、反击、流血等输出 -25%。奇点·超维使用重写后的规则，不套此开关。</small></div>',
+      '<div class="field full" id="ultraRoundWrap" hidden><label class="inlineCheck"><input id="ultraRoundActive" type="checkbox"> 当前处于普通超维回合</label><small>普通超维：本回合伤害、中毒、反击、出血等输出 -25%。奇点·超维使用重写后的规则，不套此开关。</small></div>',
       '</div>',
       '<div class="combatReadout" id="realmEnvironmentReadout"></div>',
       '<details class="formulaSource"><summary>双界域 / 至纯规则</summary><div>',
       '<div class="formulaRow"><b>队伍限制</b><br>同一队最多出现两个不同界域；只有一种界域时自动视为至纯界域。</div>',
       '<div class="formulaRow"><b>混沌共生</b><br>普通混沌与深海/血肉/超维共存时，另一界域仍按至纯处理，并触发对应混沌共生效果。</div>',
       '<div class="formulaRow"><b>原初·混沌例外</b><br>「不可分割界域」会禁止其他界域的至纯、双倍界域精通和双倍伤害强效，因此不会把“普通混沌共生”的规则套到原初·混沌。</div>',
-      '<div class="formulaRow"><b>进阶界域</b><br>繁育·血肉、晦暝·深海、奇点·超维均按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div><div class="formulaRow"><b>奇点·超维</b><br>基础团队伤害强效 +50%（全队仅超维/混沌时 +100%）；15 层奇点棱镜，“维度穿梭”额外 25 层信标。界域精通每点使这两类层数 +0.05%，至纯条件下效果翻倍。每层信标使指令卡的最终伤害与固定中毒/反击 +2%。</div><div class="formulaRow"><b>普通超维回合</b><br>SKeyDB：普通超维回合中造成的伤害、中毒、反击、流血等效果 -25%。奇点·超维的重写“超维空间”文本没有这条惩罚，因此不交叉套用。</div>',
+      '<div class="formulaRow"><b>进阶界域</b><br>繁育·血肉、晦暝·深海、奇点·超维均按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div><div class="formulaRow"><b>奇点·超维</b><br>基础团队伤害强效 +50%（全队仅超维/混沌时 +100%）；15 层奇点棱镜，“维度穿梭”额外 25 层信标。界域精通每点使这两类层数 +0.05%，至纯条件下效果翻倍。每层信标使指令卡的最终伤害与固定中毒/反击 +2%。</div><div class="formulaRow"><b>普通超维回合</b><br>SKeyDB：普通超维回合中造成的伤害、中毒、反击、出血等效果 -25%。奇点·超维的重写“超维空间”文本没有这条惩罚，因此不交叉套用。</div>',
       '</div></details>'
     ].join('');
     builder.appendChild(block);
