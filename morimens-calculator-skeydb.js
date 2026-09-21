@@ -118,9 +118,15 @@
   }
   function renderTemplate(record,level=1,ctxExtra={}){
     let text=record?.descriptionTemplate||record?.description||'';
-    text=text.replace(/\[\{([^}]+)\}:([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
-    text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
-    text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);return v===null?name:`${v}${arg?.suffix||''}`});
+    const formatted=(match,name,offset,source)=>{
+      const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;
+      const suffix=String(arg?.suffix||''),tail=String(source||'').slice(offset+match.length);
+      const shownSuffix=suffix&&tail.startsWith(suffix)?'':suffix;
+      return `${arg?.stat?`${arg.stat} × `:''}${v}${shownSuffix}`;
+    };
+    text=text.replace(/\[\{([^}]+)\}:([^\]]+)\]/g,(match,kind,name,offset,source)=>formatted(match,name,offset,source));
+    text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(match,kind,name,offset,source)=>formatted(match,name,offset,source));
+    text=text.replace(/\[([^\]]+)\]/g,(match,name,offset,source)=>formatted(match,name,offset,source));
     return text.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1');
   }
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
@@ -428,7 +434,8 @@
   function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
   function numericBonusesFromText(text,allowConditional=false){
     const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,skipped:[]};
-    for(const raw of String(text||'').split(/(?<=[.!?。；;])\s*/)){
+    const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
+    for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
       const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
       let m;
       if((m=s.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i)))out.base+=num(m[1]);
@@ -449,7 +456,7 @@
   }
 
   async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses()}
-  function renderEffectRaw(effect){let text=effect?.descriptionTemplate||'';text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=effect?.descriptionArgs?.[name],v=argValue(arg,1);return v===null?name:`${v}${arg?.suffix||''}`});return text}
+  function renderEffectRaw(effect){return renderTemplate(effect,1)}
   function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后从 SKeyDB 读取完整 3 / 6 件套效果。';recomputeGearBonuses();return}
