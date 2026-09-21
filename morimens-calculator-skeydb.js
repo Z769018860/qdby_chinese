@@ -3,7 +3,7 @@
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
   const recordCache=new Map();
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[],currentOverlays=[];
-  let wheelCatalog=[],covenantCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
+  let wheelCatalog=[],covenantCatalog=[],relicCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null,currentSignatureRelic=null;
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
@@ -61,6 +61,11 @@
   function escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
   function selectedAwakenerId(){return $('charSelect')?.selectedOptions?.[0]?.dataset?.awakenerId||$('charSelect')?.value||null}
   function num(v,fallback=0){const n=Number.parseFloat(v);return Number.isFinite(n)?n:fallback}
+  function vulnerableStacks(){
+    if($('targetVulnerable')?.checked!==true)return 0;
+    const raw=Number.parseFloat($('targetVulnerableStacks')?.value);
+    return Number.isFinite(raw)&&raw>0?Math.max(1,Math.floor(raw)):1;
+  }
   function setText(id,text){const el=$(id);if(el)el.textContent=text}
 
   async function fetchRecord(scope,id){
@@ -84,7 +89,7 @@
     base.psycheSurgeOffset=psycheSurgeLevel();
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     base.rouseActive=rouseActive();
-    base.VulnerableStacks=Math.max(0,Math.floor(num($('targetVulnerableStacks')?.value,0)));
+    base.VulnerableStacks=vulnerableStacks();
     if(currentAwakener?.id==='awakener-0018'&&base.rouseActive&&selectedEnlightenSlot()==='AbsoluteAxiom'){
       base.DamageAmplification=num(base.DamageAmplification,0)+8*Math.min(10,Math.max(0,Math.floor(num(base.finaleStacks,0))));
     }
@@ -1201,6 +1206,7 @@
     currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
     const switchedCharacter=!!previousAwakenerId&&previousAwakenerId!==currentAwakener.id;
     ensureRouseUi();if(switchedCharacter&&$('rouseActive'))$('rouseActive').checked=false;
+    await loadSignatureRelic(switchedCharacter);
     [currentTalents,currentEnlightens,currentOverlays]=await Promise.all([window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('enlightens',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('overlays',id).catch(()=>[])]);
     normalizeProgressionControls();
     configureProgressionControls(switchedCharacter);
@@ -1355,13 +1361,13 @@
   }
 
   async function loadCatalogs(){
-    const [wr,cr,gm]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants'),window.MorimensRepository.gameplayMath()]);
-    wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
+    const [wr,cr,rr,gm]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants'),window.MorimensRepository.catalog('relics'),window.MorimensRepository.gameplayMath()]);
+    wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];relicCatalog=rr.status==='fulfilled'?(rr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
     window.MorimensFormulaEngine?.setGameplayMathMetadata?.(gameplayMathMeta);ensureFormulaContextUi();
     if(gameplayMathMeta?.accountLevelCurve&&$('formulaAccountLevel')){$('formulaAccountLevel').min=String(gameplayMathMeta.accountLevelCurve.minLevel||1);$('formulaAccountLevel').max=String(gameplayMathMeta.accountLevelCurve.maxLevel||100)}
     const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=wheelOptionLabel(w);o.selected=w.id===prev;sel.appendChild(o)}}
     const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
-    const missing=[wr,cr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
+    const missing=[wr,cr,rr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契及角色专属造物索引`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
   function syncWheelDuplicates(){
     const a=$('fateSelect'),b=$('fateSelect2');if(!a||!b)return;const av=a.value,bv=b.value;
@@ -1478,6 +1484,26 @@
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套读取：无条件效果直接计入；需要敌人生命区间、特定状态、回合时点等额外条件的效果，只有勾选“额外条件已满足”后才尝试解析。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${renderRichRecord(e,1)}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
+  function signatureRelicCompactFor(awakenerId){
+    return relicCatalog.find(x=>x?.ownerAwakenerId===awakenerId&&x?.relicType==='Dimensional Image')||null;
+  }
+  function signatureRelicEnabled(){return $('signatureRelicEnabled')?.checked===true&&!!currentSignatureRelic}
+  function signatureRelicRaw(){return currentSignatureRelic?renderTemplate(currentSignatureRelic,1):''}
+  function renderSignatureRelic(){
+    const box=$('signatureRelicDesc'),toggle=$('signatureRelicEnabled');
+    if(toggle)toggle.disabled=!currentSignatureRelic;
+    if(!box)return;
+    if(!currentSignatureRelic){box.textContent='当前角色在本地 SKeyDB 中没有匹配到专属造物（维度影像）。';return}
+    const enabled=signatureRelicEnabled();
+    box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(currentSignatureRelic.name||'专属造物')}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、回合时点等条件型效果仅展示，不会因为勾选“装备”就常驻生效。</small>`;
+    window.MorimensSignatureRelic={enabled,record:currentSignatureRelic,text:signatureRelicRaw()};
+  }
+  async function loadSignatureRelic(reset=false){
+    const compact=signatureRelicCompactFor(currentAwakener?.id);
+    currentSignatureRelic=compact?await fetchRecord('relics',compact.id).catch(()=>compact):null;
+    if(reset&&$('signatureRelicEnabled'))$('signatureRelicEnabled').checked=false;
+    renderSignatureRelic();
+  }
   const wheelMainstatLabels={CRIT_RATE:'暴击率',CRIT_DMG:'暴击伤害',REALM_MASTERY:'界域精通',DMG_AMP:'伤害强效',ALIEMUS_REGEN:'狂气回充等级',KEYFLARE_REGEN:'银钥充能等级',SIGIL_YIELD:'黑印掉落',DEATH_RESISTANCE:'死亡抵抗'};
   function wheelMainstatValue(rec,slot){
     const source=gameplayMathMeta?.wheelMainstatScaling;if(!rec||!source)return null;
@@ -1520,7 +1546,8 @@
       }
     });
     if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),allow))}}
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery};renderAutoSummary();
+    if(signatureRelicEnabled())sumBonus(next,numericBonusesFromText(signatureRelicRaw(),false));
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null};renderSignatureRelic();renderAutoSummary();
   }
 
   function initManualTracking(){
@@ -1542,6 +1569,7 @@
     }
     rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);
     if(currentCovenant)rows.push(`<span class="chip">密契 6 件套：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}${$('contractConditional')?.checked?' · 额外条件已满足':''}</span>`);
+    if(signatureRelicEnabled())rows.push(`<span class="chip">专属造物：${escape(currentSignatureRelic?.name||'Dimensional Image')}</span>`);
     box.innerHTML=rows.join('')
   }
 
@@ -1552,6 +1580,8 @@
     $('fateSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(0)},{capture:true});
     $('contractSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadCovenant()},{capture:true});
     $('contractConditional')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses();updateSkillLevel()},{capture:true});
+    $('signatureRelicEnabled')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderSignatureRelic();recomputeGearBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    $('targetVulnerable')?.addEventListener('change',()=>{const input=$('targetVulnerableStacks');if(input)input.disabled=!$('targetVulnerable')?.checked;updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     const formulaReactiveFields=new Set(['critRate','critDamage','powerBonus','realmMastery']);
     document.addEventListener('input',e=>{if(formulaReactiveFields.has(e.target?.id))queueMicrotask(updateSkillLevel)},{capture:true});
     document.addEventListener('change',e=>{if(formulaReactiveFields.has(e.target?.id))queueMicrotask(updateSkillLevel)},{capture:true});
@@ -1559,17 +1589,17 @@
     $('resetBtn')?.addEventListener('click',e=>{e.stopImmediatePropagation();resetBuild()},{capture:true});
   }
   async function resetBuild(){
-    if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractConditional'))$('contractConditional').checked=false;if($('explorationBattleIndex'))$('explorationBattleIndex').value='1';currentCovenant=null;refreshBattleProgressionUi();
+    if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractConditional'))$('contractConditional').checked=false;if($('signatureRelicEnabled'))$('signatureRelicEnabled').checked=false;if($('targetVulnerable'))$('targetVulnerable').checked=false;if($('targetVulnerableStacks')){$('targetVulnerableStacks').value='';$('targetVulnerableStacks').disabled=true}if($('explorationBattleIndex'))$('explorationBattleIndex').value='1';currentCovenant=null;refreshBattleProgressionUi();
     if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('rouseActive'))$('rouseActive').checked=false;if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
-  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary()}
+  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}renderSignatureRelic();for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary()}
 
   async function boot(){
     ensureTermIconStyle();ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
     window.addEventListener('morimens-realm-change',()=>{if(currentSkill)queueMicrotask(updateSkillLevel)});
-    try{await loadCatalogs();await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
+    try{await loadCatalogs();if($('targetVulnerableStacks'))$('targetVulnerableStacks').disabled=!$('targetVulnerable')?.checked;await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get relics(){return relicCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant},get currentSignatureRelic(){return currentSignatureRelic}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
   }
   if(window.MorimensData?.db&&window.MorimensRepository)boot();else window.addEventListener('morimens-data-ready',boot,{once:true});
 })();
