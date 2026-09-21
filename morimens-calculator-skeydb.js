@@ -459,13 +459,14 @@
     if(!overlay?.id)return null;
     const text=String(renderTemplate(resolveOverlayEnlighten(overlay),1)||'');
     if(!/\bstacks?\b/i.test(text))return null;
-    const max=inferredOverlayStackMax(overlay);
-    if(max===null&&!/(?:each|every|for each)\s+stack/i.test(text))return null;
+    let max=inferredOverlayStackMax(overlay);
+    if(max===null){const exact=text.match(/(?:have|has|reach(?:es)?|at)\s+(\d+)\s+stacks?/i);if(exact)max=Math.max(1,Math.floor(Number(exact[1])||0))}
     return {
       overlayId:overlay.id,
       key:'overlay_'+String(overlay.id).replace(/[^a-z0-9]+/gi,'_').replace(/^_|_$/g,'').toLowerCase(),
       label:zhText(overlay.name||'角色状态'),
-      min:0,max:max??999,calculated:false
+      min:0,max:max??999,calculated:false,
+      description:max===null?zhText(renderTemplate(resolveOverlayEnlighten(overlay),1))+' 当前 SKeyDB 未给出明确上限，计算器暂以 999 作为输入保护上限。':undefined
     };
   }
   function resourceRequirementMet(spec){if(!spec?.requiredEnlighten)return true;const current=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot());const need=ENLIGHTEN_ORDER.indexOf(spec.requiredEnlighten);return current>=need&&need>=0}
