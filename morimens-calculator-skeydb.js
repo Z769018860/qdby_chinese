@@ -410,10 +410,15 @@
       {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，All-In! 基础伤害 +0.5%。'}
     ],
     'awakener-0024':[
+      {key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒会提高全队最终伤害；恐惧会提高力量/反击/中毒生成；悲伤与喜悦主要影响回复/资源。'},
       {overlayId:'overlay.horla.metaphor',key:'angerMetaphorStacks',label:'愤怒隐喻',min:0,max:3,calculated:true,description:'Snarl Psalm 会消耗全部愤怒隐喻；每层额外造成 2 段伤害。'},
       {overlayId:'overlay.horla.metaphor',key:'griefMetaphorStacks',label:'悲伤隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'happinessMetaphorStacks',label:'喜悦隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'fearMetaphorStacks',label:'恐惧隐喻',min:0,max:3,calculated:false}
+    ],
+    'awakener-0029':[
+      {overlayId:'overlay.lily.endure',key:'endureStacks',label:'Endure / 坚忍',min:0,max:999999,calculated:true,description:'Strike to Protect：每 1 层 Endure 使本次伤害增加 2；使用后移除 Endure。E3 只移除一半，不降低本次伤害换算。'},
+      {key:'endureConversionBoostStacks',label:'最终法则：Endure 转化强化',min:0,max:5,calculated:true,requiredEnlighten:'AbsoluteAxiom',description:'最终法则后，本回合每受到 1 次攻击，使下一次 Strike to Protect 转化的 Endure 效果 +40%，最多 5 层。'}
     ],
     'awakener-0052':[
       {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦诱',min:0,max:10,calculated:true,description:'Spine Needle Chains 在梦诱≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
@@ -472,7 +477,11 @@
   }
   function characterResourceValues(){
     const values={awakenerId:currentAwakener?.id||null};
-    document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{values[el.dataset.resourceKey]=el.type==='checkbox'?(el.checked?1:0):Math.max(0,num(el.value,0))});
+    document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{
+      if(el.type==='checkbox')values[el.dataset.resourceKey]=el.checked?1:0;
+      else if(el.tagName==='SELECT')values[el.dataset.resourceKey]=el.value;
+      else values[el.dataset.resourceKey]=Math.max(0,num(el.value,0));
+    });
     window.MorimensCharacterResources=values;
     return values;
   }
@@ -496,6 +505,10 @@
         const checked=Number(previous[spec.key])>0;
         wrap.classList.add('full');
         wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+escape(spec.label)+'</label><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
+      }else if(spec.type==='select'){
+        const selected=String(previous[spec.key]??'');
+        const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
+        wrap.innerHTML='<label>'+escape(spec.label)+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
       }else{
         const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
         wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
@@ -569,6 +582,28 @@
     if(currentAwakener?.id==='awakener-0024'&&baseSkillId==='skill.horla.snarl-psalm'&&Number(resources.angerMetaphorStacks)>0){
       const stacks=Math.min(3,Math.max(0,Math.floor(Number(resources.angerMetaphorStacks)||0)));
       mapped=cloneExtraDamageEvents(mapped,stacks*2,'愤怒隐喻 '+stacks+' 层：额外 '+(stacks*2)+' 段伤害');
+    }
+    if(currentAwakener?.id==='awakener-0024'&&resources.horlaEmotion==='anger'){
+      const overlay=resolvedOverlay('overlay.horla.anger');
+      const rendered=String(renderTemplate(overlay,1)||'');
+      const m=rendered.match(/Final DMG[^+]*\+\s*(\d+(?:\.\d+)?)%/i);
+      const bonus=m?Math.max(0,num(m[1],0)):0;
+      if(bonus>0)mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:'愤怒情绪：最终伤害 +'+bonus.toFixed(1)+'%'}:event);
+    }
+    if(currentAwakener?.id==='awakener-0024'&&resources.horlaEmotion==='fear'){
+      const overlay=resolvedOverlay('overlay.horla.fear');
+      const rendered=String(renderTemplate(overlay,1)||'');
+      const m=rendered.match(/Counter[^+]*\+\s*(\d+(?:\.\d+)?)%/i)||rendered.match(/Poison[^+]*\+\s*(\d+(?:\.\d+)?)%/i);
+      const bonus=m?Math.max(0,num(m[1],0)):0;
+      if(bonus>0)mapped=mapped.map(event=>((event.type==='poison'&&event.action==='apply')||(event.type==='counter'&&event.action==='gain'))?{...event,resourceStatusMultiplier:1+bonus/100,resourceEffectLabel:'恐惧情绪：中毒/反击生成 +'+bonus.toFixed(1)+'%'}:event);
+    }
+    if(currentAwakener?.id==='awakener-0029'&&baseSkillId==='skill.lily.strike-to-protect'&&Number(resources.endureStacks)>0){
+      const stacks=Math.max(0,Number(resources.endureStacks)||0);
+      const boost=Math.min(5,Math.max(0,Number(resources.endureConversionBoostStacks)||0));
+      const effectiveStacks=stacks*(1+0.4*boost);
+      const progression=progressionState();
+      const extraAmp=progression.soulforgeEnabled&&progression.soulforgeLevel>0?Math.max(0,Number(progression.resolvedSoulforgeArgs?.Arg5)||0):0;
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,resourceFlatDamage:(Number(event.resourceFlatDamage)||0)+2*effectiveStacks,resourceFlatDamageAmpBonusPct:(Number(event.resourceFlatDamageAmpBonusPct)||0)+extraAmp,resourceEffectLabel:'Endure '+stacks.toFixed(0)+'：独立伤害增加 '+(2*effectiveStacks).toFixed(0)+(extraAmp>0?'（额外伤害强效 +'+extraAmp.toFixed(1)+'%）':'')}:event);
     }
     if(currentAwakener?.id==='awakener-0052'&&baseSkillId==='skill.wanda.spine-needle-chains'&&Number(resources.dreamlureStacks)>=5){
       mapped=cloneExtraDamageEvents(mapped,2,'梦诱≥5：跃迁成功，额外 2 段伤害');
