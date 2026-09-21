@@ -1066,14 +1066,8 @@
         next.resourceEffectLabel=[next.resourceEffectLabel,'本场此前狂气爆发 '+prior+' 次：扭曲腐肉狂欢基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
       }
       if(currentAwakener?.id==='awakener-0019'&&(next.type==='active'||next.type==='pierce')){
-        const layers=window.MorimensGearEffects?.scopedDamageLayers||emptyScopedDamageLayers();
         const baseFactors=[],finalFactors=[];
         const addFactor=(list,label,pct)=>{pct=Math.max(0,num(pct,0));if(pct>0)list.push({label,pct})};
-        if(skillMatchesScope(currentSkill,'exalt')){addFactor(baseFactors,'大招基伤',layers.base.exalt);addFactor(finalFactors,'最终狂气爆发伤害',layers.final.exalt)}
-        if(skillMatchesScope(currentSkill,'strike')){addFactor(baseFactors,'打击基伤',layers.base.strike);addFactor(finalFactors,'打击终伤',layers.final.strike)}
-        if(skillMatchesScope(currentSkill,'command')){addFactor(baseFactors,'指令卡基伤',layers.base.command);addFactor(finalFactors,'指令卡终伤',layers.final.command)}
-        const scopedBaseTotal=num(layers.base.strike)+num(layers.base.command)+num(layers.base.exalt);
-        const scopedFinalTotal=num(layers.final.strike)+num(layers.final.command)+num(layers.final.exalt);
         addFactor(baseFactors,'局内基伤',resources.helotInBattleBaseDamagePct);
         if(rouseActive()){
           const rouse=resolvedRouseSkill(),rank=rouseRank(),perTurn=Math.max(0,num(argValue(rouse?.descriptionArgs?.Arg2,rank),0));
@@ -1109,9 +1103,6 @@
           const enhance=Math.min(50,Math.max(0,Math.floor(num(resources.helotTemporaryEnhanceStacks,0))));
           addFactor(finalFactors,'临时强化终伤',enhance*2);
         }
-        next.separateDamageLayers=true;
-        next.scopedBaseAutoTotal=scopedBaseTotal;
-        next.scopedFinalAutoTotal=scopedFinalTotal;
         next.baseDamageMultipliers=[...(next.baseDamageMultipliers||[]),...baseFactors];
         next.finalDamageMultipliers=[...(next.finalDamageMultipliers||[]),...finalFactors];
       }
