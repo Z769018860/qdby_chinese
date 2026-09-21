@@ -7,6 +7,7 @@
   let loading=false;
   let rows=[];
   let votes={};
+  let sortMode='score';
 
   const $=id=>document.getElementById(id);
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -68,7 +69,10 @@
       .loveRankLegend span{display:inline-flex;align-items:center;gap:5px}.loveRankLegend i{width:28px;height:7px;border-radius:99px}
       .loveRankLegend .hot{background:linear-gradient(90deg,rgba(213,177,118,.18),rgba(232,94,91,.7))}
       .loveRankLegend .cold{background:linear-gradient(90deg,rgba(70,142,214,.7),rgba(85,106,137,.15))}
-      .loveRankStatus{margin:10px 0;color:#8593a6;font-size:11px}
+      .loveRankDisclaimer{margin:10px 0 12px;padding:10px 12px;border:1px solid rgba(213,177,118,.28);border-left:3px solid rgba(213,177,118,.82);border-radius:10px;background:linear-gradient(90deg,rgba(94,63,32,.18),rgba(11,18,28,.34));color:#d8c6a6;font-size:11px;line-height:1.65}
+      .loveRankToolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 8px}
+      .loveRankSort{display:flex;align-items:center;gap:8px;color:#8997aa;font-size:11px}.loveRankSort label{white-space:nowrap}.loveRankSort select{height:34px;min-width:150px;padding:0 30px 0 10px;border:1px solid rgba(148,163,184,.24);border-radius:9px;background:#111827;color:#e7edf5;outline:none}.loveRankSort select:focus{border-color:rgba(213,177,118,.6);box-shadow:0 0 0 3px rgba(213,177,118,.09)}
+      .loveRankStatus{margin:0;color:#8593a6;font-size:11px}
       .loveRankList{display:grid;gap:8px}
       .loveRankRow{--love-positive:0;--love-negative:0;display:grid;grid-template-columns:52px minmax(160px,1fr) minmax(90px,.35fr) auto;align-items:center;gap:12px;padding:9px 11px;border:1px solid rgba(148,163,184,.14);border-radius:13px;background:
         linear-gradient(90deg,rgba(224,91,78,var(--love-positive)) 0%,rgba(213,177,118,calc(var(--love-positive)*.42)) 42%,rgba(7,13,23,.46) 68%),
@@ -107,13 +111,49 @@
 
   const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'请离开了',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
 
+  function ensureControls(){
+    const host=$('morimensLoveRankingList');if(!host)return;
+    let disclaimer=$('morimensLoveRankingDisclaimer');
+    if(!disclaimer){
+      disclaimer=document.createElement('div');
+      disclaimer.id='morimensLoveRankingDisclaimer';
+      disclaimer.className='loveRankDisclaimer';
+      disclaimer.textContent='免责声明：无恶意，纯节奏，加载慢或者失败是因为正在打榜的人太多。';
+      host.insertAdjacentElement('beforebegin',disclaimer);
+    }
+    let toolbar=$('morimensLoveRankingToolbar');
+    if(!toolbar){
+      toolbar=document.createElement('div');
+      toolbar.id='morimensLoveRankingToolbar';
+      toolbar.className='loveRankToolbar';
+      toolbar.innerHTML='<div class="loveRankSort"><label for="morimensLoveRankingSort">排序方式</label><select id="morimensLoveRankingSort"><option value="score">总分排序（爱 − 拉黑）</option><option value="likes">爱数量排序</option><option value="dislikes">拉黑数量排序</option><option value="heat">总热度排序（爱 + 拉黑）</option></select></div>';
+      disclaimer.insertAdjacentElement('afterend',toolbar);
+      const status=$('morimensLoveRankingStatus');if(status)toolbar.appendChild(status);
+      $('morimensLoveRankingSort')?.addEventListener('change',e=>{sortMode=e.target.value||'score';render()});
+    }
+    const select=$('morimensLoveRankingSort');if(select)select.value=sortMode;
+  }
+  function sortRows(items){
+    const cmpName=(a,b)=>a.name.localeCompare(b.name,'zh-CN');
+    return [...items].sort((a,b)=>{
+      if(sortMode==='likes')return b.likes-a.likes||b.score-a.score||b.dislikes-a.dislikes||cmpName(a,b);
+      if(sortMode==='dislikes')return b.dislikes-a.dislikes||(b.likes+b.dislikes)-(a.likes+a.dislikes)||a.score-b.score||cmpName(a,b);
+      if(sortMode==='heat')return (b.likes+b.dislikes)-(a.likes+a.dislikes)||b.likes-a.likes||b.score-a.score||cmpName(a,b);
+      return b.score-a.score||b.likes-a.likes||a.dislikes-b.dislikes||cmpName(a,b);
+    });
+  }
+  function sortLabel(){
+    return sortMode==='likes'?'爱数量':sortMode==='dislikes'?'拉黑数量':sortMode==='heat'?'总热度（爱 + 拉黑）':'总分（爱 − 拉黑）';
+  }
+
   function scoreClass(score){return score>0?'isPositive':score<0?'isNegative':'isZero'}
   function render(){
+    ensureControls();
     const host=$('morimensLoveRankingList');
     if(!host)return;
     if(!rows.length){host.innerHTML='<div class="loveRankEmpty">暂无角色数据。</div>';return}
     const maxAbs=Math.max(1,...rows.map(r=>Math.abs(r.score)));
-    const sorted=[...rows].sort((a,b)=>b.score-a.score||b.likes-a.likes||a.dislikes-b.dislikes||a.name.localeCompare(b.name,'zh-CN'));
+    const sorted=sortRows(rows);
     host.innerHTML=sorted.map((r,index)=>{
       const intensity=Math.min(.58,Math.abs(r.score)/maxAbs*.58).toFixed(3);
       const positive=r.score>0?intensity:'0',negative=r.score<0?intensity:'0';
@@ -126,7 +166,7 @@
       </div>`;
     }).join('');
     const status=$('morimensLoveRankingStatus');
-    if(status)status.textContent=`共 ${sorted.length} 名角色 · 按 赞 − 踩 排序 · 数据跨设备同步`;
+    if(status)status.textContent=`共 ${sorted.length} 个条目 · 按 ${sortLabel()} 排序 · 数据跨设备同步`;
   }
 
   async function load(){
@@ -198,7 +238,7 @@
   }
 
   async function open(){
-    injectStyle();bind();
+    injectStyle();ensureControls();bind();
     if(initialized){render();return}
     if(!window.MorimensData?.db?.records?.length){
       await new Promise(resolve=>{
