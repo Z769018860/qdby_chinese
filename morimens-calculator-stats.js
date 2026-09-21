@@ -59,7 +59,7 @@
     setAutoBase('powerBonus',num(resolved.DamageAmplification),'powerBonus');
     setAutoBase('realmMastery',num(resolved.RealmMastery),'realmMastery');
 
-    if($('attack')&&$('attack').dataset.autoAttack!=='0')$('attack').value=String(resolved.ATK);
+    if($('attack')&&$('autoCharacterStats')?.checked!==false&&$('attack').dataset.autoAttack!=='0')$('attack').value=String(resolved.ATK);
     if($('combatCon'))$('combatCon').textContent=Math.round(resolved.CON).toLocaleString('zh-CN');
     if($('combatAtk'))$('combatAtk').textContent=Math.round(resolved.ATK).toLocaleString('zh-CN');
     if($('combatDef'))$('combatDef').textContent=Math.round(resolved.DEF).toLocaleString('zh-CN');
