@@ -656,6 +656,65 @@
       :'当前角色 / 命轮没有按完成战斗数累计的伤害乘区。';
   }
 
+  function resolvedRouseSkill(){
+    const raw=currentRouseSkill();return raw?resolveSkillEnlighten(raw):null;
+  }
+  function rouseRank(){
+    const skill=resolvedRouseSkill();return Math.min(maxSkillLevel(skill),Math.max(1,Number($('skillLevel')?.value)||1));
+  }
+  function rouseRenderedText(){
+    const skill=resolvedRouseSkill();return skill?String(renderTemplate(skill,rouseRank())||''):'';
+  }
+  function currentSkillMatchesRouseScope(sentence){
+    const text=String(sentence||'');
+    const classifications=effectiveCardClassifications(currentSkill);
+    const slot=String(currentSkill?.slot||'').toLowerCase();
+    const family=String(currentSkill?.cardFamily||'').toLowerCase();
+    const name=String(currentSkill?.name||'');
+    const scopes=[];
+    if(/["“]?Strike["”]?/i.test(text))scopes.push(slot==='strike'||classifications.includes('strike')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('strike'));
+    if(/["“]?Defense["”]?/i.test(text))scopes.push(slot==='defense'||classifications.includes('defense')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('defense'));
+    if(/Command Cards?/i.test(text))scopes.push(family==='command');
+    if(/Exalt/i.test(text)&&!/Rouse/i.test(text))scopes.push(slot==='exalt'||slot==='overexalt');
+    if(name&&text.toLowerCase().includes(name.toLowerCase()))scopes.push(true);
+    return scopes.length?scopes.some(Boolean):true;
+  }
+  function applyGenericRouseEffects(events){
+    if(!rouseActive())return events||[];
+    const text=rouseRenderedText();if(!text)return events||[];
+    const sentences=text.split(/(?<=[.!?])\s+/).filter(Boolean);
+    let mapped=(events||[]).map(event=>{
+      if(event.type!=='active'&&event.type!=='pierce')return event;
+      const next={...event};const labels=[];
+      for(const sentence of sentences){
+        if(!currentSkillMatchesRouseScope(sentence))continue;
+        let m;
+        if(/(?:DMG|damage)\s+always\s+critically\s+hits/i.test(sentence)||/always\s+deals?\s+Critical/i.test(sentence)){next.guaranteedCrit=true;labels.push('灵知觉醒：必定暴击')}
+        if((m=sentence.match(/Crit\.?\s*Rate\s+and\s+Crit\.?\s*DMG\s*\+\s*([\d.]+)%/i))){
+          next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);
+          next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);
+          labels.push('灵知觉醒：暴击率/暴伤 +'+m[1]+'%');
+        }else{
+          if((m=sentence.match(/Crit\.?\s*Rate[^+%]*\+\s*([\d.]+)%/i))){next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴击率 +'+m[1]+'%')}
+          if((m=sentence.match(/Crit\.?\s*DMG[^+%]*\+\s*([\d.]+)%/i))){next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴伤 +'+m[1]+'%')}
+        }
+        if((m=sentence.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：基础伤害 +'+m[1]+'%')}
+        if((m=sentence.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：最终伤害 +'+m[1]+'%')}
+      }
+      if(labels.length)next.resourceEffectLabel=[next.resourceEffectLabel,...new Set(labels)].filter(Boolean).join('；');
+      return next;
+    });
+    const currentIsStrike=String(currentSkill?.slot||'').toLowerCase()==='strike'||effectiveCardClassifications(currentSkill).includes('strike')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('strike');
+    if(currentIsStrike&&/["“]?Strike["”]?\s+(?:becomes|deals?)\s+\{?Pierce DMG\}?/i.test(text)){
+      mapped=mapped.map(event=>(event.type==='active'?{...event,type:'pierce',resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒：打击转为穿透伤害'].filter(Boolean).join('；')}:event));
+    }
+    let extra=0,m=text.match(/["“]?Strike["”]?[^.]{0,120}?(?:deals?|triggers?)\s+(\d+)\s+additional\s+instances?\s+of\s+DMG/i);
+    if(currentIsStrike&&m)extra=Math.max(extra,Number(m[1])||0);
+    m=text.match(/hit count\s*\+\s*(\d+)\s*(?:times?|hits?)?/i);if(m)extra=Math.max(extra,Number(m[1])||0);
+    if(extra>0)mapped=cloneExtraDamageEvents(mapped,extra,'灵知觉醒：额外 '+extra+' 段伤害');
+    return mapped;
+  }
+
   function applyCharacterResourceEffects(events){
     const resources=characterResourceValues();
     const baseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
@@ -695,6 +754,7 @@
       }
       return next;
     });
+    mapped=applyGenericRouseEffects(mapped);
     if(currentAwakener?.id==='awakener-0008'&&baseSkillId==='derived.castor.onyx-plume'){
       const damageAmp=Math.max(0,num(currentFormulaContext().DamageAmplification,0));
       const explorationMult=1+0.20*finishedBattles;
