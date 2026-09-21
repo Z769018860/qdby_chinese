@@ -561,7 +561,7 @@
     'awakener-0027':[
       {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:true,requiredEnlighten:'E3',description:'E3 后，每获得 1 层燃烧，本场战斗基础伤害 +5%；按当前累计层数计算，最高输入 10 层。'},
       {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaActive',label:'当前卡具有活焰',type:'checkbox',calculated:true,description:'勾选表示当前所计算的这张卡带有活焰。活焰是单卡状态，是否存在与层数分开控制。'},
-      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaStacks',label:'活焰层数',min:1,max:3,calculated:true,dependsOn:'fiammaActive',description:'单张卡最多 3 层。基础每层使本卡最终伤害等效果 +30%；3 层时会触发 E2 对特定技能的额外效果。灵知觉醒 + 最终法则时，每层最终伤害/力量效果再额外 +30%。'}
+      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaStacks',label:'活焰层数',inputLabel:'活焰层数',min:1,max:3,calculated:true,dependsOn:'fiammaActive',description:'单张指令卡最多 3 层。基础每层使本卡最终伤害等效果 +30%；3 层时会触发 E2 对特定技能的额外效果。灵知觉醒 + 最终法则时，每层最终伤害/力量效果再额外 +30%。'}
     ],
     'awakener-0035':[
       {overlayId:'overlay.murphy-fauxborn.life-seal',key:'lifeSealStacks',label:'生命封印',min:0,max:5,calculated:true,description:'每层使下一次「妄想公主」施加的诞生仪式 +20%；灵塑启用时该增幅翻倍。5 层时该技能伤害段数翻倍。'}
@@ -1050,7 +1050,7 @@
       }
     }
     if(currentAwakener?.id==='awakener-0027'){
-      const fiammaOn=Number(resources.fiammaActive)>0;
+      const fiammaOn=Number(resources.fiammaActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command';
       const fiammaStacks=fiammaOn?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
       if(fiammaStacks>0){
         const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
@@ -1346,7 +1346,7 @@
     const generatedResources=characterResourceValues();
     if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'){
       const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
-      const fiammaStacks=Number(generatedResources.fiammaActive)>0?Math.min(3,Math.max(1,Math.floor(Number(generatedResources.fiammaStacks)||1))):0;
+      const fiammaStacks=Number(generatedResources.fiammaActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'?Math.min(3,Math.max(1,Math.floor(Number(generatedResources.fiammaStacks)||1))):0;
       const e2Unlocked=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2');
       const baseStrPct=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg4||currentSkill?.descriptionArgs?.Arg2,rank),0));
       const extraStrPct=e2Unlocked&&fiammaStacks===3?Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg3,rank),3)):0;
@@ -1404,7 +1404,7 @@
         parts.push(`血色桎梏本回合效果：主动伤害附加 ${bleedPct.toFixed(0)}% 流血`);
       }
       if(currentAwakener?.id==='awakener-0027'){
-        const fiammaStacks=Number(resources.fiammaActive)>0?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
+        const fiammaStacks=Number(resources.fiammaActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
         if(fiammaStacks>0){
           const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
           parts.push(`活焰 ${fiammaStacks}/3 层：本卡最终伤害 +${fiammaStacks*(30+(absoluteRouse?30:0))}%${absoluteRouse?'（灵知觉醒 + 最终法则）':''}`);
