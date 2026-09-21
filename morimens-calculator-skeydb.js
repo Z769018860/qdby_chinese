@@ -207,9 +207,7 @@
     for(const skill of currentSkills||[]){
       if(!skill?.name)continue;
       const verified=zhSkillNames[skill.id];
-      const fallback=skill.kind==='derivedSkill'?'对应衍生卡':(slotZh[skill.slot]||'对应技能');
-      const cn=verified||fallback;
-      if(cn&&cn!==skill.name)out=out.split(skill.name).join(cn);
+      if(verified&&verified!==skill.name)out=out.split(skill.name).join(verified);
     }
     for(const [re,to] of phraseZh)out=out.replace(re,to);
     return out
@@ -238,9 +236,7 @@
   function localizedSkillName(skill){
     if(isEnglish())return skill?.name||'Skill';
     if(zhSkillNames[skill?.id])return zhSkillNames[skill.id];
-    const translated=zhText(skill?.name||'技能');
-    if(/[A-Za-z]/.test(translated))return skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||'技能');
-    return translated||'技能';
+    return skill?.name||'技能';
   }
   function skillLabel(skill){
     const slot=skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||'技能');
@@ -270,7 +266,7 @@
     const appendGroup=(label,rows)=>{
       if(!rows.length)return;
       const group=document.createElement('optgroup');group.label=label;
-      rows.forEach((skill,index)=>{const o=document.createElement('option');o.value=skill.id;const labelText=skillLabel(skill);o.textContent=skill.kind==='derivedSkill'&&labelText==='衍生卡'?`衍生卡 ${index+1}`:labelText;o.selected=skill.id===wanted;group.appendChild(o)});
+      rows.forEach((skill,index)=>{const o=document.createElement('option');o.value=skill.id;const labelText=skillLabel(skill);o.textContent=labelText||`技能 ${index+1}`;o.selected=skill.id===wanted;group.appendChild(o)});
       select.appendChild(group);
     };
     appendGroup(isEnglish()?'Main Skills':'主技能',main);
