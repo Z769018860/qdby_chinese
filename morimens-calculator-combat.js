@@ -438,7 +438,8 @@
       const afterBase=baseRaw*(1+(basePct+skillBasePct)/100);
       const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
       const counterContribution=counterCurrent*sourceCounterCoef;
-      const resourceFlatDamage=Math.max(0,Number(source.resourceFlatDamage)||0);
+      const resourceFlatAtkPercent=Math.max(0,Number(source.resourceFlatAtkPercent)||0);
+      const resourceFlatDamage=Math.max(0,Number(source.resourceFlatDamage)||0)+attack*resourceFlatAtkPercent/100;
       const resourceFlatDamageAmpBonusPct=Math.max(0,Number(source.resourceFlatDamageAmpBonusPct)||0);
       const raw=afterBase+strengthPart+tentacleContribution+counterContribution+soulforgeFlat;
       // Some character mechanics add a flat amount directly to this Active/Pierce event
@@ -462,7 +463,7 @@
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'')+(source.doubleCritDamageBonus?' · 残骸效果已启用':'')+(source.counterBonusCoefficient?` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`:'') ,
+        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'')+(source.doubleCritDamageBonus?' · 残骸效果已启用':'')+(source.counterBonusCoefficient?` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`:'')+(resourceFlatAtkPercent?` · 命轮额外 ATK×${resourceFlatAtkPercent.toFixed(1)}%`:'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
@@ -472,6 +473,7 @@
         resourceDamageMultiplier,
         counterBonusCoefficient:sourceCounterCoef*100,
         counterContribution,
+        resourceFlatAtkPercent,
         resourceFlatDamage,
         resourceFlatDamageAmpBonusPct,
         critRateBonus:Number(source.critRateBonus)||0,
