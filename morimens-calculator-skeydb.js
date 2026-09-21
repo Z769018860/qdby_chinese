@@ -392,13 +392,45 @@
   }
 
   const resourceSpecs={
+    'awakener-0001':[
+      {key:'personaState',label:'当前人格',type:'select',calculated:false,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的 Realm and Persona 状态。不同人格会改变对应界域触发效果；当前作为战斗状态记录，不跨技能猜测触发时序。'}
+    ],
+    'awakener-0056':[
+      {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命者',min:0,max:5,calculated:false,description:'织命者层数；E3 上限为 5，E3 前上限为 3。用于 Singularity Warp 后的 Infinite Threads 追击。'},
+      {key:'singularityWarpActive',label:'Singularity Warp 已触发',type:'checkbox',calculated:false,description:'标记本次 Exalt 是否满足 Singularity Warp；额外效果依具体 Exalt 文本处理。'}
+    ],
+    'awakener-0060':[
+      {overlayId:'overlay.caraboo.offering',key:'offeringStacks',label:'Offering / 供奉',min:0,max:5,calculated:false},
+      {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'Satiety / 饱足',min:0,max:50,calculated:false}
+    ],
+    'awakener-0018':[
+      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:false,description:'10 层 Finale 时获得衍生卡 Illusion’s End。'},
+      {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'Finale Form 生效',type:'checkbox',calculated:false,description:'Finale Form 会改变 Doll: Inferno 的特定技能；当前作为形态状态记录。'}
+    ],
     'awakener-0014':[
       {overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true},
       {key:'evernightPriorPlays',label:'本回合已打出永夜',min:0,max:20,calculated:true,requiredEnlighten:'E3',description:'E3 起：第二张及后续「永夜」额外享受 100% 力量加成。这里填写本次永夜之前，本回合已经打出的永夜次数。'}
     ],
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
+      {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'勾选后，当前指令卡额外造成一次 200% ATK 主动伤害。适用于本回合首张指令卡，或圣心第 3 次打出后使下一张指令卡获得赎罪苦痛的情况。'}
+    ],
+    'awakener-0058':[
+      {overlayId:'overlay.pontos.pack-hunt',key:'packHuntStacks',label:'Pack Hunt / 群猎',min:0,max:9,calculated:true,description:'有至少 1 层时，下一张 Gaunt 消耗 1 层并额外触发 1 次；伤害计算会让 Slay-Gaunt 的固定伤害额外结算 1 次。'}
+    ],
+    'awakener-0020':[
+      {overlayId:'overlay.ramona-timeworn.negentropy',key:'negentropyStacks',label:'Negentropy / 负熵',min:0,max:3,calculated:false,description:'3 层可使 Ramona: Timeworn 的指令卡触发 Loop 效果；不同卡的 Loop 效果不同，当前保留为战斗状态。'}
+    ],
+    'awakener-0040':[
+      {overlayId:'overlay.pickman.creativity',key:'creativityStacks',label:'Creativity / 创造力',min:0,max:10,calculated:false},
+      {overlayId:'overlay.pickman.fantasia',key:'fantasiaStacks',label:'Fantasia / 幻想',min:0,max:999,calculated:false,description:'SKeyDB 未给出 Fantasia 明确总上限，暂以 999 作为输入保护上限。'}
+    ],
+    'awakener-0057':[
+      {overlayId:'overlay.saya.gynoecium',key:'gynoeciumStacks',label:'Gynoecium',min:0,max:4,calculated:false,description:'可被 Saya 的 Exalt 消耗以强化效果，最多 4 层。'}
+    ],
+    'awakener-0055':[
+      {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'Vortex Reload',min:0,max:999,calculated:false,description:'其他唤醒体释放 Exalt 后消耗 1 层并追击 Vortex! Shell!；SKeyDB 未给出明确总上限。'}
     ],
     'awakener-0061':[
       {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高 Ogier: Oathbound 指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后最终伤害增幅提高。'}
@@ -565,8 +597,16 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0&&['active','pierce','fixed','pure'].includes(next.type)){
         next.onDamageBleedPct=Math.max(0,Number(resources.sinMarkStacks)||0);
       }
+      if(currentAwakener?.id==='awakener-0041'&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&Number(resources.polluxCommandFinalBonusPct)>0&&(next.type==='active'||next.type==='pierce')){
+        const bonus=Math.max(0,Math.min(100,Number(resources.polluxCommandFinalBonusPct)||0));
+        next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
+        next.resourceEffectLabel='Ablaze/Alight：指令卡最终伤害 +'+bonus.toFixed(1)+'%';
+      }
       return next;
     });
+    if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0&&['derived.pontos.raid-gaunt','derived.pontos.vex-gaunt','derived.pontos.slay-gaunt'].includes(baseSkillId)){
+      mapped=cloneExtraDamageEvents(mapped,1,'Pack Hunt：消耗 1 层，本张 Gaunt 额外触发 1 次');
+    }
     if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       const stacks=Math.min(3,Math.max(0,Number(resources.undertowStacks)||0));
       const overlay=resolvedOverlay('overlay.ogier-oathbound.undertow');
@@ -908,6 +948,8 @@
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：Necrotic Gala 暴击伤害加成翻倍');
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
+      if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`Pack Hunt ${Number(resources.packHuntStacks)} 层：本张 Gaunt 额外触发 1 次（消耗 1 层）`);
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标 Spellbound ${Number(resources.spellboundStacks)} 层：Enthrall 按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('赎罪苦痛：当前指令卡额外造成 200% ATK 伤害');
