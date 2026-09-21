@@ -85,6 +85,15 @@
     return {baseRaw,baseAfterPools,amplifiedBase,withAdditions,afterOutgoingState,afterFinal,beforeCrit};
   }
   window.MorimensDamageMath={...(window.MorimensDamageMath||{}),evaluateCoreDamage:evaluateUniversalCore};
+  const damageMathReferenceCases=(()=>{
+    const critBase=evaluateUniversalCore({baseRaw:309,basePools:[30,25],damageAmpPct:105,strengthAdd:0,additiveAdd:0,outgoingStateMult:1,finalPools:[],enemyStateMult:1,postMult:.95});
+    const vulnerableStrength=evaluateUniversalCore({baseRaw:309,basePools:[30,25],damageAmpPct:105,strengthAdd:47*3,additiveAdd:0,outgoingStateMult:1,finalPools:[],enemyStateMult:1.5,postMult:.95});
+    return {
+      crit:{computed:critBase.beforeCrit*2.6,reference:2542.5},
+      strengthVulnerable:{computed:vulnerableStrength.beforeCrit,reference:1667.8}
+    };
+  })();
+  window.MorimensDamageMath.referenceCases=damageMathReferenceCases;
   function currentLevel(){return clamp(Number.parseFloat(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90,1,90)}
   function currentRecord(){const id=$('charSelect')?.value;return window.MorimensData?.db?.records?.find(x=>x.id===id)||((window.MorimensCharacterSync?.record?.id===id)?window.MorimensCharacterSync.record:null)||null}
   function resolvedStats(){
