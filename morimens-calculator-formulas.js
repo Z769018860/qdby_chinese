@@ -282,6 +282,7 @@
         [/\bafter\b/i,'After'],
         [/\bbefore\b/i,'Before'],
         [/\beach time\b/i,'Each time'],
+        [/\bfor (?:each|every)\b/i,'For each/every'],
         [/\bat (?:the )?(?:turn|battle) (?:start|end)\b/i,'回合/战斗时点'],
         [/\bwithin this turn\b/i,'本回合条件']
       ];
@@ -339,9 +340,12 @@
         messages.push('技能含“跃迁”条件伤害/STR/触腕修正；当前默认不把跃迁条件强行计入。');
       }
 
-      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\})/i;
+      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\})/i;
       if(conditionalStatusPattern.test(text)){
         messages.push('检测到条件式 Poison / Counter / Bleed：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
+      }
+      if(/Tentacle\s+(?:performs?|makes?)\s+(?:an?\s+)?attack[^.]*?(?:gain|gains)\s+\{Counter\}[^.]*?DMG dealt/i.test(text)){
+        messages.push('检测到“触腕立即攻击并按本次伤害获得 Counter”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
       }
       return {needsHitOverride,minHits,maxHits,messages:[...new Set(messages)]};
     }
