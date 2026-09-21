@@ -63,17 +63,21 @@
         <div class="field"><label for="currentBleed">当前 Bleed / 流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Bleed”和本回合末流血结算。</small></div>
         <div class="field"><label for="currentCounter">当前 Counter / 反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Counter”事件。</small></div>
         <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于百分比献祭"><small>SKeyDB 未公开通用 CON→Max HP 换算；涉及“X% 最大生命的献祭/延迟献祭”时请填写游戏内实际最大生命。</small></div>
-        <div class="field"><label for="currentSacrifice">当前 Sacrifice / 献祭层数</label><input id="currentSacrifice" type="number" min="0" step="0.1" value="0"><small>回合末每 1 层造成 1 点自身伤害，随后移除 50% 层数；献祭跨战斗保留。</small></div>
-        <div class="field"><label for="currentDelayedSacrifice">当前 Delayed Sacrifice / 延迟献祭</label><input id="currentDelayedSacrifice" type="number" min="0" step="0.1" value="0"><small>本回合不结算献祭自伤；下回合开始转化为同量献祭。部分效果判定时也视作献祭。</small></div>
+        <div class="field"><label for="currentSacrifice">我方当前 Sacrifice / 献祭层数</label><input id="currentSacrifice" type="number" min="0" step="0.1" value="0"><small>回合末每 1 层造成 1 点自身伤害，随后移除 50% 层数；献祭跨战斗保留。</small></div>
+        <div class="field"><label for="currentDelayedSacrifice">我方当前 Delayed Sacrifice / 延迟献祭</label><input id="currentDelayedSacrifice" type="number" min="0" step="0.1" value="0"><small>本回合不结算献祭自伤；下回合开始转化为同量献祭。部分效果判定时也视作献祭。</small></div>
         <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
         <div class="field"><label for="corrosionLossMultiplier">侵蚀生命损失倍率 %</label><input id="corrosionLossMultiplier" type="number" min="0" step="1" value="300"><small>SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。</small></div>
         <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
+        <div class="field"><label for="enemySacrificeAmount">敌方当前献祭层数</label><input id="enemySacrificeAmount" type="number" min="0" step="0.1" value="0"><small>回合末每层造成 1 点伤害并移除 50%；该伤害计入对敌总伤害，并按“其他伤害”触发侵蚀/旧日余烬。</small></div>
+        <div class="field"><label for="birthRitualStacks">Birth Ritual / 诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的 Active / Tentacle DMG 的 1% 转化为献祭；上限 75 层，回合末移除。</small></div>
+        <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的 Murphy: Fauxborn「Tidal Sacrament / 潮汐圣礼」Rouse、遗物等持续战斗态。灵塑的同类效果会自动叠加，不必重复填写。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
         <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕/Poison/Bleed，并在最后清空 Corrosion、重置 Ancient Embers；关闭可只查看本次卡牌的即时结果。</small></span></label>
         <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入回合末 Poison<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG。</small></span></label>
         <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入回合末 Bleed<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG，并随后移除。</small></span></label>
         <label class="check"><input id="includeSacrificeTurnEnd" type="checkbox" checked><span>计入回合末献祭自伤<small>仅影响自身承受伤害，不会混入“对敌总伤害”；结算后献祭层数减半。</small></span></label>
+        <label class="check"><input id="includeEnemySacrificeTurnEnd" type="checkbox" checked><span>计入敌方献祭回合末伤害<small>每层造成 1 点对敌伤害，受敌方加固影响；结算后敌方献祭减半。</small></span></label>
       </div>
       <div class="combatReadout" id="enemyLevelReadout"></div>
       <div class="combatReadout" id="combatConversion"></div>`;
@@ -91,7 +95,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','currentPoison','currentBleed','currentCounter','actorMaxHp','currentSacrifice','currentDelayedSacrifice','corrosionAmount','corrosionLossMultiplier','embersAmount','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeSacrificeTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','currentPoison','currentBleed','currentCounter','actorMaxHp','currentSacrifice','currentDelayedSacrifice','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeSacrificeTurnEnd','includeEnemySacrificeTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -188,8 +192,18 @@
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置；是否推进到回合末由“结算到本回合结束”总开关统一控制。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
+      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置；是否推进到回合末由“结算到本回合结束”总开关统一控制。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>献祭 / 延迟献祭</b><br>SKeyDB：献祭在持有者回合末造成等于当前层数的伤害，然后移除 50% 层数并可跨战斗保留；延迟献祭在下回合开始转化为同量献祭，且部分判定中也视作献祭。敌方献祭伤害作为“其他类型 DMG”进入事件链：受 Fortress/加固影响，并按 50% 规则消耗 Corrosion/Ancient Embers；不吃 Active/Tentacle 专属的 Vulnerable/Weakness，也不暴击。我方献祭只统计自身承受伤害，不加入对敌总伤害。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
     `;
+  }
+
+  function soulforgeDamageToSacrificePct(progression){
+    if(!progression?.soulforgeEnabled||!progression?.soulforgeTalent||!(progression.soulforgeLevel>0))return 0;
+    const talent=progression.soulforgeTalent,text=String(talent.descriptionTemplate||'');
+    const match=text.match(/inflict\s+\{Sacrifice\}\s+stacks\s+equal\s+to\s+\[([^\]]+)\]%\s+of\s+DMG\s+dealt/i);
+    if(!match)return 0;
+    const raw=String(match[1]),key=raw.includes(':')?raw.split(':').pop():raw;
+    const value=window.MorimensFormulaEngine?.resolveArg?.(talent.descriptionArgs?.[key],progression.soulforgeLevel,{});
+    return Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
   }
 
   function selectedSkillDelayedSacrificePct(){
@@ -372,6 +386,14 @@
         canCrit:false,fixed:true
       };
     }
+    function enemySacrificeEvent(stacks,id='sacrifice-turn-end'){
+      const raw=Math.max(0,Number(stacks)||0);
+      const damage=raw*fortifyCoef;
+      return {
+        id,type:'sacrifice',source:'status',label:'献祭 · 回合末伤害',action:'turn_end',
+        stacks:raw,raw,normal:damage,crit:damage,expected:damage,damage,canCrit:false
+      };
+    }
   
     const events=[];
     const groupDamage=new Map();
@@ -391,7 +413,11 @@
     const initialSacrifice=Math.max(0,n('currentSacrifice'));
     const initialDelayedSacrifice=Math.max(0,n('currentDelayedSacrifice'));
     const skillDelayedSacrificePct=selectedSkillDelayedSacrificePct();
-    const skillDelayedSacrificeAdded=actorMaxHp>0?actorMaxHp*skillDelayedSacrificePct/100:0;
+    const skillDelayedSacrificeAdded=actorMaxHp>0?actorMaxHp*skillDelayedSacrificePct/100*sequenceRepeat:0;
+    const initialEnemySacrifice=Math.max(0,n('enemySacrificeAmount'));
+    const birthRitualStacks=clamp(Math.floor(n('birthRitualStacks')),0,75);
+    const manualDamageToSacrificePct=Math.max(0,n('sacrificeOnDamagePct'));
+    const soulforgeDamageToSacrifice=soulforgeDamageToSacrificePct(progression);
 
     function groupKey(repeatIndex,groupId){return `${repeatIndex}:${groupId||''}`}
     function pushDamageEvent(event){
@@ -568,6 +594,22 @@
       const stacks=initialBleed+bleedAdded;
       pushDamageEvent(pureEvent(stacks,'Bleed · 回合末 Pure DMG（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
     }
+    const sacrificeSourceDamage=events
+      .filter(x=>['active','pierce','tentacle','fixed'].includes(x.type)&&x.damage>0)
+      .reduce((sum,x)=>sum+(Number(x.damage)||0),0);
+    const birthRitualSourceDamage=events
+      .filter(x=>(x.type==='active'||x.type==='tentacle')&&x.damage>0)
+      .reduce((sum,x)=>sum+(Number(x.damage)||0),0);
+    const damageToSacrificePct=manualDamageToSacrificePct+soulforgeDamageToSacrifice;
+    const sacrificeFromDamage=sacrificeSourceDamage*damageToSacrificePct/100;
+    const sacrificeFromBirthRitual=birthRitualSourceDamage*birthRitualStacks/100;
+    const enemySacrificeBeforeTurnEnd=initialEnemySacrifice+sacrificeFromDamage+sacrificeFromBirthRitual;
+    const includeEnemySacrificeTurnEnd=includeTurnEndSettlement&&$('includeEnemySacrificeTurnEnd')?.checked!==false;
+    if(includeEnemySacrificeTurnEnd&&enemySacrificeBeforeTurnEnd>0){
+      pushDamageEvent(enemySacrificeEvent(enemySacrificeBeforeTurnEnd));
+    }
+    const enemySacrificeRemaining=includeEnemySacrificeTurnEnd?enemySacrificeBeforeTurnEnd*0.5:enemySacrificeBeforeTurnEnd;
+
     const includeSacrificeTurnEnd=includeTurnEndSettlement&&$('includeSacrificeTurnEnd')?.checked!==false;
     const sacrificeSelfDamage=includeSacrificeTurnEnd?initialSacrifice:0;
     const sacrificeRemaining=includeSacrificeTurnEnd?initialSacrifice*0.5:initialSacrifice;
@@ -590,6 +632,7 @@
     const bleedEvents=events.filter(x=>x.type==='bleed'&&x.damage>0);
     const corrosionEvents=events.filter(x=>x.type==='corrosion');
     const counterEvents=events.filter(x=>x.type==='counter'&&x.damage>0);
+    const sacrificeEvents=events.filter(x=>x.type==='sacrifice'&&x.damage>0);
     const crittableEvents=[...activeEvents,...pierceEvents];
     const activeNormal=crittableEvents.reduce((s,x)=>s+x.normal,0);
     const activeCrit=crittableEvents.reduce((s,x)=>s+x.crit,0);
@@ -602,6 +645,7 @@
     const poisonTotal=poisonEvents.reduce((s,x)=>s+x.damage,0);
     const bleedTotal=bleedEvents.reduce((s,x)=>s+x.damage,0);
     const counterTotal=counterEvents.reduce((s,x)=>s+x.damage,0);
+    const sacrificeTotal=sacrificeEvents.reduce((s,x)=>s+x.damage,0);
     const total=events.reduce((s,x)=>s+(Number(x.damage)||0),0);
     const projectedTurnEnd=tentacleEvent(100,'回合末触腕预览','preview').damage*turnEndCount;
   
@@ -617,7 +661,7 @@
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
       if((event.type==='poison'||event.type==='bleed'||event.type==='corrosion'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
-      const tags={active:'Active',pierce:'Pierce',tentacle:'Tentacle',pure:'Pure',fixed:'Fixed',poison:'Poison',bleed:'Bleed',corrosion:'Corrosion',counter:'Counter'};
+      const tags={active:'Active',pierce:'Pierce',tentacle:'Tentacle',pure:'Pure',fixed:'Fixed',poison:'Poison',bleed:'Bleed',corrosion:'Corrosion',counter:'Counter',sacrifice:'献祭'};
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
@@ -632,6 +676,15 @@
     rows.push(['Poison DMG 合计',poisonTotal]);
     rows.push(['Bleed DMG 合计',bleedTotal]);
     rows.push(['Counter DMG 合计',counterTotal]);
+    rows.push(['敌方献祭回合末伤害',sacrificeTotal]);
+    rows.push(['敌方初始献祭',initialEnemySacrifice]);
+    rows.push(['伤害转化献祭比例',damageToSacrificePct]);
+    if(soulforgeDamageToSacrifice>0)rows.push(['其中：灵塑自动伤害→献祭 %',soulforgeDamageToSacrifice]);
+    if(manualDamageToSacrificePct>0)rows.push(['其中：手动持续状态伤害→献祭 %',manualDamageToSacrificePct]);
+    if(birthRitualStacks>0)rows.push(['诞生仪式新增献祭',sacrificeFromBirthRitual]);
+    if(damageToSacrificePct>0)rows.push(['伤害转化新增献祭',sacrificeFromDamage]);
+    rows.push(['敌方回合末结算前献祭',enemySacrificeBeforeTurnEnd]);
+    rows.push(['敌方最终献祭',enemySacrificeRemaining]);
     if(!includeTurnEnd&&turnEndCount>0)rows.push(['回合末触腕预览（未计入总伤害）',projectedTurnEnd]);
     rows.push(['本次新增侵蚀',corrosionAdded]);
     rows.push(['侵蚀追加生命损失合计',corrosionDamage]);
@@ -672,7 +725,7 @@
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定 Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Corrosion <b>${corrosionEvents.length}</b> / Counter <b>${counterEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定 Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Corrosion <b>${corrosionEvents.length}</b> / Counter <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
     }
     window.MorimensDamageEvents={
       mode,
@@ -682,9 +735,9 @@
       events,
       totals:{
         active:activeTotal,pierce:pierceTotal,tentacle:tentacleTotal,pure:pureTotal,fixed:fixedTotal,
-        poison:poisonTotal,bleed:bleedTotal,counter:counterTotal,corrosion:corrosionDamage,embers:embersDamage,total
+        poison:poisonTotal,bleed:bleedTotal,counter:counterTotal,sacrifice:sacrificeTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
-      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,corrosionInitial:initialCorrosion,corrosionAdded,corrosionFinal:corrosionRemaining,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent,sacrificeInitial:initialSacrifice,sacrificeSelfDamage,sacrificeFinal:sacrificeRemaining,delayedSacrificeInitial:initialDelayedSacrifice,delayedSacrificeAdded:skillDelayedSacrificeAdded,delayedSacrificeFinal,sacrificeForChecks},
+      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,corrosionInitial:initialCorrosion,corrosionAdded,corrosionFinal:corrosionRemaining,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent,sacrificeInitial:initialSacrifice,sacrificeSelfDamage,sacrificeFinal:sacrificeRemaining,delayedSacrificeInitial:initialDelayedSacrifice,delayedSacrificeAdded:skillDelayedSacrificeAdded,delayedSacrificeFinal,sacrificeForChecks,enemySacrificeInitial:initialEnemySacrifice,enemySacrificeFromDamage:sacrificeFromDamage,enemySacrificeFromBirthRitual:sacrificeFromBirthRitual,enemySacrificeBeforeTurnEnd,enemySacrificeDamage:sacrificeTotal,enemySacrificeFinal:enemySacrificeRemaining,damageToSacrificePct,birthRitualStacks},
       remaining:{corrosion:corrosionRemaining,embers:embersRemaining,corrosionBeforeTurnEndClear,embersBeforeTurnReset,turnEndProcessed,includeTurnEndSettlement}
     };
   }
@@ -695,7 +748,7 @@
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
       tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
       actorMaxHp:0,currentSacrifice:0,currentDelayedSacrifice:0,
-      corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
+      corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,enemySacrificeAmount:0,birthRitualStacks:0,sacrificeOnDamagePct:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
     if($('propagationConsumeEmbryo'))$('propagationConsumeEmbryo').checked=false;
@@ -708,6 +761,7 @@
     if($('includePoisonTurnEnd'))$('includePoisonTurnEnd').checked=true;
     if($('includeBleedTurnEnd'))$('includeBleedTurnEnd').checked=true;
     if($('includeSacrificeTurnEnd'))$('includeSacrificeTurnEnd').checked=true;
+    if($('includeEnemySacrificeTurnEnd'))$('includeEnemySacrificeTurnEnd').checked=true;
     window.MorimensRealmEngine?.render?.();
     toggleTentacleMode();
     setTimeout(()=>window.MorimensStatsSync?.updateCharacterStats?.(),20);
