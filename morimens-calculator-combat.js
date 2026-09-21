@@ -30,20 +30,21 @@
     const realm=document.createElement('div');
     realm.className='builderBlock';realm.id='realmTentacleModel';
     realm.innerHTML=`
-      <div class="builderTitle"><span>⑥ 界域精通与触腕伤害</span><small>SKeyDB 数据公式</small></div>
+      <div class="builderTitle"><span>⑦ 界域精通与触腕伤害</span><small>SKeyDB 数据公式</small></div>
       <div class="formGrid">
         <div class="field"><label for="realmMastery">最终界域精通</label><input id="realmMastery" type="number" min="0" step="0.1" value="0"><small>默认按角色等级与 SKeyDB 副属性成长规则自动带入，可手动覆盖。</small></div>
-        <div class="field"><label for="tentacleMode">深海体系</label><select id="tentacleMode"><option value="standard">普通深海</option><option value="benthos">深渊深海</option></select></div>
-        <div class="field"><label for="tentacleStance">触腕姿态</label><select id="tentacleStance"><option value="surging">涨潮 · 100%</option><option value="tranquil">静海 · 50%</option><option value="raging">怒涛 · 125%</option></select></div>
+        <div class="field"><label for="tentacleMode">触腕基础模型</label><select id="tentacleMode"><option value="standard">普通深海 / 普通触腕</option><option value="benthos">深渊深海</option></select><small>选择“普通/深渊深海”界域时会自动锁定对应模型。</small></div>
+        <div class="field"><label for="tentacleStance">触腕姿态</label><select id="tentacleStance"><option value="surging">涨潮</option><option value="tranquil">静海</option><option value="raging">怒涛</option></select></div>
         <div class="field" id="standardTentacleField"><label for="currentTentacleDamage">当前基础触腕伤害</label><input id="currentTentacleDamage" type="number" min="0" step="1" value="0"><small>普通深海的基础值 SKeyDB 未公开统一生成公式，直接填游戏触腕图标当前数值。</small></div>
         <div class="field" id="benthosHpField" hidden><label for="teamMaxHp">队伍最大生命</label><input id="teamMaxHp" type="number" min="0" step="1" value="0"><small>深渊深海：基础触腕伤害 = 队伍最大生命 × 5%。</small></div>
         <div class="field"><label for="tentacleExtraBonus">额外触腕伤害增幅 %</label><input id="tentacleExtraBonus" type="number" step="0.1" value="0"><small>用于命轮、技能、遗物等已经折算后的额外触腕增幅。</small></div>
+        <div class="field"><label for="strengthDown">力量降低 STR▼</label><input id="strengthDown" type="number" min="0" step="0.1" value="0"><small>主动伤害每点 -1；触腕按 50% 生效。</small></div>
+        <div class="field" id="benthosRagingField" hidden><label for="benthosRagingPct">深渊怒涛基础倍率 %</label><input id="benthosRagingPct" type="number" min="0" step="0.1" value="100"><small>SKeyDB 2.6.1 当前公开记录为 X，未给固定值；请按游戏内显示校准。</small></div>
         <div class="field"><label for="tentacleCount">当前触腕数</label><input id="tentacleCount" type="number" min="0" step="1" value="1"></div>
         <div class="field"><label for="tentacleAttackTimes">每只触腕攻击次数</label><input id="tentacleAttackTimes" type="number" min="0" step="1" value="1"></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
-        <label class="check"><input id="benthosPureTeam" type="checkbox"><span>全队仅深海 / 混沌<small>深渊深海界域精通效果翻倍。</small></span></label>
-        <label class="check"><input id="includeTurnEndTentacle" type="checkbox"><span>把回合末触腕攻击计入总伤害<small>默认只展示，不与当前技能伤害强行合并。</small></span></label>
+        <label class="check"><input id="includeTurnEndTentacle" type="checkbox"><span>把回合末触腕攻击计入总伤害<small>深渊静海会自动禁止回合末触腕攻击。</small></span></label>
       </div>
       <div class="combatReadout" id="tentacleReadout"></div>
       <details class="formulaSource"><summary>SKeyDB 计算公式与数据来源</summary><div id="tentacleFormulaSource"></div></details>`;
@@ -51,7 +52,7 @@
     const enemy=document.createElement('div');
     enemy.className='builderBlock';enemy.id='combatModel';
     enemy.innerHTML=`
-      <div class="builderTitle"><span>⑦ 敌方属性与异常伤害</span><small>SKeyDB 状态规则</small></div>
+      <div class="builderTitle"><span>⑧ 敌方属性与异常伤害</span><small>SKeyDB 状态规则</small></div>
       <div class="formGrid">
         <div class="field"><label for="enemyDefense">敌方防御力</label><input id="enemyDefense" type="number" min="0" step="1" value="0"></div>
         <div class="field"><label for="defenseMode">防御换算</label><select id="defenseMode"><option value="manual">使用手动实测系数</option><option value="curve">可校准曲线 K ÷ (K + 防御)</option></select></div>
@@ -75,7 +76,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCount','tentacleAttackTimes','benthosPureTeam','includeTurnEndTentacle','enemyDefense','defenseMode','defenseConstant','fortressStacks','corrosionAmount','embersAmount']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','strengthDown','benthosRagingPct','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyDefense','defenseMode','defenseConstant','fortressStacks','corrosionAmount','embersAmount']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -86,36 +87,46 @@
     document.addEventListener('click',event=>{if(event.target?.id==='resetBtn')setTimeout(resetEnemy,30)},true);
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(calculate));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
+    window.addEventListener('morimens-realm-change',()=>queueMicrotask(()=>{toggleTentacleMode();renderTriplet();calculate()}));
     toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();
     window.dispatchEvent(new CustomEvent('morimens-calculator-ui-ready'));
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
   }
 
+  function effectiveTentacleMode(){
+    const realm=window.MorimensRealmEngine?.state?.();
+    return realm?.tentacleMode||$('tentacleMode')?.value||'standard';
+  }
   function toggleTentacleMode(){
-    const benthos=$('tentacleMode')?.value==='benthos';
+    const realm=window.MorimensRealmEngine?.state?.();
+    const forced=realm?.tentacleMode;
+    if($('tentacleMode')){if(forced)$('tentacleMode').value=forced;$('tentacleMode').disabled=Boolean(forced)}
+    const benthos=effectiveTentacleMode()==='benthos';
     if($('standardTentacleField'))$('standardTentacleField').hidden=benthos;
     if($('benthosHpField'))$('benthosHpField').hidden=!benthos;
+    if($('benthosRagingField'))$('benthosRagingField').hidden=!(benthos&&$('tentacleStance')?.value==='raging');
   }
 
   function renderTriplet(){
     const rec=currentRecord();if(!rec)return;
-    const stats=resolvedStats();
+    const stats=resolvedStats(),realm=window.MorimensRealmEngine?.state?.()||{};
     if($('combatCon'))$('combatCon').textContent=fmt(stats.CON);
-    if($('combatAtk'))$('combatAtk').textContent=fmt(stats.ATK);
-    if($('combatDef'))$('combatDef').textContent=fmt(stats.DEF);
+    if($('combatAtk'))$('combatAtk').textContent=fmt((Number(stats.ATK)||0)*(Number(realm.atkMultiplier)||1));
+    if($('combatDef'))$('combatDef').textContent=fmt((Number(stats.DEF)||0)*(Number(realm.defMultiplier)||1));
   }
 
   function tentacleState(){
-    const engine=window.MorimensFormulaEngine;
-    if(!engine)return {base:0,stanceMult:1,masteryMult:1,extraMult:1,attack:0,ragingTriggerPct:50};
+    const engine=window.MorimensFormulaEngine,realm=window.MorimensRealmEngine?.state?.()||{};
+    if(!engine)return {base:0,stanceMult:1,masteryMult:1,extraMult:1,attack:0,ragingTriggerPct:50,turnEndAllowed:true};
     return engine.resolveTentacle({
-      mode:$('tentacleMode')?.value||'standard',
+      mode:effectiveTentacleMode(),
       stance:$('tentacleStance')?.value||'surging',
       currentTentacle:n('currentTentacleDamage'),
       teamMaxHp:n('teamMaxHp'),
       realmMastery:n('realmMastery'),
-      allAequorChaos:$('benthosPureTeam')?.checked===true,
-      extraBonusPct:n('tentacleExtraBonus')
+      allAequorChaos:realm.mode==='benthos'&&realm.pureTeam===true,
+      extraBonusPct:n('tentacleExtraBonus'),
+      benthosRagingPct:n('benthosRagingPct',100)
     });
   }
 
