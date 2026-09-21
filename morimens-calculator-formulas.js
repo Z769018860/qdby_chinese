@@ -500,6 +500,12 @@
         });
       }
 
+      function pureMinimumActorMaxHpPercent(matchEnd){
+        const local=template.slice(matchEnd,matchEnd+220);
+        const m=local.match(/(?:cannot\s+be\s+(?:less|lower)\s+than|with\s+a\s+minimum\s+DMG\s+equal\s+to)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:your|the\s+caster['’]s)\s+(?:own\s+)?(?:Max|max)\s+HP/i);
+        if(!m)return 0;
+        return m[1]!==undefined?num(resolveTemplateArg(skill,m[1],rank,ctx),0):num(m[2],0);
+      }
       const purePattern=/\{Pure DMG\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:(?:the|a)\s+)?(?:target(?:'s|’s)|enemy(?:'s|’s)|each enemy(?:'s|’s)|their)\s+(?:Max|max)\s+HP/gi;
       for(const match of template.matchAll(purePattern)){
         const percent=match[1]!==undefined
@@ -507,7 +513,9 @@
           :num(match[2],0);
         events.push({
           id:`pure-${index+1}`,index:index++,position:(match.index||0)+0.2,
-          type:'pure',source:'skill',basis:'targetMaxHp',percent,activeSource:false
+          type:'pure',source:'skill',basis:'targetMaxHp',percent,
+          minActorMaxHpPercent:pureMinimumActorMaxHpPercent((match.index||0)+match[0].length),
+          activeSource:false
         });
       }
 
@@ -518,7 +526,20 @@
           :num(match[2],0);
         events.push({
           id:`pure-${index+1}`,index:index++,position:(match.index||0)+0.2,
-          type:'pure',source:'skill',basis:'targetMaxHp',percent,activeSource:false
+          type:'pure',source:'skill',basis:'targetMaxHp',percent,
+          minActorMaxHpPercent:pureMinimumActorMaxHpPercent((match.index||0)+match[0].length),
+          activeSource:false
+        });
+      }
+
+      const pureActorCurrentHpPattern=/\{Pure DMG\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:the\s+)?current\s+HP/gi;
+      for(const match of template.matchAll(pureActorCurrentHpPattern)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`pure-${index+1}`,index:index++,position:(match.index||0)+0.2,
+          type:'pure',source:'skill',basis:'actorCurrentHp',percent,activeSource:false
         });
       }
 

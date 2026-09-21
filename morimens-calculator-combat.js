@@ -62,7 +62,8 @@
         <div class="field"><label for="currentPoison">当前中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“触发 X% 中毒”等即时中毒触发。</small></div>
         <div class="field"><label for="currentBleed">当前流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“触发 X% 流血”和本回合末流血结算。</small></div>
         <div class="field"><label for="currentCounter">当前反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“触发 X% 反击”事件。</small></div>
-        <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于百分比献祭"><small>SKeyDB 未公开通用 CON→Max HP 换算；涉及“X% 最大生命的献祭/延迟献祭”时请填写游戏内实际最大生命。</small></div>
+        <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于百分比献祭 / Pure 保底"><small>SKeyDB 未公开通用 CON→Max HP 换算；涉及“X% 最大生命的献祭/延迟献祭”或 Pure DMG 最低值时请填写游戏内实际最大生命。</small></div>
+        <div class="field"><label for="actorCurrentHp">当前角色当前生命</label><input id="actorCurrentHp" type="number" min="0" step="1" placeholder="留空按最大生命"><small>用于 Doresain 等“按当前 HP 百分比造成 Pure DMG”的效果；留空时按当前为满生命处理。</small></div>
         <div class="field"><label for="currentSacrifice">我方当前献祭层数</label><input id="currentSacrifice" type="number" min="0" step="0.1" value="0"><small>回合末每 1 层造成 1 点自身伤害，随后移除 50% 层数；献祭跨战斗保留。</small></div>
         <div class="field"><label for="currentDelayedSacrifice">我方当前延迟献祭</label><input id="currentDelayedSacrifice" type="number" min="0" step="0.1" value="0"><small>本回合不结算献祭自伤；下回合开始转化为同量献祭。部分效果判定时也视作献祭。</small></div>
         <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
@@ -95,7 +96,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','currentPoison','currentBleed','currentCounter','actorMaxHp','currentSacrifice','currentDelayedSacrifice','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeSacrificeTurnEnd','includeEnemySacrificeTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','currentSacrifice','currentDelayedSacrifice','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeSacrificeTurnEnd','includeEnemySacrificeTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -438,6 +439,8 @@
     const initialBleed=Math.max(0,n('currentBleed'));
     let counterCurrent=Math.max(0,n('currentCounter'));
     const actorMaxHp=Math.max(0,n('actorMaxHp'));
+    const actorCurrentHpInput=Math.max(0,n('actorCurrentHp',actorMaxHp));
+    const actorCurrentHp=actorMaxHp>0?Math.min(actorMaxHp,actorCurrentHpInput):actorCurrentHpInput;
     const initialSacrifice=Math.max(0,n('currentSacrifice'));
     const initialDelayedSacrifice=Math.max(0,n('currentDelayedSacrifice'));
     const skillDelayedSacrificePct=selectedSkillDelayedSacrificePct();
@@ -530,8 +533,18 @@
           continue;
         }
         if(source.type==='pure'){
-          const raw=source.basis==='targetMaxHp'?enemyMaxHp*Math.max(0,Number(source.percent)||0)/100:0;
-          pushDamageEvent(pureEvent(raw,`纯粹伤害 · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent}));
+          const pct=Math.max(0,Number(source.percent)||0);
+          let raw=source.basis==='targetMaxHp'
+            ?enemyMaxHp*pct/100
+            :source.basis==='actorCurrentHp'
+              ?actorCurrentHp*pct/100
+              :0;
+          const minPct=Math.max(0,Number(source.minActorMaxHpPercent)||0);
+          const minimum=actorMaxHp>0&&minPct>0?actorMaxHp*minPct/100:0;
+          if(minimum>0)raw=Math.max(raw,minimum);
+          const basisLabel=source.basis==='actorCurrentHp'?'角色当前生命':'目标最大生命';
+          const floorLabel=minPct>0?` · 最低为角色最大生命 ${minPct.toFixed(2)}%`:'';
+          pushDamageEvent(pureEvent(raw,`纯粹伤害 · ${basisLabel} ${pct.toFixed(2)}%${floorLabel}`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent,minActorMaxHpPercent:minPct,minimum}));
           continue;
         }
         if(source.type==='poison'&&source.action==='apply'){
@@ -796,7 +809,7 @@
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
       tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
-      actorMaxHp:0,currentSacrifice:0,currentDelayedSacrifice:0,
+      actorMaxHp:0,actorCurrentHp:'',currentSacrifice:0,currentDelayedSacrifice:0,
       corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,enemySacrificeAmount:0,birthRitualStacks:0,sacrificeOnDamagePct:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
