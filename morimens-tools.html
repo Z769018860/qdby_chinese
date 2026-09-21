@@ -84,8 +84,8 @@
           <div class="builderBlock">
             <div class="builderTitle"><span>④ 增益 / 减益</span><small>可叠加</small></div>
             <div class="checkGrid">
-              <label class="check"><input id="buffVuln" type="checkbox"><span>目标：易伤<small>承受的所有伤害提高 50%</small></span></label>
-              <label class="check"><input id="buffWeak" type="checkbox"><span>自身：虚弱<small>造成的所有伤害降低 25%</small></span></label>
+              <label class="check"><input id="buffVuln" type="checkbox"><span>目标：易伤<small>仅 Active / 触腕伤害承受 +50%</small></span></label>
+              <label class="check"><input id="buffWeak" type="checkbox"><span>自身：虚弱<small>仅 Active / 触腕伤害造成 -25%</small></span></label>
               <label class="check"><input id="buffBrute" type="checkbox"><span>刻印：蛮力<small>获得 8 点力量</small></span></label>
               <label class="check"><input id="buffBurst" type="checkbox"><span>刻印：高级爆发<small>获得 66 点临时力量</small></span></label>
             </div>
@@ -109,7 +109,7 @@
             <div class="field"><label for="skillCoef">技能倍率 %</label><input id="skillCoef" type="number" min="0" step="0.1" value="200"></div>
             <div class="field"><label for="critRate">基础 / 手动暴击率 %</label><input id="critRate" type="number" min="0" max="100" step="0.1" value="0"></div>
             <div class="field"><label for="critDamage">基础暴击伤害倍率 %</label><input id="critDamage" type="number" min="0" step="0.1" value="150"><small>装备的“暴击伤害 +X%”会自动加到该倍率上。</small></div>
-            <div class="field"><label for="defenseFactor">防御 / 减伤后系数 %</label><input id="defenseFactor" type="number" min="0" step="0.1" value="100"></div>
+            
             <div class="field"><label for="otherMultiplier">其他独立乘区 ×</label><input id="otherMultiplier" type="number" min="0" step="0.01" value="1"></div>
           </div>
         </details>
