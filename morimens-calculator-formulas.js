@@ -244,6 +244,47 @@
       return 0;
     }
 
+    function overExaltModifiers(skill,rank,ctx){
+      const text=String(skill?.descriptionTemplate||'');
+      const marker='{Over-Exalt}:';
+      const markerIndex=text.indexOf(marker);
+      const out={baseDamagePct:0,finalDamagePct:0,critRatePct:0,critDamagePct:0,hitMultiplier:1,hitAdd:0,hitSet:null,fixedDamageMultiplier:1};
+      if(markerIndex<0)return out;
+      const effect=text.slice(markerIndex+marker.length);
+      const value=(token,literal)=>token!==undefined?Math.max(0,num(resolveTemplateArg(skill,token,rank,ctx),0)):Math.max(0,num(literal,0));
+
+      const inThis=(effect.match(/In\s+this\s+Exalt\s*:\s*([^.!?]*)/i)||[])[1]||'';
+      let m=inThis.match(/Base DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      if(m)out.baseDamagePct=Math.max(out.baseDamagePct,value(m[1],m[2]));
+      m=inThis.match(/Final DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      if(m)out.finalDamagePct=Math.max(out.finalDamagePct,value(m[1],m[2]));
+      m=inThis.match(/Crit\.? Rate\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      if(m)out.critRatePct=Math.max(out.critRatePct,value(m[1],m[2]));
+      m=inThis.match(/Crit\.? DMG\s*\+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+      if(m)out.critDamagePct=Math.max(out.critDamagePct,value(m[1],m[2]));
+
+      if(/\{Fixed DMG\}\s+dealt\s+is\s+tripled/i.test(effect))out.fixedDamageMultiplier=3;
+      m=effect.match(/This Exalt['’]s\s+DMG\s+instances?\s*[×x]\s*(\d+(?:\.\d+)?)/i);
+      if(m)out.hitMultiplier=Math.max(1,num(m[1],1));
+      m=effect.match(/Deal\s+(\d+)\s+additional\s+instances?\s+of\s+DMG/i);
+      if(m)out.hitAdd=Math.max(out.hitAdd,Math.floor(num(m[1],0)));
+      m=effect.match(/DMG\s+instances?\s*\+\s*(\d+)/i);
+      if(m)out.hitAdd=Math.max(out.hitAdd,Math.floor(num(m[1],0)));
+
+      const baseName=String(skill?.overExaltBaseSkillName||'').trim();
+      if(baseName){
+        const escaped=baseName.replace(/[.*+?^$()|[\]\\]/g,'\\    function damageCritBonuses(skill,template,tokenEnd,rank,ctx){');
+        const setRe=new RegExp('(?:\\{)?'+escaped+'(?:\\})?\\s+deals?\\s+(\\d+)\\s+instances?\\s+DMG','i');
+        m=setRe.exec(effect);
+        if(m)out.hitSet=Math.max(1,Math.floor(num(m[1],1)));
+        const baseReA=new RegExp('Base DMG of\\s+(?:\\{)?'+escaped+'(?:\\})?\\s*\\+(?:\\[([^\\]]+)\\]|(\\d+(?:\\.\\d+)?))%','i');
+        const baseReB=new RegExp('(?:\\{)?'+escaped+'(?:\\})?\\s+Base DMG\\s*\\+(?:\\[([^\\]]+)\\]|(\\d+(?:\\.\\d+)?))%','i');
+        m=baseReA.exec(effect)||baseReB.exec(effect);
+        if(m)out.baseDamagePct=Math.max(out.baseDamagePct,value(m[1],m[2]));
+      }
+      return out;
+    }
+
     function damageCritBonuses(skill,template,tokenEnd,rank,ctx){
       const text=String(template||'');
       const local=text.slice(tokenEnd,Math.min(text.length,tokenEnd+260));
@@ -448,11 +489,14 @@
       const damageTokenCount=(template.match(/\[Damage:[^\]]+\]/gi)||[]).length;
       const actualHitOverride=damageTokenCount===1&&Number.isFinite(Number(ctx.actualHitCount))&&Number(ctx.actualHitCount)>0
         ?Math.max(1,Math.floor(Number(ctx.actualHitCount))):null;
+      const overExalt=overExaltModifiers(skill,rank,ctx);
 
       for(const match of template.matchAll(/\[Damage:([^\]]+)\]/gi)){
         const argName=match[1],tokenStart=match.index||0,tokenEnd=tokenStart+match[0].length;
         const coefficient=num(resolveArg(skill?.descriptionArgs?.[argName],rank,ctx),0);
-        const count=actualHitOverride??inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
+        const inferredCount=inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
+        const modifiedCount=overExalt.hitSet!==null?overExalt.hitSet:Math.max(1,Math.floor(inferredCount*Math.max(1,overExalt.hitMultiplier)+Math.max(0,overExalt.hitAdd)));
+        const count=actualHitOverride??modifiedCount;
         const type=damageTokenType(template,tokenEnd);
         const critBonuses=damageCritBonuses(skill,template,tokenEnd,rank,ctx);
         const indirectDefinition=damageIsIndirectDefinition(template,tokenStart);
@@ -475,8 +519,10 @@
             strengthMultiplier:damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type),
             tentacleBonusCoefficient:damageTentacleBonusCoefficient(skill,template,tokenEnd,rank,ctx),
             counterBonusCoefficient:damageCounterBonusCoefficient(skill,template,tokenEnd,rank,ctx),
-            critRateBonus:critBonuses.critRateBonus,
-            critDamageBonus:critBonuses.critDamageBonus,
+            critRateBonus:critBonuses.critRateBonus+overExalt.critRatePct,
+            critDamageBonus:critBonuses.critDamageBonus+overExalt.critDamagePct,
+            skillBaseDamageBonusPct:overExalt.baseDamagePct,
+            skillFinalDamageBonusPct:overExalt.finalDamagePct,
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
             guaranteedCrit:/(?:guaranteed\s+Critical(?:\s+Hit)?\s+DMG|always\s+critically\s+hits?)/i.test(template.slice(tokenEnd,tokenEnd+160)),
             activeSource:type==='active'
@@ -490,6 +536,7 @@
         events.push({
           id:`fixed-${index+1}`,index:index++,position:(match.index||0)+0.1,
           type:'fixed',source:'skill',
+          fixedDamageMultiplier:overExalt.fixedDamageMultiplier,
           basis:arg?.stat?'statPercent':'flat',
           stat:arg?.stat||null,percent:arg?.stat?value:null,amount:arg?.stat?null:value,
           activeSource:false
@@ -499,7 +546,7 @@
         const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
         events.push({
           id:`fixed-${index+1}`,index:index++,position:(match.index||0)+0.1,
-          type:'fixed',source:'skill',basis:'tentacle',percent,activeSource:false
+          type:'fixed',source:'skill',basis:'tentacle',percent,fixedDamageMultiplier:overExalt.fixedDamageMultiplier,activeSource:false
         });
       }
 

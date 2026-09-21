@@ -338,14 +338,16 @@
       const baseRaw=statValue(source.stat)*coeff;
       // SKeyDB distinguishes Base DMG from STR and Tentacle-DMG additions.
       // Therefore Base-DMG bonuses scale only the coefficient-derived base component.
-      const afterBase=baseRaw*(1+basePct/100);
+      const skillBasePct=Math.max(0,Number(source.skillBaseDamageBonusPct)||0);
+      const afterBase=baseRaw*(1+(basePct+skillBasePct)/100);
       const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
       const counterContribution=counterCurrent*sourceCounterCoef;
       const raw=afterBase+strengthPart+tentacleContribution+counterContribution+soulforgeFlat;
       const afterPower=raw*(1+powerPct/100);
       // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
-      const afterFinal=afterVulnerability*(1+finalPct/100)*(type==='active'?weakCoef:1);
+      const skillFinalPct=Math.max(0,Number(source.skillFinalDamageBonusPct)||0);
+      const afterFinal=afterVulnerability*(1+(finalPct+skillFinalPct)/100)*(type==='active'?weakCoef:1);
       const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult;
       const forceCrit=source.guaranteedCrit===true||$('forceCritAll')?.checked===true;
       const eventCritRate=clamp((forceCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
@@ -362,6 +364,8 @@
         stat:source.stat||'ATK',
         strengthMultiplier,
         tentacleBonusCoefficient:sourceTentacleCoef*100,
+        skillBaseDamageBonusPct:skillBasePct,
+        skillFinalDamageBonusPct:skillFinalPct,
         counterBonusCoefficient:sourceCounterCoef*100,
         counterContribution,
         critRateBonus:Number(source.critRateBonus)||0,
@@ -413,10 +417,12 @@
       const scopedFixedPct=progression.soulforgeEnabled&&scopedName&&scopedName===currentName
         ?Math.max(0,Number(progression.scopedFixedDamagePct)||0):0;
       if(scopedFixedPct>0)raw*=1+scopedFixedPct/100;
+      const fixedDamageMultiplier=Math.max(1,Number(source.fixedDamageMultiplier)||1);
+      raw*=fixedDamageMultiplier;
       const damage=raw*fortifyCoef*realmDamageOutputMult;
       return {
         id,type:'fixed',source:'skill',label:'Fixed DMG'+(scopedFixedPct>0?` · 灵塑 +${scopedFixedPct.toFixed(2)}%`:''),basis:source.basis,
-        percent:source.percent,amount:source.amount,stat:source.stat||null,scopedFixedDamagePct:scopedFixedPct,
+        percent:source.percent,amount:source.amount,stat:source.stat||null,scopedFixedDamagePct:scopedFixedPct,fixedDamageMultiplier,
         raw,normal:damage,crit:damage,expected:damage,damage,
         canCrit:false,fixed:true
       };
