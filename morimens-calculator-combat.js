@@ -41,7 +41,6 @@
         <div class="field"><label for="tentacleCritRate">触腕暴击率 %</label><input id="tentacleCritRate" type="number" min="0" max="100" step="0.1" value="0"><small>团队入场暴击率汇总规则需要完整队伍数据，当前允许手动填写最终触腕暴击率。</small></div>
         <div class="field"><label for="tentacleCritDamage">触腕暴击伤害 %</label><input id="tentacleCritDamage" type="number" min="100" step="0.1" value="150"><small>用于触腕事件的暴击/期望伤害。</small></div>
         <div class="field"><label for="strengthDown">力量降低 STR▼</label><input id="strengthDown" type="number" min="0" step="0.1" value="0"><small>主动伤害每点 -1；触腕按 50% 生效。</small></div>
-        <div class="field" id="benthosRagingField" hidden><label for="benthosRagingPct">深渊怒涛基础倍率 %</label><input id="benthosRagingPct" type="number" min="0" step="0.1" value="100"><small>SKeyDB 2.6.1 当前公开记录为 X，未给固定值；请按游戏内显示校准。</small></div>
         <div class="field"><label for="tentacleCount">当前触腕数</label><input id="tentacleCount" type="number" min="0" step="1" value="1"></div>
         <div class="field"><label for="tentacleAttackTimes">每只触腕攻击次数</label><input id="tentacleAttackTimes" type="number" min="0" step="1" value="1"></div>
       </div>
@@ -82,7 +81,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','benthosRagingPct','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','fortressStacks','currentPoison','currentCounter','corrosionAmount','embersAmount','includePoisonTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','fortressStacks','currentPoison','currentCounter','corrosionAmount','embersAmount','includePoisonTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -117,7 +116,6 @@
         ?'深渊深海：基础触腕 = 队伍最大生命 × 5%；若同时存在普通混沌共生，再叠加每名混沌唤醒体 1% 最大生命。'
         :'混沌×深海共生：每名混沌唤醒体额外提供队伍最大生命 1% 的基础触腕。';
     }
-    if($('benthosRagingField'))$('benthosRagingField').hidden=!(benthos&&$('tentacleStance')?.value==='raging');
   }
 
   function renderTriplet(){
@@ -139,8 +137,8 @@
       realmMastery:n('realmMastery'),
       masteryEffectMultiplier:realm.tentacleMasteryMultiplier||1,
       extraBaseMaxHpPct:realm.aequorChaosBaseTentacleBonusPct||0,
-      extraBonusPct:n('tentacleExtraBonus'),
-      benthosRagingPct:n('benthosRagingPct',100)
+      extraBonusPct:n('tentacleExtraBonus')
+
     });
   }
 
@@ -152,10 +150,10 @@
       <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
       <div class="formulaRow"><b>力量与触腕</b><br>每 1 点力量使主动伤害 +1；触腕享受 50% 力量。力量降低同理：主动伤害每点 -1，触腕按 50% 扣除。</div>
-      <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + 最终界域精通 × 0.02% × 界域精通效果倍率</code>；至纯深海或普通混沌×深海共生时，界域精通效果倍率为 2。</div>
-      <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛公开数据当前只给出 <code>X</code> 基础倍率，因此工具改为手动校准；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
+      <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；至纯深海或普通混沌×深海共生时，界域精通效果倍率为 2。</div>
+      <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>Damage Events</b><br><code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬只在 Active/Pierce/Tentacle 后逐事件消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Counter 触发时造成等于反击层数的 Pure DMG。三者不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
+      <div class="formulaRow"><b>Damage Events</b><br><code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Poison/Counter 等其他伤害按伤害的 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Counter 触发时造成等于反击层数的 Pure DMG。三者不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
     `;
   }
 
@@ -229,8 +227,9 @@
     }
     function scaledEvent(source,repeatIndex,eventIndex){
       const coeff=Math.max(0,Number(source.coefficient)||0)/100;
+      const strengthPart=(source.type==='active'||source.usesStrength===true)?netStrength:0;
       const raw=statValue(source.stat)*coeff
-        +netStrength
+        +strengthPart
         +tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult
         +soulforgeFlat;
       const afterBase=raw*(1+basePct/100);
@@ -245,6 +244,7 @@
         type,
         source:'skill',
         groupId:source.groupId||null,
+        repeatIndex,
         label:type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
@@ -283,43 +283,62 @@
     let corrosionRemaining=Math.max(0,n('corrosionAmount'));
     let embersRemaining=Math.max(0,n('embersAmount'));
     let corrosionDamage=0,embersDamage=0;
-    let poisonAdded=0;
+    let poisonAdded=0,counterAdded=0;
     const initialPoison=Math.max(0,n('currentPoison'));
-    const currentCounter=Math.max(0,n('currentCounter'));
-  
+    let counterCurrent=Math.max(0,n('currentCounter'));
+
+    function groupKey(repeatIndex,groupId){return `${repeatIndex}:${groupId||''}`}
     function pushDamageEvent(event){
       events.push(event);
-      if(event.groupId&&event.damage>0)groupDamage.set(event.groupId,(groupDamage.get(event.groupId)||0)+event.damage);
-      if(!(['active','pierce','tentacle'].includes(event.type))||!(event.damage>0))return;
-      const corrosionUsed=Math.min(corrosionRemaining,event.damage);
+      if(event.groupId&&event.damage>0){
+        const key=groupKey(event.repeatIndex??0,event.groupId);
+        groupDamage.set(key,(groupDamage.get(key)||0)+event.damage);
+      }
+      if(!(event.damage>0)||event.type==='reaction')return;
+      const removalRate=(event.type==='active'||event.type==='tentacle')?1:0.5;
+      const corrosionUsed=Math.min(corrosionRemaining,event.damage*removalRate);
       if(corrosionUsed>0){
         corrosionRemaining-=corrosionUsed;
-        const reaction={id:event.id+'-corrosion',type:'reaction',reaction:'corrosion',sourceEventId:event.id,label:'侵蚀追加生命损失',consumed:corrosionUsed,damage:corrosionUsed*3};
+        const reaction={id:event.id+'-corrosion',type:'reaction',reaction:'corrosion',sourceEventId:event.id,label:`侵蚀追加生命损失（${removalRate===1?'等量':'其他伤害 50%'}消费）`,consumed:corrosionUsed,damage:corrosionUsed*3};
         corrosionDamage+=reaction.damage;events.push(reaction);
       }
-      const embersUsed=Math.min(embersRemaining,event.damage);
+      const embersUsed=Math.min(embersRemaining,event.damage*removalRate);
       if(embersUsed>0){
         embersRemaining-=embersUsed;
-        const reaction={id:event.id+'-embers',type:'reaction',reaction:'embers',sourceEventId:event.id,label:'旧日余烬追加生命损失',consumed:embersUsed,damage:embersUsed*3};
+        const reaction={id:event.id+'-embers',type:'reaction',reaction:'embers',sourceEventId:event.id,label:`旧日余烬追加生命损失（${removalRate===1?'等量':'其他伤害 50%'}消费）`,consumed:embersUsed,damage:embersUsed*3};
         embersDamage+=reaction.damage;events.push(reaction);
       }
     }
-  
+
+    function appliedStatusAmount(source,repeat){
+      if(source.basis==='sourceDamage'){
+        const damage=groupDamage.get(groupKey(repeat,source.sourceGroupId))||0;
+        return Math.max(0,damage*Math.max(0,Number(source.percent)||0)/100);
+      }
+      if(source.basis==='statPercent'){
+        return Math.max(0,statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100);
+      }
+      if(source.basis==='flat')return Math.max(0,Number(source.amount)||0);
+      return 0;
+    }
+
     let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,counterIndex=0;
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
         if(source.type==='pierce'&&source.basis==='tentacle'){
           const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
           for(let i=0;i<count;i++){
-            pushDamageEvent(tentaclePierceEvent(source.percent,`触腕 Pierce DMG ${i+1}`,`tentacle-pierce-${++tentacleIndex}`));
+            const event=tentaclePierceEvent(source.percent,`触腕 Pierce DMG ${i+1}`,`tentacle-pierce-${++tentacleIndex}`);
+            event.repeatIndex=repeat;
+            pushDamageEvent(event);
           }
           continue;
         }
         if(source.type==='active'||source.type==='pierce'){
           const event=scaledEvent(source,repeat,scaledIndex++);
           pushDamageEvent(event);
-          if($('tentacleStance')?.value==='raging'&&event.damage>0){
-            pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · Active/Pierce 后触腕',`raging-${++tentacleIndex}`));
+          if(event.type==='active'&&$('tentacleStance')?.value==='raging'&&event.damage>0){
+            pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · Active DMG 后触腕',`raging-${++tentacleIndex}`));
           }
           continue;
         }
@@ -329,13 +348,14 @@
           continue;
         }
         if(source.type==='poison'&&source.action==='apply'){
-          const sourceDamage=source.sourceGroupId?groupDamage.get(source.sourceGroupId)||0:0;
-          const amount=Math.max(0,sourceDamage*Math.max(0,Number(source.percent)||0)/100);
+          const amount=appliedStatusAmount(source,repeat);
           poisonAdded+=amount;
           events.push({
             id:`poison-apply-${++poisonIndex}`,type:'poison',action:'apply',
-            label:`Poison 施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`,
-            amount,damage:0,sourceGroupId:source.sourceGroupId
+            label:source.basis==='sourceDamage'
+              ?`Poison 施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
+              :`Poison 施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+            amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
         }
@@ -345,16 +365,25 @@
           pushDamageEvent(pureEvent(raw,`Poison 触发 ${Number(source.percent||0).toFixed(2)}%`,`poison-trigger-${++poisonIndex}`,'poison',{action:'trigger',stacks,percent:source.percent}));
           continue;
         }
+        if(source.type==='counter'&&source.action==='gain'){
+          const amount=appliedStatusAmount(source,repeat);
+          counterCurrent+=amount;counterAdded+=amount;
+          events.push({
+            id:`counter-gain-${++counterIndex}`,type:'counter',action:'gain',
+            label:`Counter 获得 +${fmt(amount)}`,amount,damage:0
+          });
+          continue;
+        }
         if(source.type==='counter'&&source.action==='trigger'){
-          const raw=currentCounter*Math.max(0,Number(source.percent)||0)/100;
-          pushDamageEvent(pureEvent(raw,`Counter 触发 ${Number(source.percent||0).toFixed(2)}%`,`counter-trigger-${++counterIndex}`,'counter',{action:'trigger',stacks:currentCounter,percent:source.percent}));
+          const raw=counterCurrent*Math.max(0,Number(source.percent)||0)/100;
+          pushDamageEvent(pureEvent(raw,`Counter 触发 ${Number(source.percent||0).toFixed(2)}%`,`counter-trigger-${++counterIndex}`,'counter',{action:'trigger',stacks:counterCurrent,percent:source.percent}));
         }
       }
       if(skillTriggerPct>0){
         pushDamageEvent(tentacleEvent(skillTriggerPct*100,'技能触发触腕',`skill-tentacle-${++tentacleIndex}`));
       }
     }
-  
+
     const includeTurnEnd=$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
     const turnEndCount=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
     if(includeTurnEnd){
@@ -392,11 +421,11 @@
     $('critLine').textContent=`可暴击 Active/Pierce 暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击 Active/Pierce 期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Pure / Poison / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬只在 Active/Pierce/Tentacle 事件后逐次消费。`;
+    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Pure / Poison / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
-      if(event.type==='poison'&&event.action==='apply')return [`${index+1}. ${event.label}（新增 ${fmt(event.amount)} 层）`,0];
+      if((event.type==='poison'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
       const tags={active:'Active',pierce:'Pierce',tentacle:'Tentacle',pure:'Pure',poison:'Poison',counter:'Counter'};
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
@@ -416,12 +445,14 @@
     rows.push(['侵蚀剩余',corrosionRemaining]);
     rows.push(['旧日余烬剩余',embersRemaining]);
     rows.push(['最终 Poison 层数',initialPoison+poisonAdded]);
+    rows.push(['本次新增 Counter',counterAdded]);
+    rows.push(['最终 Counter',counterCurrent]);
     rows.push(['本次合计',total]);
     $('breakdown').innerHTML=rows.map(([a,b])=>`<div class="step"><span>${esc(a)}</span><strong>${typeof b==='number'&&Math.abs(b)<10&&a.includes('系数')?b.toFixed(3):fmt(b)}</strong></div>`).join('');
   
     const tmode=effectiveTentacleMode();
     const stance=tmode==='benthos'
-      ?({surging:'涨潮 100%',tranquil:'静海（回合末不攻击）',raging:`怒涛 ${n('benthosRagingPct',100).toFixed(1)}% 基础倍率`}[$('tentacleStance')?.value]||'')
+      ?({surging:'涨潮 100%',tranquil:'静海（回合末不攻击）',raging:'怒涛 125%' }[$('tentacleStance')?.value]||'')
       :({surging:'涨潮 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||'');
     const oneTentacle=tentacleEvent(100,'单次触腕预览','preview');
     if($('tentacleReadout')){
@@ -446,7 +477,7 @@
         active:activeTotal,pierce:pierceTotal,tentacle:tentacleTotal,pure:pureTotal,
         poison:poisonTotal,counter:counterTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
-      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,counter:currentCounter},
+      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent},
       remaining:{corrosion:corrosionRemaining,embers:embersRemaining}
     };
   }
@@ -454,7 +485,7 @@
   function resetEnemy(){
     const values={
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
-      tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,benthosRagingPct:100,
+      tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
       tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,fortressStacks:0,currentPoison:0,currentCounter:0,
       corrosionAmount:0,embersAmount:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
