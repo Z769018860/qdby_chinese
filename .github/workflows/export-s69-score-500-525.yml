@@ -206,6 +206,14 @@ jobs:
           console.log('wrote', outPath, fs.statSync(outPath).size, 'bytes');
           NODE
 
+      - name: Upload export artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: morimens-s69-score-500-525-teams
+          path: exports/morimens-s69-score-500-525-teams.json
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Commit export
         shell: bash
         run: |
