@@ -54,12 +54,16 @@
       ]);
     }catch(error){console.warn('Morimens progression catalog sync failed',error)}
     const resolved=statsFor(rec,talents);
-    setAutoBase('critRate',num(resolved.CritRate),'critRate');
-    setAutoBase('critDamage',100+num(resolved.CritDamage,50),'critDamage');
-    setAutoBase('powerBonus',num(resolved.DamageAmplification),'powerBonus');
-    setAutoBase('realmMastery',num(resolved.RealmMastery),'realmMastery');
-
-    if($('attack')&&$('autoCharacterStats')?.checked!==false&&$('attack').dataset.autoAttack!=='0')$('attack').value=String(resolved.ATK);
+    // morimens-calculator-skeydb.js owns calculator inputs once progression has initialized.
+    // This module remains a fallback plus readout/event provider, avoiding a second writer
+    // that could erase wheel Realm Mastery or gear-derived substats.
+    if(!window.MorimensProgressionStats){
+      setAutoBase('critRate',num(resolved.CritRate),'critRate');
+      setAutoBase('critDamage',100+num(resolved.CritDamage,50),'critDamage');
+      setAutoBase('powerBonus',num(resolved.DamageAmplification),'powerBonus');
+      setAutoBase('realmMastery',num(resolved.RealmMastery),'realmMastery');
+      if($('attack')&&$('autoCharacterStats')?.checked!==false&&$('attack').dataset.autoAttack!=='0')$('attack').value=String(resolved.ATK);
+    }
     if($('combatCon'))$('combatCon').textContent=Math.round(resolved.CON).toLocaleString('zh-CN');
     if($('combatAtk'))$('combatAtk').textContent=Math.round(resolved.ATK).toLocaleString('zh-CN');
     if($('combatDef'))$('combatDef').textContent=Math.round(resolved.DEF).toLocaleString('zh-CN');

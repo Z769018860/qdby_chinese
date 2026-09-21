@@ -3,7 +3,7 @@
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
   const recordCache=new Map();
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
-  let wheelCatalog=[],covenantCatalog=[],posseCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
+  let wheelCatalog=[],covenantCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
   let applyingAuto=false,wheelRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
@@ -36,7 +36,6 @@
     if($('critDamage'))base.CritDamage=Math.max(0,num($('critDamage').value,100+num(base.CritDamage,50))-100);
     base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
-    base.ownedPosseCount=Math.max(0,Math.min(50,Math.floor(num($('formulaOwnedPosseCount')?.value,0))));
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
     base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
     const realm=window.MorimensRealmEngine?.state?.();
@@ -275,8 +274,8 @@
     if(slot==='AbsoluteAxiom')return '最终法则';
     return slot;
   }
-  function configureEnlightenControl(){
-    ensureEnlightenUi();const sel=$('charEnlighten');if(!sel)return;const prev=sel.value;
+  function configureEnlightenControl(resetCharacterSpecific=false){
+    ensureEnlightenUi();const sel=$('charEnlighten');if(!sel)return;const prev=resetCharacterSpecific?'':sel.value;
     sel.innerHTML='<option value="">E0 · 未启灵</option>';
     for(const slot of ['E1','E2','E3','OverExalt','AbsoluteAxiom']){
       if(!currentEnlightens.some(x=>x.slot===slot))continue;
@@ -304,11 +303,11 @@
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
     const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
-    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。</small></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数量</label><input id="formulaOwnedPosseCount" type="number" min="0" max="50" step="1" value="0"><small>用于 SKeyDB 星辰篇研究公式的上下文/参考值，最多计 50；默认公共公式不会无条件把该倍率套到所有技能。</small></div>';
+    block.innerHTML='<div class="field full"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。公式上下文只保留账号等级；命轮精炼直接读取命轮控件。</small></div>';
     anchor.insertAdjacentElement('afterend',block);
-    const refreshFormulaContext=()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()};
+    const refreshFormulaContext=()=>{renderWheelsAndBonuses();renderCovenantAndBonuses();updateSkillLevel()};
+    $('formulaAccountLevel')?.addEventListener('input',refreshFormulaContext,{capture:true});
     $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
-    $('formulaOwnedPosseCount')?.addEventListener('change',refreshFormulaContext,{capture:true});
   }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB 1 级基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
@@ -357,7 +356,7 @@
     const availability=String(currentAwakener?.availabilityType||'').toUpperCase();
     return availability.startsWith('LIMITED_')?Math.min(5,max):0;
   }
-  function configureProgressionControls(){
+  function configureProgressionControls(resetCharacterSpecific=false){
     const engine=window.MorimensFormulaEngine;
     const state=engine?engine.resolveProgression(currentTalents,0,0,true):null;
     const inner=$('innerSpirit'),sculpt=$('characterSculpt');
@@ -370,7 +369,7 @@
       else inner.value=String(selectedDefault);
     }
     if(sculpt){
-      const previous=Math.min(sculptMax,Math.max(0,Number(sculpt.value)||0));
+      const previous=resetCharacterSpecific?0:Math.min(sculptMax,Math.max(0,Number(sculpt.value)||0));
       sculpt.innerHTML='';
       for(let i=0;i<=sculptMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 灵塑 ${i}`;o.selected=i===previous;sculpt.appendChild(o)}
       if(!sculptMax)sculpt.innerHTML='<option value="0">0 · 无灵塑数据</option>';
@@ -445,11 +444,13 @@
   }
   async function loadAwakener(){
     const id=selectedAwakenerId(),compact=recordById(id);if(!compact)return;
+    const previousAwakenerId=currentAwakener?.id||null;
     currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
+    const switchedCharacter=!!previousAwakenerId&&previousAwakenerId!==currentAwakener.id;
     [currentTalents,currentEnlightens]=await Promise.all([window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('enlightens',id).catch(()=>[])]);
     normalizeProgressionControls();
-    configureProgressionControls();
-    configureEnlightenControl();
+    configureProgressionControls(switchedCharacter);
+    configureEnlightenControl(switchedCharacter);
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
     applyCharacterStats();
@@ -475,7 +476,7 @@
     currentSkill=resolveSkillEnlighten(baseSkill);
     if(previousSkillId&&previousSkillId!==currentSkill.id&&$('skillActualHits'))$('skillActualHits').value='';
     const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
-    if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
+    if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=isEnglish()?`Lv.${i}`:`等级 ${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
   }
   function updateSkillLevel(){
     if(!currentSkill)return;
@@ -516,8 +517,8 @@
     if($('skillCoeffSummary')){
       const parts=[];
       if(damageEvents.length){
-        const labels={active:'主动',pierce:'穿透',pure:'纯粹',fixed:'固定',poison:'中毒',counter:'反击'};
-        parts.push(`Damage Events ${damageEvents.length} 个：${damageEvents.map(x=>{
+        const labels={active:'主动',pierce:'穿透',tentacle:'触腕',pure:'纯粹',fixed:'固定',poison:'中毒',bleed:'流血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
+        parts.push(`伤害事件 ${damageEvents.length} 个：${damageEvents.map(x=>{
           const name=labels[x.type]||x.type;
           if(x.coefficient!==undefined)return name+' '+Number(x.coefficient).toFixed(2)+'%';
           if(x.percent!==undefined)return name+' '+Number(x.percent).toFixed(2)+'%';
@@ -528,7 +529,7 @@
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
-      else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该 Damage Event');
+      else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该伤害事件');
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
     window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
@@ -537,13 +538,13 @@
   }
 
   async function loadCatalogs(){
-    const [wr,cr,pr,gm]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants'),window.MorimensRepository.catalog('posses'),window.MorimensRepository.gameplayMath()]);
-    wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];posseCatalog=pr.status==='fulfilled'?(pr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
+    const [wr,cr,gm]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants'),window.MorimensRepository.gameplayMath()]);
+    wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
     window.MorimensFormulaEngine?.setGameplayMathMetadata?.(gameplayMathMeta);ensureFormulaContextUi();
     if(gameplayMathMeta?.accountLevelCurve&&$('formulaAccountLevel')){$('formulaAccountLevel').min=String(gameplayMathMeta.accountLevelCurve.minLevel||1);$('formulaAccountLevel').max=String(gameplayMathMeta.accountLevelCurve.maxLevel||100)}
     const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=wheelOptionLabel(w);o.selected=w.id===prev;sel.appendChild(o)}}
-    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
-    const missing=[wr,cr,pr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
+    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
+    const missing=[wr,cr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
   function syncWheelDuplicates(){
     const a=$('fateSelect'),b=$('fateSelect2');if(!a||!b)return;const av=a.value,bv=b.value;
@@ -592,7 +593,7 @@
     const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
   }
 
-  async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses()}
+  async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses();updateSkillLevel()}
   function renderEffectRaw(effect){return renderTemplate(effect,1)}
   function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
@@ -664,10 +665,11 @@
     $('skillLevel')?.addEventListener('change',e=>{e.stopImmediatePropagation();updateSkillLevel()},{capture:true});
     $('fateSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(0)},{capture:true});
     $('contractSelect')?.addEventListener('change',e=>{e.stopImmediatePropagation();loadCovenant()},{capture:true});
-    $('contractPieces')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses()},{capture:true});
-    $('contractConditional')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses()},{capture:true});
-    document.addEventListener('input',e=>{if(e.target?.id==='realmMastery')queueMicrotask(updateSkillLevel)},{capture:true});
-    document.addEventListener('change',e=>{if(e.target?.id==='realmMastery')queueMicrotask(updateSkillLevel)},{capture:true});
+    $('contractPieces')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses();updateSkillLevel()},{capture:true});
+    $('contractConditional')?.addEventListener('change',e=>{e.stopImmediatePropagation();renderCovenantAndBonuses();updateSkillLevel()},{capture:true});
+    const formulaReactiveFields=new Set(['critRate','critDamage','powerBonus','realmMastery']);
+    document.addEventListener('input',e=>{if(formulaReactiveFields.has(e.target?.id))queueMicrotask(updateSkillLevel)},{capture:true});
+    document.addEventListener('change',e=>{if(formulaReactiveFields.has(e.target?.id))queueMicrotask(updateSkillLevel)},{capture:true});
     $('calcBtn')?.addEventListener('click',()=>{recomputeGearBonuses()},{capture:true});
     $('resetBtn')?.addEventListener('click',e=>{e.stopImmediatePropagation();resetBuild()},{capture:true});
   }

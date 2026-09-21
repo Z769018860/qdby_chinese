@@ -30,7 +30,7 @@
     <div class="grid2">
       <section class="panel" aria-labelledby="calcTitle">
         <div class="sourceItem" style="margin-bottom:14px"><strong>主要数据源于：</strong><a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer"><strong>SKeyDB</strong></a></div>
-        <div class="panelHead"><div><h2 id="calcTitle">伤害配装计算器</h2><p class="panelLead">角色、技能、命轮、密契和增益效果负责“自动带值”；攻击力、力量以及仍未还原的防御系数保留手动输入。同步失败时自动使用内置的已核对样例，不会让页面失效。</p></div><span class="statusPill">v0.2 · 维基实值 + 客户端术语</span></div>
+        <div class="panelHead"><div><h2 id="calcTitle">伤害配装计算器</h2><p class="panelLead">角色、技能、命轮、密契和增益效果优先读取本站同步的 SKeyDB public-v3；内在灵格、灵塑、界域精通和类型化伤害事件由同一套公式模块处理。未公开的普通深海基础触腕数值与官方防御曲线保留手动校准。</p></div><span class="statusPill">SKeyDB public-v3 · 公式审计版</span></div>
 
         <div class="builder">
           <div class="builderBlock">
@@ -105,18 +105,18 @@
     </div>
 
     <section class="panel">
-      <div class="panelHead"><div><h2>数据来源与同步策略</h2><p class="panelLead">为了不把数十 MB 的游戏资源直接塞进静态站点，页面采用“客户端资源定位术语 + 中文维基实时读取数值 + 本地备用数据”的方式。</p></div><span class="statusPill">客户端资源 + 中文维基</span></div>
+      <div class="panelHead"><div><h2>数据来源与同步策略</h2><p class="panelLead">计算器以本站同步的 SKeyDB public-v3 为主要结构化数据源，中文名称与文本参考中文维基；不再以运行时抓取维基技能表作为伤害倍率来源。</p></div><span class="statusPill">SKeyDB public-v3 + 中文维基</span></div>
       <div class="sourceList">
         <div class="sourceItem"><strong>客户端：</strong>上传的 UnityFS Bundle 可确认战斗/技能相关 Lua 和 <code>Damage / Power / Vulnerability</code> 配置术语；<code>_ab_info.json</code> 同时给出了大量 AssetBundle 与资源路径映射。</div>
-        <div class="sourceItem"><strong>角色技能：</strong>运行时请求角色维基页并扫描技能表，抽取每一级描述中的 <code>[攻击力*XX%]</code>。多段伤害或特殊派生伤害会保留原描述，避免把多个系数错误合并。</div>
-        <div class="sourceItem"><strong>命轮 / 密契：</strong>运行时读取对应页面，自动解析“伤害强效、暴击率、暴击伤害”等明确百分比；条件型 6 件套必须由玩家手动确认条件已满足。</div>
-        <div class="sourceItem"><strong>离线备用数据：</strong>内置少量已核对样例：莱克「肆意豪赌」Lv1~6、神王·图鲁「打击」Lv1~5、血链·希洛「缚身锁链」Lv1、萝坦「混沌之兽」Lv1、艾继丝「万古之眸」Lv1；命轮“陨日”“虔诚的伟力”和密契“四月礼赞”。</div>
+        <div class="sourceItem"><strong>角色技能：</strong>从本地 SKeyDB public-v3 的技能、衍生技能、天赋与启灵记录解析倍率、属性依赖和类型化伤害事件；动态条件无法确认时明确提示而不擅自计入。</div>
+        <div class="sourceItem"><strong>命轮 / 密契：</strong>从 SKeyDB 目录读取命轮主属性、精炼成长与密契套装效果；条件型 6 件套仍由玩家手动确认触发条件。</div>
+        <div class="sourceItem"><strong>版本一致性：</strong>当前本地 public-v3 manifest 与 dansa/SKeyDB 主分支对应 manifest 文件哈希一致；页面不再依赖旧版少量样例作为主计算来源。</div>
       </div>
     </section>
   </main>
   <footer class="wrap footer">《忘却前夜》相关角色、图片和文本版权归原权利方所有。本页为非商业个人工具；维基内容请以原页面与其授权说明为准。伤害公式仍在通过客户端脚本与战斗日志 逐步校准。</footer>
 
-<script src="morimens-tools.js?v=20260921.109"></script>
+<script src="morimens-tools.js?v=20260921.110"></script>
   <script src="site-analytics.js" defer></script>
 </body>
 </html>

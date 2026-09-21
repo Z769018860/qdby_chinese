@@ -231,12 +231,12 @@
         s.maxHpMultiplier!==1?'<span class="chip">最大生命 ×'+s.maxHpMultiplier.toFixed(2)+'</span>':'',
         s.finalDamageBonus?'<span class="chip">本次适用终伤 +'+s.finalDamageBonus.toFixed(0)+'%</span>':'',
         s.singularityBeaconStacks?'<span class="chip">奇点信标 '+s.singularityBeaconStacks+' 层</span>':'',
-        s.damageOutputMultiplier!==1?'<span class="chip">Ultra Round 输出 ×'+s.damageOutputMultiplier.toFixed(2)+'</span>':''
+        s.damageOutputMultiplier!==1?'<span class="chip">超维回合输出 ×'+s.damageOutputMultiplier.toFixed(2)+'</span>':''
       ].filter(Boolean);
       box.innerHTML='<div class="autoSummary">'+chips.join('')+'</div><div style="margin-top:7px">'+s.notes.map(esc).join('<br>')+'</div>';
     }
     const pill=document.querySelector('[aria-labelledby="calcTitle"] .statusPill');
-    if(pill)pill.textContent='v0.8 · 公式审计 / 类型化伤害事件';
+    if(pill)pill.textContent='SKeyDB public-v3 · 公式审计版';
     window.MorimensRealmState=s;
     const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,singularityBeaconStacks:s.singularityBeaconStacks,damageOutputMultiplier:s.damageOutputMultiplier,statusOutputMultiplier:s.statusOutputMultiplier,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
     if(signature!==lastRealmSignature){lastRealmSignature=signature;window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}))}

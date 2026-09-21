@@ -343,7 +343,7 @@
       ];
       if(conditionalHitPatterns.some(re=>re.test(text))){
         needsHitOverride=true;
-        messages.push('该技能存在条件额外段数（例如低生命/Boss/特定状态）；默认不擅自触发，可填写本次实际伤害段数。');
+        messages.push('该技能存在条件额外段数（例如低生命/首领战/特定状态）；默认不擅自触发，可填写本次实际伤害段数。');
       }
       if(/each\s+causing\s+an\s+additional\s+instance\s+of\s+DMG/i.test(text)){
         needsHitOverride=true;
@@ -351,10 +351,10 @@
       }
 
       if(/(?:for each|per)\s+[^.]{0,100}\bBase DMG\b|\bBase DMG\b[^.]{0,100}(?:for each|per)/i.test(text)){
-        messages.push('技能含按战斗状态动态变化的 Base DMG；未提供对应状态时不会自动假定层数。');
+        messages.push('技能含按战斗状态动态变化的基础伤害；未提供对应状态时不会自动假定层数。');
       }
       if(/\bFinal DMG\b[^.]{0,120}(?:for each|per|stack)|(?:for each|per)\s+[^.]{0,120}\bFinal DMG\b/i.test(text)){
-        messages.push('技能含按层数/状态动态变化的 Final DMG；未提供对应状态时不会自动假定层数。');
+        messages.push('技能含按层数/状态动态变化的最终伤害；未提供对应状态时不会自动假定层数。');
       }
       if(/\bBase DMG\b[^.]{0,80}\bwhen\b|\bwhen\b[^.]{0,80}\bBase DMG\b/i.test(text)){
         messages.push('技能含条件 Base DMG 加成；只有条件明确输入后才应计入。');
@@ -363,10 +363,10 @@
         messages.push('技能含“余震”伤害/触腕事件；余震是否实际触发取决于战斗状态，当前默认不自动计入。');
       }
       if(/\{Leap\}\s*:[^.]*?(?:DMG|\{STR\}|\{Tentacle DMG\})/i.test(text)){
-        messages.push('技能含“跃迁”条件伤害/STR/触腕修正；当前默认不把跃迁条件强行计入。');
+        messages.push('技能含“跃迁”条件伤害/力量/触腕修正；当前默认不把跃迁条件强行计入。');
       }
       if(/(?:\{Leap\}|\{Aftershock\}|\bIf\b|\bWhen\b|\bWhenever\b|\bUpon\b|\bAfter\b|\bFor each\b)[^.\n]{0,220}\[Damage:[^\]]+\]/i.test(text)){
-        messages.push('检测到条件 Damage Event：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把 Leap/If/When 分支高算。');
+        messages.push('检测到条件伤害事件：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把跃迁/条件分支高算。');
       }
       const hasIndirectDamageDefinition=/\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\bthat\s+deals?\s+\[Damage:[^\]]+\]/i.test(text);
       if(hasIndirectDamageDefinition){
@@ -379,13 +379,13 @@
 
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
-        messages.push('检测到条件式 Poison / Counter / Bleed / Corrosion：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
+        messages.push('检测到条件式中毒 / 反击 / 流血 / 侵蚀：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
       }
       if(/Tentacle\s+(?:performs?|makes?)\s+(?:an?\s+)?attack[^.]*?(?:gain|gains)\s+\{Counter\}[^.]*?DMG dealt/i.test(text)){
-        messages.push('检测到“触腕立即攻击并按本次伤害获得 Counter”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
+        messages.push('检测到“触腕立即攻击并按本次伤害获得反击”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
       }
       if(/Fixed\s+\{Corrosion\}[^.]*?Max HP/i.test(text)){
-        messages.push('检测到依赖施放者 Max HP 的 Fixed Corrosion；当前角色伤害面板没有可靠的实时 Max HP 状态，该部分不自动求值。');
+        messages.push('检测到依赖施放者最大生命的固定侵蚀；当前角色伤害面板没有可靠的实时最大生命状态，该部分不自动求值。');
       }
       return {needsHitOverride,minHits,maxHits,messages:[...new Set(messages)]};
     }

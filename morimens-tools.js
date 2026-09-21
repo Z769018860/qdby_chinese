@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260921.109";
+  const assetVersion="20260921.110";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -92,7 +92,7 @@ setupMorimensMascotToggle();
       // Keep only its DOM bootstrap (upgradeUI); SKeyDB modules below own
       // character/skill selection, coefficients, stats and calculate events.
       .replace(
-        /async function init\(\)\{upgradeUI\(\);populateCharacters\(\);bind\(\);loadCharacter\(\);calculate\(\);renderFortune\(false\);loadCategoryOptions[\s\S]*?await loadCharacterRoster\(\)\}\s*init\(\);/,
+        /async function init\(\)\{upgradeUI\(\);populateCharacters\(\);bind\(\);loadCharacter\(\);calculate\(\);[\s\S]*?await loadCharacterRoster\(\)\}\s*init\(\);/,
         "async function init(){upgradeUI()}\ninit();"
       );
     (0,eval)(code);

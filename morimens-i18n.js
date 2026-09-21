@@ -9,7 +9,7 @@
     '命轮属性自动带入':'Wheel stats auto-applied',
     '密契 3/6 件套':'Covenant 3/6-piece sets',
     '每日签':'Daily Fortune',
-    '伤害配装计算器':'Damage Build Calculator',
+    '伤害配装计算器':'Damage Build Calculator','主要数据源于：':'Primary data source:','SKeyDB public-v3 · 公式审计版':'SKeyDB public-v3 · audited formulas',
     '角色、技能、命轮、密契和 Buff 负责“自动带值”；攻击力、力量以及仍未还原的防御系数保留手动输入。同步失败时自动使用内置的已核对样例，不会让页面失效。':'Characters, skills, wheels, covenants, and buffs populate verified values automatically. Attack, Strength, and unresolved defense parameters remain editable. Verified fallback samples are used if synchronization is unavailable.',
     'v0.2 · Wiki 实值 + 客户端术语':'Synced data · Wiki localization + client terminology',
     '① 角色与技能':'① Character & Skill','等待同步':'Waiting for sync',
