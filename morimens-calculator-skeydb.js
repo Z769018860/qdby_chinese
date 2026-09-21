@@ -51,7 +51,7 @@
   function currentFormulaContext(extra={}){
     const level=Math.max(1,Math.min(90,Number(characterLevelControl()?.value)||90));
     const engine=window.MorimensFormulaEngine;
-    const base=currentAwakener&&engine?engine.statsWithProgression(currentAwakener,level,progressionState()):{};
+    const base=currentAwakener&&engine?engine.statsWithProgression(currentAwakener,level,progressionState(),psycheSurgeLevel()):{};
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
     if($('powerBonus'))base.DamageAmplification=num($('powerBonus').value,base.DamageAmplification||0);
     if($('critRate'))base.CritRate=num($('critRate').value,base.CritRate||0);
@@ -179,7 +179,7 @@
       .replace(/\s+([，。；：])/g,'$1')
       .trim();
   }
-  function skillLabel(skill){const slot=skill?.kind==='derivedSkill'?'衍生技能':(slotZh[skill?.slot]||skill?.slot||'');return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
+  function skillLabel(skill){const slot=skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||skill?.slot||'');return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
   function skillRecordScope(skillOrId){const id=typeof skillOrId==='string'?skillOrId:skillOrId?.id;return String(id||'').startsWith('derived.')?'derived-skills':'skills'}
   function overExaltUnlocked(){const slot=selectedEnlightenSlot();return slot==='OverExalt'||slot==='AbsoluteAxiom'}
   function visibleSkills(){return currentSkills.filter(skill=>skill.slot!=='OverExalt'||overExaltUnlocked())}
@@ -238,6 +238,8 @@
 
   const ENLIGHTEN_ORDER=['E1','E2','E3','OverExalt','AbsoluteAxiom'];
   function selectedEnlightenSlot(){return $('charEnlighten')?.value||null}
+  function psycheSurgeUnlocked(){const selected=selectedEnlightenSlot();const i=ENLIGHTEN_ORDER.indexOf(selected);return i>=ENLIGHTEN_ORDER.indexOf('E3')}
+  function psycheSurgeLevel(){return psycheSurgeUnlocked()?Math.max(0,Math.min(12,Math.floor(num($('psycheSurgeLevel')?.value,0)))):0}
   function activeEnlightens(){
     const selected=selectedEnlightenSlot();if(!selected)return [];
     const max=ENLIGHTEN_ORDER.indexOf(selected);if(max<0)return [];
@@ -314,13 +316,30 @@
     };
   }
   function ensureEnlightenUi(){
-    if($('charEnlighten'))return;
+    if($('charEnlighten')){ensurePsycheSurgeUi();return;}
     const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
     const wrap=document.createElement('div');wrap.className='field';
     wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
-    $('charEnlighten').addEventListener('change',()=>{renderEnlightenSummary();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
+    $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
+    ensurePsycheSurgeUi();
+  }
+  function ensurePsycheSurgeUi(){
+    if($('psycheSurgeLevel'))return;
+    const anchor=$('charEnlighten')?.closest('.field');if(!anchor)return;
+    const wrap=document.createElement('div');wrap.className='field';
+    wrap.innerHTML='<label for="psycheSurgeLevel">启灵后副属性成长</label><select id="psycheSurgeLevel"></select><small>对应 SKeyDB Psyche Surge（E3+Z）0–12 档：继续按角色自身 substatScaling 增加暴击率、暴击伤害、伤害强效、回充等副属性；与“灵塑”是两套独立成长。</small>';
+    anchor.insertAdjacentElement('afterend',wrap);
+    const sel=$('psycheSurgeLevel');
+    for(let i=0;i<=12;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 无额外副属性成长':String(i)+' · E3 + '+String(i);sel.appendChild(o)}
+    sel.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    configurePsycheSurgeControl(false);
+  }
+  function configurePsycheSurgeControl(reset=false){
+    const sel=$('psycheSurgeLevel');if(!sel)return;const unlocked=psycheSurgeUnlocked();
+    if(reset||!unlocked)sel.value='0';sel.disabled=!unlocked;
+    sel.title=unlocked?'E3 后可按实际 Psyche Surge 档位选择 0–12':'达到 E3 后解锁该成长档';
   }
   function enlightenSlotLabel(slot){
     if(slot==='OverExalt')return '+4 · 超限';
@@ -334,7 +353,7 @@
       if(!currentEnlightens.some(x=>x.slot===slot))continue;
       const o=document.createElement('option');o.value=slot;o.textContent=enlightenSlotLabel(slot);o.selected=prev===slot;sel.appendChild(o);
     }
-    if(!Array.from(sel.options).some(o=>o.value===prev))sel.value='';renderEnlightenSummary();
+    if(!Array.from(sel.options).some(o=>o.value===prev))sel.value='';configurePsycheSurgeControl(resetCharacterSpecific);renderEnlightenSummary();
   }
   function renderEnlightenSummary(){
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
@@ -433,9 +452,13 @@
     const chips=[
       `攻击力 ${Math.round(stats.ATK)}`,
       `体质 ${Math.round(stats.CON)}`,
-      `防御力 ${Math.round(stats.DEF)}`
+      `防御力 ${Math.round(stats.DEF)}`,
+      `暴击率 ${num(stats.CritRate).toFixed(1)}%`,
+      `暴击伤害 ${(100+num(stats.CritDamage)).toFixed(1)}%`,
+      `伤害强效 ${num(stats.DamageAmplification).toFixed(1)}%`
     ];
     if(progression.gnosticLevel)chips.push(`内在灵格 ${progression.gnosticLevel}：基础属性等级 +${progression.bonusLevels}`);
+    if(progression.psycheSurgeLevel)chips.push(`启灵后副属性成长 ${progression.psycheSurgeLevel} 档：按角色 substatScaling 继续成长`);
     if(progression.soulforgeLevel){
       chips.push(`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
       if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外增加攻击力的 ${progression.flatAtkDamagePct}%`);
@@ -479,7 +502,8 @@
   function applyCharacterStats(){
     if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number(characterLevelControl()?.value)||90));
     const engine=window.MorimensFormulaEngine,progression=progressionState();
-    const stats=engine?engine.statsWithProgression(currentAwakener,level,progression):{
+    progression.psycheSurgeLevel=psycheSurgeLevel();
+    const stats=engine?engine.statsWithProgression(currentAwakener,level,progression,progression.psycheSurgeLevel):{
       ATK:Math.floor(num(currentAwakener.baseStatsLv1?.ATK)+num(currentAwakener.statScaling?.ATK)*(level-1)+1e-7),
       CON:Math.floor(num(currentAwakener.baseStatsLv1?.CON)+num(currentAwakener.statScaling?.CON)*(level-1)+1e-7),
       DEF:Math.floor(num(currentAwakener.baseStatsLv1?.DEF)+num(currentAwakener.statScaling?.DEF)*(level-1)+1e-7),
@@ -505,6 +529,7 @@
     normalizeProgressionControls();
     configureProgressionControls(switchedCharacter);
     configureEnlightenControl(switchedCharacter);
+    configurePsycheSurgeControl(switchedCharacter);
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
     applyCharacterStats();
@@ -520,7 +545,8 @@
       currentSkills=currentSkills.filter(x=>slotOrder[x.slot]||x.kind==='derivedSkill');
       currentSkills.sort((a,b)=>(slotOrder[a.slot]||90)-(slotOrder[b.slot]||90)||String(a.name||'').localeCompare(String(b.name||'')));
       renderSkillOptions(currentSkill?.id);
-      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${visibleSkills().length} 个当前可用技能已从本地 SKeyDB 同步`);await applySkill();
+      const derivedCount=currentSkills.filter(x=>x.kind==='derivedSkill').length,baseCount=currentSkills.length-derivedCount;
+      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${baseCount} 个主技能 + ${derivedCount} 张衍生卡已从本地 SKeyDB 同步`);await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
@@ -800,7 +826,7 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
-    if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('skillActualHits'))$('skillActualHits').value='';
+    if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
