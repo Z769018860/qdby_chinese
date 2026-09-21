@@ -481,7 +481,9 @@
 
   const resourceSpecs={
     'awakener-0001':[
-      {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:false,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的人格状态。不同人格会改变对应界域触发效果；当前作为战斗状态记录，不跨技能猜测触发时序。'}
+      {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:false,showInCalculator:true,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的狂气爆发会按当前人格与界域触发额外效果并切换人格。该分支同时包含多目标伤害、目标力量降低、状态施加与触腕/中毒等不同结算时序；当前先显式记录人格，但不把这些复杂分支静默折算进当前目标伤害，避免高算。'},
+      {key:'twistedCarrionPriorUses',label:'本场此前已释放「扭曲腐肉狂欢」次数',min:0,max:99,calculated:true,description:'该狂气爆发每次释放后使自身基础伤害在本场 +20%。这里填写本次释放之前已经释放的次数；当前这次新增的 +20% 不回溯放大本次已经开始结算的伤害。'},
+      {key:'twentyFourTripleNextCommandActive',label:'超限后：当前是下一张三次生效的指令卡',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发 Aberrant Vivisection 后，“24”的下一张指令卡生效 3 次。仅在当前计算的确实是那一张指令卡时勾选；计算器会把可解析的伤害/状态事件额外重复 2 次。'}
     ],
     'awakener-0056':[
       {overlayId:'overlay.arachne.weaver',key:'weaverStacks',label:'织命者',min:0,max:5,calculated:false,description:'织命者层数；E3 上限为 5，E3 前上限为 3。用于 Singularity Warp 后的 Infinite Threads 追击。'},
@@ -524,7 +526,8 @@
       {overlayId:'overlay.saya.gynoecium',key:'gynoeciumStacks',label:'Gynoecium',min:0,max:4,calculated:false,description:'可被 Saya 的 Exalt 消耗以强化效果，最多 4 层。'}
     ],
     'awakener-0055':[
-      {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'Vortex Reload',min:0,max:999,calculated:false,description:'其他唤醒体释放 Exalt 后消耗 1 层并追击 Vortex! Shell!；SKeyDB 未给出明确总上限。'}
+      {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'Vortex Reload',min:0,max:999,calculated:false,description:'其他唤醒体释放 Exalt 后消耗 1 层并追击 Vortex! Shell!；这一层本身只决定是否产生追击，直接计算追击伤害时请选中派生卡 Vortex! Shell!。'},
+      {key:'vortexShellDoubleRemaining',label:'超限双触发剩余 Vortex! Shell! 次数',min:0,max:5,calculated:true,requiredEnlighten:'OverExalt',description:'Moskstraumen! BOOM! 后，接下来 5 次 Vortex! Shell! 均触发 2 次。若当前仍在这 5 次范围内填写 1–5；当前选择 Vortex! Shell! 时会自动把可解析事件额外结算 1 次。'}
     ],
     'awakener-0061':[
       {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后每层最终伤害增幅由 33% 提高至 50%。'},
@@ -608,7 +611,7 @@
     // The damage calculator only exposes resources that actually participate
     // in the current damage/event formula. Pure bookkeeping states stay in
     // SKeyDB data but are intentionally omitted from this UI.
-    return (resourceSpecs[currentAwakener?.id]||[]).filter(spec=>resourceRequirementMet(spec)&&spec.calculated===true);
+    return (resourceSpecs[currentAwakener?.id]||[]).filter(spec=>resourceRequirementMet(spec)&&(spec.calculated===true||spec.showInCalculator===true));
   }
   function effectiveResourceMax(spec){
     if(spec?.key==='symbiosisRemovedStacks'){
@@ -662,24 +665,24 @@
     block.innerHTML='';
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
-      const wrap=document.createElement('div');wrap.className='field calcResourceField isCalculated';
+      const wrap=document.createElement('div');wrap.className='field calcResourceField'+(spec.calculated===true?' isCalculated':' isInformational');
       const descriptionHtml=spec.description?escape(spec.description):(overlay?renderRichRecord(overlay,1):escape('角色专属战斗资源。'));
       const labelHtml=overlay?termHtml(overlay.name,spec.label):escape(spec.label);
       if(spec.type==='checkbox'){
         const checked=Number(previous[spec.key])>0;
         const dependentOff=!resourceDependencyEnabled(spec,previous);
         wrap.classList.add('full');
-        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+' '+(dependentOff?'disabled':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
+        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+' '+(dependentOff?'disabled':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
       }else if(spec.type==='select'){
         const selected=String(previous[spec.key]??'');
         const dependentOff=!resourceDependencyEnabled(spec,previous);
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
-        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'" '+(dependentOff?'disabled':'')+'>'+options+'</select><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
+        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'" '+(dependentOff?'disabled':'')+'>'+options+'</select><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
       }else{
         const max=effectiveResourceMax(spec);const fallback=Number.isFinite(Number(spec.min))?Number(spec.min):0;const value=Math.min(max,Math.max(fallback,Number(previous[spec.key])||fallback));
         const inputLabel=spec.inputLabel||spec.label+'数量';
         const dependentOff=!resourceDependencyEnabled(spec,previous);
-        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
+        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
       }
       block.appendChild(wrap);
     }
@@ -817,12 +820,36 @@
     return mapped;
   }
 
+  function repeatRepresentedCardEvents(events,extra,label,suffixBase){
+    const repeatable=(events||[]).filter(event=>['active','pierce','pure','fixed','poison','bleed','counter','corrosion'].includes(event.type));
+    const out=[...(events||[])],extraCount=Math.max(0,Math.floor(Number(extra)||0));
+    for(let n=0;n<extraCount;n++){
+      const suffix='-'+suffixBase+'-'+String(n+1);
+      for(const event of repeatable){
+        out.push({...event,
+          id:String(event.id||'event')+suffix+'-'+String(out.length+1),
+          index:out.length,
+          position:(Number(event.position)||0)+0.000012*(n+1),
+          groupId:String(event.groupId||event.id||'event')+suffix,
+          sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+suffix:event.sourceGroupId,
+          resourceEffectLabel:[event.resourceEffectLabel,label].filter(Boolean).join('；')
+        });
+      }
+    }
+    return out;
+  }
   function applyCharacterResourceEffects(events){
     const resources=characterResourceValues();
     const baseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
     const finishedBattles=completedBattles();
     let mapped=(events||[]).map(event=>{
       const next={...event};
+      if(currentAwakener?.id==='awakener-0001'&&baseSkillId==='skill.24.twisted-carrion-revel'&&Number(resources.twistedCarrionPriorUses)>0&&(next.type==='active'||next.type==='pierce')){
+        const prior=Math.max(0,Math.floor(Number(resources.twistedCarrionPriorUses)||0));
+        const bonus=20*prior;
+        next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
+        next.resourceEffectLabel=[next.resourceEffectLabel,'本场此前狂气爆发 '+prior+' 次：扭曲腐肉狂欢基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+      }
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
         next.doubleCritDamageBonus=true;
         next.resourceEffectLabel='残骸 3 层：本次暴击伤害加成翻倍';
@@ -877,6 +904,12 @@
       return next;
     });
     mapped=applyGenericRouseEffects(mapped);
+    if(currentAwakener?.id==='awakener-0001'&&Number(resources.twentyFourTripleNextCommandActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
+      mapped=repeatRepresentedCardEvents(mapped,2,'超限状态：下一张指令卡共生效 3 次','24-overexalt');
+    }
+    if(currentAwakener?.id==='awakener-0055'&&baseSkillId==='derived.vortice.vortex-shell'&&Number(resources.vortexShellDoubleRemaining)>0){
+      mapped=repeatRepresentedCardEvents(mapped,1,'超限状态：Vortex! Shell! 本次触发 2 次','vortice-overexalt');
+    }
     if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0){
       const bonus=8*Math.min(10,Math.max(0,Math.floor(Number(resources.finaleStacks)||0)));
       mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
