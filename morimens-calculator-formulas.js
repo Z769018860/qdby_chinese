@@ -199,6 +199,11 @@
         const extra=num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100;
         return Math.max(0,multiplier+extra);
       }
+      match=local.match(/additionally\s+gaining\s+\[([^\]]+)\]%\s+\{Tentacle DMG\}\s+and\s+\{STR\}\s+bonus/i);
+      if(match){
+        const extra=num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100;
+        return Math.max(0,multiplier+extra);
+      }
       match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+\[([^\]]+)\]%\s+\{STR\}\s+bonus/i);
       if(match)return Math.max(0,multiplier+num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100);
       // Some cards place the STR multiplier in a following sentence instead of beside [Damage].
