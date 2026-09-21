@@ -1773,7 +1773,8 @@
       return;
     }
     const enabled=signatureRelicEnabled(),skillMods=signatureRelicSkillMods();
-    if(box)box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(currentSignatureRelic.name||'专属造物')}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“装备”就常驻生效。${enabled&&skillMods.notes.length?' 当前技能：'+escape(skillMods.notes.join('；')):''}</small>`;
+    const relicDisplayName=isEnglish()?(currentSignatureRelic.name||'Signature Relic'):'当前角色专属造物（维度影像）';
+    if(box)box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(relicDisplayName)}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“装备”就常驻生效。${enabled&&skillMods.notes.length?' 当前技能：'+escape(skillMods.notes.join('；')):''}</small>`;
     window.MorimensSignatureRelic={enabled,record:currentSignatureRelic,text:signatureRelicRaw(),skillMods};
   }
   async function loadSignatureRelic(reset=false){
@@ -1849,7 +1850,7 @@
     rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);
     if(currentCovenant)rows.push(`<span class="chip">密契 6 件套：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}${$('contractConditional')?.checked?' · 额外条件已满足':''}</span>`);
     if(signatureRelicEnabled()){
-      rows.push(`<span class="chip">专属造物：${escape(currentSignatureRelic?.name||'Dimensional Image')}</span>`);
+      rows.push(`<span class="chip">专属造物：${escape(isEnglish()?(currentSignatureRelic?.name||'Dimensional Image'):'当前角色维度影像')}</span>`);
       const signatureStrength=num(window.MorimensGearEffects?.signatureStrengthFlat);
       if(signatureStrength>0)rows.push(`<span class="chip">专造回合开始力量 +${signatureStrength.toFixed(2)}</span>`);
     }
