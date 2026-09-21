@@ -187,7 +187,12 @@
   function skillLabel(skill){const slot=skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||skill?.slot||'');return `${slot}${slot?' · ':''}${localizedSkillName(skill)}`}
   function skillRecordScope(skillOrId){const id=typeof skillOrId==='string'?skillOrId:skillOrId?.id;return String(id||'').startsWith('derived.')?'derived-skills':'skills'}
   function overExaltUnlocked(){const slot=selectedEnlightenSlot();return slot==='OverExalt'||slot==='AbsoluteAxiom'}
-  function visibleSkills(){return currentSkills.filter(skill=>skill.slot!=='OverExalt'||overExaltUnlocked())}
+  function derivedStructuralOnly(skill){
+    if(skill?.kind!=='derivedSkill')return false;
+    if(String(skill?.nodeKind||'').toLowerCase()==='group')return true;
+    return !skill?.cardFamily&&!(skill?.cardTypes||[]).length;
+  }
+  function visibleSkills(){return currentSkills.filter(skill=>(skill.slot!=='OverExalt'||overExaltUnlocked())&&!derivedStructuralOnly(skill))}
   function derivedDamageLike(skill){
     if(skill?.kind!=='derivedSkill')return false;
     const text=String(skill.descriptionTemplate||'');
@@ -557,7 +562,7 @@
     block.innerHTML='';
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
-      const wrap=document.createElement('div');wrap.className='field';
+      const wrap=document.createElement('div');wrap.className='field calcResourceField '+(spec.calculated?'isCalculated':'isStateOnly');
       const description=spec.description||(overlay?zhText(renderTemplate(overlay,1)):'角色专属战斗资源。');
       if(spec.type==='checkbox'){
         const checked=Number(previous[spec.key])>0;
@@ -1008,6 +1013,17 @@
           if(x.percent!==undefined)return name+' '+Number(x.percent).toFixed(2)+'%';
           return name;
         }).join(' / ')}`);
+      }
+      if(currentSkill?.kind==='derivedSkill'){
+        const eventTypes=new Set(damageEvents.map(x=>x.type));
+        const notes=[];
+        if(eventTypes.has('active'))notes.push('主动伤害：受易伤/虚弱影响');
+        if(eventTypes.has('pierce'))notes.push('穿透伤害：不受易伤/虚弱影响');
+        if(eventTypes.has('tentacle'))notes.push('触腕伤害：受易伤/虚弱影响');
+        if(eventTypes.has('pure'))notes.push('纯粹伤害：不受易伤/虚弱影响');
+        if(eventTypes.has('fixed'))notes.push('固定伤害：不受易伤/虚弱影响');
+        if(notes.length)parts.push('衍生卡乘区：'+notes.join('；'));
+        if(damageEvents.some(x=>['poison','bleed','counter','corrosion'].includes(x.type)&&x.basis==='sourceDamage'))parts.push('来源伤害型状态会随对应伤害事件联动变化');
       }
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
