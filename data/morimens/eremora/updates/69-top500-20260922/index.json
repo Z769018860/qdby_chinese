@@ -1,0 +1,15 @@
+{
+  "format": "gzip-base64-chunked-v1",
+  "seasonId": 69,
+  "scope": 500,
+  "recordCount": 432,
+  "updatedAt": "2026-09-22T01:00:00+08:00",
+  "revision": "s69-top500-20260922-0100",
+  "chunks": [
+    "data/morimens/eremora/updates/69-top500-20260921/chunk-000.b64",
+    "data/morimens/eremora/updates/69-top500-20260921/chunk-001.b64"
+  ],
+  "chunkSize": 200000,
+  "compressedBytes": 385327,
+  "source": "2026-09-22 Top500 rank refresh; detailed delta records reuse the 2026-09-21 parsed overlay and merge by UID"
+}
