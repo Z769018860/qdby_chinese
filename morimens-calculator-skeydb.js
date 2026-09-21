@@ -532,11 +532,10 @@
   }
   function resourceRequirementMet(spec){if(!spec?.requiredEnlighten)return true;const current=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot());const need=ENLIGHTEN_ORDER.indexOf(spec.requiredEnlighten);return current>=need&&need>=0}
   function currentResourceSpecs(){
-    const known=(resourceSpecs[currentAwakener?.id]||[]).filter(resourceRequirementMet);
-    const knownIds=new Set();
-    for(const spec of known){if(spec.overlayId)knownIds.add(spec.overlayId);for(const id of spec.coversOverlayIds||[])knownIds.add(id)}
-    const inferred=(currentOverlays||[]).filter(x=>!knownIds.has(x.id)).map(inferredResourceSpec).filter(Boolean);
-    return [...known,...inferred];
+    // The damage calculator only exposes resources that actually participate
+    // in the current damage/event formula. Pure bookkeeping states stay in
+    // SKeyDB data but are intentionally omitted from this UI.
+    return (resourceSpecs[currentAwakener?.id]||[]).filter(spec=>resourceRequirementMet(spec)&&spec.calculated===true);
   }
   function effectiveResourceMax(spec){
     if(spec?.key==='spellboundStacks'){
