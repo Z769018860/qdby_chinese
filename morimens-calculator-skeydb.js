@@ -555,9 +555,13 @@
       {overlayId:'overlay.xu.enthrall',coversOverlayIds:['overlay.xu.betroth'],key:'xuChoice',label:'当前痴醉选择',type:'select',calculated:false,options:[['','未选择'],['betroth','相许'],['enthrall','夺魄']],description:'「夜雾下的情誓」的二选一状态：相许施加痴醉，夺魄移除痴醉并按层结算纯粹伤害/中毒。'},
       {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标痴醉',min:0,max:15,calculated:true,description:'夺魄会移除全部痴醉；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。基础上限 5，E3 上限 10，最终法则上限 15。'}
     ],
+    'awakener-0019':[
+      {key:'helotSanguineTurnActive',label:'血链大招本回合流血效果已生效',type:'checkbox',calculated:true,description:'Sanguine Fetters / 血色桎梏发动后，本回合血链希洛每次造成主动伤害都会附加流血。仅在确实已经发动大招且仍处于同一回合时勾选；流血比例按当前技能等级档读取大招 Arg2（Lv.1–6 为 75%–100%）。'}
+    ],
     'awakener-0027':[
-      {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:false},
-      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaActive',label:'当前卡具有 Fiamma',type:'checkbox',calculated:true,description:'当前卡具有 Fiamma 时，本卡最终伤害、护盾、狂气和力量效果 +30%；伤害计算器只自动应用最终伤害 +30%。'}
+      {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:true,requiredEnlighten:'E3',description:'E3 后，每获得 1 层燃烧，本场战斗基础伤害 +5%；按当前累计层数计算，最高输入 10 层。'},
+      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaActive',label:'当前卡具有活焰',type:'checkbox',calculated:true,description:'勾选表示当前所计算的这张卡带有活焰。活焰是单卡状态，是否存在与层数分开控制。'},
+      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaStacks',label:'活焰层数',min:1,max:3,calculated:true,dependsOn:'fiammaActive',description:'单张卡最多 3 层。基础每层使本卡最终伤害等效果 +30%；3 层时会触发 E2 对特定技能的额外效果。灵知觉醒 + 最终法则时，每层最终伤害/力量效果再额外 +30%。'}
     ],
     'awakener-0035':[
       {overlayId:'overlay.murphy-fauxborn.life-seal',key:'lifeSealStacks',label:'生命封印',min:0,max:5,calculated:true,description:'每层使下一次「妄想公主」施加的诞生仪式 +20%；灵塑启用时该增幅翻倍。5 层时该技能伤害段数翻倍。'}
@@ -664,18 +668,27 @@
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
         wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }else{
-        const max=effectiveResourceMax(spec);const value=Math.min(max,Math.max(spec.min,Number(previous[spec.key])||0));
+        const max=effectiveResourceMax(spec);const fallback=Number.isFinite(Number(spec.min))?Number(spec.min):0;const value=Math.min(max,Math.max(fallback,Number(previous[spec.key])||fallback));
         const inputLabel=spec.inputLabel||spec.label+'数量';
-        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
+        const dependentOff=spec.dependsOn&&Number(previous[spec.dependsOn])<=0;
+        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+' · 已接入伤害计算。</small>';
       }
       block.appendChild(wrap);
     }
     block.hidden=false;
+    const syncDependencies=()=>{
+      const values=characterResourceValues();
+      for(const spec of currentResourceSpecs()){
+        if(!spec.dependsOn)continue;
+        const input=block.querySelector('[data-resource-key="'+CSS.escape(spec.key)+'"]');
+        if(input)input.disabled=Number(values[spec.dependsOn])<=0;
+      }
+    };
     block.querySelectorAll('[data-resource-key]').forEach(el=>{
-      const rerun=()=>{characterResourceValues();updateSkillLevel();$('calcBtn')?.click()};
+      const rerun=()=>{syncDependencies();updateSkillLevel();$('calcBtn')?.click()};
       el.addEventListener('input',rerun,{capture:true});el.addEventListener('change',rerun,{capture:true});
     });
-    characterResourceValues();
+    syncDependencies();
   }
   function resolvedOverlay(id){
     return resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===id));
@@ -819,7 +832,7 @@
         next.resourceEffectLabel='Rouse：圣心额外施加等于本次伤害 100% 的流血';
       }
       if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
-        const stacks=Math.max(0,Math.floor(num($('targetVulnerableStacks')?.value,0)));
+        const stacks=vulnerableStacks();
         const bonus=Math.min(500,stacks*5);
         if(bonus>0){
           next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
@@ -1024,8 +1037,48 @@
         mapped.push({id:'xu-enthrall-poison-resource',index:mapped.length,position:9998,groupId:'xu-enthrall-poison-resource',type:'poison',action:'trigger',source:'resource',basis:'currentPoisonPercent',percent:40*stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：触发 '+(40*stacks)+'% 中毒'});
       }
     }
-    if(currentAwakener?.id==='awakener-0027'&&Number(resources.fiammaActive)>0){
-      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+30,resourceEffectLabel:'Fiamma：本卡最终伤害 +30%'}:event);
+    if(currentAwakener?.id==='awakener-0019'&&Number(resources.helotSanguineTurnActive)>0){
+      const exalt=currentSkills.find(skill=>skill.id==='skill.helot-catena.sanguine-fetters');
+      const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
+      const bleedPct=Math.max(0,num(argValue(resolveSkillEnlighten(exalt)?.descriptionArgs?.Arg2,rank),0));
+      if(bleedPct>0){
+        mapped=mapped.map(event=>event.type==='active'?{
+          ...event,
+          onDamageBleedPct:(Number(event.onDamageBleedPct)||0)+bleedPct,
+          resourceEffectLabel:[event.resourceEffectLabel,'血色桎梏本回合效果：主动伤害附加 '+bleedPct.toFixed(0)+'% 流血'].filter(Boolean).join('；')
+        }:event);
+      }
+    }
+    if(currentAwakener?.id==='awakener-0027'){
+      const fiammaOn=Number(resources.fiammaActive)>0;
+      const fiammaStacks=fiammaOn?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
+      if(fiammaStacks>0){
+        const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
+        const perStackFinal=30+(absoluteRouse?30:0);
+        const finalBonus=perStackFinal*fiammaStacks;
+        mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
+          ...event,
+          skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalBonus,
+          resourceEffectLabel:[event.resourceEffectLabel,'活焰 '+fiammaStacks+' 层：本卡最终伤害 +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?'（灵知觉醒 + 最终法则）':'')].filter(Boolean).join('；')
+        }:event);
+        const e2Unlocked=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2');
+        if(e2Unlocked&&fiammaStacks===3&&baseSkillId==='skill.kathigu-ra.solarflare'){
+          mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
+            ...event,
+            skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+50,
+            resourceEffectLabel:[event.resourceEffectLabel,'E2 · 活焰 3 层：Solarflare 基础伤害 +50%'].filter(Boolean).join('；')
+          }:event);
+        }
+      }
+      const combust=Math.min(10,Math.max(0,Math.floor(Number(resources.combustStacks)||0)));
+      if(combust>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E3')){
+        const baseBonus=combust*5;
+        mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
+          ...event,
+          skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+baseBonus,
+          resourceEffectLabel:[event.resourceEffectLabel,'E3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join('；')
+        }:event);
+      }
     }
     if(currentAwakener?.id==='awakener-0035'&&baseSkillId==='skill.murphy-fauxborn.princess-of-delusions'&&Number(resources.lifeSealStacks)>=5){
       const direct=mapped.filter(x=>x.type==='active'||x.type==='pierce');
