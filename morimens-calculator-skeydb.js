@@ -421,7 +421,7 @@
     if($('charEnlighten')){ensurePsycheSurgeUi();return;}
     const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
     const wrap=document.createElement('div');wrap.className='field';
-    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
+    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">未启灵</option></select><small>按 SKeyDB 累计应用：启灵2包含启灵1与启灵2，启灵3继续叠加启灵3效果；+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
     $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderCharacterResourceControls(false);refreshBattleProgressionUi();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
@@ -434,23 +434,26 @@
     wrap.innerHTML='<label for="psycheSurgeLevel">启灵后副属性成长</label><select id="psycheSurgeLevel"></select><small>启灵3后可选择 0–12 档副属性成长：继续按角色自身副属性成长系数增加暴击率、暴击伤害、伤害强效、回充等属性；与“灵塑”是两套独立成长。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const sel=$('psycheSurgeLevel');
-    for(let i=0;i<=12;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 无额外副属性成长':String(i)+' · E3 + '+String(i);sel.appendChild(o)}
+    for(let i=0;i<=12;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 无额外副属性成长':String(i)+' · 启灵3后第 '+String(i)+' 档';sel.appendChild(o)}
     sel.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     configurePsycheSurgeControl(false);
   }
   function configurePsycheSurgeControl(reset=false){
     const sel=$('psycheSurgeLevel');if(!sel)return;const unlocked=psycheSurgeUnlocked();
     if(reset||!unlocked)sel.value='0';sel.disabled=!unlocked;
-    sel.title=unlocked?'启灵3后可按实际副属性成长档位选择 0–12':'达到 E3 后解锁该成长档';
+    sel.title=unlocked?'启灵3后可按实际副属性成长档位选择 0–12':'达到启灵3后解锁该成长档';
   }
   function enlightenSlotLabel(slot){
     if(slot==='OverExalt')return '+4 · 超限';
     if(slot==='AbsoluteAxiom')return '最终法则';
+    if(slot==='E1')return '启灵1';
+    if(slot==='E2')return '启灵2';
+    if(slot==='E3')return '启灵3';
     return slot;
   }
   function configureEnlightenControl(resetCharacterSpecific=false){
     ensureEnlightenUi();const sel=$('charEnlighten');if(!sel)return;const prev=resetCharacterSpecific?'':sel.value;
-    sel.innerHTML='<option value="">E0 · 未启灵</option>';
+    sel.innerHTML='<option value="">未启灵</option>';
     for(const slot of ['E1','E2','E3','OverExalt','AbsoluteAxiom']){
       if(!currentEnlightens.some(x=>x.slot===slot))continue;
       const o=document.createElement('option');o.value=slot;o.textContent=enlightenSlotLabel(slot);o.selected=prev===slot;sel.appendChild(o);
@@ -459,7 +462,7 @@
   }
   function renderEnlightenSummary(){
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
-    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+renderRichRecord(x,1)).join('<br><br>'):'E0：当前不应用启灵升级。';
+    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+renderRichRecord(x,1)).join('<br><br>'):'未启灵：当前不应用启灵升级。';
   }
   function rouseActive(){return $('rouseActive')?.checked===true}
   function currentRouseSkill(){return currentSkills.find(x=>x.slot==='Rouse')||null}
@@ -516,7 +519,7 @@
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 出血。'},
       {key:'polluxCommandFinalBonusPct',label:'指令卡最终伤害额外加成',inputLabel:'指令卡最终伤害额外加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 记录的两组档位分别为 18/22/26/30% 与 9/11/13/15%；不自动猜测该增益的来源等级。'},
-      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次「苦痛救赎」；基础为 200% 攻击力，并会按本次探索已完成战斗数自动提高。'},
+      {key:'atonementByPainActive',label:'苦痛救赎生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次「苦痛救赎」；基础为 200% 攻击力，并会按本次探索已完成战斗数自动提高。'},
       {key:'atonementByPainDouble',label:'启灵3：苦痛救赎应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'启灵3后，第 3 次打出「圣心」会使下一张指令卡的「苦痛救赎」应用 2 次。只有“赎罪苦痛生效”时该开关才有意义。'}
     ],
     'awakener-0010':[
@@ -563,7 +566,7 @@
       {key:'endureConversionBoostStacks',label:'最终法则：忍耐转化强化',min:0,max:5,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒状态下：释放狂气爆发后，本回合每受到 1 次攻击，使下一次「报偿打击」转化的忍耐效果 +40%，最多 5 层。只有已开启“灵知觉醒已发动”时输入才生效。'}
     ],
     'awakener-0052':[
-      {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦诱',min:0,max:10,calculated:true,description:'「脊刺锁链」在梦引≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
+      {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦引',min:0,max:10,calculated:true,description:'「脊刺锁链」在梦引≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
       {overlayId:'overlay.wanda.murmurs',key:'murmursActive',label:'低语状态生效',type:'checkbox',calculated:true,description:'主动伤害降低 60%；E2 后降低 65%，同时攻击次数翻倍。'}
     ],
     'awakener-0054':[
@@ -1489,7 +1492,7 @@
           const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
           parts.push(`活焰 ${fiammaStacks}/3 层：本卡最终伤害 +${fiammaStacks*(30+(absoluteRouse?30:0))}%${absoluteRouse?'（灵知觉醒 + 最终法则）':''}`);
           if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.solarflare')parts.push('启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%');
-          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.last-stand-salvo')parts.push('E2 · 活焰 3 层：Last Stand Salvo 额外获得 3% 攻击力 力量；属于后续卡牌状态，不回溯本卡伤害');
+          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.last-stand-salvo')parts.push('启灵2 · 活焰 3 层：「末路枪声」额外获得 3% 攻击力的力量；属于后续卡牌状态，不回溯本卡伤害');
           if(fiammaStacks===3&&rouseActive())parts.push('灵知觉醒：3 层活焰卡使用后返回手牌；这里只计算本次使用，不自动重复整张卡');
         }
         if(Number(resources.combustStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E3'))parts.push(`启灵3 · 燃烧 ${Math.min(10,Math.floor(Number(resources.combustStacks)||0))} 层：本场基础伤害 +${Math.min(10,Math.floor(Number(resources.combustStacks)||0))*5}%`);
@@ -1505,14 +1508,14 @@
       if(currentAwakener?.id==='awakener-0018'&&currentSkill?.overExaltEffectId&&Number(resources.finaleFormActive)>0)parts.push('⚠ 超限终末形态的“每消耗 10 狂气额外触发 3% 中毒”依赖实际消耗狂气，当前未自动计入');
       if(currentAwakener?.id==='awakener-0041'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：波吕克斯基础伤害 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0008'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：卡斯托尔侵蚀施加量 +${20*completedBattles()}%`);
-      if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：克莱门汀 E2 基础伤害 +${25*completedBattles()}%`);
+      if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：克莱门汀启灵2基础伤害 +${25*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`群猎 ${Number(resources.packHuntStacks)} 层：本张对应「魇」衍生卡额外触发 1 次（消耗 1 层）`);
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0)parts.push(`暗潮 ${Number(resources.undertowStacks)} 层：指令卡最终伤害/暴伤已按当前启灵阶段计入`);
       if(currentAwakener?.id==='awakener-0061'&&rouseActive()&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.ogier-oathbound.sin-stained-spear')parts.push(selectedEnlightenSlot()==='AbsoluteAxiom'?'灵知觉醒 + 最终法则：染罪之枪基础伤害 +100%、总力量加成 500%，并施加等量侵蚀':'灵知觉醒：染罪之枪命中后施加等量侵蚀');
-      if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'&&generatedStrength>0)parts.push(`「末路枪声」本次生成力量约 ${generatedStrength.toFixed(1)}；活焰对“获得力量”的增幅与 3 层 E2 额外 3% 攻击力 已按当前状态计入。该力量只影响后续卡牌，不回溯本卡伤害。`);
+      if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'&&generatedStrength>0)parts.push(`「末路枪声」本次生成力量约 ${generatedStrength.toFixed(1)}；活焰对“获得力量”的增幅与 3 层启灵2额外 3% 攻击力已按当前状态计入。该力量只影响后续卡牌，不回溯本卡伤害。`);
       if(currentAwakener?.id==='awakener-0061'&&generatedStrength>0)parts.push(`本次爆发生成力量约 ${generatedStrength.toFixed(1)}${currentSkill?.overExaltEffectId?'（超限三倍已计入）':''}；护盾约 ${generatedShield.toFixed(1)}。生成的力量属于后续卡牌状态，请在后续伤害计算中填入“力量”。`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
