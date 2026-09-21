@@ -426,7 +426,8 @@
       const strengthMultiplier=Number.isFinite(Number(source.strengthMultiplier))
         ?Math.max(0,Number(source.strengthMultiplier))
         :(type==='active'?1:(source.usesStrength===true?1:0));
-      const strengthPart=netStrength*strengthMultiplier;
+      const strengthFlatAdd=Math.max(0,Number(source.strengthFlatAdd)||0);
+      const strengthPart=netStrength*strengthMultiplier+strengthFlatAdd;
       const sourceTentacleCoef=Number.isFinite(Number(source.tentacleBonusCoefficient))
         ?Math.max(0,Number(source.tentacleBonusCoefficient))/100
         :skillTentacleCoef;
@@ -435,21 +436,36 @@
       // SKeyDB distinguishes Base DMG from STR and Tentacle-DMG additions.
       // Therefore Base-DMG bonuses scale only the coefficient-derived base component.
       const skillBasePct=Math.max(0,Number(source.skillBaseDamageBonusPct)||0);
-      const afterBase=baseRaw*(1+(basePct+skillBasePct)/100);
+      const separateDamageLayers=source.separateDamageLayers===true;
+      const baseLayers=Array.isArray(source.baseDamageMultipliers)?source.baseDamageMultipliers:[];
+      const baseLayerFactor=baseLayers.reduce((factor,item)=>factor*(1+Math.max(0,Number(item?.pct)||0)/100),1);
+      const scopedBaseAutoTotal=separateDamageLayers?Math.max(0,Number(source.scopedBaseAutoTotal)||0):0;
+      const genericBasePct=separateDamageLayers?basePct-scopedBaseAutoTotal:basePct;
+      const afterBase=separateDamageLayers
+        ?baseRaw*(1+genericBasePct/100)*(1+skillBasePct/100)*baseLayerFactor
+        :baseRaw*(1+(basePct+skillBasePct)/100);
       const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
       const counterContribution=counterCurrent*sourceCounterCoef;
       const resourceFlatAtkPercent=Math.max(0,Number(source.resourceFlatAtkPercent)||0);
       const resourceFlatDamage=Math.max(0,Number(source.resourceFlatDamage)||0)+attack*resourceFlatAtkPercent/100;
       const resourceFlatDamageAmpBonusPct=Math.max(0,Number(source.resourceFlatDamageAmpBonusPct)||0);
+      // Blood-chain Helot follows the verified formula supplied for this calculator:
+      // Damage Amplification scales the coefficient-derived ATK/base-DMG component first;
+      // STR is added afterwards and is not itself multiplied by Damage Amplification.
       const raw=afterBase+strengthPart+tentacleContribution+counterContribution+soulforgeFlat;
-      // Some character mechanics add a flat amount directly to this Active/Pierce event
-      // (e.g. Lily's Endure). Keep that component separate so its dedicated Damage
-      // Amplification modifier can apply without incorrectly scaling the skill's base component.
-      const afterPower=raw*(1+powerPct/100)+resourceFlatDamage*(1+(powerPct+resourceFlatDamageAmpBonusPct)/100);
+      const afterPower=separateDamageLayers
+        ?afterBase*(1+powerPct/100)+strengthPart+tentacleContribution+counterContribution+soulforgeFlat+resourceFlatDamage*(1+(powerPct+resourceFlatDamageAmpBonusPct)/100)
+        :raw*(1+powerPct/100)+resourceFlatDamage*(1+(powerPct+resourceFlatDamageAmpBonusPct)/100);
       // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const skillFinalPct=Math.max(0,Number(source.skillFinalDamageBonusPct)||0);
-      const afterFinal=afterVulnerability*(1+(finalPct+skillFinalPct)/100)*(type==='active'?weakCoef:1);
+      const finalLayers=Array.isArray(source.finalDamageMultipliers)?source.finalDamageMultipliers:[];
+      const finalLayerFactor=finalLayers.reduce((factor,item)=>factor*(1+Math.max(0,Number(item?.pct)||0)/100),1);
+      const scopedFinalAutoTotal=separateDamageLayers?Math.max(0,Number(source.scopedFinalAutoTotal)||0):0;
+      const genericFinalPct=separateDamageLayers?finalPct-scopedFinalAutoTotal:finalPct;
+      const afterFinal=separateDamageLayers
+        ?afterVulnerability*(1+genericFinalPct/100)*(1+skillFinalPct/100)*finalLayerFactor*(type==='active'?weakCoef:1)
+        :afterVulnerability*(1+(finalPct+skillFinalPct)/100)*(type==='active'?weakCoef:1);
       const resourceDamageMultiplier=Number.isFinite(Number(source.resourceDamageMultiplier))?Math.max(0,Number(source.resourceDamageMultiplier)):1;
       const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult*resourceDamageMultiplier;
       const forceCrit=source.guaranteedCrit===true||$('forceCritAll')?.checked===true;
@@ -470,6 +486,10 @@
         tentacleBonusCoefficient:sourceTentacleCoef*100,
         skillBaseDamageBonusPct:skillBasePct,
         skillFinalDamageBonusPct:skillFinalPct,
+        damageLayerAudit:separateDamageLayers?{
+          genericBasePct,skillBasePct,baseLayers,powerPct,strengthMultiplier,strengthFlatAdd,
+          genericFinalPct,skillFinalPct,finalLayers,vulnerabilityPct,other
+        }:null,
         resourceDamageMultiplier,
         counterBonusCoefficient:sourceCounterCoef*100,
         counterContribution,
@@ -848,6 +868,7 @@
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
     $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱：${weakStacks>0?weakStacks+' 层（当前伤害仍只应用一次 -25%）':'无'}。角色专属伤害强效：+${characterDamageAmpBonusPct.toFixed(1)}%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
+    if(skillSync.skill?.ownerAwakenerId==='awakener-0019')$('formula').textContent+=' 血链·希洛校准：攻击力×技能倍率先依次乘局外/通用基伤、局内基伤、打击/大招/指令卡基伤、灵塑基伤、觉醒基伤与伤害强效，之后再加力量项；随后乘暴击、易伤、技能类型终伤、通用最终伤害与其他最终乘区。力量不再错误地受到伤害强效二次放大。';
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -856,6 +877,22 @@
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
+    const helotAudit=events.find(event=>event.damageLayerAudit)?.damageLayerAudit||null;
+    if(helotAudit){
+      const auditRows=[];
+      auditRows.push(['血链校准 · 局外/通用基伤系数',1+helotAudit.genericBasePct/100]);
+      if(helotAudit.skillBasePct>0)auditRows.push(['血链校准 · 技能专属基伤系数',1+helotAudit.skillBasePct/100]);
+      for(const layer of helotAudit.baseLayers||[])auditRows.push(['血链校准 · '+layer.label+'系数',1+Number(layer.pct||0)/100]);
+      auditRows.push(['血链校准 · 伤害强效系数',1+helotAudit.powerPct/100]);
+      auditRows.push(['血链校准 · 力量倍率',helotAudit.strengthMultiplier]);
+      if(helotAudit.strengthFlatAdd>0)auditRows.push(['血链校准 · 本次额外力量',helotAudit.strengthFlatAdd]);
+      auditRows.push(['血链校准 · 易伤系数',1+helotAudit.vulnerabilityPct/100]);
+      auditRows.push(['血链校准 · 通用最终伤害系数',1+helotAudit.genericFinalPct/100]);
+      if(helotAudit.skillFinalPct>0)auditRows.push(['血链校准 · 技能专属终伤系数',1+helotAudit.skillFinalPct/100]);
+      for(const layer of helotAudit.finalLayers||[])auditRows.push(['血链校准 · '+layer.label+'系数',1+Number(layer.pct||0)/100]);
+      auditRows.push(['血链校准 · 其他最终乘区',helotAudit.other]);
+      rows.unshift(...auditRows);
+    }
     rows.unshift(['敌人估算最大生命',enemyMaxHp]);
     rows.unshift(['敌人等级通用承伤系数',levelFactor]);
     rows.unshift(['界域修正后攻击力',attack]);
