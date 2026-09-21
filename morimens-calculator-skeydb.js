@@ -8,54 +8,7 @@
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄'};
-  const SKEYDB_ICON_COMMIT='d4c5a90f24a7e95745a92b8d1098aff77d6f1510';
-  const SKEYDB_ICON_REMOTE_BASE='https://raw.githubusercontent.com/dansa/SKeyDB/'+SKEYDB_ICON_COMMIT+'/src/assets/icons/';
-  const SKEYDB_ICON_STORAGE_PREFIX='morimens.skeydb-icon.'+SKEYDB_ICON_COMMIT+'.';
-  const skeyIconMemory=new Map(),skeyIconInflight=new Map();
-  let skeyIconObserver=null;
-  function storedSkeyIcon(name){
-    if(!name)return '';
-    if(skeyIconMemory.has(name))return skeyIconMemory.get(name)||'';
-    try{
-      const value=localStorage.getItem(SKEYDB_ICON_STORAGE_PREFIX+name)||'';
-      if(value)skeyIconMemory.set(name,value);
-      return value;
-    }catch{return ''}
-  }
-  function blobDataUrl(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=()=>reject(reader.error||new Error('icon cache read failed'));reader.readAsDataURL(blob)})}
-  async function resolveSkeyIcon(name){
-    const cached=storedSkeyIcon(name);if(cached)return cached;
-    if(skeyIconInflight.has(name))return skeyIconInflight.get(name);
-    const pending=(async()=>{
-      const response=await fetch(SKEYDB_ICON_REMOTE_BASE+name,{cache:'force-cache'});
-      if(!response.ok)throw new Error('SKeyDB icon HTTP '+response.status);
-      const dataUrl=await blobDataUrl(await response.blob());
-      if(!/^data:image\//i.test(dataUrl))throw new Error('Invalid SKeyDB icon response');
-      skeyIconMemory.set(name,dataUrl);
-      try{localStorage.setItem(SKEYDB_ICON_STORAGE_PREFIX+name,dataUrl)}catch{}
-      return dataUrl;
-    })().finally(()=>skeyIconInflight.delete(name));
-    skeyIconInflight.set(name,pending);return pending;
-  }
-  function hydrateSkeyTermIcons(root=document){
-    const nodes=[];
-    if(root?.matches?.('img.skeyTermIcon[data-skey-icon]'))nodes.push(root);
-    if(root?.querySelectorAll)nodes.push(...root.querySelectorAll('img.skeyTermIcon[data-skey-icon]'));
-    for(const img of nodes){
-      const name=img.dataset.skeyIcon;if(!name||img.dataset.skeyIconLoading==='1')continue;
-      const cached=storedSkeyIcon(name);
-      if(cached){img.src=cached;delete img.dataset.skeyIcon;continue}
-      img.dataset.skeyIconLoading='1';
-      resolveSkeyIcon(name).then(dataUrl=>{if(!img.isConnected)return;img.src=dataUrl;delete img.dataset.skeyIcon}).catch(()=>{if(img.isConnected)img.remove()}).finally(()=>{delete img.dataset.skeyIconLoading});
-    }
-  }
-  function ensureSkeyIconCache(){
-    if(skeyIconObserver||!document.body)return;
-    skeyIconObserver=new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node.nodeType===1)hydrateSkeyTermIcons(node)});
-    skeyIconObserver.observe(document.body,{childList:true,subtree:true});
-    hydrateSkeyTermIcons(document);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureSkeyIconCache,{once:true});else ensureSkeyIconCache();
+  const SKEYDB_ICON_BASE='assets/morimens/skeydb-icons/';
   const uniqueTermZh={
     'Satiety':'饱足','Offering':'供奉','Corpse':'残骸','Sin Mark':'罪印','Symbiosis':'共生','Pack Hunt':'群猎','Negentropy':'负熵',
     'Undertow':'暗潮','Guilt':'罪责','Endure':'坚忍','Dreamlure':'梦诱','Murmurs':'低语','Spellbound':'痴醉','Enthrall':'夺魄',
@@ -317,9 +270,9 @@
     return {label:isEnglish()?clean:(uniqueTermZh[clean]||clean),color:'misc',icon:null,glyph:/DMG|Damage/i.test(clean)?'◇':null};
   }
   function termHtml(token,displayLabel){
-    const meta=termMeta(token),label=displayLabel||meta.label,cached=meta.icon?storedSkeyIcon(meta.icon):'';
+    const meta=termMeta(token),label=displayLabel||meta.label;
     const visual=meta.icon
-      ?'<img class="skeyTermIcon" '+(cached?'src="'+escape(cached)+'"':'data-skey-icon="'+escape(meta.icon)+'"')+' alt="" decoding="async" onerror="this.remove()">'
+      ?'<img class="skeyTermIcon" src="'+escape(SKEYDB_ICON_BASE+meta.icon)+'" alt="" decoding="async" onerror="this.remove()">'
       :(meta.glyph?'<span class="skeyTermGlyph" aria-hidden="true">'+escape(meta.glyph)+'</span>':'');
     return '<span class="skeyTerm skeyTerm-'+escape(meta.color||'misc')+'" title="'+escape(String(token||''))+'">'+visual+'<span>'+escape(label)+'</span></span>';
   }
