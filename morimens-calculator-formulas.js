@@ -204,10 +204,17 @@
 
     function damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type){
       const text=String(template||'');
-      const local=text.slice(tokenEnd,Math.min(text.length,tokenEnd+220));
+      const localRaw=text.slice(tokenEnd,Math.min(text.length,tokenEnd+260));
+      // Only inspect the same damage sentence. Later {Leap}/{Aftershock}/If clauses are conditional
+      // and must not silently change the default event.
+      const local=localRaw.split(/[.!?]/,1)[0];
       let multiplier=type==='active'?1:0;
       let match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?(\d+(?:\.\d+)?)\s*[×x]\s*\{STR\}\s+bonus/i);
       if(match)return Math.max(0,num(match[1],multiplier));
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?\[([^\]]+)\]%\s*\{STR\}\s+bonus/i);
+      if(match)return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100);
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:a\s+)?(\d+(?:\.\d+)?)%\s*\{STR\}\s+bonus/i);
+      if(match)return Math.max(0,num(match[1],0)/100);
       match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+\[([^\]]+)\]%\s+\{Tentacle DMG\}\s+and\s+\{STR\}\s+bonus/i);
       if(match){
         const extra=num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100;
@@ -220,6 +227,10 @@
       }
       match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+\[([^\]]+)\]%\s+\{STR\}\s+bonus/i);
       if(match)return Math.max(0,multiplier+num(resolveTemplateArg(skill,match[1],rank,ctx),0)/100);
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+(\d+(?:\.\d+)?)%\s+\{STR\}\s+bonus/i);
+      if(match)return Math.max(0,multiplier+num(match[1],0)/100);
+      match=local.match(/(?:which\s+)?enjoys?\s+(?:an?\s+)?additional\s+(\d+(?:\.\d+)?)\s*[×x]\s*\{STR\}\s+bonus/i);
+      if(match)return Math.max(0,multiplier+num(match[1],0));
       // Some cards place the STR multiplier in a following sentence instead of beside [Damage].
       match=text.match(/\{STR\}\s+takes\s+\[([^\]]+)\]\s*[×x]\s+effect\s+on\s+[^.]+/i)
         ||text.match(/\{STR\}\s+multiplies\s+the\s+effect\s+by\s+\[([^\]]+)\]\s+on\s+[^.]+/i);
