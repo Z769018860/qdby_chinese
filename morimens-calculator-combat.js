@@ -55,7 +55,8 @@
     enemy.innerHTML=`
       <div class="builderTitle"><span>⑧ 敌人等级与状态事件</span><small>通用等级模型 + SKeyDB 状态规则</small></div>
       <div class="formGrid">
-        <div class="field"><label for="enemyLevel">敌人等级</label><input id="enemyLevel" type="number" min="1" max="120" step="1" value="77"><small>只需填写等级；工具会生成通用承伤系数与估算最大生命。</small></div>
+        <div class="field"><label for="enemyLevel">敌人等级</label><input id="enemyLevel" type="number" min="1" max="120" step="1" value="77"><small>用于通用承伤系数与默认最大生命估算。</small></div>
+        <div class="field"><label for="enemyMaxHpOverride">敌人最大生命（可选覆盖）</label><input id="enemyMaxHpOverride" type="number" min="0" step="1" placeholder="留空使用等级拟合"><small>目标最大生命百分比 Pure DMG / Corrosion 会优先使用此值。</small></div>
         <div class="field"><label for="fortressStacks">加固层数</label><input id="fortressStacks" type="number" min="0" max="100" step="1" value="0"><small>SKeyDB：每层使受到的伤害降低 1%。</small></div>
         <div class="field"><label for="currentPoison">当前 Poison / 中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Poison”等即时中毒触发。</small></div>
         <div class="field"><label for="currentBleed">当前 Bleed / 流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Bleed”和本回合末流血结算。</small></div>
@@ -84,7 +85,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includePoisonTurnEnd','includeBleedTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includePoisonTurnEnd','includeBleedTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -205,7 +206,9 @@
       levelFactor:1,
       source:{hpFit:'fallback',levelFactor:'fallback'}
     };
-    const enemyMaxHp=Math.max(1,Number(enemyProfile.estimatedMaxHp)||1);
+    const enemyMaxHpInput=Math.max(0,n('enemyMaxHpOverride',0));
+    const enemyMaxHp=enemyMaxHpInput>0?enemyMaxHpInput:Math.max(1,Number(enemyProfile.estimatedMaxHp)||1);
+    const enemyMaxHpSource=enemyMaxHpInput>0?'手动输入':'D-Zone 等级样本拟合';
     const levelFactor=Math.max(0,Number(enemyProfile.levelFactor)||1);
   
     let strength=n('strength');
@@ -599,7 +602,7 @@
       $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 界域精通效果倍率 <b>×${Number(tentacle.masteryEffectMultiplier||1).toFixed(1)}</b>${tentacle.ragingWheelBonusPct?` · 怒涛命轮临时精通 <b>+${Number(tentacle.ragingWheelBonusPct).toFixed(1)}%</b>（${fmt(tentacle.baseRealmMastery)} → ${fmt(tentacle.realmMasteryForStance)}）`:''}<br>机制基础触腕 <b>${fmt(tentacle.base)}</b>${coexist} → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 当前模式单次伤害 <b>${fmt(oneTentacle.damage)}</b>。触腕暴击率 <b>${(tentacleCritRate*100).toFixed(1)}%</b> / 暴击伤害 <b>${(tentacleCritMult*100).toFixed(1)}%</b>${pureNote}。`;
     }
     if($('enemyLevelReadout')){
-      $('enemyLevelReadout').innerHTML=`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 估算最大生命 <b>${fmt(enemyMaxHp)}</b><br><small>最大生命由 SKeyDB D-Zone 60–69 期共 1665 个等级/HP 样本作对数拟合，仅用于通用计算与目标最大生命型 Pure DMG；等级承伤系数不是官方 DEF 公式。</small>`;
+      $('enemyLevelReadout').innerHTML=`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 最大生命 <b>${fmt(enemyMaxHp)}</b>（${enemyMaxHpSource}）<br><small>${enemyMaxHpInput>0?'目标最大生命百分比效果使用手动值。':'默认最大生命由 SKeyDB D-Zone 60–69 期共 1665 个等级/HP 样本作对数拟合。'} 等级承伤系数不是官方 DEF 公式。</small>`;
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
@@ -607,7 +610,7 @@
     }
     window.MorimensDamageEvents={
       mode,
-      enemyProfile,
+      enemyProfile:{...enemyProfile,maxHp:enemyMaxHp,maxHpSource:enemyMaxHpSource,estimatedMaxHp:enemyProfile.estimatedMaxHp},
       realmOutput:{damage:realmDamageOutputMult,status:realmStatusOutputMult,fixedPoisonCounter:fixedStatusEffectMult},
       sourceSkillEvents,
       events,
@@ -624,7 +627,7 @@
     const values={
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
-      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,fortressStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
+      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,currentPoison:0,currentBleed:0,currentCounter:0,
       corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
