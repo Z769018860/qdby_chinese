@@ -187,11 +187,27 @@
     if(Array.isArray(patch.removeCardKeywordIds)){const remove=new Set(patch.removeCardKeywordIds);next={...next,cardKeywords:(next.cardKeywords||[]).filter(x=>!remove.has(x.id))}}
     return next;
   }
+  function activeTalentIds(){
+    const progression=progressionState();
+    return new Set((currentTalents||[]).filter(talent=>{
+      const family=String(talent?.family||'');
+      if(family==='soulforge_aptitude')return progression.soulforgeEnabled===true&&progression.soulforgeLevel>0;
+      if(family==='gnostic_potential')return talent?.defaultMaxed===true||progression.gnosticLevel>0;
+      return true;
+    }).map(talent=>talent.id));
+  }
   function resolveSkillEnlighten(baseSkill){
-    if(!baseSkill)return baseSkill;let next=cloneRecord(baseSkill);
-    const activeIds=new Set(activeEnlightens().map(x=>x.id));
+    if(!baseSkill)return baseSkill;
+    let next=cloneRecord(baseSkill);
+    const talentIds=activeTalentIds();
+    const enlightenIds=new Set(activeEnlightens().map(x=>x.id));
+    // Match SKeyDB full resolver ordering: active Talent upgrades first, then cumulative Enlighten upgrades.
     for(const upgrade of baseSkill.upgrades||[]){
-      if(upgrade?.upgraderType!=='enlighten'||!activeIds.has(upgrade.upgraderId)||upgrade.operation==='link_only')continue;
+      if(upgrade?.operation==='link_only'||upgrade?.upgraderType!=='talent'||!talentIds.has(upgrade.upgraderId))continue;
+      next=applyEnlightenPatch(next,upgrade);
+    }
+    for(const upgrade of baseSkill.upgrades||[]){
+      if(upgrade?.operation==='link_only'||upgrade?.upgraderType!=='enlighten'||!enlightenIds.has(upgrade.upgraderId))continue;
       next=applyEnlightenPatch(next,upgrade);
     }
     return next;
