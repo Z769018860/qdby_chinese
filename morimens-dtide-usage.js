@@ -43,15 +43,37 @@
   function selectedRankCap(){const raw=String($('dtideRankScope')?.value||'all');return raw==='all'||raw==='0'?0:(Number(raw)||0)}
   function rankScopeLabel(cap){return cap?`Top ${cap}`:'全部范围'}
 
-  const memberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'');
+  const rawMemberKey=m=>String(m?.skeydbId||m?.ingameId||m?.id||m?.canonicalName||m?.name||'');
+  const normalizeCharacterName=value=>String(value||'').normalize('NFKC').replace(/\s+/g,' ').trim().toLowerCase();
+  function memberKey(m){
+    const db=window.MorimensData?.db?.records||[];
+    let rec=db.find(x=>
+      (m?.skeydbId&&(x.id===m.skeydbId||x.ingameId===m.skeydbId))||
+      (m?.ingameId&&(x.ingameId===m.ingameId||x.id===m.ingameId))||
+      (m?.id&&(x.id===m.id||x.ingameId===m.id))
+    );
+    const canonical=normalizeCharacterName(m?.canonicalName||m?.name);
+    if(!rec&&canonical&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(canonical)){
+      rec=db.find(x=>{
+        const identity=window.MorimensData?.identityDb?.bySkeydbId?.[x.id];
+        const localized=window.MorimensData?.localizedProfile?.(x);
+        return [x.name,identity?.name,localized?.name].some(name=>normalizeCharacterName(name)===canonical);
+      });
+    }
+    if(rec?.id)return String(rec.id);
+    if(canonical&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(canonical))return `name:${canonical}`;
+    const raw=rawMemberKey(m).trim();
+    return raw?`raw:${raw.toLowerCase()}`:'';
+  }
   const difficultyOf=(team,wave)=>{const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'unknown').toLowerCase();return diffs.find(d=>new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))||'unknown'};
   const enlightOf=m=>{const p=Number(m?.potencyLevel);if(Number.isFinite(p))return p<=2?'low':p<=6?'e3plus3':p<=14?'plus4plus11':'plus12';const n=Number(m?.enlightenCount);if(Number.isFinite(n))return n<=2?'low':n===3?'e3plus3':n===4?'plus4plus11':'plus12';return /AA/i.test(String(m?.progression||''))?'plus12':/OE/i.test(String(m?.progression||''))?'plus4plus11':/E[0-2]/i.test(String(m?.progression||''))?'low':'e3plus3'};
   function displayCharacterName(...values){return values.map(decodeMojibake).find(value=>{const name=String(value||'').trim();return name&&!/^(awakener|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
   function characterInfo(m){
-    const key=m?.skeydbId||m?.ingameId||memberKey(m),db=window.MorimensData?.db?.records||[];
-    const rec=db.find(x=>x.id===key||x.ingameId===key||x.ingameId===m?.ingameId);
+    const key=memberKey(m),db=window.MorimensData?.db?.records||[];
+    const rec=db.find(x=>x.id===key||x.ingameId===m?.ingameId||x.id===m?.skeydbId);
     const loc=rec&&window.MorimensData?.localizedProfile?.(rec);
-    const name=displayCharacterName(loc?.name,m?.canonicalName,m?.name,rec?.name,key),source=rec&&window.MorimensData?.zhFor?.(rec)?.source;
+    const fallbackKey=String(key||'').replace(/^(?:name|raw):/,'');
+    const name=displayCharacterName(loc?.name,m?.canonicalName,m?.name,rec?.name,fallbackKey),source=rec&&window.MorimensData?.zhFor?.(rec)?.source;
     return {name,image:rec?.assets?.portrait||m?.image||'',art:rec?.assets?.card||rec?.assets?.portrait||m?.image||'',wikiUrl:source?.url||`https://morimens.huijiwiki.com/wiki/${encodeURIComponent(name)}`};
   }
   const versioned=url=>`${url}${url.includes('?')?'&':'?'}v=${encodeURIComponent(dataVersion)}`;
@@ -70,7 +92,15 @@
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     return loader.loadDataset(url);
   }
-  function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankOf(record),normalized=rank!=null&&record.rank!==rank?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(m=>String(m.ingameId||m.skeydbId||m.id||m.canonicalName||m.name||'')).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
+  function mergeUsageByUid(base,overlay){
+    if(!overlay?.records?.length)return base;
+    const merged=new Map();let anonymous=0;
+    for(const record of base?.records||[]){const uid=String(record?.uid??'');merged.set(uid||`__base_${anonymous++}`,record)}
+    for(const record of overlay.records||[]){const uid=String(record?.uid??'');if(uid)merged.set(uid,record)}
+    const records=[...merged.values()].sort((a,b)=>(rankOf(a)??999999)-(rankOf(b)??999999));
+    return {...base,records,recordCount:records.length,overlayRecordCount:overlay.records.length,dataUpdatedAt:overlay.updatedAt||base?.dataUpdatedAt||null};
+  }
+  function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankOf(record),normalized=rank!=null&&record.rank!==rank?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(memberKey).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
   function activeCharacterFilters(){return {realms:new Set([...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(x=>String(x.dataset.realm))),roles:new Set([...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(x=>String(x.dataset.role)))}}
   function characterMatchesFilters(character){const {realms,roles}=activeCharacterFilters(),characterRealms=character?.realms||new Set(),characterRoles=character?.roles||new Set();return (!realms.size||[...realms].some(x=>characterRealms.has(x)))&&(!roles.size||[...roles].some(x=>characterRoles.has(x)))}
   async function loadRankMap(id){
@@ -79,8 +109,16 @@
     const loader=window.MorimensDtideDataLoader;
     const path=manifest?.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`;
     if(!loader?.loadRankMap)return rankByUid;
-    try{rankByUid=await loader.loadRankMap(path,{revision:dataVersion,fresh:true})}
-    catch(e){console.warn('rank index unavailable',id,e);rankByUid=new Map()}
+    try{
+      const base=await loader.loadRankMap(path,{revision:dataVersion,fresh:true});
+      rankByUid=new Map(base||[]);
+      const overlayPath=manifest?.currentOverlay?.rankPath;
+      if(overlayPath){
+        const overlayRevision=manifest?.currentOverlay?.revision||manifest?.currentOverlay?.updatedAt||dataVersion;
+        const overlay=await loader.loadRankMap(overlayPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('usage layer rank override unavailable',error);return new Map()});
+        for(const [uid,rank] of overlay||[])rankByUid.set(String(uid),rank);
+      }
+    }catch(e){console.warn('rank index unavailable',id,e);rankByUid=new Map()}
     return rankByUid;
   }
   function scopedRows({cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',wave='all',clearType=$('dtideClearType')?.value||'all'}={}){
@@ -266,7 +304,7 @@
   function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight()})}
 
   function fallbackStats(records){
-    const ranks=(records||[]).map(x=>Number(x.rank)).filter(Number.isFinite),maxRank=ranks.length?Math.max(...ranks):0;
+    const ranks=(records||[]).map(rankOf).filter(Number.isFinite),maxRank=ranks.length?Math.max(...ranks):0;
     const rankTiers={};const historical=!ranks.length&&records?.length;for(const cap of rankCaps){const covered=historical?records.length:ranks.filter(x=>x<=cap).length;rankTiers[String(cap)]={covered,expected:historical?records.length:cap,complete:false}}
     return {seasonId:activeSeason,generatedAt:new Date().toISOString(),rankTiers,maxRankAvailable:maxRank}
   }
@@ -276,10 +314,17 @@
     if(entry.legacy||entry.coverageMode==='legacy-spreadsheet'){usage=null;usageStats=null;detailUsage=null;detailStats=null;return false}
     try{
       const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
-      activeSeason=Number(id);await loadRankMap(id);usage=await dataset((current||entry).path);
+      activeSeason=Number(id);await loadRankMap(id);
+      const baseUsage=await dataset((current||entry).path);
+      let overlayUsage=null;
+      if(current&&manifest?.currentOverlay?.path){
+        overlayUsage=await dataset(manifest.currentOverlay.path).catch(error=>{console.warn('usage layer current overlay unavailable',error);return null});
+      }
+      usage=mergeUsageByUid(baseUsage,overlayUsage);
       detailUsage=usage;
       detailStats=await json(entry.statsPath).catch(()=>null);
-      try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
+      if(overlayUsage?.records?.length)usageStats=fallbackStats(usage?.records||[]);
+      else try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
       // Do not block the first render on the previous season.  Historical
       // datasets can be tens of megabytes and are only needed for the
       // comparison/rank-change panels.
@@ -302,7 +347,7 @@
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
     try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
-      const note=$('dtideCoverageNote');if(note)note.insertAdjacentHTML('beforeend',` <strong>Top1000 出场率层：</strong>当前使用增量缓存 ${esc(String(manifest.usageIndex.recordCount||usage.recordCount||0))}/${esc(String(manifest.usageIndex.target||1000))} 名公开榜单玩家。`);
+      const note=$('dtideCoverageNote');if(note)note.insertAdjacentHTML('beforeend',` <strong>Top1000 出场率层：</strong>当前有效合并记录 ${esc(String(usage?.recordCount||usage?.records?.length||0))} 条（基础 ${esc(String(manifest.usageIndex?.recordCount||0))} + Top500 增量按 UID 覆盖），榜单目标 ${esc(String(manifest.usageIndex?.target||1000))} 名玩家。`);
     }
   }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
