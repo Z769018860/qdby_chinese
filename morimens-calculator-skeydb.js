@@ -1817,6 +1817,8 @@
           if(baseSkillId==='skill.helot-catena.sanguine-fetters'&&progressionState()?.soulforgeEnabled&&progressionState()?.soulforgeLevel>0)parts.push('「缚身锁链」灵塑专属基础伤害与力量倍率已计入');
           if(baseSkillId==='skill.helot-catena.strike'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E1'))parts.push('启灵1：打击 +15% 暴击率 / +15% 暴击伤害已计入');
           if(baseSkillId==='skill.helot-catena.hatred-unleashed')parts.push('「恨意宣泄」攻击力百分比力量已加入本次伤害'+(Number(resources.helotHatredBelowHalfHp)>0?'（生命低于50%，启灵2翻倍）':''));
+          if(baseSkillId==='skill.helot-catena.crimson-shackles')parts.push('「鲜血链条」按 2 段独立主动伤害结算：满级合计攻击力 80%，每段力量×1，合计力量项×2');
+          if(baseSkillId==='skill.helot-catena.sanguine-fetters')parts.push('「缚身锁链」本次主动伤害会自动附加当前等级 75%–100% 的出血，无需重复勾选本回合状态');
           if(baseSkillId==='derived.helot-catena.bloodthirsty-flail')parts.push('「嗜血链球」5×力量加成与目标当前流血 30% 触发已计入');
         }
       }
