@@ -180,7 +180,7 @@
     [/Surging Tides/gi,'潮涌'],[/Tranquil Sea/gi,'静海'],[/Raging Waves/gi,'怒涛'],[/Benthos: Aequor/gi,'晦暝·深海'],
     [/Delayed Sacrifice/gi,'延迟献祭'],[/Sacrifice/gi,'献祭'],[/Birth Ritual/gi,'诞生仪式'],
     [/Aequor Realm/gi,'深海界域'],[/Aequor/gi,'深海'],[/Chaos/gi,'混沌'],[/Caro/gi,'血肉'],[/Ultra/gi,'超维'],
-    [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/星辰篇/gi,'星辰篇'],
+    [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/星辰篇/gi,'星辰篇'],[/\bE1\b/g,'启灵1'],[/\bE2\b/g,'启灵2'],[/\bE3\b/g,'启灵3'],
     [/Rouse/gi,'灵知觉醒'],[/Over-?Exalt/gi,'超限爆发'],[/Exalt/gi,'狂气爆发'],[/Defense/gi,'防御'],[/Strike/gi,'打击'],
     [/Shield/gi,'护盾'],[/Damage/gi,'伤害'],[/DMG/gi,'伤害'],[/ATK/gi,'攻击力'],[/DEF/gi,'防御'],[/CON/gi,'体质'],
     [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
@@ -551,7 +551,7 @@
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 出血。'},
       {key:'polluxCommandFinalBonusPct',label:'指令卡最终伤害额外加成',inputLabel:'指令卡最终伤害额外加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 记录的两组档位分别为 18/22/26/30% 与 9/11/13/15%；不自动猜测该增益的来源等级。'},
       {key:'atonementByPainActive',label:'苦痛救赎生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次「苦痛救赎」；基础为 200% 攻击力，并会按本次探索已完成战斗数自动提高。'},
-      {key:'atonementByPainDouble',label:'启灵3：苦痛救赎应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'启灵3后，第 3 次打出「圣心」会使下一张指令卡的「苦痛救赎」应用 2 次。只有“赎罪苦痛生效”时该开关才有意义。'}
+      {key:'atonementByPainDouble',label:'启灵3：苦痛救赎应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'启灵3后，第 3 次打出「圣心」会使下一张指令卡的「苦痛救赎」应用 2 次。只有“苦痛救赎生效”时该开关才有意义。'}
     ],
     'awakener-0010':[
       {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本场累计已移除共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：每移除 1 层共生，克莱门汀在本场战斗中的基础伤害累计 +3%。这里填写本场累计已移除层数，而不是仅填写当前这一次；输入上限随 E3 / 最终法则变化。'},
@@ -712,8 +712,9 @@
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
       const wrap=document.createElement('div');wrap.className='field calcResourceField'+(spec.calculated===true?' isCalculated':' isInformational');
-      const descriptionHtml=spec.description?escape(spec.description):(overlay?renderRichRecord(overlay,1):escape('角色专属战斗资源。'));
-      const labelHtml=overlay?termHtml(overlay.name,spec.label):escape(spec.label);
+      const descriptionHtml=spec.description?escape(zhText(spec.description)):(overlay?renderRichRecord(overlay,1):escape('角色专属战斗资源。'));
+      const localizedSpecLabel=zhText(spec.label);
+      const labelHtml=overlay?termHtml(overlay.name,localizedSpecLabel):escape(localizedSpecLabel);
       if(spec.type==='checkbox'){
         const checked=Number(previous[spec.key])>0;
         const dependentOff=!resourceDependencyEnabled(spec,previous);
@@ -726,7 +727,7 @@
         wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'" '+(dependentOff?'disabled':'')+'>'+options+'</select><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
       }else{
         const max=effectiveResourceMax(spec);const fallback=Number.isFinite(Number(spec.min))?Number(spec.min):0;const value=Math.min(max,Math.max(fallback,Number(previous[spec.key])||fallback));
-        const inputLabel=spec.inputLabel||spec.label+'数量';
+        const inputLabel=zhText(spec.inputLabel||spec.label+'数量');
         const dependentOff=!resourceDependencyEnabled(spec,previous);
         wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
       }
@@ -782,9 +783,9 @@
   function hasNumericBattleBonus(source){return Object.entries(source||{}).some(([k,v])=>k!=='skipped'&&Math.abs(num(v))>1e-9)}
   function battleGrowthSources(){
     const sources=[];
-    if(currentAwakener?.id==='awakener-0041')sources.push('波吕克斯：每完成 1 场，基础伤害 +20%，赎罪苦痛伤害效果 +20%');
+    if(currentAwakener?.id==='awakener-0041')sources.push('波吕克斯：每完成 1 场，基础伤害 +20%，苦痛救赎伤害效果 +20%');
     if(currentAwakener?.id==='awakener-0008')sources.push('卡斯托尔：每完成 1 场，本次探索中的侵蚀施加量 +20%');
-    if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey'))sources.push('克莱门汀 E2：每完成 1 场，基础伤害 +25%');
+    if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey'))sources.push('克莱门汀启灵2：每完成 1 场，基础伤害 +25%');
     currentWheels.forEach((wheel,slot)=>{
       if(!wheel)return;
       const bonus=cumulativeWheelBattleBonuses(wheelDescriptionRaw(wheel,slot));
@@ -1541,7 +1542,7 @@
       if(currentAwakener?.id==='awakener-0008'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：卡斯托尔侵蚀施加量 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：克莱门汀启灵2基础伤害 +${25*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0)parts.push(`群猎 ${Number(resources.packHuntStacks)} 层：本张对应「魇」衍生卡额外触发 1 次（消耗 1 层）`);
-      if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
+      if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦引 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0)parts.push(`暗潮 ${Number(resources.undertowStacks)} 层：指令卡最终伤害/暴伤已按当前启灵阶段计入`);
