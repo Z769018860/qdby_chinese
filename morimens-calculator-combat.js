@@ -245,8 +245,9 @@
 
   function tentacleState(){
     const engine=window.MorimensFormulaEngine,realm=window.MorimensRealmEngine?.state?.()||{};
-    if(!engine)return {base:0,stanceMult:1,masteryMult:1,extraMult:1,attack:0,ragingTriggerPct:50,turnEndAllowed:true};
     const baseRealmMastery=Math.max(0,n('realmMastery'));
+    if(!aequorRealmSelected(realm))return {available:false,base:0,coexistenceBase:0,stanceMult:1,masteryMult:1,masteryEffectMultiplier:1,extraMult:1,attack:0,ragingTriggerPct:0,turnEndAllowed:false,baseRealmMastery,ragingWheelBonusPct:0,realmMasteryForStance:baseRealmMastery};
+    if(!engine)return {available:true,base:0,stanceMult:1,masteryMult:1,masteryEffectMultiplier:1,extraMult:1,attack:0,ragingTriggerPct:50,turnEndAllowed:true,baseRealmMastery,ragingWheelBonusPct:0,realmMasteryForStance:baseRealmMastery};
     const ragingWheelBonusPct=ragingWheelMasteryBonusPct();
     const realmMasteryForStance=baseRealmMastery*(1+ragingWheelBonusPct/100);
     return {
@@ -354,7 +355,7 @@
     const netStrength=strength-strengthDown;
   
     const tentacle=tentacleState();
-    const tentacleWithStrength=Math.max(0,tentacle.attack+netStrength*0.5);
+    const tentacleWithStrength=tentacle.available===false?0:Math.max(0,tentacle.attack+netStrength*0.5);
     const skillSync=window.MorimensSkillSync||{};
     const progression=window.MorimensProgressionSync||window.MorimensCharacterSync?.progression||{};
     const sourceSkillEvents=Array.isArray(skillSync.damageEvents)
@@ -736,12 +737,12 @@
           pushDamageEvent(pureEvent(raw,`反击触发 ${Number(source.percent||0).toFixed(2)}%`,`counter-trigger-${++counterIndex}`,'counter',{action:'trigger',stacks:counterCurrent,percent:source.percent}));
         }
       }
-      if(skillTriggerPct>0){
+      if(skillTriggerPct>0&&tentacle.available!==false){
         pushDamageEvent(tentacleEvent(skillTriggerPct*100,'技能触发触腕',`skill-tentacle-${++tentacleIndex}`));
       }
     }
 
-    const includeTurnEnd=includeTurnEndSettlement&&$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
+    const includeTurnEnd=includeTurnEndSettlement&&tentacle.available!==false&&$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
     const turnEndCount=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
     if(includeTurnEnd){
       for(let i=0;i<turnEndCount;i++)pushDamageEvent(tentacleEvent(100,`回合末触腕 ${i+1}`,`turn-end-${++tentacleIndex}`));
