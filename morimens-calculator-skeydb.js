@@ -1280,7 +1280,7 @@
         else if(main.key==='DEATH_RESISTANCE')next.deathResistance+=main.value;
       }
     });
-    if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),Number(e.set)<6||allow))}}
+    if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),allow))}}
     Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery};renderAutoSummary();
   }
 
@@ -1302,7 +1302,7 @@
       rows.push(`<span class="chip">${escape(labelForWheel(x.wheel))} ${wheelEnhanceLabel(x.level)} · ${wheelMainstatLabels[x.key]||x.key} +${x.value.toFixed(2)}${suffix}</span>`);
     }
     rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);
-    if(currentCovenant)rows.push(`<span class="chip">密契：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</span>`);
+    if(currentCovenant)rows.push(`<span class="chip">密契 6 件套：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}${$('contractConditional')?.checked?' · 额外条件已满足':''}</span>`);
     box.innerHTML=rows.join('')
   }
 
