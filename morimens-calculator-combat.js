@@ -256,7 +256,7 @@
 
   function tentacleState(){
     const engine=window.MorimensFormulaEngine,realm=window.MorimensRealmEngine?.state?.()||{};
-    const baseRealmMastery=Math.max(0,n('realmMastery'));
+    const baseRealmMastery=Math.max(0,Number.isFinite(Number(realm.realmMastery))?Number(realm.realmMastery):n('realmMastery'));
     if(!aequorRealmSelected(realm))return {available:false,base:0,coexistenceBase:0,stanceMult:1,masteryMult:1,masteryEffectMultiplier:1,extraMult:1,attack:0,ragingTriggerPct:0,turnEndAllowed:false,baseRealmMastery,ragingWheelBonusPct:0,realmMasteryForStance:baseRealmMastery};
     if(!engine)return {available:true,base:0,stanceMult:1,masteryMult:1,masteryEffectMultiplier:1,extraMult:1,attack:0,ragingTriggerPct:50,turnEndAllowed:true,baseRealmMastery,ragingWheelBonusPct:0,realmMasteryForStance:baseRealmMastery};
     const ragingWheelBonusPct=ragingWheelMasteryBonusPct();
@@ -358,6 +358,7 @@
   
     let strength=n('strength');
     strength+=Math.max(0,Number(window.MorimensGearEffects?.signatureStrengthFlat)||0);
+    strength+=Math.max(0,Number(window.MorimensSkillSync?.characterStrengthBonus)||0);
     const bruteStacks=checkedStackCount('buffBrute','buffBruteStacks');
     const burstStacks=checkedStackCount('buffBurst','buffBurstStacks');
     if(bruteStacks>0)strength+=8*bruteStacks;
@@ -626,13 +627,20 @@
     let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,bleedIndex=0,corrosionIndex=0,counterIndex=0;
     function applyCharacterResourceAfterDamage(event,source){
       // SKeyDB Pure DMG is not considered damage dealt by the corresponding Awakener,
-      // so "when this Awakener deals damage" attachments (e.g. Sin Mark Bleed) do not trigger from it.
-      if(event?.type==='pure')return;
+      // so "when this Awakener deals damage" attachments do not trigger from it.
+      if(event?.type==='pure'||!(event?.damage>0))return;
       const bleedPct=Math.max(0,Number(source?.onDamageBleedPct)||0);
-      if(!(event?.damage>0)||bleedPct<=0)return;
-      const amount=event.damage*bleedPct/100*realmStatusOutputMult;
-      bleedAdded+=amount;
-      events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:`罪印附加出血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
+      if(bleedPct>0){
+        const amount=event.damage*bleedPct/100*realmStatusOutputMult;
+        bleedAdded+=amount;
+        events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:`罪印附加出血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
+      }
+      const poisonPct=Math.max(0,Number(source?.onDamagePoisonPct)||0);
+      if(poisonPct>0){
+        const amount=event.damage*poisonPct/100*realmStatusOutputMult*poisonInflictionMult;
+        poisonAdded+=amount;
+        events.push({id:`resource-poison-${++poisonIndex}`,type:'poison',action:'apply',source:'resource',label:`灵知觉醒附加中毒 ${poisonPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:poisonPct});
+      }
     }
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
