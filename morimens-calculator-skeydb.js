@@ -545,7 +545,7 @@
     ],
     'awakener-0014':[
       {overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true},
-      {key:'evernightPriorPlays',label:'本回合已打出永夜',min:0,max:20,calculated:true,requiredEnlighten:'E3',description:'E3 起：第二张及后续「永夜」额外享受 100% 力量加成。这里填写本次永夜之前，本回合已经打出的永夜次数。'}
+      {key:'evernightPriorPlays',label:'本回合已打出永夜',min:0,max:20,calculated:true,requiredEnlighten:'E3',description:'启灵3起：第二张及后续「永夜」额外享受 100% 力量加成。这里填写本次永夜之前，本回合已经打出的永夜次数。'}
     ],
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 出血。'},
@@ -554,7 +554,7 @@
       {key:'atonementByPainDouble',label:'启灵3：苦痛救赎应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'启灵3后，第 3 次打出「圣心」会使下一张指令卡的「苦痛救赎」应用 2 次。只有“苦痛救赎生效”时该开关才有意义。'}
     ],
     'awakener-0010':[
-      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本场累计已移除共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：每移除 1 层共生，克莱门汀在本场战斗中的基础伤害累计 +3%。这里填写本场累计已移除层数，而不是仅填写当前这一次；输入上限随 E3 / 最终法则变化。'},
+      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本场累计已移除共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'启灵2起：每移除 1 层共生，克莱门汀在本场战斗中的基础伤害累计 +3%。这里填写本场累计已移除层数，而不是仅填写当前这一次；输入上限随启灵3 / 最终法则变化。'},
       {key:'clementineFirstCommandRouse',label:'当前是本回合第一张指令卡',type:'checkbox',calculated:true,dependsOnControl:'rouseActive',description:'仅在“灵知觉醒已发动”时生效。「妖虫的呼唤」：每回合第一张指令卡的伤害、护盾、回复、狂气和银钥效果额外触发 2 次；伤害计算器只重复当前可解析的伤害/状态事件。'}
     ],
     'awakener-0058':[
@@ -576,14 +576,14 @@
       {key:'vortexShellDoubleRemaining',label:'超限双触发剩余「涡！流！弹！」次数',min:0,max:5,calculated:true,requiredEnlighten:'OverExalt',description:'释放超限爆发后，接下来 5 次「涡！流！弹！」均触发 2 次。若当前仍在这 5 次范围内填写 1–5；当前选择「涡！流！弹！」时会自动把可解析事件额外结算 1 次。'}
     ],
     'awakener-0061':[
-      {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后每层最终伤害增幅由 33% 提高至 50%。'},
+      {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；启灵1起每层额外提高暴击伤害，启灵3后每层最终伤害增幅由 33% 提高至 50%。'},
       {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'}
     ],
     'awakener-0032':[
-      {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执妄转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执妄转化，本场战斗弥利亚姆基础伤害 +15%。'}
+      {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执妄转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'启灵3「虚荣的崩塌」：每完成 1 次圣礼→执妄转化，本场战斗弥利亚姆基础伤害 +15%。'}
     ],
     'awakener-0043':[
-      {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，对应技能基础伤害 +0.5%。'}
+      {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'启灵3「确定收益」：每消耗 1 点黑印，对应技能基础伤害 +0.5%。'}
     ],
     'awakener-0024':[
       {overlayId:'overlay.horla.emotion',coversOverlayIds:['overlay.horla.anger','overlay.horla.fear','overlay.horla.grief','overlay.horla.happiness'],key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒的全队最终伤害已自动计入；恐惧的中毒/反击生成已自动计入。恐惧对“获得力量”的增幅属于跨卡状态生成，当前不会反推既有力量，请把实际获得后的力量填入上方“力量 / 临时力量”。悲伤与喜悦主要影响回复/资源，不改变本次直接伤害。'},
@@ -598,20 +598,20 @@
     ],
     'awakener-0052':[
       {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦引',min:0,max:10,calculated:true,description:'「脊刺锁链」在梦引≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
-      {overlayId:'overlay.wanda.murmurs',key:'murmursActive',label:'低语状态生效',type:'checkbox',calculated:true,description:'主动伤害降低 60%；E2 后降低 65%，同时攻击次数翻倍。'}
+      {overlayId:'overlay.wanda.murmurs',key:'murmursActive',label:'低语状态生效',type:'checkbox',calculated:true,description:'主动伤害降低 60%；启灵2后降低 65%，同时攻击次数翻倍。'}
     ],
     'awakener-0054':[
       {overlayId:'overlay.xu.enthrall',coversOverlayIds:['overlay.xu.betroth'],key:'xuChoice',label:'当前痴醉选择',type:'select',calculated:false,options:[['','未选择'],['betroth','相许'],['enthrall','夺魄']],description:'「夜雾下的情誓」的二选一状态：相许施加痴醉，夺魄移除痴醉并按层结算纯粹伤害/中毒。'},
-      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标痴醉',min:0,max:15,calculated:true,description:'夺魄会移除全部痴醉；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。基础上限 5，E3 上限 10；最终法则只有在“灵知觉醒已发动”时上限才提高到 15。'},
+      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标痴醉',min:0,max:15,calculated:true,description:'夺魄会移除全部痴醉；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。基础上限 5，启灵3上限 10；最终法则只有在“灵知觉醒已发动”时上限才提高到 15。'},
       {key:'xuFirstCommandRouse',label:'最终法则：当前是本回合第一张指令卡',type:'checkbox',calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则灵知觉醒：徐每回合打出的第一张指令卡额外生效 1 次。仅在这张卡确实是本回合第一张指令卡时勾选。'}
     ],
     'awakener-0019':[
       {key:'helotSanguineTurnActive',label:'「缚身锁链」本回合出血效果已生效',type:'checkbox',calculated:true,description:'「缚身锁链」发动后，本回合血链·希洛每次造成主动伤害都会附加出血。仅在确实已经发动狂气爆发且仍处于同一回合时勾选；出血比例按「缚身锁链」当前等级读取（1–6 级为 75%–100%）。'}
     ],
     'awakener-0027':[
-      {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:true,requiredEnlighten:'E3',description:'E3 后，每获得 1 层燃烧，本场战斗基础伤害 +5%；按当前累计层数计算，最高输入 10 层。'},
+      {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:true,requiredEnlighten:'E3',description:'启灵3后，每获得 1 层燃烧，本场战斗基础伤害 +5%；按当前累计层数计算，最高输入 10 层。'},
       {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaActive',label:'当前卡具有活焰',type:'checkbox',calculated:true,description:'勾选表示当前所计算的这张卡带有活焰。活焰是单卡状态，是否存在与层数分开控制。'},
-      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaStacks',label:'活焰层数',inputLabel:'活焰层数',min:1,max:3,calculated:true,dependsOn:'fiammaActive',description:'单张指令卡最多 3 层。基础每层使本卡最终伤害等效果 +30%；3 层时会触发 E2 对特定技能的额外效果。灵知觉醒 + 最终法则时，每层最终伤害/力量效果再额外 +30%。'}
+      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaStacks',label:'活焰层数',inputLabel:'活焰层数',min:1,max:3,calculated:true,dependsOn:'fiammaActive',description:'单张指令卡最多 3 层。基础每层使本卡最终伤害等效果 +30%；3 层时会触发启灵2对特定技能的额外效果。灵知觉醒 + 最终法则时，每层最终伤害/力量效果再额外 +30%。'}
     ],
     'awakener-0035':[
       {overlayId:'overlay.murphy-fauxborn.life-seal',key:'lifeSealStacks',label:'生命封印',min:0,max:5,calculated:true,description:'每层使下一次「妄想公主」施加的诞生仪式 +20%；灵塑启用时该增幅翻倍。5 层时该技能伤害段数翻倍。'}
