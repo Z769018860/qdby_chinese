@@ -274,7 +274,7 @@
 
       const baseName=String(skill?.overExaltBaseSkillName||'').trim();
       if(baseName){
-        const escaped=baseName.replace(/[.*+?^${}()|[\]\\]/g,'\\const escaped=baseName.replace(/[.*+?^$()|[\]\\]/g,'\\    function damageCritBonuses(skill,template,tokenEnd,rank,ctx){');');
+        const escaped=baseName.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         const setRe=new RegExp('(?:\\{)?'+escaped+'(?:\\})?\\s+deals?\\s+(\\d+)\\s+instances?\\s+DMG','i');
         m=setRe.exec(effect);
         if(m)out.hitSet=Math.max(1,Math.floor(num(m[1],1)));
