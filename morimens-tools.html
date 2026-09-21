@@ -98,15 +98,7 @@
               <label class="check"><input id="buffWeak" type="checkbox"><span>自身：虚弱 <span style="display:inline-flex;align-items:center;gap:5px;margin-left:7px">层数 <input id="buffWeakStacks" type="number" min="1" max="99" step="1" placeholder="1" style="width:64px;height:28px;padding:0 7px"></span><small>勾选即按主动伤害 / 触腕伤害 -25% 计算；层数留空默认 1。虚弱层数表示剩余层/回合，不会把 -25% 按层重复相乘。</small></span></label>
               <label class="check"><input id="buffBrute" type="checkbox"><span>刻印：蛮力 <span style="display:inline-flex;align-items:center;gap:5px;margin-left:7px">层数 <input id="buffBruteStacks" type="number" min="1" max="99" step="1" placeholder="1" style="width:64px;height:28px;padding:0 7px"></span><small>每层按当前计算器既有口径提供 8 点力量；留空默认 1 层。</small></span></label>
               <label class="check"><input id="buffBurst" type="checkbox"><span>刻印：高级爆发 <span style="display:inline-flex;align-items:center;gap:5px;margin-left:7px">层数 <input id="buffBurstStacks" type="number" min="1" max="99" step="1" placeholder="1" style="width:64px;height:28px;padding:0 7px"></span><small>每层按当前计算器既有口径提供 66 点临时力量；留空默认 1 层。</small></span></label>
-            </div>
-            <div class="formGrid" style="margin-top:10px">
-              <div class="field full">
-                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-                  <label class="inlineCheck" for="targetVulnerable"><input id="targetVulnerable" type="checkbox"> 目标：易伤</label>
-                  <label for="targetVulnerableStacks" style="display:flex;align-items:center;gap:7px">易伤层数 <input id="targetVulnerableStacks" type="number" min="1" max="999" step="1" placeholder="1" style="width:82px"></label>
-                </div>
-                <small>勾选后按标准易伤计算；层数留空时默认为 1。标准易伤对主动伤害 / 触腕伤害的 +50% 只判断“有/无”，不会随层数重复叠加；易伤层数只对少数明确读取层数的角色或技能机制有效（例如艾继丝启灵2的「石质分解」）。</small>
-              </div>
+              <label class="check"><input id="targetVulnerable" type="checkbox"><span>目标：易伤 <span style="display:inline-flex;align-items:center;gap:5px;margin-left:7px">层数 <input id="targetVulnerableStacks" type="number" min="1" max="999" step="1" placeholder="1" style="width:64px;height:28px;padding:0 7px"></span><small>勾选后按标准易伤计算；层数留空默认 1。标准易伤对主动伤害 / 触腕伤害的 +50% 只判断“有/无”，不会按层重复叠加；易伤层数只对明确读取层数的角色或技能机制生效，例如艾继丝启灵2的「石质分解」。</small></span></label>
             </div>
             <div class="autoSummary" id="autoSummary"></div>
           </div>
