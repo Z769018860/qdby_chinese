@@ -798,7 +798,7 @@
     if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0){
       const bonus=8*Math.min(10,Math.max(0,Math.floor(Number(resources.finaleStacks)||0)));
       mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-        ?{...event,resourceDamageAmpBonusPct:(Number(event.resourceDamageAmpBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+        ?{...event,resourceEffectLabel:[event.resourceEffectLabel,'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
         :event);
     }
     if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy'){
@@ -1240,7 +1240,7 @@
       if(damageEvents.length){
         const labels={active:'主动',pierce:'穿透',tentacle:'触腕',pure:'纯粹',fixed:'固定',poison:'中毒',bleed:'流血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
         parts.push(`伤害事件 ${damageEvents.length} 个：${damageEvents.map(x=>{
-          const name=labels[x.type]||x.type;
+          const name=(labels[x.type]||x.type)+(x.turnEndOnly?'（回合末）':'');
           if(x.coefficient!==undefined)return name+' '+Number(x.coefficient).toFixed(2)+'%';
           if(x.percent!==undefined)return name+' '+Number(x.percent).toFixed(2)+'%';
           return name;
@@ -1266,6 +1266,15 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
       if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% ATK`);
+      if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&num($('targetVulnerableStacks')?.value,0)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${Math.floor(num($('targetVulnerableStacks')?.value,0))} 层：E2 Decomposition 最终伤害 +${Math.min(500,Math.floor(num($('targetVulnerableStacks')?.value,0))*5)}%`);
+      if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike')parts.push(`Predetermined Strike 力量倍率：基础 3× + 本场 Posse ${Math.floor(Number(resources.ramonaPosseUses)||0)} 次`);
+      if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本次移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：E2+ 基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
+      if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&Number(resources.clementineFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('灵知觉醒：本回合第一张指令卡的可解析伤害效果额外触发 2 次');
+      if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom')parts.push('最终法则灵知觉醒：每个可解析伤害公式的段数 +1');
+      if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy')parts.push(`饱足 ${Math.floor(Number(resources.satietyStacks)||0)} 层；供奉 ${Math.floor(Number(resources.offeringStacks)||0)} 层（供奉增加本次段数；转化后的饱足不回溯本次基础伤害）`);
+      if(currentAwakener?.id==='awakener-0018'&&Number(resources.finaleFormActive)>0)parts.push('Finale Form 已开启：只计入已明确接入的形态条件伤害');
+      if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0)parts.push(`最终法则灵知觉醒：Finale ${Math.floor(Number(resources.finaleStacks)||0)} 层 → 伤害强效 +${8*Math.floor(Number(resources.finaleStacks)||0)}%`);
+      if(currentAwakener?.id==='awakener-0018'&&currentSkill?.overExaltEffectId&&Number(resources.finaleFormActive)>0)parts.push('⚠ 超限 Finale Form 的“每消耗 10 狂气额外触发 3% 中毒”依赖实际消耗狂气，当前未自动计入');
       if(currentAwakener?.id==='awakener-0041'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：波吕克斯基础伤害 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0008'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：卡斯托尔侵蚀施加量 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：克莱门汀 E2 基础伤害 +${25*completedBattles()}%`);
@@ -1281,7 +1290,10 @@
       else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该伤害事件');
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:characterResourceValues(),rouseActive:rouseActive(),generatedStrength,generatedShield,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
+    const syncResources=characterResourceValues();
+    const characterDamageAmpBonusPct=currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'
+      ?8*Math.min(10,Math.max(0,Math.floor(Number(syncResources.finaleStacks)||0))):0;
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:syncResources,rouseActive:rouseActive(),characterDamageAmpBonusPct,generatedStrength,generatedShield,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
