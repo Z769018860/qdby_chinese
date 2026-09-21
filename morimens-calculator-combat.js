@@ -4,6 +4,59 @@
   const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
   const fmt=v=>Math.round(Number(v)||0).toLocaleString('zh-CN');
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const BREAKDOWN_ICON_BASE='assets/morimens/skeydb-icons/';
+  const breakdownVisuals={
+    active:{glyph:'✧',label:'主动伤害'},
+    pierce:{glyph:'↯',label:'穿透伤害'},
+    tentacle:{glyph:'≋',label:'触腕伤害'},
+    pure:{glyph:'✦',label:'纯粹伤害'},
+    fixed:{glyph:'◆',label:'固定伤害'},
+    poison:{icon:'IconS_Buff_006.webp',label:'中毒'},
+    bleed:{icon:'IconS_Buff_022.webp',label:'流血'},
+    corrosion:{icon:'IconS_Buff_070.webp',label:'侵蚀'},
+    counter:{icon:'IconS_Buff_019.webp',label:'反击'},
+    sacrifice:{icon:'IconS_Buff_041.webp',label:'献祭'},
+    birthRitual:{icon:'IconS_Buff_079.webp',label:'诞生仪式'},
+    embers:{icon:'IconS_Buff_025.webp',label:'旧日余烬'},
+    fortress:{icon:'IconS_Buff_046.webp',label:'加固'},
+    vulnerable:{icon:'IconS_Buff_003.webp',label:'易伤'},
+    total:{glyph:'Σ',label:'总伤害'}
+  };
+  function breakdownKind(label){
+    const text=String(label||'');
+    if(/诞生仪式/.test(text))return 'birthRitual';
+    if(/旧日余烬/.test(text))return 'embers';
+    if(/中毒/.test(text))return 'poison';
+    if(/流血/.test(text))return 'bleed';
+    if(/侵蚀/.test(text))return 'corrosion';
+    if(/反击/.test(text))return 'counter';
+    if(/献祭/.test(text))return 'sacrifice';
+    if(/触腕/.test(text))return 'tentacle';
+    if(/穿透/.test(text))return 'pierce';
+    if(/纯粹/.test(text))return 'pure';
+    if(/固定伤害/.test(text))return 'fixed';
+    if(/主动伤害/.test(text))return 'active';
+    if(/加固/.test(text))return 'fortress';
+    if(/易伤/.test(text))return 'vulnerable';
+    if(/合计|总伤害/.test(text))return 'total';
+    return '';
+  }
+  function breakdownIconHtml(kind){
+    const meta=breakdownVisuals[kind];if(!meta)return '';
+    if(meta.icon)return '<img class="breakdownIcon" src="'+BREAKDOWN_ICON_BASE+meta.icon+'" alt="" decoding="async" loading="lazy">';
+    return '<span class="breakdownGlyph" aria-hidden="true">'+esc(meta.glyph||'•')+'</span>';
+  }
+  function breakdownLabelHtml(label,kind=breakdownKind(label)){
+    return '<span class="breakdownLabel">'+breakdownIconHtml(kind)+'<span>'+esc(label)+'</span></span>';
+  }
+  function damageCompositionHtml(parts,total){
+    const positive=parts.filter(x=>Number(x.value)>0);
+    if(!positive.length)return '';
+    return '<section class="damageComposition"><div class="damageCompositionTitle"><strong>伤害构成</strong><small>按本次对敌总伤害占比</small></div><div class="damageCompositionGrid">'+positive.map(part=>{
+      const pct=total>0?Math.max(0,Number(part.value)||0)/total*100:0;
+      return '<div class="damageCompositionItem" title="'+esc(part.label)+'：'+fmt(part.value)+'（'+pct.toFixed(1)+'%）"><div class="damageCompositionHead">'+breakdownIconHtml(part.kind)+'<span>'+esc(part.label)+'</span><strong>'+fmt(part.value)+'</strong></div><div class="damageCompositionTrack"><i style="width:'+Math.min(100,pct).toFixed(2)+'%"></i></div><small>'+pct.toFixed(1)+'%</small></div>';
+    }).join('')+'</div></section>';
+  }
 
   function currentLevel(){return clamp(Number.parseFloat(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90,1,90)}
   function currentRecord(){const id=$('charSelect')?.value;return window.MorimensData?.db?.records?.find(x=>x.id===id)||((window.MorimensCharacterSync?.record?.id===id)?window.MorimensCharacterSync.record:null)||null}
@@ -89,7 +142,8 @@
       .combatReadout{margin-top:10px;color:#aeb8c7;font-size:11px;line-height:1.75}.combatReadout b{color:#f1e0bf}
       .formulaSource{margin-top:10px;color:#98a5b7;font-size:11px;line-height:1.75}.formulaSource summary{cursor:pointer;color:#d9c09a;font-weight:700}.formulaSource code{color:#f1e0bf;white-space:normal}
       .formulaSource .formulaRow{margin-top:7px;padding-top:7px;border-top:1px dashed rgba(148,163,184,.14)}
-      @media(max-width:580px){.combatStats{grid-template-columns:1fr 1fr 1fr}}
+      .breakdownLabel{display:inline-flex;align-items:center;gap:7px;min-width:0}.breakdownIcon{width:18px;height:18px;object-fit:contain;flex:0 0 18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.38))}.breakdownGlyph{display:inline-grid;place-items:center;width:18px;height:18px;flex:0 0 18px;border:1px solid rgba(229,196,142,.5);border-radius:50%;color:#f0d7a7;font-size:11px;line-height:1}.damageComposition{margin:0 0 12px;padding:12px;border:1px solid rgba(229,196,142,.2);border-radius:12px;background:rgba(14,20,31,.42)}.damageCompositionTitle{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}.damageCompositionTitle strong{color:#f2dfbb;font-size:13px}.damageCompositionTitle small{color:#8492a6;font-size:10px}.damageCompositionGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}.damageCompositionItem{min-width:0}.damageCompositionHead{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:center;gap:6px;font-size:11px;color:#bac5d4}.damageCompositionHead strong{color:#f1e0bf;font-variant-numeric:tabular-nums}.damageCompositionTrack{height:4px;margin:5px 0 2px 24px;border-radius:999px;background:rgba(148,163,184,.12);overflow:hidden}.damageCompositionTrack i{display:block;height:100%;border-radius:inherit;background:currentColor;color:#d9b776}.damageCompositionItem>small{display:block;margin-left:24px;color:#7f8da1;font-size:9px}
+      @media(max-width:580px){.combatStats{grid-template-columns:1fr 1fr 1fr}.damageCompositionGrid{grid-template-columns:1fr}}
     `;
     document.head.appendChild(style);
 
@@ -768,7 +822,20 @@
     rows.push(['本次新增反击',counterAdded]);
     rows.push(['最终反击',counterCurrent]);
     rows.push(['本次对敌合计',total]);
-    $('breakdown').innerHTML=rows.map(([a,b])=>`<div class="step"><span>${esc(a)}</span><strong>${typeof b==='number'&&Math.abs(b)<10&&a.includes('系数')?b.toFixed(3):fmt(b)}</strong></div>`).join('');
+    const composition=[
+      {kind:'active',label:'主动伤害',value:activeTotal},
+      {kind:'pierce',label:'穿透伤害',value:pierceTotal},
+      {kind:'tentacle',label:'触腕伤害',value:tentacleTotal},
+      {kind:'pure',label:'纯粹伤害',value:pureTotal},
+      {kind:'fixed',label:'固定伤害',value:fixedTotal},
+      {kind:'poison',label:'中毒',value:poisonTotal},
+      {kind:'bleed',label:'流血',value:bleedTotal},
+      {kind:'counter',label:'反击',value:counterTotal},
+      {kind:'sacrifice',label:'献祭',value:sacrificeTotal},
+      {kind:'corrosion',label:'侵蚀追加生命损失',value:corrosionDamage},
+      {kind:'embers',label:'旧日余烬追加生命损失',value:embersDamage}
+    ];
+    $('breakdown').innerHTML=damageCompositionHtml(composition,total)+rows.map(([a,b])=>`<div class="step"><span>${breakdownLabelHtml(a)}</span><strong>${typeof b==='number'&&Math.abs(b)<10&&a.includes('系数')?b.toFixed(3):fmt(b)}</strong></div>`).join('');
   
     const tmode=effectiveTentacleMode();
     const stance=tmode==='benthos'
