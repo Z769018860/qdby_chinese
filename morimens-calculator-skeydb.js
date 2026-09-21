@@ -126,6 +126,7 @@
     $('fateRankSummary')?.remove();$('fateRankText')?.remove();
     const conditions=$('skillConditionList')?.closest('.conditionBox');if(conditions)conditions.remove();
     const damageMode=$('skillDamageMode')?.closest('.field');if(damageMode)damageMode.hidden=true;
+    const legacyCoef=$('skillCoef')?.closest('.field');if(legacyCoef)legacyCoef.hidden=true;
   }
   function normalizeProgressionControls(){
     removeLegacyDeadControls();
