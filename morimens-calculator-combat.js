@@ -1,11 +1,12 @@
 (()=>{
   const $=id=>document.getElementById(id);
   const n=(id,f=0)=>{const v=Number.parseFloat($(id)?.value);return Number.isFinite(v)?v:f};
-  const vulnerableStackCount=()=>{
-    if($('targetVulnerable')?.checked!==true)return 0;
-    const raw=Number.parseFloat($('targetVulnerableStacks')?.value);
+  const checkedStackCount=(checkId,inputId)=>{
+    if($(checkId)?.checked!==true)return 0;
+    const raw=Number.parseFloat($(inputId)?.value);
     return Number.isFinite(raw)&&raw>0?Math.max(1,Math.floor(raw)):1;
   };
+  const vulnerableStackCount=()=>checkedStackCount('targetVulnerable','targetVulnerableStacks');
   const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
   const fmt=v=>Math.round(Number(v)||0).toLocaleString('zh-CN');
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -152,7 +153,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','targetVulnerable','targetVulnerableStacks','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeEnemySacrificeTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','targetVulnerable','targetVulnerableStacks','buffWeak','buffWeakStacks','buffBrute','buffBruteStacks','buffBurst','buffBurstStacks','currentPoison','currentBleed','currentCounter','actorMaxHp','actorCurrentHp','corrosionAmount','corrosionLossMultiplier','embersAmount','enemySacrificeAmount','birthRitualStacks','sacrificeOnDamagePct','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd','includeEnemySacrificeTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -165,6 +166,13 @@
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
     window.addEventListener('morimens-realm-change',()=>queueMicrotask(()=>{toggleTentacleMode();renderTriplet();calculate()}));
     const hitField=$('hitCount')?.closest('.field');if(hitField){const label=hitField.querySelector('label');if(label)label.textContent='手动重复事件序列次数';let note=hitField.querySelector('small');if(!note){note=document.createElement('small');hitField.appendChild(note)}note.textContent='多段技能已由 SKeyDB 伤害事件自动拆分；这里仅用于额外重复整套事件，通常保持 1。'}
+    const syncOptionalStackInputs=()=>{
+      for(const [checkId,inputId] of [['buffWeak','buffWeakStacks'],['buffBrute','buffBruteStacks'],['buffBurst','buffBurstStacks'],['targetVulnerable','targetVulnerableStacks']]){
+        const input=$(inputId);if(input)input.disabled=$(checkId)?.checked!==true;
+      }
+    };
+    for(const id of ['buffWeak','buffBrute','buffBurst','targetVulnerable'])$(id)?.addEventListener('change',syncOptionalStackInputs);
+    syncOptionalStackInputs();
     toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();
     window.dispatchEvent(new CustomEvent('morimens-calculator-ui-ready'));
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
@@ -320,8 +328,10 @@
   
     let strength=n('strength');
     strength+=Math.max(0,Number(window.MorimensGearEffects?.signatureStrengthFlat)||0);
-    if($('buffBrute')?.checked)strength+=8;
-    if($('buffBurst')?.checked)strength+=66;
+    const bruteStacks=checkedStackCount('buffBrute','buffBruteStacks');
+    const burstStacks=checkedStackCount('buffBurst','buffBurstStacks');
+    if(bruteStacks>0)strength+=8*bruteStacks;
+    if(burstStacks>0)strength+=66*burstStacks;
     const strengthDown=Math.max(0,n('strengthDown'));
     const netStrength=strength-strengthDown;
   
@@ -351,10 +361,12 @@
       ?Math.max(0,Number(progression.baseDamagePct)||0):0;
   
     const basePct=n('baseBonus')+soulforgeBasePct;
-    const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0);
+    const characterDamageAmpBonusPct=Math.max(0,Number(skillSync.characterDamageAmpBonusPct)||0);
+    const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0)+characterDamageAmpBonusPct;
     const vulnerableStacks=vulnerableStackCount();
     const vulnerabilityPct=n('vulnerability')+(vulnerableStacks>0?50:0);
-    const weakCoef=$('buffWeak')?.checked?.75:1;
+    const weakStacks=checkedStackCount('buffWeak','buffWeakStacks');
+    const weakCoef=weakStacks>0?.75:1;
     const finalPct=n('finalBonus')+Math.max(0,Number(realm.finalDamageBonus)||0);
     const fortifyCoef=clamp(1-Math.max(0,n('fortressStacks'))/100,0,1);
     const other=Math.max(0,n('otherMultiplier',1));
@@ -391,8 +403,13 @@
       const afterBase=baseRaw*(1+(basePct+skillBasePct)/100);
       const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
       const counterContribution=counterCurrent*sourceCounterCoef;
+      const resourceFlatDamage=Math.max(0,Number(source.resourceFlatDamage)||0);
+      const resourceFlatDamageAmpBonusPct=Math.max(0,Number(source.resourceFlatDamageAmpBonusPct)||0);
       const raw=afterBase+strengthPart+tentacleContribution+counterContribution+soulforgeFlat;
-      const afterPower=raw*(1+powerPct/100);
+      // Some character mechanics add a flat amount directly to this Active/Pierce event
+      // (e.g. Lily's Endure). Keep that component separate so its dedicated Damage
+      // Amplification modifier can apply without incorrectly scaling the skill's base component.
+      const afterPower=raw*(1+powerPct/100)+resourceFlatDamage*(1+(powerPct+resourceFlatDamageAmpBonusPct)/100);
       // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const skillFinalPct=Math.max(0,Number(source.skillFinalDamageBonusPct)||0);
@@ -420,6 +437,8 @@
         resourceDamageMultiplier,
         counterBonusCoefficient:sourceCounterCoef*100,
         counterContribution,
+        resourceFlatDamage,
+        resourceFlatDamageAmpBonusPct,
         critRateBonus:Number(source.critRateBonus)||0,
         critDamageBonus:Number(source.critDamageBonus)||0,
         eventCritRate,
@@ -783,7 +802,7 @@
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱只让主动/触腕造成伤害 -25%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
+    $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱：${weakStacks>0?weakStacks+' 层（当前伤害仍只应用一次 -25%）':'无'}。角色专属伤害强效：+${characterDamageAmpBonusPct.toFixed(1)}%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -881,7 +900,7 @@
     const values={
       realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
       tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,
-      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,targetVulnerableStacks:'',currentPoison:0,currentBleed:0,currentCounter:0,
+      tentacleCount:1,tentacleAttackTimes:1,enemyLevel:77,enemyMaxHpOverride:'',fortressStacks:0,targetVulnerableStacks:'',buffWeakStacks:'',buffBruteStacks:'',buffBurstStacks:'',currentPoison:0,currentBleed:0,currentCounter:0,
       actorMaxHp:0,actorCurrentHp:'',
       corrosionAmount:0,corrosionLossMultiplier:300,embersAmount:0,enemySacrificeAmount:0,birthRitualStacks:0,sacrificeOnDamagePct:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
     };
@@ -892,6 +911,8 @@
     if($('ultraRoundActive'))$('ultraRoundActive').checked=false;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
     if($('forceCritAll'))$('forceCritAll').checked=false;
+    for(const id of ['buffWeak','buffBrute','buffBurst'])if($(id))$(id).checked=false;
+    for(const id of ['buffWeakStacks','buffBruteStacks','buffBurstStacks'])if($(id)){$(id).value='';$(id).disabled=true}
     if($('targetVulnerable'))$('targetVulnerable').checked=false;
     if($('targetVulnerableStacks'))$('targetVulnerableStacks').disabled=true;
     if($('includeTurnEndSettlement'))$('includeTurnEndSettlement').checked=true;
