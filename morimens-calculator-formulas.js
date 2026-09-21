@@ -206,7 +206,40 @@
       ];
       for(const re of patterns){
         const match=local.match(re);if(!match)continue;
+        const before=local.slice(0,match.index||0);
+        // Do not steal a Tentacle-DMG bonus that belongs to a later status payload
+        // such as "equal Poison, which enjoys X% Tentacle DMG bonus".
+        if(/\{(?:Poison|Counter|Bleed|Corrosion)\}/i.test(before))continue;
         return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),0));
+      }
+      return 0;
+    }
+
+    function damageCounterBonusCoefficient(skill,template,tokenEnd,rank,ctx){
+      const local=String(template||'').slice(tokenEnd,tokenEnd+280);
+      const patterns=[
+        /(?:which\s+)?enjoys?\s+(?:a|an)?\s*\[([^\]]+)\]%\s*\{Counter\}(?:\s*DMG)?\s*Bonus/i,
+        /(?:the\s+DMG\s+dealt\s+)?enjoys?\s+(?:a|an)?\s*\[([^\]]+)\]%\s*\{Counter\}\s*bonus/i
+      ];
+      for(const re of patterns){
+        const match=local.match(re);if(!match)continue;
+        const before=local.slice(0,match.index||0);
+        if(/\{(?:Poison|Bleed|Corrosion)\}/i.test(before))continue;
+        return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),0));
+      }
+      return 0;
+    }
+
+    function statusTentacleBonusCoefficient(skill,template,statusPos,rank,ctx){
+      const local=String(template||'').slice(Math.max(0,statusPos),Math.max(0,statusPos)+180);
+      const patterns=[
+        /(?:which\s+)?enjoys?\s+(?:a|an)?\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
+        /(?:with|enjoying)\s+(?:a|an)?\s*(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s*\{Tentacle DMG\}\s*bonus/i
+      ];
+      for(const re of patterns){
+        const match=local.match(re);if(!match)continue;
+        if(match[1]!==undefined)return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),0));
+        return Math.max(0,num(match[2],0));
       }
       return 0;
     }
@@ -423,6 +456,7 @@
             hitCount:count,
             strengthMultiplier:damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type),
             tentacleBonusCoefficient:damageTentacleBonusCoefficient(skill,template,tokenEnd,rank,ctx),
+            counterBonusCoefficient:damageCounterBonusCoefficient(skill,template,tokenEnd,rank,ctx),
             critRateBonus:critBonuses.critRateBonus,
             critDamageBonus:critBonuses.critDamageBonus,
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
@@ -502,7 +536,8 @@
         events.push({
           id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
           type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
-          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),activeSource:false
         });
       }
       for(const match of template.matchAll(/(?:apply|inflict)?\s*(?:an\s+)?equal\s+(?:amount\s+of\s+)?\{Poison\}/gi)){
@@ -511,7 +546,8 @@
         events.push({
           id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
           type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
-          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),activeSource:false
         });
       }
 
@@ -545,7 +581,21 @@
         events.push({
           id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
           type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
-          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),
+          activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:inflict|apply)?\s*\{Poison\}\s+(?:equal to|with)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?(?:the\s+)?(?:DMG|Damage)(?:\s+dealt)?/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.31,
+          type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),
+          activeSource:false
         });
       }
       for(const match of template.matchAll(/\[Counterattack:([^\]]+)\][^.!?]*?\{Counter\}/gi)){
@@ -559,6 +609,15 @@
           activeSource:false
         });
       }
+      for(const match of template.matchAll(/(?:gain|obtain)\s+(?:an\s+)?equal\s+amount\s+of\s+\{Counter\}/gi)){
+        events.push({
+          id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.24,
+          type:'counter',action:'gain',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),
+          activeSource:false
+        });
+      }
       for(const match of template.matchAll(/(?:gain|obtain)\s+(?:Temporary\s+)?\{Counter\}\s+(?:for|equal to)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:the\s+)?DMG dealt/gi)){
         const percent=match[1]!==undefined
           ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
@@ -566,7 +625,8 @@
         events.push({
           id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
           type:'counter',action:'gain',source:'skill',basis:'sourceDamage',
-          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),activeSource:false
         });
       }
 
@@ -575,7 +635,8 @@
         events.push({
           id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
           type:'counter',action:'gain',source:'skill',basis:'sourceDamage',
-          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,
+          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),activeSource:false
         });
       }
       for(const match of template.matchAll(/(?:gain|obtain)\s+\{(?:Temporary )?Counter\}\s+equal to\s+\[([^\]]+)\]%?\s+of\s+(ATK|DEF|CON)/gi)){

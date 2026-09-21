@@ -333,12 +333,14 @@
       const sourceTentacleCoef=Number.isFinite(Number(source.tentacleBonusCoefficient))
         ?Math.max(0,Number(source.tentacleBonusCoefficient))/100
         :skillTentacleCoef;
+      const sourceCounterCoef=Math.max(0,Number(source.counterBonusCoefficient)||0)/100;
       const baseRaw=statValue(source.stat)*coeff;
       // SKeyDB distinguishes Base DMG from STR and Tentacle-DMG additions.
       // Therefore Base-DMG bonuses scale only the coefficient-derived base component.
       const afterBase=baseRaw*(1+basePct/100);
       const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
-      const raw=afterBase+strengthPart+tentacleContribution+soulforgeFlat;
+      const counterContribution=counterCurrent*sourceCounterCoef;
+      const raw=afterBase+strengthPart+tentacleContribution+counterContribution+soulforgeFlat;
       const afterPower=raw*(1+powerPct/100);
       // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
@@ -354,11 +356,13 @@
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'') ,
+        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'')+(source.counterBonusCoefficient?` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`:'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
         tentacleBonusCoefficient:sourceTentacleCoef*100,
+        counterBonusCoefficient:sourceCounterCoef*100,
+        counterContribution,
         critRateBonus:Number(source.critRateBonus)||0,
         critDamageBonus:Number(source.critDamageBonus)||0,
         eventCritRate,
@@ -489,6 +493,8 @@
       }else if(source.basis==='targetMaxHpPercent'){
         amount=enemyMaxHp*Math.max(0,Number(source.percent)||0)/100;
       }
+      const statusTentacleCoef=Math.max(0,Number(source.tentacleBonusCoefficient)||0)/100;
+      if(statusTentacleCoef>0)amount+=tentacleWithStrength*statusTentacleCoef*propagationTentacleEffectMult;
       // Propagation Fiesta / Singularity Beacon enhance Fixed Poison and Fixed Counter,
       // but not effects defined as a percentage of damage already dealt.
       if((source.type==='poison'||source.type==='counter')&&source.basis!=='sourceDamage')amount*=fixedStatusEffectMult;
