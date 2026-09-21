@@ -624,9 +624,16 @@
         const percent=match[1]!==undefined
           ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
           :num(match[2],0);
+        const tail=template.slice((match.index||0)+match[0].length,(match.index||0)+match[0].length+220);
+        const critMatch=tail.match(/If\s+a\s+Critical\s+Hit\s+occurs,?\s*the\s+trigger\s+(?:ratio|rate)\s+increases\s+to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%/i);
+        const critPercent=critMatch
+          ?(critMatch[1]!==undefined?num(resolveTemplateArg(skill,critMatch[1],rank,ctx),percent):num(critMatch[2],percent))
+          :null;
         events.push({
           id:`poison-trigger-${index+1}`,index:index++,position:(match.index||0)+0.3,
-          type:'poison',action:'trigger',source:'skill',basis:'currentPoison',percent,activeSource:false
+          type:'poison',action:'trigger',source:'skill',basis:'currentPoison',percent,
+          critPercent:Number.isFinite(Number(critPercent))?Number(critPercent):null,
+          sourceGroupId:nearestPrimaryGroup(match.index||0),activeSource:false
         });
       }
 
