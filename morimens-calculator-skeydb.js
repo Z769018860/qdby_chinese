@@ -30,6 +30,9 @@
       ?engine.statsWithProgression(currentAwakener,level,progressionState())
       :{};
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
+    base.realmMasteryFinal=base.RealmMastery;
+    const realm=window.MorimensRealmEngine?.state?.();
+    if(realm)base.primordiaAllChaosTeam=realm.primordiaAllChaosTeam===true;
     return base;
   }
   function argValue(arg,level=1){
@@ -103,7 +106,10 @@
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
   function damageCoefficient(skill,level){
     const engine=window.MorimensFormulaEngine;
-    if(engine)return engine.directAtkCoefficient(skill,level,currentFormulaContext());
+    if(engine){
+      const mode=$('skillDamageMode')?.value||'primary';
+      return mode==='sum'?engine.directAtkCoefficientSum(skill,level,currentFormulaContext()):engine.directAtkCoefficient(skill,level,currentFormulaContext());
+    }
     const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)
   }
   function maxSkillLevel(skill){let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
@@ -112,7 +118,14 @@
     if(!select)return;const previous=Math.min(max,Math.max(0,Number(select.value)||0));select.innerHTML='';
     for(let i=0;i<=max;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`${i} · ${i===0?'未启用':label+' '+i}`;option.selected=i===previous;select.appendChild(option)}
   }
+  function removeLegacyDeadControls(){
+    const fateRank=$('fateRank')?.closest('.field');if(fateRank)fateRank.remove();
+    const fateConditional=$('fateConditional')?.closest('.check');if(fateConditional){const grid=fateConditional.parentElement;fateConditional.remove();if(grid&&!grid.children.length)grid.remove()}
+    $('fateRankSummary')?.remove();$('fateRankText')?.remove();
+    const conditions=$('skillConditionList')?.closest('.conditionBox');if(conditions)conditions.remove();
+  }
   function normalizeProgressionControls(){
+    removeLegacyDeadControls();
     const legacy=$('charLevel'),duplicate=$('skeydbCharacterLevel');
     if(legacy&&duplicate&&legacy!==duplicate)duplicate.closest('.field')?.remove();
     const level=characterLevelControl();
@@ -127,10 +140,12 @@
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
     normalizeProgressionControls();
-    const level=characterLevelControl(),sync=()=>{if(currentAwakener){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
+    const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
     for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     $('soulforgeActive')?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    $('autoCharacterStats')?.addEventListener('change',()=>{if($('autoCharacterStats').checked){$('attack').dataset.autoAttack='1';applyCharacterStats()}else $('attack').dataset.autoAttack='0'},{capture:true});
+    $('skillDamageMode')?.addEventListener('change',()=>{updateSkillLevel();$('calcBtn')?.click()},{capture:true});
     $('attack')?.addEventListener('input',()=>{if(!applyingAuto)$('attack').dataset.autoAttack='0'});
   }
   function ensureSecondWheelUi(){
@@ -220,7 +235,7 @@
       DEF:Math.floor(num(currentAwakener.baseStatsLv1?.DEF)+num(currentAwakener.statScaling?.DEF)*(level-1)+1e-7),
       CritRate:num(currentAwakener.substatsLv1?.CritRate),CritDamage:num(currentAwakener.substatsLv1?.CritDamage)
     };
-    const input=$('attack');if(input&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(stats.ATK);input.dataset.autoAttack='1';applyingAuto=false}
+    const input=$('attack');if(input&&$('autoCharacterStats')?.checked!==false&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(stats.ATK);input.dataset.autoAttack='1';applyingAuto=false}
     const cr=num(stats.CritRate),cd=num(stats.CritDamage);
     if($('critRate')&&!$('critRate').dataset.manualInitialized)$('critRate').dataset.manualBase=String(cr);
     if($('critDamage')&&!$('critDamage').dataset.manualInitialized)$('critDamage').dataset.manualBase=String(100+cd);
@@ -235,14 +250,14 @@
     currentTalents=await window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]);
     normalizeProgressionControls();
     configureProgressionControls();
-    setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(rec)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
+    setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
     applyCharacterStats();
     try{
-      const rows=await window.MorimensRepository.recordsForAwakener('skills',rec.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
+      const rows=await window.MorimensRepository.recordsForAwakener('skills',currentAwakener.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
       currentSkills=currentSkills.filter(x=>slotOrder[x.slot]);currentSkills.sort((a,b)=>(slotOrder[a.slot]||99)-(slotOrder[b.slot]||99)||String(a.name||'').localeCompare(String(b.name||'')));
       if(select){select.innerHTML='';for(const skill of currentSkills){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);select.appendChild(o)}}
-      setText('charSyncStatus',`${labelForAwakener(rec)} · ${currentSkills.length} 个技能已从本地 SKeyDB 同步`);await applySkill();
+      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${currentSkills.length} 个技能已从本地 SKeyDB 同步`);await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
@@ -256,18 +271,20 @@
     const ctx=currentFormulaContext();
     const engine=window.MorimensFormulaEngine;
     const coef=damageCoefficient(currentSkill,level);
+    const directParts=engine?engine.directAtkCoefficients(currentSkill,level,ctx):[coef];
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
     const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
     if($('skillCoef'))$('skillCoef').value=String(coef);
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillCoeffSummary')){
       const parts=[];
-      if(coef)parts.push(`攻击力 × ${Number(coef).toFixed(2)}%`);
+      if(coef)parts.push(`${$('skillDamageMode')?.value==='sum'?'合计攻击倍率':'首个攻击倍率'} × ${Number(coef).toFixed(2)}%`);
+      if(directParts.length>1)parts.push(`识别到 ${directParts.length} 个主动伤害段`);
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageMode:$('skillDamageMode')?.value||'primary',tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
@@ -283,11 +300,11 @@
     for(const o of a.options)o.disabled=!!(o.value&&o.value===bv&&o.value!==av);
     for(const o of b.options)o.disabled=!!(o.value&&o.value===av&&o.value!==bv);
   }
-  function fillLevelSelect(slot,record){const sel=$(`fateLevel${slot+1}`);if(!sel)return;const max=Math.min(12,Math.max(0,maxArgLevel(record)-1)),prev=Math.min(Math.max(Number(sel.value)||0,max),max);sel.innerHTML='';for(let i=0;i<=max;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0':`+${i}`;o.selected=i===prev;sel.appendChild(o)}sel.disabled=!record||max<=0}
+  function fillLevelSelect(slot,record){const sel=$(`fateLevel${slot+1}`);if(!sel)return;const max=Math.min(12,Math.max(0,maxArgLevel(record)-1)),prev=Math.min(Math.max(Number(sel.value)||0,0),max);sel.innerHTML='';for(let i=0;i<=max;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0':`+${i}`;o.selected=i===prev;sel.appendChild(o)}sel.disabled=!record||max<=0}
   async function loadWheel(slot){
     const sel=$(slot===0?'fateSelect':'fateSelect2'),id=sel?.value;
     const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();return}
-    currentWheels[slot]=id?await fetchRecord('wheels',id):null;fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();
+    currentWheels[slot]=id?await fetchRecord('wheels',id):null;const levelSel=$(`fateLevel${slot+1}`);if(levelSel)levelSel.value='0';fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();
   }
   function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
   function numericBonusesFromText(text,allowConditional=false){
@@ -354,7 +371,7 @@
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
     if($('innerSpirit'))$('innerSpirit').value='0';if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0)}
-    if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();updateSkillLevel();$('calcBtn')?.click();
+    if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();updateSkillLevel();$('calcBtn')?.click();
   }
   function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=`${labelForWheel(wheel)} · ${wheel.rarity||''} ${wheel.realm||''}`}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses()}
 
