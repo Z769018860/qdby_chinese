@@ -1252,13 +1252,16 @@
     const runtimeHints=engine?.damageRuntimeHints?.(currentSkill,level,baseCtx)||{needsHitOverride:false,messages:[]};
     const requestedHits=Math.max(0,Math.floor(num($('skillActualHits')?.value,0)));
     const damageTokenCount=(String(currentSkill?.descriptionTemplate||'').match(/\[Damage:[^\]]+\]/gi)||[]).length;
-    const baseDamageEvents=applyCharacterResourceEffects(engine?engine.damageEvents(currentSkill,level,baseCtx):[]);
+    const baseSignature=applySignatureRelicSkillMods(applyCharacterResourceEffects(engine?engine.damageEvents(currentSkill,level,baseCtx):[]));
+    const baseDamageEvents=baseSignature.events;
     const hasAutomaticDamage=baseDamageEvents.some(x=>['active','pierce','pure','fixed'].includes(x.type));
     const canOverrideHits=runtimeHints.needsHitOverride&&damageTokenCount===1&&hasAutomaticDamage;
     const ctx=currentFormulaContext(canOverrideHits&&requestedHits>0?{actualHitCount:requestedHits}:{});
-    const damageEvents=canOverrideHits&&requestedHits>0&&engine
-      ?applyCharacterResourceEffects(engine.damageEvents(currentSkill,level,ctx))
-      :baseDamageEvents;
+    const signatureResult=canOverrideHits&&requestedHits>0&&engine
+      ?applySignatureRelicSkillMods(applyCharacterResourceEffects(engine.damageEvents(currentSkill,level,ctx)))
+      :baseSignature;
+    const damageEvents=signatureResult.events;
+    const signatureSkillMods=signatureResult.mods;
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
     const directParts=damageEvents.filter(x=>Number.isFinite(Number(x.coefficient))).map(x=>Number(x.coefficient));
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
@@ -1267,6 +1270,7 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(localizedSkillName(currentSkill))}</strong> · ${renderRichRecord(currentSkill,level)}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
+      if(signatureRelicEnabled()&&signatureSkillMods?.notes?.length)messages.push(...signatureSkillMods.notes);
       if(currentSkill?.overExaltEffectId){
         messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外 Pure/状态事件会自动叠加。');
         const overText=String(currentSkill.descriptionTemplate||'').split('{Over-Exalt}:')[1]||'';
@@ -1328,7 +1332,7 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
       if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% ATK`);
-      if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&num($('targetVulnerableStacks')?.value,0)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${Math.floor(num($('targetVulnerableStacks')?.value,0))} 层：E2 Decomposition 最终伤害 +${Math.min(500,Math.floor(num($('targetVulnerableStacks')?.value,0))*5)}%`);
+      if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&vulnerableStacks()>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${vulnerableStacks()} 层：E2 Decomposition 最终伤害 +${Math.min(500,vulnerableStacks()*5)}%`);
       if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike')parts.push(`Predetermined Strike 力量倍率：基础 3× + 本场 Posse ${Math.floor(Number(resources.ramonaPosseUses)||0)} 次`);
       if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本次移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：E2+ 基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
       if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&Number(resources.clementineFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('灵知觉醒：本回合第一张指令卡的可解析伤害效果额外触发 2 次');
@@ -1355,7 +1359,7 @@
     const syncResources=characterResourceValues();
     const characterDamageAmpBonusPct=currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'
       ?8*Math.min(10,Math.max(0,Math.floor(Number(syncResources.finaleStacks)||0))):0;
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:syncResources,rouseActive:rouseActive(),characterDamageAmpBonusPct,generatedStrength,generatedShield,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:syncResources,rouseActive:rouseActive(),characterDamageAmpBonusPct,generatedStrength,generatedShield,signatureRelic:signatureRelicEnabled()?{id:currentSignatureRelic?.id||'',mods:signatureSkillMods}:null,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
@@ -1489,14 +1493,105 @@
   }
   function signatureRelicEnabled(){return $('signatureRelicEnabled')?.checked===true&&!!currentSignatureRelic}
   function signatureRelicRaw(){return currentSignatureRelic?renderTemplate(currentSignatureRelic,1):''}
+  function signatureArgValue(key){
+    const clean=String(key||'').replace(/^.*:/,'');
+    const value=argValue(currentSignatureRelic?.descriptionArgs?.[clean],1);
+    return Number.isFinite(Number(value))?Number(value):0;
+  }
+  function signatureRelicSafeGlobalBonuses(){
+    const bonus={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
+    let strengthFlat=0;
+    if(!signatureRelicEnabled())return {bonus,strengthFlat};
+    const rendered=signatureRelicRaw();
+    sumBonus(bonus,numericBonusesFromText(rendered,false));
+    const normalized=rendered.replace(/Crit\./gi,'Crit');
+    for(const sentence of normalized.split(/(?<=[!?])\s+|\.\s+(?=(?:At|The|When|Whenever|After|Before|For|Each|If|Drawing|Playing|Place|Gain)\b)/)){
+      const line=sentence.trim();if(!line)continue;
+      const turnStart=/^At (?:the )?(?:turn start|start of (?:the )?turn)/i.test(line);
+      if(turnStart&&!/\b(?:if|when|whenever|after|before|once|every|each|until)\b/i.test(line)){
+        // A turn-start buff is already active in the state represented by this calculator.
+        sumBonus(bonus,numericBonusesFromText(line,true));
+        const str=line.match(/(?:gains?|and|,)\s+([\d.]+)\s+(?:Temporary\s+)?STR\b/i);
+        if(str)strengthFlat+=num(str[1]);
+      }
+    }
+    return {bonus,strengthFlat};
+  }
+  function signatureRelicSkillMods(){
+    const out={baseDamagePct:0,finalDamagePct:0,extraDamageCount:0,strengthMultiplierBonus:0,notes:[]};
+    if(!signatureRelicEnabled()||!currentSignatureRelic||!currentSkill)return out;
+    const raw=String(currentSignatureRelic.descriptionTemplate||'');
+    const skillName=String(currentSkill.overExaltBaseSkillName||currentSkill.name||'').toLowerCase();
+    const slot=String(currentSkill.slot||'').toLowerCase();
+    const referencesSkill=fragment=>{
+      const refs=[...String(fragment||'').matchAll(/\{([^}]+)\}/g)].map(m=>String(m[1]).replace(/^(?:derived|overlay):/i,'').toLowerCase());
+      if(skillName&&refs.some(x=>x===skillName||skillName.includes(x)||x.includes(skillName)))return true;
+      if(slot==='strike'&&/["“]Strike["”]/i.test(fragment))return true;
+      if(slot==='defense'&&/["“]Defense["”]/i.test(fragment))return true;
+      if((slot==='exalt'||slot==='overexalt')&&/\bExalt\b/i.test(fragment))return true;
+      return false;
+    };
+    const conditional=/\b(?:if|when|whenever|after|before|every|each|first|second|third|once|within|stack(?:s|ing)?|trigger(?:s|ed|ing)?|accumulat(?:e|es|ed|ing)|consume(?:s|d|ing)|loses?|deals?\s+DMG\s+\[)\b/i;
+    const clauses=raw.split(/(?<=[.!?])\s+|;\s*|,\s+and\s+(?=(?:after|when|if|whenever)\b)/i);
+    for(const clause of clauses){
+      if(!referencesSkill(clause)||conditional.test(clause))continue;
+      let m=clause.match(/Base DMG[^+%]*\+\s*\[([^\]]+)\]%/i);
+      if(m){const value=signatureArgValue(m[1]);if(value>0){out.baseDamagePct+=value;out.notes.push(`专造：该技能基础伤害 +${value}%`)}}
+      m=clause.match(/Final DMG[^+%]*\+\s*\[([^\]]+)\]%/i);
+      if(m){const value=signatureArgValue(m[1]);if(value>0){out.finalDamagePct+=value;out.notes.push(`专造：该技能最终伤害 +${value}%`)}}
+      m=clause.match(/(?:Base\s+)?DMG count(?:[^+\d]*)\+\s*(?:\[([^\]]+)\]|([\d.]+))/i);
+      if(m){const value=m[1]?signatureArgValue(m[1]):num(m[2]);if(value>0){out.extraDamageCount+=Math.floor(value);out.notes.push(`专造：该技能基础伤害段数 +${Math.floor(value)}`)}}
+      m=clause.match(/(?:additional(?:ly)?\s+(?:receive\s+)?)?(?:a\s+)?(?:\[([^\]]+)\]|([\d.]+))x\s+\{?STR\}?\s+bonus/i);
+      if(m){const value=m[1]?signatureArgValue(m[1]):num(m[2]);if(value>0){out.strengthMultiplierBonus+=value;out.notes.push(`专造：该技能额外 +${value}× 力量加成`)}}
+    }
+    // Some records name the skill before a comma and put a direct DMG-count modifier in the same unconditional clause.
+    if(out.extraDamageCount===0){
+      const direct=raw.match(/(?:DMG count of\s+\{([^}]+)\}|\{([^}]+)\}[^.]{0,90}(?:Base\s+)?DMG count(?:\s+is)?)\s*[^.]{0,20}\+\s*(?:\[([^\]]+)\]|([\d.]+))/i);
+      if(direct){
+        const ref=String(direct[1]||direct[2]||'').replace(/^(?:derived|overlay):/i,'').toLowerCase();
+        const prefix=raw.slice(Math.max(0,direct.index-70),direct.index+direct[0].length);
+        if((ref===skillName||skillName.includes(ref)||ref.includes(skillName))&&!conditional.test(prefix)){
+          const value=direct[3]?signatureArgValue(direct[3]):num(direct[4]);
+          if(value>0){out.extraDamageCount=Math.floor(value);out.notes.push(`专造：该技能基础伤害段数 +${Math.floor(value)}`)}
+        }
+      }
+    }
+    return out;
+  }
+  function applySignatureRelicSkillMods(events){
+    const mods=signatureRelicSkillMods();
+    let next=(events||[]).map(event=>{
+      if(!['active','pierce'].includes(event?.type))return event;
+      const defaultStrength=event.type==='active'?1:(event.usesStrength===true?1:0);
+      return {...event,
+        skillBaseDamageBonusPct:num(event.skillBaseDamageBonusPct)+mods.baseDamagePct,
+        skillFinalDamageBonusPct:num(event.skillFinalDamageBonusPct)+mods.finalDamagePct,
+        strengthMultiplier:(Number.isFinite(Number(event.strengthMultiplier))?Number(event.strengthMultiplier):defaultStrength)+mods.strengthMultiplierBonus
+      };
+    });
+    if(mods.extraDamageCount>0){
+      const directIndexes=next.map((event,index)=>['active','pierce'].includes(event?.type)?index:-1).filter(index=>index>=0);
+      if(directIndexes.length===1){
+        const index=directIndexes[0],source=next[index],copies=[];
+        for(let i=0;i<Math.min(20,mods.extraDamageCount);i++)copies.push({...source,id:String(source.id||'signature-hit')+`-signature-${i+1}`,signatureRelicExtraHit:true});
+        next.splice(index+1,0,...copies);
+      }else if(directIndexes.length!==1){
+        mods.notes.push('专造伤害段数存在多个基础伤害事件，未自动扩段以避免套错伤害公式');
+      }
+    }
+    return {events:next,mods};
+  }
   function renderSignatureRelic(){
     const box=$('signatureRelicDesc'),toggle=$('signatureRelicEnabled');
     if(toggle)toggle.disabled=!currentSignatureRelic;
-    if(!box)return;
-    if(!currentSignatureRelic){box.textContent='当前角色在本地 SKeyDB 中没有匹配到专属造物（维度影像）。';return}
-    const enabled=signatureRelicEnabled();
-    box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(currentSignatureRelic.name||'专属造物')}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、回合时点等条件型效果仅展示，不会因为勾选“装备”就常驻生效。</small>`;
-    window.MorimensSignatureRelic={enabled,record:currentSignatureRelic,text:signatureRelicRaw()};
+    if(!currentSignatureRelic){
+      window.MorimensSignatureRelic={enabled:false,record:null,text:'',skillMods:null};
+      if(box)box.textContent='当前角色在本地 SKeyDB 中没有匹配到专属造物（维度影像）。';
+      return;
+    }
+    const enabled=signatureRelicEnabled(),skillMods=signatureRelicSkillMods();
+    if(box)box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(currentSignatureRelic.name||'专属造物')}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“装备”就常驻生效。${enabled&&skillMods.notes.length?' 当前技能：'+escape(skillMods.notes.join('；')):''}</small>`;
+    window.MorimensSignatureRelic={enabled,record:currentSignatureRelic,text:signatureRelicRaw(),skillMods};
   }
   async function loadSignatureRelic(reset=false){
     const compact=signatureRelicCompactFor(currentAwakener?.id);
@@ -1546,8 +1641,9 @@
       }
     });
     if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),allow))}}
-    if(signatureRelicEnabled())sumBonus(next,numericBonusesFromText(signatureRelicRaw(),false));
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null};renderSignatureRelic();renderAutoSummary();
+    const signatureSafe=signatureRelicSafeGlobalBonuses();
+    if(signatureRelicEnabled())sumBonus(next,signatureSafe.bonus);
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureStrengthFlat:signatureSafe.strengthFlat,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null};renderSignatureRelic();renderAutoSummary();
   }
 
   function initManualTracking(){
@@ -1569,7 +1665,11 @@
     }
     rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);
     if(currentCovenant)rows.push(`<span class="chip">密契 6 件套：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}${$('contractConditional')?.checked?' · 额外条件已满足':''}</span>`);
-    if(signatureRelicEnabled())rows.push(`<span class="chip">专属造物：${escape(currentSignatureRelic?.name||'Dimensional Image')}</span>`);
+    if(signatureRelicEnabled()){
+      rows.push(`<span class="chip">专属造物：${escape(currentSignatureRelic?.name||'Dimensional Image')}</span>`);
+      const signatureStrength=num(window.MorimensGearEffects?.signatureStrengthFlat);
+      if(signatureStrength>0)rows.push(`<span class="chip">专造回合开始力量 +${signatureStrength.toFixed(2)}</span>`);
+    }
     box.innerHTML=rows.join('')
   }
 
