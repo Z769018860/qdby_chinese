@@ -103,8 +103,18 @@
       .trim();
   }
   function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
+  function overExaltUnlocked(){const slot=selectedEnlightenSlot();return slot==='OverExalt'||slot==='AbsoluteAxiom'}
+  function visibleSkills(){return currentSkills.filter(skill=>skill.slot!=='OverExalt'||overExaltUnlocked())}
+  function renderSkillOptions(preferredId){
+    const select=$('skillSelect');if(!select)return;
+    const visible=visibleSkills(),wanted=visible.some(x=>x.id===preferredId)?preferredId:(visible.find(x=>x.slot==='Exalt')?.id||visible[0]?.id||'');
+    select.innerHTML='';
+    for(const skill of visible){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);o.selected=skill.id===wanted;select.appendChild(o)}
+    if(wanted)select.value=wanted;
+  }
   function renderTemplate(record,level=1,ctxExtra={}){
     let text=record?.descriptionTemplate||record?.description||'';
+    text=text.replace(/\[\{([^}]+)\}:([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
     text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
     text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);return v===null?name:`${v}${arg?.suffix||''}`});
     return text.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1');
@@ -179,7 +189,7 @@
     wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加 OverExalt，最终法则再叠加 Absolute Axiom。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
-    $('charEnlighten').addEventListener('change',()=>{renderEnlightenSummary();applySkill();$('calcBtn')?.click()},{capture:true});
+    $('charEnlighten').addEventListener('change',()=>{renderEnlightenSummary();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
   }
   function enlightenSlotLabel(slot){
     if(slot==='OverExalt')return '+4 · 超限';
@@ -326,8 +336,8 @@
     try{
       const rows=await window.MorimensRepository.recordsForAwakener('skills',currentAwakener.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
       currentSkills=currentSkills.filter(x=>slotOrder[x.slot]);currentSkills.sort((a,b)=>(slotOrder[a.slot]||99)-(slotOrder[b.slot]||99)||String(a.name||'').localeCompare(String(b.name||'')));
-      if(select){select.innerHTML='';for(const skill of currentSkills){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);select.appendChild(o)}}
-      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${currentSkills.length} 个技能已从本地 SKeyDB 同步`);await applySkill();
+      renderSkillOptions(currentSkill?.id);
+      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${visibleSkills().length} 个当前可用技能已从本地 SKeyDB 同步`);await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
