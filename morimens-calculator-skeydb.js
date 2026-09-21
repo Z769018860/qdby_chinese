@@ -941,7 +941,7 @@
   function cumulativeWheelBattleBonuses(text){
     const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
     const normalized=String(text||'').replace(/Crit\./gi,'Crit');
-    for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
+    for(const raw of normalized.split(/(?<=[.!?。；;])\s+(?=(?:[\"“{(]?[A-Z0-9]|[\u3400-\u9fff]))/)){
       const s=raw.trim();if(!s)continue;
       if(!/(?:after|at\s+the\s+end\s+of)\s+(?:each|the)\s+battle(?!\s+begins?)(?:\s+ends?)?/i.test(s))continue;
       sumBonus(out,numericBonusesFromText(s,true));
@@ -1950,7 +1950,7 @@
   function numericBonusesFromText(text,allowConditional=false){
     const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0,skipped:[]};
     const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
-    for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
+    for(const raw of normalized.split(/(?<=[.!?。；;])\s+(?=(?:[\"“{(]?[A-Z0-9]|[\u3400-\u9fff]))/)){
       const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
       let m;
       const genericPoisonCounter=s.match(/Base DMG\s*,\s*Poison\s*,\s*and\s*Counter\s*\+\s*([\d.]+)%/i);
@@ -2006,7 +2006,7 @@
   function scopedDamageLayersFromText(text,allowConditional=false){
     const out=emptyScopedDamageLayers();
     const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
-    for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
+    for(const raw of normalized.split(/(?<=[.!?。；;])\s+(?=(?:[\"“{(]?[A-Z0-9]|[\u3400-\u9fff]))/)){
       const s=raw.trim();if(!s)continue;
       if(isConditional(s)&&!allowConditional)continue;
       const scopes=[];
