@@ -600,22 +600,35 @@
     return /\b(if|when|whenever|after|before|next|per |for each|for every|every time|each time|at the start|at turn|upon|once|during|while|until|first|chance|stacks?|current realm|realm includes|boss battle)\b/i.test(sentence);
   }
   function bonusScopeAllows(sentence,key){
-    const slot=String(currentSkill?.slot||'');
-    const isExalt=slot==='Exalt'||slot==='OverExalt';
-    const isStrike=slot==='Strike';
-    const isCommand=currentSkill&&currentSkill.kind!=='derivedSkill';
+    const slot=String(currentSkill?.slot||'').toLowerCase();
+    const countsAs=(currentSkill?.countsAs||[]).map(x=>String(x).toLowerCase());
+    const cardTypes=(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase());
+    const family=String(currentSkill?.cardFamily||'').toLowerCase();
+    const currentScopes={
+      exalt:slot==='exalt'||slot==='overexalt'||cardTypes.includes('exalt'),
+      strike:slot==='strike'||countsAs.includes('strike')||cardTypes.includes('strike'),
+      defense:slot==='defense'||countsAs.includes('defense')||cardTypes.includes('defense'),
+      pursuit:slot==='pursuit'||cardTypes.includes('pursuit'),
+      command:family==='command'
+    };
     const metric=key==='base'?'Base DMG':key==='final'?'Final DMG':key==='critRate'?'Crit(?:\\.? Rate)':key==='critDamage'?'Crit(?:\\.? DMG)':null;
     if(!metric)return true;
-    const metricRe=new RegExp(metric,'i');
-    if(!metricRe.test(sentence))return true;
     const compact=String(sentence||'').replace(/\\s+/g,' ');
-    const exaltScoped=new RegExp(`(?:Exalt(?:'s)?[^.;]{0,55}${metric}|${metric}[^.;]{0,55}Exalt)`,'i').test(compact);
-    if(exaltScoped&&!isExalt)return false;
-    const strikeScoped=new RegExp(`(?:(?:"?Strike"?(?: Commands?)?)[^.;]{0,55}${metric}|${metric}[^.;]{0,55}(?:"?Strike"?(?: Commands?)))`,'i').test(compact);
-    if(strikeScoped&&!isStrike)return false;
-    const commandScoped=new RegExp(`(?:Command Cards?[^.;]{0,55}${metric}|${metric}[^.;]{0,55}Command Cards?)`,'i').test(compact);
-    if(commandScoped&&!isCommand)return false;
-    return true;
+    if(!(new RegExp(metric,'i')).test(compact))return true;
+    const scopePatterns={
+      exalt:`Exalt(?:'s)?`,
+      strike:`(?:"?Strike"?(?: Commands?)?)`,
+      defense:`(?:"?Defense"?(?: Commands?)?)`,
+      pursuit:`(?:\\{?Pursuit\\}?|Pursuit Commands?)`,
+      command:`Command Cards?`
+    };
+    const required=[];
+    for(const [scope,token] of Object.entries(scopePatterns)){
+      const re=new RegExp(`(?:${token}[^.;]{0,80}${metric}|${metric}[^.;]{0,80}${token})`,'i');
+      if(re.test(compact))required.push(scope);
+    }
+    if(!required.length)return true;
+    return required.some(scope=>currentScopes[scope]);
   }
   function numericBonusesFromText(text,allowConditional=false){
     const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0,skipped:[]};
