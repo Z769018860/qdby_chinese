@@ -260,6 +260,35 @@
       return /^\s*\{Pierce DMG\}/i.test(tail)?'pierce':'active';
     }
 
+    function eventConditionalContext(template,position){
+      const text=String(template||'');
+      const p=Math.max(0,Math.floor(Number(position)||0));
+      let start=0;
+      for(const sep of ['.','!','?','\n']){
+        const i=text.lastIndexOf(sep,Math.max(0,p-1));
+        if(i>=start)start=i+1;
+      }
+      const prefix=text.slice(start,p);
+      const rules=[
+        [/\{Devour\}\s*:/i,'Devour'],
+        [/\{Leap\}\s*:/i,'Leap'],
+        [/\{Aftershock\}\s*:/i,'Aftershock'],
+        [/\{Resonance[^}]*\}\s*:/i,'Resonance'],
+        [/\bsubsequent\b/i,'后续使用'],
+        [/\bwhenever\b/i,'Whenever'],
+        [/\bwhen\b/i,'When'],
+        [/\bif\b/i,'If'],
+        [/\bupon\b/i,'Upon'],
+        [/\bafter\b/i,'After'],
+        [/\bbefore\b/i,'Before'],
+        [/\beach time\b/i,'Each time'],
+        [/\bat (?:the )?(?:turn|battle) (?:start|end)\b/i,'回合/战斗时点'],
+        [/\bwithin this turn\b/i,'本回合条件']
+      ];
+      for(const [re,label] of rules)if(re.test(prefix))return {conditional:true,conditionLabel:label,conditionPrefix:prefix.trim()};
+      return {conditional:false,conditionLabel:null,conditionPrefix:''};
+    }
+
     function damageRuntimeHints(skill,rank,ctx={}){
       const text=String(skill?.descriptionTemplate||'');
       const messages=[];
@@ -310,6 +339,10 @@
         messages.push('技能含“跃迁”条件伤害/STR/触腕修正；当前默认不把跃迁条件强行计入。');
       }
 
+      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\})/i;
+      if(conditionalStatusPattern.test(text)){
+        messages.push('检测到条件式 Poison / Counter / Bleed：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
+      }
       return {needsHitOverride,minHits,maxHits,messages:[...new Set(messages)]};
     }
 
@@ -565,8 +598,16 @@
         });
       }
 
+      for(const event of events){
+        if(event.type==='poison'||event.type==='counter'||event.type==='bleed'){
+          Object.assign(event,eventConditionalContext(template,event.position));
+        }
+      }
+      const automaticEvents=events.filter(event=>!(
+        (event.type==='poison'||event.type==='counter'||event.type==='bleed')&&event.conditional
+      ));
       const seenEventKeys=new Set();
-      const deduped=events.filter(event=>{
+      const deduped=automaticEvents.filter(event=>{
         const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.sourceGroupId||'',event.argName||'',event.hit??'',event.percent??'',event.coefficient??''].join('|');
         if(seenEventKeys.has(key))return false;
         seenEventKeys.add(key);return true;
