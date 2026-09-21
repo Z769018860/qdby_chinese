@@ -340,12 +340,15 @@
         messages.push('技能含“跃迁”条件伤害/STR/触腕修正；当前默认不把跃迁条件强行计入。');
       }
 
-      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\})/i;
+      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
-        messages.push('检测到条件式 Poison / Counter / Bleed：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
+        messages.push('检测到条件式 Poison / Counter / Bleed / Corrosion：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
       }
       if(/Tentacle\s+(?:performs?|makes?)\s+(?:an?\s+)?attack[^.]*?(?:gain|gains)\s+\{Counter\}[^.]*?DMG dealt/i.test(text)){
         messages.push('检测到“触腕立即攻击并按本次伤害获得 Counter”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
+      }
+      if(/Fixed\s+\{Corrosion\}[^.]*?Max HP/i.test(text)){
+        messages.push('检测到依赖施放者 Max HP 的 Fixed Corrosion；当前角色伤害面板没有可靠的实时 Max HP 状态，该部分不自动求值。');
       }
       return {needsHitOverride,minHits,maxHits,messages:[...new Set(messages)]};
     }
@@ -545,6 +548,41 @@
         });
       }
 
+      for(const match of template.matchAll(/\[Corrosion:([^\]]+)\][^.!?]*?\{Corrosion\}/gi)){
+        const argName=match[1],arg=skill?.descriptionArgs?.[argName];
+        const value=num(resolveArg(arg,rank,ctx),0);
+        events.push({
+          id:`corrosion-apply-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'corrosion',action:'apply',source:'skill',
+          basis:arg?.stat?'statPercent':'flat',
+          stat:arg?.stat||null,amount:arg?.stat?null:value,percent:arg?.stat?value:null,
+          activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:additionally\s+)?(?:inflict|apply)\s+\{Corrosion\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:the\s+)?target['’]s\s+Max\s+HP/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`corrosion-apply-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'corrosion',action:'apply',source:'skill',basis:'targetMaxHpPercent',percent,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:inflict|apply)\s+(?:an\s+)?equal\s+amount\s+of\s+\{Corrosion\}/gi)){
+        events.push({
+          id:`corrosion-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'corrosion',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:inflict|apply)[^.!?]{0,80}\{Corrosion\}\s+(?:stacks\s+)?equal to\s+(?:the\s+)?DMG dealt/gi)){
+        events.push({
+          id:`corrosion-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'corrosion',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+        });
+      }
+
       for(const match of template.matchAll(/(?:apply|inflict)?\s*(?:an\s+)?equal\s+(?:amount\s+of\s+)?\{Bleed\}/gi)){
         events.push({
           id:`bleed-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
@@ -603,12 +641,12 @@
       }
 
       for(const event of events){
-        if(event.type==='poison'||event.type==='counter'||event.type==='bleed'){
+        if(event.type==='poison'||event.type==='counter'||event.type==='bleed'||event.type==='corrosion'){
           Object.assign(event,eventConditionalContext(template,event.position));
         }
       }
       const automaticEvents=events.filter(event=>!(
-        (event.type==='poison'||event.type==='counter'||event.type==='bleed')&&event.conditional
+        (event.type==='poison'||event.type==='counter'||event.type==='bleed'||event.type==='corrosion')&&event.conditional
       ));
       const seenEventKeys=new Set();
       const deduped=automaticEvents.filter(event=>{
