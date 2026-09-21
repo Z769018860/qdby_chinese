@@ -260,6 +260,19 @@
       return /^\s*\{Pierce DMG\}/i.test(tail)?'pierce':'active';
     }
 
+    function damageIsIndirectDefinition(template,position){
+      const text=String(template||'');
+      const p=Math.max(0,Math.floor(Number(position)||0));
+      let start=0;
+      for(const sep of ['.','!','?','\n']){
+        const i=text.lastIndexOf(sep,Math.max(0,p-1));
+        if(i>=start)start=i+1;
+      }
+      const prefix=text.slice(start,p);
+      return /\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\bthat\s+deals?\s*$/i.test(prefix)
+        || /\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\b(?:card|cards|\{derived:[^}]+\})\b[^.!?]{0,120}\bthat\s+deals?\s*$/i.test(prefix);
+    }
+
     function eventConditionalContext(template,position){
       const text=String(template||'');
       const p=Math.max(0,Math.floor(Number(position)||0));
@@ -346,6 +359,9 @@
       if(/(?:\{Leap\}|\{Aftershock\}|\bIf\b|\bWhen\b|\bWhenever\b|\bUpon\b|\bAfter\b|\bFor each\b)[^.\n]{0,220}\[Damage:[^\]]+\]/i.test(text)){
         messages.push('检测到条件 Damage Event：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把 Leap/If/When 分支高算。');
       }
+      if(/\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\bthat\s+deals?\s+\[Damage:[^\]]+\]/i.test(text)){
+        messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接 Damage 公式：该倍率属于生成卡，不计入当前卡本次伤害。');
+      }
 
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
@@ -374,6 +390,7 @@
         const count=actualHitOverride??inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
         const type=damageTokenType(template,tokenEnd);
         const critBonuses=damageCritBonuses(skill,template,tokenEnd,rank,ctx);
+        const indirectDefinition=damageIsIndirectDefinition(template,tokenStart);
         const groupId=`damage-group-${++groupIndex}`;
         primaryGroups.push({groupId,position:tokenStart});
         for(let hit=0;hit<count;hit++){
@@ -382,6 +399,7 @@
             index:index++,
             position:tokenStart+(hit*0.0001),
             groupId,
+            indirectDefinition,
             type,
             source:'skill',
             argName,
@@ -659,7 +677,7 @@
           Object.assign(event,eventConditionalContext(template,event.position));
         }
       }
-      const automaticEvents=events.filter(event=>!event.conditional);
+      const automaticEvents=events.filter(event=>!event.conditional&&!event.indirectDefinition);
       const seenEventKeys=new Set();
       const deduped=automaticEvents.filter(event=>{
         const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.sourceGroupId||'',event.argName||'',event.hit??'',event.percent??'',event.coefficient??''].join('|');
