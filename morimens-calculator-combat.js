@@ -36,7 +36,7 @@
         <div class="field"><label for="tentacleMode">触腕基础模型</label><select id="tentacleMode"><option value="standard">普通深海 / 普通触腕</option><option value="benthos">深渊深海</option></select><small>选择“普通/深渊深海”界域时会自动锁定对应模型。</small></div>
         <div class="field"><label for="tentacleStance">触腕姿态</label><select id="tentacleStance"><option value="surging">涨潮</option><option value="tranquil">静海</option><option value="raging">怒涛</option></select></div>
         <div class="field" id="standardTentacleField"><label for="currentTentacleDamage">当前基础触腕伤害</label><input id="currentTentacleDamage" type="number" min="0" step="1" value="0"><small>普通深海的基础值 SKeyDB 未公开统一生成公式，直接填游戏触腕图标当前数值。</small></div>
-        <div class="field" id="benthosHpField" hidden><label for="teamMaxHp">队伍最大生命</label><input id="teamMaxHp" type="number" min="0" step="1" value="0"><small>深渊深海：基础触腕伤害 = 队伍最大生命 × 5%。</small></div>
+        <div class="field" id="benthosHpField" hidden><label for="teamMaxHp">队伍最大生命</label><input id="teamMaxHp" type="number" min="0" step="1" value="0"><small id="teamMaxHpNote">深渊深海：基础触腕伤害 = 队伍最大生命 × 5%。</small></div>
         <div class="field"><label for="tentacleExtraBonus">额外触腕伤害增幅 %</label><input id="tentacleExtraBonus" type="number" step="0.1" value="0"><small>用于命轮、技能、遗物等已经折算后的额外触腕增幅。</small></div>
         <div class="field"><label for="tentacleCritRate">触腕暴击率 %</label><input id="tentacleCritRate" type="number" min="0" max="100" step="0.1" value="0"><small>团队入场暴击率汇总规则需要完整队伍数据，当前允许手动填写最终触腕暴击率。</small></div>
         <div class="field"><label for="tentacleCritDamage">触腕暴击伤害 %</label><input id="tentacleCritDamage" type="number" min="100" step="0.1" value="150"><small>用于触腕事件的暴击/期望伤害。</small></div>
@@ -60,8 +60,8 @@
         <div class="field"><label for="defenseMode">防御换算</label><select id="defenseMode"><option value="manual">使用手动实测系数</option><option value="curve">可校准曲线 K ÷ (K + 防御)</option></select></div>
         <div class="field"><label for="defenseConstant">防御常数 K</label><input id="defenseConstant" type="number" min="1" step="1" value="1000"><small>仅用于可校准曲线；SKeyDB 未公开官方防御常数。</small></div>
         <div class="field"><label for="fortressStacks">加固层数</label><input id="fortressStacks" type="number" min="0" max="100" step="1" value="0"><small>每层承伤降低 1%。</small></div>
-        <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>主动伤害消耗等量侵蚀，追加消耗量 300% 的生命损失。</small></div>
-        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>主动伤害消耗等量余烬，追加消耗量 300% 的生命损失。</small></div>
+        <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>每次受到 Active 或 Tentacle 事件后依次消耗等量侵蚀，追加消耗量 300% 的生命损失。</small></div>
+        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>每次受到 Active 或 Tentacle 事件后依次消耗等量余烬，追加消耗量 300% 的生命损失。</small></div>
       </div>
       <div class="combatReadout" id="combatConversion"></div>`;
     builder.appendChild(realm);builder.appendChild(enemy);
@@ -101,12 +101,18 @@
     return realm?.tentacleMode||$('tentacleMode')?.value||'standard';
   }
   function toggleTentacleMode(){
-    const realm=window.MorimensRealmEngine?.state?.();
-    const forced=realm?.tentacleMode;
+    const realm=window.MorimensRealmEngine?.state?.()||{};
+    const forced=realm.tentacleMode;
     if($('tentacleMode')){if(forced)$('tentacleMode').value=forced;$('tentacleMode').disabled=Boolean(forced)}
     const benthos=effectiveTentacleMode()==='benthos';
+    const needsHp=benthos||Number(realm.aequorChaosBaseTentacleBonusPct)>0;
     if($('standardTentacleField'))$('standardTentacleField').hidden=benthos;
-    if($('benthosHpField'))$('benthosHpField').hidden=!benthos;
+    if($('benthosHpField'))$('benthosHpField').hidden=!needsHp;
+    if($('teamMaxHpNote')){
+      $('teamMaxHpNote').textContent=benthos
+        ?'深渊深海：基础触腕 = 队伍最大生命 × 5%；若同时存在普通混沌共生，再叠加每名混沌唤醒体 1% 最大生命。'
+        :'混沌×深海共生：每名混沌唤醒体额外提供队伍最大生命 1% 的基础触腕。';
+    }
     if($('benthosRagingField'))$('benthosRagingField').hidden=!(benthos&&$('tentacleStance')?.value==='raging');
   }
 
@@ -142,10 +148,10 @@
       <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
       <div class="formulaRow"><b>力量与触腕</b><br>每 1 点力量使主动伤害 +1；触腕享受 50% 力量。力量降低同理：主动伤害每点 -1，触腕按 50% 扣除。</div>
-      <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在主动伤害后的额外触发倍率：<code>50% + 向下取整(最终界域精通 / 50) × 1%</code>。</div>
+      <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + 最终界域精通 × 0.02% × 界域精通效果倍率</code>；至纯深海或普通混沌×深海共生时，界域精通效果倍率为 2。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛公开数据当前只给出 <code>X</code> 基础倍率，因此工具改为手动校准；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前只公开普通深海的机制与姿态倍率，没有给出统一的“初始触腕伤害”生成式，所以工具不会自行猜测；请填写游戏界面当前显示的基础触腕伤害。深渊深海的“队伍最大生命 × 5%”则有明确数据依据。</div>
+      <div class="formulaRow"><b>Damage Events</b><br>技能中的每个 <code>[Damage:...]</code> 会生成独立 Active 事件，多次伤害会展开为多条事件；技能触腕、怒涛触腕与回合末触腕生成 Tentacle 事件。侵蚀/旧日余烬只在每个 Active/Tentacle 事件后消费，不再对技能总伤害一次性结算。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入；混沌×深海共生额外按每名混沌唤醒体 +1% 队伍最大生命计算。</div>
     `;
   }
 
