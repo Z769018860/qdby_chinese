@@ -66,8 +66,9 @@
         <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
-        <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入本次技能后的一次回合末 Poison 结算<small>Poison 在回合末造成等于当前层数的 Pure DMG。</small></span></label>
-        <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入本次技能后的一次回合末 Bleed 结算<small>Bleed 在回合末造成等于当前层数的 Pure DMG，并在结算后移除。</small></span></label>
+        <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕/Poison/Bleed，并在最后清空 Corrosion、重置 Ancient Embers；关闭可只查看本次卡牌的即时结果。</small></span></label>
+        <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入回合末 Poison<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG。</small></span></label>
+        <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入回合末 Bleed<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG，并随后移除。</small></span></label>
       </div>
       <div class="combatReadout" id="enemyLevelReadout"></div>
       <div class="combatReadout" id="combatConversion"></div>`;
@@ -85,7 +86,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includePoisonTurnEnd','includeBleedTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -182,7 +183,7 @@
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
+      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置；是否推进到回合末由“结算到本回合结束”总开关统一控制。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
     `;
   }
 
@@ -520,22 +521,23 @@
       }
     }
 
-    const includeTurnEnd=$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
+    const includeTurnEndSettlement=$('includeTurnEndSettlement')?.checked!==false;
+    const includeTurnEnd=includeTurnEndSettlement&&$('includeTurnEndTentacle')?.checked===true&&tentacle.turnEndAllowed!==false;
     const turnEndCount=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(0,Math.floor(n('tentacleAttackTimes',1)));
     if(includeTurnEnd){
       for(let i=0;i<turnEndCount;i++)pushDamageEvent(tentacleEvent(100,`回合末触腕 ${i+1}`,`turn-end-${++tentacleIndex}`));
     }
   
-    if($('includePoisonTurnEnd')?.checked===true&&(initialPoison+poisonAdded)>0){
+    if(includeTurnEndSettlement&&$('includePoisonTurnEnd')?.checked===true&&(initialPoison+poisonAdded)>0){
       const stacks=initialPoison+poisonAdded;
       pushDamageEvent(pureEvent(stacks,'Poison · 回合末 Pure DMG',`poison-turn-end-${++poisonIndex}`,'poison',{action:'turn_end',stacks}));
     }
-    const includeBleedTurnEnd=$('includeBleedTurnEnd')?.checked===true;
+    const includeBleedTurnEnd=includeTurnEndSettlement&&$('includeBleedTurnEnd')?.checked===true;
     if(includeBleedTurnEnd&&(initialBleed+bleedAdded)>0){
       const stacks=initialBleed+bleedAdded;
       pushDamageEvent(pureEvent(stacks,'Bleed · 回合末 Pure DMG（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
     }
-    const turnEndProcessed=includeTurnEnd||$('includePoisonTurnEnd')?.checked===true||includeBleedTurnEnd;
+    const turnEndProcessed=includeTurnEndSettlement;
     const corrosionBeforeTurnEndClear=corrosionRemaining;
     const embersBeforeTurnReset=embersRemaining;
     if(turnEndProcessed){
@@ -638,7 +640,7 @@
         poison:poisonTotal,bleed:bleedTotal,counter:counterTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
       status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,corrosionInitial:initialCorrosion,corrosionAdded,corrosionFinal:corrosionRemaining,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent},
-      remaining:{corrosion:corrosionRemaining,embers:embersRemaining,corrosionBeforeTurnEndClear,embersBeforeTurnReset,turnEndProcessed}
+      remaining:{corrosion:corrosionRemaining,embers:embersRemaining,corrosionBeforeTurnEndClear,embersBeforeTurnReset,turnEndProcessed,includeTurnEndSettlement}
     };
   }
 
@@ -655,6 +657,7 @@
     if($('singularityDimensionShuttle'))$('singularityDimensionShuttle').checked=false;
     if($('ultraRoundActive'))$('ultraRoundActive').checked=false;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
+    if($('includeTurnEndSettlement'))$('includeTurnEndSettlement').checked=true;
     if($('includePoisonTurnEnd'))$('includePoisonTurnEnd').checked=true;
     if($('includeBleedTurnEnd'))$('includeBleedTurnEnd').checked=true;
     window.MorimensRealmEngine?.render?.();
