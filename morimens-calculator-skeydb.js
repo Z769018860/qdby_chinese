@@ -413,7 +413,7 @@
     ],
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
-      {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
+      {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成',inputLabel:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
       {key:'polluxRouseActive',label:'Path of Ablution / Rouse 已生效',type:'checkbox',calculated:true,description:'Rouse 生效时，Sacred Heart 额外施加等于本次伤害 100% 的流血。'},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次 200% ATK 的赎罪苦痛。'},
       {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。'}
@@ -554,7 +554,8 @@
         wrap.innerHTML='<label>'+escape(spec.label)+'</label><select data-resource-key="'+escape(spec.key)+'">'+options+'</select><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
       }else{
         const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
-        wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
+        const inputLabel=spec.inputLabel||spec.label+'数量';
+        wrap.innerHTML='<label>'+escape(inputLabel)+'</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
       }
       block.appendChild(wrap);
     }
@@ -611,7 +612,11 @@
       return next;
     });
     if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0&&['derived.pontos.raid-gaunt','derived.pontos.vex-gaunt','derived.pontos.slay-gaunt'].includes(baseSkillId)){
-      mapped=cloneExtraDamageEvents(mapped,1,'Pack Hunt：消耗 1 层，本张 Gaunt 额外触发 1 次');
+      if(baseSkillId==='derived.pontos.slay-gaunt'){
+        const fixed=mapped.filter(event=>event.type==='fixed');
+        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:'Pack Hunt：消耗 1 层，Slay-Gaunt 固定伤害额外触发 1 次'}));
+        mapped.push(...clones);
+      }
     }
     if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       const stacks=Math.min(3,Math.max(0,Number(resources.undertowStacks)||0));
