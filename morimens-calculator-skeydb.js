@@ -383,6 +383,21 @@
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100,calculated:true},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'勾选后，当前指令卡额外造成一次 200% ATK 主动伤害。适用于本回合首张指令卡，或圣心第 3 次打出后使下一张指令卡获得赎罪苦痛的情况。'}
+    ],
+    'awakener-0061':[
+      {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高 Ogier: Oathbound 指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后最终伤害增幅提高。'}
+    ],
+    'awakener-0032':[
+      {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执念转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执念转化，本场战斗 Miryam 基础伤害 +15%。'}
+    ],
+    'awakener-0043':[
+      {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，All-In! 基础伤害 +0.5%。'}
+    ],
+    'awakener-0024':[
+      {overlayId:'overlay.horla.metaphor',key:'angerMetaphorStacks',label:'愤怒隐喻',min:0,max:3,calculated:true,description:'Snarl Psalm 会消耗全部愤怒隐喻；每层额外造成 2 段伤害。'},
+      {overlayId:'overlay.horla.metaphor',key:'griefMetaphorStacks',label:'悲伤隐喻',min:0,max:3,calculated:false},
+      {overlayId:'overlay.horla.metaphor',key:'happinessMetaphorStacks',label:'喜悦隐喻',min:0,max:3,calculated:false},
+      {overlayId:'overlay.horla.metaphor',key:'fearMetaphorStacks',label:'恐惧隐喻',min:0,max:3,calculated:false}
     ]
   };
   function resolveOverlayEnlighten(baseOverlay){
@@ -464,10 +479,29 @@
     });
     characterResourceValues();
   }
+  function resolvedOverlay(id){
+    return resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===id));
+  }
+  function renderedOverlayNumber(id,pattern,group=1){
+    const overlay=resolvedOverlay(id);if(!overlay)return 0;
+    const text=String(renderTemplate(overlay,1)||'');
+    const m=text.match(pattern);return m?Math.max(0,num(m[group],0)):0;
+  }
+  function cloneExtraDamageEvents(events,count,label){
+    const source=(events||[]).filter(x=>x.type==='active'||x.type==='pierce');
+    if(!source.length||count<=0)return events||[];
+    const out=[...(events||[])];
+    for(let n=0;n<count;n++){
+      for(const event of source){
+        out.push({...event,id:String(event.id||'damage')+'-resource-'+String(n+1),index:out.length,position:(Number(event.position)||0)+0.0001*(n+1),groupId:String(event.groupId||event.id||'damage')+'-resource-'+String(n+1),resourceEffectLabel:label});
+      }
+    }
+    return out;
+  }
   function applyCharacterResourceEffects(events){
     const resources=characterResourceValues();
     const baseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
-    const mapped=(events||[]).map(event=>{
+    let mapped=(events||[]).map(event=>{
       const next={...event};
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
         next.doubleCritDamageBonus=true;
@@ -483,6 +517,31 @@
       }
       return next;
     });
+    if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
+      const stacks=Math.min(3,Math.max(0,Number(resources.undertowStacks)||0));
+      const overlay=resolvedOverlay('overlay.ogier-oathbound.undertow');
+      const rendered=String(renderTemplate(overlay,1)||'');
+      const finalMatch=rendered.match(/Final DMG[^\d]*(\d+(?:\.\d+)?)%/i);
+      const critMatch=rendered.match(/Crit\. DMG[^\d]*(\d+(?:\.\d+)?)%/i);
+      const finalPer=finalMatch?num(finalMatch[1],0):33;
+      const critPer=critMatch?num(critMatch[1],0):0;
+      mapped=mapped.map(event=>{
+        if(event.type!=='active'&&event.type!=='pierce')return event;
+        return {...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalPer*stacks,critDamageBonus:(Number(event.critDamageBonus)||0)+critPer*stacks,resourceEffectLabel:'暗潮 '+stacks+' 层'};
+      });
+    }
+    if(currentAwakener?.id==='awakener-0032'&&Number(resources.vanityCollapseCount)>0){
+      const bonus=15*Math.max(0,Number(resources.vanityCollapseCount)||0);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:'虚荣的崩塌：基础伤害 +'+bonus.toFixed(0)+'%'}:event);
+    }
+    if(currentAwakener?.id==='awakener-0043'&&baseSkillId==='skill.ryker.all-in'&&Number(resources.blackSigilsConsumed)>0){
+      const bonus=0.5*Math.max(0,Number(resources.blackSigilsConsumed)||0);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:'确定收益：All-In! 基础伤害 +'+bonus.toFixed(1)+'%'}:event);
+    }
+    if(currentAwakener?.id==='awakener-0024'&&baseSkillId==='skill.horla.snarl-psalm'&&Number(resources.angerMetaphorStacks)>0){
+      const stacks=Math.min(3,Math.max(0,Math.floor(Number(resources.angerMetaphorStacks)||0)));
+      mapped=cloneExtraDamageEvents(mapped,stacks*2,'愤怒隐喻 '+stacks+' 层：额外 '+(stacks*2)+' 段伤害');
+    }
     if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       mapped.push({
         id:'pollux-atonement-by-pain',index:mapped.length,position:9999,groupId:'pollux-atonement',
