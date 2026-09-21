@@ -5,65 +5,322 @@
     "note": "Stable Chinese page-title to SKeyDB identity map. IDs and English names are checked against SKeyDB; Chinese page titles follow HuijiWiki character pages."
   },
   "records": [
-    {"skeydbId":"awakener-0001","englishName":"\"24\"","name":"「24」"},
-    {"skeydbId":"awakener-0002","englishName":"Agrippa","name":"阿格里帕"},
-    {"skeydbId":"awakener-0003","englishName":"Aigis","name":"艾继丝"},
-    {"skeydbId":"awakener-0004","englishName":"Alva","name":"艾尔瓦"},
-    {"skeydbId":"awakener-0005","englishName":"Aurita","name":"奥瑞塔"},
-    {"skeydbId":"awakener-0006","englishName":"Caecus","name":"凯刻斯"},
-    {"skeydbId":"awakener-0007","englishName":"Casiah","name":"卡茜亚"},
-    {"skeydbId":"awakener-0008","englishName":"Castor","name":"卡斯托尔"},
-    {"skeydbId":"awakener-0009","englishName":"Celeste","name":"希莱斯特"},
-    {"skeydbId":"awakener-0010","englishName":"Clementine","name":"克莱门汀"},
-    {"skeydbId":"awakener-0011","englishName":"Corposant","name":"克珀珊特"},
-    {"skeydbId":"awakener-0012","englishName":"Daffodil","name":"达芙黛尔"},
-    {"skeydbId":"awakener-0013","englishName":"Doll","name":"朵尔"},
-    {"skeydbId":"awakener-0014","englishName":"Doresain","name":"杜勒赛因","fallbackVoiceLines":[{"title":"唤醒","content":"啊，多么令人刻骨铭心的香味……我已经迫不及待想要迎接你进入我的圣殿了。"}]},
-    {"skeydbId":"awakener-0015","englishName":"Erica","name":"艾瑞卡"},
-    {"skeydbId":"awakener-0016","englishName":"Faint","name":"菲茵特"},
-    {"skeydbId":"awakener-0017","englishName":"Faros","name":"法洛思"},
-    {"skeydbId":"awakener-0018","englishName":"Doll: Inferno","name":"熔毁·朵尔"},
-    {"skeydbId":"awakener-0019","englishName":"Helot: Catena","name":"血链·希洛"},
-    {"skeydbId":"awakener-0020","englishName":"Ramona: Timeworn","name":"环行·拉蒙娜"},
-    {"skeydbId":"awakener-0021","englishName":"Goliath","name":"戈利亚"},
-    {"skeydbId":"awakener-0022","englishName":"Hameln","name":"哈姆林"},
-    {"skeydbId":"awakener-0023","englishName":"Helot","name":"希洛"},
-    {"skeydbId":"awakener-0024","englishName":"Horla","name":"奥尔拉"},
-    {"skeydbId":"awakener-0025","englishName":"Jenkin","name":"詹金"},
-    {"skeydbId":"awakener-0026","englishName":"Karen","name":"珈伦"},
-    {"skeydbId":"awakener-0027","englishName":"Kathigu-Ra","name":"凯蒂古拉"},
-    {"skeydbId":"awakener-0028","englishName":"Leigh","name":"雷娅"},
-    {"skeydbId":"awakener-0029","englishName":"Lily","name":"莉莉"},
-    {"skeydbId":"awakener-0030","englishName":"Liz","name":"莉兹"},
-    {"skeydbId":"awakener-0031","englishName":"Lotan","name":"萝坦"},
-    {"skeydbId":"awakener-0032","englishName":"Miryam","name":"弥利亚姆"},
-    {"skeydbId":"awakener-0033","englishName":"Mouchette","name":"茉夏"},
-    {"skeydbId":"awakener-0034","englishName":"Murphy","name":"墨菲"},
-    {"skeydbId":"awakener-0035","englishName":"Murphy: Fauxborn","name":"诞妄·墨菲"},
-    {"skeydbId":"awakener-0036","englishName":"Nautila","name":"诺缔拉"},
-    {"skeydbId":"awakener-0037","englishName":"Nymphaea","name":"宁菲亚"},
-    {"skeydbId":"awakener-0038","englishName":"Ogier","name":"奥吉尔"},
-    {"skeydbId":"awakener-0039","englishName":"Pandia","name":"潘狄娅"},
-    {"skeydbId":"awakener-0040","englishName":"Pickman","name":"皮克曼"},
-    {"skeydbId":"awakener-0041","englishName":"Pollux","name":"波吕克斯"},
-    {"skeydbId":"awakener-0042","englishName":"Ramona","name":"拉蒙娜"},
-    {"skeydbId":"awakener-0043","englishName":"Ryker","name":"莱克"},
-    {"skeydbId":"awakener-0044","englishName":"Salvador","name":"萨尔瓦多"},
-    {"skeydbId":"awakener-0045","englishName":"Sanga","name":"珊"},
-    {"skeydbId":"awakener-0046","englishName":"Sorel","name":"索蕾尔"},
-    {"skeydbId":"awakener-0047","englishName":"Tawil","name":"塔薇"},
-    {"skeydbId":"awakener-0048","englishName":"Thais","name":"泰旖丝"},
-    {"skeydbId":"awakener-0049","englishName":"Tinct","name":"汀克特"},
-    {"skeydbId":"awakener-0050","englishName":"Tulu","name":"图鲁"},
-    {"skeydbId":"awakener-0051","englishName":"Uvhash","name":"尤乌哈希"},
-    {"skeydbId":"awakener-0052","englishName":"Wanda","name":"旺达"},
-    {"skeydbId":"awakener-0053","englishName":"Winkle","name":"温柯尔","fallbackVoiceLines":[{"title":"唤醒","content":"我是……还是叫我温柯尔吧，他们都这么叫我。是的，就这样叫我，和他们一样……"}]},
-    {"skeydbId":"awakener-0054","englishName":"Xu","name":"徐"},
-    {"skeydbId":"awakener-0055","englishName":"Vortice","name":"莫丝"},
-    {"skeydbId":"awakener-0056","englishName":"Arachne","name":"阿拉克涅"},
-    {"skeydbId":"awakener-0057","englishName":"Saya","name":"沙耶"},
-    {"skeydbId":"awakener-0058","englishName":"Pontos","name":"庞托斯"},
-    {"skeydbId":"awakener-0059","englishName":"Lotan: Cetarchon","name":"蚀灭·萝坦"},
-    {"skeydbId":"awakener-0060","englishName":"Caraboo","name":"卡拉布"}
+    {
+      "skeydbId": "awakener-0001",
+      "englishName": "\"24\"",
+      "name": "「24」"
+    },
+    {
+      "skeydbId": "awakener-0002",
+      "englishName": "Agrippa",
+      "name": "阿格里帕"
+    },
+    {
+      "skeydbId": "awakener-0003",
+      "englishName": "Aigis",
+      "name": "艾继丝"
+    },
+    {
+      "skeydbId": "awakener-0004",
+      "englishName": "Alva",
+      "name": "艾尔瓦"
+    },
+    {
+      "skeydbId": "awakener-0005",
+      "englishName": "Aurita",
+      "name": "奥瑞塔"
+    },
+    {
+      "skeydbId": "awakener-0006",
+      "englishName": "Caecus",
+      "name": "凯刻斯"
+    },
+    {
+      "skeydbId": "awakener-0007",
+      "englishName": "Casiah",
+      "name": "卡茜亚"
+    },
+    {
+      "skeydbId": "awakener-0008",
+      "englishName": "Castor",
+      "name": "卡斯托尔"
+    },
+    {
+      "skeydbId": "awakener-0009",
+      "englishName": "Celeste",
+      "name": "希莱斯特"
+    },
+    {
+      "skeydbId": "awakener-0010",
+      "englishName": "Clementine",
+      "name": "克莱门汀"
+    },
+    {
+      "skeydbId": "awakener-0011",
+      "englishName": "Corposant",
+      "name": "克珀珊特"
+    },
+    {
+      "skeydbId": "awakener-0012",
+      "englishName": "Daffodil",
+      "name": "达芙黛尔"
+    },
+    {
+      "skeydbId": "awakener-0013",
+      "englishName": "Doll",
+      "name": "朵尔"
+    },
+    {
+      "skeydbId": "awakener-0014",
+      "englishName": "Doresain",
+      "name": "杜勒赛因",
+      "fallbackVoiceLines": [
+        {
+          "title": "唤醒",
+          "content": "啊，多么令人刻骨铭心的香味……我已经迫不及待想要迎接你进入我的圣殿了。"
+        }
+      ]
+    },
+    {
+      "skeydbId": "awakener-0015",
+      "englishName": "Erica",
+      "name": "艾瑞卡"
+    },
+    {
+      "skeydbId": "awakener-0016",
+      "englishName": "Faint",
+      "name": "菲茵特"
+    },
+    {
+      "skeydbId": "awakener-0017",
+      "englishName": "Faros",
+      "name": "法洛思"
+    },
+    {
+      "skeydbId": "awakener-0018",
+      "englishName": "Doll: Inferno",
+      "name": "熔毁·朵尔"
+    },
+    {
+      "skeydbId": "awakener-0019",
+      "englishName": "Helot: Catena",
+      "name": "血链·希洛"
+    },
+    {
+      "skeydbId": "awakener-0020",
+      "englishName": "Ramona: Timeworn",
+      "name": "环行·拉蒙娜"
+    },
+    {
+      "skeydbId": "awakener-0021",
+      "englishName": "Goliath",
+      "name": "戈利亚"
+    },
+    {
+      "skeydbId": "awakener-0022",
+      "englishName": "Hameln",
+      "name": "哈姆林"
+    },
+    {
+      "skeydbId": "awakener-0023",
+      "englishName": "Helot",
+      "name": "希洛"
+    },
+    {
+      "skeydbId": "awakener-0024",
+      "englishName": "Horla",
+      "name": "奥尔拉"
+    },
+    {
+      "skeydbId": "awakener-0025",
+      "englishName": "Jenkin",
+      "name": "詹金"
+    },
+    {
+      "skeydbId": "awakener-0026",
+      "englishName": "Karen",
+      "name": "珈伦"
+    },
+    {
+      "skeydbId": "awakener-0027",
+      "englishName": "Kathigu-Ra",
+      "name": "凯蒂古拉"
+    },
+    {
+      "skeydbId": "awakener-0028",
+      "englishName": "Leigh",
+      "name": "雷娅"
+    },
+    {
+      "skeydbId": "awakener-0029",
+      "englishName": "Lily",
+      "name": "莉莉"
+    },
+    {
+      "skeydbId": "awakener-0030",
+      "englishName": "Liz",
+      "name": "莉兹"
+    },
+    {
+      "skeydbId": "awakener-0031",
+      "englishName": "Lotan",
+      "name": "萝坦"
+    },
+    {
+      "skeydbId": "awakener-0032",
+      "englishName": "Miryam",
+      "name": "弥利亚姆"
+    },
+    {
+      "skeydbId": "awakener-0033",
+      "englishName": "Mouchette",
+      "name": "茉夏"
+    },
+    {
+      "skeydbId": "awakener-0034",
+      "englishName": "Murphy",
+      "name": "墨菲"
+    },
+    {
+      "skeydbId": "awakener-0035",
+      "englishName": "Murphy: Fauxborn",
+      "name": "诞妄·墨菲"
+    },
+    {
+      "skeydbId": "awakener-0036",
+      "englishName": "Nautila",
+      "name": "诺缔拉"
+    },
+    {
+      "skeydbId": "awakener-0037",
+      "englishName": "Nymphaea",
+      "name": "宁菲亚"
+    },
+    {
+      "skeydbId": "awakener-0038",
+      "englishName": "Ogier",
+      "name": "奥吉尔"
+    },
+    {
+      "skeydbId": "awakener-0039",
+      "englishName": "Pandia",
+      "name": "潘狄娅"
+    },
+    {
+      "skeydbId": "awakener-0040",
+      "englishName": "Pickman",
+      "name": "皮克曼"
+    },
+    {
+      "skeydbId": "awakener-0041",
+      "englishName": "Pollux",
+      "name": "波吕克斯"
+    },
+    {
+      "skeydbId": "awakener-0042",
+      "englishName": "Ramona",
+      "name": "拉蒙娜"
+    },
+    {
+      "skeydbId": "awakener-0043",
+      "englishName": "Ryker",
+      "name": "莱克"
+    },
+    {
+      "skeydbId": "awakener-0044",
+      "englishName": "Salvador",
+      "name": "萨尔瓦多"
+    },
+    {
+      "skeydbId": "awakener-0045",
+      "englishName": "Sanga",
+      "name": "珊"
+    },
+    {
+      "skeydbId": "awakener-0046",
+      "englishName": "Sorel",
+      "name": "索蕾尔"
+    },
+    {
+      "skeydbId": "awakener-0047",
+      "englishName": "Tawil",
+      "name": "塔薇"
+    },
+    {
+      "skeydbId": "awakener-0048",
+      "englishName": "Thais",
+      "name": "泰旖丝"
+    },
+    {
+      "skeydbId": "awakener-0049",
+      "englishName": "Tinct",
+      "name": "汀克特"
+    },
+    {
+      "skeydbId": "awakener-0050",
+      "englishName": "Tulu",
+      "name": "图鲁"
+    },
+    {
+      "skeydbId": "awakener-0051",
+      "englishName": "Uvhash",
+      "name": "尤乌哈希"
+    },
+    {
+      "skeydbId": "awakener-0052",
+      "englishName": "Wanda",
+      "name": "旺达"
+    },
+    {
+      "skeydbId": "awakener-0053",
+      "englishName": "Winkle",
+      "name": "温柯尔",
+      "fallbackVoiceLines": [
+        {
+          "title": "唤醒",
+          "content": "我是……还是叫我温柯尔吧，他们都这么叫我。是的，就这样叫我，和他们一样……"
+        }
+      ]
+    },
+    {
+      "skeydbId": "awakener-0054",
+      "englishName": "Xu",
+      "name": "徐"
+    },
+    {
+      "skeydbId": "awakener-0055",
+      "englishName": "Vortice",
+      "name": "莫丝"
+    },
+    {
+      "skeydbId": "awakener-0056",
+      "englishName": "Arachne",
+      "name": "阿拉克涅"
+    },
+    {
+      "skeydbId": "awakener-0057",
+      "englishName": "Saya",
+      "name": "沙耶"
+    },
+    {
+      "skeydbId": "awakener-0058",
+      "englishName": "Pontos",
+      "name": "庞托斯"
+    },
+    {
+      "skeydbId": "awakener-0059",
+      "englishName": "Lotan: Cetarchon",
+      "name": "蚀灭·萝坦"
+    },
+    {
+      "skeydbId": "awakener-0060",
+      "englishName": "Caraboo",
+      "name": "卡拉布"
+    },
+    {
+      "skeydbId": "awakener-0061",
+      "englishName": "Ogier: Oathbound",
+      "name": "负誓·奥吉尔"
+    }
   ]
 }
