@@ -256,7 +256,7 @@
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
     const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
-    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于 Forbidden Lore / 研究深度等依赖账号等级的 SKeyDB 公式。</small></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数量</label><input id="formulaOwnedPosseCount" type="number" min="0" max="50" step="1" value="0"><small>SKeyDB 按实际已拥有数量计算并最多计 50；不再把数据库目录总数误当成玩家持有数。</small></div>';
+    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于 Forbidden Lore / 研究深度等依赖账号等级的 SKeyDB 公式。</small></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数量</label><input id="formulaOwnedPosseCount" type="number" min="0" max="50" step="1" value="0"><small>用于 SKeyDB 星辰篇研究公式的上下文/参考值，最多计 50；默认公共公式不会无条件把该倍率套到所有技能。</small></div>';
     anchor.insertAdjacentElement('afterend',block);
     const refreshFormulaContext=()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()};
     $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
