@@ -9,7 +9,7 @@
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhSkillNames={
     'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄',
-    'skill.24.aberrant-vivisection':'畸变的解剖',
+    'skill.24.aberrant-vivisection':'畸变的解剖','skill.24.mediating-personalities':'调停人格',
     'skill.aigis.a-small-wish':'小小愿望','skill.aigis.decomposition':'石质分解','skill.aigis.eye-of-eternity':'万古之眸',
     'skill.clementine.call-of-shaggai':'妖虫的呼唤','skill.clementine.pain-extraction':'痛苦榨取','skill.clementine.soulsalve':'精神抚慰',
     'skill.doll-inferno.terminal-of-truth-and-abyss':'终点，真理与深渊之门','skill.doll-inferno.soulblight':'灵魂瘟疫',
@@ -25,7 +25,7 @@
     'Satiety':'饱足','Offering':'供奉','Corpse':'残骸','Sin Mark':'罪印','Symbiosis':'共生','Pack Hunt':'群猎','Negentropy':'负熵',
     'Undertow':'暗潮','Guilt':'罪责','Endure':'忍耐','Dreamlure':'梦引','Murmurs':'低语','Spellbound':'痴醉','Enthrall':'夺魄',
     'Weaver':'织命','Creativity':'创意','Fantasia':'幻想','Combust':'燃烧','Birth Ritual':'诞生仪式','Life Seal':'生命封印',
-    'Finale':'终末','Finale Form':'终末形态','Fiamma':'活焰','Vortex Reload':'涡流装填'
+    'Finale':'终末','Finale Form':'终末形态','Fiamma':'活焰','Vortex Reload':'涡流装填','Mediating Personalities':'调停人格','Primordia Mastery Scaling':'原初界域精通缩放','Crimson Furnace':'猩红熔炉','Ultra Round':'超维回合','Realm Mastery':'界域精通','Damage Amplification':'伤害强效','DMG Amplification':'伤害强效','Team Unique':'队伍唯一','Anger':'愤怒','Fear':'恐惧','Grief':'悲伤','Happiness':'喜悦'
   };
     const globalTermMeta={
     'STR':['力量','IconS_Buff_021.webp','heal'],'Temporary STR':['临时力量','IconS_Buff_021.webp','heal'],'STR▼':['力量降低','IconS_Buff_037.webp','affliction'],
@@ -134,23 +134,60 @@
   }
   function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
   const slotZh={Strike:'打击',Defense:'防御',Rouse:'灵知觉醒',Skill1:'技能卡一',Skill2:'技能卡二',Exalt:'狂气爆发',OverExalt:'超限爆发'};const slotOrder={Strike:1,Defense:2,Rouse:3,Skill1:4,Skill2:5,Exalt:6,OverExalt:7};
+  const zhDescriptionOverrides={
+    'enlighten.24.hysteria':'{Frenzied Slash} 基础伤害提高 33%。抑郁人格下，对应卡牌的算力消耗额外降低 1；躁狂人格下，伤害段数额外增加 1。',
+    'enlighten.24.restraint-bonds':'{Symbiotic Aberration} 额外生成 2 狂气。抑郁状态下，对全体敌人施加 {Weakness}，持续 1 回合；躁狂状态下，对全体敌人施加 {Vulnerable}，持续 1 回合。',
+    'enlighten.24.pavlovian-conditioning-study':'回合结束时，「24」获得 10 狂气。每次「24」释放狂气爆发后，本效果在本场战斗中获得的狂气 +1。',
+    'enlighten.24.aberrant-vivisection':'获得 24 点界域精通。「24」的下一张指令卡生效 3 次。',
+    'enlighten.24.animus-projection':'{Rouse}「调停人格」获得强化：「24」的指令卡人格效果加成翻倍；「24」每回合释放狂气爆发后，该翻倍效果在本回合失效。',
+    'skill.24.frenzied-slash':'随机造成 [Damage:Arg1] 伤害，共 [Arg2] 段。抑郁人格：使手牌中算力消耗最高的 [DescArg1] 张卡牌算力消耗降低 1，并获得临时 {Retain}。躁狂人格：伤害段数 +[DescArg2]。',
+    'skill.24.symbiotic-aberration':'对全体敌人造成 [Damage:Arg1] 伤害。「24」获得 [Energy:Arg2] 狂气。抑郁人格：其他唤醒体额外获得 [DescArg1] 倍狂气。躁狂人格：额外获得 [DescArg2] 倍狂气。',
+    'skill.24.mediating-personalities':'「24」获得 [Energy:Arg1] 狂气。{Rouse}：根据当前队伍界域获得不同效果。{Chaos}：暴击率与暴击伤害 +[StateArg4]%。每使用 1 次钥令，「24」的狂气爆发最终伤害 +[StateArg1]%。{Aequor}：「24」造成的伤害享受 [StateArg2]% {Tentacle DMG} 加成，并施加等同于所造成伤害 10% 的 {Poison}；「24」的狂气爆发可触发敌人身上 50% 的 {Poison}。{Caro}：「24」每消耗 1 点算力，{Embryo Fusion} +[Blood:DescArg1]，「24」获得 [StateArg3] {STR}；其狂气爆发享受额外 300% {STR} 加成。{Ultra}：「24」造成的伤害享受 [StateArg5]% {Counter} 伤害加成。回合结束时将 1 张 {derived:Insight} 洗入弃牌堆，手牌上限 +2。',
+    'skill.24.aberrant-vivisection':'获得 24 点界域精通。「24」的下一张指令卡生效 3 次。',
+    'overlay.24.realm-and-persona':'探索开始时，「24」进入抑郁人格状态。{Chaos}·抑郁：获得 [StateArg1] 银钥能量；下一次钥令生效 2 次。{Chaos}·躁狂：造成 3 段伤害，并使「24」造成的所有伤害提高 [StateArg2]。{Aequor}·抑郁：对目标施加 {Weakness} 和 {Vulnerable}，持续 2 回合，并生成 1 只触腕，其 {Tentacle DMG} +[StateArg3]。{Aequor}·躁狂：本段伤害享受 [StateArg4]% {Tentacle DMG} 加成，并对全体敌人施加等同于伤害 30% 的 {Poison}。{Caro}·抑郁：{Embryo Fusion} +[Blood:StateArg5]，积累 [StateArg6] {Crimson Furnace}。{Caro}·躁狂：伤害享受 6 倍 {STR▼} 加成，并对目标施加等同于伤害 200% 的 {Bleed}，同时获得 [StateArg7] {STR▼}。{Ultra}·抑郁：将 2 张 {derived:Insight} 加入手牌，临时使目标的 {STR▼} 降低 [StateArg8]。{Ultra}·躁狂：获得等同于所造成伤害 15% 的 {Counter}，随后对其他敌人造成等量 {Pure DMG}。本回合每打出 1 张 {derived:Insight}，该伤害提高 [StateArg9]，最多 [StateArg10]。'
+  };
   const sentenceZh=[
+    [/At the start of the exploration/gi,'探索开始时'],
+    [/At the start of each battle/gi,'每场战斗开始时'],
+    [/At the start of odd turns/gi,'奇数回合开始时'],
+    [/At the start of even turns/gi,'偶数回合开始时'],
+    [/At (?:the )?start of (?:the )?next turn/gi,'下回合开始时'],
+    [/At (?:the )?end of (?:the )?turn/gi,'回合结束时'],
+    [/At turn start/gi,'回合开始时'],
+    [/At turn end/gi,'回合结束时'],
+    [/At battle start/gi,'战斗开始时'],
+    [/after the battle ends/gi,'战斗结束后'],
+    [/after the start of exploration/gi,'探索开始后'],
+    [/after each Posse is Unleashed/gi,'每次释放钥令后'],
+    [/This Awakener gains ([^.!?]+?) Levels? of Base Attributes\./gi,'该唤醒体获得 $1 级基础属性。'],
     [/increases Base DMG by ([^.!?,;]+)/gi,'基础伤害提高 $1'],
+    [/increases Final DMG by ([^.!?,;]+)/gi,'最终伤害提高 $1'],
+    [/increases Crit\. Rate by ([^.!?,;]+)/gi,'暴击率提高 $1'],
+    [/increases Crit\. DMG by ([^.!?,;]+)/gi,'暴击伤害提高 $1'],
     [/increases ([^.!?,;]+?) by ([^.!?,;]+)/gi,'使 $1 提高 $2'],
+    [/is increased by ([^.!?,;]+)/gi,'提高 $1'],
+    [/are increased by ([^.!?,;]+)/gi,'提高 $1'],
+    [/is reduced by ([^.!?,;]+)/gi,'降低 $1'],
+    [/are reduced by ([^.!?,;]+)/gi,'降低 $1'],
+    [/is in (?:the )?["“]?Depressed Persona["”]? state/gi,'处于抑郁人格状态'],
+    [/is in (?:the )?["“]?Manic Persona["”]? state/gi,'处于躁狂人格状态'],
     [/While in Depressed Persona/gi,'抑郁人格下'],
     [/while in Manic Persona/gi,'躁狂人格下'],
     [/In Depressed state/gi,'抑郁状态下'],
     [/in Manic state/gi,'躁狂状态下'],
     [/the Arithmetica Cost of corresponding cards is reduced by (?:an )?additional ([^.!?,;]+)/gi,'对应卡牌的算力消耗额外降低 $1'],
     [/the number of hits is increased by (?:an )?additional ([^.!?,;]+)/gi,'伤害段数额外增加 $1'],
+    [/generates? ([^.!?,;]+?) more Aliemus/gi,'额外生成 $1 狂气'],
     [/generates? ([^.!?,;]+?) more ([^.!?,;]+)/gi,'额外生成 $1 $2'],
     [/inflict ([^.!?,;]+?) on all enemies for ([^.!?,;]+?) turns?/gi,'对全体敌人施加 $1，持续 $2 回合'],
+    [/apply ([^.!?,;]+?) to all enemies for ([^.!?,;]+?) turns?/gi,'对全体敌人施加 $1，持续 $2 回合'],
+    [/inflict ([^.!?,;]+?) on all enemies/gi,'对全体敌人施加 $1'],
+    [/apply ([^.!?,;]+?) to all enemies/gi,'对全体敌人施加 $1'],
     [/Each time ([^,]+?) releases? Exalt, the Aliemus obtained from this effect in battle \+([^.!?]+)/gi,'每当 $1 释放狂气爆发时，本效果在本场战斗中获得的狂气 +$2'],
     [/The next Command Card of ([^.!?]+?) will be effective ([^.!?]+?) times?/gi,'$1 的下一张指令卡将生效 $2 次'],
     [/The Persona Effect Bonus of ([^;.!?]+?)['’]s Command Cards is doubled/gi,'$1 的指令卡人格效果加成翻倍'],
     [/this effect expires after ([^.!?]+?) unleashes Exalt each turn/gi,'该效果在 $1 每回合释放狂气爆发后结束'],
     [/is enhanced\s*:/gi,'强化为：'],
-    [/This Awakener gains ([^.!?]+?) Levels? of Base Attributes\./gi,'该唤醒体获得 $1 级基础属性。'],
     [/Randomly deal (\d+) instances? of ([^.!?]+?) (Pierce DMG|DMG)/gi,'随机造成 $1 段 $2 $3'],
     [/Deal (\d+) instances? of ([^.!?]+?) (Pierce DMG|DMG)/gi,'造成 $1 段 $2 $3'],
     [/Randomly deal ([^.!?,;]+?) (Pierce DMG|DMG) ([^.!?,;]+?) (?:times?|hits?)/gi,'随机造成 $1 $2 $3 次'],
@@ -163,80 +200,167 @@
     [/Deal ([^.!?,;]+?) (Pierce DMG|DMG)/gi,'造成 $1 $2'],
     [/Gain ([^.!?,;]+?) Shield/gi,'获得 $1 护盾'],
     [/Lose ([^.!?,;]+?) Current HP/gi,'失去当前生命值的 $1'],
+    [/Restore ([^.!?,;]+?) HP/gi,'恢复 $1 生命值'],
     [/This DMG enjoys ([^.!?]+?) STR bonus/gi,'本次伤害享受 $1 力量加成'],
     [/which enjoys (?:an? )?([^.!?,;]+?) STR bonus/gi,'并享受 $1 力量加成'],
     [/For every 1% HP the target is missing/gi,'目标每损失 1% 生命值'],
-    [/at the start of (?:the )?next turn/gi,'下回合开始时'],
-    [/at the end of (?:the )?turn/gi,'回合结束时']
+    [/For each 1 Realm Mastery Attributes? ([^.!?,;]+?) possesses/gi,'$1 每拥有 1 点界域精通属性'],
+    [/For every 1% Sigil Yield attribute ([^.!?,;]+?) possesses/gi,'$1 每拥有 1% 黑印掉落属性'],
+    [/For each stack of ([^.!?,;]+?) consumed/gi,'每消耗 1 层 $1'],
+    [/Considered as (?:a )?["“]?Defense["”]?/gi,'视为防御牌'],
+    [/Considered as (?:a )?["“]?Strike["”]?/gi,'视为打击牌'],
+    [/the next Aliemus gained from playing a card \+([^.!?,;]+)/gi,'下次打出卡牌时获得的狂气 +$1'],
+    [/stacking up to ([^.!?,;]+?) times?/gi,'最多叠加 $1 次'],
+    [/Can be triggered up to ([^.!?,;]+?) times? per turn/gi,'每回合最多触发 $1 次'],
+    [/up to ([^.!?,;]+?) times? per turn/gi,'每回合最多 $1 次'],
+    [/that last for ([^.!?,;]+?) turns?/gi,'并持续 $1 回合'],
+    [/for ([^.!?,;]+?) turns?/gi,'持续 $1 回合'],
+    [/The first time ([^.!?,;]+?) triggers each investigation/gi,'每次调查中首次触发 $1 时'],
+    [/If the current Realm is ([^,.;]+), also trigger/gi,'若当前界域为 $1，则额外触发'],
+    [/If the current Realm is ([^,.;]+)/gi,'若当前界域为 $1'],
+    [/all Awakeners gain/gi,'全体唤醒体获得'],
+    [/All Awakeners lose/gi,'全体唤醒体失去'],
+    [/all other Awakeners/gi,'其他所有唤醒体'],
+    [/the wielder['’]s/gi,'装备者的'],
+    [/each time you play a Command Card/gi,'每次打出指令卡时'],
+    [/Every time a card with an Arithmetica Cost of ([^.!?,;]+?) is played/gi,'每次打出算力消耗为 $1 的卡牌时'],
+    [/After playing or discarding ([^.!?,;]+?)/gi,'打出或弃置 $1 后'],
+    [/After playing/gi,'打出后'],
+    [/After dealing DMG/gi,'造成伤害后'],
+    [/otherwise Inflict/gi,'否则施加'],
+    [/instead of inflicting/gi,'而非施加'],
+    [/Scaling guide\s*:/gi,'数值说明：'],
+    [/break through realm restrictions/gi,'突破界域限制'],
+    [/form lineups with/gi,'与其他唤醒体组成队伍'],
+    [/providing different symbiotic effects/gi,'并提供不同的协同效果'],
+    [/Compared to other Realm teams/gi,'与其他界域队伍相比'],
+    [/rely more on coordination between Posses/gi,'更依赖钥令之间的配合'],
+    [/choosing the right Posse can greatly enhance the strength of/gi,'选择合适的钥令可以显著提高'],
+    [/temporarily reduce/gi,'临时降低'],
+    [/temporarily inflict/gi,'临时施加'],
+    [/temporarily increasing/gi,'临时提高'],
+    [/temporarily reducing/gi,'临时降低'],
+    [/gain Temporary/gi,'获得临时'],
+    [/Gain another/gi,'额外获得'],
+    [/gains an additional/gi,'额外获得'],
+    [/gain an additional/gi,'额外获得'],
+    [/equal to/gi,'等同于'],
+    [/equal amount/gi,'等量']
   ];
   const phraseZh=[
-    [/This talent is only effective in the (?:\\{)?星辰篇(?:\\})? stages\\./gi,'该天赋仅在「星辰篇」关卡中生效。'],
-    [/This Awakener's/gi,'该唤醒体的'],[/The Awakener's/gi,'该唤醒体的'],[/Awakener/gi,'唤醒体'],
-    [/upon their first (?:\\{)?Rouse(?:\\})?/gi,'首次进行灵知觉醒时'],[/they gain/gi,'并获得'],
-    [/Keyflare Regen Level/gi,'银钥充能等级'],[/Keyflare Regen/gi,'银钥充能等级'],[/Keyflare/gi,'银钥能量'],
-    [/Aliemus Regen Level/gi,'狂气回充等级'],[/Aliemus Regen/gi,'狂气回充等级'],[/Aliemus Generation/gi,'狂气生成'],[/Aliemus/gi,'狂气'],
-    [/Death Resistance/gi,'死亡抵抗'],[/Sigil Yield/gi,'黑印掉落'],[/Team Unique/gi,'队伍唯一'],[/wielder/gi,'装备者'],[/exploration/gi,'探索'],[/Arithmetica Cost/gi,'算力消耗'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
-    [/Pierce DMG/gi,'穿透伤害'],[/Pure DMG/gi,'纯粹伤害'],[/Fixed DMG/gi,'固定伤害'],[/Active DMG/gi,'主动伤害'],[/Tentacle DMG/gi,'触腕伤害'],
-    [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'出血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
-    [/Finale Form/gi,'终末形态'],[/Finale/gi,'终末'],[/Fiamma/gi,'活焰'],[/Endure/gi,'忍耐'],[/Dreamlure/gi,'梦引'],
-    [/Pack Hunt/gi,'群猎'],[/Negentropy/gi,'负熵'],[/Undertow/gi,'暗潮'],[/Guilt/gi,'罪责'],[/Murmurs/gi,'低语'],
-    [/Symbiosis/gi,'共生'],[/Offering/gi,'供奉'],[/Satiety/gi,'饱足'],[/Corpse/gi,'残骸'],[/Sin Mark/gi,'罪印'],
-    [/Weaver/gi,'织命'],[/Creativity/gi,'创意'],[/Fantasia/gi,'幻想'],[/Combust/gi,'燃烧'],[/Life Seal/gi,'生命封印'],
-    [/Spellbound/gi,'痴醉'],[/Betroth/gi,'相许'],[/Enthrall/gi,'夺魄'],[/Emotion/gi,'情绪'],[/Metaphor/gi,'隐喻'],
-    [/Leap/gi,'跃迁'],[/Aftershock/gi,'余震'],[/Devour/gi,'吞噬'],[/Resonance/gi,'共鸣'],[/Ritual/gi,'仪式'],[/Stealing|Steal/gi,'窃取'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
-    [/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
-    [/Crit\. Rate/gi,'暴击率'],[/Crit\. DMG/gi,'暴击伤害'],[/Final DMG/gi,'最终伤害'],[/Base DMG/gi,'基础伤害'],
-    [/Max HP/gi,'最大生命'],[/HP Recovery/gi,'生命回复'],[/Current HP/gi,'当前生命值'],[/HP/gi,'生命值'],[/Arithmetica Cost/gi,'算力消耗'],
-    [/all enemies/gi,'全体敌人'],[/highest HP enemy/gi,'生命值最高的敌人'],[/lowest HP enemy/gi,'生命值最低的敌人'],[/all teammates/gi,'全体队友'],[/teammates?/gi,'队友'],[/target['’]s/gi,'目标的'],[/targets?/gi,'目标'],[/Draw Pile/gi,'抽牌堆'],[/Discard Pile/gi,'弃牌堆'],
-    [/at turn end/gi,'回合结束时'],[/at turn start/gi,'回合开始时'],[/at battle start/gi,'战斗开始时'],
-    [/this turn/gi,'本回合'],[/this battle/gi,'本场战斗'],[/each turn/gi,'每回合'],[/per turn/gi,'每回合'],
-    [/first Command Card/gi,'第一张指令卡'],[/Command Card/gi,'指令卡'],[/Boss Battles?/gi,'首领战'],[/Critical Hit/gi,'暴击'],[/stacks?/gi,'层'],[/copies|copy/gi,'张'],[/cards?/gi,'卡牌'],
-    [/dealing Active DMG/gi,'造成主动伤害后'],[/Active DMG/gi,'主动伤害'],[/deals?/gi,'造成'],[/causes?/gi,'造成'],
-    [/obtain(?:s|ed)?/gi,'获得'],[/gains?/gi,'获得'],[/grant(?:s|ed)?/gi,'给予'],[/appl(?:y|ies|ied)/gi,'施加'],[/inflict(?:s|ed)?/gi,'施加'],[/recover(?:s|ed)?/gi,'恢复'],[/increase(?:s|d)?/gi,'提高'],[/reduce(?:s|d)?/gi,'降低'],[/release(?:s|d)?/gi,'释放'],[/unleash(?:es|ed)?/gi,'释放'],[/expire(?:s|d)?/gi,'结束'],
-    [/generate(?:s|d)?/gi,'生成'],[/trigger(?:s|ed)?/gi,'触发'],[/shuffle/gi,'洗入'],[/draw/gi,'抽取'],
-    [/into hand/gi,'置入手牌'],[/into the top of your Draw Pile/gi,'置于抽牌堆顶'],[/to all enemies/gi,'对全体敌人'],
-    [/enemy/gi,'敌人'],[/Turn/gi,'回合'],[/Battle/gi,'战斗'],[/Temporary/gi,'临时'],[/Permanent/gi,'永久'],
-    [/Surging Tides/gi,'潮涌'],[/Tranquil Sea/gi,'静海'],[/Raging Waves/gi,'怒涛'],[/Benthos: Aequor/gi,'晦暝·深海'],
-    [/Delayed Sacrifice/gi,'延迟献祭'],[/Sacrifice/gi,'献祭'],[/Birth Ritual/gi,'诞生仪式'],
-    [/Aequor Realm/gi,'深海界域'],[/Aequor/gi,'深海'],[/Chaos/gi,'混沌'],[/Caro/gi,'血肉'],[/Ultra/gi,'超维'],
-    [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/星辰篇/gi,'星辰篇'],[/\bE1\b/g,'启灵1'],[/\bE2\b/g,'启灵2'],[/\bE3\b/g,'启灵3'],
-    [/Rouse/gi,'灵知觉醒'],[/Over-?Exalt/gi,'超限爆发'],[/Exalt/gi,'狂气爆发'],[/Defense/gi,'防御'],[/Strike/gi,'打击'],
-    [/Shield/gi,'护盾'],[/Damage/gi,'伤害'],[/DMG/gi,'伤害'],[/ATK/gi,'攻击力'],[/DEF/gi,'防御'],[/CON/gi,'体质'],
-    [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
-    [/equal to/gi,'等同于'],[/equal amount/gi,'等量'],[/additional/gi,'额外'],[/each hit/gi,'每段伤害'],[/instances?/gi,'段'],[/hits?/gi,'段'],[/chance/gi,'概率'],[/played|playing/gi,'打出'],[/first/gi,'首次'],[/current/gi,'当前'],[/after/gi,'之后'],
-    [/Each stack of/gi,'每层'],[/Each point of/gi,'每点'],[/For each/gi,'每'],[/For every/gi,'每'],[/Every/gi,'每'],[/Each/gi,'每'],
-    [/\bRandomly\b/gi,'随机'],[/\brandom\b/gi,'随机'],[/all Tentacles/gi,'所有触腕'],[/Tentacles?/gi,'触腕'],
+    [/This talent is only effective in the (?:\{)?星辰篇(?:\})? stages\./gi,'该天赋仅在「星辰篇」关卡中生效。'],
+    [/\bThis Awakener['’]s\b/gi,'该唤醒体的'],[/\bThe Awakener['’]s\b/gi,'该唤醒体的'],[/\bAwakeners?\b/gi,'唤醒体'],
+    [/upon their first (?:\{)?Rouse(?:\})?/gi,'首次进行灵知觉醒时'],[/\bthey gain\b/gi,'并获得'],
+    [/\bDepressed Persona\b/gi,'抑郁人格'],[/\bManic Persona\b/gi,'躁狂人格'],[/\bDepressed state\b/gi,'抑郁状态'],[/\bManic state\b/gi,'躁狂状态'],[/\bPersona Effect Bonus\b/gi,'人格效果加成'],[/\bPersona\b/gi,'人格'],
+    [/\bTemp\. Crit\. Rate\b/gi,'临时暴击率'],[/\bTemp\. Crit\. DMG\b/gi,'临时暴击伤害'],[/\bTemporary Crit\. Rate\b/gi,'临时暴击率'],[/\bTemporary Crit\. DMG\b/gi,'临时暴击伤害'],[/\bCrit\. Rate\b/gi,'暴击率'],[/\bCrit\. DMG\b/gi,'暴击伤害'],[/\bCritical Hit\b/gi,'暴击'],
+    [/\bKeyflare Regen Lv\.?\b/gi,'银钥充能等级'],[/\bKeyflare Regen Level\b/gi,'银钥充能等级'],[/\bKeyflare Regen\b/gi,'银钥充能'],[/\bKeyflare\b/gi,'银钥能量'],
+    [/\bAliemus Regen Level\b/gi,'狂气回充等级'],[/\bAliemus Regen\b/gi,'狂气回充等级'],[/\bAliemus Generation\b/gi,'狂气生成'],[/\bBase Aliemus\b/gi,'基础狂气'],[/\bAliemus\b/gi,'狂气'],
+    [/\bDeath Resistance\b/gi,'死亡抵抗'],[/\bSigil Yield\b/gi,'黑印掉落'],[/\bBlack Sigils?\b/gi,'黑印'],[/\bTeam Unique\b/gi,'队伍唯一'],
+    [/\bWoD\s*&\s*Covenant\b/gi,'命轮与密契'],[/\bWoD\b/gi,'命轮'],[/\bCovenants?\b/gi,'密契'],
+    [/\bPosses?\b/gi,'钥令'],[/\bPorses?\b/gi,'钥令'],[/\bPosse\b/gi,'钥令'],
+    [/\bArithmetica Cost\b/gi,'算力消耗'],[/\bArithmetica Harmony\b/gi,'算力协调'],[/\bArithmetica\b/gi,'算力'],
+    [/\bPrimordia Mastery Scaling\b/gi,'原初界域精通缩放'],[/\bPrimordia Mastery\b/gi,'原初界域精通'],[/\bRealm Mastery\b/gi,'界域精通'],[/\bDamage Amplification\b/gi,'伤害强效'],[/\bDMG Amplification\b/gi,'伤害强效'],
+    [/STR▼/gi,'力量降低'],[/\bTemporary STR\b/gi,'临时力量'],[/\bSTR\b/gi,'力量'],
+    [/\bPierce DMG\b/gi,'穿透伤害'],[/\bPure DMG\b/gi,'纯粹伤害'],[/\bFixed DMG\b/gi,'固定伤害'],[/\bActive DMG\b/gi,'主动伤害'],[/\bTentacle DMG\b/gi,'触腕伤害'],[/\bFinal DMG\b/gi,'最终伤害'],[/\bBase DMG\b/gi,'基础伤害'],[/\bDMG\b/gi,'伤害'],
+    [/\bVulnerable\b/gi,'易伤'],[/\bWeakness\b/gi,'虚弱'],[/\bPoison\b/gi,'中毒'],[/\bCounter\b/gi,'反击'],[/\bBleed\b/gi,'出血'],[/\bCorrosion\b/gi,'侵蚀'],[/\bBarrier\b/gi,'屏障'],
+    [/\bFinale Form\b/gi,'终末形态'],[/\bFinale\b/gi,'终末'],[/\bFiamma\b/gi,'活焰'],[/\bEndure\b/gi,'忍耐'],[/\bDreamlure\b/gi,'梦引'],
+    [/\bPack Hunt\b/gi,'群猎'],[/\bNegentropy\b/gi,'负熵'],[/\bUndertow\b/gi,'暗潮'],[/\bGuilt\b/gi,'罪责'],[/\bMurmurs\b/gi,'低语'],
+    [/\bSymbiosis\b/gi,'共生'],[/\bOffering\b/gi,'供奉'],[/\bSatiety\b/gi,'饱足'],[/\bCorpse\b/gi,'残骸'],[/\bSin Mark\b/gi,'罪印'],
+    [/\bWeaver\b/gi,'织命'],[/\bCreativity\b/gi,'创意'],[/\bFantasia\b/gi,'幻想'],[/\bCombust\b/gi,'燃烧'],[/\bLife Seal\b/gi,'生命封印'],
+    [/\bSpellbound\b/gi,'痴醉'],[/\bBetroth\b/gi,'相许'],[/\bEnthrall\b/gi,'夺魄'],[/\bEmotion\b/gi,'情绪'],[/\bMetaphor\b/gi,'隐喻'],
+    [/\bAnger\b/gi,'愤怒'],[/\bFear\b/gi,'恐惧'],[/\bGrief\b/gi,'悲伤'],[/\bHappiness\b/gi,'喜悦'],
+    [/\bLeap\b/gi,'跃迁'],[/\bAftershock\b/gi,'余震'],[/\bDevour\b/gi,'吞噬'],[/\bResonance\b/gi,'共鸣'],[/\bRitual\b/gi,'仪式'],[/\bStealing\b|\bSteal\b/gi,'窃取'],[/\bExhaust\b/gi,'消耗'],[/\bRetain\b/gi,'保留'],[/\bPrepare\b/gi,'预备'],
+    [/\bMax HP\b/gi,'最大生命'],[/\bHP Recovery\b/gi,'生命回复'],[/\bShield Generation\b/gi,'护盾生成'],[/\bCurrent HP\b/gi,'当前生命值'],[/\bHP\b/gi,'生命值'],
+    [/\bHand Limit\b/gi,'手牌上限'],[/\bDraw Pile\b/gi,'抽牌堆'],[/\bDiscard Pile\b/gi,'弃牌堆'],[/\bBasic Copy\b/gi,'基础复制卡'],
+    [/\ball enemies\b/gi,'全体敌人'],[/\benemies\b/gi,'敌人'],[/\benemy\b/gi,'敌人'],[/\ball teammates\b/gi,'全体队友'],[/\bteammates?\b/gi,'队友'],
+    [/\btarget['’]s\b/gi,'目标的'],[/\btargets?\b/gi,'目标'],
+    [/\bat turn end\b/gi,'回合结束时'],[/\bat turn start\b/gi,'回合开始时'],[/\bat battle start\b/gi,'战斗开始时'],
+    [/\bthis turn\b/gi,'本回合'],[/\bthis battle\b/gi,'本场战斗'],[/\beach turn\b/gi,'每回合'],[/\bper turn\b/gi,'每回合'],
+    [/\bfirst Command Card\b/gi,'第一张指令卡'],[/\bCommand Cards?\b/gi,'指令卡'],[/\bBasic Strike\b/gi,'基础打击'],[/\bBasic Defense\b/gi,'基础防御'],
+    [/\bBoss Battles?\b/gi,'首领战'],[/\bUltra Round\b/gi,'超维回合'],
+    [/\bSurging Tides\b/gi,'潮涌'],[/\bTranquil Sea\b/gi,'静海'],[/\bRaging Waves\b/gi,'怒涛'],[/\bBenthos: Aequor\b/gi,'晦暝·深海'],
+    [/\bDelayed Sacrifice\b/gi,'延迟献祭'],[/\bSacrifice\b/gi,'献祭'],[/\bBirth Ritual\b/gi,'诞生仪式'],
+    [/\bAequor Realm\b/gi,'深海界域'],[/\bAequor\b/gi,'深海'],[/\bChaos\b/gi,'混沌'],[/\bCaro\b/gi,'血肉'],[/\bUltra\b/gi,'超维'],
+    [/\bSoulforge Aptitude\b/gi,'灵塑适性'],[/\bGnostic Potential\b/gi,'内在灵格'],[/\bE1\b/g,'启灵1'],[/\bE2\b/g,'启灵2'],[/\bE3\b/g,'启灵3'],
+    [/\bRouse\b/gi,'灵知觉醒'],[/\bOver-?Exalt\b/gi,'超限爆发'],[/\bExalts?\b/gi,'狂气爆发'],[/\bDefense\b/gi,'防御'],[/\bStrike\b/gi,'打击'],
+    [/\bShields?\b/gi,'护盾'],[/\bDamage\b/gi,'伤害'],[/\bATK\b/gi,'攻击力'],[/\bDEF\b/gi,'防御力'],[/\bCON\b/gi,'体质'],
+    [/\bSkill(?:s)?\b/gi,'技能'],[/\bLevels?\b/gi,'等级'],[/\bAttributes?\b/gi,'属性'],
+    [/\badditional\b/gi,'额外'],[/\beach hit\b/gi,'每段伤害'],[/\binstances?\b/gi,'段'],[/\bhits?\b/gi,'段'],[/\bchance\b/gi,'概率'],
+    [/\bplayed\b|\bplaying\b/gi,'打出'],[/\bcurrent\b/gi,'当前'],
+    [/\bEach stack of\b/gi,'每层'],[/\bEach point of\b/gi,'每点'],[/\bFor each\b/gi,'每'],[/\bFor every\b/gi,'每'],[/\bEvery\b/gi,'每'],[/\bEach\b/gi,'每'],
+    [/\bRandomly\b/gi,'随机'],[/\brandom\b/gi,'随机'],[/\ball Tentacles\b/gi,'所有触腕'],[/\bTentacles?\b/gi,'触腕'],
     [/\bNon-Derived\b/gi,'非衍生'],[/\bDerived\b/gi,'衍生'],[/\beffects?\b/gi,'效果'],[/\bpoints?\b/gi,'点'],
-    [/DMG taken/gi,'受到的伤害'],[/damage taken/gi,'受到的伤害'],[/\bdealt\b/gi,'造成'],[/\btaken\b/gi,'受到'],
-    [/\bremov(?:e|es|ed)\b/gi,'移除'],[/\bconsum(?:e|es|ed)\b/gi,'消耗'],[/\bswitch(?:es|ed)?\b/gi,'切换'],[/\bstance\b/gi,'姿态'],
-    [/up to/gi,'最多'],[/\bmaximum\b/gi,'最大'],[/\bminimum\b/gi,'最小'],[/\bamount\b/gi,'数值'],[/\bbonus\b/gi,'加成'],
+    [/\bDMG taken\b/gi,'受到的伤害'],[/\bdamage taken\b/gi,'受到的伤害'],[/\bdealt\b/gi,'造成'],[/\btaken\b/gi,'受到'],
+    [/\bremov(?:e|es|ed|ing)\b/gi,'移除'],[/\bconsum(?:e|es|ed|ing)\b/gi,'消耗'],[/\bswitch(?:es|ed|ing)?\b/gi,'切换'],[/\bstance\b/gi,'姿态'],
+    [/\bup to\b/gi,'最多'],[/\bmaximum\b/gi,'最大'],[/\bminimum\b/gi,'最小'],[/\bamount\b/gi,'数值'],[/\bbonus\b/gi,'加成'],
     [/\bcorresponding\b/gi,'对应'],[/\bnumber of hits\b/gi,'伤害段数'],[/\bstate\b/gi,'状态'],[/\bteam\b/gi,'队伍'],[/\brealm\b/gi,'界域'],[/\beffective\b/gi,'生效'],[/\benhanced\b/gi,'强化'],[/\bdoubled\b/gi,'翻倍'],[/\banother\b/gi,'额外'],[/\bother\b/gi,'其他'],[/\bbased on\b/gi,'根据'],[/\bdifferent\b/gi,'不同'],[/\bwill\b/gi,'将'],[/\bcan\b/gi,'可以'],
-    [/in hand/gi,'在手牌中'],[/\bhand\b/gi,'手牌'],[/\bplay(?:s|ed|ing)?\b/gi,'打出'],[/\b(?:uses?|using)\b/gi,'使用'],
+    [/\bin hand\b/gi,'在手牌中'],[/\bhand\b/gi,'手牌'],[/\bplay(?:s|ed|ing)?\b/gi,'打出'],[/\buses?\b|\busing\b/gi,'使用'],
     [/\bbelow\b/gi,'低于'],[/\babove\b/gi,'高于'],[/\buntil\b/gi,'直到'],[/\bduring\b/gi,'在'],[/\bwhile\b/gi,'当'],[/\bonly\b/gi,'仅'],[/\balways\b/gi,'始终'],
-    [/\bwithout\b/gi,'不具有'],[/\binstead\b/gi,'改为'],[/\bsame\b/gi,'相同'],[/\bnext\b/gi,'下次'],[/\bmore\b/gi,'更多'],[/\bless\b/gi,'更少'],
-    [/before/gi,'之前'],[/when/gi,'当'],[/if/gi,'若'],[/times/gi,'次'],[/time/gi,'次']
+    [/\bwithout\b/gi,'不具有'],[/\binstead\b/gi,'改为'],[/\bsame\b/gi,'相同'],[/\bnext\b/gi,'下一'],[/\bmore\b/gi,'更多'],[/\bless\b/gi,'更少'],
+    [/\bbefore\b/gi,'之前'],[/\bwhen\b/gi,'当'],[/\bif\b/gi,'若'],[/\btimes?\b/gi,'次'],
+    [/\bTemporarily\b/gi,'临时'],[/\bTemporary\b/gi,'临时'],[/\bPermanent\b/gi,'永久']
   ];
-  function zhText(value){
-    let out=String(value||'');
-    if(isEnglish())return out.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1').replace(/\s+/g,' ').trim();
-    for(const [re,to] of sentenceZh)out=out.replace(re,to);
-    if(currentAwakener?.name){
-      const cn=labelForAwakener(currentAwakener);
-      if(cn&&cn!==currentAwakener.name)out=out.split(currentAwakener.name).join(cn);
-    }
+  const commonWordZh=new Map(Object.entries({
+    all:'全体',and:'并且',or:'或',as:'视为',at:'在',be:'为',been:'为',being:'为',by:'由',from:'来自',for:'用于',in:'在',into:'转为',of:'的',on:'在',the:'',a:'',an:'',this:'本次',that:'该',these:'这些',those:'这些',
+    your:'你的',you:'你',their:'其',them:'其',she:'该唤醒体',he:'该唤醒体',her:'该唤醒体的',his:'该唤醒体的',its:'其',
+    is:'为',are:'为',was:'为',were:'为',has:'拥有',have:'拥有',had:'拥有',
+    gain:'获得',gains:'获得',gained:'获得',gaining:'获得',obtain:'获得',obtains:'获得',obtained:'获得',grant:'给予',grants:'给予',granted:'给予',
+    apply:'施加',applies:'施加',applied:'施加',inflict:'施加',inflicts:'施加',inflicted:'施加',
+    increase:'提高',increases:'提高',increased:'提高',increasing:'提高',reduce:'降低',reduces:'降低',reduced:'降低',reducing:'降低',
+    generate:'生成',generates:'生成',generated:'生成',generating:'生成',trigger:'触发',triggers:'触发',triggered:'触发',triggering:'触发',
+    release:'释放',releases:'释放',released:'释放',releasing:'释放',unleash:'释放',unleashes:'释放',unleashed:'释放',
+    recover:'恢复',recovers:'恢复',recovered:'恢复',restore:'恢复',restores:'恢复',restored:'恢复',
+    lose:'失去',loses:'失去',lost:'失去',discard:'弃置',discards:'弃置',discarded:'弃置',discarding:'弃置',draw:'抽取',draws:'抽取',drawn:'抽取',shuffle:'洗入',shuffles:'洗入',
+    add:'加入',adds:'加入',added:'加入',transfer:'转移',transfers:'转移',transferred:'转移',convert:'转化',converts:'转化',converted:'转化',
+    start:'开始',end:'结束',ends:'结束',ended:'结束',turn:'回合',turns:'回合',battle:'战斗',battles:'战斗',exploration:'探索',investigation:'调查',stage:'关卡',stages:'关卡',round:'回合',
+    card:'卡牌',cards:'卡牌',copy:'复制卡',copies:'复制卡',stack:'层',stacks:'层',hit:'段',hits:'段',instance:'段',instances:'段',
+    effect:'效果',effects:'效果',base:'基础',final:'最终',active:'主动',basic:'基础',temporary:'临时',temporarily:'临时',permanent:'永久',
+    target:'目标',targets:'目标',enemy:'敌人',enemies:'敌人',teammate:'队友',teammates:'队友',team:'队伍',teams:'队伍',lineup:'队伍',lineups:'队伍',
+    wielder:'装备者',realm:'界域',realms:'界域',attribute:'属性',attributes:'属性',mastery:'精通',cost:'消耗',rate:'率',recovery:'回复',regen:'充能',limit:'上限',
+    number:'数量',amount:'数值',bonus:'加成',chance:'概率',additional:'额外',another:'额外',other:'其他',same:'相同',current:'当前',next:'下一',first:'首次',second:'第二',
+    selected:'选定',available:'可用',random:'随机',randomly:'随机',equal:'等同',more:'更多',less:'更少',every:'每',each:'每',per:'每',any:'任意',
+    after:'之后',before:'之前',when:'当',while:'当',until:'直到',during:'期间',only:'仅',always:'始终',otherwise:'否则',instead:'改为',then:'随后',also:'同时',once:'一次',
+    compared:'相比',faster:'更快',select:'选择',choosing:'选择',chosen:'选定',includes:'包含',include:'包含',providing:'提供',different:'不同',coordination:'配合',between:'之间',greatly:'显著',enhance:'提高',strength:'强度',benefits:'享受',
+    break:'突破',through:'',restrictions:'限制',form:'组成',symbiotic:'协同',right:'合适',rely:'依赖',possesses:'拥有',equipped:'装备',
+    considered:'视为',ignores:'无视',ignore:'无视',last:'持续',accumulate:'积累',accumulates:'积累',accumulating:'积累',stacking:'叠加',
+    enjoy:'享受',enjoys:'享受',expire:'失效',expires:'失效',expired:'失效',halved:'减半',greater:'大于',than:'',able:'可以',
+    depressed:'抑郁',manic:'躁狂',persona:'人格',crit:'暴击',critical:'暴击',scaling:'缩放',guide:'说明',intent:'意图',attack:'攻击',against:'对',therefore:'因此',odd:'奇数',even:'偶数',except:'除',plus:'加'
+  }));
+  function protectKnownSkillNames(text){
+    const protectedTerms=[];
+    let out=String(text||'');
     for(const skill of currentSkills||[]){
       if(!skill?.name)continue;
       const verified=zhSkillNames[skill.id];
-      if(verified&&verified!==skill.name)out=out.split(skill.name).join(verified);
+      if(verified&&verified!==skill.name){out=out.split(skill.name).join(verified);continue}
+      const marker='@@MPROPER'+protectedTerms.length+'@@';
+      if(out.includes(skill.name)){protectedTerms.push(skill.name);out=out.split(skill.name).join(marker)}
+    }
+    return {text:out,protectedTerms};
+  }
+  function restoreKnownSkillNames(text,protectedTerms){
+    return String(text||'').replace(/@@MPROPER(\d+)@@/g,(m,n)=>protectedTerms[Number(n)]||m);
+  }
+  function translateResidualEnglish(text){
+    return String(text||'').replace(/\b[A-Za-z][A-Za-z'’-]*\b/g,word=>commonWordZh.get(word.toLowerCase())??word);
+  }
+  function zhText(value){
+    let out=String(value||'');
+    if(isEnglish())return out.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1').replace(/\s+/g,' ').trim();
+    const protectedResult=protectKnownSkillNames(out);out=protectedResult.text;
+    for(const [re,to] of sentenceZh)out=out.replace(re,to);
+    for(const rec of data()?.db?.records||[]){
+      if(!rec?.name)continue;
+      const cn=zhFor(rec)?.name||data()?.identityDb?.bySkeydbId?.[rec.id]?.name;
+      if(cn&&cn!==rec.name)out=out.split(rec.name).join(cn);
     }
     for(const [re,to] of phraseZh)out=out.replace(re,to);
-    return out
+    out=out
       .replace(/\bof (?:her|his|their)\b/gi,'')
       .replace(/\b(?:her|his|their)\b/gi,'该唤醒体的')
       .replace(/['’]s\b/g,'的')
       .replace(/\band\b/gi,'并且')
       .replace(/\bwith\b/gi,'并具有')
-      .replace(/\bby\b/gi,'提高')
       .replace(/\bfrom\b/gi,'来自')
       .replace(/\b(?:the|a|an)\b/gi,'')
       .replace(/\bof\b/gi,'的')
@@ -245,12 +369,18 @@
       .replace(/\bin\b/gi,'在')
       .replace(/\bon\b/gi,'在')
       .replace(/\bfor\b/gi,'用于')
-      .replace(/\bthis\b/gi,'本次')
+      .replace(/\bthis\b/gi,'本次');
+    out=translateResidualEnglish(out);
+    out=restoreKnownSkillNames(out,protectedResult.protectedTerms);
+    return out
       .replace(/\s*,\s*/g,'，')
       .replace(/\.(?=\s|$)/g,'。')
       .replace(/\s*;\s*/g,'；')
+      .replace(/\s*:\s*/g,'：')
       .replace(/\s+/g,' ')
-      .replace(/\s+([，。；：])/g,'$1')
+      .replace(/\s+([，。；：！？])/g,'$1')
+      .replace(/([（“「])\s+/g,'$1')
+      .replace(/\s+([）”」])/g,'$1')
       .trim();
   }
   function localizedSkillName(skill){
@@ -316,6 +446,10 @@
     const clean=raw.replace(/^(?:overlay|derived):/i,'').trim();
     const global=globalTermMeta[raw]||globalTermMeta[clean];
     if(global)return {label:isEnglish()?clean:global[0],icon:global[1],color:global[2],glyph:global[3]||null};
+    const awakener=(data()?.db?.records||[]).find(x=>String(x.name||'').toLowerCase()===clean.toLowerCase());
+    if(awakener)return {label:isEnglish()?clean:labelForAwakener(awakener),color:'misc',icon:null,glyph:null};
+    const skill=(currentSkills||[]).find(x=>String(x.name||'').toLowerCase()===clean.toLowerCase());
+    if(skill)return {label:localizedSkillName(skill),color:'misc',icon:null,glyph:null};
     const overlay=(currentOverlays||[]).find(x=>String(x.name||'').toLowerCase()===clean.toLowerCase());
     if(overlay){
       const label=isEnglish()?clean:(uniqueTermZh[clean]||clean);
@@ -332,7 +466,8 @@
     return '<span class="skeyTerm skeyTerm-'+escape(meta.color||'misc')+'" title="'+escape(String(token||''))+'">'+visual+'<span>'+escape(label)+'</span></span>';
   }
   function renderRichRecord(record,level=1,ctxExtra={}){
-    let text=renderTemplatePreserveTerms(record,level,ctxExtra),terms=[];
+    const displayRecord=!isEnglish()&&zhDescriptionOverrides[record?.id]?{...record,descriptionTemplate:zhDescriptionOverrides[record.id]}:record;
+    let text=renderTemplatePreserveTerms(displayRecord,level,ctxExtra),terms=[];
     text=text.replace(/\{([^{}]+)\}/g,(m,token)=>{const i=terms.push(token)-1;return '@@MTERM'+i+'@@'});
     let html=escape(zhText(text));
     return html.replace(/@@MTERM(\d+)@@/g,(m,n)=>termHtml(terms[Number(n)]||''));
