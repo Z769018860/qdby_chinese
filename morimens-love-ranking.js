@@ -76,7 +76,7 @@
         transition:transform .18s ease,border-color .18s ease,background .2s ease}
       .loveRankRow:hover{transform:translateY(-1px);border-color:rgba(213,177,118,.32)}
       .loveRankPlace{font:900 18px/1 system-ui;color:#e9d3a8;text-align:center;font-variant-numeric:tabular-nums}
-      .loveRankChar{display:flex;align-items:center;gap:10px;min-width:0}.loveRankAvatar{width:48px;height:48px;border-radius:12px;object-fit:cover;background:#101827;border:1px solid rgba(255,255,255,.08);flex:none}
+      .loveRankChar{display:flex;align-items:center;gap:10px;min-width:0}.loveRankAvatar,.loveRankEmoji{width:48px;height:48px;border-radius:12px;background:#101827;border:1px solid rgba(255,255,255,.08);flex:none}.loveRankAvatar{object-fit:cover}.loveRankEmoji{display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1}
       .loveRankName{min-width:0}.loveRankName strong{display:block;color:#eef3fa;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.loveRankName small{display:block;margin-top:4px;color:#7f8da1;font-size:9px}
       .loveRankScore{text-align:center}.loveRankScore strong{display:block;font:900 20px/1 system-ui;font-variant-numeric:tabular-nums}.loveRankScore small{display:block;margin-top:4px;color:#8190a3;font-size:9px}.loveRankScore.isPositive strong{color:#f0bd79}.loveRankScore.isNegative strong{color:#72b3ed}.loveRankScore.isZero strong{color:#a8b3c1}
       .loveRankActions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
@@ -90,7 +90,7 @@
       .loveVoteCount{display:inline-block;min-width:18px;text-align:left;color:#e7edf5;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px rgba(0,0,0,.6)}
       .loveVoteBtn.isActive .loveVoteCount{color:#f2ddb5}
       .loveRankEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
-      @media(max-width:680px){.loveRankRow{grid-template-columns:36px minmax(0,1fr);gap:8px}.loveRankPlace{grid-row:1/3}.loveRankScore{text-align:left;padding-left:58px}.loveRankActions{grid-column:2;justify-content:flex-start;padding-left:58px;gap:8px}.loveRankAvatar{width:44px;height:44px}.loveVoteLike .loveVoteArtwork{width:40px;height:40px}.loveVoteDislike .loveVoteArtwork{width:98px;height:36px}.loveVoteCount{font-size:11px}}
+      @media(max-width:680px){.loveRankRow{grid-template-columns:36px minmax(0,1fr);gap:8px}.loveRankPlace{grid-row:1/3}.loveRankScore{text-align:left;padding-left:58px}.loveRankActions{grid-column:2;justify-content:flex-start;padding-left:58px;gap:8px}.loveRankAvatar,.loveRankEmoji{width:44px;height:44px}.loveRankEmoji{font-size:27px}.loveVoteLike .loveVoteArtwork{width:40px;height:40px}.loveVoteDislike .loveVoteArtwork{width:98px;height:36px}.loveVoteCount{font-size:11px}}
     `;
     document.head.appendChild(style);
   }
@@ -98,11 +98,13 @@
   function resolveCharacters(){
     const data=window.MorimensData;
     const records=Array.isArray(data?.db?.records)?data.db.records:[];
-    return records.map(rec=>{
+    const characters=records.map(rec=>{
       const loc=data.localizedProfile?.(rec)||{};
       const image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
       return {id:String(rec.id),name:String(loc.name||rec.name||rec.id),englishName:String(rec.name||''),image};
-    }).sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
+    });
+    characters.push({id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'',image:'',emoji:'🐈'});
+    return characters.sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
   }
 
   function scoreClass(score){return score>0?'isPositive':score<0?'isNegative':'isZero'}
@@ -118,13 +120,13 @@
       const selected=votes[r.id]||'';
       return `<div class="loveRankRow" data-love-id="${esc(r.id)}" style="--love-positive:${positive};--love-negative:${negative}">
         <div class="loveRankPlace">#${index+1}</div>
-        <div class="loveRankChar">${r.image?`<img class="loveRankAvatar" src="${esc(r.image)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:''}<div class="loveRankName"><strong>${esc(r.name)}</strong><small>${esc(r.englishName)}</small></div></div>
+        <div class="loveRankChar">${r.image?`<img class="loveRankAvatar" src="${esc(r.image)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:r.emoji?`<span class="loveRankEmoji" aria-hidden="true">${esc(r.emoji)}</span>`:''}<div class="loveRankName"><strong>${esc(r.name)}</strong>${r.englishName?`<small>${esc(r.englishName)}</small>`:''}</div></div>
         <div class="loveRankScore ${scoreClass(r.score)}"><strong>${r.score>0?'+':''}${r.score}</strong><small>👍 ${r.likes} · 👎 ${r.dislikes}</small></div>
         <div class="loveRankActions"><button type="button" class="loveVoteBtn loveVoteLike ${selected==='like'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="like" aria-pressed="${selected==='like'}" aria-label="${selected==='like'?'取消点赞':'点赞'}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='like'?'like-on.webp?v=20260920.73':'like-off.webp?v=20260920.73'}" alt=""><span class="loveVoteCount">${r.likes}</span></button><button type="button" class="loveVoteBtn loveVoteDislike ${selected==='dislike'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="dislike" aria-pressed="${selected==='dislike'}" aria-label="${selected==='dislike'?'取消拉黑':'拉黑'}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='dislike'?'dislike-on.webp?v=20260920.73':'dislike-off.webp?v=20260920.73'}" alt=""><span class="loveVoteCount">${r.dislikes}</span></button></div>
       </div>`;
     }).join('');
     const status=$('morimensLoveRankingStatus');
-    if(status)status.textContent=`共 ${sorted.length} 名角色 · 按 赞 − 踩 排序 · 数据跨设备同步`;
+    if(status)status.textContent=`共 ${sorted.length} 个条目 · 按 赞 − 踩 排序 · 数据跨设备同步`;
   }
 
   async function load(){
