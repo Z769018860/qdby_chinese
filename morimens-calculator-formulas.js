@@ -620,7 +620,7 @@
         });
       }
 
-      for(const match of template.matchAll(/trigger(?:s|ed)?\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?\{Poison\}/gi)){
+      for(const match of template.matchAll(/trigger(?:s|ed)?\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:(?:of\s+)?(?:(?:the\s+)?target['’]s\s+)?)?\{Poison\}/gi)){
         const percent=match[1]!==undefined
           ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
           :num(match[2],0);
