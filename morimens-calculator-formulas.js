@@ -524,7 +524,7 @@
             critDamageBonus:critBonuses.critDamageBonus+overExalt.critDamagePct,
             skillBaseDamageBonusPct:overExalt.baseDamagePct,
             skillFinalDamageBonusPct:overExalt.finalDamagePct,
-            usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
+            usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(String(template).slice(tokenEnd,Math.min(String(template).length,tokenEnd+260)).split(/[.!?]/,1)[0]),
             guaranteedCrit:/(?:guaranteed\s+Critical(?:\s+Hit)?\s+DMG|always\s+critically\s+hits?)/i.test(template.slice(tokenEnd,tokenEnd+160)),
             activeSource:type==='active'
           });
