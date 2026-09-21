@@ -32812,215 +32812,255 @@
           {
             "id": "voice-150471",
             "title": "Awaken",
-            "content": "Honor, justice, loyalty... every virtue worth the name perished by my own hand. What you have summoned is no knight of virtue, but a mere sinner. Even so, I will guard you with this broken body. Please give the order... if you can still trust me."
+            "content": "Honor, justice, loyalty... every virtue worth the name perished by my own hand. What you have summoned is no knight of virtue, but a mere sinner. Even so, I will guard you with this broken body. Please give the order... if you can still trust me.",
+            "category": "daily"
           },
           {
             "id": "voice-150473",
             "title": "Upgrade: I",
-            "content": "You truly wish to elevate me? ...As you wish, my lord. Thank you."
+            "content": "You truly wish to elevate me? ...As you wish, my lord. Thank you.",
+            "category": "daily"
           },
           {
             "id": "voice-150468",
             "title": "Upgrade: II",
-            "content": "Silence! ...Forgive me, my lord. That demon grows more restless as my power grows."
+            "content": "Silence! ...Forgive me, my lord. That demon grows more restless as my power grows.",
+            "category": "daily"
           },
           {
             "id": "voice-150479",
             "title": "Upgrade: III",
-            "content": "With this power, I can protect more people..."
+            "content": "With this power, I can protect more people...",
+            "category": "daily"
           },
           {
             "id": "voice-150451",
             "title": "Enlighten: Observe",
             "unlockCondition": "Unlocks at Enlighten Level 1",
-            "content": "The formless power keeps churning... It's harder to master than I imagined."
+            "content": "The formless power keeps churning... It's harder to master than I imagined.",
+            "category": "daily"
           },
           {
             "id": "voice-150474",
             "title": "Enlighten: Ponder",
             "unlockCondition": "Unlocks at Enlighten Level 2",
-            "content": "<Italic:Devour... Destroy...> Tch—do not think to sway me! I will not bend to your will again!"
+            "content": "<Italic:Devour... Destroy...> Tch—do not think to sway me! I will not bend to your will again!",
+            "category": "daily"
           },
           {
             "id": "voice-150456",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "I know—only the unwavering can master this dreadful power. I have wrestled with It deep within for far too long."
+            "content": "I know—only the unwavering can master this dreadful power. I have wrestled with It deep within for far too long.",
+            "category": "daily"
           },
           {
             "id": "voice-150460",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "Its restlessness seems to have abated. Is it because... you are here?"
+            "content": "Its restlessness seems to have abated. Is it because... you are here?",
+            "category": "daily"
           },
           {
             "id": "voice-150450",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "It still whispers in my ear, urging me to turn my spear upon the innocent... But worry not. I know I can resist. Your faith in me has given me the strength to believe in myself."
+            "content": "It still whispers in my ear, urging me to turn my spear upon the innocent... But worry not. I know I can resist. Your faith in me has given me the strength to believe in myself.",
+            "category": "daily"
           },
           {
             "id": "voice-150463",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "I feel a strength beyond measure, yet that tormenting voice has vanished. It must be your tireless encouragement that has steeled my will to stand against it.\n...Thank you. Thank you, my lord."
+            "content": "I feel a strength beyond measure, yet that tormenting voice has vanished. It must be your tireless encouragement that has steeled my will to stand against it.\n...Thank you. Thank you, my lord.",
+            "category": "daily"
           },
           {
             "id": "voice-150461",
             "title": "Affinity: I",
             "unlockCondition": "Unlocks at Affinity Level 2",
-            "content": "Have you commands for me, my lord? If not, I shall return to my patrol."
+            "content": "Have you commands for me, my lord? If not, I shall return to my patrol.",
+            "category": "daily"
           },
           {
             "id": "voice-150464",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "You are curious about the black slime clinging to my body?\nIt is the source of my power—and my despair, too. Restless as it is, it can take any shape, so it serves me well in battle. I shape it into spear and shield, for someone once took great care to teach me how to wield them... What? You wish to touch it? I must refuse. It is far too dangerous."
+            "content": "You are curious about the black slime clinging to my body?\nIt is the source of my power—and my despair, too. Restless as it is, it can take any shape, so it serves me well in battle. I shape it into spear and shield, for someone once took great care to teach me how to wield them... What? You wish to touch it? I must refuse. It is far too dangerous.",
+            "category": "daily"
           },
           {
             "id": "voice-150466",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "If it isn't too much trouble, could you tell me about your time as a Keeper? No, I do not seek a tale—I only wish to learn. After all, on this path of \"protection,\" you have walked long before me."
+            "content": "If it isn't too much trouble, could you tell me about your time as a Keeper? No, I do not seek a tale—I only wish to learn. After all, on this path of \"protection,\" you have walked long before me.",
+            "category": "daily"
           },
           {
             "id": "voice-150444",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "I know the wrongs I have committed can never be undone. \"Atonement\" is nothing but a comfort I offer myself. But even so... Wait... please don't pat my head, my lord."
+            "content": "I know the wrongs I have committed can never be undone. \"Atonement\" is nothing but a comfort I offer myself. But even so... Wait... please don't pat my head, my lord.",
+            "category": "daily"
           },
           {
             "id": "voice-150475",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "My lord, I must confess—each time I watch you give your all to fight the calamities and save this world, a quiet longing stirs within me. If only I could be of some use to you... You truly permit it? I see.\nThen... allow me to stay by your side until your journey reaches its end. As your knight, and yours alone, I shall spend what remains of this life clearing every obstacle before you."
+            "content": "My lord, I must confess—each time I watch you give your all to fight the calamities and save this world, a quiet longing stirs within me. If only I could be of some use to you... You truly permit it? I see.\nThen... allow me to stay by your side until your journey reaches its end. As your knight, and yours alone, I shall spend what remains of this life clearing every obstacle before you.",
+            "category": "daily"
           },
           {
             "id": "voice-150455",
             "title": "Chat: Touch",
-            "content": "Don't touch me! ...No, forgive me. I only feared I might hurt you."
+            "content": "Don't touch me! ...No, forgive me. I only feared I might hurt you.",
+            "category": "daily"
           },
           {
             "id": "voice-150443",
             "title": "Chat: About the Crisis",
-            "content": "It feels so much like the power that coils about my body, only... more evil. Is this what you've been fighting all this time, my lord?"
+            "content": "It feels so much like the power that coils about my body, only... more evil. Is this what you've been fighting all this time, my lord?",
+            "category": "daily"
           },
           {
             "id": "voice-150465",
             "title": "Chat: About Mythag",
-            "content": "Mythag... it is such a beautiful, peaceful place. I had a home like this once, though now, not even a record of it remains."
+            "content": "Mythag... it is such a beautiful, peaceful place. I had a home like this once, though now, not even a record of it remains.",
+            "category": "daily"
           },
           {
             "id": "voice-150462",
             "title": "Chat: What I Like",
-            "content": "The drift of hearth-smoke at dusk, rain-swept meadows, the smiling faces of the people... all of these speak of peace. That is what I cherish. And I shall give my all to guard it."
+            "content": "The drift of hearth-smoke at dusk, rain-swept meadows, the smiling faces of the people... all of these speak of peace. That is what I cherish. And I shall give my all to guard it.",
+            "category": "daily"
           },
           {
             "id": "voice-150453",
             "title": "Chat: What I Hate",
-            "content": "I despise the weak, the wavering, and those who harm the innocent. Because... that's exactly who I used to be. I loathe myself for all the sins I've committed."
+            "content": "I despise the weak, the wavering, and those who harm the innocent. Because... that's exactly who I used to be. I loathe myself for all the sins I've committed.",
+            "category": "daily"
           },
           {
             "id": "voice-150467",
             "title": "Chat: About the Keeper",
-            "content": "I never dared hope to protect another, nor to find a path to atonement—yet you made it possible. For someone like me, my lord... you are the only reason I'm still here."
+            "content": "I never dared hope to protect another, nor to find a path to atonement—yet you made it possible. For someone like me, my lord... you are the only reason I'm still here.",
+            "category": "daily"
           },
           {
             "id": "voice-150457",
             "title": "Chat: About Ogier",
             "unlockCondition": "Unlocks after acquiring Awakener \"Ogier\"",
-            "content": "Though his power is limited and his hopes naive, he remains pure, unstained. I think that's what a real knight ought to be. Yet I can never again become someone like him."
+            "content": "Though his power is limited and his hopes naive, he remains pure, unstained. I think that's what a real knight ought to be. Yet I can never again become someone like him.",
+            "category": "daily"
           },
           {
             "id": "voice-152465",
             "title": "Chat: About Helot: Catena",
             "unlockCondition": "Unlock after acquiring Awakener \"Helot: Catena\"",
-            "content": "Miss Helot: Catena's power seems to stem from a profound hatred. But hatred, once kindled, keeps spreading until it swallows everything. I fear that one day it will cost her far more than she can bear."
+            "content": "Miss Helot: Catena's power seems to stem from a profound hatred. But hatred, once kindled, keeps spreading until it swallows everything. I fear that one day it will cost her far more than she can bear.",
+            "category": "daily"
           },
           {
             "id": "voice-152466",
             "title": "Chat: Cherished Things",
-            "content": "Even if all I once cherished turns to dust, I will protect others to the end—I will not die with regret again."
+            "content": "Even if all I once cherished turns to dust, I will protect others to the end—I will not die with regret again.",
+            "category": "daily"
           },
           {
             "id": "voice-150452",
             "title": "Investigation Begins",
-            "content": "Stay behind me."
+            "content": "Stay behind me.",
+            "category": "battle"
           },
           {
             "id": "voice-150446",
             "title": "Investigation Success",
-            "content": "Victory, as expected."
+            "content": "Victory, as expected.",
+            "category": "battle"
           },
           {
             "id": "voice-150449",
             "title": "Investigation Halted",
-            "content": "Again... I could not... protect them..."
+            "content": "Again... I could not... protect them...",
+            "category": "battle"
           },
           {
             "id": "voice-150459",
             "title": "Strike: I",
-            "content": "Be gone."
+            "content": "Be gone.",
+            "category": "battle"
           },
           {
             "id": "voice-150478",
             "title": "Strike: II",
-            "content": "Hah!"
+            "content": "Hah!",
+            "category": "battle"
           },
           {
             "id": "voice-150472",
             "title": "Defense: I",
-            "content": "Hmph..."
+            "content": "Hmph...",
+            "category": "battle"
           },
           {
             "id": "voice-150442",
             "title": "Defense: II",
-            "content": "I'll cover you."
+            "content": "I'll cover you.",
+            "category": "battle"
           },
           {
             "id": "voice-150448",
             "title": "Hit: I",
-            "content": "Just a scratch."
+            "content": "Just a scratch.",
+            "category": "battle"
           },
           {
             "id": "voice-150470",
             "title": "Hit: II",
-            "content": "It's okay."
+            "content": "It's okay.",
+            "category": "battle"
           },
           {
             "id": "voice-150454",
             "title": "Skill: I - Undertow 1",
-            "content": "Stay back!"
+            "content": "Stay back!",
+            "category": "battle"
           },
           {
             "id": "voice-152212",
             "title": "Skill: I - Undertow 2",
-            "content": "Hmph!"
+            "content": "Hmph!",
+            "category": "battle"
           },
           {
             "id": "voice-152209",
             "title": "Skill: I - Undertow 3",
-            "content": "Pierce!"
+            "content": "Pierce!",
+            "category": "battle"
           },
           {
             "id": "voice-150458",
             "title": "Skill: II",
-            "content": "Return... to the formless!"
+            "content": "Return... to the formless!",
+            "category": "battle"
           },
           {
             "id": "voice-150445",
             "title": "Rouse",
-            "content": "That which is formless... may become all things."
+            "content": "That which is formless... may become all things.",
+            "category": "battle"
           },
           {
             "id": "voice-150477",
             "title": "Exalt",
-            "content": "I shall be your fortress!"
+            "content": "I shall be your fortress!",
+            "category": "battle"
           },
           {
             "id": "voice-150469",
             "title": "Over-Exalt",
-            "content": "Black slime, stand forth as a rampart!"
+            "content": "Black slime, stand forth as a rampart!",
+            "category": "battle"
           }
         ]
       },
