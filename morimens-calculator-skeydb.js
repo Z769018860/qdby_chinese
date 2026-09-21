@@ -2,8 +2,8 @@
   const $=id=>document.getElementById(id);
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
   const recordCache=new Map();
-  let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[];
-  let wheelCatalog=[],covenantCatalog=[],currentWheels=[null,null],currentCovenant=null;
+  let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
+  let wheelCatalog=[],covenantCatalog=[],posseCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
   let applyingAuto=false;
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
@@ -23,27 +23,28 @@
     const key=`${scope}:${id}`;if(recordCache.has(key))return recordCache.get(key);
     const p=window.MorimensRepository.record(scope,id);recordCache.set(key,p);try{return await p}catch(e){recordCache.delete(key);throw e}
   }
-  function currentFormulaContext(){
+  function currentFormulaContext(extra={}){
     const level=Math.max(1,Math.min(90,Number(characterLevelControl()?.value)||90));
     const engine=window.MorimensFormulaEngine;
-    const base=currentAwakener&&engine
-      ?engine.statsWithProgression(currentAwakener,level,progressionState())
-      :{};
+    const base=currentAwakener&&engine?engine.statsWithProgression(currentAwakener,level,progressionState()):{};
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
-    base.realmMasteryFinal=base.RealmMastery;
+    base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
+    base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
+    base.ownedPosseCount=Math.max(0,Math.floor(num($('formulaOwnedPosseCount')?.value,posseCatalog.length)));
+    base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.floor(num($('formulaWheelRefinementLevel')?.value,0))));
     const realm=window.MorimensRealmEngine?.state?.();
     if(realm){
       base.primordiaAllChaosTeam=realm.primordiaAllChaosTeam===true;
       base.ATK=(Number(base.ATK)||0)*(Number(realm.atkMultiplier)||1);
       base.DEF=(Number(base.DEF)||0)*(Number(realm.defMultiplier)||1);
     }
-    return base;
+    return engine?.publicFormulaContext?.({...base,...extra})||{...base,...extra};
   }
-  function argValue(arg,level=1){
+  function argValue(arg,level=1,ctxExtra={}){
     if(!arg)return null;
     const engine=window.MorimensFormulaEngine;
     if(engine){
-      const value=engine.resolveArg(arg,level,currentFormulaContext());
+      const value=engine.resolveArg(arg,level,currentFormulaContext(ctxExtra));
       return value===null?null:String(value);
     }
     if(Array.isArray(arg.values)&&arg.values.length)return arg.values[Math.min(Math.max(level-1,0),arg.values.length-1)];
@@ -101,19 +102,16 @@
       .trim();
   }
   function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
-  function renderTemplate(record,level=1){
+  function renderTemplate(record,level=1,ctxExtra={}){
     let text=record?.descriptionTemplate||record?.description||'';
-    text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
-    text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level);return v===null?name:`${v}${arg?.suffix||''}`});
+    text=text.replace(/\[([A-Za-z]+):([^\]]+)\]/g,(_,kind,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);if(v===null)return name;return `${arg?.stat?`${arg.stat} × `:''}${v}${arg?.suffix||''}`});
+    text=text.replace(/\[([^\]]+)\]/g,(_,name)=>{const arg=record?.descriptionArgs?.[name],v=argValue(arg,level,ctxExtra);return v===null?name:`${v}${arg?.suffix||''}`});
     return text.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1');
   }
   function damageArgName(skill){return skill?.descriptionTemplate?.match(/\[Damage:([^\]]+)\]/)?.[1]||null}
   function damageCoefficient(skill,level){
     const engine=window.MorimensFormulaEngine;
-    if(engine){
-      const mode=$('skillDamageMode')?.value||'primary';
-      return mode==='sum'?engine.directAtkCoefficientSum(skill,level,currentFormulaContext()):engine.directAtkCoefficient(skill,level,currentFormulaContext());
-    }
+    if(engine)return engine.directAtkCoefficient(skill,level,currentFormulaContext());
     const name=damageArgName(skill);if(!name)return 0;return num(argValue(skill?.descriptionArgs?.[name],level),0)
   }
   function maxSkillLevel(skill){let n=1;for(const arg of Object.values(skill?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
