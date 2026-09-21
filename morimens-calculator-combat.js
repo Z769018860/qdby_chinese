@@ -6,7 +6,7 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function currentLevel(){return clamp(Number.parseFloat(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90,1,90)}
-  function currentRecord(){return window.MorimensCharacterSync?.record||window.MorimensData?.db?.records?.find(x=>x.id===$('charSelect')?.value)||null}
+  function currentRecord(){const id=$('charSelect')?.value;return window.MorimensData?.db?.records?.find(x=>x.id===id)||((window.MorimensCharacterSync?.record?.id===id)?window.MorimensCharacterSync.record:null)||null}
   function resolvedStats(){
     if(window.MorimensProgressionStats)return window.MorimensProgressionStats;
     if(window.MorimensCharacterSync?.finalStats)return window.MorimensCharacterSync.finalStats;
@@ -40,7 +40,7 @@
         <div class="field"><label for="tentacleExtraBonus">额外触腕伤害增幅 %</label><input id="tentacleExtraBonus" type="number" step="0.1" value="0"><small>用于命轮、技能、遗物等已经折算后的额外触腕增幅。</small></div>
         <div class="field"><label for="tentacleCritRate">触腕暴击率 %</label><input id="tentacleCritRate" type="number" min="0" max="100" step="0.1" value="0"><small>团队入场暴击率汇总规则需要完整队伍数据，当前允许手动填写最终触腕暴击率。</small></div>
         <div class="field"><label for="tentacleCritDamage">触腕暴击伤害 %</label><input id="tentacleCritDamage" type="number" min="100" step="0.1" value="150"><small>用于触腕事件的暴击/期望伤害。</small></div>
-        <div class="field"><label for="strengthDown">力量降低 STR▼</label><input id="strengthDown" type="number" min="0" step="0.1" value="0"><small>主动伤害每点 -1；触腕按 50% 生效。</small></div>
+        <div class="field"><label for="strengthDown">力量降低</label><input id="strengthDown" type="number" min="0" step="0.1" value="0"><small>主动伤害每点 -1；触腕按 50% 生效。</small></div>
         <div class="field"><label for="tentacleCount">当前触腕数</label><input id="tentacleCount" type="number" min="0" step="1" value="1"></div>
         <div class="field"><label for="tentacleAttackTimes">每只触腕攻击次数</label><input id="tentacleAttackTimes" type="number" min="0" step="1" value="1"></div>
       </div>
@@ -56,26 +56,26 @@
       <div class="builderTitle"><span>⑧ 敌人等级与状态事件</span><small>通用等级模型 + SKeyDB 状态规则</small></div>
       <div class="formGrid">
         <div class="field"><label for="enemyLevel">敌人等级</label><input id="enemyLevel" type="number" min="1" max="120" step="1" value="77"><small>用于通用承伤系数与默认最大生命估算。</small></div>
-        <div class="field"><label for="enemyMaxHpOverride">敌人最大生命（可选覆盖）</label><input id="enemyMaxHpOverride" type="number" min="0" step="1" placeholder="留空使用等级拟合"><small>目标最大生命百分比 Pure DMG / Corrosion 会优先使用此值。</small></div>
+        <div class="field"><label for="enemyMaxHpOverride">敌人最大生命（可选覆盖）</label><input id="enemyMaxHpOverride" type="number" min="0" step="1" placeholder="留空使用等级拟合"><small>目标最大生命百分比的纯粹伤害 / 侵蚀效果会优先使用此值。</small></div>
         <div class="field"><label for="fortressStacks">加固层数</label><input id="fortressStacks" type="number" min="0" max="100" step="1" value="0"><small>SKeyDB：每层使受到的伤害降低 1%。</small></div>
-        <div class="field"><label class="inlineCheck"><input id="forceCritAll" type="checkbox"> 本次可暴击伤害强制暴击</label><small>用于 Castor 最终法则 Rouse 等“当前角色伤害始终暴击”的已激活战斗态；技能文本自身写明 guaranteed Critical Hit 时无需勾选。</small></div>
-        <div class="field"><label for="currentPoison">当前 Poison / 中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Poison”等即时中毒触发。</small></div>
-        <div class="field"><label for="currentBleed">当前 Bleed / 流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Bleed”和本回合末流血结算。</small></div>
-        <div class="field"><label for="currentCounter">当前 Counter / 反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Counter”事件。</small></div>
+        <div class="field"><label class="inlineCheck"><input id="forceCritAll" type="checkbox"> 本次可暴击伤害强制暴击</label><small>用于“当前角色伤害始终暴击”等已激活战斗态；技能文本自身写明“必定暴击”时无需勾选。</small></div>
+        <div class="field"><label for="currentPoison">当前中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“触发 X% 中毒”等即时中毒触发。</small></div>
+        <div class="field"><label for="currentBleed">当前流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“触发 X% 流血”和本回合末流血结算。</small></div>
+        <div class="field"><label for="currentCounter">当前反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“触发 X% 反击”事件。</small></div>
         <div class="field"><label for="actorMaxHp">当前角色最大生命</label><input id="actorMaxHp" type="number" min="0" step="1" value="0" placeholder="用于百分比献祭"><small>SKeyDB 未公开通用 CON→Max HP 换算；涉及“X% 最大生命的献祭/延迟献祭”时请填写游戏内实际最大生命。</small></div>
-        <div class="field"><label for="currentSacrifice">我方当前 Sacrifice / 献祭层数</label><input id="currentSacrifice" type="number" min="0" step="0.1" value="0"><small>回合末每 1 层造成 1 点自身伤害，随后移除 50% 层数；献祭跨战斗保留。</small></div>
-        <div class="field"><label for="currentDelayedSacrifice">我方当前 Delayed Sacrifice / 延迟献祭</label><input id="currentDelayedSacrifice" type="number" min="0" step="0.1" value="0"><small>本回合不结算献祭自伤；下回合开始转化为同量献祭。部分效果判定时也视作献祭。</small></div>
-        <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
+        <div class="field"><label for="currentSacrifice">我方当前献祭层数</label><input id="currentSacrifice" type="number" min="0" step="0.1" value="0"><small>回合末每 1 层造成 1 点自身伤害，随后移除 50% 层数；献祭跨战斗保留。</small></div>
+        <div class="field"><label for="currentDelayedSacrifice">我方当前延迟献祭</label><input id="currentDelayedSacrifice" type="number" min="0" step="0.1" value="0"><small>本回合不结算献祭自伤；下回合开始转化为同量献祭。部分效果判定时也视作献祭。</small></div>
+        <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；其他伤害按 50% 消费；回合末清空。</small></div>
         <div class="field"><label for="corrosionLossMultiplier">侵蚀生命损失倍率 %</label><input id="corrosionLossMultiplier" type="number" min="0" step="1" value="300"><small>SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。</small></div>
-        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Fixed / Poison / Bleed / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
+        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>主动伤害 / 触腕伤害按伤害等量消费；穿透 / 纯粹 / 固定 / 中毒 / 流血 / 反击等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
         <div class="field"><label for="enemySacrificeAmount">敌方当前献祭层数</label><input id="enemySacrificeAmount" type="number" min="0" step="0.1" value="0"><small>回合末每层造成 1 点伤害并移除 50%；该伤害计入对敌总伤害，并按“其他伤害”触发侵蚀/旧日余烬。</small></div>
-        <div class="field"><label for="birthRitualStacks">敌方已有 Birth Ritual / 诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的 Active / Tentacle DMG 的 1% 转化为献祭；所选技能本身即时施加的层数会自动叠加，上限 75 层，回合末移除。</small></div>
-        <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的 Murphy: Fauxborn「Tidal Sacrament / 潮汐圣礼」Rouse、遗物等持续战斗态。灵塑的同类效果会自动叠加；默认作用于角色自身 Active / Pierce / Fixed，独立触腕通过诞生仪式计算。</small></div>
+        <div class="field"><label for="birthRitualStacks">敌方已有诞生仪式层数</label><input id="birthRitualStacks" type="number" min="0" max="75" step="1" value="0"><small>每层使敌人受到的主动伤害 / 触腕伤害的 1% 转化为献祭；所选技能本身即时施加的层数会自动叠加，上限 75 层，回合末移除。</small></div>
+        <div class="field"><label for="sacrificeOnDamagePct">额外“伤害→献祭”比例 %</label><input id="sacrificeOnDamagePct" type="number" min="0" step="0.1" value="0"><small>用于已激活的「潮汐圣礼」灵知觉醒、遗物等持续战斗态。灵塑的同类效果会自动叠加；默认作用于角色自身主动 / 穿透 / 固定伤害，独立触腕通过诞生仪式计算。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
-        <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕/Poison/Bleed，并在最后清空 Corrosion、重置 Ancient Embers；关闭可只查看本次卡牌的即时结果。</small></span></label>
-        <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入回合末 Poison<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG。</small></span></label>
-        <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入回合末 Bleed<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG，并随后移除。</small></span></label>
+        <label class="check"><input id="includeTurnEndSettlement" type="checkbox" checked><span>结算到本回合结束<small>开启后才执行回合末触腕 / 中毒 / 流血，并在最后清空 Corrosion、重置 Ancient Embers；关闭可只查看本次卡牌的即时结果。</small></span></label>
+        <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入回合末中毒<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的纯粹伤害。</small></span></label>
+        <label class="check"><input id="includeBleedTurnEnd" type="checkbox" checked><span>计入回合末流血<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的 Pure DMG，并随后移除。</small></span></label>
         <label class="check"><input id="includeSacrificeTurnEnd" type="checkbox" checked><span>计入回合末献祭自伤<small>仅影响自身承受伤害，不会混入“对敌总伤害”；结算后献祭层数减半。</small></span></label>
         <label class="check"><input id="includeEnemySacrificeTurnEnd" type="checkbox" checked><span>计入敌方献祭回合末伤害<small>每层造成 1 点对敌伤害，受敌方加固影响；结算后敌方献祭减半。</small></span></label>
       </div>
@@ -107,7 +107,7 @@
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(calculate));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
     window.addEventListener('morimens-realm-change',()=>queueMicrotask(()=>{toggleTentacleMode();renderTriplet();calculate()}));
-    const hitField=$('hitCount')?.closest('.field');if(hitField){const label=hitField.querySelector('label');if(label)label.textContent='手动重复事件序列次数';let note=hitField.querySelector('small');if(!note){note=document.createElement('small');hitField.appendChild(note)}note.textContent='多段技能已由 SKeyDB Damage Events 自动拆分；这里仅用于额外重复整套事件，通常保持 1。'}
+    const hitField=$('hitCount')?.closest('.field');if(hitField){const label=hitField.querySelector('label');if(label)label.textContent='手动重复事件序列次数';let note=hitField.querySelector('small');if(!note){note=document.createElement('small');hitField.appendChild(note)}note.textContent='多段技能已由 SKeyDB 伤害事件自动拆分；这里仅用于额外重复整套事件，通常保持 1。'}
     toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();
     window.dispatchEvent(new CustomEvent('morimens-calculator-ui-ready'));
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
@@ -188,11 +188,11 @@
       <div class="formulaRow"><b>内在灵格</b><br>SKeyDB 的“内在灵格”天赋先把当前等级解析为“基础属性等级 +N”，然后同时作用于体质、攻击、防御三个主属性；不是简单把天赋说明里显示的属性数字直接相加。</div>
       <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
-      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 guaranteed Critical Hit 时自动按必暴；跨卡/跨回合状态（例如已激活的“伤害始终暴击”Rouse）不会被凭空假设，可通过“本次可暴击伤害强制暴击”显式开启。</div><div class="formulaRow"><b>基础伤害、力量与触腕</b><br><code>基础伤害 = 属性 × 技能倍率 × (1 + Base DMG 加成)</code>，随后再加入该伤害事件明确拥有的 STR 与触腕伤害附加项；Base DMG 不再错误放大 STR/触腕附加值。每 1 点力量使普通 Active DMG +1；技能若明确写 2×/5× 或额外 STR 加成，则按该事件自己的 STR 倍率计算。触腕本体享受 50% 力量。</div>
+      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 “必定暴击” 时自动按必暴；跨卡/跨回合状态（例如已激活的“伤害始终暴击”灵知觉醒）不会被凭空假设，可通过“本次可暴击伤害强制暴击”显式开启。</div><div class="formulaRow"><b>基础伤害、力量与触腕</b><br><code>基础伤害 = 属性 × 技能倍率 × (1 + 基础伤害加成)</code>，随后再加入该伤害事件明确拥有的 力量与触腕伤害附加项；基础伤害加成不再错误放大力量/触腕附加值。每 1 点力量使普通主动伤害 +1；技能若明确写 2×/5× 或额外 力量加成，则按该事件自己的 STR 倍率计算。触腕本体享受 50% 力量。</div>
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
-      <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
+      <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 对应「无光之底」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>Damage Events</b><br>SKeyDB 的易伤/虚弱只修正 Active 与 Tentacle；Pierce 即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为 Active 或 Pierce；目标最大生命百分比会生成 Pure；Poison 支持“按伤害施加”和“Trigger X% Poison”；Counter 支持“Trigger X% Counter”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；Pierce/Pure/Fixed/Poison/Bleed/Counter 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置；是否推进到回合末由“结算到本回合结束”总开关统一控制。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方 DEF 常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 level/HP 样本的对数拟合；普通伤害的等级系数使用 SKeyDB stage-growth 曲线做相对等级归一化，明确属于通用比较模型而非官方 DEF 公式。</div><div class="formulaRow"><b>献祭 / 延迟献祭</b><br>SKeyDB：献祭在持有者回合末造成等于当前层数的伤害，然后移除 50% 层数并可跨战斗保留；延迟献祭在下回合开始转化为同量献祭，且部分判定中也视作献祭。敌方献祭伤害作为“其他类型 DMG”进入事件链：受 Fortress/加固影响，并按 50% 规则消耗 Corrosion/Ancient Embers；不吃 Active/Tentacle 专属的 Vulnerable/Weakness，也不暴击。我方献祭只统计自身承受伤害，不加入对敌总伤害。</div><div class="formulaRow"><b>Pure / Poison / Bleed / Counter</b><br>SKeyDB：Pure DMG 不能暴击；Poison 回合末造成等于层数的 Pure DMG；Bleed 回合末造成等于层数的 Pure DMG 并随后移除；Counter 触发时造成等于反击层数的 Pure DMG。这些状态伤害不套通用等级系数，仍受明确的 Fortress 承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
+      <div class="formulaRow"><b>伤害事件</b><br>SKeyDB 的易伤/虚弱只修正主动伤害与触腕伤害；穿透伤害即使由触腕触发也不套易伤/虚弱。<code>[Damage:...]</code> 会按文本识别为主动伤害或穿透伤害；目标最大生命百分比会生成纯粹伤害；中毒支持“按伤害施加”和“触发 X% 中毒”；反击支持“触发 X% 反击”。侵蚀/旧日余烬：Active/Tentacle 按伤害等量消费；穿透/纯粹/固定/中毒/流血/反击 等其他伤害按伤害的 50% 消费。侵蚀默认造成消费量 300% 的生命损失（可按效果校准），侵蚀在回合末清空，旧日余烬每回合重置；是否推进到回合末由“结算到本回合结束”总开关统一控制。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB D-Zone 没有公开统一敌方防御常数，因此删除手工 DEF/K 模型。估算最大生命使用 D-Zone 60–69 期 1665 个 等级/生命值样本的对数拟合；普通伤害的等级系数使用 SKeyDB 关卡成长曲线做相对等级归一化，明确属于通用比较模型而非官方防御公式。</div><div class="formulaRow"><b>献祭 / 延迟献祭</b><br>SKeyDB：献祭在持有者回合末造成等于当前层数的伤害，然后移除 50% 层数并可跨战斗保留；延迟献祭在下回合开始转化为同量献祭，且部分判定中也视作献祭。敌方献祭伤害作为“其他类型伤害”进入事件链：受 加固影响，并按 50% 规则消耗 侵蚀/旧日余烬；不吃 主动/触腕专属的易伤/虚弱，也不暴击。我方献祭只统计自身承受伤害，不加入对敌总伤害。</div><div class="formulaRow"><b>纯粹伤害 / 中毒 / 流血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒回合末造成等于层数的纯粹伤害；流血回合末造成等于层数的纯粹伤害并随后移除；反击触发时造成等于反击层数的纯粹伤害。这些状态伤害不套通用等级系数，仍受明确的 加固承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；深渊深海则严格使用队伍最大生命 ×5%。</div>
     `;
   }
 
@@ -349,7 +349,7 @@
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'') ,
+        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
@@ -683,30 +683,30 @@
     const label={normal:'非暴击',crit:'暴击',expected:'期望'}[mode];
     $('resultLabel').textContent=`${$('charSelect')?.selectedOptions?.[0]?.textContent||'角色'} · ${label}总伤害`;
     $('resultNumber').textContent=fmt(total);
-    $('normalLine').textContent=`可暴击 Active/Pierce 非暴击合计：${fmt(activeNormal)}`;
-    $('critLine').textContent=`可暴击 Active/Pierce 暴击合计：${fmt(activeCrit)}`;
-    $('expectedLine').textContent=`可暴击 Active/Pierce 期望合计：${fmt(activeExpected)}`;
+    $('normalLine').textContent=`可暴击主动/穿透伤害的非暴击合计：${fmt(activeNormal)}`;
+    $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
+    $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。Vulnerable / Weakness 按 SKeyDB 只作用于 Active 与 Tentacle；Pierce 不套这两项。Pure / Fixed / Poison / Bleed / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。献祭属于自身承受伤害：回合末每层造成 1 点自身伤害并移除 50% 层数，不计入对敌总伤害；延迟献祭在下回合开始转为献祭。`;
+    $('formula').textContent=`伤害事件：主动 / 穿透 / 触腕伤害使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；穿透伤害无视屏障。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。易伤 / 虚弱按 SKeyDB 只作用于主动伤害与触腕伤害；穿透伤害不套这两项。纯粹 / 固定 / 中毒 / 流血 / 反击不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀 / 旧日余烬按 SKeyDB：主动 / 触腕伤害等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。献祭属于自身承受伤害：回合末每层造成 1 点自身伤害并移除 50% 层数，不计入对敌总伤害；延迟献祭在下回合开始转为献祭。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
       if((event.type==='poison'||event.type==='bleed'||event.type==='corrosion'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
-      const tags={active:'Active',pierce:'Pierce',tentacle:'Tentacle',pure:'Pure',fixed:'Fixed',poison:'Poison',bleed:'Bleed',corrosion:'Corrosion',counter:'Counter',sacrifice:'献祭'};
+      const tags={active:'主动伤害',pierce:'穿透伤害',tentacle:'触腕伤害',pure:'纯粹伤害',fixed:'固定伤害',poison:'中毒',bleed:'流血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
     rows.unshift(['敌人估算最大生命',enemyMaxHp]);
     rows.unshift(['敌人等级通用承伤系数',levelFactor]);
     rows.unshift(['界域修正后攻击力',attack]);
-    rows.push(['Active DMG 合计',activeTotal]);
-    rows.push(['Pierce DMG 合计',pierceTotal]);
-    rows.push(['Tentacle DMG 合计',tentacleTotal]);
-    rows.push(['Pure DMG 合计',pureTotal]);
-    rows.push(['Fixed DMG 合计',fixedTotal]);
-    rows.push(['Poison DMG 合计',poisonTotal]);
-    rows.push(['Bleed DMG 合计',bleedTotal]);
-    rows.push(['Counter DMG 合计',counterTotal]);
+    rows.push(['主动伤害合计',activeTotal]);
+    rows.push(['穿透伤害合计',pierceTotal]);
+    rows.push(['触腕伤害合计',tentacleTotal]);
+    rows.push(['纯粹伤害合计',pureTotal]);
+    rows.push(['固定伤害合计',fixedTotal]);
+    rows.push(['中毒伤害合计',poisonTotal]);
+    rows.push(['流血伤害合计',bleedTotal]);
+    rows.push(['反击伤害合计',counterTotal]);
     rows.push(['敌方献祭回合末伤害',sacrificeTotal]);
     rows.push(['敌方初始献祭',initialEnemySacrifice]);
     rows.push(['伤害转化献祭比例',damageToSacrificePct]);
@@ -727,10 +727,10 @@
     if(turnEndProcessed&&embersBeforeTurnReset>0)rows.push(['旧日余烬回合重置前剩余',embersBeforeTurnReset]);
     rows.push(['侵蚀最终剩余',corrosionRemaining]);
     rows.push(['旧日余烬最终剩余',embersRemaining]);
-    rows.push(['最终 Poison 层数',initialPoison+poisonAdded]);
-    rows.push(['最终 Bleed 层数',includeBleedTurnEnd?0:initialBleed+bleedAdded]);
-    rows.push(['本次新增 Counter',counterAdded]);
-    rows.push(['最终 Counter',counterCurrent]);
+    rows.push(['最终中毒层数',initialPoison+poisonAdded]);
+    rows.push(['最终流血层数',includeBleedTurnEnd?0:initialBleed+bleedAdded]);
+    rows.push(['本次新增反击',counterAdded]);
+    rows.push(['最终反击',counterCurrent]);
     rows.push(['当前献祭层数',initialSacrifice]);
     if(includeSacrificeTurnEnd)rows.push(['回合末献祭自身伤害',sacrificeSelfDamage]);
     rows.push(['回合末后献祭剩余',sacrificeRemaining]);
@@ -755,11 +755,11 @@
       $('tentacleReadout').innerHTML=`体系：<b>${model}</b> · 姿态：<b>${stance}</b> · 界域精通效果倍率 <b>×${Number(tentacle.masteryEffectMultiplier||1).toFixed(1)}</b>${tentacle.ragingWheelBonusPct?` · 怒涛命轮临时精通 <b>+${Number(tentacle.ragingWheelBonusPct).toFixed(1)}%</b>（${fmt(tentacle.baseRealmMastery)} → ${fmt(tentacle.realmMasteryForStance)}）`:''}<br>机制基础触腕 <b>${fmt(tentacle.base)}</b>${coexist} → 姿态/精通后 <b>${fmt(tentacle.attack)}</b> → 加入 50% 净力量后 <b>${fmt(tentacleWithStrength)}</b> → 当前模式单次伤害 <b>${fmt(oneTentacle.damage)}</b>。触腕暴击率 <b>${(tentacleCritRate*100).toFixed(1)}%</b> / 暴击伤害 <b>${(tentacleCritMult*100).toFixed(1)}%</b>${pureNote}。`;
     }
     if($('enemyLevelReadout')){
-      $('enemyLevelReadout').innerHTML=`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 最大生命 <b>${fmt(enemyMaxHp)}</b>（${enemyMaxHpSource}）<br><small>${enemyMaxHpInput>0?'目标最大生命百分比效果使用手动值。':'默认最大生命由 SKeyDB D-Zone 60–69 期共 1665 个等级/HP 样本作对数拟合。'} 等级承伤系数不是官方 DEF 公式。</small>`;
+      $('enemyLevelReadout').innerHTML=`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 最大生命 <b>${fmt(enemyMaxHp)}</b>（${enemyMaxHpSource}）<br><small>${enemyMaxHpInput>0?'目标最大生命百分比效果使用手动值。':'默认最大生命由 SKeyDB D-Zone 60–69 期共 1665 个等级/生命值样本作对数拟合。'} 等级承伤系数不是官方 DEF 公式。</small>`;
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定 Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Corrosion <b>${corrosionEvents.length}</b> / Counter <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 流血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
     }
     window.MorimensDamageEvents={
       mode,

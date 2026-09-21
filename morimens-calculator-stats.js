@@ -73,7 +73,7 @@
       const p=resolved.progression||{};
       const parts=[
         `${localizedName(rec)} · ${rec.id}`,
-        `Lv.${level()} 攻击 ${resolved.ATK}`,
+        `等级 ${level()} · 攻击 ${resolved.ATK}`,
         `体质 ${resolved.CON}`,
         `防御 ${resolved.DEF}`,
         `暴击率 ${num(resolved.CritRate).toFixed(1)}%`,
@@ -114,6 +114,10 @@
     bindUserTracking();
     setTimeout(updateCharacterStats,120);
     window.addEventListener('morimens-language-change',()=>setTimeout(updateCharacterStats,20));
+    window.addEventListener('morimens-progression-change',()=>{
+      const id=selectedId();if(id&&id!==state.lastAwakenerId)state.userEdited={critRate:false,critDamage:false,powerBonus:false,realmMastery:false};
+      setTimeout(updateCharacterStats,0);
+    });
     window.addEventListener('morimens-calculator-ui-ready',()=>setTimeout(updateCharacterStats,0));
   }
   window.MorimensStatsSync={updateCharacterStats,statsFor};

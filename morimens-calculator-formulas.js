@@ -140,7 +140,8 @@
     const bonus=arg?.substatBonus;
     if(!bonus)return base;
     const stat=num(ctx?.[bonus.substat],0),mult=num(bonus.multiplier,0);
-    const mode=bonus.mode??(arg.kind!=='fixed'&&String(arg.suffix||'').includes('%')?'scale_base':'additive');
+    const suffix=arg?.suffix??bonus?.suffix??'';
+    const mode=bonus.mode??(arg.kind!=='fixed'&&String(suffix).includes('%')?'scale_base':'additive');
     if(mode==='scale_base')return base*(1+(stat*mult)/100);
     if(mode==='additive_factor')return base*(num(bonus.baseMultiplier,1)+(stat*mult)/100);
     return base+stat*mult;
@@ -175,6 +176,14 @@
       if(wordMatch){
         const words={once:1,twice:2,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};
         const raw=String(wordMatch[1]).toLowerCase();
+        return Math.max(1,Math.floor(words[raw]??num(raw,1)));
+      }
+      // Some SKeyDB descriptions place the hit count after a target phrase,
+      // e.g. "Deal [Damage] DMG to all enemies 2 times".
+      const targetRepeat=tail.match(/^\s*(?:DMG|damage)?\s*(?:to|against)\s+[^,.!?;]{0,100}?\s+(once|twice|one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s*(?:times?|hits?|instances?)/i);
+      if(targetRepeat){
+        const words={once:1,twice:2,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10};
+        const raw=String(targetRepeat[1]).toLowerCase();
         return Math.max(1,Math.floor(words[raw]??num(raw,1)));
       }
       const later=rawTail.match(/^[^.]{0,120}([^~])\[([^\]]+)\]\s*\{plural:\[[^\]]+\]\|time\|times\}/i);

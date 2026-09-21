@@ -14,6 +14,9 @@
   function zhFor(rec){return data()?.zhFor?.(rec)||data()?.zhDb?.bySkeydbId?.[rec?.id]||data()?.identityDb?.bySkeydbId?.[rec?.id]||null}
   function labelForAwakener(rec){return isEnglish()?rec.name:(zhFor(rec)?.name||rec.name)}
   function labelForWheel(rec){return data()?.localizedEntity?.('wheel',rec)?.name||rec?.name||''}
+  const realmZh={CHAOS:'混沌',CARO:'血肉',AEQUOR:'深海',ULTRA:'超维'};
+  function realmLabel(value){const raw=String(value||'');return isEnglish()?raw:(realmZh[raw.toUpperCase()]||raw)}
+  function wheelOptionLabel(wheel){return [labelForWheel(wheel),isEnglish()?wheel?.rarity:'',realmLabel(wheel?.realm)].filter(Boolean).join(' · ')}
   function escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
   function selectedAwakenerId(){return $('charSelect')?.selectedOptions?.[0]?.dataset?.awakenerId||$('charSelect')?.value||null}
   function num(v,fallback=0){const n=Number.parseFloat(v);return Number.isFinite(n)?n:fallback}
@@ -58,23 +61,44 @@
   }
   function maxArgLevel(record){let n=1;for(const arg of Object.values(record?.descriptionArgs||{})){if(Array.isArray(arg?.values))n=Math.max(n,arg.values.length)}return n}
   const slotZh={Strike:'打击',Defense:'防御',Rouse:'灵知觉醒',Skill1:'技能卡一',Skill2:'技能卡二',Exalt:'狂气爆发',OverExalt:'超限爆发'};const slotOrder={Strike:1,Defense:2,Rouse:3,Skill1:4,Skill2:5,Exalt:6,OverExalt:7};
+  const sentenceZh=[
+    [/This Awakener gains ([^.!?]+?) Levels? of Base Attributes\./gi,'该唤醒体获得 $1 级基础属性。'],
+    [/Randomly deal (\d+) instances? of ([^.!?]+?) (Pierce DMG|DMG)/gi,'随机造成 $1 段 $2 $3'],
+    [/Deal (\d+) instances? of ([^.!?]+?) (Pierce DMG|DMG)/gi,'造成 $1 段 $2 $3'],
+    [/Randomly deal ([^.!?,;]+?) (Pierce DMG|DMG) ([^.!?,;]+?) (?:times?|hits?)/gi,'随机造成 $1 $2 $3 次'],
+    [/Deal ([^.!?,;]+?) (Pierce DMG|DMG) to all enemies ([^.!?,;]+?) (?:times?|hits?)/gi,'对全体敌人造成 $1 $2 $3 次'],
+    [/Deal ([^.!?,;]+?) (Pierce DMG|DMG) to all enemies/gi,'对全体敌人造成 $1 $2'],
+    [/Deal ([^.!?,;]+?) (Pierce DMG|DMG) to (?:the )?enemy with lowest HP/gi,'对生命值最低的敌人造成 $1 $2'],
+    [/Deal ([^.!?,;]+?) (Pierce DMG|DMG) to (?:the )?enemy with highest HP/gi,'对生命值最高的敌人造成 $1 $2'],
+    [/Deal ([^.!?,;]+?) guaranteed Critical Hit DMG/gi,'造成必定暴击的 $1 伤害'],
+    [/Deal ([^.!?,;]+?) (Pierce DMG|DMG) (\d+|twice) (?:times?|hits?)/gi,'造成 $1 $2 $3 次'],
+    [/Deal ([^.!?,;]+?) (Pierce DMG|DMG)/gi,'造成 $1 $2'],
+    [/Gain ([^.!?,;]+?) Shield/gi,'获得 $1 护盾'],
+    [/Lose ([^.!?,;]+?) Current HP/gi,'失去当前生命值的 $1'],
+    [/This DMG enjoys ([^.!?]+?) STR bonus/gi,'本次伤害享受 $1 力量加成'],
+    [/which enjoys (?:an? )?([^.!?,;]+?) STR bonus/gi,'并享受 $1 力量加成'],
+    [/For every 1% HP the target is missing/gi,'目标每损失 1% 生命值'],
+    [/at the start of (?:the )?next turn/gi,'下回合开始时'],
+    [/at the end of (?:the )?turn/gi,'回合结束时']
+  ];
   const phraseZh=[
     [/This talent is only effective in the (?:\\{)?星辰篇(?:\\})? stages\\./gi,'该天赋仅在「星辰篇」关卡中生效。'],
     [/This Awakener's/gi,'该唤醒体的'],[/The Awakener's/gi,'该唤醒体的'],[/Awakener/gi,'唤醒体'],
     [/upon their first (?:\\{)?Rouse(?:\\})?/gi,'首次进行灵知觉醒时'],[/they gain/gi,'并获得'],
     [/Keyflare Regen Level/gi,'银钥充能等级'],[/Keyflare Regen/gi,'银钥充能'],[/Keyflare/gi,'银钥能量'],
     [/Aliemus/gi,'狂气'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
-    [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'流血'],
-    [/Leap/gi,'跃迁'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
-    [/Tentacle DMG/gi,'触腕伤害'],[/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
+    [/Pierce DMG/gi,'穿透伤害'],[/Pure DMG/gi,'纯粹伤害'],[/Fixed DMG/gi,'固定伤害'],[/Active DMG/gi,'主动伤害'],[/Tentacle DMG/gi,'触腕伤害'],
+    [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'流血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
+    [/Leap/gi,'跃迁'],[/Aftershock/gi,'余震'],[/Devour/gi,'吞噬'],[/Resonance/gi,'共鸣'],[/Ritual/gi,'仪式'],[/Stealing|Steal/gi,'窃取'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
+    [/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
     [/Crit\. Rate/gi,'暴击率'],[/Crit\. DMG/gi,'暴击伤害'],[/Final DMG/gi,'最终伤害'],[/Base DMG/gi,'基础伤害'],
-    [/Max HP/gi,'最大生命'],[/HP Recovery/gi,'生命回复'],[/Arithmetica Cost/gi,'算术值消耗'],
-    [/all enemies/gi,'全体敌人'],[/highest HP enemy/gi,'生命最高的敌人'],[/Draw Pile/gi,'抽牌堆'],[/Discard Pile/gi,'弃牌堆'],
+    [/Max HP/gi,'最大生命'],[/HP Recovery/gi,'生命回复'],[/Current HP/gi,'当前生命值'],[/HP/gi,'生命值'],[/Arithmetica Cost/gi,'算力消耗'],
+    [/all enemies/gi,'全体敌人'],[/highest HP enemy/gi,'生命值最高的敌人'],[/lowest HP enemy/gi,'生命值最低的敌人'],[/all teammates/gi,'全体队友'],[/teammates?/gi,'队友'],[/target['’]s/gi,'目标的'],[/targets?/gi,'目标'],[/Draw Pile/gi,'抽牌堆'],[/Discard Pile/gi,'弃牌堆'],
     [/at turn end/gi,'回合结束时'],[/at turn start/gi,'回合开始时'],[/at battle start/gi,'战斗开始时'],
     [/this turn/gi,'本回合'],[/this battle/gi,'本场战斗'],[/each turn/gi,'每回合'],[/per turn/gi,'每回合'],
-    [/first Command Card/gi,'第一张指令卡'],[/Command Card/gi,'指令卡'],[/cards?/gi,'卡牌'],
+    [/first Command Card/gi,'第一张指令卡'],[/Command Card/gi,'指令卡'],[/Boss Battles?/gi,'首领战'],[/Critical Hit/gi,'暴击'],[/stacks?/gi,'层'],[/copies|copy/gi,'张'],[/cards?/gi,'卡牌'],
     [/dealing Active DMG/gi,'造成主动伤害后'],[/Active DMG/gi,'主动伤害'],[/deals?/gi,'造成'],[/causes?/gi,'造成'],
-    [/obtains?/gi,'获得'],[/gains?/gi,'获得'],[/increase(?:s|d)?/gi,'提高'],[/reduce(?:s|d)?/gi,'降低'],
+    [/obtains?/gi,'获得'],[/gains?/gi,'获得'],[/appl(?:y|ies|ied)/gi,'施加'],[/inflict(?:s|ed)?/gi,'施加'],[/recover(?:s|ed)?/gi,'恢复'],[/increase(?:s|d)?/gi,'提高'],[/reduce(?:s|d)?/gi,'降低'],
     [/generate(?:s|d)?/gi,'生成'],[/trigger(?:s|ed)?/gi,'触发'],[/shuffle/gi,'洗入'],[/draw/gi,'抽取'],
     [/into hand/gi,'置入手牌'],[/into the top of your Draw Pile/gi,'置于抽牌堆顶'],[/to all enemies/gi,'对全体敌人'],
     [/enemy/gi,'敌人'],[/Turn/gi,'回合'],[/Battle/gi,'战斗'],[/Temporary/gi,'临时'],[/Permanent/gi,'永久'],
@@ -85,11 +109,13 @@
     [/Rouse/gi,'灵知觉醒'],[/Over-?Exalt/gi,'超限爆发'],[/Exalt/gi,'狂气爆发'],[/Defense/gi,'防御'],[/Strike/gi,'打击'],
     [/Shield/gi,'护盾'],[/Damage/gi,'伤害'],[/DMG/gi,'伤害'],[/ATK/gi,'攻击力'],[/DEF/gi,'防御'],[/CON/gi,'体质'],
     [/Crit/gi,'暴击'],[/Skill/gi,'技能'],[/Level/gi,'等级'],[/Base/gi,'基础'],[/Final/gi,'最终'],
-    [/equal to/gi,'等同于'],[/additional/gi,'额外'],[/first/gi,'首次'],[/current/gi,'当前'],[/after/gi,'之后'],
+    [/equal to/gi,'等同于'],[/equal amount/gi,'等量'],[/additional/gi,'额外'],[/each hit/gi,'每段伤害'],[/instances?/gi,'段'],[/hits?/gi,'段'],[/chance/gi,'概率'],[/played|playing/gi,'打出'],[/first/gi,'首次'],[/current/gi,'当前'],[/after/gi,'之后'],
     [/before/gi,'之前'],[/when/gi,'当'],[/if/gi,'若'],[/for every/gi,'每'],[/times/gi,'次'],[/time/gi,'次']
   ];
   function zhText(value){
     let out=String(value||'');
+    if(isEnglish())return out.replace(/\n/g,' ').replace(/\{([^}]+)\}/g,'$1').replace(/\s+/g,' ').trim();
+    for(const [re,to] of sentenceZh)out=out.replace(re,to);
     if(currentAwakener?.name){
       const cn=labelForAwakener(currentAwakener);
       if(cn&&cn!==currentAwakener.name)out=out.split(currentAwakener.name).join(cn);
@@ -102,6 +128,17 @@
       .replace(/\bwith\b/gi,'并具有')
       .replace(/\bby\b/gi,'提高')
       .replace(/\bfrom\b/gi,'来自')
+      .replace(/\b(?:the|a|an)\b/gi,'')
+      .replace(/\bof\b/gi,'的')
+      .replace(/\bto\b/gi,'对')
+      .replace(/\bis\b|\bare\b/gi,'为')
+      .replace(/\bin\b/gi,'在')
+      .replace(/\bon\b/gi,'在')
+      .replace(/\bfor\b/gi,'用于')
+      .replace(/\bthis\b/gi,'本次')
+      .replace(/\s*,\s*/g,'，')
+      .replace(/\.(?=\s|$)/g,'。')
+      .replace(/\s*;\s*/g,'；')
       .replace(/\s+/g,' ')
       .replace(/\s+([，。；：])/g,'$1')
       .trim();
@@ -239,7 +276,7 @@
   }
   function renderEnlightenSummary(){
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
-    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot))+' · '+escape(zhText(x.name||''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
+    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
   }
   function ensureSkillRuntimeUi(){
     if($('skillRuntimeBlock'))return;
@@ -357,6 +394,25 @@
     window.MorimensProgressionSync=progression;
   }
 
+  function syncCharacterBaseField(id,nextBase){
+    const el=$(id);if(!el||!currentAwakener)return;
+    const next=num(nextBase,0),previousId=el.dataset.characterBaseAwakener||'';
+    const previousBase=Number.parseFloat(el.dataset.characterBase);
+    const manualBase=Number.parseFloat(el.dataset.manualBase);
+    const followedPrevious=!Number.isFinite(previousBase)||!Number.isFinite(manualBase)||Math.abs(previousBase-manualBase)<1e-7;
+    if(previousId!==currentAwakener.id||followedPrevious)el.dataset.manualBase=String(next);
+    el.dataset.characterBase=String(next);el.dataset.characterBaseAwakener=currentAwakener.id;
+  }
+  function syncCharacterRealmMastery(nextBase){
+    const el=$('realmMastery');if(!el||!currentAwakener)return;
+    const next=num(nextBase,0),previousId=el.dataset.characterBaseAwakener||'';
+    const previousBase=Number.parseFloat(el.dataset.characterBase);
+    const shownBase=num(el.value)-wheelRealmMasteryAuto;
+    const followedPrevious=!Number.isFinite(previousBase)||Math.abs(previousBase-shownBase)<1e-7;
+    if(previousId!==currentAwakener.id||followedPrevious){applyingAuto=true;el.value=String(Math.round((next+wheelRealmMasteryAuto)*1000)/1000);applyingAuto=false}
+    el.dataset.characterBase=String(next);el.dataset.characterBaseAwakener=currentAwakener.id;
+  }
+
   function applyCharacterStats(){
     if(!currentAwakener)return;const level=Math.min(90,Math.max(1,Number(characterLevelControl()?.value)||90));
     const engine=window.MorimensFormulaEngine,progression=progressionState();
@@ -368,8 +424,10 @@
     };
     const input=$('attack');if(input&&$('autoCharacterStats')?.checked!==false&&(input.dataset.autoAttack!=='0')){applyingAuto=true;input.value=String(stats.ATK);input.dataset.autoAttack='1';applyingAuto=false}
     const cr=num(stats.CritRate),cd=num(stats.CritDamage);
-    if($('critRate')&&!$('critRate').dataset.manualInitialized)$('critRate').dataset.manualBase=String(cr);
-    if($('critDamage')&&!$('critDamage').dataset.manualInitialized)$('critDamage').dataset.manualBase=String(100+cd);
+    syncCharacterBaseField('critRate',cr);
+    syncCharacterBaseField('critDamage',100+cd);
+    syncCharacterBaseField('powerBonus',num(stats.DamageAmplification));
+    syncCharacterRealmMastery(num(stats.RealmMastery));
     renderProgressionSummary(stats,progression);
     window.MorimensProgressionStats=stats;
     applyAutoBonuses();
@@ -383,7 +441,7 @@
     configureProgressionControls();
     configureEnlightenControl();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
-    const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
+    const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
     applyCharacterStats();
     try{
       const [skillRows,derivedRows]=await Promise.all([
@@ -473,7 +531,7 @@
     wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];posseCatalog=pr.status==='fulfilled'?(pr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
     window.MorimensFormulaEngine?.setGameplayMathMetadata?.(gameplayMathMeta);ensureFormulaContextUi();
     if(gameplayMathMeta?.accountLevelCurve&&$('formulaAccountLevel')){$('formulaAccountLevel').min=String(gameplayMathMeta.accountLevelCurve.minLevel||1);$('formulaAccountLevel').max=String(gameplayMathMeta.accountLevelCurve.maxLevel||100)}
-    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${labelForWheel(w)} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
+    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=wheelOptionLabel(w);o.selected=w.id===prev;sel.appendChild(o)}}
     const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
     const missing=[wr,cr,pr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
@@ -606,10 +664,10 @@
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
     if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('skillActualHits'))$('skillActualHits').value='';
-    for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0)}
+    for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
-  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=`${labelForWheel(wheel)} · ${wheel.rarity||''} ${wheel.realm||''}`}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses()}
+  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses()}
 
   async function boot(){
     ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
