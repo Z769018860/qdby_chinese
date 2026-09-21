@@ -146,7 +146,7 @@
   function activeEnlightens(){
     const selected=selectedEnlightenSlot();if(!selected)return [];
     const max=ENLIGHTEN_ORDER.indexOf(selected);if(max<0)return [];
-    return currentEnlightens.filter(x=>{const i=ENLIGHTEN_ORDER.indexOf(x.slot);return i>=0&&i<=max});
+    return currentEnlightens.filter(x=>{const i=ENLIGHTEN_ORDER.indexOf(x.slot);return i>=0&&i<=max}).sort((a,b)=>ENLIGHTEN_ORDER.indexOf(a.slot)-ENLIGHTEN_ORDER.indexOf(b.slot));
   }
   function cloneRecord(record){return record?JSON.parse(JSON.stringify(record)):record}
   function applyEnlightenPatch(record,upgrade){
