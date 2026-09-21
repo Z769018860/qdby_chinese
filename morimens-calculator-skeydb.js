@@ -644,6 +644,12 @@
     for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
       const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
       let m;
+      const genericPoisonCounter=s.match(/Base DMG\s*,\s*Poison\s*,\s*and\s*Counter\s*\+\s*([\d.]+)%/i);
+      if(genericPoisonCounter){
+        const value=num(genericPoisonCounter[1]);
+        out.poisonInfliction+=value;
+        out.counterGeneration+=value;
+      }
       const paired=s.match(/\+\s*([\d.]+)%\s*Base DMG\s+and\s+Crit\.?\s*DMG/i);
       if(paired){
         if(bonusScopeAllows(s,'base'))out.base+=num(paired[1]);
