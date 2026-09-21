@@ -98,15 +98,14 @@
   function resolveCharacters(){
     const data=window.MorimensData;
     const records=Array.isArray(data?.db?.records)?data.db.records:[];
-    if(!records.length)return [];
-    const characters=records.map(rec=>{
+    return records.map(rec=>{
       const loc=data.localizedProfile?.(rec)||{};
       const image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
       return {id:String(rec.id),name:String(loc.name||rec.name||rec.id),englishName:String(rec.name||''),image};
-    });
-    characters.push({id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'请离开了',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'});
-    return characters.sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
+    }).sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
   }
+
+  const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'请离开了',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
 
   function scoreClass(score){return score>0?'isPositive':score<0?'isNegative':'isZero'}
   function render(){
@@ -140,6 +139,14 @@
       if(!characters.length)throw new Error('角色资料尚未加载');
       const counters=await getCounters(characters.map(x=>x.id));
       rows=characters.map(x=>{const c=counters.get(x.id)||{likes:0,dislikes:0};return {...x,...c,score:c.likes-c.dislikes}});
+      try{
+        const specialCounters=await getCounters([schoolCat.id]);
+        const c=specialCounters.get(schoolCat.id)||{likes:0,dislikes:0};
+        rows.push({...schoolCat,...c,score:c.likes-c.dislikes});
+      }catch(error){
+        console.warn('弥萨格校猫投票计数加载失败，使用 0 票占位，不影响原榜单',error);
+        rows.push({...schoolCat,likes:0,dislikes:0,score:0});
+      }
       render();
       initialized=true;
     }catch(error){
