@@ -490,6 +490,7 @@
         strengthMultiplier:0,tentacleBonusCoefficient:0,counterBonusCoefficient:0,
         critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
         usesStrength:false,guaranteedCrit:false,activeSource:true,
+        onDamageBleedPct:Math.max(0,Number(resources.sinMarkStacks)||0),
         resourceEffectLabel:'赎罪苦痛：额外 200% ATK 伤害'
       });
     }
@@ -741,7 +742,7 @@
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       const resources=characterResourceValues();
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：Necrotic Gala 暴击伤害加成翻倍');
-      if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&baseSkillId==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
+      if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('赎罪苦痛：当前指令卡额外造成 200% ATK 伤害');
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
