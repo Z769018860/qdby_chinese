@@ -10,7 +10,12 @@
   const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄'};
   const SKEYDB_ICON_COMMIT='d4c5a90f24a7e95745a92b8d1098aff77d6f1510';
   const SKEYDB_ICON_BASE='https://raw.githubusercontent.com/dansa/SKeyDB/'+SKEYDB_ICON_COMMIT+'/src/assets/icons/';
-  const globalTermMeta={
+  const uniqueTermZh={
+    'Satiety':'饱足','Offering':'供奉','Corpse':'残骸','Sin Mark':'罪印','Symbiosis':'共生','Pack Hunt':'群猎','Negentropy':'负熵',
+    'Undertow':'暗潮','Guilt':'罪责','Endure':'坚忍','Dreamlure':'梦诱','Murmurs':'低语','Spellbound':'痴醉','Enthrall':'夺魄',
+    'Weaver':'织命者','Creativity':'创造力','Fantasia':'幻想','Combust':'燃烧','Birth Ritual':'诞生仪式','Life Seal':'生命封印'
+  };
+    const globalTermMeta={
     'STR':['力量','IconS_Buff_021.webp','heal'],'Temporary STR':['临时力量','IconS_Buff_021.webp','heal'],'STR▼':['力量降低','IconS_Buff_037.webp','affliction'],
     'Vulnerable':['易伤','IconS_Buff_003.webp','damage'],'Weakness':['虚弱','IconS_Buff_005.webp','affliction'],'Poison':['中毒','IconS_Buff_006.webp','affliction'],
     'Counter':['反击','IconS_Buff_019.webp','shield'],'Bleed':['流血','IconS_Buff_022.webp','damage'],'Corrosion':['侵蚀','IconS_Buff_070.webp','affliction'],
@@ -259,11 +264,11 @@
     if(global)return {label:isEnglish()?clean:global[0],icon:global[1],color:global[2],glyph:global[3]||null};
     const overlay=(currentOverlays||[]).find(x=>String(x.name||'').toLowerCase()===clean.toLowerCase());
     if(overlay){
-      const label=isEnglish()?clean:clean;
+      const label=isEnglish()?clean:(uniqueTermZh[clean]||clean);
       const icon=overlay.iconId?String(overlay.iconId)+'.webp':null;
       return {label,icon,color:overlay.textColor||'misc',glyph:null};
     }
-    return {label:clean,color:'misc',icon:null,glyph:/DMG|Damage/i.test(clean)?'◇':null};
+    return {label:isEnglish()?clean:(uniqueTermZh[clean]||clean),color:'misc',icon:null,glyph:/DMG|Damage/i.test(clean)?'◇':null};
   }
   function termHtml(token,displayLabel){
     const meta=termMeta(token),label=displayLabel||meta.label;
