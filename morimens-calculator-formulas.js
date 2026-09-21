@@ -283,7 +283,7 @@
         [/\bwhen\b/i,'When'],
         [/\bif\b/i,'If'],
         [/\bupon\b/i,'Upon'],
-        [/\bafter\b/i,'After'],
+        [/\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy|\w+['’]s\s+turn)\b/i,'After trigger'],
         [/\bbefore\b/i,'Before'],
         [/\beach time\b/i,'Each time'],
         [/\bfor (?:each|every)\b/i,'For each/every'],
@@ -347,7 +347,7 @@
         messages.push('检测到条件 Damage Event：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把 Leap/If/When 分支高算。');
       }
 
-      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
+      const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
         messages.push('检测到条件式 Poison / Counter / Bleed / Corrosion：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
       }
@@ -394,7 +394,7 @@
             critRateBonus:critBonuses.critRateBonus,
             critDamageBonus:critBonuses.critDamageBonus,
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
-            guaranteedCrit:/guaranteed\s+Critical\s+DMG/i.test(template.slice(tokenEnd,tokenEnd+120)),
+            guaranteedCrit:/(?:guaranteed\s+Critical(?:\s+Hit)?\s+DMG|always\s+critically\s+hits?)/i.test(template.slice(tokenEnd,tokenEnd+160)),
             activeSource:type==='active'
           });
         }
