@@ -179,12 +179,13 @@
       for(const [key,bonus] of Object.entries(patch.argSubstatBonuses)){if(args[key])args[key]={...args[key],substatBonus:{...bonus}}}
       next={...next,descriptionArgs:args};
     }
-    if(Array.isArray(patch.cardKeywords)){
+    if(Array.isArray(patch.removeCardKeywordIds)||Array.isArray(patch.cardKeywords)){
       const merged=new Map((next.cardKeywords||[]).map(x=>[x.id,{...x}]));
-      for(const keyword of patch.cardKeywords)merged.set(keyword.id,{...keyword});
+      // Match SKeyDB mergeCardKeywords(): removals happen first, then additions/replacements.
+      for(const id of patch.removeCardKeywordIds||[])merged.delete(id);
+      for(const keyword of patch.cardKeywords||[])merged.set(keyword.id,{...keyword});
       next={...next,cardKeywords:[...merged.values()]};
     }
-    if(Array.isArray(patch.removeCardKeywordIds)){const remove=new Set(patch.removeCardKeywordIds);next={...next,cardKeywords:(next.cardKeywords||[]).filter(x=>!remove.has(x.id))}}
     return next;
   }
   function activeTalentIds(){
