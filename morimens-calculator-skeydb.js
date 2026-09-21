@@ -578,12 +578,12 @@
     block.innerHTML='';
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
-      const wrap=document.createElement('div');wrap.className='field calcResourceField '+(spec.calculated?'isCalculated':'isStateOnly');
+      const wrap=document.createElement('div');wrap.className='field calcResourceField isCalculated';
       const description=spec.description||(overlay?zhText(renderTemplate(overlay,1)):'角色专属战斗资源。');
       if(spec.type==='checkbox'){
         const checked=Number(previous[spec.key])>0;
         wrap.classList.add('full');
-        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+escape(spec.label)+'</label><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入。')+'</small>';
+        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+'> '+escape(spec.label)+'</label><small>'+escape(description)+' · 已接入伤害计算。'+'</small>';
       }else if(spec.type==='select'){
         const selected=String(previous[spec.key]??'');
         const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
@@ -591,7 +591,7 @@
       }else{
         const max=effectiveResourceMax(spec);const value=Math.min(max,Math.max(spec.min,Number(previous[spec.key])||0));
         const inputLabel=spec.inputLabel||spec.label+'数量';
-        wrap.innerHTML='<label>'+escape(inputLabel)+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
+        wrap.innerHTML='<label>'+escape(inputLabel)+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+' · 已接入伤害计算。'+'</small>';
       }
       block.appendChild(wrap);
     }
