@@ -591,22 +591,12 @@
         });
       }
 
-      for(const match of template.matchAll(/\{Poison\}\s+equal to\s+\[([^\]]+)\]%?\s+(?:of\s+)?DMG dealt/gi)){
-        const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
-        events.push({
-          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
-          type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
-          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,
-          tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),
-          activeSource:false
-        });
-      }
-      for(const match of template.matchAll(/(?:inflict|apply)?\s*\{Poison\}\s+(?:equal to|with)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?(?:the\s+)?(?:DMG|Damage)(?:\s+dealt)?/gi)){
+      for(const match of template.matchAll(/(?:inflict|apply)?\s*\{Poison\}\s+(?:equal to|with)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%?\s+(?:of\s+)?(?:the\s+)?(?:DMG|Damage)(?:\s+dealt)?/gi)){
         const percent=match[1]!==undefined
           ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
           :num(match[2],0);
         events.push({
-          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.31,
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
           type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
           sourceGroupId:nearestPrimaryGroup(match.index||0),percent,
           tentacleBonusCoefficient:statusTentacleBonusCoefficient(skill,template,match.index||0,rank,ctx),
