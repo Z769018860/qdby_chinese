@@ -207,7 +207,7 @@
     return Number.isFinite(Number(value))?Math.max(0,Number(value)):0;
   }
 
-  function selectedSkillBirthRitualStacks(){
+  function selectedSkillBirthRitualStacks(progression){
     const sync=window.MorimensSkillSync||{},skill=sync.skill||{};
     const text=String(skill.descriptionTemplate||'');
     const patterns=[
@@ -220,7 +220,18 @@
       const raw=m[1];if(raw!==undefined){
         const key=String(raw).includes(':')?String(raw).split(':').pop():String(raw);
         const value=window.MorimensFormulaEngine?.resolveArg?.(skill.descriptionArgs?.[key],sync.level||1,sync.context||{});
-        if(Number.isFinite(Number(value)))return Math.max(0,Number(value));
+        if(Number.isFinite(Number(value))){
+          let result=Math.max(0,Number(value));
+          if(skill.id==='skill.murphy-fauxborn.princess-of-delusions'){
+            const lifeSeal=Math.max(0,Math.min(5,Number(sync.resources?.lifeSealStacks)||0));
+            if(lifeSeal>0){
+              const soulforgeOn=progression?.soulforgeEnabled===true&&Number(progression?.soulforgeLevel)>0;
+              const perStackPct=soulforgeOn?40:20;
+              result*=1+lifeSeal*perStackPct/100;
+            }
+          }
+          return result;
+        }
       }
     }
     return 0;
@@ -462,7 +473,7 @@
     const skillDelayedSacrificeAdded=actorMaxHp>0?actorMaxHp*skillDelayedSacrificePct/100*sequenceRepeat:0;
     const initialEnemySacrifice=Math.max(0,n('enemySacrificeAmount'));
     const initialBirthRitualStacks=clamp(Math.floor(n('birthRitualStacks')),0,75);
-    const skillBirthRitualPerPlay=Math.max(0,selectedSkillBirthRitualStacks());
+    const skillBirthRitualPerPlay=Math.max(0,selectedSkillBirthRitualStacks(progression));
     const finalBirthRitualStacks=clamp(initialBirthRitualStacks+skillBirthRitualPerPlay*sequenceRepeat,0,75);
     const averageBirthRitualStacksForSkill=sequenceRepeat>0
       ?clamp(initialBirthRitualStacks+skillBirthRitualPerPlay*(sequenceRepeat+1)/2,0,75)
