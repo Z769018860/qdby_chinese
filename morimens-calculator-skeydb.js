@@ -173,7 +173,11 @@
       for(const [key,bonus] of Object.entries(patch.argSubstatBonuses)){if(args[key])args[key]={...args[key],substatBonus:{...bonus}}}
       next={...next,descriptionArgs:args};
     }
-    if(Array.isArray(patch.cardKeywords))next={...next,cardKeywords:cloneRecord(patch.cardKeywords)};
+    if(Array.isArray(patch.cardKeywords)){
+      const merged=new Map((next.cardKeywords||[]).map(x=>[x.id,{...x}]));
+      for(const keyword of patch.cardKeywords)merged.set(keyword.id,{...keyword});
+      next={...next,cardKeywords:[...merged.values()]};
+    }
     if(Array.isArray(patch.removeCardKeywordIds)){const remove=new Set(patch.removeCardKeywordIds);next={...next,cardKeywords:(next.cardKeywords||[]).filter(x=>!remove.has(x.id))}}
     return next;
   }
@@ -236,8 +240,8 @@
     const field=first.closest('.field');if(!field)return;field.classList.remove('full');
     const second=document.createElement('div');second.className='field';second.innerHTML='<label for="fateSelect2">命轮 2</label><select id="fateSelect2"><option value="">无</option></select>';
     field.parentNode.insertBefore(second,field.nextSibling);
-    const l1=document.createElement('div');l1.className='field';l1.innerHTML='<label for="fateLevel1">命轮 1 效果档位</label><select id="fateLevel1"><option value="1">1</option></select>';
-    const l2=document.createElement('div');l2.className='field';l2.innerHTML='<label for="fateLevel2">命轮 2 效果档位</label><select id="fateLevel2"><option value="1">1</option></select>';
+    const l1=document.createElement('div');l1.className='field';l1.innerHTML='<label for="fateLevel1">命轮 1 精炼</label><select id="fateLevel1"><option value="0">E0</option></select>';
+    const l2=document.createElement('div');l2.className='field';l2.innerHTML='<label for="fateLevel2">命轮 2 精炼</label><select id="fateLevel2"><option value="0">E0</option></select>';
     second.parentNode.insertBefore(l1,second.nextSibling);second.parentNode.insertBefore(l2,l1.nextSibling);
     first.previousElementSibling&&(first.previousElementSibling.textContent='命轮 1');
     $('fateSelect2').addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(1)},{capture:true});
@@ -364,7 +368,7 @@
     const engine=window.MorimensFormulaEngine;
     const damageEvents=engine?engine.damageEvents(currentSkill,level,ctx):[];
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
-    const directParts=damageEvents.map(x=>x.coefficient);
+    const directParts=damageEvents.filter(x=>Number.isFinite(Number(x.coefficient))).map(x=>Number(x.coefficient));
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
     const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
     if($('skillCoef'))$('skillCoef').value=String(coef);
@@ -403,7 +407,19 @@
     for(const o of a.options)o.disabled=!!(o.value&&o.value===bv&&o.value!==av);
     for(const o of b.options)o.disabled=!!(o.value&&o.value===av&&o.value!==bv);
   }
-  function fillLevelSelect(slot,record){const sel=$(`fateLevel${slot+1}`);if(!sel)return;const max=Math.min(12,Math.max(0,maxArgLevel(record)-1)),prev=Math.min(Math.max(Number(sel.value)||0,0),max);sel.innerHTML='';for(let i=0;i<=max;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0':`+${i}`;o.selected=i===prev;sel.appendChild(o)}sel.disabled=!record||max<=0}
+  function wheelEnhanceLabel(level){
+    const n=Math.max(0,Math.min(15,Math.floor(Number(level)||0)));
+    return n<=3?`E${n}`:`E3 + ${n-3}`;
+  }
+  function fillLevelSelect(slot,record){
+    const sel=$(`fateLevel${slot+1}`);if(!sel)return;
+    const max=record?15:0,prev=Math.min(Math.max(Number(sel.value)||0,0),max);
+    sel.innerHTML='';
+    for(let i=0;i<=max;i++){
+      const o=document.createElement('option');o.value=String(i);o.textContent=wheelEnhanceLabel(i);o.selected=i===prev;sel.appendChild(o);
+    }
+    sel.disabled=!record;
+  }
   async function loadWheel(slot){
     const sel=$(slot===0?'fateSelect':'fateSelect2'),id=sel?.value;
     const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();return}
@@ -426,7 +442,7 @@
     return out;
   }
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final'])target[k]+=num(b[k])}
-  function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(12,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,stage+1,{wheelRefinementLevel:Math.min(3,stage)})}
+  function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
     const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
