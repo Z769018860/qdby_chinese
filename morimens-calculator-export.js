@@ -269,6 +269,7 @@
       y+=section.h+GAP;
     }
     ctx.fillStyle='#657286';ctx.font='16px '+fontStack;ctx.fillText('忘忘看报 · Morimens Weekly · 伤害计算器导出',P,canvas.height-P+18);
+    ctx.textAlign='right';ctx.fillStyle='#7f8b9e';ctx.font='15px '+fontStack;ctx.fillText('https://qingdengbuyi.top/morimens-tools.html#calc',W-P,canvas.height-P);ctx.fillText('copyright@青灯不弈',W-P,canvas.height-P+24);ctx.textAlign='left';
     return canvas;
   }
   async function downloadReport(){
