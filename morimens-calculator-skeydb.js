@@ -287,6 +287,32 @@
     }
     return next;
   }
+  function composeOverExaltSkill(overSkill){
+    const baseRaw=currentSkills.find(x=>x.slot==='Exalt');
+    if(!baseRaw||!overSkill)return overSkill;
+    const base=resolveSkillEnlighten(baseRaw);
+    const over=resolveSkillEnlighten(overSkill);
+    let overTemplate=String(over.descriptionTemplate||'');
+    const overArgs={};
+    for(const [key,arg] of Object.entries(over.descriptionArgs||{})){
+      const nextKey='Over_'+key;
+      overTemplate=overTemplate.replace(new RegExp('\\b'+key+'\\b','g'),nextKey);
+      overArgs[nextKey]=cloneRecord(arg);
+    }
+    return {
+      ...base,
+      id:over.id,
+      name:String(base.name||'Exalt')+' · '+String(over.name||'Over-Exalt'),
+      slot:'OverExalt',
+      cardTypes:['over_exalt'],
+      descriptionTemplate:String(base.descriptionTemplate||'')+'\n{Over-Exalt}: '+overTemplate,
+      descriptionArgs:{...(base.descriptionArgs||{}),...overArgs},
+      overExaltEffectId:over.id,
+      overExaltEffectName:over.name,
+      overExaltBaseSkillId:base.id,
+      overExaltBaseSkillName:base.name
+    };
+  }
   function ensureEnlightenUi(){
     if($('charEnlighten'))return;
     const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
@@ -501,7 +527,8 @@
     const id=$('skillSelect')?.value;if(!id)return;
     const previousSkillId=currentSkill?.id||null;
     const baseSkill=currentSkills.find(x=>x.id===id)||await fetchRecord(skillRecordScope(id),id);
-    currentSkill=resolveSkillEnlighten(baseSkill);
+    const resolvedSkill=resolveSkillEnlighten(baseSkill);
+    currentSkill=resolvedSkill?.slot==='OverExalt'?composeOverExaltSkill(resolvedSkill):resolvedSkill;
     if(previousSkillId&&previousSkillId!==currentSkill.id&&$('skillActualHits'))$('skillActualHits').value='';
     const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
     if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=isEnglish()?`Lv.${i}`:`等级 ${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
@@ -530,6 +557,7 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
+      if(currentSkill?.overExaltEffectId)messages.push('超限爆发按 SKeyDB 机制与原狂气爆发合并展示；当前先继承原爆发伤害事件，后续可量化的超限倍率会继续逐项接入。');
       if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立伤害公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
       if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push('当前唯一伤害公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。');
       $('skillRuntimeBlock').hidden=messages.length===0;
