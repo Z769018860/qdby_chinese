@@ -212,6 +212,25 @@
         }
       }
 
+      for(const match of template.matchAll(/(?:Deal|deals?)\s+\[([^\]]+)\]\s+\{Fixed DMG\}/gi)){
+        const argName=String(match[1]).includes(':')?String(match[1]).split(':').pop():match[1];
+        const arg=skill?.descriptionArgs?.[argName],value=num(resolveArg(arg,rank,ctx),0);
+        events.push({
+          id:`fixed-${index+1}`,index:index++,position:(match.index||0)+0.1,
+          type:'fixed',source:'skill',
+          basis:arg?.stat?'statPercent':'flat',
+          stat:arg?.stat||null,percent:arg?.stat?value:null,amount:arg?.stat?null:value,
+          activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:Deal|deals?)\s+\{Fixed DMG\}\s+equal to\s+\[([^\]]+)\]%?\s+\{Tentacle DMG\}/gi)){
+        const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
+        events.push({
+          id:`fixed-${index+1}`,index:index++,position:(match.index||0)+0.1,
+          type:'fixed',source:'skill',basis:'tentacle',percent,activeSource:false
+        });
+      }
+
       const purePattern=/\{Pure DMG\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:(?:the|a)\s+)?(?:target(?:'s|’s)|enemy(?:'s|’s)|each enemy(?:'s|’s)|their)\s+(?:Max|max)\s+HP/gi;
       for(const match of template.matchAll(purePattern)){
         const percent=match[1]!==undefined
@@ -514,7 +533,7 @@
       primary:'SKeyDB src/domain/awakener-level-scaling.ts',
       descriptionArgs:'SKeyDB src/domain/description-args.ts + public-description-args.ts',
       enemyProfile:'SKeyDB D-Zone seasons 60-69 level/HP sample fit + generic relative level factor',
-      damageEvents:['overlay.global.poison','overlay.global.counter','overlay.global.pierce-dmg','overlay.global.pure-dmg'],
+      damageEvents:['overlay.global.poison','overlay.global.counter','overlay.global.pierce-dmg','overlay.global.pure-dmg','overlay.global.fixed-dmg'],
       tentacle:[
         'public-v3/records/overlays/overlay.global.surging-tides.json',
         'public-v3/records/overlays/overlay.global.tranquil-sea.json',
