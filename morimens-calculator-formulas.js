@@ -468,7 +468,7 @@
         messages.push('技能含按层数/状态动态变化的最终伤害；未提供对应状态时不会自动假定层数。');
       }
       if(/\bBase DMG\b[^.]{0,80}\bwhen\b|\bwhen\b[^.]{0,80}\bBase DMG\b/i.test(text)){
-        messages.push('技能含条件 Base DMG 加成；只有条件明确输入后才应计入。');
+        messages.push('技能含条件基础伤害加成；只有条件明确输入后才应计入。');
       }
       if(/\{Aftershock\}\s*:[^.]*?(?:Tentacle|DMG)/i.test(text)){
         messages.push('技能含“余震”伤害/触腕事件；余震是否实际触发取决于战斗状态，当前默认不自动计入。');
@@ -485,7 +485,7 @@
         for(let i=messages.length-1;i>=0;i--){
           if(/段数|额外段数|额外.*instance|实际伤害段数/.test(messages[i]))messages.splice(i,1);
         }
-        messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接 Damage 公式：该倍率与段数属于生成卡，不计入当前卡本次伤害；请直接选择对应派生卡计算。');
+        messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接伤害公式：该倍率与段数属于生成卡，不计入当前卡本次伤害；请直接选择对应派生卡计算。');
       }
 
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\beach\s+(?:stack|point|charge|mark|sigil|tentacle|card)\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
@@ -493,7 +493,7 @@
         messages.push('检测到条件式中毒 / 反击 / 流血 / 侵蚀：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
       }
       if(/\{Finale Form\}\s*:/i.test(text)){
-        messages.push('检测到 Finale Form 条件分支：未开启对应角色形态时不计入；已接入的 Finale Form 伤害会由角色状态开关单独加入。');
+        messages.push('检测到「终末形态」条件分支：未开启对应角色形态时不计入；已接入的终末形态伤害会由角色状态开关单独加入。');
       }
       if(/Tentacle\s+(?:performs?|makes?)\s+(?:an?\s+)?attack[^.]*?(?:gain|gains)\s+\{Counter\}[^.]*?DMG dealt/i.test(text)){
         messages.push('检测到“触腕立即攻击并按本次伤害获得反击”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
