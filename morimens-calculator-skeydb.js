@@ -436,7 +436,8 @@
       {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'Vortex Reload',min:0,max:999,calculated:false,description:'其他唤醒体释放 Exalt 后消耗 1 层并追击 Vortex! Shell!；SKeyDB 未给出明确总上限。'}
     ],
     'awakener-0061':[
-      {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高 Ogier: Oathbound 指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后最终伤害增幅提高。'}
+      {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后每层最终伤害增幅由 33% 提高至 50%。'},
+      {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'Guilt / 罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'}
     ],
     'awakener-0032':[
       {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执念转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执念转化，本场战斗 Miryam 基础伤害 +15%。'}
