@@ -87,6 +87,8 @@
             </div>
             <div class="checkGrid" style="margin-top:10px"><label class="check"><input id="contractConditional" type="checkbox"><span>额外条件已满足<small>默认自动计入 3 件套与 6 件套的无条件效果；只有“敌人生命区间 / 特定状态 / 本回合触发”等条件型效果需要在满足时勾选。</small></span></label></div>
             <div class="desc" id="contractDesc">选择密契后默认按完整 6 件套读取。无条件效果直接计入；条件型 6 件套效果仅在上方确认后计入。</div>
+            <div class="checkGrid" style="margin-top:10px"><label class="check"><input id="signatureRelicEnabled" type="checkbox"><span>装备当前角色专属造物（维度影像）<small>自动匹配 SKeyDB 中 owner 对应的专属造物。可可靠解析的无条件伤害/属性效果会计入；“第 N 次使用、命中特定状态”等条件型效果不会仅因装备而常驻生效。</small></span></label></div>
+            <div class="desc" id="signatureRelicDesc">正在匹配当前角色的专属造物……</div>
           </div>
 
           <div class="builderBlock calcSection calcSectionBuff">
@@ -97,7 +99,13 @@
               <label class="check"><input id="buffBurst" type="checkbox"><span>刻印：高级爆发<small>获得 66 点临时力量</small></span></label>
             </div>
             <div class="formGrid" style="margin-top:10px">
-              <div class="field full"><label for="targetVulnerableStacks">目标易伤层数</label><input id="targetVulnerableStacks" type="number" min="0" max="999" step="1" value="0"><small>0 层表示没有易伤；≥1 层时按 SKeyDB 启用“主动伤害 / 触腕伤害承受 +50%”，这个 +50% 本身不随层数叠加。个别技能会额外读取当前易伤层数，例如 Aigis E2 的 Decomposition。</small></div>
+              <div class="field full">
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <label class="inlineCheck" for="targetVulnerable"><input id="targetVulnerable" type="checkbox"> 目标：易伤</label>
+                  <label for="targetVulnerableStacks" style="display:flex;align-items:center;gap:7px">易伤层数 <input id="targetVulnerableStacks" type="number" min="1" max="999" step="1" placeholder="1" style="width:82px"></label>
+                </div>
+                <small>勾选后按标准易伤计算；层数留空时默认为 1。标准易伤对主动伤害 / 触腕伤害的 +50% 只判断“有/无”，不会随层数重复叠加；易伤层数只对少数明确读取层数的角色或技能机制有效（例如 Aigis E2 的 Decomposition）。</small>
+              </div>
             </div>
             <div class="autoSummary" id="autoSummary"></div>
           </div>
