@@ -307,9 +307,10 @@
   async function loadAwakener(){
     const id=selectedAwakenerId(),compact=recordById(id);if(!compact)return;
     currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
-    currentTalents=await window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]);
+    [currentTalents,currentEnlightens]=await Promise.all([window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('enlightens',id).catch(()=>[])]);
     normalizeProgressionControls();
     configureProgressionControls();
+    configureEnlightenControl();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
     applyCharacterStats();
@@ -321,7 +322,7 @@
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
-    const id=$('skillSelect')?.value;if(!id)return;currentSkill=currentSkills.find(x=>x.id===id)||await fetchRecord('skills',id);
+    const id=$('skillSelect')?.value;if(!id)return;const baseSkill=currentSkills.find(x=>x.id===id)||await fetchRecord('skills',id);currentSkill=resolveSkillEnlighten(baseSkill);
     const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
     if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
   }
@@ -330,30 +331,34 @@
     const level=Number($('skillLevel')?.value)||1;
     const ctx=currentFormulaContext();
     const engine=window.MorimensFormulaEngine;
-    const coef=damageCoefficient(currentSkill,level);
-    const directParts=engine?engine.directAtkCoefficients(currentSkill,level,ctx):[coef];
+    const damageEvents=engine?engine.damageEvents(currentSkill,level,ctx):[];
+    const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
+    const directParts=damageEvents.map(x=>x.coefficient);
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
     const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
     if($('skillCoef'))$('skillCoef').value=String(coef);
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillCoeffSummary')){
       const parts=[];
-      if(coef)parts.push(`${$('skillDamageMode')?.value==='sum'?'合计攻击倍率':'首个攻击倍率'} × ${Number(coef).toFixed(2)}%`);
-      if(directParts.length>1)parts.push(`识别到 ${directParts.length} 个主动伤害段`);
+      if(damageEvents.length)parts.push(`主动伤害事件 ${damageEvents.length} 次：${damageEvents.map(x=>Number(x.coefficient).toFixed(2)+'%').join(' / ')}`);
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageMode:$('skillDamageMode')?.value||'primary',tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,enlightenSlot:selectedEnlightenSlot(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
 
   async function loadCatalogs(){
-    const [wr,cr]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants')]);wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];
+    const [wr,cr,pr,gm]=await Promise.allSettled([window.MorimensRepository.catalog('wheels'),window.MorimensRepository.catalog('covenants'),window.MorimensRepository.catalog('posses'),window.MorimensRepository.gameplayMath()]);
+    wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];posseCatalog=pr.status==='fulfilled'?(pr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
+    window.MorimensFormulaEngine?.setGameplayMathMetadata?.(gameplayMathMeta);ensureFormulaContextUi();
+    if($('formulaOwnedPosseCount')){$('formulaOwnedPosseCount').max=String(posseCatalog.length);if(!Number($('formulaOwnedPosseCount').value))$('formulaOwnedPosseCount').value=String(posseCatalog.length)}
+    if(gameplayMathMeta?.accountLevelCurve&&$('formulaAccountLevel')){$('formulaAccountLevel').min=String(gameplayMathMeta.accountLevelCurve.minLevel||1);$('formulaAccountLevel').max=String(gameplayMathMeta.accountLevelCurve.maxLevel||100)}
     const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=`${labelForWheel(w)} · ${w.rarity||''} ${w.realm||''}`;o.selected=w.id===prev;sel.appendChild(o)}}
     const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML='<option value="">无</option>';for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
-    const missing=[wr,cr].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
+    const missing=[wr,cr,pr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；命轮可选 2 个且不可重复`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
   function syncWheelDuplicates(){
     const a=$('fateSelect'),b=$('fateSelect2');if(!a||!b)return;const av=a.value,bv=b.value;
@@ -383,7 +388,7 @@
     return out;
   }
   function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final'])target[k]+=num(b[k])}
-  function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(12,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,stage+1)}
+  function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(12,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,stage+1,{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
     const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${escape(wheelDescription(w,i))}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。选择后从 SKeyDB 读取完整效果；条件型效果只展示，不会在未确认条件时强制计入。';recomputeGearBonuses();
@@ -429,7 +434,7 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
-    if($('innerSpirit'))$('innerSpirit').value='0';if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;
+    if($('innerSpirit'))$('innerSpirit').value='0';if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0)}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();updateSkillLevel();$('calcBtn')?.click();
   }
