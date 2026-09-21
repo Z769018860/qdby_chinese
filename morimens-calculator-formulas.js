@@ -242,6 +242,17 @@
         });
       }
 
+      const pureGenericTargetPattern=/\{Pure DMG\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:the\s+)?Max\s+HP\s+to\s+(?:the\s+)?(?:enemy|enemies|back-row enemies|front-row enemies)/gi;
+      for(const match of template.matchAll(pureGenericTargetPattern)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`pure-${index+1}`,index:index++,position:(match.index||0)+0.2,
+          type:'pure',source:'skill',basis:'targetMaxHp',percent,activeSource:false
+        });
+      }
+
       const tentaclePiercePattern=/Command all Tentacles to attack(?: all enemies)?\s+\[([^\]]+)\]\s+\{plural:[^}]+\},?\s+dealing\s+\[([^\]]+)\]%?\s+\{Pierce DMG\}/gi;
     for(const match of template.matchAll(tentaclePiercePattern)){
       const attacks=Math.max(1,Math.floor(num(resolveTemplateArg(skill,match[1],rank,ctx),1)));
@@ -286,6 +297,20 @@
           activeSource:false
         });
       }
+      for(const match of template.matchAll(/(?:inflict|apply)\s+\[([^\]]+)\]\s+\{Poison\}/gi)){
+        if(String(match[1]).startsWith('{Poison}:'))continue;
+        const argName=String(match[1]).includes(':')?String(match[1]).split(':').pop():match[1];
+        const arg=skill?.descriptionArgs?.[argName];
+        const value=num(resolveArg(arg,rank,ctx),0);
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'poison',action:'apply',source:'skill',
+          basis:arg?.stat?'statPercent':'flat',
+          stat:arg?.stat||null,amount:arg?.stat?null:value,percent:arg?.stat?value:null,
+          activeSource:false
+        });
+      }
+
       for(const match of template.matchAll(/\{Poison\}\s+equal to\s+\[([^\]]+)\]%?\s+(?:of\s+)?DMG dealt/gi)){
         const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
         events.push({
@@ -342,8 +367,14 @@
         });
       }
 
-      events.sort((a,b)=>(a.position-b.position)||(a.index-b.index));
-      return events;
+      const seenEventKeys=new Set();
+      const deduped=events.filter(event=>{
+        const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.argName||'',event.percent??'',event.coefficient??''].join('|');
+        if(seenEventKeys.has(key))return false;
+        seenEventKeys.add(key);return true;
+      });
+      deduped.sort((a,b)=>(a.position-b.position)||(a.index-b.index));
+      return deduped;
     }
 
     function directAtkCoefficients(skill,rank,ctx){
@@ -416,7 +447,7 @@
     const patterns=[
       /(?:equal to|with (?:a|an)|enjoys? (?:a|an)?|receives? (?:a|an)?)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
       /\[([^\]]+)\]%\s*\{Tentacle DMG\}\s*(?:bonus|Bonus)/i,
-      /(?:gain|gaining|gains)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i
+      /additionally\s+gaining\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i
     ];
     for(const re of patterns){
       const m=t.match(re);if(!m)continue;
@@ -427,10 +458,20 @@
   }
 
   function triggeredTentaclePercent(skill,rank,ctx){
-    const t=String(skill?.descriptionTemplate||'');
-    const explicit=t.match(/(?:trigger|command|causes?)\s+1\s+Tentacle[^.\n]*?(?:dealing|deal)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i);
-    if(explicit){const name=explicit[1].includes(':')?explicit[1].split(':').pop():explicit[1];return num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0)}
-    if(/(?:trigger|command)\s+1\s+Tentacle\s+(?:to\s+)?attack/i.test(t))return 100;
+    const text=String(skill?.descriptionTemplate||'');
+    const clauses=text.split(/(?<=[.!?])\s+|\n+/).map(x=>x.trim()).filter(Boolean);
+    for(const clause of clauses){
+      const triggerPos=clause.search(/(?:trigger|command|causes?)\s+1\s+Tentacle(?:\s+Attack)?\s*(?:to\s+)?attack?/i);
+      if(triggerPos<0)continue;
+      const prefix=clause.slice(0,triggerPos);
+      if(/\{[^}]+\}\s*:\s*$/i.test(prefix)||/\b(if|when|whenever|after|before|upon|once)\b/i.test(prefix))continue;
+      const explicit=clause.match(/(?:trigger|command|causes?)\s+1\s+Tentacle(?:\s+Attack)?[^.!?\n]*?(?:dealing|deal)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i);
+      if(explicit){
+        const name=explicit[1].includes(':')?explicit[1].split(':').pop():explicit[1];
+        return num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0);
+      }
+      return 100;
+    }
     return null;
   }
   function talentByFamily(talents,family){
