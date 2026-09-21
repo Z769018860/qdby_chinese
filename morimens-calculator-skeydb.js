@@ -502,12 +502,12 @@
       {key:'singularityWarpActive',label:'Singularity Warp 已触发',type:'checkbox',calculated:false,description:'标记本次 Exalt 是否满足 Singularity Warp；额外效果依具体 Exalt 文本处理。'}
     ],
     'awakener-0060':[
-      {overlayId:'overlay.caraboo.offering',key:'offeringStacks',label:'Offering / 供奉',min:0,max:5,calculated:true,description:'卡拉布的狂气爆发会消耗全部供奉；每层使本次狂气爆发额外增加 1 段，并在结算后转化为等量饱足。'},
-      {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'Satiety / 饱足',min:0,max:50,calculated:true,description:'每层提高卡拉布狂气爆发的基础伤害与护盾。伤害计算只把打出前已有的饱足计入本次基础伤害；供奉转化出的饱足不回溯放大已开始结算的本次爆发。'}
+      {overlayId:'overlay.caraboo.offering',key:'offeringStacks',label:'供奉',min:0,max:5,calculated:true,description:'卡拉布的狂气爆发会消耗全部供奉；每层使本次狂气爆发额外增加 1 段，并在结算后转化为等量饱足。'},
+      {overlayId:'overlay.caraboo.satiety',key:'satietyStacks',label:'饱足',min:0,max:50,calculated:true,description:'每层提高卡拉布狂气爆发的基础伤害与护盾。伤害计算只把打出前已有的饱足计入本次基础伤害；供奉转化出的饱足不回溯放大已开始结算的本次爆发。'}
     ],
     'awakener-0018':[
-      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'Finale',min:0,max:10,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒：每层 Finale 使全队伤害强效 +8%。当前角色为 Doll: Inferno 时会直接进入最终伤害公式；只有同时开启“灵知觉醒已发动”时生效。'},
-      {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'Finale Form 已生效',type:'checkbox',calculated:true,description:'只在实际进入 Finale Form 后勾选。会启用已明确接入的 Finale Form 中毒触发；未勾选时不会把条件分支误算成常驻效果。'}
+      {overlayId:'overlay.doll-inferno.finale',key:'finaleStacks',label:'终末',min:0,max:10,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒：每层「终末」使全队伤害强效 +8%。当前角色为熔毁·朵尔时会直接进入最终伤害公式；只有同时开启“灵知觉醒已发动”时生效。'},
+      {overlayId:'overlay.doll-inferno.finale-form',key:'finaleFormActive',label:'终末形态已生效',type:'checkbox',calculated:true,description:'只在实际进入「终末形态」后勾选。会启用已明确接入的终末形态中毒触发；未勾选时不会把条件分支误算成常驻效果。'}
     ],
     'awakener-0014':[
       {overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true},
@@ -515,19 +515,19 @@
     ],
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
-      {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成',inputLabel:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
-      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次赎罪苦痛；基础为 200% ATK，并会按本次探索已完成战斗数自动提高。'},
-      {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。只有“赎罪苦痛生效”时该开关才有意义。'}
+      {key:'polluxCommandFinalBonusPct',label:'指令卡最终伤害额外加成',inputLabel:'指令卡最终伤害额外加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 记录的两组档位分别为 18/22/26/30% 与 9/11/13/15%；不自动猜测该增益的来源等级。'},
+      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次「苦痛救赎」；基础为 200% 攻击力，并会按本次探索已完成战斗数自动提高。'},
+      {key:'atonementByPainDouble',label:'启灵3：苦痛救赎应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'启灵3后，第 3 次打出「圣心」会使下一张指令卡的「苦痛救赎」应用 2 次。只有“赎罪苦痛生效”时该开关才有意义。'}
     ],
     'awakener-0010':[
-      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本场累计已移除 Symbiosis / 共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：每移除 1 层共生，克莱门汀在本场战斗中的基础伤害累计 +3%。这里填写本场累计已移除层数，而不是仅填写当前这一次；输入上限随 E3 / 最终法则变化。'},
-      {key:'clementineFirstCommandRouse',label:'当前是本回合第一张指令卡',type:'checkbox',calculated:true,dependsOnControl:'rouseActive',description:'仅在“灵知觉醒已发动”时生效。Call of Shaggai：每回合第一张指令卡的伤害、护盾、回复、狂气和银钥效果额外触发 2 次；伤害计算器只重复当前可解析的伤害/状态事件。'}
+      {overlayId:'overlay.clementine.symbiosis',key:'symbiosisRemovedStacks',label:'本场累计已移除共生',min:0,max:20,calculated:true,requiredEnlighten:'E2',description:'E2 起：每移除 1 层共生，克莱门汀在本场战斗中的基础伤害累计 +3%。这里填写本场累计已移除层数，而不是仅填写当前这一次；输入上限随 E3 / 最终法则变化。'},
+      {key:'clementineFirstCommandRouse',label:'当前是本回合第一张指令卡',type:'checkbox',calculated:true,dependsOnControl:'rouseActive',description:'仅在“灵知觉醒已发动”时生效。「妖虫的呼唤」：每回合第一张指令卡的伤害、护盾、回复、狂气和银钥效果额外触发 2 次；伤害计算器只重复当前可解析的伤害/状态事件。'}
     ],
     'awakener-0058':[
-      {overlayId:'overlay.pontos.pack-hunt',key:'packHuntStacks',label:'Pack Hunt / 群猎',min:0,max:9,calculated:true,description:'有至少 1 层时，下一张 Gaunt 消耗 1 层并额外触发 1 次；伤害计算会让 Slay-Gaunt 的固定伤害额外结算 1 次。'}
+      {overlayId:'overlay.pontos.pack-hunt',key:'packHuntStacks',label:'群猎',min:0,max:9,calculated:true,description:'有至少 1 层时，下一张对应的「魇」衍生卡消耗 1 层并额外触发 1 次；伤害计算会让「猎杀之魇」的固定伤害额外结算 1 次。'}
     ],
     'awakener-0020':[
-      {key:'ramonaPosseUses',label:'本场已使用 Posse 次数',min:0,max:99,calculated:true,description:'Predetermined Strike：本场每使用 1 次 Posse，其力量倍率 +1。基础力量倍率由 SKeyDB 的“STR is 3× more effective”解析。'},
+      {key:'ramonaPosseUses',label:'本场已使用钥令次数',min:0,max:99,calculated:true,description:'「命定之剑」：本场每使用 1 次钥令，力量倍率 +1；基础力量倍率为 3 倍。'},
       {overlayId:'overlay.ramona-timeworn.negentropy',key:'negentropyStacks',label:'Negentropy / 负熵',min:0,max:3,calculated:false,description:'3 层可使指令卡触发 Loop；Loop 生成或选择的派生效果请直接选择对应派生卡计算。'}
     ],
     'awakener-0040':[
@@ -539,31 +539,31 @@
     ],
     'awakener-0055':[
       {overlayId:'overlay.vortice.vortex-reload',key:'vortexReloadStacks',label:'Vortex Reload',min:0,max:999,calculated:false,description:'其他唤醒体释放 Exalt 后消耗 1 层并追击 Vortex! Shell!；这一层本身只决定是否产生追击，直接计算追击伤害时请选中派生卡 Vortex! Shell!。'},
-      {key:'vortexShellDoubleRemaining',label:'超限双触发剩余 Vortex! Shell! 次数',min:0,max:5,calculated:true,requiredEnlighten:'OverExalt',description:'Moskstraumen! BOOM! 后，接下来 5 次 Vortex! Shell! 均触发 2 次。若当前仍在这 5 次范围内填写 1–5；当前选择 Vortex! Shell! 时会自动把可解析事件额外结算 1 次。'}
+      {key:'vortexShellDoubleRemaining',label:'超限双触发剩余「涡！流！弹！」次数',min:0,max:5,calculated:true,requiredEnlighten:'OverExalt',description:'释放超限爆发后，接下来 5 次「涡！流！弹！」均触发 2 次。若当前仍在这 5 次范围内填写 1–5；当前选择「涡！流！弹！」时会自动把可解析事件额外结算 1 次。'}
     ],
     'awakener-0061':[
       {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后每层最终伤害增幅由 33% 提高至 50%。'},
       {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'Guilt / 罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'}
     ],
     'awakener-0032':[
-      {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执念转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执念转化，本场战斗 Miryam 基础伤害 +15%。'}
+      {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执妄转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执妄转化，本场战斗弥利亚姆基础伤害 +15%。'}
     ],
     'awakener-0043':[
-      {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，All-In! 基础伤害 +0.5%。'}
+      {overlayId:'overlay.ryker.certain-gain',key:'blackSigilsConsumed',label:'探索中已消耗黑印',min:0,max:9999,calculated:true,requiredEnlighten:'E3',description:'E3「确定收益」：每消耗 1 点黑印，对应技能基础伤害 +0.5%。'}
     ],
     'awakener-0024':[
       {overlayId:'overlay.horla.emotion',coversOverlayIds:['overlay.horla.anger','overlay.horla.fear','overlay.horla.grief','overlay.horla.happiness'],key:'horlaEmotion',label:'当前情绪',type:'select',calculated:true,options:[['','无'],['anger','愤怒'],['fear','恐惧'],['grief','悲伤'],['happiness','喜悦']],description:'情绪同一时间只能存在一种。愤怒的全队最终伤害已自动计入；恐惧的中毒/反击生成已自动计入。恐惧对“获得力量”的增幅属于跨卡状态生成，当前不会反推既有力量，请把实际获得后的力量填入上方“力量 / 临时力量”。悲伤与喜悦主要影响回复/资源，不改变本次直接伤害。'},
-      {overlayId:'overlay.horla.metaphor',key:'angerMetaphorStacks',label:'愤怒隐喻',min:0,max:3,calculated:true,description:'Snarl Psalm 会消耗全部愤怒隐喻；每层额外造成 2 段伤害。'},
+      {overlayId:'overlay.horla.metaphor',key:'angerMetaphorStacks',label:'愤怒隐喻',min:0,max:3,calculated:true,description:'对应技能会消耗全部愤怒隐喻；每层额外造成 2 段伤害。'},
       {overlayId:'overlay.horla.metaphor',key:'griefMetaphorStacks',label:'悲伤隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'happinessMetaphorStacks',label:'喜悦隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'fearMetaphorStacks',label:'恐惧隐喻',min:0,max:3,calculated:false}
     ],
     'awakener-0029':[
-      {overlayId:'overlay.lily.endure',key:'endureStacks',label:'Endure / 坚忍',min:0,max:999999,calculated:true,description:'Strike to Protect：每 1 层 Endure 使本次伤害增加 2；使用后移除 Endure。E3 只移除一半，不降低本次伤害换算。'},
-      {key:'endureConversionBoostStacks',label:'最终法则：Endure 转化强化',min:0,max:5,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒状态下：释放 Exalt 后，本回合每受到 1 次攻击，使下一次 Strike to Protect 转化的 Endure 效果 +40%，最多 5 层。只有已开启“灵知觉醒已发动”时输入才生效。'}
+      {overlayId:'overlay.lily.endure',key:'endureStacks',label:'忍耐',min:0,max:999999,calculated:true,description:'「报偿打击」：每 1 层忍耐使本次伤害增加 2；使用后移除忍耐。启灵3只移除一半，不降低本次伤害换算。'},
+      {key:'endureConversionBoostStacks',label:'最终法则：忍耐转化强化',min:0,max:5,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒状态下：释放狂气爆发后，本回合每受到 1 次攻击，使下一次「报偿打击」转化的忍耐效果 +40%，最多 5 层。只有已开启“灵知觉醒已发动”时输入才生效。'}
     ],
     'awakener-0052':[
-      {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦诱',min:0,max:10,calculated:true,description:'Spine Needle Chains 在梦诱≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
+      {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦诱',min:0,max:10,calculated:true,description:'「脊刺锁链」在梦引≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
       {overlayId:'overlay.wanda.murmurs',key:'murmursActive',label:'低语状态生效',type:'checkbox',calculated:true,description:'主动伤害降低 60%；E2 后降低 65%，同时攻击次数翻倍。'}
     ],
     'awakener-0054':[
@@ -572,7 +572,7 @@
       {key:'xuFirstCommandRouse',label:'最终法则：当前是本回合第一张指令卡',type:'checkbox',calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则灵知觉醒：徐每回合打出的第一张指令卡额外生效 1 次。仅在这张卡确实是本回合第一张指令卡时勾选。'}
     ],
     'awakener-0019':[
-      {key:'helotSanguineTurnActive',label:'血链大招本回合流血效果已生效',type:'checkbox',calculated:true,description:'Sanguine Fetters / 血色桎梏发动后，本回合血链希洛每次造成主动伤害都会附加流血。仅在确实已经发动大招且仍处于同一回合时勾选；流血比例按当前技能等级档读取大招 Arg2（Lv.1–6 为 75%–100%）。'}
+      {key:'helotSanguineTurnActive',label:'「缚身锁链」本回合出血效果已生效',type:'checkbox',calculated:true,description:'「缚身锁链」发动后，本回合血链·希洛每次造成主动伤害都会附加出血。仅在确实已经发动狂气爆发且仍处于同一回合时勾选；出血比例按「缚身锁链」当前等级读取（1–6 级为 75%–100%）。'}
     ],
     'awakener-0027':[
       {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:true,requiredEnlighten:'E3',description:'E3 后，每获得 1 层燃烧，本场战斗基础伤害 +5%；按当前累计层数计算，最高输入 10 层。'},
