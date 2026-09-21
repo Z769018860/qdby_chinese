@@ -242,15 +242,71 @@
       return /^\s*\{Pierce DMG\}/i.test(tail)?'pierce':'active';
     }
 
+    function damageRuntimeHints(skill,rank,ctx={}){
+      const text=String(skill?.descriptionTemplate||'');
+      const messages=[];
+      let needsHitOverride=false,minHits=null,maxHits=null;
+
+      let match=text.match(/(\d+)\s*~\s*\[([^\]]+)\]\s*\{plural:[^}]*\|time\|times\}/i);
+      if(match){
+        minHits=Math.max(1,Math.floor(num(match[1],1)));
+        maxHits=Math.max(minHits,Math.floor(num(resolveTemplateArg(skill,match[2],rank,ctx),minHits)));
+        needsHitOverride=true;
+        messages.push(`该技能段数为 ${minHits}~${maxHits}，取决于战斗内随机/资源状态；请填写“本次实际伤害段数”。`);
+      }
+
+      match=text.match(/\bX\s*\+\s*(\d+)\s*(?:times?|hits?)/i);
+      if(match){
+        needsHitOverride=true;
+        messages.push(`该技能段数包含 X+${match[1]}，X 取决于本次消耗的算力/技能状态；请填写实际伤害段数。`);
+      }
+
+      const conditionalHitPatterns=[
+        /If [^.]+?,\s*deal\s+(\d+)\s+additional\s+(?:hit|instance)s?\s+of\s+DMG/i,
+        /If [^.]+?,\s*deal(?:s)?\s+(?:DMG\s+)?(\d+)\s+more\s+times/i,
+        /Deals?\s+(\d+)\s+extra\s+instance(?:s)?\s+of\s+DMG\s+in\s+Boss Battles/i,
+        /If [^.]+?,\s*deal\s+(\d+)\s+additional\s+hit/i
+      ];
+      if(conditionalHitPatterns.some(re=>re.test(text))){
+        needsHitOverride=true;
+        messages.push('该技能存在条件额外段数（例如低生命/Boss/特定状态）；默认不擅自触发，可填写本次实际伤害段数。');
+      }
+      if(/each\s+causing\s+an\s+additional\s+instance\s+of\s+DMG/i.test(text)){
+        needsHitOverride=true;
+        messages.push('该技能的额外段数取决于消耗/持有的战斗资源；请填写本次实际伤害段数。');
+      }
+
+      if(/(?:for each|per)\s+[^.]{0,100}\bBase DMG\b|\bBase DMG\b[^.]{0,100}(?:for each|per)/i.test(text)){
+        messages.push('技能含按战斗状态动态变化的 Base DMG；未提供对应状态时不会自动假定层数。');
+      }
+      if(/\bFinal DMG\b[^.]{0,120}(?:for each|per|stack)|(?:for each|per)\s+[^.]{0,120}\bFinal DMG\b/i.test(text)){
+        messages.push('技能含按层数/状态动态变化的 Final DMG；未提供对应状态时不会自动假定层数。');
+      }
+      if(/\bBase DMG\b[^.]{0,80}\bwhen\b|\bwhen\b[^.]{0,80}\bBase DMG\b/i.test(text)){
+        messages.push('技能含条件 Base DMG 加成；只有条件明确输入后才应计入。');
+      }
+      if(/\{Aftershock\}\s*:[^.]*?(?:Tentacle|DMG)/i.test(text)){
+        messages.push('技能含“余震”伤害/触腕事件；余震是否实际触发取决于战斗状态，当前默认不自动计入。');
+      }
+      if(/\{Leap\}\s*:[^.]*?(?:DMG|\{STR\}|\{Tentacle DMG\})/i.test(text)){
+        messages.push('技能含“跃迁”条件伤害/STR/触腕修正；当前默认不把跃迁条件强行计入。');
+      }
+
+      return {needsHitOverride,minHits,maxHits,messages:[...new Set(messages)]};
+    }
+
     function damageEvents(skill,rank,ctx={}){
       const template=String(skill?.descriptionTemplate||'');
       const events=[];let index=0,groupIndex=0;
       const primaryGroups=[];
+      const damageTokenCount=(template.match(/\[Damage:[^\]]+\]/gi)||[]).length;
+      const actualHitOverride=damageTokenCount===1&&Number.isFinite(Number(ctx.actualHitCount))&&Number(ctx.actualHitCount)>0
+        ?Math.max(1,Math.floor(Number(ctx.actualHitCount))):null;
 
       for(const match of template.matchAll(/\[Damage:([^\]]+)\]/gi)){
         const argName=match[1],tokenStart=match.index||0,tokenEnd=tokenStart+match[0].length;
         const coefficient=num(resolveArg(skill?.descriptionArgs?.[argName],rank,ctx),0);
-        const count=inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
+        const count=actualHitOverride??inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
         const type=damageTokenType(template,tokenEnd);
         const groupId=`damage-group-${++groupIndex}`;
         primaryGroups.push({groupId,position:tokenStart});
@@ -641,7 +697,7 @@
     return {base,coexistenceBase,stanceMult,masteryMult,masteryEffectMultiplier:masteryMultFactor,effectiveMastery,extraMult,attack,ragingTriggerPct,turnEndAllowed};
   }
   window.MorimensFormulaEngine={
-    primaryStat,substat,contextFor,setGameplayMathMetadata,publicFormulaContext,resolveScaledBaseFormula,resolveArg,damageEvents,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,estimatedEnemyMaxHp,genericEnemyLevelFactor,genericEnemyProfile,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
+    primaryStat,substat,contextFor,setGameplayMathMetadata,publicFormulaContext,resolveScaledBaseFormula,resolveArg,damageRuntimeHints,damageEvents,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,estimatedEnemyMaxHp,genericEnemyLevelFactor,genericEnemyProfile,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
     source:{
       primary:'SKeyDB src/domain/awakener-level-scaling.ts',
       descriptionArgs:'SKeyDB src/domain/description-args.ts + public-description-args.ts',
