@@ -88,7 +88,7 @@
   function directAtkCoefficients(skill,rank,ctx){
     const template=String(skill?.descriptionTemplate||'');
     const out=[];
-    for(const match of template.matchAll(/\\[Damage:([^\\]]+)\\]/gi)){
+    for(const match of template.matchAll(/\[Damage:([^\]]+)\]/gi)){
       const name=match[1];
       out.push(num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0));
     }
