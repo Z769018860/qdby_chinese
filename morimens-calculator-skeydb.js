@@ -545,7 +545,7 @@
     ],
     'awakener-0029':[
       {overlayId:'overlay.lily.endure',key:'endureStacks',label:'Endure / 坚忍',min:0,max:999999,calculated:true,description:'Strike to Protect：每 1 层 Endure 使本次伤害增加 2；使用后移除 Endure。E3 只移除一半，不降低本次伤害换算。'},
-      {key:'endureConversionBoostStacks',label:'最终法则：Endure 转化强化',min:0,max:5,calculated:true,requiredEnlighten:'AbsoluteAxiom',description:'最终法则后，本回合每受到 1 次攻击，使下一次 Strike to Protect 转化的 Endure 效果 +40%，最多 5 层。'}
+      {key:'endureConversionBoostStacks',label:'最终法则：Endure 转化强化',min:0,max:5,calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则的灵知觉醒状态下：释放 Exalt 后，本回合每受到 1 次攻击，使下一次 Strike to Protect 转化的 Endure 效果 +40%，最多 5 层。只有已开启“灵知觉醒已发动”时输入才生效。'}
     ],
     'awakener-0052':[
       {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦诱',min:0,max:10,calculated:true,description:'Spine Needle Chains 在梦诱≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
@@ -553,7 +553,8 @@
     ],
     'awakener-0054':[
       {overlayId:'overlay.xu.enthrall',coversOverlayIds:['overlay.xu.betroth'],key:'xuChoice',label:'当前痴醉选择',type:'select',calculated:false,options:[['','未选择'],['betroth','相许'],['enthrall','夺魄']],description:'「夜雾下的情誓」的二选一状态：相许施加痴醉，夺魄移除痴醉并按层结算纯粹伤害/中毒。'},
-      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标痴醉',min:0,max:15,calculated:true,description:'夺魄会移除全部痴醉；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。基础上限 5，E3 上限 10，最终法则上限 15。'}
+      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标痴醉',min:0,max:15,calculated:true,description:'夺魄会移除全部痴醉；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。基础上限 5，E3 上限 10；最终法则只有在“灵知觉醒已发动”时上限才提高到 15。'},
+      {key:'xuFirstCommandRouse',label:'最终法则：当前是本回合第一张指令卡',type:'checkbox',calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则灵知觉醒：徐每回合打出的第一张指令卡额外生效 1 次。仅在这张卡确实是本回合第一张指令卡时勾选。'}
     ],
     'awakener-0019':[
       {key:'helotSanguineTurnActive',label:'血链大招本回合流血效果已生效',type:'checkbox',calculated:true,description:'Sanguine Fetters / 血色桎梏发动后，本回合血链希洛每次造成主动伤害都会附加流血。仅在确实已经发动大招且仍处于同一回合时勾选；流血比例按当前技能等级档读取大招 Arg2（Lv.1–6 为 75%–100%）。'}
@@ -612,13 +613,13 @@
   function effectiveResourceMax(spec){
     if(spec?.key==='symbiosisRemovedStacks'){
       const slot=selectedEnlightenSlot();
-      if(slot==='AbsoluteAxiom')return 20;
+      if(slot==='AbsoluteAxiom'&&rouseActive())return 20;
       if(ENLIGHTEN_ORDER.indexOf(slot)>=ENLIGHTEN_ORDER.indexOf('E3'))return 15;
       return 10;
     }
     if(spec?.key==='spellboundStacks'){
       const slot=selectedEnlightenSlot();
-      if(slot==='AbsoluteAxiom')return 15;
+      if(slot==='AbsoluteAxiom'&&rouseActive())return 15;
       if(ENLIGHTEN_ORDER.indexOf(slot)>=ENLIGHTEN_ORDER.indexOf('E3'))return 10;
       return 5;
     }
@@ -852,11 +853,11 @@
         next.usesStrength=true;
         next.resourceEffectLabel=[next.resourceEffectLabel,'本场已使用 Posse '+uses+' 次：力量倍率 +'+uses].filter(Boolean).join('；');
       }
-      if(currentAwakener?.id==='awakener-0010'&&baseSkillId==='skill.clementine.lifeform-reconstruction'&&Number(resources.symbiosisRemovedStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
+      if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
         const stacks=Math.max(0,Math.floor(Number(resources.symbiosisRemovedStacks)||0));
         const bonus=3*stacks;
         next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'移除共生 '+stacks+' 层：基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,'本场累计移除共生 '+stacks+' 层：基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
       }
       if(currentAwakener?.id==='awakener-0041'&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&Number(resources.polluxCommandFinalBonusPct)>0&&(next.type==='active'||next.type==='pierce')){
         const bonus=Math.max(0,Math.min(100,Number(resources.polluxCommandFinalBonusPct)||0));
@@ -1031,6 +1032,12 @@
       const active=mapped.filter(x=>x.type==='active');
       mapped=mapped.map(event=>event.type==='active'?{...event,resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}:event);
       const clones=active.map((event,i)=>({...event,id:String(event.id||'active')+'-murmurs-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00001*(i+1),groupId:String(event.groupId||event.id||'active')+'-murmurs-'+String(i+1),resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}));
+      mapped.push(...clones);
+    }
+    if(currentAwakener?.id==='awakener-0054'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.xuFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
+      const direct=mapped.filter(event=>['active','pierce','pure','fixed'].includes(event.type));
+      const status=mapped.filter(event=>['poison','bleed','counter','corrosion'].includes(event.type));
+      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',resourceEffectLabel:[event.resourceEffectLabel,'最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次'].filter(Boolean).join('；')}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0054'&&baseSkillId==='derived.xu.enthrall'&&Number(resources.spellboundStacks)>0){
