@@ -255,7 +255,7 @@
     if($('charEnlighten'))return;
     const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
     const wrap=document.createElement('div');wrap.className='field';
-    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加 OverExalt，最终法则再叠加 Absolute Axiom。</small>';
+    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
     $('charEnlighten').addEventListener('change',()=>{renderEnlightenSummary();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
@@ -283,7 +283,7 @@
     const anchor=$('skillDesc');if(!anchor)return;
     const block=document.createElement('div');
     block.id='skillRuntimeBlock';block.className='formGrid';block.style.marginTop='10px';block.hidden=true;
-    block.innerHTML='<div class="field" id="skillActualHitsField"><label for="skillActualHits">本次实际伤害段数</label><input id="skillActualHits" type="number" min="1" step="1" placeholder="按技能默认/最低段数"><small>仅在随机段数、X+N、Boss/低生命额外段数等动态技能中出现；填写后覆盖该技能唯一 Damage 事件的段数。</small></div><div class="field full"><div class="desc" id="skillRuntimeWarnings"></div></div>';
+    block.innerHTML='<div class="field" id="skillActualHitsField"><label for="skillActualHits">本次实际伤害段数</label><input id="skillActualHits" type="number" min="1" step="1" placeholder="按技能默认/最低段数"><small>仅在随机段数、X+N、首领战/低生命额外段数等动态技能中出现；填写后覆盖该技能唯一伤害事件的段数。</small></div><div class="field full"><div class="desc" id="skillRuntimeWarnings"></div></div>';
     anchor.insertAdjacentElement('afterend',block);
     const rerun=()=>{if(currentSkill)updateSkillLevel()};
     $('skillActualHits')?.addEventListener('input',rerun,{capture:true});
@@ -294,14 +294,14 @@
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
     const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
-    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于 Forbidden Lore / 研究深度等依赖账号等级的 SKeyDB 公式。</small></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数量</label><input id="formulaOwnedPosseCount" type="number" min="0" max="50" step="1" value="0"><small>用于 SKeyDB 星辰篇研究公式的上下文/参考值，最多计 50；默认公共公式不会无条件把该倍率套到所有技能。</small></div>';
+    block.innerHTML='<div class="field"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。</small></div><div class="field"><label for="formulaOwnedPosseCount">已拥有造物数量</label><input id="formulaOwnedPosseCount" type="number" min="0" max="50" step="1" value="0"><small>用于 SKeyDB 星辰篇研究公式的上下文/参考值，最多计 50；默认公共公式不会无条件把该倍率套到所有技能。</small></div>';
     anchor.insertAdjacentElement('afterend',block);
     const refreshFormulaContext=()=>{updateSkillLevel();renderWheelsAndBonuses();renderCovenantAndBonuses();$('calcBtn')?.click()};
     $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
     $('formulaOwnedPosseCount')?.addEventListener('change',refreshFormulaContext,{capture:true});
   }
   function ensureCharacterLevel(){
-    if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
+    if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB 1 级基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
     normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();ensureSkillRuntimeUi();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
@@ -491,8 +491,8 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
-      if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立 Damage 公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
-      if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push('当前唯一 Damage 公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。');
+      if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立伤害公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
+      if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push('当前唯一伤害公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。');
       $('skillRuntimeBlock').hidden=messages.length===0;
       if($('skillActualHitsField'))$('skillActualHitsField').hidden=!canOverrideHits;
       if($('skillRuntimeWarnings'))$('skillRuntimeWarnings').innerHTML=messages.length

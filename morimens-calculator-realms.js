@@ -275,7 +275,7 @@
       '<div class="formulaRow"><b>队伍限制</b><br>同一队最多出现两个不同界域；只有一种界域时自动视为至纯界域。</div>',
       '<div class="formulaRow"><b>混沌共生</b><br>普通混沌与深海/血肉/超维共存时，另一界域仍按至纯处理，并触发对应混沌共生效果。</div>',
       '<div class="formulaRow"><b>原初混沌例外</b><br>「不可分割界域」会禁止其他界域的至纯、双倍界域精通和双倍伤害强效，因此不会把“普通混沌共生”的规则套到原初混沌。</div>',
-      '<div class="formulaRow"><b>进阶界域</b><br>繁衍血肉、深渊深海、奇点超维均按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div><div class="formulaRow"><b>奇点超维</b><br>基础团队伤害强效 +50%（全队仅超维/混沌时 +100%）；15 层 Singularity Prism，Dimension Shuttle 额外 25 层 Beacon。Realm Mastery 每点使这两类层数 +0.05%，至纯条件下效果翻倍。每层 Beacon 使 Command Card 的 Final DMG 与固定 Poison/Counter +2%。</div><div class="formulaRow"><b>普通 Ultra Round</b><br>SKeyDB：普通 Ultra Round 中造成的 DMG、Poison、Counter、Bleed 等效果 -25%。奇点超维的重写 Ultra Space 文本没有这条惩罚，因此不交叉套用。</div>',
+      '<div class="formulaRow"><b>进阶界域</b><br>繁衍血肉、深渊深海、奇点超维均按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div><div class="formulaRow"><b>奇点超维</b><br>基础团队伤害强效 +50%（全队仅超维/混沌时 +100%）；15 层奇点棱镜，“维度穿梭”额外 25 层信标。界域精通每点使这两类层数 +0.05%，至纯条件下效果翻倍。每层信标使指令卡的最终伤害与固定中毒/反击 +2%。</div><div class="formulaRow"><b>普通超维回合</b><br>SKeyDB：普通超维回合中造成的伤害、中毒、反击、流血等效果 -25%。奇点超维的重写“超维空间”文本没有这条惩罚，因此不交叉套用。</div>',
       '</div></details>'
     ].join('');
     builder.appendChild(block);
