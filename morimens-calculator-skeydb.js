@@ -421,7 +421,7 @@
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
       {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成',inputLabel:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
       {key:'polluxRouseActive',label:'Path of Ablution / Rouse 已生效',type:'checkbox',calculated:true,description:'Rouse 生效时，Sacred Heart 额外施加等于本次伤害 100% 的流血。'},
-      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次 200% ATK 的赎罪苦痛。'},
+      {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次赎罪苦痛；基础为 200% ATK，并会按本次探索已完成战斗数自动提高。'},
       {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。'}
     ],
     'awakener-0058':[
@@ -1102,7 +1102,6 @@
       if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
       if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
-      if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('赎罪苦痛：当前指令卡额外造成 200% ATK 伤害');
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0)parts.push(`暗潮 ${Number(resources.undertowStacks)} 层：指令卡最终伤害/暴伤已按当前启灵阶段计入`);
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.ogierRouseActive)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.ogier-oathbound.sin-stained-spear')parts.push(selectedEnlightenSlot()==='AbsoluteAxiom'?'灵知觉醒 + 最终法则：染罪之枪基础伤害 +100%、总力量加成 500%，并施加等量侵蚀':'灵知觉醒：染罪之枪命中后施加等量侵蚀');
       if(currentAwakener?.id==='awakener-0061'&&generatedStrength>0)parts.push(`本次爆发生成力量约 ${generatedStrength.toFixed(1)}${currentSkill?.overExaltEffectId?'（超限三倍已计入）':''}；护盾约 ${generatedShield.toFixed(1)}。生成的力量属于后续卡牌状态，请在后续伤害计算中填入“力量”。`);
