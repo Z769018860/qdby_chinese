@@ -29,7 +29,7 @@
     const globalTermMeta={
     'STR':['力量','IconS_Buff_021.webp','heal'],'Temporary STR':['临时力量','IconS_Buff_021.webp','heal'],'STR▼':['力量降低','IconS_Buff_037.webp','affliction'],
     'Vulnerable':['易伤','IconS_Buff_003.webp','damage'],'Weakness':['虚弱','IconS_Buff_005.webp','affliction'],'Poison':['中毒','IconS_Buff_006.webp','affliction'],
-    'Counter':['反击','IconS_Buff_019.webp','shield'],'Bleed':['流血','IconS_Buff_022.webp','damage'],'Corrosion':['侵蚀','IconS_Buff_070.webp','affliction'],
+    'Counter':['反击','IconS_Buff_019.webp','shield'],'Bleed':['出血','IconS_Buff_022.webp','damage'],'Corrosion':['侵蚀','IconS_Buff_070.webp','affliction'],
     'Fortress':['护垒','IconS_Buff_046.webp','shield'],'Sacrifice':['献祭','IconS_Buff_041.webp','shield'],'Delayed Sacrifice':['延迟献祭','IconS_Buff_042.webp','shield'],
     'Ancient Embers':['旧日余烬','IconS_Buff_025.webp','affliction'],'Birth Ritual':['诞生仪式','IconS_Buff_079.webp','shield'],
     'Pure DMG':['纯粹伤害',null,'misc','✦'],'Fixed DMG':['固定伤害',null,'misc','◆'],'Pierce DMG':['穿透伤害',null,'misc','↯'],'Tentacle DMG':['触腕伤害',null,'misc','≋'],
@@ -157,7 +157,7 @@
     [/Aliemus Regen Level/gi,'狂气回充等级'],[/Aliemus Regen/gi,'狂气回充等级'],[/Aliemus Generation/gi,'狂气生成'],[/Aliemus/gi,'狂气'],
     [/Death Resistance/gi,'死亡抵抗'],[/Sigil Yield/gi,'黑印掉落'],[/Team Unique/gi,'队伍唯一'],[/wielder/gi,'装备者'],[/exploration/gi,'探索'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
     [/Pierce DMG/gi,'穿透伤害'],[/Pure DMG/gi,'纯粹伤害'],[/Fixed DMG/gi,'固定伤害'],[/Active DMG/gi,'主动伤害'],[/Tentacle DMG/gi,'触腕伤害'],
-    [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'流血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
+    [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'出血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
     [/Spellbound/gi,'痴醉'],[/Betroth/gi,'相许'],[/Enthrall/gi,'夺魄'],[/Emotion/gi,'情绪'],[/Metaphor/gi,'隐喻'],
     [/Leap/gi,'跃迁'],[/Aftershock/gi,'余震'],[/Devour/gi,'吞噬'],[/Resonance/gi,'共鸣'],[/Ritual/gi,'仪式'],[/Stealing|Steal/gi,'窃取'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
     [/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
@@ -514,7 +514,7 @@
       {key:'evernightPriorPlays',label:'本回合已打出永夜',min:0,max:20,calculated:true,requiredEnlighten:'E3',description:'E3 起：第二张及后续「永夜」额外享受 100% 力量加成。这里填写本次永夜之前，本回合已经打出的永夜次数。'}
     ],
     'awakener-0041':[
-      {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
+      {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 出血。'},
       {key:'polluxCommandFinalBonusPct',label:'指令卡最终伤害额外加成',inputLabel:'指令卡最终伤害额外加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 记录的两组档位分别为 18/22/26/30% 与 9/11/13/15%；不自动猜测该增益的来源等级。'},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次「苦痛救赎」；基础为 200% 攻击力，并会按本次探索已完成战斗数自动提高。'},
       {key:'atonementByPainDouble',label:'启灵3：苦痛救赎应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',dependsOn:'atonementByPainActive',description:'启灵3后，第 3 次打出「圣心」会使下一张指令卡的「苦痛救赎」应用 2 次。只有“赎罪苦痛生效”时该开关才有意义。'}
@@ -876,7 +876,7 @@
       }
       if(currentAwakener?.id==='awakener-0041'&&baseSkillId==='derived.pollux.sacred-heart'&&rouseActive()&&(next.type==='active'||next.type==='pierce')){
         next.onDamageBleedPct=(Number(next.onDamageBleedPct)||0)+100;
-        next.resourceEffectLabel='Rouse：圣心额外施加等于本次伤害 100% 的流血';
+        next.resourceEffectLabel='灵知觉醒：「圣心」额外施加等于本次伤害 100% 的出血';
       }
       if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
         const stacks=vulnerableStacks();
@@ -890,7 +890,7 @@
         const uses=Math.max(0,Math.floor(Number(resources.ramonaPosseUses)||0));
         next.strengthMultiplier=Math.max(0,Number(next.strengthMultiplier)||0)+uses;
         next.usesStrength=true;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'本场已使用 Posse '+uses+' 次：力量倍率 +'+uses].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,'本场已使用钥令 '+uses+' 次：力量倍率 +'+uses].filter(Boolean).join('；');
       }
       if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
         const stacks=Math.max(0,Math.floor(Number(resources.symbiosisRemovedStacks)||0));
@@ -901,7 +901,7 @@
       if(currentAwakener?.id==='awakener-0041'&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&Number(resources.polluxCommandFinalBonusPct)>0&&(next.type==='active'||next.type==='pierce')){
         const bonus=Math.max(0,Math.min(100,Number(resources.polluxCommandFinalBonusPct)||0));
         next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel='Ablaze/Alight：指令卡最终伤害 +'+bonus.toFixed(1)+'%';
+        next.resourceEffectLabel='指令卡最终伤害额外加成 +'+bonus.toFixed(1)+'%';
       }
       if(finishedBattles>0&&currentAwakener?.id==='awakener-0041'&&(next.type==='active'||next.type==='pierce')){
         const bonus=20*finishedBattles;
@@ -1000,7 +1000,7 @@
     if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0&&['derived.pontos.raid-gaunt','derived.pontos.vex-gaunt','derived.pontos.slay-gaunt'].includes(baseSkillId)){
       if(baseSkillId==='derived.pontos.slay-gaunt'){
         const fixed=mapped.filter(event=>event.type==='fixed');
-        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:'Pack Hunt：消耗 1 层，「猎杀之魇」固定伤害额外触发 1 次'}));
+        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:'群猎：消耗 1 层，「猎杀之魇」固定伤害额外触发 1 次'}));
         mapped.push(...clones);
       }
     }
@@ -1474,14 +1474,14 @@
       const resources=characterResourceValues();
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：对应狂气爆发的暴击伤害加成翻倍');
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
-      if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 出血`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`当前指令卡最终伤害额外加成 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
-      if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('灵知觉醒：「圣心」额外施加等于本次伤害 100% 的流血');
+      if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('灵知觉醒：「圣心」额外施加等于本次伤害 100% 的出血');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`苦痛救赎：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% 攻击力`);
       if(currentAwakener?.id==='awakener-0019'&&Number(resources.helotSanguineTurnActive)>0){
         const exalt=currentSkills.find(skill=>skill.id==='skill.helot-catena.sanguine-fetters');
         const bleedPct=Math.max(0,num(argValue(resolveSkillEnlighten(exalt)?.descriptionArgs?.Arg2,Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1))),0));
-        parts.push(`「缚身锁链」本回合效果：主动伤害附加 ${bleedPct.toFixed(0)}% 流血`);
+        parts.push(`「缚身锁链」本回合效果：主动伤害附加 ${bleedPct.toFixed(0)}% 出血`);
       }
       if(currentAwakener?.id==='awakener-0027'){
         const fiammaStacks=Number(resources.fiammaActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
