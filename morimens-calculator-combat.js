@@ -38,6 +38,8 @@
         <div class="field" id="standardTentacleField"><label for="currentTentacleDamage">当前基础触腕伤害</label><input id="currentTentacleDamage" type="number" min="0" step="1" value="0"><small>普通深海的基础值 SKeyDB 未公开统一生成公式，直接填游戏触腕图标当前数值。</small></div>
         <div class="field" id="benthosHpField" hidden><label for="teamMaxHp">队伍最大生命</label><input id="teamMaxHp" type="number" min="0" step="1" value="0"><small>深渊深海：基础触腕伤害 = 队伍最大生命 × 5%。</small></div>
         <div class="field"><label for="tentacleExtraBonus">额外触腕伤害增幅 %</label><input id="tentacleExtraBonus" type="number" step="0.1" value="0"><small>用于命轮、技能、遗物等已经折算后的额外触腕增幅。</small></div>
+        <div class="field"><label for="tentacleCritRate">触腕暴击率 %</label><input id="tentacleCritRate" type="number" min="0" max="100" step="0.1" value="0"><small>团队入场暴击率汇总规则需要完整队伍数据，当前允许手动填写最终触腕暴击率。</small></div>
+        <div class="field"><label for="tentacleCritDamage">触腕暴击伤害 %</label><input id="tentacleCritDamage" type="number" min="100" step="0.1" value="150"><small>用于触腕事件的暴击/期望伤害。</small></div>
         <div class="field"><label for="strengthDown">力量降低 STR▼</label><input id="strengthDown" type="number" min="0" step="0.1" value="0"><small>主动伤害每点 -1；触腕按 50% 生效。</small></div>
         <div class="field" id="benthosRagingField" hidden><label for="benthosRagingPct">深渊怒涛基础倍率 %</label><input id="benthosRagingPct" type="number" min="0" step="0.1" value="100"><small>SKeyDB 2.6.1 当前公开记录为 X，未给固定值；请按游戏内显示校准。</small></div>
         <div class="field"><label for="tentacleCount">当前触腕数</label><input id="tentacleCount" type="number" min="0" step="1" value="1"></div>
@@ -76,7 +78,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','strengthDown','benthosRagingPct','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyDefense','defenseMode','defenseConstant','fortressStacks','corrosionAmount','embersAmount']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','benthosRagingPct','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyDefense','defenseMode','defenseConstant','fortressStacks','corrosionAmount','embersAmount']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -124,7 +126,8 @@
       currentTentacle:n('currentTentacleDamage'),
       teamMaxHp:n('teamMaxHp'),
       realmMastery:n('realmMastery'),
-      allAequorChaos:realm.mode==='benthos'&&realm.pureTeam===true,
+      masteryEffectMultiplier:realm.tentacleMasteryMultiplier||1,
+      extraBaseMaxHpPct:realm.aequorChaosBaseTentacleBonusPct||0,
       extraBonusPct:n('tentacleExtraBonus'),
       benthosRagingPct:n('benthosRagingPct',100)
     });
@@ -246,9 +249,13 @@
   }
 
   function resetEnemy(){
-    const values={realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,tentacleExtraBonus:0,strengthDown:0,benthosRagingPct:100,tentacleCount:1,tentacleAttackTimes:1,enemyDefense:0,defenseMode:'manual',defenseConstant:1000,fortressStacks:0,corrosionAmount:0,embersAmount:0,realmMode:'auto'};
+    const values={
+      realmMastery:0,tentacleMode:'standard',tentacleStance:'surging',currentTentacleDamage:0,teamMaxHp:0,
+      tentacleExtraBonus:0,tentacleCritRate:0,tentacleCritDamage:150,strengthDown:0,benthosRagingPct:100,
+      tentacleCount:1,tentacleAttackTimes:1,enemyDefense:0,defenseMode:'manual',defenseConstant:1000,
+      fortressStacks:0,corrosionAmount:0,embersAmount:0,realmPrimary:'auto',realmSecondary:'',realmChaosCount:1
+    };
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
-    if($('realmPureTeam'))$('realmPureTeam').checked=false;
     if($('propagationConsumeEmbryo'))$('propagationConsumeEmbryo').checked=false;
     if($('propagationApplyFiesta'))$('propagationApplyFiesta').checked=true;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
