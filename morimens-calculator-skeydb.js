@@ -523,7 +523,7 @@
 
   const resourceSpecs={
     'awakener-0001':[
-      {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:false,showInCalculator:true,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的狂气爆发会按当前人格与界域触发额外效果并切换人格。该分支同时包含多目标伤害、目标力量降低、状态施加与触腕/中毒等不同结算时序；当前先显式记录人格，但不把这些复杂分支静默折算进当前目标伤害，避免高算。'},
+      {overlayId:'overlay.24.realm-and-persona',key:'personaState',label:'当前人格 / 情绪状态',type:'select',calculated:true,showInCalculator:true,options:[['depressed','抑郁人格'],['manic','躁狂人格']],description:'“24”的人格会参与已能可靠还原的伤害分支：躁狂人格会增加「Frenzied Slash」的伤害段数；最终法则且灵知觉醒已发动时，指令卡人格加成按文本翻倍；若启用维度影像，躁狂人格在回合开始获得的临时暴击率与暴击伤害也会计入。其余多目标、后续状态或资源效果仅在可可靠解析时计入，避免高算。'},
       {key:'twistedCarrionPriorUses',label:'本场此前已释放「扭曲腐肉狂欢」次数',min:0,max:99,calculated:true,description:'该狂气爆发每次释放后使自身基础伤害在本场 +20%。这里填写本次释放之前已经释放的次数；当前这次新增的 +20% 不回溯放大本次已经开始结算的伤害。'},
       {key:'twentyFourTripleNextCommandActive',label:'超限后：当前是下一张三次生效的指令卡',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'超限爆发「畸变的解剖」后，“24”的下一张指令卡生效 3 次。仅在当前计算的确实是那一张指令卡时勾选；计算器会把可解析的伤害/状态事件额外重复 2 次。'}
     ],
@@ -947,6 +947,21 @@
       return next;
     });
     mapped=applyGenericRouseEffects(mapped);
+    if(currentAwakener?.id==='awakener-0001'&&baseSkillId==='skill.24.frenzied-slash'&&String(resources.personaState||'depressed')==='manic'){
+      const rank=Math.max(1,Number($('skillLevel')?.value)||1);
+      const rendered=String(renderTemplate(currentSkill,rank)||'');
+      const match=rendered.match(/Manic Persona:\s*DMG instances?\s*\+\s*(\d+)/i);
+      let extra=match?Math.max(0,Math.floor(Number(match[1])||0)):0;
+      const doubled=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
+      if(doubled)extra*=2;
+      if(extra>0){
+        mapped=cloneExtraDamageEvents(
+          mapped,
+          extra,
+          '躁狂人格：「Frenzied Slash」额外 '+extra+' 段'+(doubled?'（最终法则人格加成已翻倍）':'')
+        );
+      }
+    }
     if(currentAwakener?.id==='awakener-0001'&&Number(resources.twentyFourTripleNextCommandActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       mapped=repeatRepresentedCardEvents(mapped,2,'超限状态：下一张指令卡共生效 3 次','24-overexalt');
     }
@@ -1682,6 +1697,24 @@
     if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套读取：无条件效果直接计入；需要敌人生命区间、特定状态、回合时点等额外条件的效果，只有勾选“额外条件已满足”后才尝试解析。';recomputeGearBonuses();return}
     const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${renderRichRecord(e,1)}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
   }
+  function ensureSignatureRelicUi(){
+    let panel=$('signatureRelicPanel');
+    if(!panel){
+      panel=document.createElement('div');
+      panel.id='signatureRelicPanel';
+      panel.className='signatureRelicPanel';
+      panel.innerHTML='<div class="signatureRelicHead"><strong>维度影像 / 专属造物</strong><span id="signatureRelicStatus">正在匹配…</span></div><label class="check signatureRelicToggle"><input id="signatureRelicEnabled" type="checkbox"><span>启用当前角色维度影像<small>每个唤醒体会自动匹配自己的维度影像。勾选后，可可靠解析且满足条件的属性、伤害、段数和力量效果会进入伤害计算。</small></span></label><div class="desc" id="signatureRelicDesc">正在匹配当前角色的维度影像……</div><div class="signatureRelicApplied" id="signatureRelicApplied">未启用，不计入伤害。</div>';
+    }
+    const charSelect=$('charSelect');
+    const characterBlock=charSelect?.closest('.calcSectionCharacter')||charSelect?.closest('.builderBlock');
+    const charGrid=charSelect?.closest('.formGrid');
+    if(characterBlock&&charGrid&&characterBlock.contains(charGrid)){
+      if(panel.parentElement!==characterBlock||panel.previousElementSibling!==charGrid)charGrid.insertAdjacentElement('afterend',panel);
+    }else if(characterBlock&&!characterBlock.contains(panel)){
+      characterBlock.insertAdjacentElement('afterbegin',panel);
+    }
+    return panel;
+  }
   function signatureRelicCompactFor(awakenerId){
     return relicCatalog.find(x=>x?.ownerAwakenerId===awakenerId&&x?.relicType==='Dimensional Image')||null;
   }
@@ -1707,6 +1740,14 @@
         sumBonus(bonus,numericBonusesFromText(line,true));
         const str=line.match(/(?:gains?|and|,)\s+([\d.]+)\s+(?:Temporary\s+)?STR\b/i);
         if(str)strengthFlat+=num(str[1]);
+      }
+    }
+    if(currentAwakener?.id==='awakener-0001'&&currentSignatureRelic?.id==='relic-0001'){
+      const persona=String(characterResourceValues().personaState||'depressed');
+      if(persona==='manic'){
+        const personaCrit=Math.max(0,signatureArgValue('Arg2'));
+        bonus.critRate+=personaCrit;
+        bonus.critDamage+=personaCrit;
       }
     }
     return {bonus,strengthFlat};
@@ -1916,7 +1957,7 @@
   function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}renderSignatureRelic();for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary()}
 
   async function boot(){
-    ensureTermIconStyle();ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();initManualTracking();bindCapture();renderCharacters();
+    ensureTermIconStyle();ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();ensureSignatureRelicUi();initManualTracking();bindCapture();renderCharacters();
     window.addEventListener('morimens-realm-change',()=>{if(currentSkill)queueMicrotask(updateSkillLevel)});
     try{await loadCatalogs();if($('targetVulnerableStacks'))$('targetVulnerableStacks').disabled=!$('targetVulnerable')?.checked;await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get relics(){return relicCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant},get currentSignatureRelic(){return currentSignatureRelic}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
   }
