@@ -64,6 +64,27 @@
     }).join('')+'</div></section>';
   }
 
+  const pctFactor=pct=>Math.max(0,1+(Number(pct)||0)/100);
+  const poolProduct=pools=>(pools||[]).reduce((factor,pct)=>factor*pctFactor(pct),1);
+  function evaluateUniversalCore(input={}){
+    const baseRaw=Math.max(0,Number(input.baseRaw)||0);
+    const basePools=(input.basePools||[]).map(Number).filter(Number.isFinite);
+    const damageAmpPct=Number(input.damageAmpPct)||0;
+    const strengthAdd=Number(input.strengthAdd)||0;
+    const additiveAdd=Number(input.additiveAdd)||0;
+    const outgoingStateMult=Math.max(0,Number(input.outgoingStateMult)||1);
+    const finalPools=(input.finalPools||[]).map(Number).filter(Number.isFinite);
+    const enemyStateMult=Math.max(0,Number(input.enemyStateMult)||1);
+    const postMult=Math.max(0,Number(input.postMult)||1);
+    const baseAfterPools=baseRaw*poolProduct(basePools);
+    const amplifiedBase=baseAfterPools*pctFactor(damageAmpPct);
+    const withAdditions=amplifiedBase+strengthAdd+additiveAdd;
+    const afterOutgoingState=withAdditions*outgoingStateMult;
+    const afterFinal=afterOutgoingState*poolProduct(finalPools);
+    const beforeCrit=afterFinal*enemyStateMult*postMult;
+    return {baseRaw,baseAfterPools,amplifiedBase,withAdditions,afterOutgoingState,afterFinal,beforeCrit};
+  }
+  window.MorimensDamageMath={...(window.MorimensDamageMath||{}),evaluateCoreDamage:evaluateUniversalCore};
   function currentLevel(){return clamp(Number.parseFloat(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90,1,90)}
   function currentRecord(){const id=$('charSelect')?.value;return window.MorimensData?.db?.records?.find(x=>x.id===id)||((window.MorimensCharacterSync?.record?.id===id)?window.MorimensCharacterSync.record:null)||null}
   function resolvedStats(){
@@ -433,41 +454,58 @@
         :skillTentacleCoef;
       const sourceCounterCoef=Math.max(0,Number(source.counterBonusCoefficient)||0)/100;
       const baseRaw=statValue(source.stat)*coeff;
-      // SKeyDB distinguishes Base DMG from STR and Tentacle-DMG additions.
-      // Therefore Base-DMG bonuses scale only the coefficient-derived base component.
-      const skillBasePct=Math.max(0,Number(source.skillBaseDamageBonusPct)||0);
-      const separateDamageLayers=source.separateDamageLayers===true;
-      const baseLayers=Array.isArray(source.baseDamageMultipliers)?source.baseDamageMultipliers:[];
-      const baseLayerFactor=baseLayers.reduce((factor,item)=>factor*(1+Math.max(0,Number(item?.pct)||0)/100),1);
-      const scopedBaseAutoTotal=separateDamageLayers?Math.max(0,Number(source.scopedBaseAutoTotal)||0):0;
-      const genericBasePct=separateDamageLayers?basePct-scopedBaseAutoTotal:basePct;
-      const afterBase=separateDamageLayers
-        ?baseRaw*(1+genericBasePct/100)*(1+skillBasePct/100)*baseLayerFactor
-        :baseRaw*(1+(basePct+skillBasePct)/100);
+      const skillBasePct=Number(source.skillBaseDamageBonusPct)||0;
+      const skillFinalPct=Number(source.skillFinalDamageBonusPct)||0;
+      const customBaseLayers=Array.isArray(source.baseDamageMultipliers)?source.baseDamageMultipliers:[];
+      const customFinalLayers=Array.isArray(source.finalDamageMultipliers)?source.finalDamageMultipliers:[];
+      const scopeLabels={awakener:'角色基伤',skill:'技能基伤',strike:'打击基伤',command:'指令卡基伤',exalt:'狂气爆发基伤',pursuit:'追击基伤',defense:'防御卡基伤'};
+      const finalScopeLabels={awakener:'角色终伤',skill:'技能终伤',strike:'打击终伤',command:'指令卡终伤',exalt:'狂气爆发终伤',pursuit:'追击终伤',defense:'防御卡终伤'};
+      const scopeKeys=Array.isArray(gearEffects.damageScopeKeys)&&gearEffects.damageScopeKeys.length
+        ?gearEffects.damageScopeKeys:['awakener','skill','strike','command','exalt','pursuit','defense'];
+      const scoped=gearEffects.scopedDamageLayers||{};
+      const scopedBaseLayers=scopeKeys.map(key=>({key,label:scopeLabels[key]||key,pct:Number(scoped.base?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
+      const scopedFinalLayers=scopeKeys.map(key=>({key,label:finalScopeLabels[key]||key,pct:Number(scoped.final?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
+      const scopedBaseAutoTotal=scopedBaseLayers.reduce((sum,x)=>sum+x.pct,0);
+      const scopedFinalAutoTotal=scopedFinalLayers.reduce((sum,x)=>sum+x.pct,0);
+      // n('baseBonus') / n('finalBonus') already contain parsed gear bonuses.
+      // Remove target-scoped pools here, then re-apply each target pool multiplicatively.
+      const genericBasePct=n('baseBonus')-scopedBaseAutoTotal;
+      const genericFinalPct=finalPct-scopedFinalAutoTotal;
+      const basePools=[
+        genericBasePct,
+        soulforgeBasePct,
+        ...scopedBaseLayers.map(x=>x.pct),
+        skillBasePct,
+        ...customBaseLayers.map(x=>Number(x?.pct)||0)
+      ];
+      const finalPools=[
+        genericFinalPct,
+        ...scopedFinalLayers.map(x=>x.pct),
+        skillFinalPct,
+        ...customFinalLayers.map(x=>Number(x?.pct)||0)
+      ];
       const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
       const counterContribution=counterCurrent*sourceCounterCoef;
       const resourceFlatAtkPercent=Math.max(0,Number(source.resourceFlatAtkPercent)||0);
       const resourceFlatDamage=Math.max(0,Number(source.resourceFlatDamage)||0)+attack*resourceFlatAtkPercent/100;
-      const resourceFlatDamageAmpBonusPct=Math.max(0,Number(source.resourceFlatDamageAmpBonusPct)||0);
-      // Blood-chain Helot follows the verified formula supplied for this calculator:
-      // Damage Amplification scales the coefficient-derived ATK/base-DMG component first;
-      // STR is added afterwards and is not itself multiplied by Damage Amplification.
-      const raw=afterBase+strengthPart+tentacleContribution+counterContribution+soulforgeFlat;
-      const afterPower=separateDamageLayers
-        ?afterBase*(1+powerPct/100)+strengthPart+tentacleContribution+counterContribution+soulforgeFlat+resourceFlatDamage*(1+(powerPct+resourceFlatDamageAmpBonusPct)/100)
-        :raw*(1+powerPct/100)+resourceFlatDamage*(1+(powerPct+resourceFlatDamageAmpBonusPct)/100);
-      // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
-      const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
-      const skillFinalPct=Math.max(0,Number(source.skillFinalDamageBonusPct)||0);
-      const finalLayers=Array.isArray(source.finalDamageMultipliers)?source.finalDamageMultipliers:[];
-      const finalLayerFactor=finalLayers.reduce((factor,item)=>factor*(1+Math.max(0,Number(item?.pct)||0)/100),1);
-      const scopedFinalAutoTotal=separateDamageLayers?Math.max(0,Number(source.scopedFinalAutoTotal)||0):0;
-      const genericFinalPct=separateDamageLayers?finalPct-scopedFinalAutoTotal:finalPct;
-      const afterFinal=separateDamageLayers
-        ?afterVulnerability*(1+genericFinalPct/100)*(1+skillFinalPct/100)*finalLayerFactor*(type==='active'?weakCoef:1)
-        :afterVulnerability*(1+(finalPct+skillFinalPct)/100)*(type==='active'?weakCoef:1);
+      const resourceFlatDamageAmpBonusPct=Number(source.resourceFlatDamageAmpBonusPct)||0;
+      // Universal Morimens order:
+      // 1) ATK × skill coefficient × grouped Base-DMG pools × DMG Amplification
+      // 2) + STR × STR multiplier + other additive effects
+      // 3) × outgoing-state effects × grouped Final-DMG pools
+      // 4) × enemy-state effects, environment/level multipliers, then Critical.
+      // DMG Amplification never multiplies STR or other additive effects.
+      const additivePart=tentacleContribution+counterContribution+soulforgeFlat+resourceFlatDamage*pctFactor(resourceFlatDamageAmpBonusPct);
+      const outgoingStateMult=type==='active'?weakCoef:1;
+      const enemyStateMult=type==='active'?pctFactor(vulnerabilityPct):1;
       const resourceDamageMultiplier=Number.isFinite(Number(source.resourceDamageMultiplier))?Math.max(0,Number(source.resourceDamageMultiplier)):1;
-      const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult*resourceDamageMultiplier;
+      const postMult=levelFactor*fortifyCoef*other*realmDamageOutputMult*resourceDamageMultiplier;
+      const core=evaluateUniversalCore({
+        baseRaw,basePools,damageAmpPct:powerPct,
+        strengthAdd:strengthPart,additiveAdd:additivePart,
+        outgoingStateMult,finalPools,enemyStateMult,postMult
+      });
+      const normal=core.beforeCrit;
       const forceCrit=source.guaranteedCrit===true||$('forceCritAll')?.checked===true;
       const eventCritRate=clamp((forceCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
       const baseEventCritMult=Math.max(0,activeCritMult+Math.max(0,Number(source.critDamageBonus)||0)/100);
@@ -486,10 +524,14 @@
         tentacleBonusCoefficient:sourceTentacleCoef*100,
         skillBaseDamageBonusPct:skillBasePct,
         skillFinalDamageBonusPct:skillFinalPct,
-        damageLayerAudit:separateDamageLayers?{
-          genericBasePct,skillBasePct,baseLayers,powerPct,strengthMultiplier,strengthFlatAdd,
-          genericFinalPct,skillFinalPct,finalLayers,vulnerabilityPct,other
-        }:null,
+        damageLayerAudit:{
+          genericBasePct,soulforgeBasePct,skillBasePct,
+          scopedBaseLayers,customBaseLayers,powerPct,strengthMultiplier,strengthFlatAdd,
+          additivePart,genericFinalPct,skillFinalPct,scopedFinalLayers,customFinalLayers,
+          outgoingStateMult,enemyStateMult,vulnerabilityPct,other,fortifyCoef,levelFactor,
+          realmDamageOutputMult,resourceDamageMultiplier,
+          stages:core
+        },
         resourceDamageMultiplier,
         counterBonusCoefficient:sourceCounterCoef*100,
         counterContribution,
