@@ -414,6 +414,7 @@
       chips.push(`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
       if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外增加攻击力的 ${progression.flatAtkDamagePct}%`);
       if(progression.baseDamagePct)chips.push(`灵塑专属：基础伤害 +${progression.baseDamagePct}%`);
+      if(progression.scopedFixedDamagePct&&progression.scopedFixedDamageSkillName)chips.push(`灵塑专属：${progression.scopedFixedDamageSkillName} 固定伤害 +${progression.scopedFixedDamagePct}%`);
     }
     box.innerHTML=chips.map(x=>`<span class="chip">${escape(x)}</span>`).join('');
 

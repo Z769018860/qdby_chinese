@@ -407,10 +407,16 @@
       if(source.basis==='tentacle')raw=tentacleWithStrength*Math.max(0,Number(source.percent)||0)/100;
       else if(source.basis==='statPercent')raw=statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100;
       else if(source.basis==='flat')raw=Math.max(0,Number(source.amount)||0);
+      const normalizeName=value=>String(value||'').toLowerCase().replace(/[^a-z0-9]+/g,'');
+      const scopedName=normalizeName(progression.scopedFixedDamageSkillName);
+      const currentName=normalizeName(skillSync?.skill?.name);
+      const scopedFixedPct=progression.soulforgeEnabled&&scopedName&&scopedName===currentName
+        ?Math.max(0,Number(progression.scopedFixedDamagePct)||0):0;
+      if(scopedFixedPct>0)raw*=1+scopedFixedPct/100;
       const damage=raw*fortifyCoef*realmDamageOutputMult;
       return {
-        id,type:'fixed',source:'skill',label:'Fixed DMG',basis:source.basis,
-        percent:source.percent,amount:source.amount,stat:source.stat||null,
+        id,type:'fixed',source:'skill',label:'Fixed DMG'+(scopedFixedPct>0?` · 灵塑 +${scopedFixedPct.toFixed(2)}%`:''),basis:source.basis,
+        percent:source.percent,amount:source.amount,stat:source.stat||null,scopedFixedDamagePct:scopedFixedPct,
         raw,normal:damage,crit:damage,expected:damage,damage,
         canCrit:false,fixed:true
       };

@@ -915,6 +915,13 @@
       const key=flatAtkMatch[1].includes(':')?flatAtkMatch[1].split(':').pop():flatAtkMatch[1];
       flatAtkDamagePct=num(resolvedSoulforgeArgs[key],0);
     }
+    let scopedFixedDamagePct=0,scopedFixedDamageSkillName=null;
+    const scopedFixedMatch=template.match(/\{derived:([^}]+)\}\s*\{Fixed DMG\}\s*\+\[([^\]]+)\]%/i);
+    if(scopedFixedMatch&&soulforgeEnabled&&sLevel>0){
+      const key=scopedFixedMatch[2].includes(':')?scopedFixedMatch[2].split(':').pop():scopedFixedMatch[2];
+      scopedFixedDamageSkillName=String(scopedFixedMatch[1]||'').trim();
+      scopedFixedDamagePct=num(resolvedSoulforgeArgs[key],0);
+    }
     let baseDamagePct=0;
     // Only auto-apply Soulforge Base-DMG bonuses that clearly target the whole Awakener.
     // Named-card / Strike / Command-Card bonuses are left scoped instead of leaking to every skill.
@@ -940,6 +947,8 @@
       keyflare,
       flatAtkDamagePct,
       baseDamagePct,
+      scopedFixedDamagePct,
+      scopedFixedDamageSkillName,
       resolvedSoulforgeArgs,
       soulforgeEnabled:Boolean(soulforgeEnabled)
     };
