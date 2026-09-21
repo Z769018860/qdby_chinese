@@ -65,6 +65,7 @@
     Object.assign(base,characterResourceValues());
     base.psycheSurgeOffset=psycheSurgeLevel();
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
+    base.rouseActive=rouseActive();
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
     base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
     const realm=window.MorimensRealmEngine?.state?.();
@@ -385,6 +386,24 @@
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
     box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
   }
+  function rouseActive(){return $('rouseActive')?.checked===true}
+  function currentRouseSkill(){return currentSkills.find(x=>x.slot==='Rouse')||null}
+  function ensureRouseUi(){
+    if($('rouseActive'))return;
+    const anchor=$('enlightenDesc')||$('charStatsSummary');if(!anchor)return;
+    const wrap=document.createElement('div');wrap.id='rouseStateBlock';wrap.className='field full calcResourceField isCalculated';wrap.style.marginTop='8px';
+    wrap.innerHTML='<label class="inlineCheck"><input id="rouseActive" type="checkbox"> 灵知觉醒已发动</label><small id="rouseStateNote">角色在灵知觉醒前后可能具有不同效果。勾选后，计算器会启用已明确接入的灵知觉醒乘区；不会自动猜测需要额外战斗时序的资源。</small>';
+    anchor.insertAdjacentElement('afterend',wrap);
+    $('rouseActive')?.addEventListener('change',()=>{renderRouseSummary();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+  }
+  function renderRouseSummary(){
+    ensureRouseUi();
+    const note=$('rouseStateNote');if(!note)return;
+    const rouse=currentRouseSkill();
+    const state=rouseActive()?'已发动':'未发动';
+    const desc=rouse?zhText(renderTemplate(resolveSkillEnlighten(rouse),1)):'当前角色的灵知觉醒技能资料尚未加载。';
+    note.textContent='当前：'+state+'。'+desc+(rouseActive()?' · 已明确接入的伤害乘区会参与计算。':' · 灵知觉醒后的专属效果不会参与计算。');
+  }
   function ensureSkillRuntimeUi(){
     if($('skillRuntimeBlock'))return;
     const anchor=$('skillDesc');if(!anchor)return;
@@ -420,7 +439,6 @@
     'awakener-0041':[
       {overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:2000,calculated:true,description:'罪印上限按 2000 处理；每层使波吕克斯造成伤害时额外附加 1% 流血。'},
       {key:'polluxCommandFinalBonusPct',label:'Ablaze / Alight 指令卡最终伤害加成',inputLabel:'Ablaze / Alight 指令卡最终伤害加成 %',min:0,max:100,calculated:true,description:'填写当前实际生效值。SKeyDB 档位：Ablaze 18/22/26/30%，Alight 9/11/13/15%；不自动猜测该 Buff 的来源等级。'},
-      {key:'polluxRouseActive',label:'Path of Ablution / Rouse 已生效',type:'checkbox',calculated:true,description:'Rouse 生效时，Sacred Heart 额外施加等于本次伤害 100% 的流血。'},
       {key:'atonementByPainActive',label:'赎罪苦痛生效',type:'checkbox',calculated:true,description:'当前指令卡额外结算 1 次赎罪苦痛；基础为 200% ATK，并会按本次探索已完成战斗数自动提高。'},
       {key:'atonementByPainDouble',label:'E3：赎罪苦痛应用 2 次',type:'checkbox',calculated:true,requiredEnlighten:'E3',description:'Divine Revelation（E3）后，Sacred Heart 第 3 次打出使下一张指令卡的赎罪苦痛应用 2 次。'}
     ],
@@ -442,8 +460,7 @@
     ],
     'awakener-0061':[
       {overlayId:'overlay.ogier-oathbound.undertow',key:'undertowStacks',label:'暗潮',min:0,max:3,calculated:true,description:'每层提高负誓·奥吉尔指令卡最终伤害；E1 起每层额外提高暴击伤害，E3 后每层最终伤害增幅由 33% 提高至 50%。'},
-      {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'Guilt / 罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'},
-      {key:'ogierRouseActive',label:'灵知觉醒效果已生效',type:'checkbox',calculated:true,description:'启用后，“染罪之枪”命中会施加等同本次伤害的侵蚀；最终法则时还会使该技能基础伤害 +100%，并额外获得 200% 力量加成。'}
+      {overlayId:'overlay.ogier-oathbound.guilt',key:'guiltStacks',label:'Guilt / 罪责',min:0,max:3,calculated:false,description:'打出负誓·奥吉尔的技能牌时消耗 1 层，抽取 1 张其防御牌并使其获得保留；最多 3 层并跨战斗保留。该资源不直接增加单次伤害。'}
     ],
     'awakener-0032':[
       {overlayId:'overlay.miryam.vanitys-collapse',key:'vanityCollapseCount',label:'本场已完成圣礼→执念转化',min:0,max:99,calculated:true,requiredEnlighten:'E3',description:'E3「虚荣的崩塌」：每完成 1 次圣礼→执念转化，本场战斗 Miryam 基础伤害 +15%。'}
@@ -657,7 +674,7 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0&&['active','pierce','fixed','pure'].includes(next.type)){
         next.onDamageBleedPct=Math.max(0,Number(resources.sinMarkStacks)||0);
       }
-      if(currentAwakener?.id==='awakener-0041'&&baseSkillId==='derived.pollux.sacred-heart'&&Number(resources.polluxRouseActive)>0&&(next.type==='active'||next.type==='pierce')){
+      if(currentAwakener?.id==='awakener-0041'&&baseSkillId==='derived.pollux.sacred-heart'&&rouseActive()&&(next.type==='active'||next.type==='pierce')){
         next.onDamageBleedPct=(Number(next.onDamageBleedPct)||0)+100;
         next.resourceEffectLabel='Rouse：圣心额外施加等于本次伤害 100% 的流血';
       }
@@ -696,7 +713,7 @@
         mapped.push(...clones);
       }
     }
-    if(currentAwakener?.id==='awakener-0061'&&baseSkillId==='skill.ogier-oathbound.sin-stained-spear'&&Number(resources.ogierRouseActive)>0){
+    if(currentAwakener?.id==='awakener-0061'&&baseSkillId==='skill.ogier-oathbound.sin-stained-spear'&&rouseActive()){
       const absoluteAxiom=selectedEnlightenSlot()==='AbsoluteAxiom';
       mapped=mapped.map(event=>{
         if(event.type!=='active'&&event.type!=='pierce')return event;
@@ -832,7 +849,7 @@
   }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB 1 级基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
-    normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();ensureSkillRuntimeUi();ensureCharacterResourceUi();
+    normalizeProgressionControls();ensureEnlightenUi();ensureRouseUi();ensureFormulaContextUi();ensureSkillRuntimeUi();ensureCharacterResourceUi();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
     for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
@@ -974,6 +991,7 @@
     const previousAwakenerId=currentAwakener?.id||null;
     currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
     const switchedCharacter=!!previousAwakenerId&&previousAwakenerId!==currentAwakener.id;
+    ensureRouseUi();if(switchedCharacter&&$('rouseActive'))$('rouseActive').checked=false;
     [currentTalents,currentEnlightens,currentOverlays]=await Promise.all([window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('enlightens',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('overlays',id).catch(()=>[])]);
     normalizeProgressionControls();
     configureProgressionControls(switchedCharacter);
@@ -997,7 +1015,7 @@
       currentSkills.sort((a,b)=>(slotOrder[a.slot]||90)-(slotOrder[b.slot]||90)||String(a.name||'').localeCompare(String(b.name||'')));
       renderSkillOptions(currentSkill?.id);
       const derivedCount=currentSkills.filter(x=>x.kind==='derivedSkill').length,baseCount=currentSkills.length-derivedCount;
-      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${baseCount} 个主技能 + ${derivedCount} 张衍生卡已从本地 SKeyDB 同步`);await applySkill();
+      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${baseCount} 个主技能 + ${derivedCount} 张衍生卡已从本地 SKeyDB 同步`);renderRouseSummary();await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
@@ -1093,7 +1111,7 @@
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
-      if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxRouseActive)>0)parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
+      if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% ATK`);
       if(currentAwakener?.id==='awakener-0041'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：波吕克斯基础伤害 +${20*completedBattles()}%`);
       if(currentAwakener?.id==='awakener-0008'&&completedBattles()>0)parts.push(`探索第 ${explorationBattleIndex()} 场：卡斯托尔侵蚀施加量 +${20*completedBattles()}%`);
@@ -1103,14 +1121,14 @@
       if(currentAwakener?.id==='awakener-0054'&&resources.xuChoice)parts.push(`徐当前选择：${resources.xuChoice==='betroth'?'相许':'夺魄'}`);
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0)parts.push(`暗潮 ${Number(resources.undertowStacks)} 层：指令卡最终伤害/暴伤已按当前启灵阶段计入`);
-      if(currentAwakener?.id==='awakener-0061'&&Number(resources.ogierRouseActive)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.ogier-oathbound.sin-stained-spear')parts.push(selectedEnlightenSlot()==='AbsoluteAxiom'?'灵知觉醒 + 最终法则：染罪之枪基础伤害 +100%、总力量加成 500%，并施加等量侵蚀':'灵知觉醒：染罪之枪命中后施加等量侵蚀');
+      if(currentAwakener?.id==='awakener-0061'&&rouseActive()&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.ogier-oathbound.sin-stained-spear')parts.push(selectedEnlightenSlot()==='AbsoluteAxiom'?'灵知觉醒 + 最终法则：染罪之枪基础伤害 +100%、总力量加成 500%，并施加等量侵蚀':'灵知觉醒：染罪之枪命中后施加等量侵蚀');
       if(currentAwakener?.id==='awakener-0061'&&generatedStrength>0)parts.push(`本次爆发生成力量约 ${generatedStrength.toFixed(1)}${currentSkill?.overExaltEffectId?'（超限三倍已计入）':''}；护盾约 ${generatedShield.toFixed(1)}。生成的力量属于后续卡牌状态，请在后续伤害计算中填入“力量”。`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
       else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该伤害事件');
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:characterResourceValues(),generatedStrength,generatedShield,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:characterResourceValues(),rouseActive:rouseActive(),generatedStrength,generatedShield,activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
