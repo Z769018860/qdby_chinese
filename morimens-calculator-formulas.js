@@ -151,49 +151,187 @@
     return String(template||'').match(re)?.[1]||null;
   }
 
-  function inferDamageRepeatCount(template,tokenEnd,skill,rank,ctx){
-    const tail=String(template||'').slice(tokenEnd,tokenEnd+180);
-    const m=tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*\{plural:\[[^\]]+\]\|time\|times\}/i)
-      ||tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*(?:times?|hits?)/i);
-    if(!m)return 1;
-    const key=m[1].includes(':')?m[1].split(':').pop():m[1];
-    return Math.max(1,Math.floor(num(resolveArg(skill?.descriptionArgs?.[key],rank,ctx),1)));
-  }
 
-  function damageEvents(skill,rank,ctx={}){
-    const template=String(skill?.descriptionTemplate||'');
-    const events=[];let index=0;
-    for(const match of template.matchAll(/\[Damage:([^\]]+)\]/gi)){
-      const argName=match[1],coefficient=num(resolveArg(skill?.descriptionArgs?.[argName],rank,ctx),0);
-      const count=inferDamageRepeatCount(template,(match.index||0)+match[0].length,skill,rank,ctx);
-      for(let hit=0;hit<count;hit++){
+    function resolveTemplateArg(skill,token,rank,ctx){
+      if(token===null||token===undefined)return null;
+      const raw=String(token).trim();
+      const numeric=Number(raw);
+      if(Number.isFinite(numeric))return numeric;
+      const key=raw.includes(':')?raw.split(':').pop():raw;
+      return resolveArg(skill?.descriptionArgs?.[key],rank,ctx);
+    }
+
+    function inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx){
+      const text=String(template||'');
+      const tail=text.slice(tokenEnd,tokenEnd+180);
+      const after=tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*\{plural:\[[^\]]+\]\|time\|times\}/i)
+        ||tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*(?:times?|hits?)/i);
+      if(after){
+        const value=resolveTemplateArg(skill,after[1],rank,ctx);
+        return Math.max(1,Math.floor(num(value,1)));
+      }
+      const head=text.slice(Math.max(0,tokenStart-80),tokenStart);
+      const before=head.match(/(?:deal|deals|randomly deal|randomly deals)\s+(\d+)\s+(?:instances?\s+of|hits?\s+of?)\s*$/i);
+      if(before)return Math.max(1,Math.floor(num(before[1],1)));
+      return 1;
+    }
+
+    function damageTokenType(template,tokenEnd){
+      const tail=String(template||'').slice(tokenEnd,tokenEnd+80);
+      return /^\s*\{Pierce DMG\}/i.test(tail)?'pierce':'active';
+    }
+
+    function damageEvents(skill,rank,ctx={}){
+      const template=String(skill?.descriptionTemplate||'');
+      const events=[];let index=0,groupIndex=0;
+      const primaryGroups=[];
+
+      for(const match of template.matchAll(/\[Damage:([^\]]+)\]/gi)){
+        const argName=match[1],tokenStart=match.index||0,tokenEnd=tokenStart+match[0].length;
+        const coefficient=num(resolveArg(skill?.descriptionArgs?.[argName],rank,ctx),0);
+        const count=inferDamageRepeatCount(template,tokenStart,tokenEnd,skill,rank,ctx);
+        const type=damageTokenType(template,tokenEnd);
+        const groupId=`damage-group-${++groupIndex}`;
+        primaryGroups.push({groupId,position:tokenStart});
+        for(let hit=0;hit<count;hit++){
+          events.push({
+            id:`${type}-${index+1}`,
+            index:index++,
+            position:tokenStart+(hit*0.0001),
+            groupId,
+            type,
+            source:'skill',
+            argName,
+            coefficient,
+            stat:skill?.descriptionArgs?.[argName]?.stat||'ATK',
+            hit:hit+1,
+            hitCount:count,
+            activeSource:true
+          });
+        }
+      }
+
+      const purePattern=/\{Pure DMG\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:(?:the|a)\s+)?(?:target(?:'s|’s)|enemy(?:'s|’s)|each enemy(?:'s|’s)|their)\s+(?:Max|max)\s+HP/gi;
+      for(const match of template.matchAll(purePattern)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
         events.push({
-          id:`active-${index+1}`,
-          index:index++,
-          type:'active',
-          source:'skill',
-          argName,
-          coefficient,
-          stat:skill?.descriptionArgs?.[argName]?.stat||'ATK',
-          hit:hit+1,
-          hitCount:count
+          id:`pure-${index+1}`,index:index++,position:(match.index||0)+0.2,
+          type:'pure',source:'skill',basis:'targetMaxHp',percent,activeSource:false
         });
       }
+
+      const nearestPrimaryGroup=position=>{
+        let found=null;
+        for(const group of primaryGroups){if(group.position<=position)found=group;else break}
+        return found?.groupId||null;
+      };
+
+      for(const match of template.matchAll(/inflict\s+\[([^\]]+)\]%?\s+of\s+(?:the\s+)?DMG(?:\s+dealt)?\s+as\s+\{Poison\}/gi)){
+        const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/inflict\s+an\s+equal\s+amount\s+of\s+\{Poison\}/gi)){
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+        });
+      }
+
+      for(const match of template.matchAll(/trigger(?:s|ed)?\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+\{Poison\}/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`poison-trigger-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'poison',action:'trigger',source:'skill',basis:'currentPoison',percent,activeSource:false
+        });
+      }
+
+      for(const match of template.matchAll(/trigger\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+\{Counter\}/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`counter-trigger-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'counter',action:'trigger',source:'skill',basis:'currentCounter',percent,activeSource:false
+        });
+      }
+
+      events.sort((a,b)=>(a.position-b.position)||(a.index-b.index));
+      return events;
     }
-    return events;
-  }
 
-  function directAtkCoefficients(skill,rank,ctx){
-    return damageEvents(skill,rank,ctx).filter(x=>x.type==='active').map(x=>x.coefficient);
-  }
+    function directAtkCoefficients(skill,rank,ctx){
+      return damageEvents(skill,rank,ctx)
+        .filter(x=>x.type==='active'||x.type==='pierce')
+        .map(x=>x.coefficient);
+    }
 
-  function directAtkCoefficient(skill,rank,ctx){
-    return directAtkCoefficients(skill,rank,ctx)[0]||0;
-  }
+    function directAtkCoefficient(skill,rank,ctx){
+      return directAtkCoefficients(skill,rank,ctx)[0]||0;
+    }
 
-  function directAtkCoefficientSum(skill,rank,ctx){
-    return directAtkCoefficients(skill,rank,ctx).reduce((sum,value)=>sum+num(value,0),0);
-  }
+    function directAtkCoefficientSum(skill,rank,ctx){
+      return directAtkCoefficients(skill,rank,ctx).reduce((sum,value)=>sum+num(value,0),0);
+    }
+
+    const DZONE_GENERIC_HP_FIT={
+      seasons:'60-69',
+      sampleCount:1665,
+      minLevel:35,
+      maxLevel:103,
+      logIntercept:2.4817265231447854,
+      logSlope:0.11550437175178609
+    };
+
+    function estimatedEnemyMaxHp(level){
+      const lv=clamp(num(level,77),1,120);
+      return Math.max(1,Math.round(Math.exp(DZONE_GENERIC_HP_FIT.logIntercept+DZONE_GENERIC_HP_FIT.logSlope*lv)));
+    }
+
+    function accountStageGrowth(level){
+      const curve=gameplayMathMetadata?.accountLevelCurve;
+      const values=curve?.stageGrow;
+      if(!Array.isArray(values)||!values.length)return null;
+      const min=Math.floor(num(curve.minLevel,1)),max=Math.floor(num(curve.maxLevel,min+values.length-1));
+      const lv=num(level,min);
+      if(lv<=min)return num(values[0],1);
+      if(lv<=max){
+        const lo=Math.floor(lv),hi=Math.ceil(lv);
+        const a=num(values[clamp(lo-min,0,values.length-1)],1);
+        const b=num(values[clamp(hi-min,0,values.length-1)],a);
+        return a+(b-a)*(lv-lo);
+      }
+      const last=num(values[values.length-1],1),prev=num(values[Math.max(0,values.length-2)],last);
+      return last+Math.max(0,lv-max)*Math.max(1,last-prev);
+    }
+
+    function genericEnemyLevelFactor(characterLevel,enemyLevel){
+      const charGrowth=accountStageGrowth(characterLevel),enemyGrowth=accountStageGrowth(enemyLevel);
+      if(charGrowth&&enemyGrowth)return clamp(Math.sqrt(charGrowth/enemyGrowth),0.65,1.35);
+      return clamp(Math.exp(-0.012*(num(enemyLevel,77)-num(characterLevel,77))),0.65,1.35);
+    }
+
+    function genericEnemyProfile(enemyLevel,characterLevel){
+      const level=clamp(Math.round(num(enemyLevel,77)),1,120);
+      return {
+        level,
+        estimatedMaxHp:estimatedEnemyMaxHp(level),
+        levelFactor:genericEnemyLevelFactor(characterLevel,level),
+        source:{
+          hpFit:`SKeyDB D-Zone seasons ${DZONE_GENERIC_HP_FIT.seasons}, ${DZONE_GENERIC_HP_FIT.sampleCount} level/HP samples`,
+          levelFactor:'generic relative level model using SKeyDB account stage-growth curve; not an official enemy DEF formula'
+        }
+      };
+    }
+
 
   function tentacleBonusCoefficient(skill,rank,ctx){
     const t=String(skill?.descriptionTemplate||'');
@@ -312,10 +450,12 @@
     return {base,coexistenceBase,stanceMult,masteryMult,masteryEffectMultiplier:masteryMultFactor,effectiveMastery,extraMult,attack,ragingTriggerPct,turnEndAllowed};
   }
   window.MorimensFormulaEngine={
-    primaryStat,substat,contextFor,setGameplayMathMetadata,publicFormulaContext,resolveScaledBaseFormula,resolveArg,damageEvents,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
+    primaryStat,substat,contextFor,setGameplayMathMetadata,publicFormulaContext,resolveScaledBaseFormula,resolveArg,damageEvents,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,estimatedEnemyMaxHp,genericEnemyLevelFactor,genericEnemyProfile,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
     source:{
       primary:'SKeyDB src/domain/awakener-level-scaling.ts',
       descriptionArgs:'SKeyDB src/domain/description-args.ts + public-description-args.ts',
+      enemyProfile:'SKeyDB D-Zone seasons 60-69 level/HP sample fit + generic relative level factor',
+      damageEvents:['overlay.global.poison','overlay.global.counter','overlay.global.pierce-dmg','overlay.global.pure-dmg'],
       tentacle:[
         'public-v3/records/overlays/overlay.global.surging-tides.json',
         'public-v3/records/overlays/overlay.global.tranquil-sea.json',
