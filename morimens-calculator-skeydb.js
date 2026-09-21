@@ -175,21 +175,28 @@
     if($('charEnlighten'))return;
     const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
     const wrap=document.createElement('div');wrap.className='field';
-    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3；存在绝对公理时可选 AA。</small>';
+    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加 OverExalt，最终法则再叠加 Absolute Axiom。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
     $('charEnlighten').addEventListener('change',()=>{renderEnlightenSummary();applySkill();$('calcBtn')?.click()},{capture:true});
   }
+  function enlightenSlotLabel(slot){
+    if(slot==='OverExalt')return '+4 · 超限';
+    if(slot==='AbsoluteAxiom')return '最终法则';
+    return slot;
+  }
   function configureEnlightenControl(){
     ensureEnlightenUi();const sel=$('charEnlighten');if(!sel)return;const prev=sel.value;
     sel.innerHTML='<option value="">E0 · 未启灵</option>';
-    for(const slot of ['E1','E2','E3']){if(!currentEnlightens.some(x=>x.slot===slot))continue;const o=document.createElement('option');o.value=slot;o.textContent=slot;o.selected=prev===slot;sel.appendChild(o)}
-    if(currentEnlightens.some(x=>x.slot==='AbsoluteAxiom')){const o=document.createElement('option');o.value='AbsoluteAxiom';o.textContent='AA · 绝对公理';o.selected=prev==='AbsoluteAxiom';sel.appendChild(o)}
+    for(const slot of ['E1','E2','E3','OverExalt','AbsoluteAxiom']){
+      if(!currentEnlightens.some(x=>x.slot===slot))continue;
+      const o=document.createElement('option');o.value=slot;o.textContent=enlightenSlotLabel(slot);o.selected=prev===slot;sel.appendChild(o);
+    }
     if(!Array.from(sel.options).some(o=>o.value===prev))sel.value='';renderEnlightenSummary();
   }
   function renderEnlightenSummary(){
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
-    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(x.slot==='AbsoluteAxiom'?'AA':x.slot)+' · '+escape(zhText(x.name||''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
+    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot))+' · '+escape(zhText(x.name||''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
   }
   function ensureFormulaContextUi(){
     if($('formulaContextBlock'))return;
@@ -342,7 +349,15 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillCoeffSummary')){
       const parts=[];
-      if(damageEvents.length)parts.push(`主动伤害事件 ${damageEvents.length} 次：${damageEvents.map(x=>Number(x.coefficient).toFixed(2)+'%').join(' / ')}`);
+      if(damageEvents.length){
+        const labels={active:'主动',pierce:'穿透',pure:'纯粹',poison:'中毒',counter:'反击'};
+        parts.push(`Damage Events ${damageEvents.length} 个：${damageEvents.map(x=>{
+          const name=labels[x.type]||x.type;
+          if(x.coefficient!==undefined)return name+' '+Number(x.coefficient).toFixed(2)+'%';
+          if(x.percent!==undefined)return name+' '+Number(x.percent).toFixed(2)+'%';
+          return name;
+        }).join(' / ')}`);
+      }
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
