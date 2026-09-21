@@ -599,9 +599,16 @@
   function isConditional(sentence){
     return /\b(if|when|whenever|after|before|next|per |for each|for every|every time|each time|at the start|at turn|upon|once|during|while|until|first|chance|stacks?|current realm|realm includes|boss battle)\b/i.test(sentence);
   }
+  function effectiveCardClassifications(skill){
+    const values=new Set((skill?.countsAs||[]).map(x=>String(x).toLowerCase()));
+    const text=String(skill?.descriptionTemplate||'');
+    if(/(?:counts?\s+as|considered\s+as)\s+(?:a\s+)?["“]?strike["”]?/i.test(text))values.add('strike');
+    if(/(?:counts?\s+as|considered\s+as)\s+(?:a\s+)?["“]?defense["”]?/i.test(text))values.add('defense');
+    return [...values];
+  }
   function bonusScopeAllows(sentence,key){
     const slot=String(currentSkill?.slot||'').toLowerCase();
-    const countsAs=(currentSkill?.countsAs||[]).map(x=>String(x).toLowerCase());
+    const countsAs=effectiveCardClassifications(currentSkill);
     const cardTypes=(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase());
     const family=String(currentSkill?.cardFamily||'').toLowerCase();
     const currentScopes={
