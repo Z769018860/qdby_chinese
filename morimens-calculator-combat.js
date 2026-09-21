@@ -174,7 +174,7 @@
       <div class="formulaRow"><b>内在灵格</b><br>SKeyDB 的“内在灵格”天赋先把当前等级解析为“基础属性等级 +N”，然后同时作用于体质、攻击、防御三个主属性；不是简单把天赋说明里显示的属性数字直接相加。</div>
       <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
-      <div class="formulaRow"><b>力量与触腕</b><br>每 1 点力量使主动伤害 +1；触腕享受 50% 力量。力量降低同理：主动伤害每点 -1，触腕按 50% 扣除。</div>
+      <div class="formulaRow"><b>基础伤害、力量与触腕</b><br><code>基础伤害 = 属性 × 技能倍率 × (1 + Base DMG 加成)</code>，随后再加入该伤害事件明确拥有的 STR 与触腕伤害附加项；Base DMG 不再错误放大 STR/触腕附加值。每 1 点力量使普通 Active DMG +1；技能若明确写 2×/5× 或额外 STR 加成，则按该事件自己的 STR 倍率计算。触腕本体享受 50% 力量。</div>
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
@@ -258,12 +258,16 @@
         ?Math.max(0,Number(source.strengthMultiplier))
         :(type==='active'?1:(source.usesStrength===true?1:0));
       const strengthPart=netStrength*strengthMultiplier;
-      const raw=statValue(source.stat)*coeff
-        +strengthPart
-        +tentacleWithStrength*skillTentacleCoef*propagationTentacleEffectMult
-        +soulforgeFlat;
-      const afterBase=raw*(1+basePct/100);
-      const afterPower=afterBase*(1+powerPct/100);
+      const sourceTentacleCoef=Number.isFinite(Number(source.tentacleBonusCoefficient))
+        ?Math.max(0,Number(source.tentacleBonusCoefficient))/100
+        :skillTentacleCoef;
+      const baseRaw=statValue(source.stat)*coeff;
+      // SKeyDB distinguishes Base DMG from STR and Tentacle-DMG additions.
+      // Therefore Base-DMG bonuses scale only the coefficient-derived base component.
+      const afterBase=baseRaw*(1+basePct/100);
+      const tentacleContribution=tentacleWithStrength*sourceTentacleCoef*propagationTentacleEffectMult;
+      const raw=afterBase+strengthPart+tentacleContribution+soulforgeFlat;
+      const afterPower=raw*(1+powerPct/100);
       // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const afterFinal=afterVulnerability*(1+finalPct/100)*(type==='active'?weakCoef:1);
@@ -279,6 +283,11 @@
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
+        tentacleBonusCoefficient:sourceTentacleCoef*100,
+        baseRaw,
+        afterBase,
+        strengthPart,
+        tentacleContribution,
         raw,
         ignoresBarrier:type==='pierce',
         activeSource:true,
