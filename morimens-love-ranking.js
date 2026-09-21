@@ -103,7 +103,7 @@
       const image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
       return {id:String(rec.id),name:String(loc.name||rec.name||rec.id),englishName:String(rec.name||''),image};
     });
-    characters.push({id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'',image:'',emoji:'🐈'});
+    characters.push({id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'请离开了',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'});
     return characters.sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
   }
 
