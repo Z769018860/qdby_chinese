@@ -198,6 +198,7 @@
       ?0:Math.max(0,Number(skillSync.triggeredTentaclePercent))/100;
     const propagationTentacleEffectMult=realm.propagationApplies
       ?1+Math.max(0,Number(realm.propagationFiestaStacks)||0)/100:1;
+    const propagationFixedEffectMult=propagationTentacleEffectMult;
     const soulforgeFlat=progression.soulforgeEnabled
       ?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
     const soulforgeBasePct=progression.soulforgeEnabled
@@ -328,11 +329,12 @@
         const damage=groupDamage.get(groupKey(repeat,source.sourceGroupId))||0;
         return Math.max(0,damage*Math.max(0,Number(source.percent)||0)/100);
       }
-      if(source.basis==='statPercent'){
-        return Math.max(0,statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100);
-      }
-      if(source.basis==='flat')return Math.max(0,Number(source.amount)||0);
-      return 0;
+      let amount=0;
+      if(source.basis==='statPercent')amount=statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100;
+      else if(source.basis==='flat')amount=Math.max(0,Number(source.amount)||0);
+      // Propagation Fiesta enhances Fixed Poison / Counter on the next Exalt; sourceDamage-proportional effects are not "Fixed".
+      if((source.type==='poison'||source.type==='counter')&&source.basis!=='sourceDamage')amount*=propagationFixedEffectMult;
+      return Math.max(0,amount);
     }
 
     let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,counterIndex=0;
@@ -494,7 +496,7 @@
       sourceSkillEvents,
       events,
       totals:{
-        active:activeTotal,pierce:pierceTotal,tentacle:tentacleTotal,pure:pureTotal,
+        active:activeTotal,pierce:pierceTotal,tentacle:tentacleTotal,pure:pureTotal,fixed:fixedTotal,
         poison:poisonTotal,counter:counterTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
       status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent},
