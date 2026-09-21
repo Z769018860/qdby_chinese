@@ -65,7 +65,9 @@
       CHAOS:isPure&&baseRealms[0]==='CHAOS',
       AEQUOR:!indivisible&&((isPure&&baseRealms[0]==='AEQUOR')||(chaosCoexistence&&otherRealm==='AEQUOR')),
       CARO:!indivisible&&((isPure&&baseRealms[0]==='CARO')||(chaosCoexistence&&otherRealm==='CARO')),
-      ULTRA:!indivisible&&((isPure&&baseRealms[0]==='ULTRA')||(chaosCoexistence&&otherRealm==='ULTRA'))
+      // Public SKeyDB "Pure Ultra" explicitly requires an all-Ultra team.
+      // Singularity: Ultra has its own Ultra-or-Chaos condition handled below.
+      ULTRA:!indivisible&&isPure&&baseRealms[0]==='ULTRA'
     };
     const masteryEffectMultiplier={
       CHAOS:1,
@@ -179,7 +181,9 @@
       out.notes.push(`混沌×血肉：每名混沌唤醒体回合结束积累 2% 最大生命的猩红熔炉；混沌角色释放狂气爆发时胚胎融合 +25%。`);
     }
     if(chaosCoexistence&&otherRealm==='ULTRA'){
-      out.notes.push(`混沌×超维：超维按至纯处理；每名混沌唤醒体提供共生力量效果，超维唤醒体暴击伤害 +10%。`);
+      out.notes.push(hasMode(modes,'singularity')
+        ?'混沌×奇点超维：奇点规则明确允许 Ultra/Chaos 队伍获得双倍 Ultra Mastery 与双倍界域伤害强效。'
+        :'混沌×普通超维：保留混沌共存阵容，但公开 SKeyDB 的 Pure Ultra 只写“全队 Ultra”，因此不把普通 Ultra Mastery 擅自翻倍。');
     }
     return out;
   }
