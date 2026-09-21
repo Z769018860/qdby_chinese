@@ -122,7 +122,8 @@
       const doubled=!indivisible&&onlyFrom(baseRealms,['AEQUOR','CHAOS']);
       out.teamDamageAmp+=doubled?100:50;
       out.tentacleMasteryMultiplier=doubled?2:1;
-      out.notes.push(`深渊深海：基础触腕为队伍最大生命 5%，团队伤害强效 +${doubled?100:50}%，怒涛界域精通效果 ×${out.tentacleMasteryMultiplier}。`);
+      out.startingTentacleMultiplier=1;
+      out.notes.push(`深渊深海：基础触腕为队伍最大生命 5%，团队伤害强效 +${doubled?100:50}%，怒涛界域精通效果 ×${out.tentacleMasteryMultiplier}；按 Lightless Bottom 记录，至纯不会额外获得初始触腕。`);
     }else if(baseRealms.includes('AEQUOR')){
       out.notes.push(`普通深海：界域精通效果 ×${out.tentacleMasteryMultiplier}${out.startingTentacleMultiplier===2?'，至纯效果使初始触腕数翻倍':''}。`);
     }
