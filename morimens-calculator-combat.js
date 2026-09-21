@@ -633,6 +633,8 @@
     for(const [id,v] of Object.entries(values))if($(id))$(id).value=String(v);
     if($('propagationConsumeEmbryo'))$('propagationConsumeEmbryo').checked=false;
     if($('propagationApplyFiesta'))$('propagationApplyFiesta').checked=true;
+    if($('singularityDimensionShuttle'))$('singularityDimensionShuttle').checked=false;
+    if($('ultraRoundActive'))$('ultraRoundActive').checked=false;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
     if($('includePoisonTurnEnd'))$('includePoisonTurnEnd').checked=true;
     if($('includeBleedTurnEnd'))$('includeBleedTurnEnd').checked=true;
