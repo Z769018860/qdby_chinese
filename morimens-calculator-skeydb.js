@@ -1992,10 +1992,25 @@
     }
     return out;
   }
-  function emptyScopedDamageLayers(){return {base:{strike:0,command:0,exalt:0},final:{strike:0,command:0,exalt:0}}}
+  const DAMAGE_SCOPE_KEYS=['awakener','skill','strike','command','exalt','pursuit','defense'];
+  function emptyScopedDamageLayers(){
+    const make=()=>Object.fromEntries(DAMAGE_SCOPE_KEYS.map(key=>[key,0]));
+    return {base:make(),final:make()};
+  }
   function mergeScopedDamageLayers(target,source){
-    for(const metric of ['base','final'])for(const scope of ['strike','command','exalt'])target[metric][scope]+=num(source?.[metric]?.[scope],0);
+    for(const metric of ['base','final'])for(const scope of DAMAGE_SCOPE_KEYS)target[metric][scope]+=num(source?.[metric]?.[scope],0);
     return target;
+  }
+  function currentSkillNamedInSentence(sentence){
+    const text=String(sentence||''),lower=text.toLowerCase();
+    const names=[currentSkill?.name,currentSkill?.overExaltBaseSkillName].filter(Boolean).map(x=>String(x).toLowerCase());
+    for(const name of names){
+      if(lower.includes('{'+name+'}')||lower.includes('{derived:'+name+'}'))return true;
+      if(lower.includes('base dmg of '+name)||lower.includes('final dmg of '+name))return true;
+    }
+    const owner=String(currentAwakener?.name||'').toLowerCase();
+    if(owner&&names.some(name=>lower.includes(owner+"'s "+name)||lower.includes(owner+'’s '+name)))return true;
+    return /(?:this card|this skill)[^.;]{0,80}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,80}(?:this card|this skill)/i.test(text);
   }
   function scopedDamageLayersFromText(text,allowConditional=false){
     const out=emptyScopedDamageLayers();
@@ -2004,9 +2019,16 @@
       const s=raw.trim();if(!s)continue;
       if(isConditional(s)&&!allowConditional)continue;
       const scopes=[];
-      if(/(?:["“]?Strike["”]?(?: Commands?)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}["“]?Strike["”]?)/i.test(s)&&skillMatchesScope(currentSkill,'strike'))scopes.push('strike');
-      if(/(?:Command Cards?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Command Cards?)/i.test(s)&&skillMatchesScope(currentSkill,'command'))scopes.push('command');
-      if(/(?:Exalt(?:['’]s)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Exalt)/i.test(s)&&skillMatchesScope(currentSkill,'exalt'))scopes.push('exalt');
+      const lower=s.toLowerCase(),owner=String(currentAwakener?.name||'').toLowerCase();
+      if(currentSkillNamedInSentence(s))scopes.push('skill');
+      else{
+        if((lower.includes("this awakener's")||(owner&&(lower.includes(owner+"'s")||lower.includes(owner+'’s'))))&&/(?:Base|Final) DMG/i.test(s))scopes.push('awakener');
+        if(/(?:["“]?Strike["”]?(?: Commands?)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}["“]?Strike["”]?)/i.test(s)&&skillMatchesScope(currentSkill,'strike'))scopes.push('strike');
+        if(/(?:Command Cards?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Command Cards?)/i.test(s)&&skillMatchesScope(currentSkill,'command'))scopes.push('command');
+        if(/(?:Exalt(?:['’]s)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Exalt)/i.test(s)&&skillMatchesScope(currentSkill,'exalt'))scopes.push('exalt');
+        if(/(?:Pursuit(?: Commands?)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}Pursuit)/i.test(s)&&skillMatchesScope(currentSkill,'pursuit'))scopes.push('pursuit');
+        if(/(?:["“]?Defense["”]?(?: Commands?)?[^.;]{0,90}(?:Base|Final) DMG|(?:Base|Final) DMG[^.;]{0,90}["“]?Defense["”]?)/i.test(s)&&skillMatchesScope(currentSkill,'defense'))scopes.push('defense');
+      }
       if(!scopes.length)continue;
       let m=s.match(/Base DMG[^+%]{0,100}\+\s*([\d.]+)%/i)||s.match(/\+\s*([\d.]+)%\s*Base DMG/i);
       if(m)for(const scope of new Set(scopes))out.base[scope]+=num(m[1],0);
