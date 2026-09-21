@@ -7,6 +7,7 @@
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
+  const zhSkillNames={'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心'};
   const zhCovenants={
     'Deus Ex Machina':'机械降神',
     'Re-evolution':'再衍化',
@@ -181,7 +182,8 @@
       .replace(/\s+([，。；：])/g,'$1')
       .trim();
   }
-  function skillLabel(skill){const slot=skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||skill?.slot||'');return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
+  function localizedSkillName(skill){return isEnglish()?(skill?.name||'Skill'):(zhSkillNames[skill?.id]||zhText(skill?.name||'技能'))}
+  function skillLabel(skill){const slot=skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||skill?.slot||'');return `${slot}${slot?' · ':''}${localizedSkillName(skill)}`}
   function skillRecordScope(skillOrId){const id=typeof skillOrId==='string'?skillOrId:skillOrId?.id;return String(id||'').startsWith('derived.')?'derived-skills':'skills'}
   function overExaltUnlocked(){const slot=selectedEnlightenSlot();return slot==='OverExalt'||slot==='AbsoluteAxiom'}
   function visibleSkills(){return currentSkills.filter(skill=>skill.slot!=='OverExalt'||overExaltUnlocked())}
@@ -324,7 +326,7 @@
     wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">E0 · 未启灵</option></select><small>按 SKeyDB 累计应用：E2=E1+E2，E3=E1+E2+E3，+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
     anchor.insertAdjacentElement('afterend',wrap);
     const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
-    $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
+    $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderCharacterResourceControls(false);renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
     ensurePsycheSurgeUi();
   }
   function ensurePsycheSurgeUi(){
@@ -374,9 +376,48 @@
   }
 
   const resourceSpecs={
-    'awakener-0014':[{overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3}],
-    'awakener-0041':[{overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100}]
+    'awakener-0014':[{overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3,calculated:true}],
+    'awakener-0041':[{overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100,calculated:true}]
   };
+  function resolveOverlayEnlighten(baseOverlay){
+    if(!baseOverlay)return baseOverlay;
+    let next=cloneRecord(baseOverlay);
+    const enlightenIds=new Set(activeEnlightens().map(x=>x.id));
+    for(const upgrade of baseOverlay.upgrades||[]){
+      if(upgrade?.operation==='link_only'||upgrade?.upgraderType!=='enlighten'||!enlightenIds.has(upgrade.upgraderId))continue;
+      next=applyEnlightenPatch(next,upgrade);
+    }
+    return next;
+  }
+  function inferredOverlayStackMax(overlay){
+    const text=String(renderTemplate(resolveOverlayEnlighten(overlay),1)||'');
+    const patterns=[
+      /(?:max(?:imum)?(?:\s+of)?|stacks?\s+up\s+to|stacking\s+up\s+to)\s*(\d+)\s*(?:stacks?)?/i,
+      /up\s+to\s+(\d+)\s+stacks?/i,
+      /reaches?\s+(\d+)\s+stacks?/i
+    ];
+    for(const re of patterns){const m=text.match(re);if(m)return Math.max(1,Math.floor(Number(m[1])||0))}
+    return null;
+  }
+  function inferredResourceSpec(overlay){
+    if(!overlay?.id)return null;
+    const text=String(renderTemplate(resolveOverlayEnlighten(overlay),1)||'');
+    if(!/\bstacks?\b/i.test(text))return null;
+    const max=inferredOverlayStackMax(overlay);
+    if(max===null&&!/(?:each|every|for each)\s+stack/i.test(text))return null;
+    return {
+      overlayId:overlay.id,
+      key:'overlay_'+String(overlay.id).replace(/[^a-z0-9]+/gi,'_').replace(/^_|_$/g,'').toLowerCase(),
+      label:zhText(overlay.name||'角色状态'),
+      min:0,max:max??999,calculated:false
+    };
+  }
+  function currentResourceSpecs(){
+    const known=resourceSpecs[currentAwakener?.id]||[];
+    const knownIds=new Set(known.map(x=>x.overlayId));
+    const inferred=(currentOverlays||[]).filter(x=>!knownIds.has(x.id)).map(inferredResourceSpec).filter(Boolean);
+    return [...known,...inferred];
+  }
   function characterResourceValues(){
     const values={awakenerId:currentAwakener?.id||null};
     document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{values[el.dataset.resourceKey]=Math.max(0,num(el.value,0))});
@@ -391,16 +432,16 @@
   }
   function renderCharacterResourceControls(reset=false){
     ensureCharacterResourceUi();const block=$('characterResourceBlock');if(!block)return;
-    const specs=resourceSpecs[currentAwakener?.id]||[];
+    const specs=currentResourceSpecs();
     if(!specs.length){block.innerHTML='';block.hidden=true;window.MorimensCharacterResources={awakenerId:currentAwakener?.id||null};return}
     const previous=reset?{}:characterResourceValues();
     block.innerHTML='';
     for(const spec of specs){
-      const overlay=(currentOverlays||[]).find(x=>x.id===spec.overlayId);
+      const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
       const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
       const wrap=document.createElement('div');wrap.className='field';
       const description=overlay?.descriptionTemplate?zhText(overlay.descriptionTemplate):'角色专属战斗资源。';
-      wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+' · 已接入伤害计算。</small>';
+      wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+(spec.calculated?' · 已接入伤害计算。':' · 已作为战斗状态输入；当前只有可可靠解析的公式会自动参与伤害。')+'</small>';
       block.appendChild(wrap);
     }
     block.hidden=false;
@@ -636,7 +677,7 @@
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
     const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
     if($('skillCoef'))$('skillCoef').value=String(coef);
-    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
+    if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(localizedSkillName(currentSkill))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
       if(currentSkill?.overExaltEffectId){
