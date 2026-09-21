@@ -42,27 +42,93 @@
     };
   }
 
+  let gameplayMathMetadata=null;
+
+  function setGameplayMathMetadata(metadata){
+    gameplayMathMetadata=metadata&&typeof metadata==='object'?metadata:null;
+    return gameplayMathMetadata;
+  }
+
+  function publicFormulaContext(ctx={}){
+    return {
+      ...ctx,
+      accountLevel:clamp(Math.floor(num(ctx.accountLevel,50)),1,100),
+      ownedPosseCount:Math.max(0,Math.floor(num(ctx.ownedPosseCount,0))),
+      wheelRefinementLevel:ctx.wheelRefinementLevel===undefined?undefined:clamp(Math.floor(num(ctx.wheelRefinementLevel,0)),0,3),
+      realmMasteryFinal:Math.max(0,num(ctx.realmMasteryFinal,ctx.RealmMastery||0)),
+      primordiaAllChaosTeam:ctx.primordiaAllChaosTeam===true
+    };
+  }
+
+  function accountCurve(ctx={}){
+    const meta=gameplayMathMetadata?.accountLevelCurve;
+    if(!meta||!Array.isArray(meta.stageGrow)||!meta.stageGrow.length)return null;
+    const min=Math.floor(num(meta.minLevel,1)),max=Math.floor(num(meta.maxLevel,min+meta.stageGrow.length-1));
+    const level=clamp(Math.floor(num(ctx.accountLevel,50)),min,max),i=level-min;
+    return {
+      accountLevel:level,
+      stageGrow:num(meta.stageGrow[i],0),
+      accountDamagePower:num(meta.accountDamagePower?.[i],0),
+      hpMultiplier:num(meta.hpMultiplier?.[i],0)
+    };
+  }
+
+  function resolveScaledBaseFormula(baseFormula,ctx={}){
+    const curve=accountCurve(publicFormulaContext(ctx));if(!curve)return null;
+    if(baseFormula==='accountStageGrowth')return curve.stageGrow;
+    if(baseFormula==='somaticResearchHpMultiplier')return curve.hpMultiplier;
+    if(baseFormula==='esotericResearchDepth')return curve.stageGrow;
+    if(baseFormula==='occultResearchDepth')return curve.stageGrow*(curve.accountDamagePower/100);
+    if(baseFormula==='occultResearchMultiplier')return curve.accountDamagePower/100;
+    return null;
+  }
+
   function baseArgValue(arg,rank=1,ctx={}){
     if(!arg)return null;
+    const context=publicFormulaContext(ctx);
     if(arg.kind==='fixed')return num(arg.value,0);
     if(arg.kind==='linear')return num(arg.base,0)+num(arg.gainPerLevel,0)*(Math.max(1,rank)-1);
     if(arg.kind==='scaling'){
       const arr=Array.isArray(arg.values)?arg.values:[];
-      return arr.length?num(arr[Math.min(Math.max(rank-1,0),arr.length-1)],0):0;
+      if(!arr.length)return 0;
+      const index=arg.scalingContext==='wheelRefinement'&&context.wheelRefinementLevel!==undefined
+        ?context.wheelRefinementLevel
+        :Math.max(rank-1,0);
+      return num(arr[Math.min(index,arr.length-1)],0);
     }
     if(arg.kind==='computed'){
+      if(arg.formulaKey==='scaled'||arg.formulaKey==='scaledCeilThenMultiply'){
+        const base=resolveScaledBaseFormula(arg.baseFormula,context);
+        if(base===null)return null;
+        if(arg.formulaKey==='scaled'){
+          const scaled=base*(Number.isFinite(Number(arg.multiplier))?Number(arg.multiplier):1);
+          return arg.rounding==='ceil'?Math.ceil(scaled):scaled;
+        }
+        const divisor=num(arg.divisor,1);
+        if(!(divisor>0))return null;
+        return Math.ceil((base*num(arg.multiplier,0))/divisor)*num(arg.postMultiplier,0);
+      }
+      if(arg.formulaKey==='wheelRefinementLinear'){
+        if(context.wheelRefinementLevel===undefined)return null;
+        return num(arg.baseValue,0)+context.wheelRefinementLevel*num(arg.perLevel,0);
+      }
       if(arg.formulaKey==='realmMasteryLinear'){
-        const v=num(arg.baseValue,0)+num(ctx.RealmMastery,0)*num(arg.perPoint,0);
-        return arg.rounding==='ceil'?Math.ceil(v-EPS):v;
+        const v=num(arg.baseValue,0)+context.realmMasteryFinal*num(arg.perPoint,0);
+        return arg.rounding==='ceil'?Math.ceil(v):v;
       }
       if(arg.formulaKey==='primordiaPosseScaled'){
-        let base=num(arg.baseValue,0);
-        if(arg.baseFormula!=='fixed'&&Number.isFinite(num(ctx.scaledBaseValue,NaN)))base=num(ctx.scaledBaseValue);
-        base*=num(arg.multiplier,1);
-        if(arg.baseFormula!=='fixed')base=Math.ceil(base-EPS);
+        let base;
+        if(arg.baseFormula==='fixed')base=num(arg.baseValue,0);
+        else{
+          const resolved=resolveScaledBaseFormula(arg.baseFormula,context);
+          if(resolved===null)return null;
+          base=resolved;
+        }
+        const scaledBase=base*(Number.isFinite(Number(arg.multiplier))?Number(arg.multiplier):1);
+        const normalizedBase=arg.baseFormula==='fixed'?scaledBase:Math.ceil(scaledBase);
         const rate=arg.scalingBucket==='offensive'?0.001:0.0005;
-        const team=ctx.primordiaAllChaosTeam?2:1;
-        return Math.ceil(base*(1+num(ctx.RealmMastery,0)*rate*team)-EPS);
+        const team=context.primordiaAllChaosTeam?2:1;
+        return Math.ceil(normalizedBase*(1+context.realmMasteryFinal*rate*team)-EPS);
       }
     }
     return null;
@@ -85,14 +151,40 @@
     return String(template||'').match(re)?.[1]||null;
   }
 
-  function directAtkCoefficients(skill,rank,ctx){
+  function inferDamageRepeatCount(template,tokenEnd,skill,rank,ctx){
+    const tail=String(template||'').slice(tokenEnd,tokenEnd+180);
+    const m=tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*\{plural:\[[^\]]+\]\|time\|times\}/i)
+      ||tail.match(/^\s*(?:DMG|damage)?\s*\[([^\]]+)\]\s*(?:times?|hits?)/i);
+    if(!m)return 1;
+    const key=m[1].includes(':')?m[1].split(':').pop():m[1];
+    return Math.max(1,Math.floor(num(resolveArg(skill?.descriptionArgs?.[key],rank,ctx),1)));
+  }
+
+  function damageEvents(skill,rank,ctx={}){
     const template=String(skill?.descriptionTemplate||'');
-    const out=[];
+    const events=[];let index=0;
     for(const match of template.matchAll(/\[Damage:([^\]]+)\]/gi)){
-      const name=match[1];
-      out.push(num(resolveArg(skill?.descriptionArgs?.[name],rank,ctx),0));
+      const argName=match[1],coefficient=num(resolveArg(skill?.descriptionArgs?.[argName],rank,ctx),0);
+      const count=inferDamageRepeatCount(template,(match.index||0)+match[0].length,skill,rank,ctx);
+      for(let hit=0;hit<count;hit++){
+        events.push({
+          id:`active-${index+1}`,
+          index:index++,
+          type:'active',
+          source:'skill',
+          argName,
+          coefficient,
+          stat:skill?.descriptionArgs?.[argName]?.stat||'ATK',
+          hit:hit+1,
+          hitCount:count
+        });
+      }
     }
-    return out;
+    return events;
+  }
+
+  function directAtkCoefficients(skill,rank,ctx){
+    return damageEvents(skill,rank,ctx).filter(x=>x.type==='active').map(x=>x.coefficient);
   }
 
   function directAtkCoefficient(skill,rank,ctx){
@@ -219,7 +311,7 @@
   }
 
   window.MorimensFormulaEngine={
-    primaryStat,substat,contextFor,resolveArg,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
+    primaryStat,substat,contextFor,setGameplayMathMetadata,publicFormulaContext,resolveScaledBaseFormula,resolveArg,damageEvents,directAtkCoefficients,directAtkCoefficient,directAtkCoefficientSum,tentacleBonusCoefficient,triggeredTentaclePercent,resolveProgression,statsWithProgression,resolveTentacle,
     source:{
       primary:'SKeyDB src/domain/awakener-level-scaling.ts',
       descriptionArgs:'SKeyDB src/domain/description-args.ts + public-description-args.ts',
