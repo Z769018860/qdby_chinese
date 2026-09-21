@@ -1342,7 +1342,20 @@
       }
     }
     let generatedStrength=0,generatedShield=0;
-    const ogierBaseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
+    const generatedBaseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
+    const generatedResources=characterResourceValues();
+    if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'){
+      const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
+      const fiammaStacks=Number(generatedResources.fiammaActive)>0?Math.min(3,Math.max(1,Math.floor(Number(generatedResources.fiammaStacks)||1))):0;
+      const e2Unlocked=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2');
+      const baseStrPct=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg4||currentSkill?.descriptionArgs?.Arg2,rank),0));
+      const extraStrPct=e2Unlocked&&fiammaStacks===3?Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg3,rank),3)):0;
+      const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
+      const fiammaPerStack=30+(absoluteRouse?30:0);
+      const fiammaStrengthMultiplier=1+fiammaStacks*fiammaPerStack/100;
+      generatedStrength=Math.max(0,num(ctx?.ATK,0))*(baseStrPct+extraStrPct)/100*fiammaStrengthMultiplier;
+    }
+    const ogierBaseSkillId=generatedBaseSkillId;
     if(currentAwakener?.id==='awakener-0061'&&ogierBaseSkillId==='skill.ogier-oathbound.unfallen-heart'){
       const resources=characterResourceValues();
       const stacks=Math.min(3,Math.max(0,Number(resources.undertowStacks)||0));
@@ -1385,6 +1398,22 @@
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.polluxCommandFinalBonusPct)>0)parts.push(`Ablaze/Alight：当前指令卡最终伤害 +${Number(resources.polluxCommandFinalBonusPct).toFixed(1)}%`);
       if(currentAwakener?.id==='awakener-0041'&&rouseActive())parts.push('Rouse：Sacred Heart 额外施加 100% 本次伤害的流血');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0)parts.push(`赎罪苦痛：${Number(resources.atonementByPainDouble)>0?2:1} 次 × ${(200*(1+0.20*completedBattles())).toFixed(0)}% ATK`);
+      if(currentAwakener?.id==='awakener-0019'&&Number(resources.helotSanguineTurnActive)>0){
+        const exalt=currentSkills.find(skill=>skill.id==='skill.helot-catena.sanguine-fetters');
+        const bleedPct=Math.max(0,num(argValue(resolveSkillEnlighten(exalt)?.descriptionArgs?.Arg2,Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1))),0));
+        parts.push(`血色桎梏本回合效果：主动伤害附加 ${bleedPct.toFixed(0)}% 流血`);
+      }
+      if(currentAwakener?.id==='awakener-0027'){
+        const fiammaStacks=Number(resources.fiammaActive)>0?Math.min(3,Math.max(1,Math.floor(Number(resources.fiammaStacks)||1))):0;
+        if(fiammaStacks>0){
+          const absoluteRouse=rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom';
+          parts.push(`活焰 ${fiammaStacks}/3 层：本卡最终伤害 +${fiammaStacks*(30+(absoluteRouse?30:0))}%${absoluteRouse?'（灵知觉醒 + 最终法则）':''}`);
+          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.solarflare')parts.push('E2 · 活焰 3 层：Solarflare 基础伤害 +50%');
+          if(fiammaStacks===3&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&baseSkillId==='skill.kathigu-ra.last-stand-salvo')parts.push('E2 · 活焰 3 层：Last Stand Salvo 额外获得 3% ATK 力量；属于后续卡牌状态，不回溯本卡伤害');
+          if(fiammaStacks===3&&rouseActive())parts.push('灵知觉醒：3 层活焰卡使用后返回手牌；这里只计算本次使用，不自动重复整张卡');
+        }
+        if(Number(resources.combustStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E3'))parts.push(`E3 · 燃烧 ${Math.min(10,Math.floor(Number(resources.combustStacks)||0))} 层：本场基础伤害 +${Math.min(10,Math.floor(Number(resources.combustStacks)||0))*5}%`);
+      }
       if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&vulnerableStacks()>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2'))parts.push(`目标易伤 ${vulnerableStacks()} 层：E2 Decomposition 最终伤害 +${Math.min(500,vulnerableStacks()*5)}%`);
       if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike')parts.push(`Predetermined Strike 力量倍率：基础 3× + 本场 Posse ${Math.floor(Number(resources.ramonaPosseUses)||0)} 次`);
       if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0)parts.push(`本次移除共生 ${Math.floor(Number(resources.symbiosisRemovedStacks)||0)} 层：E2+ 基础伤害 +${Math.floor(Number(resources.symbiosisRemovedStacks)||0)*3}%`);
@@ -1403,6 +1432,7 @@
       if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标痴醉 ${Number(resources.spellboundStacks)} 层：夺魄按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0061'&&Number(resources.undertowStacks)>0)parts.push(`暗潮 ${Number(resources.undertowStacks)} 层：指令卡最终伤害/暴伤已按当前启灵阶段计入`);
       if(currentAwakener?.id==='awakener-0061'&&rouseActive()&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='skill.ogier-oathbound.sin-stained-spear')parts.push(selectedEnlightenSlot()==='AbsoluteAxiom'?'灵知觉醒 + 最终法则：染罪之枪基础伤害 +100%、总力量加成 500%，并施加等量侵蚀':'灵知觉醒：染罪之枪命中后施加等量侵蚀');
+      if(currentAwakener?.id==='awakener-0027'&&generatedBaseSkillId==='skill.kathigu-ra.last-stand-salvo'&&generatedStrength>0)parts.push(`Last Stand Salvo 本次生成力量约 ${generatedStrength.toFixed(1)}；活焰对“获得力量”的增幅与 3 层 E2 额外 3% ATK 已按当前状态计入。该力量只影响后续卡牌，不回溯本卡伤害。`);
       if(currentAwakener?.id==='awakener-0061'&&generatedStrength>0)parts.push(`本次爆发生成力量约 ${generatedStrength.toFixed(1)}${currentSkill?.overExaltEffectId?'（超限三倍已计入）':''}；护盾约 ${generatedShield.toFixed(1)}。生成的力量属于后续卡牌状态，请在后续伤害计算中填入“力量”。`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
