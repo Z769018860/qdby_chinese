@@ -58,6 +58,7 @@
         <div class="field"><label for="enemyLevel">敌人等级</label><input id="enemyLevel" type="number" min="1" max="120" step="1" value="77"><small>用于通用承伤系数与默认最大生命估算。</small></div>
         <div class="field"><label for="enemyMaxHpOverride">敌人最大生命（可选覆盖）</label><input id="enemyMaxHpOverride" type="number" min="0" step="1" placeholder="留空使用等级拟合"><small>目标最大生命百分比 Pure DMG / Corrosion 会优先使用此值。</small></div>
         <div class="field"><label for="fortressStacks">加固层数</label><input id="fortressStacks" type="number" min="0" max="100" step="1" value="0"><small>SKeyDB：每层使受到的伤害降低 1%。</small></div>
+        <div class="field"><label class="inlineCheck"><input id="forceCritAll" type="checkbox"> 本次可暴击伤害强制暴击</label><small>用于 Castor 最终法则 Rouse 等“当前角色伤害始终暴击”的已激活战斗态；技能文本自身写明 guaranteed Critical Hit 时无需勾选。</small></div>
         <div class="field"><label for="currentPoison">当前 Poison / 中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Poison”等即时中毒触发。</small></div>
         <div class="field"><label for="currentBleed">当前 Bleed / 流血层数</label><input id="currentBleed" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Bleed”和本回合末流血结算。</small></div>
         <div class="field"><label for="currentCounter">当前 Counter / 反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Counter”事件。</small></div>
@@ -86,7 +87,7 @@
     `;
     document.head.appendChild(style);
 
-    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd']){
+    for(const id of ['realmMastery','tentacleMode','tentacleStance','currentTentacleDamage','teamMaxHp','tentacleExtraBonus','tentacleCritRate','tentacleCritDamage','strengthDown','tentacleCount','tentacleAttackTimes','includeTurnEndTentacle','enemyLevel','enemyMaxHpOverride','fortressStacks','forceCritAll','currentPoison','currentBleed','currentCounter','corrosionAmount','corrosionLossMultiplier','embersAmount','includeTurnEndSettlement','includePoisonTurnEnd','includeBleedTurnEnd']){
       $(id)?.addEventListener('input',()=>{toggleTentacleMode();calculate()});
       $(id)?.addEventListener('change',()=>{toggleTentacleMode();calculate()});
     }
@@ -179,7 +180,7 @@
       <div class="formulaRow"><b>内在灵格</b><br>SKeyDB 的“内在灵格”天赋先把当前等级解析为“基础属性等级 +N”，然后同时作用于体质、攻击、防御三个主属性；不是简单把天赋说明里显示的属性数字直接相加。</div>
       <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
-      <div class="formulaRow"><b>基础伤害、力量与触腕</b><br><code>基础伤害 = 属性 × 技能倍率 × (1 + Base DMG 加成)</code>，随后再加入该伤害事件明确拥有的 STR 与触腕伤害附加项；Base DMG 不再错误放大 STR/触腕附加值。每 1 点力量使普通 Active DMG +1；技能若明确写 2×/5× 或额外 STR 加成，则按该事件自己的 STR 倍率计算。触腕本体享受 50% 力量。</div>
+      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 guaranteed Critical Hit 时自动按必暴；跨卡/跨回合状态（例如已激活的“伤害始终暴击”Rouse）不会被凭空假设，可通过“本次可暴击伤害强制暴击”显式开启。</div><div class="formulaRow"><b>基础伤害、力量与触腕</b><br><code>基础伤害 = 属性 × 技能倍率 × (1 + Base DMG 加成)</code>，随后再加入该伤害事件明确拥有的 STR 与触腕伤害附加项；Base DMG 不再错误放大 STR/触腕附加值。每 1 点力量使普通 Active DMG +1；技能若明确写 2×/5× 或额外 STR 加成，则按该事件自己的 STR 倍率计算。触腕本体享受 50% 力量。</div>
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>涨潮 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>深渊深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 Pontos「Lightless Bottom」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初混沌精通</b><br>原初混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
@@ -281,16 +282,17 @@
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const afterFinal=afterVulnerability*(1+finalPct/100)*(type==='active'?weakCoef:1);
       const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult;
-      const eventCritRate=clamp((source.guaranteedCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
+      const forceCrit=source.guaranteedCrit===true||$('forceCritAll')?.checked===true;
+      const eventCritRate=clamp((forceCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
       const eventCritMult=Math.max(0,activeCritMult+Math.max(0,Number(source.critDamageBonus)||0)/100);
-      const critState=selectCrit(normal,eventCritRate,eventCritMult,source.guaranteedCrit===true);
+      const critState=selectCrit(normal,eventCritRate,eventCritMult,forceCrit);
       return {
         id:`skill-${repeatIndex+1}-${eventIndex+1}`,
         type,
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`)+(source.guaranteedCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'') ,
+        label:(type==='pierce'?`Pierce DMG ${eventIndex+1}`:`Active DMG ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
@@ -657,6 +659,7 @@
     if($('singularityDimensionShuttle'))$('singularityDimensionShuttle').checked=false;
     if($('ultraRoundActive'))$('ultraRoundActive').checked=false;
     if($('includeTurnEndTentacle'))$('includeTurnEndTentacle').checked=false;
+    if($('forceCritAll'))$('forceCritAll').checked=false;
     if($('includeTurnEndSettlement'))$('includeTurnEndSettlement').checked=true;
     if($('includePoisonTurnEnd'))$('includePoisonTurnEnd').checked=true;
     if($('includeBleedTurnEnd'))$('includeBleedTurnEnd').checked=true;
