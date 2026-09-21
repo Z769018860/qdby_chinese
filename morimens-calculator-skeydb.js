@@ -425,6 +425,9 @@
     'awakener-0027':[
       {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:false},
       {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaActive',label:'当前卡具有 Fiamma',type:'checkbox',calculated:true,description:'当前卡具有 Fiamma 时，本卡最终伤害、护盾、狂气和力量效果 +30%；伤害计算器只自动应用最终伤害 +30%。'}
+    ],
+    'awakener-0035':[
+      {overlayId:'overlay.murphy-fauxborn.life-seal',key:'lifeSealStacks',label:'生命封印',min:0,max:5,calculated:true,description:'每层使下一次「妄想公主」施加的诞生仪式 +20%；灵塑启用时该增幅翻倍。5 层时该技能伤害段数翻倍。'}
     ]
   };
   function resolveOverlayEnlighten(baseOverlay){
@@ -594,6 +597,11 @@
     }
     if(currentAwakener?.id==='awakener-0027'&&Number(resources.fiammaActive)>0){
       mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+30,resourceEffectLabel:'Fiamma：本卡最终伤害 +30%'}:event);
+    }
+    if(currentAwakener?.id==='awakener-0035'&&baseSkillId==='skill.murphy-fauxborn.princess-of-delusions'&&Number(resources.lifeSealStacks)>=5){
+      const direct=mapped.filter(x=>x.type==='active'||x.type==='pierce');
+      const clones=direct.map((event,i)=>({...event,id:String(event.id||'damage')+'-life-seal-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00002*(i+1),groupId:String(event.groupId||event.id||'damage')+'-life-seal-'+String(i+1),resourceEffectLabel:'生命封印 5 层：伤害段数翻倍'}));
+      mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       mapped.push({
