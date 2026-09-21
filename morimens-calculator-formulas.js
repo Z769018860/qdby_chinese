@@ -222,7 +222,18 @@
         });
       }
 
-      const nearestPrimaryGroup=position=>{
+      const tentaclePiercePattern=/Command all Tentacles to attack(?: all enemies)?\s+\[([^\]]+)\]\s+\{plural:[^}]+\},?\s+dealing\s+\[([^\]]+)\]%?\s+\{Pierce DMG\}/gi;
+    for(const match of template.matchAll(tentaclePiercePattern)){
+      const attacks=Math.max(1,Math.floor(num(resolveTemplateArg(skill,match[1],rank,ctx),1)));
+      const percent=num(resolveTemplateArg(skill,match[2],rank,ctx),0);
+      events.push({
+        id:`pierce-tentacle-${index+1}`,index:index++,position:(match.index||0)+0.15,
+        type:'pierce',source:'skill',basis:'tentacle',percent,attacksPerTentacle:attacks,
+        activeSource:false
+      });
+    }
+
+    const nearestPrimaryGroup=position=>{
         let found=null;
         for(const group of primaryGroups){if(group.position<=position)found=group;else break}
         return found?.groupId||null;
