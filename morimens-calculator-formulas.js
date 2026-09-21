@@ -188,6 +188,20 @@
       return 1;
     }
 
+    function damageTentacleBonusCoefficient(skill,template,tokenEnd,rank,ctx){
+      const local=String(template||'').slice(tokenEnd,tokenEnd+240);
+      const patterns=[
+        /(?:which\s+)?enjoys?\s+(?:a|an)?\s*(?:additional\s+)?\[([^\]]+)\]%\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
+        /with\s+(?:a|an)?\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}\s*Bonus/i,
+        /additionally\s+gaining\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i
+      ];
+      for(const re of patterns){
+        const match=local.match(re);if(!match)continue;
+        return Math.max(0,num(resolveTemplateArg(skill,match[1],rank,ctx),0));
+      }
+      return 0;
+    }
+
     function damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type){
       const text=String(template||'');
       const local=text.slice(tokenEnd,Math.min(text.length,tokenEnd+220));
@@ -243,6 +257,7 @@
             hit:hit+1,
             hitCount:count,
             strengthMultiplier:damageStrengthMultiplier(skill,template,tokenStart,tokenEnd,rank,ctx,type),
+            tentacleBonusCoefficient:damageTentacleBonusCoefficient(skill,template,tokenEnd,rank,ctx),
             usesStrength:type==='active'||/\{STR\}\s+bonus/i.test(template.slice(tokenEnd,tokenEnd+180)),
             guaranteedCrit:/guaranteed\s+Critical\s+DMG/i.test(template.slice(tokenEnd,tokenEnd+120)),
             activeSource:type==='active'
@@ -485,7 +500,8 @@
     const patterns=[
       /(?:equal to|with (?:a|an)|enjoys? (?:a|an)?|receives? (?:a|an)?)\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}(?:\s*Bonus)?/i,
       /\[([^\]]+)\]%\s*\{Tentacle DMG\}\s*(?:bonus|Bonus)/i,
-      /additionally\s+gaining\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i
+      /additionally\s+gaining\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i,
+      /enjoys?\s+(?:an?\s+)?additional\s*\[([^\]]+)\]%\s*\{Tentacle DMG\}/i
     ];
     for(const re of patterns){
       const m=t.match(re);if(!m)continue;
