@@ -2,7 +2,7 @@
   const $=id=>document.getElementById(id);
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
   const recordCache=new Map();
-  let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
+  let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[],currentOverlays=[];
   let wheelCatalog=[],covenantCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
@@ -61,6 +61,8 @@
     base.SigilYield=num(base.SigilYield,0)+num(auto.sigilYield,0);
     base.DeathResistance=num(base.DeathResistance,0)+num(auto.deathResistance,0);
     base.realmMasteryFinal=Math.max(0,num(base.RealmMastery,0));
+    Object.assign(base,characterResourceValues());
+    base.psycheSurgeOffset=psycheSurgeLevel();
     base.accountLevel=Math.max(1,Math.floor(num($('formulaAccountLevel')?.value,50)));
     const wheelStages=[1,2].map(i=>Math.max(0,Math.floor(num($(`fateLevel${i}`)?.value,0))));
     base.wheelRefinementLevel=Math.max(0,Math.min(3,Math.max(...wheelStages,0)));
@@ -371,6 +373,59 @@
     $('skillActualHits')?.addEventListener('change',rerun,{capture:true});
   }
 
+  const resourceSpecs={
+    'awakener-0014':[{overlayId:'overlay.doresain.corpse',key:'corpseStacks',label:'残骸',min:0,max:3}],
+    'awakener-0041':[{overlayId:'overlay.pollux.sin-mark',key:'sinMarkStacks',label:'罪印',min:0,max:100}]
+  };
+  function characterResourceValues(){
+    const values={awakenerId:currentAwakener?.id||null};
+    document.querySelectorAll('#characterResourceBlock [data-resource-key]').forEach(el=>{values[el.dataset.resourceKey]=Math.max(0,num(el.value,0))});
+    window.MorimensCharacterResources=values;
+    return values;
+  }
+  function ensureCharacterResourceUi(){
+    if($('characterResourceBlock'))return;
+    const anchor=$('enlightenDesc')||$('charStatsSummary')||$('skillDesc');if(!anchor)return;
+    const block=document.createElement('div');block.id='characterResourceBlock';block.className='formGrid';block.style.marginTop='10px';block.hidden=true;
+    anchor.insertAdjacentElement('afterend',block);
+  }
+  function renderCharacterResourceControls(reset=false){
+    ensureCharacterResourceUi();const block=$('characterResourceBlock');if(!block)return;
+    const specs=resourceSpecs[currentAwakener?.id]||[];
+    if(!specs.length){block.innerHTML='';block.hidden=true;window.MorimensCharacterResources={awakenerId:currentAwakener?.id||null};return}
+    const previous=reset?{}:characterResourceValues();
+    block.innerHTML='';
+    for(const spec of specs){
+      const overlay=(currentOverlays||[]).find(x=>x.id===spec.overlayId);
+      const value=Math.min(spec.max,Math.max(spec.min,Number(previous[spec.key])||0));
+      const wrap=document.createElement('div');wrap.className='field';
+      const description=overlay?.descriptionTemplate?zhText(overlay.descriptionTemplate):'角色专属战斗资源。';
+      wrap.innerHTML='<label>'+escape(spec.label)+'数量</label><input type="number" min="'+spec.min+'" max="'+spec.max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'"><small>'+escape(description)+' · 已接入伤害计算。</small>';
+      block.appendChild(wrap);
+    }
+    block.hidden=false;
+    block.querySelectorAll('[data-resource-key]').forEach(el=>{
+      const rerun=()=>{characterResourceValues();updateSkillLevel();$('calcBtn')?.click()};
+      el.addEventListener('input',rerun,{capture:true});el.addEventListener('change',rerun,{capture:true});
+    });
+    characterResourceValues();
+  }
+  function applyCharacterResourceEffects(events){
+    const resources=characterResourceValues();
+    const baseSkillId=currentSkill?.overExaltBaseSkillId||currentSkill?.id||'';
+    return (events||[]).map(event=>{
+      const next={...event};
+      if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
+        next.doubleCritDamageBonus=true;
+        next.resourceEffectLabel='残骸 3 层：本次暴击伤害加成翻倍';
+      }
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0&&['active','pierce','fixed','pure'].includes(next.type)){
+        next.onDamageBleedPct=Math.max(0,Number(resources.sinMarkStacks)||0);
+      }
+      return next;
+    });
+  }
+
   function ensureFormulaContextUi(){
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
@@ -383,7 +438,7 @@
   }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB 1 级基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
-    normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();ensureSkillRuntimeUi();
+    normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();ensureSkillRuntimeUi();ensureCharacterResourceUi();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
     for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
@@ -525,11 +580,12 @@
     const previousAwakenerId=currentAwakener?.id||null;
     currentAwakener=await fetchRecord('awakeners',id).catch(()=>compact);
     const switchedCharacter=!!previousAwakenerId&&previousAwakenerId!==currentAwakener.id;
-    [currentTalents,currentEnlightens]=await Promise.all([window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('enlightens',id).catch(()=>[])]);
+    [currentTalents,currentEnlightens,currentOverlays]=await Promise.all([window.MorimensRepository.fullRecordsForAwakener('talents',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('enlightens',id).catch(()=>[]),window.MorimensRepository.fullRecordsForAwakener('overlays',id).catch(()=>[])]);
     normalizeProgressionControls();
     configureProgressionControls(switchedCharacter);
     configureEnlightenControl(switchedCharacter);
     configurePsycheSurgeControl(switchedCharacter);
+    renderCharacterResourceControls(switchedCharacter);
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
     applyCharacterStats();
@@ -568,12 +624,12 @@
     const runtimeHints=engine?.damageRuntimeHints?.(currentSkill,level,baseCtx)||{needsHitOverride:false,messages:[]};
     const requestedHits=Math.max(0,Math.floor(num($('skillActualHits')?.value,0)));
     const damageTokenCount=(String(currentSkill?.descriptionTemplate||'').match(/\[Damage:[^\]]+\]/gi)||[]).length;
-    const baseDamageEvents=engine?engine.damageEvents(currentSkill,level,baseCtx):[];
+    const baseDamageEvents=applyCharacterResourceEffects(engine?engine.damageEvents(currentSkill,level,baseCtx):[]);
     const hasAutomaticDamage=baseDamageEvents.some(x=>['active','pierce','pure','fixed'].includes(x.type));
     const canOverrideHits=runtimeHints.needsHitOverride&&damageTokenCount===1&&hasAutomaticDamage;
     const ctx=currentFormulaContext(canOverrideHits&&requestedHits>0?{actualHitCount:requestedHits}:{});
     const damageEvents=canOverrideHits&&requestedHits>0&&engine
-      ?engine.damageEvents(currentSkill,level,ctx)
+      ?applyCharacterResourceEffects(engine.damageEvents(currentSkill,level,ctx))
       :baseDamageEvents;
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
     const directParts=damageEvents.filter(x=>Number.isFinite(Number(x.coefficient))).map(x=>Number(x.coefficient));
@@ -613,12 +669,15 @@
       }
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
+      const resources=characterResourceValues();
+      if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：Necrotic Gala 暴击伤害加成翻倍');
+      if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
       else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该伤害事件');
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),psycheSurgeLevel:psycheSurgeLevel(),resources:characterResourceValues(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
@@ -828,7 +887,7 @@
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
     if($('innerSpirit')){const max=Math.max(0,...Array.from($('innerSpirit').options||[]).map(o=>Number(o.value)||0));$('innerSpirit').value=String(defaultGnosticLevel(max))}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
-    if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
+    if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
   function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses()}
 
