@@ -80,6 +80,53 @@
     });
   }
 
+  let resultDockFollowRaf=0;
+  function resultDockTopOffset(){
+    const tabs=document.querySelector('.morimensTabs');
+    if(!tabs)return 10;
+    const rect=tabs.getBoundingClientRect();
+    return rect.bottom>0&&rect.top<window.innerHeight?Math.max(10,rect.bottom+8):10;
+  }
+  function updateResultDockFollow(){
+    if(resultDockFollowRaf)return;
+    resultDockFollowRaf=requestAnimationFrame(()=>{
+      resultDockFollowRaf=0;
+      const dock=$('calcResultDock'),slot=$('calcResultDockSlot'),panel=$('calcTitle')?.closest('.panel');
+      if(!dock||!slot||!panel||panel.offsetParent===null){
+        if(dock){
+          dock.classList.remove('isFollowing');
+          dock.style.removeProperty('top');
+          dock.style.removeProperty('left');
+          dock.style.removeProperty('width');
+        }
+        if(slot)slot.style.removeProperty('min-height');
+        return;
+      }
+      const wasFollowing=dock.classList.contains('isFollowing');
+      if(wasFollowing)dock.classList.remove('isFollowing');
+      dock.style.removeProperty('top');
+      dock.style.removeProperty('left');
+      dock.style.removeProperty('width');
+      const dockHeight=dock.offsetHeight;
+      slot.style.minHeight=dockHeight+'px';
+      const slotRect=slot.getBoundingClientRect();
+      const panelRect=panel.getBoundingClientRect();
+      const top=resultDockTopOffset();
+      const shouldFollow=
+        panelRect.top<top &&
+        panelRect.bottom>top+dockHeight+24 &&
+        slotRect.top>top+dockHeight+18;
+      if(shouldFollow){
+        dock.classList.add('isFollowing');
+        dock.style.top=top+'px';
+        dock.style.left=slotRect.left+'px';
+        dock.style.width=slotRect.width+'px';
+      }else{
+        slot.style.minHeight='';
+      }
+    });
+  }
+
   function inject(){
     if($('combatModel')||!$('calcBtn'))return;
     const first=$('charSelect')?.closest('.builderBlock');
@@ -171,6 +218,8 @@
       setResultMode(button.dataset.mode);
       queueMicrotask(calculate);
     }));
+    window.addEventListener('scroll',updateResultDockFollow,{passive:true});
+    window.addEventListener('resize',updateResultDockFollow,{passive:true});
     document.addEventListener('click',event=>{if(event.target?.id==='resetBtn')setTimeout(resetEnemy,30)},true);
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(calculate));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
@@ -184,7 +233,7 @@
     for(const id of ['buffWeak','buffBrute','buffBurst','targetVulnerable'])$(id)?.addEventListener('change',syncOptionalStackInputs);
     syncOptionalStackInputs();
     setResultMode(document.querySelector('.modeBtn[aria-pressed="true"]')?.dataset?.mode||'expected');
-    toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();
+    toggleTentacleMode();renderTriplet();renderFormulaSource();calculate();updateResultDockFollow();
     window.dispatchEvent(new CustomEvent('morimens-calculator-ui-ready'));
     setTimeout(()=>{window.MorimensStatsSync?.updateCharacterStats?.();renderTriplet();calculate()},300);
   }
@@ -832,6 +881,7 @@
     $('normalLine').textContent=`可暴击主动/穿透伤害的非暴击合计：${fmt(activeNormal)}`;
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
+    updateResultDockFollow();
   
     $('formula').textContent=`事件口径：主动 / 穿透 / 触腕伤害使用当前通用等级系数 ${levelFactor.toFixed(3)} 并经过加固；穿透伤害同时削减护盾与生命、不可免疫并无视屏障。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层）':'否'}。标准易伤只判断有/无，主动/触腕承伤按 SKeyDB +50%，不会随层数重复叠加；填写的层数仅供明确读取易伤层数的个别角色/技能机制使用。虚弱：${weakStacks>0?weakStacks+' 层（当前伤害仍只应用一次 -25%）':'无'}。角色专属伤害强效：+${characterDamageAmpBonusPct.toFixed(1)}%。纯粹伤害不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果；固定伤害不能暴击、不属于基础伤害，也不吃最终伤害或类似加成。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。侵蚀 / 旧日余烬：主动/触腕等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。结果模式“期望/暴击/非暴击”只改变可暴击事件，纯粹、固定和状态结算不随显示模式改变。`;
   
