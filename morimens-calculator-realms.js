@@ -11,7 +11,8 @@
     propagation:{base:'CARO',label:'繁衍血肉 · Propagation: Caro',advanced:true},
     aequor:{base:'AEQUOR',label:'普通深海'},
     benthos:{base:'AEQUOR',label:'深渊深海 · Benthos: Aequor',advanced:true},
-    ultra:{base:'ULTRA',label:'普通超维'}
+    ultra:{base:'ULTRA',label:'普通超维'},
+    singularity:{base:'ULTRA',label:'奇点超维 · Singularity: Ultra',advanced:true}
   };
   const BASE_ZH={CHAOS:'混沌',CARO:'血肉',AEQUOR:'深海',ULTRA:'超维'};
 
@@ -38,6 +39,10 @@
   function isExalt(){
     const slot=String(window.MorimensSkillSync?.skill?.slot||'');
     return slot==='Exalt'||slot==='OverExalt';
+  }
+  function isCommandCard(){
+    const skill=window.MorimensSkillSync?.skill;
+    return String(skill?.cardFamily||'').toLowerCase()==='command';
   }
   function scaledStacks(base,rm,effectMultiplier=1){
     return Math.ceil(base*(1+rm*0.0005*effectMultiplier)-EPS);
@@ -76,6 +81,9 @@
       atkMultiplier:1,defMultiplier:1,maxHpMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,
       primordiaAllChaosTeam:false,primordiaUtilityMultiplier:1,primordiaOffensiveMultiplier:1,
       propagationFiestaStacks:0,propagationApplies:false,
+      singularityApplies:false,singularityPrismStacks:0,singularityShuttleStacks:0,singularityBeaconStacks:0,
+      fixedPoisonCounterBonusPct:0,
+      ultraRoundActive:false,damageOutputMultiplier:1,statusOutputMultiplier:1,
       tentacleMode:baseRealms.includes('AEQUOR')?(hasMode(modes,'benthos')?'benthos':'standard'):null,
       tentacleMasteryMultiplier:masteryEffectMultiplier.AEQUOR,
       startingTentacleMultiplier:pureEffects.AEQUOR?2:1,
@@ -113,7 +121,10 @@
       const embryoStacks=$('propagationConsumeEmbryo')?.checked===true?scaledStacks(40,rm,effectMult):0;
       out.propagationFiestaStacks=turnStacks+embryoStacks;
       out.propagationApplies=isExalt()&&$('propagationApplyFiesta')?.checked!==false;
-      out.finalDamageBonus=out.propagationApplies?out.propagationFiestaStacks:0;
+      if(out.propagationApplies){
+        out.finalDamageBonus+=out.propagationFiestaStacks;
+        out.fixedPoisonCounterBonusPct+=out.propagationFiestaStacks;
+      }
       out.masteryEffectMultiplier.CARO=effectMult;
       out.notes.push(`繁衍血肉：最大生命 +10%，团队伤害强效 +${doubled?100:50}%，当前繁衍狂欢 ${out.propagationFiestaStacks} 层。`);
     }
@@ -126,6 +137,39 @@
       out.notes.push(`深渊深海：基础触腕为队伍最大生命 5%，团队伤害强效 +${doubled?100:50}%，怒涛界域精通效果 ×${out.tentacleMasteryMultiplier}；按 Lightless Bottom 记录，至纯不会额外获得初始触腕。`);
     }else if(baseRealms.includes('AEQUOR')){
       out.notes.push(`普通深海：界域精通效果 ×${out.tentacleMasteryMultiplier}${out.startingTentacleMultiplier===2?'，至纯效果使初始触腕数翻倍':''}。`);
+    }
+
+    if(hasMode(modes,'singularity')){
+      const doubled=!indivisible&&onlyFrom(baseRealms,['ULTRA','CHAOS']);
+      const effectMult=doubled?2:1;
+      const prismStacks=scaledStacks(15,rm,effectMult);
+      const shuttleStacks=$('singularityDimensionShuttle')?.checked===true?scaledStacks(25,rm,effectMult):0;
+      const command=isCommandCard();
+      out.teamDamageAmp+=doubled?100:50;
+      out.masteryEffectMultiplier.ULTRA=effectMult;
+      out.singularityPrismStacks=prismStacks;
+      out.singularityShuttleStacks=shuttleStacks;
+      out.singularityBeaconStacks=command?prismStacks+shuttleStacks:0;
+      out.singularityApplies=command;
+      if(command){
+        const beaconBonus=out.singularityBeaconStacks*2;
+        out.finalDamageBonus+=beaconBonus;
+        out.fixedPoisonCounterBonusPct+=beaconBonus;
+      }
+      out.notes.push(`奇点超维：团队伤害强效 +${doubled?100:50}%；Prism ${prismStacks} 层${shuttleStacks?`，本卡额外 Dimension Shuttle Beacon ${shuttleStacks} 层`:''}。`);
+      out.notes.push(command
+        ?`当前为 Command Card：共 ${out.singularityBeaconStacks} 层 Beacon，Final DMG 与固定 Poison/Counter 效果 +${out.singularityBeaconStacks*2}%。`
+        :'当前不是 Command Card：Singularity Prism/Beacon 的卡牌效果不自动计入本次伤害。');
+      out.notes.push('奇点超维重写后的 Ultra Space 文本未保留普通 Ultra Round 的 -25% 输出条款，因此此模式不套用普通超维惩罚。');
+    }else if(hasMode(modes,'ultra')){
+      out.ultraRoundActive=$('ultraRoundActive')?.checked===true;
+      if(out.ultraRoundActive){
+        out.damageOutputMultiplier*=0.75;
+        out.statusOutputMultiplier*=0.75;
+        out.notes.push('普通超维 Ultra Round：本回合造成的 DMG、Poison、Counter、Bleed 等效果按 SKeyDB ×75%。');
+      }else{
+        out.notes.push(`普通超维：界域精通效果 ×${out.masteryEffectMultiplier.ULTRA}；未勾选 Ultra Round，不应用 -25% 输出修正。`);
+      }
     }
 
     if(chaosCoexistence&&otherRealm==='AEQUOR'){
@@ -156,8 +200,12 @@
     syncSecondaryOptions();
     const s=state();
     const propagation=s.modes.includes('propagation');
+    const singularity=s.modes.includes('singularity');
+    const normalUltra=s.modes.includes('ultra');
     if($('propagationConsumeWrap'))$('propagationConsumeWrap').hidden=!propagation;
     if($('propagationApplyWrap'))$('propagationApplyWrap').hidden=!propagation;
+    if($('singularityDimensionWrap'))$('singularityDimensionWrap').hidden=!singularity;
+    if($('ultraRoundWrap'))$('ultraRoundWrap').hidden=!normalUltra;
     if($('realmChaosCountWrap'))$('realmChaosCountWrap').hidden=!s.chaosCoexistence;
   }
   function render(){
@@ -172,14 +220,16 @@
         s.defMultiplier!==1?'<span class="chip">防御 ×'+s.defMultiplier.toFixed(2)+'</span>':'',
         s.teamDamageAmp?'<span class="chip">团队伤害强效 +'+s.teamDamageAmp.toFixed(0)+'%</span>':'',
         s.maxHpMultiplier!==1?'<span class="chip">最大生命 ×'+s.maxHpMultiplier.toFixed(2)+'</span>':'',
-        s.finalDamageBonus?'<span class="chip">本次狂气爆发终伤 +'+s.finalDamageBonus.toFixed(0)+'%</span>':''
+        s.finalDamageBonus?'<span class="chip">本次适用终伤 +'+s.finalDamageBonus.toFixed(0)+'%</span>':'',
+        s.singularityBeaconStacks?'<span class="chip">奇点信标 '+s.singularityBeaconStacks+' 层</span>':'',
+        s.damageOutputMultiplier!==1?'<span class="chip">Ultra Round 输出 ×'+s.damageOutputMultiplier.toFixed(2)+'</span>':''
       ].filter(Boolean);
       box.innerHTML='<div class="autoSummary">'+chips.join('')+'</div><div style="margin-top:7px">'+s.notes.map(esc).join('<br>')+'</div>';
     }
     const pill=document.querySelector('[aria-labelledby="calcTitle"] .statusPill');
     if(pill)pill.textContent='v0.8 · 公式审计 / Typed Damage Events';
     window.MorimensRealmState=s;
-    const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
+    const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,singularityBeaconStacks:s.singularityBeaconStacks,damageOutputMultiplier:s.damageOutputMultiplier,statusOutputMultiplier:s.statusOutputMultiplier,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
     if(signature!==lastRealmSignature){lastRealmSignature=signature;window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}))}
     return s;
   }
@@ -192,7 +242,8 @@
       '<option value="propagation">繁衍血肉</option>',
       '<option value="aequor">普通深海</option>',
       '<option value="benthos">深渊深海</option>',
-      '<option value="ultra">普通超维</option>'
+      '<option value="ultra">普通超维</option>',
+      '<option value="singularity">奇点超维</option>'
     ].join('');
   }
   function inject(){
@@ -207,17 +258,19 @@
       '<div class="field" id="realmChaosCountWrap" hidden><label for="realmChaosCount">混沌唤醒体数量</label><input id="realmChaosCount" type="number" min="1" max="4" step="1" value="1"><small>用于混沌×深海/血肉/超维的共生效果。</small></div>',
       '<div class="field" id="propagationConsumeWrap" hidden><label class="inlineCheck"><input id="propagationConsumeEmbryo" type="checkbox"> 本回合已首次吞噬繁衍胚胎</label><small>额外获得基础 40 层繁衍狂欢，并受繁衍血肉精通加成。</small></div>',
       '<div class="field full" id="propagationApplyWrap" hidden><label class="inlineCheck"><input id="propagationApplyFiesta" type="checkbox" checked> 将繁衍狂欢用于本次狂气爆发</label><small>只对狂气爆发/超限爆发自动计入最终伤害。</small></div>',
+      '<div class="field full" id="singularityDimensionWrap" hidden><label class="inlineCheck"><input id="singularityDimensionShuttle" type="checkbox"> 本卡获得 Dimension Shuttle 的 25 层 Singularity Beacon</label><small>用于本回合第一张触发 Dimension Shuttle 的 Command Card，或带有该 25 层 Beacon 的复制卡。Realm Mastery 会同步放大层数。</small></div>',
+      '<div class="field full" id="ultraRoundWrap" hidden><label class="inlineCheck"><input id="ultraRoundActive" type="checkbox"> 当前处于普通 Ultra Round</label><small>普通超维：本回合 DMG、Poison、Counter、Bleed 等输出 -25%。奇点超维使用重写后的规则，不套此开关。</small></div>',
       '</div>',
       '<div class="combatReadout" id="realmEnvironmentReadout"></div>',
       '<details class="formulaSource"><summary>双界域 / 至纯规则</summary><div>',
       '<div class="formulaRow"><b>队伍限制</b><br>同一队最多出现两个不同界域；只有一种界域时自动视为至纯界域。</div>',
       '<div class="formulaRow"><b>混沌共生</b><br>普通混沌与深海/血肉/超维共存时，另一界域仍按至纯处理，并触发对应混沌共生效果。</div>',
       '<div class="formulaRow"><b>原初混沌例外</b><br>「不可分割界域」会禁止其他界域的至纯、双倍界域精通和双倍伤害强效，因此不会把“普通混沌共生”的规则套到原初混沌。</div>',
-      '<div class="formulaRow"><b>进阶界域</b><br>繁衍血肉与深渊深海仍按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div>',
+      '<div class="formulaRow"><b>进阶界域</b><br>繁衍血肉、深渊深海、奇点超维均按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div><div class="formulaRow"><b>奇点超维</b><br>基础团队伤害强效 +50%（全队仅超维/混沌时 +100%）；15 层 Singularity Prism，Dimension Shuttle 额外 25 层 Beacon。Realm Mastery 每点使这两类层数 +0.05%，至纯条件下效果翻倍。每层 Beacon 使 Command Card 的 Final DMG 与固定 Poison/Counter +2%。</div><div class="formulaRow"><b>普通 Ultra Round</b><br>SKeyDB：普通 Ultra Round 中造成的 DMG、Poison、Counter、Bleed 等效果 -25%。奇点超维的重写 Ultra Space 文本没有这条惩罚，因此不交叉套用。</div>',
       '</div></details>'
     ].join('');
     builder.appendChild(block);
-    for(const id of ['realmPrimary','realmSecondary','realmChaosCount','propagationConsumeEmbryo','propagationApplyFiesta']){
+    for(const id of ['realmPrimary','realmSecondary','realmChaosCount','propagationConsumeEmbryo','propagationApplyFiesta','singularityDimensionShuttle','ultraRoundActive']){
       $(id)?.addEventListener('input',()=>queueMicrotask(render));
       $(id)?.addEventListener('change',()=>queueMicrotask(render));
     }
