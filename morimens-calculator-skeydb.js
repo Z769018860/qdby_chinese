@@ -5,9 +5,31 @@
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[];
   let wheelCatalog=[],covenantCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null;
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
-  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0};
+  const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,counterGeneration:0};
   const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
-  const zhCovenants={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸'};
+  const zhCovenants={
+    'Deus Ex Machina':'机械降神',
+    'Re-evolution':'再衍化',
+    'Scarlet Embrace':'猩红之拥',
+    'Crimson Pulse':'猩红之悸',
+    'Twisted Twins: Black':'扭曲双子·黑',
+    "Burial Ground's Sighs":'埋骨地絮语',
+    'Twisted Twins: White':'扭曲双子·白',
+    'Cursed Rabbit':'诅咒兔',
+    'Paradox':'二律背反',
+    'Photosynthesis Ritual':'光合祭礼',
+    'Returnal Line':'海归线',
+    'Ring of Chamber 36':'36室之环',
+    'Life Drain':'生机榨取',
+    'April Tribute':'四月礼赞',
+    'Organic Form':'有机形态',
+    'Sweet Slug':'甜蜜蛞蝓',
+    'Dream of Medicine':'入药之梦',
+    'Feast from Afar':'远方的欢宴',
+    'Unstained Chronicle':'无垢启示录',
+    'Steppenwolf':'荒原狼',
+    'Cocoon of the Maiden':'少女之蛹'
+  };
 
   function data(){return window.MorimensData}
   function recordById(id){return data()?.db?.records?.find(x=>x.id===id)||null}
@@ -88,8 +110,9 @@
     [/This talent is only effective in the (?:\\{)?星辰篇(?:\\})? stages\\./gi,'该天赋仅在「星辰篇」关卡中生效。'],
     [/This Awakener's/gi,'该唤醒体的'],[/The Awakener's/gi,'该唤醒体的'],[/Awakener/gi,'唤醒体'],
     [/upon their first (?:\\{)?Rouse(?:\\})?/gi,'首次进行灵知觉醒时'],[/they gain/gi,'并获得'],
-    [/Keyflare Regen Level/gi,'银钥充能等级'],[/Keyflare Regen/gi,'银钥充能'],[/Keyflare/gi,'银钥能量'],
-    [/Aliemus/gi,'狂气'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
+    [/Keyflare Regen Level/gi,'银钥充能等级'],[/Keyflare Regen/gi,'银钥充能等级'],[/Keyflare/gi,'银钥能量'],
+    [/Aliemus Regen Level/gi,'狂气回充等级'],[/Aliemus Regen/gi,'狂气回充等级'],[/Aliemus Generation/gi,'狂气生成'],[/Aliemus/gi,'狂气'],
+    [/Death Resistance/gi,'死亡抵抗'],[/Sigil Yield/gi,'黑印掉落'],[/Team Unique/gi,'队伍唯一'],[/wielder/gi,'装备者'],[/exploration/gi,'探索'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
     [/Pierce DMG/gi,'穿透伤害'],[/Pure DMG/gi,'纯粹伤害'],[/Fixed DMG/gi,'固定伤害'],[/Active DMG/gi,'主动伤害'],[/Tentacle DMG/gi,'触腕伤害'],
     [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'流血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
     [/Leap/gi,'跃迁'],[/Aftershock/gi,'余震'],[/Devour/gi,'吞噬'],[/Resonance/gi,'共鸣'],[/Ritual/gi,'仪式'],[/Stealing|Steal/gi,'窃取'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
@@ -575,7 +598,7 @@
   }
   function isConditional(sentence){return /\b(if|when|whenever|after|before|next|per |for each|at the start|at turn|upon|once)\b/i.test(sentence)}
   function numericBonusesFromText(text,allowConditional=false){
-    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,skipped:[]};
+    const out={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,counterGeneration:0,skipped:[]};
     const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
     for(const raw of normalized.split(/(?<=[!?。；;]|\.(?=\s+[A-Z]))\s*/)){
       const s=raw.trim();if(!s)continue;if(isConditional(s)&&!allowConditional){out.skipped.push(s);continue}
@@ -591,11 +614,13 @@
       if((m=s.match(/Keyflare Regen(?: Lv\.)?[^+\d]*\+\s*([\d.]+)/i)))out.keyflareRegen+=num(m[1]);
       if((m=s.match(/Sigil Yield[^+\d]*\+\s*([\d.]+)%?/i)))out.sigilYield+=num(m[1]);
       if((m=s.match(/Death Resistance[^+\d]*\+\s*([\d.]+)%?/i)))out.deathResistance+=num(m[1]);
+      if((m=s.match(/Poison(?: Infliction)?[^+%]*\+\s*([\d.]+)%/i)))out.poisonInfliction+=num(m[1]);
+      if((m=s.match(/Counter(?: Generation)?[^+%]*\+\s*([\d.]+)%/i)))out.counterGeneration+=num(m[1]);
       const both=s.match(/Crit\.? Rate and Crit\.? DMG(?: increase)? by\s*([\d.]+)%/i);if(both){out.critRate+=num(both[1]);out.critDamage+=num(both[1])}
     }
     return out;
   }
-  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance'])target[k]+=num(b[k])}
+  function sumBonus(target,b){for(const k of ['base','power','critRate','critDamage','vulnerability','final','realmMastery','aliemusRegen','keyflareRegen','sigilYield','deathResistance','poisonInfliction','counterGeneration'])target[k]+=num(b[k])}
   function wheelDescriptionRaw(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderTemplate(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function renderWheelsAndBonuses(){
@@ -629,7 +654,7 @@
     gearRealmMasteryAuto=nextValue;
   }
   function recomputeGearBonuses(){
-    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0};
+    const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,counterGeneration:0};
     let nextRealmMastery=0;wheelMainstatSummary=[];
     currentWheels.forEach((w,i)=>{
       if(!w)return;
@@ -648,7 +673,7 @@
       }
     });
     if(currentCovenant){const pieces=Number($('contractPieces')?.value)||0,allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(e.set<=pieces)sumBonus(next,numericBonusesFromText(renderEffectRaw(e),e.set<6||allow))}}
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);renderAutoSummary();
+    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery};renderAutoSummary();
   }
 
   function initManualTracking(){
@@ -661,7 +686,7 @@
   }
   function renderAutoSummary(){
     const box=$('autoSummary');if(!box)return;
-    const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害']];
+    const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['counterGeneration','反击生成']];
     const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}%</span>`);
     for(const x of wheelMainstatSummary){
       const suffix=['CRIT_RATE','CRIT_DMG','DMG_AMP','SIGIL_YIELD','DEATH_RESISTANCE'].includes(x.key)?'%':'';

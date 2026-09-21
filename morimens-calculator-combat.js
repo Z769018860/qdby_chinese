@@ -291,6 +291,9 @@
     const realmDamageOutputMult=Math.max(0,Number(realm.damageOutputMultiplier)||1);
     const realmStatusOutputMult=Math.max(0,Number(realm.statusOutputMultiplier)||1);
     const fixedStatusEffectMult=1+Math.max(0,Number(realm.fixedPoisonCounterBonusPct)||0)/100;
+    const gearEffects=window.MorimensGearEffects||{};
+    const poisonInflictionMult=1+Math.max(0,Number(gearEffects.poisonInflictionPct)||0)/100;
+    const counterGenerationMult=1+Math.max(0,Number(gearEffects.counterGenerationPct)||0)/100;
     const soulforgeFlat=progression.soulforgeEnabled
       ?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
     const soulforgeBasePct=progression.soulforgeEnabled
@@ -489,6 +492,8 @@
       if((source.type==='poison'||source.type==='counter')&&source.basis!=='sourceDamage')amount*=fixedStatusEffectMult;
       // Normal Ultra Round explicitly reduces generated Poison / Counter / Bleed by 25%.
       if(source.type==='poison'||source.type==='counter'||source.type==='bleed')amount*=realmStatusOutputMult;
+      if(source.type==='poison'&&source.action==='apply')amount*=poisonInflictionMult;
+      if(source.type==='counter'&&source.action==='gain')amount*=counterGenerationMult;
       return Math.max(0,amount);
     }
 
@@ -498,7 +503,7 @@
         if(source.type==='pierce'&&source.basis==='tentacle'){
           const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
           for(let i=0;i<count;i++){
-            const event=tentaclePierceEvent(source.percent,`触腕 Pierce DMG ${i+1}`,`tentacle-pierce-${++tentacleIndex}`);
+            const event=tentaclePierceEvent(source.percent,`触腕穿透伤害 ${i+1}`,`tentacle-pierce-${++tentacleIndex}`);
             event.repeatIndex=repeat;
             pushDamageEvent(event);
           }
@@ -508,7 +513,7 @@
           const event=scaledEvent(source,repeat,scaledIndex++);
           pushDamageEvent(event);
           if(event.type==='active'&&$('tentacleStance')?.value==='raging'&&event.damage>0){
-            pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · Active DMG 后触腕',`raging-${++tentacleIndex}`));
+            pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · 主动伤害后触腕',`raging-${++tentacleIndex}`));
           }
           continue;
         }
@@ -518,7 +523,7 @@
         }
         if(source.type==='pure'){
           const raw=source.basis==='targetMaxHp'?enemyMaxHp*Math.max(0,Number(source.percent)||0)/100:0;
-          pushDamageEvent(pureEvent(raw,`Pure DMG · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent}));
+          pushDamageEvent(pureEvent(raw,`纯粹伤害 · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent}));
           continue;
         }
         if(source.type==='poison'&&source.action==='apply'){
@@ -527,8 +532,8 @@
           events.push({
             id:`poison-apply-${++poisonIndex}`,type:'poison',action:'apply',
             label:source.basis==='sourceDamage'
-              ?`Poison 施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
-              :`Poison 施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+              ?`中毒施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
+              :`中毒施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
@@ -545,8 +550,8 @@
           else if(mode==='expected')effectivePercent=basePercent+(critPercent-basePercent)*critChance;
           const raw=stacks*effectivePercent/100;
           const label=critPercent!==basePercent
-            ?`Poison 触发 ${effectivePercent.toFixed(2)}%（基础 ${basePercent.toFixed(2)}% / 暴击 ${critPercent.toFixed(2)}%）`
-            :`Poison 触发 ${basePercent.toFixed(2)}%`;
+            ?`中毒触发 ${effectivePercent.toFixed(2)}%（基础 ${basePercent.toFixed(2)}% / 暴击 ${critPercent.toFixed(2)}%）`
+            :`中毒触发 ${basePercent.toFixed(2)}%`;
           pushDamageEvent(pureEvent(raw,label,`poison-trigger-${++poisonIndex}`,'poison',{action:'trigger',stacks,percent:effectivePercent,basePercent,critPercent,critChance}));
           continue;
         }
@@ -557,10 +562,10 @@
           events.push({
             id:`corrosion-apply-${++corrosionIndex}`,type:'corrosion',action:'apply',
             label:source.basis==='sourceDamage'
-              ?`Corrosion 施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
+              ?`侵蚀施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
               :source.basis==='targetMaxHpPercent'
-                ?`Corrosion 施加 · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`
-                :`Corrosion 施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+                ?`侵蚀施加 · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`
+                :`侵蚀施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
@@ -571,8 +576,8 @@
           events.push({
             id:`bleed-apply-${++bleedIndex}`,type:'bleed',action:'apply',
             label:source.basis==='sourceDamage'
-              ?`Bleed 施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
-              :`Bleed 施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+              ?`流血施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
+              :`流血施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
             amount,damage:0,sourceGroupId:source.sourceGroupId||null
           });
           continue;
@@ -580,7 +585,7 @@
         if(source.type==='bleed'&&source.action==='trigger'){
           const stacks=initialBleed+bleedAdded;
           const raw=stacks*Math.max(0,Number(source.percent)||0)/100;
-          pushDamageEvent(pureEvent(raw,`Bleed 触发 ${Number(source.percent||0).toFixed(2)}%`,`bleed-trigger-${++bleedIndex}`,'bleed',{action:'trigger',stacks,percent:source.percent}));
+          pushDamageEvent(pureEvent(raw,`流血触发 ${Number(source.percent||0).toFixed(2)}%`,`bleed-trigger-${++bleedIndex}`,'bleed',{action:'trigger',stacks,percent:source.percent}));
           continue;
         }
         if(source.type==='counter'&&source.action==='gain'){
@@ -594,7 +599,7 @@
         }
         if(source.type==='counter'&&source.action==='trigger'){
           const raw=counterCurrent*Math.max(0,Number(source.percent)||0)/100;
-          pushDamageEvent(pureEvent(raw,`Counter 触发 ${Number(source.percent||0).toFixed(2)}%`,`counter-trigger-${++counterIndex}`,'counter',{action:'trigger',stacks:counterCurrent,percent:source.percent}));
+          pushDamageEvent(pureEvent(raw,`反击触发 ${Number(source.percent||0).toFixed(2)}%`,`counter-trigger-${++counterIndex}`,'counter',{action:'trigger',stacks:counterCurrent,percent:source.percent}));
         }
       }
       if(skillTriggerPct>0){
@@ -611,12 +616,12 @@
   
     if(includeTurnEndSettlement&&$('includePoisonTurnEnd')?.checked===true&&(initialPoison+poisonAdded)>0){
       const stacks=initialPoison+poisonAdded;
-      pushDamageEvent(pureEvent(stacks,'Poison · 回合末 Pure DMG',`poison-turn-end-${++poisonIndex}`,'poison',{action:'turn_end',stacks}));
+      pushDamageEvent(pureEvent(stacks,'中毒 · 回合末纯粹伤害',`poison-turn-end-${++poisonIndex}`,'poison',{action:'turn_end',stacks}));
     }
     const includeBleedTurnEnd=includeTurnEndSettlement&&$('includeBleedTurnEnd')?.checked===true;
     if(includeBleedTurnEnd&&(initialBleed+bleedAdded)>0){
       const stacks=initialBleed+bleedAdded;
-      pushDamageEvent(pureEvent(stacks,'Bleed · 回合末 Pure DMG（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
+      pushDamageEvent(pureEvent(stacks,'流血 · 回合末纯粹伤害（结算后移除）',`bleed-turn-end-${++bleedIndex}`,'bleed',{action:'turn_end',stacks,removedAfter:true}));
     }
     const sacrificeSourceDamage=events
       // "DMG dealt by Murphy: Fauxborn" is attributed to the Awakener herself.
@@ -759,12 +764,13 @@
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 流血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 流血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。献祭自伤：<b>${fmt(sacrificeSelfDamage)}</b>${skillDelayedSacrificePct>0?(actorMaxHp>0?`；本技能新增延迟献祭 <b>${fmt(skillDelayedSacrificeAdded)}</b>`:`；本技能含 <b>${skillDelayedSacrificePct.toFixed(2)}%</b> 最大生命的延迟献祭，请填写角色最大生命`):''}。`;
     }
     window.MorimensDamageEvents={
       mode,
       enemyProfile:{...enemyProfile,maxHp:enemyMaxHp,maxHpSource:enemyMaxHpSource,estimatedMaxHp:enemyProfile.estimatedMaxHp},
       realmOutput:{damage:realmDamageOutputMult,status:realmStatusOutputMult,fixedPoisonCounter:fixedStatusEffectMult},
+      gearOutput:{poisonInfliction:poisonInflictionMult,counterGeneration:counterGenerationMult},
       sourceSkillEvents,
       events,
       totals:{
