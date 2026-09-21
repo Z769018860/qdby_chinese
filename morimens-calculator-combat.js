@@ -226,7 +226,9 @@
       ?0:Math.max(0,Number(skillSync.triggeredTentaclePercent))/100;
     const propagationTentacleEffectMult=realm.propagationApplies
       ?1+Math.max(0,Number(realm.propagationFiestaStacks)||0)/100:1;
-    const propagationFixedEffectMult=propagationTentacleEffectMult;
+    const realmDamageOutputMult=Math.max(0,Number(realm.damageOutputMultiplier)||1);
+    const realmStatusOutputMult=Math.max(0,Number(realm.statusOutputMultiplier)||1);
+    const fixedStatusEffectMult=1+Math.max(0,Number(realm.fixedPoisonCounterBonusPct)||0)/100;
     const soulforgeFlat=progression.soulforgeEnabled
       ?attack*Math.max(0,Number(progression.flatAtkDamagePct)||0)/100:0;
     const soulforgeBasePct=progression.soulforgeEnabled
@@ -274,7 +276,7 @@
       // SKeyDB Vulnerable / Weakness explicitly affect Active DMG and Tentacle DMG, not Pierce/Pure/Fixed.
       const afterVulnerability=type==='active'?afterPower*(1+vulnerabilityPct/100):afterPower;
       const afterFinal=afterVulnerability*(1+finalPct/100)*(type==='active'?weakCoef:1);
-      const normal=afterFinal*levelFactor*fortifyCoef*other;
+      const normal=afterFinal*levelFactor*fortifyCoef*other*realmDamageOutputMult;
       const eventCritRate=clamp((source.guaranteedCrit?1:activeCritRate)+Math.max(0,Number(source.critRateBonus)||0)/100,0,1);
       const eventCritMult=Math.max(0,activeCritMult+Math.max(0,Number(source.critDamageBonus)||0)/100);
       const critState=selectCrit(normal,eventCritRate,eventCritMult,source.guaranteedCrit===true);
@@ -306,7 +308,7 @@
     function tentacleEvent(percent,label,id){
       const scale=Math.max(0,Number(percent)||0)/100;
       const raw=tentacleWithStrength*scale;
-      const normal=raw*(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*levelFactor*fortifyCoef*other;
+      const normal=raw*(1+powerPct/100)*(1+vulnerabilityPct/100)*weakCoef*levelFactor*fortifyCoef*other*realmDamageOutputMult;
       const critState=selectCrit(normal,tentacleCritRate,tentacleCritMult);
       return {id,type:'tentacle',source:'tentacle',label,percent:Number(percent)||0,raw,activeSource:false,...critState};
     }
@@ -314,13 +316,13 @@
       const scale=Math.max(0,Number(percent)||0)/100;
       const raw=tentacleWithStrength*scale;
       // This event is Pierce DMG even though its basis is Tentacle DMG, so Vulnerable/Weakness do not apply.
-      const normal=raw*(1+powerPct/100)*levelFactor*fortifyCoef*other;
+      const normal=raw*(1+powerPct/100)*levelFactor*fortifyCoef*other*realmDamageOutputMult;
       const critState=selectCrit(normal,tentacleCritRate,tentacleCritMult);
       return {id,type:'pierce',source:'tentacle',basis:'tentacle',label,percent:Number(percent)||0,raw,ignoresBarrier:true,activeSource:false,...critState};
     }
     function pureEvent(raw,label,id,type='pure',extra={}){
       const beforeFortress=Math.max(0,Number(raw)||0);
-      const damage=beforeFortress*fortifyCoef;
+      const damage=beforeFortress*fortifyCoef*realmDamageOutputMult;
       return {
         id,type,source:'skill',label,raw:beforeFortress,
         normal:damage,crit:damage,expected:damage,damage,
@@ -332,7 +334,7 @@
       if(source.basis==='tentacle')raw=tentacleWithStrength*Math.max(0,Number(source.percent)||0)/100;
       else if(source.basis==='statPercent')raw=statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100;
       else if(source.basis==='flat')raw=Math.max(0,Number(source.amount)||0);
-      const damage=raw*fortifyCoef;
+      const damage=raw*fortifyCoef*realmDamageOutputMult;
       return {
         id,type:'fixed',source:'skill',label:'Fixed DMG',basis:source.basis,
         percent:source.percent,amount:source.amount,stat:source.stat||null,
@@ -376,15 +378,20 @@
     }
 
     function appliedStatusAmount(source,repeat){
+      let amount=0;
       if(source.basis==='sourceDamage'){
         const damage=groupDamage.get(groupKey(repeat,source.sourceGroupId))||0;
-        return Math.max(0,damage*Math.max(0,Number(source.percent)||0)/100);
+        amount=damage*Math.max(0,Number(source.percent)||0)/100;
+      }else if(source.basis==='statPercent'){
+        amount=statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100;
+      }else if(source.basis==='flat'){
+        amount=Math.max(0,Number(source.amount)||0);
       }
-      let amount=0;
-      if(source.basis==='statPercent')amount=statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100;
-      else if(source.basis==='flat')amount=Math.max(0,Number(source.amount)||0);
-      // Propagation Fiesta enhances Fixed Poison / Counter on the next Exalt; sourceDamage-proportional effects are not "Fixed".
-      if((source.type==='poison'||source.type==='counter')&&source.basis!=='sourceDamage')amount*=propagationFixedEffectMult;
+      // Propagation Fiesta / Singularity Beacon enhance Fixed Poison and Fixed Counter,
+      // but not effects defined as a percentage of damage already dealt.
+      if((source.type==='poison'||source.type==='counter')&&source.basis!=='sourceDamage')amount*=fixedStatusEffectMult;
+      // Normal Ultra Round explicitly reduces generated Poison / Counter / Bleed by 25%.
+      if(source.type==='poison'||source.type==='counter'||source.type==='bleed')amount*=realmStatusOutputMult;
       return Math.max(0,amount);
     }
 
@@ -525,7 +532,7 @@
     $('critLine').textContent=`可暴击 Active/Pierce 暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击 Active/Pierce 期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。Vulnerable / Weakness 按 SKeyDB 只作用于 Active 与 Tentacle；Pierce 不套这两项。Pure / Fixed / Poison / Bleed / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。`;
+    $('formula').textContent=`Damage Events：Active/Pierce/Tentacle 使用通用等级系数 ${levelFactor.toFixed(3)}，再经过加固；Pierce 忽略 Barrier。当前界域输出系数 ×${realmDamageOutputMult.toFixed(3)}，状态生成系数 ×${realmStatusOutputMult.toFixed(3)}。Vulnerable / Weakness 按 SKeyDB 只作用于 Active 与 Tentacle；Pierce 不套这两项。Pure / Fixed / Poison / Bleed / Counter 不暴击、不使用通用等级系数，仅保留明确的加固承伤修正。侵蚀/旧日余烬按 SKeyDB：Active/Tentacle 等量消费，其他伤害按 50% 消费；侵蚀移除生命损失默认 300%（可校准），回合末侵蚀清空、旧日余烬重置。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -575,11 +582,12 @@
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Counter <b>${counterEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定 Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Counter <b>${counterEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
     }
     window.MorimensDamageEvents={
       mode,
       enemyProfile,
+      realmOutput:{damage:realmDamageOutputMult,status:realmStatusOutputMult,fixedPoisonCounter:fixedStatusEffectMult},
       sourceSkillEvents,
       events,
       totals:{
