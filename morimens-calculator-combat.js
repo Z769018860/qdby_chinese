@@ -60,7 +60,7 @@
         <div class="field"><label for="currentPoison">当前 Poison / 中毒层数</label><input id="currentPoison" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Poison”等即时中毒触发。</small></div>
         <div class="field"><label for="currentCounter">当前 Counter / 反击数值</label><input id="currentCounter" type="number" min="0" step="1" value="0"><small>用于“Trigger X% Counter”事件。</small></div>
         <div class="field"><label for="corrosionAmount">侵蚀层数 / 数值</label><input id="corrosionAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Poison / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
-        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Pierce / Tentacle 事件后依次消费，追加消费量 300% 的生命损失。</small></div>
+        <div class="field"><label for="embersAmount">旧日余烬层数 / 数值</label><input id="embersAmount" type="number" min="0" step="1" value="0"><small>Active / Tentacle 按伤害等量消费；Pierce / Pure / Poison / Counter 等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。</small></div>
       </div>
       <div class="checkGrid" style="margin-top:10px">
         <label class="check"><input id="includePoisonTurnEnd" type="checkbox" checked><span>计入本次技能后的一次回合末 Poison 结算<small>Poison 在回合末造成等于当前层数的 Pure DMG。</small></span></label>
