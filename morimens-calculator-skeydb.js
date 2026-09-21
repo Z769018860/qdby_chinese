@@ -158,6 +158,10 @@
     [/Death Resistance/gi,'死亡抵抗'],[/Sigil Yield/gi,'黑印掉落'],[/Team Unique/gi,'队伍唯一'],[/wielder/gi,'装备者'],[/exploration/gi,'探索'],[/Arithmetica Harmony/gi,'算力协调'],[/Arithmetica/gi,'算力'],[/STR▼/gi,'力量降低'],[/STR/gi,'力量'],
     [/Pierce DMG/gi,'穿透伤害'],[/Pure DMG/gi,'纯粹伤害'],[/Fixed DMG/gi,'固定伤害'],[/Active DMG/gi,'主动伤害'],[/Tentacle DMG/gi,'触腕伤害'],
     [/Vulnerable/gi,'易伤'],[/Weakness/gi,'虚弱'],[/Poison/gi,'中毒'],[/Counter/gi,'反击'],[/Bleed/gi,'出血'],[/Corrosion/gi,'侵蚀'],[/Barrier/gi,'屏障'],
+    [/Finale Form/gi,'终末形态'],[/Finale/gi,'终末'],[/Fiamma/gi,'活焰'],[/Endure/gi,'忍耐'],[/Dreamlure/gi,'梦引'],
+    [/Pack Hunt/gi,'群猎'],[/Negentropy/gi,'负熵'],[/Undertow/gi,'暗潮'],[/Guilt/gi,'罪责'],[/Murmurs/gi,'低语'],
+    [/Symbiosis/gi,'共生'],[/Offering/gi,'供奉'],[/Satiety/gi,'饱足'],[/Corpse/gi,'残骸'],[/Sin Mark/gi,'罪印'],
+    [/Weaver/gi,'织命'],[/Creativity/gi,'创意'],[/Fantasia/gi,'幻想'],[/Combust/gi,'燃烧'],[/Life Seal/gi,'生命封印'],
     [/Spellbound/gi,'痴醉'],[/Betroth/gi,'相许'],[/Enthrall/gi,'夺魄'],[/Emotion/gi,'情绪'],[/Metaphor/gi,'隐喻'],
     [/Leap/gi,'跃迁'],[/Aftershock/gi,'余震'],[/Devour/gi,'吞噬'],[/Resonance/gi,'共鸣'],[/Ritual/gi,'仪式'],[/Stealing|Steal/gi,'窃取'],[/Exhaust/gi,'消耗'],[/Retain/gi,'保留'],[/Prepare/gi,'预备'],
     [/Realm Mastery/gi,'界域精通'],[/Damage Amplification/gi,'伤害强效'],
@@ -172,7 +176,7 @@
     [/generate(?:s|d)?/gi,'生成'],[/trigger(?:s|ed)?/gi,'触发'],[/shuffle/gi,'洗入'],[/draw/gi,'抽取'],
     [/into hand/gi,'置入手牌'],[/into the top of your Draw Pile/gi,'置于抽牌堆顶'],[/to all enemies/gi,'对全体敌人'],
     [/enemy/gi,'敌人'],[/Turn/gi,'回合'],[/Battle/gi,'战斗'],[/Temporary/gi,'临时'],[/Permanent/gi,'永久'],
-    [/Surging Tides/gi,'潮涌'],[/Tranquil Sea/gi,'静海'],[/Raging Waves/gi,'怒涛'],[/Benthos: Aequor/gi,'深渊深海'],
+    [/Surging Tides/gi,'潮涌'],[/Tranquil Sea/gi,'静海'],[/Raging Waves/gi,'怒涛'],[/Benthos: Aequor/gi,'晦暝·深海'],
     [/Delayed Sacrifice/gi,'延迟献祭'],[/Sacrifice/gi,'献祭'],[/Birth Ritual/gi,'诞生仪式'],
     [/Aequor Realm/gi,'深海界域'],[/Aequor/gi,'深海'],[/Chaos/gi,'混沌'],[/Caro/gi,'血肉'],[/Ultra/gi,'超维'],
     [/Soulforge Aptitude/gi,'灵塑适性'],[/Gnostic Potential/gi,'内在灵格'],[/星辰篇/gi,'星辰篇'],
@@ -198,6 +202,10 @@
     if(currentAwakener?.name){
       const cn=labelForAwakener(currentAwakener);
       if(cn&&cn!==currentAwakener.name)out=out.split(currentAwakener.name).join(cn);
+    }
+    for(const skill of currentSkills||[]){
+      const cn=zhSkillNames[skill?.id];
+      if(cn&&skill?.name&&cn!==skill.name)out=out.split(skill.name).join(cn);
     }
     for(const [re,to] of phraseZh)out=out.replace(re,to);
     return out
