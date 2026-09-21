@@ -105,7 +105,8 @@
       .replace(/\s+([，。；：])/g,'$1')
       .trim();
   }
-  function skillLabel(skill){const slot=slotZh[skill?.slot]||skill?.slot||'';return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
+  function skillLabel(skill){const slot=skill?.kind==='derivedSkill'?'衍生技能':(slotZh[skill?.slot]||skill?.slot||'');return `${slot}${slot?' · ':''}${zhText(skill?.name||'技能')}`}
+  function skillRecordScope(skillOrId){const id=typeof skillOrId==='string'?skillOrId:skillOrId?.id;return String(id||'').startsWith('derived.')?'derived-skills':'skills'}
   function overExaltUnlocked(){const slot=selectedEnlightenSlot();return slot==='OverExalt'||slot==='AbsoluteAxiom'}
   function visibleSkills(){return currentSkills.filter(skill=>skill.slot!=='OverExalt'||overExaltUnlocked())}
   function renderSkillOptions(preferredId){
@@ -337,14 +338,22 @@
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">Loading…</option>';
     applyCharacterStats();
     try{
-      const rows=await window.MorimensRepository.recordsForAwakener('skills',currentAwakener.id);currentSkills=await Promise.all(rows.map(x=>fetchRecord('skills',x.id)));
-      currentSkills=currentSkills.filter(x=>slotOrder[x.slot]);currentSkills.sort((a,b)=>(slotOrder[a.slot]||99)-(slotOrder[b.slot]||99)||String(a.name||'').localeCompare(String(b.name||'')));
+      const [skillRows,derivedRows]=await Promise.all([
+        window.MorimensRepository.recordsForAwakener('skills',currentAwakener.id),
+        window.MorimensRepository.recordsForAwakener('derived-skills',currentAwakener.id).catch(()=>[])
+      ]);
+      currentSkills=await Promise.all([
+        ...skillRows.map(x=>fetchRecord('skills',x.id)),
+        ...derivedRows.map(x=>fetchRecord('derived-skills',x.id))
+      ]);
+      currentSkills=currentSkills.filter(x=>slotOrder[x.slot]||x.kind==='derivedSkill');
+      currentSkills.sort((a,b)=>(slotOrder[a.slot]||90)-(slotOrder[b.slot]||90)||String(a.name||'').localeCompare(String(b.name||'')));
       renderSkillOptions(currentSkill?.id);
       setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${visibleSkills().length} 个当前可用技能已从本地 SKeyDB 同步`);await applySkill();
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
-    const id=$('skillSelect')?.value;if(!id)return;const baseSkill=currentSkills.find(x=>x.id===id)||await fetchRecord('skills',id);currentSkill=resolveSkillEnlighten(baseSkill);
+    const id=$('skillSelect')?.value;if(!id)return;const baseSkill=currentSkills.find(x=>x.id===id)||await fetchRecord(skillRecordScope(id),id);currentSkill=resolveSkillEnlighten(baseSkill);
     const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
     if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
   }
