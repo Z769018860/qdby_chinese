@@ -101,10 +101,25 @@
     return wheel?.assetId?`assets/morimens/wheels/${wheel.assetId}.webp?v=${assetVersion()}`:'';
   }
   function usageFor(rec){
-    const rows=usageStats?.characters||[],target=normalize(rec?.name),index=rows.findIndex(row=>normalize(row.name)===target||(rec?.aliases||[]).some(alias=>normalize(alias)===normalize(row.name)));
-    if(index<0)return {season:usageStats?.seasonId||69,count:0,rate:0,rank:null,total:rows.length,sample:usageStats?.teamCount||0};
-    const row=rows[index],sample=Number(usageStats?.teamCount||0),rate=sample?Number(row.count||0)/sample*100:0;
-    return {season:usageStats?.seasonId||69,count:Number(row.count||0),rate,rank:index+1,total:rows.length,sample};
+    // Current stats snapshots store the aggregate leaderboard scope in `all`.
+    // Fall back to the former flat shape so historical snapshots remain valid.
+    const scope=usageStats?.all&&Array.isArray(usageStats.all.characters)?usageStats.all:(usageStats||{});
+    const rows=Array.isArray(scope?.characters)?scope.characters:[];
+    const targetId=String(rec?.id||''),targetIngameId=String(rec?.ingameId||''),targetName=normalize(rec?.name);
+    const aliases=(rec?.aliases||[]).map(normalize).filter(Boolean);
+    const index=rows.findIndex(row=>{
+      const rowId=String(row?.id||row?.key||''),rowIngameId=String(row?.ingameId||'');
+      if(targetId&&rowId===targetId)return true;
+      if(targetIngameId&&rowIngameId===targetIngameId)return true;
+      const rowName=normalize(row?.name);
+      return !!rowName&&(rowName===targetName||aliases.includes(rowName));
+    });
+    const sample=Number(scope?.teamCount||usageStats?.teamCount||0);
+    if(index<0)return {season:usageStats?.seasonId||69,count:0,rate:0,rank:null,total:rows.length,sample};
+    const row=rows[index],count=Number(row.count||0),precomputedRate=Number(row.teamRatePct);
+    const rate=Number.isFinite(precomputedRate)?precomputedRate:(sample?count/sample*100:0);
+    const explicitRank=Number(row.rank),rank=Number.isFinite(explicitRank)&&explicitRank>0?explicitRank:index+1;
+    return {season:usageStats?.seasonId||69,count,rate,rank,total:rows.length,sample};
   }
   function renderQuote(rec){
     const q=allQuotes(rec),box=$('fortuneQuote');if(!box)return;
