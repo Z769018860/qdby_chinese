@@ -503,7 +503,14 @@
       flatAtkDamagePct=num(resolvedSoulforgeArgs[key],0);
     }
     let baseDamagePct=0;
-    const baseDmgMatch=template.match(/Base DMG(?: caused by [^.]+)?\s*\+\[([^\]]+)\]%/i);
+    // Only auto-apply Soulforge Base-DMG bonuses that clearly target the whole Awakener.
+    // Named-card / Strike / Command-Card bonuses are left scoped instead of leaking to every skill.
+    const broadBasePatterns=[
+      /(?:^|[.\n]\s*)(?:This Awakener's|[A-Za-z][A-Za-z :'-]{0,40}'s)\s+Base DMG\s*\+\[([^\]]+)\]%/i,
+      /Base DMG caused by [^.]+\s*\+\[([^\]]+)\]%/i,
+      /All Awakeners['’][^.]*\bBase DMG\s*\+\[([^\]]+)\]%/i
+    ];
+    const baseDmgMatch=broadBasePatterns.map(re=>template.match(re)).find(Boolean)||null;
     if(baseDmgMatch&&soulforgeEnabled&&sLevel>0){
       const key=baseDmgMatch[1].includes(':')?baseDmgMatch[1].split(':').pop():baseDmgMatch[1];
       baseDamagePct=num(resolvedSoulforgeArgs[key],0);
