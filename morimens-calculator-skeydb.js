@@ -1065,6 +1065,56 @@
         next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
         next.resourceEffectLabel=[next.resourceEffectLabel,'本场此前狂气爆发 '+prior+' 次：扭曲腐肉狂欢基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
       }
+      if(currentAwakener?.id==='awakener-0019'&&(next.type==='active'||next.type==='pierce')){
+        const layers=window.MorimensGearEffects?.scopedDamageLayers||emptyScopedDamageLayers();
+        const baseFactors=[],finalFactors=[];
+        const addFactor=(list,label,pct)=>{pct=Math.max(0,num(pct,0));if(pct>0)list.push({label,pct})};
+        if(skillMatchesScope(currentSkill,'exalt')){addFactor(baseFactors,'大招基伤',layers.base.exalt);addFactor(finalFactors,'最终狂气爆发伤害',layers.final.exalt)}
+        if(skillMatchesScope(currentSkill,'strike')){addFactor(baseFactors,'打击基伤',layers.base.strike);addFactor(finalFactors,'打击终伤',layers.final.strike)}
+        if(skillMatchesScope(currentSkill,'command')){addFactor(baseFactors,'指令卡基伤',layers.base.command);addFactor(finalFactors,'指令卡终伤',layers.final.command)}
+        const scopedBaseTotal=num(layers.base.strike)+num(layers.base.command)+num(layers.base.exalt);
+        const scopedFinalTotal=num(layers.final.strike)+num(layers.final.command)+num(layers.final.exalt);
+        addFactor(baseFactors,'局内基伤',resources.helotInBattleBaseDamagePct);
+        if(rouseActive()){
+          const rouse=resolvedRouseSkill(),rank=rouseRank(),perTurn=Math.max(0,num(argValue(rouse?.descriptionArgs?.Arg2,rank),0));
+          const triggers=Math.max(0,Math.floor(num(resources.helotRouseTurnStarts,0)));
+          addFactor(baseFactors,'觉醒基伤',perTurn*triggers);
+        }
+        const progression=progressionState();
+        if(baseSkillId==='skill.helot-catena.sanguine-fetters'&&progression?.soulforgeEnabled&&progression.soulforgeLevel>0){
+          const soulforgeBase=Math.max(0,num(progression.resolvedSoulforgeArgs?.Arg4,0));
+          const soulforgeStrength=Math.max(0,num(progression.resolvedSoulforgeArgs?.Arg3,0));
+          addFactor(baseFactors,'灵塑基伤',soulforgeBase);
+          next.strengthMultiplier=(Number.isFinite(Number(next.strengthMultiplier))?Math.max(0,Number(next.strengthMultiplier)):1)+soulforgeStrength/100;
+          next.usesStrength=true;
+        }
+        if(baseSkillId==='skill.helot-catena.strike'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E1')){
+          next.critRateBonus=(Number(next.critRateBonus)||0)+15;
+          next.critDamageBonus=(Number(next.critDamageBonus)||0)+15;
+          next.resourceEffectLabel=[next.resourceEffectLabel,'启灵1：本次打击暴击率/暴击伤害 +15%'].filter(Boolean).join('；');
+        }
+        if(baseSkillId==='skill.helot-catena.hatred-unleashed'){
+          const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
+          let gainedPct=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg2,rank),0));
+          if(ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&Number(resources.helotHatredBelowHalfHp)>0)gainedPct*=2;
+          const atk=Math.max(0,num(currentFormulaContext()?.ATK,0));
+          next.strengthFlatAdd=(Number(next.strengthFlatAdd)||0)+atk*gainedPct/100;
+          next.resourceEffectLabel=[next.resourceEffectLabel,'恨意宣泄：本次加入攻击力 '+gainedPct.toFixed(1)+'% 的力量'].filter(Boolean).join('；');
+        }
+        if(Number(resources.helotOverExaltBuffActive)>0){
+          next.critDamageBonus=(Number(next.critDamageBonus)||0)+35;
+          next.resourceEffectLabel=[next.resourceEffectLabel,'超限爆发状态：暴击伤害 +35%'].filter(Boolean).join('；');
+        }
+        if(String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'){
+          const enhance=Math.min(50,Math.max(0,Math.floor(num(resources.helotTemporaryEnhanceStacks,0))));
+          addFactor(finalFactors,'临时强化终伤',enhance*2);
+        }
+        next.separateDamageLayers=true;
+        next.scopedBaseAutoTotal=scopedBaseTotal;
+        next.scopedFinalAutoTotal=scopedFinalTotal;
+        next.baseDamageMultipliers=[...(next.baseDamageMultipliers||[]),...baseFactors];
+        next.finalDamageMultipliers=[...(next.finalDamageMultipliers||[]),...finalFactors];
+      }
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
         next.doubleCritDamageBonus=true;
         next.resourceEffectLabel='残骸 3 层：本次暴击伤害加成翻倍';
