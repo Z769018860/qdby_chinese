@@ -32,7 +32,11 @@
     if($('realmMastery'))base.RealmMastery=num($('realmMastery').value,base.RealmMastery||0);
     base.realmMasteryFinal=base.RealmMastery;
     const realm=window.MorimensRealmEngine?.state?.();
-    if(realm)base.primordiaAllChaosTeam=realm.primordiaAllChaosTeam===true;
+    if(realm){
+      base.primordiaAllChaosTeam=realm.primordiaAllChaosTeam===true;
+      base.ATK=(Number(base.ATK)||0)*(Number(realm.atkMultiplier)||1);
+      base.DEF=(Number(base.DEF)||0)*(Number(realm.defMultiplier)||1);
+    }
     return base;
   }
   function argValue(arg,level=1){
