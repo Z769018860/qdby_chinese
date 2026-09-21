@@ -187,11 +187,27 @@
   function skillRecordScope(skillOrId){const id=typeof skillOrId==='string'?skillOrId:skillOrId?.id;return String(id||'').startsWith('derived.')?'derived-skills':'skills'}
   function overExaltUnlocked(){const slot=selectedEnlightenSlot();return slot==='OverExalt'||slot==='AbsoluteAxiom'}
   function visibleSkills(){return currentSkills.filter(skill=>skill.slot!=='OverExalt'||overExaltUnlocked())}
+  function derivedDamageLike(skill){
+    if(skill?.kind!=='derivedSkill')return false;
+    const text=String(skill.descriptionTemplate||'');
+    return /\[Damage:[^\]]+\]|\{(?:Pure DMG|Fixed DMG|Pierce DMG)\}|\b(?:deal|deals|inflict|inflicts|trigger|triggers)\b[^.!?\n]{0,120}\b(?:DMG|Damage|Poison|Counter|Bleed|Corrosion)\b/i.test(text);
+  }
   function renderSkillOptions(preferredId){
     const select=$('skillSelect');if(!select)return;
     const visible=visibleSkills(),wanted=visible.some(x=>x.id===preferredId)?preferredId:(visible.find(x=>x.slot==='Exalt')?.id||visible[0]?.id||'');
+    const main=visible.filter(x=>x.kind!=='derivedSkill');
+    const derivedDamage=visible.filter(derivedDamageLike);
+    const derivedUtility=visible.filter(x=>x.kind==='derivedSkill'&&!derivedDamageLike(x));
     select.innerHTML='';
-    for(const skill of visible){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);o.selected=skill.id===wanted;select.appendChild(o)}
+    const appendGroup=(label,rows)=>{
+      if(!rows.length)return;
+      const group=document.createElement('optgroup');group.label=label;
+      for(const skill of rows){const o=document.createElement('option');o.value=skill.id;o.textContent=skillLabel(skill);o.selected=skill.id===wanted;group.appendChild(o)}
+      select.appendChild(group);
+    };
+    appendGroup(isEnglish()?'Main Skills':'主技能',main);
+    appendGroup(isEnglish()?'Derived Damage Cards':'衍生伤害卡',derivedDamage);
+    appendGroup(isEnglish()?'Derived Utility / State Cards':'衍生辅助 / 状态卡',derivedUtility);
     if(wanted)select.value=wanted;
   }
   function renderTemplate(record,level=1,ctxExtra={}){
@@ -398,6 +414,17 @@
       {overlayId:'overlay.horla.metaphor',key:'griefMetaphorStacks',label:'悲伤隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'happinessMetaphorStacks',label:'喜悦隐喻',min:0,max:3,calculated:false},
       {overlayId:'overlay.horla.metaphor',key:'fearMetaphorStacks',label:'恐惧隐喻',min:0,max:3,calculated:false}
+    ],
+    'awakener-0052':[
+      {overlayId:'overlay.wanda.dreamlure',key:'dreamlureStacks',label:'梦诱',min:0,max:10,calculated:true,description:'Spine Needle Chains 在梦诱≥5时可成功触发跃迁，额外造成 2 段伤害并消耗 5 层。'},
+      {overlayId:'overlay.wanda.murmurs',key:'murmursActive',label:'低语状态生效',type:'checkbox',calculated:true,description:'主动伤害降低 60%；E2 后降低 65%，同时攻击次数翻倍。'}
+    ],
+    'awakener-0054':[
+      {overlayId:'overlay.xu.spellbound',key:'spellboundStacks',label:'目标 Spellbound',min:0,max:10,calculated:true,description:'Enthrall 移除全部 Spellbound；每层造成目标最大生命 1% 纯粹伤害并触发 40% 中毒。E3 前实际上限为 5。'}
+    ],
+    'awakener-0027':[
+      {overlayId:'overlay.kathigu-ra.combust',key:'combustStacks',label:'燃烧',min:0,max:10,calculated:false},
+      {overlayId:'overlay.kathigu-ra.fiamma',key:'fiammaActive',label:'当前卡具有 Fiamma',type:'checkbox',calculated:true,description:'当前卡具有 Fiamma 时，本卡最终伤害、护盾、狂气和力量效果 +30%；伤害计算器只自动应用最终伤害 +30%。'}
     ]
   };
   function resolveOverlayEnlighten(baseOverlay){
@@ -488,13 +515,11 @@
     const m=text.match(pattern);return m?Math.max(0,num(m[group],0)):0;
   }
   function cloneExtraDamageEvents(events,count,label){
-    const source=(events||[]).filter(x=>x.type==='active'||x.type==='pierce');
-    if(!source.length||count<=0)return events||[];
+    const source=(events||[]).find(x=>x.type==='active'||x.type==='pierce');
+    if(!source||count<=0)return events||[];
     const out=[...(events||[])];
     for(let n=0;n<count;n++){
-      for(const event of source){
-        out.push({...event,id:String(event.id||'damage')+'-resource-'+String(n+1),index:out.length,position:(Number(event.position)||0)+0.0001*(n+1),groupId:String(event.groupId||event.id||'damage')+'-resource-'+String(n+1),resourceEffectLabel:label});
-      }
+      out.push({...source,id:String(source.id||'damage')+'-resource-'+String(n+1),index:out.length,position:(Number(source.position)||0)+0.0001*(n+1),groupId:String(source.groupId||source.id||'damage')+'-resource-'+String(n+1),resourceEffectLabel:label});
     }
     return out;
   }
@@ -541,6 +566,34 @@
     if(currentAwakener?.id==='awakener-0024'&&baseSkillId==='skill.horla.snarl-psalm'&&Number(resources.angerMetaphorStacks)>0){
       const stacks=Math.min(3,Math.max(0,Math.floor(Number(resources.angerMetaphorStacks)||0)));
       mapped=cloneExtraDamageEvents(mapped,stacks*2,'愤怒隐喻 '+stacks+' 层：额外 '+(stacks*2)+' 段伤害');
+    }
+    if(currentAwakener?.id==='awakener-0052'&&baseSkillId==='skill.wanda.spine-needle-chains'&&Number(resources.dreamlureStacks)>=5){
+      mapped=cloneExtraDamageEvents(mapped,2,'梦诱≥5：跃迁成功，额外 2 段伤害');
+    }
+    if(currentAwakener?.id==='awakener-0052'&&Number(resources.murmursActive)>0){
+      const overlay=resolvedOverlay('overlay.wanda.murmurs');
+      const rendered=String(renderTemplate(overlay,1)||'');
+      const m=rendered.match(/Active DMG dealt\s*-\s*(\d+(?:\.\d+)?)%/i);
+      const reduction=m?Math.max(0,Math.min(100,num(m[1],60))):60;
+      const mult=Math.max(0,1-reduction/100);
+      const active=mapped.filter(x=>x.type==='active');
+      mapped=mapped.map(event=>event.type==='active'?{...event,resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}:event);
+      const clones=active.map((event,i)=>({...event,id:String(event.id||'active')+'-murmurs-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00001*(i+1),groupId:String(event.groupId||event.id||'active')+'-murmurs-'+String(i+1),resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}));
+      mapped.push(...clones);
+    }
+    if(currentAwakener?.id==='awakener-0054'&&baseSkillId==='derived.xu.enthrall'&&Number(resources.spellboundStacks)>0){
+      const overlay=resolvedOverlay('overlay.xu.spellbound');
+      const rendered=String(renderTemplate(overlay,1)||'');
+      const capMatch=rendered.match(/Stacks up to\s*(\d+)/i);
+      const cap=capMatch?Math.max(1,Number(capMatch[1])||5):5;
+      const stacks=Math.min(cap,Math.max(0,Math.floor(Number(resources.spellboundStacks)||0)));
+      if(stacks>0){
+        mapped.push({id:'xu-enthrall-pure-resource',index:mapped.length,position:9997,groupId:'xu-enthrall-pure-resource',type:'pure',source:'resource',basis:'targetMaxHp',percent:stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：纯粹伤害'});
+        mapped.push({id:'xu-enthrall-poison-resource',index:mapped.length,position:9998,groupId:'xu-enthrall-poison-resource',type:'poison',action:'trigger',source:'resource',basis:'currentPoisonPercent',percent:40*stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：触发 '+(40*stacks)+'% 中毒'});
+      }
+    }
+    if(currentAwakener?.id==='awakener-0027'&&Number(resources.fiammaActive)>0){
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+30,resourceEffectLabel:'Fiamma：本卡最终伤害 +30%'}:event);
     }
     if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       mapped.push({
@@ -803,6 +856,8 @@
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.corpseStacks)>=3)parts.push('残骸 3 层：Necrotic Gala 暴击伤害加成翻倍');
       if(currentAwakener?.id==='awakener-0014'&&Number(resources.evernightPriorPlays)>0&&(currentSkill?.overExaltBaseSkillId||currentSkill?.id)==='derived.doresain.evernights-revel')parts.push('后续永夜：额外 100% 力量加成');
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0)parts.push(`罪印 ${Number(resources.sinMarkStacks)} 层：每次技能伤害附加 ${Number(resources.sinMarkStacks)}% 流血`);
+      if(currentAwakener?.id==='awakener-0052'&&Number(resources.dreamlureStacks)>=5)parts.push('梦诱 ≥5：可触发跃迁额外伤害');
+      if(currentAwakener?.id==='awakener-0054'&&Number(resources.spellboundStacks)>0)parts.push(`目标 Spellbound ${Number(resources.spellboundStacks)} 层：Enthrall 按层结算纯粹伤害/中毒触发`);
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command')parts.push('赎罪苦痛：当前指令卡额外造成 200% ATK 伤害');
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
