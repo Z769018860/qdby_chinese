@@ -239,6 +239,18 @@
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
     box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot))+' · '+escape(zhText(x.name||''))+'</strong>：'+escape(zhText(renderTemplate(x,1)))).join('<br><br>'):'E0：当前不应用启灵升级。';
   }
+  function ensureSkillRuntimeUi(){
+    if($('skillRuntimeBlock'))return;
+    const anchor=$('skillDesc');if(!anchor)return;
+    const block=document.createElement('div');
+    block.id='skillRuntimeBlock';block.className='formGrid';block.style.marginTop='10px';block.hidden=true;
+    block.innerHTML='<div class="field" id="skillActualHitsField"><label for="skillActualHits">本次实际伤害段数</label><input id="skillActualHits" type="number" min="1" step="1" placeholder="按技能默认/最低段数"><small>仅在随机段数、X+N、Boss/低生命额外段数等动态技能中出现；填写后覆盖该技能唯一 Damage 事件的段数。</small></div><div class="field full"><div class="desc" id="skillRuntimeWarnings"></div></div>';
+    anchor.insertAdjacentElement('afterend',block);
+    const rerun=()=>{if(currentSkill)updateSkillLevel()};
+    $('skillActualHits')?.addEventListener('input',rerun,{capture:true});
+    $('skillActualHits')?.addEventListener('change',rerun,{capture:true});
+  }
+
   function ensureFormulaContextUi(){
     if($('formulaContextBlock'))return;
     const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
@@ -249,7 +261,7 @@
   }
   function ensureCharacterLevel(){
     if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB Lv.1 基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
-    normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();
+    normalizeProgressionControls();ensureEnlightenUi();ensureFormulaContextUi();ensureSkillRuntimeUi();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
     level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
     for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
@@ -379,15 +391,25 @@
     }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
-    const id=$('skillSelect')?.value;if(!id)return;const baseSkill=currentSkills.find(x=>x.id===id)||await fetchRecord(skillRecordScope(id),id);currentSkill=resolveSkillEnlighten(baseSkill);
+    const id=$('skillSelect')?.value;if(!id)return;
+    const previousSkillId=currentSkill?.id||null;
+    const baseSkill=currentSkills.find(x=>x.id===id)||await fetchRecord(skillRecordScope(id),id);
+    currentSkill=resolveSkillEnlighten(baseSkill);
+    if(previousSkillId&&previousSkillId!==currentSkill.id&&$('skillActualHits'))$('skillActualHits').value='';
     const levels=maxSkillLevel(currentSkill),levelSelect=$('skillLevel'),previous=Math.min(Number(levelSelect?.value)||1,levels);
     if(levelSelect){levelSelect.innerHTML='';for(let i=1;i<=levels;i++){const o=document.createElement('option');o.value=String(i);o.textContent=`Lv.${i}`;o.selected=i===previous;levelSelect.appendChild(o)}}updateSkillLevel();
   }
   function updateSkillLevel(){
     if(!currentSkill)return;
+    ensureSkillRuntimeUi();
     const level=Number($('skillLevel')?.value)||1;
-    const ctx=currentFormulaContext();
     const engine=window.MorimensFormulaEngine;
+    const baseCtx=currentFormulaContext();
+    const runtimeHints=engine?.damageRuntimeHints?.(currentSkill,level,baseCtx)||{needsHitOverride:false,messages:[]};
+    const requestedHits=Math.max(0,Math.floor(num($('skillActualHits')?.value,0)));
+    const damageTokenCount=(String(currentSkill?.descriptionTemplate||'').match(/\[Damage:[^\]]+\]/gi)||[]).length;
+    const canOverrideHits=runtimeHints.needsHitOverride&&damageTokenCount===1;
+    const ctx=currentFormulaContext(canOverrideHits&&requestedHits>0?{actualHitCount:requestedHits}:{});
     const damageEvents=engine?engine.damageEvents(currentSkill,level,ctx):[];
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
     const directParts=damageEvents.filter(x=>Number.isFinite(Number(x.coefficient))).map(x=>Number(x.coefficient));
@@ -395,6 +417,19 @@
     const triggerPct=engine?engine.triggeredTentaclePercent(currentSkill,level,ctx):null;
     if($('skillCoef'))$('skillCoef').value=String(coef);
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(zhText(currentSkill.name))}</strong> · ${escape(zhText(renderTemplate(currentSkill,level)))}`;
+    if($('skillRuntimeBlock')){
+      const messages=[...(runtimeHints.messages||[])];
+      if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立 Damage 公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
+      $('skillRuntimeBlock').hidden=messages.length===0;
+      if($('skillActualHitsField'))$('skillActualHitsField').hidden=!canOverrideHits;
+      if($('skillRuntimeWarnings'))$('skillRuntimeWarnings').innerHTML=messages.length
+        ?'<strong>动态条件提示：</strong>'+messages.map(escape).join('<br>')
+        :'';
+      if(canOverrideHits&&$('skillActualHits')){
+        const range=runtimeHints.minHits&&runtimeHints.maxHits?`建议范围：${runtimeHints.minHits}–${runtimeHints.maxHits}。`:'';
+        $('skillActualHits').title=range||'填写本次实际伤害段数';
+      }
+    }
     if($('skillCoeffSummary')){
       const parts=[];
       if(damageEvents.length){
@@ -408,9 +443,11 @@
       }
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
+      if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
+      else if(runtimeHints.needsHitOverride)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
-    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,enlightenSlot:selectedEnlightenSlot(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
+    window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
     window.dispatchEvent(new CustomEvent('morimens-skill-formula',{detail:window.MorimensSkillSync}));
     $('calcBtn')?.click();
   }
@@ -552,7 +589,7 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractPieces'))$('contractPieces').value='0';if($('contractConditional'))$('contractConditional').checked=false;currentCovenant=null;
-    if($('innerSpirit'))$('innerSpirit').value='0';if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';
+    if($('innerSpirit'))$('innerSpirit').value='0';if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('skillActualHits'))$('skillActualHits').value='';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0)}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
