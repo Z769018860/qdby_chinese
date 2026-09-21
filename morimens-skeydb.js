@@ -1,7 +1,7 @@
 (()=>{
   const DATA_URL='data/morimens/skeydb/awakeners.json';
   const ZH_URL='data/morimens/huiji/zh-CN.json';
-  const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json';
+  const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json?v=20260921.61';
   const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json?v=20260918.35';
   const USAGE_MANIFEST_URL='data/morimens/eremora/manifest.json';
   let db=null,zhDb=null,identityDb=null,wheelZhDb=null,wheelCatalog=[],wheelAssets=null,usageStats=null,current=null,quoteIndex=0;
