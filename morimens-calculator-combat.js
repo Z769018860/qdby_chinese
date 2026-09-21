@@ -28,7 +28,7 @@
     if(!builder)return;
 
     const realm=document.createElement('div');
-    realm.className='builderBlock';realm.id='realmTentacleModel';
+    realm.className='builderBlock calcSection calcSectionTentacle';realm.id='realmTentacleModel';
     realm.innerHTML=`
       <div class="builderTitle"><span>⑦ 界域精通与触腕伤害</span><small>SKeyDB 数据公式</small></div>
       <div class="formGrid">
@@ -51,7 +51,7 @@
       <details class="formulaSource"><summary>SKeyDB 计算公式与数据来源</summary><div id="tentacleFormulaSource"></div></details>`;
 
     const enemy=document.createElement('div');
-    enemy.className='builderBlock';enemy.id='combatModel';
+    enemy.className='builderBlock calcSection calcSectionEnemy';enemy.id='combatModel';
     enemy.innerHTML=`
       <div class="builderTitle"><span>⑧ 敌人等级与状态事件</span><small>通用等级模型 + SKeyDB 状态规则</small></div>
       <div class="formGrid">
