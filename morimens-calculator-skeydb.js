@@ -749,6 +749,26 @@
         next.onDamageBleedPct=(Number(next.onDamageBleedPct)||0)+100;
         next.resourceEffectLabel='Rouse：圣心额外施加等于本次伤害 100% 的流血';
       }
+      if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
+        const stacks=Math.max(0,Math.floor(num($('targetVulnerableStacks')?.value,0)));
+        const bonus=Math.min(500,stacks*5);
+        if(bonus>0){
+          next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
+          next.resourceEffectLabel=[next.resourceEffectLabel,'易伤 '+stacks+' 层：Decomposition 最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+        }
+      }
+      if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike'&&Number(resources.ramonaPosseUses)>0&&(next.type==='active'||next.type==='pierce')){
+        const uses=Math.max(0,Math.floor(Number(resources.ramonaPosseUses)||0));
+        next.strengthMultiplier=Math.max(0,Number(next.strengthMultiplier)||0)+uses;
+        next.usesStrength=true;
+        next.resourceEffectLabel=[next.resourceEffectLabel,'本场已使用 Posse '+uses+' 次：力量倍率 +'+uses].filter(Boolean).join('；');
+      }
+      if(currentAwakener?.id==='awakener-0010'&&baseSkillId==='skill.clementine.lifeform-reconstruction'&&Number(resources.symbiosisRemovedStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
+        const stacks=Math.max(0,Math.floor(Number(resources.symbiosisRemovedStacks)||0));
+        const bonus=3*stacks;
+        next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
+        next.resourceEffectLabel=[next.resourceEffectLabel,'移除共生 '+stacks+' 层：基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+      }
       if(currentAwakener?.id==='awakener-0041'&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&Number(resources.polluxCommandFinalBonusPct)>0&&(next.type==='active'||next.type==='pierce')){
         const bonus=Math.max(0,Math.min(100,Number(resources.polluxCommandFinalBonusPct)||0));
         next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
@@ -767,6 +787,41 @@
       return next;
     });
     mapped=applyGenericRouseEffects(mapped);
+    if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy'){
+      const rank=Math.max(1,Number($('skillLevel')?.value)||1);
+      const satiety=Math.min(50,Math.max(0,Math.floor(Number(resources.satietyStacks)||0)));
+      const offering=Math.min(5,Math.max(0,Math.floor(Number(resources.offeringStacks)||0)));
+      const perStack=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg6,rank),0));
+      if(satiety>0&&perStack>0){
+        const bonus=satiety*perStack;
+        mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
+          ?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,'饱足 '+satiety+' 层：爆发基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          :event);
+      }
+      if(offering>0)mapped=cloneExtraDamageEvents(mapped,offering,'供奉 '+offering+' 层：本次狂气爆发额外 '+offering+' 段');
+    }
+    if(currentAwakener?.id==='awakener-0018'&&Number(resources.finaleFormActive)>0){
+      const rank=Math.max(1,Number($('skillLevel')?.value)||1);
+      if(baseSkillId==='skill.doll-inferno.terminal-of-truth-and-abyss'){
+        mapped.push({id:'doll-finale-terminal-poison',index:mapped.length,position:9992,groupId:'doll-finale-terminal-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:'Finale Form：狂气爆发额外触发 50% 中毒'});
+      }
+      if(baseSkillId==='skill.doll-inferno.soulblight'){
+        const percent=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg3,rank),0));
+        if(percent>0)mapped.push({id:'doll-finale-rouse-poison',index:mapped.length,position:9993,groupId:'doll-finale-rouse-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent,turnEndOnly:true,activeSource:false,resourceEffectLabel:'Finale Form：回合结束触发 '+percent.toFixed(0)+'% 中毒'});
+      }
+    }
+    if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&Number(resources.clementineFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
+      const rouse=resolvedRouseSkill();
+      const extra=Math.max(0,Math.floor(num(argValue(rouse?.descriptionArgs?.Arg2,1),0)));
+      if(extra>0){
+        const direct=mapped.filter(event=>['active','pierce','pure','fixed'].includes(event.type));
+        const clones=[];
+        for(let n=0;n<extra;n++)for(const event of direct){
+          clones.push({...event,id:String(event.id||'damage')+'-clementine-rouse-'+String(n+1)+'-'+String(clones.length+1),index:mapped.length+clones.length,position:(Number(event.position)||0)+0.00005*(n+1),groupId:String(event.groupId||event.id||'damage')+'-clementine-rouse-'+String(n+1),resourceEffectLabel:'灵知觉醒：本回合第一张指令卡伤害额外触发 '+extra+' 次'});
+        }
+        mapped.push(...clones);
+      }
+    }
     if(currentAwakener?.id==='awakener-0008'&&baseSkillId==='derived.castor.onyx-plume'){
       const damageAmp=Math.max(0,num(currentFormulaContext().DamageAmplification,0));
       const explorationMult=1+0.20*finishedBattles;
