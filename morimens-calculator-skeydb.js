@@ -411,9 +411,13 @@
     const runtimeHints=engine?.damageRuntimeHints?.(currentSkill,level,baseCtx)||{needsHitOverride:false,messages:[]};
     const requestedHits=Math.max(0,Math.floor(num($('skillActualHits')?.value,0)));
     const damageTokenCount=(String(currentSkill?.descriptionTemplate||'').match(/\[Damage:[^\]]+\]/gi)||[]).length;
-    const canOverrideHits=runtimeHints.needsHitOverride&&damageTokenCount===1;
+    const baseDamageEvents=engine?engine.damageEvents(currentSkill,level,baseCtx):[];
+    const hasAutomaticDamage=baseDamageEvents.some(x=>['active','pierce','pure','fixed'].includes(x.type));
+    const canOverrideHits=runtimeHints.needsHitOverride&&damageTokenCount===1&&hasAutomaticDamage;
     const ctx=currentFormulaContext(canOverrideHits&&requestedHits>0?{actualHitCount:requestedHits}:{});
-    const damageEvents=engine?engine.damageEvents(currentSkill,level,ctx):[];
+    const damageEvents=canOverrideHits&&requestedHits>0&&engine
+      ?engine.damageEvents(currentSkill,level,ctx)
+      :baseDamageEvents;
     const coef=damageEvents[0]?.coefficient||damageCoefficient(currentSkill,level);
     const directParts=damageEvents.filter(x=>Number.isFinite(Number(x.coefficient))).map(x=>Number(x.coefficient));
     const tentacleCoef=engine?engine.tentacleBonusCoefficient(currentSkill,level,ctx):0;
@@ -423,6 +427,7 @@
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
       if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立 Damage 公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
+      if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push('当前唯一 Damage 公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。');
       $('skillRuntimeBlock').hidden=messages.length===0;
       if($('skillActualHitsField'))$('skillActualHitsField').hidden=!canOverrideHits;
       if($('skillRuntimeWarnings'))$('skillRuntimeWarnings').innerHTML=messages.length
@@ -447,7 +452,8 @@
       if(tentacleCoef)parts.push(`触腕伤害 × ${Number(tentacleCoef).toFixed(2)}%`);
       if(triggerPct!==null)parts.push(`额外触腕触发 × ${Number(triggerPct).toFixed(2)}%`);
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
-      else if(runtimeHints.needsHitOverride)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
+      else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
+      else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该 Damage Event');
       $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
     }
     window.MorimensSkillSync={skill:currentSkill,level,atkCoefficient:coef,directAtkCoefficients:directParts,damageEvents,tentacleCoefficient:tentacleCoef,triggeredTentaclePercent:triggerPct,context:ctx,runtimeHints,actualHitCount:canOverrideHits&&requestedHits>0?requestedHits:null,enlightenSlot:selectedEnlightenSlot(),activeEnlightenIds:activeEnlightens().map(x=>x.id)};
