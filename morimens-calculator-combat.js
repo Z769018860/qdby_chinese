@@ -345,7 +345,9 @@
   
     const events=[];
     const groupDamage=new Map();
-    let corrosionRemaining=Math.max(0,n('corrosionAmount'));
+    const initialCorrosion=Math.max(0,n('corrosionAmount'));
+    let corrosionRemaining=initialCorrosion;
+    let corrosionAdded=0;
     let embersRemaining=Math.max(0,n('embersAmount'));
     const corrosionLossMultiplier=Math.max(0,n('corrosionLossMultiplier',300))/100;
     let corrosionDamage=0,embersDamage=0;
@@ -386,6 +388,8 @@
         amount=statValue(source.stat)*Math.max(0,Number(source.percent)||0)/100;
       }else if(source.basis==='flat'){
         amount=Math.max(0,Number(source.amount)||0);
+      }else if(source.basis==='targetMaxHpPercent'){
+        amount=enemyMaxHp*Math.max(0,Number(source.percent)||0)/100;
       }
       // Propagation Fiesta / Singularity Beacon enhance Fixed Poison and Fixed Counter,
       // but not effects defined as a percentage of damage already dealt.
@@ -395,7 +399,7 @@
       return Math.max(0,amount);
     }
 
-    let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,bleedIndex=0,counterIndex=0;
+    let scaledIndex=0,tentacleIndex=0,pureIndex=0,poisonIndex=0,bleedIndex=0,corrosionIndex=0,counterIndex=0;
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
       for(const source of sourceSkillEvents){
         if(source.type==='pierce'&&source.basis==='tentacle'){
@@ -440,6 +444,21 @@
           const stacks=initialPoison+poisonAdded;
           const raw=stacks*Math.max(0,Number(source.percent)||0)/100;
           pushDamageEvent(pureEvent(raw,`Poison 触发 ${Number(source.percent||0).toFixed(2)}%`,`poison-trigger-${++poisonIndex}`,'poison',{action:'trigger',stacks,percent:source.percent}));
+          continue;
+        }
+        if(source.type==='corrosion'&&source.action==='apply'){
+          const amount=appliedStatusAmount(source,repeat);
+          corrosionRemaining+=amount;
+          corrosionAdded+=amount;
+          events.push({
+            id:`corrosion-apply-${++corrosionIndex}`,type:'corrosion',action:'apply',
+            label:source.basis==='sourceDamage'
+              ?`Corrosion 施加 · 来源伤害 ${Number(source.percent||0).toFixed(2)}%`
+              :source.basis==='targetMaxHpPercent'
+                ?`Corrosion 施加 · 目标最大生命 ${Number(source.percent||0).toFixed(2)}%`
+                :`Corrosion 施加 · ${source.stat?source.stat+' × '+Number(source.percent||0).toFixed(2)+'%':fmt(amount)}`,
+            amount,damage:0,sourceGroupId:source.sourceGroupId||null
+          });
           continue;
         }
         if(source.type==='bleed'&&source.action==='apply'){
@@ -509,6 +528,7 @@
     const fixedEvents=events.filter(x=>x.type==='fixed');
     const poisonEvents=events.filter(x=>x.type==='poison'&&x.damage>0);
     const bleedEvents=events.filter(x=>x.type==='bleed'&&x.damage>0);
+    const corrosionEvents=events.filter(x=>x.type==='corrosion');
     const counterEvents=events.filter(x=>x.type==='counter'&&x.damage>0);
     const crittableEvents=[...activeEvents,...pierceEvents];
     const activeNormal=crittableEvents.reduce((s,x)=>s+x.normal,0);
@@ -536,8 +556,8 @@
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
-      if((event.type==='poison'||event.type==='bleed'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
-      const tags={active:'Active',pierce:'Pierce',tentacle:'Tentacle',pure:'Pure',fixed:'Fixed',poison:'Poison',bleed:'Bleed',counter:'Counter'};
+      if((event.type==='poison'||event.type==='bleed'||event.type==='corrosion'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
+      const tags={active:'Active',pierce:'Pierce',tentacle:'Tentacle',pure:'Pure',fixed:'Fixed',poison:'Poison',bleed:'Bleed',corrosion:'Corrosion',counter:'Counter'};
       const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
@@ -553,6 +573,7 @@
     rows.push(['Bleed DMG 合计',bleedTotal]);
     rows.push(['Counter DMG 合计',counterTotal]);
     if(!includeTurnEnd&&turnEndCount>0)rows.push(['回合末触腕预览（未计入总伤害）',projectedTurnEnd]);
+    rows.push(['本次新增侵蚀',corrosionAdded]);
     rows.push(['侵蚀追加生命损失合计',corrosionDamage]);
     rows.push(['旧日余烬追加生命损失合计',embersDamage]);
     if(turnEndProcessed&&corrosionBeforeTurnEndClear>0)rows.push(['侵蚀回合末清空前剩余',corrosionBeforeTurnEndClear]);
@@ -582,7 +603,7 @@
     }
     if($('combatConversion')){
       const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定 Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Counter <b>${counterEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
+      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定 Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}。事件：Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Corrosion <b>${corrosionEvents.length}</b> / Counter <b>${counterEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
     }
     window.MorimensDamageEvents={
       mode,
@@ -594,7 +615,7 @@
         active:activeTotal,pierce:pierceTotal,tentacle:tentacleTotal,pure:pureTotal,fixed:fixedTotal,
         poison:poisonTotal,bleed:bleedTotal,counter:counterTotal,corrosion:corrosionDamage,embers:embersDamage,total
       },
-      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent},
+      status:{poisonInitial:initialPoison,poisonAdded,poisonFinal:initialPoison+poisonAdded,bleedInitial:initialBleed,bleedAdded,bleedFinal:includeBleedTurnEnd?0:initialBleed+bleedAdded,corrosionInitial:initialCorrosion,corrosionAdded,corrosionFinal:corrosionRemaining,counterInitial:Math.max(0,n('currentCounter')),counterAdded,counterFinal:counterCurrent},
       remaining:{corrosion:corrosionRemaining,embers:embersRemaining,corrosionBeforeTurnEndClear,embersBeforeTurnReset,turnEndProcessed}
     };
   }
