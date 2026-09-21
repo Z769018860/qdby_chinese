@@ -382,7 +382,7 @@
 
       const seenEventKeys=new Set();
       const deduped=events.filter(event=>{
-        const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.argName||'',event.percent??'',event.coefficient??''].join('|');
+        const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.argName||'',event.hit??'',event.percent??'',event.coefficient??''].join('|');
         if(seenEventKeys.has(key))return false;
         seenEventKeys.add(key);return true;
       });
