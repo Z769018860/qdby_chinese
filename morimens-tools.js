@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260921.85";
+  const assetVersion="20260921.90";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -103,6 +103,7 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-formulas.js?v=${assetVersion}`);
     await import(`./morimens-calculator-skeydb.js?v=${assetVersion}`);
     await import(`./morimens-calculator-stats.js?v=${assetVersion}`);
+    await import(`./morimens-calculator-realms.js?v=${assetVersion}`);
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
