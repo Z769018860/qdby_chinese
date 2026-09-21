@@ -922,10 +922,21 @@
       const rouse=resolvedRouseSkill();
       const extra=Math.max(0,Math.floor(num(argValue(rouse?.descriptionArgs?.Arg2,1),0)));
       if(extra>0){
-        const direct=mapped.filter(event=>['active','pierce','pure','fixed'].includes(event.type));
+        // Call of Shaggai repeats the card's effects, not just its direct hit.
+        // Duplicate all damage/status events represented by the calculator while
+        // leaving draw/heal/resource effects outside this single-damage model.
+        const repeatable=mapped.filter(event=>['active','pierce','pure','fixed','poison','bleed','counter','corrosion'].includes(event.type));
         const clones=[];
-        for(let n=0;n<extra;n++)for(const event of direct){
-          clones.push({...event,id:String(event.id||'damage')+'-clementine-rouse-'+String(n+1)+'-'+String(clones.length+1),index:mapped.length+clones.length,position:(Number(event.position)||0)+0.00005*(n+1),groupId:String(event.groupId||event.id||'damage')+'-clementine-rouse-'+String(n+1),resourceEffectLabel:'灵知觉醒：本回合第一张指令卡伤害额外触发 '+extra+' 次'});
+        for(let n=0;n<extra;n++)for(const event of repeatable){
+          const suffix='-clementine-rouse-'+String(n+1);
+          clones.push({...event,
+            id:String(event.id||'event')+suffix+'-'+String(clones.length+1),
+            index:mapped.length+clones.length,
+            position:(Number(event.position)||0)+0.00005*(n+1),
+            groupId:String(event.groupId||event.id||'event')+suffix,
+            sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+suffix:event.sourceGroupId,
+            resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒：本回合第一张指令卡效果额外触发 '+extra+' 次'].filter(Boolean).join('；')
+          });
         }
         mapped.push(...clones);
       }
@@ -1037,7 +1048,7 @@
     if(currentAwakener?.id==='awakener-0054'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.xuFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       const direct=mapped.filter(event=>['active','pierce','pure','fixed'].includes(event.type));
       const status=mapped.filter(event=>['poison','bleed','counter','corrosion'].includes(event.type));
-      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',resourceEffectLabel:[event.resourceEffectLabel,'最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次'].filter(Boolean).join('；')}));
+      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+'-xu-aa-first':event.sourceGroupId,resourceEffectLabel:[event.resourceEffectLabel,'最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次'].filter(Boolean).join('；')}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0054'&&baseSkillId==='derived.xu.enthrall'&&Number(resources.spellboundStacks)>0){
