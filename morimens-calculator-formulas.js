@@ -405,6 +405,15 @@
           sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
         });
       }
+      for(const match of template.matchAll(/(?:apply|inflict)?\s*(?:an\s+)?equal\s+(?:amount\s+of\s+)?\{Poison\}/gi)){
+        // Avoid duplicating the stricter "inflict an equal amount" pattern above.
+        if(/inflict\s+an\s+equal\s+amount\s+of\s+\{Poison\}/i.test(match[0]))continue;
+        events.push({
+          id:`poison-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'poison',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+        });
+      }
 
       for(const match of template.matchAll(/inflict\s+\[\{Poison\}:([^\]]+)\][^.!?]*?\{Poison\}/gi)){
         const argName=match[1],arg=skill?.descriptionArgs?.[argName];
@@ -450,6 +459,17 @@
           activeSource:false
         });
       }
+      for(const match of template.matchAll(/(?:gain|obtain)\s+(?:Temporary\s+)?\{Counter\}\s+(?:for|equal to)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+of\s+(?:the\s+)?DMG dealt/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
+          type:'counter',action:'gain',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+        });
+      }
+
       for(const match of template.matchAll(/(?:gain|obtain)\s+\{(?:Temporary )?Counter\}\s+equal to\s+\[([^\]]+)\]%?\s+(?:of\s+)?DMG dealt/gi)){
         const percent=num(resolveTemplateArg(skill,match[1],rank,ctx),0);
         events.push({
@@ -464,6 +484,43 @@
           id:`counter-gain-${index+1}`,index:index++,position:(match.index||0)+0.25,
           type:'counter',action:'gain',source:'skill',basis:'statPercent',
           stat:String(match[2]).toUpperCase(),percent,activeSource:false
+        });
+      }
+
+      for(const match of template.matchAll(/(?:apply|inflict)?\s*(?:an\s+)?equal\s+(?:amount\s+of\s+)?\{Bleed\}/gi)){
+        events.push({
+          id:`bleed-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'bleed',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent:100,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:inflict|apply)?\s*\{Bleed\}\s+equal to\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?(?:the\s+)?DMG dealt/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`bleed-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'bleed',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/(?:inflict|apply)\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?(?:the\s+)?DMG dealt\s+as\s+\{Bleed\}/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`bleed-apply-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'bleed',action:'apply',source:'skill',basis:'sourceDamage',
+          sourceGroupId:nearestPrimaryGroup(match.index||0),percent,activeSource:false
+        });
+      }
+      for(const match of template.matchAll(/trigger(?:s|ed)?\s+(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))%\s+(?:of\s+)?\{Bleed\}/gi)){
+        const percent=match[1]!==undefined
+          ?num(resolveTemplateArg(skill,match[1],rank,ctx),0)
+          :num(match[2],0);
+        events.push({
+          id:`bleed-trigger-${index+1}`,index:index++,position:(match.index||0)+0.3,
+          type:'bleed',action:'trigger',source:'skill',basis:'currentBleed',percent,activeSource:false
         });
       }
 
@@ -489,7 +546,7 @@
 
       const seenEventKeys=new Set();
       const deduped=events.filter(event=>{
-        const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.argName||'',event.hit??'',event.percent??'',event.coefficient??''].join('|');
+        const key=[event.type,event.action||'',Math.floor((event.position||0)*10),event.basis||'',event.sourceGroupId||'',event.argName||'',event.hit??'',event.percent??'',event.coefficient??''].join('|');
         if(seenEventKeys.has(key))return false;
         seenEventKeys.add(key);return true;
       });
