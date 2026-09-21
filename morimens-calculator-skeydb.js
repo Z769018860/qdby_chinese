@@ -2155,6 +2155,7 @@
       if(skillMatchesScope(currentSkill,'defense')&&/["“]Defense["”]/i.test(fragment))return true;
       if(skillMatchesScope(currentSkill,'exalt')&&/\bExalt\b/i.test(fragment))return true;
       if(skillMatchesScope(currentSkill,'pursuit')&&/\bPursuit\b/i.test(fragment))return true;
+      if(skillMatchesScope(currentSkill,'command')&&/Command Cards?/i.test(fragment))return true;
       return false;
     };
     const conditional=/\b(?:if|when|whenever|after|before|every|each|first|second|third|once|within|stack(?:s|ing)?|trigger(?:s|ed|ing)?|accumulat(?:e|es|ed|ing)|consume(?:s|d|ing)|loses?|deals?\s+DMG\s+\[)\b/i;
