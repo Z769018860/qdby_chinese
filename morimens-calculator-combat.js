@@ -68,7 +68,9 @@
   const poolProduct=pools=>(pools||[]).reduce((factor,pct)=>factor*pctFactor(pct),1);
   function evaluateUniversalCore(input={}){
     const baseRaw=Math.max(0,Number(input.baseRaw)||0);
-    const basePools=(input.basePools||[]).map(Number).filter(Number.isFinite);
+    const legacyBasePools=(input.basePools||[]).map(Number).filter(Number.isFinite);
+    const outOfBattleBasePools=(input.outOfBattleBasePools||legacyBasePools).map(Number).filter(Number.isFinite);
+    const inBattleBasePools=(input.inBattleBasePools||[]).map(Number).filter(Number.isFinite);
     const damageAmpPct=Number(input.damageAmpPct)||0;
     const strengthAdd=Number(input.strengthAdd)||0;
     const additiveAdd=Number(input.additiveAdd)||0;
@@ -76,13 +78,14 @@
     const finalPools=(input.finalPools||[]).map(Number).filter(Number.isFinite);
     const enemyStateMult=Math.max(0,Number(input.enemyStateMult)||1);
     const postMult=Math.max(0,Number(input.postMult)||1);
-    const baseAfterPools=baseRaw*poolProduct(basePools);
+    const outOfBattleBase=baseRaw*poolProduct(outOfBattleBasePools);
+    const baseAfterPools=outOfBattleBase*poolProduct(inBattleBasePools);
     const amplifiedBase=baseAfterPools*pctFactor(damageAmpPct);
     const withAdditions=amplifiedBase+strengthAdd+additiveAdd;
     const afterOutgoingState=withAdditions*outgoingStateMult;
     const afterFinal=afterOutgoingState*poolProduct(finalPools);
     const beforeCrit=afterFinal*enemyStateMult*postMult;
-    return {baseRaw,baseAfterPools,amplifiedBase,withAdditions,afterOutgoingState,afterFinal,beforeCrit};
+    return {baseRaw,outOfBattleBase,baseAfterPools,amplifiedBase,withAdditions,afterOutgoingState,afterFinal,beforeCrit};
   }
   window.MorimensDamageMath={...(window.MorimensDamageMath||{}),evaluateCoreDamage:evaluateUniversalCore};
   const damageMathReferenceCases=(()=>{
@@ -313,7 +316,7 @@
       <div class="formulaRow"><b>内在灵格</b><br>SKeyDB 的“内在灵格”天赋先把当前等级解析为“基础属性等级 +N”，然后同时作用于体质、攻击、防御三个主属性；不是简单把天赋说明里显示的属性数字直接相加。</div>
       <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
-      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 “必定暴击” 时自动按必暴；跨卡/跨回合状态（例如已激活的“伤害始终暴击”灵知觉醒）不会被凭空假设，可通过“本次可暴击伤害强制暴击”显式开启。</div><div class="formulaRow"><b>基础伤害、力量与触腕</b><br><code>基础伤害 = 属性 × 技能倍率 × (1 + 基础伤害加成)</code>，随后再加入该伤害事件明确拥有的力量与触腕伤害附加项；基础伤害加成不再错误放大力量/触腕附加值。每 1 点力量使普通主动伤害 +1；技能若明确写 2×/5× 或额外力量加成，则按该事件自己的力量倍率计算。触腕本体享受 50% 力量。</div>
+      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 “必定暴击” 时自动按必暴；跨卡/跨回合状态（例如已激活的“伤害始终暴击”灵知觉醒）不会被凭空假设，可通过“本次可暴击伤害强制暴击”显式开启。</div><div class="formulaRow"><b>局外 / 局内基础伤害</b><br><code>技能原始伤害 = 属性 × 技能倍率</code><br><code>局外阶段 = 技能原始伤害 × 局外基础伤害池</code><br><code>局内阶段 = 局外阶段 × 局内基础伤害池</code><br>命轮、密契、角色成长、灵塑等可可靠解析的常驻基础伤害默认归入局外；“本场战斗 / 本回合 / 触发后 / 累计场次 / 临时状态”等动态基础伤害归入局内。之后才结算伤害强效，再加入力量与其他加算伤害；基础伤害与伤害强效不会放大力量/触腕附加值。</div>
       <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
       <div class="formulaRow"><b>晦暝·深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 对应「无光之底」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
       <div class="formulaRow"><b>原初·混沌精通</b><br>原初·混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
@@ -421,7 +424,12 @@
     const soulforgeBasePct=progression.soulforgeEnabled
       ?Math.max(0,Number(progression.baseDamagePct)||0):0;
   
-    const basePct=n('baseBonus')+soulforgeBasePct;
+    const basePhaseData=gearEffects.baseDamagePhases||{outOfBattle:{total:0,scoped:{}},inBattle:{total:0,scoped:{}}};
+    const manualOutBattleBasePct=n('baseBonus');
+    const manualInBattleBasePct=n('inBattleBaseBonus');
+    const autoOutBattleBasePct=Number(basePhaseData.outOfBattle?.total)||0;
+    const autoInBattleBasePct=Number(basePhaseData.inBattle?.total)||0;
+    if($('basePhaseSummary'))$('basePhaseSummary').textContent=`自动：局外 +${autoOutBattleBasePct.toFixed(2)}%，局内 +${autoInBattleBasePct.toFixed(2)}%；手动额外：局外 +${manualOutBattleBasePct.toFixed(2)}%，局内 +${manualInBattleBasePct.toFixed(2)}%。命轮、密契等已识别效果无需重复填写。`;
     const characterDamageAmpBonusPct=Math.max(0,Number(skillSync.characterDamageAmpBonusPct)||0);
     const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0)+characterDamageAmpBonusPct;
     const vulnerableStacks=vulnerableStackCount();
@@ -472,18 +480,27 @@
       const scopeKeys=Array.isArray(gearEffects.damageScopeKeys)&&gearEffects.damageScopeKeys.length
         ?gearEffects.damageScopeKeys:['awakener','skill','strike','command','exalt','pursuit','defense'];
       const scoped=gearEffects.scopedDamageLayers||{};
-      const scopedBaseLayers=scopeKeys.map(key=>({key,label:scopeLabels[key]||key,pct:Number(scoped.base?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
+      const outPhaseScoped=basePhaseData.outOfBattle?.scoped||{};
+      const inPhaseScoped=basePhaseData.inBattle?.scoped||{};
+      const outScopedBaseLayers=scopeKeys.map(key=>({key,label:'局外·'+(scopeLabels[key]||key),pct:Number(outPhaseScoped?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
+      const inScopedBaseLayers=scopeKeys.map(key=>({key,label:'局内·'+(scopeLabels[key]||key),pct:Number(inPhaseScoped?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
       const scopedFinalLayers=scopeKeys.map(key=>({key,label:finalScopeLabels[key]||key,pct:Number(scoped.final?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
-      const scopedBaseAutoTotal=scopedBaseLayers.reduce((sum,x)=>sum+x.pct,0);
+      const outScopedAutoTotal=outScopedBaseLayers.reduce((sum,x)=>sum+x.pct,0);
+      const inScopedAutoTotal=inScopedBaseLayers.reduce((sum,x)=>sum+x.pct,0);
       const scopedFinalAutoTotal=scopedFinalLayers.reduce((sum,x)=>sum+x.pct,0);
-      // n('baseBonus') / n('finalBonus') already contain parsed gear bonuses.
-      // Remove target-scoped pools here, then re-apply each target pool multiplicatively.
-      const genericBasePct=n('baseBonus')-scopedBaseAutoTotal;
+      // Static build effects are resolved before battle-state effects.
+      // Each phase still preserves target-specific pools (Awakener / Strike / Command / Exalt / etc.).
+      const genericOutBattleBasePct=manualOutBattleBasePct+autoOutBattleBasePct-outScopedAutoTotal;
+      const genericInBattleBasePct=manualInBattleBasePct+autoInBattleBasePct-inScopedAutoTotal;
       const genericFinalPct=finalPct-scopedFinalAutoTotal;
-      const basePools=[
-        genericBasePct,
+      const outOfBattleBasePools=[
+        genericOutBattleBasePct,
         soulforgeBasePct,
-        ...scopedBaseLayers.map(x=>x.pct),
+        ...outScopedBaseLayers.map(x=>x.pct)
+      ];
+      const inBattleBasePools=[
+        genericInBattleBasePct,
+        ...inScopedBaseLayers.map(x=>x.pct),
         skillBasePct,
         ...customBaseLayers.map(x=>Number(x?.pct)||0)
       ];
@@ -499,10 +516,13 @@
       const resourceFlatDamage=Math.max(0,Number(source.resourceFlatDamage)||0)+attack*resourceFlatAtkPercent/100;
       const resourceFlatDamageAmpBonusPct=Number(source.resourceFlatDamageAmpBonusPct)||0;
       // Universal Morimens order:
-      // 1) ATK × skill coefficient × grouped Base-DMG pools × DMG Amplification
-      // 2) + STR × STR multiplier + other additive effects
-      // 3) × outgoing-state effects × grouped Final-DMG pools
-      // 4) × enemy-state effects, environment/level multipliers, then Critical.
+      // 1) ATK × skill coefficient
+      // 2) × out-of-battle Base-DMG pools
+      // 3) × in-battle Base-DMG pools
+      // 4) × DMG Amplification
+      // 5) + STR × STR multiplier + other additive effects
+      // 6) × outgoing-state effects × grouped Final-DMG pools
+      // 7) × enemy-state effects, environment/level multipliers, then Critical.
       // DMG Amplification never multiplies STR or other additive effects.
       const additivePart=tentacleContribution+counterContribution+soulforgeFlat+resourceFlatDamage*pctFactor(resourceFlatDamageAmpBonusPct);
       const outgoingStateMult=type==='active'?weakCoef:1;
@@ -510,7 +530,7 @@
       const resourceDamageMultiplier=Number.isFinite(Number(source.resourceDamageMultiplier))?Math.max(0,Number(source.resourceDamageMultiplier)):1;
       const postMult=levelFactor*fortifyCoef*other*realmDamageOutputMult*resourceDamageMultiplier;
       const core=evaluateUniversalCore({
-        baseRaw,basePools,damageAmpPct:powerPct,
+        baseRaw,outOfBattleBasePools,inBattleBasePools,damageAmpPct:powerPct,
         strengthAdd:strengthPart,additiveAdd:additivePart,
         outgoingStateMult,finalPools,enemyStateMult,postMult
       });
@@ -534,8 +554,9 @@
         skillBaseDamageBonusPct:skillBasePct,
         skillFinalDamageBonusPct:skillFinalPct,
         damageLayerAudit:{
-          genericBasePct,soulforgeBasePct,skillBasePct,
-          scopedBaseLayers,customBaseLayers,powerPct,strengthMultiplier,strengthFlatAdd,
+          manualOutBattleBasePct,manualInBattleBasePct,autoOutBattleBasePct,autoInBattleBasePct,
+          genericOutBattleBasePct,genericInBattleBasePct,soulforgeBasePct,skillBasePct,
+          outScopedBaseLayers,inScopedBaseLayers,customBaseLayers,powerPct,strengthMultiplier,strengthFlatAdd,
           additivePart,genericFinalPct,skillFinalPct,scopedFinalLayers,customFinalLayers,
           outgoingStateMult,enemyStateMult,vulnerabilityPct,other,fortifyCoef,levelFactor,
           realmDamageOutputMult,resourceDamageMultiplier,
@@ -918,7 +939,7 @@
     $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
     $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
   
-    $('formula').textContent=`通用伤害口径：A = 攻击力 × 技能倍率 × 各基础伤害目标池 × 伤害强效；B = A + 力量 × 力量倍率 + 其他加算伤害；C = B × 自身状态修正 × 各最终伤害目标池；D = C × 敌方承伤状态 × 等级/加固/界域等环境系数，最后按暴击/非暴击/期望模式结算。相同作用目标的基础伤害/最终伤害先相加为同一池，不同作用目标的池彼此相乘。伤害强效只作用于攻击力×技能倍率形成的基础伤害部分，不作用于力量或其他加算项。当前等级系数 ${levelFactor.toFixed(3)}；加固 ×${fortifyCoef.toFixed(3)}；界域输出 ×${realmDamageOutputMult.toFixed(3)}。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层，主动/触腕 ×1.5）':'否'}；虚弱：${weakStacks>0?weakStacks+' 层（主动/触腕 ×0.75，仅应用一次）':'无'}。SKeyDB 明确：固定伤害不能暴击、不属于基础伤害且不吃最终伤害；纯粹伤害不能暴击，也不视为对应唤醒体造成的伤害。`;
+    $('formula').textContent=`通用伤害口径：A0 = 攻击力 × 技能倍率；A1 = A0 × 局外基础伤害池；A2 = A1 × 局内基础伤害池；B = A2 × 伤害强效；C = B + 力量 × 力量倍率 + 其他加算伤害；D = C × 自身状态修正 × 各最终伤害目标池；E = D × 敌方承伤状态 × 等级/加固/界域等环境系数，最后按暴击/非暴击/期望模式结算。命轮、密契、角色成长、灵塑等可解析常驻基伤自动进入局外；本场战斗、本回合、触发后、累计场次与角色资源等动态基伤进入局内。每个阶段内部仍按角色/技能/打击/指令卡/狂气爆发等作用目标分池：同目标先相加，不同目标池彼此相乘。伤害强效只作用于基础伤害部分，不作用于力量或其他加算项。当前等级系数 ${levelFactor.toFixed(3)}；加固 ×${fortifyCoef.toFixed(3)}；界域输出 ×${realmDamageOutputMult.toFixed(3)}。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层，主动/触腕 ×1.5）':'否'}；虚弱：${weakStacks>0?weakStacks+' 层（主动/触腕 ×0.75，仅应用一次）':'无'}。`;
   
     const rows=events.map((event,index)=>{
       if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
@@ -931,11 +952,17 @@
     if(damageAudit){
       const auditRows=[];
       const factor=pct=>pctFactor(pct);
-      auditRows.push(['乘区校验 · 通用/未分组基伤系数',factor(damageAudit.genericBasePct)]);
-      if(Math.abs(damageAudit.soulforgeBasePct)>1e-9)auditRows.push(['乘区校验 · 灵塑角色基伤系数',factor(damageAudit.soulforgeBasePct)]);
-      for(const layer of damageAudit.scopedBaseLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
-      if(Math.abs(damageAudit.skillBasePct)>1e-9)auditRows.push(['乘区校验 · 当前技能基伤系数',factor(damageAudit.skillBasePct)]);
-      for(const layer of damageAudit.customBaseLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      auditRows.push(['局外基伤 · 手动额外',damageAudit.manualOutBattleBasePct||0]);
+      auditRows.push(['局外基伤 · 自动识别',damageAudit.autoOutBattleBasePct||0]);
+      auditRows.push(['乘区校验 · 局外通用基伤系数',factor(damageAudit.genericOutBattleBasePct)]);
+      if(Math.abs(damageAudit.soulforgeBasePct)>1e-9)auditRows.push(['乘区校验 · 局外灵塑角色基伤系数',factor(damageAudit.soulforgeBasePct)]);
+      for(const layer of damageAudit.outScopedBaseLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      auditRows.push(['局内基伤 · 手动额外',damageAudit.manualInBattleBasePct||0]);
+      auditRows.push(['局内基伤 · 自动识别',damageAudit.autoInBattleBasePct||0]);
+      auditRows.push(['乘区校验 · 局内通用基伤系数',factor(damageAudit.genericInBattleBasePct)]);
+      for(const layer of damageAudit.inScopedBaseLayers||[])auditRows.push(['乘区校验 · '+layer.label+'系数',factor(layer.pct)]);
+      if(Math.abs(damageAudit.skillBasePct)>1e-9)auditRows.push(['乘区校验 · 局内当前技能/状态基伤系数',factor(damageAudit.skillBasePct)]);
+      for(const layer of damageAudit.customBaseLayers||[])auditRows.push(['乘区校验 · 局内'+layer.label+'系数',factor(layer.pct)]);
       auditRows.push(['乘区校验 · 伤害强效系数',factor(damageAudit.powerPct)]);
       auditRows.push(['乘区校验 · 力量倍率',damageAudit.strengthMultiplier]);
       if(Math.abs(damageAudit.strengthFlatAdd)>1e-9)auditRows.push(['乘区校验 · 本次额外力量',damageAudit.strengthFlatAdd]);
@@ -951,11 +978,13 @@
       if(Math.abs(damageAudit.realmDamageOutputMult-1)>1e-9)auditRows.push(['乘区校验 · 界域输出系数',damageAudit.realmDamageOutputMult]);
       if(Math.abs(damageAudit.other-1)>1e-9)auditRows.push(['乘区校验 · 其他独立乘区',damageAudit.other]);
       if(Math.abs(damageAudit.resourceDamageMultiplier-1)>1e-9)auditRows.push(['乘区校验 · 角色资源独立系数',damageAudit.resourceDamageMultiplier]);
-      auditRows.push(['阶段A · 基伤乘区后',damageAudit.stages?.baseAfterPools||0]);
-      auditRows.push(['阶段A · 伤害强效后',damageAudit.stages?.amplifiedBase||0]);
-      auditRows.push(['阶段B · 加入力量/加算项后',damageAudit.stages?.withAdditions||0]);
-      auditRows.push(['阶段C · 自身状态与最终伤害后',damageAudit.stages?.afterFinal||0]);
-      auditRows.push(['阶段D · 敌方状态/环境后（暴击前）',damageAudit.stages?.beforeCrit||0]);
+      auditRows.push(['阶段A0 · 技能原始伤害',damageAudit.stages?.baseRaw||0]);
+      auditRows.push(['阶段A1 · 局外基础伤害后',damageAudit.stages?.outOfBattleBase||0]);
+      auditRows.push(['阶段A2 · 局内基础伤害后',damageAudit.stages?.baseAfterPools||0]);
+      auditRows.push(['阶段B · 伤害强效后',damageAudit.stages?.amplifiedBase||0]);
+      auditRows.push(['阶段C · 加入力量/加算项后',damageAudit.stages?.withAdditions||0]);
+      auditRows.push(['阶段D · 自身状态与最终伤害后',damageAudit.stages?.afterFinal||0]);
+      auditRows.push(['阶段E · 敌方状态/环境后（暴击前）',damageAudit.stages?.beforeCrit||0]);
       rows.unshift(...auditRows);
     }
     rows.unshift(['敌人估算最大生命',enemyMaxHp]);
