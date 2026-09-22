@@ -111,12 +111,14 @@
           </div>
 
           <div class="builderBlock calcSection calcSectionDamage" id="damageMultipliers">
-            <div class="builderTitle"><span>⑤ 核心伤害乘区</span><small>同作用目标先相加，不同目标乘区彼此相乘</small></div>
+            <div class="builderTitle"><span>⑤ 核心伤害乘区</span><small>自动区分局外 / 局内；同作用目标先相加</small></div>
             <div class="formGrid">
-              <div class="field"><label for="baseBonus">通用基础伤害增幅 %</label><input id="baseBonus" type="number" step="0.1" value="0"><small>手动值视为通用基础伤害池。字段里自动值仍会合计展示，但实际计算会把命轮 / 密契中的“角色、打击、指令卡、狂气爆发、追击、指定技能”等拆回各自目标池：同池先相加，不同池再相乘。</small></div>
-              <div class="field"><label for="powerBonus">伤害强效 %</label><input id="powerBonus" type="number" step="0.1" value="0"><small>所有伤害强效来源相加为同一乘区；只作用于“攻击力 × 技能倍率 × 基础伤害乘区”，不会放大力量或其他加算伤害。</small></div>
+              <div class="field"><label for="baseBonus">额外局外基础伤害 %</label><input id="baseBonus" type="number" step="0.1" value="0"><small>只填页面无法自动读取的额外局外基伤。命轮、密契、角色成长、灵塑等可可靠解析的常驻加成会自动计入，不要重复填写。</small></div>
+              <div class="field"><label for="inBattleBaseBonus">额外局内基础伤害 %</label><input id="inBattleBaseBonus" type="number" step="0.1" value="0"><small>填写本场战斗中已经获得、但页面无法自动判断的基伤，例如临时状态或外部队友效果。页面能识别的“本场战斗 / 本回合 / 触发后 / 累计场次”效果会自动计入。</small></div>
+              <div class="field"><label for="powerBonus">伤害强效 %</label><input id="powerBonus" type="number" step="0.1" value="0"><small>所有伤害强效来源相加为同一乘区；只作用于“攻击力 × 技能倍率 × 基础伤害阶段”，不会放大力量或其他加算伤害。</small></div>
               <div class="field"><label for="finalBonus">通用最终伤害增幅 %</label><input id="finalBonus" type="number" step="0.1" value="0"><small>手动值视为通用最终伤害池。打击终伤、指令卡终伤、狂气爆发终伤、指定技能终伤等按各自目标池汇总后再彼此相乘。</small></div>
             </div>
+            <div class="desc" id="basePhaseSummary">基础伤害按“局外常驻 → 局内动态”两个阶段依次结算。命轮、密契等已选择配装会自动识别；这里只需要补充无法自动读取的额外数值。</div>
           </div>
         </div>
 
@@ -182,7 +184,7 @@
   <footer class="wrap footer"><div>© 2026 青灯不弈 · 忘忘看报</div><div>粉丝向免费工具；<a href="https://morimens.qookkagames.com/" target="_blank" rel="noopener noreferrer">《忘却前夜》</a>相关角色、图片与游戏素材版权归原权利方所有。</div></footer>
 
       <script src="morimens-fortune.js?v=20260922.1"></script>
-      <script src="morimens-tools.js?v=20260922.23"></script>
+      <script src="morimens-tools.js?v=20260922.24"></script>
   <script src="waline-anonymous-avatars.js?v=20260920.5" defer></script>
   <script src="site-analytics.js" defer></script>
 </body>
