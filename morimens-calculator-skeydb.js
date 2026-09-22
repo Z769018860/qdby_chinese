@@ -6,7 +6,7 @@
   let wheelCatalog=[],covenantCatalog=[],relicCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null,currentSignatureRelic=null;
   let applyingAuto=false,gearRealmMasteryAuto=0,wheelMainstatSummary=[];
   const auto={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
-  const trackedFields={base:'baseBonus',power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
+  const trackedFields={power:'powerBonus',critRate:'critRate',critDamage:'critDamage',vulnerability:'vulnerability',final:'finalBonus'};
   const zhSkillNames={
     'derived.doresain.evernights-revel':'永夜','derived.pollux.sacred-heart':'圣心','derived.xu.betroth':'相许','derived.xu.enthrall':'夺魄',
     'skill.24.aberrant-vivisection':'畸变的解剖','skill.24.mediating-personalities':'调停人格',
@@ -2007,6 +2007,32 @@
     for(const metric of ['base','final'])for(const scope of DAMAGE_SCOPE_KEYS)target[metric][scope]+=num(source?.[metric]?.[scope],0);
     return target;
   }
+  function emptyBaseDamagePhases(){
+    const make=()=>Object.fromEntries(DAMAGE_SCOPE_KEYS.map(key=>[key,0]));
+    return {
+      outOfBattle:{total:0,scoped:make()},
+      inBattle:{total:0,scoped:make()}
+    };
+  }
+  function isInBattleBaseDamageSentence(sentence){
+    const s=String(sentence||'');
+    return /\b(?:at\s+(?:the\s+)?(?:start|end)\s+of\s+(?:the\s+)?(?:battle|turn)|at\s+battle\s+start|during\s+(?:this|the)\s+(?:battle|turn)|(?:for\s+)?the\s+rest\s+of\s+(?:this|the)\s+battle|this\s+(?:battle|turn)|temporar(?:y|ily)|whenever|when|after|before|upon|each\s+time|every\s+time|for\s+each|per\s+(?:stack|use|card|kill|enemy)|stacks?|kills?|played|used|consum(?:e|ed|ing)|trigger(?:ed|s)?|switching\s+to)\b/i.test(s);
+  }
+  function addBaseDamagePhasesFromText(target,text,allowConditional=false,forcedPhase=null,multiplier=1){
+    const normalized=String(text||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
+    for(const raw of normalized.split(/(?<=[.!?。；;])\s+(?=(?:[\"“{(]?[A-Z0-9]|[\u3400-\u9fff]))/)){
+      const s=raw.trim();if(!s)continue;
+      if(isConditional(s)&&!allowConditional)continue;
+      const bonus=numericBonusesFromText(s,allowConditional);
+      const scoped=scopedDamageLayersFromText(s,allowConditional);
+      const scopedTotal=DAMAGE_SCOPE_KEYS.reduce((sum,key)=>sum+num(scoped?.base?.[key],0),0);
+      if(Math.abs(num(bonus.base))<1e-9&&Math.abs(scopedTotal)<1e-9)continue;
+      const phase=forcedPhase|| (isInBattleBaseDamageSentence(s)?'inBattle':'outOfBattle');
+      target[phase].total+=num(bonus.base)*multiplier;
+      for(const scope of DAMAGE_SCOPE_KEYS)target[phase].scoped[scope]+=num(scoped?.base?.[scope],0)*multiplier;
+    }
+    return target;
+  }
   function currentSkillNamedInSentence(sentence){
     const text=String(sentence||''),lower=text.toLowerCase();
     const names=[currentSkill?.name,currentSkill?.overExaltBaseSkillName].filter(Boolean).map(x=>String(x).toLowerCase());
@@ -2288,16 +2314,23 @@
   function recomputeGearBonuses(){
     const next={base:0,power:0,critRate:0,critDamage:0,vulnerability:0,final:0,realmMastery:0,aliemusRegen:0,keyflareRegen:0,sigilYield:0,deathResistance:0,poisonInfliction:0,fixedPoisonInfliction:0,poisonTrigger:0,counterGeneration:0};
     const scopedLayers=emptyScopedDamageLayers();
+    const baseDamagePhases=emptyBaseDamagePhases();
     let nextRealmMastery=0;wheelMainstatSummary=[];
     currentWheels.forEach((w,i)=>{
       if(!w)return;
       const wheelText=wheelDescriptionRaw(w,i);
       sumBonus(next,numericBonusesFromText(wheelText,false));
       mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(wheelText,false));
+      addBaseDamagePhasesFromText(baseDamagePhases,wheelText,false);
       const battleBonus=cumulativeWheelBattleBonuses(wheelText);
       if(completedBattles()>0&&hasNumericBattleBonus(battleBonus)){
-        sumBonus(next,scaledBattleBonuses(battleBonus,completedBattles()));
-        mergeScopedDamageLayers(scopedLayers,scaledScopedDamageLayers(cumulativeWheelBattleScopedLayers(wheelText),completedBattles()));
+        const times=completedBattles();
+        const scaledBattle=scaledBattleBonuses(battleBonus,times);
+        const scaledScoped=scaledScopedDamageLayers(cumulativeWheelBattleScopedLayers(wheelText),times);
+        sumBonus(next,scaledBattle);
+        mergeScopedDamageLayers(scopedLayers,scaledScoped);
+        baseDamagePhases.inBattle.total+=num(scaledBattle.base);
+        for(const scope of DAMAGE_SCOPE_KEYS)baseDamagePhases.inBattle.scoped[scope]+=num(scaledScoped?.base?.[scope],0);
       }
       const main=wheelMainstatValue(w,i);
       if(main){
@@ -2312,12 +2345,51 @@
         else if(main.key==='DEATH_RESISTANCE')next.deathResistance+=main.value;
       }
     });
-    if(currentCovenant){const allow=$('contractConditional')?.checked===true;for(const e of currentCovenant.setEffects||[]){if(Number(e.set)<=6){const raw=renderEffectRaw(e);sumBonus(next,numericBonusesFromText(raw,allow));mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(raw,allow))}}}
+    if(currentCovenant){
+      const allow=$('contractConditional')?.checked===true;
+      for(const e of currentCovenant.setEffects||[]){
+        if(Number(e.set)<=6){
+          const raw=renderEffectRaw(e);
+          sumBonus(next,numericBonusesFromText(raw,allow));
+          mergeScopedDamageLayers(scopedLayers,scopedDamageLayersFromText(raw,allow));
+          addBaseDamagePhasesFromText(baseDamagePhases,raw,allow);
+        }
+      }
+    }
     const signatureSafe=signatureRelicSafeGlobalBonuses();
-    if(signatureRelicEnabled())sumBonus(next,signatureSafe.bonus);
-    Object.assign(auto,next);applyAutoBonuses();applyGearRealmMastery(nextRealmMastery+next.realmMastery);window.MorimensGearEffects={poisonInflictionPct:auto.poisonInfliction,fixedPoisonInflictionPct:auto.fixedPoisonInfliction,poisonTriggerPct:auto.poisonTrigger,counterGenerationPct:auto.counterGeneration,aliemusRegen:auto.aliemusRegen,keyflareRegen:auto.keyflareRegen,sigilYield:auto.sigilYield,deathResistance:auto.deathResistance,realmMastery:auto.realmMastery,signatureStrengthFlat:signatureSafe.strengthFlat,signatureRelicEnabled:signatureRelicEnabled(),signatureRelicId:currentSignatureRelic?.id||null,scopedDamageLayers:scopedLayers,damageScopeKeys:[...DAMAGE_SCOPE_KEYS]};renderSignatureRelic();renderAutoSummary();
+    if(signatureRelicEnabled()){
+      sumBonus(next,signatureSafe.bonus);
+      const rendered=signatureRelicRaw();
+      addBaseDamagePhasesFromText(baseDamagePhases,rendered,false);
+      const normalized=String(rendered||'').replace(/Crit\./gi,'Crit').replace(/Temp\./gi,'Temporary');
+      for(const sentence of normalized.split(/(?<=[!?])\s+|\.\s+(?=(?:At|The|When|Whenever|After|Before|For|Each|If|Drawing|Playing|Place|Gain)\b)/)){
+        const line=sentence.trim();if(!line)continue;
+        const turnStart=/^At (?:the )?(?:turn start|start of (?:the )?turn)/i.test(line);
+        if(turnStart&&!/\b(?:if|when|whenever|after|before|once|every|each|until)\b/i.test(line))addBaseDamagePhasesFromText(baseDamagePhases,line,true,'inBattle');
+      }
+    }
+    Object.assign(auto,next);
+    applyAutoBonuses();
+    applyGearRealmMastery(nextRealmMastery+next.realmMastery);
+    window.MorimensGearEffects={
+      poisonInflictionPct:auto.poisonInfliction,
+      fixedPoisonInflictionPct:auto.fixedPoisonInfliction,
+      poisonTriggerPct:auto.poisonTrigger,
+      counterGenerationPct:auto.counterGeneration,
+      aliemusRegen:auto.aliemusRegen,
+      keyflareRegen:auto.keyflareRegen,
+      sigilYield:auto.sigilYield,
+      deathResistance:auto.deathResistance,
+      realmMastery:auto.realmMastery,
+      signatureStrengthFlat:signatureSafe.strengthFlat,
+      signatureRelicEnabled:signatureRelicEnabled(),
+      signatureRelicId:currentSignatureRelic?.id||null,
+      scopedDamageLayers:scopedLayers,
+      baseDamagePhases,
+      damageScopeKeys:[...DAMAGE_SCOPE_KEYS]
+    };
+    renderSignatureRelic();renderAutoSummary();
   }
-
   function initManualTracking(){
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;if(el.dataset.manualBase===undefined)el.dataset.manualBase=String(num(el.value));el.dataset.manualInitialized='1';el.addEventListener('input',()=>{if(applyingAuto)return;el.dataset.manualBase=String(num(el.value)-num(auto[key]));},{capture:true})}
   }
@@ -2328,9 +2400,15 @@
   }
   function renderAutoSummary(){
     const box=$('autoSummary');if(!box)return;
-    const labels=[['base','基础伤害'],['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['fixedPoisonInfliction','固定中毒施加'],['poisonTrigger','中毒触发'],['counterGeneration','反击生成']];
-    const percentKeys=new Set(['base','power','critRate','critDamage','vulnerability','final','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration']);
+    const labels=[['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['fixedPoisonInfliction','固定中毒施加'],['poisonTrigger','中毒触发'],['counterGeneration','反击生成']];
+    const percentKeys=new Set(['power','critRate','critDamage','vulnerability','final','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration']);
     const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}${percentKeys.has(k)?'%':''}</span>`);
+    const phases=window.MorimensGearEffects?.baseDamagePhases||{};
+    const autoOut=num(phases.outOfBattle?.total),autoIn=num(phases.inBattle?.total);
+    if(Math.abs(autoIn)>1e-9)rows.unshift(`<span class="chip">自动局内基础伤害 +${autoIn.toFixed(2)}%</span>`);
+    if(Math.abs(autoOut)>1e-9)rows.unshift(`<span class="chip">自动局外基础伤害 +${autoOut.toFixed(2)}%</span>`);
+    const phaseSummary=$('basePhaseSummary');
+    if(phaseSummary)phaseSummary.textContent=`已自动识别：局外基础伤害 +${autoOut.toFixed(2)}%，局内基础伤害 +${autoIn.toFixed(2)}%。命轮、密契等可解析的常驻效果无需重复填写；上方两个输入框只补充额外数值。`;
     for(const x of wheelMainstatSummary){
       const suffix=['CRIT_RATE','CRIT_DMG','DMG_AMP','SIGIL_YIELD','DEATH_RESISTANCE'].includes(x.key)?'%':'';
       rows.push(`<span class="chip">${escape(labelForWheel(x.wheel))} ${wheelEnhanceLabel(x.level)} · ${wheelMainstatLabels[x.key]||x.key} +${x.value.toFixed(2)}${suffix}</span>`);
@@ -2362,7 +2440,7 @@
   }
   async function resetBuild(){
     if($('fateSelect'))$('fateSelect').value='';if($('fateSelect2'))$('fateSelect2').value='';currentWheels=[null,null];if($('contractSelect'))$('contractSelect').value='';if($('contractConditional'))$('contractConditional').checked=false;if($('signatureRelicEnabled'))$('signatureRelicEnabled').checked=false;if($('targetVulnerable'))$('targetVulnerable').checked=false;if($('targetVulnerableStacks')){$('targetVulnerableStacks').value='';$('targetVulnerableStacks').disabled=true}if($('explorationBattleIndex'))$('explorationBattleIndex').value='1';currentCovenant=null;refreshBattleProgressionUi();
-    if($('innerSpirit')){$('innerSpirit').value=isLimitedAwakener()?'5':'0'}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('rouseActive'))$('rouseActive').checked=false;if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';
+    if($('innerSpirit')){$('innerSpirit').value=isLimitedAwakener()?'5':'0'}if($('characterSculpt'))$('characterSculpt').value='0';if($('soulforgeActive'))$('soulforgeActive').checked=true;if($('charEnlighten'))$('charEnlighten').value='';if($('rouseActive'))$('rouseActive').checked=false;if($('psycheSurgeLevel')){$('psycheSurgeLevel').value='0';$('psycheSurgeLevel').disabled=true}if($('skillActualHits'))$('skillActualHits').value='';if($('baseBonus'))$('baseBonus').value='0';if($('inBattleBaseBonus'))$('inBattleBaseBonus').value='0';
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
