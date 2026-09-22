@@ -772,7 +772,6 @@
       {key:'xuFirstCommandRouse',label:'最终法则：当前是本回合第一张指令卡',type:'checkbox',calculated:true,requiredEnlighten:'AbsoluteAxiom',dependsOnControl:'rouseActive',description:'最终法则灵知觉醒：徐每回合打出的第一张指令卡额外生效 1 次。仅在这张卡确实是本回合第一张指令卡时勾选。'}
     ],
     'awakener-0019':[
-      {key:'helotInBattleBaseDamagePct',label:'额外局内基础伤害增幅',inputLabel:'额外局内基础伤害增幅 %',min:0,max:9999,calculated:true,description:'对应血链伤害公式中的「局内基伤」。只填写当前战斗中已经生效、且没有被下方“索魂者宣言回合成长”或装备自动解析重复记录的基础伤害增幅。该项作为独立基础伤害乘区计算。'},
       {key:'helotRouseTurnStarts',label:'索魂者宣言已触发回合开始次数',min:0,max:99,calculated:true,dependsOnControl:'rouseActive',description:'灵知觉醒「索魂者宣言」每次回合开始都会使血链·希洛本场基础伤害提高当前技能等级对应的 10%–15%。填写已经触发的次数；同一来源的多次成长先累加，再作为「觉醒基伤」独立乘区。'},
       {key:'helotHatredBelowHalfHp',label:'「恨意宣泄」当前生命低于 50%',type:'checkbox',calculated:true,requiredEnlighten:'E2',description:'启灵2：生命低于 50% 时，「恨意宣泄」本次获得的力量翻倍。开启后会把攻击力百分比力量按双倍加入本次伤害公式。'},
       {key:'helotOverExaltBuffActive',label:'超限爆发暴伤 +35% 已生效',type:'checkbox',calculated:true,requiredEnlighten:'OverExalt',description:'「缚恨」发动后血链·希洛暴击伤害 +35%。只有该超限状态当前确实生效时勾选，不会因为解锁 +4 自动常驻。'},
@@ -1083,7 +1082,6 @@
       if(currentAwakener?.id==='awakener-0019'&&(next.type==='active'||next.type==='pierce')){
         const baseFactors=[],finalFactors=[];
         const addFactor=(list,label,pct)=>{pct=Math.max(0,num(pct,0));if(pct>0)list.push({label,pct})};
-        addFactor(baseFactors,'局内基伤',resources.helotInBattleBaseDamagePct);
         if(rouseActive()){
           const rouse=resolvedRouseSkill(),rank=rouseRank(),perTurn=Math.max(0,num(argValue(rouse?.descriptionArgs?.Arg2,rank),0));
           const triggers=Math.max(0,Math.floor(num(resources.helotRouseTurnStarts,0)));
