@@ -850,6 +850,40 @@
     ]
   };
   const resourceSpecEnglish={
+    personaState:{label:'Current Persona / Mood State'},
+    weaverStacks:{label:'Weaver stacks'},
+    offeringStacks:{label:'Offering stacks'},
+    satietyStacks:{label:'Satiety stacks'},
+    finaleStacks:{label:'Finale stacks'},
+    finaleFormActive:{label:'Finale Form active'},
+    corpseStacks:{label:'Corpse stacks'},
+    sinMarkStacks:{label:'Sin Mark stacks'},
+    symbiosisRemovedStacks:{label:'Symbiosis stacks removed this battle'},
+    packHuntStacks:{label:'Pack Hunt stacks'},
+    negentropyStacks:{label:'Negentropy stacks'},
+    creativityStacks:{label:'Creativity stacks'},
+    fantasiaStacks:{label:'Fantasia stacks'},
+    gynoeciumStacks:{label:'Gynoecium stacks'},
+    vortexReloadStacks:{label:'Vortex Reload stacks'},
+    undertowStacks:{label:'Undertow stacks'},
+    guiltStacks:{label:'Guilt stacks'},
+    vanityCollapseCount:{label:'Collapse of Vanity trigger count'},
+    blackSigilsConsumed:{label:'Black Sigils consumed'},
+    horlaEmotion:{label:'Current Emotion'},
+    angerMetaphorStacks:{label:'Anger Metaphor stacks'},
+    griefMetaphorStacks:{label:'Grief Metaphor stacks'},
+    happinessMetaphorStacks:{label:'Happiness Metaphor stacks'},
+    fearMetaphorStacks:{label:'Fear Metaphor stacks'},
+    endureStacks:{label:'Endure stacks'},
+    dreamlureStacks:{label:'Dreamlure stacks'},
+    murmursActive:{label:'Murmurs active'},
+    xuChoice:{label:'Current Spellbound choice'},
+    spellboundStacks:{label:'Target Spellbound stacks'},
+    combustStacks:{label:'Combust stacks'},
+    fiammaActive:{label:'Current card has Fiamma'},
+    fiammaStacks:{label:'Fiamma stacks',inputLabel:'Fiamma stacks'},
+    lifeSealStacks:{label:'Life Seal stacks'},
+
     twistedCarrionPriorUses:{label:'Prior Twisted Carrion Revel uses this battle',description:'Enter uses completed before the current cast. Each prior use increases later casts’ Base DMG by 20%; the current cast does not retroactively increase itself.'},
     twentyFourOverExaltPriorUses:{label:'Prior Aberrant Vivisection uses this battle',description:'Each completed Over-Exalt grants 24 Realm Mastery. Enter only uses completed before the current resolution.'},
     twentyFourTripleNextCommandActive:{label:'After Over-Exalt: current card is the next triple-resolving Command',description:'After Aberrant Vivisection, “24”’s next Command resolves 3 times. Enable only for that specific card.'},
@@ -1113,7 +1147,7 @@
         if((m=direct.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+Number(m[1]);labels.push(isEnglish()?'Rouse: Base DMG +'+m[1]+'%':'灵知觉醒：基础伤害 +'+m[1]+'%')}
         if((m=direct.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+Number(m[1]);labels.push(isEnglish()?'Rouse: Final DMG +'+m[1]+'%':'灵知觉醒：最终伤害 +'+m[1]+'%')}
       }
-      if(labels.length)next.resourceEffectLabel=[next.resourceEffectLabel,...new Set(labels)].filter(Boolean).join('；');
+      if(labels.length)next.resourceEffectLabel=[next.resourceEffectLabel,...new Set(labels)].filter(Boolean).join(isEnglish()?'; ':'；');
       return next;
     });
     const currentIsStrike=String(currentSkill?.slot||'').toLowerCase()==='strike'||effectiveCardClassifications(currentSkill).includes('strike')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('strike');
@@ -1140,7 +1174,7 @@
           position:(Number(event.position)||0)+0.000012*(n+1),
           groupId:String(event.groupId||event.id||'event')+suffix,
           sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+suffix:event.sourceGroupId,
-          resourceEffectLabel:[event.resourceEffectLabel,label].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,label].filter(Boolean).join(isEnglish()?'; ':'；')
         });
       }
     }
@@ -1156,7 +1190,7 @@
         const prior=Math.max(0,Math.floor(Number(resources.twistedCarrionPriorUses)||0));
         const bonus=20*prior;
         next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'本场此前狂气爆发 '+prior+' 次：扭曲腐肉狂欢基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Prior Exalt uses this battle: '+prior+'; Twisted Carrion Revel Base DMG +'+bonus.toFixed(0)+'%':'本场此前狂气爆发 '+prior+' 次：扭曲腐肉狂欢基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；');
       }
       if(currentAwakener?.id==='awakener-0019'&&(next.type==='active'||next.type==='pierce')){
         const baseFactors=[],finalFactors=[];
@@ -1164,20 +1198,20 @@
         if(rouseActive()){
           const rouse=resolvedRouseSkill(),rank=rouseRank(),perTurn=Math.max(0,num(argValue(rouse?.descriptionArgs?.Arg2,rank),0));
           const triggers=Math.max(0,Math.floor(num(resources.helotRouseTurnStarts,0)));
-          addFactor(baseFactors,'觉醒基伤',perTurn*triggers);
+          addFactor(baseFactors,ui('觉醒基伤','Rouse Base DMG'),perTurn*triggers);
         }
         const progression=progressionState();
         if(baseSkillId==='skill.helot-catena.sanguine-fetters'&&progression?.soulforgeEnabled&&progression.soulforgeLevel>0){
           const soulforgeBase=Math.max(0,num(progression.resolvedSoulforgeArgs?.Arg4,0));
           const soulforgeStrength=Math.max(0,num(progression.resolvedSoulforgeArgs?.Arg3,0));
-          addFactor(baseFactors,'灵塑基伤',soulforgeBase);
+          addFactor(baseFactors,ui('灵塑基伤','Soulforge Base DMG'),soulforgeBase);
           next.strengthMultiplier=(Number.isFinite(Number(next.strengthMultiplier))?Math.max(0,Number(next.strengthMultiplier)):1)+soulforgeStrength/100;
           next.usesStrength=true;
         }
         if(baseSkillId==='skill.helot-catena.strike'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E1')){
           next.critRateBonus=(Number(next.critRateBonus)||0)+15;
           next.critDamageBonus=(Number(next.critDamageBonus)||0)+15;
-          next.resourceEffectLabel=[next.resourceEffectLabel,'启灵1：本次打击暴击率/暴击伤害 +15%'].filter(Boolean).join('；');
+          next.resourceEffectLabel=[next.resourceEffectLabel,ui('启灵1：本次打击暴击率/暴击伤害 +15%','E1: this Strike gains Crit Rate / Crit DMG +15%')].filter(Boolean).join(isEnglish()?'; ':'；');
         }
         if(baseSkillId==='skill.helot-catena.hatred-unleashed'){
           const rank=Math.max(1,Math.min(6,Number($('skillLevel')?.value)||1));
@@ -1185,69 +1219,69 @@
           if(ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&Number(resources.helotHatredBelowHalfHp)>0)gainedPct*=2;
           const atk=Math.max(0,num(currentFormulaContext()?.ATK,0));
           next.strengthFlatAdd=(Number(next.strengthFlatAdd)||0)+atk*gainedPct/100;
-          next.resourceEffectLabel=[next.resourceEffectLabel,'恨意宣泄：本次加入攻击力 '+gainedPct.toFixed(1)+'% 的力量'].filter(Boolean).join('；');
+          next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Hatred Unleashed: add STR equal to '+gainedPct.toFixed(1)+'% ATK for this resolution':'恨意宣泄：本次加入攻击力 '+gainedPct.toFixed(1)+'% 的力量'].filter(Boolean).join(isEnglish()?'; ':'；');
         }
         if(Number(resources.helotOverExaltBuffActive)>0){
           next.critDamageBonus=(Number(next.critDamageBonus)||0)+35;
-          next.resourceEffectLabel=[next.resourceEffectLabel,'超限爆发状态：暴击伤害 +35%'].filter(Boolean).join('；');
+          next.resourceEffectLabel=[next.resourceEffectLabel,ui('超限爆发状态：暴击伤害 +35%','Over-Exalt state: Crit DMG +35%')].filter(Boolean).join(isEnglish()?'; ':'；');
         }
         if(String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'){
           const enhance=Math.min(50,Math.max(0,Math.floor(num(resources.helotTemporaryEnhanceStacks,0))));
-          addFactor(finalFactors,'临时强化终伤',enhance*2);
+          addFactor(finalFactors,ui('临时强化终伤','Temporary Enhancement Final DMG'),enhance*2);
         }
         next.baseDamageMultipliers=[...(next.baseDamageMultipliers||[]),...baseFactors];
         next.finalDamageMultipliers=[...(next.finalDamageMultipliers||[]),...finalFactors];
       }
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='skill.doresain.necrotic-gala'&&Number(resources.corpseStacks)>=3&&(next.type==='active'||next.type==='pierce')){
         next.doubleCritDamageBonus=true;
-        next.resourceEffectLabel='残骸 3 层：本次暴击伤害加成翻倍';
+        next.resourceEffectLabel=ui('残骸 3 层：本次暴击伤害加成翻倍','Corpse 3 stacks: this Crit DMG bonus is doubled');
       }
       if(currentAwakener?.id==='awakener-0014'&&baseSkillId==='derived.doresain.evernights-revel'&&Number(resources.evernightPriorPlays)>0&&(next.type==='active'||next.type==='pierce')){
         next.strengthMultiplier=Math.max(0,Number(next.strengthMultiplier)||0)+1;
         next.usesStrength=true;
-        next.resourceEffectLabel='后续永夜：额外 100% 力量加成';
+        next.resourceEffectLabel=ui('后续永夜：额外 100% 力量加成','Later Evernight: additional 100% STR contribution');
       }
       if(currentAwakener?.id==='awakener-0041'&&Number(resources.sinMarkStacks)>0&&['active','pierce','fixed','pure'].includes(next.type)){
         next.onDamageBleedPct=Math.max(0,Number(resources.sinMarkStacks)||0);
       }
       if(currentAwakener?.id==='awakener-0041'&&baseSkillId==='derived.pollux.sacred-heart'&&rouseActive()&&(next.type==='active'||next.type==='pierce')){
         next.onDamageBleedPct=(Number(next.onDamageBleedPct)||0)+100;
-        next.resourceEffectLabel='灵知觉醒：「圣心」额外施加等于本次伤害 100% 的出血';
+        next.resourceEffectLabel=ui('灵知觉醒：「圣心」额外施加等于本次伤害 100% 的出血','Rouse: Sacred Heart additionally applies Bleed equal to 100% of this damage');
       }
       if(currentAwakener?.id==='awakener-0003'&&baseSkillId==='skill.aigis.decomposition'&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
         const stacks=vulnerableStacks();
         const bonus=Math.min(500,stacks*5);
         if(bonus>0){
           next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
-          next.resourceEffectLabel=[next.resourceEffectLabel,'易伤 '+stacks+' 层：对应技能最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+          next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Vulnerable '+stacks+' stacks: corresponding skill Final DMG +'+bonus.toFixed(0)+'%':'易伤 '+stacks+' 层：对应技能最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；');
         }
       }
       if(currentAwakener?.id==='awakener-0020'&&baseSkillId==='skill.ramona-timeworn.predetermined-strike'&&Number(resources.ramonaPosseUses)>0&&(next.type==='active'||next.type==='pierce')){
         const uses=Math.max(0,Math.floor(Number(resources.ramonaPosseUses)||0));
         next.strengthMultiplier=Math.max(0,Number(next.strengthMultiplier)||0)+uses;
         next.usesStrength=true;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'本场已使用钥令 '+uses+' 次：力量倍率 +'+uses].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Posse used '+uses+' time(s) this battle: STR multiplier +'+uses:'本场已使用钥令 '+uses+' 次：力量倍率 +'+uses].filter(Boolean).join(isEnglish()?'; ':'；');
       }
       if(currentAwakener?.id==='awakener-0010'&&Number(resources.symbiosisRemovedStacks)>0&&ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2')&&(next.type==='active'||next.type==='pierce')){
         const stacks=Math.max(0,Math.floor(Number(resources.symbiosisRemovedStacks)||0));
         const bonus=3*stacks;
         next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'本场累计移除共生 '+stacks+' 层：基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Removed '+stacks+' Symbiosis stacks this battle: Base DMG +'+bonus.toFixed(0)+'%':'本场累计移除共生 '+stacks+' 层：基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；');
       }
       if(currentAwakener?.id==='awakener-0041'&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'&&Number(resources.polluxCommandFinalBonusPct)>0&&(next.type==='active'||next.type==='pierce')){
         const bonus=Math.max(0,Math.min(100,Number(resources.polluxCommandFinalBonusPct)||0));
         next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel='指令卡最终伤害额外加成 +'+bonus.toFixed(1)+'%';
+        next.resourceEffectLabel=isEnglish()?'Extra Command Final DMG +'+bonus.toFixed(1)+'%':'指令卡最终伤害额外加成 +'+bonus.toFixed(1)+'%';
       }
       if(finishedBattles>0&&currentAwakener?.id==='awakener-0041'&&(next.type==='active'||next.type==='pierce')){
         const bonus=20*finishedBattles;
         next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'探索成长：已完成 '+finishedBattles+' 场，基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Exploration growth: '+finishedBattles+' completed battle(s), Base DMG +'+bonus.toFixed(0)+'%':'探索成长：已完成 '+finishedBattles+' 场，基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；');
       }
       if(finishedBattles>0&&currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey')&&(next.type==='active'||next.type==='pierce')){
         const bonus=25*finishedBattles;
         next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+bonus;
-        next.resourceEffectLabel=[next.resourceEffectLabel,'灵魂疗愈之旅：已完成 '+finishedBattles+' 场，基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?'Soul-Healing Journey: '+finishedBattles+' completed battle(s), Base DMG +'+bonus.toFixed(0)+'%':'灵魂疗愈之旅：已完成 '+finishedBattles+' 场，基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；');
       }
       return next;
     });
@@ -1263,13 +1297,13 @@
         const perUse=rouseArg('StateArg1');
         const bonus=posseUses*perUse;
         if(bonus>0)mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Chaos: '+posseUses+' Posse uses; Exalt Final DMG +'+bonus.toFixed(0)+'%':'灵知觉醒·混沌：已释放钥令 '+posseUses+' 次，狂气爆发最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          ?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Chaos: '+posseUses+' Posse uses; Exalt Final DMG +'+bonus.toFixed(0)+'%':'灵知觉醒·混沌：已释放钥令 '+posseUses+' 次，狂气爆发最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；')}
           :event);
       }
       if(realms.has('AEQUOR')){
         const tentacleBonus=rouseArg('StateArg2');
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,tentacleBonusCoefficient:(Number(event.tentacleBonusCoefficient)||0)+tentacleBonus,onDamagePoisonPct:(Number(event.onDamagePoisonPct)||0)+10,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Aequor: Tentacle DMG +'+tentacleBonus.toFixed(0)+'% and add Poison equal to 10% of this damage':'灵知觉醒·深海：触腕伤害加成 '+tentacleBonus.toFixed(0)+'%，并附加本次伤害 10% 的中毒'].filter(Boolean).join('；')}
+          ?{...event,tentacleBonusCoefficient:(Number(event.tentacleBonusCoefficient)||0)+tentacleBonus,onDamagePoisonPct:(Number(event.onDamagePoisonPct)||0)+10,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Aequor: Tentacle DMG +'+tentacleBonus.toFixed(0)+'% and add Poison equal to 10% of this damage':'灵知觉醒·深海：触腕伤害加成 '+tentacleBonus.toFixed(0)+'%，并附加本次伤害 10% 的中毒'].filter(Boolean).join(isEnglish()?'; ':'；')}
           :event);
         if(baseSkillId==='skill.24.twisted-carrion-revel'){
           mapped.push({id:'24-rouse-aequor-poison-trigger',index:mapped.length,position:9990,groupId:'24-rouse-aequor-poison-trigger',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:ui('灵知觉醒·深海：狂气爆发额外触发 50% 中毒','Rouse · Aequor: Exalt additionally triggers 50% Poison')});
@@ -1277,13 +1311,13 @@
       }
       if(realms.has('CARO')&&baseSkillId==='skill.24.twisted-carrion-revel'){
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,strengthMultiplier:(Number.isFinite(Number(event.strengthMultiplier))?Number(event.strengthMultiplier):(event.type==='active'?1:0))+3,usesStrength:true,resourceEffectLabel:[event.resourceEffectLabel,ui('灵知觉醒·血肉：狂气爆发额外享受 300% 力量加成','Rouse · Caro: Exalt gains an additional 300% STR contribution')].filter(Boolean).join('；')}
+          ?{...event,strengthMultiplier:(Number.isFinite(Number(event.strengthMultiplier))?Number(event.strengthMultiplier):(event.type==='active'?1:0))+3,usesStrength:true,resourceEffectLabel:[event.resourceEffectLabel,ui('灵知觉醒·血肉：狂气爆发额外享受 300% 力量加成','Rouse · Caro: Exalt gains an additional 300% STR contribution')].filter(Boolean).join(isEnglish()?'; ':'；')}
           :event);
       }
       if(realms.has('ULTRA')){
         const counterBonus=rouseArg('StateArg5');
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,counterBonusCoefficient:(Number(event.counterBonusCoefficient)||0)+counterBonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Ultra: Counter DMG +'+counterBonus.toFixed(0)+'%':'灵知觉醒·超维：反击伤害加成 '+counterBonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          ?{...event,counterBonusCoefficient:(Number(event.counterBonusCoefficient)||0)+counterBonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Ultra: Counter DMG +'+counterBonus.toFixed(0)+'%':'灵知觉醒·超维：反击伤害加成 '+counterBonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；')}
           :event);
       }
     }
@@ -1311,7 +1345,7 @@
     if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0){
       const bonus=8*Math.min(10,Math.max(0,Math.floor(Number(resources.finaleStacks)||0)));
       mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-        ?{...event,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' stacks: Damage Amplification +'+bonus.toFixed(0)+'%':'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+        ?{...event,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' stacks: Damage Amplification +'+bonus.toFixed(0)+'%':'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；')}
         :event);
     }
     if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy'){
@@ -1322,7 +1356,7 @@
       if(satiety>0&&perStack>0){
         const bonus=satiety*perStack;
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Satiety '+satiety+' stacks: Exalt Base DMG +'+bonus.toFixed(0)+'%':'饱足 '+satiety+' 层：爆发基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          ?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Satiety '+satiety+' stacks: Exalt Base DMG +'+bonus.toFixed(0)+'%':'饱足 '+satiety+' 层：爆发基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；')}
           :event);
       }
       if(offering>0)mapped=cloneExtraDamageEvents(mapped,offering,'供奉 '+offering+' 层：本次狂气爆发额外 '+offering+' 段');
@@ -1366,7 +1400,7 @@
             position:(Number(event.position)||0)+0.00005*(n+1),
             groupId:String(event.groupId||event.id||'event')+suffix,
             sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+suffix:event.sourceGroupId,
-            resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse: the first Command this turn triggers its effects '+extra+' additional time(s)':'灵知觉醒：本回合第一张指令卡效果额外触发 '+extra+' 次'].filter(Boolean).join('；')
+            resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse: the first Command this turn triggers its effects '+extra+' additional time(s)':'灵知觉醒：本回合第一张指令卡效果额外触发 '+extra+' 次'].filter(Boolean).join(isEnglish()?'; ':'；')
           });
         }
         mapped.push(...clones);
@@ -1401,7 +1435,7 @@
           next.strengthMultiplier=baseStrength+2;
           next.usesStrength=true;
         }
-        next.resourceEffectLabel=[next.resourceEffectLabel,absoluteAxiom?'灵知觉醒 + 最终法则：基础伤害 +100%，额外 200% 力量加成':'灵知觉醒：命中后施加等量侵蚀'].filter(Boolean).join('；');
+        next.resourceEffectLabel=[next.resourceEffectLabel,isEnglish()?(absoluteAxiom?'Rouse + Absolute Axiom: Base DMG +100%, additional 200% STR contribution':'Rouse: applies equal Corrosion after hit'):(absoluteAxiom?'灵知觉醒 + 最终法则：基础伤害 +100%，额外 200% 力量加成':'灵知觉醒：命中后施加等量侵蚀')].filter(Boolean).join(isEnglish()?'; ':'；');
         return next;
       });
       const sourceGroups=[...new Set(mapped.filter(event=>(event.type==='active'||event.type==='pierce')&&event.groupId).map(event=>event.groupId))];
@@ -1425,7 +1459,7 @@
       const critPer=critMatch?num(critMatch[1],0):0;
       mapped=mapped.map(event=>{
         if(event.type!=='active'&&event.type!=='pierce')return event;
-        return {...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalPer*stacks,critDamageBonus:(Number(event.critDamageBonus)||0)+critPer*stacks,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Undercurrent '+stacks+' stacks':'暗潮 '+stacks+' 层'].filter(Boolean).join('；')};
+        return {...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalPer*stacks,critDamageBonus:(Number(event.critDamageBonus)||0)+critPer*stacks,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Undercurrent '+stacks+' stacks':'暗潮 '+stacks+' 层'].filter(Boolean).join(isEnglish()?'; ':'；')};
       });
     }
     if(currentAwakener?.id==='awakener-0032'&&Number(resources.vanityCollapseCount)>0){
@@ -1473,13 +1507,13 @@
       const mult=Math.max(0,1-reduction/100);
       const active=mapped.filter(x=>x.type==='active');
       mapped=mapped.map(event=>event.type==='active'?{...event,resourceDamageMultiplier:mult,resourceEffectLabel:(isEnglish()?'Murmurs: Active DMG ×'+mult.toFixed(2)+'; attack count doubled':'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍')}:event);
-      const clones=active.map((event,i)=>({...event,id:String(event.id||'active')+'-murmurs-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00001*(i+1),groupId:String(event.groupId||event.id||'active')+'-murmurs-'+String(i+1),resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}));
+      const clones=active.map((event,i)=>({...event,id:String(event.id||'active')+'-murmurs-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00001*(i+1),groupId:String(event.groupId||event.id||'active')+'-murmurs-'+String(i+1),resourceDamageMultiplier:mult,resourceEffectLabel:(isEnglish()?'Murmurs: Active DMG ×'+mult.toFixed(2)+'; attack count doubled':'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍')}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0054'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.xuFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       const direct=mapped.filter(event=>['active','pierce','pure','fixed'].includes(event.type));
       const status=mapped.filter(event=>['poison','bleed','counter','corrosion'].includes(event.type));
-      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+'-xu-aa-first':event.sourceGroupId,resourceEffectLabel:[event.resourceEffectLabel,ui('最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次','Absolute Axiom Rouse: the first Command this turn resolves one additional time')].filter(Boolean).join('；')}));
+      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+'-xu-aa-first':event.sourceGroupId,resourceEffectLabel:[event.resourceEffectLabel,ui('最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次','Absolute Axiom Rouse: the first Command this turn resolves one additional time')].filter(Boolean).join(isEnglish()?'; ':'；')}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0054'&&baseSkillId==='derived.xu.enthrall'&&Number(resources.spellboundStacks)>0){
@@ -1501,7 +1535,7 @@
         mapped=mapped.map(event=>event.type==='active'?{
           ...event,
           onDamageBleedPct:(Number(event.onDamageBleedPct)||0)+bleedPct,
-          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?((baseSkillId==='skill.helot-catena.sanguine-fetters'?'Sanguine Fetters, this use: ':'Sanguine Fetters, this turn: ')+'Active DMG adds '+bleedPct.toFixed(0)+'% Bleed'):((baseSkillId==='skill.helot-catena.sanguine-fetters'?'「缚身锁链」本次效果：':'「缚身锁链」本回合效果：')+'主动伤害附加 '+bleedPct.toFixed(0)+'% 流血')].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?((baseSkillId==='skill.helot-catena.sanguine-fetters'?'Sanguine Fetters, this use: ':'Sanguine Fetters, this turn: ')+'Active DMG adds '+bleedPct.toFixed(0)+'% Bleed'):((baseSkillId==='skill.helot-catena.sanguine-fetters'?'「缚身锁链」本次效果：':'「缚身锁链」本回合效果：')+'主动伤害附加 '+bleedPct.toFixed(0)+'% 流血')].filter(Boolean).join(isEnglish()?'; ':'；')
         }:event);
       }
     }
@@ -1515,14 +1549,14 @@
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
           ...event,
           skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalBonus,
-          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Fiamma '+fiammaStacks+' stacks: this card Final DMG +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?' (Rouse + Absolute Axiom)':''):'活焰 '+fiammaStacks+' 层：本卡最终伤害 +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?'（灵知觉醒 + 最终法则）':'')].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Fiamma '+fiammaStacks+' stacks: this card Final DMG +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?' (Rouse + Absolute Axiom)':''):'活焰 '+fiammaStacks+' 层：本卡最终伤害 +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?'（灵知觉醒 + 最终法则）':'')].filter(Boolean).join(isEnglish()?'; ':'；')
         }:event);
         const e2Unlocked=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2');
         if(e2Unlocked&&fiammaStacks===3&&baseSkillId==='skill.kathigu-ra.solarflare'){
           mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
             ...event,
             skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+50,
-            resourceEffectLabel:[event.resourceEffectLabel,ui('启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%','E2 · Fiamma 3 stacks: Gigaflare Base DMG +50%')].filter(Boolean).join('；')
+            resourceEffectLabel:[event.resourceEffectLabel,ui('启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%','E2 · Fiamma 3 stacks: Gigaflare Base DMG +50%')].filter(Boolean).join(isEnglish()?'; ':'；')
           }:event);
         }
       }
@@ -1532,7 +1566,7 @@
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
           ...event,
           skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+baseBonus,
-          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'E3 · Combust '+combust+' stacks: Base DMG this battle +'+baseBonus.toFixed(0)+'%':'启灵3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'E3 · Combust '+combust+' stacks: Base DMG this battle +'+baseBonus.toFixed(0)+'%':'启灵3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join(isEnglish()?'; ':'；')
         }:event);
       }
     }
@@ -2214,7 +2248,7 @@
       m=raw.match(/Active DMG\s*\+\s*(?:an\s+amount\s+)?equal to\s+(?:the )?wielder['’]s\s+ATK\s*[×x*]\s*([\d.]+)%/i);
       if(m){
         const percent=num(m[1]);
-        mapped=mapped.map(event=>event.type==='active'?{...event,resourceFlatAtkPercent:(Number(event.resourceFlatAtkPercent)||0)+percent,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?`Wheel “${wheelName}”: Active DMG adds ATK × ${percent}%`:`命轮「${wheelName}」：主动伤害额外 +ATK×${percent}%`].filter(Boolean).join('；')}:event);
+        mapped=mapped.map(event=>event.type==='active'?{...event,resourceFlatAtkPercent:(Number(event.resourceFlatAtkPercent)||0)+percent,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?`Wheel “${wheelName}”: Active DMG adds ATK × ${percent}%`:`命轮「${wheelName}」：主动伤害额外 +ATK×${percent}%`].filter(Boolean).join(isEnglish()?'; ':'；')}:event);
         notes.push(`命轮「${wheelName}」：每个主动伤害事件额外增加 ATK × ${percent}%`);
       }
     });
