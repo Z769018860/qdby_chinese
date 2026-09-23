@@ -8,8 +8,57 @@
   };
   const vulnerableStackCount=()=>checkedStackCount('targetVulnerable','targetVulnerableStacks');
   const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
-  const fmt=v=>Math.round(Number(v)||0).toLocaleString('zh-CN');
+  const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEnglish()?en:zh;
+  const fmt=v=>Math.round(Number(v)||0).toLocaleString(isEnglish()?'en-US':'zh-CN');
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function combatText(value){
+    const raw=String(value??'');if(!isEnglish())return raw;
+    const exact={
+      '主动伤害':'Active DMG','穿透伤害':'Pierce DMG','触腕伤害':'Tentacle DMG','纯粹伤害':'Pure DMG','固定伤害':'Fixed DMG',
+      '中毒':'Poison','出血':'Bleed','侵蚀':'Corrosion','反击':'Counter','献祭':'Sacrifice','诞生仪式':'Birth Ritual','旧日余烬':'Embers',
+      '加固':'Fortify','易伤':'Vulnerable','总伤害':'Total DMG',
+      '局外基伤 · 手动额外':'Out-of-Battle Base DMG · Manual Extra','局外基伤 · 自动识别':'Out-of-Battle Base DMG · Auto-detected',
+      '局内基伤 · 手动额外':'In-Battle Base DMG · Manual Extra','局内基伤 · 自动识别':'In-Battle Base DMG · Auto-detected',
+      '界域修正后攻击力':'ATK after Realm modifiers','敌人等级通用承伤系数':'Generic enemy level factor','敌人估算最大生命':'Estimated enemy Max HP',
+      '主动伤害合计':'Active DMG Total','穿透伤害合计':'Pierce DMG Total','触腕伤害合计':'Tentacle DMG Total','纯粹伤害合计':'Pure DMG Total',
+      '固定伤害合计':'Fixed DMG Total','中毒伤害合计':'Poison DMG Total','出血伤害合计':'Bleed DMG Total','反击伤害合计':'Counter DMG Total',
+      '敌方献祭回合末伤害':'Enemy Sacrifice Turn-end DMG','敌方初始献祭':'Initial Enemy Sacrifice','伤害转化献祭比例':'DMG-to-Sacrifice Ratio',
+      '其中：灵塑自动伤害→献祭 %':'of which: Soulforge auto DMG→Sacrifice %','其中：手动持续状态伤害→献祭 %':'of which: manual persistent-state DMG→Sacrifice %',
+      '敌方已有诞生仪式层数':'Existing Enemy Birth Ritual Stacks','所选技能每次即时施加诞生仪式':'Birth Ritual Applied per Selected-skill Use',
+      '本次伤害序列后诞生仪式层数':'Birth Ritual Stacks after This Sequence','诞生仪式新增献祭':'Sacrifice Added by Birth Ritual',
+      '伤害转化新增献祭':'Sacrifice Added by Damage Conversion','敌方回合末结算前献祭':'Enemy Sacrifice before Turn-end Settlement','敌方最终献祭':'Final Enemy Sacrifice',
+      '回合末触腕预览（未计入总伤害）':'Turn-end Tentacle Preview (not included in total)','本次新增侵蚀':'Corrosion Added This Sequence',
+      '侵蚀追加生命损失合计':'Corrosion Additional HP Loss Total','旧日余烬追加生命损失合计':'Embers Additional HP Loss Total',
+      '侵蚀回合末清空前剩余':'Corrosion Remaining before Turn-end Clear','旧日余烬回合重置前剩余':'Embers Remaining before Turn Reset',
+      '侵蚀最终剩余':'Final Corrosion','旧日余烬最终剩余':'Final Embers','最终中毒层数':'Final Poison Stacks','最终出血层数':'Final Bleed Stacks',
+      '本次新增反击':'Counter Added This Sequence','最终反击':'Final Counter','本次对敌合计':'Total Damage to Enemy'
+    };
+    if(exact[raw])return exact[raw];
+    return raw
+      .replace(/^乘区校验 · /,'Layer Audit · ')
+      .replace(/^阶段A0 · 技能原始伤害$/,'Stage A0 · Raw Skill Damage')
+      .replace(/^阶段A1 · 局外基础伤害后$/,'Stage A1 · After Out-of-Battle Base DMG')
+      .replace(/^阶段A2 · 局内基础伤害后$/,'Stage A2 · After In-Battle Base DMG')
+      .replace(/^阶段B · 伤害强效后$/,'Stage B · After Damage Amplification')
+      .replace(/^阶段C · 加入力量\/加算项后$/,'Stage C · After STR / Additive Damage')
+      .replace(/^阶段D · 自身状态与最终伤害后$/,'Stage D · After Outgoing State / Final DMG')
+      .replace(/^阶段E · 敌方状态\/环境后（暴击前）$/,'Stage E · After Enemy State / Environment (pre-Crit)')
+      .replace(/局外通用基伤系数/g,'Generic Out-of-Battle Base DMG Factor').replace(/局外灵塑角色基伤系数/g,'Soulforge Out-of-Battle Base DMG Factor')
+      .replace(/局内通用基伤系数/g,'Generic In-Battle Base DMG Factor').replace(/局内当前技能\/状态基伤系数/g,'Current Skill/State In-Battle Base DMG Factor')
+      .replace(/局外·/g,'Out-of-Battle · ').replace(/局内·/g,'In-Battle · ')
+      .replace(/角色基伤/g,'Awakener Base DMG').replace(/技能基伤/g,'Skill Base DMG').replace(/打击基伤/g,'Strike Base DMG').replace(/指令卡基伤/g,'Command Base DMG').replace(/狂气爆发基伤/g,'Exalt Base DMG').replace(/追击基伤/g,'Pursuit Base DMG').replace(/防御卡基伤/g,'Defense Base DMG')
+      .replace(/角色终伤/g,'Awakener Final DMG').replace(/技能终伤/g,'Skill Final DMG').replace(/打击终伤/g,'Strike Final DMG').replace(/指令卡终伤/g,'Command Final DMG').replace(/狂气爆发终伤/g,'Exalt Final DMG').replace(/追击终伤/g,'Pursuit Final DMG').replace(/防御卡终伤/g,'Defense Final DMG')
+      .replace(/伤害强效系数/g,'Damage Amplification Factor').replace(/力量倍率/g,'STR Multiplier').replace(/本次额外力量/g,'Extra STR This Event').replace(/其他加算项/g,'Other Additive Damage').replace(/自身状态修正/g,'Outgoing-state Modifier')
+      .replace(/通用\/未分组终伤系数/g,'Generic / Ungrouped Final DMG Factor').replace(/当前技能终伤系数/g,'Current Skill Final DMG Factor').replace(/敌方承伤状态/g,'Enemy Damage-taken State').replace(/等级系数/g,'Level Factor').replace(/加固系数/g,'Fortify Factor').replace(/界域输出系数/g,'Realm Output Factor').replace(/其他独立乘区/g,'Other Independent Multiplier').replace(/角色资源独立系数/g,'Character-resource Independent Multiplier')
+      .replace(/系数/g,'Factor').replace(/主动伤害/g,'Active DMG').replace(/穿透伤害/g,'Pierce DMG').replace(/触腕伤害/g,'Tentacle DMG').replace(/纯粹伤害/g,'Pure DMG').replace(/固定伤害/g,'Fixed DMG')
+      .replace(/中毒/g,'Poison').replace(/出血/g,'Bleed').replace(/侵蚀/g,'Corrosion').replace(/反击/g,'Counter').replace(/献祭/g,'Sacrifice').replace(/诞生仪式/g,'Birth Ritual').replace(/旧日余烬/g,'Embers').replace(/加固/g,'Fortify').replace(/易伤/g,'Vulnerable')
+      .replace(/回合末/g,'Turn End').replace(/必定暴击/g,'Guaranteed Crit').replace(/暴击率/g,'Crit Rate').replace(/暴伤/g,'Crit DMG').replace(/残骸效果已启用/g,'Corpse effect active').replace(/命轮额外攻击力/g,'Wheel extra ATK').replace(/消费/g,'consumed').replace(/等量/g,'equal amount').replace(/其他伤害 50%/g,'50% for other damage').replace(/附加/g,' added ').replace(/获得/g,' gained ').replace(/触发/g,' trigger ');
+  }
+  function realmLabelForDisplay(value){
+    if(!isEnglish())return String(value||'普通');
+    return String(value||'Standard').replace(/原初·混沌/g,'Primordia · Chaos').replace(/繁育·血肉/g,'Propagation · Caro').replace(/晦暝·深海/g,'Benthos · Aequor').replace(/奇点·超维/g,'Singularity · Ultra').replace(/至纯/g,'Pure ').replace(/双界域/g,' Dual Realm').replace(/混沌/g,'Chaos').replace(/深海/g,'Aequor').replace(/血肉/g,'Caro').replace(/超维/g,'Ultra').replace(/普通/g,'Standard');
+  }
   const BREAKDOWN_ICON_BASE='assets/morimens/skeydb-icons/';
   const breakdownVisuals={
     active:{glyph:'✧',label:'主动伤害'},
