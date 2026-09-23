@@ -1,7 +1,9 @@
 (()=>{
   'use strict';
   const $=id=>document.getElementById(id);
-  const escFile=value=>String(value||'').replace(/[\\/:*?"<>|\s]+/g,'-').replace(/^-+|-+$/g,'').slice(0,48)||'未选择';
+  const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEnglish()?en:zh;
+  const escFile=value=>String(value||'').replace(/[\\/:*?"<>|\s]+/g,'-').replace(/^-+|-+$/g,'').slice(0,48)||ui('未选择','not-selected');
   const clean=value=>String(value||'').replace(/\s+/g,' ').trim();
   const visibleForReport=el=>{
     if(!el||el.type==='hidden'||el.closest('[hidden]'))return false;
@@ -17,17 +19,17 @@
       const clone=check.cloneNode(true);
       clone.querySelectorAll('small,input,select,textarea').forEach(x=>x.remove());
       const text=clean(clone.textContent);
-      if(control.type==='number'&&/Stacks$/i.test(control.id||''))return (text||control.id)+' · 层数';
-      return text||control.id||'设置';
+      if(control.type==='number'&&/Stacks$/i.test(control.id||''))return (text||control.id)+ui(' · 层数',' · Stacks');
+      return text||control.id||ui('设置','Setting');
     }
-    return control.name||control.id||'设置';
+    return control.name||control.id||ui('设置','Setting');
   }
   function valueFor(control){
-    if(control.type==='checkbox')return control.checked?'开启':'关闭';
-    if(control.type==='radio')return control.checked?'选中':'未选';
+    if(control.type==='checkbox')return control.checked?ui('开启','On'):ui('关闭','Off');
+    if(control.type==='radio')return control.checked?ui('选中','Selected'):ui('未选','Not selected');
     if(control.tagName==='SELECT')return clean(control.selectedOptions?.[0]?.textContent||control.value||'—');
-    const value=control.value===''?(control.placeholder?('默认 / '+control.placeholder):'—'):control.value;
-    return clean(value)+(control.disabled?'（自动/锁定）':'');
+    const value=control.value===''?(control.placeholder?(ui('默认 / ','Default / ')+control.placeholder):'—'):control.value;
+    return clean(value)+(control.disabled?ui('（自动/锁定）',' (auto/locked)'):'');
   }
   function sectionTitleFor(control){
     const block=control.closest('.builderBlock');
@@ -36,10 +38,10 @@
       if(title)return clean(title.textContent);
     }
     const details=control.closest('details.advanced');
-    if(details)return clean(details.querySelector('summary')?.textContent||'高级 / 手动校准');
+    if(details)return clean(details.querySelector('summary')?.textContent||ui('高级 / 手动校准','Advanced / Manual Calibration'));
     const signature=control.closest('.signatureRelicPanel');
-    if(signature)return clean(signature.querySelector('.signatureRelicHead strong')?.textContent||'维度影像 / 专属造物');
-    return '其他设置';
+    if(signature)return clean(signature.querySelector('.signatureRelicHead strong')?.textContent||ui('维度影像 / 专属造物','Dimensional Image / Signature Creation'));
+    return ui('其他设置','Other Settings');
   }
   function collectSettings(panel){
     const groups=new Map();
@@ -65,37 +67,37 @@
       if(!text||seen.has(text)||/等待|正在匹配|尚未|选择.+后/.test(text)&&text.length<40)continue;
       seen.add(text);
       let title='';
-      if(el.id==='skillDesc')title='技能说明';
-      else if(el.id==='skillCoeffSummary')title='技能公式';
-      else if(el.id==='fateDesc')title='命轮说明';
-      else if(el.id==='contractDesc')title='密契说明';
-      else if(el.id==='enlightenDesc')title='启灵说明';
-      else if(el.id==='progressionDesc')title='成长说明';
-      else if(el.classList.contains('signatureRelicApplied'))title='维度影像生效';
-      else if(el.closest('.signatureRelicPanel'))title='维度影像说明';
+      if(el.id==='skillDesc')title=ui('技能说明','Skill Description');
+      else if(el.id==='skillCoeffSummary')title=ui('技能公式','Skill Formula');
+      else if(el.id==='fateDesc')title=ui('命轮说明','Wheel Description');
+      else if(el.id==='contractDesc')title=ui('密契说明','Covenant Description');
+      else if(el.id==='enlightenDesc')title=ui('启灵说明','Enlighten Description');
+      else if(el.id==='progressionDesc')title=ui('成长说明','Progression Description');
+      else if(el.classList.contains('signatureRelicApplied'))title=ui('维度影像生效','Dimensional Image Applied');
+      else if(el.closest('.signatureRelicPanel'))title=ui('维度影像说明','Dimensional Image Description');
       else {
         const block=el.closest('.builderBlock');
-        title=clean(block?.querySelector('.builderTitle span,.builderTitle')?.textContent||'说明');
+        title=clean(block?.querySelector('.builderTitle span,.builderTitle')?.textContent||ui('说明','Description'));
       }
       rows.push({title,text});
     }
     return rows;
   }
   function collectResult(){
-    const mode=clean(document.querySelector('.modeBtn[aria-pressed="true"]')?.textContent||$('resultLabel')?.textContent||'期望伤害');
+    const mode=clean(document.querySelector('.modeBtn[aria-pressed="true"]')?.textContent||$('resultLabel')?.textContent||ui('期望伤害','Expected Damage'));
     const summary=[
       {label:clean($('resultLabel')?.textContent||mode),value:clean($('resultNumber')?.textContent||'0')},
-      {label:'非暴击',value:clean($('normalLine')?.textContent||'—')},
-      {label:'暴击',value:clean($('critLine')?.textContent||'—')},
-      {label:'期望',value:clean($('expectedLine')?.textContent||'—')}
+      {label:ui('非暴击','Non-critical'),value:clean($('normalLine')?.textContent||'—')},
+      {label:ui('暴击','Critical'),value:clean($('critLine')?.textContent||'—')},
+      {label:ui('期望','Expected'),value:clean($('expectedLine')?.textContent||'—')}
     ];
     const composition=Array.from(document.querySelectorAll('#breakdown .damageCompositionItem')).map(el=>({
-      label:clean(el.querySelector('.damageCompositionHead span')?.textContent||'伤害构成'),
+      label:clean(el.querySelector('.damageCompositionHead span')?.textContent||ui('伤害构成','Damage Composition')),
       value:clean(el.querySelector('.damageCompositionHead strong')?.textContent||'—'),
       extra:clean(el.querySelector('small')?.textContent||'')
     }));
     const breakdown=Array.from(document.querySelectorAll('#breakdown .step')).map(el=>({
-      label:clean(el.querySelector('span')?.textContent||'明细'),
+      label:clean(el.querySelector('span')?.textContent||ui('明细','Detail')),
       value:clean(el.querySelector('strong')?.textContent||'—')
     }));
     return {
@@ -124,13 +126,13 @@
   }
   function buildReport(){
     const panel=document.querySelector('[aria-labelledby="calcTitle"]');
-    if(!panel)throw new Error('未找到伤害计算器');
-    const char=$('charSelect')?.selectedOptions?.[0]?.textContent||'未选择角色';
-    const skill=$('skillSelect')?.selectedOptions?.[0]?.textContent||'未选择技能';
+    if(!panel)throw new Error(ui('未找到伤害计算器','Damage calculator not found'));
+    const char=$('charSelect')?.selectedOptions?.[0]?.textContent||ui('未选择角色','No Awakener selected');
+    const skill=$('skillSelect')?.selectedOptions?.[0]?.textContent||ui('未选择技能','No skill selected');
     return {
-      title:'忘忘看报 · 伤害计算器报告',
+      title:ui('忘忘看报 · 伤害计算器报告','Morimens Weekly · Damage Calculator Report'),
       subtitle:clean(char)+' · '+clean(skill),
-      meta:'导出时间：'+new Date().toLocaleString('zh-CN',{hour12:false})+' · 结果模式：'+collectResult().mode,
+      meta:(isEnglish()?'Exported: ':'导出时间：')+new Date().toLocaleString(isEnglish()?'en-US':'zh-CN',{hour12:false})+(isEnglish()?' · Result mode: ':' · 结果模式：')+collectResult().mode,
       settings:collectSettings(panel),
       descriptions:collectDescriptions(panel),
       result:collectResult(),
@@ -221,7 +223,7 @@
           if(i%2===0)ly+=h;else ry+=h;
         });
       }else if(section.type==='descriptions'){
-        ctx.fillStyle='#e8d6b6';ctx.font='800 24px '+fontStack;ctx.fillText('当前说明与自动解析',P+CARD,cy+24);cy+=58;
+        ctx.fillStyle='#e8d6b6';ctx.font='800 24px '+fontStack;ctx.fillText(ui('当前说明与自动解析','Current Descriptions & Auto Parsing'),P+CARD,cy+24);cy+=58;
         for(const item of report.descriptions){
           ctx.fillStyle='#cfb98f';ctx.font='700 19px '+fontStack;ctx.fillText(item.title,P+CARD,cy+20);cy+=32;
           ctx.font='18px '+fontStack;
@@ -229,7 +231,7 @@
           cy=drawLines(lines,P+CARD,cy+21,29,'#b8c2d0',fontStack,18)+10;
         }
       }else{
-        ctx.fillStyle='#e8d6b6';ctx.font='800 24px '+fontStack;ctx.fillText('最终详细结果',P+CARD,cy+24);cy+=58;
+        ctx.fillStyle='#e8d6b6';ctx.font='800 24px '+fontStack;ctx.fillText(ui('最终详细结果','Final Detailed Result'),P+CARD,cy+24);cy+=58;
         rounded(P+CARD,cy,W-P*2-CARD*2,128,16,'rgba(143,52,65,.13)','rgba(213,177,118,.18)');
         ctx.fillStyle='#9faabc';ctx.font='18px '+fontStack;ctx.fillText(report.result.summary[0].label,P+CARD+22,cy+29);
         ctx.fillStyle='#f5e4c3';ctx.font='900 42px '+fontStack;ctx.fillText(report.result.summary[0].value,P+CARD+22,cy+76);
@@ -237,7 +239,7 @@
         ctx.fillText(report.result.summary.slice(1).map(x=>x.value).join('    '),P+CARD+22,cy+108);
         cy+=150;
         if(report.result.composition.length){
-          ctx.fillStyle='#cfb98f';ctx.font='700 20px '+fontStack;ctx.fillText('伤害构成',P+CARD,cy+20);cy+=34;
+          ctx.fillStyle='#cfb98f';ctx.font='700 20px '+fontStack;ctx.fillText(ui('伤害构成','Damage Composition'),P+CARD,cy+20);cy+=34;
           const inner=W-P*2-CARD*2,colW=(inner-COLGAP)/2;
           report.result.composition.forEach((row,i)=>{
             const x=P+CARD+(i%2)*(colW+COLGAP), yy=cy+Math.floor(i/2)*62;
@@ -247,7 +249,7 @@
           });
           cy+=Math.ceil(report.result.composition.length/2)*62+14;
         }
-        ctx.fillStyle='#cfb98f';ctx.font='700 20px '+fontStack;ctx.fillText('事件与数值明细',P+CARD,cy+20);cy+=36;
+        ctx.fillStyle='#cfb98f';ctx.font='700 20px '+fontStack;ctx.fillText(ui('事件与数值明细','Event & Value Details'),P+CARD,cy+20);cy+=36;
         const rw=W-P*2-CARD*2;
         for(const row of report.result.breakdown){
           const h=rowHeight(row,rw);
@@ -257,7 +259,7 @@
           cy+=h;
         }
         if(report.result.formula){
-          cy+=6;ctx.fillStyle='#cfb98f';ctx.font='700 20px '+fontStack;ctx.fillText('计算口径 / 公式说明',P+CARD,cy+20);cy+=34;
+          cy+=6;ctx.fillStyle='#cfb98f';ctx.font='700 20px '+fontStack;ctx.fillText(ui('计算口径 / 公式说明','Calculation Model / Formula'),P+CARD,cy+20);cy+=34;
           const lines=measureTextBlock(report.result.formula,W-P*2-CARD*2,monoStack,17,27).lines;
           cy=drawLines(lines,P+CARD,cy+20,27,'#b8c2d0',monoStack,17)+12;
         }
@@ -268,7 +270,7 @@
       }
       y+=section.h+GAP;
     }
-    ctx.fillStyle='#657286';ctx.font='16px '+fontStack;ctx.fillText('忘忘看报 · Morimens Weekly · 伤害计算器导出',P,canvas.height-P+18);
+    ctx.fillStyle='#657286';ctx.font='16px '+fontStack;ctx.fillText(ui('忘忘看报 · Morimens Weekly · 伤害计算器导出','Morimens Weekly · Damage Calculator Export'),P,canvas.height-P+18);
     ctx.textAlign='right';ctx.fillStyle='#7f8b9e';ctx.font='15px '+fontStack;ctx.fillText('https://qingdengbuyi.top/morimens-tools.html#calc',W-P,canvas.height-P);ctx.fillText('copyright@青灯不弈',W-P,canvas.height-P+24);ctx.textAlign='left';
     return canvas;
   }
@@ -277,22 +279,22 @@
     if(btn?.disabled)return;
     const old=btn?.textContent;
     try{
-      if(btn){btn.disabled=true;btn.textContent='正在生成…'}
+      if(btn){btn.disabled=true;btn.textContent=ui('正在生成…','Generating…')}
       try{window.MorimensCombatCalculator?.calculate?.()}catch{}
       await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
       const report=buildReport(),canvas=renderReport(report);
-      const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('图片编码失败')),'image/png',0.96));
+      const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error(ui('图片编码失败','Image encoding failed'))),'image/png',0.96));
       const url=URL.createObjectURL(blob),a=document.createElement('a'),now=new Date(),stamp=[
         now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0'),
         '-',String(now.getHours()).padStart(2,'0'),String(now.getMinutes()).padStart(2,'0')
       ].join('');
-      a.href=url;a.download='忘忘看报-伤害计算-'+escFile(report.char)+'-'+escFile(report.skill)+'-'+stamp+'.png';
+      a.href=url;a.download=(isEnglish()?'morimens-damage-':'忘忘看报-伤害计算-')+escFile(report.char)+'-'+escFile(report.skill)+'-'+stamp+'.png';
       document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
     }catch(error){
       console.error('Damage report export failed',error);
-      alert('伤害计算器图片生成失败：'+(error?.message||error));
+      alert((isEnglish()?'Damage calculator image export failed: ':'伤害计算器图片生成失败：')+(error?.message||error));
     }finally{
-      if(btn){btn.disabled=false;btn.textContent=old||'下载图片'}
+      if(btn){btn.disabled=false;btn.textContent=old||ui('下载图片','Download Image')}
     }
   }
   function bind(){
