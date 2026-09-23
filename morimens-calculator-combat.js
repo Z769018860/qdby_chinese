@@ -520,7 +520,7 @@
     renderTriplet();
     const realm=window.MorimensRealmEngine?.state?.()||{
       atkMultiplier:1,defMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,
-      propagationFiestaStacks:0,propagationApplies:false,label:'普通界域'
+      propagationFiestaStacks:0,propagationApplies:false,label:ui('普通界域','Standard Realm')
     };
     const engine=window.MorimensFormulaEngine;
     const stats=resolvedStats();
@@ -537,7 +537,7 @@
     };
     const enemyMaxHpInput=Math.max(0,n('enemyMaxHpOverride',0));
     const enemyMaxHp=enemyMaxHpInput>0?enemyMaxHpInput:Math.max(1,Number(enemyProfile.estimatedMaxHp)||1);
-    const enemyMaxHpSource=enemyMaxHpInput>0?'手动输入':'融灾等级样本拟合';
+    const enemyMaxHpSource=enemyMaxHpInput>0?ui('手动输入','Manual input'):ui('融灾等级样本拟合','D-Zone level-sample fit');
     const levelFactor=Math.max(0,Number(enemyProfile.levelFactor)||1);
   
     let strength=n('strength');
@@ -580,7 +580,7 @@
     const manualInBattleBasePct=n('inBattleBaseBonus');
     const autoOutBattleBasePct=Number(basePhaseData.outOfBattle?.total)||0;
     const autoInBattleBasePct=Number(basePhaseData.inBattle?.total)||0;
-    if($('basePhaseSummary'))$('basePhaseSummary').textContent=`自动：局外 +${autoOutBattleBasePct.toFixed(2)}%，局内 +${autoInBattleBasePct.toFixed(2)}%；手动额外：局外 +${manualOutBattleBasePct.toFixed(2)}%，局内 +${manualInBattleBasePct.toFixed(2)}%。命轮、密契等已识别效果无需重复填写。`;
+    if($('basePhaseSummary'))$('basePhaseSummary').textContent=isEnglish()?`Auto: Out-of-Battle +${autoOutBattleBasePct.toFixed(2)}%, In-Battle +${autoInBattleBasePct.toFixed(2)}%; Manual extra: Out-of-Battle +${manualOutBattleBasePct.toFixed(2)}%, In-Battle +${manualInBattleBasePct.toFixed(2)}%. Recognized Wheel/Covenant effects do not need to be entered again.`:`自动：局外 +${autoOutBattleBasePct.toFixed(2)}%，局内 +${autoInBattleBasePct.toFixed(2)}%；手动额外：局外 +${manualOutBattleBasePct.toFixed(2)}%，局内 +${manualInBattleBasePct.toFixed(2)}%。命轮、密契等已识别效果无需重复填写。`;
     const characterDamageAmpBonusPct=Math.max(0,Number(skillSync.characterDamageAmpBonusPct)||0);
     const powerPct=n('powerBonus')+Math.max(0,Number(realm.teamDamageAmp)||0)+characterDamageAmpBonusPct;
     const vulnerableStacks=vulnerableStackCount();
@@ -606,8 +606,8 @@
       return attack;
     }
     function statLabel(stat){
-      const labels={ATK:'攻击力',CON:'体质',DEF:'防御力',RealmMastery:'界域精通',CritRate:'暴击率',CritDamage:'暴击伤害',DamageAmplification:'伤害强效'};
-      return labels[String(stat||'')]||String(stat||'数值');
+      const labels=isEnglish()?{ATK:'ATK',CON:'CON',DEF:'DEF',RealmMastery:'Realm Mastery',CritRate:'Crit Rate',CritDamage:'Crit DMG',DamageAmplification:'Damage Amplification'}:{ATK:'攻击力',CON:'体质',DEF:'防御力',RealmMastery:'界域精通',CritRate:'暴击率',CritDamage:'暴击伤害',DamageAmplification:'伤害强效'};
+      return labels[String(stat||'')]||String(stat||ui('数值','Value'));
     }
     function scaledEvent(source,repeatIndex,eventIndex){
       const type=source.type==='pierce'?'pierce':'active';
@@ -626,15 +626,15 @@
       const skillFinalPct=Number(source.skillFinalDamageBonusPct)||0;
       const customBaseLayers=Array.isArray(source.baseDamageMultipliers)?source.baseDamageMultipliers:[];
       const customFinalLayers=Array.isArray(source.finalDamageMultipliers)?source.finalDamageMultipliers:[];
-      const scopeLabels={awakener:'角色基伤',skill:'技能基伤',strike:'打击基伤',command:'指令卡基伤',exalt:'狂气爆发基伤',pursuit:'追击基伤',defense:'防御卡基伤'};
-      const finalScopeLabels={awakener:'角色终伤',skill:'技能终伤',strike:'打击终伤',command:'指令卡终伤',exalt:'狂气爆发终伤',pursuit:'追击终伤',defense:'防御卡终伤'};
+      const scopeLabels=isEnglish()?{awakener:'Awakener Base DMG',skill:'Skill Base DMG',strike:'Strike Base DMG',command:'Command Base DMG',exalt:'Exalt Base DMG',pursuit:'Pursuit Base DMG',defense:'Defense Base DMG'}:{awakener:'角色基伤',skill:'技能基伤',strike:'打击基伤',command:'指令卡基伤',exalt:'狂气爆发基伤',pursuit:'追击基伤',defense:'防御卡基伤'};
+      const finalScopeLabels=isEnglish()?{awakener:'Awakener Final DMG',skill:'Skill Final DMG',strike:'Strike Final DMG',command:'Command Final DMG',exalt:'Exalt Final DMG',pursuit:'Pursuit Final DMG',defense:'Defense Final DMG'}:{awakener:'角色终伤',skill:'技能终伤',strike:'打击终伤',command:'指令卡终伤',exalt:'狂气爆发终伤',pursuit:'追击终伤',defense:'防御卡终伤'};
       const scopeKeys=Array.isArray(gearEffects.damageScopeKeys)&&gearEffects.damageScopeKeys.length
         ?gearEffects.damageScopeKeys:['awakener','skill','strike','command','exalt','pursuit','defense'];
       const scoped=gearEffects.scopedDamageLayers||{};
       const outPhaseScoped=basePhaseData.outOfBattle?.scoped||{};
       const inPhaseScoped=basePhaseData.inBattle?.scoped||{};
-      const outScopedBaseLayers=scopeKeys.map(key=>({key,label:'局外·'+(scopeLabels[key]||key),pct:Number(outPhaseScoped?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
-      const inScopedBaseLayers=scopeKeys.map(key=>({key,label:'局内·'+(scopeLabels[key]||key),pct:Number(inPhaseScoped?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
+      const outScopedBaseLayers=scopeKeys.map(key=>({key,label:ui('局外·','Out-of-Battle · ')+(scopeLabels[key]||key),pct:Number(outPhaseScoped?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
+      const inScopedBaseLayers=scopeKeys.map(key=>({key,label:ui('局内·','In-Battle · ')+(scopeLabels[key]||key),pct:Number(inPhaseScoped?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
       const scopedFinalLayers=scopeKeys.map(key=>({key,label:finalScopeLabels[key]||key,pct:Number(scoped.final?.[key])||0})).filter(x=>Math.abs(x.pct)>1e-9);
       const outScopedAutoTotal=outScopedBaseLayers.reduce((sum,x)=>sum+x.pct,0);
       const inScopedAutoTotal=inScopedBaseLayers.reduce((sum,x)=>sum+x.pct,0);
@@ -697,7 +697,7 @@
         source:'skill',
         groupId:source.groupId||null,
         repeatIndex,
-        label:(type==='pierce'?`穿透伤害 ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`)+(forceCrit?' · 必定暴击':'')+(source.critRateBonus?` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`:'')+(source.critDamageBonus?` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`:'')+(source.doubleCritDamageBonus?' · 残骸效果已启用':'')+(source.counterBonusCoefficient?` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`:'')+(resourceFlatAtkPercent?` · 命轮额外攻击力×${resourceFlatAtkPercent.toFixed(1)}%`:'') ,
+        label:(type==='pierce'?(isEnglish()?`Pierce DMG ${eventIndex+1}`:`穿透伤害 ${eventIndex+1}`):(isEnglish()?`Active DMG ${eventIndex+1}`:`主动伤害 ${eventIndex+1}`))+(forceCrit?ui(' · 必定暴击',' · Guaranteed Crit'):'')+(source.critRateBonus?(isEnglish()?` · Crit Rate +${Number(source.critRateBonus).toFixed(1)}%`:` · 暴击率+${Number(source.critRateBonus).toFixed(1)}%`):'')+(source.critDamageBonus?(isEnglish()?` · Crit DMG +${Number(source.critDamageBonus).toFixed(1)}%`:` · 暴伤+${Number(source.critDamageBonus).toFixed(1)}%`):'')+(source.doubleCritDamageBonus?ui(' · 残骸效果已启用',' · Corpse effect active'):'')+(source.counterBonusCoefficient?(isEnglish()?` · Counter bonus ${Number(source.counterBonusCoefficient).toFixed(1)}%`:` · 反击加成 ${Number(source.counterBonusCoefficient).toFixed(1)}%`):'')+(resourceFlatAtkPercent?(isEnglish()?` · Wheel extra ATK ×${resourceFlatAtkPercent.toFixed(1)}%`:` · 命轮额外攻击力×${resourceFlatAtkPercent.toFixed(1)}%`):'') ,
         coefficient:Number(source.coefficient)||0,
         stat:source.stat||'ATK',
         strengthMultiplier,
@@ -1083,20 +1083,21 @@
     const total=events.reduce((s,x)=>s+(Number(x.damage)||0),0);
     const projectedTurnEnd=tentacleEvent(100,'回合末触腕预览','preview').damage*turnEndCount;
   
-    const label={normal:'非暴击',crit:'暴击',expected:'期望'}[mode];
-    $('resultLabel').textContent=`${$('charSelect')?.selectedOptions?.[0]?.textContent||'角色'} · ${label}总伤害`;
+    const label=isEnglish()?({normal:'Non-critical',crit:'Critical',expected:'Expected'}[mode]):({normal:'非暴击',crit:'暴击',expected:'期望'}[mode]);
+    $('resultLabel').textContent=`${$('charSelect')?.selectedOptions?.[0]?.textContent||ui('角色','Awakener')} · ${label} ${ui('总伤害','Total Damage')}`;
     $('resultNumber').textContent=fmt(total);
-    $('normalLine').textContent=`可暴击主动/穿透伤害的非暴击合计：${fmt(activeNormal)}`;
-    $('critLine').textContent=`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
-    $('expectedLine').textContent=`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
-  
-    $('formula').textContent=`通用伤害口径：A0 = 攻击力 × 技能倍率；A1 = A0 × 局外基础伤害池；A2 = A1 × 局内基础伤害池；B = A2 × 伤害强效；C = B + 力量 × 力量倍率 + 其他加算伤害；D = C × 自身状态修正 × 各最终伤害目标池；E = D × 敌方承伤状态 × 等级/加固/界域等环境系数，最后按暴击/非暴击/期望模式结算。命轮、密契、角色成长、灵塑等可解析常驻基伤自动进入局外；本场战斗、本回合、触发后、累计场次与角色资源等动态基伤进入局内。每个阶段内部仍按角色/技能/打击/指令卡/狂气爆发等作用目标分池：同目标先相加，不同目标池彼此相乘。伤害强效只作用于基础伤害部分，不作用于力量或其他加算项。当前等级系数 ${levelFactor.toFixed(3)}；加固 ×${fortifyCoef.toFixed(3)}；界域输出 ×${realmDamageOutputMult.toFixed(3)}。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层，主动/触腕 ×1.5）':'否'}；虚弱：${weakStacks>0?weakStacks+' 层（主动/触腕 ×0.75，仅应用一次）':'无'}。`;
+    $('normalLine').textContent=isEnglish()?`Non-critical total for crittable Active/Pierce damage: ${fmt(activeNormal)}`:`可暴击主动/穿透伤害的非暴击合计：${fmt(activeNormal)}`;
+    $('critLine').textContent=isEnglish()?`Critical total for crittable Active/Pierce damage: ${fmt(activeCrit)}`:`可暴击主动/穿透伤害的暴击合计：${fmt(activeCrit)}`;
+    $('expectedLine').textContent=isEnglish()?`Expected total for crittable Active/Pierce damage: ${fmt(activeExpected)}`:`可暴击主动/穿透伤害的期望合计：${fmt(activeExpected)}`;
+    $('formula').textContent=isEnglish()
+      ?`Universal damage order: A0 = ATK × skill coefficient; A1 = A0 × out-of-battle Base DMG pools; A2 = A1 × in-battle Base DMG pools; B = A2 × Damage Amplification; C = B + STR × STR multiplier + other additive damage; D = C × outgoing-state modifier × grouped Final DMG pools; E = D × enemy damage-taken state × level/Fortify/Realm/environment factors, then resolve Critical / Non-critical / Expected mode. Reliably parsed permanent Base DMG from Wheels, Covenants, character progression, and Soulforge enters the out-of-battle stage; effects tied to this battle, this turn, triggers, completed battles, or character resources enter the in-battle stage. Within a stage, bonuses with the same scope add first while different scope pools multiply. Damage Amplification applies only to the Base-DMG portion and does not multiply STR or other additive damage. Current level factor ${levelFactor.toFixed(3)}; Fortify ×${fortifyCoef.toFixed(3)}; Realm output ×${realmDamageOutputMult.toFixed(3)}. Target Vulnerable: ${vulnerableStacks>0?'Yes ('+vulnerableStacks+' stack(s), Active/Tentacle ×1.5)':'No'}; Weak: ${weakStacks>0?weakStacks+' stack(s) (Active/Tentacle ×0.75, applied once)':'None'}.`
+      :`通用伤害口径：A0 = 攻击力 × 技能倍率；A1 = A0 × 局外基础伤害池；A2 = A1 × 局内基础伤害池；B = A2 × 伤害强效；C = B + 力量 × 力量倍率 + 其他加算伤害；D = C × 自身状态修正 × 各最终伤害目标池；E = D × 敌方承伤状态 × 等级/加固/界域等环境系数，最后按暴击/非暴击/期望模式结算。命轮、密契、角色成长、灵塑等可解析常驻基伤自动进入局外；本场战斗、本回合、触发后、累计场次与角色资源等动态基伤进入局内。每个阶段内部仍按角色/技能/打击/指令卡/狂气爆发等作用目标分池：同目标先相加，不同目标池彼此相乘。伤害强效只作用于基础伤害部分，不作用于力量或其他加算项。当前等级系数 ${levelFactor.toFixed(3)}；加固 ×${fortifyCoef.toFixed(3)}；界域输出 ×${realmDamageOutputMult.toFixed(3)}。目标易伤：${vulnerableStacks>0?'是（'+vulnerableStacks+' 层，主动/触腕 ×1.5）':'否'}；虚弱：${weakStacks>0?weakStacks+' 层（主动/触腕 ×0.75，仅应用一次）':'无'}。`;
   
     const rows=events.map((event,index)=>{
-      if(event.type==='reaction')return [`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
-      if((event.type==='poison'||event.type==='bleed'||event.type==='corrosion'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${event.label}`,0];
-      const tags={active:'主动伤害',pierce:'穿透伤害',tentacle:'触腕伤害',pure:'纯粹伤害',fixed:'固定伤害',poison:'中毒',bleed:'出血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
-      const detail=`${tags[event.type]||event.type} · ${event.label||''}`;
+      if(event.type==='reaction')return [isEnglish()?`${index+1}. ${combatText(event.label)} (consumed ${fmt(event.consumed)})`:`${index+1}. ${event.label}（消费 ${fmt(event.consumed)}）`,event.damage];
+      if((event.type==='poison'||event.type==='bleed'||event.type==='corrosion'||event.type==='counter')&&(event.action==='apply'||event.action==='gain'))return [`${index+1}. ${combatText(event.label)}`,0];
+      const tags=isEnglish()?{active:'Active DMG',pierce:'Pierce DMG',tentacle:'Tentacle DMG',pure:'Pure DMG',fixed:'Fixed DMG',poison:'Poison',bleed:'Bleed',corrosion:'Corrosion',counter:'Counter',sacrifice:'Sacrifice'}:{active:'主动伤害',pierce:'穿透伤害',tentacle:'触腕伤害',pure:'纯粹伤害',fixed:'固定伤害',poison:'中毒',bleed:'出血',corrosion:'侵蚀',counter:'反击',sacrifice:'献祭'};
+      const detail=`${tags[event.type]||event.type} · ${combatText(event.label||'')}`;
       return [`${index+1}. ${detail}`,event.damage||0];
     });
     const damageAudit=events.find(event=>event.damageLayerAudit)?.damageLayerAudit||null;
