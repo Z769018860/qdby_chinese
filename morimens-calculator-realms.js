@@ -275,7 +275,17 @@
     return s;
   }
   function options(includeAuto=false){
-    return [
+    const rows=isEnglish()?[
+      includeAuto?'<option value="auto">Use current Awakener Realm (standard form)</option>':'',
+      '<option value="chaos">Standard Chaos</option>',
+      '<option value="primordia">Primordia · Chaos</option>',
+      '<option value="caro">Standard Caro</option>',
+      '<option value="propagation">Propagation · Caro</option>',
+      '<option value="aequor">Standard Aequor</option>',
+      '<option value="benthos">Benthos · Aequor</option>',
+      '<option value="ultra">Standard Ultra</option>',
+      '<option value="singularity">Singularity · Ultra</option>'
+    ]:[
       includeAuto?'<option value="auto">按当前角色界域（普通形态）</option>':'',
       '<option value="chaos">普通混沌</option>',
       '<option value="primordia">原初·混沌</option>',
@@ -285,8 +295,49 @@
       '<option value="benthos">晦暝·深海</option>',
       '<option value="ultra">普通超维</option>',
       '<option value="singularity">奇点·超维</option>'
-    ].join('');
+    ];
+    return rows.join('');
   }
+  function populateRealmOptions(){
+    const primary=$('realmPrimary'),secondary=$('realmSecondary');if(!primary||!secondary)return;
+    const p=primary.value||'auto',s=secondary.value||'';
+    primary.innerHTML=options(true);
+    secondary.innerHTML=(isEnglish()?'<option value="">None · Pure Realm</option>':'<option value="">无 · 至纯界域</option>')+options(false);
+    if([...primary.options].some(o=>o.value===p))primary.value=p;
+    if([...secondary.options].some(o=>o.value===s))secondary.value=s;
+  }
+  function localizeRealmUi(){
+    const block=$('realmEnvironmentModel');if(!block)return;
+    const title=block.querySelector('.builderTitle span'),sub=block.querySelector('.builderTitle small');
+    if(title)title.textContent=ui('⑥ 队伍界域','⑥ Team Realms');
+    if(sub)sub.textContent=ui('最多两个不同界域','Up to two different Realms');
+    const setField=(id,zhLabel,enLabel,zhNote='',enNote='')=>{
+      const field=$(id)?.closest('.field');if(!field)return;
+      const label=field.querySelector('label');if(label)label.textContent=ui(zhLabel,enLabel);
+      const small=field.querySelector('small');if(small&&zhNote)small.textContent=ui(zhNote,enNote);
+    };
+    setField('realmPrimary','主界域','Primary Realm','可按当前角色自动识别普通界域，也可手动选择进阶界域。','Can use the current Awakener’s standard Realm automatically, or select an advanced Realm manually.');
+    setField('realmSecondary','第二界域','Secondary Realm','留空即至纯；选择另一个不同界域即双界域。最多两种界域。','Leave empty for Pure Realm; choose another different Realm for Dual Realm. Maximum two Realms.');
+    setField('realmChaosCount','混沌唤醒体数量','Chaos Awakener Count','用于混沌×深海/血肉/超维的共生效果。','Used by Chaos coexistence with Aequor / Caro / Ultra.');
+    const inline=(id,zhText,enText,zhNote,enNote)=>{
+      const field=$(id)?.closest('.field');if(!field)return;
+      const label=field.querySelector('label'),input=$(id);
+      if(label){label.textContent='';if(input)label.appendChild(input);label.appendChild(document.createTextNode(' '+ui(zhText,enText)))}
+      const small=field.querySelector('small');if(small)small.textContent=ui(zhNote,enNote);
+    };
+    inline('propagationConsumeEmbryo','本回合已首次消耗「繁育·胚胎」','First Propagation Embryo consumed this turn','额外获得基础 40 层繁育狂热，并受繁育·血肉精通加成。','Gain 40 base Propagation Fiesta stacks, scaled by Propagation · Caro mastery.');
+    inline('propagationApplyFiesta','将繁育狂热用于本次狂气爆发','Apply Propagation Fiesta to this Exalt','只对狂气爆发/超限爆发自动计入最终伤害。','Automatically contributes to Final DMG only for Exalt / Over-Exalt.');
+    inline('singularityDimensionShuttle','本卡获得“维度穿梭”的 25 层奇点信标','This card has 25 Dimension Shuttle Beacon stacks','用于本回合第一张触发“维度穿梭”的指令卡，或带有该 25 层信标的复制卡。界域精通会同步放大层数。','Use for the first Command this turn that triggers Dimension Shuttle, or a copied card carrying those 25 Beacon stacks. Realm Mastery scales the stack count.');
+    inline('ultraRoundActive','当前处于普通超维回合','Currently in a standard Ultra turn','普通超维：本回合伤害、中毒、反击、出血等输出 -25%。奇点·超维使用重写后的规则，不套此开关。','Standard Ultra: damage, Poison, Counter, Bleed, and similar output is -25% this turn. Singularity · Ultra uses its rewritten rules instead.');
+    populateRealmOptions();
+    const details=block.querySelector('details.formulaSource');
+    if(details){
+      details.innerHTML=isEnglish()
+        ?'<summary>Dual Realm / Pure Realm Rules</summary><div><div class="formulaRow"><b>Team Limit</b><br>A team can contain at most two different Realms. With only one Realm, it is treated as Pure.</div><div class="formulaRow"><b>Chaos Coexistence</b><br>When Standard Chaos coexists with Aequor / Caro / Ultra, the other Realm can still use its supported Pure/coexistence effects.</div><div class="formulaRow"><b>Primordia · Chaos Exception</b><br>Indivisible Realm suppresses other Pure-Realm, doubled Realm Mastery, and doubled Damage Amplification effects.</div><div class="formulaRow"><b>Advanced Realms</b><br>Propagation · Caro, Benthos · Aequor, and Singularity · Ultra each use their own SKeyDB conditions for doubled effects in teams containing only that Realm / Chaos.</div><div class="formulaRow"><b>Singularity · Ultra</b><br>Base team Damage Amplification +50% (+100% when the team contains only Ultra / Chaos); 15 Prism stacks and 25 additional Dimension Shuttle Beacon stacks. Each Beacon stack gives Commands +2% Final DMG and Fixed Poison/Counter effects.</div><div class="formulaRow"><b>Standard Ultra Turn</b><br>Per SKeyDB, damage, Poison, Counter, Bleed, and similar output is reduced by 25%. Singularity · Ultra does not inherit this ordinary-turn penalty.</div></div>'
+        :'<summary>双界域 / 至纯规则</summary><div><div class="formulaRow"><b>队伍限制</b><br>同一队最多出现两个不同界域；只有一种界域时自动视为至纯界域。</div><div class="formulaRow"><b>混沌共生</b><br>普通混沌与深海/血肉/超维共存时，另一界域仍按至纯处理，并触发对应混沌共生效果。</div><div class="formulaRow"><b>原初·混沌例外</b><br>「不可分割界域」会禁止其他界域的至纯、双倍界域精通和双倍伤害强效，因此不会把“普通混沌共生”的规则套到原初·混沌。</div><div class="formulaRow"><b>进阶界域</b><br>繁育·血肉、晦暝·深海、奇点·超维均按各自 SKeyDB 条件判断“全队仅本界域/混沌”时的双倍效果。</div><div class="formulaRow"><b>奇点·超维</b><br>基础团队伤害强效 +50%（全队仅超维/混沌时 +100%）；15 层奇点棱镜，“维度穿梭”额外 25 层信标。每层信标使指令卡的最终伤害与固定中毒/反击 +2%。</div><div class="formulaRow"><b>普通超维回合</b><br>SKeyDB：普通超维回合中造成的伤害、中毒、反击、出血等效果 -25%。奇点·超维不套此普通惩罚。</div></div>';
+    }
+  }
+
   function inject(){
     if($('realmEnvironmentModel')||!$('calcBtn'))return;
     const builder=$('calcBtn').closest('.panel')?.querySelector('.builder');if(!builder)return;
@@ -311,6 +362,7 @@
       '</div></details>'
     ].join('');
     builder.appendChild(block);
+    localizeRealmUi();
     for(const id of ['realmPrimary','realmSecondary','realmChaosCount','propagationConsumeEmbryo','propagationApplyFiesta','singularityDimensionShuttle','ultraRoundActive']){
       $(id)?.addEventListener('input',()=>queueMicrotask(render));
       $(id)?.addEventListener('change',()=>queueMicrotask(render));
@@ -318,6 +370,7 @@
     $('charSelect')?.addEventListener('change',()=>setTimeout(render,30));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(render));
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(render));
+    window.addEventListener('morimens-language-change',()=>queueMicrotask(()=>{localizeRealmUi();render()}));
     setTimeout(render,0);
   }
 
