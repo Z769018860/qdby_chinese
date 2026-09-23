@@ -4,14 +4,18 @@
   const decodeMojibake=value=>{const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(c=>c.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}};
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
+  const ui=(cn,en)=>zh()?cn:en;
   const rankCaps=[50,200,500,1000];
   const diffs=['normal','hard','nightmare','madness'];
   const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
+  const diffEn={all:'All Difficulties',normal:'Normal',hard:'Hard',nightmare:'Nightmare',madness:'Madness',unknown:'Unknown'};
   const enlightZh={low:'0～2启',e3plus3:'3启～+3',plus4plus11:'+4～+11',plus12:'+12'};
+  const enlightEn={low:'E0–E2',e3plus3:'E3–+3',plus4plus11:'+4–+11',plus12:'+12'};
   const enlightKeys=['low','e3plus3','plus4plus11','plus12'];
   const enlightColors={low:'#7b8798',e3plus3:'#d9a441',plus4plus11:'#62b7ff',plus12:'#d978d0',unknown:'#5f6b7a'};
   const wheelStackKeys=['stack0_2','stack3_11','stack12'];
   const wheelStackZh={stack0_2:'0～2叠',stack3_11:'3叠～+11',stack12:'+12'};
+  const wheelStackEn={stack0_2:'0–2 stacks',stack3_11:'3–+11',stack12:'+12'};
   const wheelStackColors={stack0_2:'#8c97a8',stack3_11:'#62b7ff',stack12:'#d978d0'};
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
   const covenantZh={'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸','Twisted Twins: Black':'扭曲双子·黑','Burial Ground\'s Sighs':'埋骨地絮语','Cursed Rabbit':'诅咒兔','Organic Form':'有机形态','Photosynthesis Ritual':'光合祭礼','Paradox':'二律背反','Returnal Line':'海归线','April Tribute':'四月礼赞','Life Drain':'生机榨取','Dream of Medicine':'入药之梦','Sweet Slug':'甜蜜蛞蝓','Ring of Chamber 36':'36室之环','Twisted Twins: White':'扭曲双子·白','Feast from Afar':'远方的欢宴','Steppenwolf':'荒原狼','Unstained Chronicle':'无垢启示录','Cocoon of the Maiden':'少女之蛹'};
@@ -188,7 +192,13 @@
     if(stat&&Number.isFinite(Number(stat.covered)))return {covered:Number(stat.covered),expected:Number(stat.expected||cap),complete:!!stat.complete,historical:false};
     const ranks=new Set(rankValues.filter(x=>x<=cap));return {covered:ranks.size,expected:cap,complete:ranks.size>=cap,historical:false};
   }
-  function coverageLabel(cap){const c=coverage(cap);if(!cap)return `全部范围 · ${c.covered} 条`;return c.historical?`历史本地样本 · ${c.covered} 条`:`Top ${cap} · ${c.covered}/${c.expected}${c.complete?'':' 样本'}`}
+  function coverageLabel(cap){
+    const c=coverage(cap);
+    if(!cap)return zh()?`全部范围 · ${c.covered} 条`:`All Ranks · ${c.covered} records`;
+    return c.historical
+      ?(zh()?`历史本地样本 · ${c.covered} 条`:`Historical local sample · ${c.covered} records`)
+      :`Top ${cap} · ${c.covered}/${c.expected}${c.complete?'':(zh()?' 样本':' sample')}`;
+  }
 
   function ensureEnlightPanel(){
     if($('dtideUsageEnlight'))return $('dtideUsageEnlight');const host=$('dtideEquipment');if(!host)return null;
@@ -196,13 +206,27 @@
   }
   function renderCoverage(){
     const cap=selectedRankCap(),c=coverage(cap),box=$('dtideCoverageWarn');if(!box)return;
-    box.innerHTML=!cap?`<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>`:c.historical?`<div class="dtideNotice">该期没有完整榜单排名索引，当前统计使用已有的 <b>${c.covered}</b> 条本地历史用户记录。</div>`:c.complete?`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已覆盖 ${c.covered}/${c.expected} 名玩家；出场率按该榜单范围计算。</div>`:`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已回填 <b>${c.covered}/${c.expected}</b> 名玩家。以下百分比为当前有效样本。</div>`;
-    const sel=$('dtideRankScope');if(sel)for(const opt of sel.options){if(opt.value==='all'||opt.value==='0'){opt.textContent='全部范围（含未知排名）';continue}const n=Number(opt.value),cc=coverage(n);opt.textContent=cc.historical?`历史样本 · ${cc.covered} 条`:`Top ${n} · ${cc.covered}/${cc.expected}${cc.complete?'':'（回填中）'}`}
+    if(!cap)box.innerHTML=zh()?'<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>':'<div class="dtideNotice">Current scope is <b>All Ranks</b>. All downloaded users are included, including users whose leaderboard rank cannot currently be matched.</div>';
+    else if(c.historical)box.innerHTML=zh()?`<div class="dtideNotice">该期没有完整榜单排名索引，当前统计使用已有的 <b>${c.covered}</b> 条本地历史用户记录。</div>`:`<div class="dtideNotice">This season has no complete rank index. Statistics use the <b>${c.covered}</b> locally available historical user records.</div>`;
+    else if(c.complete)box.innerHTML=zh()?`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已覆盖 ${c.covered}/${c.expected} 名玩家；出场率按该榜单范围计算。</div>`:`<div class="dtideNotice"><b>Top ${cap}</b> currently covers ${c.covered}/${c.expected} players; appearance rates use this rank scope.</div>`;
+    else box.innerHTML=zh()?`<div class="dtideNotice">当前 <b>Top ${cap}</b> 已回填 <b>${c.covered}/${c.expected}</b> 名玩家。以下百分比为当前有效样本。</div>`:`<div class="dtideNotice"><b>Top ${cap}</b> has ${c.covered}/${c.expected} players backfilled. Percentages below use the currently valid sample.</div>`;
+    const sel=$('dtideRankScope');
+    if(sel)for(const opt of sel.options){
+      if(opt.value==='all'||opt.value==='0'){opt.textContent=ui('全部范围（含未知排名）','All Ranks (including unknown ranks)');continue}
+      const n=Number(opt.value),cc=coverage(n);
+      opt.textContent=cc.historical?(zh()?`历史样本 · ${cc.covered} 条`:`Historical sample · ${cc.covered}`):`Top ${n} · ${cc.covered}/${cc.expected}${cc.complete?'':ui('（回填中）',' (backfilling)')}`;
+    }
   }
   function renderSummary(){
     const g=group(scopedRows()),cap=selectedRankCap(),c=coverage(cap),difficulty=$('dtideDifficulty')?.value||'all';
-    if($('dtideSummary'))$('dtideSummary').innerHTML=[['榜单覆盖',!cap?`${c.covered} 条`:`${c.covered}/${c.expected}`],['当前范围',rankScopeLabel(cap)],['难度',diffZh[difficulty]||difficulty],['统计队伍',g.teamCount]].map(([a,b])=>`<div class="dtideStat"><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join('');
-    if($('dtideStatus'))$('dtideStatus').textContent=`第 ${activeSeason} 期 · ${diffZh[difficulty]||difficulty} · ${coverageLabel(cap)}`;
+    const diff=zh()?(diffZh[difficulty]||difficulty):(diffEn[difficulty]||difficulty);
+    if($('dtideSummary'))$('dtideSummary').innerHTML=[
+      [ui('榜单覆盖','Rank Coverage'),!cap?(zh()?`${c.covered} 条`:`${c.covered} records`):`${c.covered}/${c.expected}`],
+      [ui('当前范围','Current Scope'),rankScopeLabel(cap)],
+      [ui('难度','Difficulty'),diff],
+      [ui('统计队伍','Teams Counted'),g.teamCount]
+    ].map(([a,b])=>`<div class="dtideStat"><small>${esc(a)}</small><strong>${esc(b)}</strong></div>`).join('');
+    if($('dtideStatus'))$('dtideStatus').textContent=zh()?`第 ${activeSeason} 期 · ${diff} · ${coverageLabel(cap)}`:`Season ${activeSeason} · ${diff} · ${coverageLabel(cap)}`;
   }
   const creationZh={'"Chaos Ring"':'「混沌指轮」','Chaos Ring':'「混沌指轮」','Rusted Key':'锈蚀钥匙','Forgotten Loom+':'遗忘织机+','Chronometric Device+':'计时装置+','Black Candle':'黑色蜡烛','Omen Ritual Bird':'预兆仪式鸟','Foreign Stamp Album+':'异国邮票册+','Vitality Injection+':'活性注射器+','Vitality Injection':'活性注射器','Blessed Blood+':'祝福之血+','Blessed Blood':'祝福之血','Weeping Pipe+':'哭泣烟斗+','Weeping Pipe':'哭泣烟斗','Octahedron Dice':'八面骰','Lucky Windcoat':'幸运风衣','Malignant Child+':'恶性之子+','Malignant Child':'恶性之子','Solar Disc+':'太阳圆盘+','Solar Disc':'太阳圆盘','Rite of Spring+':'春之祭+','Rite of Spring':'春之祭','Big Mouth Button':'大嘴纽扣','Crimson Brooch+':'猩红胸针+','Crimson Brooch':'猩红胸针','Proto Battery+':'原型电池+','Proto Battery':'原型电池','Kaleidoscope+':'万花筒+','Kaleidoscope':'万花筒','Preserved Butterfly+':'封存蝴蝶+','Preserved Butterfly':'封存蝴蝶','Forsaken Blood':'遗弃之血','Relic of the Past+':'往昔遗物+','Relic of the Past':'往昔遗物','Celestial Astrolabe+':'天体星盘+','Celestial Astrolabe':'天体星盘'};
   const tokenZh={
@@ -310,8 +334,24 @@
   }
   function renderUsage(){
     const g=group(scopedRows()),mode=$('dtideRateMode')?.value||'team',host=$('dtideUsage');if(!host)return;
-    host.innerHTML=g.characters.filter(characterMatchesFilters).slice(0,24).map(c=>`<button type="button" class="dtideUsage" data-usage-character="${esc(c.key)}" aria-expanded="false"><div class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span><b>${esc(c.name)}</b><small>${c.count} 支队伍出现 · 点击展开详情</small></span></div><strong>${pct(mode==='slot'?c.slotRatePct:c.teamRatePct)}</strong></button>`).join('')||'<div class="dtideEmpty">当前筛选下暂无匹配角色。</div>';
-    host.onclick=e=>{const card=e.target.closest('[data-usage-character]');if(!card)return;const old=host.querySelector('.dtideInlineDetail'),same=old?.dataset.for===card.dataset.usageCharacter;host.querySelectorAll('[data-usage-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;const d=characterDetails(card.dataset.usageCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div><b>${esc(x.name)}</b><small>${x.count} 次同队/采用</small></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">暂无数据</div>'}</div></div>`;const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.dataset.for=card.dataset.usageCharacter;const gearSection=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div class="dtideGearUsageName">${x.image?`<img src="${esc(x.image)}" alt="" loading="lazy" data-fallback="${esc(x.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}">`:''}<span><b>${esc(x.name)}</b><small>${x.count} 次同队/采用</small></span></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||'<div class="dtideEmpty">暂无数据</div>'}</div></div>`;detail.innerHTML=`<div class="dtideGearSummary"><div><small>该角色样本</small><b>${d.appearances} 支队伍</b></div></div>`+section('Top 5 队友出场率',d.teammates)+gearSection('命轮出场率',d.wheels)+gearSection('密契出场率',d.covenants)+gearSection('Top 5 造物 <small>剔除任一波次100%固定造物、锈蚀钥匙及其他角色维度影像；按当前筛选范围使用率排序</small>',d.creations)+gearSection('Top 5 钥令',d.tokens);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')};
+    host.innerHTML=g.characters.filter(characterMatchesFilters).slice(0,24).map(c=>`<button type="button" class="dtideUsage" data-usage-character="${esc(c.key)}" aria-expanded="false"><div class="dtideChar">${c.image?`<img src="${esc(c.image)}" alt="">`:''}<span><b>${esc(c.name)}</b><small>${zh()?`${c.count} 支队伍出现 · 点击展开详情`:`${c.count} teams · click for details`}</small></span></div><strong>${pct(mode==='slot'?c.slotRatePct:c.teamRatePct)}</strong></button>`).join('')||`<div class="dtideEmpty">${ui('当前筛选下暂无匹配角色。','No characters match the current filters.')}</div>`;
+    host.onclick=e=>{
+      const card=e.target.closest('[data-usage-character]');if(!card)return;
+      const old=host.querySelector('.dtideInlineDetail'),same=old?.dataset.for===card.dataset.usageCharacter;
+      host.querySelectorAll('[data-usage-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;
+      const d=characterDetails(card.dataset.usageCharacter);
+      const section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div><b>${esc(x.name)}</b><small>${zh()?`${x.count} 次同队/采用`:`${x.count} co-uses`}</small></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||`<div class="dtideEmpty">${ui('暂无数据','No data')}</div>`}</div></div>`;
+      const gearSection=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div class="dtideGearUsageName">${x.image?`<img src="${esc(x.image)}" alt="" loading="lazy" data-fallback="${esc(x.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}">`:''}<span><b>${esc(x.name)}</b><small>${zh()?`${x.count} 次同队/采用`:`${x.count} co-uses`}</small></span></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||`<div class="dtideEmpty">${ui('暂无数据','No data')}</div>`}</div></div>`;
+      const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.dataset.for=card.dataset.usageCharacter;
+      const creationTitle=zh()?'Top 5 造物 <small>剔除任一波次100%固定造物、锈蚀钥匙及其他角色维度影像；按当前筛选范围使用率排序</small>':'Top 5 Creations <small>Excludes any 100%-fixed Creation in a wave, Rusted Key, and other Awakeners’ Dimensional Images; sorted by usage in the current scope.</small>';
+      detail.innerHTML=`<div class="dtideGearSummary"><div><small>${ui('该角色样本','Character Sample')}</small><b>${d.appearances} ${ui('支队伍','teams')}</b></div></div>`
+        +section(ui('Top 5 队友出场率','Top 5 Teammate Appearance Rate'),d.teammates)
+        +gearSection(ui('命轮出场率','Wheel Appearance Rate'),d.wheels)
+        +gearSection(ui('密契出场率','Covenant Appearance Rate'),d.covenants)
+        +gearSection(creationTitle,d.creations)
+        +gearSection(ui('Top 5 钥令','Top 5 Posse'),d.tokens);
+      card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true');
+    };
   }
   function renderMatrix(){
     const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';
