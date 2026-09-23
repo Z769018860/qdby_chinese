@@ -93,7 +93,21 @@
     if(/主动伤害/.test(text))return 'active';
     if(/加固/.test(text))return 'fortress';
     if(/易伤/.test(text))return 'vulnerable';
-    if(/合计|总伤害/.test(text))return 'total';
+    if(/合计|总伤害|Total|Total DMG/i.test(text))return 'total';
+    if(/Birth Ritual/i.test(text))return 'birthRitual';
+    if(/Embers/i.test(text))return 'embers';
+    if(/Poison/i.test(text))return 'poison';
+    if(/Bleed/i.test(text))return 'bleed';
+    if(/Corrosion/i.test(text))return 'corrosion';
+    if(/Counter/i.test(text))return 'counter';
+    if(/Sacrifice/i.test(text))return 'sacrifice';
+    if(/Tentacle/i.test(text))return 'tentacle';
+    if(/Pierce/i.test(text))return 'pierce';
+    if(/Pure/i.test(text))return 'pure';
+    if(/Fixed DMG/i.test(text))return 'fixed';
+    if(/Active DMG/i.test(text))return 'active';
+    if(/Fortify/i.test(text))return 'fortress';
+    if(/Vulnerable/i.test(text))return 'vulnerable';
     return '';
   }
   function breakdownIconHtml(kind){
@@ -102,14 +116,15 @@
     return '<span class="breakdownGlyph" aria-hidden="true">'+esc(meta.glyph||'•')+'</span>';
   }
   function breakdownLabelHtml(label,kind=breakdownKind(label)){
-    return '<span class="breakdownLabel">'+breakdownIconHtml(kind)+'<span>'+esc(label)+'</span></span>';
+    const shown=combatText(label);
+    return '<span class="breakdownLabel">'+breakdownIconHtml(kind)+'<span>'+esc(shown)+'</span></span>';
   }
   function damageCompositionHtml(parts,total){
     const positive=parts.filter(x=>Number(x.value)>0);
     if(!positive.length)return '';
-    return '<section class="damageComposition"><div class="damageCompositionTitle"><strong>伤害构成</strong><small>按本次对敌总伤害占比</small></div><div class="damageCompositionGrid">'+positive.map(part=>{
-      const pct=total>0?Math.max(0,Number(part.value)||0)/total*100:0;
-      return '<div class="damageCompositionItem" title="'+esc(part.label)+'：'+fmt(part.value)+'（'+pct.toFixed(1)+'%）"><div class="damageCompositionHead">'+breakdownIconHtml(part.kind)+'<span>'+esc(part.label)+'</span><strong>'+fmt(part.value)+'</strong></div><div class="damageCompositionTrack"><i style="width:'+Math.min(100,pct).toFixed(2)+'%"></i></div><small>'+pct.toFixed(1)+'%</small></div>';
+    return '<section class="damageComposition"><div class="damageCompositionTitle"><strong>'+ui('伤害构成','Damage Composition')+'</strong><small>'+ui('按本次对敌总伤害占比','Share of total damage to the enemy')+'</small></div><div class="damageCompositionGrid">'+positive.map(part=>{
+      const pct=total>0?Math.max(0,Number(part.value)||0)/total*100:0,shown=combatText(part.label);
+      return '<div class="damageCompositionItem" title="'+esc(shown)+(isEnglish()?': ':'：')+fmt(part.value)+(isEnglish()?' ('+pct.toFixed(1)+'%)':'（'+pct.toFixed(1)+'%）')+'"><div class="damageCompositionHead">'+breakdownIconHtml(part.kind)+'<span>'+esc(shown)+'</span><strong>'+fmt(part.value)+'</strong></div><div class="damageCompositionTrack"><i style="width:'+Math.min(100,pct).toFixed(2)+'%"></i></div><small>'+pct.toFixed(1)+'%</small></div>';
     }).join('')+'</div></section>';
   }
 
@@ -360,17 +375,35 @@
 
   function renderFormulaSource(){
     const box=$('tentacleFormulaSource');if(!box)return;
+    if(isEnglish()){
+      box.innerHTML=`
+        <div class="formulaRow"><b>Primary Stats</b><br><code>ceil((base growth + character level + base-stat levels from Inner Spirit) × stat growth rate)</code><br>Then multiply by the Soulforge primary-stat percentage and round up. Source: <code>awakener-level-scaling.ts</code>.</div>
+        <div class="formulaRow"><b>Inner Spirit</b><br>SKeyDB resolves Inner Spirit into “base-stat level +N”, which applies to CON, ATK, and DEF together.</div>
+        <div class="formulaRow"><b>Soulforge</b><br><code>post-Soulforge stat = ceil(post-Inner-Spirit stat × (1 + Soulforge% / 100))</code>. Explicit signature effects such as “extra damage equal to X% ATK” or “Base DMG +X%” are applied automatically when safely resolvable.</div>
+        <div class="formulaRow"><b>Realm Mastery in Skill Arguments</b><br><code>Additive: base + Realm Mastery × coefficient</code><br><code>Scaled: base × (1 + Realm Mastery × coefficient / 100)</code><br>Source: <code>description-args.ts</code>.</div>
+        <div class="formulaRow"><b>Guaranteed Crit</b><br>Skills that explicitly guarantee Crit are handled automatically. Cross-card or cross-turn guaranteed-Crit states are not assumed; use the battle-state toggle only when that state is actually active.</div>
+        <div class="formulaRow"><b>Out-of-Battle / In-Battle Base DMG</b><br><code>Raw = stat × skill coefficient</code><br><code>Out-of-battle = Raw × out-of-battle Base DMG pools</code><br><code>In-battle = previous stage × in-battle Base DMG pools</code><br>Permanent parsed effects from Wheels, Covenants, progression, and Soulforge are classified as out-of-battle. Battle/turn/trigger/resource effects are classified as in-battle. Damage Amplification is applied next; STR and other additive damage are added afterward.</div>
+        <div class="formulaRow"><b>Standard Aequor Tentacle Stances</b><br>Surging = 100%; Tranquil = 50%; Raging = 125%. Raging post-Active-DMG Tentacle ratio: <code>50% + floor(effective final Realm Mastery / 50) × 1%</code>.</div>
+        <div class="formulaRow"><b>Benthos · Aequor</b><br><code>Base Tentacle DMG = Team Max HP × 5%</code>. Benthos Tranquil performs no turn-end Tentacle attack; Benthos Raging uses the SKeyDB-recorded <code>125%</code> stance ratio.</div>
+        <div class="formulaRow"><b>Damage Events and Status Scope</b><br><b>Active/Tentacle:</b> affected by Vulnerable and Weak. <b>Pierce:</b> ignores those two modifiers. <b>Pure:</b> cannot Crit and does not count as the Awakener dealing damage for “when dealing damage” riders. <b>Fixed:</b> cannot Crit and does not receive Base/Final DMG bonuses.</div>
+        <div class="formulaRow"><b>Generic Enemy Level Model</b><br>The default Max HP estimate uses a log fit over 1,665 level/HP samples from SKeyDB D-Zone seasons 60–69. The level factor is a comparison model, not an official defense formula.</div>
+        <div class="formulaRow"><b>Enemy Sacrifice / Birth Ritual</b><br>Enemy Sacrifice deals turn-end damage. Birth Ritual converts the corresponding damage into Sacrifice. Only mechanics that alter enemy damage are retained here.</div>
+        <div class="formulaRow"><b>Pure DMG / Poison / Bleed / Counter</b><br>Per SKeyDB, Pure DMG cannot Crit. Poison and Bleed deal turn-end Pure DMG equal to their stacks; Bleed is removed afterward. Counter deals Pure DMG equal to its current value when triggered.</div>`;
+      return;
+    }
     box.innerHTML=`
       <div class="formulaRow"><b>角色主属性</b><br><code>向上取整((基础成长值 + 角色等级 + 内在灵格提供的基础属性等级) × 属性成长率)</code><br>随后再乘以灵塑提供的主属性百分比并向上取整。数据来源：<code>awakener-level-scaling.ts</code>。</div>
       <div class="formulaRow"><b>内在灵格</b><br>SKeyDB 的“内在灵格”天赋先把当前等级解析为“基础属性等级 +N”，然后同时作用于体质、攻击、防御三个主属性；不是简单把天赋说明里显示的属性数字直接相加。</div>
-      <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。能明确解析为“伤害额外增加攻击力 X%”或“基础伤害 +X%”的专属效果也会自动计入；条件不明确的效果只展示，不擅自加入。</div>
+      <div class="formulaRow"><b>灵塑</b><br>灵塑适性第 N 级的第一个参数作为主属性百分比：<code>灵塑后主属性 = 向上取整(灵格后主属性 × (1 + 灵塑百分比 / 100))</code>。灵塑天赋仅在“星辰篇”关卡生效，因此页面提供独立启用开关。</div>
       <div class="formulaRow"><b>界域精通参与技能参数</b><br><code>加算模式：基础值 + 界域精通 × 系数</code><br><code>按基础值缩放：基础值 × (1 + 界域精通 × 系数 / 100)</code><br>数据来源：<code>description-args.ts</code>。</div>
-      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 “必定暴击” 时自动按必暴；跨卡/跨回合状态（例如已激活的“伤害始终暴击”灵知觉醒）不会被凭空假设，可通过“本次可暴击伤害强制暴击”显式开启。</div><div class="formulaRow"><b>局外 / 局内基础伤害</b><br><code>技能原始伤害 = 属性 × 技能倍率</code><br><code>局外阶段 = 技能原始伤害 × 局外基础伤害池</code><br><code>局内阶段 = 局外阶段 × 局内基础伤害池</code><br>命轮、密契、角色成长、灵塑等可可靠解析的常驻基础伤害默认归入局外；“本场战斗 / 本回合 / 触发后 / 累计场次 / 临时状态”等动态基础伤害归入局内。之后才结算伤害强效，再加入力量与其他加算伤害；基础伤害与伤害强效不会放大力量/触腕附加值。</div>
-      <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>；先计入当前命轮中“切换怒涛后获得当前界域精通 X% 的临时界域精通”，再应用至纯深海/混沌共生的界域精通效果倍率。</div>
-      <div class="formulaRow"><b>晦暝·深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；团队伤害强效 +50%，纯深海/混沌 +100%。深渊静海不进行回合末触腕攻击。深渊怒涛在 对应「无光之底」天赋记录中明确为 <code>125%</code>；其界域精通部分为 <code>1 + 界域精通 × 0.025% × 纯队倍率</code>。</div>
-      <div class="formulaRow"><b>原初·混沌精通</b><br>原初·混沌本体提供全队攻击/防御 +10% 与团队伤害强效 +50%（纯混沌 +100%）。精通仅继续缩放造物：进攻类效果（包含触腕伤害）<code>向上取整(基础效果 × (1 + 界域精通 × 0.1% × 纯混沌倍率))</code>，纯混沌时倍率翻倍。</div>
-      <div class="formulaRow"><b>伤害事件与状态范围</b><br><b>主动伤害 / 触腕伤害：</b>受易伤与虚弱影响。<b>穿透伤害：</b>同时削减护盾与生命、不可免疫并无视屏障，但不受易伤/虚弱影响。<b>纯粹伤害：</b>不能暴击，且不视为对应唤醒体造成的伤害，因此不会触发该角色的“造成伤害时”附加效果。<b>固定伤害：</b>不能暴击、不属于基础伤害，不受最终伤害或类似加成影响。侵蚀/旧日余烬对主动/触腕按伤害等量消费，对其他伤害按 50% 消费。</div><div class="formulaRow"><b>敌人等级通用模型</b><br>SKeyDB 的融灾数据没有公开统一敌方防御常数，因此不采用手工防御/K 模型。估算最大生命使用 融灾第 60–69 期 1665 个等级/生命值样本的对数拟合；普通伤害的等级系数使用 SKeyDB 关卡成长曲线做相对等级归一化，明确属于通用比较模型而非官方防御公式。</div><div class="formulaRow"><b>敌方献祭 / 诞生仪式</b><br>敌方献祭在回合末造成伤害并进入对敌事件链；诞生仪式会把对应伤害转化为敌方献祭。这里只保留会改变对敌伤害的献祭相关计算。</div><div class="formulaRow"><b>纯粹伤害 / 中毒 / 出血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒回合末造成等于层数的纯粹伤害；出血回合末造成等于层数的纯粹伤害并随后移除；反击触发时造成等于反击层数的纯粹伤害。这些状态伤害不套通用等级系数，仍受明确的加固承伤修正。</div><div class="formulaRow"><b>普通深海基础触腕说明</b><br>SKeyDB 当前没有给普通深海统一初始触腕生成式，因此普通基础值仍由游戏内当前显示值输入。当前公开记录没有足够依据把“每名混沌额外增加队伍最大生命百分比”自动加入基础触腕；晦暝·深海则严格使用队伍最大生命 ×5%。</div>
-    `;
+      <div class="formulaRow"><b>必定暴击战斗态</b><br>技能文本写明 “必定暴击” 时自动按必暴；跨卡/跨回合状态不会被凭空假设。</div>
+      <div class="formulaRow"><b>局外 / 局内基础伤害</b><br><code>技能原始伤害 = 属性 × 技能倍率</code><br><code>局外阶段 = 技能原始伤害 × 局外基础伤害池</code><br><code>局内阶段 = 局外阶段 × 局内基础伤害池</code><br>命轮、密契、角色成长、灵塑等可可靠解析的常驻基础伤害默认归入局外；战斗内动态基础伤害归入局内。</div>
+      <div class="formulaRow"><b>普通深海触腕姿态</b><br>潮涌 = 100%；静海 = 50%；怒涛 = 125%。怒涛在每次主动伤害后的触腕倍率：<code>50% + floor(有效最终界域精通 / 50) × 1%</code>。</div>
+      <div class="formulaRow"><b>晦暝·深海</b><br><code>基础触腕伤害 = 队伍最大生命 × 5%</code>；深渊静海不进行回合末触腕攻击；深渊怒涛按公开记录为 <code>125%</code>。</div>
+      <div class="formulaRow"><b>伤害事件与状态范围</b><br><b>主动/触腕：</b>受易伤与虚弱影响。<b>穿透：</b>不受易伤/虚弱影响。<b>纯粹：</b>不能暴击。<b>固定：</b>不能暴击，也不受基础伤害/最终伤害加成。</div>
+      <div class="formulaRow"><b>敌人等级通用模型</b><br>估算最大生命使用融灾第 60–69 期 1665 个等级/生命值样本的对数拟合；等级系数属于通用比较模型而非官方防御公式。</div>
+      <div class="formulaRow"><b>敌方献祭 / 诞生仪式</b><br>敌方献祭在回合末造成伤害；诞生仪式会把对应伤害转化为敌方献祭。</div>
+      <div class="formulaRow"><b>纯粹伤害 / 中毒 / 出血 / 反击</b><br>SKeyDB：纯粹伤害不能暴击；中毒与出血在回合末造成等于层数的纯粹伤害；反击触发时造成等于反击层数的纯粹伤害。</div>`;
   }
 
   function soulforgeDamageToSacrificePct(progression){
