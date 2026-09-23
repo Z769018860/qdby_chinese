@@ -19,18 +19,25 @@ function setupMorimensMascotToggle(){
   const button=document.getElementById("morimensMascotToggle"),image=document.getElementById("morimensMascot");
   if(!button||!image)return;
   const characters=[
-    {name:"杜勒赛因",src:"images/杜勒赛因-防御.gif?v=20260918.1"},
-    {name:"卡拉布",src:"images/卡拉布-技能2.gif?v=20260918.1"}
+    {zh:"杜勒赛因",en:"Doresain",src:"images/杜勒赛因-防御.gif?v=20260918.1"},
+    {zh:"卡拉布",en:"Caraboo",src:"images/卡拉布-技能2.gif?v=20260918.1"}
   ];
-  let index=0;
+  let index=image.src.includes("卡拉布")?1:0;
+  const isEn=()=>localStorage.getItem("morimens.language")==="en";
+  const refreshText=()=>{
+    const current=characters[index],next=characters[1-index];
+    image.alt=isEn()?current.en:current.zh;
+    button.setAttribute("aria-label",isEn()?("Switch to "+next.en):("切换为"+next.zh));
+  };
   for(const character of characters){const preload=new Image();preload.src=character.src}
   button.addEventListener("click",()=>{
-    index=1-index;const current=characters[index],next=characters[1-index];
+    index=1-index;const current=characters[index];
     button.classList.remove("isSwapping");void button.offsetWidth;button.classList.add("isSwapping");
-    image.src=current.src;image.alt=current.name;
-    button.setAttribute("aria-label",localStorage.getItem("morimens.language")==="en"?`Switch to ${next.name}`:`切换为${next.name}`);
+    image.src=current.src;refreshText();
     setTimeout(()=>button.classList.remove("isSwapping"),450);
   });
+  window.addEventListener("morimens-language-change",refreshText);
+  refreshText();
 }
 setupMorimensMascotToggle();
 
