@@ -4,6 +4,7 @@
   const dateKey=()=>new Date().toLocaleDateString('sv-SE');
   const cacheKey='morimens.daily-fortune.v6';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
   const wheelKeywordPool=['爆发','连击','暴击','资源','强化','续航','灵知','高压'];
   const tarotPool=['命运之轮','星辰','月影','审判','隐者','力量','战车','节制','世界','女祭司','魔术师','太阳'];
   const signTexts={大吉:'星轨正合，今日所行皆有回响。',上吉:'潮声引路，把握时机便能乘势而上。',中吉:'灯火未熄，稳步前行自有所得。',小吉:'微光在侧，适合完成眼前的小目标。',平:'风浪未定，守成比冒进更为合适。',小凶:'雾色渐浓，宜留余力并谨慎选择。',凶:'暗潮将至，今日更适合整备与等待。'};
@@ -42,32 +43,52 @@
     const avatarCaption=avatarQuotes[(seed>>>21)%avatarQuotes.length]||'「不允许你们靠近守密人半步……！」';
     const cthulhuSign=cthulhuSigns[(seed>>>13)%cthulhuSigns.length]||themedText;
     const signText=`${avatarCaption} · ${cthulhuSign}`;
+    if(isEnglish()){
+      const signEn={大吉:'Great Fortune',上吉:'Good Fortune',中吉:'Moderate Fortune',小吉:'Small Fortune',平:'Neutral',小凶:'Minor Misfortune',凶:'Misfortune'};
+      const scoreEn={Combat:scores['战斗'],Draws:scores['抽取'],Exploration:scores['探索'],Upgrade:scores['强化']};
+      const keywordEn={爆发:'Burst',连击:'Multi-hit',暴击:'Crit',资源:'Resources',强化:'Upgrade',续航:'Sustain',灵知:'Rouse',高压:'High Pressure'};
+      const englishWheelKeywords=wheelKeywords.map(x=>keywordEn[x]||x);
+      const englishKeywords=[detail.realm,detail.type,detail.wheelName,'D-Zone'].filter((x,i,a)=>x&&a.indexOf(x)===i);
+      const englishUsage=usage.rank?`Season ${usage.season||69} appearance rate ${Number(usage.rate||0).toFixed(1)}% · Rank ${usage.rank}/${usage.total}`:'No current-season appearance-rate record';
+      const recommendations=['Challenge a high-difficulty D-Zone stage','Review your Wheel and Covenant setup','Clear an unfinished stage','Farm upgrade resources','Try a different Realm team','Finish daily and weekly tasks'];
+      const challenges=['Complete one D-Zone challenge','Win a battle with today’s Realm','Win without a borrowed assist','Use today’s Awakener in one battle','Clear one high-difficulty stage','Try a different Wheel setup'];
+      const tarotEn=['Wheel of Fortune','The Star','The Moon','Judgement','The Hermit','Strength','The Chariot','Temperance','The World','The High Priestess','The Magician','The Sun'];
+      const englishSignText=`${detail.name||'Today’s Awakener'} · ${detail.wheelName||'Today’s Wheel'} · A lighthearted daily omen based on the current D-Zone usage snapshot and today’s seed.`;
+      return {...detail,date:dateKey(),scores:scoreEn,wheelKeywords:englishWheelKeywords,keywords:englishKeywords,fortuneScore,sign:signEn[sign]||sign,signText:englishSignText,usageText:englishUsage,tarotName:tarotEn[(seed>>>20)%tarotEn.length],recommend:recommendations[(seed>>>12)%recommendations.length],challenge:challenges[(seed>>>17)%challenges.length]};
+    }
     return {...detail,date:dateKey(),scores,wheelKeywords,keywords,fortuneScore,sign,signText,usageText,tarotName:tarotPool[(seed>>>20)%tarotPool.length],recommend:recommendPool[(seed>>>12)%recommendPool.length],challenge:challengePool[(seed>>>17)%challengePool.length]};
   }
   function render(data,{cached=false}={}){
-    if(!data)return;latestReportData=data;
-    if($('fortuneWheelName'))$('fortuneWheelName').textContent=data.wheelName||'命轮';
+    if(!data)return;latestReportData=data;const en=isEnglish();
+    if($('fortuneWheelName'))$('fortuneWheelName').textContent=data.wheelName||(en?'Wheel':'命轮');
     if($('fortuneWheelKeywords'))$('fortuneWheelKeywords').textContent=(data.wheelKeywords||[]).join(' · ');
-    if($('fortuneLevel'))$('fortuneLevel').textContent=`${data.sign||'平'}签`;
-    if($('fortuneSignText'))$('fortuneSignText').textContent=data.signText||signTexts.平;
-    if($('fortuneTarotName'))$('fortuneTarotName').textContent=`塔罗 · ${data.tarotName||'命运之轮'}`;
+    if($('fortuneLevel'))$('fortuneLevel').textContent=en?(data.sign||'Neutral'):`${data.sign||'平'}签`;
+    if($('fortuneSignText'))$('fortuneSignText').textContent=data.signText||(en?'A quiet day to proceed carefully.':signTexts.平);
+    if($('fortuneTarotName'))$('fortuneTarotName').textContent=`${en?'Tarot':'塔罗'} · ${data.tarotName||(en?'Wheel of Fortune':'命运之轮')}`;
     if($('fortuneKeyword'))$('fortuneKeyword').innerHTML=(data.keywords||[]).map(x=>`<span>${esc(x)}</span>`).join('');
-    if($('fortuneLuckGrid'))$('fortuneLuckGrid').innerHTML=Object.entries(data.scores||{}).map(([name,value])=>{const stars=Math.max(1,Math.min(5,Math.round(value/20)));return `<div class="fortuneLuckItem"><header><span>${esc(name)}</span><b>+${Math.max(5,Math.round((value-45)/2))}%</b></header><div class="fortuneStars" aria-label="${stars} 星">${[1,2,3,4,5].map(i=>`<span class="${i<=stars?'isOn':''}">★</span>`).join('')}</div></div>`}).join('');
-    const avg=Object.values(data.scores||{}).reduce((a,b)=>a+b,0)/Math.max(1,Object.keys(data.scores||{}).length);if($('fortuneStat'))$('fortuneStat').textContent=`综合 × ${(1+avg/500).toFixed(2)}`;
-    if($('fortuneRecommend'))$('fortuneRecommend').textContent=`${data.usageText||''}${data.usageText?'；':''}${data.recommend||'适合稳步推进今日目标'}`;
-    if($('fortuneChallenge'))$('fortuneChallenge').textContent=data.challenge||'完成一次融灾挑战';
-    if($('fortuneSync'))$('fortuneSync').textContent=cached?'✓ 今日签缓存 · 出场率已纳入':'✓ 当期出场率已纳入签级';
+    if($('fortuneLuckGrid'))$('fortuneLuckGrid').innerHTML=Object.entries(data.scores||{}).map(([name,value])=>{const stars=Math.max(1,Math.min(5,Math.round(value/20)));return `<div class="fortuneLuckItem"><header><span>${esc(name)}</span><b>+${Math.max(5,Math.round((value-45)/2))}%</b></header><div class="fortuneStars" aria-label="${stars} ${en?'stars':'星'}">${[1,2,3,4,5].map(i=>`<span class="${i<=stars?'isOn':''}">★</span>`).join('')}</div></div>`}).join('');
+    const avg=Object.values(data.scores||{}).reduce((a,b)=>a+b,0)/Math.max(1,Object.keys(data.scores||{}).length);
+    if($('fortuneStat'))$('fortuneStat').textContent=`${en?'Overall':'综合'} × ${(1+avg/500).toFixed(2)}`;
+    if($('fortuneRecommend'))$('fortuneRecommend').textContent=`${data.usageText||''}${data.usageText?(en?'; ':'；'):''}${data.recommend||(en?'Proceed steadily with today’s goals':'适合稳步推进今日目标')}`;
+    if($('fortuneChallenge'))$('fortuneChallenge').textContent=data.challenge||(en?'Complete one D-Zone challenge':'完成一次融灾挑战');
+    if($('fortuneSync'))$('fortuneSync').textContent=en?(cached?'✓ Daily fortune cache · appearance rate included':'✓ Current-season appearance rate included'):(cached?'✓ 今日签缓存 · 出场率已纳入':'✓ 当期出场率已纳入签级');
     if(almanacToday)renderAlmanac(almanacToday,{cached});
   }
+
   function renderAlmanac(almanac,{cached=false}={}){
     if(!almanac||almanac.date!==dateKey())return;almanacToday=almanac;
+    if(isEnglish()){
+      if($('fortuneSync'))$('fortuneSync').textContent=`✓ Daily almanac ${cached?'cache':'synced'} · ${almanac.date}`;
+      return;
+    }
     const yi=(almanac.yi||[]).filter(Boolean),ji=(almanac.ji||[]).filter(Boolean),offset=hash(dateKey());
     const picks=(rows,key,count=2)=>rows.length?Array.from({length:Math.min(count,rows.length)},(_,i)=>rows[(offset+(key==='ji'?7:0)+i*5)%rows.length]).filter((x,i,a)=>a.indexOf(x)===i):[];
     const pickYi=picks(yi,'yi'),pickJi=picks(ji,'ji');
     const yiText=pickYi.length?pickYi.map(x=>`「${x}」${translateAlmanac(x)}`).join('；'):'稳步完成日常任务';
     const jiText=pickJi.length?pickJi.map(x=>`「${x}」`).join('、'):'高消耗尝试';
-    // 黄历仅用于同步状态，不覆盖“今日推荐”和“今日挑战”卡片。\n    if($('fortuneSync'))$('fortuneSync').textContent=`✓ 每日黄历${cached?'缓存':'已同步'} · ${almanac.lunarDate||almanac.date}${almanac.ganZhi?' · '+almanac.ganZhi:''}`;
+    if($('fortuneSync'))$('fortuneSync').textContent=`✓ 每日黄历${cached?'缓存':'已同步'} · ${almanac.lunarDate||almanac.date}${almanac.ganZhi?' · '+almanac.ganZhi:''}`;
   }
+
   async function loadAlmanac(){
     const key='morimens.daily-almanac.v1';try{const cached=JSON.parse(localStorage.getItem(key)||'null');if(cached?.date===dateKey())renderAlmanac(cached,{cached:true})}catch{}
     try{const response=await fetch(`data/morimens/almanac/today.json?v=${dateKey()}`,{cache:'no-cache'});if(!response.ok)return;const data=await response.json();if(data?.date!==dateKey())return;renderAlmanac(data);try{localStorage.setItem(key,JSON.stringify(data))}catch{}}catch{}
@@ -90,6 +111,10 @@
   const downloadButton=$('downloadFortuneReportBtn');if(downloadButton){downloadButton.addEventListener('click',async()=>{downloadButton.disabled=true;downloadButton.textContent='正在生成…';try{await downloadFortuneReport(downloadButton)}catch(error){console.error('下载今日签失败',error);alert(error.message)}finally{downloadButton.disabled=false;downloadButton.textContent='下载今日签'}})}
   try{const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');if(cached?.date===dateKey())render(cached,{cached:true})}catch{}
   window.addEventListener('morimens-fortune-render',event=>{latestDetail=event.detail||{};const data=build(latestDetail);render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}});
+  window.addEventListener('morimens-language-change',()=>{
+    if(!latestDetail)return;
+    const data=build(latestDetail);render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}
+  });
   (async()=>{try{const response=await fetch('https://api64.ipify.org?format=json',{cache:'no-store',signal:AbortSignal.timeout(2500)});if(response.ok){const payload=await response.json();visitorSalt=String(payload.ip||'')}}catch(error){visitorSalt='local-'+hash((navigator.userAgent||'')+'|'+(navigator.language||'')+'|'+screen.width+'x'+screen.height)}if(latestDetail){const data=build(latestDetail);render(data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}}})();
   loadAlmanac();
 })();
