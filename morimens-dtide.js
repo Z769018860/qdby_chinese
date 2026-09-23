@@ -845,7 +845,16 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
         if($('morimensCommentsTab'))$('morimensCommentsTab').textContent=zh()?'留言板':'Guestbook';
       }
       relocalizeControls();
-      if(manifest){manifest=null;loadOnce()}
+      if(manifest){
+        const sel=$('dtideSeason');
+        if(sel)for(const option of sel.options){
+          const entry=(manifest.availableSeasons||[]).find(x=>String(x.seasonId)===String(option.value));if(!entry)continue;
+          const legacy=entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty';
+          if(legacy)option.textContent=ui('旧版融灾425出场率（来源：@却尘）','Legacy D-Zone 425 Appearance Rate (source: @却尘)');
+          else option.textContent=zh()?('第 '+entry.seasonId+' 期 · '+(entry.recordCount??0)+' 条'+(entry.complete?' · 完整':' · 部分')):('Season '+entry.seasonId+' · '+(entry.recordCount??0)+' records'+(entry.complete?' · Complete':' · Partial'));
+        }
+        renderAll();
+      }
     });
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
