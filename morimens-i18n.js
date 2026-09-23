@@ -27,7 +27,7 @@
     '防御系数':'Defense Multiplier','伤害加成':'Damage Bonus','易伤':'Vulnerability','暴击率':'Crit Rate','暴击伤害加成':'Crit DMG Bonus',
     '今日签文':'Daily Fortune','今日运势':'Daily Fortune','抽取今日签':'Draw Today’s Fortune','再抽一次':'Reroll',
     '换一句角色台词':'Another Voice Line','查看中文维基':'Open Chinese Wiki',
-    '数据来源':'Data Sources','来源与校准':'Sources & Calibration','角色头像':'Character Portrait',
+    '数据来源':'Data Sources','来源与校准':'Sources & Calibration','角色头像':'Character Portrait','网站访问统计':'Site Visit Statistics','下载当前完整设置与详细伤害结果':'Download the complete current setup and detailed damage results','结果显示模式':'Result Display Mode',
     '该角色当前同步数据没有可用台词。':'No synchronized voice line is available for this character.',
     '稀有度':'Rarity','界域':'Realm','类型':'Type','阵营':'Faction','生日':'Birthday','声优':'Voice actor',
     '融灾榜单':'D-Zone Leaderboard','伤害计算器':'Damage Calculator','更新日志':'Changelog','关于':'About',
