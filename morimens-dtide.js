@@ -618,25 +618,45 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const union=new Map();for(const g of groups)for(const c of g.characters)union.set(c.key,c);const rows=[...union.values()].map(c=>({...c,total:groups.reduce((s,g)=>s+(g.characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total).slice(0,40);if(!rows.length)return '<div class="dtideEmpty">暂无记录。</div>';return `<table class="dtideTable"><thead><tr><th>角色</th>${columns.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(c=>{const info=characterInfo(c.id||c.ingameId||c.key);return `<tr><td>${esc(info.name||c.name)}</td>${groups.map(g=>{const hit=g.characters.find(x=>x.key===c.key);return `<td class="dtideRate">${pct(hit?.teamRatePct||0)}</td>`}).join('')}</tr>`}).join('')}</tbody></table>`}
   function renderComparisons(){return}
   function renderEquipment(){
-    const g=currentGroup(),coverage=manifest.fieldCoverage||{},key=$('dtideEquipCharacter').value;if(!coverage.wheels&&!coverage.covenants){$('dtideEquipment').innerHTML='<div class="dtideNotice">当前快照尚未由结构化 __data.json 重建；下一次同步后会自动启用命轮、密契与启灵统计。</div>';return}
-    const section=(title,arr,rateKey='teamRatePct',denom='支队伍',isEnlight=false)=>{const items=isEnlight?[...(arr||[])].sort((a,b)=>enlightOrder.indexOf(b.key)-enlightOrder.indexOf(a.key)):(arr||[]);return `<h4 style="margin:10px 0 7px;font-size:12px">${title}</h4><div class="dtideUsageCards">${items.slice(0,24).map(x=>{const group=x.key||x.id||'unknown',color=enlightColors[group]||enlightColors.unknown;return `<div class="dtideUsage${isEnlight?' dtideEnlightItem':''}"${isEnlight?` style="--dtide-enlight-color:${color};--dtide-enlight-fill:${color}38"`:''}><div><b>${esc(isEnlight?(enlightZh[group]||x.name||group):(x.name||x.key))}</b><small>${x.count} ${denom}</small></div><strong>${pct(x[rateKey])}</strong></div>`}).join('')||'<div class="dtideEmpty">暂无</div>'}</div>`};
-    if(!key){$('dtideEquipment').innerHTML=section('启灵分组 · 角色槽位分布',g.enlight,'teamRatePct','次',true)+section('命轮 · 队伍采用率',g.wheels)+section('密契套装 · 队伍采用率',g.covenants);return}
-    const c=g.byCharacter.find(x=>x.key===key);if(!c){$('dtideEquipment').innerHTML='<div class="dtideEmpty">当前筛选下该角色没有记录。</div>';return}const info=characterInfo(c.id||c.ingameId||c.key),enlight=(c.enlight||[]).map(x=>`${enlightZh[x.key]||x.name} ${x.count}`).join(' · ')||'—';$('dtideEquipment').innerHTML=`<div class="dtideGearSummary"><div><small>角色</small><b>${esc(info.name||c.name)}</b></div><div><small>出现次数 / 等级</small><b>${c.appearances} · Lv.${c.level.min??'—'}–${c.level.max??'—'}</b></div><div><small>启灵分组</small><b>${esc(enlight)}</b></div></div>`+section('最高出场率队友 Top 5',c.teammates,'ratePct','次同队')+section('该角色启灵分组',c.enlight,'ratePct','次',true)+section('该角色命轮采用率',c.wheels,'ratePct','次装备')+section('该角色密契套装采用率',c.covenants,'ratePct','次采用');
+    const g=currentGroup(),coverage=manifest.fieldCoverage||{},key=$('dtideEquipCharacter').value;
+    if(!coverage.wheels&&!coverage.covenants){$('dtideEquipment').innerHTML=`<div class="dtideNotice">${ui('当前快照尚未由结构化 __data.json 重建；下一次同步后会自动启用命轮、密契与启灵统计。','This snapshot has not yet been rebuilt from structured __data.json. Wheel, Covenant, and Enlighten statistics will become available after the next synchronization.')}</div>`;return}
+    const enlightLabels=zh()?enlightZh:enlightEn;
+    const section=(title,arr,rateKey='teamRatePct',denom=ui('支队伍','teams'),isEnlight=false)=>{
+      const items=isEnlight?[...(arr||[])].sort((a,b)=>enlightOrder.indexOf(b.key)-enlightOrder.indexOf(a.key)):(arr||[]);
+      return `<h4 style="margin:10px 0 7px;font-size:12px">${title}</h4><div class="dtideUsageCards">${items.slice(0,24).map(x=>{const group=x.key||x.id||'unknown',color=enlightColors[group]||enlightColors.unknown;return `<div class="dtideUsage${isEnlight?' dtideEnlightItem':''}"${isEnlight?` style="--dtide-enlight-color:${color};--dtide-enlight-fill:${color}38"`:''}><div><b>${esc(isEnlight?(enlightLabels[group]||x.name||group):(x.name||x.key))}</b><small>${x.count} ${denom}</small></div><strong>${pct(x[rateKey])}</strong></div>`}).join('')||`<div class="dtideEmpty">${ui('暂无','None')}</div>`}</div>`;
+    };
+    if(!key){
+      $('dtideEquipment').innerHTML=
+        section(ui('启灵分组 · 角色槽位分布','Enlighten Group · Character Slot Distribution'),g.enlight,'teamRatePct',ui('次','times'),true)+
+        section(ui('命轮 · 队伍采用率','Wheel · Team Adoption Rate'),g.wheels)+
+        section(ui('密契套装 · 队伍采用率','Covenant Set · Team Adoption Rate'),g.covenants);
+      return;
+    }
+    const row=g.byCharacter.find(x=>x.key===key);if(!row){$('dtideEquipment').innerHTML=`<div class="dtideEmpty">${ui('当前筛选下该角色没有记录。','No records for this Awakener under the current filters.')}</div>`;return}
+    const info=characterInfo(row.id||row.ingameId||row.key),enlight=(row.enlight||[]).map(x=>`${enlightLabels[x.key]||x.name} ${x.count}`).join(' · ')||'—';
+    $('dtideEquipment').innerHTML=`<div class="dtideGearSummary"><div><small>${ui('角色','Awakener')}</small><b>${esc(info.name||row.name)}</b></div><div><small>${ui('出现次数 / 等级','Appearances / Level')}</small><b>${row.appearances} · Lv.${row.level.min??'—'}–${row.level.max??'—'}</b></div><div><small>${ui('启灵分组','Enlighten Group')}</small><b>${esc(enlight)}</b></div></div>`
+      +section(ui('最高出场率队友 Top 5','Top 5 Teammates by Appearance Rate'),row.teammates,'ratePct',ui('次同队','co-uses'))
+      +section(ui('该角色启灵分组','Character Enlighten Groups'),row.enlight,'ratePct',ui('次','times'),true)
+      +section(ui('该角色命轮采用率','Character Wheel Adoption Rate'),row.wheels,'ratePct',ui('次装备','equips'))
+      +section(ui('该角色密契套装采用率','Character Covenant Adoption Rate'),row.covenants,'ratePct',ui('次采用','uses'));
   }
   function populateFilters(){
     const chars=new Map();for(const {team} of flattenTeams())for(const m of team.members||[]){
       const k=filterMemberKey(m);if(!k)continue;
-      const sourceKey=String(memberKey(m)||'');
-      const info=characterInfo(m.skeydbId||m.ingameId||sourceKey,m);
-      const old=chars.get(k);
-      if(!old)chars.set(k,{...info,fallback:m.canonicalName||m.name||sourceKey,sourceKey});
-      else if(!old.image&&info.image)old.image=info.image;
+      const sourceKey=String(memberKey(m)||''),info=characterInfo(m.skeydbId||m.ingameId||sourceKey,m),old=chars.get(k);
+      if(!old)chars.set(k,{...info,fallback:m.canonicalName||m.name||sourceKey,sourceKey});else if(!old.image&&info.image)old.image=info.image;
     }
     for(const rec of currentSeasonRosterSupplements()){const k=filterMemberKey({skeydbId:rec.id,ingameId:rec.ingameId,name:rec.name});if(!k||chars.has(k))continue;const info=characterInfo(rec.id,rec);chars.set(k,{...info,fallback:rec.name||rec.id,sourceKey:rec.id})}
-    const choices=[...chars.entries()].sort((a,b)=>(a[1].name||a[1].fallback).localeCompare(b[1].name||b[1].fallback,'zh-CN')).map(([k,v])=>`<button type="button" class="dtideCharacterChoice" data-character-key="${esc(k)}" data-character-source="${esc(v.sourceKey||'')}" aria-pressed="false" title="${esc(v.name||v.fallback)}">${v.image?`<img src="${esc(v.image)}" alt="" loading="lazy" onerror="this.hidden=true">`:''}<span class="dtideCharacterChoiceName">${esc(v.name||v.fallback)}</span></button>`).join('');$('dtideCharacters').innerHTML=choices;$('dtideExcludeCharacters').innerHTML=choices;
-    const scoreValues=[...new Set(flattenTeams().map(({record})=>Number(record?.score)).filter(Number.isFinite))].sort((a,b)=>b-a);const scoreRanges=[['500:525','500–525 分'],['450:495','450–495 分'],['400:445','400–445 分'],[':399','400（不含）以下']];$('dtideTotalScore').innerHTML='<option value="all">全部分数</option>'+scoreRanges.map(([value,label])=>`<option value="${value}">${label}</option>`).join('')+scoreValues.map(score=>`<option value="${score}">${score} 分</option>`).join('');const coverage=manifest.fieldCoverage||{};$('dtideProgression').disabled=!coverage.enlightenLevel;$('dtideWheel').disabled=!coverage.wheels;$('dtideCovenant').disabled=!coverage.covenants;
+    const choices=[...chars.entries()].sort((a,b)=>(a[1].name||a[1].fallback).localeCompare(b[1].name||b[1].fallback,zh()?'zh-CN':'en')).map(([k,v])=>`<button type="button" class="dtideCharacterChoice" data-character-key="${esc(k)}" data-character-source="${esc(v.sourceKey||'')}" aria-pressed="false" title="${esc(v.name||v.fallback)}">${v.image?`<img src="${esc(v.image)}" alt="" loading="lazy" onerror="this.hidden=true">`:''}<span class="dtideCharacterChoiceName">${esc(v.name||v.fallback)}</span></button>`).join('');
+    $('dtideCharacters').innerHTML=choices;$('dtideExcludeCharacters').innerHTML=choices;
+    const scoreValues=[...new Set(flattenTeams().map(({record})=>Number(record?.score)).filter(Number.isFinite))].sort((a,b)=>b-a);
+    const scoreRanges=zh()?[['500:525','500–525 分'],['450:495','450–495 分'],['400:445','400–445 分'],[':399','400（不含）以下']]:[['500:525','500–525 pts'],['450:495','450–495 pts'],['400:445','400–445 pts'],[':399','Below 400']];
+    $('dtideTotalScore').innerHTML=`<option value="all">${ui('全部分数','All Scores')}</option>`+scoreRanges.map(([value,label])=>`<option value="${value}">${label}</option>`).join('')+scoreValues.map(score=>`<option value="${score}">${score} ${ui('分','pts')}</option>`).join('');
+    const coverage=manifest.fieldCoverage||{};$('dtideProgression').disabled=!coverage.enlightenLevel;$('dtideWheel').disabled=!coverage.wheels;$('dtideCovenant').disabled=!coverage.covenants;
     const wheelNames=new Map(),covNames=new Map();for(const {team} of flattenTeams())for(const m of team.members||[]){for(const item of m.wheels||[])wheelNames.set(String(item.id??item.name),wheelName(item));for(const item of m.covenants||((m.covenant)?[m.covenant]:[]))covNames.set(String(item.id??item.name),covenantName(item))}
-    $('dtideWheel').innerHTML='<option value="">不限</option>'+[...wheelNames].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN')).map(([k,v])=>`<option value="${esc(k)}">${esc(v)}</option>`).join('');$('dtideCovenant').innerHTML='<option value="">不限</option>'+[...covNames].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN')).map(([k,v])=>`<option value="${esc(k)}">${esc(v)}</option>`).join('');filtersReady=true;
+    $('dtideWheel').innerHTML=`<option value="">${ui('不限','Any')}</option>`+[...wheelNames].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),zh()?'zh-CN':'en')).map(([k,v])=>`<option value="${esc(k)}">${esc(v)}</option>`).join('');
+    $('dtideCovenant').innerHTML=`<option value="">${ui('不限','Any')}</option>`+[...covNames].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),zh()?'zh-CN':'en')).map(([k,v])=>`<option value="${esc(k)}">${esc(v)}</option>`).join('');
+    filtersReady=true;
   }
 
   function matchesFilters(row){
