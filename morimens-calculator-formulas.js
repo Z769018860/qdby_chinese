@@ -429,7 +429,7 @@
 
     function damageRuntimeHints(skill,rank,ctx={}){
       const text=String(skill?.descriptionTemplate||'');
-      const messages=[];
+      const messages=[];const english=localStorage.getItem('morimens.language')==='en';const msg=(zh,en)=>messages.push(english?en:zh);
       let needsHitOverride=false,minHits=null,maxHits=null;
 
       let match=text.match(/(\d+)\s*~\s*\[([^\]]+)\]\s*\{plural:[^}]*\|time\|times\}/i);
@@ -437,13 +437,13 @@
         minHits=Math.max(1,Math.floor(num(match[1],1)));
         maxHits=Math.max(minHits,Math.floor(num(resolveTemplateArg(skill,match[2],rank,ctx),minHits)));
         needsHitOverride=true;
-        messages.push(`该技能段数为 ${minHits}~${maxHits}，取决于战斗内随机/资源状态；请填写“本次实际伤害段数”。`);
+        msg(`该技能段数为 ${minHits}~${maxHits}，取决于战斗内随机/资源状态；请填写“本次实际伤害段数”。`,`This skill has ${minHits}–${maxHits} hits depending on in-battle random/resource state. Enter the actual hit count for this use.`);
       }
 
       match=text.match(/\bX\s*\+\s*(\d+)\s*(?:times?|hits?)/i);
       if(match){
         needsHitOverride=true;
-        messages.push(`该技能段数包含 X+${match[1]}，X 取决于本次消耗的算力/技能状态；请填写实际伤害段数。`);
+        msg(`该技能段数包含 X+${match[1]}，X 取决于本次消耗的算力/技能状态；请填写实际伤害段数。`,`This skill uses X+${match[1]} hits; X depends on Arithmetica consumed or the current skill state. Enter the actual hit count.`);
       }
 
       const conditionalHitPatterns=[
@@ -454,30 +454,30 @@
       ];
       if(conditionalHitPatterns.some(re=>re.test(text))){
         needsHitOverride=true;
-        messages.push('该技能存在条件额外段数（例如低生命/首领战/特定状态）；默认不擅自触发，可填写本次实际伤害段数。');
+        msg('该技能存在条件额外段数（例如低生命/首领战/特定状态）；默认不擅自触发，可填写本次实际伤害段数。','This skill has conditional extra hits (for example low HP, boss battle, or a specific state). They are not assumed automatically; enter the actual hit count if triggered.');
       }
       if(/each\s+causing\s+an\s+additional\s+instance\s+of\s+DMG/i.test(text)){
         needsHitOverride=true;
-        messages.push('该技能的额外段数取决于消耗/持有的战斗资源；请填写本次实际伤害段数。');
+        msg('该技能的额外段数取决于消耗/持有的战斗资源；请填写本次实际伤害段数。','Extra hits depend on battle resources consumed or held. Enter the actual hit count for this use.');
       }
 
       if(/(?:for each|per)\s+[^.]{0,100}\bBase DMG\b|\bBase DMG\b[^.]{0,100}(?:for each|per)/i.test(text)){
-        messages.push('技能含按战斗状态动态变化的基础伤害；未提供对应状态时不会自动假定层数。');
+        msg('技能含按战斗状态动态变化的基础伤害；未提供对应状态时不会自动假定层数。','This skill has Base DMG that changes with battle state. No stack/state value is assumed unless the corresponding input is provided.');
       }
       if(/\bFinal DMG\b[^.]{0,120}(?:for each|per|stack)|(?:for each|per)\s+[^.]{0,120}\bFinal DMG\b/i.test(text)){
-        messages.push('技能含按层数/状态动态变化的最终伤害；未提供对应状态时不会自动假定层数。');
+        msg('技能含按层数/状态动态变化的最终伤害；未提供对应状态时不会自动假定层数。','This skill has Final DMG that changes with stacks/state. No stack/state value is assumed unless the corresponding input is provided.');
       }
       if(/\bBase DMG\b[^.]{0,80}\bwhen\b|\bwhen\b[^.]{0,80}\bBase DMG\b/i.test(text)){
-        messages.push('技能含条件基础伤害加成；只有条件明确输入后才应计入。');
+        msg('技能含条件基础伤害加成；只有条件明确输入后才应计入。','This skill has a conditional Base DMG bonus. It is included only when the condition is explicitly represented by an input.');
       }
       if(/\{Aftershock\}\s*:[^.]*?(?:Tentacle|DMG)/i.test(text)){
-        messages.push('技能含“余震”伤害/触腕事件；余震是否实际触发取决于战斗状态，当前默认不自动计入。');
+        msg('技能含“余震”伤害/触腕事件；余震是否实际触发取决于战斗状态，当前默认不自动计入。','This skill includes an Aftershock damage/Tentacle event. Whether Aftershock actually triggers depends on battle state, so it is not included by default.');
       }
       if(/\{Leap\}\s*:[^.]*?(?:DMG|\{STR\}|\{Tentacle DMG\})/i.test(text)){
-        messages.push('技能含“跃迁”条件伤害/力量/触腕修正；当前默认不把跃迁条件强行计入。');
+        msg('技能含“跃迁”条件伤害/力量/触腕修正；当前默认不把跃迁条件强行计入。','This skill includes conditional Leap damage/STR/Tentacle modifiers. The Leap condition is not forced by default.');
       }
       if(/(?:\{Leap\}|\{Aftershock\}|\bIf\b|\bWhen\b|\bWhenever\b|\bUpon\b|\bAfter\b|\bFor each\b)[^.\n]{0,220}\[Damage:[^\]]+\]/i.test(text)){
-        messages.push('检测到条件伤害事件：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把跃迁/条件分支高算。');
+        msg('检测到条件伤害事件：默认只结算无条件伤害；条件伤害未满足时不会自动加入，避免把跃迁/条件分支高算。','Conditional damage was detected. Only unconditional damage is resolved by default; unmet conditional branches are excluded to avoid overcounting.');
       }
       const hasIndirectDamageDefinition=/\b(?:shuffle|add|put|create|generate)\b[^.!?]{0,220}\bthat\s+deals?\s+\[Damage:[^\]]+\]/i.test(text);
       if(hasIndirectDamageDefinition){
@@ -485,21 +485,21 @@
         for(let i=messages.length-1;i>=0;i--){
           if(/段数|额外段数|额外.*instance|实际伤害段数/.test(messages[i]))messages.splice(i,1);
         }
-        messages.push('检测到“生成/洗入另一张卡牌时描述其伤害”的间接伤害公式：该倍率与段数属于生成卡，不计入当前卡本次伤害；请直接选择对应派生卡计算。');
+        msg('检测到“生成/洗入另一张卡牌时描述其伤害”的间接伤害公式：该倍率与段数属于生成卡，不计入当前卡本次伤害；请直接选择对应派生卡计算。','An indirect damage formula describes a generated/shuffled card. Its coefficient and hit count belong to that generated card and are not counted on the current card; select the corresponding derived card directly.');
       }
 
       const conditionalStatusPattern=/(?:\{Devour\}|\{Leap\}|\{Aftershock\}|\{Resonance[^}]*\}|\bsubsequent\b|\bwhenever\b|\bwhen\b|\bif\b|\bupon\b|\bafter\s+(?:playing|being played|releasing|unleashing|using|taking|dealing|receiving|gaining|losing|removing|the\s+(?:turn|battle)|this\s+(?:turn|card)|each|every|next|an?\s+enemy)\b|\bbefore\b|\beach time\b|\beach\s+(?:stack|point|charge|mark|sigil|tentacle|card)\b|\bfor (?:each|every)\b|\bat (?:the )?(?:turn|battle) (?:start|end)\b)[^.\n]*(?:\{Poison\}|\{Counter\}|\{Bleed\}|\{Corrosion\})/i;
       if(conditionalStatusPattern.test(text)){
-        messages.push('检测到条件式中毒 / 反击 / 流血 / 侵蚀：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。');
+        msg('检测到条件式中毒 / 反击 / 流血 / 侵蚀：默认不把条件事件直接计入本次技能；请按实际战斗状态手动补充当前层数或等待专用条件输入。','Conditional Poison / Counter / Bleed / Corrosion was detected. It is not added to the current skill by default; use the available battle-state input when applicable.');
       }
       if(/\{Finale Form\}\s*:/i.test(text)){
-        messages.push('检测到「终末形态」条件分支：未开启对应角色形态时不计入；已接入的终末形态伤害会由角色状态开关单独加入。');
+        msg('检测到「终末形态」条件分支：未开启对应角色形态时不计入；已接入的终末形态伤害会由角色状态开关单独加入。','A Finale Form conditional branch was detected. It is excluded unless the corresponding form is active; supported Finale Form damage is added by the character-state control.');
       }
       if(/Tentacle\s+(?:performs?|makes?)\s+(?:an?\s+)?attack[^.]*?(?:gain|gains)\s+\{Counter\}[^.]*?DMG dealt/i.test(text)){
-        messages.push('检测到“触腕立即攻击并按本次伤害获得反击”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。');
+        msg('检测到“触腕立即攻击并按本次伤害获得反击”的复合事件；当前不自动猜测其攻击时序/目标，未计入该复合事件。','A compound event where a Tentacle attacks immediately and generates Counter from the damage dealt was detected. Its timing/target is not inferred, so the compound event is excluded.');
       }
       if(/Fixed\s+\{Corrosion\}[^.]*?Max HP/i.test(text)){
-        messages.push('检测到依赖施放者最大生命的固定侵蚀；当前角色伤害面板没有可靠的实时最大生命状态，该部分不自动求值。');
+        msg('检测到依赖施放者最大生命的固定侵蚀；当前角色伤害面板没有可靠的实时最大生命状态，该部分不自动求值。','Fixed Corrosion based on the caster’s Max HP was detected. The calculator does not have a reliable live Max HP state, so this component is not evaluated automatically.');
       }
       return {needsHitOverride,minHits,maxHits,messages:[...new Set(messages)]};
     }
