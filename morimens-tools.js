@@ -28,7 +28,7 @@ function setupMorimensMascotToggle(){
     index=1-index;const current=characters[index],next=characters[1-index];
     button.classList.remove("isSwapping");void button.offsetWidth;button.classList.add("isSwapping");
     image.src=current.src;image.alt=current.name;
-    button.setAttribute("aria-label",`切换为${next.name}`);
+    button.setAttribute("aria-label",localStorage.getItem("morimens.language")==="en"?`Switch to ${next.name}`:`切换为${next.name}`);
     setTimeout(()=>button.classList.remove("isSwapping"),450);
   });
 }
@@ -36,7 +36,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260924.2";
+  const assetVersion="20260924.3";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -127,7 +127,7 @@ setupMorimensMascotToggle();
     console.error("Morimens loader failed",err);
     const box=document.createElement("div");
     box.style.cssText="position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;padding:12px 14px;border-radius:12px;background:#7f1d1d;color:#fff;font:14px/1.6 system-ui";
-    box.textContent="忘却前夜工具加载失败 / Morimens tools failed to load. 请刷新页面或稍后再试。";
+    box.textContent=localStorage.getItem("morimens.language")==="en"?"Morimens tools failed to load. Refresh the page or try again later.":"忘却前夜工具加载失败，请刷新页面或稍后再试。";
     document.body.appendChild(box);
   }
 })();
