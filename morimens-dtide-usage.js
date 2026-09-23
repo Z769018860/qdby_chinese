@@ -281,11 +281,11 @@
   }
   function rankChange(currentRank,previousRank){
     if(!previousSeasonId)return '<small class="dtideRankSame">—</small>';
-    if(!previousRank)return `<small class="dtideRankNew" title="第 ${previousSeasonId} 期未上榜">NEW</small>`;
+    if(!previousRank)return `<small class="dtideRankNew" title="${zh()?`第 ${previousSeasonId} 期未上榜`:`Not ranked in Season ${previousSeasonId}`}">NEW</small>`;
     const delta=previousRank-currentRank;
-    if(delta>0)return `<small class="dtideRankUp" title="较第 ${previousSeasonId} 期上升 ${delta} 名">▲ ${delta}</small>`;
-    if(delta<0)return `<small class="dtideRankDown" title="较第 ${previousSeasonId} 期下降 ${Math.abs(delta)} 名">▼ ${Math.abs(delta)}</small>`;
-    return `<small class="dtideRankSame" title="较第 ${previousSeasonId} 期排名不变">＝</small>`;
+    if(delta>0)return `<small class="dtideRankUp" title="${zh()?`较第 ${previousSeasonId} 期上升 ${delta} 名`:`Up ${delta} from Season ${previousSeasonId}`}">▲ ${delta}</small>`;
+    if(delta<0)return `<small class="dtideRankDown" title="${zh()?`较第 ${previousSeasonId} 期下降 ${Math.abs(delta)} 名`:`Down ${Math.abs(delta)} from Season ${previousSeasonId}`}">▼ ${Math.abs(delta)}</small>`;
+    return `<small class="dtideRankSame" title="${zh()?`较第 ${previousSeasonId} 期排名不变`:`Unchanged from Season ${previousSeasonId}`}">＝</small>`;
   }
   function fixedCreationKeys(rows){
     const byWave=new Map();
@@ -372,13 +372,15 @@
     host.onclick=e=>{const sort=e.target.closest('[data-sort-key]');if(sort){const key=String(sort.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix();return}if(entity==='wheel'){  if(e.target.closest('a'))return;  const row=e.target.closest('[data-matrix-wheel-row]');if(!row)return;  const tbody=row.closest('tbody'),key=row.dataset.matrixWheelRow,old=tbody.querySelector('.dtideMatrixDetailRow'),same=old?.dataset.for===key;old?.remove();if(same)return;  const item=rows.find(x=>String(x.key)===String(key))||{},d=wheelDetails(key,item),tr=document.createElement('tr');tr.className='dtideMatrixDetailRow';tr.dataset.for=key;tr.innerHTML='<td colspan="'+(waves.length+2)+'"><div class="dtideInlineDetail">'+wheelInsightHtml(d)+'</div></td>';row.insertAdjacentElement('afterend',tr);return;}const btn=e.target.closest('[data-matrix-character]');if(!btn)return;const tbody=btn.closest('tbody'),old=tbody.querySelector('.dtideMatrixDetailRow'),same=old?.dataset.for===btn.dataset.matrixCharacter;tbody.querySelectorAll('[data-matrix-character]').forEach(x=>x.setAttribute('aria-expanded','false'));old?.remove();if(same)return;const d=characterDetails(btn.dataset.matrixCharacter),section=(title,arr)=>`<div><h4>${title}</h4><div class="dtideUsageCards">${arr.map(x=>`<div class="dtideUsage"><div class="dtideChar">${x.image?`<img class="dtideGearIcon" src="${esc(x.image)}" data-fallback="${esc(x.fallbackImage||'')}" referrerpolicy="no-referrer" onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.hidden=true}" alt="">`:''}<span><b>${esc(x.name)}</b><small>${x.count} ${ui('次','times')}</small></span></div><strong>${pct(x.ratePct)}</strong></div>`).join('')||`<div class="dtideEmpty">${ui('当前详细样本暂无记录','No records in the current detailed sample')}</div>`}</div></div>`,tr=document.createElement('tr');tr.className='dtideMatrixDetailRow';tr.dataset.for=btn.dataset.matrixCharacter;tr.innerHTML=`<td colspan="${waves.length+(entity==='character'?3:2)}"><div class="dtideInlineDetail">${section(ui('Top 5 队友配置出场率','Top 5 Teammate Appearance Rate'),d.teammates)}${section(ui('命轮出场率','Wheel Appearance Rate'),d.wheels)}${section(ui('密契出场率','Covenant Appearance Rate'),d.covenants)}${characterInsightHtml(d)}${section(zh()?'Top 5 造物 <small>剔除任一波次100%固定造物、锈蚀钥匙及其他角色维度影像；按当前筛选范围使用率排序</small>':'Top 5 Creations <small>Excludes 100%-fixed Creations, Rusted Key, and other Awakeners’ Dimensional Images; sorted by usage in the current scope.</small>',d.creations)}${section(ui('Top 5 钥令','Top 5 Posse'),d.tokens)}</div></td>`;btn.closest('tr').insertAdjacentElement('afterend',tr);btn.setAttribute('aria-expanded','true')};
   }
   function compareTable(labels,groups){
-    const union=new Map();for(const g of groups)for(const c of g.characters)union.set(c.key,c);const rows=[...union.values()].map(c=>({...c,total:groups.reduce((s,g)=>s+(g.characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total).slice(0,50);if(!rows.length)return '<div class="dtideEmpty">暂无记录。</div>';
-    return `<table class="dtideTable"><thead><tr><th>角色</th>${labels.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(c=>`<tr><td>${esc(c.name)}</td>${groups.map(g=>{const h=g.characters.find(x=>x.key===c.key);return `<td class="dtideRate">${pct(h?.teamRatePct||0)}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;
+    const union=new Map();for(const g of groups)for(const c of g.characters)union.set(c.key,c);
+    const rows=[...union.values()].map(c=>({...c,total:groups.reduce((s,g)=>s+(g.characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total).slice(0,50);
+    if(!rows.length)return `<div class="dtideEmpty">${ui('暂无记录。','No records.')}</div>`;
+    return `<table class="dtideTable"><thead><tr><th>${ui('角色','Awakener')}</th>${labels.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(c=>`<tr><td>${esc(c.name)}</td>${groups.map(g=>{const h=g.characters.find(x=>x.key===c.key);return `<td class="dtideRate">${pct(h?.teamRatePct||0)}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;
   }
   function renderComparisons(){
     const wave='all',ct=$('dtideClearType')?.value||'all',difficulty=$('dtideDifficulty')?.value||'all',cap=selectedRankCap();
     if($('dtideRankCompare'))$('dtideRankCompare').innerHTML=compareTable(rankCaps.map(coverageLabel),rankCaps.map(x=>group(scopedRows({cap:x,difficulty,wave,clearType:ct}))));
-    if($('dtideDifficultyCompare'))$('dtideDifficultyCompare').innerHTML=compareTable(diffs.map(x=>diffZh[x]),diffs.map(x=>group(scopedRows({cap,difficulty:x,wave,clearType:ct}))));
+    if($('dtideDifficultyCompare'))$('dtideDifficultyCompare').innerHTML=compareTable(diffs.map(x=>(zh()?diffZh:diffEn)[x]),diffs.map(x=>group(scopedRows({cap,difficulty:x,wave,clearType:ct}))));
   }
   function renderEnlight(){
     $('dtideUsageEnlight')?.remove();
