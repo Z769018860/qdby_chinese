@@ -1,6 +1,7 @@
 (()=>{
   const $=id=>document.getElementById(id);
   const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEnglish()?en:zh;
   const recordCache=new Map();
   let currentAwakener=null,currentSkills=[],currentSkill=null,currentTalents=[],currentEnlightens=[],currentOverlays=[];
   let wheelCatalog=[],covenantCatalog=[],relicCatalog=[],gameplayMathMeta=null,currentWheels=[null,null],currentCovenant=null,currentSignatureRelic=null;
@@ -400,8 +401,11 @@
     if(zhSkillNames[skill?.id])return zhSkillNames[skill.id];
     return skill?.name||'技能';
   }
+  const slotEn={Strike:'Strike',Defense:'Defense',Rouse:'Rouse',Skill1:'Skill 1',Skill2:'Skill 2',Exalt:'Exalt',OverExalt:'Over-Exalt'};
   function skillLabel(skill){
-    const slot=skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||'技能');
+    const slot=isEnglish()
+      ?(skill?.kind==='derivedSkill'?'Derived Card':(slotEn[skill?.slot]||'Skill'))
+      :(skill?.kind==='derivedSkill'?'衍生卡':(slotZh[skill?.slot]||'技能'));
     const title=localizedSkillName(skill);
     return !title||title===slot?slot:`${slot} · ${title}`;
   }
@@ -500,7 +504,12 @@
   const characterLevelControl=()=>$('charLevel')||$('skeydbCharacterLevel');
   function fillRange(select,label,max){
     if(!select)return;const previous=Math.min(max,Math.max(0,Number(select.value)||0));select.innerHTML='';
-    for(let i=0;i<=max;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`${i} · ${i===0?'未启用':label+' '+i}`;option.selected=i===previous;select.appendChild(option)}
+    const englishLabel=label==='内在灵格'?'Inner Spirit':label==='灵塑'?'Soulforge':label;
+    for(let i=0;i<=max;i++){
+      const option=document.createElement('option');option.value=String(i);
+      option.textContent=`${i} · ${i===0?ui('未启用','Disabled'):(isEnglish()?englishLabel:label)+' '+i}`;
+      option.selected=i===previous;select.appendChild(option)
+    }
   }
   function removeLegacyDeadControls(){
     const fateRank=$('fateRank')?.closest('.field');if(fateRank)fateRank.remove();
@@ -515,21 +524,46 @@
     const legacy=$('charLevel'),duplicate=$('skeydbCharacterLevel');
     if(legacy&&duplicate&&legacy!==duplicate)duplicate.closest('.field')?.remove();
     const level=characterLevelControl();
-    if(level?.tagName==='SELECT'){const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`等级 ${i}`;option.selected=i===previous;level.appendChild(option)}}
+    if(level?.tagName==='SELECT'){
+      const previous=Math.min(90,Math.max(1,Number(level.value)||90));level.innerHTML='';
+      for(let i=1;i<=90;i++){const option=document.createElement('option');option.value=String(i);option.textContent=isEnglish()?`Lv. ${i}`:`等级 ${i}`;option.selected=i===previous;level.appendChild(option)}
+    }
     const innerField=$('innerSpirit')?.closest('.field');
-    if(innerField){const label=innerField.querySelector('label');if(label)label.textContent='内在灵格';let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}note.textContent='按“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式；限定唤醒体固定为 5 且不可调整，常驻/福利唤醒体可按实际进度选择。'}
+    if(innerField){
+      const label=innerField.querySelector('label');if(label)label.textContent=ui('内在灵格','Inner Spirit');
+      let note=innerField.querySelector('small');if(!note){note=document.createElement('small');innerField.appendChild(note)}
+      note.textContent=ui('按“内在灵格”天赋换算为基础属性等级，再参与体质、攻击、防御成长公式；限定唤醒体固定为 5 且不可调整，常驻/福利唤醒体可按实际进度选择。','Inner Spirit converts its talent level into base-stat levels before CON, ATK, and DEF growth. Limited Awakeners are fixed at 5; permanent/free Awakeners can use their actual progression.');
+    }
     const normalizedInner=$('innerSpirit');
     if(normalizedInner&&isLimitedAwakener()){
-      normalizedInner.innerHTML='<option value="5">5 · 内在灵格 5（限定固定）</option>';
-      normalizedInner.value='5';
-      normalizedInner.disabled=true;
-      normalizedInner.title='限定唤醒体的内在灵格固定为 5，不可调整';
+      normalizedInner.innerHTML=`<option value="5">${isEnglish()?'5 · Inner Spirit 5 (fixed for limited Awakener)':'5 · 内在灵格 5（限定固定）'}</option>`;
+      normalizedInner.value='5';normalizedInner.disabled=true;
+      normalizedInner.title=ui('限定唤醒体的内在灵格固定为 5，不可调整','Limited Awakeners have Inner Spirit fixed at 5.');
     }else{
       fillRange(normalizedInner,'内在灵格',5);
       if(normalizedInner){normalizedInner.disabled=false;normalizedInner.title=''}
     }
-    if(!$('characterSculpt')){const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt">灵塑</label><select id="characterSculpt"></select><small>按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。</small>';inner.insertAdjacentElement('afterend',wrap)}}
-    if(!$('soulforgeActive')){const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> 按星辰篇关卡环境启用灵塑效果</label><small>灵塑天赋仅在“星辰篇”关卡生效；取消勾选后保留灵塑等级但不把其数值计入伤害。</small>';sculpt.insertAdjacentElement('afterend',wrap)}}
+    if(!$('characterSculpt')){
+      const inner=$('innerSpirit')?.closest('.field'),wrap=document.createElement('div');
+      if(inner){wrap.className='field';wrap.innerHTML='<label for="characterSculpt"></label><select id="characterSculpt"></select><small></small>';inner.insertAdjacentElement('afterend',wrap)}
+    }
+    const sculptField=$('characterSculpt')?.closest('.field');
+    if(sculptField){
+      const label=sculptField.querySelector('label');if(label)label.textContent=ui('灵塑','Soulforge');
+      let note=sculptField.querySelector('small');if(!note){note=document.createElement('small');sculptField.appendChild(note)}
+      note.textContent=ui('按 SKeyDB 灵塑适性计算主属性百分比与可明确解析的专属伤害效果。','Uses SKeyDB Soulforge aptitude to resolve primary-stat percentages and explicitly supported signature damage effects.');
+      const sculpt=$('characterSculpt');if(sculpt)for(const option of sculpt.options){const value=Number(option.value)||0;option.textContent=value===0?ui('0 · 未启用','0 · Disabled'):ui(`${value} · 灵塑 ${value}`,`${value} · Soulforge ${value}`)}
+    }
+    if(!$('soulforgeActive')){
+      const sculpt=$('characterSculpt')?.closest('.field'),wrap=document.createElement('div');
+      if(sculpt){wrap.className='field full';wrap.innerHTML='<label class="inlineCheck"><input id="soulforgeActive" type="checkbox" checked> <span id="soulforgeActiveLabel"></span></label><small></small>';sculpt.insertAdjacentElement('afterend',wrap)}
+    }
+    const soulforgeField=$('soulforgeActive')?.closest('.field');
+    if(soulforgeField){
+      const label=soulforgeField.querySelector('#soulforgeActiveLabel');if(label)label.textContent=ui('按星辰篇关卡环境启用灵塑效果','Enable Soulforge effects for Star Chapter stage conditions');
+      let note=soulforgeField.querySelector('small');if(!note){note=document.createElement('small');soulforgeField.appendChild(note)}
+      note.textContent=ui('灵塑天赋仅在“星辰篇”关卡生效；取消勾选后保留灵塑等级但不把其数值计入伤害。','Soulforge talents apply only in Star Chapter stages. Disabling this keeps the Soulforge level selected but excludes its values from damage.');
+    }
   }
 
   const ENLIGHTEN_ORDER=['E1','E2','E3','OverExalt','AbsoluteAxiom'];
@@ -635,9 +669,15 @@
   function configurePsycheSurgeControl(reset=false){
     const sel=$('psycheSurgeLevel');if(!sel)return;const unlocked=psycheSurgeUnlocked();
     if(reset||!unlocked)sel.value='0';sel.disabled=!unlocked;
-    sel.title=unlocked?'启灵3后可按实际副属性成长档位选择 0–12':'达到启灵3后解锁该成长档';
+    sel.title=unlocked?ui('启灵3后可按实际副属性成长档位选择 0–12','After E3, select the actual substat growth tier from 0–12'):ui('达到启灵3后解锁该成长档','This growth tier unlocks at E3');
   }
   function enlightenSlotLabel(slot){
+    if(isEnglish()){
+      if(slot==='OverExalt')return 'Over-Exalt';
+      if(slot==='AbsoluteAxiom')return 'Absolute Axiom';
+      if(slot==='E1'||slot==='E2'||slot==='E3')return slot;
+      return slot;
+    }
     if(slot==='OverExalt')return '+4 · 超限';
     if(slot==='AbsoluteAxiom')return '最终法则';
     if(slot==='E1')return '启灵1';
@@ -647,45 +687,57 @@
   }
   function configureEnlightenControl(resetCharacterSpecific=false){
     ensureEnlightenUi();const sel=$('charEnlighten');if(!sel)return;const prev=resetCharacterSpecific?'':sel.value;
-    sel.innerHTML='<option value="">未启灵</option>';
+    sel.innerHTML=`<option value="">${ui('未启灵','No Enlighten')}</option>`;
     for(const slot of ['E1','E2','E3','OverExalt','AbsoluteAxiom']){
       if(!currentEnlightens.some(x=>x.slot===slot))continue;
       const o=document.createElement('option');o.value=slot;o.textContent=enlightenSlotLabel(slot);o.selected=prev===slot;sel.appendChild(o);
     }
-    if(!Array.from(sel.options).some(o=>o.value===prev))sel.value='';configurePsycheSurgeControl(resetCharacterSpecific);renderEnlightenSummary();
+    if(!Array.from(sel.options).some(o=>o.value===prev))sel.value='';
+    configurePsycheSurgeControl(resetCharacterSpecific);renderEnlightenSummary();
   }
   function renderEnlightenSummary(){
     const box=$('enlightenDesc');if(!box)return;const active=activeEnlightens();
-    box.innerHTML=active.length?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>：'+renderRichRecord(x,1)).join('<br><br>'):'未启灵：当前不应用启灵升级。';
+    box.innerHTML=active.length
+      ?active.map(x=>'<strong>'+escape(enlightenSlotLabel(x.slot)+(isEnglish()&&x.name?' · '+x.name:''))+'</strong>'+(isEnglish()?': ':'：')+renderRichRecord(x,1)).join('<br><br>')
+      :ui('未启灵：当前不应用启灵升级。','No Enlighten: no Enlighten upgrades are applied.');
   }
   function rouseActive(){return $('rouseActive')?.checked===true}
   function currentRouseSkill(){return currentSkills.find(x=>x.slot==='Rouse')||null}
   function ensureRouseUi(){
-    if($('rouseActive'))return;
-    const anchor=$('enlightenDesc')||$('charStatsSummary');if(!anchor)return;
-    const wrap=document.createElement('div');wrap.id='rouseStateBlock';wrap.className='field full calcResourceField isCalculated';wrap.style.marginTop='8px';
-    wrap.innerHTML='<label class="inlineCheck"><input id="rouseActive" type="checkbox"> 灵知觉醒已发动</label><small id="rouseStateNote">角色在灵知觉醒前后可能具有不同效果。勾选后，计算器会启用已明确接入的灵知觉醒乘区；不会自动猜测需要额外战斗时序的资源。</small>';
-    anchor.insertAdjacentElement('afterend',wrap);
-    $('rouseActive')?.addEventListener('change',()=>{renderRouseSummary();renderCharacterResourceControls(false);updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    let wrap=$('rouseStateBlock');
+    if(!wrap){
+      const anchor=$('enlightenDesc')||$('charStatsSummary');if(!anchor)return;
+      wrap=document.createElement('div');wrap.id='rouseStateBlock';wrap.className='field full calcResourceField isCalculated';wrap.style.marginTop='8px';
+      wrap.innerHTML='<label class="inlineCheck"><input id="rouseActive" type="checkbox"> <span id="rouseStateLabel"></span></label><small id="rouseStateNote"></small>';
+      anchor.insertAdjacentElement('afterend',wrap);
+      $('rouseActive')?.addEventListener('change',()=>{renderRouseSummary();renderCharacterResourceControls(false);updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    }
+    const label=$('rouseStateLabel');if(label)label.textContent=ui('灵知觉醒已发动','Rouse Active');
+    return wrap;
   }
   function renderRouseSummary(){
-    ensureRouseUi();
-    const note=$('rouseStateNote');if(!note)return;
-    const rouse=currentRouseSkill();
-    const state=rouseActive()?'已发动':'未发动';
-    const desc=rouse?renderRichRecord(resolveSkillEnlighten(rouse),1):escape('当前角色的灵知觉醒技能资料尚未加载。');
-    note.innerHTML='<strong>当前：'+escape(state)+'。</strong>'+desc+escape(rouseActive()?' · 已明确接入的伤害乘区会参与计算。':' · 灵知觉醒后的专属效果不会参与计算。');
+    ensureRouseUi();const note=$('rouseStateNote');if(!note)return;
+    const rouse=currentRouseSkill(),state=rouseActive()?ui('已发动','Active'):ui('未发动','Inactive');
+    const desc=rouse?renderRichRecord(resolveSkillEnlighten(rouse),1):escape(ui('当前角色的灵知觉醒技能资料尚未加载。','This Awakener’s Rouse skill record has not loaded yet.'));
+    note.innerHTML='<strong>'+escape(isEnglish()?`Current: ${state}. `:`当前：${state}。`)+'</strong>'+desc+escape(rouseActive()?ui(' · 已明确接入的伤害乘区会参与计算。',' · Explicitly supported damage layers are included.'):ui(' · 灵知觉醒后的专属效果不会参与计算。',' · Rouse-specific effects are excluded while inactive.'));
   }
   function ensureSkillRuntimeUi(){
-    if($('skillRuntimeBlock'))return;
-    const anchor=$('skillDesc');if(!anchor)return;
-    const block=document.createElement('div');
-    block.id='skillRuntimeBlock';block.className='formGrid';block.style.marginTop='10px';block.hidden=true;
-    block.innerHTML='<div class="field" id="skillActualHitsField"><label for="skillActualHits">本次实际伤害段数</label><input id="skillActualHits" type="number" min="1" step="1" placeholder="按技能默认/最低段数"><small>仅在随机段数、X+N、首领战/低生命额外段数等动态技能中出现；填写后覆盖该技能唯一伤害事件的段数。</small></div><div class="field full"><div class="desc" id="skillRuntimeWarnings"></div></div>';
-    anchor.insertAdjacentElement('afterend',block);
-    const rerun=()=>{if(currentSkill)updateSkillLevel()};
-    $('skillActualHits')?.addEventListener('input',rerun,{capture:true});
-    $('skillActualHits')?.addEventListener('change',rerun,{capture:true});
+    let block=$('skillRuntimeBlock');
+    if(!block){
+      const anchor=$('skillDesc');if(!anchor)return;
+      block=document.createElement('div');block.id='skillRuntimeBlock';block.className='formGrid';block.style.marginTop='10px';block.hidden=true;
+      block.innerHTML='<div class="field" id="skillActualHitsField"><label for="skillActualHits"></label><input id="skillActualHits" type="number" min="1" step="1"><small></small></div><div class="field full"><div class="desc" id="skillRuntimeWarnings"></div></div>';
+      anchor.insertAdjacentElement('afterend',block);
+      const rerun=()=>{if(currentSkill)updateSkillLevel()};
+      $('skillActualHits')?.addEventListener('input',rerun,{capture:true});$('skillActualHits')?.addEventListener('change',rerun,{capture:true});
+    }
+    const field=$('skillActualHitsField');
+    if(field){
+      const label=field.querySelector('label');if(label)label.textContent=ui('本次实际伤害段数','Actual Hit Count');
+      const input=$('skillActualHits');if(input)input.placeholder=ui('按技能默认/最低段数','Use skill default/minimum hits');
+      const small=field.querySelector('small');if(small)small.textContent=ui('仅在随机段数、X+N、首领战/低生命额外段数等动态技能中出现；填写后覆盖该技能唯一伤害事件的段数。','Shown only for dynamic hit-count skills such as random hits, X+N, boss-only, or low-HP extra hits. Entering a value overrides the hit count of the skill’s single damage event.');
+    }
+    return block;
   }
 
   const resourceSpecs={
@@ -787,6 +839,33 @@
       {overlayId:'overlay.murphy-fauxborn.life-seal',key:'lifeSealStacks',label:'生命封印',min:0,max:5,calculated:true,description:'每层使下一次「妄想公主」施加的诞生仪式 +20%；灵塑启用时该增幅翻倍。5 层时该技能伤害段数翻倍。'}
     ]
   };
+  const resourceSpecEnglish={
+    twistedCarrionPriorUses:{label:'Prior Twisted Carrion Revel uses this battle',description:'Enter uses completed before the current cast. Each prior use increases later casts’ Base DMG by 20%; the current cast does not retroactively increase itself.'},
+    twentyFourOverExaltPriorUses:{label:'Prior Aberrant Vivisection uses this battle',description:'Each completed Over-Exalt grants 24 Realm Mastery. Enter only uses completed before the current resolution.'},
+    twentyFourTripleNextCommandActive:{label:'After Over-Exalt: current card is the next triple-resolving Command',description:'After Aberrant Vivisection, “24”’s next Command resolves 3 times. Enable only for that specific card.'},
+    twentyFourRousePosseUses:{label:'Posse uses since Rouse (Chaos)',description:'Enter Posse uses completed before the current Exalt for the Chaos Rouse Final DMG scaling.'},
+    twentyFourRouseArithmeticaConsumed:{label:'Arithmetica consumed since Rouse (Caro)',description:'Enter Arithmetica already consumed before the current skill resolves; the Caro Rouse converts it into STR from ATK.'},
+    singularityWarpActive:{label:'Singularity Warp triggered',description:'Marks whether the current Exalt satisfies Singularity Warp. Additional effects follow the source Exalt text.'},
+    evernightPriorPlays:{label:'Evernight plays earlier this turn',description:'From E3 onward, later Evernight cards gain the additional STR scaling. Enter how many Evernight cards were played earlier this turn.'},
+    polluxCommandFinalBonusPct:{label:'Extra Command Final DMG bonus',inputLabel:'Extra Command Final DMG bonus %',description:'Enter the Final DMG bonus currently active for Command cards. The calculator does not guess which source tier produced it.'},
+    atonementByPainActive:{label:'Atonement by Pain active',description:'Adds one Atonement by Pain resolution to the current Command, using its supported ATK scaling and battle-growth rules.'},
+    atonementByPainDouble:{label:'E3: Atonement by Pain resolves twice',description:'Enable when E3 causes Atonement by Pain to resolve twice for the current calculation.'},
+    clementineFirstCommandRouse:{label:'Current card is the first Command this turn',description:'Enable only when the current card is the first Command played this turn while the relevant Rouse effect is active.'},
+    ramonaPosseUses:{label:'Posse uses this battle',description:'Enter the number of Posse uses already completed this battle for effects that scale with prior Posse uses.'},
+    vortexShellDoubleRemaining:{label:'Remaining double-trigger Vortex Shell uses',description:'Enter how many Vortex Shell resolutions still receive the Over-Exalt double-trigger effect.'},
+    endureConversionBoostStacks:{label:'Absolute Axiom: Endure conversion boost',description:'Enter the active boost stacks for the next Strike to Protect while the Absolute Axiom Rouse effect is active.'},
+    xuFirstCommandRouse:{label:'Absolute Axiom: current card is the first Command this turn',description:'Xu’s first Command each turn resolves one extra time during the relevant Rouse state. Enable only for that card.'},
+    helotRouseTurnStarts:{label:'Reaper’s Declaration turn-start triggers',description:'Enter how many turn starts have triggered Reaper’s Declaration. Repeated Base DMG growth is accumulated from the source skill values.'},
+    helotHatredBelowHalfHp:{label:'Hatred Unleashed: current HP below 50%',description:'E2: when HP is below 50%, the STR gained by Hatred Unleashed is doubled for this resolution.'},
+    helotOverExaltBuffActive:{label:'Over-Exalt Crit DMG +35% active',description:'Enable only while the +35% Crit DMG state from the Over-Exalt effect is currently active.'},
+    helotTemporaryEnhanceStacks:{label:'Temporary enhancement stacks on current Command',description:'Enter the temporary enhancement stacks actually held by the current Command during the Absolute Axiom Rouse state (max 50).'},
+    helotSanguineTurnActive:{label:'Sanguine Fetters Bleed effect active this turn',description:'Enable for later cards in the same turn after Sanguine Fetters has activated its on-Active-DMG Bleed effect.'}
+  };
+  function englishResourceOption(spec,value,label){
+    const common={depressed:'Depressed Persona',manic:'Manic Persona',anger:'Anger',fear:'Fear',grief:'Grief',happiness:'Happiness',betroth:'Betroth',enthrall:'Enthrall'};
+    if(String(value)==='')return spec?.key==='xuChoice'?'Not selected':'None';
+    return common[value]||label;
+  }
   function resolveOverlayEnlighten(baseOverlay){
     if(!baseOverlay)return baseOverlay;
     let next=cloneRecord(baseOverlay);
@@ -877,45 +956,35 @@
     ensureCharacterResourceUi();const block=$('characterResourceBlock');if(!block)return;
     const specs=currentResourceSpecs();
     if(!specs.length){block.innerHTML='';block.hidden=true;window.MorimensCharacterResources={awakenerId:currentAwakener?.id||null};return}
-    const previous=reset?{}:characterResourceValues();
-    block.innerHTML='';
+    const previous=reset?{}:characterResourceValues();block.innerHTML='';
     for(const spec of specs){
       const overlay=resolveOverlayEnlighten((currentOverlays||[]).find(x=>x.id===spec.overlayId));
+      const englishSpec=resourceSpecEnglish[spec.key]||{};
       const wrap=document.createElement('div');wrap.className='field calcResourceField'+(spec.calculated===true?' isCalculated':' isInformational');
-      const descriptionHtml=spec.description?escape(zhText(spec.description)):(overlay?renderRichRecord(overlay,1):escape('角色专属战斗资源。'));
-      const localizedSpecLabel=zhText(spec.label);
+      const descriptionHtml=isEnglish()
+        ?(overlay?renderRichRecord(overlay,1):escape(englishSpec.description||'Character-specific combat state.'))
+        :(spec.description?escape(zhText(spec.description)):(overlay?renderRichRecord(overlay,1):escape('角色专属战斗资源。')));
+      const localizedSpecLabel=isEnglish()?(overlay?.name||englishSpec.label||spec.label):zhText(spec.label);
       const labelHtml=overlay?termHtml(overlay.name,localizedSpecLabel):escape(localizedSpecLabel);
+      const suffix=spec.calculated===true?ui(' · 已接入伤害计算。',' · Applied to damage calculation.'):ui(' · 状态说明：当前不自动折算到总伤害。',' · Informational only; not automatically converted into total damage.');
       if(spec.type==='checkbox'){
-        const checked=Number(previous[spec.key])>0;
-        const dependentOff=!resourceDependencyEnabled(spec,previous);
-        wrap.classList.add('full');
-        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+' '+(dependentOff?'disabled':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
+        const checked=Number(previous[spec.key])>0,dependentOff=!resourceDependencyEnabled(spec,previous);wrap.classList.add('full');
+        wrap.innerHTML='<label class="inlineCheck"><input type="checkbox" data-resource-key="'+escape(spec.key)+'" '+(checked?'checked':'')+' '+(dependentOff?'disabled':'')+'> '+labelHtml+'</label><small>'+descriptionHtml+suffix+'</small>';
       }else if(spec.type==='select'){
-        const selected=String(previous[spec.key]??'');
-        const dependentOff=!resourceDependencyEnabled(spec,previous);
-        const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(label)+'</option>').join('');
-        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'" '+(dependentOff?'disabled':'')+'>'+options+'</select><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
+        const selected=String(previous[spec.key]??''),dependentOff=!resourceDependencyEnabled(spec,previous);
+        const options=(spec.options||[]).map(([value,label])=>'<option value="'+escape(value)+'" '+(String(value)===selected?'selected':'')+'>'+escape(isEnglish()?englishResourceOption(spec,value,label):label)+'</option>').join('');
+        wrap.innerHTML='<label>'+labelHtml+'</label><select data-resource-key="'+escape(spec.key)+'" '+(dependentOff?'disabled':'')+'>'+options+'</select><small>'+descriptionHtml+suffix+'</small>';
       }else{
-        const max=effectiveResourceMax(spec);const fallback=Number.isFinite(Number(spec.min))?Number(spec.min):0;const value=Math.min(max,Math.max(fallback,Number(previous[spec.key])||fallback));
-        const inputLabel=zhText(spec.inputLabel||spec.label+'数量');
+        const max=effectiveResourceMax(spec),fallback=Number.isFinite(Number(spec.min))?Number(spec.min):0,value=Math.min(max,Math.max(fallback,Number(previous[spec.key])||fallback));
+        const inputLabel=isEnglish()?(englishSpec.inputLabel||overlay?.name||englishSpec.label||spec.label):zhText(spec.inputLabel||spec.label+'数量');
         const dependentOff=!resourceDependencyEnabled(spec,previous);
-        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+(spec.calculated===true?' · 已接入伤害计算。':' · 状态说明：当前不自动折算到总伤害。')+'</small>';
+        wrap.innerHTML='<label>'+(overlay?termHtml(overlay.name,inputLabel):escape(inputLabel))+'</label><input type="number" min="'+spec.min+'" max="'+max+'" step="1" data-resource-key="'+escape(spec.key)+'" value="'+value+'" '+(dependentOff?'disabled':'')+'><small>'+descriptionHtml+suffix+'</small>';
       }
       block.appendChild(wrap);
     }
     block.hidden=false;
-    const syncDependencies=()=>{
-      const values=characterResourceValues();
-      for(const spec of currentResourceSpecs()){
-        if(!spec.dependsOn&&!spec.dependsOnControl)continue;
-        const input=block.querySelector('[data-resource-key="'+CSS.escape(spec.key)+'"]');
-        if(input)input.disabled=!resourceDependencyEnabled(spec,values);
-      }
-    };
-    block.querySelectorAll('[data-resource-key]').forEach(el=>{
-      const rerun=()=>{syncDependencies();updateSkillLevel();$('calcBtn')?.click()};
-      el.addEventListener('input',rerun,{capture:true});el.addEventListener('change',rerun,{capture:true});
-    });
+    const syncDependencies=()=>{const values=characterResourceValues();for(const spec of currentResourceSpecs()){if(!spec.dependsOn&&!spec.dependsOnControl)continue;const input=block.querySelector('[data-resource-key="'+CSS.escape(spec.key)+'"]');if(input)input.disabled=!resourceDependencyEnabled(spec,values)}};
+    block.querySelectorAll('[data-resource-key]').forEach(el=>{const rerun=()=>{syncDependencies();updateSkillLevel();$('calcBtn')?.click()};el.addEventListener('input',rerun,{capture:true});el.addEventListener('change',rerun,{capture:true})});
     syncDependencies();
   }
   function resolvedOverlay(id){
@@ -1545,58 +1614,47 @@
     const inner=$('innerSpirit'),sculpt=$('characterSculpt');
     const innerMax=state?.gnosticMax||0,sculptMax=state?.soulforgeMax||0;
     if(inner){
-      const limited=isLimitedAwakener();
-      inner.innerHTML='';
+      const previous=resetCharacterSpecific?0:Math.min(innerMax,Math.max(0,Number(inner.value)||0));
+      const limited=isLimitedAwakener();inner.innerHTML='';
       if(limited&&innerMax>=5){
-        inner.innerHTML='<option value="5">5 · 内在灵格 5（限定固定）</option>';
-        inner.value='5';
-        inner.disabled=true;
-        inner.title='限定唤醒体的内在灵格固定为 5，不可调整';
+        inner.innerHTML=`<option value="5">${isEnglish()?'5 · Inner Spirit 5 (fixed for limited Awakener)':'5 · 内在灵格 5（限定固定）'}</option>`;
+        inner.value='5';inner.disabled=true;inner.title=ui('限定唤醒体的内在灵格固定为 5，不可调整','Limited Awakeners have Inner Spirit fixed at 5.');
       }else{
-        for(let i=0;i<=innerMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 内在灵格 ${i}`;inner.appendChild(o)}
-        if(!innerMax)inner.innerHTML='<option value="0">0 · 无内在灵格数据</option>';
-        inner.value='0';
-        inner.disabled=!innerMax;
-        inner.title='';
+        for(let i=0;i<=innerMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?ui('0 · 未启用','0 · Disabled'):ui(`${i} · 内在灵格 ${i}`,`${i} · Inner Spirit ${i}`);o.selected=i===previous;inner.appendChild(o)}
+        if(!innerMax)inner.innerHTML=`<option value="0">${ui('0 · 无内在灵格数据','0 · No Inner Spirit data')}</option>`;
+        inner.value=String(Math.min(innerMax,previous));inner.disabled=!innerMax;inner.title='';
       }
     }
     if(sculpt){
-      const previous=resetCharacterSpecific?0:Math.min(sculptMax,Math.max(0,Number(sculpt.value)||0));
-      sculpt.innerHTML='';
-      for(let i=0;i<=sculptMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 未启用':`${i} · 灵塑 ${i}`;o.selected=i===previous;sculpt.appendChild(o)}
-      if(!sculptMax)sculpt.innerHTML='<option value="0">0 · 无灵塑数据</option>';
+      const previous=resetCharacterSpecific?0:Math.min(sculptMax,Math.max(0,Number(sculpt.value)||0));sculpt.innerHTML='';
+      for(let i=0;i<=sculptMax;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?ui('0 · 未启用','0 · Disabled'):ui(`${i} · 灵塑 ${i}`,`${i} · Soulforge ${i}`);o.selected=i===previous;sculpt.appendChild(o)}
+      if(!sculptMax)sculpt.innerHTML=`<option value="0">${ui('0 · 无灵塑数据','0 · No Soulforge data')}</option>`;
     }
   }
   function renderProgressionSummary(stats,progression){
     const box=$('charStatsSummary');if(!box)return;
-    const chips=[
-      `攻击力 ${Math.round(stats.ATK)}`,
-      `体质 ${Math.round(stats.CON)}`,
-      `防御力 ${Math.round(stats.DEF)}`,
-      `暴击率 ${num(stats.CritRate).toFixed(1)}%`,
-      `暴击伤害 ${(100+num(stats.CritDamage)).toFixed(1)}%`,
-      `伤害强效 ${num(stats.DamageAmplification).toFixed(1)}%`
+    const chips=isEnglish()?[
+      `ATK ${Math.round(stats.ATK)}`,`CON ${Math.round(stats.CON)}`,`DEF ${Math.round(stats.DEF)}`,
+      `Crit Rate ${num(stats.CritRate).toFixed(1)}%`,`Crit DMG ${(100+num(stats.CritDamage)).toFixed(1)}%`,`Damage Amplification ${num(stats.DamageAmplification).toFixed(1)}%`
+    ]:[
+      `攻击力 ${Math.round(stats.ATK)}`,`体质 ${Math.round(stats.CON)}`,`防御力 ${Math.round(stats.DEF)}`,
+      `暴击率 ${num(stats.CritRate).toFixed(1)}%`,`暴击伤害 ${(100+num(stats.CritDamage)).toFixed(1)}%`,`伤害强效 ${num(stats.DamageAmplification).toFixed(1)}%`
     ];
-    if(progression.gnosticLevel)chips.push(`内在灵格 ${progression.gnosticLevel}：基础属性等级 +${progression.bonusLevels}`);
-    if(progression.psycheSurgeLevel)chips.push(`启灵后副属性成长 ${progression.psycheSurgeLevel} 档：按角色副属性成长系数继续成长`);
+    if(progression.gnosticLevel)chips.push(isEnglish()?`Inner Spirit ${progression.gnosticLevel}: base-stat level +${progression.bonusLevels}`:`内在灵格 ${progression.gnosticLevel}：基础属性等级 +${progression.bonusLevels}`);
+    if(progression.psycheSurgeLevel)chips.push(isEnglish()?`Post-E3 substat growth tier ${progression.psycheSurgeLevel}: uses this Awakener's substat growth coefficients`:`启灵后副属性成长 ${progression.psycheSurgeLevel} 档：按角色副属性成长系数继续成长`);
     if(progression.soulforgeLevel){
-      chips.push(`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
-      if(progression.flatAtkDamagePct)chips.push(`灵塑专属：伤害额外增加攻击力的 ${progression.flatAtkDamagePct}%`);
-      if(progression.baseDamagePct)chips.push(`灵塑专属：基础伤害 +${progression.baseDamagePct}%`);
-      if(progression.scopedFixedDamagePct&&progression.scopedFixedDamageSkillName)chips.push(`灵塑专属：${progression.scopedFixedDamageSkillName} 固定伤害 +${progression.scopedFixedDamagePct}%`);
+      chips.push(isEnglish()?`Soulforge ${progression.soulforgeLevel}: primary stats +${progression.soulforgePct}%${progression.soulforgeEnabled?'':' (disabled)'}`:`灵塑 ${progression.soulforgeLevel}：主属性 +${progression.soulforgePct}%${progression.soulforgeEnabled?'':'（当前未启用）'}`);
+      if(progression.flatAtkDamagePct)chips.push(isEnglish()?`Soulforge signature: extra damage equal to ${progression.flatAtkDamagePct}% ATK`:`灵塑专属：伤害额外增加攻击力的 ${progression.flatAtkDamagePct}%`);
+      if(progression.baseDamagePct)chips.push(isEnglish()?`Soulforge signature: Base DMG +${progression.baseDamagePct}%`:`灵塑专属：基础伤害 +${progression.baseDamagePct}%`);
+      if(progression.scopedFixedDamagePct&&progression.scopedFixedDamageSkillName)chips.push(isEnglish()?`Soulforge signature: ${progression.scopedFixedDamageSkillName} Fixed DMG +${progression.scopedFixedDamagePct}%`:`灵塑专属：${progression.scopedFixedDamageSkillName} 固定伤害 +${progression.scopedFixedDamagePct}%`);
     }
     box.innerHTML=chips.map(x=>`<span class="chip">${escape(x)}</span>`).join('');
-
     let desc=$('progressionDesc');
     if(!desc){desc=document.createElement('div');desc.id='progressionDesc';desc.className='desc';desc.style.marginTop='8px';box.insertAdjacentElement('afterend',desc)}
     const details=[];
-    if(progression.gnosticTalent&&progression.gnosticLevel){
-      details.push(`<strong>内在灵格：</strong>${renderRichRecord(progression.gnosticTalent,progression.gnosticLevel)}`);
-    }
-    if(progression.soulforgeTalent&&progression.soulforgeLevel){
-      details.push(`<strong>灵塑：</strong>${renderRichRecord(progression.soulforgeTalent,progression.soulforgeLevel)}`);
-    }
-    desc.innerHTML=details.length?details.join('<br><br>'):'内在灵格与灵塑均为 0，当前不产生额外成长加成。';
+    if(progression.gnosticTalent&&progression.gnosticLevel)details.push(`<strong>${ui('内在灵格：','Inner Spirit:')}</strong>${renderRichRecord(progression.gnosticTalent,progression.gnosticLevel)}`);
+    if(progression.soulforgeTalent&&progression.soulforgeLevel)details.push(`<strong>${ui('灵塑：','Soulforge:')}</strong>${renderRichRecord(progression.soulforgeTalent,progression.soulforgeLevel)}`);
+    desc.innerHTML=details.length?details.join('<br><br>'):ui('内在灵格与灵塑均为 0，当前不产生额外成长加成。','Inner Spirit and Soulforge are both 0; no additional progression bonuses are applied.');
     window.MorimensProgressionSync=progression;
   }
 
@@ -2113,15 +2171,22 @@
   function wheelDescription(rec,slot){return zhText(wheelDescriptionRaw(rec,slot))}
   function wheelDescriptionRich(rec,slot){if(!rec)return '';const stage=Math.min(15,Math.max(0,Number($(`fateLevel${slot+1}`)?.value)||0));return renderRichRecord(rec,Math.min(4,stage+1),{wheelRefinementLevel:Math.min(3,stage)})}
   function renderWheelsAndBonuses(){
-    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>：${wheelDescriptionRich(w,i)}`:'').filter(Boolean);if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):'可装备两个不同命轮。主属性按 SKeyDB 成长表读取；可可靠解析的基础伤害、伤害强效、暴击、界域精通与状态倍率自动计入；条件型效果在未确认触发时只展示、不强算。';recomputeGearBonuses();refreshBattleProgressionUi();
+    const texts=currentWheels.map((w,i)=>w?`<strong>${escape(labelForWheel(w))}</strong>${isEnglish()?': ':'：'}${wheelDescriptionRich(w,i)}`:'').filter(Boolean);
+    if($('fateDesc'))$('fateDesc').innerHTML=texts.length?texts.join('<br><br>'):ui('可装备两个不同命轮。主属性按 SKeyDB 成长表读取；可可靠解析的基础伤害、伤害强效、暴击、界域精通与状态倍率自动计入；条件型效果在未确认触发时只展示、不强算。','Equip up to two different Wheels. Main stats use the SKeyDB growth table; reliably parsed Base DMG, Damage Amplification, Crit, Realm Mastery, and state multipliers are applied automatically. Conditional effects are shown but not forced when their trigger is unconfirmed.');
+    recomputeGearBonuses();refreshBattleProgressionUi();
   }
 
   async function loadCovenant(){const id=$('contractSelect')?.value;currentCovenant=id?await fetchRecord('covenants',id):null;renderCovenantAndBonuses();updateSkillLevel()}
   function renderEffectRaw(effect){return renderTemplate(effect,1)}
   function renderEffect(effect){return zhText(renderEffectRaw(effect))}
   function renderCovenantAndBonuses(){
-    if(!currentCovenant){if($('contractDesc'))$('contractDesc').textContent='选择密契后默认按完整 6 件套读取：无条件效果直接计入；需要敌人生命区间、特定状态、回合时点等额外条件的效果，只有勾选“额外条件已满足”后才尝试解析。';recomputeGearBonuses();return}
-    const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} 件：</strong>${renderRichRecord(e,1)}`);if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;recomputeGearBonuses();
+    if(!currentCovenant){
+      if($('contractDesc'))$('contractDesc').textContent=ui('选择密契后默认按完整 6 件套读取：无条件效果直接计入；需要敌人生命区间、特定状态、回合时点等额外条件的效果，只有勾选“额外条件已满足”后才尝试解析。','A selected Covenant is treated as a complete 6-piece set by default. Unconditional effects are applied directly; effects requiring enemy HP ranges, states, or turn timing are parsed only after the additional-condition toggle is enabled.');
+      recomputeGearBonuses();return
+    }
+    const lines=(currentCovenant.setEffects||[]).map(e=>`<strong>${e.set} ${ui('件','pieces')}:</strong> ${renderRichRecord(e,1)}`);
+    if($('contractDesc'))$('contractDesc').innerHTML=`<strong>${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}</strong><br>${lines.join('<br>')}`;
+    recomputeGearBonuses();
   }
   function ensureSignatureRelicUi(){
     let panel=$('signatureRelicPanel');
@@ -2252,34 +2317,30 @@
     if(toggle)toggle.disabled=!currentSignatureRelic;
     if(!currentSignatureRelic){
       window.MorimensSignatureRelic={enabled:false,record:null,text:'',skillMods:null};
-      if(status)status.textContent='未匹配';
-      if(box)box.textContent='当前角色在本地 SKeyDB 中没有匹配到维度影像。';
-      if(applied){applied.classList.remove('isActive');applied.textContent='未启用，不计入伤害。'}
+      if(status)status.textContent=ui('未匹配','No match');
+      if(box)box.textContent=ui('当前角色在本地 SKeyDB 中没有匹配到维度影像。','No Dimensional Image is matched to this Awakener in the local SKeyDB snapshot.');
+      if(applied){applied.classList.remove('isActive');applied.textContent=ui('未启用，不计入伤害。','Disabled; not included in damage.')}
       return;
     }
-    const enabled=signatureRelicEnabled(),skillMods=signatureRelicSkillMods();
-    const relicRawName=currentSignatureRelic.name||'Dimensional Image';
+    const enabled=signatureRelicEnabled(),skillMods=signatureRelicSkillMods(),relicRawName=currentSignatureRelic.name||'Dimensional Image';
     const relicDisplayName=isEnglish()?relicRawName:'当前角色维度影像';
-    if(status)status.textContent=(enabled?'已启用 · ':'已匹配 · ')+relicRawName;
-    if(box)box.innerHTML=`<strong>${enabled?'已装备':'未装备'} · ${escape(relicDisplayName)}</strong>：${renderRichRecord(currentSignatureRelic,1)}<br><small>无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“启用”就常驻生效。</small>`;
-
+    if(status)status.textContent=(enabled?ui('已启用 · ','Enabled · '):ui('已匹配 · ','Matched · '))+relicRawName;
+    if(box)box.innerHTML=`<strong>${enabled?ui('已装备','Equipped'):ui('未装备','Not equipped')} · ${escape(relicDisplayName)}</strong>${isEnglish()?': ':'：'}${renderRichRecord(currentSignatureRelic,1)}<br><small>${ui('无条件且可可靠解析的伤害/属性修正会自动计入；第 N 次使用、目标状态、累计触发等条件型效果仅展示，不会因为勾选“启用”就常驻生效。','Unconditional, reliably parsed damage/stat modifiers are applied automatically. Conditional effects such as Nth use, target state, or accumulated triggers are displayed from the source but are not made permanent merely by enabling the item.')}</small>`;
     if(applied){
       applied.classList.toggle('isActive',enabled);
-      if(!enabled){
-        applied.textContent='未启用，不计入伤害。';
-      }else{
+      if(!enabled)applied.textContent=ui('未启用，不计入伤害。','Disabled; not included in damage.');
+      else{
         const safe=signatureRelicSafeGlobalBonuses();
-        const labels={base:'基础伤害',power:'伤害强效',critRate:'暴击率',critDamage:'暴击伤害',vulnerability:'易伤',final:'最终伤害',realmMastery:'界域精通',aliemusRegen:'狂气回充',keyflareRegen:'银钥充能',sigilYield:'黑印掉落',deathResistance:'死亡抵抗',poisonInfliction:'中毒施加',fixedPoisonInfliction:'固定中毒施加',poisonTrigger:'中毒触发',counterGeneration:'反击生成'};
+        const labels=isEnglish()
+          ?{base:'Base DMG',power:'Damage Amplification',critRate:'Crit Rate',critDamage:'Crit DMG',vulnerability:'Vulnerability',final:'Final DMG',realmMastery:'Realm Mastery',aliemusRegen:'Aliemus Regen',keyflareRegen:'Keyflare Regen',sigilYield:'Sigil Yield',deathResistance:'Death Resistance',poisonInfliction:'Poison Infliction',fixedPoisonInfliction:'Fixed Poison Infliction',poisonTrigger:'Poison Trigger',counterGeneration:'Counter Generation'}
+          :{base:'基础伤害',power:'伤害强效',critRate:'暴击率',critDamage:'暴击伤害',vulnerability:'易伤',final:'最终伤害',realmMastery:'界域精通',aliemusRegen:'狂气回充',keyflareRegen:'银钥充能',sigilYield:'黑印掉落',deathResistance:'死亡抵抗',poisonInfliction:'中毒施加',fixedPoisonInfliction:'固定中毒施加',poisonTrigger:'中毒触发',counterGeneration:'反击生成'};
         const parts=[];
-        for(const [key,label] of Object.entries(labels)){
-          const value=Number(safe.bonus?.[key])||0;
-          if(Math.abs(value)>1e-9)parts.push(label+' +'+Number(value.toFixed(2))+(key==='realmMastery'||key==='aliemusRegen'||key==='keyflareRegen'?'':'%'));
-        }
-        if(Number(safe.strengthFlat)>0)parts.push('回合开始力量 +'+Number(Number(safe.strengthFlat).toFixed(2)));
+        for(const [key,label] of Object.entries(labels)){const value=Number(safe.bonus?.[key])||0;if(Math.abs(value)>1e-9)parts.push(label+' +'+Number(value.toFixed(2))+(key==='realmMastery'||key==='aliemusRegen'||key==='keyflareRegen'?'':'%'))}
+        if(Number(safe.strengthFlat)>0)parts.push((isEnglish()?'Turn-start STR +':'回合开始力量 +')+Number(Number(safe.strengthFlat).toFixed(2)));
         if(skillMods.notes.length)parts.push(...skillMods.notes);
         applied.textContent=parts.length
-          ?'已计入：'+parts.join('；')
-          :'已启用。当前维度影像对所选技能没有可直接安全计入的伤害项；条件型效果不会自动强算。';
+          ?ui('已计入：','Applied: ')+parts.join(isEnglish()?'; ':'；')
+          :ui('已启用。当前维度影像对所选技能没有可直接安全计入的伤害项；条件型效果不会自动强算。','Enabled. This Dimensional Image has no damage modifier that can be safely applied directly to the selected skill; conditional effects are not forced.');
       }
     }
     window.MorimensSignatureRelic={enabled,record:currentSignatureRelic,text:signatureRelicRaw(),skillMods};
@@ -2398,27 +2459,30 @@
   }
   function renderAutoSummary(){
     const box=$('autoSummary');if(!box)return;
-    const labels=[['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['fixedPoisonInfliction','固定中毒施加'],['poisonTrigger','中毒触发'],['counterGeneration','反击生成']];
+    const labels=isEnglish()
+      ?[['power','Damage Amplification'],['critRate','Crit Rate'],['critDamage','Crit DMG'],['vulnerability','Vulnerability'],['final','Final DMG'],['realmMastery','Realm Mastery'],['aliemusRegen','Aliemus Regen Lv.'],['keyflareRegen','Keyflare Regen Lv.'],['sigilYield','Sigil Yield'],['deathResistance','Death Resistance'],['poisonInfliction','Poison Infliction'],['fixedPoisonInfliction','Fixed Poison Infliction'],['poisonTrigger','Poison Trigger'],['counterGeneration','Counter Generation']]
+      :[['power','伤害强效'],['critRate','暴击率'],['critDamage','暴击伤害'],['vulnerability','易伤'],['final','最终伤害'],['realmMastery','界域精通'],['aliemusRegen','狂气回充等级'],['keyflareRegen','银钥充能等级'],['sigilYield','黑印掉落'],['deathResistance','死亡抵抗'],['poisonInfliction','中毒施加'],['fixedPoisonInfliction','固定中毒施加'],['poisonTrigger','中毒触发'],['counterGeneration','反击生成']];
     const percentKeys=new Set(['power','critRate','critDamage','vulnerability','final','sigilYield','deathResistance','poisonInfliction','fixedPoisonInfliction','poisonTrigger','counterGeneration']);
     const rows=labels.filter(([k])=>Math.abs(auto[k])>1e-9).map(([k,n])=>`<span class="chip">${n} +${auto[k].toFixed(2)}${percentKeys.has(k)?'%':''}</span>`);
-    const phases=window.MorimensGearEffects?.baseDamagePhases||{};
-    const autoOut=num(phases.outOfBattle?.total),autoIn=num(phases.inBattle?.total);
-    if(Math.abs(autoIn)>1e-9)rows.unshift(`<span class="chip">自动局内基础伤害 +${autoIn.toFixed(2)}%</span>`);
-    if(Math.abs(autoOut)>1e-9)rows.unshift(`<span class="chip">自动局外基础伤害 +${autoOut.toFixed(2)}%</span>`);
+    const phases=window.MorimensGearEffects?.baseDamagePhases||{},autoOut=num(phases.outOfBattle?.total),autoIn=num(phases.inBattle?.total);
+    if(Math.abs(autoIn)>1e-9)rows.unshift(`<span class="chip">${ui('自动局内基础伤害','Auto In-Battle Base DMG')} +${autoIn.toFixed(2)}%</span>`);
+    if(Math.abs(autoOut)>1e-9)rows.unshift(`<span class="chip">${ui('自动局外基础伤害','Auto Out-of-Battle Base DMG')} +${autoOut.toFixed(2)}%</span>`);
     const phaseSummary=$('basePhaseSummary');
-    if(phaseSummary)phaseSummary.textContent=`已自动识别：局外基础伤害 +${autoOut.toFixed(2)}%，局内基础伤害 +${autoIn.toFixed(2)}%。命轮、密契等可解析的常驻效果无需重复填写；上方两个输入框只补充额外数值。`;
+    if(phaseSummary)phaseSummary.textContent=isEnglish()
+      ?`Auto-detected: Out-of-Battle Base DMG +${autoOut.toFixed(2)}%, In-Battle Base DMG +${autoIn.toFixed(2)}%. Parsed permanent Wheel/Covenant effects do not need to be entered again; use the two fields above only for extra values.`
+      :`已自动识别：局外基础伤害 +${autoOut.toFixed(2)}%，局内基础伤害 +${autoIn.toFixed(2)}%。命轮、密契等可解析的常驻效果无需重复填写；上方两个输入框只补充额外数值。`;
     for(const x of wheelMainstatSummary){
       const suffix=['CRIT_RATE','CRIT_DMG','DMG_AMP','SIGIL_YIELD','DEATH_RESISTANCE'].includes(x.key)?'%':'';
       rows.push(`<span class="chip">${escape(labelForWheel(x.wheel))} ${wheelEnhanceLabel(x.level)} · ${wheelMainstatLabels[x.key]||x.key} +${x.value.toFixed(2)}${suffix}</span>`);
     }
-    rows.unshift(`<span class="chip">命轮 ${currentWheels.filter(Boolean).length}/2</span>`);
-    if(currentCovenant)rows.push(`<span class="chip">密契 6 件套：${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}${$('contractConditional')?.checked?' · 额外条件已满足':''}</span>`);
+    rows.unshift(`<span class="chip">${ui('命轮','Wheels')} ${currentWheels.filter(Boolean).length}/2</span>`);
+    if(currentCovenant)rows.push(`<span class="chip">${ui('密契 6 件套：','Covenant 6-piece: ')}${escape(isEnglish()?currentCovenant.name:(zhCovenants[currentCovenant.name]||currentCovenant.name))}${$('contractConditional')?.checked?ui(' · 额外条件已满足',' · condition satisfied'):''}</span>`);
     if(signatureRelicEnabled()){
-      rows.push(`<span class="chip">专属造物：${escape(isEnglish()?(currentSignatureRelic?.name||'Dimensional Image'):'当前角色维度影像')}</span>`);
+      rows.push(`<span class="chip">${ui('专属造物：','Signature Creation: ')}${escape(isEnglish()?(currentSignatureRelic?.name||'Dimensional Image'):'当前角色维度影像')}</span>`);
       const signatureStrength=num(window.MorimensGearEffects?.signatureStrengthFlat);
-      if(signatureStrength>0)rows.push(`<span class="chip">专造回合开始力量 +${signatureStrength.toFixed(2)}</span>`);
+      if(signatureStrength>0)rows.push(`<span class="chip">${ui('专造回合开始力量','Signature turn-start STR')} +${signatureStrength.toFixed(2)}</span>`);
     }
-    box.innerHTML=rows.join('')
+    box.innerHTML=rows.join('');
   }
 
   function bindCapture(){
@@ -2442,7 +2506,15 @@
     for(const [key,id] of Object.entries(trackedFields)){const el=$(id);if(!el)continue;el.dataset.manualBase=String(key==='critDamage'?150:0);delete el.dataset.characterBase;delete el.dataset.characterBaseAwakener}if($('realmMastery')){delete $('realmMastery').dataset.characterBase;delete $('realmMastery').dataset.characterBaseAwakener}
     if($('autoCharacterStats'))$('autoCharacterStats').checked=true;if($('attack'))$('attack').dataset.autoAttack='1';renderCharacterResourceControls(true);applyCharacterStats();recomputeGearBonuses();renderWheelsAndBonuses();renderCovenantAndBonuses();syncWheelDuplicates();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click();
   }
-  function applyLanguage(){renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}renderSignatureRelic();for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const c=covenantCatalog.find(x=>x.id===o.value);if(c)o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name)}}renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary()}
+  function applyLanguage(){
+    renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}
+    normalizeProgressionControls();configureEnlightenControl(false);renderCharacterResourceControls(false);applyCharacterStats();
+    renderSkillOptions(currentSkill?.id);if(currentSkill)updateSkillLevel();
+    renderSignatureRelic();
+    for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}
+    const cs=$('contractSelect');if(cs&&covenantCatalog.length){for(const o of cs.options){const covenant=covenantCatalog.find(x=>x.id===o.value);if(covenant)o.textContent=isEnglish()?covenant.name:(zhCovenants[covenant.name]||covenant.name)}}
+    renderWheelsAndBonuses();renderCovenantAndBonuses();renderRouseSummary();renderAutoSummary();
+  }
 
   async function boot(){
     ensureTermIconStyle();ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();ensureSignatureRelicUi();initManualTracking();bindCapture();renderCharacters();
