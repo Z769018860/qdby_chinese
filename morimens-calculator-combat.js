@@ -385,11 +385,11 @@
     if($('benthosHpField'))$('benthosHpField').hidden=!needsHp;
     if($('teamMaxHpNote')){
       $('teamMaxHpNote').textContent=benthos
-        ?'晦暝·深海：基础触腕 = 队伍最大生命 × 5%；不会额外叠加未公开的混沌基础触腕。'
-        :'普通深海：当前 SKeyDB 未公开额外的混沌基础触腕公式，不自动附加。';
+        ?ui('晦暝·深海：基础触腕 = 队伍最大生命 × 5%；不会额外叠加未公开的混沌基础触腕。','Benthos · Aequor: Base Tentacle = Team Max HP × 5%; no unverified extra Chaos base is added.')
+        :ui('普通深海：当前 SKeyDB 未公开额外的混沌基础触腕公式，不自动附加。','Standard Aequor: SKeyDB does not expose an additional Chaos base-Tentacle formula, so none is added automatically.');
     }
     if(!aequorActive&&$('tentacleReadout')){
-      $('tentacleReadout').innerHTML='当前队伍未选择 <b>深海 / 晦暝·深海</b> 界域，触腕相关输入已禁用，本次伤害不会生成或结算触腕事件。';
+      $('tentacleReadout').innerHTML=ui('当前队伍未选择 <b>深海 / 晦暝·深海</b> 界域，触腕相关输入已禁用，本次伤害不会生成或结算触腕事件。','The current team has no <b>Aequor / Benthos · Aequor</b> Realm selected. Tentacle inputs are disabled and no Tentacle event will be generated or resolved.');
     }
   }
   function renderTriplet(){
@@ -1192,12 +1192,17 @@
   
     const tmode=effectiveTentacleMode();
     const stance=tmode==='benthos'
-      ?({surging:'潮涌 100%',tranquil:'静海（回合末不攻击）',raging:'怒涛 125%' }[$('tentacleStance')?.value]||'')
-      :({surging:'潮涌 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||'');
-    const oneTentacle=tentacleEvent(100,'单次触腕预览','preview');
+      ?(isEnglish()?({surging:'Surging 100%',tranquil:'Tranquil (no turn-end attack)',raging:'Raging 125%'}[$('tentacleStance')?.value]||''):({surging:'潮涌 100%',tranquil:'静海（回合末不攻击）',raging:'怒涛 125%' }[$('tentacleStance')?.value]||''))
+      :(isEnglish()?({surging:'Surging 100%',tranquil:'Tranquil 50%',raging:'Raging 125%'}[$('tentacleStance')?.value]||''):({surging:'潮涌 100%',tranquil:'静海 50%',raging:'怒涛 125%'}[$('tentacleStance')?.value]||''));
+    const oneTentacle=tentacleEvent(100,ui('单次触腕预览','Single Tentacle Preview'),'preview');
     if($('tentacleReadout')){
       if(tentacle.available===false){
-        $('tentacleReadout').innerHTML='当前队伍未选择 <b>深海 / 晦暝·深海</b> 界域，触腕相关输入已禁用，本次伤害不会生成或结算触腕事件。';
+        $('tentacleReadout').innerHTML=ui('当前队伍未选择 <b>深海 / 晦暝·深海</b> 界域，触腕相关输入已禁用，本次伤害不会生成或结算触腕事件。','The current team has no <b>Aequor / Benthos · Aequor</b> Realm selected. Tentacle inputs are disabled and no Tentacle event will be generated or resolved.');
+      }else if(isEnglish()){
+        const model=tmode==='benthos'?'Benthos · Aequor':'Standard Aequor / Standard Tentacle';
+        const coexist=tentacle.coexistenceBase?`, extra Chaos-coexistence Base Tentacle ${fmt(tentacle.coexistenceBase)}`:'';
+        const pureNote=(realm.startingTentacleMultiplier||1)>1?'; Pure Aequor doubles starting Tentacle count (the current count input remains authoritative)':'';
+        $('tentacleReadout').innerHTML=`Model: <b>${model}</b> · Stance: <b>${stance}</b> · Realm Mastery effect ×<b>${Number(tentacle.masteryEffectMultiplier||1).toFixed(1)}</b>${tentacle.ragingWheelBonusPct?` · Raging Wheel temporary mastery <b>+${Number(tentacle.ragingWheelBonusPct).toFixed(1)}%</b> (${fmt(tentacle.baseRealmMastery)} → ${fmt(tentacle.realmMasteryForStance)})`:''}<br>Base Tentacle <b>${fmt(tentacle.base)}</b>${coexist} → after stance/mastery <b>${fmt(tentacle.attack)}</b> → after 50% net STR <b>${fmt(tentacleWithStrength)}</b> → one current-mode hit <b>${fmt(oneTentacle.damage)}</b>. Tentacle Crit Rate <b>${(tentacleCritRate*100).toFixed(1)}%</b> / Crit DMG <b>${(tentacleCritMult*100).toFixed(1)}%</b>${pureNote}.`;
       }else{
         const model=tmode==='benthos'?'晦暝·深海':'普通深海 / 普通触腕';
         const coexist=tentacle.coexistenceBase?`，混沌共生额外基础触腕 ${fmt(tentacle.coexistenceBase)}`:'';
@@ -1206,11 +1211,15 @@
       }
     }
     if($('enemyLevelReadout')){
-      $('enemyLevelReadout').innerHTML=`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 最大生命 <b>${fmt(enemyMaxHp)}</b>（${enemyMaxHpSource}）<br><small>${enemyMaxHpInput>0?'目标最大生命百分比效果使用手动值。':'默认最大生命由 SKeyDB 融灾第 60–69 期共 1665 个等级/生命值样本作对数拟合。'} 等级承伤系数不是官方防御公式。</small>`;
+      $('enemyLevelReadout').innerHTML=isEnglish()
+        ?`Enemy level <b>${enemyProfile.level}</b> · Generic damage-taken factor <b>${levelFactor.toFixed(3)}</b> · Max HP <b>${fmt(enemyMaxHp)}</b> (${enemyMaxHpSource})<br><small>${enemyMaxHpInput>0?'Target-Max-HP percentage effects use the manual value.':'Default Max HP uses a log fit over 1,665 level/HP samples from SKeyDB D-Zone seasons 60–69.'} The level damage-taken factor is not an official defense formula.</small>`
+        :`敌人等级 <b>${enemyProfile.level}</b> · 通用承伤系数 <b>${levelFactor.toFixed(3)}</b> · 最大生命 <b>${fmt(enemyMaxHp)}</b>（${enemyMaxHpSource}）<br><small>${enemyMaxHpInput>0?'目标最大生命百分比效果使用手动值。':'默认最大生命由 SKeyDB 融灾第 60–69 期共 1665 个等级/生命值样本作对数拟合。'} 等级承伤系数不是官方防御公式。</small>`;
     }
     if($('combatConversion')){
-      const enlightenLabel={OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0';
-      $('combatConversion').innerHTML=`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${fixedPoisonInflictionMult!==1?`；固定中毒施加 ×<b>${fixedPoisonInflictionMult.toFixed(2)}</b>`:''}${poisonTriggerMult!==1?`；中毒触发 ×<b>${poisonTriggerMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 出血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
+      const enlightenLabel=isEnglish()?({OverExalt:'Over-Exalt',AbsoluteAxiom:'Absolute Axiom'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0'):({OverExalt:'+4 超限',AbsoluteAxiom:'最终法则'}[skillSync.enlightenSlot]||skillSync.enlightenSlot||'E0');
+      $('combatConversion').innerHTML=isEnglish()
+        ?`Realm: <b>${esc(realmLabelForDisplay(realm.label||'Standard'))}</b>; ATK <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`; Realm output ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`; Fixed Poison/Counter ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`; Poison Infliction ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${fixedPoisonInflictionMult!==1?`; Fixed Poison Infliction ×<b>${fixedPoisonInflictionMult.toFixed(2)}</b>`:''}${poisonTriggerMult!==1?`; Poison Trigger ×<b>${poisonTriggerMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`; Counter Generation ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}. Events: Active <b>${activeEvents.length}</b> / Pierce <b>${pierceEvents.length}</b> / Tentacle <b>${tentacleEvents.length}</b> / Pure <b>${pureEvents.length}</b> / Fixed <b>${fixedEvents.length}</b> / Poison <b>${poisonEvents.length}</b> / Bleed <b>${bleedEvents.length}</b> / Corrosion <b>${corrosionEvents.length}</b> / Counter <b>${counterEvents.length}</b> / Sacrifice <b>${sacrificeEvents.length}</b>. Enlighten: <b>${esc(enlightenLabel)}</b>.`
+        :`界域：<b>${esc(realm.label||'普通')}</b>；攻击 <b>${fmt(attackRaw)}</b> → <b>${fmt(attack)}</b>${realmDamageOutputMult!==1?`；界域输出 ×<b>${realmDamageOutputMult.toFixed(2)}</b>`:''}${fixedStatusEffectMult!==1?`；固定中毒/反击 ×<b>${fixedStatusEffectMult.toFixed(2)}</b>`:''}${poisonInflictionMult!==1?`；中毒施加 ×<b>${poisonInflictionMult.toFixed(2)}</b>`:''}${fixedPoisonInflictionMult!==1?`；固定中毒施加 ×<b>${fixedPoisonInflictionMult.toFixed(2)}</b>`:''}${poisonTriggerMult!==1?`；中毒触发 ×<b>${poisonTriggerMult.toFixed(2)}</b>`:''}${counterGenerationMult!==1?`；反击生成 ×<b>${counterGenerationMult.toFixed(2)}</b>`:''}。事件：主动 <b>${activeEvents.length}</b> / 穿透 <b>${pierceEvents.length}</b> / 触腕 <b>${tentacleEvents.length}</b> / 纯粹 <b>${pureEvents.length}</b> / 固定 <b>${fixedEvents.length}</b> / 中毒 <b>${poisonEvents.length}</b> / 出血 <b>${bleedEvents.length}</b> / 侵蚀 <b>${corrosionEvents.length}</b> / 反击 <b>${counterEvents.length}</b> / 献祭 <b>${sacrificeEvents.length}</b>。启灵：<b>${esc(enlightenLabel)}</b>。`;
     }
     window.MorimensDamageEvents={
       mode,
@@ -1233,9 +1242,9 @@
       return calculate();
     }catch(error){
       console.error('Morimens damage calculation failed',error);
-      if($('resultLabel'))$('resultLabel').textContent='伤害计算失败';
+      if($('resultLabel'))$('resultLabel').textContent=ui('伤害计算失败','Damage Calculation Failed');
       if($('resultNumber'))$('resultNumber').textContent='—';
-      if($('formula'))$('formula').textContent='计算过程中发生异常：'+String(error?.message||error)+'。请刷新后重试；如果持续出现，请保留当前配装与技能信息用于排查。';
+      if($('formula'))$('formula').textContent=isEnglish()?'An error occurred during calculation: '+String(error?.message||error)+'. Refresh and retry; if it persists, keep the current build and skill information for debugging.':'计算过程中发生异常：'+String(error?.message||error)+'。请刷新后重试；如果持续出现，请保留当前配装与技能信息用于排查。';
       return null;
     }
   }
@@ -1272,4 +1281,5 @@
   window.MorimensCombatCalculator={calculate:safeCalculate,calculateUnsafe:calculate,renderTriplet,tentacleState,renderFormulaSource};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inject,0));else setTimeout(inject,0);
   window.addEventListener('morimens-data-ready',()=>setTimeout(()=>{renderTriplet();safeCalculate()},100));
+  window.addEventListener('morimens-language-change',()=>setTimeout(()=>{localizeCombatUi();renderFormulaSource();toggleTentacleMode();renderTriplet();safeCalculate()},0));
 })();
