@@ -1047,13 +1047,13 @@
   function hasNumericBattleBonus(source){return Object.entries(source||{}).some(([k,v])=>k!=='skipped'&&Math.abs(num(v))>1e-9)}
   function battleGrowthSources(){
     const sources=[];
-    if(currentAwakener?.id==='awakener-0041')sources.push('波吕克斯：每完成 1 场，基础伤害 +20%，苦痛救赎伤害效果 +20%');
-    if(currentAwakener?.id==='awakener-0008')sources.push('卡斯托尔：每完成 1 场，本次探索中的侵蚀施加量 +20%');
-    if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey'))sources.push('克莱门汀启灵2：每完成 1 场，基础伤害 +25%');
+    if(currentAwakener?.id==='awakener-0041')sources.push(isEnglish()?'Pollux: each completed battle gives Base DMG +20% and Atonement by Pain effect +20%':'波吕克斯：每完成 1 场，基础伤害 +20%，苦痛救赎伤害效果 +20%');
+    if(currentAwakener?.id==='awakener-0008')sources.push(isEnglish()?'Castor: each completed battle gives Corrosion Infliction +20% for this exploration':'卡斯托尔：每完成 1 场，本次探索中的侵蚀施加量 +20%');
+    if(currentAwakener?.id==='awakener-0010'&&activeEnlightens().some(x=>x.id==='enlighten.clementine.soul-healing-journey'))sources.push(isEnglish()?'Clementine E2: each completed battle gives Base DMG +25%':'克莱门汀启灵2：每完成 1 场，基础伤害 +25%');
     currentWheels.forEach((wheel,slot)=>{
       if(!wheel)return;
       const bonus=cumulativeWheelBattleBonuses(wheelDescriptionRaw(wheel,slot));
-      if(hasNumericBattleBonus(bonus))sources.push('命轮「'+labelForWheel(wheel)+'」：存在每场战斗累计伤害乘区');
+      if(hasNumericBattleBonus(bonus))sources.push(isEnglish()?'Wheel “'+labelForWheel(wheel)+'”: has a per-completed-battle cumulative damage modifier':'命轮「'+labelForWheel(wheel)+'」：存在每场战斗累计伤害乘区');
     });
     return sources;
   }
@@ -1061,8 +1061,8 @@
     const field=$('battleIndexField'),note=$('battleGrowthNote');if(!field)return;
     const sources=battleGrowthSources();field.hidden=sources.length===0;
     if(note)note.textContent=sources.length
-      ?'填写当前正在进行的场次；第 1 场 = 尚未完成战斗，第 3 场 = 已完成 2 场。当前生效：'+sources.join('；')
-      :'当前角色 / 命轮没有按完成战斗数累计的伤害乘区。';
+      ?(isEnglish()?'Enter the current battle number: Battle 1 means 0 completed battles; Battle 3 means 2 completed battles. Active sources: '+sources.join('; '):'填写当前正在进行的场次；第 1 场 = 尚未完成战斗，第 3 场 = 已完成 2 场。当前生效：'+sources.join('；'))
+      :(isEnglish()?'The current Awakener / Wheels have no damage modifier that accumulates by completed battles.':'当前角色 / 命轮没有按完成战斗数累计的伤害乘区。');
   }
 
   function resolvedRouseSkill(){
@@ -1101,30 +1101,30 @@
         const direct=sentence.split(/\b(?:after|before|whenever|each time|for each|for every|every time|at turn|at the start|at the end|when|while|until|next)\b/i)[0].trim();
         if(!direct||!currentSkillMatchesRouseScope(direct))continue;
         let m;
-        if(/(?:DMG|damage)\s+always\s+critically\s+hits/i.test(direct)||/always\s+deals?\s+Critical/i.test(direct)){next.guaranteedCrit=true;labels.push('灵知觉醒：必定暴击')}
+        if(/(?:DMG|damage)\s+always\s+critically\s+hits/i.test(direct)||/always\s+deals?\s+Critical/i.test(direct)){next.guaranteedCrit=true;labels.push(isEnglish()?'Rouse: Guaranteed Crit':'灵知觉醒：必定暴击')}
         if((m=direct.match(/Crit\.?\s*Rate\s+and\s+Crit\.?\s*DMG\s*\+\s*([\d.]+)%/i))){
           next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);
           next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);
-          labels.push('灵知觉醒：暴击率/暴伤 +'+m[1]+'%');
+          labels.push(isEnglish()?'Rouse: Crit Rate / Crit DMG +'+m[1]+'%':'灵知觉醒：暴击率/暴伤 +'+m[1]+'%');
         }else{
-          if((m=direct.match(/Crit\.?\s*Rate[^+%]*\+\s*([\d.]+)%/i))){next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴击率 +'+m[1]+'%')}
-          if((m=direct.match(/Crit\.?\s*DMG[^+%]*\+\s*([\d.]+)%/i))){next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);labels.push('灵知觉醒：暴伤 +'+m[1]+'%')}
+          if((m=direct.match(/Crit\.?\s*Rate[^+%]*\+\s*([\d.]+)%/i))){next.critRateBonus=(Number(next.critRateBonus)||0)+Number(m[1]);labels.push(isEnglish()?'Rouse: Crit Rate +'+m[1]+'%':'灵知觉醒：暴击率 +'+m[1]+'%')}
+          if((m=direct.match(/Crit\.?\s*DMG[^+%]*\+\s*([\d.]+)%/i))){next.critDamageBonus=(Number(next.critDamageBonus)||0)+Number(m[1]);labels.push(isEnglish()?'Rouse: Crit DMG +'+m[1]+'%':'灵知觉醒：暴伤 +'+m[1]+'%')}
         }
-        if((m=direct.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：基础伤害 +'+m[1]+'%')}
-        if((m=direct.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+Number(m[1]);labels.push('灵知觉醒：最终伤害 +'+m[1]+'%')}
+        if((m=direct.match(/Base DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillBaseDamageBonusPct=(Number(next.skillBaseDamageBonusPct)||0)+Number(m[1]);labels.push(isEnglish()?'Rouse: Base DMG +'+m[1]+'%':'灵知觉醒：基础伤害 +'+m[1]+'%')}
+        if((m=direct.match(/Final DMG[^+%]*\+\s*([\d.]+)%/i))){next.skillFinalDamageBonusPct=(Number(next.skillFinalDamageBonusPct)||0)+Number(m[1]);labels.push(isEnglish()?'Rouse: Final DMG +'+m[1]+'%':'灵知觉醒：最终伤害 +'+m[1]+'%')}
       }
       if(labels.length)next.resourceEffectLabel=[next.resourceEffectLabel,...new Set(labels)].filter(Boolean).join('；');
       return next;
     });
     const currentIsStrike=String(currentSkill?.slot||'').toLowerCase()==='strike'||effectiveCardClassifications(currentSkill).includes('strike')||(currentSkill?.cardTypes||[]).map(x=>String(x).toLowerCase()).includes('strike');
     if(currentIsStrike&&/["“]?Strike["”]?\s+(?:becomes|deals?)\s+\{?Pierce DMG\}?/i.test(text)){
-      mapped=mapped.map(event=>(event.type==='active'?{...event,type:'pierce',resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒：打击转为穿透伤害'].filter(Boolean).join('；')}:event));
+      mapped=mapped.map(event=>(event.type==='active'?{...event,type:'pierce',resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse: Strike becomes Pierce DMG':'灵知觉醒：打击转为穿透伤害'].filter(Boolean).join(isEnglish()?'; ':'；')}:event));
     }
     let extra=0,m=text.match(/["“]?Strike["”]?[^.]{0,120}?(?:deals?|triggers?)\s+(\d+)\s+additional\s+instances?\s+of\s+DMG/i);
     if(currentIsStrike&&m)extra=Math.max(extra,Number(m[1])||0);
     m=text.match(/hit count\s*\+\s*(\d+)\s*(?:times?|hits?)?/i);if(m)extra=Math.max(extra,Number(m[1])||0);
     m=text.match(/DMG instances?\s*\+\s*(\d+)/i);if(m)extra=Math.max(extra,Number(m[1])||0);
-    if(extra>0)mapped=cloneExtraDamageEvents(mapped,extra,'灵知觉醒：额外 '+extra+' 段伤害');
+    if(extra>0)mapped=cloneExtraDamageEvents(mapped,extra,isEnglish()?'Rouse: '+extra+' additional damage hit(s)':'灵知觉醒：额外 '+extra+' 段伤害');
     return mapped;
   }
 
