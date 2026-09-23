@@ -1,12 +1,14 @@
 (()=>{
   const $=id=>document.getElementById(id);
+  const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEnglish()?en:zh;
   const num=(v,f=0)=>{const n=Number.parseFloat(v);return Number.isFinite(n)?n:f};
   const state={userEdited:{critRate:false,critDamage:false,powerBonus:false,realmMastery:false},lastAwakenerId:null};
 
   function data(){return window.MorimensData}
   function selectedId(){return $('charSelect')?.selectedOptions?.[0]?.dataset?.awakenerId||$('charSelect')?.value||null}
   function currentRecord(){const id=selectedId();return data()?.db?.records?.find(x=>x.id===id)||null}
-  function localizedName(rec){return data()?.zhFor?.(rec)?.name||data()?.identityDb?.bySkeydbId?.[rec?.id]?.name||rec?.name||''}
+  function localizedName(rec){return isEnglish()?(rec?.name||''):(data()?.zhFor?.(rec)?.name||data()?.identityDb?.bySkeydbId?.[rec?.id]?.name||rec?.name||'')}
   function level(){return Math.max(1,Math.min(90,Number(($('charLevel')||$('skeydbCharacterLevel'))?.value)||90))}
   function statsFor(rec,talents=[]){
     const engine=window.MorimensFormulaEngine,lv=level();
@@ -64,9 +66,9 @@
       setAutoBase('realmMastery',num(resolved.RealmMastery),'realmMastery');
       if($('attack')&&$('autoCharacterStats')?.checked!==false&&$('attack').dataset.autoAttack!=='0')$('attack').value=String(resolved.ATK);
     }
-    if($('combatCon'))$('combatCon').textContent=Math.round(resolved.CON).toLocaleString('zh-CN');
-    if($('combatAtk'))$('combatAtk').textContent=Math.round(resolved.ATK).toLocaleString('zh-CN');
-    if($('combatDef'))$('combatDef').textContent=Math.round(resolved.DEF).toLocaleString('zh-CN');
+    if($('combatCon'))$('combatCon').textContent=Math.round(resolved.CON).toLocaleString(isEnglish()?'en-US':'zh-CN');
+    if($('combatAtk'))$('combatAtk').textContent=Math.round(resolved.ATK).toLocaleString(isEnglish()?'en-US':'zh-CN');
+    if($('combatDef'))$('combatDef').textContent=Math.round(resolved.DEF).toLocaleString(isEnglish()?'en-US':'zh-CN');
 
     let box=$('skeydbProgressSync');
     if(!box){
@@ -75,23 +77,28 @@
     }
     if(box){
       const p=resolved.progression||{};
-      const parts=[
+      const parts=isEnglish()?[
         `${localizedName(rec)} · ${rec.id}`,
-        `等级 ${level()} · 攻击 ${resolved.ATK}`,
-        `体质 ${resolved.CON}`,
-        `防御 ${resolved.DEF}`,
-        `暴击率 ${num(resolved.CritRate).toFixed(1)}%`,
-        `暴击伤害 ${(100+num(resolved.CritDamage,50)).toFixed(1)}%`,
-        `伤害强效 ${num(resolved.DamageAmplification).toFixed(1)}%`,
-        `界域精通 ${num(resolved.RealmMastery).toFixed(1)}`,
+        `Lv. ${level()} · ATK ${resolved.ATK}`,
+        `CON ${resolved.CON}`,
+        `DEF ${resolved.DEF}`,
+        `Crit Rate ${num(resolved.CritRate).toFixed(1)}%`,
+        `Crit DMG ${(100+num(resolved.CritDamage,50)).toFixed(1)}%`,
+        `Damage Amplification ${num(resolved.DamageAmplification).toFixed(1)}%`,
+        `Realm Mastery ${num(resolved.RealmMastery).toFixed(1)}`,
+        p.gnosticLevel?`Inner Spirit ${p.gnosticLevel} (base-stat level +${p.bonusLevels})`:'',
+        p.soulforgeLevel?`Soulforge ${p.soulforgeLevel} (primary stats +${p.soulforgePct}%${p.soulforgeEnabled?'':' · disabled'})`:'',
+        `Skills ${skills.length}`,`Derived Skills ${derived.length}`,`Enlighten ${enlightens.length}`,`Talents ${talents.length}`
+      ].filter(Boolean):[
+        `${localizedName(rec)} · ${rec.id}`,
+        `等级 ${level()} · 攻击 ${resolved.ATK}`,`体质 ${resolved.CON}`,`防御 ${resolved.DEF}`,
+        `暴击率 ${num(resolved.CritRate).toFixed(1)}%`,`暴击伤害 ${(100+num(resolved.CritDamage,50)).toFixed(1)}%`,
+        `伤害强效 ${num(resolved.DamageAmplification).toFixed(1)}%`,`界域精通 ${num(resolved.RealmMastery).toFixed(1)}`,
         p.gnosticLevel?`内在灵格 ${p.gnosticLevel}（基础属性等级 +${p.bonusLevels}）`:'',
         p.soulforgeLevel?`灵塑 ${p.soulforgeLevel}（主属性 +${p.soulforgePct}%${p.soulforgeEnabled?'':'，未启用'}）`:'',
-        `技能 ${skills.length}`,
-        `衍生技能 ${derived.length}`,
-        `启灵 ${enlightens.length}`,
-        `天赋 ${talents.length}`
+        `技能 ${skills.length}`,`衍生技能 ${derived.length}`,`启灵 ${enlightens.length}`,`天赋 ${talents.length}`
       ].filter(Boolean);
-      box.textContent=`SKeyDB 数值同步：${parts.join(' · ')}`;
+      box.textContent=(isEnglish()?'SKeyDB stat sync: ':'SKeyDB 数值同步：')+parts.join(' · ');
     }
     window.MorimensCharacterSync={record:rec,skills,enlightens,talents,derived,finalStats:resolved,progression:resolved.progression,update:updateCharacterStats};
     window.dispatchEvent(new CustomEvent('morimens-character-stats',{detail:{record:rec,stats:resolved,progression:resolved.progression}}));
