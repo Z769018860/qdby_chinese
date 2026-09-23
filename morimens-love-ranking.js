@@ -171,10 +171,10 @@
     if(loading)return;
     loading=true;
     const status=$('morimensLoveRankingStatus');
-    if(status)status.textContent='正在载入角色与投票数据……';
+    if(status)status.textContent=ui('正在载入角色与投票数据……','Loading character and vote data…');
     try{
       const characters=resolveCharacters();
-      if(!characters.length)throw new Error('角色资料尚未加载');
+      if(!characters.length)throw new Error(ui('角色资料尚未加载','Character data has not loaded yet'));
       const counters=await getCounters(characters.map(x=>x.id));
       rows=characters.map(x=>{const c=counters.get(x.id)||{likes:0,dislikes:0};return {...x,...c,score:c.likes-c.dislikes}});
       try{
@@ -189,7 +189,7 @@
       initialized=true;
     }catch(error){
       console.error('爱的节奏榜加载失败',error);
-      if(status)status.textContent='爱的节奏榜加载失败，请稍后重试。';
+      if(status)status.textContent=ui('爱的节奏榜加载失败，请稍后重试。','Failed to load Love Rhythm Ranking. Please try again later.');
     }finally{loading=false}
   }
 
@@ -217,7 +217,7 @@
       render();
     }catch(error){
       console.error('爱的节奏榜投票失败',error);
-      buttons.forEach(b=>{b.title='同步失败，请稍后重试'});
+      buttons.forEach(b=>{b.title=ui('同步失败，请稍后重试','Sync failed. Please try again later.')});
     }finally{
       document.querySelectorAll(`.loveVoteBtn[data-love-id="${CSS.escape(id)}"]`).forEach(b=>b.disabled=false);
     }
