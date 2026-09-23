@@ -429,11 +429,28 @@
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
   }
   function bind(){if(bound)return;const ids=['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode','dtideSort','dtideCreationFilter'];for(const id of ids)$(id)?.addEventListener('change',()=>setTimeout(renderAll,0));$('dtideEntityType')?.addEventListener('change',()=>{if(!usage)return;window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;requestAnimationFrame(renderMatrix)});$('dtideSeason')?.addEventListener('change',async()=>{try{await loadForSeason($('dtideSeason').value)}catch(e){console.warn('usage layer season load failed',e)}});document.addEventListener('click',e=>{if(!e.target.closest('#dtideRealmFilters .dtideFilterChip,#dtideRoleFilters .dtideFilterChip'))return;queueMicrotask(renderAll)});bound=true}
+  function renderUsageLayerNote(){
+    const note=$('dtideCoverageNote');if(!note||!manifest||!usage)return;
+    note.querySelector('.dtideUsageLayerNote')?.remove();
+    const merged=esc(String(usage?.recordCount||usage?.records?.length||0)),base=esc(String(manifest.usageIndex?.recordCount||0)),target=esc(String(manifest.usageIndex?.target||1000));
+    const html=zh()
+      ?' <span class="dtideUsageLayerNote"><strong>Top1000 出场率层：</strong>当前有效合并记录 '+merged+' 条（基础 '+base+' + Top500 增量按 UID 覆盖），榜单目标 '+target+' 名玩家。</span>'
+      :' <span class="dtideUsageLayerNote"><strong>Top 1000 appearance-rate layer:</strong> '+merged+' effective merged records (base '+base+' + Top 500 UID overlay), target '+target+' players.</span>';
+    note.insertAdjacentHTML('beforeend',html);
+  }
   async function init(){
     for(let i=0;i<50&&!$('dtideRankScope');i++)await new Promise(r=>setTimeout(r,100));if(!$('dtideRankScope'))return;
-    try{await loadGearCatalog();const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);manifest=await response.json();dataVersion=manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';bind();window.addEventListener('morimens-language-change',renderAll);const seasonId=$('dtideSeason')?.value||manifest.currentSeason;if(await loadForSeason(seasonId)){
-      const note=$('dtideCoverageNote');if(note)note.insertAdjacentHTML('beforeend',` <strong>Top1000 出场率层：</strong>当前有效合并记录 ${esc(String(usage?.recordCount||usage?.records?.length||0))} 条（基础 ${esc(String(manifest.usageIndex?.recordCount||0))} + Top500 增量按 UID 覆盖），榜单目标 ${esc(String(manifest.usageIndex?.target||1000))} 名玩家。`);
-    }
-  }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}}
+    try{
+      await loadGearCatalog();
+      const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});
+      if(!response.ok)throw new Error('manifest HTTP '+response.status);
+      manifest=await response.json();
+      dataVersion=manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
+      bind();
+      window.addEventListener('morimens-language-change',()=>{renderAll();renderUsageLayerNote()});
+      const seasonId=$('dtideSeason')?.value||manifest.currentSeason;
+      if(await loadForSeason(seasonId))renderUsageLayerNote();
+    }catch(e){console.warn('Top1000 usage layer unavailable; falling back to detailed snapshot.',e)}
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
