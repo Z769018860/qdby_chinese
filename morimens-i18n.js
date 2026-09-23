@@ -218,7 +218,30 @@
     document.getElementById('langZh').addEventListener('click',()=>setLanguage(ZH));document.getElementById('langEn').addEventListener('click',()=>setLanguage(EN));updateSwitch();
   }
   function boot(){
-    ensureSwitch();translateTree();observer=new MutationObserver(muts=>{observer.disconnect();for(const m of muts){for(const node of m.addedNodes){if(node.nodeType===Node.TEXT_NODE){const v=replaceExact(node.nodeValue);if(v!==node.nodeValue)node.nodeValue=v}else if(node.nodeType===Node.ELEMENT_NODE)translateTree(node)}}translateCharacterOptions();translateDynamicControls();observer.observe(document.body,{subtree:true,childList:true,characterData:true})});observer.observe(document.body,{subtree:true,childList:true,characterData:true});window.addEventListener('morimens-data-ready',()=>translateTree());window.MorimensI18n={get language(){return lang},setLanguage,t:replaceExact,translateTree};
+    ensureSwitch();translateTree();
+    const observe=()=>observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label']});
+    observer=new MutationObserver(muts=>{
+      observer.disconnect();
+      for(const m of muts){
+        if(m.type==='characterData'&&m.target?.nodeType===Node.TEXT_NODE){
+          const v=replaceExact(m.target.nodeValue);if(v!==m.target.nodeValue)m.target.nodeValue=v;
+          continue;
+        }
+        if(m.type==='attributes'&&m.target?.nodeType===Node.ELEMENT_NODE){
+          const attr=m.attributeName,old=m.target.getAttribute(attr),value=replaceExact(old);
+          if(value!==old)m.target.setAttribute(attr,value);
+          continue;
+        }
+        for(const node of m.addedNodes||[]){
+          if(node.nodeType===Node.TEXT_NODE){const v=replaceExact(node.nodeValue);if(v!==node.nodeValue)node.nodeValue=v}
+          else if(node.nodeType===Node.ELEMENT_NODE)translateTree(node);
+        }
+      }
+      translateCharacterOptions();translateDynamicControls();observe();
+    });
+    observe();
+    window.addEventListener('morimens-data-ready',()=>translateTree());
+    window.MorimensI18n={get language(){return lang},setLanguage,t:replaceExact,translateTree};
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
