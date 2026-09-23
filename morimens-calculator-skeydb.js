@@ -1613,7 +1613,7 @@
     for(const sel of [first,second])if(sel?.options?.[0]&&!sel.options[0].value)sel.options[0].textContent=isEnglish()?'None':'无';
   }
   function ensureSyncBadge(){
-    const block=$('fateDesc')?.closest('.builderBlock');if(block&&!$('skeydbBuildStatus')){const d=document.createElement('div');d.id='skeydbBuildStatus';d.className='syncLine';d.innerHTML='<span class="syncDot" id="skeydbBuildDot"></span><span id="skeydbBuildText">SKeyDB 配装数据加载中…</span>';block.appendChild(d)}
+    const block=$('fateDesc')?.closest('.builderBlock');if(block&&!$('skeydbBuildStatus')){const d=document.createElement('div');d.id='skeydbBuildStatus';d.className='syncLine';d.innerHTML='<span class="syncDot" id="skeydbBuildDot"></span><span id="skeydbBuildText"></span>';setText('skeydbBuildText',ui('SKeyDB 配装数据加载中…','Loading SKeyDB build data…'));block.appendChild(d)}
   }
 
   function renderCharacters(){
@@ -1742,7 +1742,7 @@
     renderCharacterResourceControls(switchedCharacter);
     refreshBattleProgressionUi();
     setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',isEnglish()?`${labelForAwakener(currentAwakener)}: loading skills…`:`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
-    const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
+    const select=$('skillSelect');if(select)select.innerHTML=`<option value="">${ui('正在载入…','Loading…')}</option>`;
     applyCharacterStats();
     try{
       const [skillRows,derivedRows]=await Promise.all([
