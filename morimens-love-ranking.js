@@ -12,6 +12,8 @@
   const $=id=>document.getElementById(id);
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const num=v=>Number.isFinite(Number(v))?Number(v):0;
+  const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEnglish()?en:zh;
 
   function loadVotes(){
     try{
@@ -100,38 +102,36 @@
   }
 
   function resolveCharacters(){
-    const data=window.MorimensData;
-    const records=Array.isArray(data?.db?.records)?data.db.records:[];
+    const data=window.MorimensData,records=Array.isArray(data?.db?.records)?data.db.records:[];
     return records.map(rec=>{
-      const loc=data.localizedProfile?.(rec)||{};
-      const image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
-      return {id:String(rec.id),name:String(loc.name||rec.name||rec.id),englishName:String(rec.name||''),image};
-    }).sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
+      const loc=data.localizedProfile?.(rec)||{},image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
+      const displayName=isEnglish()?String(rec.name||rec.id):String(loc.name||rec.name||rec.id);
+      return {id:String(rec.id),name:displayName,englishName:String(rec.name||''),image};
+    }).sort((a,b)=>a.name.localeCompare(b.name,isEnglish()?'en':'zh-CN'));
   }
 
-  const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'请离开了',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
+  const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'Misag School Cat',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
 
   function ensureControls(){
     const host=$('morimensLoveRankingList');if(!host)return;
     let disclaimer=$('morimensLoveRankingDisclaimer');
-    if(!disclaimer){
-      disclaimer=document.createElement('div');
-      disclaimer.id='morimensLoveRankingDisclaimer';
-      disclaimer.className='loveRankDisclaimer';
-      disclaimer.textContent='免责声明：无恶意，纯节奏，加载慢或者失败是因为正在打榜的人太多。';
-      host.insertAdjacentElement('beforebegin',disclaimer);
-    }
+    if(!disclaimer){disclaimer=document.createElement('div');disclaimer.id='morimensLoveRankingDisclaimer';disclaimer.className='loveRankDisclaimer';host.insertAdjacentElement('beforebegin',disclaimer)}
+    disclaimer.textContent=ui('免责声明：无恶意，纯节奏，加载慢或者失败是因为正在打榜的人太多。','Disclaimer: no hostility intended; this is a lighthearted ranking. Slow or failed loads may occur when too many people are voting.');
     let toolbar=$('morimensLoveRankingToolbar');
     if(!toolbar){
-      toolbar=document.createElement('div');
-      toolbar.id='morimensLoveRankingToolbar';
-      toolbar.className='loveRankToolbar';
-      toolbar.innerHTML='<div class="loveRankSort"><label for="morimensLoveRankingSort">排序方式</label><select id="morimensLoveRankingSort"><option value="score">总分排序（爱 − 拉黑）</option><option value="likes">爱数量排序</option><option value="dislikes">拉黑数量排序</option><option value="heat">总热度排序（爱 + 拉黑）</option></select></div>';
+      toolbar=document.createElement('div');toolbar.id='morimensLoveRankingToolbar';toolbar.className='loveRankToolbar';
+      toolbar.innerHTML='<div class="loveRankSort"><label for="morimensLoveRankingSort"></label><select id="morimensLoveRankingSort"><option value="score"></option><option value="likes"></option><option value="dislikes"></option><option value="heat"></option></select></div>';
       disclaimer.insertAdjacentElement('afterend',toolbar);
       const status=$('morimensLoveRankingStatus');if(status)toolbar.appendChild(status);
       $('morimensLoveRankingSort')?.addEventListener('change',e=>{sortMode=e.target.value||'score';render()});
     }
-    const select=$('morimensLoveRankingSort');if(select)select.value=sortMode;
+    const label=toolbar.querySelector('label');if(label)label.textContent=ui('排序方式','Sort by');
+    const select=$('morimensLoveRankingSort');
+    if(select){
+      const labels={score:ui('总分排序（爱 − 拉黑）','Score (Love − Block)'),likes:ui('爱数量排序','Love count'),dislikes:ui('拉黑数量排序','Block count'),heat:ui('总热度排序（爱 + 拉黑）','Total heat (Love + Block)')};
+      for(const option of select.options)option.textContent=labels[option.value]||option.value;
+      select.value=sortMode;
+    }
   }
   function sortRows(items){
     const cmpName=(a,b)=>a.name.localeCompare(b.name,'zh-CN');
@@ -143,30 +143,28 @@
     });
   }
   function sortLabel(){
+    if(isEnglish())return sortMode==='likes'?'Love count':sortMode==='dislikes'?'Block count':sortMode==='heat'?'Total heat (Love + Block)':'Score (Love − Block)';
     return sortMode==='likes'?'爱数量':sortMode==='dislikes'?'拉黑数量':sortMode==='heat'?'总热度（爱 + 拉黑）':'总分（爱 − 拉黑）';
   }
 
   function scoreClass(score){return score>0?'isPositive':score<0?'isNegative':'isZero'}
   function render(){
-    ensureControls();
-    const host=$('morimensLoveRankingList');
-    if(!host)return;
-    if(!rows.length){host.innerHTML='<div class="loveRankEmpty">暂无角色数据。</div>';return}
-    const maxAbs=Math.max(1,...rows.map(r=>Math.abs(r.score)));
-    const sorted=sortRows(rows);
+    ensureControls();const host=$('morimensLoveRankingList');if(!host)return;
+    if(!rows.length){host.innerHTML=`<div class="loveRankEmpty">${ui('暂无角色数据。','No character data.')}</div>`;return}
+    const maxAbs=Math.max(1,...rows.map(r=>Math.abs(r.score))),sorted=sortRows(rows);
     host.innerHTML=sorted.map((r,index)=>{
-      const intensity=Math.min(.58,Math.abs(r.score)/maxAbs*.58).toFixed(3);
-      const positive=r.score>0?intensity:'0',negative=r.score<0?intensity:'0';
-      const selected=votes[r.id]||'';
+      const intensity=Math.min(.58,Math.abs(r.score)/maxAbs*.58).toFixed(3),positive=r.score>0?intensity:'0',negative=r.score<0?intensity:'0',selected=votes[r.id]||'';
+      const displayName=r.id===schoolCat.id?(isEnglish()?schoolCat.englishName:schoolCat.name):r.name;
+      const subName=r.id===schoolCat.id?(isEnglish()?schoolCat.name:schoolCat.englishName):(isEnglish()?'':r.englishName);
       return `<div class="loveRankRow" data-love-id="${esc(r.id)}" style="--love-positive:${positive};--love-negative:${negative}">
         <div class="loveRankPlace">#${index+1}</div>
-        <div class="loveRankChar">${r.image?`<img class="loveRankAvatar" src="${esc(r.image)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:''}<div class="loveRankName"><strong>${esc(r.name)}</strong><small>${esc(r.englishName)}</small></div></div>
+        <div class="loveRankChar">${r.image?`<img class="loveRankAvatar" src="${esc(r.image)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:''}<div class="loveRankName"><strong>${esc(displayName)}</strong>${subName?`<small>${esc(subName)}</small>`:''}</div></div>
         <div class="loveRankScore ${scoreClass(r.score)}"><strong>${r.score>0?'+':''}${r.score}</strong><small>👍 ${r.likes} · 👎 ${r.dislikes}</small></div>
-        <div class="loveRankActions"><button type="button" class="loveVoteBtn loveVoteLike ${selected==='like'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="like" aria-pressed="${selected==='like'}" aria-label="${selected==='like'?'取消点赞':'点赞'}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='like'?'like-on.webp?v=20260920.73':'like-off.webp?v=20260920.73'}" alt=""><span class="loveVoteCount">${r.likes}</span></button><button type="button" class="loveVoteBtn loveVoteDislike ${selected==='dislike'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="dislike" aria-pressed="${selected==='dislike'}" aria-label="${selected==='dislike'?'取消拉黑':'拉黑'}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='dislike'?'dislike-on.webp?v=20260920.73':'dislike-off.webp?v=20260920.73'}" alt=""><span class="loveVoteCount">${r.dislikes}</span></button></div>
+        <div class="loveRankActions"><button type="button" class="loveVoteBtn loveVoteLike ${selected==='like'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="like" aria-pressed="${selected==='like'}" aria-label="${selected==='like'?ui('取消点赞','Remove love'):ui('点赞','Love')}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='like'?'like-on.webp?v=20260920.73':'like-off.webp?v=20260920.73'}" alt=""><span class="loveVoteCount">${r.likes}</span></button><button type="button" class="loveVoteBtn loveVoteDislike ${selected==='dislike'?'isActive':''}" data-love-id="${esc(r.id)}" data-vote="dislike" aria-pressed="${selected==='dislike'}" aria-label="${selected==='dislike'?ui('取消拉黑','Remove block'):ui('拉黑','Block')}"><img class="loveVoteArtwork" src="assets/morimens/love-rank/${selected==='dislike'?'dislike-on.webp?v=20260920.73':'dislike-off.webp?v=20260920.73'}" alt=""><span class="loveVoteCount">${r.dislikes}</span></button></div>
       </div>`;
     }).join('');
     const status=$('morimensLoveRankingStatus');
-    if(status)status.textContent=`共 ${sorted.length} 个条目 · 按 ${sortLabel()} 排序 · 数据跨设备同步`;
+    if(status)status.textContent=isEnglish()?`${sorted.length} entries · Sorted by ${sortLabel()} · Synced across devices`:`共 ${sorted.length} 个条目 · 按 ${sortLabel()} 排序 · 数据跨设备同步`;
   }
 
   async function load(){
@@ -251,6 +249,13 @@
 
   votes=loadVotes();
   window.MorimensLoveRanking={open,refresh:load};
+  window.addEventListener('morimens-language-change',()=>{
+    if(initialized){
+      const names=new Map(resolveCharacters().map(x=>[x.id,x]));
+      rows=rows.map(row=>row.id===schoolCat.id?{...row,name:isEnglish()?schoolCat.englishName:schoolCat.name,englishName:schoolCat.englishName}:{...row,...(names.get(row.id)||{})});
+      render();
+    }else ensureControls();
+  });
   window.addEventListener('morimens-love-ranking-open',open);
   if(location.hash==='#love')setTimeout(open,0);
 })();
