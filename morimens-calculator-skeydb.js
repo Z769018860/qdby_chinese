@@ -1263,27 +1263,27 @@
         const perUse=rouseArg('StateArg1');
         const bonus=posseUses*perUse;
         if(bonus>0)mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·混沌：已释放钥令 '+posseUses+' 次，狂气爆发最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          ?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Chaos: '+posseUses+' Posse uses; Exalt Final DMG +'+bonus.toFixed(0)+'%':'灵知觉醒·混沌：已释放钥令 '+posseUses+' 次，狂气爆发最终伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
           :event);
       }
       if(realms.has('AEQUOR')){
         const tentacleBonus=rouseArg('StateArg2');
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,tentacleBonusCoefficient:(Number(event.tentacleBonusCoefficient)||0)+tentacleBonus,onDamagePoisonPct:(Number(event.onDamagePoisonPct)||0)+10,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·深海：触腕伤害加成 '+tentacleBonus.toFixed(0)+'%，并附加本次伤害 10% 的中毒'].filter(Boolean).join('；')}
+          ?{...event,tentacleBonusCoefficient:(Number(event.tentacleBonusCoefficient)||0)+tentacleBonus,onDamagePoisonPct:(Number(event.onDamagePoisonPct)||0)+10,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Aequor: Tentacle DMG +'+tentacleBonus.toFixed(0)+'% and add Poison equal to 10% of this damage':'灵知觉醒·深海：触腕伤害加成 '+tentacleBonus.toFixed(0)+'%，并附加本次伤害 10% 的中毒'].filter(Boolean).join('；')}
           :event);
         if(baseSkillId==='skill.24.twisted-carrion-revel'){
-          mapped.push({id:'24-rouse-aequor-poison-trigger',index:mapped.length,position:9990,groupId:'24-rouse-aequor-poison-trigger',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:'灵知觉醒·深海：狂气爆发额外触发 50% 中毒'});
+          mapped.push({id:'24-rouse-aequor-poison-trigger',index:mapped.length,position:9990,groupId:'24-rouse-aequor-poison-trigger',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:ui('灵知觉醒·深海：狂气爆发额外触发 50% 中毒','Rouse · Aequor: Exalt additionally triggers 50% Poison')});
         }
       }
       if(realms.has('CARO')&&baseSkillId==='skill.24.twisted-carrion-revel'){
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,strengthMultiplier:(Number.isFinite(Number(event.strengthMultiplier))?Number(event.strengthMultiplier):(event.type==='active'?1:0))+3,usesStrength:true,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·血肉：狂气爆发额外享受 300% 力量加成'].filter(Boolean).join('；')}
+          ?{...event,strengthMultiplier:(Number.isFinite(Number(event.strengthMultiplier))?Number(event.strengthMultiplier):(event.type==='active'?1:0))+3,usesStrength:true,resourceEffectLabel:[event.resourceEffectLabel,ui('灵知觉醒·血肉：狂气爆发额外享受 300% 力量加成','Rouse · Caro: Exalt gains an additional 300% STR contribution')].filter(Boolean).join('；')}
           :event);
       }
       if(realms.has('ULTRA')){
         const counterBonus=rouseArg('StateArg5');
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,counterBonusCoefficient:(Number(event.counterBonusCoefficient)||0)+counterBonus,resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒·超维：反击伤害加成 '+counterBonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          ?{...event,counterBonusCoefficient:(Number(event.counterBonusCoefficient)||0)+counterBonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse · Ultra: Counter DMG +'+counterBonus.toFixed(0)+'%':'灵知觉醒·超维：反击伤害加成 '+counterBonus.toFixed(0)+'%'].filter(Boolean).join('；')}
           :event);
       }
     }
@@ -1311,7 +1311,7 @@
     if(currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.finaleStacks)>0){
       const bonus=8*Math.min(10,Math.max(0,Math.floor(Number(resources.finaleStacks)||0)));
       mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-        ?{...event,resourceEffectLabel:[event.resourceEffectLabel,'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+        ?{...event,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' stacks: Damage Amplification +'+bonus.toFixed(0)+'%':'Finale '+Math.floor(Number(resources.finaleStacks)||0)+' 层：伤害强效 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
         :event);
     }
     if(currentAwakener?.id==='awakener-0060'&&baseSkillId==='skill.caraboo.ta-da-its-the-fairy'){
@@ -1322,7 +1322,7 @@
       if(satiety>0&&perStack>0){
         const bonus=satiety*perStack;
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')
-          ?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,'饱足 '+satiety+' 层：爆发基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
+          ?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Satiety '+satiety+' stacks: Exalt Base DMG +'+bonus.toFixed(0)+'%':'饱足 '+satiety+' 层：爆发基础伤害 +'+bonus.toFixed(0)+'%'].filter(Boolean).join('；')}
           :event);
       }
       if(offering>0)mapped=cloneExtraDamageEvents(mapped,offering,'供奉 '+offering+' 层：本次狂气爆发额外 '+offering+' 段');
@@ -1330,11 +1330,11 @@
     if(currentAwakener?.id==='awakener-0018'&&Number(resources.finaleFormActive)>0){
       const rank=Math.max(1,Number($('skillLevel')?.value)||1);
       if(baseSkillId==='skill.doll-inferno.terminal-of-truth-and-abyss'){
-        mapped.push({id:'doll-finale-terminal-poison',index:mapped.length,position:9992,groupId:'doll-finale-terminal-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:'终末形态：狂气爆发额外触发 50% 中毒'});
+        mapped.push({id:'doll-finale-terminal-poison',index:mapped.length,position:9992,groupId:'doll-finale-terminal-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent:50,activeSource:false,resourceEffectLabel:ui('终末形态：狂气爆发额外触发 50% 中毒','Finale Form: Exalt additionally triggers 50% Poison')});
       }
       if(baseSkillId==='skill.doll-inferno.soulblight'){
         const percent=Math.max(0,num(argValue(currentSkill?.descriptionArgs?.Arg3,rank),0));
-        if(percent>0)mapped.push({id:'doll-finale-rouse-poison',index:mapped.length,position:9993,groupId:'doll-finale-rouse-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent,turnEndOnly:true,activeSource:false,resourceEffectLabel:'终末形态：回合结束触发 '+percent.toFixed(0)+'% 中毒'});
+        if(percent>0)mapped.push({id:'doll-finale-rouse-poison',index:mapped.length,position:9993,groupId:'doll-finale-rouse-poison',type:'poison',action:'trigger',source:'resource',basis:'currentPoison',percent,turnEndOnly:true,activeSource:false,resourceEffectLabel:(isEnglish()?'Finale Form: trigger '+percent.toFixed(0)+'% Poison at turn end':'终末形态：回合结束触发 '+percent.toFixed(0)+'% 中毒')});
       }
     }
     if(currentAwakener?.id==='awakener-0010'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'){
@@ -1345,7 +1345,7 @@
         const key=event.groupId||event.id;
         if(!key||seenGroups.has(key))continue;
         seenGroups.add(key);
-        extras.push({...event,id:String(event.id||'damage')+'-clementine-aa-extra',index:mapped.length+extras.length,position:(Number(event.position)||0)+0.00004,groupId:String(key)+'-clementine-aa-extra',resourceEffectLabel:'最终法则灵知觉醒：该伤害效果段数 +1'});
+        extras.push({...event,id:String(event.id||'damage')+'-clementine-aa-extra',index:mapped.length+extras.length,position:(Number(event.position)||0)+0.00004,groupId:String(key)+'-clementine-aa-extra',resourceEffectLabel:ui('最终法则灵知觉醒：该伤害效果段数 +1','Absolute Axiom Rouse: this damage effect gains +1 hit')});
       }
       mapped.push(...extras);
     }
@@ -1366,7 +1366,7 @@
             position:(Number(event.position)||0)+0.00005*(n+1),
             groupId:String(event.groupId||event.id||'event')+suffix,
             sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+suffix:event.sourceGroupId,
-            resourceEffectLabel:[event.resourceEffectLabel,'灵知觉醒：本回合第一张指令卡效果额外触发 '+extra+' 次'].filter(Boolean).join('；')
+            resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Rouse: the first Command this turn triggers its effects '+extra+' additional time(s)':'灵知觉醒：本回合第一张指令卡效果额外触发 '+extra+' 次'].filter(Boolean).join('；')
           });
         }
         mapped.push(...clones);
@@ -1380,13 +1380,13 @@
         groupId:'castor-onyx-plume-corrosion',type:'corrosion',action:'apply',source:'talent',
         basis:'statPercent',stat:'ATK',percent:840,activeSource:false,turnUnique:true,
         resourceStatusMultiplier:(1+damageAmp/100)*explorationMult,
-        resourceEffectLabel:'净化之羽：首张黑羽施加 840% 攻击力 侵蚀；伤害强效与已完成战斗成长已计入'
+        resourceEffectLabel:ui('净化之羽：首张黑羽施加 840% 攻击力 侵蚀；伤害强效与已完成战斗成长已计入','Purifying Feather: the first Black Feather applies Corrosion equal to 840% ATK; Damage Amplification and completed-battle growth are included')
       });
     }
     if(currentAwakener?.id==='awakener-0058'&&Number(resources.packHuntStacks)>0&&['derived.pontos.raid-gaunt','derived.pontos.vex-gaunt','derived.pontos.slay-gaunt'].includes(baseSkillId)){
       if(baseSkillId==='derived.pontos.slay-gaunt'){
         const fixed=mapped.filter(event=>event.type==='fixed');
-        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:'群猎：消耗 1 层，「猎杀之魇」固定伤害额外触发 1 次'}));
+        const clones=fixed.map((event,i)=>({...event,id:String(event.id||'fixed')+'-pack-hunt-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00003*(i+1),groupId:String(event.groupId||event.id||'fixed')+'-pack-hunt-'+String(i+1),resourceEffectLabel:ui('群猎：消耗 1 层，「猎杀之魇」固定伤害额外触发 1 次','Pack Hunt: consume 1 stack; Nightmare of the Hunt Fixed DMG triggers one additional time')}));
         mapped.push(...clones);
       }
     }
@@ -1411,7 +1411,7 @@
           groupId:'ogier-rouse-corrosion-'+String(i+1),
           type:'corrosion',action:'apply',source:'resource',basis:'sourceDamage',
           sourceGroupId,percent:100,activeSource:false,
-          resourceEffectLabel:'灵知觉醒：染罪之枪施加等同伤害的侵蚀'
+          resourceEffectLabel:ui('灵知觉醒：染罪之枪施加等同伤害的侵蚀','Rouse: Stained Spear applies Corrosion equal to damage dealt')
         });
       }
     }
@@ -1425,16 +1425,16 @@
       const critPer=critMatch?num(critMatch[1],0):0;
       mapped=mapped.map(event=>{
         if(event.type!=='active'&&event.type!=='pierce')return event;
-        return {...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalPer*stacks,critDamageBonus:(Number(event.critDamageBonus)||0)+critPer*stacks,resourceEffectLabel:[event.resourceEffectLabel,'暗潮 '+stacks+' 层'].filter(Boolean).join('；')};
+        return {...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalPer*stacks,critDamageBonus:(Number(event.critDamageBonus)||0)+critPer*stacks,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Undercurrent '+stacks+' stacks':'暗潮 '+stacks+' 层'].filter(Boolean).join('；')};
       });
     }
     if(currentAwakener?.id==='awakener-0032'&&Number(resources.vanityCollapseCount)>0){
       const bonus=15*Math.max(0,Number(resources.vanityCollapseCount)||0);
-      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:'虚荣的崩塌：基础伤害 +'+bonus.toFixed(0)+'%'}:event);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:(isEnglish()?'Collapse of Vanity: Base DMG +'+bonus.toFixed(0)+'%':'虚荣的崩塌：基础伤害 +'+bonus.toFixed(0)+'%')}:event);
     }
     if(currentAwakener?.id==='awakener-0043'&&baseSkillId==='skill.ryker.all-in'&&Number(resources.blackSigilsConsumed)>0){
       const bonus=0.5*Math.max(0,Number(resources.blackSigilsConsumed)||0);
-      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:'确定收益：对应技能基础伤害 +'+bonus.toFixed(1)+'%'}:event);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+bonus,resourceEffectLabel:(isEnglish()?'Guaranteed Return: corresponding skill Base DMG +'+bonus.toFixed(1)+'%':'确定收益：对应技能基础伤害 +'+bonus.toFixed(1)+'%')}:event);
     }
     if(currentAwakener?.id==='awakener-0024'&&baseSkillId==='skill.horla.snarl-psalm'&&Number(resources.angerMetaphorStacks)>0){
       const stacks=Math.min(3,Math.max(0,Math.floor(Number(resources.angerMetaphorStacks)||0)));
@@ -1445,14 +1445,14 @@
       const rendered=String(renderTemplate(overlay,1)||'');
       const m=rendered.match(/Final DMG[^+]*\+\s*(\d+(?:\.\d+)?)%/i);
       const bonus=m?Math.max(0,num(m[1],0)):0;
-      if(bonus>0)mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:'愤怒情绪：最终伤害 +'+bonus.toFixed(1)+'%'}:event);
+      if(bonus>0)mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+bonus,resourceEffectLabel:(isEnglish()?'Anger: Final DMG +'+bonus.toFixed(1)+'%':'愤怒情绪：最终伤害 +'+bonus.toFixed(1)+'%')}:event);
     }
     if(currentAwakener?.id==='awakener-0024'&&resources.horlaEmotion==='fear'){
       const overlay=resolvedOverlay('overlay.horla.fear');
       const rendered=String(renderTemplate(overlay,1)||'');
       const m=rendered.match(/Counter[^+]*\+\s*(\d+(?:\.\d+)?)%/i)||rendered.match(/Poison[^+]*\+\s*(\d+(?:\.\d+)?)%/i);
       const bonus=m?Math.max(0,num(m[1],0)):0;
-      if(bonus>0)mapped=mapped.map(event=>((event.type==='poison'&&event.action==='apply')||(event.type==='counter'&&event.action==='gain'))?{...event,resourceStatusMultiplier:1+bonus/100,resourceEffectLabel:'恐惧情绪：中毒/反击生成 +'+bonus.toFixed(1)+'%'}:event);
+      if(bonus>0)mapped=mapped.map(event=>((event.type==='poison'&&event.action==='apply')||(event.type==='counter'&&event.action==='gain'))?{...event,resourceStatusMultiplier:1+bonus/100,resourceEffectLabel:(isEnglish()?'Fear: Poison / Counter generation +'+bonus.toFixed(1)+'%':'恐惧情绪：中毒/反击生成 +'+bonus.toFixed(1)+'%')}:event);
     }
     if(currentAwakener?.id==='awakener-0029'&&baseSkillId==='skill.lily.strike-to-protect'&&Number(resources.endureStacks)>0){
       const stacks=Math.max(0,Number(resources.endureStacks)||0);
@@ -1460,7 +1460,7 @@
       const effectiveStacks=stacks*(1+0.4*boost);
       const progression=progressionState();
       const extraAmp=progression.soulforgeEnabled&&progression.soulforgeLevel>0?Math.max(0,Number(progression.resolvedSoulforgeArgs?.Arg5)||0):0;
-      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,resourceFlatDamage:(Number(event.resourceFlatDamage)||0)+2*effectiveStacks,resourceFlatDamageAmpBonusPct:(Number(event.resourceFlatDamageAmpBonusPct)||0)+extraAmp,resourceEffectLabel:'忍耐 '+stacks.toFixed(0)+'：独立伤害增加 '+(2*effectiveStacks).toFixed(0)+(extraAmp>0?'（额外伤害强效 +'+extraAmp.toFixed(1)+'%）':'')}:event);
+      mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{...event,resourceFlatDamage:(Number(event.resourceFlatDamage)||0)+2*effectiveStacks,resourceFlatDamageAmpBonusPct:(Number(event.resourceFlatDamageAmpBonusPct)||0)+extraAmp,resourceEffectLabel:(isEnglish()?'Endurance '+stacks.toFixed(0)+': independent damage +'+(2*effectiveStacks).toFixed(0)+(extraAmp>0?' (extra Damage Amplification +'+extraAmp.toFixed(1)+'%)':''):'忍耐 '+stacks.toFixed(0)+'：独立伤害增加 '+(2*effectiveStacks).toFixed(0)+(extraAmp>0?'（额外伤害强效 +'+extraAmp.toFixed(1)+'%）':''))}:event);
     }
     if(currentAwakener?.id==='awakener-0052'&&baseSkillId==='skill.wanda.spine-needle-chains'&&Number(resources.dreamlureStacks)>=5){
       mapped=cloneExtraDamageEvents(mapped,2,'梦引≥5：跃迁成功，额外 2 段伤害');
@@ -1472,14 +1472,14 @@
       const reduction=m?Math.max(0,Math.min(100,num(m[1],60))):60;
       const mult=Math.max(0,1-reduction/100);
       const active=mapped.filter(x=>x.type==='active');
-      mapped=mapped.map(event=>event.type==='active'?{...event,resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}:event);
+      mapped=mapped.map(event=>event.type==='active'?{...event,resourceDamageMultiplier:mult,resourceEffectLabel:(isEnglish()?'Murmurs: Active DMG ×'+mult.toFixed(2)+'; attack count doubled':'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍')}:event);
       const clones=active.map((event,i)=>({...event,id:String(event.id||'active')+'-murmurs-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00001*(i+1),groupId:String(event.groupId||event.id||'active')+'-murmurs-'+String(i+1),resourceDamageMultiplier:mult,resourceEffectLabel:'低语：主动伤害 ×'+mult.toFixed(2)+'，攻击次数翻倍'}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0054'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'&&Number(resources.xuFirstCommandRouse)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
       const direct=mapped.filter(event=>['active','pierce','pure','fixed'].includes(event.type));
       const status=mapped.filter(event=>['poison','bleed','counter','corrosion'].includes(event.type));
-      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+'-xu-aa-first':event.sourceGroupId,resourceEffectLabel:[event.resourceEffectLabel,'最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次'].filter(Boolean).join('；')}));
+      const clones=[...direct,...status].map((event,i)=>({...event,id:String(event.id||'event')+'-xu-aa-first-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.000015*(i+1),groupId:String(event.groupId||event.id||'event')+'-xu-aa-first',sourceGroupId:event.sourceGroupId?String(event.sourceGroupId)+'-xu-aa-first':event.sourceGroupId,resourceEffectLabel:[event.resourceEffectLabel,ui('最终法则灵知觉醒：本回合第一张指令卡额外生效 1 次','Absolute Axiom Rouse: the first Command this turn resolves one additional time')].filter(Boolean).join('；')}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0054'&&baseSkillId==='derived.xu.enthrall'&&Number(resources.spellboundStacks)>0){
@@ -1489,8 +1489,8 @@
       const cap=selectedEnlightenSlot()==='AbsoluteAxiom'?15:(capMatch?Math.max(1,Number(capMatch[1])||5):5);
       const stacks=Math.min(cap,Math.max(0,Math.floor(Number(resources.spellboundStacks)||0)));
       if(stacks>0){
-        mapped.push({id:'xu-enthrall-pure-resource',index:mapped.length,position:9997,groupId:'xu-enthrall-pure-resource',type:'pure',source:'resource',basis:'targetMaxHp',percent:stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：纯粹伤害'});
-        mapped.push({id:'xu-enthrall-poison-resource',index:mapped.length,position:9998,groupId:'xu-enthrall-poison-resource',type:'poison',action:'trigger',source:'resource',basis:'currentPoisonPercent',percent:40*stacks,activeSource:false,resourceEffectLabel:'Spellbound '+stacks+' 层：触发 '+(40*stacks)+'% 中毒'});
+        mapped.push({id:'xu-enthrall-pure-resource',index:mapped.length,position:9997,groupId:'xu-enthrall-pure-resource',type:'pure',source:'resource',basis:'targetMaxHp',percent:stacks,activeSource:false,resourceEffectLabel:(isEnglish()?'Spellbound '+stacks+' stacks: Pure DMG':'Spellbound '+stacks+' 层：纯粹伤害')});
+        mapped.push({id:'xu-enthrall-poison-resource',index:mapped.length,position:9998,groupId:'xu-enthrall-poison-resource',type:'poison',action:'trigger',source:'resource',basis:'currentPoisonPercent',percent:40*stacks,activeSource:false,resourceEffectLabel:(isEnglish()?'Spellbound '+stacks+' stacks: trigger '+(40*stacks)+'% Poison':'Spellbound '+stacks+' 层：触发 '+(40*stacks)+'% 中毒')});
       }
     }
     if(currentAwakener?.id==='awakener-0019'&&(baseSkillId==='skill.helot-catena.sanguine-fetters'||Number(resources.helotSanguineTurnActive)>0)){
@@ -1501,7 +1501,7 @@
         mapped=mapped.map(event=>event.type==='active'?{
           ...event,
           onDamageBleedPct:(Number(event.onDamageBleedPct)||0)+bleedPct,
-          resourceEffectLabel:[event.resourceEffectLabel,(baseSkillId==='skill.helot-catena.sanguine-fetters'?'「缚身锁链」本次效果：':'「缚身锁链」本回合效果：')+'主动伤害附加 '+bleedPct.toFixed(0)+'% 流血'].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?((baseSkillId==='skill.helot-catena.sanguine-fetters'?'Sanguine Fetters, this use: ':'Sanguine Fetters, this turn: ')+'Active DMG adds '+bleedPct.toFixed(0)+'% Bleed'):((baseSkillId==='skill.helot-catena.sanguine-fetters'?'「缚身锁链」本次效果：':'「缚身锁链」本回合效果：')+'主动伤害附加 '+bleedPct.toFixed(0)+'% 流血')].filter(Boolean).join('；')
         }:event);
       }
     }
@@ -1515,14 +1515,14 @@
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
           ...event,
           skillFinalDamageBonusPct:(Number(event.skillFinalDamageBonusPct)||0)+finalBonus,
-          resourceEffectLabel:[event.resourceEffectLabel,'活焰 '+fiammaStacks+' 层：本卡最终伤害 +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?'（灵知觉醒 + 最终法则）':'')].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'Fiamma '+fiammaStacks+' stacks: this card Final DMG +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?' (Rouse + Absolute Axiom)':''):'活焰 '+fiammaStacks+' 层：本卡最终伤害 +'+finalBonus.toFixed(0)+'%'+(absoluteRouse?'（灵知觉醒 + 最终法则）':'')].filter(Boolean).join('；')
         }:event);
         const e2Unlocked=ENLIGHTEN_ORDER.indexOf(selectedEnlightenSlot())>=ENLIGHTEN_ORDER.indexOf('E2');
         if(e2Unlocked&&fiammaStacks===3&&baseSkillId==='skill.kathigu-ra.solarflare'){
           mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
             ...event,
             skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+50,
-            resourceEffectLabel:[event.resourceEffectLabel,'启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%'].filter(Boolean).join('；')
+            resourceEffectLabel:[event.resourceEffectLabel,ui('启灵2 · 活焰 3 层：「千兆耀斑」基础伤害 +50%','E2 · Fiamma 3 stacks: Gigaflare Base DMG +50%')].filter(Boolean).join('；')
           }:event);
         }
       }
@@ -1532,13 +1532,13 @@
         mapped=mapped.map(event=>(event.type==='active'||event.type==='pierce')?{
           ...event,
           skillBaseDamageBonusPct:(Number(event.skillBaseDamageBonusPct)||0)+baseBonus,
-          resourceEffectLabel:[event.resourceEffectLabel,'启灵3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join('；')
+          resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?'E3 · Combust '+combust+' stacks: Base DMG this battle +'+baseBonus.toFixed(0)+'%':'启灵3 · 燃烧 '+combust+' 层：本场基础伤害 +'+baseBonus.toFixed(0)+'%'].filter(Boolean).join('；')
         }:event);
       }
     }
     if(currentAwakener?.id==='awakener-0035'&&baseSkillId==='skill.murphy-fauxborn.princess-of-delusions'&&Number(resources.lifeSealStacks)>=5){
       const direct=mapped.filter(x=>x.type==='active'||x.type==='pierce');
-      const clones=direct.map((event,i)=>({...event,id:String(event.id||'damage')+'-life-seal-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00002*(i+1),groupId:String(event.groupId||event.id||'damage')+'-life-seal-'+String(i+1),resourceEffectLabel:'生命封印 5 层：伤害段数翻倍'}));
+      const clones=direct.map((event,i)=>({...event,id:String(event.id||'damage')+'-life-seal-'+String(i+1),index:mapped.length+i,position:(Number(event.position)||0)+0.00002*(i+1),groupId:String(event.groupId||event.id||'damage')+'-life-seal-'+String(i+1),resourceEffectLabel:ui('生命封印 5 层：伤害段数翻倍','Life Seal 5 stacks: damage hit count doubled')}));
       mapped.push(...clones);
     }
     if(currentAwakener?.id==='awakener-0041'&&Number(resources.atonementByPainActive)>0&&String(currentSkill?.cardFamily||'').toLowerCase()==='command'){
@@ -1551,7 +1551,7 @@
           critRateBonus:0,critDamageBonus:0,skillBaseDamageBonusPct:0,skillFinalDamageBonusPct:0,
           usesStrength:false,guaranteedCrit:false,activeSource:true,
           onDamageBleedPct:Math.max(0,Number(resources.sinMarkStacks)||0),
-          resourceEffectLabel:'苦痛救赎：第 '+String(i+1)+' 次 '+(200*(1+0.20*finishedBattles)).toFixed(0)+'% 攻击力 伤害'+(finishedBattles>0?'（已完成 '+finishedBattles+' 场）':'')
+          resourceEffectLabel:(isEnglish()?'Atonement by Pain: hit '+String(i+1)+' · '+(200*(1+0.20*finishedBattles)).toFixed(0)+'% ATK damage'+(finishedBattles>0?' ('+finishedBattles+' completed battle(s))':''):'苦痛救赎：第 '+String(i+1)+' 次 '+(200*(1+0.20*finishedBattles)).toFixed(0)+'% 攻击力 伤害'+(finishedBattles>0?'（已完成 '+finishedBattles+' 场）':''))
         });
       }
     }
@@ -2198,7 +2198,7 @@
         const scope=scopedPoison[1].toLowerCase();
         if(skillMatchesScope(currentSkill,scope)){
           const percent=num(scopedPoison[2]),stat=String(scopedPoison[3]).toUpperCase();
-          append.push({id:`wheel-${wheel.id}-poison`,index:0,position:9998,type:'poison',action:'apply',source:'wheel',basis:'statPercent',stat,percent,activeSource:false,resourceEffectLabel:`命轮「${wheelName}」：${scope==='strike'?'打击':'防御'}附加中毒`});
+          append.push({id:`wheel-${wheel.id}-poison`,index:0,position:9998,type:'poison',action:'apply',source:'wheel',basis:'statPercent',stat,percent,activeSource:false,resourceEffectLabel:isEnglish()?`Wheel “${wheelName}”: ${scope==='strike'?'Strike':'Defense'} adds Poison`:`命轮「${wheelName}」：${scope==='strike'?'打击':'防御'}附加中毒`});
           notes.push(`命轮「${wheelName}」：当前${scope==='strike'?'打击':'防御'}附加 ${stat} × ${percent}% 中毒`);
         }
       }
@@ -2207,14 +2207,14 @@
       m=raw.match(/As part of (?:the )?wielder['’]s Exalt,\s*first inflict\s+\{?Poison\}?\s+equal to\s+([\d.]+)%\s+of\s+(?:the )?wielder['’]s\s+(ATK|DEF)/i);
       if(m&&skillMatchesScope(currentSkill,'exalt')){
         const percent=num(m[1]),stat=String(m[2]).toUpperCase();
-        prepend.push({id:`wheel-${wheel.id}-pre-exalt-poison`,index:0,position:-9998,type:'poison',action:'apply',source:'wheel',basis:'statPercent',stat,percent,activeSource:false,resourceEffectLabel:`命轮「${wheelName}」：狂气爆发前置中毒`});
+        prepend.push({id:`wheel-${wheel.id}-pre-exalt-poison`,index:0,position:-9998,type:'poison',action:'apply',source:'wheel',basis:'statPercent',stat,percent,activeSource:false,resourceEffectLabel:isEnglish()?`Wheel “${wheelName}”: pre-Exalt Poison`:`命轮「${wheelName}」：狂气爆发前置中毒`});
         notes.push(`命轮「${wheelName}」：狂气爆发前先施加 ${stat} × ${percent}% 中毒`);
       }
       // Some Wheels add a flat ATK-derived component to every Active-DMG event.
       m=raw.match(/Active DMG\s*\+\s*(?:an\s+amount\s+)?equal to\s+(?:the )?wielder['’]s\s+ATK\s*[×x*]\s*([\d.]+)%/i);
       if(m){
         const percent=num(m[1]);
-        mapped=mapped.map(event=>event.type==='active'?{...event,resourceFlatAtkPercent:(Number(event.resourceFlatAtkPercent)||0)+percent,resourceEffectLabel:[event.resourceEffectLabel,`命轮「${wheelName}」：主动伤害额外 +ATK×${percent}%`].filter(Boolean).join('；')}:event);
+        mapped=mapped.map(event=>event.type==='active'?{...event,resourceFlatAtkPercent:(Number(event.resourceFlatAtkPercent)||0)+percent,resourceEffectLabel:[event.resourceEffectLabel,isEnglish()?`Wheel “${wheelName}”: Active DMG adds ATK × ${percent}%`:`命轮「${wheelName}」：主动伤害额外 +ATK×${percent}%`].filter(Boolean).join('；')}:event);
         notes.push(`命轮「${wheelName}」：每个主动伤害事件额外增加 ATK × ${percent}%`);
       }
     });
