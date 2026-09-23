@@ -5,14 +5,18 @@
   const decodeMojibake=value=>{const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(c=>c.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}};
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
+  const ui=(cn,en)=>zh()?cn:en;
   const rankCaps=[50,200,500,1000];
   const difficultyOrder=['normal','hard','nightmare','madness'];
   const difficultyZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
+  const difficultyEn={all:'All Difficulties',normal:'Normal',hard:'Hard',nightmare:'Nightmare',madness:'Madness',unknown:'Unknown'};
   const enlightOrder=['e0_2','e3_plus3','plus4_11','plus12'];
   const enlightZh={e0_2:'0～2启',e3_plus3:'3启～+3',plus4_11:'+4～+11',plus12:'+12',unknown:'未知'};
+  const enlightEn={e0_2:'E0–E2',e3_plus3:'E3–+3',plus4_11:'+4–+11',plus12:'+12',unknown:'Unknown'};
   const enlightColors={e0_2:'#8c97a8',e3_plus3:'#d9a441',plus4_11:'#62b7ff',plus12:'#d978d0',unknown:'#6b7280'};
   const wheelStackOrder=['stack0_2','stack3_11','stack12'];
   const wheelStackZh={stack0_2:'0～2叠',stack3_11:'3叠～+11',stack12:'+12'};
+  const wheelStackEn={stack0_2:'0–2 stacks',stack3_11:'3–+11',stack12:'+12'};
   const wheelStackColors={stack0_2:'#8c97a8',stack3_11:'#62b7ff',stack12:'#d978d0'};
   const realmOrder=['Chaos','Aequor','Caro','Ultra'];
   const realmZh={Chaos:'混沌',Aequor:'深海',Caro:'血肉',Ultra:'超维'};
@@ -380,10 +384,19 @@
   }
 
   function renderCoverage(){
-    const cap=selectedRankCap(),max=maxRankAvailable(),box=$('dtideCoverageWarn');
-    if(!cap)box.innerHTML='<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>';
-    else{const complete=max>=cap;box.innerHTML=complete?'':`<div class="dtideNotice">当前快照实际抓取到的最高榜单名次为 <b>#${esc(max||'—')}</b>。Top ${cap} 统计目前属于不完整样本。</div>`}
-    for(const opt of $('dtideRankScope').options){if(opt.value==='all'||opt.value==='0'){opt.textContent='全部范围（含未知排名）';continue}const n=Number(opt.value),ok=max>=n;opt.textContent=`Top ${n}${ok?'':' · 当前样本不足'}`}
+    const cap=selectedRankCap(),max=maxRankAvailable(),box=$('dtideCoverageWarn');if(!box)return;
+    if(!cap)box.innerHTML=zh()?'<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>':'<div class="dtideNotice">Current scope is <b>All Ranks</b>. All downloaded users are included, including users whose leaderboard rank cannot currently be matched.</div>';
+    else{
+      const complete=max>=cap;
+      box.innerHTML=complete?'':(zh()
+        ?`<div class="dtideNotice">当前快照实际抓取到的最高榜单名次为 <b>#${esc(max||'—')}</b>。Top ${cap} 统计目前属于不完整样本。</div>`
+        :`<div class="dtideNotice">The current snapshot reaches rank <b>#${esc(max||'—')}</b>. Top ${cap} statistics are currently based on an incomplete sample.</div>`);
+    }
+    for(const opt of $('dtideRankScope')?.options||[]){
+      if(opt.value==='all'||opt.value==='0'){opt.textContent=ui('全部范围（含未知排名）','All Ranks (including unknown ranks)');continue}
+      const n=Number(opt.value),ok=max>=n;
+      opt.textContent=`Top ${n}${ok?'':ui(' · 当前样本不足',' · incomplete sample')}`;
+    }
   }
   function identityNormalizationSummary(){
     const aliases=new Map();
@@ -394,7 +407,21 @@
     const merged=[...aliases.values()].filter(set=>set.size>1).length;
     return {characters:aliases.size,mergedAliases:merged};
   }
-  function renderSummary(){const g=currentGroup(),coverage=manifest.fieldCoverage||{},cap=selectedRankCap(),max=maxRankAvailable();$('dtideSummary').innerHTML=[['榜单样本',`${season.recordCount} 条 / 最深 #${max||'—'}`],['当前范围',rankScopeLabel(cap)],['统计队伍',g.teamCount],['角色槽位',g.memberSlots]].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');$('dtideStatus').textContent=`第 ${season.seasonId} 期 · ${difficultyZh[$('dtideDifficulty').value]||'全部难度'} · ${rankScopeLabel(cap)}`;$('dtideFilterCoverage').textContent=`等级 ✓ · 启灵 ${coverage.enlightenLevel?'✓':'—'} · 命轮 ${coverage.wheels?'✓':'—'} · 密契 ${coverage.covenants?'✓':'—'}`;renderCoverage()}
+  function renderSummary(){
+    const g=currentGroup(),coverage=manifest.fieldCoverage||{},cap=selectedRankCap(),max=maxRankAvailable();
+    const difficulty=$('dtideDifficulty').value,diff=zh()?(difficultyZh[difficulty]||difficultyZh.all):(difficultyEn[difficulty]||difficultyEn.all);
+    $('dtideSummary').innerHTML=[
+      [ui('榜单样本','Leaderboard Sample'),zh()?`${season.recordCount} 条 / 最深 #${max||'—'}`:`${season.recordCount} records / deepest #${max||'—'}`],
+      [ui('当前范围','Current Scope'),rankScopeLabel(cap)],
+      [ui('统计队伍','Teams Counted'),g.teamCount],
+      [ui('角色槽位','Character Slots'),g.memberSlots]
+    ].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');
+    $('dtideStatus').textContent=zh()?`第 ${season.seasonId} 期 · ${diff} · ${rankScopeLabel(cap)}`:`Season ${season.seasonId} · ${diff} · ${rankScopeLabel(cap)}`;
+    $('dtideFilterCoverage').textContent=zh()
+      ?`等级 ✓ · 启灵 ${coverage.enlightenLevel?'✓':'—'} · 命轮 ${coverage.wheels?'✓':'—'} · 密契 ${coverage.covenants?'✓':'—'}`
+      :`Level ✓ · Enlighten ${coverage.enlightenLevel?'✓':'—'} · Wheels ${coverage.wheels?'✓':'—'} · Covenants ${coverage.covenants?'✓':'—'}`;
+    renderCoverage();
+  }
 
 const dtideHeatStyle=(rate,max=0)=>{const safeMax=Math.max(Number(max)||0,Number.EPSILON),t=Math.max(0,Math.min(1,Number(rate||0)/safeMax)),h=Math.round(215-215*t),a=(.52*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
 function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'total-desc';const m=spec.match(/^wave(\d+)-(asc|desc)$/);let av=a.total||a.count||0,bv=b.total||b.count||0;if(m){const w=Number(m[1]),g=groups?.get(w),find=x=>g?.characters?.find(y=>y.key===x.key)?.count||0;av=find(a);bv=find(b)}const d=bv-av;return spec.endsWith('-asc')?-d:d||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')}
@@ -579,7 +606,14 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     host.innerHTML=`<table class="dtideTable"><thead><tr><th>角色</th>${waves.map(w=>`<th><button type="button" class="dtideSortHead" data-sort-key="${w}" title="点击切换升降序">Wave ${w}${arrow(String(w))}</button></th>`).join('')}<th><button type="button" class="dtideSortHead" data-sort-key="assist" title="点击切换升降序">助战使用率${arrow('assist')}</button></th><th><button type="button" class="dtideSortHead" data-sort-key="total" title="点击切换升降序">总出现${arrow('total')}</button></th></tr></thead><tbody>${rows.map(c=>{const ce=characterEnlight.get(c.key),info=characterInfo(c.id||c.ingameId||c.key,c);return `<tr><td><div class="dtideChar">${info.image?`<img src="${esc(info.image)}" alt="" onerror="this.hidden=true">`:''}<span>${esc(info.name||c.name)}</span>${enlightBar({...c,count:ce?.count||c.total,enlight:ce?[...ce.enlight.values()]:[]})}</div></td>${waves.map(w=>{const g=groups.get(w),hit=g?.characters.find(x=>x.key===c.key),rate=mode==='slot'?(hit?.slotRatePct||0):(hit?.teamRatePct||0);return `<td class="dtideRate">${pct(rate)}</td>`}).join('')}<td class="dtideRate dtideHeat" style="${dtideHeatStyle(c.assistRatePct||0,assistHeatMax)}">${pct(c.assistRatePct||0)}</td><td>${c.total}</td></tr>`}).join('')}</tbody></table>`;
     host.onclick=e=>{const btn=e.target.closest('[data-sort-key]');if(!btn)return;const key=String(btn.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix()};
   }
-  function renderUsage(){const host=$('dtideUsage');if(!host)return;const g=currentGroup(),mode=$('dtideRateMode')?.value||'team';host.innerHTML=g.characters.slice(0,18).map((c,i)=>{const info=characterInfo(c.id||c.ingameId||c.key),rate=mode==='slot'?(g.memberSlots?c.count/g.memberSlots*100:0):c.teamRatePct;return `<button class="dtideUsage" type="button" data-character-index="${i}" title="点击展开该角色的 Top5 队友、命轮和密契出场率"><div class="dtideChar">${info.image?`<img src="${esc(info.image)}" alt="">`:''}<span><b>${esc(info.name||c.name)}</b><small>${c.count} 次 · 展开 Top5 队友 / 命轮 / 密契</small></span></div><strong>${pct(rate)}</strong></button>`}).join('')||'<div class="dtideEmpty">无角色统计。</div>'}
+  function renderUsage(){
+    const host=$('dtideUsage');if(!host)return;
+    const g=currentGroup(),mode=$('dtideRateMode')?.value||'team';
+    host.innerHTML=g.characters.slice(0,18).map((c,i)=>{
+      const info=characterInfo(c.id||c.ingameId||c.key),rate=mode==='slot'?(g.memberSlots?c.count/g.memberSlots*100:0):c.teamRatePct;
+      return `<button class="dtideUsage" type="button" data-character-index="${i}" title="${ui('点击展开该角色的 Top5 队友、命轮和密契出场率','Open this Awakener’s Top 5 teammates, Wheels, and Covenants')}"><div class="dtideChar">${info.image?`<img src="${esc(info.image)}" alt="">`:''}<span><b>${esc(info.name||c.name)}</b><small>${zh()?`${c.count} 次 · 展开 Top5 队友 / 命轮 / 密契`:`${c.count} appearances · open Top 5 teammates / Wheels / Covenants`}</small></span></div><strong>${pct(rate)}</strong></button>`;
+    }).join('')||`<div class="dtideEmpty">${ui('无角色统计。','No character statistics.')}</div>`;
+  }
   function compareTable(columns,groups){
     const union=new Map();for(const g of groups)for(const c of g.characters)union.set(c.key,c);const rows=[...union.values()].map(c=>({...c,total:groups.reduce((s,g)=>s+(g.characters.find(x=>x.key===c.key)?.count||0),0)})).sort((a,b)=>b.total-a.total).slice(0,40);if(!rows.length)return '<div class="dtideEmpty">暂无记录。</div>';return `<table class="dtideTable"><thead><tr><th>角色</th>${columns.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(c=>{const info=characterInfo(c.id||c.ingameId||c.key);return `<tr><td>${esc(info.name||c.name)}</td>${groups.map(g=>{const hit=g.characters.find(x=>x.key===c.key);return `<td class="dtideRate">${pct(hit?.teamRatePct||0)}</td>`}).join('')}</tr>`}).join('')}</tbody></table>`}
   function renderComparisons(){return}
@@ -635,12 +669,17 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function renderResults(){
     if(!$('dtideResults')||!$('dtidePager'))return;
     searchPerformed=true;
-    const all=flattenTeams().filter(matchesFilters),limit=200,rows=all.slice(0,limit);
+    const all=flattenTeams().filter(matchesFilters),limit=200,rows=all.slice(0,limit),enlightLabels=zh()?enlightZh:enlightEn;
     $('dtideResults').innerHTML=rows.map(({record,wave,team,difficulty})=>{
-      const replay=replayCodeOf(team);
-      return `<article class="dtideResult"><div class="dtideResultHead"><b>#${esc(record.rank??'—')} ${esc(record.player)} · Wave ${wave.wave} · ${esc(difficultyZh[difficulty]||difficultyZh.unknown)} · ${team.clearType==='extra'?'Extra Clear':'Clear'} · ${esc(record.score??'—')} 分</b><div class="dtideResultLinks"><a href="${esc(record.url)}" target="_blank" rel="noopener noreferrer">查看 Eremora 原记录</a>${replay?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(replay)}" title="复制 battleUuid，用于游戏内录像回放">复制录像回放</button>`:''}</div></div><div class="dtideMembers">${team.members.map(m=>{const info=characterInfo(m.skeydbId||m.ingameId||memberKey(m),m),wn=(m.wheels||[]).map(wheelName).filter(Boolean).join(' / '),cn=(m.covenants||((m.covenant)?[m.covenant]:[])).map(covenantName).filter(Boolean).join(' / '),ec=enlightClass(m);return `<div class="dtideMember">${info.image?`<img class="dtideMemberAvatar" src="${esc(info.image)}" alt="" loading="lazy">`:''}<b>${esc(info.name||m.canonicalName||m.name)}</b><small>Lv.${esc(m.level??'—')} · ${esc(enlightZh[ec])}${m.covenantScore!=null?` · 密契评分 ${esc(m.covenantScore)}`:''}</small>${wn?`<small class="dtideGear">命轮：${esc(wn)}</small>`:''}${cn?`<small class="dtideGear">密契：${esc(cn)}</small>`:''}${m.borrowed?'<small class="dtideBorrow">借用助战</small>':''}</div>`}).join('')}</div></article>`;
-    }).join('')||'<div class="dtideEmpty">没有符合这些条件的配队。</div>';
-    $('dtidePager').textContent=`匹配 ${all.length} 支队伍${all.length>limit?` · 当前显示前 ${limit} 支`:''}`;
+      const replay=replayCodeOf(team),diff=zh()?(difficultyZh[difficulty]||difficultyZh.unknown):(difficultyEn[difficulty]||difficultyEn.unknown);
+      return `<article class="dtideResult"><div class="dtideResultHead"><b>#${esc(record.rank??'—')} ${esc(record.player)} · Wave ${wave.wave} · ${esc(diff)} · ${team.clearType==='extra'?'Extra Clear':'Clear'} · ${esc(record.score??'—')} ${ui('分','pts')}</b><div class="dtideResultLinks"><a href="${esc(record.url)}" target="_blank" rel="noopener noreferrer">${ui('查看 Eremora 原记录','View original Eremora record')}</a>${replay?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(replay)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}</div></div><div class="dtideMembers">${team.members.map(m=>{
+        const info=characterInfo(m.skeydbId||m.ingameId||memberKey(m),m),wn=(m.wheels||[]).map(wheelName).filter(Boolean).join(' / '),cn=(m.covenants||((m.covenant)?[m.covenant]:[])).map(covenantName).filter(Boolean).join(' / '),ec=enlightClass(m);
+        return `<div class="dtideMember">${info.image?`<img class="dtideMemberAvatar" src="${esc(info.image)}" alt="" loading="lazy">`:''}<b>${esc(info.name||m.canonicalName||m.name)}</b><small>Lv.${esc(m.level??'—')} · ${esc(enlightLabels[ec]||ec)}${m.covenantScore!=null?` · ${ui('密契评分','Covenant Rating')} ${esc(m.covenantScore)}`:''}</small>${wn?`<small class="dtideGear">${ui('命轮：','Wheels: ')}${esc(wn)}</small>`:''}${cn?`<small class="dtideGear">${ui('密契：','Covenants: ')}${esc(cn)}</small>`:''}${m.borrowed?`<small class="dtideBorrow">${ui('借用助战','Borrowed Assist')}</small>`:''}</div>`;
+      }).join('')}</div></article>`;
+    }).join('')||`<div class="dtideEmpty">${ui('没有符合这些条件的配队。','No teams match these filters.')}</div>`;
+    $('dtidePager').textContent=zh()
+      ?`匹配 ${all.length} 支队伍${all.length>limit?` · 当前显示前 ${limit} 支`:''}`
+      :`${all.length} teams matched${all.length>limit?` · Showing first ${limit}`:''}`;
   }
   function renderSearchPrompt(){if(!$('dtideResults')||!$('dtidePager'))return;$('dtideResults').innerHTML='<div class="dtideEmpty">设置筛选条件后点击“搜索配队”查看结果。</div>';$('dtidePager').textContent=''}
   function resetFilters(){for(const id of ['dtideLevelMin','dtideLevelMax','dtideCovenantScoreMin','dtideCovenantScoreMax','dtideScoreMin','dtideRankMax'])$(id).value='';for(const id of ['dtideProgression','dtideBorrowed','dtideWheel','dtideCovenant'])$(id).value='';document.querySelectorAll('.dtideCharacterChoice.isSelected').forEach(x=>{x.classList.remove('isSelected');x.setAttribute('aria-pressed','false')});document.querySelectorAll('.dtideFilterChip.isActive').forEach(x=>x.classList.remove('isActive'));$('dtideCharacterMode').value='all';$('dtideSearchWave').value='all';analysisCache=null;searchPerformed=false;renderSearchPrompt();scheduleRender()}
