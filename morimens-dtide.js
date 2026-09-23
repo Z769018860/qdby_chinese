@@ -426,25 +426,25 @@
 const dtideHeatStyle=(rate,max=0)=>{const safeMax=Math.max(Number(max)||0,Number.EPSILON),t=Math.max(0,Math.min(1,Number(rate||0)/safeMax)),h=Math.round(215-215*t),a=(.52*t).toFixed(2);return `--dtide-heat:hsla(${h},78%,46%,${a})`};
 function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'total-desc';const m=spec.match(/^wave(\d+)-(asc|desc)$/);let av=a.total||a.count||0,bv=b.total||b.count||0;if(m){const w=Number(m[1]),g=groups?.get(w),find=x=>g?.characters?.find(y=>y.key===x.key)?.count||0;av=find(a);bv=find(b)}const d=bv-av;return spec.endsWith('-asc')?-d:d||String(a.name||a.key).localeCompare(String(b.name||b.key),'zh-CN')}
   async function downloadRenderedTable(button){
-    const table=$('dtideMatrix')?.querySelector('table.dtideTable');if(!table)throw new Error('当前筛选条件下没有可下载的表格');
+    const table=$('dtideMatrix')?.querySelector('table.dtideTable');if(!table)throw new Error(ui('当前筛选条件下没有可下载的表格','No downloadable table under the current filters'));
     const headers=[...table.querySelectorAll('thead tr:first-child th')].map(th=>({lines:th.innerText.trim().replace(/[↕↑↓]\s*$/,'').split(/\n+/).map(x=>x.trim()).filter(Boolean),color:getComputedStyle(th.querySelector('small')||th).color}));
     const body=[...table.tBodies[0]?.rows||[]].filter(tr=>!tr.classList.contains('dtideLegacyDetailRow')).map(tr=>[...tr.cells].map(td=>{
       const image=td.querySelector('img:not([hidden])'),bar=td.querySelector('.dtideRatioBar,.dtideEnlightBar');
       return {text:(td.querySelector('.dtideChar > span')?.innerText||td.innerText||'').trim(),image:image?.getAttribute('src')||'',color:getComputedStyle(td).color,background:getComputedStyle(td).backgroundColor,bar:bar?[...bar.children].map(part=>({color:getComputedStyle(part).backgroundColor,width:parseFloat(getComputedStyle(part).width)||0})):null};
     }));
-    if(!headers.length||!body.length)throw new Error('当前筛选条件下没有可下载的表格');
-    const title=season?.legacy?'旧版融灾425出场率（来源：@却尘）':`第 ${season?.seasonId||''} 期 · ${$('dtideMatrixTitle')?.textContent||'融灾榜单'}`;
+    if(!headers.length||!body.length)throw new Error(ui('当前筛选条件下没有可下载的表格','No downloadable table under the current filters'));
+    const title=season?.legacy?ui('旧版融灾425出场率（来源：@却尘）','Legacy D-Zone 425 Appearance Rate (source: @却尘)'):(zh()?`第 ${season?.seasonId||''} 期 · ${$('dtideMatrixTitle')?.textContent||'融灾榜单'}`:`Season ${season?.seasonId||''} · ${$('dtideMatrixTitle')?.textContent||'D-Zone Ranking'}`);
     const selectedLabel=id=>$(id)?.selectedOptions?.[0]?.textContent?.trim()||'';
-    const status=season?.legacy?`排序：${headers.find((_,i)=>table.querySelectorAll('thead th')[i]?.querySelector('[data-legacy-sort]')?.textContent?.includes('↓'))?.lines.join(' ')||'当前排序'}`:[selectedLabel('dtideDifficulty'),selectedLabel('dtideRankScope'),selectedLabel('dtideTotalScore'),$('dtideRateMode')?.value==='slot'?'角色槽位率':'队伍出场率'].filter(Boolean).join(' · ');
-    button.disabled=true;button.textContent='正在生成图片…';
+    const status=season?.legacy?(zh()?`排序：${headers.find((_,i)=>table.querySelectorAll('thead th')[i]?.querySelector('[data-legacy-sort]')?.textContent?.includes('↓'))?.lines.join(' ')||'当前排序'}`:`Sort: ${headers.find((_,i)=>table.querySelectorAll('thead th')[i]?.querySelector('[data-legacy-sort]')?.textContent?.includes('↓'))?.lines.join(' ')||'current order'}`):[selectedLabel('dtideDifficulty'),selectedLabel('dtideRankScope'),selectedLabel('dtideTotalScore'),$('dtideRateMode')?.value==='slot'?ui('角色槽位率','Character Slot Rate'):ui('队伍出场率','Team Appearance Rate')].filter(Boolean).join(' · ');
+    button.disabled=true;button.textContent=ui('正在生成图片…','Generating image…');
     try{
       const pad=36,nameWidth=240,colWidths=headers.map((h,i)=>i===0?nameWidth:Math.max(114,Math.min(205,Math.max(...h.lines.map(s=>s.length),0)*13+28))),width=pad*2+colWidths.reduce((a,b)=>a+b,0),rowHeight=46,headerY=142,headerHeight=78,footerHeight=108;
       const canvas=document.createElement('canvas');canvas.width=width;canvas.height=headerY+headerHeight+body.length*rowHeight+footerHeight;
-      const ctx=canvas.getContext('2d');if(!ctx)throw new Error('浏览器不支持图片导出');
+      const ctx=canvas.getContext('2d');if(!ctx)throw new Error(ui('浏览器不支持图片导出','This browser does not support image export'));
       ctx.fillStyle='#0e1624';ctx.fillRect(0,0,canvas.width,canvas.height);
       ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillStyle='#f1d69f';ctx.font='bold 27px system-ui,sans-serif';ctx.fillText(title,pad,45,width-pad*2);
       ctx.fillStyle='#b8c5d6';ctx.font='16px system-ui,sans-serif';ctx.fillText(status,pad,86,width-pad*2);
-      ctx.fillText(`当前表格 · ${body.length} 条`,pad,116);
+      ctx.fillText(zh()?`当前表格 · ${body.length} 条`:`Current table · ${body.length} rows`,pad,116);
       const xPositions=colWidths.map((_,i)=>pad+colWidths.slice(0,i).reduce((a,b)=>a+b,0));
       ctx.fillStyle='#192638';ctx.fillRect(pad,headerY,width-pad*2,headerHeight);
       headers.forEach((h,i)=>{ctx.textAlign=i?'center':'left';ctx.font='bold 16px system-ui,sans-serif';h.lines.forEach((line,j)=>{ctx.fillStyle=j&&h.lines.length>1?h.color:'#f0f4fa';ctx.fillText(line,xPositions[i]+(i?colWidths[i]/2:12),headerY+headerHeight/2+(j-(h.lines.length-1)/2)*23,colWidths[i]-18)})});
@@ -459,9 +459,9 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       });
       ctx.textAlign='right';ctx.fillStyle='#b8c5d6';ctx.font='15px system-ui,sans-serif';ctx.fillText('https://qingdengbuyi.top/morimens-tools.html#dtide',width-pad,canvas.height-58);
       ctx.fillStyle='#f1d69f';ctx.font='bold 16px system-ui,sans-serif';ctx.fillText('copyright@青灯不弈',width-pad,canvas.height-27);
-      const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw new Error('图片生成失败');
-      const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`融灾榜单-${season?.legacy?'旧版':season?.seasonId||'当前'}-${$('dtideEntityType')?.value||'角色'}.png`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-    }finally{button.disabled=false;button.textContent='下载图片'}
+      const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw new Error(ui('图片生成失败','Image generation failed'));
+      const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=zh()?`融灾榜单-${season?.legacy?'旧版':season?.seasonId||'当前'}-${$('dtideEntityType')?.value||'角色'}.png`:`dzone-ranking-${season?.legacy?'legacy':season?.seasonId||'current'}-${$('dtideEntityType')?.value||'character'}.png`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+    }finally{button.disabled=false;button.textContent=ui('下载图片','Download Image')}
   }
   function legacyDetailExtras(name,periods){
     const data=legacyStructured?.characters?.[name]||{},assist=data.assistRates||{},teamTotal=Number(data.teamTotal||0),realmColor={混沌:'#e7b65c',超维:'#b98cff',深海:'#5cb8ff',血肉:'#ff7180'},teamMap=new Map();for(const team of data.topTeams||[]){if(!Array.isArray(team.characters)||team.characters.length!==4)continue;const characters=[...team.characters].sort((a,b)=>String(a).localeCompare(String(b),'zh-CN')),key=characters.join('|'),row=teamMap.get(key)||{characters,count:0,periods:new Set()};row.count+=Number(team.count||0);if(team.period)row.periods.add(String(team.period));teamMap.set(key,row)}const teams=[...teamMap.values()].sort((a,b)=>b.count-a.count||a.characters.join('/').localeCompare(b.characters.join('/'),'zh-CN')).slice(0,10);
@@ -681,7 +681,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       ?`匹配 ${all.length} 支队伍${all.length>limit?` · 当前显示前 ${limit} 支`:''}`
       :`${all.length} teams matched${all.length>limit?` · Showing first ${limit}`:''}`;
   }
-  function renderSearchPrompt(){if(!$('dtideResults')||!$('dtidePager'))return;$('dtideResults').innerHTML='<div class="dtideEmpty">设置筛选条件后点击“搜索配队”查看结果。</div>';$('dtidePager').textContent=''}
+  function renderSearchPrompt(){if(!$('dtideResults')||!$('dtidePager'))return;$('dtideResults').innerHTML='<div class="dtideEmpty">'+ui('设置筛选条件后点击“搜索配队”查看结果。','Set filters, then click “Search Teams” to view results.')+'</div>';$('dtidePager').textContent=''}
   function resetFilters(){for(const id of ['dtideLevelMin','dtideLevelMax','dtideCovenantScoreMin','dtideCovenantScoreMax','dtideScoreMin','dtideRankMax'])$(id).value='';for(const id of ['dtideProgression','dtideBorrowed','dtideWheel','dtideCovenant'])$(id).value='';document.querySelectorAll('.dtideCharacterChoice.isSelected').forEach(x=>{x.classList.remove('isSelected');x.setAttribute('aria-pressed','false')});document.querySelectorAll('.dtideFilterChip.isActive').forEach(x=>x.classList.remove('isActive'));$('dtideCharacterMode').value='all';$('dtideSearchWave').value='all';analysisCache=null;searchPerformed=false;renderSearchPrompt();scheduleRender()}
   function enlightenmentDetailBlock(arr){const items=[...(arr||[])].sort((a,b)=>enlightOrder.indexOf(a.key)-enlightOrder.indexOf(b.key));return '<h4>详细启灵比例</h4><div class="dtideUsageCards">'+(items.map(x=>{const key=x.key||'unknown',color=enlightColors[key]||enlightColors.unknown;return `<div class="dtideUsage dtideEnlightItem" style="--dtide-enlight-color:${color};--dtide-enlight-fill:${color}55"><div><b>${esc(enlightZh[key]||x.name||'未知')}</b><small>${x.count} 次</small></div><strong>${pct(x.ratePct)}</strong></div>`}).join('')||'<div class="dtideEmpty">暂无启灵数据</div>')+'</div>'}
   function renderSeasonDate(){const el=$('dtideSeasonDate');if(!el)return;const id=String(season?.seasonId??$('dtideSeason')?.value??''),date=id==='68'?'8.31–9.13':id==='69'?'9.14–9.27':'';el.hidden=!date;el.textContent=date?(zh()?`第 ${id} 期融灾 · ${date}`:`Season ${id} D-Zone · ${date}`):''}
@@ -701,8 +701,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     cancelAnimationFrame(renderFrame);renderFrame=0;
     searchPerformed=false;
     filtersReady=false;
-    $('dtideStatus').textContent='正在载入期次…';
-    const matrix=$('dtideMatrix');if(matrix){matrix.setAttribute('aria-busy','true');matrix.innerHTML='<div class="dtideEmpty">正在载入并整理角色榜单…</div>'}
+    $('dtideStatus').textContent=ui('正在载入期次…','Loading season…');
+    const matrix=$('dtideMatrix');if(matrix){matrix.setAttribute('aria-busy','true');matrix.innerHTML='<div class="dtideEmpty">'+ui('正在载入并整理角色榜单…','Loading and organizing the character ranking…')+'</div>'}
     const entry=manifest.availableSeasons.find(x=>String(x.seasonId)===String(id));
     if(!entry)throw new Error(`Season ${id} snapshot unavailable`);
     const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path
@@ -740,7 +740,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(seasonOption&&Number.isFinite(Number(season?.recordCount))&&!(entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty')){
       const loadedRecordCount=Number(season.recordCount);
       entry.recordCount=loadedRecordCount;
-      seasonOption.textContent=`第 ${entry.seasonId} 期 · ${loadedRecordCount} 条${entry.complete?' · 完整':' · 部分'}`;
+      seasonOption.textContent=zh()?`第 ${entry.seasonId} 期 · ${loadedRecordCount} 条${entry.complete?' · 完整':' · 部分'}`:`Season ${entry.seasonId} · ${loadedRecordCount} records${entry.complete?' · Complete':' · Partial'}`;
     }
     stats=loadedStats;
     legacyStructured=loadedLegacyStructured;
@@ -748,7 +748,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     analysisCache=null;
     seasonAssistHeatMax=fullSeasonAssistHeatMax();
     const waves=[...new Set(flattenTeams().map(x=>Number(x.wave.wave)))].sort((a,b)=>a-b);
-    $('dtideSearchWave').innerHTML='<option value="all">全部波次</option>'+waves.map(w=>`<option value="${w}">Wave ${w}</option>`).join('');
+    $('dtideSearchWave').innerHTML='<option value="all">'+ui('全部波次','All Waves')+'</option>'+waves.map(w=>`<option value="${w}">Wave ${w}</option>`).join('');
     populateFilters();
     const identitySummary=identityNormalizationSummary();
     if(identitySummary.mergedAliases>0)console.info('D-Zone character identity aliases merged',identitySummary);
@@ -758,7 +758,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   async function loadOnce(){
     if(manifest)return;try{await waitMorimensData();for(const r of window.MorimensData?.db?.records||[]){awakenerMap.set(r.id,r);if(r.ingameId)awakenerMap.set(r.ingameId,r)}const r=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!r.ok)throw new Error(`manifest HTTP ${r.status}`);manifest=await r.json();const sel=$('dtideSeason');if(!sel)throw new Error('期次选择器尚未挂载');sel.innerHTML=(manifest.availableSeasons||[]).map(s=>`<option value="${s.seasonId}">${(s.legacy||s.coverageMode==='legacy-spreadsheet'||String(s.seasonId)==='legacy-high-difficulty')?'旧版融灾425出场率（来源：@却尘）':`第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}`}</option>`).join('');if(!sel.options.length)throw new Error('暂无融灾快照');sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);await loadSeason(sel.value);const pending=manifest.pendingBackfillSeasonIds||[];const note=$('dtideCoverageNote');if(note)note.innerHTML=`<strong>字段真实性：</strong>${esc((manifest.notes||[]).join(' '))}${pending.length?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:''}`;sel.addEventListener('change',()=>{const requested=sel.value;loadSeason(requested).catch(error=>{if(sel.value===requested)showError(error)})});for(const id of ['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideWave','dtideClearType','dtideRateMode','dtideSort','dtideEntityType','dtideCreationFilter'])$(id)?.addEventListener('change',scheduleRender);$('dtideEquipCharacter')?.addEventListener('change',renderEquipment);$('dtideSearch')?.addEventListener('click',renderResults);$('dtideReset')?.addEventListener('click',resetFilters);$('dtideUsage')?.addEventListener('click',e=>{const card=e.target.closest('[data-character-index]');if(!card)return;const c=currentGroup().characters[Number(card.dataset.characterIndex)];if(!c)return;document.querySelectorAll('.dtideInlineDetail').forEach(x=>x.remove());const block=(title,arr)=>'<h4>'+title+'</h4><div class="dtideUsageCards">'+((arr||[]).slice(0,5).map(x=>'<div class="dtideUsage"><div><b>'+esc(x.name||x.key)+'</b><small>'+x.count+' 次</small></div><strong>'+pct(x.ratePct||x.teamRatePct)+'</strong></div>').join('')||'<div class="dtideEmpty">暂无数据</div>')+'</div>';const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.innerHTML=block('Top5 队友出场率',c.teammates)+enlightenmentDetailBlock(c.enlight)+block('命轮出场率',c.wheels)+block('密契出场率',c.covenants);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')})}catch(e){showError(e)}
   }
-  function showError(e){console.warn('D-Zone analytics failed',e);if($('dtideStatus'))$('dtideStatus').textContent='融灾数据加载失败';if($('dtideResults'))$('dtideResults').innerHTML=`<div class="dtideNotice">${esc(e?.message||e)}</div>`}
+  function showError(e){console.warn('D-Zone analytics failed',e);if($('dtideStatus'))$('dtideStatus').textContent=ui('融灾数据加载失败','Failed to load D-Zone data');if($('dtideResults'))$('dtideResults').innerHTML=`<div class="dtideNotice">${esc(e?.message||e)}</div>`}
   function boot(){injectStyle();setupTabs();document.addEventListener('click',e=>{const download=e.target.closest('#dtideTableDownload');if(download){downloadRenderedTable(download).catch(error=>{console.error('下载表格图片失败',error);alert(`图片生成失败：${error.message}`)});return}const replay=e.target.closest('.dtideReplayCopy');if(replay){copyReplayCode(replay);return}const choice=e.target.closest('.dtideCharacterChoice');if(choice){const selected=choice.classList.toggle('isSelected');choice.setAttribute('aria-pressed',String(selected));return}const chip=e.target.closest('.dtideFilterChip');if(!chip)return;chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender()});window.addEventListener('morimens-language-change',()=>{if($('morimensBuilderTab')){$('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';$('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard';if($('morimensLoveTab'))$('morimensLoveTab').textContent=zh()?'爱的节奏榜':'Love Rhythm';if($('morimensCommentsTab'))$('morimensCommentsTab').textContent=zh()?'留言板':'Guestbook'}relocalizeControls()})}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
