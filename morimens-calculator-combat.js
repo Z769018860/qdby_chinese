@@ -177,6 +177,74 @@
     });
   }
 
+  function localizeCombatUi(){
+    const setText=(selector,zh,en)=>{const el=document.querySelector(selector);if(el)el.textContent=ui(zh,en)};
+    const setField=(id,zhLabel,enLabel,zhNote='',enNote='')=>{
+      const field=$(id)?.closest('.field');if(!field)return;
+      const label=field.querySelector('label');if(label)label.textContent=ui(zhLabel,enLabel);
+      const small=field.querySelector('small');if(small&&zhNote)small.textContent=ui(zhNote,enNote);
+    };
+    setText('#characterTriplet>div:nth-child(1) small','体质','CON');
+    setText('#characterTriplet>div:nth-child(2) small','攻击力','ATK');
+    setText('#characterTriplet>div:nth-child(3) small','防御力','DEF');
+    setText('#realmTentacleModel .builderTitle span','⑦ 界域精通与触腕伤害','⑦ Realm Mastery & Tentacle DMG');
+    setText('#realmTentacleModel .builderTitle small','SKeyDB 数据公式','SKeyDB data formulas');
+    setField('realmMastery','最终界域精通','Final Realm Mastery','默认按角色等级与 SKeyDB 副属性成长规则自动带入，可手动覆盖。','Auto-filled from character level and SKeyDB substat growth; can be overridden manually.');
+    setField('tentacleMode','触腕基础模型','Tentacle Base Model','选择“普通/晦暝·深海”界域时会自动锁定对应模型。','Selecting standard Aequor or Benthos · Aequor automatically locks the matching model.');
+    setField('tentacleStance','触腕姿态','Tentacle Stance');
+    setField('currentTentacleDamage','当前基础触腕伤害','Current Base Tentacle DMG','普通深海的基础值 SKeyDB 未公开统一生成公式，直接填游戏触腕图标当前数值。','SKeyDB does not expose one universal standard-Aequor base formula; enter the current in-game Tentacle value.');
+    setField('teamMaxHp','队伍最大生命','Team Max HP','晦暝·深海：基础触腕伤害 = 队伍最大生命 × 5%。','Benthos · Aequor: Base Tentacle DMG = Team Max HP × 5%.');
+    setField('tentacleExtraBonus','额外触腕伤害增幅 %','Extra Tentacle DMG Bonus %','用于命轮、技能、遗物等已经折算后的额外触腕增幅。','Additional Tentacle DMG after resolving Wheel, skill, relic, or other bonuses.');
+    setField('tentacleCritRate','触腕暴击率 %','Tentacle Crit Rate %','团队入场暴击率汇总规则需要完整队伍数据，当前允许手动填写最终触腕暴击率。','Full team data is required to derive entry Crit Rate; enter the final Tentacle Crit Rate manually when needed.');
+    setField('tentacleCritDamage','触腕暴击伤害 %','Tentacle Crit DMG %','用于触腕事件的暴击/期望伤害。','Used for Tentacle Crit and expected damage.');
+    setField('strengthDown','力量降低','STR Reduction','主动伤害每点 -1；触腕按 50% 生效。','Each point subtracts 1 from Active-DMG STR; Tentacle uses 50%.');
+    setField('tentacleCount','当前触腕数','Current Tentacle Count');
+    setField('tentacleAttackTimes','每只触腕攻击次数','Attacks per Tentacle');
+    const mode=$('tentacleMode');if(mode?.options?.length>=2){mode.options[0].textContent=ui('普通深海 / 普通触腕','Standard Aequor / Standard Tentacle');mode.options[1].textContent=ui('晦暝·深海','Benthos · Aequor')}
+    const stance=$('tentacleStance');if(stance?.options?.length>=3){stance.options[0].textContent=ui('潮涌','Surging');stance.options[1].textContent=ui('静海','Tranquil');stance.options[2].textContent=ui('怒涛','Raging')}
+    const turnEnd=$('includeTurnEndTentacle')?.closest('.check')?.querySelector('span');if(turnEnd)turnEnd.innerHTML=ui('把回合末触腕攻击计入总伤害<small>深渊静海会自动禁止回合末触腕攻击。</small>','Include turn-end Tentacle attacks in total damage<small>Benthos Tranquil automatically disables turn-end Tentacle attacks.</small>');
+    const sourceSummary=$('tentacleFormulaSource')?.closest('details')?.querySelector('summary');if(sourceSummary)sourceSummary.textContent=ui('SKeyDB 计算公式与数据来源','SKeyDB Formulas & Data Sources');
+
+    setText('#combatModel .builderTitle span','⑧ 敌人等级与状态事件','⑧ Enemy Level & Status Events');
+    setText('#combatModel .builderTitle small','通用等级模型 + SKeyDB 状态规则','Generic level model + SKeyDB status rules');
+    setField('enemyLevel','敌人等级','Enemy Level','用于通用承伤系数与默认最大生命估算。','Used for the generic damage-taken factor and default Max HP estimate.');
+    setField('enemyMaxHpOverride','敌人最大生命（可选覆盖）','Enemy Max HP (optional override)','目标最大生命百分比的纯粹伤害 / 侵蚀效果会优先使用此值。','Pure DMG / Corrosion effects based on target Max HP use this value first.');
+    if($('enemyMaxHpOverride'))$('enemyMaxHpOverride').placeholder=ui('留空使用等级拟合','Leave blank to use level fit');
+    setField('fortressStacks','加固层数','Fortify Stacks','SKeyDB：每层使受到的伤害降低 1%。','SKeyDB: each stack reduces damage taken by 1%.');
+    setField('currentPoison','当前中毒层数','Current Poison Stacks','用于“触发 X% 中毒”等即时中毒触发。','Used for effects that trigger X% of current Poison.');
+    setField('currentBleed','当前出血层数','Current Bleed Stacks','用于“触发 X% 出血”和本回合末出血结算。','Used for effects that trigger X% Bleed and turn-end Bleed settlement.');
+    setField('currentCounter','当前反击数值','Current Counter','用于“触发 X% 反击”事件。','Used for effects that trigger X% of current Counter.');
+    setField('actorMaxHp','当前角色最大生命','Current Awakener Max HP','SKeyDB 未公开通用“体质→最大生命”换算；仅在技能的纯粹伤害最低值等伤害公式明确依赖角色最大生命时填写。','SKeyDB does not expose a universal CON→Max HP formula; fill this only when a damage formula explicitly depends on the Awakener’s Max HP.');
+    if($('actorMaxHp'))$('actorMaxHp').placeholder=ui('用于纯粹伤害保底','Used for Pure-DMG minimums');
+    setField('actorCurrentHp','当前角色当前生命','Current Awakener HP','用于杜勒赛因等“按当前生命值百分比造成纯粹伤害”的效果；留空时按当前为满生命处理。','Used by effects that deal Pure DMG from current HP. Blank means current HP = Max HP.');
+    if($('actorCurrentHp'))$('actorCurrentHp').placeholder=ui('留空按最大生命','Blank = Max HP');
+    setField('corrosionAmount','侵蚀层数 / 数值','Corrosion Stacks / Value','主动伤害 / 触腕伤害按伤害等量消费；其他伤害按 50% 消费；回合末清空。','Active/Tentacle damage consumes an equal amount; other damage consumes 50%; cleared at turn end.');
+    setField('corrosionLossMultiplier','侵蚀生命损失倍率 %','Corrosion HP-loss Multiplier %','SKeyDB 默认 300%；若效果明确修改“侵蚀移除伤害”（例如 300% → 500%），在此填写修改后的倍率。','SKeyDB defaults to 300%. If an effect explicitly changes Corrosion removal damage, enter the modified multiplier here.');
+    setField('embersAmount','旧日余烬层数 / 数值','Embers Stacks / Value','主动伤害 / 触腕伤害按伤害等量消费；穿透 / 纯粹 / 固定 / 中毒 / 出血 / 反击等其他伤害按伤害的 50% 消费；追加消费量 300% 的生命损失。','Active/Tentacle damage consumes an equal amount; other damage consumes 50%, causing extra HP loss equal to 300% of the consumed amount.');
+    setField('enemySacrificeAmount','敌方当前献祭层数','Current Enemy Sacrifice','回合末每层造成 1 点伤害并移除 50%；该伤害计入对敌总伤害，并按“其他伤害”触发侵蚀/旧日余烬。','At turn end, each stack deals 1 damage and 50% is removed. This damage counts toward total damage and interacts with Corrosion/Embers as other damage.');
+    setField('birthRitualStacks','敌方已有诞生仪式层数','Existing Enemy Birth Ritual Stacks','每层使敌人受到的主动伤害 / 触腕伤害的 1% 转化为献祭；所选技能本身即时施加的层数会自动叠加，上限 75 层，回合末移除。','Each stack converts 1% of Active/Tentacle DMG taken into Sacrifice. Stacks applied by the selected skill are added automatically, up to 75, then removed at turn end.');
+    setField('sacrificeOnDamagePct','额外“伤害→献祭”比例 %','Extra “DMG → Sacrifice” Ratio %','用于已激活的「潮汐圣礼」灵知觉醒、遗物等持续战斗态。灵塑的同类效果会自动叠加；默认作用于角色自身主动 / 穿透 / 固定伤害，独立触腕通过诞生仪式计算。','Used for active persistent battle states. Matching Soulforge effects stack automatically; this applies to the Awakener’s own Active/Pierce/Fixed damage, while independent Tentacles use Birth Ritual.');
+
+    const force=$('forceCritAll')?.closest('.field');
+    if(force){
+      const label=force.querySelector('label');
+      if(label){
+        const input=label.querySelector('input');
+        label.textContent='';
+        if(input)label.appendChild(input);
+        label.appendChild(document.createTextNode(' '+ui('本次可暴击伤害强制暴击','Force crittable damage to Crit')));
+      }
+      const small=force.querySelector('small');if(small)small.textContent=ui('用于“当前角色伤害始终暴击”等已激活战斗态；技能文本自身写明“必定暴击”时无需勾选。','Use for an already-active battle state such as “this Awakener’s damage always Crits.” Skills that explicitly guarantee Crit do not need this toggle.');
+    }
+    const checkText=(id,zh,en)=>{const span=$(id)?.closest('.check')?.querySelector('span');if(span)span.innerHTML=ui(zh,en)};
+    checkText('includeTurnEndSettlement','结算到本回合结束<small>开启后才执行回合末触腕 / 中毒 / 出血，并在最后清空侵蚀、重置旧日余烬；关闭可只查看本次卡牌的即时结果。</small>','Settle through the end of this turn<small>Runs turn-end Tentacle / Poison / Bleed, then clears Corrosion and resets Embers. Disable to inspect only the immediate result of this card.</small>');
+    checkText('includePoisonTurnEnd','计入回合末中毒<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的纯粹伤害。</small>','Include turn-end Poison<small>Only active with turn-end settlement; deals Pure DMG equal to current stacks.</small>');
+    checkText('includeBleedTurnEnd','计入回合末出血<small>仅在“结算到本回合结束”开启时生效；造成等于当前层数的纯粹伤害，并随后移除。</small>','Include turn-end Bleed<small>Only active with turn-end settlement; deals Pure DMG equal to current stacks, then removes them.</small>');
+    checkText('includeEnemySacrificeTurnEnd','计入敌方献祭回合末伤害<small>每层造成 1 点对敌伤害，受敌方加固影响；结算后敌方献祭减半。</small>','Include enemy Sacrifice turn-end damage<small>Each stack deals 1 damage, affected by Fortify; Sacrifice is halved after settlement.</small>');
+    const hit=$('hitCount')?.closest('.field');
+    if(hit){const label=hit.querySelector('label'),small=hit.querySelector('small');if(label)label.textContent=ui('手动重复事件序列次数','Manual Event-sequence Repeats');if(small)small.textContent=ui('多段技能已由 SKeyDB 伤害事件自动拆分；这里仅用于额外重复整套事件，通常保持 1。','Multi-hit skills are already split into SKeyDB damage events. Use this only to repeat the entire event sequence; normally keep it at 1.')}
+  }
+
   function inject(){
     if($('combatModel')||!$('calcBtn'))return;
     const first=$('charSelect')?.closest('.builderBlock');
@@ -272,7 +340,8 @@
     window.addEventListener('morimens-skill-formula',()=>queueMicrotask(calculate));
     window.addEventListener('morimens-character-stats',()=>queueMicrotask(()=>{renderTriplet();calculate()}));
     window.addEventListener('morimens-realm-change',()=>queueMicrotask(()=>{toggleTentacleMode();renderTriplet();calculate()}));
-    const hitField=$('hitCount')?.closest('.field');if(hitField){const label=hitField.querySelector('label');if(label)label.textContent='手动重复事件序列次数';let note=hitField.querySelector('small');if(!note){note=document.createElement('small');hitField.appendChild(note)}note.textContent='多段技能已由 SKeyDB 伤害事件自动拆分；这里仅用于额外重复整套事件，通常保持 1。'}
+    const hitField=$('hitCount')?.closest('.field');if(hitField&&!hitField.querySelector('small')){const note=document.createElement('small');hitField.appendChild(note)}
+    localizeCombatUi();
     const syncOptionalStackInputs=()=>{
       for(const [checkId,inputId] of [['buffWeak','buffWeakStacks'],['buffBrute','buffBruteStacks'],['buffBurst','buffBurstStacks'],['targetVulnerable','targetVulnerableStacks']]){
         const input=$(inputId);if(input)input.disabled=$(checkId)?.checked!==true;
