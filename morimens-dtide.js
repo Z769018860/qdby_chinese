@@ -138,7 +138,7 @@
     </section>
   `}
 
-  let commentsLoading=false,commentsLoaded=false;
+  let commentsLoading=false,commentsLoaded=false,commentsApp=null;
   function commentsHtml(){return `
     <section class="panel" aria-labelledby="morimensCommentsTitle">
       <div class="morimensCommentHero">
@@ -183,7 +183,7 @@
         const link=document.createElement('link');link.rel='stylesheet';link.href='https://unpkg.com/@waline/client@v3/dist/waline.css';link.dataset.morimensWaline='true';document.head.appendChild(link);
       }
       const [{init},{MORIMENS_EMOJI_PRESET},guestbookPath]=await Promise.all([import('https://unpkg.com/@waline/client@v3/dist/waline.js'),import('./waline-morimens-emoji.js?v=20260920.2'),resolveGuestbookPath()]);
-      init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:'zh-CN',emoji:[MORIMENS_EMOJI_PRESET],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
+      commentsApp=init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:zh()?'zh-CN':'en-US',emoji:[MORIMENS_EMOJI_PRESET],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
       commentsLoaded=true;
       if(status)status.remove();
     }catch(error){
@@ -853,6 +853,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender();
     });
     window.addEventListener('morimens-language-change',()=>{
+      commentsApp?.update?.({lang:zh()?'zh-CN':'en-US'});
       if($('morimensBuilderTab')){
         $('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';
         $('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard';
