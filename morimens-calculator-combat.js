@@ -878,13 +878,13 @@
       if(bleedPct>0){
         const amount=event.damage*bleedPct/100*realmStatusOutputMult;
         bleedAdded+=amount;
-        events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:`罪印附加出血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
+        events.push({id:`resource-bleed-${++bleedIndex}`,type:'bleed',action:'apply',source:'resource',label:isEnglish()?`Sin Mark added Bleed ${bleedPct.toFixed(0)}%`:`罪印附加出血 ${bleedPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:bleedPct});
       }
       const poisonPct=Math.max(0,Number(source?.onDamagePoisonPct)||0);
       if(poisonPct>0){
         const amount=event.damage*poisonPct/100*realmStatusOutputMult*poisonInflictionMult;
         poisonAdded+=amount;
-        events.push({id:`resource-poison-${++poisonIndex}`,type:'poison',action:'apply',source:'resource',label:`灵知觉醒附加中毒 ${poisonPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:poisonPct});
+        events.push({id:`resource-poison-${++poisonIndex}`,type:'poison',action:'apply',source:'resource',label:isEnglish()?`Rouse added Poison ${poisonPct.toFixed(0)}%`:`灵知觉醒附加中毒 ${poisonPct.toFixed(0)}%`,amount,damage:0,sourceEventId:event.id,percent:poisonPct});
       }
     }
     for(let repeat=0;repeat<sequenceRepeat;repeat++){
@@ -895,7 +895,7 @@
           if(tentacle.available===false)continue;
           const count=Math.max(0,Math.floor(n('tentacleCount',1)))*Math.max(1,Math.floor(Number(source.attacksPerTentacle)||1));
           for(let i=0;i<count;i++){
-            const event=tentaclePierceEvent(source.percent,`触腕穿透伤害 ${i+1}`,`tentacle-pierce-${++tentacleIndex}`);
+            const event=tentaclePierceEvent(source.percent,isEnglish()?`Tentacle Pierce DMG ${i+1}`:`触腕穿透伤害 ${i+1}`,`tentacle-pierce-${++tentacleIndex}`);
             event.repeatIndex=repeat;
             pushDamageEvent(event);
           }
@@ -906,7 +906,7 @@
           pushDamageEvent(event);
           applyCharacterResourceAfterDamage(event,source);
           if(tentacle.available!==false&&event.type==='active'&&$('tentacleStance')?.value==='raging'&&event.damage>0){
-            pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,'怒涛 · 主动伤害后触腕',`raging-${++tentacleIndex}`));
+            pushDamageEvent(tentacleEvent(tentacle.ragingTriggerPct,ui('怒涛 · 主动伤害后触腕','Raging · Tentacle after Active DMG'),`raging-${++tentacleIndex}`));
           }
           continue;
         }
@@ -924,9 +924,9 @@
           const minPct=Math.max(0,Number(source.minActorMaxHpPercent)||0);
           const minimum=actorMaxHp>0&&minPct>0?actorMaxHp*minPct/100:0;
           if(minimum>0)raw=Math.max(raw,minimum);
-          const basisLabel=source.basis==='actorCurrentHp'?'角色当前生命':'目标最大生命';
-          const floorLabel=minPct>0?` · 最低为角色最大生命 ${minPct.toFixed(2)}%`:'';
-          const event=pureEvent(raw,`纯粹伤害 · ${basisLabel} ${pct.toFixed(2)}%${floorLabel}`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent,minActorMaxHpPercent:minPct,minimum});pushDamageEvent(event);applyCharacterResourceAfterDamage(event,source);
+          const basisLabel=source.basis==='actorCurrentHp'?ui('角色当前生命','Awakener Current HP'):ui('目标最大生命','Target Max HP');
+          const floorLabel=minPct>0?(isEnglish()?` · minimum ${minPct.toFixed(2)}% of Awakener Max HP`:` · 最低为角色最大生命 ${minPct.toFixed(2)}%`):'';
+          const event=pureEvent(raw,isEnglish()?`Pure DMG · ${basisLabel} ${pct.toFixed(2)}%${floorLabel}`:`纯粹伤害 · ${basisLabel} ${pct.toFixed(2)}%${floorLabel}`,`pure-${++pureIndex}`,'pure',{basis:source.basis,percent:source.percent,minActorMaxHpPercent:minPct,minimum});pushDamageEvent(event);applyCharacterResourceAfterDamage(event,source);
           continue;
         }
         if(source.type==='poison'&&source.action==='apply'){
