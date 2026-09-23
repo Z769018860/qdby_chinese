@@ -776,9 +776,77 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(matrix)matrix.removeAttribute('aria-busy');
   }
   async function loadOnce(){
-    if(manifest)return;try{await waitMorimensData();for(const r of window.MorimensData?.db?.records||[]){awakenerMap.set(r.id,r);if(r.ingameId)awakenerMap.set(r.ingameId,r)}const r=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!r.ok)throw new Error(`manifest HTTP ${r.status}`);manifest=await r.json();const sel=$('dtideSeason');if(!sel)throw new Error('期次选择器尚未挂载');sel.innerHTML=(manifest.availableSeasons||[]).map(s=>`<option value="${s.seasonId}">${(s.legacy||s.coverageMode==='legacy-spreadsheet'||String(s.seasonId)==='legacy-high-difficulty')?'旧版融灾425出场率（来源：@却尘）':`第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}`}</option>`).join('');if(!sel.options.length)throw new Error('暂无融灾快照');sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);await loadSeason(sel.value);const pending=manifest.pendingBackfillSeasonIds||[];const note=$('dtideCoverageNote');if(note)note.innerHTML=`<strong>字段真实性：</strong>${esc((manifest.notes||[]).join(' '))}${pending.length?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:''}`;sel.addEventListener('change',()=>{const requested=sel.value;loadSeason(requested).catch(error=>{if(sel.value===requested)showError(error)})});for(const id of ['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideWave','dtideClearType','dtideRateMode','dtideSort','dtideEntityType','dtideCreationFilter'])$(id)?.addEventListener('change',scheduleRender);$('dtideEquipCharacter')?.addEventListener('change',renderEquipment);$('dtideSearch')?.addEventListener('click',renderResults);$('dtideReset')?.addEventListener('click',resetFilters);$('dtideUsage')?.addEventListener('click',e=>{const card=e.target.closest('[data-character-index]');if(!card)return;const c=currentGroup().characters[Number(card.dataset.characterIndex)];if(!c)return;document.querySelectorAll('.dtideInlineDetail').forEach(x=>x.remove());const block=(title,arr)=>'<h4>'+title+'</h4><div class="dtideUsageCards">'+((arr||[]).slice(0,5).map(x=>'<div class="dtideUsage"><div><b>'+esc(x.name||x.key)+'</b><small>'+x.count+' 次</small></div><strong>'+pct(x.ratePct||x.teamRatePct)+'</strong></div>').join('')||'<div class="dtideEmpty">暂无数据</div>')+'</div>';const detail=document.createElement('div');detail.className='dtideInlineDetail';detail.innerHTML=block('Top5 队友出场率',c.teammates)+enlightenmentDetailBlock(c.enlight)+block('命轮出场率',c.wheels)+block('密契出场率',c.covenants);card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true')})}catch(e){showError(e)}
+    if(manifest)return;
+    try{
+      await waitMorimensData();
+      for(const r of window.MorimensData?.db?.records||[]){awakenerMap.set(r.id,r);if(r.ingameId)awakenerMap.set(r.ingameId,r)}
+      const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});
+      if(!response.ok)throw new Error(`manifest HTTP ${response.status}`);
+      manifest=await response.json();
+      const sel=$('dtideSeason');
+      if(!sel)throw new Error(ui('期次选择器尚未挂载','Season selector is not mounted'));
+      sel.innerHTML=(manifest.availableSeasons||[]).map(s=>{
+        const legacy=s.legacy||s.coverageMode==='legacy-spreadsheet'||String(s.seasonId)==='legacy-high-difficulty';
+        const label=legacy
+          ?ui('旧版融灾425出场率（来源：@却尘）','Legacy D-Zone 425 Appearance Rate (source: @却尘)')
+          :(zh()?`第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}`:`Season ${s.seasonId} · ${s.recordCount??0} records${s.complete?' · Complete':' · Partial'}`);
+        return `<option value="${s.seasonId}">${label}</option>`;
+      }).join('');
+      if(!sel.options.length)throw new Error(ui('暂无融灾快照','No D-Zone snapshot is available'));
+      sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);
+      await loadSeason(sel.value);
+      const pending=manifest.pendingBackfillSeasonIds||[],note=$('dtideCoverageNote');
+      if(note){
+        const rawNotes=(manifest.notes||[]).join(' ');
+        const translatedNotes=zh()?rawNotes:(/[㐀-鿿]/.test(rawNotes)?'Statistics use the synchronized snapshot and only fields present in its structured data.':rawNotes);
+        const pendingText=pending.length
+          ?(zh()?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:` ${pending.length} historical season(s) are still incremental snapshots: ${pending.slice(0,12).join(', ')}${pending.length>12?'…':''}`)
+          :'';
+        note.innerHTML=`<strong>${ui('字段真实性：','Field integrity: ')}</strong>${esc(translatedNotes)}${pendingText}`;
+      }
+      sel.addEventListener('change',()=>{const requested=sel.value;loadSeason(requested).catch(error=>{if(sel.value===requested)showError(error)})});
+      for(const id of ['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideWave','dtideClearType','dtideRateMode','dtideSort','dtideEntityType','dtideCreationFilter'])$(id)?.addEventListener('change',scheduleRender);
+      $('dtideEquipCharacter')?.addEventListener('change',renderEquipment);
+      $('dtideSearch')?.addEventListener('click',renderResults);
+      $('dtideReset')?.addEventListener('click',resetFilters);
+      $('dtideUsage')?.addEventListener('click',e=>{
+        const card=e.target.closest('[data-character-index]');if(!card)return;
+        const row=currentGroup().characters[Number(card.dataset.characterIndex)];if(!row)return;
+        document.querySelectorAll('.dtideInlineDetail').forEach(x=>x.remove());
+        const block=(title,arr)=>'<h4>'+title+'</h4><div class="dtideUsageCards">'+((arr||[]).slice(0,5).map(x=>'<div class="dtideUsage"><div><b>'+esc(x.name||x.key)+'</b><small>'+x.count+' '+ui('次','times')+'</small></div><strong>'+pct(x.ratePct||x.teamRatePct)+'</strong></div>').join('')||'<div class="dtideEmpty">'+ui('暂无数据','No data')+'</div>')+'</div>';
+        const detail=document.createElement('div');detail.className='dtideInlineDetail';
+        detail.innerHTML=block(ui('Top5 队友出场率','Top 5 Teammate Appearance Rate'),row.teammates)+enlightenmentDetailBlock(row.enlight)+block(ui('命轮出场率','Wheel Appearance Rate'),row.wheels)+block(ui('密契出场率','Covenant Appearance Rate'),row.covenants);
+        card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true');
+      });
+    }catch(e){showError(e)}
   }
   function showError(e){console.warn('D-Zone analytics failed',e);if($('dtideStatus'))$('dtideStatus').textContent=ui('融灾数据加载失败','Failed to load D-Zone data');if($('dtideResults'))$('dtideResults').innerHTML=`<div class="dtideNotice">${esc(e?.message||e)}</div>`}
-  function boot(){injectStyle();setupTabs();document.addEventListener('click',e=>{const download=e.target.closest('#dtideTableDownload');if(download){downloadRenderedTable(download).catch(error=>{console.error('下载表格图片失败',error);alert(`图片生成失败：${error.message}`)});return}const replay=e.target.closest('.dtideReplayCopy');if(replay){copyReplayCode(replay);return}const choice=e.target.closest('.dtideCharacterChoice');if(choice){const selected=choice.classList.toggle('isSelected');choice.setAttribute('aria-pressed',String(selected));return}const chip=e.target.closest('.dtideFilterChip');if(!chip)return;chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender()});window.addEventListener('morimens-language-change',()=>{if($('morimensBuilderTab')){$('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';$('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard';if($('morimensLoveTab'))$('morimensLoveTab').textContent=zh()?'爱的节奏榜':'Love Rhythm';if($('morimensCommentsTab'))$('morimensCommentsTab').textContent=zh()?'留言板':'Guestbook'}relocalizeControls()})}
+  function boot(){
+    injectStyle();setupTabs();
+    document.addEventListener('click',e=>{
+      const download=e.target.closest('#dtideTableDownload');
+      if(download){
+        downloadRenderedTable(download).catch(error=>{
+          console.error('D-Zone table image export failed',error);
+          alert((zh()?'图片生成失败：':'Image generation failed: ')+error.message);
+        });
+        return;
+      }
+      const replay=e.target.closest('.dtideReplayCopy');if(replay){copyReplayCode(replay);return}
+      const choice=e.target.closest('.dtideCharacterChoice');if(choice){const selected=choice.classList.toggle('isSelected');choice.setAttribute('aria-pressed',String(selected));return}
+      const chip=e.target.closest('.dtideFilterChip');if(!chip)return;
+      chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender();
+    });
+    window.addEventListener('morimens-language-change',()=>{
+      if($('morimensBuilderTab')){
+        $('morimensBuilderTab').textContent=zh()?'伤害计算 / 每日签':'Damage / Fortune';
+        $('morimensDtideTab').textContent=zh()?'融灾榜单':'D-Zone Leaderboard';
+        if($('morimensLoveTab'))$('morimensLoveTab').textContent=zh()?'爱的节奏榜':'Love Rhythm';
+        if($('morimensCommentsTab'))$('morimensCommentsTab').textContent=zh()?'留言板':'Guestbook';
+      }
+      relocalizeControls();
+      if(manifest){manifest=null;loadOnce()}
+    });
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
