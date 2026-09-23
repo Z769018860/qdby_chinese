@@ -57,7 +57,7 @@
     return !current&&rankByUid.size===0;
   }
   function selectedRankCap(){const raw=String($('dtideRankScope')?.value||'all');return raw==='all'||raw==='0'?0:(Number(raw)||0)}
-  function rankScopeLabel(cap){return cap?`Top ${cap}`:'全部范围'}
+  function rankScopeLabel(cap){return cap?`Top ${cap}`:(zh()?'全部范围':'All Ranks')}
 
   function injectStyle(){
     if($('morimensDtideStyle'))return;
@@ -255,15 +255,18 @@
   `}
 
   async function waitMorimensData(){if(window.MorimensData?.db?.records&&window.MorimensData?.identityDb?.bySkeydbId)return;await new Promise(resolve=>{const t=setTimeout(resolve,5000);window.addEventListener('morimens-data-ready',()=>{clearTimeout(t);resolve()},{once:true})})}
-  function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(name)})||'未知'}
+  function displayCharacterName(...values){return values.find(value=>{const name=String(value||'').trim();return name&&!/^(awakener(?:-\d+)?|unknown|角色|唤醒体)$/i.test(name)})||(zh()?'未知':'Unknown')}
   function characterInfo(key,fallback={}){
     const data=window.MorimensData,liveRecords=data?.db?.records||[];
     const rec=liveRecords.find(x=>x.id===key||x.ingameId===key||x.id===fallback.skeydbId||x.ingameId===fallback.ingameId)||awakenerMap.get(key)||awakenerMap.get(fallback.skeydbId)||Array.from(awakenerMap.values()).find(x=>x.ingameId===key||x.id===fallback.skeydbId)||null;
     const id=rec?.id||fallback.skeydbId||(/^awakener-\d+$/i.test(String(key||''))?key:null),identity=data?.identityDb?.bySkeydbId?.[id]||data?.zhDb?.bySkeydbId?.[id],loc=rec&&data?.localizedProfile?.(rec);
     const portrait=rec&&data?.assetFor?.(rec,'portrait'),card=rec&&data?.assetFor?.(rec,'card');
-    return {name:displayCharacterName(identity?.name,loc?.name,fallback.canonicalName,fallback.name,rec?.name),image:portrait||localAsset(rec?.assets?.portrait||fallback.image||'','portrait'),art:card||portrait||localAsset(rec?.assets?.card||rec?.assets?.portrait||fallback.image||'','portrait'),id:id||key,ingameId:rec?.ingameId||fallback.ingameId};
+    const displayName=zh()
+      ?displayCharacterName(identity?.name,loc?.name,fallback.canonicalName,fallback.name,rec?.name)
+      :displayCharacterName(rec?.name,loc?.name,fallback.canonicalName,fallback.name,identity?.englishName);
+    return {name:displayName,image:portrait||localAsset(rec?.assets?.portrait||fallback.image||'','portrait'),art:card||portrait||localAsset(rec?.assets?.card||rec?.assets?.portrait||fallback.image||'','portrait'),id:id||key,ingameId:rec?.ingameId||fallback.ingameId};
   }
-  function wheelName(item){return window.MorimensData?.localizedEntity?.('wheel',item)?.name||item?.name||item?.id||'未知命轮'}
+  function wheelName(item){return window.MorimensData?.localizedEntity?.('wheel',item)?.name||item?.name||item?.id||(zh()?'未知命轮':'Unknown Wheel')}
   const covenantZh={'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸','Twisted Twins: Black':'扭曲双子·黑','Burial Ground\'s Sighs':'埋骨地絮语','Cursed Rabbit':'诅咒兔','Organic Form':'有机形态','Photosynthesis Ritual':'光合祭礼','Paradox':'二律背反','Returnal Line':'海归线','April Tribute':'四月礼赞','Life Drain':'生机榨取','Dream of Medicine':'入药之梦','Sweet Slug':'甜蜜蛞蝓','Ring of Chamber 36':'36室之环','Twisted Twins: White':'扭曲双子·白','Feast from Afar':'远方的欢宴','Steppenwolf':'荒原狼','Unstained Chronicle':'无垢启示录','Cocoon of the Maiden':'少女之蛹'};
   function covenantEnglishName(item){return String(item?.name||item?.canonicalName||item?.label||item?.id||item||'未识别').replace(/^"|"$/g,'').trim()}
   function covenantName(item){const en=covenantEnglishName(item);if(!zh())return en;return covenantZh[en]||window.MorimensData?.localizedEntity?.('covenant',item)?.name||en}
@@ -642,7 +645,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function renderSearchPrompt(){if(!$('dtideResults')||!$('dtidePager'))return;$('dtideResults').innerHTML='<div class="dtideEmpty">设置筛选条件后点击“搜索配队”查看结果。</div>';$('dtidePager').textContent=''}
   function resetFilters(){for(const id of ['dtideLevelMin','dtideLevelMax','dtideCovenantScoreMin','dtideCovenantScoreMax','dtideScoreMin','dtideRankMax'])$(id).value='';for(const id of ['dtideProgression','dtideBorrowed','dtideWheel','dtideCovenant'])$(id).value='';document.querySelectorAll('.dtideCharacterChoice.isSelected').forEach(x=>{x.classList.remove('isSelected');x.setAttribute('aria-pressed','false')});document.querySelectorAll('.dtideFilterChip.isActive').forEach(x=>x.classList.remove('isActive'));$('dtideCharacterMode').value='all';$('dtideSearchWave').value='all';analysisCache=null;searchPerformed=false;renderSearchPrompt();scheduleRender()}
   function enlightenmentDetailBlock(arr){const items=[...(arr||[])].sort((a,b)=>enlightOrder.indexOf(a.key)-enlightOrder.indexOf(b.key));return '<h4>详细启灵比例</h4><div class="dtideUsageCards">'+(items.map(x=>{const key=x.key||'unknown',color=enlightColors[key]||enlightColors.unknown;return `<div class="dtideUsage dtideEnlightItem" style="--dtide-enlight-color:${color};--dtide-enlight-fill:${color}55"><div><b>${esc(enlightZh[key]||x.name||'未知')}</b><small>${x.count} 次</small></div><strong>${pct(x.ratePct)}</strong></div>`}).join('')||'<div class="dtideEmpty">暂无启灵数据</div>')+'</div>'}
-  function renderSeasonDate(){const el=$('dtideSeasonDate');if(!el)return;const id=String(season?.seasonId??$('dtideSeason')?.value??''),date=id==='68'?'8.31–9.13':id==='69'?'9.14–9.27':'';el.hidden=!date;el.textContent=date?`第 ${id} 期融灾 · ${date}`:''}
+  function renderSeasonDate(){const el=$('dtideSeasonDate');if(!el)return;const id=String(season?.seasonId??$('dtideSeason')?.value??''),date=id==='68'?'8.31–9.13':id==='69'?'9.14–9.27':'';el.hidden=!date;el.textContent=date?(zh()?`第 ${id} 期融灾 · ${date}`:`Season ${id} D-Zone · ${date}`):''}
   function renderAll(){renderSeasonDate();if(window.MorimensDtideRenderer==='legacy')return;renderSummary();renderMatrix();renderUsage();renderComparisons();if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt();$('dtideMatrix')?.removeAttribute('aria-busy')}
   function scheduleRender(){if(window.MorimensDtideRenderer==='legacy')return;cancelAnimationFrame(renderFrame);renderFrame=requestAnimationFrame(()=>{renderFrame=0;if(season&&filtersReady)renderAll()})}
   function relocalizeControls(){
