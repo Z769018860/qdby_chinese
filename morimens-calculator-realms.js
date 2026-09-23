@@ -1,5 +1,7 @@
 (()=>{
   const $=id=>document.getElementById(id);
+  const isEnglish=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEnglish()?en:zh;
   const num=(v,f=0)=>{const n=Number.parseFloat(v);return Number.isFinite(n)?n:f};
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const EPS=1e-9;
@@ -15,6 +17,7 @@
     singularity:{base:'ULTRA',label:'奇点·超维',advanced:true}
   };
   const BASE_ZH={CHAOS:'混沌',CARO:'血肉',AEQUOR:'深海',ULTRA:'超维'};
+  const BASE_EN={CHAOS:'Chaos',CARO:'Caro',AEQUOR:'Aequor',ULTRA:'Ultra'};
 
   function currentRecord(){
     const id=$('charSelect')?.value||'';
@@ -59,7 +62,7 @@
   function hasMode(modes,name){return modes.includes(name)}
   function basesOf(modes){return [...new Set(modes.map(x=>MODE_META[x]?.base).filter(Boolean))]}
   function onlyFrom(bases,allowed){return bases.length>0&&bases.every(x=>allowed.includes(x))}
-  function describeBases(bases){return bases.map(x=>BASE_ZH[x]||x).join(' + ')}
+  function describeBases(bases){const labels=isEnglish()?BASE_EN:BASE_ZH;return bases.map(x=>labels[x]||x).join(' + ')}
 
   function state(){
     const modes=selectedModes(),baseRealms=basesOf(modes),rm=mastery();
@@ -91,7 +94,7 @@
 
     const out={
       modes,baseRealms,isDual,isPure,indivisible,normalChaos,chaosCoexistence,chaosCount,otherRealm,
-      label:isPure?`至纯${describeBases(baseRealms)}`:`${describeBases(baseRealms)}双界域`,
+      label:isPure?(isEnglish()?`Pure ${describeBases(baseRealms)}`:`至纯${describeBases(baseRealms)}`):(isEnglish()?`${describeBases(baseRealms)} Dual Realm`:`${describeBases(baseRealms)}双界域`),
       realmMastery:rm,baseRealmMastery:baseRm,temporaryRealmMastery,pureEffects,masteryEffectMultiplier,
       atkMultiplier:1,defMultiplier:1,maxHpMultiplier:1,teamDamageAmp:0,finalDamageBonus:0,
       primordiaAllChaosTeam:false,primordiaUtilityMultiplier:1,primordiaOffensiveMultiplier:1,
@@ -106,15 +109,15 @@
       notes:[]
     };
 
-    if(temporaryRealmMastery>0)out.notes.push(`“24”此前超限提供临时/战斗内界域精通 +${temporaryRealmMastery.toFixed(0)}；当前有效界域精通 ${rm.toFixed(1)}。`);
+    if(temporaryRealmMastery>0)out.notes.push(isEnglish()?`Prior Over-Exalt uses by “24” provide +${temporaryRealmMastery.toFixed(0)} temporary/in-battle Realm Mastery; current effective Realm Mastery ${rm.toFixed(1)}.`:`“24”此前超限提供临时/战斗内界域精通 +${temporaryRealmMastery.toFixed(0)}；当前有效界域精通 ${rm.toFixed(1)}。`);
     if(indivisible){
-      out.notes.push('原初·混沌「不可分割界域」生效：其他界域不触发至纯、双倍界域精通或双倍伤害强效。');
+      out.notes.push(ui('原初·混沌「不可分割界域」生效：其他界域不触发至纯、双倍界域精通或双倍伤害强效。','Primordia · Chaos “Indivisible Realm” is active: other Realms do not trigger Pure effects, doubled Realm Mastery, or doubled Damage Amplification.'));
     }else if(chaosCoexistence){
-      out.notes.push(`混沌共生：${BASE_ZH[otherRealm]||otherRealm}按至纯界域处理；当前混沌唤醒体数量 ${chaosCount}。`);
+      out.notes.push(isEnglish()?`Chaos coexistence: ${BASE_EN[otherRealm]||otherRealm} is treated under its Pure-Realm coexistence rule; current Chaos Awakener count ${chaosCount}.`:`混沌共生：${BASE_ZH[otherRealm]||otherRealm}按至纯界域处理；当前混沌唤醒体数量 ${chaosCount}。`);
     }else if(isPure){
-      out.notes.push('队伍只有一种界域，自动按至纯界域处理。');
+      out.notes.push(ui('队伍只有一种界域，自动按至纯界域处理。','The team has one Realm and is treated as a Pure Realm.'));
     }else{
-      out.notes.push('队伍包含两个不同界域，按双界域处理，不触发普通至纯效果。');
+      out.notes.push(ui('队伍包含两个不同界域，按双界域处理，不触发普通至纯效果。','The team contains two different Realms and is treated as Dual Realm; ordinary Pure effects do not trigger.'));
     }
 
     if(hasMode(modes,'primordia')){
@@ -125,7 +128,7 @@
       out.teamDamageAmp+=allChaos?100:50;
       out.primordiaUtilityMultiplier=1+rm*0.0005*(allChaos?2:1);
       out.primordiaOffensiveMultiplier=1+rm*0.001*(allChaos?2:1);
-      out.notes.push(`原初·混沌：攻击/防御 +10%，团队伤害强效 +${allChaos?100:50}%。`);
+      out.notes.push(isEnglish()?`Primordia · Chaos: ATK/DEF +10%, team Damage Amplification +${allChaos?100:50}%.`:`原初·混沌：攻击/防御 +10%，团队伤害强效 +${allChaos?100:50}%。`);
     }
 
     if(hasMode(modes,'propagation')){
@@ -142,7 +145,7 @@
         out.fixedPoisonCounterBonusPct+=out.propagationFiestaStacks;
       }
       out.masteryEffectMultiplier.CARO=effectMult;
-      out.notes.push(`繁育·血肉：最大生命 +10%，团队伤害强效 +${doubled?100:50}%，当前繁育狂热 ${out.propagationFiestaStacks} 层。`);
+      out.notes.push(isEnglish()?`Propagation · Caro: Max HP +10%, team Damage Amplification +${doubled?100:50}%, current Propagation Fiesta ${out.propagationFiestaStacks} stacks.`:`繁育·血肉：最大生命 +10%，团队伤害强效 +${doubled?100:50}%，当前繁育狂热 ${out.propagationFiestaStacks} 层。`);
     }
 
     if(hasMode(modes,'benthos')){
@@ -150,9 +153,9 @@
       out.teamDamageAmp+=doubled?100:50;
       out.tentacleMasteryMultiplier=doubled?2:1;
       out.startingTentacleMultiplier=1;
-      out.notes.push(`晦暝·深海：基础触腕为队伍最大生命 5%，团队伤害强效 +${doubled?100:50}%，怒涛界域精通效果 ×${out.tentacleMasteryMultiplier}；按「无光之底」记录，至纯不会额外获得初始触腕。`);
+      out.notes.push(isEnglish()?`Benthos · Aequor: Base Tentacle is 5% of team Max HP, team Damage Amplification +${doubled?100:50}%, Raging Realm-Mastery effect ×${out.tentacleMasteryMultiplier}; the SKeyDB record does not add extra starting Tentacles for Pure Aequor.`:`晦暝·深海：基础触腕为队伍最大生命 5%，团队伤害强效 +${doubled?100:50}%，怒涛界域精通效果 ×${out.tentacleMasteryMultiplier}；按「无光之底」记录，至纯不会额外获得初始触腕。`);
     }else if(baseRealms.includes('AEQUOR')){
-      out.notes.push('普通深海：怒涛使用最终界域精通计算触腕触发比例；当前公开 SKeyDB 未定义普通至纯深海的精通或起始触腕翻倍，因此不自动附加。');
+      out.notes.push(ui('普通深海：怒涛使用最终界域精通计算触腕触发比例；当前公开 SKeyDB 未定义普通至纯深海的精通或起始触腕翻倍，因此不自动附加。','Standard Aequor: Raging uses final Realm Mastery for its Tentacle trigger ratio. Public SKeyDB does not define extra mastery or starting-Tentacle doubling for ordinary Pure Aequor, so none is added automatically.'));
     }
 
     if(hasMode(modes,'singularity')){
@@ -172,34 +175,34 @@
         out.finalDamageBonus+=beaconBonus;
         out.fixedPoisonCounterBonusPct+=beaconBonus;
       }
-      out.notes.push(`奇点·超维：团队伤害强效 +${doubled?100:50}%；棱镜 ${prismStacks} 层${shuttleStacks?`，本卡额外维度穿梭信标 ${shuttleStacks} 层`:''}。`);
+      out.notes.push(isEnglish()?`Singularity · Ultra: team Damage Amplification +${doubled?100:50}%; Prism ${prismStacks} stacks${shuttleStacks?`, plus ${shuttleStacks} Dimension Shuttle Beacon stacks on this card`:''}.`:`奇点·超维：团队伤害强效 +${doubled?100:50}%；棱镜 ${prismStacks} 层${shuttleStacks?`，本卡额外维度穿梭信标 ${shuttleStacks} 层`:''}。`);
       out.notes.push(command
-        ?`当前为指令卡：共 ${out.singularityBeaconStacks} 层信标，最终伤害与固定中毒/反击效果 +${out.singularityBeaconStacks*2}%。`
-        :'当前不是指令卡：奇点棱镜/信标的卡牌效果不自动计入本次伤害。');
-      out.notes.push('奇点·超维重写后的超维空间文本未保留普通超维回合的 -25% 输出条款，因此此模式不套用普通超维惩罚。');
+        ? (isEnglish()?`Current card is a Command: ${out.singularityBeaconStacks} Beacon stacks; Final DMG and Fixed Poison/Counter effects +${out.singularityBeaconStacks*2}%.`:`当前为指令卡：共 ${out.singularityBeaconStacks} 层信标，最终伤害与固定中毒/反击效果 +${out.singularityBeaconStacks*2}%。`)
+        : ui('当前不是指令卡：奇点棱镜/信标的卡牌效果不自动计入本次伤害。','Current card is not a Command: Singularity Prism/Beacon card effects are not applied to this damage.'));
+      out.notes.push(ui('奇点·超维重写后的超维空间文本未保留普通超维回合的 -25% 输出条款，因此此模式不套用普通超维惩罚。','The rewritten Singularity · Ultra Space text does not retain the ordinary Ultra-turn -25% output clause, so that penalty is not applied in Singularity mode.'));
     }else if(hasMode(modes,'ultra')){
       out.ultraRoundActive=$('ultraRoundActive')?.checked===true;
       if(out.ultraRoundActive){
         out.damageOutputMultiplier*=0.75;
         out.statusOutputMultiplier*=0.75;
-        out.notes.push('普通超维回合：本回合造成的伤害、中毒、反击、出血等效果按 SKeyDB ×75%。');
+        out.notes.push(ui('普通超维回合：本回合造成的伤害、中毒、反击、出血等效果按 SKeyDB ×75%。','Standard Ultra turn: damage, Poison, Counter, Bleed, and similar output is ×75% per SKeyDB.'));
       }else{
-        out.notes.push(`普通超维：界域精通效果 ×${out.masteryEffectMultiplier.ULTRA}；未勾选超维回合，不应用 -25% 输出修正。`);
+        out.notes.push(isEnglish()?`Standard Ultra: Realm Mastery effect ×${out.masteryEffectMultiplier.ULTRA}; the Ultra-turn toggle is off, so the -25% output modifier is not applied.`:`普通超维：界域精通效果 ×${out.masteryEffectMultiplier.ULTRA}；未勾选超维回合，不应用 -25% 输出修正。`);
       }
     }
 
     if(chaosCoexistence&&otherRealm==='AEQUOR'){
       out.notes.push(hasMode(modes,'benthos')
-        ?'混沌×晦暝·深海：按晦暝·深海公开记录，基础触腕伤害固定为队伍最大生命 5%；不额外叠加未公开的混沌触腕基础。'
-        :'混沌×普通深海：当前 SKeyDB 未公开“每名混沌额外增加队伍最大生命百分比到基础触腕”的可验证公式，因此不自动附加该项。');
+        ?(ui('混沌×晦暝·深海：按晦暝·深海公开记录，基础触腕伤害固定为队伍最大生命 5%；不额外叠加未公开的混沌触腕基础。','Chaos × Benthos · Aequor: Base Tentacle DMG remains 5% of team Max HP according to the public record; no unverified extra Chaos base is stacked.'))
+        :ui('混沌×普通深海：当前 SKeyDB 未公开“每名混沌额外增加队伍最大生命百分比到基础触腕”的可验证公式，因此不自动附加该项。','Chaos × Standard Aequor: public SKeyDB does not expose a verifiable formula for adding team-Max-HP percentage per Chaos Awakener to Base Tentacle DMG, so it is not added automatically.'));
     }
     if(chaosCoexistence&&otherRealm==='CARO'){
-      out.notes.push(`混沌×血肉：每名混沌唤醒体回合结束积累 2% 最大生命的猩红熔炉；混沌角色释放狂气爆发时胚胎融合 +25%。`);
+      out.notes.push(ui('混沌×血肉：每名混沌唤醒体回合结束积累 2% 最大生命的猩红熔炉；混沌角色释放狂气爆发时胚胎融合 +25%。','Chaos × Caro: each Chaos Awakener accumulates Crimson Furnace equal to 2% Max HP at turn end; a Chaos Awakener using Exalt increases Embryo Fusion by 25%.'));
     }
     if(chaosCoexistence&&otherRealm==='ULTRA'){
       out.notes.push(hasMode(modes,'singularity')
-        ?'混沌×奇点·超维：奇点规则明确允许 超维/混沌队伍获得双倍超维精通 与双倍界域伤害强效。'
-        :'混沌×普通超维：保留混沌共存阵容，但公开 SKeyDB 的 至纯超维只写“全队超维”，因此不把普通超维精通 擅自翻倍。');
+        ?ui('混沌×奇点·超维：奇点规则明确允许 超维/混沌队伍获得双倍超维精通 与双倍界域伤害强效。','Chaos × Singularity · Ultra: Singularity explicitly allows Ultra/Chaos teams to receive doubled Ultra mastery effects and doubled Realm Damage Amplification.')
+        :ui('混沌×普通超维：保留混沌共存阵容，但公开 SKeyDB 的 至纯超维只写“全队超维”，因此不把普通超维精通 擅自翻倍。','Chaos × Standard Ultra: coexistence remains valid, but public SKeyDB describes Pure Ultra as an all-Ultra team, so ordinary Ultra mastery is not doubled automatically.'));
     }
     return out;
   }
@@ -251,21 +254,21 @@
     if(box){
       const chips=[
         '<span class="chip">'+esc(s.label)+'</span>',
-        '<span class="chip">有效界域精通 '+s.realmMastery.toFixed(1)+(s.temporaryRealmMastery>0?'（含 +'+s.temporaryRealmMastery.toFixed(0)+'）':'')+'</span>',
-        s.isDual?'<span class="chip">双界域</span>':'<span class="chip">至纯界域</span>',
-        s.indivisible?'<span class="chip">不可分割界域</span>':'',
-        s.atkMultiplier!==1?'<span class="chip">攻击 ×'+s.atkMultiplier.toFixed(2)+'</span>':'',
-        s.defMultiplier!==1?'<span class="chip">防御 ×'+s.defMultiplier.toFixed(2)+'</span>':'',
-        s.teamDamageAmp?'<span class="chip">团队伤害强效 +'+s.teamDamageAmp.toFixed(0)+'%</span>':'',
-        s.maxHpMultiplier!==1?'<span class="chip">最大生命 ×'+s.maxHpMultiplier.toFixed(2)+'</span>':'',
-        s.finalDamageBonus?'<span class="chip">本次适用终伤 +'+s.finalDamageBonus.toFixed(0)+'%</span>':'',
-        s.singularityBeaconStacks?'<span class="chip">奇点信标 '+s.singularityBeaconStacks+' 层</span>':'',
-        s.damageOutputMultiplier!==1?'<span class="chip">超维回合输出 ×'+s.damageOutputMultiplier.toFixed(2)+'</span>':''
+        '<span class="chip">'+ui('有效界域精通 ','Effective Realm Mastery ')+s.realmMastery.toFixed(1)+(s.temporaryRealmMastery>0?(isEnglish()?' (includes +'+s.temporaryRealmMastery.toFixed(0)+')':'（含 +'+s.temporaryRealmMastery.toFixed(0)+'）'):'')+'</span>',
+        s.isDual?'<span class="chip">'+ui('双界域','Dual Realm')+'</span>':'<span class="chip">'+ui('至纯界域','Pure Realm')+'</span>',
+        s.indivisible?'<span class="chip">'+ui('不可分割界域','Indivisible Realm')+'</span>':'',
+        s.atkMultiplier!==1?'<span class="chip">'+ui('攻击','ATK')+' ×'+s.atkMultiplier.toFixed(2)+'</span>':'',
+        s.defMultiplier!==1?'<span class="chip">'+ui('防御','DEF')+' ×'+s.defMultiplier.toFixed(2)+'</span>':'',
+        s.teamDamageAmp?'<span class="chip">'+ui('团队伤害强效','Team Damage Amplification')+' +'+s.teamDamageAmp.toFixed(0)+'%</span>':'',
+        s.maxHpMultiplier!==1?'<span class="chip">'+ui('最大生命','Max HP')+' ×'+s.maxHpMultiplier.toFixed(2)+'</span>':'',
+        s.finalDamageBonus?'<span class="chip">'+ui('本次适用终伤','Applicable Final DMG')+' +'+s.finalDamageBonus.toFixed(0)+'%</span>':'',
+        s.singularityBeaconStacks?'<span class="chip">'+ui('奇点信标','Singularity Beacon')+' '+s.singularityBeaconStacks+' '+ui('层','stacks')+'</span>':'',
+        s.damageOutputMultiplier!==1?'<span class="chip">'+ui('超维回合输出','Ultra-turn Output')+' ×'+s.damageOutputMultiplier.toFixed(2)+'</span>':''
       ].filter(Boolean);
       box.innerHTML='<div class="autoSummary">'+chips.join('')+'</div><div style="margin-top:7px">'+s.notes.map(esc).join('<br>')+'</div>';
     }
     const pill=document.querySelector('[aria-labelledby="calcTitle"] .statusPill');
-    if(pill)pill.textContent='SKeyDB public-v3 · 公式审计版';
+    if(pill)pill.textContent=isEnglish()?'SKeyDB public-v3 · Formula-audited':'SKeyDB public-v3 · 公式审计版';
     window.MorimensRealmState=s;
     const signature=JSON.stringify({modes:s.modes,baseRealms:s.baseRealms,isPure:s.isPure,isDual:s.isDual,indivisible:s.indivisible,chaosCount:s.chaosCount,realmMastery:s.realmMastery,temporaryRealmMastery:s.temporaryRealmMastery,teamDamageAmp:s.teamDamageAmp,atkMultiplier:s.atkMultiplier,defMultiplier:s.defMultiplier,maxHpMultiplier:s.maxHpMultiplier,finalDamageBonus:s.finalDamageBonus,fiesta:s.propagationFiestaStacks,singularityBeaconStacks:s.singularityBeaconStacks,damageOutputMultiplier:s.damageOutputMultiplier,statusOutputMultiplier:s.statusOutputMultiplier,tentacleMode:s.tentacleMode,tentacleMasteryMultiplier:s.tentacleMasteryMultiplier,primordiaAllChaosTeam:s.primordiaAllChaosTeam});
     if(signature!==lastRealmSignature){lastRealmSignature=signature;window.dispatchEvent(new CustomEvent('morimens-realm-change',{detail:s}))}
