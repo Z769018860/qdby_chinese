@@ -196,6 +196,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-24 · 英文适配完善</strong><br>完成忘忘看报英文模式的系统性审阅与补全：覆盖旧版 v0.3 启动框架、伤害计算器角色专属资源、伤害事件明细、融灾榜单与旧版425榜单、爱的节奏榜、留言板、更新日志、关于页及动态生成文本；Waline 留言板语言会随中英文切换同步更新，并修复动态文本、title、placeholder、aria-label 在重绘后的翻译监听。</div>
         <div class="sourceItem"><strong>2026-09-21 · 伤害计算器审查与精简</strong><br>继续同步 SKeyDB 角色、衍生卡、启灵、灵知觉醒、跨战斗成长、界域与状态伤害逻辑；修复衍生卡力量倍率与超限解析，统一灵知觉醒开关，密契默认按完整 6 件套计算；移除我方献祭层数、延迟献祭及仅用于记录但不参与当前伤害公式的冗余状态输入。</div>
         <div class="sourceItem"><strong>2026-09-21 · 融灾榜单数据与筛选修复</strong><br>统一搜索配队与榜单统计的数据口径：当前期按 UID 合并基础缓存与 Top500 增量，并同步最新排名；角色身份统一映射到 SKeyDB canonical ID，修复同一角色因游戏 ID、英文名或中文名不同而被拆分统计的问题，同时统一队伍去重、Top5 队友、助战率、界域与类型筛选。</div>
         <div class="sourceItem"><strong>2026-09-21 · 爱的节奏榜</strong><br>新增弥萨格校猫；增加“无恶意，纯节奏”免责声明；新增总分、爱数量、拉黑数量与总热度（爱 + 拉黑）四种排序方式，并保留 Waline 跨设备在线计数。</div>
