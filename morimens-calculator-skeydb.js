@@ -432,7 +432,7 @@
     const appendGroup=(label,rows)=>{
       if(!rows.length)return;
       const group=document.createElement('optgroup');group.label=label;
-      rows.forEach((skill,index)=>{const o=document.createElement('option');o.value=skill.id;const labelText=skillLabel(skill);o.textContent=labelText||`技能 ${index+1}`;o.selected=skill.id===wanted;group.appendChild(o)});
+      rows.forEach((skill,index)=>{const o=document.createElement('option');o.value=skill.id;const labelText=skillLabel(skill);o.textContent=labelText||(isEnglish()?`Skill ${index+1}`:`技能 ${index+1}`);o.selected=skill.id===wanted;group.appendChild(o)});
       select.appendChild(group);
     };
     appendGroup(isEnglish()?'Main Skills':'主技能',main);
@@ -646,24 +646,34 @@
     };
   }
   function ensureEnlightenUi(){
-    if($('charEnlighten')){ensurePsycheSurgeUi();return;}
-    const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
-    const wrap=document.createElement('div');wrap.className='field';
-    wrap.innerHTML='<label for="charEnlighten">角色启灵</label><select id="charEnlighten"><option value="">未启灵</option></select><small>按 SKeyDB 累计应用：启灵2包含启灵1与启灵2，启灵3继续叠加启灵3效果；+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。</small>';
-    anchor.insertAdjacentElement('afterend',wrap);
-    const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
-    $('charEnlighten').addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderCharacterResourceControls(false);refreshBattleProgressionUi();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
+    let sel=$('charEnlighten');
+    if(!sel){
+      const anchor=characterLevelControl()?.closest('.field')||$('innerSpirit')?.closest('.field');if(!anchor)return;
+      const wrap=document.createElement('div');wrap.className='field';
+      wrap.innerHTML='<label for="charEnlighten"></label><select id="charEnlighten"><option value=""></option></select><small></small>';
+      anchor.insertAdjacentElement('afterend',wrap);sel=$('charEnlighten');
+      const desc=document.createElement('div');desc.id='enlightenDesc';desc.className='desc';desc.style.marginTop='8px';wrap.insertAdjacentElement('afterend',desc);
+      sel.addEventListener('change',()=>{configurePsycheSurgeControl(false);applyCharacterStats();renderEnlightenSummary();renderCharacterResourceControls(false);refreshBattleProgressionUi();renderSkillOptions(currentSkill?.id);applySkill();$('calcBtn')?.click()},{capture:true});
+    }
+    const field=sel.closest('.field'),label=field?.querySelector('label'),note=field?.querySelector('small');
+    if(label)label.textContent=ui('角色启灵','Enlighten');
+    if(note)note.textContent=ui('按 SKeyDB 累计应用：启灵2包含启灵1与启灵2，启灵3继续叠加启灵3效果；+4 超限继续叠加超限升级，最终法则再叠加最终法则升级。','SKeyDB upgrades are cumulative: E2 includes E1+E2, E3 adds E3, Over-Exalt adds its upgrade, and Absolute Axiom adds the final upgrade.');
     ensurePsycheSurgeUi();
   }
   function ensurePsycheSurgeUi(){
-    if($('psycheSurgeLevel'))return;
-    const anchor=$('charEnlighten')?.closest('.field');if(!anchor)return;
-    const wrap=document.createElement('div');wrap.className='field';
-    wrap.innerHTML='<label for="psycheSurgeLevel">启灵后副属性成长</label><select id="psycheSurgeLevel"></select><small>启灵3后可选择 0–12 档副属性成长：继续按角色自身副属性成长系数增加暴击率、暴击伤害、伤害强效、回充等属性；与“灵塑”是两套独立成长。</small>';
-    anchor.insertAdjacentElement('afterend',wrap);
-    const sel=$('psycheSurgeLevel');
-    for(let i=0;i<=12;i++){const o=document.createElement('option');o.value=String(i);o.textContent=i===0?'0 · 无额外副属性成长':String(i)+' · 启灵3后第 '+String(i)+' 档';sel.appendChild(o)}
-    sel.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    let sel=$('psycheSurgeLevel');
+    if(!sel){
+      const anchor=$('charEnlighten')?.closest('.field');if(!anchor)return;
+      const wrap=document.createElement('div');wrap.className='field';
+      wrap.innerHTML='<label for="psycheSurgeLevel"></label><select id="psycheSurgeLevel"></select><small></small>';
+      anchor.insertAdjacentElement('afterend',wrap);sel=$('psycheSurgeLevel');
+      for(let i=0;i<=12;i++){const o=document.createElement('option');o.value=String(i);sel.appendChild(o)}
+      sel.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    }
+    const field=sel.closest('.field');
+    const label=field?.querySelector('label');if(label)label.textContent=ui('启灵后副属性成长','Post-E3 Substat Growth');
+    const note=field?.querySelector('small');if(note)note.textContent=ui('启灵3后可选择 0–12 档副属性成长：继续按角色自身副属性成长系数增加暴击率、暴击伤害、伤害强效、回充等属性；与“灵塑”是两套独立成长。','After E3, select substat growth tier 0–12. Crit Rate, Crit DMG, Damage Amplification, regeneration, and other substats continue to grow using the Awakener’s own SKeyDB coefficients. This progression is independent from Soulforge.');
+    for(let i=0;i<sel.options.length;i++)sel.options[i].textContent=i===0?ui('0 · 无额外副属性成长','0 · No extra substat growth'):ui(`${i} · 启灵3后第 ${i} 档`,`${i} · Post-E3 tier ${i}`);
     configurePsycheSurgeControl(false);
   }
   function configurePsycheSurgeControl(reset=false){
@@ -1549,39 +1559,58 @@
   }
 
   function ensureFormulaContextUi(){
-    if($('formulaContextBlock'))return;
-    const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
-    const block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
-    block.innerHTML='<div class="field full"><label for="formulaAccountLevel">账号等级</label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small>用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。公式上下文只保留账号等级；命轮精炼直接读取命轮控件。</small></div><div class="field full" id="battleIndexField" hidden><label for="explorationBattleIndex">当前探索：第几场战斗</label><input id="explorationBattleIndex" type="number" min="1" max="99" step="1" value="1"><small id="battleGrowthNote">仅在角色或命轮存在跨战斗累计伤害乘区时显示。</small></div>';
-    anchor.insertAdjacentElement('afterend',block);
-    const refreshFormulaContext=()=>{renderWheelsAndBonuses();renderCovenantAndBonuses();updateSkillLevel()};
-    $('formulaAccountLevel')?.addEventListener('input',refreshFormulaContext,{capture:true});
-    $('explorationBattleIndex')?.addEventListener('input',()=>{refreshBattleProgressionUi();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    let block=$('formulaContextBlock');
+    if(!block){
+      const anchor=$('charStatsSummary')||$('skillDesc');if(!anchor)return;
+      block=document.createElement('div');block.id='formulaContextBlock';block.className='formGrid';block.style.marginTop='10px';
+      block.innerHTML='<div class="field full"><label for="formulaAccountLevel"></label><input id="formulaAccountLevel" type="number" min="1" max="100" step="1" value="50"><small></small></div><div class="field full" id="battleIndexField" hidden><label for="explorationBattleIndex"></label><input id="explorationBattleIndex" type="number" min="1" max="99" step="1" value="1"><small id="battleGrowthNote"></small></div>';
+      anchor.insertAdjacentElement('afterend',block);
+      const refreshFormulaContext=()=>{renderWheelsAndBonuses();renderCovenantAndBonuses();updateSkillLevel()};
+      $('formulaAccountLevel')?.addEventListener('input',refreshFormulaContext,{capture:true});
+      $('explorationBattleIndex')?.addEventListener('input',()=>{refreshBattleProgressionUi();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+      $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
+    }
+    const account=$('formulaAccountLevel')?.closest('.field'),battle=$('battleIndexField');
+    if(account){const label=account.querySelector('label'),small=account.querySelector('small');if(label)label.textContent=ui('账号等级','Account Level');if(small)small.textContent=ui('用于“禁忌学识”/研究深度等依赖账号等级的 SKeyDB 公式。公式上下文只保留账号等级；命轮精炼直接读取命轮控件。','Used by SKeyDB formulas that depend on account level, such as Forbidden Knowledge / research depth. The formula context keeps only account level; Wheel refinement is read directly from the Wheel controls.')}
+    if(battle){const label=battle.querySelector('label'),small=$('battleGrowthNote');if(label)label.textContent=ui('当前探索：第几场战斗','Current Exploration: Battle Number');if(small)small.textContent=ui('仅在角色或命轮存在跨战斗累计伤害乘区时显示。','Shown only when the selected Awakener or Wheel has a cross-battle cumulative damage effect.')}
     refreshBattleProgressionUi();
-    $('formulaAccountLevel')?.addEventListener('change',refreshFormulaContext,{capture:true});
   }
   function ensureCharacterLevel(){
-    if(!characterLevelControl()){const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel">角色等级</label><select id="charLevel"></select><small>使用 SKeyDB 1 级基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。</small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)}
+    if(!characterLevelControl()){
+      const anchor=$('skillLevel')?.closest('.field');if(!anchor)return;
+      const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="charLevel"></label><select id="charLevel"></select><small></small>';anchor.parentNode.insertBefore(wrap,anchor.nextSibling)
+    }
+    const field=characterLevelControl()?.closest('.field');
+    if(field){const label=field.querySelector('label'),small=field.querySelector('small');if(label)label.textContent=ui('角色等级','Character Level');if(small)small.textContent=ui('使用 SKeyDB 1 级基础攻击与每级成长自动带入；手动修改“有效攻击力”后停止覆盖。','Uses SKeyDB level-1 base ATK and per-level growth automatically. Manual edits to Effective ATK stop automatic overwrites.')}
     normalizeProgressionControls();ensureEnlightenUi();ensureRouseUi();ensureFormulaContextUi();ensureSkillRuntimeUi();ensureCharacterResourceUi();
     const level=characterLevelControl(),sync=()=>{if(currentAwakener&&$('autoCharacterStats')?.checked!==false){$('attack').dataset.autoAttack='1';applyCharacterStats()}};
-    level?.addEventListener('input',sync,{capture:true});level?.addEventListener('change',sync,{capture:true});
-    for(const id of ['innerSpirit','characterSculpt'])$(id)?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
-    $('soulforgeActive')?.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
-    $('autoCharacterStats')?.addEventListener('change',()=>{if($('autoCharacterStats').checked){$('attack').dataset.autoAttack='1';applyCharacterStats()}else $('attack').dataset.autoAttack='0'},{capture:true});
-    $('attack')?.addEventListener('input',()=>{if(!applyingAuto)$('attack').dataset.autoAttack='0'});
+    if(level&&!level.dataset.morimensBound){level.dataset.morimensBound='1';level.addEventListener('input',sync,{capture:true});level.addEventListener('change',sync,{capture:true})}
+    for(const id of ['innerSpirit','characterSculpt']){const el=$(id);if(el&&!el.dataset.morimensBound){el.dataset.morimensBound='1';el.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true})}}
+    const soul=$('soulforgeActive');if(soul&&!soul.dataset.morimensBound){soul.dataset.morimensBound='1';soul.addEventListener('change',()=>{applyCharacterStats();updateSkillLevel();$('calcBtn')?.click()},{capture:true})}
+    const autoStats=$('autoCharacterStats');if(autoStats&&!autoStats.dataset.morimensBound){autoStats.dataset.morimensBound='1';autoStats.addEventListener('change',()=>{if(autoStats.checked){$('attack').dataset.autoAttack='1';applyCharacterStats()}else $('attack').dataset.autoAttack='0'},{capture:true})}
+    const attack=$('attack');if(attack&&!attack.dataset.morimensBound){attack.dataset.morimensBound='1';attack.addEventListener('input',()=>{if(!applyingAuto)attack.dataset.autoAttack='0'})}
   }
   function ensureSecondWheelUi(){
-    const first=$('fateSelect');if(!first||$('fateSelect2'))return;
-    const field=first.closest('.field');if(!field)return;field.classList.remove('full');
-    const second=document.createElement('div');second.className='field';second.innerHTML='<label for="fateSelect2">命轮 2</label><select id="fateSelect2"><option value="">无</option></select>';
-    field.parentNode.insertBefore(second,field.nextSibling);
-    const l1=document.createElement('div');l1.className='field';l1.innerHTML='<label for="fateLevel1">命轮 1 精炼</label><select id="fateLevel1"><option value="0">E0</option></select>';
-    const l2=document.createElement('div');l2.className='field';l2.innerHTML='<label for="fateLevel2">命轮 2 精炼</label><select id="fateLevel2"><option value="0">E0</option></select>';
-    second.parentNode.insertBefore(l1,second.nextSibling);second.parentNode.insertBefore(l2,l1.nextSibling);
-    first.previousElementSibling&&(first.previousElementSibling.textContent='命轮 1');
-    $('fateSelect2').addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(1)},{capture:true});
-    $('fateLevel1').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
-    $('fateLevel2').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+    const first=$('fateSelect');if(!first)return;
+    let second=$('fateSelect2');
+    if(!second){
+      const field=first.closest('.field');if(!field)return;field.classList.remove('full');
+      const secondWrap=document.createElement('div');secondWrap.className='field';secondWrap.innerHTML='<label for="fateSelect2"></label><select id="fateSelect2"><option value=""></option></select>';
+      field.parentNode.insertBefore(secondWrap,field.nextSibling);
+      const l1=document.createElement('div');l1.className='field';l1.innerHTML='<label for="fateLevel1"></label><select id="fateLevel1"><option value="0">E0</option></select>';
+      const l2=document.createElement('div');l2.className='field';l2.innerHTML='<label for="fateLevel2"></label><select id="fateLevel2"><option value="0">E0</option></select>';
+      secondWrap.parentNode.insertBefore(l1,secondWrap.nextSibling);secondWrap.parentNode.insertBefore(l2,l1.nextSibling);
+      $('fateSelect2').addEventListener('change',e=>{e.stopImmediatePropagation();loadWheel(1)},{capture:true});
+      $('fateLevel1').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+      $('fateLevel2').addEventListener('change',e=>{e.stopImmediatePropagation();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click()},{capture:true});
+      second=$('fateSelect2');
+    }
+    const f1=first.closest('.field'),f2=second?.closest('.field'),l1=$('fateLevel1')?.closest('.field'),l2=$('fateLevel2')?.closest('.field');
+    if(f1?.querySelector('label'))f1.querySelector('label').textContent=ui('命轮 1','Wheel 1');
+    if(f2?.querySelector('label'))f2.querySelector('label').textContent=ui('命轮 2','Wheel 2');
+    if(l1?.querySelector('label'))l1.querySelector('label').textContent=ui('命轮 1 精炼','Wheel 1 Refinement');
+    if(l2?.querySelector('label'))l2.querySelector('label').textContent=ui('命轮 2 精炼','Wheel 2 Refinement');
+    for(const sel of [first,second])if(sel?.options?.[0]&&!sel.options[0].value)sel.options[0].textContent=isEnglish()?'None':'无';
   }
   function ensureSyncBadge(){
     const block=$('fateDesc')?.closest('.builderBlock');if(block&&!$('skeydbBuildStatus')){const d=document.createElement('div');d.id='skeydbBuildStatus';d.className='syncLine';d.innerHTML='<span class="syncDot" id="skeydbBuildDot"></span><span id="skeydbBuildText">SKeyDB 配装数据加载中…</span>';block.appendChild(d)}
@@ -1712,7 +1741,7 @@
     configurePsycheSurgeControl(switchedCharacter);
     renderCharacterResourceControls(switchedCharacter);
     refreshBattleProgressionUi();
-    setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
+    setText('charSyncText','SKeyDB public-v3');setText('charSyncStatus',isEnglish()?`${labelForAwakener(currentAwakener)}: loading skills…`:`${labelForAwakener(currentAwakener)}：正在载入技能…`);$('charSyncDot')?.classList.remove('bad','warn');$('charSyncDot')?.classList.add('ok');
     const select=$('skillSelect');if(select)select.innerHTML='<option value="">正在载入…</option>';
     applyCharacterStats();
     try{
@@ -1728,8 +1757,8 @@
       currentSkills.sort((a,b)=>(slotOrder[a.slot]||90)-(slotOrder[b.slot]||90)||String(a.name||'').localeCompare(String(b.name||'')));
       renderSkillOptions(currentSkill?.id);
       const derivedCount=currentSkills.filter(x=>x.kind==='derivedSkill').length,baseCount=currentSkills.length-derivedCount;
-      setText('charSyncStatus',`${labelForAwakener(currentAwakener)} · ${baseCount} 个主技能 + ${derivedCount} 张衍生卡已从本地 SKeyDB 同步`);renderRouseSummary();await applySkill();
-    }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus','SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
+      setText('charSyncStatus',isEnglish()?`${labelForAwakener(currentAwakener)} · ${baseCount} main skills + ${derivedCount} derived cards synchronized from local SKeyDB`:`${labelForAwakener(currentAwakener)} · ${baseCount} 个主技能 + ${derivedCount} 张衍生卡已从本地 SKeyDB 同步`);renderRouseSummary();await applySkill();
+    }catch(error){console.warn('SKeyDB skill load failed',error);setText('charSyncStatus',isEnglish()?'Failed to load SKeyDB skill snapshot':'SKeyDB 技能快照加载失败');$('charSyncDot')?.classList.add('bad')}
   }
   async function applySkill(){
     const id=$('skillSelect')?.value;if(!id)return;
@@ -1773,23 +1802,23 @@
     if($('skillDesc'))$('skillDesc').innerHTML=`<strong>${escape(localizedSkillName(currentSkill))}</strong> · ${renderRichRecord(currentSkill,level)}`;
     if($('skillRuntimeBlock')){
       const messages=[...(runtimeHints.messages||[])];
-      if(signatureRelicEnabled()&&signatureSkillMods?.notes?.length)messages.push(...signatureSkillMods.notes);
-      if(wheelSkillNotes.length)messages.push(...wheelSkillNotes);
+      if(signatureRelicEnabled()&&signatureSkillMods?.notes?.length)messages.push(...(isEnglish()?['Signature Creation modifiers from the SKeyDB source are applied where their conditions can be resolved safely.']:signatureSkillMods.notes));
+      if(wheelSkillNotes.length)messages.push(...(isEnglish()?['Wheel skill-specific modifiers from the SKeyDB source are applied where their conditions can be resolved safely.']:wheelSkillNotes));
       if(currentSkill?.overExaltEffectId){
-        messages.push('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外纯粹伤害/状态事件会自动叠加。');
+        messages.push(ui('超限爆发已按 SKeyDB“升级原狂气爆发并添加额外效果”合并计算；基础/最终伤害、技能暴击、伤害段数、固定伤害倍增及可直接解析的额外纯粹伤害/状态事件会自动叠加。','Over-Exalt is merged with the upgraded base Exalt according to SKeyDB. Base/Final DMG, skill Crit, hit count, fixed-damage multipliers, and directly resolvable extra Pure/status events are combined automatically.'));
         const overText=String(currentSkill.descriptionTemplate||'').split('{Over-Exalt}:')[1]||'';
-        if(/(?:all Awakeners|this turn|for the next|lasting|temporarily increase)/i.test(overText))messages.push('该超限还包含团队/回合持续状态；这类效果不反向追溯到本次基础狂气爆发伤害，避免因结算时序不明而高算。');
+        if(/(?:all Awakeners|this turn|for the next|lasting|temporarily increase)/i.test(overText))messages.push(ui('该超限还包含团队/回合持续状态；这类效果不反向追溯到本次基础狂气爆发伤害，避免因结算时序不明而高算。','This Over-Exalt also contains team/turn-duration states. Those effects are not applied retroactively to the current base Exalt damage when timing is ambiguous.'));
       }
-      if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push('该技能包含多个独立伤害公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。');
-      if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push('当前唯一伤害公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。');
+      if(runtimeHints.needsHitOverride&&damageTokenCount>1)messages.push(ui('该技能包含多个独立伤害公式，无法安全用一个段数覆盖全部事件；当前仅显示条件提示，不自动改写段数。','This skill contains multiple independent damage formulas, so one hit-count override cannot safely replace all events. The condition is shown without rewriting hit counts.'));
+      if(runtimeHints.needsHitOverride&&damageTokenCount===1&&!hasAutomaticDamage)messages.push(ui('当前唯一伤害公式属于未满足/未选择的条件分支，因此禁用段数覆盖，避免填写段数后误以为条件伤害已启用。','The only damage formula belongs to an unmet/unselected conditional branch, so hit-count override is disabled to avoid implying that the conditional damage is active.'));
       $('skillRuntimeBlock').hidden=messages.length===0;
       if($('skillActualHitsField'))$('skillActualHitsField').hidden=!canOverrideHits;
       if($('skillRuntimeWarnings'))$('skillRuntimeWarnings').innerHTML=messages.length
-        ?'<strong>动态条件提示：</strong>'+messages.map(escape).join('<br>')
+        ?`<strong>${ui('动态条件提示：','Dynamic Condition Notes:')}</strong>`+messages.map(escape).join('<br>')
         :'';
       if(canOverrideHits&&$('skillActualHits')){
-        const range=runtimeHints.minHits&&runtimeHints.maxHits?`建议范围：${runtimeHints.minHits}–${runtimeHints.maxHits}。`:'';
-        $('skillActualHits').title=range||'填写本次实际伤害段数';
+        const range=runtimeHints.minHits&&runtimeHints.maxHits?(isEnglish()?`Suggested range: ${runtimeHints.minHits}–${runtimeHints.maxHits}.`:`建议范围：${runtimeHints.minHits}–${runtimeHints.maxHits}。`):'';
+        $('skillActualHits').title=range||ui('填写本次实际伤害段数','Enter the actual hit count for this use');
       }
     }
     let generatedStrength=0,generatedShield=0,characterStrengthBonus=0;
@@ -1923,7 +1952,29 @@
       if(canOverrideHits&&requestedHits>0)parts.push(`实际段数覆盖：${requestedHits}`);
       else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)parts.push('⚠ 动态段数未指定，当前按可确定的基础/最低段数');
       else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)parts.push('⚠ 条件伤害分支未启用，当前不结算该伤害事件');
-      $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
+      if(isEnglish()){
+        const enParts=[];
+        if(damageEvents.length){
+          const labels={active:'Active DMG',pierce:'Pierce DMG',tentacle:'Tentacle DMG',pure:'Pure DMG',fixed:'Fixed DMG',poison:'Poison',bleed:'Bleed',corrosion:'Corrosion',counter:'Counter',sacrifice:'Sacrifice'};
+          enParts.push(`${damageEvents.length} damage event${damageEvents.length===1?'':'s'}: ${damageEvents.map(event=>{
+            const name=(labels[event.type]||event.type)+(event.turnEndOnly?' (turn end)':'');
+            if(event.coefficient!==undefined)return name+' '+Number(event.coefficient).toFixed(2)+'%';
+            if(event.percent!==undefined)return name+' '+Number(event.percent).toFixed(2)+'%';
+            return name;
+          }).join(' / ')}`);
+        }
+        if(currentSkill?.kind==='derivedSkill')enParts.push('Derived-card damage uses the event type shown above; Vulnerable/Weak and STR are applied only where that event type supports them.');
+        if(tentacleCoef)enParts.push(`Tentacle DMG × ${Number(tentacleCoef).toFixed(2)}%`);
+        if(triggerPct!==null)enParts.push(`Additional Tentacle trigger × ${Number(triggerPct).toFixed(2)}%`);
+        if(signatureRelicEnabled()&&signatureSkillMods?.notes?.length)enParts.push('Signature Creation skill modifier applied');
+        if(wheelSkillNotes.length)enParts.push('Wheel skill modifier applied');
+        if(canOverrideHits&&requestedHits>0)enParts.push(`Actual hit-count override: ${requestedHits}`);
+        else if(runtimeHints.needsHitOverride&&hasAutomaticDamage)enParts.push('Dynamic hit count not specified; using the determinable base/minimum count');
+        else if(runtimeHints.needsHitOverride&&!hasAutomaticDamage)enParts.push('Conditional damage branch inactive; this damage event is not resolved');
+        $('skillCoeffSummary').textContent=(enParts.length?enParts.join(' + '):'No directly resolvable damage coefficient')+` · ${currentSkill.id}`;
+      }else{
+        $('skillCoeffSummary').textContent=(parts.length?parts.join(' + '):'该技能没有可直接换算的伤害倍率')+` · ${currentSkill.id}`;
+      }
     }
     const syncResources=characterResourceValues();
     const characterDamageAmpBonusPct=currentAwakener?.id==='awakener-0018'&&rouseActive()&&selectedEnlightenSlot()==='AbsoluteAxiom'
@@ -1938,9 +1989,13 @@
     wheelCatalog=wr.status==='fulfilled'?(wr.value?.records||[]):[];covenantCatalog=cr.status==='fulfilled'?(cr.value?.records||[]):[];relicCatalog=rr.status==='fulfilled'?(rr.value?.records||[]):[];gameplayMathMeta=gm.status==='fulfilled'?gm.value:null;
     window.MorimensFormulaEngine?.setGameplayMathMetadata?.(gameplayMathMeta);ensureFormulaContextUi();
     if(gameplayMathMeta?.accountLevelCurve&&$('formulaAccountLevel')){$('formulaAccountLevel').min=String(gameplayMathMeta.accountLevelCurve.minLevel||1);$('formulaAccountLevel').max=String(gameplayMathMeta.accountLevelCurve.maxLevel||100)}
-    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const w of wheelCatalog){const o=document.createElement('option');o.value=w.id;o.textContent=wheelOptionLabel(w);o.selected=w.id===prev;sel.appendChild(o)}}
-    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const c of covenantCatalog){const o=document.createElement('option');o.value=c.id;o.textContent=isEnglish()?c.name:(zhCovenants[c.name]||c.name);o.selected=c.id===prev;cs.appendChild(o)}}
-    const missing=[wr,cr,rr,gm].filter(x=>x.status!=='fulfilled').length;setText('skeydbBuildText',missing?`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契及角色专属造物索引`);$('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
+    const w1=$('fateSelect'),w2=$('fateSelect2');for(const sel of [w1,w2]){if(!sel)continue;const prev=sel.value;sel.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const wheel of wheelCatalog){const o=document.createElement('option');o.value=wheel.id;o.textContent=wheelOptionLabel(wheel);o.selected=wheel.id===prev;sel.appendChild(o)}}
+    const cs=$('contractSelect');if(cs){const prev=cs.value;cs.innerHTML=`<option value="">${isEnglish()?'None':'无'}</option>`;for(const covenant of covenantCatalog){const o=document.createElement('option');o.value=covenant.id;o.textContent=isEnglish()?covenant.name:(zhCovenants[covenant.name]||covenant.name);o.selected=covenant.id===prev;cs.appendChild(o)}}
+    const missing=[wr,cr,rr,gm].filter(x=>x.status!=='fulfilled').length;
+    setText('skeydbBuildText',missing
+      ?(isEnglish()?`Loaded ${wheelCatalog.length} Wheels and ${covenantCatalog.length} Covenants; some catalogs are unavailable, but character/skill calculation remains usable.`:`已载入 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契；部分目录暂不可用，角色技能仍可计算`)
+      :(isEnglish()?`Synchronized ${wheelCatalog.length} Wheels, ${covenantCatalog.length} Covenants, and the signature-creation index.`:`已同步 ${wheelCatalog.length} 个命轮、${covenantCatalog.length} 套密契及角色专属造物索引`));
+    $('skeydbBuildDot')?.classList.add(missing?'warn':'ok');syncWheelDuplicates();
   }
   function syncWheelDuplicates(){
     const a=$('fateSelect'),b=$('fateSelect2');if(!a||!b)return;const av=a.value,bv=b.value;
@@ -1962,7 +2017,7 @@
   }
   async function loadWheel(slot){
     const sel=$(slot===0?'fateSelect':'fateSelect2'),id=sel?.value;
-    const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText','两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();return}
+    const other=$(slot===0?'fateSelect2':'fateSelect');if(id&&other?.value===id){sel.value='';currentWheels[slot]=null;setText('skeydbBuildText',isEnglish()?'The two Wheel slots cannot use the same Wheel; the duplicate selection was cleared.':'两个命轮不能重复，已取消重复选择。');syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();return}
     currentWheels[slot]=id?await fetchRecord('wheels',id):null;const levelSel=$(`fateLevel${slot+1}`);if(levelSel)levelSel.value='0';fillLevelSelect(slot,currentWheels[slot]);syncWheelDuplicates();renderWheelsAndBonuses();updateSkillLevel();$('calcBtn')?.click();
   }
   function isConditional(sentence){
@@ -2508,7 +2563,7 @@
   }
   function applyLanguage(){
     renderCharacters();if(currentAwakener){const sel=$('charSelect');if(sel)sel.value=currentAwakener.id}
-    normalizeProgressionControls();configureEnlightenControl(false);renderCharacterResourceControls(false);applyCharacterStats();
+    normalizeProgressionControls();configureProgressionControls(false);ensureEnlightenUi();configureEnlightenControl(false);ensureFormulaContextUi();ensureSkillRuntimeUi();ensureSecondWheelUi();renderCharacterResourceControls(false);applyCharacterStats();
     renderSkillOptions(currentSkill?.id);if(currentSkill)updateSkillLevel();
     renderSignatureRelic();
     for(const id of ['fateSelect','fateSelect2']){const sel=$(id);if(!sel)continue;for(const o of sel.options){if(!o.value){o.textContent=isEnglish()?'None':'无';continue}const wheel=wheelCatalog.find(x=>x.id===o.value);if(wheel)o.textContent=wheelOptionLabel(wheel)}}
@@ -2519,7 +2574,7 @@
   async function boot(){
     ensureTermIconStyle();ensureCharacterLevel();ensureSecondWheelUi();ensureSyncBadge();ensureSignatureRelicUi();initManualTracking();bindCapture();renderCharacters();
     window.addEventListener('morimens-realm-change',()=>{if(currentSkill)queueMicrotask(updateSkillLevel)});
-    try{await loadCatalogs();if($('targetVulnerableStacks'))$('targetVulnerableStacks').disabled=!$('targetVulnerable')?.checked;await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get relics(){return relicCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant},get currentSignatureRelic(){return currentSignatureRelic}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText','SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
+    try{await loadCatalogs();if($('targetVulnerableStacks'))$('targetVulnerableStacks').disabled=!$('targetVulnerable')?.checked;await loadAwakener();for(const delay of [500,1800,5000])setTimeout(normalizeProgressionControls,delay);window.addEventListener('morimens-language-change',applyLanguage);window.MorimensBuildData={get wheels(){return wheelCatalog},get covenants(){return covenantCatalog},get relics(){return relicCatalog},get currentWheels(){return currentWheels},get currentCovenant(){return currentCovenant},get currentSignatureRelic(){return currentSignatureRelic}}}catch(error){console.error('Morimens SKeyDB calculator bootstrap failed',error);setText('skeydbBuildText',isEnglish()?'Failed to load SKeyDB character/skill data. Refresh and try again.':'SKeyDB 角色/技能数据加载失败，请刷新后重试');$('skeydbBuildDot')?.classList.add('bad')}
   }
   if(window.MorimensData?.db&&window.MorimensRepository)boot();else window.addEventListener('morimens-data-ready',boot,{once:true});
 })();
