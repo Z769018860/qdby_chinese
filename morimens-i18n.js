@@ -100,12 +100,89 @@
     '未启灵':'No Enlighten','灵知觉醒已发动':'Rouse Active','本次实际伤害段数':'Actual Hit Count','按技能默认/最低段数':'Use skill default/minimum hits',
     '内在灵格':'Inner Spirit','灵塑':'Soulforge','限定唤醒体的内在灵格固定为 5，不可调整':'Limited Awakeners have Inner Spirit fixed at 5.'
   });
+  Object.assign(dict,{
+    '角色名和命轮名点开有详情':'Character and Wheel names open detailed views',
+    '旧版融灾425出场率在线文档':'Legacy D-Zone 425 appearance-rate document',
+    '视频发布：查看本次更新介绍':'Video: view this update overview',
+    '我不是数据的制造者，我只是节奏的搬运工。':'I do not create the data; I only relay the meta.',
+    '没有一无是处的唤醒体，只有恨铁不成钢的守密人。':'There are no completely useless Awakeners—only Keepers wishing they performed better.',
+    '等待载入角色数据……':'Waiting for character data…',
+    '欢迎在这里交流《忘却前夜》、融灾榜单、角色配置与网页建议。留言由 Waline 提供在线存储，可跨设备查看。':'Discuss Morimens, D-Zone rankings, character builds, and site feedback here. Messages are stored by Waline and can be viewed across devices.',
+    '2026-09-21 · 伤害计算器审查与精简':'2026-09-21 · Damage Calculator Audit & Cleanup',
+    '继续同步 SKeyDB 角色、衍生卡、启灵、灵知觉醒、跨战斗成长、界域与状态伤害逻辑；修复衍生卡力量倍率与超限解析，统一灵知觉醒开关，密契默认按完整 6 件套计算；移除我方献祭层数、延迟献祭及仅用于记录但不参与当前伤害公式的冗余状态输入。':'Continued synchronizing SKeyDB Awakeners, derived cards, Enlighten, Rouse, cross-battle growth, Realm, and status-damage logic; fixed derived-card STR scaling and Over-Exalt parsing, unified the Rouse switch, defaulted Covenants to full 6-piece sets, and removed redundant state inputs that do not participate in the current damage formula.',
+    '2026-09-21 · 融灾榜单数据与筛选修复':'2026-09-21 · D-Zone Data & Filter Fixes',
+    '统一搜索配队与榜单统计的数据口径：当前期按 UID 合并基础缓存与 Top500 增量，并同步最新排名；角色身份统一映射到 SKeyDB canonical ID，修复同一角色因游戏 ID、英文名或中文名不同而被拆分统计的问题，同时统一队伍去重、Top5 队友、助战率等统计口径。':'Unified Team Search and leaderboard statistics: current-season base cache and Top 500 delta are merged by UID with the latest ranks; character identity is normalized to SKeyDB canonical IDs to prevent duplicate statistics caused by game IDs or localized names; team deduplication, Top 5 teammates, and assist-rate definitions are also aligned.',
+    '2026-09-20 · 留言板头像与表情':'2026-09-20 · Guestbook Avatars & Emotes',
+    '匿名头像池扩展为全部已上传角色头像，并改为按昵称固定映射；主页与忘忘看报留言板接入《忘却前夜》自定义表情包。':'Expanded anonymous avatars to all uploaded character portraits with nickname-stable mapping; added custom Morimens emotes to the homepage and Morimens Weekly guestbook.',
+    '2026-09-20 · 爱的节奏榜':'2026-09-20 · Love Rhythm Ranking',
+    '新增全角色赞踩榜：按“赞 − 踩”净分实时排序，使用热力图显示正负热度，投票数据通过 Waline 在线计数跨设备同步。':'Added an all-character love/block ranking sorted live by net score, with a positive/negative heatmap and cross-device counters synchronized through Waline.',
+    '2026-09-20 · 旧版融灾425榜单':'2026-09-20 · Legacy D-Zone 425 Ranking',
+    '旧版融灾高难出场率统一更名为“旧版融灾425出场率”；旧版数据没有造物榜单，点击“造物榜单”时改为显示空状态，不再错误复用角色榜单。':'Renamed the legacy high-difficulty D-Zone view to “Legacy D-Zone 425 Appearance Rate.” The legacy dataset has no Creation ranking, so that tab now shows an empty state instead of reusing the Character ranking.',
+    '2026-09-19 · 榜单图片下载':'2026-09-19 · Leaderboard Image Export',
+    '为角色、命轮、造物及旧版融灾榜单增加“下载图片”功能；图片按照当前筛选与排序后的实时表格生成，并在右下角加入网站地址与 copyright@青灯不弈 水印。':'Added image export for Character, Wheel, Creation, and legacy D-Zone rankings. Images use the currently filtered/sorted table and include the site address plus the copyright@青灯不弈 watermark.',
+    '当前为全部范围，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。':'All-ranks mode includes every downloaded user, including users whose leaderboard rank cannot currently be matched.',
+    '平均出场率':'Average Appearance Rate','命轮逐期高难出场率':'Wheel High-Difficulty Rate by Period',
+    '旧版融灾425出场率（来源：@却尘）':'Legacy D-Zone 425 Appearance Rate (source: @却尘)',
+    '统计命轮':'Wheels Counted','高难出场率':'High-Difficulty Appearance Rate',
+    '旧版融灾425出场率暂无造物榜单数据。':'No Creation ranking data is available for the legacy D-Zone 425 dataset.',
+    '旧版融灾425出场率没有可用的造物榜单数据，因此该榜单保持为空。':'The legacy D-Zone 425 dataset has no usable Creation ranking data, so this ranking remains empty.',
+    '角色逐期高难出场率':'Character High-Difficulty Rate by Period','统计角色':'Characters Counted',
+    '当前口径暂无命轮记录。':'No Wheel records for the current scope.','当前口径暂无造物记录。':'No Creation records for the current scope.','当前口径暂无记录。':'No records for the current scope.',
+    '暂无出场记录':'No appearance record','启灵数据缺失':'Enlighten data unavailable',
+    '点击切换升降序':'Toggle ascending / descending','点击展开该角色的 Top5 队友、命轮和密契出场率':'Open this character’s Top 5 teammates, Wheels, and Covenants',
+    '展开 Top5 队友 / 命轮 / 密契':'Open Top 5 teammates / Wheels / Covenants',
+    '当前快照尚未由结构化 __data.json 重建；下一次同步后会自动启用命轮、密契与启灵统计。':'This snapshot has not yet been rebuilt from structured __data.json. Wheel, Covenant, and Enlighten statistics will become available after the next synchronization.',
+    '启灵分组 · 角色槽位分布':'Enlighten Group · Character Slot Distribution','命轮 · 队伍采用率':'Wheel · Team Adoption Rate','密契套装 · 队伍采用率':'Covenant Set · Team Adoption Rate',
+    '当前筛选下该角色没有记录。':'No records for this character under the current filters.',
+    '出现次数 / 等级':'Appearances / Level','该角色启灵分组':'Character Enlighten Groups','该角色命轮采用率':'Character Wheel Adoption Rate','该角色密契套装采用率':'Character Covenant Adoption Rate',
+    '密契评分':'Covenant Rating','命轮：':'Wheel: ','密契：':'Covenant: ',
+    '该角色样本':'Character Sample','支队伍':'teams','Top5 队友出场率':'Top 5 Teammate Appearance Rate',
+    '角色榜单数据':'Character Ranking Data','命轮榜单数据':'Wheel Ranking Data','造物榜单数据':'Creation Ranking Data',
+    '全部范围':'All Ranks','全部范围（含未知排名）':'All Ranks (including unknown ranks)',
+    '当前筛选下暂无匹配角色。':'No characters match the current filters.',
+    '下载表格图片失败':'Failed to export table image','图片生成失败':'Image generation failed',
+    '正在载入角色与投票数据……':'Loading character and vote data…','角色资料尚未加载':'Character data has not loaded yet',
+    '爱的节奏榜加载失败，请稍后重试。':'Failed to load Love Rhythm Ranking. Please try again later.','同步失败，请稍后重试':'Sync failed. Please try again later.',
+    '正在生成…':'Generating…','请先生成今日签':'Generate the Daily Fortune first','浏览器不支持图片导出':'This browser does not support image export','图片生成失败':'Image generation failed'
+  });
   const reverse=Object.fromEntries(Object.entries(dict).map(([a,b])=>[b,a]));
   const normalize=s=>String(s||'').toLowerCase().replace(/[“”"'「」『』·・:：\s_\-]/g,'').replace(/[^a-z0-9\u3400-\u9fff]/g,'');
   let lang=localStorage.getItem(KEY)||ZH;
   let observer=null;
 
-  function replaceDynamic(value){let s=String(value);if(lang===EN){s=s.replace(/^第\s*(\d+)\s*期$/,'Season $1').replace(/^第\s*(\d+)\s*期\s*·\s*(\d+)\s*条(\s*·\s*完整|\s*·\s*部分)?$/,(_,a,b,c)=>`Season ${a} · ${b} records${c?.includes('完整')?' · Complete':c?' · Partial':''}`).replace(/^(\d+(?:\.\d+)?)\s*分$/,'$1 pts').replace(/^(\d+)\s*次$/,'$1 times').replace(/^(\d+)\s*支队伍$/,'$1 teams').replace(/^匹配\s*(\d+)\s*支队伍(?:\s*·\s*当前显示前\s*(\d+)\s*支)?$/,(_,a,b)=>`${a} teams matched${b?` · Showing first ${b}`:''}`).replace(/^当前筛选下暂无匹配角色。$/,'No characters match the current filters.').replace(/^当前口径暂无(.+)详细数据。$/,(_,x)=>`No detailed ${replaceExact(x)} data for the current scope.`).replace(/^当前口径暂无(.+)记录。$/,(_,x)=>`No ${replaceExact(x)} records for the current scope.`)}else{s=s.replace(/^Season\s*(\d+)$/,'第 $1 期').replace(/^Season\s*(\d+)\s*·\s*(\d+)\s*records(\s*·\s*Complete|\s*·\s*Partial)?$/,(_,a,b,c)=>`第 ${a} 期 · ${b} 条${c?.includes('Complete')?' · 完整':c?' · 部分':''}`).replace(/^(\d+(?:\.\d+)?)\s*pts$/,'$1 分').replace(/^(\d+)\s*times$/,'$1 次').replace(/^(\d+)\s*teams$/,'$1 支队伍').replace(/^(\d+)\s*teams matched(?:\s*·\s*Showing first\s*(\d+))?$/,(_,a,b)=>`匹配 ${a} 支队伍${b?` · 当前显示前 ${b} 支`:''}`)}return s}
+  function replaceDynamic(value){
+    let s=String(value);
+    if(lang===EN){
+      s=s
+        .replace(/^第\s*(\d+)\s*期$/,'Season $1')
+        .replace(/^第\s*(\d+)\s*期\s*融灾\s*·\s*(.+)$/,'Season $1 D-Zone · $2')
+        .replace(/^第\s*(\d+)\s*期\s*·\s*(\d+)\s*条(\s*·\s*完整|\s*·\s*部分)?$/,(_,a,b,c)=>`Season ${a} · ${b} records${c?.includes('完整')?' · Complete':c?' · Partial':''}`)
+        .replace(/^第\s*(\d+)\s*期\s*·\s*(.+?)\s*·\s*(Top\s*\d+|全部范围)$/i,(_,a,b,d)=>`Season ${a} · ${replaceExact(b)} · ${replaceExact(d)}`)
+        .replace(/^(\d+(?:\.\d+)?)\s*分$/,'$1 pts')
+        .replace(/^(\d+)\s*次$/,'$1 times')
+        .replace(/^(\d+)\s*支队伍$/,'$1 teams')
+        .replace(/^匹配\s*(\d+)\s*支队伍(?:\s*·\s*当前显示前\s*(\d+)\s*支)?$/,(_,a,b)=>`${a} teams matched${b?` · Showing first ${b}`:''}`)
+        .replace(/^共\s*(\d+)\s*个条目\s*·\s*按\s*(.+?)\s*排序\s*·\s*数据跨设备同步$/,(_,a,b)=>`${a} entries · Sorted by ${b} · Synced across devices`)
+        .replace(/^当前快照实际抓取到的最高榜单名次为\s*#?([^。]+)。Top\s*(\d+)\s*统计目前属于不完整样本。$/,(_,a,b)=>`The current snapshot reaches rank #${a}. Top ${b} statistics are currently based on an incomplete sample.`)
+        .replace(/^当前\s*Top\s*(\d+)\s*已覆盖\s*(\d+)\/(\d+)\s*名玩家；出场率按该榜单范围计算。$/,(_,a,b,d)=>`Top ${a}: ${b}/${d} players are covered; appearance rates use this rank range.`)
+        .replace(/^当前筛选下暂无匹配角色。$/,'No characters match the current filters.')
+        .replace(/^当前口径暂无(.+)详细数据。$/,(_,x)=>`No detailed ${replaceExact(x)} data for the current scope.`)
+        .replace(/^当前口径暂无(.+)记录。$/,(_,x)=>`No ${replaceExact(x)} records for the current scope.`)
+        .replace(/^(.+?)\s*·\s*(\d+)\s*次\s*·\s*展开 Top5 队友 \/ 命轮 \/ 密契$/,(_,name,n)=>`${name} · ${n} times · Open Top 5 teammates / Wheels / Covenants`)
+        .replace(/^(.+?)\s*·\s*各期出场率排名变化$/,(_,name)=>`${name} · Appearance-rank changes by period`)
+        .replace(/^(.+?)各期排名折线图$/,(_,name)=>`${name} rank trend by period`);
+    }else{
+      s=s
+        .replace(/^Season\s*(\d+)$/,'第 $1 期')
+        .replace(/^Season\s*(\d+)\s*D-Zone\s*·\s*(.+)$/,'第 $1 期融灾 · $2')
+        .replace(/^Season\s*(\d+)\s*·\s*(\d+)\s*records(\s*·\s*Complete|\s*·\s*Partial)?$/,(_,a,b,c)=>`第 ${a} 期 · ${b} 条${c?.includes('Complete')?' · 完整':c?' · 部分':''}`)
+        .replace(/^(\d+(?:\.\d+)?)\s*pts$/,'$1 分')
+        .replace(/^(\d+)\s*times$/,'$1 次')
+        .replace(/^(\d+)\s*teams$/,'$1 支队伍')
+        .replace(/^(\d+)\s*teams matched(?:\s*·\s*Showing first\s*(\d+))?$/,(_,a,b)=>`匹配 ${a} 支队伍${b?` · 当前显示前 ${b} 支`:''}`);
+    }
+    return s
+  }
   function replaceExact(value){const raw=String(value??''),trim=raw.trim();if(!trim)return raw;const table=lang===EN?dict:reverse,next=table[trim];if(next)return raw.replace(trim,next);return raw.replace(trim,replaceDynamic(trim))}
   function translateTree(root=document.body){
     if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
