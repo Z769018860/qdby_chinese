@@ -53,7 +53,7 @@
       .replace(/通用\/未分组终伤系数/g,'Generic / Ungrouped Final DMG Factor').replace(/当前技能终伤系数/g,'Current Skill Final DMG Factor').replace(/敌方承伤状态/g,'Enemy Damage-taken State').replace(/等级系数/g,'Level Factor').replace(/加固系数/g,'Fortify Factor').replace(/界域输出系数/g,'Realm Output Factor').replace(/其他独立乘区/g,'Other Independent Multiplier').replace(/角色资源独立系数/g,'Character-resource Independent Multiplier')
       .replace(/系数/g,'Factor').replace(/主动伤害/g,'Active DMG').replace(/穿透伤害/g,'Pierce DMG').replace(/触腕伤害/g,'Tentacle DMG').replace(/纯粹伤害/g,'Pure DMG').replace(/固定伤害/g,'Fixed DMG')
       .replace(/中毒/g,'Poison').replace(/出血/g,'Bleed').replace(/侵蚀/g,'Corrosion').replace(/反击/g,'Counter').replace(/献祭/g,'Sacrifice').replace(/诞生仪式/g,'Birth Ritual').replace(/旧日余烬/g,'Embers').replace(/加固/g,'Fortify').replace(/易伤/g,'Vulnerable')
-      .replace(/回合末/g,'Turn End').replace(/必定暴击/g,'Guaranteed Crit').replace(/暴击率/g,'Crit Rate').replace(/暴伤/g,'Crit DMG').replace(/残骸效果已启用/g,'Corpse effect active').replace(/命轮额外攻击力/g,'Wheel extra ATK').replace(/消费/g,'consumed').replace(/等量/g,'equal amount').replace(/其他伤害 50%/g,'50% for other damage').replace(/附加/g,' added ').replace(/获得/g,' gained ').replace(/触发/g,' trigger ');
+      .replace(/回合末/g,'Turn End').replace(/必定暴击/g,'Guaranteed Crit').replace(/暴击率/g,'Crit Rate').replace(/暴击伤害/g,'Crit DMG').replace(/暴伤/g,'Crit DMG').replace(/灵塑/g,'Soulforge').replace(/灵知觉醒/g,'Rouse').replace(/最终法则/g,'Absolute Axiom').replace(/超限爆发/g,'Over-Exalt').replace(/狂气爆发/g,'Exalt').replace(/基础伤害/g,'Base DMG').replace(/最终伤害/g,'Final DMG').replace(/伤害强效/g,'Damage Amplification').replace(/攻击力/g,'ATK').replace(/力量/g,'STR').replace(/追加生命损失/g,'Additional HP Loss').replace(/生命损失/g,'HP Loss').replace(/最大生命/g,'Max HP').replace(/当前生命/g,'Current HP').replace(/残骸效果已启用/g,'Corpse effect active').replace(/残骸/g,'Corpse').replace(/罪印/g,'Sin Mark').replace(/命轮额外攻击力/g,'Wheel extra ATK').replace(/启灵1/g,'E1').replace(/启灵2/g,'E2').replace(/启灵3/g,'E3').replace(/本场/g,'this battle').replace(/本回合/g,'this turn').replace(/消费/g,'consumed').replace(/等量/g,'equal amount').replace(/其他伤害 50%/g,'50% for other damage').replace(/附加/g,' added ').replace(/获得/g,' gained ').replace(/触发/g,' trigger ').replace(/回合/g,'turn').replace(/层/g,' stacks').replace(/次数/g,' uses').replace(/次/g,' times');
   }
   function realmLabelForDisplay(value){
     if(!isEnglish())return String(value||'普通');
@@ -772,7 +772,7 @@
       raw*=fixedDamageMultiplier;
       const damage=raw*fortifyCoef*realmDamageOutputMult;
       return {
-        id,type:'fixed',source:'skill',label:'固定伤害'+(scopedFixedPct>0?` · 灵塑 +${scopedFixedPct.toFixed(2)}%`:''),basis:source.basis,
+        id,type:'fixed',source:'skill',label:isEnglish()?('Fixed DMG'+(scopedFixedPct>0?` · Soulforge +${scopedFixedPct.toFixed(2)}%`:'')):('固定伤害'+(scopedFixedPct>0?` · 灵塑 +${scopedFixedPct.toFixed(2)}%`:'')),basis:source.basis,
         percent:source.percent,amount:source.amount,stat:source.stat||null,scopedFixedDamagePct:scopedFixedPct,fixedDamageMultiplier,
         raw,normal:damage,crit:damage,expected:damage,damage,
         canCrit:false,fixed:true
@@ -782,7 +782,7 @@
       const raw=Math.max(0,Number(stacks)||0);
       const damage=raw*fortifyCoef;
       return {
-        id,type:'sacrifice',source:'status',label:'献祭 · 回合末伤害',action:'turn_end',
+        id,type:'sacrifice',source:'status',label:ui('献祭 · 回合末伤害','Sacrifice · Turn-end DMG'),action:'turn_end',
         stacks:raw,raw,normal:damage,crit:damage,expected:damage,damage,canCrit:false
       };
     }
@@ -997,7 +997,7 @@
           counterCurrent+=amount;counterAdded+=amount;
           events.push({
             id:`counter-gain-${++counterIndex}`,type:'counter',action:'gain',
-            label:`反击获得 +${fmt(amount)}`,amount,damage:0
+            label:isEnglish()?`Counter gained +${fmt(amount)}`:`反击获得 +${fmt(amount)}`,amount,damage:0
           });
           continue;
         }
