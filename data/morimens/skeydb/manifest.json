@@ -2,8 +2,8 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "d4c5a90f24a7e95745a92b8d1098aff77d6f1510",
-    "syncedAt": "2026-09-21T11:49:31.298Z",
+    "commit": "dbf515b1b9c122fbddd24d371bb93d3d6c3794a6",
+    "syncedAt": "2026-09-24T08:34:53.091Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {

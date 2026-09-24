@@ -2,8 +2,8 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "d4c5a90f24a7e95745a92b8d1098aff77d6f1510",
-    "syncedAt": "2026-09-21T11:49:31.298Z",
+    "commit": "dbf515b1b9c122fbddd24d371bb93d3d6c3794a6",
+    "syncedAt": "2026-09-24T08:34:53.091Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "count": 61,
@@ -21863,31 +21863,31 @@
             "kind": "introduction",
             "title": "Basic Information",
             "unlockCondition": "Awakener Level 1",
-            "content": "He is flesh born from a twisted existence—stitched together from cut skin, a hollow chest cavity, a tainted heart, and invisible chains.\n\nHe is placed upon a pedestal, worshipped at the feet, said to possess a pure soul.\n\nWhat, then, is he? Lost in countless dreams, he asks in confusion; and among the dark-green lake waters and the empty fog, only his own voice echoes back in lonely reply."
+            "content": "He is flesh born from a twisted existence, made up of cut and resewn skin, an empty chest cavity, a tainted heart, and invisible chains.\nHe is placed on a pedestal; people worship at his feet and claim he possesses a pure soul.\n\nWhat exactly is he? Lost in countless dreams, he asks in confusion; among the dark green lake water and the empty fog, only his voice echoes in loneliness."
           },
           {
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Awakener Level 3",
-            "content": "Considering the potential relationship between Pollux's \"Sacred Heart\" and the Church of the Lightbearers' divine ritual, Mythag formed a research team to conduct a series of inspections and experiments on the heart.\n\n To Pollux's regret, the \"Sacred Heart\" had entirely replaced his original heart's function, becoming integrated into his body, making direct removal or replacement impossible.\n\nDuring observational experiments, researchers discovered that the \"Sacred Heart,\" which resembles an eye pupil, often exhibited subtle tremors and rotations independent of Pollux's will, much like a real eye.\n\nHowever, light source testing proved the \"Sacred Heart\" did not possess visual functions. Instead, this activity appeared to be sensitivity to other living beings or objects. In comparative trials with varied items, proximity to items related to dissolution and the silver core triggered the heart's activity more easily.\n\nIts activity was particularly pronounced in front of Dissolutes and Awakeners. After Pollux actively used the \"Sacred Heart's\" power, the physical and chemical properties of ordinary items remained unchanged. However, when directed at dissoluted items and creatures, a remarkable expansion of dissolution occurred. Living organisms visibly in the early stages of dissolution rapidly accelerated towards the late stages. The more severe the dissolution originally suffered by the organisms, the faster this spread occurred.\n\nIn experiments with strict protective measures on Awakeners, the subjects reported a sense of approaching dark danger when faced with the \"Sacred Heart's\" power, prompting the experiment to be quickly halted.\n\nAfter a stern explanation from the school, Pollux promised not to use his power against Awakeners. Due to Pollux's cooperation and excellent self-control, Mythag did not impose mandatory controlling items on him, but instead arranged regular health checks and power training.\n\nIt is said that after hearing the experimental results, Awakener Winkle almost fainted screaming and posted notices prohibiting Pollux from approaching on the doors of her laboratory and dormitory. The school repeatedly tried to persuade her to no avail, and Pollux graciously stated that he would respect Winkle's wishes."
+            "content": "Considering the potential relationship between Pollux's \"Sacred Heart\" and the Church of the Lightbearers' divine ritual, Mythag formed a research team to conduct a series of inspections and experiments on the heart.\nTo Pollux's dismay, the \"Sacred Heart\" had entirely replaced his original heart's function, becoming integrated into his body, making direct removal or replacement impossible.\nDuring observational experiments, researchers discovered that the \"Sacred Heart,\" which resembles a pupil, often exhibited subtle tremors and rotations independent of Pollux's will, much like a real eye.\nHowever, light source testing proved the \"Sacred Heart\" did not possess visual functions. Instead, the activity appeared to be sensitivity to other living beings or objects. In comparative trials with various items, proximity to items related to Dissolution and the Silver Core triggered the heart's activity more easily.\nIts activity was particularly pronounced near Dissoluted creatures and Awakeners. When Pollux actively used the \"Sacred Heart's\" power, the physical and chemical properties of ordinary items remained unchanged. However, when directed at Dissoluted items and creatures, a remarkable expansion of Dissolution occurred. Living organisms visibly in the early stages of Dissolution rapidly accelerated towards the late stages. The more severe the Dissolution originally suffered by the organisms, the faster this spread occurred.\nIn experiments with strict protective measures on Awakeners, the subjects reported a sense of approaching darkness and danger when faced with the \"Sacred Heart's\" power, prompting the experiment to be quickly halted.\nAfter a stern explanation from the school, Pollux promised not to use the power against Awakeners. Due to Pollux's cooperation and excellent self-control, Mythag did not impose mandatory controlling items on him, but instead arranged regular health checks and power training.\nApparently, after hearing of the experimental results, Awakener Winkle almost fainted from screaming before posted notices prohibiting Pollux from approaching on the doors of her laboratory and dormitory. The school repeatedly tried to persuade her to no avail, and Pollux graciously stated that he would respect Winkle's wishes."
           },
           {
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Compared to Castor's active and studious attitude, Pollux's approach to the world is one of quiet vigilance.\n\nHe observes, he thinks, he doubts. It was his meticulous consideration and caution that once enabled their successful escape from the church's heavy control. From a young age, he learned to gauge the intentions of others, to lie, and to hide his true thoughts behind a disarming smile. Even with his intimately close brother, he would subconsciously use a relaxed demeanor to soothe and reassure.\n\n\"It's okay.\"\n\n\"It will be alright.\"\n\nBeneath the shadow of a giant, the weak must exhaust every means to grasp a single glimmer of hope.\n\nHaving endured a long period of forced forgetting and deception, he now tolerates no danger or mistakes. Even after heeding Thais's advice and coming to Mythag, he remained profoundly vigilant for a long time.\n\nTo other Awakeners, Pollux appears as a quiet, patient, and friendly individual who often offers a gentle smile. But seasoned elders who see him can only sigh at the profound difference between the two brothers.\n\nAccording to Thais, even in her presence, Pollux will intentionally or unintentionally position himself between her and Castor—since reclaiming his memory, he no longer wishes for Castor to always be his sole protector.\n\nJenkin once earnestly complained to the Keeper about Pollux's duality, claiming that when she \"accidentally\" picked up an item belonging to Castor, she witnessed his expression turn terrifying in an instant. \"His usual good temper must be fake! He's the type who would eat children in private!\"\n\nHowever, after witnessing the Keeper's true power, Pollux's attitude underwent a complete transformation. He claims to have learned the truth of the world from that great soul and has now taken the Keeper as his new, unwavering faith."
+            "content": "Compared to Castor's eager and studious attitude, Pollux's approach to the world is one of quiet vigilance.\nHe observes, he thinks, he doubts. It was his meticulous consideration and caution that once enabled their successful escape from the church's heavy control. From a young age, he learned to gauge the intentions of others, to lie, and to hide his true thoughts behind a disarming smile. Even with his intimately close brother, he would subconsciously use a relaxed demeanor to soothe and reassure.\n\"It's okay.\"\n\"It will be alright.\"\nBeneath the shadow of a giant, the weak must exhaust every means to grasp a single glimmer of hope.\nHaving endured a long period of forced amnesia and deception, he is now more intolerable of danger or mistakes. Even after heeding Thais's advice and coming to Mythag, he remained profoundly vigilant for a long time.\nTo other awakeners, Pollux appears as a quiet, patient, and friendly individual who often offers a gentle smile. But seasoned elders who see him can only sigh at the profound difference between the two brothers.\nAccording to Thais, even in her presence, Pollux will intentionally or unintentionally position himself between her and Castor—since reclaiming his memory, he no longer wishes for Castor to always be his protector.\nJenkin once earnestly complained to the Keeper about Pollux's duality, claiming that when she \"accidentally\" picked up an item belonging to Castor, she witnessed his expression turn terrifying in an instant. \"His usual good temper must be fake! He's the type who would eat children in private!\"\nHowever, after witnessing the Keeper's true power, Pollux's attitude underwent a complete transformation. He claims to have learned the truth of the world from that great soul and has now taken the Keeper as his new, unwavering faith."
           },
           {
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "In the original design of the God of Fate, Pollux was probably never meant to be born.\n\nInitially, only Castor had been successfully created in the artificial Twin Divi experiment. Just as this single, clueless embryo was to be disposed of, Pollux struggled and twisted himself free from his brother's flesh. He absorbed his life force, yet in doing so, he also saved it—from that moment on, their flesh, souls, and fates were irrevocably intertwined.\n\nIn the monotonous routine of the church's teaching, their lives and destinies were identical. But with the start of the \"Holy Transformation\" ritual, the pain and ruthless torment awakened something within Pollux—a defiance of his ordained fate as a Divus. The two children committed the boldest act of their lives: they sketched a world map from an outdated book and escaped from one false world to another imagined one.\n\nAfter the fragile, fleeting beautiful dream shattered, the cruel punishment that followed did not crush their souls, yet that merciless fork in fate had already driven them apart.\n\nJuliette ordered the two to be separated and \"re-educated.\" Castor, submerged in the pool of sin, remained unaware that the tortures they had imagined were never inflicted upon Pollux. Instead, with an air of near mercy, Juliette ended the physical punishment and soon released Pollux from the dark room's confinement, steering him instead toward intense and rigorous theological teachings.\n\nPollux's unyielding doubts transformed into a deep-seated unease and fear under Juliette's utterly calm gaze; she must have mastered a method of control he could not resist, to appear so completely at ease.\n\nHe struggled, he disguised himself, and he never gave up. It seemed he did so many things... but what, in the end, had he truly accomplished? In the mirror, only the soul of a stranger remained, dutifully wearing the crown of the Divus.\n\nHe, and all their shared memories, had been completely forgotten."
+            "content": "In the original design of the God of Fate, Pollux was probably never meant to be born.\nInitially, only Castor had been successfully created in the artificial Twin Divi experiment. Just as this single, clueless embryo was to be disposed of, Pollux struggled and twisted himself free from his brother's flesh. He absorbed his life force, yet in doing so, he also saved it—from that moment on, their flesh, souls, and fates were irrevocably intertwined.\nIn the monotonous routine of the church's teaching, their lives and destinies were identical. But with the start of the \"Holy Transformation\" ritual, the pain and ruthless torment awakened something within Pollux—a defiance of his ordained fate as a Divus. The two children committed the boldest act of their lives: they sketched a world map from an outdated book and escaped from one false world to another imagined one.\nAfter that fragile, fleeting beautiful dream shattered, the cruel punishment that followed did not crush their souls, yet that merciless fork in fate had already driven them apart.\nJuliette ordered the two to be separated and \"re-educated.\" Castor, submerged in the pool of sin, remained unaware that the tortures they had imagined were never inflicted upon Pollux. Instead, with a decision nearing mercy, Juliette ended the physical punishment and soon released Pollux from the dark room's confinement, steering him instead toward intense and rigorous theological education.\nPollux's unyielding doubts transformed into a deep-seated unease and fear under Juliette's utterly calm gaze; she must have mastered a method of control he could not resist, to appear so completely at ease.\nHe struggled, he disguised himself, and he never gave up. It seemed he did so many things... but what, in the end, had he truly accomplished? In the mirror, only the soul of a stranger remained, dutifully wearing the crown of the Divus.\nHe, and all their shared memories, had been completely forgotten."
           },
           {
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "His entire life was lived under manipulated strings, and the script written long ago was a laughable lie that made him constantly lose, forget, and miss out. \n\n When he was young, what he desired most was to freely flap his wings and see the world beyond that lake. \n\n It wasn't until he lost everything for this wish that he could no longer regard such a light and carefree life as his ultimate dream. \n\n Endless rage ignited that pitch-black heart, and the pain and hatred he repressed like blood needed to be washed away with the deaths of those false believers."
+            "content": "His entire life was lived under manipulating strings; that script written long ago was a laughable lie that forced him to constantly lose, forget, and miss out.\nWhen he was young, what he desired most was to freely flap his wings and see the world beyond that lake.\nIt wasn't until he lost everything to fulfill this wish that he could no longer regard such a light and carefree life as his ultimate dream.\nEndless rage ignited that pitch-black heart, and the pain and hatred he repressed into his blood needed to be washed away with the deaths of those false believers."
           }
         ],
         "voiceLines": [
@@ -21899,7 +21899,7 @@
           {
             "id": "voice-95082",
             "title": "Upgrade: I",
-            "content": "Your bestowed gift I shall wield, with deepest gratitude."
+            "content": "Your bestowed gift I shall wield, with the deepest gratitude."
           },
           {
             "id": "voice-95059",
@@ -21939,7 +21939,7 @@
             "id": "voice-95065",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "The sins of the past are committed; I shall flee them no longer. I must also correct the Lantern's mistakes and guide the strayed back to the true path. Let me bear my sins. Then, I shall answer the light of your call and tread the right path as the Divus."
+            "content": "The sins of the past have been committed; I shall flee them no longer. I must also correct the Lantern's mistakes and guide the strayed back to the true path. Let me bear my sins. Then, I shall answer the light of your call and tread the right path as the Divus."
           },
           {
             "id": "voice-95092",
@@ -21963,7 +21963,7 @@
             "id": "voice-95072",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "I have lost my light, and this blind suffering torments me. I beg you, save my lost soul. Please, take my hand as I guide yours over this Holy Heart in my chest. Please, guide toward the light..."
+            "content": "I have lost my light, and this blind suffering torments me. I beg you, save my lost soul. Please, take my hand as I guide yours over this Holy Heart in my chest. Please, guide me toward the light..."
           },
           {
             "id": "voice-95076",
@@ -21975,12 +21975,12 @@
             "id": "voice-95070",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "You have lead me and granted me Light. For so long I was blinded by false purpose. Now, I have found my true calling: to correct the ignorant and distorted heretics and bring everlasting Light to this world. I know of your selflessness; You have no need for my devotion or offerings. Then I beg this: allow me to walk at your side, to record every sacred word and deed, that they may guide my path through the darkness."
+            "content": "You have lead me and granted me Light. For so long I was blinded by false purpose. Now, I have found my true calling: to correct the ignorant and distorted heretics and bring everlasting Light to this world. I know of your selflessness; You have no need for my devotion or offerings. Then I beg of this: allow me to walk at your side, to record every sacred word and deed, that they may guide my path through the darkness."
           },
           {
             "id": "voice-95091",
             "title": "Chat: Touch",
-            "content": "D-Do you have an order for me, my Light? Your Apostle stands ever-ready to hear your teaching."
+            "content": "Do... do you have an order for me, my Light? Your Apostle stands ever-ready to hear your teaching."
           },
           {
             "id": "voice-95063",
@@ -32812,255 +32812,215 @@
           {
             "id": "voice-150471",
             "title": "Awaken",
-            "content": "Honor, justice, loyalty... every virtue worth the name perished by my own hand. What you have summoned is no knight of virtue, but a mere sinner. Even so, I will guard you with this broken body. Please give the order... if you can still trust me.",
-            "category": "daily"
+            "content": "Honor, justice, loyalty... every virtue worth the name perished by my own hand. What you have summoned is no knight of virtue, but a mere sinner. Even so, I will guard you with this broken body. Please give the order... if you can still trust me."
           },
           {
             "id": "voice-150473",
             "title": "Upgrade: I",
-            "content": "You truly wish to elevate me? ...As you wish, my lord. Thank you.",
-            "category": "daily"
+            "content": "You truly wish to elevate me? ...As you wish, my lord. Thank you."
           },
           {
             "id": "voice-150468",
             "title": "Upgrade: II",
-            "content": "Silence! ...Forgive me, my lord. That demon grows more restless as my power grows.",
-            "category": "daily"
+            "content": "Silence! ...Forgive me, my lord. That demon grows more restless as my power grows."
           },
           {
             "id": "voice-150479",
             "title": "Upgrade: III",
-            "content": "With this power, I can protect more people...",
-            "category": "daily"
+            "content": "With this power, I can protect more people..."
           },
           {
             "id": "voice-150451",
             "title": "Enlighten: Observe",
             "unlockCondition": "Unlocks at Enlighten Level 1",
-            "content": "The formless power keeps churning... It's harder to master than I imagined.",
-            "category": "daily"
+            "content": "The formless power keeps churning... It's harder to master than I imagined."
           },
           {
             "id": "voice-150474",
             "title": "Enlighten: Ponder",
             "unlockCondition": "Unlocks at Enlighten Level 2",
-            "content": "<Italic:Devour... Destroy...> Tch—do not think to sway me! I will not bend to your will again!",
-            "category": "daily"
+            "content": "<Italic:Devour... Destroy...> Tch—do not think to sway me! I will not bend to your will again!"
           },
           {
             "id": "voice-150456",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "I know—only the unwavering can master this dreadful power. I have wrestled with It deep within for far too long.",
-            "category": "daily"
+            "content": "I know—only the unwavering can master this dreadful power. I have wrestled with It deep within for far too long."
           },
           {
             "id": "voice-150460",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "Its restlessness seems to have abated. Is it because... you are here?",
-            "category": "daily"
+            "content": "Its restlessness seems to have abated. Is it because... you are here?"
           },
           {
             "id": "voice-150450",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "It still whispers in my ear, urging me to turn my spear upon the innocent... But worry not. I know I can resist. Your faith in me has given me the strength to believe in myself.",
-            "category": "daily"
+            "content": "It still whispers in my ear, urging me to turn my spear upon the innocent... But worry not. I know I can resist. Your faith in me has given me the strength to believe in myself."
           },
           {
             "id": "voice-150463",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "I feel a strength beyond measure, yet that tormenting voice has vanished. It must be your tireless encouragement that has steeled my will to stand against it.\n...Thank you. Thank you, my lord.",
-            "category": "daily"
+            "content": "I feel a strength beyond measure, yet that tormenting voice has vanished. It must be your tireless encouragement that has steeled my will to stand against it.\n...Thank you. Thank you, my lord."
           },
           {
             "id": "voice-150461",
             "title": "Affinity: I",
             "unlockCondition": "Unlocks at Affinity Level 2",
-            "content": "Have you commands for me, my lord? If not, I shall return to my patrol.",
-            "category": "daily"
+            "content": "Have you commands for me, my lord? If not, I shall return to my patrol."
           },
           {
             "id": "voice-150464",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "You are curious about the black slime clinging to my body?\nIt is the source of my power—and my despair, too. Restless as it is, it can take any shape, so it serves me well in battle. I shape it into spear and shield, for someone once took great care to teach me how to wield them... What? You wish to touch it? I must refuse. It is far too dangerous.",
-            "category": "daily"
+            "content": "You are curious about the black slime clinging to my body?\nIt is the source of my power—and my despair, too. Restless as it is, it can take any shape, so it serves me well in battle. I shape it into spear and shield, for someone once took great care to teach me how to wield them... What? You wish to touch it? I must refuse. It is far too dangerous."
           },
           {
             "id": "voice-150466",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "If it isn't too much trouble, could you tell me about your time as a Keeper? No, I do not seek a tale—I only wish to learn. After all, on this path of \"protection,\" you have walked long before me.",
-            "category": "daily"
+            "content": "If it isn't too much trouble, could you tell me about your time as a Keeper? No, I do not seek a tale—I only wish to learn. After all, on this path of \"protection,\" you have walked long before me."
           },
           {
             "id": "voice-150444",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "I know the wrongs I have committed can never be undone. \"Atonement\" is nothing but a comfort I offer myself. But even so... Wait... please don't pat my head, my lord.",
-            "category": "daily"
+            "content": "I know the wrongs I have committed can never be undone. \"Atonement\" is nothing but a comfort I offer myself. But even so... Wait... please don't pat my head, my lord."
           },
           {
             "id": "voice-150475",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "My lord, I must confess—each time I watch you give your all to fight the calamities and save this world, a quiet longing stirs within me. If only I could be of some use to you... You truly permit it? I see.\nThen... allow me to stay by your side until your journey reaches its end. As your knight, and yours alone, I shall spend what remains of this life clearing every obstacle before you.",
-            "category": "daily"
+            "content": "My lord, I must confess—each time I watch you give your all to fight the calamities and save this world, a quiet longing stirs within me. If only I could be of some use to you... You truly permit it? I see.\nThen... allow me to stay by your side until your journey reaches its end. As your knight, and yours alone, I shall spend what remains of this life clearing every obstacle before you."
           },
           {
             "id": "voice-150455",
             "title": "Chat: Touch",
-            "content": "Don't touch me! ...No, forgive me. I only feared I might hurt you.",
-            "category": "daily"
+            "content": "Don't touch me! ...No, forgive me. I only feared I might hurt you."
           },
           {
             "id": "voice-150443",
             "title": "Chat: About the Crisis",
-            "content": "It feels so much like the power that coils about my body, only... more evil. Is this what you've been fighting all this time, my lord?",
-            "category": "daily"
+            "content": "It feels so much like the power that coils about my body, only... more evil. Is this what you've been fighting all this time, my lord?"
           },
           {
             "id": "voice-150465",
             "title": "Chat: About Mythag",
-            "content": "Mythag... it is such a beautiful, peaceful place. I had a home like this once, though now, not even a record of it remains.",
-            "category": "daily"
+            "content": "Mythag... it is such a beautiful, peaceful place. I had a home like this once, though now, not even a record of it remains."
           },
           {
             "id": "voice-150462",
             "title": "Chat: What I Like",
-            "content": "The drift of hearth-smoke at dusk, rain-swept meadows, the smiling faces of the people... all of these speak of peace. That is what I cherish. And I shall give my all to guard it.",
-            "category": "daily"
+            "content": "The drift of hearth-smoke at dusk, rain-swept meadows, the smiling faces of the people... all of these speak of peace. That is what I cherish. And I shall give my all to guard it."
           },
           {
             "id": "voice-150453",
             "title": "Chat: What I Hate",
-            "content": "I despise the weak, the wavering, and those who harm the innocent. Because... that's exactly who I used to be. I loathe myself for all the sins I've committed.",
-            "category": "daily"
+            "content": "I despise the weak, the wavering, and those who harm the innocent. Because... that's exactly who I used to be. I loathe myself for all the sins I've committed."
           },
           {
             "id": "voice-150467",
             "title": "Chat: About the Keeper",
-            "content": "I never dared hope to protect another, nor to find a path to atonement—yet you made it possible. For someone like me, my lord... you are the only reason I'm still here.",
-            "category": "daily"
+            "content": "I never dared hope to protect another, nor to find a path to atonement—yet you made it possible. For someone like me, my lord... you are the only reason I'm still here."
           },
           {
             "id": "voice-150457",
             "title": "Chat: About Ogier",
             "unlockCondition": "Unlocks after acquiring Awakener \"Ogier\"",
-            "content": "Though his power is limited and his hopes naive, he remains pure, unstained. I think that's what a real knight ought to be. Yet I can never again become someone like him.",
-            "category": "daily"
+            "content": "Though his power is limited and his hopes naive, he remains pure, unstained. I think that's what a real knight ought to be. Yet I can never again become someone like him."
           },
           {
             "id": "voice-152465",
             "title": "Chat: About Helot: Catena",
             "unlockCondition": "Unlock after acquiring Awakener \"Helot: Catena\"",
-            "content": "Miss Helot: Catena's power seems to stem from a profound hatred. But hatred, once kindled, keeps spreading until it swallows everything. I fear that one day it will cost her far more than she can bear.",
-            "category": "daily"
+            "content": "Miss Helot: Catena's power seems to stem from a profound hatred. But hatred, once kindled, keeps spreading until it swallows everything. I fear that one day it will cost her far more than she can bear."
           },
           {
             "id": "voice-152466",
             "title": "Chat: Cherished Things",
-            "content": "Even if all I once cherished turns to dust, I will protect others to the end—I will not die with regret again.",
-            "category": "daily"
+            "content": "Even if all I once cherished turns to dust, I will protect others to the end—I will not die with regret again."
           },
           {
             "id": "voice-150452",
             "title": "Investigation Begins",
-            "content": "Stay behind me.",
-            "category": "battle"
+            "content": "Stay behind me."
           },
           {
             "id": "voice-150446",
             "title": "Investigation Success",
-            "content": "Victory, as expected.",
-            "category": "battle"
+            "content": "Victory, as expected."
           },
           {
             "id": "voice-150449",
             "title": "Investigation Halted",
-            "content": "Again... I could not... protect them...",
-            "category": "battle"
+            "content": "Again... I could not... protect them..."
           },
           {
             "id": "voice-150459",
             "title": "Strike: I",
-            "content": "Be gone.",
-            "category": "battle"
+            "content": "Be gone."
           },
           {
             "id": "voice-150478",
             "title": "Strike: II",
-            "content": "Hah!",
-            "category": "battle"
+            "content": "Hah!"
           },
           {
             "id": "voice-150472",
             "title": "Defense: I",
-            "content": "Hmph...",
-            "category": "battle"
+            "content": "Hmph..."
           },
           {
             "id": "voice-150442",
             "title": "Defense: II",
-            "content": "I'll cover you.",
-            "category": "battle"
+            "content": "I'll cover you."
           },
           {
             "id": "voice-150448",
             "title": "Hit: I",
-            "content": "Just a scratch.",
-            "category": "battle"
+            "content": "Just a scratch."
           },
           {
             "id": "voice-150470",
             "title": "Hit: II",
-            "content": "It's okay.",
-            "category": "battle"
+            "content": "It's okay."
           },
           {
             "id": "voice-150454",
             "title": "Skill: I - Undertow 1",
-            "content": "Stay back!",
-            "category": "battle"
+            "content": "Stay back!"
           },
           {
             "id": "voice-152212",
             "title": "Skill: I - Undertow 2",
-            "content": "Hmph!",
-            "category": "battle"
+            "content": "Hmph!"
           },
           {
             "id": "voice-152209",
             "title": "Skill: I - Undertow 3",
-            "content": "Pierce!",
-            "category": "battle"
+            "content": "Pierce!"
           },
           {
             "id": "voice-150458",
             "title": "Skill: II",
-            "content": "Return... to the formless!",
-            "category": "battle"
+            "content": "Return... to the formless!"
           },
           {
             "id": "voice-150445",
             "title": "Rouse",
-            "content": "That which is formless... may become all things.",
-            "category": "battle"
+            "content": "That which is formless... may become all things."
           },
           {
             "id": "voice-150477",
             "title": "Exalt",
-            "content": "I shall be your fortress!",
-            "category": "battle"
+            "content": "I shall be your fortress!"
           },
           {
             "id": "voice-150469",
             "title": "Over-Exalt",
-            "content": "Black slime, stand forth as a rampart!",
-            "category": "battle"
+            "content": "Black slime, stand forth as a rampart!"
           }
         ]
       },
