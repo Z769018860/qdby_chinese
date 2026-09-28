@@ -487,7 +487,7 @@
     const sid=selectedSeasonId(),rows=submissionHistory.filter(x=>Number(x.seasonId)===sid).slice(0,HISTORY_LIMIT);
     const seasonCount=submissionHistory.filter(x=>Number(x.seasonId)===sid).length;
     if(count)count.textContent=ui(`${seasonCount} 条`,` ${seasonCount} records`);
-    host.innerHTML=rows.length?rows.map(row=>`<div class="dtideCommunityHistoryRow"><b>UID ${esc(row.uid)}</b><span>${esc(formatTime(row.submittedAt))}</span><span>${ui('更新人：','By: ')}${esc(row.submittedBy||ui('匿名','Anonymous'))}</span></div>`).join(''):`<div class="dtideCommunityHistoryRow"><span>${ui('当前期暂无自行更新记录。','No community updates for this season yet.')}</span></div>`;
+    host.innerHTML=rows.length?rows.map(row=>`<div class="dtideCommunityHistoryRow"><b>UID ${esc(row.uid)}</b><span>${esc(formatTime(row.submittedAt))}</span><span>${ui('更新人：','By: ')}${esc(row.submittedBy||ui('匿名','Anonymous'))}</span></div>`).join(''):`<div class="dtideCommunityHistoryRow"><span>${ui('所选期次暂无自行更新记录。','No community updates for the selected season yet.')}</span></div>`;
   }
   async function syncCommunity(force=false){
     if(syncing)return;
@@ -500,7 +500,7 @@
       if(!ctx.legacy&&viewSeasonId&&latest.length){window.MorimensDtideCommunity?.mergeRecords?.(latest);window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)}
       renderHistory();
       const newest=latest[0];
-      if(force)status(newest?ui(`已刷新社区补充：${latest.length} 个 UID；最近由 ${newest.submittedBy} 更新于 ${formatTime(newest.submittedAt)}。`,`Community data refreshed: ${latest.length} UIDs; latest by ${newest.submittedBy} at ${formatTime(newest.submittedAt)}.`):ui('已刷新，当前期暂无社区补充。','Refreshed. No community data for this season.'),'ok');
+      if(force)status(newest?ui(`已刷新社区补充：${latest.length} 个 UID；最近由 ${newest.submittedBy} 更新于 ${formatTime(newest.submittedAt)}。`,`Community data refreshed: ${latest.length} UIDs; latest by ${newest.submittedBy} at ${formatTime(newest.submittedAt)}.`):ui('已刷新，当前查看期次暂无社区补充。','Refreshed. No community data for the viewed season.'),'ok');
     }catch(error){
       console.warn('D-Zone community submission sync failed',error);
       if(force)status(ui('社区补充载入失败：','Failed to load community data: ')+(error?.message||String(error)),'error');
