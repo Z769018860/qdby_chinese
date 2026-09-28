@@ -155,6 +155,7 @@
   function statName(attr){
     const raw=String(attr?.name||attr?.id||ui('词条','Stat')).trim();
     if(!zh())return raw;
+    if(/[\u3400-\u9fff]/.test(raw))return raw;
     if(statZh[raw])return statZh[raw];
     const key=raw.toUpperCase().replace(/[%/()+.-]+/g,'_').replace(/\s+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
     if(statZh[key])return statZh[key];
@@ -281,6 +282,144 @@
       }
     }
     return [...out.values()].sort((a,b)=>b.count-a.count||b.borrowers.size-a.borrowers.size||a.uid.localeCompare(b.uid,'en',{numeric:true})||a.characterName.localeCompare(b.characterName,'zh-CN'));
+  }
+  function utf8ToBase64(value){
+    const bytes=new TextEncoder().encode(String(value)),chunk=0x8000,parts=[];
+    for(let i=0;i<bytes.length;i+=chunk)parts.push(String.fromCharCode(...bytes.subarray(i,i+chunk)));
+    return btoa(parts.join(''));
+  }
+  function base64ToUtf8(value){
+    const bin=atob(String(value||'')),bytes=Uint8Array.from(bin,ch=>ch.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+  function extractSubmission(comment){
+    const text=String(comment||''),needle=SUBMISSION_MARKER+':',idx=text.indexOf(needle);
+    if(idx<0)return null;
+    const token=(text.slice(idx+needle.length).match(/[A-Za-z0-9+/=]+/)||[])[0];
+    if(!token)return null;
+    try{return JSON.parse(base64ToUtf8(token))}catch{return null}
+  }
+  function displayAwakener(rec){
+    if(!rec)return {key:'',name:ui('未知角色','Unknown'),image:''};
+    const loc=window.MorimensData?.localizedProfile?.(rec)||{};
+    const name=zh()?(loc.name||rec.localizedName||rec.zhName||rec.name||rec.id):(rec.name||loc.name||rec.id);
+    return {key:String(rec.id||''),name:String(name||rec.id||''),image:localAssetPath(rec)};
+  }
+  function manualKey(row){return [row.uid,row.characterKey].join('|')}
+  function manualRowFromPayload(payload,meta={}){
+    if(!payload||payload.version!==1)return null;
+    const uid=String(payload.uid||'').trim();
+    if(!/^\d{5,20}$/.test(uid))return null;
+    const charRec=gear.awakenerById.get(String(payload.characterId||''));if(!charRec)return null;
+    const char=displayAwakener(charRec);
+    const wheelRec=gear.wheelById.get(String(payload.wheelId||''));if(!wheelRec)return null;
+    const covRec=gear.covenantById.get(String(payload.covenantId||''));if(!covRec)return null;
+    const level=Math.max(1,Math.min(100,Number(payload.level)||1));
+    const wheelStack=Math.max(0,Math.min(12,Number(payload.wheelStack)||0));
+    const attrs=(Array.isArray(payload.attrs)?payload.attrs:[]).slice(0,8).map(a=>{
+      const value=Number(a?.value);if(!Number.isFinite(value))return null;
+      const name=String(a?.name||'').trim().slice(0,40);if(!name)return null;
+      return {id:name,name,value,percentage:!!a?.percentage,percentPoints:!!a?.percentage};
+    }).filter(Boolean);
+    const wheel={id:String(wheelRec.id),name:wheelName(wheelRec),image:wheelImage(wheelRec),level:null,enhanceLevel:wheelStack};
+    const cov={id:String(covRec.id),name:covenantName(covRec),image:covenantImage(covRec),count:6};
+    const player=cleanPlayerName(payload.player||'').slice(0,30);
+    if(player)playerNames.set(uid,player);
+    return {
+      uid,player:player||playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,
+      level,enlightenment:String(payload.enlightenment||ui('未知','Unknown')).slice(0,20),
+      breakLevel:payload.breakLevel==null||payload.breakLevel===''?null:Number(payload.breakLevel),
+      skills:String(payload.skills||'').trim().slice(0,40),likeLevel:null,fighting:null,
+      wheels:[wheel],covenants:[cov],trinkets:[],finalAttrs:attrs,
+      count:null,borrowers:new Set(),seasons:new Set(),manual:true,source:'online',
+      submittedAt:String(meta.insertedAt||payload.submittedAt||''),commentId:String(meta.objectId||'')
+    };
+  }
+  async function loadManualRows(){
+    const collected=[];let pageNo=1,totalPages=1;
+    try{
+      do{
+        const url=WALINE_SERVER+'/api/comment?path='+encodeURIComponent(SUBMISSION_PATH)+'&page='+pageNo+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN';
+        const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
+        const payload=await response.json();if(payload?.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
+        const box=payload?.data&&typeof payload.data==='object'&&!Array.isArray(payload.data)?payload.data:payload;
+        const items=Array.isArray(box?.data)?box.data:Array.isArray(payload?.data)?payload.data:[];
+        for(const item of items){
+          const parsed=extractSubmission(item?.comment),row=manualRowFromPayload(parsed,{insertedAt:item?.insertedAt,objectId:item?.objectId});
+          if(row)collected.push(row);
+        }
+        totalPages=Math.min(20,Math.max(1,Number(box?.totalPages)||1));pageNo++;
+      }while(pageNo<=totalPages);
+      const latest=new Map();
+      for(const row of collected)if(!latest.has(manualKey(row)))latest.set(manualKey(row),row);
+      manualRows=[...latest.values()];
+    }catch(e){
+      console.warn('Online assist submissions unavailable',e);manualRows=[];
+    }
+    return manualRows;
+  }
+  function mergeManual(base){
+    const all=[...manualRows,...base];
+    return all.sort((a,b)=>{
+      if(!!a.manual!==!!b.manual)return a.manual?-1:1;
+      const ac=Number.isFinite(Number(a.count))?Number(a.count):-1,bc=Number.isFinite(Number(b.count))?Number(b.count):-1;
+      return bc-ac||String(b.submittedAt||'').localeCompare(String(a.submittedAt||''))||a.uid.localeCompare(b.uid,'en',{numeric:true});
+    });
+  }
+  function submitStatOptions(){
+    return [...new Set(Object.values(statZh))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+  }
+  function addAttrRow(name='',value='',percentage=true){
+    const host=$('assistSubmitAttrRows');if(!host||host.children.length>=8)return;
+    const row=document.createElement('div');row.className='assistSubmitAttrRow';
+    row.innerHTML='<select class="assistSubmitAttrName" aria-label="'+ui('词条属性','Stat')+'"><option value="">'+ui('选择词条','Select stat')+'</option>'+submitStatOptions().map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')+'</select><input class="assistSubmitAttrValue" type="number" step="0.01" placeholder="'+ui('数值','Value')+'" aria-label="'+ui('词条数值','Stat value')+'"><select class="assistSubmitAttrUnit" aria-label="'+ui('单位','Unit')+'"><option value="percent">%</option><option value="number">'+ui('数值','Value')+'</option></select><button type="button" class="assistAttrRemove" aria-label="'+ui('删除词条','Remove stat')+'">×</button>';
+    host.appendChild(row);
+    if(name)row.querySelector('.assistSubmitAttrName').value=name;
+    if(value!==''&&value!=null)row.querySelector('.assistSubmitAttrValue').value=value;
+    row.querySelector('.assistSubmitAttrUnit').value=percentage?'percent':'number';
+    row.querySelector('.assistAttrRemove').addEventListener('click',()=>row.remove());
+  }
+  function populateSubmitForm(){
+    const char=$('assistSubmitCharacter'),wheel=$('assistSubmitWheel'),cov=$('assistSubmitCovenant');if(!char||!wheel||!cov)return;
+    const cv=char.value,wv=wheel.value,sv=cov.value;
+    char.innerHTML='<option value="">'+ui('请选择助战角色','Select Awakener')+'</option>'+gear.awakeners.map(r=>displayAwakener(r)).filter(x=>x.key).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en')).map(x=>'<option value="'+esc(x.key)+'">'+esc(x.name)+'</option>').join('');
+    wheel.innerHTML='<option value="">'+ui('请选择命轮','Select Wheel')+'</option>'+gear.wheels.map(r=>({id:String(r.id),name:wheelName(r)})).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en')).map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('');
+    cov.innerHTML='<option value="">'+ui('请选择密契套装','Select Covenant set')+'</option>'+gear.covenants.map(r=>({id:String(r.id),name:covenantName(r)})).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en')).map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('');
+    if([...char.options].some(o=>o.value===cv))char.value=cv;if([...wheel.options].some(o=>o.value===wv))wheel.value=wv;if([...cov.options].some(o=>o.value===sv))cov.value=sv;
+  }
+  function collectSubmitAttrs(){
+    return [...document.querySelectorAll('#assistSubmitAttrRows .assistSubmitAttrRow')].map(row=>{
+      const name=String(row.querySelector('.assistSubmitAttrName')?.value||'').trim(),value=Number(row.querySelector('.assistSubmitAttrValue')?.value);
+      if(!name||!Number.isFinite(value))return null;
+      return {name,value,percentage:row.querySelector('.assistSubmitAttrUnit')?.value==='percent'};
+    }).filter(Boolean);
+  }
+  async function submitAssist(event){
+    event.preventDefault();
+    const form=event.currentTarget,button=$('assistSubmitButton'),status=$('assistSubmitStatus');
+    if(!form.reportValidity())return;
+    const payload={
+      version:1,uid:String($('assistSubmitUid')?.value||'').trim(),player:String($('assistSubmitPlayer')?.value||'').trim(),
+      characterId:String($('assistSubmitCharacter')?.value||''),level:Number($('assistSubmitLevel')?.value||0),
+      enlightenment:String($('assistSubmitEnlightenment')?.value||''),skills:String($('assistSubmitSkills')?.value||'').trim(),
+      breakLevel:$('assistSubmitBreak')?.value===''?null:Number($('assistSubmitBreak')?.value),
+      wheelId:String($('assistSubmitWheel')?.value||''),wheelStack:Number($('assistSubmitWheelStack')?.value||0),
+      covenantId:String($('assistSubmitCovenant')?.value||''),attrs:collectSubmitAttrs(),submittedAt:new Date().toISOString()
+    };
+    if(!/^\d{5,20}$/.test(payload.uid)){if(status)status.textContent=ui('UID 格式不正确','Invalid UID');return}
+    if(!gear.awakenerById.has(payload.characterId)||!gear.wheelById.has(payload.wheelId)||!gear.covenantById.has(payload.covenantId)){if(status)status.textContent=ui('请选择有效的角色、命轮和密契','Select valid build options');return}
+    if(button)button.disabled=true;if(status)status.textContent=ui('正在提交…','Submitting…');
+    try{
+      const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
+      const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick:payload.player||'匿名守密人',mail:'',link:'',comment,url:SUBMISSION_PATH,ua:navigator.userAgent||''})});
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      const result=await response.json();if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
+      if(status)status.textContent=ui('提交成功，已刷新列表','Submitted and refreshed');
+      form.reset();$('assistSubmitLevel').value='90';$('assistSubmitAttrRows').innerHTML='';addAttrRow();
+      await loadManualRows();await load(activeSeason);
+    }catch(e){
+      console.error('Assist submission failed',e);if(status)status.textContent=ui('提交失败，请稍后重试','Submission failed, please retry');
+    }finally{if(button)button.disabled=false}
   }
   function optionRows(list,selector){
     const map=new Map();
