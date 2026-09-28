@@ -31,34 +31,53 @@
     el.textContent=message||'';
   }
   function context(){return window.MorimensDtideCommunity?.getContext?.()||null}
-  function selectedSeasonId(){
-    const importSelected=String($('dtideCommunitySeason')?.value||'').trim();
-    if(/^\d+$/.test(importSelected)){const value=Number(importSelected);if(Number.isFinite(value)&&value>0)return value}
-    const ctx=context();
-    const contextSeason=Number(ctx?.selectedSeasonId||ctx?.currentSeason||0);
-    if(Number.isFinite(contextSeason)&&contextSeason>0)return contextSeason;
-    const selected=String($('dtideSeason')?.value||'').trim();
-    if(/^\d+$/.test(selected)){const value=Number(selected);if(Number.isFinite(value)&&value>0)return value}
-    return 0;
+  function normalizeVariant(seasonId,variant=''){
+    const explicit=String(variant||'').trim();
+    return explicit||(Number(seasonId)===69?'prebug':'default');
   }
+  function targetKeyFor(entry){
+    return String(entry?.targetKey??entry?.communityTargetKey??entry?.snapshotId??entry?.seasonId??'');
+  }
+  function selectedTargetMeta(){
+    const ctx=context(),known=ctx?.availableSeasons||[],selected=String($('dtideCommunitySeason')?.value||'').trim();
+    const found=known.find(entry=>targetKeyFor(entry)===selected);
+    if(found){
+      const seasonId=Number(found.sourceSeasonId??found.seasonId)||0;
+      return {seasonId,communityVariant:normalizeVariant(seasonId,found.communityVariant),targetKey:targetKeyFor(found),labelZh:found.labelZh,labelEn:found.labelEn};
+    }
+    if(/^\d+$/.test(selected)){
+      const seasonId=Number(selected);
+      return {seasonId,communityVariant:normalizeVariant(seasonId),targetKey:selected};
+    }
+    const seasonId=Number(ctx?.selectedSeasonId||ctx?.currentSeason||0)||0;
+    const communityVariant=normalizeVariant(seasonId,ctx?.communityVariant);
+    return {seasonId,communityVariant,targetKey:String(ctx?.selectedTargetKey||seasonId||'')};
+  }
+  function selectedSeasonId(){return selectedTargetMeta().seasonId}
+  function selectedCommunityVariant(){return selectedTargetMeta().communityVariant}
+  function selectedTargetKey(){return selectedTargetMeta().targetKey}
   function canSubmitSeason(){
-    const seasonId=selectedSeasonId(),ctx=context();
-    if(!seasonId)return false;
-    const known=ctx?.availableSeasons||[];
-    return !known.length||known.some(entry=>Number(entry?.seasonId)===seasonId);
+    const meta=selectedTargetMeta(),ctx=context(),known=ctx?.availableSeasons||[];
+    if(!meta.seasonId||!meta.targetKey)return false;
+    return !known.length||known.some(entry=>targetKeyFor(entry)===meta.targetKey);
   }
   function syncSeasonOptions(){
     const select=$('dtideCommunitySeason');if(!select)return;
-    const ctx=context(),known=(ctx?.availableSeasons||[]).filter(entry=>Number(entry?.seasonId)>0);
+    const ctx=context(),known=(ctx?.availableSeasons||[]).filter(entry=>Number(entry?.sourceSeasonId??entry?.seasonId)>0);
     const previous=String(select.value||'');
-    const fallback=String(ctx?.selectedSeasonId||ctx?.currentSeason||'');
+    const fallback=String(ctx?.selectedTargetKey||ctx?.selectedSeasonId||ctx?.currentSeason||'');
     if(known.length){
-      select.innerHTML=known.map(entry=>`<option value="${esc(entry.seasonId)}">${esc(zh()?(entry.labelZh||('第 '+entry.seasonId+' 期融灾')):(entry.labelEn||('Season '+entry.seasonId+' D-Zone')))}${entry.periodShort?' · '+esc(entry.periodShort):''}</option>`).join('');
-      if(previous&&known.some(entry=>String(entry.seasonId)===previous))select.value=previous;
-      else if(fallback&&known.some(entry=>String(entry.seasonId)===fallback))select.value=fallback;
+      select.innerHTML=known.map(entry=>{
+        const seasonId=Number(entry.sourceSeasonId??entry.seasonId)||0,targetKey=targetKeyFor(entry);
+        const label=zh()?(entry.labelZh||('第 '+seasonId+' 期融灾')):(entry.labelEn||('Season '+seasonId+' D-Zone'));
+        return `<option value="${esc(targetKey)}">${esc(label)}${entry.periodShort?' · '+esc(entry.periodShort):''}</option>`;
+      }).join('');
+      if(previous&&known.some(entry=>targetKeyFor(entry)===previous))select.value=previous;
+      else if(fallback&&known.some(entry=>targetKeyFor(entry)===fallback))select.value=fallback;
       else if(select.options.length)select.selectedIndex=0;
     }else if(!select.options.length&&fallback){
-      select.innerHTML=`<option value="${esc(fallback)}">${ui('第 '+fallback+' 期融灾','Season '+fallback+' D-Zone')}</option>`;
+      const seasonId=Number(ctx?.selectedSeasonId||ctx?.currentSeason||0)||0;
+      select.innerHTML=`<option value="${esc(fallback)}">${ui('第 '+seasonId+' 期融灾','Season '+seasonId+' D-Zone')}</option>`;
       select.value=fallback;
     }
   }
@@ -84,6 +103,7 @@
   }
 
   function mount(){
+    if(window.MorimensDzoneImportEmbedded===false)return;
     if(mounted&&$('dtideCommunityImport')){refreshUi();return}
     const anchor=$('dtideStatus');
     if(!anchor)return;
@@ -465,7 +485,9 @@
           const data=await decodeSubmission(encoded);
           const record=data?.record,uid=String(data?.uid||record?.uid||'').trim(),seasonId=Number(data?.seasonId||record?.seasonId||0);
           if(!uid||!seasonId||!record)continue;
-          rows.push({uid,seasonId,record,submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone'});
+          const communityVariant=normalizeVariant(seasonId,data?.communityVariant||data?.variant);
+          const targetKey=String(data?.targetKey||(seasonId===69?(communityVariant==='postbug'?'69-postbug':'69-prebug'):seasonId));
+          rows.push({uid,seasonId,communityVariant,targetKey,record,submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone'});
         }catch(error){console.warn('Skip unreadable D-Zone community submission',error)}
       }
       const total=Number(payload?.data?.count??payload?.data?.total??payload?.count??payload?.total);
@@ -474,18 +496,18 @@
     rows.sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt)));
     return rows;
   }
-  function latestPerUid(rows,seasonId){
+  function latestPerUid(rows,seasonId,communityVariant=normalizeVariant(seasonId)){
     const map=new Map();
     for(const row of rows){
-      if(Number(row.seasonId)!==Number(seasonId))continue;
+      if(Number(row.seasonId)!==Number(seasonId)||normalizeVariant(row.seasonId,row.communityVariant)!==normalizeVariant(seasonId,communityVariant))continue;
       const key=String(row.uid);if(!map.has(key))map.set(key,row);
     }
     return [...map.values()];
   }
   function renderHistory(){
     const host=$('dtideCommunityHistoryRows'),count=$('dtideCommunityHistoryCount');if(!host)return;
-    const sid=selectedSeasonId(),rows=submissionHistory.filter(x=>Number(x.seasonId)===sid).slice(0,HISTORY_LIMIT);
-    const seasonCount=submissionHistory.filter(x=>Number(x.seasonId)===sid).length;
+    const meta=selectedTargetMeta(),rows=submissionHistory.filter(x=>Number(x.seasonId)===meta.seasonId&&normalizeVariant(x.seasonId,x.communityVariant)===meta.communityVariant).slice(0,HISTORY_LIMIT);
+    const seasonCount=submissionHistory.filter(x=>Number(x.seasonId)===meta.seasonId&&normalizeVariant(x.seasonId,x.communityVariant)===meta.communityVariant).length;
     if(count)count.textContent=ui(`${seasonCount} 条`,` ${seasonCount} records`);
     host.innerHTML=rows.length?rows.map(row=>`<div class="dtideCommunityHistoryRow"><b>UID ${esc(row.uid)}</b><span>${esc(formatTime(row.submittedAt))}</span><span>${ui('更新人：','By: ')}${esc(row.submittedBy||ui('匿名','Anonymous'))}</span></div>`).join(''):`<div class="dtideCommunityHistoryRow"><span>${ui('所选期次暂无自行更新记录。','No community updates for the selected season yet.')}</span></div>`;
   }
@@ -495,8 +517,8 @@
     syncing=true;
     try{
       if(force||!submissionHistory.length||Date.now()-lastSyncAt>60000){submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}
-      const viewSeasonId=Number(ctx.selectedSeasonId)||0;
-      const latest=latestPerUid(submissionHistory,viewSeasonId);
+      const viewSeasonId=Number(ctx.selectedSeasonId)||0,viewVariant=normalizeVariant(viewSeasonId,ctx.communityVariant);
+      const latest=latestPerUid(submissionHistory,viewSeasonId,viewVariant);
       if(!ctx.legacy&&viewSeasonId&&latest.length){window.MorimensDtideCommunity?.mergeRecords?.(latest);window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)}
       renderHistory();
       const newest=latest[0];
@@ -508,7 +530,7 @@
   }
 
   async function submitPasted(){
-    const button=$('dtideCommunitySubmit'),seasonId=selectedSeasonId();
+    const button=$('dtideCommunitySubmit'),target=selectedTargetMeta(),seasonId=target.seasonId,communityVariant=target.communityVariant,targetKey=target.targetKey;
     if(!canSubmitSeason()){status(ui('请选择有效的融灾期次。','Choose a valid D-Zone season.'),'error');return}
     const text=String($('dtideCommunityPaste')?.value||''),ctx=context(),typedUid=String($('dtideCommunityUid')?.value||'').trim();
     if(!text.trim()){status(ui('请先粘贴 Eremora __data.json 内容。','Paste the Eremora __data.json content first.'),'error');return}
@@ -520,16 +542,17 @@
       if(!typedUid&&$('dtideCommunityUid'))$('dtideCommunityUid').value=record.uid;
       updateUrlPreview();
       const submittedBy=cleanName($('dtideCommunityNick')?.value||'').slice(0,32)||ui('匿名','Anonymous'),submittedAt=new Date().toISOString();
-      const payload={version:1,source:'eremora-dzone',seasonId,uid:record.uid,submittedBy,submittedAt,record};
+      const payload={version:2,source:'eremora-dzone',seasonId,communityVariant,targetKey,uid:record.uid,submittedBy,submittedAt,record};
       status(ui('解析成功，正在压缩并提交……','Parsed successfully. Compressing and submitting…'));
       await persistSubmission(payload);
-      const row={uid:record.uid,seasonId,record,submittedBy,submittedAt,source:'eremora-dzone'};
-      submissionHistory=[row,...submissionHistory.filter(x=>!(Number(x.seasonId)===seasonId&&String(x.uid)===record.uid&&String(x.submittedAt)===submittedAt))];
-      if(Number(ctx?.selectedSeasonId)===Number(seasonId)){
+      const row={uid:record.uid,seasonId,communityVariant,targetKey,record,submittedBy,submittedAt,source:'eremora-dzone'};
+      submissionHistory=[row,...submissionHistory.filter(x=>!(Number(x.seasonId)===seasonId&&normalizeVariant(x.seasonId,x.communityVariant)===communityVariant&&String(x.uid)===record.uid&&String(x.submittedAt)===submittedAt))];
+      if(Number(ctx?.selectedSeasonId)===Number(seasonId)&&normalizeVariant(seasonId,ctx?.communityVariant)===communityVariant){
         window.MorimensDtideCommunity?.mergeRecords?.([row]);window.MorimensDtideUsageCommunity?.mergeRecords?.([row]);
       }
       renderHistory();
-      status(ui(`提交成功：UID ${record.uid} 的第 ${seasonId} 期数据已合并。更新时间 ${formatTime(submittedAt)}，更新人 ${submittedBy}。`,`Submitted: UID ${record.uid} Season ${seasonId} data was merged. Updated ${formatTime(submittedAt)} by ${submittedBy}.`),'ok');
+      const phaseLabel=seasonId===69?(communityVariant==='postbug'?ui(' Bug后',' Post-bug'):ui(' Bug前',' Pre-bug')):'';
+      status(ui(`提交成功：UID ${record.uid} 的第 ${seasonId} 期${phaseLabel}数据已保存。更新时间 ${formatTime(submittedAt)}，更新人 ${submittedBy}。`,`Submitted: UID ${record.uid} Season ${seasonId}${phaseLabel} data was saved. Updated ${formatTime(submittedAt)} by ${submittedBy}.`),'ok');
     }catch(error){
       console.error('D-Zone community import failed',error);
       status(ui('导入失败：','Import failed: ')+(error?.message||String(error)),'error');
@@ -538,7 +561,7 @@
 
   async function listSubmissionRecords(options={}){
     if(options.refresh||!submissionHistory.length){try{submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}catch(error){console.warn('D-Zone submission history unavailable',error)}}
-    return submissionHistory.map(({uid,seasonId,submittedBy,submittedAt,source})=>({uid,seasonId,submittedBy,submittedAt,source}));
+    return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submittedBy,submittedAt,source})=>({uid,seasonId,communityVariant:normalizeVariant(seasonId,communityVariant),targetKey:targetKey||String(seasonId===69?(normalizeVariant(seasonId,communityVariant)==='postbug'?'69-postbug':'69-prebug'):seasonId),submittedBy,submittedAt,source}));
   }
 
   function onSeasonLoaded(){
@@ -546,6 +569,6 @@
   }
   window.addEventListener('morimens:dtide-season-loaded',onSeasonLoaded);
   window.addEventListener('morimens-language-change',()=>{mount();refreshUi()});
-  window.MorimensDzoneImport={mount,refresh:()=>syncCommunity(true),parseDzonePayload,listSubmissionRecords,latestForSeason:seasonId=>latestPerUid(submissionHistory,seasonId)};
+  window.MorimensDzoneImport={mount,refresh:()=>syncCommunity(true),parseDzonePayload,listSubmissionRecords,latestForSeason:(seasonId,communityVariant)=>latestPerUid(submissionHistory,seasonId,communityVariant)};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{mount();setTimeout(onSeasonLoaded,0)});else{mount();setTimeout(onSeasonLoaded,0)}
 })();
