@@ -64,7 +64,7 @@
       .assistCharacter{display:flex;align-items:center;gap:9px;min-width:160px}.assistCharacter img{width:42px;height:42px;border-radius:9px;object-fit:cover;background:#0b1220;flex:none}.assistCharacter b,.assistCharacter small{display:block}.assistCharacter small{margin-top:3px;color:#7f8da1;font-size:9px}
       .assistUid a{color:#e0bd82;text-decoration:none;font-weight:800}.assistUid a:hover{text-decoration:underline}.assistUid strong{display:block;margin-top:3px;color:#d9e1eb;font-size:11px}.assistUid small{display:block;margin-top:2px;color:#718096;font-size:9px}.assistUidLine{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.assistCopyUid{border:1px solid rgba(224,189,130,.35);background:rgba(224,189,130,.08);color:#e8ca91;border-radius:7px;padding:3px 7px;font-size:9px;cursor:pointer}.assistCopyUid:hover{background:rgba(224,189,130,.16)}.assistCopyUid.copied{color:#8ed9b1;border-color:rgba(142,217,177,.4)}.assistGuideBanner{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:14px 0 2px;padding:14px 17px;border:1px solid rgba(245,194,104,.55);border-radius:12px;background:linear-gradient(100deg,rgba(104,61,12,.42),rgba(217,167,75,.12));box-shadow:0 0 22px rgba(217,167,75,.08);color:#ffe2a7;text-decoration:none;font-weight:900}.assistGuideBanner:hover{border-color:#f0c36f;background:linear-gradient(100deg,rgba(123,72,13,.5),rgba(217,167,75,.18))}.assistGuideBanner span{color:#fff3d7;font-size:11px}
       .assistGear{display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}.assistGearCard{display:grid;grid-template-columns:34px minmax(0,1fr);gap:7px;align-items:start;min-width:145px;max-width:230px;padding:6px 8px;border:1px solid rgba(148,163,184,.16);border-radius:9px;background:#111827}.assistGearCard>img{width:34px;height:34px;border-radius:7px;object-fit:contain;background:#0b1220}.assistGearCard b{display:block;font-size:10px;color:#e9eef5;line-height:1.25}.assistGearCard small{display:block;margin-top:2px;color:#8794a6;font-size:9px;line-height:1.3}.assistGearTextOnly{grid-template-columns:minmax(0,1fr)}.assistAttrList{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}.assistAttr{padding:2px 5px;border-radius:6px;background:rgba(217,179,108,.09);border:1px solid rgba(217,179,108,.16);color:#d9c59e;font-size:8px;line-height:1.25;white-space:nowrap}.assistAttrWarn{white-space:normal;color:#f1c98e;border-color:rgba(241,201,142,.28);background:rgba(120,77,24,.15)}.assistSuitLine{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}.assistSuitTag,.assistSeasonTag{display:inline-flex;align-items:center;padding:3px 6px;border-radius:7px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);font-size:9px;color:#b6c0ce}.assistCount{font-size:16px;color:#f1d69f;font-weight:900;font-variant-numeric:tabular-nums}
-      .assistProgression{margin-top:7px;display:grid;gap:5px}.assistProgression>div{display:flex;align-items:flex-start;gap:6px}.assistProgression b{flex:none;min-width:28px;color:#8fa2b4;font-size:9px}.assistProgression span{display:flex;flex-wrap:wrap;gap:4px}.assistProgression i{font-style:normal;padding:2px 5px;border-radius:6px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.12);color:#c4ceda;font-size:8px}.assistProgressionColumn{vertical-align:top!important}.assistProgressionCell{display:flex;flex-wrap:wrap;gap:4px}.assistProgressionCell span{display:inline-flex;padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14);color:#cbd5e1;font-size:9px;line-height:1.3;word-break:break-word}
+      .assistProgression{margin-top:7px;display:grid;gap:5px}.assistProgression>div{display:flex;align-items:flex-start;gap:6px}.assistProgression b{flex:none;min-width:28px;color:#8fa2b4;font-size:9px}.assistProgression span{display:flex;flex-wrap:wrap;gap:4px}.assistProgression i{font-style:normal;padding:2px 5px;border-radius:6px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.12);color:#c4ceda;font-size:8px}.assistProgressionColumn{vertical-align:top!important}.assistSkillSummary,.assistTalentSummary{display:flex;align-items:center;flex-wrap:wrap;gap:4px}.assistSkillSummary span,.assistTalentValue{display:inline-flex;min-width:20px;justify-content:center;padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14);color:#cbd5e1;font-size:9px;line-height:1.3}.assistSkillSummary em,.assistTalentSummary em{font-style:normal;color:#6f7d8d;font-size:9px}.assistTalentValue.madness{color:#f0a4a4;border-color:rgba(240,164,164,.25)}.assistTalentValue.soulforge{color:#d7dde7}.assistTalentValue.gnostic{color:#d7dde7}
       .assistBuildMeta{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.assistBuildMeta span{padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#c4ceda}.assistBuildMeta b{color:#f0d69f;font-weight:800}.assistSource{display:flex;flex-direction:column;gap:5px;align-items:flex-start}.assistSourceTag{display:inline-flex;align-items:center;padding:4px 7px;border-radius:8px;font-size:9px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);color:#bac5d2}.assistSourceTag.online{border-color:rgba(88,220,246,.34);background:rgba(88,220,246,.08);color:#8de9fb}.assistSource small{font-size:8px;color:#758398}.assistManualUse{color:#8de9fb;font-size:10px;font-weight:800}.assistCountCell{text-align:center;vertical-align:middle!important}
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
@@ -252,8 +252,22 @@
     const one=atom(value);
     return one?[one]:[];
   }
-  function memberSkills(member){return structuredProgressionList(member?.potential??member?.skillLevels??member?.skills)}
-  function memberSoulforge(member){return structuredProgressionList(member?.breakLevel??member?.break_level)}
+  function memberSkills(member){
+    const slots=(Array.isArray(member?.slots)?member.slots:[])
+      .filter(x=>Number(x?.slot)>=1&&Number(x?.slot)<=6&&Number.isFinite(Number(x?.level)))
+      .sort((a,b)=>Number(a.slot)-Number(b.slot));
+    return slots.map(x=>String(Number(x.level)));
+  }
+  function memberSoulforge(member){
+    const talents=Array.isArray(member?.talents)?member.talents:[];
+    const order=['madness','soulforge','gnostic'];
+    return order.map(kind=>{
+      const t=talents.find(x=>String(x?.kind||'')===kind&&Number.isFinite(Number(x?.lv)));
+      if(!t)return null;
+      const lv=Number(t.lv);
+      return {kind,level:lv,text:kind==='madness'?('+'+lv):String(lv)};
+    }).filter(Boolean);
+  }
   function progressionHtml(row){
     const skills=Array.isArray(row?.skills)?row.skills:[],soulforge=Array.isArray(row?.soulforge)?row.soulforge:[];
     if(!skills.length&&!soulforge.length)return '';
@@ -262,10 +276,16 @@
       (soulforge.length?'<div><b>'+ui('灵塑','Soulforge')+'</b><span>'+soulforge.map(x=>'<i>'+esc(x)+'</i>').join('')+'</span></div>':'')+
       '</div>';
   }
-  function progressionCell(items){
-    const list=Array.isArray(items)?items.filter(x=>String(x??'').trim()!==''):[];
+  function progressionCell(items,type='plain'){
+    const list=Array.isArray(items)?items.filter(Boolean):[];
     if(!list.length)return '';
-    return '<div class="assistProgressionCell">'+list.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>';
+    if(type==='talents'){
+      return '<div class="assistTalentSummary">'+list.map(x=>{
+        const kind=String(x?.kind||''),text=String(x?.text??x?.level??'');
+        return '<span class="assistTalentValue '+esc(kind)+'" title="'+esc(kind)+'">'+esc(text)+'</span>';
+      }).join('<em>/</em>')+'</div>';
+    }
+    return '<div class="assistSkillSummary">'+list.map(x=>'<span>'+esc(x)+'</span>').join('<em>/</em>')+'</div>';
   }
   function configKey(uid,m){
     const cov=m?.covenants||(m?.covenant?[m.covenant]:[]);
@@ -343,7 +363,7 @@
             const wheels=(member?.wheels||member?.weapons||[]).map(x=>{const r=wheelRecord(x);return {id:String(r?.id??x?.id??x?.name??''),name:wheelName(x),image:wheelImage(x),level:x?.level??null,enhanceLevel:x?.enhanceLevel??x?.enhance_level??null}}).filter(x=>x.id||x.name);
             const covs=(member?.covenants||(member?.covenant?[member.covenant]:[])).map(x=>{const r=covenantRecord(x);return {id:String(r?.id??x?.id??x?.name??''),name:covenantName(x),image:covenantImage(x),count:x?.count??null}}).filter(x=>x.id||x.name);
             const trinkets=(member?.trinkets||[]).map(x=>({id:String(x?.id??x?.name??''),name:String(x?.name||x?.id||ui('密契','Covenant')),image:fallbackLocalImage(x?.image,'covenant')||x?.image||'',slot:x?.slot??null,level:x?.level??null,enhanceLevel:x?.enhanceLevel??x?.enhance_level??null,attrs:(x?.attrs||[]).map(a=>({id:a?.id,name:a?.name,value:a?.value,percentage:!!a?.percentage,rollQuality:a?.rollQuality??a?.roll_quality??null}))}));
-            row={uid,player:playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,level:member?.level??null,enlightenment:enlightLabel(member),skills:[],soulforge:[],wheels,covenants:covs,trinkets,finalAttrs:hasRollQuality(trinkets)?aggregateRollAttrs(trinkets):aggregateAttrs(trinkets),count:0,borrowers:new Set(),seasons:new Set()};
+            row={uid,player:playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,level:member?.level??null,enlightenment:enlightLabel(member),skills:memberSkills(member),soulforge:memberSoulforge(member),wheels,covenants:covs,trinkets,finalAttrs:hasRollQuality(trinkets)?aggregateRollAttrs(trinkets):aggregateAttrs(trinkets),count:0,borrowers:new Set(),seasons:new Set()};
             out.set(key,row);
           }
           if(!row.player&&playerNames.has(uid))row.player=playerNames.get(uid);
@@ -447,8 +467,8 @@
         characterImage:char.image,
         level:payload.level??null,
         enlightenment:enlightLabel({potencyLevel:payload.potencyLevel}),
-        skills:[],
-        soulforge:[],
+        skills:memberSkills({slots:payload.slots}),
+        soulforge:memberSoulforge({talents:payload.talents}),
         wheels,
         covenants,
         trinkets:Array.isArray(payload.trinkets)?payload.trinkets:[],
@@ -613,6 +633,12 @@
       potencyLevel:data.potency_level??null,
       potential:data.potential??null,
       breakLevel:data.break_level??null,
+      slots:(Array.isArray(data.slots)?data.slots:[]).map(x=>({
+        id:x?.id,name:x?.name,image:x?.image,slot:x?.slot??null,level:x?.level??null,isUp:x?.is_up??x?.isUp??null
+      })),
+      talents:(Array.isArray(data.talents)?data.talents:[]).map(x=>({
+        id:x?.id,name:x?.name,image:x?.image,lv:x?.lv??null,kind:x?.kind??''
+      })),
       weapons:(Array.isArray(data.weapons)?data.weapons:[]).map(x=>({
         id:x?.id,
         name:x?.name,
@@ -950,8 +976,8 @@
         const playerCell='<td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未匹配到玩家名','Player name unavailable')+'</small>')+'</td>';
         const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+((r.imported||r.source==='showcase')?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):(r.manual?ui('旧版在线补充配置','Legacy submitted build'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players'))))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
         const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+ui('旧版补充','Legacy')+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span>'+(r.imported?'<small style="display:block;margin-top:4px;color:#718096">'+ui('历史实战累计','Historical observed uses')+'</small>':'')+'</td>';
-        const skillsCell='<td class="assistProgressionColumn">'+progressionCell(r.skills)+'</td>';
-        const soulforgeCell='<td class="assistProgressionColumn">'+progressionCell(r.soulforge)+'</td>';
+        const skillsCell='<td class="assistProgressionColumn">'+progressionCell(r.skills,'skills')+'</td>';
+        const soulforgeCell='<td class="assistProgressionColumn">'+progressionCell(r.soulforge,'talents')+'</td>';
         return '<tr class="'+(r.imported?'assistManualRow':(r.manual?'assistManualRow':'assistObservedRow'))+'">'+playerCell+roleCell+skillsCell+soulforgeCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
       }).join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
     host?.querySelectorAll('[data-copy-uid]').forEach(btn=>btn.addEventListener('click',()=>copyUid(btn.dataset.copyUid,btn)));
