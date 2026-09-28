@@ -131,10 +131,12 @@
   }
   async function loadGearMetadata(){
     const repo=window.MorimensRepository;if(!repo)return;
-    const [w,c,a]=await Promise.allSettled([repo.catalog('wheels'),repo.catalog('covenants'),repo.index('assets')]);
+    const [aw,w,c,a]=await Promise.allSettled([repo.catalog('awakeners'),repo.catalog('wheels'),repo.catalog('covenants'),repo.index('assets')]);
+    gear.awakeners=aw.status==='fulfilled'?(aw.value?.records||[]):[];
     gear.wheels=w.status==='fulfilled'?(w.value?.records||[]):[];
     gear.covenants=c.status==='fulfilled'?(c.value?.records||[]):[];
     gear.assets=a.status==='fulfilled'?(a.value?.assets||{}):{};
+    gear.awakenerById=new Map(gear.awakeners.map(r=>[String(r.id),r]));
     gear.wheelById=new Map(gear.wheels.map(r=>[String(r.id),r]));
     gear.covenantById=new Map(gear.covenants.map(r=>[String(r.id),r]));
     gear.assetById=new Map();gear.assetByBase=new Map();
