@@ -251,7 +251,7 @@
           <div class="assistAutoImportInfo">
             <strong>自动读取内容</strong>
             <span>角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。</span>
-            <small>数据来源：<code>eremora.com/api/showcase?uid=UID&amp;tid=角色ID</code>。不再手动填写配置，避免结构化字段录入错误。</small>
+            <small>数据来源：<code>eremora.com/api/showcase?uid=UID&amp;tid=角色ID</code>。请求由当前访问者浏览器直接发出，会使用访问者自己的网络出口、浏览器环境与可用 Eremora Cookie；不会通过 GitHub Action 或本站服务端代理。</small>
           </div>
           <p class="assistSubmitPrivacy">导入后 UID 与公开助战配置会显示在互助助战列表中。若该 UID + 角色已有自动导入记录，将以最新一次导入结果为准。</p>
           <div class="assistSubmitActions"><button class="primaryBtn" id="assistSubmitButton" type="submit">自动读取并导入</button><span id="assistSubmitStatus" aria-live="polite"></span></div>
