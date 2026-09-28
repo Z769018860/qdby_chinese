@@ -10,7 +10,7 @@
   const WALINE_SERVER='https://textbox.qingdengbuyi.top';
   const SUBMISSION_PATH='/__morimens_assist_submissions__/';
   const SUBMISSION_MARKER='MORIMENS_ASSIST_V1';
-  let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[];
+  let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[],importDelegatesBound=false;
   const cache=new Map(),playerNames=new Map();
   const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map(),showcaseTidByCanonical:new Map(),showcaseCanonicalByTid:new Map()};
   const zhCovenants={
@@ -67,7 +67,8 @@
       .assistBuildMeta{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.assistBuildMeta span{padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#c4ceda}.assistBuildMeta b{color:#f0d69f;font-weight:800}.assistSource{display:flex;flex-direction:column;gap:5px;align-items:flex-start}.assistSourceTag{display:inline-flex;align-items:center;padding:4px 7px;border-radius:8px;font-size:9px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);color:#bac5d2}.assistSourceTag.online{border-color:rgba(88,220,246,.34);background:rgba(88,220,246,.08);color:#8de9fb}.assistSource small{font-size:8px;color:#758398}.assistManualUse{color:#8de9fb;font-size:10px;font-weight:800}.assistCountCell{text-align:center;vertical-align:middle!important}
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
-      .assistAutoImportInfo{margin-top:13px;padding:12px 14px;border:1px solid rgba(88,220,246,.14);border-radius:10px;background:rgba(88,220,246,.045);display:flex;flex-direction:column;gap:3px}.assistAutoImportInfo strong{color:#bceffa;font-size:11px}.assistAutoImportInfo span{color:#c4cfda;font-size:10px}.assistAutoImportInfo small{color:#718096;font-size:9px}.assistClipboardSteps{margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(5,10,16,.22)}.assistClipboardStep{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.assistClipboardStep>b{flex:none;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:rgba(88,220,246,.1);border:1px solid rgba(88,220,246,.28);color:#8de9fb;font-size:11px}.assistClipboardStep strong{display:block;color:#dce9f3;font-size:11px}.assistClipboardStep span{display:block;margin-top:2px;color:#8391a2;font-size:9px;line-height:1.55}.assistShowcaseUrl{margin:8px 0 12px;padding:9px 11px;border-radius:9px;background:#0a1119;border:1px solid rgba(148,163,184,.14);color:#8ea0b3;font-size:9px;word-break:break-all}.assistShowcaseUrl code{color:#bfeaf3}.assistPasteLabel{display:block;margin-top:12px;color:#96a5b6;font-size:9px}.assistPasteLabel>span{display:block;margin-bottom:6px}.assistPasteLabel textarea{width:100%;min-height:108px;resize:vertical;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0a1119;color:#dfe8f2;padding:10px;outline:none;font:10px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}.assistPasteLabel textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
+      .assistAutoImportInfo{margin-top:13px;padding:12px 14px;border:1px solid rgba(88,220,246,.14);border-radius:10px;background:rgba(88,220,246,.045);display:flex;flex-direction:column;gap:3px}.assistAutoImportInfo strong{color:#bceffa;font-size:11px}.assistAutoImportInfo span{color:#c4cfda;font-size:10px}.assistAutoImportInfo small{color:#718096;font-size:9px}.assistAutoAttempt{margin-top:13px;padding:12px 14px;border:1px solid rgba(240,195,111,.22);border-radius:10px;background:rgba(104,61,12,.12);display:flex;align-items:center;justify-content:space-between;gap:12px}.assistAutoAttempt>div{min-width:0}.assistAutoAttempt strong{display:block;color:#f4d99d;font-size:11px}.assistAutoAttempt span{display:block;margin-top:3px;color:#9b8e75;font-size:9px;line-height:1.55}.assistSubmitActions a.primaryBtn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}.assistSubmitActions a[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+      .assistClipboardSteps{margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(5,10,16,.22)}.assistClipboardStep{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.assistClipboardStep>b{flex:none;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:rgba(88,220,246,.1);border:1px solid rgba(88,220,246,.28);color:#8de9fb;font-size:11px}.assistClipboardStep strong{display:block;color:#dce9f3;font-size:11px}.assistClipboardStep span{display:block;margin-top:2px;color:#8391a2;font-size:9px;line-height:1.55}.assistShowcaseUrl{margin:8px 0 12px;padding:9px 11px;border-radius:9px;background:#0a1119;border:1px solid rgba(148,163,184,.14);color:#8ea0b3;font-size:9px;word-break:break-all}.assistShowcaseUrl code{color:#bfeaf3}.assistPasteLabel{display:block;margin-top:12px;color:#96a5b6;font-size:9px}.assistPasteLabel>span{display:block;margin-bottom:6px}.assistPasteLabel textarea{width:100%;min-height:108px;resize:vertical;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0a1119;color:#dfe8f2;padding:10px;outline:none;font:10px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}.assistPasteLabel textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
             @media(max-width:850px){.assistFilters{grid-template-columns:1fr 1fr}.assistFilterAction{grid-column:span 2}}
       @media(max-width:900px){.assistSubmitGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.assistTable{min-width:900px}}
       @media(max-width:560px){.assistFilters{grid-template-columns:1fr}.assistFilterAction{grid-column:auto}.assistSubmitGrid{grid-template-columns:1fr}.assistSubmitBox>summary{align-items:flex-start;flex-direction:column;gap:3px}}
@@ -550,6 +551,52 @@
     };
   }
 
+  async function persistShowcasePayload(payload){
+    const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
+    const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        nick:payload.player||'Eremora Showcase',
+        mail:'',
+        link:'',
+        comment,
+        url:SUBMISSION_PATH,
+        ua:navigator.userAgent||''
+      })
+    });
+    if(!response.ok)throw new Error('Waline HTTP '+response.status);
+    const result=await response.json();
+    if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
+    return result;
+  }
+  async function tryDirectAutoImport(){
+    const status=$('assistSubmitStatus'),button=$('assistAutoImportAttempt');
+    try{
+      const values=validateShowcaseSelection(showcaseFormValues());
+      if(button)button.disabled=true;
+      if(status)status.textContent=ui('正在尝试直接读取 Eremora Showcase…','Trying direct Eremora Showcase import…');
+      const response=await fetch(showcaseUrl(values.uid,values.tid),{
+        method:'GET',
+        mode:'cors',
+        credentials:'include',
+        cache:'no-store',
+        redirect:'follow',
+        headers:{Accept:'application/json'}
+      });
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      const data=await response.json();
+      await importShowcaseData(data,'direct-fetch');
+    }catch(e){
+      console.warn('Direct Showcase import failed',e);
+      if(status)status.textContent=ui(
+        '自动导入失败（这很常见，通常是 CORS / Cloudflare 限制）。请使用下面的“打开 Eremora 数据页 → 复制 JSON → 剪贴板/粘贴导入”。',
+        'Automatic import failed (commonly due to CORS / Cloudflare). Use the fallback below: open the Eremora data page, copy JSON, then import from clipboard/paste.'
+      );
+    }finally{
+      if(button)button.disabled=false;
+    }
+  }
   function showcaseFormValues(){
     const uid=String($('assistSubmitUid')?.value||'').trim();
     const tid=String($('assistSubmitCharacter')?.value||'').trim();
@@ -565,42 +612,52 @@
     return {uid,tid};
   }
   function updateShowcaseUrlPreview(){
-    const preview=$('assistShowcaseUrlPreview');
-    if(!preview)return;
+    const preview=$('assistShowcaseUrlPreview'),link=$('assistOpenShowcase');
     const values=showcaseFormValues();
     if(/^\d{5,20}$/.test(values.uid)&&values.tid&&gear.showcaseCanonicalByTid.has(values.tid)){
       const url=showcaseUrl(values.uid,values.tid);
-      preview.innerHTML='<code>'+esc(url)+'</code>';
-      preview.dataset.url=url;
+      if(preview){preview.innerHTML='<code>'+esc(url)+'</code>';preview.dataset.url=url}
+      if(link){link.href=url;link.setAttribute('aria-disabled','false')}
     }else{
-      preview.textContent=ui('请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');
-      delete preview.dataset.url;
+      if(preview){preview.textContent=ui('请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');delete preview.dataset.url}
+      if(link){link.href='#';link.setAttribute('aria-disabled','true')}
     }
   }
-  function openShowcasePage(){
+  function openShowcasePage(event){
     const status=$('assistSubmitStatus');
     try{
       const values=validateShowcaseSelection(showcaseFormValues());
-      const url=showcaseUrl(values.uid,values.tid);
+      const url=showcaseUrl(values.uid,values.tid),link=$('assistOpenShowcase');
+      if(link)link.href=url;
       updateShowcaseUrlPreview();
-      const win=window.open(url,'_blank','noopener,noreferrer');
-      if(!win&&status)status.textContent=ui('浏览器阻止了新标签页，请允许弹窗或使用“复制数据页地址”。','The browser blocked the new tab. Allow popups or copy the data-page URL.');
-      else if(status)status.textContent=ui('已打开 Eremora 数据页；复制 JSON 后返回本页导入。','Eremora data page opened. Copy the JSON and return here to import it.');
+      if(status)status.textContent=ui('正在打开 Eremora 数据页；复制 JSON 后返回本页导入。','Opening the Eremora data page. Copy the JSON and return here to import it.');
+      // assistOpenShowcase is an <a target="_blank">. Let native navigation run after this delegated handler.
+      return true;
     }catch(e){
+      event?.preventDefault?.();
       if(status)status.textContent=e?.message||String(e);
+      return false;
     }
   }
   async function copyShowcaseUrl(){
     const status=$('assistSubmitStatus');
     try{
       const values=validateShowcaseSelection(showcaseFormValues()),url=showcaseUrl(values.uid,values.tid);
-      if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(url);
-      else{
-        const ta=document.createElement('textarea');
-        ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
-        document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+      let copied=false;
+      if(navigator.clipboard?.writeText){
+        try{await navigator.clipboard.writeText(url);copied=true}catch(_){}
       }
-      if(status)status.textContent=ui('数据页地址已复制。','Data-page URL copied.');
+      if(!copied){
+        const ta=document.createElement('textarea');
+        ta.value=url;ta.style.position='fixed';ta.style.left='-9999px';ta.style.top='0';
+        document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
+        try{copied=!!document.execCommand('copy')}catch(_){}
+        ta.remove();
+      }
+      if(!copied){
+        window.prompt(ui('浏览器禁止自动复制，请长按/全选复制这个地址：','Automatic copy is blocked. Copy this URL manually:'),url);
+      }
+      if(status)status.textContent=copied?ui('数据页地址已复制。','Data-page URL copied.'):ui('已显示数据页地址，请手动复制。','The data-page URL is shown for manual copy.');
     }catch(e){
       if(status)status.textContent=ui('复制失败：','Copy failed: ')+(e?.message||String(e));
     }
@@ -771,17 +828,33 @@
         :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora Showcase imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
     }
   }
+  function bindImportDelegates(){
+    if(importDelegatesBound)return;
+    importDelegatesBound=true;
+    document.addEventListener('click',event=>{
+      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistClipboardImport');
+      if(!target)return;
+      if(target.id==='assistAutoImportAttempt'){event.preventDefault();tryDirectAutoImport();return}
+      if(target.id==='assistOpenShowcase'){openShowcasePage(event);return}
+      if(target.id==='assistCopyShowcaseUrl'){event.preventDefault();copyShowcaseUrl();return}
+      if(target.id==='assistClipboardImport'){event.preventDefault();readClipboardAndImport();return}
+    });
+    document.addEventListener('input',event=>{
+      if(event.target?.id==='assistSubmitUid')updateShowcaseUrlPreview();
+    });
+    document.addEventListener('change',event=>{
+      if(event.target?.id==='assistSubmitCharacter')updateShowcaseUrlPreview();
+    });
+    document.addEventListener('paste',event=>{
+      if(event.target?.id==='assistPasteShowcase')handleShowcasePaste(event);
+    });
+  }
   function bind(){
     $('assistSeason')?.addEventListener('change',()=>load($('assistSeason').value).catch(error));
     for(const id of ['assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
     $('assistUidFilter')?.addEventListener('input',()=>{page=1;render()});
     $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
-    $('assistSubmitUid')?.addEventListener('input',updateShowcaseUrlPreview);
-    $('assistSubmitCharacter')?.addEventListener('change',updateShowcaseUrlPreview);
-    $('assistOpenShowcase')?.addEventListener('click',openShowcasePage);
-    $('assistCopyShowcaseUrl')?.addEventListener('click',copyShowcaseUrl);
-    $('assistClipboardImport')?.addEventListener('click',readClipboardAndImport);
-    $('assistPasteShowcase')?.addEventListener('paste',handleShowcasePaste);
+    bindImportDelegates();
     updateShowcaseUrlPreview();
   }
   function error(e){
@@ -803,7 +876,8 @@
     if($('morimensAssistTitle'))$('morimensAssistTitle').textContent=ui('互助助战列表','Assist List');
     if(initialized){populateSubmitForm();load(activeSeason).catch(error)}
   }
-  window.MorimensAssistList={open:init,reload:()=>load($('assistSeason')?.value||activeSeason||'all')};
+  bindImportDelegates();
+    window.MorimensAssistList={open:init,reload:()=>load($('assistSeason')?.value||activeSeason||'all')};
   window.addEventListener('morimens-assist-list-open',init);
   window.addEventListener('morimens-language-change',relocalize);
   window.addEventListener('morimens-data-ready',()=>{if(initialized)load(activeSeason).catch(error)});
