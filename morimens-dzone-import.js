@@ -158,7 +158,7 @@
     constructor(values){this.values=values;this.memo=new Map();this.active=new Set()}
     h(ref){
       if(typeof ref!=='number'||!Number.isInteger(ref))return ref;
-      if(ref<0)return null;
+      if(ref<0)return ref===-6?0:null;
       if(this.memo.has(ref))return this.memo.get(ref);
       if(ref>=this.values.length)return ref;
       if(this.active.has(ref))return this.memo.get(ref);
@@ -457,7 +457,7 @@
     try{
       if(force||!submissionHistory.length||Date.now()-lastSyncAt>60000){submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}
       const latest=latestPerUid(submissionHistory,ctx.selectedSeasonId);
-      if(currentOnly()&&latest.length)window.MorimensDtideCommunity?.mergeRecords?.(latest);
+      if(currentOnly()&&latest.length){window.MorimensDtideCommunity?.mergeRecords?.(latest);window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)}
       renderHistory();
       const newest=latest[0];
       if(force)status(newest?ui(`已刷新社区补充：${latest.length} 个 UID；最近由 ${newest.submittedBy} 更新于 ${formatTime(newest.submittedAt)}。`,`Community data refreshed: ${latest.length} UIDs; latest by ${newest.submittedBy} at ${formatTime(newest.submittedAt)}.`):ui('已刷新，当前期暂无社区补充。','Refreshed. No community data for this season.'),'ok');
@@ -485,7 +485,7 @@
       await persistSubmission(payload);
       const row={uid:record.uid,seasonId,record,submittedBy,submittedAt,source:'eremora-dzone'};
       submissionHistory=[row,...submissionHistory.filter(x=>!(Number(x.seasonId)===seasonId&&String(x.uid)===record.uid&&String(x.submittedAt)===submittedAt))];
-      window.MorimensDtideCommunity?.mergeRecords?.([row]);
+      window.MorimensDtideCommunity?.mergeRecords?.([row]);window.MorimensDtideUsageCommunity?.mergeRecords?.([row]);
       renderHistory();
       status(ui(`提交成功：UID ${record.uid} 的第 ${seasonId} 期数据已合并。更新时间 ${formatTime(submittedAt)}，更新人 ${submittedBy}。`,`Submitted: UID ${record.uid} Season ${seasonId} data was merged. Updated ${formatTime(submittedAt)} by ${submittedBy}.`),'ok');
     }catch(error){
@@ -504,6 +504,6 @@
   }
   window.addEventListener('morimens:dtide-season-loaded',onSeasonLoaded);
   window.addEventListener('morimens-language-change',()=>{mount();refreshUi()});
-  window.MorimensDzoneImport={mount,refresh:()=>syncCommunity(true),parseDzonePayload,listSubmissionRecords};
+  window.MorimensDzoneImport={mount,refresh:()=>syncCommunity(true),parseDzonePayload,listSubmissionRecords,latestForSeason:seasonId=>latestPerUid(submissionHistory,seasonId)};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{mount();setTimeout(onSeasonLoaded,0)});else{mount();setTimeout(onSeasonLoaded,0)}
 })();
