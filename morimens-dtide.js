@@ -197,7 +197,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；新增跨设备在线补充表单，可提交 UID、玩家名、助战角色、等级、启灵、技能、灵塑、命轮叠位、密契套装及可选最终词条。在线补充配置与历史融灾使用次数分开标记，不会将手填配置计入实战使用次数。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；新增跨设备在线补充表单，可提交 UID、玩家名、助战角色、等级、启灵、命轮叠位、密契套装及可选最终词条。在线补充配置与历史融灾使用次数分开标记，不会将手填配置计入实战使用次数。</div>
         <div class="sourceItem"><strong>2026-09-24 · 英文适配完善</strong><br>完成忘忘看报英文模式的系统性审阅与补全：覆盖旧版 v0.3 启动框架、伤害计算器角色专属资源、伤害事件明细、融灾榜单与旧版425榜单、爱的节奏榜、留言板、更新日志、关于页及动态生成文本；Waline 留言板语言会随中英文切换同步更新，并修复动态文本、title、placeholder、aria-label 在重绘后的翻译监听。</div>
         <div class="sourceItem"><strong>2026-09-21 · 伤害计算器审查与精简</strong><br>继续同步 SKeyDB 角色、衍生卡、启灵、灵知觉醒、跨战斗成长、界域与状态伤害逻辑；修复衍生卡力量倍率与超限解析，统一灵知觉醒开关，密契默认按完整 6 件套计算；移除我方献祭层数、延迟献祭及仅用于记录但不参与当前伤害公式的冗余状态输入。</div>
         <div class="sourceItem"><strong>2026-09-21 · 融灾榜单数据与筛选修复</strong><br>统一搜索配队与榜单统计的数据口径：当前期按 UID 合并基础缓存与 Top500 增量，并同步最新排名；角色身份统一映射到 SKeyDB canonical ID，修复同一角色因游戏 ID、英文名或中文名不同而被拆分统计的问题，同时统一队伍去重、Top5 队友、助战率、界域与类型筛选。</div>
@@ -252,8 +252,6 @@
             <label><span>启灵数 <b>*</b></span><select id="assistSubmitEnlightenment" name="enlightenment" required>
               <option value="0启">0启</option><option value="1启">1启</option><option value="2启">2启</option><option value="3启">3启</option><option value="+4超限">+4 超限</option><option value="最终法则">最终法则（AA）</option>
             </select></label>
-            <label><span>技能等级</span><input id="assistSubmitSkills" name="skills" maxlength="40" placeholder="选填，如 6/6/6/6/6/6"></label>
-            <label><span>灵塑</span><input id="assistSubmitBreak" name="breakLevel" type="number" min="0" max="20" placeholder="选填"></label>
             <label><span>命轮 <b>*</b></span><select id="assistSubmitWheel" name="wheel" required><option value="">正在读取命轮…</option></select></label>
             <label><span>命轮叠位 <b>*</b></span><select id="assistSubmitWheelStack" name="wheelStack" required><option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option><option value="4">+4</option><option value="5">+5</option><option value="6">+6</option><option value="7">+7</option><option value="8">+8</option><option value="9">+9</option><option value="10">+10</option><option value="11">+11</option><option value="12">+12</option></select></label>
             <label><span>密契套装 <b>*</b></span><select id="assistSubmitCovenant" name="covenant" required><option value="">正在读取密契…</option></select></label>
