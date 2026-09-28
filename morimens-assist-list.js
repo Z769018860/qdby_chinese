@@ -12,7 +12,7 @@
   const SUBMISSION_MARKER='MORIMENS_ASSIST_V1';
   let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[];
   const cache=new Map(),playerNames=new Map();
-  const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map()};
+  const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map(),showcaseTidByCanonical:new Map(),showcaseCanonicalByTid:new Map()};
   const zhCovenants={
     'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸',
     'Twisted Twins: Black':'扭曲双子·黑',"Burial Ground's Sighs":'埋骨地絮语','Twisted Twins: White':'扭曲双子·白',
@@ -239,6 +239,15 @@
     }
     return [{seasonId:String(id),data:await datasetFor(id)}];
   }
+
+  function indexShowcaseTids(bundle){
+    for(const {data} of bundle||[])for(const record of data?.records||[])for(const wave of record?.waves||[])for(const team of wave?.teams||[])for(const member of team?.members||[]){
+      const tid=String(member?.id??'').trim(),canonical=String(member?.skeydbId??characterInfo(member)?.key??'').trim();
+      if(!/^\d+$/.test(tid)||!canonical)continue;
+      if(!gear.showcaseTidByCanonical.has(canonical))gear.showcaseTidByCanonical.set(canonical,tid);
+      if(!gear.showcaseCanonicalByTid.has(tid))gear.showcaseCanonicalByTid.set(tid,canonical);
+    }
+  }
   async function loadTop1000Names(){
     const loader=window.MorimensDtideDataLoader;if(!loader?.loadJson)return;
     const docs=await Promise.all(['68','69'].map(id=>loader.loadJson('data/morimens/eremora/top1000/'+id+'.json',{fresh:false}).catch(()=>null)));
@@ -313,7 +322,10 @@
 
     if(Number(payload.version)===2){
       const charId=String(payload.characterId||payload.awaker?.id||'');
-      const charRec=gear.awakenerById.get(charId)||null;
+      const res=String(payload.awaker?.res||'').replace(/_AF$/i,'').toUpperCase();
+      const rawName=normName(payload.awaker?.name||'');
+      const canonical=String(payload.canonicalId||gear.showcaseCanonicalByTid.get(charId)||'');
+      const charRec=gear.awakenerById.get(canonical)||gear.awakeners.find(r=>String(r.ingameId||'').toUpperCase()===res||normName(r.name)===rawName)||null;
       const char=charRec?displayAwakener(charRec):{
         key:charId,
         name:String(payload.awaker?.name||charId||ui('未知角色','Unknown Awakener')),
@@ -438,8 +450,11 @@
   function populateSubmitForm(){
     const char=$('assistSubmitCharacter');if(!char)return;
     const current=char.value;
-    const options=gear.awakeners.map(r=>displayAwakener(r)).filter(x=>x.key).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en'));
-    char.innerHTML='<option value="">'+ui('请选择助战角色','Select Awakener')+'</option>'+options.map(x=>'<option value="'+esc(x.key)+'">'+esc(x.name)+'</option>').join('');
+    const options=gear.awakeners.map(r=>{
+      const shown=displayAwakener(r),tid=gear.showcaseTidByCanonical.get(String(r.id));
+      return tid?{tid,canonical:String(r.id),name:shown.name}:null;
+    }).filter(Boolean).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en'));
+    char.innerHTML='<option value="">'+ui('请选择助战角色','Select Awakener')+'</option>'+options.map(x=>'<option value="'+esc(x.tid)+'" data-canonical="'+esc(x.canonical)+'">'+esc(x.name)+'</option>').join('');
     if([...char.options].some(o=>o.value===current))char.value=current;
   }
   function aggregateShowcaseAttrs(trinkets){
@@ -465,10 +480,13 @@
       uid:String(uid),
       player:playerNames.get(String(uid))||'',
       characterId:awakerId,
+      canonicalId:gear.showcaseCanonicalByTid.get(awakerId)||'',
       awaker:{
         id:data.awaker?.id,
         name:data.awaker?.name,
-        image:data.awaker?.image||data.awaker?.mini||''
+        image:data.awaker?.image||data.awaker?.mini||'',
+        mini:data.awaker?.mini||'',
+        res:data.awaker?.res||''
       },
       level:data.level??null,
       potencyLevel:data.potency_level??null,
@@ -528,7 +546,7 @@
     if(!form.reportValidity())return;
     const uid=String($('assistSubmitUid')?.value||'').trim(),tid=String($('assistSubmitCharacter')?.value||'').trim();
     if(!/^\d{5,20}$/.test(uid)){if(status)status.textContent=ui('UID 格式不正确','Invalid UID');return}
-    if(!tid||!gear.awakenerById.has(tid)){if(status)status.textContent=ui('请选择有效的助战角色','Select a valid Awakener');return}
+    if(!tid||!gear.showcaseCanonicalByTid.has(tid)){if(status)status.textContent=ui('请选择有效的助战角色','Select a valid Awakener');return}
     if(button)button.disabled=true;
     if(status)status.textContent=ui('正在从 Eremora 读取 Showcase…','Reading Showcase from Eremora…');
     try{
@@ -637,7 +655,7 @@
     activeSeason=String(id||'all');page=1;
     if($('morimensAssistStatus'))$('morimensAssistStatus').textContent=ui('正在载入…','Loading…');
     if($('assistTable'))$('assistTable').innerHTML='<div class="dtideEmpty">'+ui('正在读取助战配置…','Loading assist configurations…')+'</div>';
-    const bundle=await bundleFor(activeSeason),observed=extract(bundle);rows=mergeManual(observed);populate();populateSubmitForm();render();
+    const bundle=await bundleFor(activeSeason);indexShowcaseTids(bundle);const observed=extract(bundle);rows=mergeManual(observed);populate();populateSubmitForm();render();
     const note=$('assistCoverageNote');
     if(note){
       const counts=bundle.map(({seasonId,data})=>'第 '+seasonId+' 期 '+Number(data?.recordCount||data?.records?.length||0)+' 条').join(' + ');
@@ -664,7 +682,7 @@
       for(let i=0;i<50&&!$('morimensAssistPanel');i++)await new Promise(r=>setTimeout(r,100));
       if(!$('morimensAssistPanel'))return;
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error('manifest HTTP '+response.status);
-      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();populateSubmitForm();bind();initialized=true;await load($('assistSeason')?.value||'all');
+      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();bind();initialized=true;await load($('assistSeason')?.value||'all');
     }catch(e){error(e)}finally{loading=false}
   }
   function relocalize(){
