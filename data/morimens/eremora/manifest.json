@@ -18,9 +18,11 @@
       "coverageMode": "current-leaderboard-top500-partial",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
-      "dataUpdatedAt": "2026-09-29T07:15:00+09:00",
+      "dataUpdatedAt": "2026-09-29T05:51:00+08:00",
       "labelZh": "第70期 新新融灾 · 深海戒指",
-      "periodShort": "9.28–10.11"
+      "periodShort": "9.28–10.11",
+      "ringRealm": "Aequor",
+      "ringRealmZh": "深海"
     },
     {
       "seasonId": 69,
@@ -287,19 +289,19 @@
     "statsPath": "data/morimens/eremora/stats/70.json",
     "target": 500,
     "rankIndexCount": 457,
-    "recordCount": 457,
+    "recordCount": 459,
     "coverage": {
       "expected": 500,
-      "covered": 457,
-      "coveragePct": 91.4,
+      "covered": 459,
+      "coveragePct": 91.8,
       "complete": false
     },
-    "syncedAt": "2026-09-28T21:12:06.644583Z",
-    "revision": "46451db0f59c021225fee0805c428e01bda73a8976d40d82339278fcfc7497ee",
+    "syncedAt": "2026-09-29T05:51:00+08:00",
+    "revision": "42f46490db8cd85de41552a936e04e623329df197737f391f6f910a53cd627a3",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 9,
-    "chunkSize": 700000,
-    "chunkBytes": 5958180
+    "chunks": 29,
+    "chunkSize": 15000,
+    "chunkBytes": 430721
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -323,15 +325,16 @@
     "nameZh": "深海戒指",
     "nameEn": "Aequor Ring"
   },
-  "currentOverlay": {
+  "latestLocalImport": {
     "seasonId": 70,
-    "path": "data/morimens/eremora/updates/70-latest-20260929/overlay.json",
-    "updatedAt": "2026-09-29T07:15:00+09:00",
-    "revision": "s70-u4-20260929-0715",
-    "deltaUidCount": 2,
-    "parsedDeltaRecordCount": 2,
-    "baseRecordCount": 457,
-    "mergedRecordCount": 459,
-    "mergeMode": "replace-by-uid"
+    "archive": "u(4).zip",
+    "rawFiles": 500,
+    "parsedRecords": 459,
+    "noSeasonActivity": 41,
+    "ringRealm": "Aequor",
+    "ringRealmZh": "深海",
+    "stageNaming": "Zone 1-5",
+    "updatedAt": "2026-09-29T05:51:00+08:00",
+    "revision": "42f46490db8cd85de41552a936e04e623329df197737f391f6f910a53cd627a3"
   }
 }

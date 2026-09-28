@@ -201,7 +201,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为剪贴板导入：填写 UID 与助战角色后打开对应 Eremora Showcase 数据页，复制 JSON，再由本站从剪贴板或粘贴框解析并导入。当前配置与同一 UID + 角色的历史融灾借用次数继续合并累计。</div>
