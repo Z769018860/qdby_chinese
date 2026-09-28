@@ -269,8 +269,18 @@
   function decodePayload(text){
     const docs=parseDocs(text),roots=[];
     for(const doc of docs){
-      if(doc?.type==='data'&&Array.isArray(doc.nodes))for(const node of doc.nodes||[])if(Array.isArray(node?.data)){try{roots.push(unflatten(node.data))}catch(_){}}
-      if(doc?.type==='chunk'&&Array.isArray(doc.data)){try{roots.push(unflatten(doc.data))}catch(_){}}
+      let recognized=false;
+      if(doc?.type==='data'&&Array.isArray(doc.nodes)){
+        for(const node of doc.nodes||[]){
+          if(Array.isArray(node?.data)){try{roots.push(unflatten(node.data));recognized=true}catch(_){}}
+          else if(node?.data&&typeof node.data==='object'){roots.push(node.data);recognized=true}
+        }
+      }
+      if(doc?.type==='chunk'){
+        if(Array.isArray(doc.data)){try{roots.push(unflatten(doc.data));recognized=true}catch(_){}}
+        else if(doc?.data&&typeof doc.data==='object'){roots.push(doc.data);recognized=true}
+      }
+      if(!recognized&&doc&&typeof doc==='object')roots.push(doc);
     }
     if(!roots.length)throw new Error(ui('没有识别到可解码的 Eremora 数据块。','No decodable Eremora data chunks were found.'));
     return {docs,roots};
@@ -289,23 +299,41 @@
     if(value==null||typeof value==='boolean'||value==='')return null;
     const n=Number(value);return Number.isFinite(n)?n:null;
   }
+  function findSelectedSeason(decoded){
+    let selected=null;
+    for(const root of decoded.roots){
+      walk(root,value=>{
+        if(selected!=null||!value||Array.isArray(value))return;
+        const selection=value.selection;
+        const season=numberOrNull(selection?.season??value.selectedSeason??value.season_id??value.seasonId);
+        const mode=String(selection?.mode||'').toLowerCase();
+        if(season!=null&&(!mode||mode==='abyss'||mode==='dzone'))selected=Math.trunc(season);
+      });
+      if(selected!=null)break;
+    }
+    return selected;
+  }
   function findActivities(decoded){
-    const found=[];
+    const found=[],selectedSeason=findSelectedSeason(decoded);
     for(const root of decoded.roots)walk(root,(value,path)=>{
       if(!value||Array.isArray(value))return;
-      const activity=value.activity,stages=value.stages;
-      if(!activity||typeof activity!=='object'||!Array.isArray(stages))return;
-      const name=String(activity.name||'');
-      if(!/Dissoluted Abyss|D[- ]?Zone/i.test(name)&&activity.period==null)return;
-      const period=numberOrNull(activity.period);
-      if(period!=null)found.push({path,node:value,period:Math.trunc(period),stageCount:stages.length});
+      const stages=Array.isArray(value.stages)?value.stages:(Array.isArray(value.stage_list)?value.stage_list:null);
+      if(!stages)return;
+      const activity=value.activity&&typeof value.activity==='object'?value.activity:{};
+      const name=String(activity.name||value.activity_name||value.name||'');
+      const looksLikeDzone=/Dissoluted Abyss|D[- ]?Effect Zone|D[- ]?Zone|Abyss/i.test(name)
+        ||stages.some(row=>/(?:Wave|Zone)\s*\d+/i.test(String(row?.stage?.name||row?.name||'')));
+      if(!looksLikeDzone)return;
+      const rawPeriod=numberOrNull(activity.period??value.period??value.season??value.season_id??value.seasonId);
+      const period=rawPeriod!=null?Math.trunc(rawPeriod):null;
+      found.push({path,node:value,period,stageCount:stages.length,selectedSeason});
     });
     const best=new Map();
     for(const item of found){
-      const key=`${item.period}:${item.node?.activity_tid??''}`,old=best.get(key);
+      const key=`${item.period??'unknown'}:${item.node?.activity_tid??item.node?.activity?.id??item.path}`,old=best.get(key);
       if(!old||item.stageCount>old.stageCount)best.set(key,item);
     }
-    return [...best.values()].sort((a,b)=>b.period-a.period||b.stageCount-a.stageCount);
+    return [...best.values()].sort((a,b)=>(Number(b.period)||-1)-(Number(a.period)||-1)||b.stageCount-a.stageCount);
   }
   function findMediaBase(decoded){
     let found='';
@@ -316,15 +344,19 @@
     return found;
   }
   function findHeader(decoded){
-    let header=null;
+    let header=null,fallback=null;
     for(const root of decoded.roots){
       walk(root,value=>{
-        if(header||Array.isArray(value))return;
-        const h=value.header;if(h&&typeof h==='object'&&h.uid!=null)header=h;
+        if(!value||Array.isArray(value))return;
+        const h=value.header;
+        if(!header&&h&&typeof h==='object'&&h.uid!=null)header=h;
+        if(!fallback&&value.uid!=null&&/^\d{5,20}$/.test(String(value.uid).trim())){
+          fallback={uid:value.uid,name:value.name||value.playerName||value.nickname||''};
+        }
       });
       if(header)break;
     }
-    return header||{};
+    return header||fallback||{};
   }
   function media(base,path,thumb=false){
     if(!path)return '';
@@ -418,10 +450,24 @@
     };
   }
   function parseDzonePayload(text,expectedSeason){
-    const decoded=decodePayload(text),activities=findActivities(decoded),target=activities.find(x=>Number(x.period)===Number(expectedSeason));
-    if(!target)throw new Error(ui(`粘贴内容里没有找到第 ${expectedSeason} 期融灾数据。`,`Season ${expectedSeason} D-Zone data was not found in the pasted payload.`));
+    const decoded=decodePayload(text),activities=findActivities(decoded),selectedSeason=findSelectedSeason(decoded);
+    let target=activities.find(x=>Number(x.period)===Number(expectedSeason));
+    if(!target&&Number(selectedSeason)===Number(expectedSeason)){
+      const unknown=activities.filter(x=>x.period==null).sort((a,b)=>b.stageCount-a.stageCount);
+      if(unknown.length)target={...unknown[0],period:Number(expectedSeason)};
+    }
+    if(!target&&activities.length===1&&activities[0].period==null){
+      target={...activities[0],period:Number(expectedSeason)};
+    }
+    if(!target){
+      const detected=[...new Set(activities.map(x=>x.period).filter(x=>x!=null).map(Number))].sort((a,b)=>b-a);
+      const extra=detected.length?(zh()?('；粘贴内容识别到期次：'+detected.join('、')):('; detected seasons: '+detected.join(', '))):'';
+      throw new Error(ui(`粘贴内容里没有找到第 ${expectedSeason} 期融灾数据${extra}。`,`Season ${expectedSeason} D-Zone data was not found in the pasted payload${extra}.`));
+    }
     const record=normalizeActivity(target,decoded);
-    if(!record.uid)throw new Error(ui('无法从数据中识别玩家 UID。','Could not identify the player UID from the payload.'));
+    record.seasonId=Number(expectedSeason);
+    record.url=`https://eremora.com/u/${encodeURIComponent(record.uid||'')}/challenges/dzone/${expectedSeason}`;
+    if(!record.uid)throw new Error(ui('无法从数据中识别玩家 UID。请确认复制的是该玩家的 Eremora __data.json 完整内容。','Could not identify the player UID. Copy the complete Eremora __data.json payload for that player.'));
     const waveSet=new Set((record.waves||[]).map(w=>Number(w.wave)).filter(n=>n>=1&&n<=5));
     if(waveSet.size<5)throw new Error(ui(`只解析到 ${waveSet.size}/5 个 Zone；为避免覆盖完整数据，本次提交已拒绝。`,`Only ${waveSet.size}/5 Zones were parsed. The submission was rejected to avoid replacing complete data with a partial record.`));
     const teams=(record.waves||[]).reduce((sum,w)=>sum+(w.teams?.length||0),0);
@@ -561,7 +607,11 @@
 
   async function listSubmissionRecords(options={}){
     if(options.refresh||!submissionHistory.length){try{submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}catch(error){console.warn('D-Zone submission history unavailable',error)}}
-    return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submittedBy,submittedAt,source})=>({uid,seasonId,communityVariant:normalizeVariant(seasonId,communityVariant),targetKey:targetKey||String(seasonId===69?(normalizeVariant(seasonId,communityVariant)==='postbug'?'69-postbug':'69-prebug'):seasonId),submittedBy,submittedAt,source}));
+    return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submittedBy,submittedAt,source,record})=>{
+      const variant=normalizeVariant(seasonId,communityVariant),teams=(record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0),zones=(record?.waves||[]).length;
+      const phase=Number(seasonId)===69?(variant==='postbug'?'Bug后':'Bug前'):'';
+      return {uid,seasonId,communityVariant:variant,targetKey:targetKey||String(seasonId===69?(variant==='postbug'?'69-postbug':'69-prebug'):seasonId),submittedBy,submittedAt,source,summary:`第 ${seasonId} 期${phase?' · '+phase:''} · ${zones} Zone · ${teams} 支队伍 · 分数 ${record?.score??'—'}`,record};
+    });
   }
 
   function onSeasonLoaded(){
