@@ -409,11 +409,11 @@
   }
   function manualKey(row){return [row.uid,row.characterKey].join('|')}
   function manualRowFromPayload(payload,meta={}){
-    if(!payload||![1,2,3].includes(Number(payload.version)))return null;
+    if(!payload||![1,2,3,4].includes(Number(payload.version)))return null;
     const uid=String(payload.uid||'').trim();
     if(!/^\d{5,20}$/.test(uid))return null;
 
-    if([2,3].includes(Number(payload.version))){
+    if([2,3,4].includes(Number(payload.version))){
       const charId=String(payload.characterId||payload.awaker?.id||'');
       const res=String(payload.awaker?.res||'').replace(/_AF$/i,'').toUpperCase();
       const rawName=normName(payload.awaker?.name||'');
@@ -468,7 +468,7 @@
         characterName:char.name,
         characterImage:char.image,
         level:payload.level??null,
-        enlightenment:enlightLabel({potencyLevel:payload.potencyLevel}),
+        enlightenment:String(payload.enlightenmentLabel||'').trim()||enlightLabel({potencyLevel:payload.potencyLevel}),
         skills:memberSkills({slots:payload.slots}),
         soulforge:memberSoulforge({talents:payload.talents}),
         wheels,
@@ -482,7 +482,8 @@
         manual:true,
         source:'showcase',
         submittedAt:String(meta.insertedAt||payload.fetchedAt||payload.submittedAt||''),
-        commentId:String(meta.objectId||'')
+        commentId:String(meta.objectId||''),
+        _payload:payload
       };
     }
 
@@ -721,6 +722,136 @@
     }finally{
       if(button)button.disabled=false;
     }
+  }
+
+  function profileDataUrl(uid){
+    return 'https://eremora.com/u/'+encodeURIComponent(uid)+'/__data.json';
+  }
+  function selectedAwakenerNames(tid){
+    const canonical=gear.showcaseCanonicalByTid.get(String(tid))||'',rec=gear.awakenerById.get(canonical),names=[];
+    if(rec?.name)names.push(String(rec.name));
+    const shown=rec?displayAwakener(rec):null;
+    if(shown?.name)names.push(String(shown.name));
+    return [...new Set(names.map(x=>x.replace(/^["“]|["”]$/g,'').trim()).filter(Boolean))];
+  }
+  function svelteUnflatten(values){
+    if(!Array.isArray(values))return values;
+    const memo=new Array(values.length),done=new Set(),active=new Set();
+    const hydrate=i=>{
+      if(i===-1||i===-2)return undefined;
+      if(i===-3)return NaN;if(i===-4)return Infinity;if(i===-5)return -Infinity;if(i===-6)return -0;
+      if(!Number.isInteger(i)||i<0||i>=values.length)return i;
+      if(done.has(i))return memo[i];
+      if(active.has(i))return memo[i];
+      const v=values[i];
+      if(v===null||typeof v!=='object'){memo[i]=v;done.add(i);return v}
+      active.add(i);
+      if(Array.isArray(v)){
+        if(typeof v[0]==='string'){
+          const tag=v[0];let out;
+          if(tag==='Date')out=v[1];
+          else if(tag==='Set'){out=[];memo[i]=out;for(let j=1;j<v.length;j++)out.push(hydrate(v[j]))}
+          else if(tag==='Map'){out=[];memo[i]=out;for(let j=1;j<v.length;j+=2)out.push({key:hydrate(v[j]),value:hydrate(v[j+1])})}
+          else if(tag==='Object')out=hydrate(v[1]);
+          else if(tag==='null'){out={};memo[i]=out;for(let j=1;j<v.length;j+=2)out[String(v[j])]=hydrate(v[j+1])}
+          else if(tag==='Promise')out={__promise:hydrate(v[1])};
+          else{out=[tag];memo[i]=out;for(let j=1;j<v.length;j++)out.push(Number.isInteger(v[j])?hydrate(v[j]):v[j])}
+          memo[i]??=out;active.delete(i);done.add(i);return memo[i];
+        }
+        const out=[];memo[i]=out;for(let j=0;j<v.length;j++)if(v[j]!==-2)out[j]=hydrate(v[j]);
+        active.delete(i);done.add(i);return out;
+      }
+      const out={};memo[i]=out;for(const [k,ref] of Object.entries(v))out[k]=hydrate(ref);
+      active.delete(i);done.add(i);return out;
+    };
+    return hydrate(0);
+  }
+  function walkObject(root,cb){
+    const seen=new Set();
+    const visit=v=>{
+      if(!v||typeof v!=='object'||seen.has(v))return;
+      seen.add(v);cb(v);
+      if(Array.isArray(v))for(const x of v)visit(x);
+      else for(const x of Object.values(v))visit(x);
+    };
+    visit(root);
+  }
+  function progressionFromCandidate(obj,tid){
+    if(!obj||typeof obj!=='object')return null;
+    const names=selectedAwakenerNames(tid).map(normName);
+    const oid=String(obj?.awaker?.id??obj?.id??obj?.tid??''),oname=normName(obj?.awaker?.name??obj?.name??'');
+    const identityOk=oid===String(tid)||(oname&&names.includes(oname));
+    if(!identityOk)return null;
+    const slots=(Array.isArray(obj?.slots)?obj.slots:[]).map(x=>({
+      id:x?.id,name:x?.name,image:x?.image,slot:x?.slot??null,level:x?.level??null,isUp:x?.is_up??x?.isUp??null
+    })).filter(x=>Number(x.slot)>=1&&Number(x.slot)<=6&&Number.isFinite(Number(x.level)));
+    const talents=(Array.isArray(obj?.talents)?obj.talents:[]).map(x=>({
+      id:x?.id,name:x?.name,image:x?.image,lv:x?.lv??x?.level??null,kind:x?.kind??''
+    })).filter(x=>['madness','soulforge','gnostic'].includes(String(x.kind))&&Number.isFinite(Number(x.lv)));
+    if(!slots.length&&!talents.length)return null;
+    return {slots,talents,level:obj?.level??null};
+  }
+  function parseSvelteProfileProgression(text,tid){
+    const raw=String(text||'').replace(/^\uFEFF/,'').trim();
+    const docs=[];
+    for(const line of raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean)){
+      try{const doc=JSON.parse(line);if(doc&&typeof doc==='object')docs.push(doc)}catch(_){}
+    }
+    const roots=[];
+    for(const doc of docs){
+      if(doc?.type==='chunk'&&Array.isArray(doc.data)){
+        try{roots.push(svelteUnflatten(doc.data))}catch(_){}
+      }
+      for(const node of Array.isArray(doc?.nodes)?doc.nodes:[]){
+        if(Array.isArray(node?.data)){try{roots.push(svelteUnflatten(node.data))}catch(_){}}
+      }
+    }
+    let best=null;
+    for(const root of roots)walkObject(root,obj=>{if(!best){const p=progressionFromCandidate(obj,tid);if(p)best=p}});
+    return best;
+  }
+  function parseProfileTextProgression(text,tid){
+    const raw=String(text||'').replace(/\r/g,' ');
+    const names=selectedAwakenerNames(tid).map(normName);
+    const re=/([+]?\d{1,2}\s*\/\s*\d{1,2}\s*\/\s*\d{1,2})\s+(\d{1,2}(?:\s*\/\s*\d{1,2}){5})\s+["“]?([^\n]{1,60}?)["”]?\s+Lv\.?\s*(\d{1,3})/gim;
+    for(const m of raw.matchAll(re)){
+      const name=normName(String(m[3]||'').trim());
+      if(names.length&&!names.includes(name))continue;
+      const talentNums=String(m[1]).split('/').map(x=>Number(x.replace('+','').trim()));
+      const skillNums=String(m[2]).split('/').map(x=>Number(x.trim()));
+      if(talentNums.length!==3||skillNums.length!==6)continue;
+      return {
+        slots:skillNums.map((level,i)=>({slot:i+1,level})),
+        talents:[
+          {kind:'madness',lv:talentNums[0]},
+          {kind:'soulforge',lv:talentNums[1]},
+          {kind:'gnostic',lv:talentNums[2]}
+        ],
+        level:Number(m[4])
+      };
+    }
+    return null;
+  }
+  function parseProfileProgression(text,tid){
+    return parseSvelteProfileProgression(text,tid)||parseProfileTextProgression(text,tid);
+  }
+  function existingImportedRow(values){
+    const canonical=gear.showcaseCanonicalByTid.get(String(values.tid))||'';
+    const key=[String(values.uid),canonical].join('|');
+    return manualRows.find(r=>manualKey(r)===key)||rows.find(r=>manualKey(r)===key)||null;
+  }
+  function payloadFromExisting(values){
+    const existing=existingImportedRow(values),canonical=gear.showcaseCanonicalByTid.get(String(values.tid))||'',rec=gear.awakenerById.get(canonical);
+    if(existing?._payload){
+      try{return JSON.parse(JSON.stringify(existing._payload))}catch(_){}
+    }
+    return {
+      version:4,source:'eremora-showcase',uid:String(values.uid),characterId:String(values.tid),canonicalId:canonical,
+      awaker:{id:Number(values.tid)||values.tid,name:rec?.name||existing?.characterName||'',image:existing?.characterImage||''},
+      level:existing?.level??null,enlightenmentLabel:existing?.enlightenment||'',
+      potencyLevel:null,weapons:(existing?.wheels||[]).map(x=>({...x})),suits:(existing?.covenants||[]).map(x=>({...x})),
+      trinkets:(existing?.trinkets||[]).map(x=>({...x,attrs:(x?.attrs||[]).map(a=>({...a}))})),slots:[],talents:[]
+    };
   }
   function showcaseFormValues(){
     const uid=String($('assistSubmitUid')?.value||'').trim();
