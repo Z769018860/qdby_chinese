@@ -287,11 +287,11 @@
     "statsPath": "data/morimens/eremora/stats/70.json",
     "target": 500,
     "rankIndexCount": 457,
-    "recordCount": 459,
+    "recordCount": 457,
     "coverage": {
       "expected": 500,
-      "covered": 459,
-      "coveragePct": 91.8,
+      "covered": 457,
+      "coveragePct": 91.4,
       "complete": false
     },
     "syncedAt": "2026-09-28T21:12:06.644583Z",
@@ -322,5 +322,16 @@
     "realm": "Aequor",
     "nameZh": "深海戒指",
     "nameEn": "Aequor Ring"
+  },
+  "currentOverlay": {
+    "seasonId": 70,
+    "path": "data/morimens/eremora/updates/70-latest-20260929/overlay.json",
+    "updatedAt": "2026-09-29T07:15:00+09:00",
+    "revision": "s70-u4-20260929-0715",
+    "deltaUidCount": 2,
+    "parsedDeltaRecordCount": 2,
+    "baseRecordCount": 457,
+    "mergedRecordCount": 459,
+    "mergeMode": "replace-by-uid"
   }
 }
