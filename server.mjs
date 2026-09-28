@@ -223,6 +223,35 @@ async function handleApi(req, res, url) {
     }
   }
 
+  if (url.pathname === '/api/morimens-showcase' && req.method === 'GET') {
+    const uid = String(url.searchParams.get('uid') || '').trim();
+    const tid = String(url.searchParams.get('tid') || '').trim();
+    if (!/^\d{5,20}$/.test(uid) || !/^\d{1,12}$/.test(tid)) {
+      return sendJson(res, 400, { ok: false, message: 'invalid uid or tid' }), true;
+    }
+    try {
+      const upstream = new URL('https://eremora.com/api/showcase');
+      upstream.searchParams.set('uid', uid);
+      upstream.searchParams.set('tid', tid);
+      const response = await fetch(upstream, {
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'Mozilla/5.0 (compatible; qingdengbuyi-morimens-tools/1.0)',
+          Referer: 'https://eremora.com/',
+        },
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (!response.ok) {
+        return sendJson(res, 502, { ok: false, message: 'Eremora Showcase request failed', upstreamStatus: response.status }), true;
+      }
+      const data = await response.json();
+      return sendJson(res, 200, data), true;
+    } catch (error) {
+      console.error('Morimens Showcase proxy error:', error);
+      return sendJson(res, 502, { ok: false, message: 'Eremora Showcase temporarily unavailable' }), true;
+    }
+  }
+
   if (url.pathname === '/api/state' && req.method === 'GET') {
     const db = await readDb();
     return sendJson(res, 200, db), true;
