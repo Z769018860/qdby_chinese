@@ -7,9 +7,12 @@
   function decodeMojibake(value){const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(ch=>ch.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}}
   function cleanPlayerName(value){return decodeMojibake(value).replace(/^<#[^>]+>\s*/,'').trim()}
   const PAGE_SIZE=100;
-  let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1;
+  const WALINE_SERVER='https://textbox.qingdengbuyi.top';
+  const SUBMISSION_PATH='/__morimens_assist_submissions__/';
+  const SUBMISSION_MARKER='[MORIMENS_ASSIST_V1]';
+  let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[];
   const cache=new Map(),playerNames=new Map();
-  const gear={assets:{},wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),wheelById:new Map(),covenantById:new Map()};
+  const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map()};
   const zhCovenants={
     'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸',
     'Twisted Twins: Black':'扭曲双子·黑',"Burial Ground's Sighs":'埋骨地絮语','Twisted Twins: White':'扭曲双子·白',
@@ -19,19 +22,37 @@
     'Unstained Chronicle':'无垢启示录','Steppenwolf':'荒原狼','Cocoon of the Maiden':'少女之蛹'
   };
   const statZh={
-    'ATK':'攻击','Attack':'攻击','HP':'生命','Health':'生命','DEF':'防御','Defense':'防御',
-    'Crit Rate':'暴击率','CRIT Rate':'暴击率','CritRate':'暴击率','CRIT_RATE':'暴击率',
-    'Crit DMG':'暴击伤害','Crit Damage':'暴击伤害','CritDamage':'暴击伤害','CRIT_DMG':'暴击伤害',
-    'Damage Amplification':'伤害强效','DMG Amplification':'伤害强效','DMG_AMP':'伤害强效',
-    'Realm Mastery':'界域精通','REALM_MASTERY':'界域精通','Aliemus Regen':'异质回复',
-    'Keyflare Regen':'钥令回复','Sigil Yield':'灵纹获取','Death Resistance':'死亡抗性',
-    'Vulnerability':'易伤','Vulnerable':'易伤','Strength':'力量','STR':'力量',
-    'Poison Infliction':'中毒施加','Counter Generation':'反击生成',
+    'ATK':'攻击','Attack':'攻击','ATTACK':'攻击','HP':'生命','Health':'生命','HEALTH':'生命','DEF':'防御','Defense':'防御','DEFENSE':'防御',
+    'Max HP':'最大生命','MAX_HP':'最大生命','Max Health':'最大生命',
+    'Crit Rate':'暴击率','CRIT Rate':'暴击率','CritRate':'暴击率','CRIT_RATE':'暴击率','CRITICAL_RATE':'暴击率',
+    'Crit DMG':'暴击伤害','Crit Damage':'暴击伤害','CritDamage':'暴击伤害','CRIT_DMG':'暴击伤害','CRITICAL_DAMAGE':'暴击伤害',
+    'Damage Amplification':'伤害强效','DMG Amplification':'伤害强效','DMG_AMP':'伤害强效','DAMAGE_AMPLIFICATION':'伤害强效',
+    'Realm Mastery':'界域精通','REALM_MASTERY':'界域精通',
+    'Aliemus Regen':'异质回复','ALIEMUS_REGEN':'异质回复',
+    'Keyflare Regen':'钥令回复','KEYFLARE_REGEN':'钥令回复',
+    'Sigil Yield':'灵纹获取','SIGIL_YIELD':'灵纹获取',
+    'Death Resistance':'死亡抗性','DEATH_RESISTANCE':'死亡抗性',
+    'Vulnerability':'易伤','Vulnerable':'易伤','VULNERABILITY':'易伤',
+    'Strength':'力量','STR':'力量','STR Up':'力量提升','STR_UP':'力量提升',
+    'Poison Infliction':'中毒施加','POISON_INFLICTION':'中毒施加',
+    'Fixed Poison Infliction':'固定中毒施加','FIXED_POISON_INFLICTION':'固定中毒施加',
+    'Poison Trigger':'中毒触发','POISON_TRIGGER':'中毒触发',
+    'Counter Generation':'反击生成','COUNTER_GENERATION':'反击生成',
+    'Poison DMG':'中毒伤害','POISON_DMG':'中毒伤害','Poison Damage':'中毒伤害',
+    'Counter DMG':'反击伤害','COUNTER_DMG':'反击伤害','Counter Damage':'反击伤害',
+    'Pierce DMG':'穿透伤害','PIERCE_DMG':'穿透伤害','Pierce Damage':'穿透伤害',
+    'Pure DMG':'纯粹伤害','PURE_DMG':'纯粹伤害','Pure Damage':'纯粹伤害',
+    'Tentacle DMG':'触腕伤害','TENTACLE_DMG':'触腕伤害','Tentacle Damage':'触腕伤害',
+    'Active DMG':'主动伤害','ACTIVE_DMG':'主动伤害','Final DMG':'最终伤害','FINAL_DMG':'最终伤害',
+    'Base DMG':'基础伤害','BASE_DMG':'基础伤害','Fixed DMG':'固定伤害','FIXED_DMG':'固定伤害',
+    'Shield':'护盾','SHIELD':'护盾','Shield Strength':'护盾强效','SHIELD_STRENGTH':'护盾强效',
+    'Heal':'治疗','Healing':'治疗','Heal Bonus':'治疗加成','Healing Bonus':'治疗加成','HEAL_BONUS':'治疗加成','HEALING_BONUS':'治疗加成',
+    'Effect Hit':'效果命中','EFFECT_HIT':'效果命中','Effect RES':'效果抵抗','Effect Resistance':'效果抵抗','EFFECT_RES':'效果抵抗',
     'ATK_PCT':'攻击百分比','HP_PCT':'生命百分比','DEF_PCT':'防御百分比',
     'Attack %':'攻击百分比','Health %':'生命百分比','Defense %':'防御百分比',
-    'ALIEMUS_REGEN':'异质回复','KEYFLARE_REGEN':'钥令回复','SIGIL_YIELD':'灵纹获取',
-    'DEATH_RESISTANCE':'死亡抗性','VULNERABILITY':'易伤','DMG_BONUS':'伤害加成',
-    'HEAL_BONUS':'治疗加成','HEALING_BONUS':'治疗加成','EFFECT_HIT':'效果命中','EFFECT_RES':'效果抵抗'
+    'DMG_BONUS':'伤害加成','Damage Bonus':'伤害加成','DMG Reduction':'伤害减免','DMG_REDUCTION':'伤害减免',
+    'Crit RES':'暴击抗性','CRIT_RES':'暴击抗性','Crit Resistance':'暴击抗性',
+    'Speed':'速度','SPEED':'速度','Accuracy':'命中','ACCURACY':'命中','Dodge':'闪避','DODGE':'闪避'
   };
 
   function style(){
@@ -129,7 +150,29 @@
     if(Number.isFinite(n))return n<=3?`${n}启`:String(m?.progression||m?.enlightenMilestone||n);
     return String(m?.progression||m?.enlightenMilestone||ui('未知','Unknown'));
   }
-  function statName(attr){const raw=String(attr?.name||attr?.id||ui('词条','Stat'));return zh()?(statZh[raw]||raw):raw}
+  function statName(attr){
+    const raw=String(attr?.name||attr?.id||ui('词条','Stat')).trim();
+    if(!zh())return raw;
+    if(statZh[raw])return statZh[raw];
+    const key=raw.toUpperCase().replace(/[%/()+.-]+/g,'_').replace(/\s+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+    if(statZh[key])return statZh[key];
+    const phrase=[
+      [/CRIT(?:ICAL)?[_ ]*RATE/i,'暴击率'],[/CRIT(?:ICAL)?[_ ]*(?:DMG|DAMAGE)/i,'暴击伤害'],
+      [/(?:DAMAGE|DMG)[_ ]*AMPLIFICATION/i,'伤害强效'],[/REALM[_ ]*MASTERY/i,'界域精通'],
+      [/ALIEMUS[_ ]*REGEN/i,'异质回复'],[/KEYFLARE[_ ]*REGEN/i,'钥令回复'],[/SIGIL[_ ]*YIELD/i,'灵纹获取'],
+      [/DEATH[_ ]*RESISTANCE/i,'死亡抗性'],[/POISON[_ ]*INFLICTION/i,'中毒施加'],[/POISON[_ ]*TRIGGER/i,'中毒触发'],
+      [/COUNTER[_ ]*GENERATION/i,'反击生成'],[/POISON[_ ]*(?:DMG|DAMAGE)/i,'中毒伤害'],
+      [/COUNTER[_ ]*(?:DMG|DAMAGE)/i,'反击伤害'],[/PIERCE[_ ]*(?:DMG|DAMAGE)/i,'穿透伤害'],
+      [/PURE[_ ]*(?:DMG|DAMAGE)/i,'纯粹伤害'],[/TENTACLE[_ ]*(?:DMG|DAMAGE)/i,'触腕伤害'],
+      [/HEAL(?:ING)?[_ ]*BONUS/i,'治疗加成'],[/EFFECT[_ ]*HIT/i,'效果命中'],[/EFFECT[_ ]*(?:RES|RESISTANCE)/i,'效果抵抗'],
+      [/VULNERAB(?:LE|ILITY)/i,'易伤'],[/MAX[_ ]*(?:HP|HEALTH)/i,'最大生命']
+    ];
+    for(const [re,label] of phrase)if(re.test(raw))return label;
+    const tokenMap={ATK:'攻击',ATTACK:'攻击',HP:'生命',HEALTH:'生命',DEF:'防御',DEFENSE:'防御',STR:'力量',STRENGTH:'力量',POISON:'中毒',COUNTER:'反击',PIERCE:'穿透',PURE:'纯粹',TENTACLE:'触腕',ACTIVE:'主动',FINAL:'最终',BASE:'基础',FIXED:'固定',DAMAGE:'伤害',DMG:'伤害',RATE:'率',BONUS:'加成',REGEN:'回复',RESISTANCE:'抗性',RES:'抗性',SHIELD:'护盾',HEAL:'治疗',HEALING:'治疗',SPEED:'速度',ACCURACY:'命中',DODGE:'闪避',PERCENT:'百分比',PCT:'百分比',UP:'提升'};
+    const tokens=key.split('_').filter(Boolean),translated=tokens.map(t=>tokenMap[t]||'');
+    if(tokens.length&&translated.every(Boolean))return translated.join('');
+    return '其他属性';
+  }
   function attrText(attr){
     const name=statName(attr);
     const raw=Number(attr?.value);
