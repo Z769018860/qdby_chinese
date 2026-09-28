@@ -698,26 +698,43 @@
   }
   async function tryDirectAutoImport(){
     const status=$('assistSubmitStatus'),button=$('assistAutoImportAttempt');
+    const values=validateShowcaseSelection(showcaseFormValues());
+    if(button)button.disabled=true;
     try{
-      const values=validateShowcaseSelection(showcaseFormValues());
-      if(button)button.disabled=true;
-      if(status)status.textContent=ui('正在尝试直接读取 Eremora Showcase…','Trying direct Eremora Showcase import…');
-      const response=await fetch(showcaseUrl(values.uid,values.tid),{
-        method:'GET',
-        mode:'cors',
-        credentials:'include',
-        cache:'no-store',
-        redirect:'follow',
-        headers:{Accept:'application/json'}
-      });
-      if(!response.ok)throw new Error('HTTP '+response.status);
-      const data=await response.json();
-      await importShowcaseData(data,'direct-fetch');
+      if(status)status.textContent=ui('正在尝试同时读取 Showcase 与完整资料…','Trying Showcase and full profile data…');
+      const fetchOpts={method:'GET',mode:'cors',credentials:'include',cache:'no-store',redirect:'follow'};
+      const [showcaseResult,profileResult]=await Promise.allSettled([
+        fetch(showcaseUrl(values.uid,values.tid),{...fetchOpts,headers:{Accept:'application/json'}}).then(async r=>{if(!r.ok)throw new Error('Showcase HTTP '+r.status);return r.json()}),
+        fetch(profileDataUrl(values.uid),{...fetchOpts,headers:{Accept:'application/json,text/plain,*/*'}}).then(async r=>{if(!r.ok)throw new Error('Profile HTTP '+r.status);return r.text()})
+      ]);
+      const progression=profileResult.status==='fulfilled'?parseProfileProgression(profileResult.value,values.tid):null;
+      if(showcaseResult.status==='fulfilled'){
+        const data=showcaseResult.value;
+        if(progression){
+          data.slots=progression.slots;
+          data.talents=progression.talents;
+          if(data.level==null&&progression.level!=null)data.level=progression.level;
+        }
+        await importShowcaseData(data,'direct-dual');
+        if(status)status.textContent=progression
+          ?ui('自动导入成功：Showcase 与技能/灵塑资料均已合并。','Automatic import succeeded with Showcase and progression data.')
+          :ui('Showcase 已导入，但完整资料未能读取，技能/灵塑仍需使用下方完整资料页补充。','Showcase imported, but full profile data could not be read. Use the full-profile fallback below for skills/soulforge.');
+        return;
+      }
+      if(progression){
+        await importProgressionPatch(progression,'direct-profile');
+        if(status)status.textContent=ui('已自动补充技能/灵塑；Showcase 配置仍需使用下方配置页导入。','Skills/soulforge were imported; use the Showcase fallback below for gear.');
+        return;
+      }
+      throw new Error([
+        showcaseResult.status==='rejected'?(showcaseResult.reason?.message||'Showcase failed'):'',
+        profileResult.status==='rejected'?(profileResult.reason?.message||'Profile failed'):''
+      ].filter(Boolean).join(' / ')||'Both sources failed');
     }catch(e){
-      console.warn('Direct Showcase import failed',e);
+      console.warn('Direct dual import failed',e);
       if(status)status.textContent=ui(
-        '自动导入失败（这很常见，通常是 CORS / Cloudflare 限制）。请使用下面的“打开 Eremora 数据页 → 复制 JSON → 剪贴板/粘贴导入”。',
-        'Automatic import failed (commonly due to CORS / Cloudflare). Use the fallback below: open the Eremora data page, copy JSON, then import from clipboard/paste.'
+        '自动导入失败（通常是 CORS / Cloudflare）。请分别打开 Showcase 配置页和完整资料数据页，复制后粘贴到下方；两次导入会自动合并。',
+        'Automatic import failed (usually CORS / Cloudflare). Open the Showcase and full-profile data pages below, then paste each result; they will merge automatically.'
       );
     }finally{
       if(button)button.disabled=false;
@@ -869,14 +886,20 @@
   }
   function updateShowcaseUrlPreview(){
     const preview=$('assistShowcaseUrlPreview'),link=$('assistOpenShowcase');
+    const profilePreview=$('assistProfileDataUrlPreview'),profileLink=$('assistOpenProfileData');
     const values=showcaseFormValues();
-    if(/^\d{5,20}$/.test(values.uid)&&values.tid&&gear.showcaseCanonicalByTid.has(values.tid)){
-      const url=showcaseUrl(values.uid,values.tid);
+    const valid=/^\d{5,20}$/.test(values.uid)&&values.tid&&gear.showcaseCanonicalByTid.has(values.tid);
+    if(valid){
+      const url=showcaseUrl(values.uid,values.tid),purl=profileDataUrl(values.uid);
       if(preview){preview.innerHTML='<code>'+esc(url)+'</code>';preview.dataset.url=url}
       if(link){link.href=url;link.setAttribute('aria-disabled','false')}
+      if(profilePreview){profilePreview.innerHTML='<code>'+esc(purl)+'</code>';profilePreview.dataset.url=purl}
+      if(profileLink){profileLink.href=purl;profileLink.setAttribute('aria-disabled','false')}
     }else{
       if(preview){preview.textContent=ui('请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');delete preview.dataset.url}
       if(link){link.href='#';link.setAttribute('aria-disabled','true')}
+      if(profilePreview){profilePreview.textContent=ui('完整资料页会用于补充技能与灵塑。','Full profile data is used for skills and soulforge.');delete profilePreview.dataset.url}
+      if(profileLink){profileLink.href='#';profileLink.setAttribute('aria-disabled','true')}
     }
   }
   function openShowcasePage(event){
@@ -895,25 +918,49 @@
       return false;
     }
   }
+  function openProfileDataPage(event){
+    const status=$('assistSubmitStatus');
+    try{
+      const values=validateShowcaseSelection(showcaseFormValues()),url=profileDataUrl(values.uid),link=$('assistOpenProfileData');
+      if(link)link.href=url;
+      updateShowcaseUrlPreview();
+      if(status)status.textContent=ui('正在打开完整资料数据页；复制全部内容后返回本页导入。','Opening full profile data. Copy all content and return here to import it.');
+      return true;
+    }catch(e){
+      event?.preventDefault?.();
+      if(status)status.textContent=e?.message||String(e);
+      return false;
+    }
+  }
+  async function copyUrlText(url,successText){
+    let copied=false;
+    if(navigator.clipboard?.writeText){
+      try{await navigator.clipboard.writeText(url);copied=true}catch(_){}
+    }
+    if(!copied){
+      const ta=document.createElement('textarea');
+      ta.value=url;ta.style.position='fixed';ta.style.left='-9999px';ta.style.top='0';
+      document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
+      try{copied=!!document.execCommand('copy')}catch(_){}
+      ta.remove();
+    }
+    if(!copied)window.prompt(ui('浏览器禁止自动复制，请手动复制这个地址：','Automatic copy is blocked. Copy this URL manually:'),url);
+    return copied;
+  }
+  async function copyProfileDataUrl(){
+    const status=$('assistSubmitStatus');
+    try{
+      const values=validateShowcaseSelection(showcaseFormValues()),url=profileDataUrl(values.uid),copied=await copyUrlText(url);
+      if(status)status.textContent=copied?ui('完整资料地址已复制。','Full-profile URL copied.'):ui('已显示完整资料地址，请手动复制。','Full-profile URL shown for manual copy.');
+    }catch(e){
+      if(status)status.textContent=ui('复制失败：','Copy failed: ')+(e?.message||String(e));
+    }
+  }
   async function copyShowcaseUrl(){
     const status=$('assistSubmitStatus');
     try{
-      const values=validateShowcaseSelection(showcaseFormValues()),url=showcaseUrl(values.uid,values.tid);
-      let copied=false;
-      if(navigator.clipboard?.writeText){
-        try{await navigator.clipboard.writeText(url);copied=true}catch(_){}
-      }
-      if(!copied){
-        const ta=document.createElement('textarea');
-        ta.value=url;ta.style.position='fixed';ta.style.left='-9999px';ta.style.top='0';
-        document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
-        try{copied=!!document.execCommand('copy')}catch(_){}
-        ta.remove();
-      }
-      if(!copied){
-        window.prompt(ui('浏览器禁止自动复制，请长按/全选复制这个地址：','Automatic copy is blocked. Copy this URL manually:'),url);
-      }
-      if(status)status.textContent=copied?ui('数据页地址已复制。','Data-page URL copied.'):ui('已显示数据页地址，请手动复制。','The data-page URL is shown for manual copy.');
+      const values=validateShowcaseSelection(showcaseFormValues()),url=showcaseUrl(values.uid,values.tid),copied=await copyUrlText(url);
+      if(status)status.textContent=copied?ui('Showcase 地址已复制。','Showcase URL copied.'):ui('已显示 Showcase 地址，请手动复制。','Showcase URL shown for manual copy.');
     }catch(e){
       if(status)status.textContent=ui('复制失败：','Copy failed: ')+(e?.message||String(e));
     }
