@@ -153,10 +153,16 @@
   }
   function enlightLabel(m){
     const p=Number(m?.potencyLevel);
-    if(Number.isFinite(p))return p<=3?`${p}启`:`+${p-3}`;
+    if(Number.isFinite(p))return p<=3?(zh()?`${p}启`:`E${p}`):`+${p-3}`;
     const n=Number(m?.enlightenCount);
-    if(Number.isFinite(n))return n<=3?`${n}启`:String(m?.progression||m?.enlightenMilestone||n);
-    return String(m?.progression||m?.enlightenMilestone||ui('未知','Unknown'));
+    if(Number.isFinite(n))return n<=3?(zh()?`${n}启`:`E${n}`):String(m?.progression||m?.enlightenMilestone||n);
+    const raw=String(m?.progression||m?.enlightenMilestone||'').trim();
+    if(!raw)return ui('未知','Unknown');
+    if(!zh()){
+      const hit=raw.match(/^(\d+)启$/);
+      if(hit)return 'E'+hit[1];
+    }
+    return raw;
   }
   function statName(attr){
     const raw=String(attr?.name||attr?.id||ui('词条','Stat')).trim();
@@ -335,7 +341,7 @@
         }
       }
     }
-    return [...out.values()].sort((a,b)=>b.count-a.count||b.borrowers.size-a.borrowers.size||a.uid.localeCompare(b.uid,'en',{numeric:true})||a.characterName.localeCompare(b.characterName,'zh-CN'));
+    return [...out.values()].sort((a,b)=>b.count-a.count||b.borrowers.size-a.borrowers.size||a.uid.localeCompare(b.uid,'en',{numeric:true})||a.characterName.localeCompare(b.characterName,zh()?'zh-CN':'en-US'));
   }
   function utf8ToBase64(value){
     const bytes=new TextEncoder().encode(String(value)),chunk=0x8000,parts=[];
@@ -985,18 +991,18 @@
   function optionRows(list,selector){
     const map=new Map();
     for(const row of list)for(const item of selector(row)||[]){const id=String(item?.id||item?.name||'');if(id)map.set(id,item?.name||id)}
-    return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
+    return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),zh()?'zh-CN':'en-US'));
   }
   function covenantOptions(){
     const map=new Map();
     for(const row of rows)for(const x of row.covenants||[]){const id=String(x?.id||x?.name||'');if(id)map.set(id,x?.name||id)}
-    return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
+    return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),zh()?'zh-CN':'en-US'));
   }
   function populate(){
     const char=$('assistCharacterFilter'),level=$('assistLevelFilter'),enlight=$('assistEnlightFilter'),wheel=$('assistWheelFilter'),cov=$('assistCovenantFilter'),source=$('assistSourceFilter');
     if(!char||!level||!enlight||!wheel||!cov||!source)return;
     const keep=[char.value,level.value,enlight.value,wheel.value,cov.value,source.value];
-    const chars=[...new Map(rows.map(r=>[r.characterKey,r.characterName]))].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
+    const chars=[...new Map(rows.map(r=>[r.characterKey,r.characterName]))].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),zh()?'zh-CN':'en-US'));
     const levels=[...new Set(rows.map(r=>r.level).filter(x=>x!=null&&x!==''))].sort((a,b)=>Number(a)-Number(b));
     const enlights=[...new Set(rows.map(r=>String(r.enlightenment||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'zh-CN',{numeric:true}));
     char.innerHTML='<option value="">'+ui('全部角色','All Awakeners')+'</option>'+chars.map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
@@ -1149,7 +1155,20 @@
   function relocalize(){
     if($('morimensAssistTab'))$('morimensAssistTab').textContent=ui('互助助战列表','Assist List');
     localizeAssistStaticUi();
-    if(initialized){populateSubmitForm();load(activeSeason).catch(error)}
+    if(initialized){
+      manualRows=manualRows.map(row=>{
+        if(row?._payload){
+          return manualRowFromPayload(row._payload,{insertedAt:row.submittedAt,objectId:row.commentId})||row;
+        }
+        const rec=gear.awakenerById.get(String(row?.characterKey||''));
+        if(rec)row.characterName=displayAwakener(rec).name;
+        row.wheels=(row.wheels||[]).map(x=>({...x,name:wheelName(x)}));
+        row.covenants=(row.covenants||[]).map(x=>({...x,name:covenantName(x)}));
+        return row;
+      });
+      populateSubmitForm();
+      load(activeSeason).catch(error);
+    }
   }
   bindImportDelegates();
   queueMicrotask(()=>localizeAssistStaticUi());
