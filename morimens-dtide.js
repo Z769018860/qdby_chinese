@@ -237,7 +237,7 @@
         <span class="statusPill" id="morimensAssistStatus">等待载入</span>
       </div>
       <div class="assistFilters">
-        <div class="dtideField"><label for="assistSeason">期次</label><select id="assistSeason"><option value="69">第 69 期</option><option value="68">第 68 期</option></select></div>
+        <div class="dtideField"><label for="assistSeason">期次</label><select id="assistSeason"><option value="all" selected>全部期次（68 + 69）</option><option value="69">第 69 期</option><option value="68">第 68 期</option></select></div>
         <div class="dtideField"><label for="assistUidFilter">玩家 UID</label><input id="assistUidFilter" type="search" inputmode="numeric" placeholder="输入 UID 搜索"></div>
         <div class="dtideField"><label for="assistCharacterFilter">挂的助战角色</label><select id="assistCharacterFilter"><option value="">全部角色</option></select></div>
         <div class="dtideField"><label for="assistWheelFilter">命轮</label><select id="assistWheelFilter"><option value="">全部命轮</option></select></div>
