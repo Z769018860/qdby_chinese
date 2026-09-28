@@ -365,7 +365,7 @@
             const wheels=(member?.wheels||member?.weapons||[]).map(x=>{const r=wheelRecord(x);return {id:String(r?.id??x?.id??x?.name??''),name:wheelName(x),image:wheelImage(x),level:x?.level??null,enhanceLevel:x?.enhanceLevel??x?.enhance_level??null}}).filter(x=>x.id||x.name);
             const covs=(member?.covenants||(member?.covenant?[member.covenant]:[])).map(x=>{const r=covenantRecord(x);return {id:String(r?.id??x?.id??x?.name??''),name:covenantName(x),image:covenantImage(x),count:x?.count??null}}).filter(x=>x.id||x.name);
             const trinkets=(member?.trinkets||[]).map(x=>({id:String(x?.id??x?.name??''),name:String(x?.name||x?.id||ui('密契','Covenant')),image:fallbackLocalImage(x?.image,'covenant')||x?.image||'',slot:x?.slot??null,level:x?.level??null,enhanceLevel:x?.enhanceLevel??x?.enhance_level??null,attrs:(x?.attrs||[]).map(a=>({id:a?.id,name:a?.name,value:a?.value,percentage:!!a?.percentage,rollQuality:a?.rollQuality??a?.roll_quality??null}))}));
-            row={uid,player:playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,level:member?.level??null,enlightenment:enlightLabel(member),skills:memberSkills(member),soulforge:memberSoulforge(member),wheels,covenants:covs,trinkets,finalAttrs:hasRollQuality(trinkets)?aggregateRollAttrs(trinkets):aggregateAttrs(trinkets),count:0,borrowers:new Set(),seasons:new Set()};
+            row={uid,player:playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,level:member?.level??null,enlightenment:enlightLabel(member),wheels,covenants:covs,trinkets,finalAttrs:hasRollQuality(trinkets)?aggregateRollAttrs(trinkets):aggregateAttrs(trinkets),count:0,borrowers:new Set(),seasons:new Set()};
             out.set(key,row);
           }
           if(!row.player&&playerNames.has(uid))row.player=playerNames.get(uid);
@@ -469,8 +469,6 @@
         characterImage:char.image,
         level:payload.level??null,
         enlightenment:String(payload.enlightenmentLabel||'').trim()||enlightLabel({potencyLevel:payload.potencyLevel}),
-        skills:memberSkills({slots:payload.slots}),
-        soulforge:memberSoulforge({talents:payload.talents}),
         wheels,
         covenants,
         trinkets:Array.isArray(payload.trinkets)?payload.trinkets:[],
@@ -634,14 +632,6 @@
       },
       level:data.level??null,
       potencyLevel:data.potency_level??null,
-      potential:data.potential??null,
-      breakLevel:data.break_level??null,
-      slots:(Array.isArray(data.slots)?data.slots:[]).map(x=>({
-        id:x?.id,name:x?.name,image:x?.image,slot:x?.slot??null,level:x?.level??null,isUp:x?.is_up??x?.isUp??null
-      })),
-      talents:(Array.isArray(data.talents)?data.talents:[]).map(x=>({
-        id:x?.id,name:x?.name,image:x?.image,lv:x?.lv??null,kind:x?.kind??''
-      })),
       weapons:(Array.isArray(data.weapons)?data.weapons:[]).map(x=>({
         id:x?.id,
         name:x?.name,
@@ -701,182 +691,30 @@
     const values=validateShowcaseSelection(showcaseFormValues());
     if(button)button.disabled=true;
     try{
-      if(status)status.textContent=ui('正在尝试同时读取 Showcase 与完整资料…','Trying Showcase and full profile data…');
-      const fetchOpts={method:'GET',mode:'cors',credentials:'include',cache:'no-store',redirect:'follow'};
-      const [showcaseResult,profileResult,profilePageResult]=await Promise.allSettled([
-        fetch(showcaseUrl(values.uid,values.tid),{...fetchOpts,headers:{Accept:'application/json'}}).then(async r=>{if(!r.ok)throw new Error('Showcase HTTP '+r.status);return r.json()}),
-        fetch(profileDataUrl(values.uid),{...fetchOpts,headers:{Accept:'application/json,text/plain,*/*'}}).then(async r=>{if(!r.ok)throw new Error('Profile data HTTP '+r.status);return r.text()}),
-        fetch(profilePageUrl(values.uid),{...fetchOpts,headers:{Accept:'text/html,text/plain,*/*'}}).then(async r=>{if(!r.ok)throw new Error('Profile page HTTP '+r.status);return r.text()})
-      ]);
-      const progression=
-        (profileResult.status==='fulfilled'?parseProfileProgression(profileResult.value,values.tid):null)||
-        (profilePageResult.status==='fulfilled'?parseProfileProgression(profilePageResult.value,values.tid):null);
-      if(showcaseResult.status==='fulfilled'){
-        const data=showcaseResult.value;
-        if(progression){
-          data.slots=progression.slots;
-          data.talents=progression.talents;
-          if(data.level==null&&progression.level!=null)data.level=progression.level;
-        }
-        await importShowcaseData(data,'direct-dual');
-        if(status)status.textContent=progression
-          ?ui('自动导入成功：Showcase 与技能/灵塑资料均已合并。','Automatic import succeeded with Showcase and progression data.')
-          :ui('Showcase 已导入，但完整资料未能读取，技能/灵塑仍需使用下方完整资料页补充。','Showcase imported, but full profile data could not be read. Use the full-profile fallback below for skills/soulforge.');
-        return;
-      }
-      if(progression){
-        await importProgressionPatch(progression,'direct-profile');
-        if(status)status.textContent=ui('已自动补充技能/灵塑；Showcase 配置仍需使用下方配置页导入。','Skills/soulforge were imported; use the Showcase fallback below for gear.');
-        return;
-      }
-      throw new Error([
-        showcaseResult.status==='rejected'?(showcaseResult.reason?.message||'Showcase failed'):'',
-        profileResult.status==='rejected'?(profileResult.reason?.message||'Profile data failed'):'',
-        profilePageResult.status==='rejected'?(profilePageResult.reason?.message||'Profile page failed'):''
-      ].filter(Boolean).join(' / ')||'All sources failed');
+      if(status)status.textContent=ui('正在尝试读取 Eremora Showcase…','Trying Eremora Showcase…');
+      const response=await fetch(showcaseUrl(values.uid,values.tid),{
+        method:'GET',
+        mode:'cors',
+        credentials:'include',
+        cache:'no-store',
+        redirect:'follow',
+        headers:{Accept:'application/json'}
+      });
+      if(!response.ok)throw new Error('Showcase HTTP '+response.status);
+      const data=await response.json();
+      await importShowcaseData(data,'direct-showcase');
+      if(status)status.textContent=ui('Showcase 自动导入成功。技能、灵塑不在导入范围内。','Showcase import succeeded. Skills/soulforge are not included.');
     }catch(e){
-      console.warn('Direct dual import failed',e);
+      console.warn('Direct Showcase import failed',e);
       if(status)status.textContent=ui(
-        '自动导入失败（通常是 CORS / Cloudflare）。请分别打开 Showcase 配置页和完整资料数据页，复制后粘贴到下方；两次导入会自动合并。',
-        'Automatic import failed (usually CORS / Cloudflare). Open the Showcase and full-profile data pages below, then paste each result; they will merge automatically.'
+        '自动导入失败（通常是 CORS / Cloudflare）。请使用下面的 Showcase 数据页复制 JSON 后导入。',
+        'Automatic import failed (usually CORS / Cloudflare). Use the Showcase data-page clipboard fallback below.'
       );
     }finally{
       if(button)button.disabled=false;
     }
   }
 
-  function profileDataUrl(uid){
-    return 'https://eremora.com/u/'+encodeURIComponent(uid)+'/__data.json';
-  }
-  function profilePageUrl(uid){
-    return 'https://eremora.com/u/'+encodeURIComponent(uid);
-  }
-  function selectedAwakenerNames(tid){
-    const canonical=gear.showcaseCanonicalByTid.get(String(tid))||'',rec=gear.awakenerById.get(canonical),names=[];
-    if(rec?.name)names.push(String(rec.name));
-    const shown=rec?displayAwakener(rec):null;
-    if(shown?.name)names.push(String(shown.name));
-    return [...new Set(names.map(x=>x.replace(/^["“]|["”]$/g,'').trim()).filter(Boolean))];
-  }
-  function svelteUnflatten(values){
-    if(!Array.isArray(values))return values;
-    const memo=new Array(values.length),done=new Set(),active=new Set();
-    const hydrate=i=>{
-      if(i===-1||i===-2)return undefined;
-      if(i===-3)return NaN;if(i===-4)return Infinity;if(i===-5)return -Infinity;if(i===-6)return -0;
-      if(!Number.isInteger(i)||i<0||i>=values.length)return i;
-      if(done.has(i))return memo[i];
-      if(active.has(i))return memo[i];
-      const v=values[i];
-      if(v===null||typeof v!=='object'){memo[i]=v;done.add(i);return v}
-      active.add(i);
-      if(Array.isArray(v)){
-        if(typeof v[0]==='string'){
-          const tag=v[0];let out;
-          if(tag==='Date')out=v[1];
-          else if(tag==='Set'){out=[];memo[i]=out;for(let j=1;j<v.length;j++)out.push(hydrate(v[j]))}
-          else if(tag==='Map'){out=[];memo[i]=out;for(let j=1;j<v.length;j+=2)out.push({key:hydrate(v[j]),value:hydrate(v[j+1])})}
-          else if(tag==='Object')out=hydrate(v[1]);
-          else if(tag==='null'){out={};memo[i]=out;for(let j=1;j<v.length;j+=2)out[String(v[j])]=hydrate(v[j+1])}
-          else if(tag==='Promise')out={__promise:hydrate(v[1])};
-          else{out=[tag];memo[i]=out;for(let j=1;j<v.length;j++)out.push(Number.isInteger(v[j])?hydrate(v[j]):v[j])}
-          memo[i]??=out;active.delete(i);done.add(i);return memo[i];
-        }
-        const out=[];memo[i]=out;for(let j=0;j<v.length;j++)if(v[j]!==-2)out[j]=hydrate(v[j]);
-        active.delete(i);done.add(i);return out;
-      }
-      const out={};memo[i]=out;for(const [k,ref] of Object.entries(v))out[k]=hydrate(ref);
-      active.delete(i);done.add(i);return out;
-    };
-    return hydrate(0);
-  }
-  function walkObject(root,cb){
-    const seen=new Set();
-    const visit=v=>{
-      if(!v||typeof v!=='object'||seen.has(v))return;
-      seen.add(v);cb(v);
-      if(Array.isArray(v))for(const x of v)visit(x);
-      else for(const x of Object.values(v))visit(x);
-    };
-    visit(root);
-  }
-  function progressionFromCandidate(obj,tid){
-    if(!obj||typeof obj!=='object')return null;
-    const names=selectedAwakenerNames(tid).map(normName);
-    const oid=String(obj?.awaker?.id??obj?.id??obj?.tid??''),oname=normName(obj?.awaker?.name??obj?.name??'');
-    const identityOk=oid===String(tid)||(oname&&names.includes(oname));
-    if(!identityOk)return null;
-    const slots=(Array.isArray(obj?.slots)?obj.slots:[]).map(x=>({
-      id:x?.id,name:x?.name,image:x?.image,slot:x?.slot??null,level:x?.level??null,isUp:x?.is_up??x?.isUp??null
-    })).filter(x=>Number(x.slot)>=1&&Number(x.slot)<=6&&Number.isFinite(Number(x.level)));
-    const talents=(Array.isArray(obj?.talents)?obj.talents:[]).map(x=>({
-      id:x?.id,name:x?.name,image:x?.image,lv:x?.lv??x?.level??null,kind:x?.kind??''
-    })).filter(x=>['madness','soulforge','gnostic'].includes(String(x.kind))&&Number.isFinite(Number(x.lv)));
-    if(!slots.length&&!talents.length)return null;
-    return {slots,talents,level:obj?.level??null};
-  }
-  function parseSvelteProfileProgression(text,tid){
-    const raw=String(text||'').replace(/^\uFEFF/,'').trim();
-    const docs=[];
-    for(const line of raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean)){
-      try{const doc=JSON.parse(line);if(doc&&typeof doc==='object')docs.push(doc)}catch(_){}
-    }
-    const roots=[];
-    for(const doc of docs){
-      if(doc?.type==='chunk'&&Array.isArray(doc.data)){
-        try{roots.push(svelteUnflatten(doc.data))}catch(_){}
-      }
-      for(const node of Array.isArray(doc?.nodes)?doc.nodes:[]){
-        if(Array.isArray(node?.data)){try{roots.push(svelteUnflatten(node.data))}catch(_){}}
-      }
-    }
-    let best=null;
-    for(const root of roots)walkObject(root,obj=>{if(!best){const p=progressionFromCandidate(obj,tid);if(p)best=p}});
-    return best;
-  }
-  function parseProfileTextProgression(text,tid){
-    const raw=String(text||'').replace(/\r/g,' ');
-    const names=selectedAwakenerNames(tid).map(normName);
-    const re=/([+]?\d{1,2}\s*\/\s*\d{1,2}\s*\/\s*\d{1,2})\s+(\d{1,2}(?:\s*\/\s*\d{1,2}){5})\s+["“]?([^\n]{1,60}?)["”]?\s+Lv\.?\s*(\d{1,3})/gim;
-    for(const m of raw.matchAll(re)){
-      const name=normName(String(m[3]||'').trim());
-      if(names.length&&!names.includes(name))continue;
-      const talentNums=String(m[1]).split('/').map(x=>Number(x.replace('+','').trim()));
-      const skillNums=String(m[2]).split('/').map(x=>Number(x.trim()));
-      if(talentNums.length!==3||skillNums.length!==6)continue;
-      return {
-        slots:skillNums.map((level,i)=>({slot:i+1,level})),
-        talents:[
-          {kind:'madness',lv:talentNums[0]},
-          {kind:'soulforge',lv:talentNums[1]},
-          {kind:'gnostic',lv:talentNums[2]}
-        ],
-        level:Number(m[4])
-      };
-    }
-    return null;
-  }
-  function parseProfileProgression(text,tid){
-    return parseSvelteProfileProgression(text,tid)||parseProfileTextProgression(text,tid);
-  }
-  function existingImportedRow(values){
-    const canonical=gear.showcaseCanonicalByTid.get(String(values.tid))||'';
-    const key=[String(values.uid),canonical].join('|');
-    return manualRows.find(r=>manualKey(r)===key)||rows.find(r=>manualKey(r)===key)||null;
-  }
-  function payloadFromExisting(values){
-    const existing=existingImportedRow(values),canonical=gear.showcaseCanonicalByTid.get(String(values.tid))||'',rec=gear.awakenerById.get(canonical);
-    if(existing?._payload){
-      try{return JSON.parse(JSON.stringify(existing._payload))}catch(_){}
-    }
-    return {
-      version:4,source:'eremora-showcase',uid:String(values.uid),characterId:String(values.tid),canonicalId:canonical,
-      awaker:{id:Number(values.tid)||values.tid,name:rec?.name||existing?.characterName||'',image:existing?.characterImage||''},
-      level:existing?.level??null,enlightenmentLabel:existing?.enlightenment||'',
-      potencyLevel:null,weapons:(existing?.wheels||[]).map(x=>({...x})),suits:(existing?.covenants||[]).map(x=>({...x})),
-      trinkets:(existing?.trinkets||[]).map(x=>({...x,attrs:(x?.attrs||[]).map(a=>({...a}))})),slots:[],talents:[]
-    };
-  }
   function showcaseFormValues(){
     const uid=String($('assistSubmitUid')?.value||'').trim();
     const tid=String($('assistSubmitCharacter')?.value||'').trim();
@@ -893,22 +731,15 @@
   }
   function updateShowcaseUrlPreview(){
     const preview=$('assistShowcaseUrlPreview'),link=$('assistOpenShowcase');
-    const profilePreview=$('assistProfileDataUrlPreview'),profileLink=$('assistOpenProfileData');
     const values=showcaseFormValues();
     const valid=/^\d{5,20}$/.test(values.uid)&&values.tid&&gear.showcaseCanonicalByTid.has(values.tid);
     if(valid){
-      const url=showcaseUrl(values.uid,values.tid),purl=profileDataUrl(values.uid),pageUrl=profilePageUrl(values.uid),profilePageLink=$('assistOpenProfilePage');
+      const url=showcaseUrl(values.uid,values.tid);
       if(preview){preview.innerHTML='<code>'+esc(url)+'</code>';preview.dataset.url=url}
       if(link){link.href=url;link.setAttribute('aria-disabled','false')}
-      if(profilePreview){profilePreview.innerHTML='<code>'+esc(purl)+'</code>';profilePreview.dataset.url=purl}
-      if(profileLink){profileLink.href=purl;profileLink.setAttribute('aria-disabled','false')}
-      if(profilePageLink){profilePageLink.href=pageUrl;profilePageLink.setAttribute('aria-disabled','false')}
     }else{
       if(preview){preview.textContent=ui('请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');delete preview.dataset.url}
       if(link){link.href='#';link.setAttribute('aria-disabled','true')}
-      if(profilePreview){profilePreview.textContent=ui('完整资料页会用于补充技能与灵塑。','Full profile data is used for skills and soulforge.');delete profilePreview.dataset.url}
-      if(profileLink){profileLink.href='#';profileLink.setAttribute('aria-disabled','true')}
-      const profilePageLink=$('assistOpenProfilePage');if(profilePageLink){profilePageLink.href='#';profilePageLink.setAttribute('aria-disabled','true')}
     }
   }
   function openShowcasePage(event){
@@ -920,20 +751,6 @@
       updateShowcaseUrlPreview();
       if(status)status.textContent=ui('正在打开 Eremora 数据页；复制 JSON 后返回本页导入。','Opening the Eremora data page. Copy the JSON and return here to import it.');
       // assistOpenShowcase is an <a target="_blank">. Let native navigation run after this delegated handler.
-      return true;
-    }catch(e){
-      event?.preventDefault?.();
-      if(status)status.textContent=e?.message||String(e);
-      return false;
-    }
-  }
-  function openProfileDataPage(event){
-    const status=$('assistSubmitStatus');
-    try{
-      const values=validateShowcaseSelection(showcaseFormValues()),url=profileDataUrl(values.uid),link=$('assistOpenProfileData');
-      if(link)link.href=url;
-      updateShowcaseUrlPreview();
-      if(status)status.textContent=ui('正在打开完整资料数据页；复制全部内容后返回本页导入。','Opening full profile data. Copy all content and return here to import it.');
       return true;
     }catch(e){
       event?.preventDefault?.();
@@ -955,29 +772,6 @@
     }
     if(!copied)window.prompt(ui('浏览器禁止自动复制，请手动复制这个地址：','Automatic copy is blocked. Copy this URL manually:'),url);
     return copied;
-  }
-  function openProfilePage(event){
-    const status=$('assistSubmitStatus');
-    try{
-      const values=validateShowcaseSelection(showcaseFormValues()),url=profilePageUrl(values.uid),link=$('assistOpenProfilePage');
-      if(link)link.href=url;
-      updateShowcaseUrlPreview();
-      if(status)status.textContent=ui('正在打开玩家资料页；可全选复制页面文字后返回粘贴，用于补充技能/灵塑。','Opening player profile. Copy all visible page text and paste it back to import skills/soulforge.');
-      return true;
-    }catch(e){
-      event?.preventDefault?.();
-      if(status)status.textContent=e?.message||String(e);
-      return false;
-    }
-  }
-  async function copyProfileDataUrl(){
-    const status=$('assistSubmitStatus');
-    try{
-      const values=validateShowcaseSelection(showcaseFormValues()),url=profileDataUrl(values.uid),copied=await copyUrlText(url);
-      if(status)status.textContent=copied?ui('完整资料地址已复制。','Full-profile URL copied.'):ui('已显示完整资料地址，请手动复制。','Full-profile URL shown for manual copy.');
-    }catch(e){
-      if(status)status.textContent=ui('复制失败：','Copy failed: ')+(e?.message||String(e));
-    }
   }
   async function copyShowcaseUrl(){
     const status=$('assistSubmitStatus');
@@ -1003,30 +797,13 @@
     }
     throw new Error(ui('无法解析为 Showcase JSON','Could not parse Showcase JSON'));
   }
-  function mergeExistingProgression(payload,values){
-    const prior=existingImportedRow(values);
-    if(!prior)return payload;
-    const raw=prior?._payload||{};
-    if(!(payload.slots||[]).length){
-      if(Array.isArray(raw.slots)&&raw.slots.length)payload.slots=JSON.parse(JSON.stringify(raw.slots));
-      else if(Array.isArray(prior.skills)&&prior.skills.length)payload.slots=prior.skills.map((level,i)=>({slot:i+1,level:Number(level)}));
-    }
-    if(!(payload.talents||[]).length){
-      if(Array.isArray(raw.talents)&&raw.talents.length)payload.talents=JSON.parse(JSON.stringify(raw.talents));
-      else if(Array.isArray(prior.soulforge)&&prior.soulforge.length)payload.talents=prior.soulforge.map(x=>({kind:x.kind,lv:x.level}));
-    }
-    if(!payload.enlightenmentLabel&&prior.enlightenment)payload.enlightenmentLabel=prior.enlightenment;
-    payload.version=4;
-    return payload;
-  }
   async function importShowcaseData(data,origin){
     const status=$('assistSubmitStatus'),button=$('assistClipboardImport');
     const values=validateShowcaseSelection(showcaseFormValues());
     if(button)button.disabled=true;
     try{
-      if(status)status.textContent=ui('已读取 Showcase，正在校验并合并…','Showcase read. Validating and merging…');
-      let payload=normalizeShowcasePayload(values.uid,values.tid,data);
-      payload=mergeExistingProgression(payload,values);
+      if(status)status.textContent=ui('已读取 Showcase，正在校验并导入…','Showcase read. Validating and importing…');
+      const payload=normalizeShowcasePayload(values.uid,values.tid,data);
       payload.importMethod=origin||'clipboard';
       const candidate=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
       const key=candidate?manualKey(candidate):'';
@@ -1036,74 +813,30 @@
       const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
       if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
       if(status)status.textContent=existed
-        ?ui('Showcase 配置已更新；已有技能/灵塑数据已保留。','Showcase build updated; existing skills/soulforge were preserved.')
-        :ui('Showcase 配置已导入；如技能/灵塑为空，请继续导入完整资料。','Showcase imported; import full profile data next if skills/soulforge are empty.');
+        ?ui('Showcase 配置已更新，历史融灾使用次数保持不变。技能、灵塑不包含在导入中。','Showcase build updated; historical usage was preserved. Skills/soulforge are not imported.')
+        :ui('Showcase 配置已导入。技能、灵塑不包含在导入中。','Showcase imported. Skills/soulforge are not included.');
       const paste=$('assistPasteShowcase');if(paste)paste.value='';
       await load(activeSeason);
     }finally{
       if(button)button.disabled=false;
     }
   }
-  async function importProgressionPatch(progression,origin){
-    const status=$('assistSubmitStatus'),values=validateShowcaseSelection(showcaseFormValues());
-    if(!progression||(!(progression.slots||[]).length&&!(progression.talents||[]).length))throw new Error(ui('没有识别到当前角色的技能/灵塑数据','No skills/soulforge data found for the selected Awakener'));
-    const payload=payloadFromExisting(values);
-    payload.version=4;
-    payload.source='eremora-showcase';
-    payload.slots=(progression.slots||[]).map(x=>({...x}));
-    payload.talents=(progression.talents||[]).map(x=>({...x}));
-    if(progression.level!=null)payload.level=progression.level;
-    payload.importMethod=origin||'profile-data';
-    payload.fetchedAt=new Date().toISOString();
-    payload.updateExisting=true;
-    await persistShowcasePayload(payload);
-    const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
-    if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
-    if(status)status.textContent=ui(
-      '技能/灵塑已补充并与原有命轮、密契配置合并。',
-      'Skills/soulforge were added and merged with the existing gear/covenant build.'
-    );
-    const paste=$('assistPasteShowcase');if(paste)paste.value='';
-    await load(activeSeason);
-  }
-  function parseAssistImportText(text,values){
-    const raw=String(text==null?'':text).replace(/^\uFEFF/,'').trim();
-    if(!raw)throw new Error(ui('没有可导入内容','No importable content'));
-    // A normal Showcase JSON has an awaker object and detailed equipment.
-    try{
-      const json=JSON.parse(raw);
-      if(json?.awaker)return {kind:'showcase',data:json};
-      const p=progressionFromCandidate(json,values.tid);
-      if(p)return {kind:'progression',data:p};
-    }catch(_){}
-    // SvelteKit /u/{uid}/__data.json or copied profile text.
-    const progression=parseProfileProgression(raw,values.tid);
-    if(progression)return {kind:'progression',data:progression};
-    // Markdown/code-fenced Showcase JSON fallback.
-    try{
-      const json=parseShowcaseText(raw);
-      if(json?.awaker)return {kind:'showcase',data:json};
-    }catch(_){}
-    if(/^https?:\/\/eremora\.com\//i.test(raw))throw new Error(ui('你复制的是地址，不是数据内容。请打开该地址后复制页面内容。','You copied a URL, not the data. Open it and copy the page content.'));
-    throw new Error(ui('无法识别内容：请粘贴 Showcase JSON、完整资料 __data.json，或玩家资料页文本。','Unrecognized content. Paste Showcase JSON, full-profile __data.json, or copied profile text.'));
-  }
   async function importShowcaseText(text,origin){
-    const values=validateShowcaseSelection(showcaseFormValues());
-    const parsed=parseAssistImportText(text,values);
-    if(parsed.kind==='showcase')return importShowcaseData(parsed.data,origin||'clipboard');
-    return importProgressionPatch(parsed.data,origin||'clipboard-profile');
+    const data=parseShowcaseText(text);
+    if(!data?.awaker)throw new Error(ui('粘贴内容不是有效的 Eremora Showcase JSON','Pasted content is not valid Eremora Showcase JSON'));
+    return importShowcaseData(data,origin||'clipboard');
   }
   async function importPastedShowcase(){
     const status=$('assistSubmitStatus'),area=$('assistPasteShowcase');
     try{
       validateShowcaseSelection(showcaseFormValues());
       const text=String(area?.value||'').trim();
-      if(!text)throw new Error(ui('请先粘贴 Showcase / 完整资料数据','Paste Showcase or full-profile data first'));
-      if(status)status.textContent=ui('正在识别并导入已粘贴内容…','Detecting and importing pasted content…');
+      if(!text)throw new Error(ui('请先粘贴 Showcase JSON','Paste Showcase JSON first'));
+      if(status)status.textContent=ui('正在导入已粘贴 Showcase JSON…','Importing pasted Showcase JSON…');
       await importShowcaseText(text,'paste-button');
     }catch(e){
-      console.error('Pasted assist import failed',e);
-      if(status)status.textContent=ui('粘贴内容导入失败：','Pasted content import failed: ')+(e?.message||String(e));
+      console.error('Pasted Showcase import failed',e);
+      if(status)status.textContent=ui('粘贴内容导入失败：','Pasted Showcase import failed: ')+(e?.message||String(e));
     }
   }
   function clearPastedShowcase(){
@@ -1116,16 +849,16 @@
     try{
       validateShowcaseSelection(showcaseFormValues());
       if(!navigator.clipboard?.readText)throw new Error(ui('当前浏览器不支持网页直接读取剪贴板','This browser cannot read the clipboard directly'));
-      if(status)status.textContent=ui('正在读取剪贴板并识别数据类型…','Reading clipboard and detecting data type…');
+      if(status)status.textContent=ui('正在读取剪贴板中的 Showcase JSON…','Reading Showcase JSON from clipboard…');
       const text=await navigator.clipboard.readText();
       await importShowcaseText(text,'clipboard-read');
     }catch(e){
-      console.error('Assist clipboard import failed',e);
+      console.error('Showcase clipboard import failed',e);
       const area=$('assistPasteShowcase');
       if(area){area.focus();try{area.scrollIntoView({behavior:'smooth',block:'center'})}catch(_){}}
       if(status)status.textContent=ui(
-        '无法直接读取剪贴板。请在下方粘贴 Showcase JSON 或完整资料数据，然后点击“导入已粘贴内容”。',
-        'Could not read the clipboard. Paste Showcase JSON or full-profile data below, then click “Import pasted content”.'
+        '无法直接读取剪贴板。请在下方粘贴 Showcase JSON，然后点击“导入已粘贴 JSON”。',
+        'Could not read the clipboard. Paste Showcase JSON below, then click “Import pasted JSON”.'
       );
     }
   }
@@ -1136,10 +869,10 @@
     event.preventDefault();
     if(area)area.value=text;
     try{
-      if(status)status.textContent=ui('检测到粘贴内容，正在识别并导入…','Pasted content detected. Detecting and importing…');
+      if(status)status.textContent=ui('检测到 Showcase JSON，正在自动导入…','Showcase JSON detected. Importing…');
       await importShowcaseText(text,'paste');
     }catch(e){
-      console.error('Assist paste import failed',e);
+      console.error('Showcase paste import failed',e);
       if(status)status.textContent=ui('粘贴导入失败：','Paste import failed: ')+(e?.message||String(e));
     }
   }
@@ -1266,14 +999,11 @@
     if(importDelegatesBound)return;
     importDelegatesBound=true;
     document.addEventListener('click',event=>{
-      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistOpenProfileData,#assistCopyProfileDataUrl,#assistOpenProfilePage,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
+      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
       if(!target)return;
       if(target.id==='assistAutoImportAttempt'){event.preventDefault();tryDirectAutoImport();return}
       if(target.id==='assistOpenShowcase'){openShowcasePage(event);return}
       if(target.id==='assistCopyShowcaseUrl'){event.preventDefault();copyShowcaseUrl();return}
-      if(target.id==='assistOpenProfileData'){openProfileDataPage(event);return}
-      if(target.id==='assistCopyProfileDataUrl'){event.preventDefault();copyProfileDataUrl();return}
-      if(target.id==='assistOpenProfilePage'){openProfilePage(event);return}
       if(target.id==='assistClipboardImport'){event.preventDefault();readClipboardAndImport();return}
       if(target.id==='assistImportPastedJson'){event.preventDefault();importPastedShowcase();return}
       if(target.id==='assistClearPastedJson'){event.preventDefault();clearPastedShowcase();return}
