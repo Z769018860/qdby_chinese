@@ -124,7 +124,7 @@
     const comments=document.createElement('div');comments.id='morimensCommentsPanel';comments.setAttribute('role','tabpanel');comments.hidden=true;comments.innerHTML=commentsHtml();
     const about=document.createElement('div');about.id='morimensAboutPanel';about.setAttribute('role','tabpanel');about.hidden=true;about.innerHTML=aboutHtml();
     hero.after(announcement,tabs,dtide,assist,calc,fortune,love,changelog,comments,about);$('morimensBootShell')?.remove();document.body.classList.remove('morimensBooting');dtide.querySelector('.dtideLeaderboardTabs')?.addEventListener('click',e=>{const tab=e.target.closest('[data-dtide-entity]');if(!tab)return;const field=$('dtideEntityType'),entity=tab.dataset.dtideEntity;if(!field||field.value===entity)return;dtide.querySelectorAll('[data-dtide-entity]').forEach(x=>x.setAttribute('aria-selected',String(x===tab)));field.value=entity;field.dispatchEvent(new Event('change',{bubbles:true}));window.__dtideMatrixSort='total';window.__dtideMatrixAsc=false;const title=$('dtideMatrixTitle'),host=$('dtideMatrix'),label=entity==='wheel'?ui('命轮','Wheel'):entity==='creation'?ui('造物','Creation'):ui('角色','Awakener');if(title)title.textContent=zh()?label+'逐波出场率':label+' Appearance Rate by Wave';if(host)host.setAttribute('aria-busy','true');requestAnimationFrame(()=>{renderAll();if(host)host.removeAttribute('aria-busy')})});
-    const activate=name=>{const isD=name==='dtide',isH=name==='assist',isC=name==='calc',isF=name==='fortune',isR=name==='love',isL=name==='changelog',isM=name==='comments',isA=name==='about';for(const [id,on] of [['morimensDtideTab',isD],['morimensAssistTab',isH],['morimensCalcTab',isC],['morimensFortuneTab',isF],['morimensLoveTab',isR],['morimensChangelogTab',isL],['morimensCommentsTab',isM],['morimensAboutTab',isA]])$(id).setAttribute('aria-selected',String(on));dtide.hidden=!isD;assist.hidden=!isH;calc.hidden=!isC;fortune.hidden=!isF;love.hidden=!isR;changelog.hidden=!isL;comments.hidden=!isM;about.hidden=!isA;history.replaceState(null,'',`#${name}`);if(isD)loadOnce();if(isH){window.MorimensAssistList?.open?.();window.dispatchEvent(new CustomEvent('morimens-assist-list-open'))}if(isR){window.MorimensLoveRanking?.open?.();window.dispatchEvent(new CustomEvent('morimens-love-ranking-open'))}if(isM)initComments()};
+    const activate=name=>{const isD=name==='dtide',isH=name==='assist',isC=name==='calc',isF=name==='fortune',isR=name==='love',isL=name==='changelog',isM=name==='comments',isA=name==='about';for(const [id,on] of [['morimensDtideTab',isD],['morimensAssistTab',isH],['morimensCalcTab',isC],['morimensFortuneTab',isF],['morimensLoveTab',isR],['morimensChangelogTab',isL],['morimensCommentsTab',isM],['morimensAboutTab',isA]])$(id).setAttribute('aria-selected',String(on));dtide.hidden=!isD;assist.hidden=!isH;calc.hidden=!isC;fortune.hidden=!isF;love.hidden=!isR;changelog.hidden=!isL;comments.hidden=!isM;about.hidden=!isA;history.replaceState(null,'',`#${name}`);if(isD)loadOnce();if(isH){window.MorimensAssistList?.open?.();window.dispatchEvent(new CustomEvent('morimens-assist-list-open'))}if(isR){window.MorimensLoveRanking?.open?.();window.dispatchEvent(new CustomEvent('morimens-love-ranking-open'))}if(isM)initComments();if(isA)loadAboutSubmissionRecords()};
     $('morimensDtideTab').addEventListener('click',()=>activate('dtide'));$('morimensAssistTab').addEventListener('click',()=>activate('assist'));$('morimensCalcTab').addEventListener('click',()=>activate('calc'));$('morimensFortuneTab').addEventListener('click',()=>activate('fortune'));$('morimensLoveTab').addEventListener('click',()=>activate('love'));$('morimensChangelogTab').addEventListener('click',()=>activate('changelog'));$('morimensCommentsTab').addEventListener('click',()=>activate('comments'));$('morimensAboutTab').addEventListener('click',()=>activate('about'));activate(['#assist','#calc','#fortune','#love','#changelog','#comments','#about'].includes(location.hash)?location.hash.slice(1):'dtide');
   }
 
@@ -222,12 +222,49 @@
     </section>
   `}
 
+  let aboutSubmissionsLoading=false;
+  async function loadAboutSubmissionRecords(){
+    const host=$('morimensSubmissionRecords');if(!host||aboutSubmissionsLoading)return;
+    aboutSubmissionsLoading=true;host.textContent=ui('正在载入自行提交记录……','Loading community submission records…');
+    try{
+      const marker='MORIMENS_ASSIST_V1:',rows=[];let page=1;
+      while(page<=5){
+        const response=await fetch('https://textbox.qingdengbuyi.top/api/comment?path='+encodeURIComponent('/__morimens_assist_submissions__/')+'&page='+page+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN',{cache:'no-store'});
+        if(!response.ok)throw new Error('Waline HTTP '+response.status);
+        const payload=await response.json();if(payload?.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
+        const items=Array.isArray(payload?.data)?payload.data:Array.isArray(payload?.data?.data)?payload.data.data:[];
+        for(const item of items){
+          try{
+            const comment=String(item?.comment||''),idx=comment.indexOf(marker);if(idx<0)continue;
+            const encoded=comment.slice(idx+marker.length).trim().split(/\\s/)[0];
+            const bin=atob(encoded),bytes=Uint8Array.from(bin,ch=>ch.charCodeAt(0)),data=JSON.parse(new TextDecoder().decode(bytes));
+            const uid=String(data?.uid||'').trim(),awaker=String(data?.awaker?.name||data?.characterName||data?.characterId||'').trim();
+            if(!uid)continue;
+            rows.push({uid,awaker,insertedAt:item?.insertedAt||data?.fetchedAt||'',source:String(data?.source||'eremora-showcase')});
+          }catch(_){}
+        }
+        const total=Number(payload?.data?.count??payload?.data?.total??payload?.count??payload?.total);
+        if(items.length<100||(Number.isFinite(total)&&page*100>=total))break;
+        page++;
+      }
+      rows.sort((a,b)=>String(b.insertedAt).localeCompare(String(a.insertedAt)));
+      const shown=rows.slice(0,50);
+      host.innerHTML=shown.length?shown.map(row=>{
+        const d=row.insertedAt?new Date(row.insertedAt):null,date=d&&!Number.isNaN(d.getTime())?d.toLocaleString(zh()?'zh-CN':'en-US'):'—';
+        return '<div style="padding:7px 0;border-bottom:1px solid rgba(148,163,184,.12)"><b>UID '+esc(row.uid)+'</b> · '+esc(row.awaker||ui('未知角色','Unknown Awakener'))+'<br><small>'+esc(date)+' · '+ui('Eremora Showcase 自行提交','Eremora Showcase submission')+'</small></div>';
+      }).join(''):(zh()?'暂无自行提交记录。':'No community submissions yet.');
+    }catch(error){
+      console.warn('About submission records unavailable',error);
+      host.textContent=ui('自行提交记录暂时载入失败。','Community submission records are temporarily unavailable.');
+    }finally{aboutSubmissionsLoading=false}
+  }
+
   function aboutHtml(){return `
     <section class="panel" aria-labelledby="morimensAboutTitle">
       <div class="panelHead"><div><p class="eyebrow">ABOUT · CREDITS</p><h2 id="morimensAboutTitle">关于忘忘看报</h2><p class="panelLead">本工具箱为《忘却前夜》玩家制作的粉丝向项目，免费使用，不进行任何商业化运营。</p></div><span class="statusPill">非官方 · 非商业</span></div>
       <div class="sourceList">
         <div class="sourceItem"><strong>数据与资料来源</strong><br>感谢 <a href="https://eremora.com/leaderboard/abyss" target="_blank" rel="noopener noreferrer">Eremora</a> 提供融灾榜单与挑战记录；感谢 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a> 提供角色、技能、命轮及密契等结构化数据；感谢 <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">忘却前夜中文维基</a> 提供中文名称、资料与文本参考。</div>
-        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>
+        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>\n        <div class="sourceItem"><strong>自行提交记录</strong><br><div id="morimensSubmissionRecords">正在载入自行提交记录……</div></div>
         <div class="sourceItem"><strong>GitHub · 半成品 MMA 工具</strong><br>如果有大佬愿意继续做，可以提供一点微不足道的帮助：<a href="https://github.com/Z769018860/MMA-5771" target="_blank" rel="noopener noreferrer">MMA-5771</a></div><div class="sourceItem"><strong>制作者</strong><br>B站：<a href="https://space.bilibili.com/95687310?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">@青灯不弈</a></div>
       </div>
     </section>
@@ -836,7 +873,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     const revision=current.revision||manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
-    const overlay=isCurrent&&manifest.currentOverlay?.path?manifest.currentOverlay:null;
+    const overlay=isCurrent&&manifest.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===sourceSeasonId?manifest.currentOverlay:null;
     const overlayRevision=overlay?.revision||overlay?.updatedAt||revision;
     const rankPath=entry.legacy||entry.coverageMode==='legacy-spreadsheet'?null:(entry.rankPath||(isCurrent?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${sourceSeasonId}.json`):`data/morimens/eremora/rank-index/${entry.snapshotId??entry.seasonId}.json`));
     const [loadedSeason,loadedStats,loadedRanks,loadedLegacyStructured,loadedOverlay,loadedOverlayRanks]=await Promise.all([
@@ -954,7 +991,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
         if($('morimensLoveTab'))$('morimensLoveTab').textContent=zh()?'爱的节奏榜':'Love Rhythm';
         if($('morimensCommentsTab'))$('morimensCommentsTab').textContent=zh()?'留言板':'Guestbook';
       }
-      relocalizeControls();
+      relocalizeControls();if(!document.querySelector('#morimensAboutPanel')?.hidden)loadAboutSubmissionRecords();
       if(manifest){
         const sel=$('dtideSeason');
         if(sel)for(const option of sel.options){
