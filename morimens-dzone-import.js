@@ -704,7 +704,18 @@
         (wantedId&&String(row.submissionId||'')===wantedId)||
         (!wantedId&&String(row.uid)===wantedUid&&Number(row.seasonId)===Number(seasonId)&&normalizeVariant(row.seasonId,row.communityVariant)===wantedVariant)
       );
-      if(hit)return {hit,rows:last};
+      if(hit){
+        const zones=new Set((hit.record?.waves||[]).map(w=>Number(w?.wave)).filter(n=>n>=1&&n<=5));
+        const teams=(hit.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0);
+        const members=(hit.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams||[]).reduce((n,t)=>n+(t?.members?.length||0),0),0);
+        if(zones.size<5||teams<5||members<20){
+          throw new Error(ui(
+            `社区记录已经回读，但紧凑数据还原不完整（${zones.size}/5 Zone、${teams} 支队伍、${members} 个角色槽位），本次不会合并统计。`,
+            `The community record was read back, but compact-data restoration is incomplete (${zones.size}/5 Zones, ${teams} teams, ${members} member slots), so it will not be merged into statistics.`
+          ));
+        }
+        return {hit,rows:last};
+      }
     }
     throw new Error(ui(
       'Waline 返回了提交成功，但公开社区记录中没有回读到这条数据。它可能被评论审核/反垃圾规则隐藏，因此本次不会计入榜单统计。请检查 Waline 后台后重新提交。',
