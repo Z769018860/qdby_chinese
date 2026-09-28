@@ -9,7 +9,7 @@
   const PAGE_SIZE=100;
   let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1;
   const cache=new Map(),playerNames=new Map();
-  const gear={assets:{},wheels:[],covenants:[]};
+  const gear={assets:{},wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),wheelById:new Map(),covenantById:new Map()};
   const zhCovenants={
     'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸',
     'Twisted Twins: Black':'扭曲双子·黑',"Burial Ground's Sighs":'埋骨地絮语','Twisted Twins: White':'扭曲双子·白',
@@ -26,7 +26,12 @@
     'Realm Mastery':'界域精通','REALM_MASTERY':'界域精通','Aliemus Regen':'异质回复',
     'Keyflare Regen':'钥令回复','Sigil Yield':'灵纹获取','Death Resistance':'死亡抗性',
     'Vulnerability':'易伤','Vulnerable':'易伤','Strength':'力量','STR':'力量',
-    'Poison Infliction':'中毒施加','Counter Generation':'反击生成'
+    'Poison Infliction':'中毒施加','Counter Generation':'反击生成',
+    'ATK_PCT':'攻击百分比','HP_PCT':'生命百分比','DEF_PCT':'防御百分比',
+    'Attack %':'攻击百分比','Health %':'生命百分比','Defense %':'防御百分比',
+    'ALIEMUS_REGEN':'异质回复','KEYFLARE_REGEN':'钥令回复','SIGIL_YIELD':'灵纹获取',
+    'DEATH_RESISTANCE':'死亡抗性','VULNERABILITY':'易伤','DMG_BONUS':'伤害加成',
+    'HEAL_BONUS':'治疗加成','HEALING_BONUS':'治疗加成','EFFECT_HIT':'效果命中','EFFECT_RES':'效果抵抗'
   };
 
   function style(){
@@ -52,34 +57,70 @@
     return {key:rec?.id||memberKey(m),name,image:rec?.assets?.portrait||m?.image||''};
   }
   function normName(value){return String(value||'').normalize('NFKC').toLowerCase().replace(/[·・:\-_'’“”"\s]/g,'')}
-  function localAssetPath(record){
-    const key=record?.assets?.icon,asset=key&&gear.assets?.[key],raw=asset?.availability?.path||'';
+  function safeBaseName(raw){
+    const clean=String(raw||'').split('?')[0].split('#')[0],last=clean.split('/').pop()||'';
+    try{return decodeURIComponent(last)}catch{return last}
+  }
+  function imageStem(raw){return safeBaseName(raw).replace(/\.(?:webp|png|jpe?g)$/i,'')}
+  function assetPath(asset){
+    const raw=asset?.availability?.path||'';
     return raw?raw.replace(/^src\/assets\//,'assets/morimens/'):'';
   }
+  function localAssetPath(record){
+    const key=record?.assets?.icon,asset=key&&gear.assets?.[key];
+    return assetPath(asset);
+  }
   function fallbackLocalImage(raw,kind){
-    const clean=String(raw||'').split('?')[0],name=decodeURIComponent(clean.split('/').pop()||'');
-    if(kind==='wheel'&&/^Weapon_(?:Full|Mini)_[^/]+\.webp$/i.test(name))return name.includes('Weapon_Mini_')?'assets/morimens/wheels/Mini/'+name:'assets/morimens/wheels/'+name;
-    if(kind==='covenant'&&/^Icon_Trinket_[^/]+\.webp$/i.test(name))return 'assets/morimens/covenants/Icon/'+name;
+    const stem=imageStem(raw);if(!stem)return '';
+    if(kind==='wheel'&&/^Weapon_(?:Full|Mini)_[^/]+$/i.test(stem))return /^Weapon_Mini_/i.test(stem)?'assets/morimens/wheels/Mini/'+stem+'.webp':'assets/morimens/wheels/'+stem+'.webp';
+    if(kind==='covenant'&&/^Icon_Trinket_[^/]+$/i.test(stem))return 'assets/morimens/covenants/Icon/'+stem+'.webp';
     return '';
+  }
+  function assetFromEquipment(x,kind){
+    const id=String(x?.id||''),stem=imageStem(x?.image),candidates=[id,stem].filter(Boolean);
+    for(const key of candidates){
+      const asset=gear.assetById.get(key)||gear.assetByBase.get(key);
+      if(asset&&(!kind||asset.kind===kind))return asset;
+    }
+    return null;
+  }
+  function recordFromAsset(asset,kind){
+    const owner=String(asset?.ownerId||'');if(!owner)return null;
+    return kind==='wheel'?gear.wheelById.get(owner)||null:kind==='covenant'?gear.covenantById.get(owner)||null:null;
   }
   function wheelRecord(x){
     const id=String(x?.id||''),name=normName(x?.name);
-    return gear.wheels.find(r=>String(r.id)===id||normName(r.name)===name||normName(window.MorimensData?.localizedEntity?.('wheel',r)?.name)===name)||null;
+    const direct=gear.wheelById.get(id)||gear.wheels.find(r=>normName(r.name)===name||normName(window.MorimensData?.localizedEntity?.('wheel',r)?.name)===name);
+    return direct||recordFromAsset(assetFromEquipment(x,'wheel'),'wheel');
   }
   function covenantRecord(x){
     const id=String(x?.id||''),name=normName(x?.name);
-    return gear.covenants.find(r=>String(r.id)===id||normName(r.name)===name||normName(zhCovenants[r.name])===name)||null;
+    const direct=gear.covenantById.get(id)||gear.covenants.find(r=>normName(r.name)===name||normName(zhCovenants[r.name])===name);
+    return direct||recordFromAsset(assetFromEquipment(x,'covenant'),'covenant');
   }
   function wheelName(x){const r=wheelRecord(x);return r?(window.MorimensData?.localizedEntity?.('wheel',r)?.name||r.name):(window.MorimensData?.localizedEntity?.('wheel',x)?.name||x?.name||String(x?.id||ui('未知命轮','Unknown Wheel')))}
   function covenantName(x){const r=covenantRecord(x),raw=r?.name||x?.name||String(x?.id||ui('未知密契','Unknown Covenant'));return zh()?(zhCovenants[raw]||raw):raw}
-  function wheelImage(x){const r=wheelRecord(x);return localAssetPath(r)||fallbackLocalImage(x?.image,'wheel')||x?.image||''}
-  function covenantImage(x){const r=covenantRecord(x);return localAssetPath(r)||fallbackLocalImage(x?.image,'covenant')||x?.image||''}
+  function wheelImage(x){
+    const r=wheelRecord(x),a=assetFromEquipment(x,'wheel');
+    return localAssetPath(r)||assetPath(a)||fallbackLocalImage(x?.image,'wheel')||x?.image||'';
+  }
+  function covenantImage(x){
+    const r=covenantRecord(x),a=assetFromEquipment(x,'covenant');
+    return localAssetPath(r)||assetPath(a)||fallbackLocalImage(x?.image,'covenant')||x?.image||'';
+  }
   async function loadGearMetadata(){
     const repo=window.MorimensRepository;if(!repo)return;
     const [w,c,a]=await Promise.allSettled([repo.catalog('wheels'),repo.catalog('covenants'),repo.index('assets')]);
     gear.wheels=w.status==='fulfilled'?(w.value?.records||[]):[];
     gear.covenants=c.status==='fulfilled'?(c.value?.records||[]):[];
     gear.assets=a.status==='fulfilled'?(a.value?.assets||{}):{};
+    gear.wheelById=new Map(gear.wheels.map(r=>[String(r.id),r]));
+    gear.covenantById=new Map(gear.covenants.map(r=>[String(r.id),r]));
+    gear.assetById=new Map();gear.assetByBase=new Map();
+    for(const asset of Object.values(gear.assets||{})){
+      const assetId=String(asset?.assetId||'');if(assetId)gear.assetById.set(assetId,asset);
+      const base=imageStem(asset?.availability?.path);if(base)gear.assetByBase.set(base,asset);
+    }
   }
   function enlightLabel(m){
     const p=Number(m?.potencyLevel);
