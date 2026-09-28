@@ -197,7 +197,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为自动导入：只需填写 UID 与助战角色，由访问者浏览器直接调用 Eremora Showcase，读取角色等级、启灵、命轮及叠位、密契套装与最终汇总词条。自动导入负责“当前配置”，同一 UID + 角色的历史融灾借用次数仍继续累计并显示。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为剪贴板导入：填写 UID 与助战角色后打开对应 Eremora Showcase 数据页，复制 JSON，再由本站从剪贴板或粘贴框解析并导入。当前配置与同一 UID + 角色的历史融灾借用次数继续合并累计。</div>
         <div class="sourceItem"><strong>2026-09-24 · 英文适配完善</strong><br>完成忘忘看报英文模式的系统性审阅与补全：覆盖旧版 v0.3 启动框架、伤害计算器角色专属资源、伤害事件明细、融灾榜单与旧版425榜单、爱的节奏榜、留言板、更新日志、关于页及动态生成文本；Waline 留言板语言会随中英文切换同步更新，并修复动态文本、title、placeholder、aria-label 在重绘后的翻译监听。</div>
         <div class="sourceItem"><strong>2026-09-21 · 伤害计算器审查与精简</strong><br>继续同步 SKeyDB 角色、衍生卡、启灵、灵知觉醒、跨战斗成长、界域与状态伤害逻辑；修复衍生卡力量倍率与超限解析，统一灵知觉醒开关，密契默认按完整 6 件套计算；移除我方献祭层数、延迟献祭及仅用于记录但不参与当前伤害公式的冗余状态输入。</div>
         <div class="sourceItem"><strong>2026-09-21 · 融灾榜单数据与筛选修复</strong><br>统一搜索配队与榜单统计的数据口径：当前期按 UID 合并基础缓存与 Top500 增量，并同步最新排名；角色身份统一映射到 SKeyDB canonical ID，修复同一角色因游戏 ID、英文名或中文名不同而被拆分统计的问题，同时统一队伍去重、Top5 队友、助战率、界域与类型筛选。</div>
@@ -242,19 +242,35 @@
         <span>查看图文 / 视频教程 →</span>
       </a>
       <details class="assistSubmitBox" id="assistSubmitBox">
-        <summary><strong>＋ 自动增加助战信息</strong><span>填写 UID + 助战角色，自动从 Eremora Showcase 读取完整配置</span></summary>
-        <form id="assistSubmitForm" class="assistSubmitForm">
+        <summary><strong>＋ 导入助战信息</strong><span>UID + 角色 → 打开 Eremora 数据页 → 复制 JSON → 导入</span></summary>
+        <form id="assistSubmitForm" class="assistSubmitForm" onsubmit="return false">
           <div class="assistSubmitGrid assistSubmitGridCompact">
             <label><span>玩家 UID <b>*</b></span><input id="assistSubmitUid" name="uid" inputmode="numeric" autocomplete="off" pattern="[0-9]{5,20}" maxlength="20" required placeholder="例如 100759759"></label>
             <label><span>助战角色 <b>*</b></span><select id="assistSubmitCharacter" name="character" required><option value="">正在读取角色…</option></select></label>
           </div>
-          <div class="assistAutoImportInfo">
-            <strong>自动读取内容</strong>
-            <span>角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。</span>
-            <small>数据来源：<code>eremora.com/api/showcase?uid=UID&amp;tid=角色ID</code>。请求由当前访问者浏览器直接发出，会使用访问者自己的网络出口、浏览器环境与可用 Eremora Cookie；不会通过 GitHub Action 或本站服务端代理。</small>
+          <div class="assistClipboardSteps">
+            <div class="assistClipboardStep"><b>1</b><div><strong>打开 Eremora Showcase 数据页</strong><span>会根据上面的 UID 和助战角色自动生成正确的 <code>uid + tid</code> 地址。</span></div></div>
+            <div class="assistSubmitActions">
+              <button class="primaryBtn" id="assistOpenShowcase" type="button">① 打开 Eremora 数据页</button>
+              <button class="ghostBtn" id="assistCopyShowcaseUrl" type="button">复制数据页地址</button>
+            </div>
+            <div class="assistShowcaseUrl" id="assistShowcaseUrlPreview">请先填写 UID 并选择助战角色。</div>
+            <div class="assistClipboardStep"><b>2</b><div><strong>复制页面中的 JSON</strong><span>电脑：<code>Ctrl+A → Ctrl+C</code>；手机：长按页面内容 → 全选 → 复制。</span></div></div>
+            <div class="assistClipboardStep"><b>3</b><div><strong>返回本页并导入</strong><span>优先点击“从剪贴板读取并导入”。若手机浏览器不允许网页读取剪贴板，可在下方输入框长按“粘贴”，粘贴完成后会自动导入。</span></div></div>
+            <div class="assistSubmitActions">
+              <button class="primaryBtn" id="assistClipboardImport" type="button">③ 从剪贴板读取并导入</button>
+              <span id="assistSubmitStatus" aria-live="polite"></span>
+            </div>
+            <label class="assistPasteLabel" for="assistPasteShowcase"><span>手机 / Safari 兜底：长按下方区域并粘贴 JSON</span>
+              <textarea id="assistPasteShowcase" rows="5" spellcheck="false" placeholder="在这里粘贴 Eremora Showcase 返回的 JSON；检测到有效 JSON 后会自动导入。"></textarea>
+            </label>
           </div>
-          <p class="assistSubmitPrivacy">导入后 UID 与公开助战配置会显示在互助助战列表中。若该 UID + 角色已有自动导入记录，将以最新一次导入结果为准。</p>
-          <div class="assistSubmitActions"><button class="primaryBtn" id="assistSubmitButton" type="submit">自动读取并导入</button><span id="assistSubmitStatus" aria-live="polite"></span></div>
+          <div class="assistAutoImportInfo">
+            <strong>导入内容</strong>
+            <span>角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。</span>
+            <small>这种方式不会跨域读取 Eremora：Eremora 数据页由你自己正常打开，本站只读取你主动复制/粘贴回来的 JSON。导入的当前配置仍会与 68/69 期历史助战使用次数合并。</small>
+          </div>
+          <p class="assistSubmitPrivacy">请只导入本人或已公开的助战信息。若同一 UID + 角色已有导入记录，将以最新一次导入配置为准，历史融灾使用次数不会被清零。</p>
         </form>
       </details>
             <div class="assistFilters">
