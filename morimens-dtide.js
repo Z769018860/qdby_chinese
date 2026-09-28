@@ -197,7 +197,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；新增跨设备在线补充表单，可提交 UID、玩家名、助战角色、等级、启灵、命轮叠位、密契套装及可选最终词条。在线补充配置与历史融灾使用次数分开标记，不会将手填配置计入实战使用次数。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为自动导入：只需填写 UID 与助战角色，页面会调用 Eremora Showcase 接口自动读取角色等级、启灵、命轮及叠位、密契套装与最终汇总词条。自动导入配置与历史融灾使用次数分开标记，不计入实战使用次数。</div>
         <div class="sourceItem"><strong>2026-09-24 · 英文适配完善</strong><br>完成忘忘看报英文模式的系统性审阅与补全：覆盖旧版 v0.3 启动框架、伤害计算器角色专属资源、伤害事件明细、融灾榜单与旧版425榜单、爱的节奏榜、留言板、更新日志、关于页及动态生成文本；Waline 留言板语言会随中英文切换同步更新，并修复动态文本、title、placeholder、aria-label 在重绘后的翻译监听。</div>
         <div class="sourceItem"><strong>2026-09-21 · 伤害计算器审查与精简</strong><br>继续同步 SKeyDB 角色、衍生卡、启灵、灵知觉醒、跨战斗成长、界域与状态伤害逻辑；修复衍生卡力量倍率与超限解析，统一灵知觉醒开关，密契默认按完整 6 件套计算；移除我方献祭层数、延迟献祭及仅用于记录但不参与当前伤害公式的冗余状态输入。</div>
         <div class="sourceItem"><strong>2026-09-21 · 融灾榜单数据与筛选修复</strong><br>统一搜索配队与榜单统计的数据口径：当前期按 UID 合并基础缓存与 Top500 增量，并同步最新排名；角色身份统一映射到 SKeyDB canonical ID，修复同一角色因游戏 ID、英文名或中文名不同而被拆分统计的问题，同时统一队伍去重、Top5 队友、助战率、界域与类型筛选。</div>
@@ -242,29 +242,22 @@
         <span>查看图文 / 视频教程 →</span>
       </a>
       <details class="assistSubmitBox" id="assistSubmitBox">
-        <summary><strong>＋ 在线补充助战信息</strong><span>跨设备公开显示 · 可补充当前常用助战配置</span></summary>
+        <summary><strong>＋ 自动增加助战信息</strong><span>填写 UID + 助战角色，自动从 Eremora Showcase 读取完整配置</span></summary>
         <form id="assistSubmitForm" class="assistSubmitForm">
-          <div class="assistSubmitGrid">
-            <label><span>玩家 UID <b>*</b></span><input id="assistSubmitUid" name="uid" inputmode="numeric" autocomplete="off" pattern="[0-9]{5,20}" maxlength="20" required placeholder="例如 100239011"></label>
-            <label><span>玩家名</span><input id="assistSubmitPlayer" name="player" maxlength="30" placeholder="选填"></label>
+          <div class="assistSubmitGrid assistSubmitGridCompact">
+            <label><span>玩家 UID <b>*</b></span><input id="assistSubmitUid" name="uid" inputmode="numeric" autocomplete="off" pattern="[0-9]{5,20}" maxlength="20" required placeholder="例如 100759759"></label>
             <label><span>助战角色 <b>*</b></span><select id="assistSubmitCharacter" name="character" required><option value="">正在读取角色…</option></select></label>
-            <label><span>角色等级 <b>*</b></span><input id="assistSubmitLevel" name="level" type="number" min="1" max="100" value="90" required></label>
-            <label><span>启灵数 <b>*</b></span><select id="assistSubmitEnlightenment" name="enlightenment" required>
-              <option value="0启">0启</option><option value="1启">1启</option><option value="2启">2启</option><option value="3启">3启</option><option value="+4超限">+4 超限</option><option value="最终法则">最终法则（AA）</option>
-            </select></label>
-            <label><span>命轮 <b>*</b></span><select id="assistSubmitWheel" name="wheel" required><option value="">正在读取命轮…</option></select></label>
-            <label><span>命轮叠位 <b>*</b></span><select id="assistSubmitWheelStack" name="wheelStack" required><option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option><option value="4">+4</option><option value="5">+5</option><option value="6">+6</option><option value="7">+7</option><option value="8">+8</option><option value="9">+9</option><option value="10">+10</option><option value="11">+11</option><option value="12">+12</option></select></label>
-            <label><span>密契套装 <b>*</b></span><select id="assistSubmitCovenant" name="covenant" required><option value="">正在读取密契…</option></select></label>
           </div>
-          <div class="assistSubmitAttrs">
-            <div class="assistSubmitAttrsHead"><div><strong>密契最终词条属性</strong><small>选填；填写六件密契最终汇总值，不需要逐片填写</small></div><button type="button" class="ghostBtn" id="assistAddAttr">＋ 增加词条</button></div>
-            <div id="assistSubmitAttrRows"></div>
+          <div class="assistAutoImportInfo">
+            <strong>自动读取内容</strong>
+            <span>角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。</span>
+            <small>数据来源：<code>eremora.com/api/showcase?uid=UID&amp;tid=角色ID</code>。不再手动填写配置，避免结构化字段录入错误。</small>
           </div>
-          <p class="assistSubmitPrivacy">提交后 UID、玩家名（如填写）和助战配置会公开显示。请只提交本人或已公开的助战信息。</p>
-          <div class="assistSubmitActions"><button class="primaryBtn" id="assistSubmitButton" type="submit">提交助战信息</button><span id="assistSubmitStatus" aria-live="polite"></span></div>
+          <p class="assistSubmitPrivacy">导入后 UID 与公开助战配置会显示在互助助战列表中。若该 UID + 角色已有自动导入记录，将以最新一次导入结果为准。</p>
+          <div class="assistSubmitActions"><button class="primaryBtn" id="assistSubmitButton" type="submit">自动读取并导入</button><span id="assistSubmitStatus" aria-live="polite"></span></div>
         </form>
       </details>
-      <div class="assistFilters">
+            <div class="assistFilters">
         <div class="dtideField"><label for="assistSeason">期次</label><select id="assistSeason"><option value="all" selected>全部期次（68 + 69）</option><option value="69">第 69 期</option><option value="68">第 68 期</option></select></div>
         <div class="dtideField"><label for="assistUidFilter">玩家 UID</label><input id="assistUidFilter" type="search" inputmode="numeric" placeholder="输入 UID 搜索"></div>
         <div class="dtideField"><label for="assistCharacterFilter">挂的助战角色</label><select id="assistCharacterFilter"><option value="">全部角色</option></select></div>
