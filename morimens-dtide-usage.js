@@ -126,7 +126,7 @@
     try{
       const base=await loader.loadRankMap(path,{revision:dataVersion,fresh:true});
       rankByUid=new Map(base||[]);
-      const overlayPath=manifest?.currentOverlay?.rankPath;
+      const overlayPath=Number(manifest?.currentOverlay?.seasonId)===Number(id)?manifest?.currentOverlay?.rankPath:null;
       if(overlayPath){
         const overlayRevision=manifest?.currentOverlay?.revision||manifest?.currentOverlay?.updatedAt||dataVersion;
         const overlay=await loader.loadRankMap(overlayPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('usage layer rank override unavailable',error);return new Map()});
@@ -402,7 +402,7 @@
       activeSeason=Number(id);await loadRankMap(id);
       const baseUsage=await dataset((current||entry).path);
       let overlayUsage=null;
-      if(current&&manifest?.currentOverlay?.path){
+      if(current&&manifest?.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===activeSeason){
         overlayUsage=await dataset(manifest.currentOverlay.path).catch(error=>{console.warn('usage layer current overlay unavailable',error);return null});
       }
       usage=mergeUsageByUid(baseUsage,overlayUsage);
