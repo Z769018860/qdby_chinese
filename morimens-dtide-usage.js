@@ -20,7 +20,7 @@
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
   const covenantZh={'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸','Twisted Twins: Black':'扭曲双子·黑','Burial Ground\'s Sighs':'埋骨地絮语','Cursed Rabbit':'诅咒兔','Organic Form':'有机形态','Photosynthesis Ritual':'光合祭礼','Paradox':'二律背反','Returnal Line':'海归线','April Tribute':'四月礼赞','Life Drain':'生机榨取','Dream of Medicine':'入药之梦','Sweet Slug':'甜蜜蛞蝓','Ring of Chamber 36':'36室之环','Twisted Twins: White':'扭曲双子·白','Feast from Afar':'远方的欢宴','Steppenwolf':'荒原狼','Unstained Chronicle':'无垢启示录','Cocoon of the Maiden':'少女之蛹'};
   const creationZhOfficial={'Black Candle':'黑烛','Chaos Ring':'「混沌指轮」','Aequor Ring':'「深海指轮」','Truth Unbound':'无拘真理','Rusted Key':'锈蚀钥匙','Tilted Scales':'失衡的天平','Kaleidoscope':'万花筒','Plague Record':'瘟疫记录','Filigree Agate':'缠丝玛瑙','Omen Ritual Bird':'厄运仪式鸟','True North Compass':'定向罗盘','Time Scarab':'时间圣甲虫','Guardian Hand':'守护之手','Alfonso\'s Artifact':'阿方索的造物','Blessed Blood':'祝福之血','Vitality Injection':'活性注射器','Silver Tongue':'巧舌','Forgotten Loom':'遗忘织机','Chronometric Device':'精密计时器','Spatial Deflector':'空间偏转器','Mythag Insignia':'弥萨格徽章','Weeping Pipe':'哭泣烟斗','In Twilight':'在夕光里','Serpent\'s Husk':'怪蛇残蜕','Silent Prelude':'无声前奏','Iron Lock':'重锁','Foreign Stamp Album':'异乡邮票夹','Malignant Child':'恶童','Preserved Butterfly':'封存蝴蝶','Celestial Astrolabe':'天体星盘','Lucky Rabbit\'s Paw':'幸运兔脚','Octahedron Dice':'偏方骰子','Lucky Windcoat':'幸运风衣','Veil of the Nameless Deity':'无名之神的面纱','Big Mouth Button':'大嘴纽扣','Forgotten Prelude':'遗忘前奏','Proto Battery':'原型电池','Hyperstring Pocketwatch':'超弦怀表','Vision Corrector':'视力矫正器','Solar Disc':'日月轮盘','Relic of the Past':'往昔遗物','Radium Jawbone':'镭制颚骨','Neurotoxin':'神经毒素','Arcana Relic':'阿尔卡纳遗物','Rite of Spring':'春之祭','Mute Jukebox':'失声唱机','Easter Moment':'复活节时刻','Bloody Pebble':'血色卵石','Highest Honor':'无上荣宠','Voyager\'s Parasol':'旅行者阳伞','Forsaken Blood':'被遗忘者之血','Putney Morning Post':'帕特尼晨报','Brand-New Wallet':'崭新的钱包','Phantom Hand':'幻影之手','Differential Engine':'银白差分机','Deceased\'s Chrono':'亡者时计','Nameless Appendage':'无名附肢','Fleeting Beauty':'美丽瞬间','Crimson Brooch':'猩红胸针','Rusted Saw':'锈蚀锯','Gilded Reverie':'镀金遐想','Our Home':'我们的家','Tiny Music Box':'小小音乐盒','Arcane Gloves':'秘法手套','Luminous Hourglass':'发光沙漏','Harford\'s Elixir':'哈福德灵药','Laurel Cufflinks':'月桂袖扣','Severed Head Worm':'断头虫','Chant of the Tides':'潮汐颂歌','Other Tongue':'异舌','Dearest Babe':'至爱宝贝','Nettle Vest':'荨麻背心','Arcana Archive':'阿尔卡纳记录','Submersible Helm':'潜水头盔','Safe Passage':'安全通行','Lemurian Delight':'利莫里亚之悦','Ritual Dagger':'仪式匕首','Trigon Prism':'三棱镜','Yellow Snail':'黄蜗牛','Prophet\'s Lamp':'先知之灯','Rhind Papyrus':'莱因德纸草','Stellar Brew':'群星之酒','Doctor\'s Case':'医生手提箱','Uncanny Salve':'诡异药膏','Rusty Lancet':'锈蚀柳叶刀','Hierophant\'s Staff':'祭司权杖'};
-  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,activeSeasonKey='',activeCommunityVariant='default',activeEntry=null,bound=false,dataVersion='1',gearByName=new Map(),rankByUid=new Map(),communityUsageMetaByUid=new Map();
+  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,activeSeasonKey='',activeCommunityVariant='default',activeEntry=null,bound=false,dataVersion='1',gearByName=new Map(),rankByUid=new Map(),rankScoreByUid=new Map(),communityUsageMetaByUid=new Map();
 
   function scoreRange(){
     const raw=String($('dtideTotalScore')?.value||'all');
@@ -29,9 +29,16 @@
     if(parts.length===2){const lo=parts[0]===''?-Infinity:Number(parts[0]),hi=parts[1]===''?Infinity:Number(parts[1]);if(!Number.isNaN(lo)&&!Number.isNaN(hi))return [lo,hi]}
     const exact=Number(raw);return Number.isFinite(exact)&&exact>=0?[exact,exact]:null;
   }
+  function scoreOf(record){
+    const own=Number(record?.score);
+    if(record?.communityUpdate&&Number.isFinite(own))return own;
+    const mapped=rankScoreByUid.get(String(record?.uid??''));
+    if(Number.isFinite(mapped))return mapped;
+    return own;
+  }
   function scoreMatches(record){
     const range=scoreRange();if(!range)return true;
-    const score=Number(record?.score);return Number.isFinite(score)&&score>=range[0]&&score<=range[1];
+    const score=scoreOf(record);return Number.isFinite(score)&&score>=range[0]&&score<=range[1];
   }
   function rankOf(record){
     const mapped=rankByUid.get(String(record?.uid??''));
@@ -151,23 +158,38 @@
   function activeCharacterFilters(){return {realms:new Set([...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(x=>String(x.dataset.realm))),roles:new Set([...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(x=>String(x.dataset.role)))}}
   function characterMatchesFilters(character){const {realms,roles}=activeCharacterFilters(),characterRealms=character?.realms||new Set(),characterRoles=character?.roles||new Set();return (!realms.size||[...realms].some(x=>characterRealms.has(x)))&&(!roles.size||[...roles].some(x=>characterRoles.has(x)))}
   async function loadRankMap(id,entry=null){
-    rankByUid=new Map();
+    rankByUid=new Map();rankScoreByUid=new Map();
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadRankMap)return rankByUid;
     const isCurrent=!entry?.snapshotId&&Number(id)===Number(manifest?.currentSeason);
     const path=entry?.rankPath||(isCurrent?manifest?.rankIndex?.path:null)||`data/morimens/eremora/rank-index/${id}.json`;
     try{
-      const base=await loader.loadRankMap(path,{revision:dataVersion,fresh:true});
+      const [base,baseDoc]=await Promise.all([
+        loader.loadRankMap(path,{revision:dataVersion,fresh:true}),
+        json(path,{fresh:true}).catch(error=>{console.warn('usage layer rank score index unavailable',error);return null})
+      ]);
       rankByUid=new Map(base||[]);
+      for(const row of baseDoc?.rows||[]){
+        const uid=String(row?.uid??''),score=Number(row?.score);
+        if(uid&&Number.isFinite(score))rankScoreByUid.set(uid,score);
+      }
       const overlayPath=entry?.overlayRankPath||(isCurrent&&Number(manifest?.currentOverlay?.seasonId)===Number(id)?manifest?.currentOverlay?.rankPath:null);
       if(overlayPath){
         const overlayRevision=entry?.overlayRevision||entry?.overlayUpdatedAt||manifest?.currentOverlay?.revision||manifest?.currentOverlay?.updatedAt||dataVersion;
-        const overlay=await loader.loadRankMap(overlayPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('usage layer rank override unavailable',error);return new Map()});
+        const [overlay,overlayDoc]=await Promise.all([
+          loader.loadRankMap(overlayPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('usage layer rank override unavailable',error);return new Map()}),
+          json(overlayPath,{fresh:true}).catch(error=>{console.warn('usage layer score override unavailable',error);return null})
+        ]);
         for(const [uid,rank] of overlay||[])rankByUid.set(String(uid),rank);
+        for(const row of overlayDoc?.rows||[]){
+          const uid=String(row?.uid??''),score=Number(row?.score);
+          if(uid&&Number.isFinite(score))rankScoreByUid.set(uid,score);
+        }
       }
-    }catch(e){console.warn('rank index unavailable',id,e);rankByUid=new Map()}
+    }catch(e){console.warn('rank index unavailable',id,e);rankByUid=new Map();rankScoreByUid=new Map()}
     return rankByUid;
   }
+
   function scopedRows({cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',wave='all',clearType=$('dtideClearType')?.value||'all'}={}){
     return flatten().filter(x=>{
       if(!rankMatches(x.record,cap))return false;
