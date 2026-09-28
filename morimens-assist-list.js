@@ -66,11 +66,11 @@
       .assistGear{display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}.assistGearCard{display:grid;grid-template-columns:34px minmax(0,1fr);gap:7px;align-items:start;min-width:145px;max-width:230px;padding:6px 8px;border:1px solid rgba(148,163,184,.16);border-radius:9px;background:#111827}.assistGearCard>img{width:34px;height:34px;border-radius:7px;object-fit:contain;background:#0b1220}.assistGearCard b{display:block;font-size:10px;color:#e9eef5;line-height:1.25}.assistGearCard small{display:block;margin-top:2px;color:#8794a6;font-size:9px;line-height:1.3}.assistGearTextOnly{grid-template-columns:minmax(0,1fr)}.assistAttrList{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}.assistAttr{padding:2px 5px;border-radius:6px;background:rgba(217,179,108,.09);border:1px solid rgba(217,179,108,.16);color:#d9c59e;font-size:8px;line-height:1.25;white-space:nowrap}.assistSuitLine{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}.assistSuitTag,.assistSeasonTag{display:inline-flex;align-items:center;padding:3px 6px;border-radius:7px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);font-size:9px;color:#b6c0ce}.assistCount{font-size:16px;color:#f1d69f;font-weight:900;font-variant-numeric:tabular-nums}
       .assistBuildMeta{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.assistBuildMeta span{padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#c4ceda}.assistBuildMeta b{color:#f0d69f;font-weight:800}.assistSource{display:flex;flex-direction:column;gap:5px;align-items:flex-start}.assistSourceTag{display:inline-flex;align-items:center;padding:4px 7px;border-radius:8px;font-size:9px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);color:#bac5d2}.assistSourceTag.online{border-color:rgba(88,220,246,.34);background:rgba(88,220,246,.08);color:#8de9fb}.assistSource small{font-size:8px;color:#758398}.assistManualUse{color:#8de9fb;font-size:10px;font-weight:800}.assistCountCell{text-align:center;vertical-align:middle!important}
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
-      .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select,.assistSubmitAttrRow input,.assistSubmitAttrRow select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus,.assistSubmitAttrRow input:focus,.assistSubmitAttrRow select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
-      .assistSubmitAttrs{margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.13);border-radius:11px;background:rgba(5,10,16,.24)}.assistSubmitAttrsHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:9px}.assistSubmitAttrsHead strong{display:block;font-size:11px;color:#dce6f2}.assistSubmitAttrsHead small{display:block;margin-top:2px;color:#718096;font-size:9px}.assistSubmitAttrRow{display:grid;grid-template-columns:minmax(150px,1.4fr) minmax(90px,.7fr) 86px 34px;gap:7px;margin-top:7px}.assistAttrRemove{border:1px solid rgba(220,100,100,.2);background:rgba(220,100,100,.07);color:#e69a9a;border-radius:8px;cursor:pointer}.assistAttrRemove:hover{background:rgba(220,100,100,.13)}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9}
+      .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
+      .assistAutoImportInfo{margin-top:13px;padding:12px 14px;border:1px solid rgba(88,220,246,.14);border-radius:10px;background:rgba(88,220,246,.045);display:flex;flex-direction:column;gap:3px}.assistAutoImportInfo strong{color:#bceffa;font-size:11px}.assistAutoImportInfo span{color:#c4cfda;font-size:10px}.assistAutoImportInfo small{color:#718096;font-size:9px}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
             @media(max-width:850px){.assistFilters{grid-template-columns:1fr 1fr}.assistFilterAction{grid-column:span 2}}
       @media(max-width:900px){.assistSubmitGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.assistTable{min-width:900px}}
-      @media(max-width:560px){.assistFilters{grid-template-columns:1fr}.assistFilterAction{grid-column:auto}.assistSubmitGrid{grid-template-columns:1fr}.assistSubmitAttrRow{grid-template-columns:1fr 90px 75px 34px}.assistSubmitBox>summary{align-items:flex-start;flex-direction:column;gap:3px}}
+      @media(max-width:560px){.assistFilters{grid-template-columns:1fr}.assistFilterAction{grid-column:auto}.assistSubmitGrid{grid-template-columns:1fr}.assistSubmitBox>summary{align-items:flex-start;flex-direction:column;gap:3px}}
     `;document.head.appendChild(s);
   }
 
@@ -307,9 +307,77 @@
   }
   function manualKey(row){return [row.uid,row.characterKey].join('|')}
   function manualRowFromPayload(payload,meta={}){
-    if(!payload||payload.version!==1)return null;
+    if(!payload||![1,2].includes(Number(payload.version)))return null;
     const uid=String(payload.uid||'').trim();
     if(!/^\d{5,20}$/.test(uid))return null;
+
+    if(Number(payload.version)===2){
+      const charId=String(payload.characterId||payload.awaker?.id||'');
+      const charRec=gear.awakenerById.get(charId)||null;
+      const char=charRec?displayAwakener(charRec):{
+        key:charId,
+        name:String(payload.awaker?.name||charId||ui('未知角色','Unknown Awakener')),
+        image:String(payload.awaker?.image||'')
+      };
+      if(!char.key)return null;
+
+      const wheels=(Array.isArray(payload.weapons)?payload.weapons:[]).map(x=>{
+        const rec=wheelRecord(x);
+        return {
+          id:String(rec?.id??x?.id??x?.name??''),
+          name:wheelName(x),
+          image:wheelImage(x),
+          level:x?.level??null,
+          enhanceLevel:x?.enhanceLevel??x?.enhance_level??null
+        };
+      }).filter(x=>x.id||x.name);
+
+      const covenants=(Array.isArray(payload.suits)?payload.suits:[]).map(x=>{
+        const rec=covenantRecord(x);
+        return {
+          id:String(rec?.id??x?.id??x?.name??''),
+          name:covenantName(x),
+          image:covenantImage(x),
+          count:x?.count??null
+        };
+      }).filter(x=>x.id||x.name);
+
+      const attrs=(Array.isArray(payload.attrs)?payload.attrs:[]).map(a=>{
+        const raw=Number(a?.value);if(!Number.isFinite(raw))return null;
+        return {
+          id:String(a?.id??a?.name??''),
+          name:String(a?.name??a?.id??''),
+          value:raw,
+          percentage:!!a?.percentage,
+          percentPoints:!!a?.percentage
+        };
+      }).filter(a=>a?.id||a?.name);
+
+      const player=cleanPlayerName(payload.player||'').slice(0,30);
+      if(player)playerNames.set(uid,player);
+      return {
+        uid,
+        player:player||playerNames.get(uid)||'',
+        characterKey:char.key,
+        characterName:char.name,
+        characterImage:char.image,
+        level:payload.level??null,
+        enlightenment:enlightLabel({potencyLevel:payload.potencyLevel}),
+        wheels,
+        covenants,
+        trinkets:[],
+        finalAttrs:attrs,
+        count:null,
+        borrowers:new Set(),
+        seasons:new Set(),
+        manual:true,
+        source:'showcase',
+        submittedAt:String(meta.insertedAt||payload.fetchedAt||payload.submittedAt||''),
+        commentId:String(meta.objectId||'')
+      };
+    }
+
+    // Legacy V1 submissions remain readable for backward compatibility.
     const charRec=gear.awakenerById.get(String(payload.characterId||''));if(!charRec)return null;
     const char=displayAwakener(charRec);
     const wheelRec=gear.wheelById.get(String(payload.wheelId||''));if(!wheelRec)return null;
@@ -331,7 +399,6 @@
     return {
       uid,player:player||playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,
       level,enlightenment:String(payload.enlightenment||ui('未知','Unknown')).slice(0,20),
-
       wheels:[wheel],covenants:[cov],trinkets:[],finalAttrs:attrs,
       count:null,borrowers:new Set(),seasons:new Set(),manual:true,source:'online',
       submittedAt:String(meta.insertedAt||payload.submittedAt||''),commentId:String(meta.objectId||'')
@@ -368,59 +435,117 @@
       return bc-ac||String(b.submittedAt||'').localeCompare(String(a.submittedAt||''))||a.uid.localeCompare(b.uid,'en',{numeric:true});
     });
   }
-  function submitStatOptions(){
-    return [...new Set(Object.values(statZh))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
-  }
-  function addAttrRow(name='',value='',percentage=true){
-    const host=$('assistSubmitAttrRows');if(!host||host.children.length>=8)return;
-    const row=document.createElement('div');row.className='assistSubmitAttrRow';
-    row.innerHTML='<select class="assistSubmitAttrName" aria-label="'+ui('词条属性','Stat')+'"><option value="">'+ui('选择词条','Select stat')+'</option>'+submitStatOptions().map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')+'</select><input class="assistSubmitAttrValue" type="number" step="0.01" placeholder="'+ui('数值','Value')+'" aria-label="'+ui('词条数值','Stat value')+'"><select class="assistSubmitAttrUnit" aria-label="'+ui('单位','Unit')+'"><option value="percent">%</option><option value="number">'+ui('数值','Value')+'</option></select><button type="button" class="assistAttrRemove" aria-label="'+ui('删除词条','Remove stat')+'">×</button>';
-    host.appendChild(row);
-    if(name)row.querySelector('.assistSubmitAttrName').value=name;
-    if(value!==''&&value!=null)row.querySelector('.assistSubmitAttrValue').value=value;
-    row.querySelector('.assistSubmitAttrUnit').value=percentage?'percent':'number';
-    row.querySelector('.assistAttrRemove').addEventListener('click',()=>row.remove());
-  }
   function populateSubmitForm(){
-    const char=$('assistSubmitCharacter'),wheel=$('assistSubmitWheel'),cov=$('assistSubmitCovenant');if(!char||!wheel||!cov)return;
-    const cv=char.value,wv=wheel.value,sv=cov.value;
-    char.innerHTML='<option value="">'+ui('请选择助战角色','Select Awakener')+'</option>'+gear.awakeners.map(r=>displayAwakener(r)).filter(x=>x.key).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en')).map(x=>'<option value="'+esc(x.key)+'">'+esc(x.name)+'</option>').join('');
-    wheel.innerHTML='<option value="">'+ui('请选择命轮','Select Wheel')+'</option>'+gear.wheels.map(r=>({id:String(r.id),name:wheelName(r)})).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en')).map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('');
-    cov.innerHTML='<option value="">'+ui('请选择密契套装','Select Covenant set')+'</option>'+gear.covenants.map(r=>({id:String(r.id),name:covenantName(r)})).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en')).map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('');
-    if([...char.options].some(o=>o.value===cv))char.value=cv;if([...wheel.options].some(o=>o.value===wv))wheel.value=wv;if([...cov.options].some(o=>o.value===sv))cov.value=sv;
+    const char=$('assistSubmitCharacter');if(!char)return;
+    const current=char.value;
+    const options=gear.awakeners.map(r=>displayAwakener(r)).filter(x=>x.key).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en'));
+    char.innerHTML='<option value="">'+ui('请选择助战角色','Select Awakener')+'</option>'+options.map(x=>'<option value="'+esc(x.key)+'">'+esc(x.name)+'</option>').join('');
+    if([...char.options].some(o=>o.value===current))char.value=current;
   }
-  function collectSubmitAttrs(){
-    return [...document.querySelectorAll('#assistSubmitAttrRows .assistSubmitAttrRow')].map(row=>{
-      const name=String(row.querySelector('.assistSubmitAttrName')?.value||'').trim(),value=Number(row.querySelector('.assistSubmitAttrValue')?.value);
-      if(!name||!Number.isFinite(value))return null;
-      return {name,value,percentage:row.querySelector('.assistSubmitAttrUnit')?.value==='percent'};
-    }).filter(Boolean);
+  function aggregateShowcaseAttrs(trinkets){
+    const map=new Map();
+    for(const item of Array.isArray(trinkets)?trinkets:[])for(const a of Array.isArray(item?.attrs)?item.attrs:[]){
+      const id=String(a?.id??a?.name??'').trim();if(!id)continue;
+      const raw=Number(a?.value);if(!Number.isFinite(raw))continue;
+      const percentage=!!a?.percentage,key=id+'|'+(percentage?1:0);
+      const row=map.get(key)||{id,name:String(a?.name||id),value:0,percentage};
+      row.value+=percentage&&Math.abs(raw)<=1?raw*100:raw;
+      map.set(key,row);
+    }
+    return [...map.values()].sort((a,b)=>statName(a).localeCompare(statName(b),'zh-CN'));
+  }
+  function normalizeShowcasePayload(uid,tid,data){
+    if(!data||typeof data!=='object'||!data.awaker)throw new Error(ui('Showcase 返回缺少角色数据','Showcase response has no Awakener data'));
+    const awakerId=String(data.awaker?.id??'');
+    if(!awakerId)throw new Error(ui('Showcase 返回缺少角色 ID','Showcase response has no Awakener ID'));
+    if(String(tid)!==awakerId)throw new Error(ui('返回角色与所选角色不一致','Returned Awakener does not match the selected one'));
+    return {
+      version:2,
+      source:'eremora-showcase',
+      uid:String(uid),
+      player:playerNames.get(String(uid))||'',
+      characterId:awakerId,
+      awaker:{
+        id:data.awaker?.id,
+        name:data.awaker?.name,
+        image:data.awaker?.image||data.awaker?.mini||''
+      },
+      level:data.level??null,
+      potencyLevel:data.potency_level??null,
+      weapons:(Array.isArray(data.weapons)?data.weapons:[]).map(x=>({
+        id:x?.id,
+        name:x?.name,
+        image:x?.image,
+        level:x?.level??null,
+        enhanceLevel:x?.enhance_level??x?.enhanceLevel??null
+      })),
+      suits:(Array.isArray(data.suits)?data.suits:[]).map(x=>({
+        id:x?.id,
+        name:x?.name,
+        image:x?.image,
+        count:x?.count??null
+      })),
+      attrs:aggregateShowcaseAttrs(data.trinkets),
+      fetchedAt:new Date().toISOString()
+    };
+  }
+  async function fetchShowcase(uid,tid){
+    const url='https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
+    let response;
+    try{
+      response=await fetch(url,{method:'GET',mode:'cors',credentials:'omit',cache:'no-store'});
+    }catch(e){
+      const err=new Error(ui('浏览器无法访问 Eremora Showcase，可能被 CORS 或 Cloudflare 拦截','Browser could not access Eremora Showcase; CORS or Cloudflare may be blocking the request'));
+      err.cause=e;throw err;
+    }
+    if(!response.ok)throw new Error('Eremora Showcase HTTP '+response.status);
+    let data;
+    try{data=await response.json()}catch{throw new Error(ui('Eremora Showcase 返回的不是有效 JSON','Eremora Showcase did not return valid JSON'))}
+    return {url,data};
+  }
+  async function persistShowcasePayload(payload){
+    const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
+    const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        nick:payload.player||'Eremora Showcase',
+        mail:'',
+        link:'',
+        comment,
+        url:SUBMISSION_PATH,
+        ua:navigator.userAgent||''
+      })
+    });
+    if(!response.ok)throw new Error('Waline HTTP '+response.status);
+    const result=await response.json();
+    if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
+    return result;
   }
   async function submitAssist(event){
     event.preventDefault();
     const form=event.currentTarget,button=$('assistSubmitButton'),status=$('assistSubmitStatus');
     if(!form.reportValidity())return;
-    const payload={
-      version:1,uid:String($('assistSubmitUid')?.value||'').trim(),player:String($('assistSubmitPlayer')?.value||'').trim(),
-      characterId:String($('assistSubmitCharacter')?.value||''),level:Number($('assistSubmitLevel')?.value||0),
-      enlightenment:String($('assistSubmitEnlightenment')?.value||''),
-      wheelId:String($('assistSubmitWheel')?.value||''),wheelStack:Number($('assistSubmitWheelStack')?.value||0),
-      covenantId:String($('assistSubmitCovenant')?.value||''),attrs:collectSubmitAttrs(),submittedAt:new Date().toISOString()
-    };
-    if(!/^\d{5,20}$/.test(payload.uid)){if(status)status.textContent=ui('UID 格式不正确','Invalid UID');return}
-    if(!gear.awakenerById.has(payload.characterId)||!gear.wheelById.has(payload.wheelId)||!gear.covenantById.has(payload.covenantId)){if(status)status.textContent=ui('请选择有效的角色、命轮和密契','Select valid build options');return}
-    if(button)button.disabled=true;if(status)status.textContent=ui('正在提交…','Submitting…');
+    const uid=String($('assistSubmitUid')?.value||'').trim(),tid=String($('assistSubmitCharacter')?.value||'').trim();
+    if(!/^\d{5,20}$/.test(uid)){if(status)status.textContent=ui('UID 格式不正确','Invalid UID');return}
+    if(!tid||!gear.awakenerById.has(tid)){if(status)status.textContent=ui('请选择有效的助战角色','Select a valid Awakener');return}
+    if(button)button.disabled=true;
+    if(status)status.textContent=ui('正在从 Eremora 读取 Showcase…','Reading Showcase from Eremora…');
     try{
-      const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
-      const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick:payload.player||'匿名守密人',mail:'',link:'',comment,url:SUBMISSION_PATH,ua:navigator.userAgent||''})});
-      if(!response.ok)throw new Error('HTTP '+response.status);
-      const result=await response.json();if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
-      if(status)status.textContent=ui('提交成功；如开启审核，审核后会显示','Submitted; if moderation is enabled, it will appear after approval');
-      form.reset();$('assistSubmitLevel').value='90';$('assistSubmitAttrRows').innerHTML='';addAttrRow();
-      await loadManualRows();await load(activeSeason);
+      const {data}=await fetchShowcase(uid,tid);
+      const payload=normalizeShowcasePayload(uid,tid,data);
+      if(status)status.textContent=ui('读取成功，正在导入…','Showcase loaded. Importing…');
+      await persistShowcasePayload(payload);
+      if(status)status.textContent=ui('自动导入成功','Imported from Eremora successfully');
+      form.reset();
+      await loadManualRows();
+      await load(activeSeason);
     }catch(e){
-      console.error('Assist submission failed',e);if(status)status.textContent=ui('提交失败，请稍后重试','Submission failed, please retry');
-    }finally{if(button)button.disabled=false}
+      console.error('Showcase assist import failed',e);
+      if(status)status.textContent=ui('自动导入失败：','Import failed: ')+(e?.message||String(e));
+    }finally{
+      if(button)button.disabled=false;
+    }
   }
   function optionRows(list,selector){
     const map=new Map();
@@ -473,7 +598,7 @@
   function sourceHtml(row){
     if(row.manual){
       const date=row.submittedAt?new Date(row.submittedAt):null,valid=date&&!Number.isNaN(date.getTime());
-      return '<div class="assistSource"><span class="assistSourceTag online">'+ui('在线补充','Online submission')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+'</div>';
+      return '<div class="assistSource"><span class="assistSourceTag online">'+(row.source==='showcase'?ui('Eremora 自动导入','Eremora import'):ui('旧版在线补充','Legacy submission'))+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+'</div>';
     }
     return '<div class="assistSource">'+(seasonTags(row)||'<span class="assistSourceTag">'+ui('历史记录','Historical')+'</span>')+'</div>';
   }
@@ -497,8 +622,8 @@
       '<th>'+ui('使用','Uses')+'</th>'+
       '</tr></thead><tbody>'+shown.map(r=>{
         const playerCell='<td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未匹配到玩家名','Player name unavailable')+'</small>')+'</td>';
-        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+(r.manual?ui('玩家在线补充的当前配置','Current build submitted online'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players')))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
-        const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+ui('玩家补充','Submitted')+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span></td>';
+        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+(r.manual?(r.source==='showcase'?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):ui('旧版在线补充配置','Legacy submitted build')):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players')))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
+        const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+(r.source==='showcase'?ui('自动导入','Imported'):ui('旧版补充','Legacy'))+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span></td>';
         return '<tr class="'+(r.manual?'assistManualRow':'assistObservedRow')+'">'+playerCell+roleCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
       }).join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
     host?.querySelectorAll('[data-copy-uid]').forEach(btn=>btn.addEventListener('click',()=>copyUid(btn.dataset.copyUid,btn)));
@@ -526,7 +651,6 @@
     for(const id of ['assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
     $('assistUidFilter')?.addEventListener('input',()=>{page=1;render()});
     $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
-    $('assistAddAttr')?.addEventListener('click',()=>addAttrRow());
     $('assistSubmitForm')?.addEventListener('submit',submitAssist);
   }
   function error(e){
@@ -540,7 +664,7 @@
       for(let i=0;i<50&&!$('morimensAssistPanel');i++)await new Promise(r=>setTimeout(r,100));
       if(!$('morimensAssistPanel'))return;
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error('manifest HTTP '+response.status);
-      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();populateSubmitForm();if($('assistSubmitAttrRows')&&!$('assistSubmitAttrRows').children.length)addAttrRow();bind();initialized=true;await load($('assistSeason')?.value||'all');
+      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();populateSubmitForm();bind();initialized=true;await load($('assistSeason')?.value||'all');
     }catch(e){error(e)}finally{loading=false}
   }
   function relocalize(){
