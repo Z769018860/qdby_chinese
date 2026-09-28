@@ -216,7 +216,7 @@ def norm_activity(item,entry,decoded,catalog):
         if not isinstance(sr,dict):continue
         team=sr.get("team")
         if not isinstance(team,dict) or not isinstance(team.get("awakers"),list):continue
-        st=sr.get("stage") if isinstance(sr.get("stage"),dict) else {};sn=fix_text(st.get("name") or "");m=re.search(r"Wave\s*(\d+)",sn,re.I)
+        st=sr.get("stage") if isinstance(sr.get("stage"),dict) else {};sn=fix_text(st.get("name") or "");m=re.search(r"(?:Wave|Zone)\s*(\d+)",sn,re.I)
         if not m:continue
         result=team.get("result") if isinstance(team.get("result"),dict) else {}
         rows.append({"wave":int(m.group(1)),"madness":num(st.get("rec_level")),"stageId":st.get("id") if st.get("id") is not None else team.get("stage_tid"),
@@ -285,7 +285,7 @@ def main():
         except Exception as ex:
             fail.append({"uid":uid,"rank":entry.get("rank"),"file":str(f),"errorType":type(ex).__name__,"error":str(ex)});print(f"[FAIL] {uid}: {ex}")
     for sid,mp in seasons.items():
-        existing=load_json(data/"seasons"/f"{sid}.json",{"records":[]});merged={str(x.get("uid")):x for x in existing.get("records",[]) if isinstance(x,dict)}
+        existing=({"records":[]} if sid==args.season else load_json(data/"seasons"/f"{sid}.json",{"records":[]}));merged={str(x.get("uid")):x for x in existing.get("records",[]) if isinstance(x,dict)}
         for uid,r in mp.items():merged[uid]=merge_rec(merged.get(uid),r)
         recs=list(merged.values())
         if sid==args.season:recs.sort(key=lambda x:(x.get("rank") if x.get("rank") is not None else 999999,-(x.get("score") or 0)))
