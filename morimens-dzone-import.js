@@ -31,7 +31,14 @@
     el.textContent=message||'';
   }
   function context(){return window.MorimensDtideCommunity?.getContext?.()||null}
-  function selectedSeasonId(){const ctx=context();return Number(ctx?.selectedSeasonId||ctx?.currentSeason||0)||0}
+  function selectedSeasonId(){
+    const ctx=context();
+    const contextSeason=Number(ctx?.selectedSeasonId||ctx?.currentSeason||0);
+    if(Number.isFinite(contextSeason)&&contextSeason>0)return contextSeason;
+    const selected=String($('dtideSeason')?.value||'').trim();
+    if(/^\d+$/.test(selected)){const value=Number(selected);if(Number.isFinite(value)&&value>0)return value}
+    return 0;
+  }
   function currentOnly(){
     const ctx=context();
     return !!ctx&&Number(ctx.selectedSeasonId)===Number(ctx.currentSeason)&&!ctx.legacy;
@@ -92,13 +99,23 @@
     const host=anchor.closest('.dtideHero')||anchor.parentElement||anchor;
     host.insertAdjacentElement('afterend',box);
     mounted=true;
-    $('dtideCommunityUid')?.addEventListener('input',updateUrlPreview);
+    const uidInput=$('dtideCommunityUid');
+    uidInput?.addEventListener('input',updateUrlPreview);
+    uidInput?.addEventListener('change',updateUrlPreview);
+    uidInput?.addEventListener('keyup',updateUrlPreview);
+    uidInput?.addEventListener('paste',()=>setTimeout(updateUrlPreview,0));
+    uidInput?.addEventListener('focus',updateUrlPreview);
+    box.addEventListener('toggle',()=>{if(box.open)updateUrlPreview()});
+    $('dtideSeason')?.addEventListener('change',()=>setTimeout(updateUrlPreview,0));
     $('dtideCommunityCopyUrl')?.addEventListener('click',copyImportUrl);
     $('dtideCommunityClipboard')?.addEventListener('click',readClipboard);
     $('dtideCommunitySubmit')?.addEventListener('click',submitPasted);
     $('dtideCommunityRefresh')?.addEventListener('click',()=>syncCommunity(true));
     $('dtideCommunityOpen')?.addEventListener('click',event=>{if(event.currentTarget.getAttribute('aria-disabled')==='true')event.preventDefault()});
     refreshUi();
+    setTimeout(updateUrlPreview,0);
+    setTimeout(updateUrlPreview,250);
+    setTimeout(updateUrlPreview,1000);
   }
 
   function refreshUi(){
