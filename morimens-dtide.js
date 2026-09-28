@@ -266,8 +266,9 @@
             <div class="assistSubmitActions">
               <a class="primaryBtn" id="assistOpenProfileData" href="#" target="_blank" rel="noopener noreferrer">② 打开完整资料数据页</a>
               <button class="ghostBtn" id="assistCopyProfileDataUrl" type="button">复制完整资料地址</button>
+              <a class="ghostBtn" id="assistOpenProfilePage" href="#" target="_blank" rel="noopener noreferrer">资料页文本兜底</a>
             </div>
-            <div class="assistShowcaseUrl" id="assistProfileDataUrlPreview">完整资料页会用于补充技能与灵塑。</div>
+            <div class="assistShowcaseUrl" id="assistProfileDataUrlPreview">完整资料数据用于补充技能与灵塑；若原始数据页无法解析，可打开“资料页文本兜底”，全选复制页面文字后粘贴。</div>
             <div class="assistClipboardStep"><b>2</b><div><strong>分别复制需要的数据</strong><span>Showcase JSON 用于命轮/密契；完整资料 <code>__data.json</code> 用于技能与灵塑。两者可分两次粘贴，系统会更新同一 UID + 角色记录。</span></div></div>
             <div class="assistClipboardStep"><b>3</b><div><strong>返回本页并导入</strong><span>优先点击“从剪贴板读取并导入”。若手机浏览器不允许网页读取剪贴板，可在下方输入框长按“粘贴”，粘贴完成后会自动导入。</span></div></div>
             <div class="assistSubmitActions">
