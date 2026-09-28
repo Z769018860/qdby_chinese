@@ -361,8 +361,89 @@
       card.insertAdjacentElement('afterend',detail);card.setAttribute('aria-expanded','true');
     };
   }
+
+  function mutualAssistMemberMatchesFilters(member){
+    const {realms,roles}=activeCharacterFilters(),dims=characterDimensions(member);
+    return (!realms.size||(dims.realm!=null&&realms.has(String(dims.realm))))&&(!roles.size||(dims.role!=null&&roles.has(String(dims.role))));
+  }
+  function buildMutualAssistPairs(){
+    const records=usage?.records||[],players=new Map();
+    for(const record of records){
+      const uid=String(record?.uid??'').trim();if(!uid)continue;
+      players.set(uid,{
+        uid,
+        name:decodeMojibake(record?.player||record?.name||uid),
+        rank:rankOf(record)
+      });
+    }
+    const directed=new Map(),seen=new Set();let assistEvents=0;
+    for(const {record,wave,team} of scopedRows()){
+      const borrower=String(record?.uid??'').trim();if(!borrower)continue;
+      for(const member of team?.members||[]){
+        if(!member?.borrowed)continue;
+        const provider=String(member?.assistUid??member?.assist_uid??'').trim();
+        if(!provider||provider==='0'||provider===borrower||!mutualAssistMemberMatchesFilters(member))continue;
+        const characterKey=String(memberKey(member)||member?.id||member?.name||'unknown');
+        const battle=String(team?.battleUuid||team?.battle_uuid||team?.wid||team?.stageId||team?.stageName||'');
+        const eventKey=[borrower,provider,battle,String(wave?.wave??''),characterKey].join('|');
+        if(seen.has(eventKey))continue;
+        seen.add(eventKey);assistEvents++;
+        const key=borrower+'>'+provider,row=directed.get(key)||{borrower,provider,count:0,characters:new Map(),waves:new Map()};
+        row.count++;
+        const info=characterInfo(member),characterName=info?.name||member?.canonicalName||member?.name||characterKey;
+        row.characters.set(characterName,(row.characters.get(characterName)||0)+1);
+        const waveKey=String(wave?.wave??'?');row.waves.set(waveKey,(row.waves.get(waveKey)||0)+1);
+        directed.set(key,row);
+      }
+    }
+    const pairKeys=new Set();
+    for(const row of directed.values()){
+      const pair=[row.borrower,row.provider].sort((a,b)=>a.localeCompare(b,'en',{numeric:true}));
+      pairKeys.add(pair.join('|'));
+    }
+    const pairs=[];
+    for(const pairKey of pairKeys){
+      const [a,b]=pairKey.split('|'),aFromB=directed.get(a+'>'+b),bFromA=directed.get(b+'>'+a);
+      if(!aFromB||!bFromA)continue;
+      pairs.push({
+        a:players.get(a)||{uid:a,name:a,rank:null},
+        b:players.get(b)||{uid:b,name:b,rank:null},
+        aFromB,bFromA,
+        total:aFromB.count+bFromA.count,
+        balanced:Math.min(aFromB.count,bFromA.count)
+      });
+    }
+    pairs.sort((x,y)=>y.total-x.total||y.balanced-x.balanced||(x.a.rank??999999)-(y.a.rank??999999)||(x.b.rank??999999)-(y.b.rank??999999));
+    return {pairs,assistEvents,directedEdges:directed.size,teamRows:scopedRows().length};
+  }
+  function renderMutualAssistList(){
+    const host=$('dtideMatrix');if(!host)return;
+    const title=$('dtideMatrixTitle');if(title)title.textContent=ui('互助助战列表','Mutual Assist List');
+    const legend=$('dtideRatioLegend');if(legend){legend.innerHTML='';legend.removeAttribute('aria-label')}
+    const {pairs,assistEvents,directedEdges,teamRows}=buildMutualAssistPairs();
+    if(!assistEvents){
+      host.innerHTML='<div class="dtideEmpty">'+ui('当前期次/筛选范围没有可用的助战来源 UID 数据。','No assist-provider UID data is available for the current season/filter scope.')+'</div>';
+      return;
+    }
+    const playerCell=player=>{
+      const rank=Number.isFinite(Number(player?.rank))?'#'+Number(player.rank):ui('排名未知','Rank unknown');
+      return '<div class="dtideMutualPlayer"><a href="https://eremora.com/u/'+encodeURIComponent(player.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(player.name||player.uid)+'</a><small>'+rank+' · UID '+esc(player.uid)+'</small></div>';
+    };
+    const chars=direction=>[...direction.characters.entries()].sort((a,b)=>b[1]-a[1]||String(a[0]).localeCompare(String(b[0]),'zh-CN')).map(([name,count])=>esc(name)+' ×'+count).join('、');
+    host.innerHTML='<div class="dtideNotice dtideMutualMeta">'+
+      (zh()
+        ?'当前筛选范围共识别 <b>'+assistEvents+'</b> 条有效助战借用记录、<b>'+directedEdges+'</b> 条有向玩家关系，并形成 <b>'+pairs.length+'</b> 对双向互助关系。仅当 A 借过 B 且 B 也借过 A 时列入本表；同一战斗/波次/角色会去重。'
+        :'The current scope contains <b>'+assistEvents+'</b> valid assist-borrow events, <b>'+directedEdges+'</b> directed player relationships, and <b>'+pairs.length+'</b> reciprocal pairs. A pair is listed only when A borrowed from B and B also borrowed from A; duplicate battle/wave/character events are removed.')+
+      '</div>'+
+      (pairs.length
+        ?'<table class="dtideTable dtideMutualTable"><thead><tr><th>#</th><th>'+ui('玩家 A','Player A')+'</th><th>'+ui('玩家 B','Player B')+'</th><th>'+ui('A 借 B','A from B')+'</th><th>'+ui('B 借 A','B from A')+'</th><th>'+ui('互助总次数','Total')+'</th><th>'+ui('助战角色明细','Assist Details')+'</th></tr></thead><tbody>'+
+          pairs.map((pair,index)=>'<tr><td class="dtideLegacyRank">'+(index+1)+'</td><td>'+playerCell(pair.a)+'</td><td>'+playerCell(pair.b)+'</td><td class="dtideRate">'+pair.aFromB.count+'</td><td class="dtideRate">'+pair.bFromA.count+'</td><td class="dtideRate">'+pair.total+'</td><td class="dtideMutualDetail"><div><b>'+esc(pair.a.name||pair.a.uid)+' ← '+esc(pair.b.name||pair.b.uid)+'</b>：'+chars(pair.aFromB)+'</div><div><b>'+esc(pair.b.name||pair.b.uid)+' ← '+esc(pair.a.name||pair.a.uid)+'</b>：'+chars(pair.bFromA)+'</div></td></tr>').join('')+
+          '</tbody></table>'
+        :'<div class="dtideEmpty">'+ui('当前筛选范围存在助战记录，但没有形成双向互助关系。','Assist records exist in the current scope, but no reciprocal player pairs were found.')+'</div>');
+  }
+
   function renderMatrix(){
-    const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';
+    const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';if(entity==='mutual'){renderMutualAssistList();return;}
     const sortKey=window.__dtideMatrixSort||'total',asc=window.__dtideMatrixAsc||false,currentRecords=entity==='character'?(usage?.records||[]):(detailUsage?.records||[]),previousRecords=entity==='character'?(previousUsage?.records||[]):(previousDetailUsage?.records||[]);
     const current=rankedRows(currentRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),{waves,hit:getHit}=current,rows=entity==='character'?current.rows.map((c,i)=>({...c,fullRank:i+1})).filter(characterMatchesFilters):current.rows;
     const prior=rankedRows(previousRecords,entity,{cap,difficulty,clearType:ct,sortKey,asc}),previousRanks=new Map(prior.rows.map((x,i)=>[x.key,i+1]));
