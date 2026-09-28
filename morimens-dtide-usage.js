@@ -150,18 +150,18 @@
   function flatten(records=usage?.records||[]){const unique=new Map(),richness=t=>(t.token?8:0)+(t.creations?.length||0)*3+(t.members||[]).reduce((n,m)=>n+(m.wheels?.length||m.weapons?.length||0)*4+(m.covenants?.length||m.suits?.length||(m.covenant?1:0))*4+(m.covenantScore!=null?2:0)+(m.level!=null?1:0)+(m.enlightenment?.length||0),0);for(const record of records){const rank=rankOf(record),normalized=rank!=null&&record.rank!==rank?{...record,rank}:record;for(const wave of normalized.waves||[])for(const team of wave.teams||[]){const difficulty=difficultyOf(team,wave),members=(team.members||[]).map(memberKey).filter(Boolean).sort().join(','),key=[normalized.uid||normalized.rank||'',wave.wave||'',team.clearType||'',difficulty,members].join('|'),row={record:normalized,wave,team,difficulty},old=unique.get(key);if(!old||richness(team)>richness(old.team))unique.set(key,row)}}return [...unique.values()]}
   function activeCharacterFilters(){return {realms:new Set([...document.querySelectorAll('#dtideRealmFilters .dtideFilterChip.isActive')].map(x=>String(x.dataset.realm))),roles:new Set([...document.querySelectorAll('#dtideRoleFilters .dtideFilterChip.isActive')].map(x=>String(x.dataset.role)))}}
   function characterMatchesFilters(character){const {realms,roles}=activeCharacterFilters(),characterRealms=character?.realms||new Set(),characterRoles=character?.roles||new Set();return (!realms.size||[...realms].some(x=>characterRealms.has(x)))&&(!roles.size||[...roles].some(x=>characterRoles.has(x)))}
-  async function loadRankMap(id){
+  async function loadRankMap(id,entry=null){
     rankByUid=new Map();
-    if(Number(id)!==Number(manifest?.currentSeason))return rankByUid;
     const loader=window.MorimensDtideDataLoader;
-    const path=manifest?.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`;
     if(!loader?.loadRankMap)return rankByUid;
+    const isCurrent=!entry?.snapshotId&&Number(id)===Number(manifest?.currentSeason);
+    const path=entry?.rankPath||(isCurrent?manifest?.rankIndex?.path:null)||`data/morimens/eremora/rank-index/${id}.json`;
     try{
       const base=await loader.loadRankMap(path,{revision:dataVersion,fresh:true});
       rankByUid=new Map(base||[]);
-      const overlayPath=Number(manifest?.currentOverlay?.seasonId)===Number(id)?manifest?.currentOverlay?.rankPath:null;
+      const overlayPath=entry?.overlayRankPath||(isCurrent&&Number(manifest?.currentOverlay?.seasonId)===Number(id)?manifest?.currentOverlay?.rankPath:null);
       if(overlayPath){
-        const overlayRevision=manifest?.currentOverlay?.revision||manifest?.currentOverlay?.updatedAt||dataVersion;
+        const overlayRevision=entry?.overlayRevision||entry?.overlayUpdatedAt||manifest?.currentOverlay?.revision||manifest?.currentOverlay?.updatedAt||dataVersion;
         const overlay=await loader.loadRankMap(overlayPath,{revision:overlayRevision,fresh:true}).catch(error=>{console.warn('usage layer rank override unavailable',error);return new Map()});
         for(const [uid,rank] of overlay||[])rankByUid.set(String(uid),rank);
       }
@@ -437,11 +437,12 @@
       activeSeason=sourceSeasonId;
       activeSeasonKey=String(entry.communityTargetKey??entry.snapshotId??entry.seasonId);
       activeCommunityVariant=String(entry.communityVariant||(sourceSeasonId===69?'prebug':'default'));
-      communityUsageMetaByUid=new Map();await loadRankMap(sourceSeasonId);
+      communityUsageMetaByUid=new Map();await loadRankMap(sourceSeasonId,entry);
       const baseUsage=await dataset((current||entry).path);
       let overlayUsage=null;
-      if(current&&manifest?.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===activeSeason){
-        overlayUsage=await dataset(manifest.currentOverlay.path).catch(error=>{console.warn('usage layer current overlay unavailable',error);return null});
+      const overlayPath=entry.overlayPath||(current&&manifest?.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===activeSeason?manifest.currentOverlay.path:null);
+      if(overlayPath){
+        overlayUsage=await dataset(overlayPath).catch(error=>{console.warn('usage layer overlay unavailable',error);return null});
       }
       usage=mergeUsageByUid(baseUsage,overlayUsage);
       if(overlayUsage?.records?.length)console.info('D-Zone usage overlay merged',{base:baseUsage?.records?.length||0,overlay:overlayUsage.records.length,effective:usage?.records?.length||0});
