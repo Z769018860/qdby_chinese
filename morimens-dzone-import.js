@@ -581,7 +581,13 @@
     const meta=selectedTargetMeta(),rows=submissionHistory.filter(x=>Number(x.seasonId)===meta.seasonId&&normalizeVariant(x.seasonId,x.communityVariant)===meta.communityVariant).slice(0,HISTORY_LIMIT);
     const seasonCount=submissionHistory.filter(x=>Number(x.seasonId)===meta.seasonId&&normalizeVariant(x.seasonId,x.communityVariant)===meta.communityVariant).length;
     if(count)count.textContent=ui(`${seasonCount} 条`,` ${seasonCount} records`);
-    host.innerHTML=rows.length?rows.map(row=>`<div class="dtideCommunityHistoryRow"><b>UID ${esc(row.uid)}</b><span>${esc(formatTime(row.submittedAt))}</span><span>${ui('更新人：','By: ')}${esc(row.submittedBy||ui('匿名','Anonymous'))}</span></div>`).join(''):`<div class="dtideCommunityHistoryRow"><span>${ui('所选期次暂无自行更新记录。','No community updates for the selected season yet.')}</span></div>`;
+    host.innerHTML=rows.length?rows.map(row=>{
+      const teams=(row.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0),zones=(row.record?.waves||[]).length;
+      const score=row.record?.score??row.record?.currentScore??'—';
+      const phase=Number(row.seasonId)===69?(normalizeVariant(row.seasonId,row.communityVariant)==='postbug'?ui('Bug后','Post-bug'):ui('Bug前','Pre-bug')):'';
+      const detail=ui(`第 ${row.seasonId} 期${phase?' · '+phase:''} · ${score} 分 · ${zones} Zone · ${teams} 支队伍`,`Season ${row.seasonId}${phase?' · '+phase:''} · ${score} pts · ${zones} Zones · ${teams} teams`);
+      return `<div class="dtideCommunityHistoryRow"><b>UID ${esc(row.uid)}</b><span>${esc(detail)}<br>${esc(formatTime(row.submittedAt))}</span><span>${ui('更新人：','By: ')}${esc(row.submittedBy||ui('匿名','Anonymous'))}</span></div>`;
+    }).join(''):`<div class="dtideCommunityHistoryRow"><span>${ui('所选期次暂无自行更新记录。','No community updates for the selected season yet.')}</span></div>`;
   }
   async function syncCommunity(force=false){
     if(syncing)return;
