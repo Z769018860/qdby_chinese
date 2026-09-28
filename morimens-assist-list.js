@@ -440,8 +440,49 @@
     return manualRows;
   }
   function mergeManual(base){
-    const all=[...manualRows,...base];
-    return all.sort((a,b)=>{
+    const showcase=new Map(),legacy=[];
+    for(const row of manualRows){
+      if(row?.source==='showcase')showcase.set(manualKey(row),row);
+      else legacy.push(row);
+    }
+
+    const observedByKey=new Map();
+    for(const row of base||[]){
+      const key=manualKey(row),bucket=observedByKey.get(key)||[];
+      bucket.push(row);observedByKey.set(key,bucket);
+    }
+
+    const out=[];
+    const consumed=new Set();
+    for(const [key,imported] of showcase){
+      const observed=observedByKey.get(key)||[];
+      const borrowers=new Set(),seasons=new Set();
+      let count=0,player=imported.player||'';
+      for(const row of observed){
+        const n=Number(row.count);if(Number.isFinite(n))count+=n;
+        for(const uid of row.borrowers||[])borrowers.add(uid);
+        for(const season of row.seasons||[])seasons.add(season);
+        if(!player&&row.player)player=row.player;
+      }
+      out.push({
+        ...imported,
+        player,
+        count,
+        borrowers,
+        seasons,
+        manual:false,
+        imported:true,
+        source:'showcase'
+      });
+      consumed.add(key);
+    }
+
+    for(const row of base||[])if(!consumed.has(manualKey(row)))out.push(row);
+    // Keep legacy hand-entered rows readable, but they are not treated as observed usage.
+    out.push(...legacy);
+
+    return out.sort((a,b)=>{
+      if(!!a.imported!==!!b.imported)return a.imported?-1:1;
       if(!!a.manual!==!!b.manual)return a.manual?-1:1;
       const ac=Number.isFinite(Number(a.count))?Number(a.count):-1,bc=Number.isFinite(Number(b.count))?Number(b.count):-1;
       return bc-ac||String(b.submittedAt||'').localeCompare(String(a.submittedAt||''))||a.uid.localeCompare(b.uid,'en',{numeric:true});
@@ -508,24 +549,27 @@
     };
   }
   async function fetchShowcase(uid,tid){
-    const direct='https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
-    const proxy='/api/morimens-showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
-    const attempts=[
-      {url:direct,options:{method:'GET',mode:'cors',credentials:'omit',cache:'no-store'},label:'direct'},
-      {url:proxy,options:{method:'GET',credentials:'same-origin',cache:'no-store'},label:'proxy'}
-    ];
-    let lastError=null;
-    for(const attempt of attempts){
-      try{
-        const response=await fetch(attempt.url,attempt.options);
-        if(!response.ok){lastError=new Error((attempt.label==='direct'?'Eremora Showcase ':'Showcase proxy ')+'HTTP '+response.status);continue}
-        const data=await response.json();
-        if(data?.ok===false){lastError=new Error(data.message||ui('Showcase 代理请求失败','Showcase proxy request failed'));continue}
-        return {url:direct,data,transport:attempt.label};
-      }catch(e){lastError=e}
+    const url='https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
+    try{
+      const response=await fetch(url,{
+        method:'GET',
+        mode:'cors',
+        credentials:'include',
+        cache:'no-store',
+        redirect:'follow',
+        headers:{Accept:'application/json'}
+      });
+      if(!response.ok)throw new Error('Eremora Showcase HTTP '+response.status);
+      const data=await response.json();
+      return {url,data,transport:'visitor-browser'};
+    }catch(error){
+      const message=error?.message||String(error);
+      const err=new Error(ui(
+        '浏览器直连 Eremora Showcase 失败。当前请求已使用你的 IP、浏览器与 Eremora Cookie；若仍失败，通常是 Eremora 的 CORS/Cloudflare 阻止跨站脚本读取。',
+        'Direct browser request to Eremora Showcase failed. The request used your IP, browser and Eremora cookies; if it still fails, Eremora CORS/Cloudflare is likely blocking cross-site script access.'
+      )+' ('+message+')');
+      err.cause=error;throw err;
     }
-    const err=new Error(ui('无法读取 Eremora Showcase；直连和站内代理均失败','Unable to read Eremora Showcase; both direct and same-origin proxy requests failed'));
-    err.cause=lastError;throw err;
   }
   async function persistShowcasePayload(payload){
     const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
@@ -621,21 +665,24 @@
     return [...(row.seasons||[])].sort((a,b)=>Number(a)-Number(b)).map(s=>'<span class="assistSeasonTag">'+ui('第 '+s+' 期','Season '+s)+'</span>').join('');
   }
   function sourceHtml(row){
+    const date=row.submittedAt?new Date(row.submittedAt):null,valid=date&&!Number.isNaN(date.getTime());
+    if(row.imported||row.source==='showcase'){
+      return '<div class="assistSource"><span class="assistSourceTag online">'+ui('Eremora 自动导入','Eremora import')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+(seasonTags(row)?'<div>'+seasonTags(row)+'</div>':'<small>'+ui('暂无历史借用记录','No historical borrow record')+'</small>')+'</div>';
+    }
     if(row.manual){
-      const date=row.submittedAt?new Date(row.submittedAt):null,valid=date&&!Number.isNaN(date.getTime());
-      return '<div class="assistSource"><span class="assistSourceTag online">'+(row.source==='showcase'?ui('Eremora 自动导入','Eremora import'):ui('旧版在线补充','Legacy submission'))+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+'</div>';
+      return '<div class="assistSource"><span class="assistSourceTag online">'+ui('旧版在线补充','Legacy submission')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+'</div>';
     }
     return '<div class="assistSource">'+(seasonTags(row)||'<span class="assistSourceTag">'+ui('历史记录','Historical')+'</span>')+'</div>';
   }
   function render(){
     const list=filtered(),pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE));page=Math.min(page,pages);
     const shown=list.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE);
-    const uses=list.reduce((n,r)=>n+(Number.isFinite(Number(r.count))?Number(r.count):0),0),manualCount=list.filter(r=>r.manual).length,uids=new Set(list.map(r=>r.uid)),chars=new Set(list.map(r=>r.characterKey));
+    const uses=list.reduce((n,r)=>n+(Number.isFinite(Number(r.count))?Number(r.count):0),0),manualCount=list.filter(r=>r.imported||r.manual).length,uids=new Set(list.map(r=>r.uid)),chars=new Set(list.map(r=>r.characterKey));
     if($('assistSummary'))$('assistSummary').innerHTML=[
       [ui('助战提供者','Assist Providers'),uids.size],
       [ui('助战配置','Assist Configurations'),list.length],
       [ui('融灾使用次数','D-Zone Uses'),uses],
-      [ui('在线补充','Online Submissions'),manualCount]
+      [ui('自动导入 / 补充','Imports / Submissions'),manualCount]
     ].map(([a,b])=>'<div class="dtideStat"><small>'+esc(a)+'</small><strong>'+esc(b)+'</strong></div>').join('');
     const host=$('assistTable');
     if(host)host.innerHTML=shown.length?'<table class="dtideTable assistTable"><thead><tr>'+
@@ -647,9 +694,9 @@
       '<th>'+ui('使用','Uses')+'</th>'+
       '</tr></thead><tbody>'+shown.map(r=>{
         const playerCell='<td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未匹配到玩家名','Player name unavailable')+'</small>')+'</td>';
-        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+(r.manual?(r.source==='showcase'?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):ui('旧版在线补充配置','Legacy submitted build')):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players')))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
-        const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+(r.source==='showcase'?ui('自动导入','Imported'):ui('旧版补充','Legacy'))+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span></td>';
-        return '<tr class="'+(r.manual?'assistManualRow':'assistObservedRow')+'">'+playerCell+roleCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
+        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+((r.imported||r.source==='showcase')?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):(r.manual?ui('旧版在线补充配置','Legacy submitted build'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players'))))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
+        const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+ui('旧版补充','Legacy')+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span>'+(r.imported?'<small style="display:block;margin-top:4px;color:#718096">'+ui('历史实战累计','Historical observed uses')+'</small>':'')+'</td>';
+        return '<tr class="'+(r.imported?'assistManualRow':(r.manual?'assistManualRow':'assistObservedRow'))+'">'+playerCell+roleCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
       }).join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
     host?.querySelectorAll('[data-copy-uid]').forEach(btn=>btn.addEventListener('click',()=>copyUid(btn.dataset.copyUid,btn)));
     const pager=$('assistPager');
@@ -667,8 +714,8 @@
     if(note){
       const counts=bundle.map(({seasonId,data})=>'第 '+seasonId+' 期 '+Number(data?.recordCount||data?.records?.length||0)+' 条').join(' + ');
       note.innerHTML=zh()
-        ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>在线补充</b>是玩家提交的当前常用助战配置，会单独标记且不计入“融灾使用次数”。同一 UID + 同一助战角色的在线补充只显示最新一条。'
-        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Online submissions are shown as current player-provided builds and are never counted as observed D-Zone uses.';
+        ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>Eremora 自动导入</b>只覆盖当前助战配置，来源会明确标记，但同一 UID + 角色的历史融灾借用次数、借用人数与期次会继续合并累计。'
+        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
     }
   }
   function bind(){
