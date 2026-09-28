@@ -249,7 +249,7 @@
             <label><span>玩家名</span><input id="assistSubmitPlayer" name="player" maxlength="30" placeholder="选填"></label>
             <label><span>助战角色 <b>*</b></span><select id="assistSubmitCharacter" name="character" required><option value="">正在读取角色…</option></select></label>
             <label><span>角色等级 <b>*</b></span><input id="assistSubmitLevel" name="level" type="number" min="1" max="100" value="90" required></label>
-            <label><span>启灵 <b>*</b></span><select id="assistSubmitEnlightenment" name="enlightenment" required>
+            <label><span>启灵数 <b>*</b></span><select id="assistSubmitEnlightenment" name="enlightenment" required>
               <option value="0启">0启</option><option value="1启">1启</option><option value="2启">2启</option><option value="3启">3启</option><option value="+4超限">+4 超限</option><option value="最终法则">最终法则（AA）</option>
             </select></label>
             <label><span>技能等级</span><input id="assistSubmitSkills" name="skills" maxlength="40" placeholder="选填，如 6/6/6/6/6/6"></label>
