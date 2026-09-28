@@ -703,7 +703,7 @@
     if(pager)pager.innerHTML=pages>1?'<button type="button" class="ghostBtn" id="assistPrev" '+(page<=1?'disabled':'')+'>'+ui('上一页','Previous')+'</button><span>'+ui('第 ','Page ')+page+' / '+pages+ui(' 页','')+' · '+list.length+ui(' 条',' rows')+'</span><button type="button" class="ghostBtn" id="assistNext" '+(page>=pages?'disabled':'')+'>'+ui('下一页','Next')+'</button>':'<span>'+list.length+ui(' 条配置',' configurations')+'</span>';
     $('assistPrev')?.addEventListener('click',()=>{if(page>1){page--;render()}});
     $('assistNext')?.addEventListener('click',()=>{if(page<pages){page++;render()}});
-    if($('morimensAssistStatus'))$('morimensAssistStatus').textContent=(activeSeason==='all'?ui('全部期次','All Seasons'):(ui('第 ','Season ')+activeSeason+ui(' 期','')))+' · '+ui('实战记录 + 在线补充','Observed + Online');
+    if($('morimensAssistStatus'))$('morimensAssistStatus').textContent=(activeSeason==='all'?ui('全部期次','All Seasons'):(ui('第 ','Season ')+activeSeason+ui(' 期','')))+' · '+ui('Eremora 当前配置 + 历史实战统计','Eremora current builds + historical observed usage');
   }
   async function load(id){
     activeSeason=String(id||'all');page=1;
