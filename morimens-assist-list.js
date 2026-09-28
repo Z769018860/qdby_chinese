@@ -4,6 +4,8 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  function decodeMojibake(value){const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(ch=>ch.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}}
+  function cleanPlayerName(value){return decodeMojibake(value).replace(/^<#[^>]+>\s*/,'').trim()}
   const PAGE_SIZE=100;
   let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1;
   const cache=new Map(),playerNames=new Map();
@@ -87,10 +89,18 @@
     }
     return [{seasonId:String(id),data:await datasetFor(id)}];
   }
+  async function loadTop1000Names(){
+    const loader=window.MorimensDtideDataLoader;if(!loader?.loadJson)return;
+    const docs=await Promise.all(['68','69'].map(id=>loader.loadJson('data/morimens/eremora/top1000/'+id+'.json',{fresh:false}).catch(()=>null)));
+    for(const doc of docs)for(const user of doc?.users||[]){
+      const uid=String(user?.uid??'').trim(),name=cleanPlayerName(user?.player||user?.name||'');
+      if(uid&&name)playerNames.set(uid,name);
+    }
+  }
   function indexPlayerNames(bundle){
     for(const {data} of bundle)for(const record of data?.records||[]){
-      const uid=String(record?.uid??'').trim(),name=String(record?.player||record?.name||'').trim();
-      if(uid&&name&&!playerNames.has(uid))playerNames.set(uid,name);
+      const uid=String(record?.uid??'').trim(),name=cleanPlayerName(record?.player||record?.name||'');
+      if(uid&&name)playerNames.set(uid,name);
     }
   }
   function extract(bundle){
@@ -128,18 +138,36 @@
     for(const row of list)for(const item of selector(row)||[]){const id=String(item?.id||item?.name||'');if(id)map.set(id,item?.name||id)}
     return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
   }
+  function covenantOptions(){
+    const map=new Map();
+    for(const row of rows){
+      for(const x of row.covenants||[]){const id=String(x?.id||x?.name||'');if(id)map.set('set:'+id,ui('套装 · ','Set · ')+(x?.name||id))}
+      for(const x of row.trinkets||[]){const id=String(x?.id||x?.name||'');if(id)map.set('item:'+id,ui('密契 · ','Covenant · ')+(x?.name||id))}
+    }
+    return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
+  }
   function populate(){
     const char=$('assistCharacterFilter'),wheel=$('assistWheelFilter'),cov=$('assistCovenantFilter');if(!char||!wheel||!cov)return;
     const keep=[char.value,wheel.value,cov.value];
     const chars=[...new Map(rows.map(r=>[r.characterKey,r.characterName]))].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
     char.innerHTML='<option value="">'+ui('全部角色','All Awakeners')+'</option>'+chars.map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
     wheel.innerHTML='<option value="">'+ui('全部命轮','All Wheels')+'</option>'+optionRows(rows,r=>r.wheels).map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
-    cov.innerHTML='<option value="">'+ui('全部密契','All Covenants')+'</option>'+optionRows(rows,r=>r.covenants).map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
+    cov.innerHTML='<option value="">'+ui('全部密契','All Covenants')+'</option>'+covenantOptions().map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
     [char,wheel,cov].forEach((el,i)=>{if([...el.options].some(o=>o.value===keep[i]))el.value=keep[i]});
   }
   function filtered(){
     const uid=String($('assistUidFilter')?.value||'').trim(),char=$('assistCharacterFilter')?.value||'',wheel=$('assistWheelFilter')?.value||'',cov=$('assistCovenantFilter')?.value||'';
-    return rows.filter(r=>(!uid||r.uid.includes(uid)||String(r.player||'').toLowerCase().includes(uid.toLowerCase()))&&(!char||r.characterKey===char)&&(!wheel||r.wheels.some(x=>String(x.id||x.name)===wheel))&&(!cov||r.covenants.some(x=>String(x.id||x.name)===cov)));
+    return rows.filter(r=>{
+      if(uid&&!r.uid.includes(uid)&&!String(r.player||'').toLowerCase().includes(uid.toLowerCase()))return false;
+      if(char&&r.characterKey!==char)return false;
+      if(wheel&&!r.wheels.some(x=>String(x.id||x.name)===wheel))return false;
+      if(cov){
+        const [kind,...rest]=cov.split(':'),id=rest.join(':');
+        if(kind==='set'&&!r.covenants.some(x=>String(x.id||x.name)===id))return false;
+        if(kind==='item'&&!r.trinkets.some(x=>String(x.id||x.name)===id))return false;
+      }
+      return true;
+    });
   }
   function wheelCards(items){
     if(!items?.length)return '<span class="assistSuitTag">'+ui('无记录','No record')+'</span>';
@@ -199,7 +227,7 @@
       for(let i=0;i<50&&!$('morimensAssistPanel');i++)await new Promise(r=>setTimeout(r,100));
       if(!$('morimensAssistPanel'))return;
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error('manifest HTTP '+response.status);
-      manifest=await response.json();bind();initialized=true;await load($('assistSeason')?.value||'all');
+      manifest=await response.json();await loadTop1000Names();bind();initialized=true;await load($('assistSeason')?.value||'all');
     }catch(e){error(e)}finally{loading=false}
   }
   function relocalize(){
