@@ -31,13 +31,20 @@
       "leaderboardEntryCount": 1000,
       "complete": false,
       "coverageMode": "current-leaderboard",
-      "path": "data/morimens/eremora/seasons/69.json",
+      "path": "data/morimens/eremora/usage/69-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/69.json",
       "dataUpdatedAt": "2026-09-22T01:00:00+08:00",
       "labelZh": "第69期 · Bug前",
       "labelEn": "Season 69 · Pre-bug",
       "communityVariant": "prebug",
-      "communityTargetKey": "69-prebug"
+      "communityTargetKey": "69-prebug",
+      "rankPath": "data/morimens/eremora/rank-index/69.json",
+      "baseRecordCount": 1007,
+      "overlayPath": "data/morimens/eremora/updates/69-top500-20260922/index.json",
+      "overlayRankPath": "data/morimens/eremora/updates/69-top500-20260922/ranks.json",
+      "overlayScope": 500,
+      "overlayUpdatedAt": "2026-09-22T01:00:00+08:00",
+      "overlayRevision": "s69-top500-20260922-0100"
     },
     {
       "seasonId": 69,
@@ -46,7 +53,7 @@
       "leaderboardEntryCount": 1000,
       "complete": false,
       "coverageMode": "placeholder-prebug-data",
-      "path": "data/morimens/eremora/seasons/69.json",
+      "path": "data/morimens/eremora/usage/69-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/69.json",
       "dataUpdatedAt": "2026-09-22T01:00:00+08:00",
       "snapshotId": "69-postbug",
@@ -59,7 +66,13 @@
       "dataPending": true,
       "placeholderSource": "69-prebug",
       "placeholderNoteZh": "Bug后正式数据待填充；当前暂沿用原第69期（Bug前）数据作为占位。",
-      "placeholderNoteEn": "Post-bug data is pending; the original Season 69 pre-bug dataset is temporarily reused as a placeholder."
+      "placeholderNoteEn": "Post-bug data is pending; the original Season 69 pre-bug dataset is temporarily reused as a placeholder.",
+      "baseRecordCount": 1007,
+      "overlayPath": "data/morimens/eremora/updates/69-top500-20260922/index.json",
+      "overlayRankPath": "data/morimens/eremora/updates/69-top500-20260922/ranks.json",
+      "overlayScope": 500,
+      "overlayUpdatedAt": "2026-09-22T01:00:00+08:00",
+      "overlayRevision": "s69-top500-20260922-0100"
     },
     {
       "seasonId": 68,
