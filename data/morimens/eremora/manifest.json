@@ -299,8 +299,8 @@
     "syncedAt": "2026-09-29T05:51:00+08:00",
     "revision": "42f46490db8cd85de41552a936e04e623329df197737f391f6f910a53cd627a3",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 29,
-    "chunkSize": 15000,
+    "chunks": 6,
+    "chunkSize": 75000,
     "chunkBytes": 430721
   },
   "rawTop1000Import": {
