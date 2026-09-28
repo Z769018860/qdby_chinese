@@ -114,7 +114,7 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 457,
+    "leaderboardEntries": 500,
     "records": 457,
     "complete": false,
     "failures": 43
@@ -292,13 +292,13 @@
     "seasonId": 70,
     "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/70.json",
-    "target": 1000,
-    "rankIndexCount": 457,
+    "target": 500,
+    "rankIndexCount": 500,
     "recordCount": 457,
     "coverage": {
-      "expected": 1000,
+      "expected": 500,
       "covered": 457,
-      "coveragePct": 45.7,
+      "coveragePct": 91.4,
       "complete": false
     },
     "syncedAt": "2026-09-28T21:12:06.644583Z",
