@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>社区维护记录 · 忘忘看报</title>
+  <style>
+    :root{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:#e8eef5;background:#081019}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 0%,rgba(55,136,165,.16),transparent 36%),linear-gradient(180deg,#0b131d,#070d14);color:#e8eef5}
+    a{color:#9beafb}.wrap{width:min(1200px,calc(100% - 28px));margin:0 auto;padding:32px 0 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.topActions{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 12px;border:1px solid rgba(93,219,244,.26);border-radius:9px;background:rgba(93,219,244,.06);color:#bdf0fa;text-decoration:none;font-size:12px}
+    .hero{margin-top:18px;padding:22px;border:1px solid rgba(93,219,244,.17);border-radius:18px;background:rgba(12,23,34,.84);box-shadow:0 18px 60px rgba(0,0,0,.24)}.eyebrow{margin:0 0 7px;color:#72dff3;font-size:11px;letter-spacing:.14em}.hero h1{margin:0;font-size:26px}.hero p{margin:10px 0 0;color:#91a2b4;font-size:13px;line-height:1.75}
+    .filters{display:grid;grid-template-columns:minmax(220px,1.4fr) minmax(160px,.6fr);gap:10px;margin:16px 0}.filters input,.filters select{min-height:40px;width:100%;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e8eef5;padding:0 10px;outline:none}
+    .status{margin:12px 0;color:#8ea1b5;font-size:12px}.status.error{color:#f0a1a1}
+    .tableWrap{overflow:auto;border:1px solid rgba(148,163,184,.15);border-radius:14px;background:rgba(9,16,24,.72)}
+    table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:11px 12px;border-bottom:1px solid rgba(148,163,184,.1);text-align:left;vertical-align:top;font-size:12px}th{position:sticky;top:0;background:#101a25;color:#8fa2b7;font-size:10px;letter-spacing:.04em;z-index:1}tbody tr:hover{background:rgba(255,255,255,.018)}
+    td.nick{font-weight:800;color:#dfe8f2}td.uid a{text-decoration:none;font-weight:800;color:#e2bf83}.contentMain{font-weight:700;color:#d8e2ec}.contentSub{display:block;margin-top:4px;color:#77879a;font-size:10px;line-height:1.5}.tag{display:inline-flex;padding:3px 7px;border-radius:999px;border:1px solid rgba(93,219,244,.22);color:#9fe8f5;background:rgba(93,219,244,.05);font-size:9px}.empty{padding:28px;text-align:center;color:#748498}
+    @media(max-width:700px){.filters{grid-template-columns:1fr}.hero h1{font-size:22px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <a class="btn" href="morimens-tools.html#about">← 返回忘忘看报 · 关于</a>
+      <div class="topActions">
+        <a class="btn" href="morimens-dzone-submit.html">融灾数据自行提交</a>
+      </div>
+    </div>
+    <section class="hero">
+      <p class="eyebrow">COMMUNITY MAINTENANCE LOG</p>
+      <h1>社区维护记录</h1>
+      <p>集中记录社区自行维护产生的提交。表格展示提交人昵称、提交 UID、提交内容、提交时间与来源；第69期融灾记录会区分 Bug前 / Bug后。</p>
+    </section>
+    <div class="filters">
+      <input id="search" type="search" placeholder="搜索提交人、UID、内容……">
+      <select id="source"><option value="">全部来源</option><option value="dzone">融灾数据</option><option value="assist">助战 Showcase</option></select>
+    </div>
+    <div id="status" class="status">正在载入社区维护记录……</div>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>提交人昵称</th><th>UID</th><th>提交内容</th><th>提交时间</th><th>来源</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="5" class="empty">正在载入……</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+  <script>
+  (()=> {
+    const WALINE='https://textbox.qingdengbuyi.top';
+    const ASSIST_PATH='/__morimens_assist_submissions__/';
+    const ASSIST_MARKER='MORIMENS_ASSIST_V1:';
+    const rows=[];
+    const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    const fmt=value=>{const d=value?new Date(value):null;return d&&!Number.isNaN(d.getTime())?d.toLocaleString('zh-CN'):'—'};
+    function utf8FromBase64(encoded){
+      const binary=atob(String(encoded||'')),bytes=Uint8Array.from(binary,ch=>ch.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+    async function fetchWaline(path){
+      const all=[];
+      for(let page=1;page<=10;page++){
+        const response=await fetch(WALINE+'/api/comment?path='+encodeURIComponent(path)+'&page='+page+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN',{cache:'no-store'});
+        if(!response.ok)throw new Error('Waline HTTP '+response.status);
+        const payload=await response.json();if(payload?.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
+        const items=Array.isArray(payload?.data)?payload.data:Array.isArray(payload?.data?.data)?payload.data.data:[];
+        all.push(...items);
+        const total=Number(payload?.data?.count??payload?.data?.total??payload?.count??payload?.total);
+        if(items.length<100||(Number.isFinite(total)&&page*100>=total))break;
+      }
+      return all;
+    }
+    async function loadAssist(){
+      const items=await fetchWaline(ASSIST_PATH);
+      for(const item of items){
+        try{
+          const comment=String(item?.comment||''),idx=comment.indexOf(ASSIST_MARKER);if(idx<0)continue;
+          const encoded=comment.slice(idx+ASSIST_MARKER.length).trim().split(/\s|</)[0];
+          const data=JSON.parse(utf8FromBase64(encoded));
+          const uid=String(data?.uid||'').trim();if(!uid)continue;
+          const name=String(data?.awaker?.name||data?.characterName||data?.canonicalId||data?.characterId||'未知角色').trim();
+          const level=data?.level!=null?'Lv.'+data.level:'等级未知';
+          const wheels=(data?.weapons||[]).map(x=>x?.name).filter(Boolean);
+          const suits=(data?.suits||[]).map(x=>x?.name).filter(Boolean);
+          const nick=String(item?.nick||data?.player||'匿名').trim()||'匿名';
+          rows.push({
+            kind:'assist',nick,uid,
+            content:'助战 Showcase · '+name,
+            detail:[level,wheels.length?('命轮：'+wheels.join(' / ')):'',suits.length?('密契：'+suits.join(' / ')):''].filter(Boolean).join(' · '),
+            time:item?.insertedAt||data?.fetchedAt||'',
+            source:'助战 Showcase'
+          });
+        }catch(error){console.warn('Skip assist maintenance row',error)}
+      }
+    }
+    async function loadDzone(){
+      window.MorimensDzoneImportEmbedded=false;
+      await new Promise((resolve,reject)=>{
+        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.6';script.defer=true;
+        script.onload=resolve;script.onerror=()=>reject(new Error('融灾记录脚本载入失败'));document.head.appendChild(script);
+      });
+      const items=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true})||[];
+      for(const item of items){
+        const phase=Number(item.seasonId)===69?(item.communityVariant==='postbug'?'Bug后':'Bug前'):'';
+        rows.push({
+          kind:'dzone',
+          nick:String(item.submittedBy||'匿名'),
+          uid:String(item.uid||''),
+          content:item.summary||('第 '+item.seasonId+' 期融灾'+(phase?' · '+phase:'')),
+          detail:'归档键：'+String(item.targetKey||item.seasonId),
+          time:item.submittedAt||'',
+          source:'融灾数据'
+        });
+      }
+    }
+    function render(){
+      const body=document.getElementById('rows'),status=document.getElementById('status'),q=String(document.getElementById('search').value||'').trim().toLowerCase(),source=document.getElementById('source').value;
+      const filtered=rows.filter(row=>(!source||row.kind===source)&&(!q||[row.nick,row.uid,row.content,row.detail,row.source].join(' ').toLowerCase().includes(q))).sort((a,b)=>String(b.time).localeCompare(String(a.time)));
+      status.textContent='共 '+rows.length+' 条维护记录'+(filtered.length!==rows.length?' · 当前显示 '+filtered.length+' 条':'');
+      body.innerHTML=filtered.length?filtered.map(row=>'<tr>'+
+        '<td class="nick">'+esc(row.nick||'匿名')+'</td>'+
+        '<td class="uid"><a href="https://eremora.com/u/'+encodeURIComponent(row.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(row.uid)+'</a></td>'+
+        '<td><span class="contentMain">'+esc(row.content)+'</span>'+(row.detail?'<span class="contentSub">'+esc(row.detail)+'</span>':'')+'</td>'+
+        '<td>'+esc(fmt(row.time))+'</td>'+
+        '<td><span class="tag">'+esc(row.source)+'</span></td>'+
+      '</tr>').join(''):'<tr><td colspan="5" class="empty">没有符合条件的社区维护记录。</td></tr>';
+    }
+    async function init(){
+      const status=document.getElementById('status');
+      try{
+        const settled=await Promise.allSettled([loadDzone(),loadAssist()]);
+        const errors=settled.filter(x=>x.status==='rejected').map(x=>x.reason?.message||String(x.reason));
+        render();
+        if(errors.length){status.textContent+='；部分来源载入失败：'+errors.join('；');status.classList.add('error')}
+      }catch(error){status.textContent='社区维护记录载入失败：'+(error?.message||error);status.classList.add('error')}
+    }
+    document.getElementById('search').addEventListener('input',render);
+    document.getElementById('source').addEventListener('change',render);
+    init();
+  })();
+  </script>
+</body>
+</html>
