@@ -197,9 +197,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 完整资料双源导入</strong><br>助战导入升级为双源合并：Showcase 负责命轮/密契，玩家资料 <code>/u/UID/__data.json</code> 或普通资料页文本负责技能与灵塑。可分两次粘贴，自动更新同一 UID + 角色并保留已有配置与历史使用次数。</div>
-        <div class="sourceItem"><strong>2026-09-29 · 助战角色栏两行展示</strong><br>技能与灵塑摘要移回“助战角色”栏：技能按 slots[1–6].level 显示为 6 / 6 / 6 / 6 / 6 / 6，灵塑按 talents 的 madness / soulforge / gnostic 显示为 +11 / 10 / 5。旧数据缺少 slots/talents 时保持空白。</div>
-        <div class="sourceItem"><strong>2026-09-29 · 技能 / 灵塑字段重新校准</strong><br>确认原先将 potential 当作技能、break_level 当作灵塑是错误映射。正确技能等级来自 slots[1–6].level；图示的 +11 / 10 / 5 来自 talents 的 madness / soulforge / gnostic。处理脚本已开始保留 slots/talents；旧数据缺失这些字段时保持空白，不再显示错误数字。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为剪贴板导入：填写 UID 与助战角色后打开对应 Eremora Showcase 数据页，复制 JSON，再由本站从剪贴板或粘贴框解析并导入。当前配置与同一 UID + 角色的历史融灾借用次数继续合并累计。</div>
@@ -242,6 +240,7 @@
         </div>
         <span class="statusPill" id="morimensAssistStatus">等待载入</span>
       </div>
+      <div class="dtideNotice assistNotice assistImportScopeNotice"><strong>导入说明：</strong>当前助战导入仅使用 <b>Eremora Showcase</b>，包含等级、启灵、命轮、密契与密契词条；<b>不包含技能、灵塑</b>。如需查看完整养成详情，可直接点击列表中的 <b>UID</b> 跳转 Eremora 玩家详情页。</div>
       <a class="assistGuideBanner" href="morimens-assist-guide.html">
         <strong>如何在对方没关注自己的情况下使用助战</strong>
         <span>查看图文 / 视频教程 →</span>
@@ -264,30 +263,24 @@
               <button class="ghostBtn" id="assistCopyShowcaseUrl" type="button">复制 Showcase 地址</button>
             </div>
             <div class="assistShowcaseUrl" id="assistShowcaseUrlPreview">请先填写 UID 并选择助战角色。</div>
-            <div class="assistSubmitActions">
-              <a class="primaryBtn" id="assistOpenProfileData" href="#" target="_blank" rel="noopener noreferrer">② 打开完整资料数据页</a>
-              <button class="ghostBtn" id="assistCopyProfileDataUrl" type="button">复制完整资料地址</button>
-              <a class="ghostBtn" id="assistOpenProfilePage" href="#" target="_blank" rel="noopener noreferrer">资料页文本兜底</a>
-            </div>
-            <div class="assistShowcaseUrl" id="assistProfileDataUrlPreview">完整资料数据用于补充技能与灵塑；若原始数据页无法解析，可打开“资料页文本兜底”，全选复制页面文字后粘贴。</div>
-            <div class="assistClipboardStep"><b>2</b><div><strong>分别复制需要的数据</strong><span>Showcase JSON 用于命轮/密契；完整资料 <code>__data.json</code> 用于技能与灵塑。两者可分两次粘贴，系统会更新同一 UID + 角色记录。</span></div></div>
+            <div class="assistClipboardStep"><b>2</b><div><strong>复制 Showcase JSON</strong><span>电脑：<code>Ctrl+A → Ctrl+C</code>；手机：长按页面内容 → 全选 → 复制。</span></div></div>
             <div class="assistClipboardStep"><b>3</b><div><strong>返回本页并导入</strong><span>优先点击“从剪贴板读取并导入”。若手机浏览器不允许网页读取剪贴板，可在下方输入框长按“粘贴”，粘贴完成后会自动导入。</span></div></div>
             <div class="assistSubmitActions">
               <button class="primaryBtn" id="assistClipboardImport" type="button">③ 从剪贴板读取并导入</button>
               <span id="assistSubmitStatus" aria-live="polite"></span>
             </div>
             <label class="assistPasteLabel" for="assistPasteShowcase"><span>手机 / Safari 兜底：长按下方区域并粘贴 JSON</span>
-              <textarea id="assistPasteShowcase" rows="6" spellcheck="false" placeholder="可粘贴：① Showcase JSON；② /u/UID/__data.json 完整资料数据；③ 玩家资料页复制出的文本。系统会自动识别并合并。"></textarea>
+              <textarea id="assistPasteShowcase" rows="6" spellcheck="false" placeholder="在这里粘贴 Eremora Showcase 返回的完整 JSON。"></textarea>
             </label>
             <div class="assistSubmitActions assistPasteActions">
-              <button class="primaryBtn" id="assistImportPastedJson" type="button">导入已粘贴内容</button>
+              <button class="primaryBtn" id="assistImportPastedJson" type="button">导入已粘贴 Showcase JSON</button>
               <button class="ghostBtn" id="assistClearPastedJson" type="button">清空粘贴内容</button>
             </div>
           </div>
           <div class="assistAutoImportInfo">
             <strong>导入内容</strong>
-            <span>Showcase：等级、启灵、命轮、密契与最终词条；完整资料：技能 6 槽等级与灵塑 + madness / soulforge / gnostic。</span>
-            <small>自动导入会尝试同时读取 Showcase 与完整资料；若被 CORS/Cloudflare 拦截，可分别打开两个数据页复制回来。两次导入会合并到同一个 UID + 角色，不会清空历史使用次数。</small>
+            <span>Showcase 导入：角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。</span>
+            <small>技能、灵塑不包含在导入范围内；如需查看完整详情，请点击列表中的 UID 跳转 Eremora 玩家页。重新导入同一 UID + 角色只会更新当前 Showcase 配置，不会清空历史使用次数。</small>
           </div>
           <p class="assistSubmitPrivacy">请只导入本人或已公开的助战信息。若同一 UID + 角色已有导入记录，将以最新一次导入配置为准，历史融灾使用次数不会被清零。</p>
         </form>
@@ -304,7 +297,7 @@
         <div class="dtideField assistFilterAction"><label>&nbsp;</label><button type="button" class="ghostBtn" id="assistReset">清空筛选</button></div>
       </div>
       <div class="dtideStatGrid" id="assistSummary"></div>
-      <div class="dtideNotice assistNotice" id="assistCoverageNote">数据只统计仓库现有第68、69期记录中明确标记为 borrowed 且带 assistUid 的助战角色。技能已校准为 slots[1–6].level；图示养成摘要来自 talents 中的 madness / soulforge / gnostic（如 +11 / 10 / 5）。旧结构化数据没有保存 slots/talents 时保持空白，不再使用 potential 或 break_level 冒充。密契“最终词条”只汇总带 rollQuality 的洗练词条。</div>
+      <div class="dtideNotice assistNotice" id="assistCoverageNote">数据只统计仓库现有第68、69期记录中明确标记为 borrowed 且带 assistUid 的助战角色。当前手动/自动导入仅使用 Eremora Showcase，不包含技能、灵塑；需要完整养成信息请点击 UID 查看 Eremora 玩家详情。密契“最终词条”只汇总带 rollQuality 的洗练词条。</div>
       <div class="dtideSection">
         <div class="dtideScroll" id="assistTable"><div class="dtideEmpty">点击“互助助战列表”后载入数据。</div></div>
         <div class="dtidePager" id="assistPager"></div>
