@@ -67,7 +67,7 @@ function buildStats(doc){
   return {seasonId:doc.seasonId,generatedAt:new Date().toISOString(),recordCount:doc.records?.length||0,maxRankAvailable:maxRank,all:usage(rows),waves:byWave,difficulties,rankTiers,coverage:{difficulty:{recognizedTeams:recognized,totalTeams:rows.length,complete:rows.length>0&&recognized===rows.length},rankScopes:Object.fromEntries(RANK_CAPS.map(x=>[String(x),maxRank>=x])),enlightenment:true}};
 }
 
-const files=(await readdir(SEASON_DIR)).filter(x=>/^\d+\.json$/.test(x));
+const files=(await readdir(SEASON_DIR)).filter(x=>/^(?:\d+|69bug)\.json$/.test(x));
 const coverage=[];
 for(const file of files){
   const p=path.join(SEASON_DIR,file),doc=await readJson(p);if(!doc)continue;

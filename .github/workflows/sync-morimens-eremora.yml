@@ -9,13 +9,14 @@ on:
         type: boolean
         default: false
   push:
-    branches: [main]
+    branches: [main, preview]
     paths:
       - "scripts/discover_eremora_leaderboard.mjs"
       - "scripts/eremora_sveltekit.mjs"
       - "scripts/sync_morimens_eremora.mjs"
       - "scripts/sync_morimens_eremora_rank_index.mjs"
       - "scripts/sync_morimens_eremora_usage.mjs"
+      - "scripts/sync_morimens_s69_postbug.mjs"
       - "scripts/postprocess_morimens_eremora.mjs"
       - ".github/workflows/sync-morimens-eremora.yml"
 
@@ -44,6 +45,7 @@ jobs:
           node --check scripts/sync_morimens_eremora.mjs
           node --check scripts/sync_morimens_eremora_rank_index.mjs
           node --check scripts/sync_morimens_eremora_usage.mjs
+          node --check scripts/sync_morimens_s69_postbug.mjs
           node --check scripts/postprocess_morimens_eremora.mjs
           node --check morimens-dtide.js
       - name: Discover Eremora public data
@@ -58,6 +60,13 @@ jobs:
           EREMORA_BATCH_SIZE: "3"
           EREMORA_BATCH_DELAY_MS: "2200"
         run: node scripts/sync_morimens_eremora.mjs
+      - name: Build Season 69 post-bug Top 1000 snapshot
+        if: ${{ github.ref_name == 'preview' || (github.event_name == 'workflow_dispatch' && inputs.fetch_from_eremora) }}
+        env:
+          EREMORA_POSTBUG_TARGET: "1000"
+          EREMORA_POSTBUG_MIN_ROWS: "950"
+          EREMORA_POSTBUG_PAGE_DELAY_MS: "1600"
+        run: node scripts/sync_morimens_s69_postbug.mjs
       - name: Precompute detailed rank, difficulty and enlightenment analytics
         continue-on-error: true
         run: node scripts/postprocess_morimens_eremora.mjs
@@ -100,7 +109,7 @@ jobs:
           git commit -m "chore: refresh Eremora structured leaderboard snapshot"
           for attempt in 1 2 3 4 5; do
             git pull --rebase origin main
-            if git push origin HEAD:main; then exit 0; fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             sleep $((attempt * 10))
           done
           echo "Failed to push Eremora snapshot after retries." >&2

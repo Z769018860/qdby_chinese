@@ -422,7 +422,8 @@
       [ui('统计队伍','Teams Counted'),g.teamCount],
       [ui('角色槽位','Character Slots'),g.memberSlots]
     ].map(([a,b])=>`<div class="dtideStat"><small>${a}</small><strong>${esc(b)}</strong></div>`).join('');
-    $('dtideStatus').textContent=zh()?`第 ${season.seasonId} 期 · ${diff} · ${rankScopeLabel(cap)}`:`Season ${season.seasonId} · ${diff} · ${rankScopeLabel(cap)}`;
+    const activeSeasonName=zh()?(activeSeasonEntry?.labelZh||`第 ${season.seasonId} 期`):(activeSeasonEntry?.labelEn||`Season ${season.seasonId}`);
+    $('dtideStatus').textContent=`${activeSeasonName} · ${diff} · ${rankScopeLabel(cap)}`;
     $('dtideFilterCoverage').textContent=zh()
       ?`等级 ✓ · 启灵 ${coverage.enlightenLevel?'✓':'—'} · 命轮 ${coverage.wheels?'✓':'—'} · 密契 ${coverage.covenants?'✓':'—'}`
       :`Level ✓ · Enlighten ${coverage.enlightenLevel?'✓':'—'} · Wheels ${coverage.wheels?'✓':'—'} · Covenants ${coverage.covenants?'✓':'—'}`;
@@ -720,7 +721,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       (items.map(x=>{const key=x.key||'unknown',color=enlightColors[key]||enlightColors.unknown;return `<div class="dtideUsage dtideEnlightItem" style="--dtide-enlight-color:${color};--dtide-enlight-fill:${color}55"><div><b>${esc(labels[key]||x.name||ui('未知','Unknown'))}</b><small>${x.count} ${ui('次','times')}</small></div><strong>${pct(x.ratePct)}</strong></div>`}).join('')||'<div class="dtideEmpty">'+ui('暂无启灵数据','No Enlighten data')+'</div>')+
       '</div>';
   }
-  function renderSeasonDate(){const el=$('dtideSeasonDate');if(!el)return;const id=String(season?.seasonId??$('dtideSeason')?.value??''),date=id==='68'?'8.31–9.13':id==='69'?'9.14–9.27':'';el.hidden=!date;el.textContent=date?(zh()?`第 ${id} 期融灾 · ${date}`:`Season ${id} D-Zone · ${date}`):''}
+  function renderSeasonDate(){const el=$('dtideSeasonDate');if(!el)return;const id=String(season?.seasonId??$('dtideSeason')?.value??''),date=activeSeasonEntry?.periodShort||(id==='68'?'8.31–9.13':id==='69'?'9.14–9.28':'');const name=zh()?(activeSeasonEntry?.labelZh||`第 ${id} 期融灾`):(activeSeasonEntry?.labelEn||`Season ${id} D-Zone`);el.hidden=!date;el.textContent=date?`${name} · ${date}`:''}
   function renderAll(){renderSeasonDate();if(window.MorimensDtideRenderer==='legacy')return;renderSummary();renderMatrix();renderUsage();renderComparisons();if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt();$('dtideMatrix')?.removeAttribute('aria-busy')}
   function scheduleRender(){if(window.MorimensDtideRenderer==='legacy')return;cancelAnimationFrame(renderFrame);renderFrame=requestAnimationFrame(()=>{renderFrame=0;if(season&&filtersReady)renderAll()})}
   function relocalizeControls(){
@@ -739,17 +740,20 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     filtersReady=false;
     $('dtideStatus').textContent=ui('正在载入期次…','Loading season…');
     const matrix=$('dtideMatrix');if(matrix){matrix.setAttribute('aria-busy','true');matrix.innerHTML='<div class="dtideEmpty">'+ui('正在载入并整理角色榜单…','Loading and organizing the character ranking…')+'</div>'}
-    const entry=manifest.availableSeasons.find(x=>String(x.seasonId)===String(id));
+    const entry=manifest.availableSeasons.find(x=>String(x.snapshotId??x.seasonId)===String(id));
     if(!entry)throw new Error(`Season ${id} snapshot unavailable`);
-    const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path
+    activeSeasonEntry=entry;
+    const sourceSeasonId=Number(entry.sourceSeasonId??entry.seasonId);
+    const isCurrent=!entry.snapshotId&&sourceSeasonId===Number(manifest.currentSeason);
+    const current=isCurrent&&manifest.usageIndex?.path
       ?{path:manifest.usageIndex.path,statsPath:manifest.usageIndex.statsPath}
       :entry;
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     const revision=current.revision||manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
-    const overlay=Number(id)===Number(manifest.currentSeason)&&manifest.currentOverlay?.path?manifest.currentOverlay:null;
+    const overlay=isCurrent&&manifest.currentOverlay?.path?manifest.currentOverlay:null;
     const overlayRevision=overlay?.revision||overlay?.updatedAt||revision;
-    const rankPath=entry.legacy||entry.coverageMode==='legacy-spreadsheet'?null:(Number(id)===Number(manifest.currentSeason)?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${id}.json`):`data/morimens/eremora/rank-index/${id}.json`);
+    const rankPath=entry.legacy||entry.coverageMode==='legacy-spreadsheet'?null:(entry.rankPath||(isCurrent?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${sourceSeasonId}.json`):`data/morimens/eremora/rank-index/${entry.snapshotId??entry.seasonId}.json`));
     const [loadedSeason,loadedStats,loadedRanks,loadedLegacyStructured,loadedOverlay,loadedOverlayRanks]=await Promise.all([
       loader.loadDataset(current.path),
       loader.loadJson(current.statsPath,{revision,fresh:true}),
@@ -776,7 +780,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(seasonOption&&Number.isFinite(Number(season?.recordCount))&&!(entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty')){
       const loadedRecordCount=Number(season.recordCount);
       entry.recordCount=loadedRecordCount;
-      seasonOption.textContent=zh()?`第 ${entry.seasonId} 期 · ${loadedRecordCount} 条${entry.complete?' · 完整':' · 部分'}`:`Season ${entry.seasonId} · ${loadedRecordCount} records${entry.complete?' · Complete':' · Partial'}`;
+      const seasonName=zh()?(entry.labelZh||`第 ${entry.seasonId} 期`):(entry.labelEn||`Season ${entry.seasonId}`);
+      seasonOption.textContent=zh()?`${seasonName} · ${loadedRecordCount} 条${entry.complete?' · 完整':' · 部分'}`:`${seasonName} · ${loadedRecordCount} records${entry.complete?' · Complete':' · Partial'}`;
     }
     stats=loadedStats;
     legacyStructured=loadedLegacyStructured;
@@ -803,13 +808,14 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       if(!sel)throw new Error(ui('期次选择器尚未挂载','Season selector is not mounted'));
       sel.innerHTML=(manifest.availableSeasons||[]).map(s=>{
         const legacy=s.legacy||s.coverageMode==='legacy-spreadsheet'||String(s.seasonId)==='legacy-high-difficulty';
+        const custom=zh()?s.labelZh:s.labelEn;
         const label=legacy
           ?ui('旧版融灾425出场率（来源：@却尘）','Legacy D-Zone 425 Appearance Rate (source: @却尘)')
-          :(zh()?`第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}`:`Season ${s.seasonId} · ${s.recordCount??0} records${s.complete?' · Complete':' · Partial'}`);
-        return `<option value="${s.seasonId}">${label}</option>`;
+          :(custom?`${custom} · ${s.recordCount??0} ${zh()?'条':'records'}${s.complete?(zh()?' · 完整':' · Complete'):(zh()?' · 部分':' · Partial')}`:(zh()?`第 ${s.seasonId} 期 · ${s.recordCount??0} 条${s.complete?' · 完整':' · 部分'}`:`Season ${s.seasonId} · ${s.recordCount??0} records${s.complete?' · Complete':' · Partial'}`));
+        return `<option value="${esc(String(s.snapshotId??s.seasonId))}">${label}</option>`;
       }).join('');
       if(!sel.options.length)throw new Error(ui('暂无融灾快照','No D-Zone snapshot is available'));
-      sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>x.seasonId===manifest.currentSeason)?manifest.currentSeason:manifest.availableSeasons[0].seasonId);
+      sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>!x.snapshotId&&x.seasonId===manifest.currentSeason)?manifest.currentSeason:(manifest.availableSeasons[0].snapshotId??manifest.availableSeasons[0].seasonId));
       await loadSeason(sel.value);
       const pending=manifest.pendingBackfillSeasonIds||[],note=$('dtideCoverageNote');
       if(note){
