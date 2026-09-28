@@ -1026,10 +1026,23 @@
       return true;
     });
   }
+  function wheelRefinementLabel(level){
+    const n=Number(level);
+    if(!Number.isFinite(n))return '';
+    const lv=Math.trunc(n);
+    if(lv<1)return '';
+    if(lv<=4){
+      const stack=lv-1;
+      return zh()?(stack+'叠'):(stack+' Stack');
+    }
+    const plus=Math.min(12,Math.max(1,lv-4));
+    return '+'+plus;
+  }
   function wheelCards(items){
     if(!items?.length)return '<span class="assistSuitTag">'+ui('无记录','No record')+'</span>';
     return '<div class="assistGear">'+items.map(x=>{
-      const meta=[];if(x.level!=null)meta.push('Lv.'+x.level);if(x.enhanceLevel!=null)meta.push(ui('叠位 ','Stack ')+(Number(x.enhanceLevel)>0?('+'+x.enhanceLevel):'0'));
+      const meta=[],refinement=wheelRefinementLabel(x.level);
+      if(refinement)meta.push(refinement);
       return '<div class="assistGearCard'+(x.image?'':' assistGearTextOnly')+'">'+(x.image?'<img src="'+esc(x.image)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<div><b>'+esc(x.name)+'</b>'+(meta.length?'<small>'+esc(meta.join(' · '))+'</small>':'')+'</div></div>';
     }).join('')+'</div>';
   }
