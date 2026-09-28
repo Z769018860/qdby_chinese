@@ -121,7 +121,7 @@
     for(const record of usage.records||[]){const uid=String(record?.uid??'').trim();if(uid)byUid.set(uid,record);else anonymous.push(record)}
     const activeEntry=(manifest?.availableSeasons||[]).find(entry=>Number(entry?.seasonId)===Number(activeSeason));
     const current=Number(activeSeason)===Number(manifest?.currentSeason);
-    const officialUpdatedAt=usage?.dataUpdatedAt||activeEntry?.dataUpdatedAt||(current?manifest?.usageIndex?.syncedAt:null)||manifest?.source?.syncedAt||null;
+    const officialUpdatedAt=usage?.dataUpdatedAt||activeEntry?.dataUpdatedAt||(current?manifest?.usageIndex?.syncedAt:null)||null;
     const officialMs=officialUpdatedAt?Date.parse(officialUpdatedAt):NaN;
     let applied=0,skipped=0;
     for(const item of items){
@@ -467,11 +467,16 @@
   function renderUsageLayerNote(){
     const note=$('dtideCoverageNote');if(!note||!manifest||!usage)return;
     note.querySelector('.dtideUsageLayerNote')?.remove();
-    const merged=esc(String(usage?.recordCount||usage?.records?.length||0)),base=esc(String(manifest.usageIndex?.recordCount||0)),target=esc(String(manifest.usageIndex?.target||1000)),community=Number(usage?.communityRecordCount||0),communityUpdated=usage?.communityUpdatedAt?new Date(usage.communityUpdatedAt):null,communityTime=communityUpdated&&!Number.isNaN(communityUpdated.getTime())?communityUpdated.toLocaleString(zh()?'zh-CN':'en-US'):'';
+    const activeEntry=(manifest.availableSeasons||[]).find(entry=>Number(entry?.seasonId)===Number(activeSeason))||{};
+    const merged=esc(String(usage?.recordCount||usage?.records?.length||0));
+    const base=esc(String(activeEntry.recordCount??usage?.records?.length??0));
+    const targetValue=activeEntry.leaderboardEntryCount??activeEntry.recordCount??usage?.records?.length??0;
+    const target=esc(String(targetValue));
+    const community=Number(usage?.communityRecordCount||0),communityUpdated=usage?.communityUpdatedAt?new Date(usage.communityUpdatedAt):null,communityTime=communityUpdated&&!Number.isNaN(communityUpdated.getTime())?communityUpdated.toLocaleString(zh()?'zh-CN':'en-US'):'';
     const communityText=community?(zh()?('；社区自行更新覆盖 '+community+' 个 UID'+(communityTime?'，最近更新 '+communityTime:'')):('; community imports cover '+community+' UID(s)'+(communityTime?', latest '+communityTime:''))):'';
     const html=zh()
-      ?' <span class="dtideUsageLayerNote"><strong>Top1000 出场率层：</strong>当前有效记录 '+merged+' 条（基础快照 '+base+' 条'+communityText+'），榜单目标 '+target+' 名玩家。</span>'
-      :' <span class="dtideUsageLayerNote"><strong>Top 1000 appearance-rate layer:</strong> '+merged+' effective records (base snapshot '+base+communityText+'), target '+target+' players.</span>';
+      ?' <span class="dtideUsageLayerNote"><strong>出场率数据层：</strong>第 '+esc(String(activeSeason||''))+' 期当前有效记录 '+merged+' 条（基础快照 '+base+' 条'+communityText+'），当前期次参考目标 '+target+' 名玩家。</span>'
+      :' <span class="dtideUsageLayerNote"><strong>Appearance-rate data layer:</strong> Season '+esc(String(activeSeason||''))+' has '+merged+' effective records (base snapshot '+base+communityText+'), reference target '+target+' players.</span>';
     note.insertAdjacentHTML('beforeend',html);
   }
   async function init(){
