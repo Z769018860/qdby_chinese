@@ -242,16 +242,20 @@
         <span>查看图文 / 视频教程 →</span>
       </a>
       <details class="assistSubmitBox" id="assistSubmitBox">
-        <summary><strong>＋ 导入助战信息</strong><span>UID + 角色 → 打开 Eremora 数据页 → 复制 JSON → 导入</span></summary>
+        <summary><strong>＋ 导入助战信息</strong><span>先尝试自动导入；失败后使用 Eremora 数据页 + 剪贴板导入</span></summary>
         <form id="assistSubmitForm" class="assistSubmitForm" onsubmit="return false">
           <div class="assistSubmitGrid assistSubmitGridCompact">
             <label><span>玩家 UID <b>*</b></span><input id="assistSubmitUid" name="uid" inputmode="numeric" autocomplete="off" pattern="[0-9]{5,20}" maxlength="20" required placeholder="例如 100759759"></label>
             <label><span>助战角色 <b>*</b></span><select id="assistSubmitCharacter" name="character" required><option value="">正在读取角色…</option></select></label>
           </div>
+          <div class="assistAutoAttempt">
+            <div><strong>优先尝试：自动导入</strong><span>会直接读取 Eremora Showcase。由于 Eremora 的 CORS / Cloudflare 限制，这个方法大概率失败；失败后请使用下面的剪贴板导入。</span></div>
+            <button class="primaryBtn" id="assistAutoImportAttempt" type="button">尝试自动导入（可能失败）</button>
+          </div>
           <div class="assistClipboardSteps">
-            <div class="assistClipboardStep"><b>1</b><div><strong>打开 Eremora Showcase 数据页</strong><span>会根据上面的 UID 和助战角色自动生成正确的 <code>uid + tid</code> 地址。</span></div></div>
+            <div class="assistClipboardStep"><b>1</b><div><strong>自动导入失败时：打开 Eremora Showcase 数据页</strong><span>会根据上面的 UID 和助战角色自动生成正确的 <code>uid + tid</code> 地址。</span></div></div>
             <div class="assistSubmitActions">
-              <button class="primaryBtn" id="assistOpenShowcase" type="button">① 打开 Eremora 数据页</button>
+              <a class="primaryBtn" id="assistOpenShowcase" href="#" target="_blank" rel="noopener noreferrer">① 打开 Eremora 数据页</a>
               <button class="ghostBtn" id="assistCopyShowcaseUrl" type="button">复制数据页地址</button>
             </div>
             <div class="assistShowcaseUrl" id="assistShowcaseUrlPreview">请先填写 UID 并选择助战角色。</div>
