@@ -744,6 +744,9 @@
   function profileDataUrl(uid){
     return 'https://eremora.com/u/'+encodeURIComponent(uid)+'/__data.json';
   }
+  function profilePageUrl(uid){
+    return 'https://eremora.com/u/'+encodeURIComponent(uid);
+  }
   function selectedAwakenerNames(tid){
     const canonical=gear.showcaseCanonicalByTid.get(String(tid))||'',rec=gear.awakenerById.get(canonical),names=[];
     if(rec?.name)names.push(String(rec.name));
@@ -890,16 +893,18 @@
     const values=showcaseFormValues();
     const valid=/^\d{5,20}$/.test(values.uid)&&values.tid&&gear.showcaseCanonicalByTid.has(values.tid);
     if(valid){
-      const url=showcaseUrl(values.uid,values.tid),purl=profileDataUrl(values.uid);
+      const url=showcaseUrl(values.uid,values.tid),purl=profileDataUrl(values.uid),pageUrl=profilePageUrl(values.uid),profilePageLink=$('assistOpenProfilePage');
       if(preview){preview.innerHTML='<code>'+esc(url)+'</code>';preview.dataset.url=url}
       if(link){link.href=url;link.setAttribute('aria-disabled','false')}
       if(profilePreview){profilePreview.innerHTML='<code>'+esc(purl)+'</code>';profilePreview.dataset.url=purl}
       if(profileLink){profileLink.href=purl;profileLink.setAttribute('aria-disabled','false')}
+      if(profilePageLink){profilePageLink.href=pageUrl;profilePageLink.setAttribute('aria-disabled','false')}
     }else{
       if(preview){preview.textContent=ui('请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');delete preview.dataset.url}
       if(link){link.href='#';link.setAttribute('aria-disabled','true')}
       if(profilePreview){profilePreview.textContent=ui('完整资料页会用于补充技能与灵塑。','Full profile data is used for skills and soulforge.');delete profilePreview.dataset.url}
       if(profileLink){profileLink.href='#';profileLink.setAttribute('aria-disabled','true')}
+      const profilePageLink=$('assistOpenProfilePage');if(profilePageLink){profilePageLink.href='#';profilePageLink.setAttribute('aria-disabled','true')}
     }
   }
   function openShowcasePage(event){
@@ -946,6 +951,20 @@
     }
     if(!copied)window.prompt(ui('浏览器禁止自动复制，请手动复制这个地址：','Automatic copy is blocked. Copy this URL manually:'),url);
     return copied;
+  }
+  function openProfilePage(event){
+    const status=$('assistSubmitStatus');
+    try{
+      const values=validateShowcaseSelection(showcaseFormValues()),url=profilePageUrl(values.uid),link=$('assistOpenProfilePage');
+      if(link)link.href=url;
+      updateShowcaseUrlPreview();
+      if(status)status.textContent=ui('正在打开玩家资料页；可全选复制页面文字后返回粘贴，用于补充技能/灵塑。','Opening player profile. Copy all visible page text and paste it back to import skills/soulforge.');
+      return true;
+    }catch(e){
+      event?.preventDefault?.();
+      if(status)status.textContent=e?.message||String(e);
+      return false;
+    }
   }
   async function copyProfileDataUrl(){
     const status=$('assistSubmitStatus');
@@ -1243,13 +1262,14 @@
     if(importDelegatesBound)return;
     importDelegatesBound=true;
     document.addEventListener('click',event=>{
-      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistOpenProfileData,#assistCopyProfileDataUrl,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
+      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistOpenProfileData,#assistCopyProfileDataUrl,#assistOpenProfilePage,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
       if(!target)return;
       if(target.id==='assistAutoImportAttempt'){event.preventDefault();tryDirectAutoImport();return}
       if(target.id==='assistOpenShowcase'){openShowcasePage(event);return}
       if(target.id==='assistCopyShowcaseUrl'){event.preventDefault();copyShowcaseUrl();return}
       if(target.id==='assistOpenProfileData'){openProfileDataPage(event);return}
       if(target.id==='assistCopyProfileDataUrl'){event.preventDefault();copyProfileDataUrl();return}
+      if(target.id==='assistOpenProfilePage'){openProfilePage(event);return}
       if(target.id==='assistClipboardImport'){event.preventDefault();readClipboardAndImport();return}
       if(target.id==='assistImportPastedJson'){event.preventDefault();importPastedShowcase();return}
       if(target.id==='assistClearPastedJson'){event.preventDefault();clearPastedShowcase();return}
