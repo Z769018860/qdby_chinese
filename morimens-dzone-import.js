@@ -638,7 +638,10 @@
   }
 
   async function listSubmissionRecords(options={}){
-    if(options.refresh||!submissionHistory.length){try{submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}catch(error){console.warn('D-Zone submission history unavailable',error)}}
+    if(options.refresh||!submissionHistory.length){
+      try{submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}
+      catch(error){console.warn('D-Zone submission history unavailable',error);if(options.strict)throw error}
+    }
     return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submittedBy,submittedAt,source,record})=>{
       const variant=normalizeVariant(seasonId,communityVariant),teams=(record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0),zones=(record?.waves||[]).length;
       const phase=Number(seasonId)===69?(variant==='postbug'?'Bug后':'Bug前'):'';
