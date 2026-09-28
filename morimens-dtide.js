@@ -201,6 +201,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 第69期拆分 Bug前 / Bug后</strong><br>第69期榜单拆分为“Bug前”和“Bug后”两个逻辑期次；两者访问 Eremora 时仍统一使用 <code>/dzone/69/__data.json</code>。Bug前沿用现有第69期数据；Bug后暂沿用同一份数据作为占位并明确标注“数据待填充”。社区提交按“69 + Bug阶段 + UID”隔离保存；提交入口移至关于页链接的独立表单。</div>
         <div class="sourceItem"><strong>2026-09-29 · 融灾榜单开放自行导入</strong><br>社区自行导入新增独立“融灾赛季期次”选择，可补充当前期与历史期次。选择期次并填写 UID 后会生成对应 Eremora <code>/challenges/dzone/&lt;season&gt;/__data.json</code> 地址；系统校验 5 个 Zone 后按“期次 + UID”保存并合并，记录更新时间与可选更新人昵称（留空为“匿名”）。查看对应期次榜单时，社区数据会进入角色、命轮、造物与配队搜索统计，同时保留官方排名索引。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
@@ -250,7 +251,8 @@
       try{
         const dzoneRows=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true})||[];
         for(const row of dzoneRows){
-          rows.push({uid:String(row.uid||''),awaker:ui('第 '+row.seasonId+' 期融灾','Season '+row.seasonId+' D-Zone'),insertedAt:row.submittedAt||'',source:'eremora-dzone',submittedBy:String(row.submittedBy||ui('匿名','Anonymous'))});
+          const phase=Number(row.seasonId)===69?(String(row.communityVariant||'prebug')==='postbug'?ui('Bug后','Post-bug'):ui('Bug前','Pre-bug')):'';
+          rows.push({uid:String(row.uid||''),awaker:ui('第 '+row.seasonId+' 期融灾','Season '+row.seasonId+' D-Zone')+(phase?' · '+phase:''),insertedAt:row.submittedAt||'',source:'eremora-dzone',submittedBy:String(row.submittedBy||ui('匿名','Anonymous'))});
         }
       }catch(error){console.warn('D-Zone community submission records unavailable in About',error)}
       rows.sort((a,b)=>String(b.insertedAt).localeCompare(String(a.insertedAt)));
@@ -270,7 +272,7 @@
       <div class="panelHead"><div><p class="eyebrow">ABOUT · CREDITS</p><h2 id="morimensAboutTitle">关于忘忘看报</h2><p class="panelLead">本工具箱为《忘却前夜》玩家制作的粉丝向项目，免费使用，不进行任何商业化运营。</p></div><span class="statusPill">非官方 · 非商业</span></div>
       <div class="sourceList">
         <div class="sourceItem"><strong>数据与资料来源</strong><br>感谢 <a href="https://eremora.com/leaderboard/abyss" target="_blank" rel="noopener noreferrer">Eremora</a> 提供融灾榜单与挑战记录；感谢 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a> 提供角色、技能、命轮及密契等结构化数据；感谢 <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">忘却前夜中文维基</a> 提供中文名称、资料与文本参考。</div>
-        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>\n        <div class="sourceItem"><strong>自行提交记录</strong><br><div id="morimensSubmissionRecords">正在载入自行提交记录……</div></div>
+        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>\n        <div class="sourceItem"><strong>社区 / 自行提交记录</strong><br><span>融灾数据自行提交已移至独立表单页；第69期提交时需区分 Bug前 / Bug后。</span><br><a href="morimens-dzone-submit.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;margin:10px 0 6px;padding:7px 11px;border:1px solid rgba(88,220,246,.28);border-radius:8px;color:#bceffa;text-decoration:none">打开融灾数据自行提交表单</a><div id="morimensSubmissionRecords">正在载入自行提交记录……</div></div>
         <div class="sourceItem"><strong>GitHub · 半成品 MMA 工具</strong><br>如果有大佬愿意继续做，可以提供一点微不足道的帮助：<a href="https://github.com/Z769018860/MMA-5771" target="_blank" rel="noopener noreferrer">MMA-5771</a></div><div class="sourceItem"><strong>制作者</strong><br>B站：<a href="https://space.bilibili.com/95687310?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">@青灯不弈</a></div>
       </div>
     </section>
@@ -519,12 +521,16 @@
 
   function renderCoverage(){
     const cap=selectedRankCap(),max=maxRankAvailable(),box=$('dtideCoverageWarn');if(!box)return;
-    if(!cap)box.innerHTML=zh()?'<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>':'<div class="dtideNotice">Current scope is <b>All Ranks</b>. All downloaded users are included, including users whose leaderboard rank cannot currently be matched.</div>';
+    const pending=activeSeasonEntry?.dataPending
+      ?(zh()?'<div class="dtideNotice"><b>数据待填充：</b>第69期 Bug后正式数据尚未录入，当前暂沿用原第69期 Bug前数据作为占位，不代表 Bug后正式统计结果。</div>':'<div class="dtideNotice"><b>Data pending:</b> official post-bug Season 69 data has not been populated yet. The original pre-bug Season 69 dataset is temporarily reused as a placeholder and does not represent final post-bug statistics.</div>')
+      :'';
+    if(!cap)box.innerHTML=pending+(zh()?'<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>':'<div class="dtideNotice">Current scope is <b>All Ranks</b>. All downloaded users are included, including users whose leaderboard rank cannot currently be matched.</div>');
     else{
       const complete=max>=cap;
-      box.innerHTML=complete?'':(zh()
+      const coverage=complete?'':(zh()
         ?`<div class="dtideNotice">当前快照实际抓取到的最高榜单名次为 <b>#${esc(max||'—')}</b>。Top ${cap} 统计目前属于不完整样本。</div>`
         :`<div class="dtideNotice">The current snapshot reaches rank <b>#${esc(max||'—')}</b>. Top ${cap} statistics are currently based on an incomplete sample.</div>`);
+      box.innerHTML=pending+coverage;
     }
     for(const opt of $('dtideRankScope')?.options||[]){
       if(opt.value==='all'||opt.value==='0'){opt.textContent=ui('全部范围（含未知排名）','All Ranks (including unknown ranks)');continue}
@@ -868,16 +874,27 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const currentSeason=Number(manifest?.currentSeason||0)||0;
     const legacy=!!(activeSeasonEntry?.legacy||activeSeasonEntry?.coverageMode==='legacy-spreadsheet'||String(activeSeasonEntry?.seasonId)==='legacy-high-difficulty');
     const isCurrent=!activeSeasonEntry?.snapshotId&&!legacy&&selectedSeasonId===currentSeason;
+    const communityVariant=String(activeSeasonEntry?.communityVariant||(selectedSeasonId===69?'prebug':'default'));
+    const selectedTargetKey=String(activeSeasonEntry?.communityTargetKey??activeSeasonEntry?.snapshotId??selectedSeasonId);
     const officialUpdatedAt=season?.dataUpdatedAt||activeSeasonEntry?.dataUpdatedAt||(isCurrent?manifest?.usageIndex?.syncedAt:null)||null;
     const availableSeasons=(manifest?.availableSeasons||[]).filter(entry=>!(entry?.legacy||entry?.coverageMode==='legacy-spreadsheet'||String(entry?.seasonId)==='legacy-high-difficulty')).map(entry=>({
-      seasonId:Number(entry.seasonId)||0,
+      seasonId:Number(entry.sourceSeasonId??entry.seasonId)||0,
+      sourceSeasonId:Number(entry.sourceSeasonId??entry.seasonId)||0,
+      targetKey:String(entry.communityTargetKey??entry.snapshotId??entry.seasonId),
+      communityVariant:String(entry.communityVariant||((Number(entry.sourceSeasonId??entry.seasonId)===69&&!entry.snapshotId)?'prebug':'default')),
       labelZh:entry.labelZh||('第 '+entry.seasonId+' 期融灾'),
       labelEn:entry.labelEn||('Season '+entry.seasonId+' D-Zone'),
-      periodShort:entry.periodShort||entry.period||''
+      periodShort:entry.periodShort||entry.period||'',
+      dataPending:!!entry.dataPending
     })).filter(entry=>entry.seasonId>0);
-    return {selectedSeasonId,currentSeason,legacy,isCurrent,recordCount:Number(season?.recordCount||0),officialUpdatedAt,availableSeasons};
+    return {selectedSeasonId,currentSeason,legacy,isCurrent,communityVariant,selectedTargetKey,recordCount:Number(season?.recordCount||0),officialUpdatedAt,availableSeasons};
   }
   function communityTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
+  function communityVariantOf(item,record){
+    const explicit=String(item?.communityVariant||item?.variant||record?.communityUpdate?.communityVariant||'').trim();
+    if(explicit)return explicit;
+    return Number(record?.seasonId||item?.seasonId)===69?'prebug':'default';
+  }
   function mergeCommunityDzoneRecords(items){
     const ctx=communityDzoneContext();
     if(ctx.legacy||!ctx.selectedSeasonId||!season||!Array.isArray(items))return {applied:0,skipped:items?.length||0};
@@ -887,7 +904,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const officialMs=ctx.officialUpdatedAt?Date.parse(ctx.officialUpdatedAt):NaN;
     for(const item of items){
       const record=item?.record||item,uid=String(record?.uid??'').trim(),submittedAt=item?.submittedAt||record?.communityUpdate?.submittedAt||'';
-      if(!uid||Number(record?.seasonId)!==Number(ctx.selectedSeasonId)||communityTeamCount(record)<5){skipped++;continue}
+      const itemVariant=communityVariantOf(item,record);
+      if(!uid||Number(record?.seasonId)!==Number(ctx.selectedSeasonId)||itemVariant!==ctx.communityVariant||communityTeamCount(record)<5){skipped++;continue}
       const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
       if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
       const previous=byUid.get(uid);
@@ -895,7 +913,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       const next=inheritReplayMetadata(previous,{...record,
         rank:previous?.rank??record?.rank??null,
         leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
-        communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone'}
+        communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone',communityVariant:itemVariant,targetKey:String(item?.targetKey||ctx.selectedTargetKey)}
       });
       byUid.set(uid,next);communityDzoneMetaByUid.set(uid,next.communityUpdate);applied++;
     }
@@ -914,7 +932,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.4';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    window.MorimensDzoneImportEmbedded=false;
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.5';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
@@ -1060,10 +1079,10 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       if(manifest){
         const sel=$('dtideSeason');
         if(sel)for(const option of sel.options){
-          const entry=(manifest.availableSeasons||[]).find(x=>String(x.seasonId)===String(option.value));if(!entry)continue;
+          const entry=(manifest.availableSeasons||[]).find(x=>String(x.snapshotId??x.seasonId)===String(option.value));if(!entry)continue;
           const legacy=entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty';
           if(legacy)option.textContent=ui('旧版融灾425出场率（来源：@却尘）','Legacy D-Zone 425 Appearance Rate (source: @却尘)');
-          else option.textContent=zh()?((entry.label||('第 '+entry.seasonId+' 期'))+' · '+(entry.recordCount??0)+' 条'+(entry.complete?' · 完整':' · 部分')):((entry.labelEn||('Season '+entry.seasonId))+' · '+(entry.recordCount??0)+' records'+(entry.complete?' · Complete':' · Partial'));
+          else option.textContent=zh()?((entry.labelZh||entry.label||('第 '+entry.seasonId+' 期'))+' · '+(entry.recordCount??0)+' 条'+(entry.complete?' · 完整':' · 部分')):((entry.labelEn||('Season '+entry.seasonId))+' · '+(entry.recordCount??0)+' records'+(entry.complete?' · Complete':' · Partial'));
         }
         renderAll();
       }
