@@ -1,6 +1,6 @@
 {
   "seasonId": 65,
-  "generatedAt": "2026-09-17T14:30:43.908Z",
+  "generatedAt": "2026-09-28T21:14:01.795Z",
   "recordCount": 24,
   "maxRankAvailable": 0,
   "all": {
@@ -5687,6 +5687,56 @@
           "wheels": [],
           "covenants": [],
           "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
         }
       }
     },
@@ -9356,6 +9406,56 @@
           "wheels": [],
           "covenants": [],
           "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
         }
       }
     },
@@ -12740,6 +12840,56 @@
           "enlightenment": []
         },
         "madness": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
           "teamCount": 0,
           "memberSlots": 0,
           "wheelSlots": 0,
@@ -16284,6 +16434,56 @@
           "wheels": [],
           "covenants": [],
           "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
         }
       }
     },
@@ -19782,6 +19982,56 @@
           "wheels": [],
           "covenants": [],
           "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
         }
       }
     }
@@ -19818,6 +20068,56 @@
       "enlightenment": []
     },
     "madness": {
+      "teamCount": 0,
+      "memberSlots": 0,
+      "wheelSlots": 0,
+      "covenantSlots": 0,
+      "characters": [],
+      "wheels": [],
+      "covenants": [],
+      "enlightenment": []
+    },
+    "alert1": {
+      "teamCount": 0,
+      "memberSlots": 0,
+      "wheelSlots": 0,
+      "covenantSlots": 0,
+      "characters": [],
+      "wheels": [],
+      "covenants": [],
+      "enlightenment": []
+    },
+    "alert2": {
+      "teamCount": 0,
+      "memberSlots": 0,
+      "wheelSlots": 0,
+      "covenantSlots": 0,
+      "characters": [],
+      "wheels": [],
+      "covenants": [],
+      "enlightenment": []
+    },
+    "alert3": {
+      "teamCount": 0,
+      "memberSlots": 0,
+      "wheelSlots": 0,
+      "covenantSlots": 0,
+      "characters": [],
+      "wheels": [],
+      "covenants": [],
+      "enlightenment": []
+    },
+    "alert4": {
+      "teamCount": 0,
+      "memberSlots": 0,
+      "wheelSlots": 0,
+      "covenantSlots": 0,
+      "characters": [],
+      "wheels": [],
+      "covenants": [],
+      "enlightenment": []
+    },
+    "alert5": {
       "teamCount": 0,
       "memberSlots": 0,
       "wheelSlots": 0,
@@ -21627,6 +21927,56 @@
           "wheels": [],
           "covenants": [],
           "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
         }
       }
     },
@@ -23420,6 +23770,56 @@
           "enlightenment": []
         },
         "madness": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
           "teamCount": 0,
           "memberSlots": 0,
           "wheelSlots": 0,
@@ -25229,6 +25629,56 @@
           "wheels": [],
           "covenants": [],
           "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
         }
       }
     },
@@ -27022,6 +27472,56 @@
           "enlightenment": []
         },
         "madness": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert1": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert2": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert3": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert4": {
+          "teamCount": 0,
+          "memberSlots": 0,
+          "wheelSlots": 0,
+          "covenantSlots": 0,
+          "characters": [],
+          "wheels": [],
+          "covenants": [],
+          "enlightenment": []
+        },
+        "alert5": {
           "teamCount": 0,
           "memberSlots": 0,
           "wheelSlots": 0,
