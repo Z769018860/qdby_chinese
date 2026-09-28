@@ -9,7 +9,7 @@
   const PAGE_SIZE=100;
   const WALINE_SERVER='https://textbox.qingdengbuyi.top';
   const SUBMISSION_PATH='/__morimens_assist_submissions__/';
-  const SUBMISSION_MARKER='[MORIMENS_ASSIST_V1]';
+  const SUBMISSION_MARKER='MORIMENS_ASSIST_V1';
   let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[];
   const cache=new Map(),playerNames=new Map();
   const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map()};
@@ -323,11 +323,14 @@
     const covRec=gear.covenantById.get(String(payload.covenantId||''));if(!covRec)return null;
     const level=Math.max(1,Math.min(100,Number(payload.level)||1));
     const wheelStack=Math.max(0,Math.min(12,Number(payload.wheelStack)||0));
-    const attrs=(Array.isArray(payload.attrs)?payload.attrs:[]).slice(0,8).map(a=>{
-      const value=Number(a?.value);if(!Number.isFinite(value))return null;
-      const name=String(a?.name||'').trim().slice(0,40);if(!name)return null;
-      return {id:name,name,value,percentage:!!a?.percentage,percentPoints:!!a?.percentage};
-    }).filter(Boolean);
+    const attrMap=new Map();
+    for(const a of (Array.isArray(payload.attrs)?payload.attrs:[]).slice(0,8)){
+      const value=Number(a?.value);if(!Number.isFinite(value))continue;
+      const name=String(a?.name||'').trim().slice(0,40);if(!name)continue;
+      const percentage=!!a?.percentage,key=name+'|'+(percentage?1:0),prev=attrMap.get(key)||{id:name,name,value:0,percentage,percentPoints:percentage};
+      prev.value+=value;attrMap.set(key,prev);
+    }
+    const attrs=[...attrMap.values()];
     const wheel={id:String(wheelRec.id),name:wheelName(wheelRec),image:wheelImage(wheelRec),level:null,enhanceLevel:wheelStack};
     const cov={id:String(covRec.id),name:covenantName(covRec),image:covenantImage(covRec),count:6};
     const player=cleanPlayerName(payload.player||'').slice(0,30);
@@ -335,7 +338,7 @@
     return {
       uid,player:player||playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,
       level,enlightenment:String(payload.enlightenment||ui('未知','Unknown')).slice(0,20),
-      breakLevel:payload.breakLevel==null||payload.breakLevel===''?null:Number(payload.breakLevel),
+      breakLevel:payload.breakLevel==null||payload.breakLevel===''?null:(Number.isFinite(Number(payload.breakLevel))?Math.max(0,Math.min(20,Number(payload.breakLevel))):null),
       skills:String(payload.skills||'').trim().slice(0,40),likeLevel:null,fighting:null,
       wheels:[wheel],covenants:[cov],trinkets:[],finalAttrs:attrs,
       count:null,borrowers:new Set(),seasons:new Set(),manual:true,source:'online',
