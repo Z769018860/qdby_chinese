@@ -1026,22 +1026,23 @@
       return true;
     });
   }
-  function wheelRefinementLabel(level){
+  function wheelRefinementLabel(level,enhanceLevel){
     const n=Number(level);
     if(!Number.isFinite(n))return '';
     const lv=Math.trunc(n);
     if(lv<1)return '';
-    if(lv<=4){
-      const stack=lv-1;
-      return zh()?(stack+'叠'):(stack+' Stack');
-    }
-    const plus=Math.min(12,Math.max(1,lv-4));
-    return '+'+plus;
+    const extraRaw=Number(enhanceLevel);
+    const extra=Number.isFinite(extraRaw)?Math.max(0,Math.trunc(extraRaw)):0;
+    // Wheel progression: Lv.1..4 => 0..3 stacks; Lv.5 => +1.
+    // enhance_level advances the same progression. Example: Lv.15 (+11) + enhance 1 => +12.
+    const progress=Math.min(15,Math.max(0,(lv-1)+extra));
+    if(progress<=3)return zh()?(progress+'叠'):(progress+' Stack'+(progress===1?'':'s'));
+    return '+'+Math.min(12,progress-3);
   }
   function wheelCards(items){
     if(!items?.length)return '<span class="assistSuitTag">'+ui('无记录','No record')+'</span>';
     return '<div class="assistGear">'+items.map(x=>{
-      const meta=[],refinement=wheelRefinementLabel(x.level);
+      const meta=[],refinement=wheelRefinementLabel(x.level,x.enhanceLevel);
       if(refinement)meta.push(refinement);
       return '<div class="assistGearCard'+(x.image?'':' assistGearTextOnly')+'">'+(x.image?'<img src="'+esc(x.image)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<div><b>'+esc(x.name)+'</b>'+(meta.length?'<small>'+esc(meta.join(' · '))+'</small>':'')+'</div></div>';
     }).join('')+'</div>';
