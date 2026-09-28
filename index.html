@@ -309,7 +309,7 @@
         const counts = new Map();
         for (const row of rows) {
           const path = String(row?.url || row?.path || '').trim();
-          if (!path || path.startsWith('/__qdby_site_views__/')) continue;
+          if (!path || path.startsWith('/__qdby_site_views__/') || path.startsWith('/__morimens_assist_submissions__/')) continue;
           counts.set(path, (counts.get(path) || 0) + 1);
         }
         const preferred = ['/', '/index.html', '/guestbook', '/comments', '/message'];
