@@ -201,6 +201,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 第69期 1035 条数据恢复</strong><br>Bug前 / Bug后两个逻辑选项都重新使用原第69期完整数据栈：1007 条基础数据 + 2026-09-22 Top500 增量层，合并后 1035 条。Bug后仍仅作为“数据待填充”的占位展示，两者社区提交继续分开保存。</div>
         <div class="sourceItem"><strong>2026-09-29 · 第69期拆分 Bug前 / Bug后</strong><br>第69期榜单拆分为“Bug前”和“Bug后”两个逻辑期次；两者访问 Eremora 时仍统一使用 <code>/dzone/69/__data.json</code>。Bug前沿用现有第69期数据；Bug后暂沿用同一份数据作为占位并明确标注“数据待填充”。社区提交按“69 + Bug阶段 + UID”隔离保存；提交入口移至关于页链接的独立表单。</div>
         <div class="sourceItem"><strong>2026-09-29 · 融灾榜单开放自行导入</strong><br>社区自行导入新增独立“融灾赛季期次”选择，可补充当前期与历史期次。选择期次并填写 UID 后会生成对应 Eremora <code>/challenges/dzone/&lt;season&gt;/__data.json</code> 地址；系统校验 5 个 Zone 后按“期次 + UID”保存并合并，记录更新时间与可选更新人昵称（留空为“匿名”）。查看对应期次榜单时，社区数据会进入角色、命轮、造物与配队搜索统计，同时保留官方排名索引。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
@@ -932,8 +933,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
-    window.MorimensDzoneImportEmbedded=false;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.6';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    window.MorimensDzoneImportEmbedded=true;
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.7';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
@@ -956,7 +957,15 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
     const revision=current.revision||manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
-    const overlay=isCurrent&&manifest.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===sourceSeasonId?manifest.currentOverlay:null;
+    const archivedOverlay=entry.overlayPath?{
+      seasonId:sourceSeasonId,
+      scope:Number(entry.overlayScope)||0,
+      path:entry.overlayPath,
+      rankPath:entry.overlayRankPath||null,
+      updatedAt:entry.overlayUpdatedAt||entry.dataUpdatedAt||null,
+      revision:entry.overlayRevision||entry.overlayUpdatedAt||entry.dataUpdatedAt||revision
+    }:null;
+    const overlay=isCurrent&&manifest.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===sourceSeasonId?manifest.currentOverlay:archivedOverlay;
     const overlayRevision=overlay?.revision||overlay?.updatedAt||revision;
     const rankPath=entry.legacy||entry.coverageMode==='legacy-spreadsheet'?null:(entry.rankPath||(isCurrent?(manifest.rankIndex?.path||`data/morimens/eremora/rank-index/${sourceSeasonId}.json`):`data/morimens/eremora/rank-index/${entry.snapshotId??entry.seasonId}.json`));
     const [loadedSeason,loadedStats,loadedRanks,loadedLegacyStructured,loadedOverlay,loadedOverlayRanks]=await Promise.all([
