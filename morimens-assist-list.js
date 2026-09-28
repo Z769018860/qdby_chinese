@@ -839,6 +839,149 @@
     }
   }
 
+  function localizeAssistStaticUi(){
+    const root=$('morimensAssistPanel');if(!root)return;
+    const setText=(el,cn,en)=>{if(el)el.textContent=ui(cn,en)};
+    const bySel=sel=>root.querySelector(sel);
+    setText($('morimensAssistTitle'),'互助助战列表','Assist List');
+    setText($('morimensAssistLead'),
+      '整理第68、69期融灾记录中实际被借用的助战配置。按助战提供者 UID 与角色配装聚合，统计被使用次数。',
+      'Aggregates Assist builds actually borrowed in D-Zone Seasons 68 and 69, grouped by provider UID and Awakener build with observed use counts.'
+    );
+    if($('morimensAssistStatus')&&!initialized)setText($('morimensAssistStatus'),'等待载入','Waiting to load');
+
+    const scope=bySel('.assistImportScopeNotice');
+    if(scope)scope.innerHTML=zh()
+      ?'<strong>导入说明：</strong>当前助战导入仅使用 <b>Eremora Showcase</b>，包含等级、启灵、命轮、密契与密契词条；<b>不包含技能、灵塑</b>。如需查看完整养成详情，可直接点击列表中的 <b>UID</b> 跳转 Eremora 玩家详情页。'
+      :'<strong>Import note:</strong> Assist imports use <b>Eremora Showcase</b> only, including level, Enlighten, Wheels, Covenants, and Covenant substats. <b>Skills and Soulforge are not imported.</b> Click a <b>UID</b> in the list to open the full Eremora player profile.';
+
+    setText(bySel('.assistGuideBanner strong'),
+      '如何在对方没关注自己的情况下使用助战',
+      'How to use an Assist from a player who does not follow you'
+    );
+    setText(bySel('.assistGuideBanner span'),'查看图文 / 视频教程 →','View illustrated / video guide →');
+
+    const summary=bySel('#assistSubmitBox > summary');
+    if(summary){
+      setText(summary.querySelector('strong'),'＋ 导入助战信息','＋ Import Assist Build');
+      setText(summary.querySelector('span'),
+        '先尝试自动导入；失败后使用 Eremora 数据页 + 剪贴板导入',
+        'Try automatic import first; if it fails, use the Eremora data page + clipboard import.'
+      );
+    }
+
+    const uidInput=$('assistSubmitUid'),charSelect=$('assistSubmitCharacter');
+    setText(uidInput?.closest('label')?.querySelector('span'),'玩家 UID *','Player UID *');
+    setText(charSelect?.closest('label')?.querySelector('span'),'助战角色 *','Assist Awakener *');
+    if(uidInput)uidInput.placeholder=ui('例如 100759759','e.g. 100759759');
+    if(charSelect&&!initialized&&charSelect.options.length)charSelect.options[0].textContent=ui('正在读取角色…','Loading Awakeners…');
+
+    const attempt=bySel('.assistAutoAttempt');
+    if(attempt){
+      setText(attempt.querySelector('strong'),'优先尝试：自动导入','First choice: automatic import');
+      setText(attempt.querySelector('span'),
+        '会直接读取 Eremora Showcase。由于 Eremora 的 CORS / Cloudflare 限制，这个方法大概率失败；失败后请使用下面的剪贴板导入。',
+        'This directly reads Eremora Showcase. It may fail because of Eremora CORS / Cloudflare restrictions; if so, use the clipboard fallback below.'
+      );
+    }
+    setText($('assistAutoImportAttempt'),'尝试自动导入（可能失败）','Try automatic import (may fail)');
+
+    const steps=[...root.querySelectorAll('.assistClipboardStep')];
+    if(steps[0]){
+      setText(steps[0].querySelector('strong'),
+        '自动导入失败时：打开 Eremora Showcase 数据页',
+        'If automatic import fails: open the Eremora Showcase data page'
+      );
+      const span=steps[0].querySelector('span');
+      if(span)span.innerHTML=zh()
+        ?'会根据上面的 UID 和助战角色自动生成正确的 <code>uid + tid</code> 地址。'
+        :'The correct <code>uid + tid</code> URL is generated automatically from the UID and Assist Awakener above.';
+    }
+    if(steps[1]){
+      setText(steps[1].querySelector('strong'),'复制 Showcase JSON','Copy the Showcase JSON');
+      const span=steps[1].querySelector('span');
+      if(span)span.innerHTML=zh()
+        ?'电脑：<code>Ctrl+A → Ctrl+C</code>；手机：长按页面内容 → 全选 → 复制。'
+        :'Desktop: <code>Ctrl+A → Ctrl+C</code>. Mobile: long-press the page content → Select All → Copy.';
+    }
+    if(steps[2]){
+      setText(steps[2].querySelector('strong'),'返回本页并导入','Return here and import');
+      setText(steps[2].querySelector('span'),
+        '优先点击“从剪贴板读取并导入”。若手机浏览器不允许网页读取剪贴板，可在下方输入框长按“粘贴”，粘贴完成后会自动导入。',
+        'Use “Read clipboard and import” first. If your mobile browser blocks clipboard access, long-press the box below and paste the JSON; pasted data can be imported directly.'
+      );
+    }
+
+    setText($('assistOpenShowcase'),'① 打开 Showcase 配置页','① Open Showcase data page');
+    setText($('assistCopyShowcaseUrl'),'复制 Showcase 地址','Copy Showcase URL');
+    const preview=$('assistShowcaseUrlPreview');
+    if(preview&&!preview.dataset.url)setText(preview,'请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');
+    setText($('assistClipboardImport'),'③ 从剪贴板读取并导入','③ Read clipboard and import');
+
+    const paste=$('assistPasteShowcase');
+    setText(paste?.closest('label')?.querySelector('span'),
+      '手机 / Safari 兜底：长按下方区域并粘贴 JSON',
+      'Mobile / Safari fallback: long-press below and paste the JSON'
+    );
+    if(paste)paste.placeholder=ui(
+      '在这里粘贴 Eremora Showcase 返回的完整 JSON。',
+      'Paste the complete JSON returned by Eremora Showcase here.'
+    );
+    setText($('assistImportPastedJson'),'导入已粘贴 Showcase JSON','Import pasted Showcase JSON');
+    setText($('assistClearPastedJson'),'清空粘贴内容','Clear pasted content');
+
+    const importInfo=bySel('.assistAutoImportInfo');
+    if(importInfo){
+      setText(importInfo.querySelector('strong'),'导入内容','Imported fields');
+      setText(importInfo.querySelector('span'),
+        'Showcase 导入：角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。',
+        'Showcase import: Awakener level, Enlighten, Wheels and stacks, Covenant set, and aggregated final substats from all six Covenant pieces.'
+      );
+      setText(importInfo.querySelector('small'),
+        '技能、灵塑不包含在导入范围内；如需查看完整详情，请点击列表中的 UID 跳转 Eremora 玩家页。重新导入同一 UID + 角色只会更新当前 Showcase 配置，不会清空历史使用次数。',
+        'Skills and Soulforge are not included. For full progression details, click the UID in the list to open the Eremora player profile. Re-importing the same UID + Awakener updates the current Showcase build without clearing historical use counts.'
+      );
+    }
+    setText(bySel('.assistSubmitPrivacy'),
+      '请只导入本人或已公开的助战信息。若同一 UID + 角色已有导入记录，将以最新一次导入配置为准，历史融灾使用次数不会被清零。',
+      'Only import your own or publicly available Assist information. If the same UID + Awakener already exists, the latest imported build replaces the current configuration while historical D-Zone use counts are preserved.'
+    );
+
+    const labelMap={
+      assistSeason:['期次','Season'],
+      assistUidFilter:['玩家 UID','Player UID'],
+      assistCharacterFilter:['挂的助战角色','Assist Awakener'],
+      assistLevelFilter:['角色等级','Awakener Level'],
+      assistEnlightFilter:['启灵','Enlighten'],
+      assistWheelFilter:['命轮','Wheel'],
+      assistCovenantFilter:['密契','Covenant'],
+      assistSourceFilter:['来源','Source']
+    };
+    for(const [id,[cn,en]] of Object.entries(labelMap))setText(root.querySelector('label[for="'+id+'"]'),cn,en);
+    const uidFilter=$('assistUidFilter');if(uidFilter)uidFilter.placeholder=ui('输入 UID / 玩家名搜索','Search UID / player name');
+
+    const season=$('assistSeason');
+    if(season){
+      const texts={
+        all:ui('全部期次（68 + 69）','All Seasons (68 + 69)'),
+        '69':ui('第 69 期','Season 69'),
+        '68':ui('第 68 期','Season 68')
+      };
+      for(const option of season.options)if(texts[option.value])option.textContent=texts[option.value];
+    }
+    setText($('assistReset'),'清空筛选','Clear filters');
+
+    const coverage=$('assistCoverageNote');
+    if(coverage)coverage.innerHTML=zh()
+      ?'数据只统计仓库现有第68、69期记录中明确标记为 <code>borrowed</code> 且带 <code>assistUid</code> 的助战角色。当前手动/自动导入仅使用 Eremora Showcase，不包含技能、灵塑；需要完整养成信息请点击 UID 查看 Eremora 玩家详情。密契“最终词条”只汇总带 <code>rollQuality</code> 的洗练词条。'
+      :'Only Assist Awakeners explicitly marked <code>borrowed</code> with an <code>assistUid</code> in the stored Season 68/69 records are counted. Manual/automatic imports use Eremora Showcase only and do not include Skills or Soulforge; click a UID for full progression details on Eremora. “Final substats” include only rolled Covenant substats carrying <code>rollQuality</code>.';
+
+    const table=$('assistTable');
+    if(table&&!initialized&&table.querySelector('.dtideEmpty')){
+      table.querySelector('.dtideEmpty').textContent=ui('点击“互助助战列表”后载入数据。','Open “Assist List” to load data.');
+    }
+  }
+
   function optionRows(list,selector){
     const map=new Map();
     for(const row of list)for(const item of selector(row)||[]){const id=String(item?.id||item?.name||'');if(id)map.set(id,item?.name||id)}
@@ -998,17 +1141,19 @@
     try{
       for(let i=0;i<50&&!$('morimensAssistPanel');i++)await new Promise(r=>setTimeout(r,100));
       if(!$('morimensAssistPanel'))return;
+      localizeAssistStaticUi();
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error('manifest HTTP '+response.status);
       manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();bind();initialized=true;await load($('assistSeason')?.value||'all');
     }catch(e){error(e)}finally{loading=false}
   }
   function relocalize(){
     if($('morimensAssistTab'))$('morimensAssistTab').textContent=ui('互助助战列表','Assist List');
-    if($('morimensAssistTitle'))$('morimensAssistTitle').textContent=ui('互助助战列表','Assist List');
+    localizeAssistStaticUi();
     if(initialized){populateSubmitForm();load(activeSeason).catch(error)}
   }
   bindImportDelegates();
-    window.MorimensAssistList={open:init,reload:()=>load($('assistSeason')?.value||activeSeason||'all')};
+  queueMicrotask(()=>localizeAssistStaticUi());
+  window.MorimensAssistList={open:init,reload:()=>load($('assistSeason')?.value||activeSeason||'all')};
   window.addEventListener('morimens-assist-list-open',init);
   window.addEventListener('morimens-language-change',relocalize);
   window.addEventListener('morimens-data-ready',()=>{if(initialized)load(activeSeason).catch(error)});
