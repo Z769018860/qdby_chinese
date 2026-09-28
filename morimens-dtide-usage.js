@@ -116,11 +116,12 @@
   }
   function communityUsageTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
   function mergeCommunityUsageRecords(items){
-    const current=Number(activeSeason)===Number(manifest?.currentSeason);
-    if(!current||!usage||!Array.isArray(items))return {applied:0,skipped:items?.length||0};
+    if(!activeSeason||!usage||!Array.isArray(items))return {applied:0,skipped:items?.length||0};
     const byUid=new Map(),anonymous=[];
     for(const record of usage.records||[]){const uid=String(record?.uid??'').trim();if(uid)byUid.set(uid,record);else anonymous.push(record)}
-    const officialUpdatedAt=usage?.dataUpdatedAt||manifest?.usageIndex?.syncedAt||manifest?.source?.syncedAt||null;
+    const activeEntry=(manifest?.availableSeasons||[]).find(entry=>Number(entry?.seasonId)===Number(activeSeason));
+    const current=Number(activeSeason)===Number(manifest?.currentSeason);
+    const officialUpdatedAt=usage?.dataUpdatedAt||activeEntry?.dataUpdatedAt||(current?manifest?.usageIndex?.syncedAt:null)||manifest?.source?.syncedAt||null;
     const officialMs=officialUpdatedAt?Date.parse(officialUpdatedAt):NaN;
     let applied=0,skipped=0;
     for(const item of items){
