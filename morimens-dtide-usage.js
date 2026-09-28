@@ -6,9 +6,9 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const rankCaps=[50,200,500,1000];
-  const diffs=['normal','hard','nightmare','madness','alert1','alert2','alert3','alert4','alert5'];
-  const diffZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',alert1:'警戒 I',alert2:'警戒 II',alert3:'警戒 III',alert4:'警戒 IV',alert5:'警戒 V',unknown:'未识别'};
-  const diffEn={all:'All Difficulties',normal:'Normal',hard:'Hard',nightmare:'Nightmare',madness:'Madness',alert1:'Alert I',alert2:'Alert II',alert3:'Alert III',alert4:'Alert IV',alert5:'Alert V',unknown:'Unknown'};
+  const diffs=['threatC','threatB','threatA','threatS','threatSS','threatSSS','threatDown'];
+  const diffZh={all:'全部难度',threatC:'危险等级 C',threatB:'危险等级 B',threatA:'危险等级 A',threatS:'危险等级 S',threatSS:'危险等级 SS',threatSSS:'危险等级 SSS',threatDown:'危险等级 ▼',unknown:'未识别'};
+  const diffEn={all:'All Difficulties',threatC:'Threat Level C',threatB:'Threat Level B',threatA:'Threat Level A',threatS:'Threat Level S',threatSS:'Threat Level SS',threatSSS:'Threat Level SSS',threatDown:'Threat Level ▼',unknown:'Unknown'};
   const enlightZh={low:'0～2启',e3plus3:'3启～+3',plus4plus11:'+4～+11',plus12:'+12'};
   const enlightEn={low:'E0–E2',e3plus3:'E3–+3',plus4plus11:'+4–+11',plus12:'+12'};
   const enlightKeys=['low','e3plus3','plus4plus11','plus12'];
@@ -69,7 +69,7 @@
     const raw=rawMemberKey(m).trim();
     return raw?`raw:${raw.toLowerCase()}`:'';
   }
-  const difficultyOf=(team,wave)=>{const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'unknown').toLowerCase(),alert=raw.match(/alert\s*(i{1,3}|iv|v|[1-5])(?:$|[^a-z0-9])/i);if(alert){const level={i:1,ii:2,iii:3,iv:4,v:5}[alert[1].toLowerCase()]||Number(alert[1]);return `alert${level}`}return diffs.slice(0,4).find(d=>new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))||'unknown'};
+  const difficultyOf=(team,wave)=>{const raw=String(team?.stageName||wave?.stageName||team?.difficulty||wave?.difficulty||'unknown').trim();if(/(?:threat level\s*)?▼\s*$/i.test(raw))return 'threatDown';const match=raw.match(/threat level\s*(sss|ss|s|a|b|c)(?:$|[^a-z])/i);return match?`threat${match[1].toUpperCase()}`:'unknown'};
   const enlightOf=m=>{const p=Number(m?.potencyLevel);if(Number.isFinite(p))return p<=2?'low':p<=6?'e3plus3':p<=14?'plus4plus11':'plus12';const n=Number(m?.enlightenCount);if(Number.isFinite(n))return n<=2?'low':n===3?'e3plus3':n===4?'plus4plus11':'plus12';return /AA/i.test(String(m?.progression||''))?'plus12':/OE/i.test(String(m?.progression||''))?'plus4plus11':/E[0-2]/i.test(String(m?.progression||''))?'low':'e3plus3'};
   function displayCharacterName(...values){return values.map(decodeMojibake).find(value=>{const name=String(value||'').trim();return name&&!/^(awakener|unknown|角色|唤醒体)$/i.test(name)})||(zh()?'未知':'Unknown')}
   function characterInfo(m){

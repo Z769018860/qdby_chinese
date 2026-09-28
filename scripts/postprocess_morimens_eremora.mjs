@@ -6,21 +6,18 @@ const SEASON_DIR=path.join(ROOT,'seasons');
 const STATS_DIR=path.join(ROOT,'stats');
 const MANIFEST=path.join(ROOT,'manifest.json');
 const RANK_CAPS=[50,200,500,1000];
-const DIFFICULTIES=['normal','hard','nightmare','madness','alert1','alert2','alert3','alert4','alert5'];
-const DIFFICULTY_ZH={normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',alert1:'警戒 I',alert2:'警戒 II',alert3:'警戒 III',alert4:'警戒 IV',alert5:'警戒 V',unknown:'未识别'};
+const DIFFICULTIES=['threatC','threatB','threatA','threatS','threatSS','threatSSS','threatDown'];
+const DIFFICULTY_ZH={threatC:'危险等级 C',threatB:'危险等级 B',threatA:'危险等级 A',threatS:'危险等级 S',threatSS:'危险等级 SS',threatSSS:'危险等级 SSS',threatDown:'危险等级 ▼',unknown:'未识别'};
 const ENLIGHT_ZH={e3:'最高三启',overlimit:'最高超限',law12:'最高+12法则'};
 
 async function readJson(file,fallback=null){try{return JSON.parse(await readFile(file,'utf8'))}catch{return fallback}}
 async function saveJson(file,data){await mkdir(path.dirname(file),{recursive:true});await writeFile(file,JSON.stringify(data,null,2)+'\n')}
 function keyOf(m){return String(m?.skeydbId||m?.ingameId||m?.id||m?.name||'')}
 function difficultyOf(team={}){
-  const raw=String(team.difficulty||team.stageName||'').toLowerCase();
-  const alert=raw.match(/alert\s*(i{1,3}|iv|v|[1-5])(?:$|[^a-z0-9])/i);
-  if(alert){const level={i:1,ii:2,iii:3,iv:4,v:5}[alert[1].toLowerCase()]||Number(alert[1]);return `alert${level}`}
-  if(/nightmare/.test(raw))return 'nightmare';
-  if(/madness/.test(raw))return 'madness';
-  if(/hard/.test(raw))return 'hard';
-  if(/normal/.test(raw))return 'normal';
+  const raw=String(team.stageName||team.difficulty||'').trim();
+  if(/(?:threat level\s*)?▼\s*$/i.test(raw))return 'threatDown';
+  const match=raw.match(/threat level\s*(sss|ss|s|a|b|c)(?:$|[^a-z])/i);
+  if(match)return `threat${match[1].toUpperCase()}`;
   return 'unknown';
 }
 function enlightTier(member={}){
@@ -81,5 +78,5 @@ for(const file of files){
   if(changed)await saveJson(p,doc);
   const stats=buildStats(doc);await saveJson(path.join(STATS_DIR,file),stats);coverage.push({seasonId:doc.seasonId,maxRankAvailable:stats.maxRankAvailable,difficulty:stats.coverage.difficulty,rankScopes:stats.coverage.rankScopes});
 }
-const manifest=await readJson(MANIFEST,{});manifest.analytics={...(manifest.analytics||{}),generatedAt:new Date().toISOString(),rankScopes:RANK_CAPS,difficulties:DIFFICULTIES.map(id=>({id,label:DIFFICULTY_ZH[id]})),enlightenmentGroups:Object.entries(ENLIGHT_ZH).map(([id,label])=>({id,label})),coverage:coverage.sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))};manifest.fieldCoverage={...(manifest.fieldCoverage||{}),difficulty:coverage.some(x=>x.difficulty?.recognizedTeams>0)};manifest.notes=[...(manifest.notes||[]).filter(x=>!String(x).startsWith('出场率分层：')&&!String(x).startsWith('启灵分组：')),'启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。','出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂 / 警戒 I–V；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。'];await saveJson(MANIFEST,manifest);
+const manifest=await readJson(MANIFEST,{});manifest.analytics={...(manifest.analytics||{}),generatedAt:new Date().toISOString(),rankScopes:RANK_CAPS,difficulties:DIFFICULTIES.map(id=>({id,label:DIFFICULTY_ZH[id]})),enlightenmentGroups:Object.entries(ENLIGHT_ZH).map(([id,label])=>({id,label})),coverage:coverage.sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))};manifest.fieldCoverage={...(manifest.fieldCoverage||{}),difficulty:coverage.some(x=>x.difficulty?.recognizedTeams>0)};manifest.notes=[...(manifest.notes||[]).filter(x=>!String(x).startsWith('出场率分层：')&&!String(x).startsWith('启灵分组：')),'启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。','出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。'];await saveJson(MANIFEST,manifest);
 console.log(`Postprocessed ${coverage.length} Eremora seasons: ${coverage.map(x=>`${x.seasonId}#${x.maxRankAvailable}`).join(', ')}`);

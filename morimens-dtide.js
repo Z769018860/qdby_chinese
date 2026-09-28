@@ -7,9 +7,9 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const rankCaps=[50,200,500,1000];
-  const difficultyOrder=['normal','hard','nightmare','madness','alert1','alert2','alert3','alert4','alert5'];
-  const difficultyZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',alert1:'警戒 I',alert2:'警戒 II',alert3:'警戒 III',alert4:'警戒 IV',alert5:'警戒 V',unknown:'未识别'};
-  const difficultyEn={all:'All Difficulties',normal:'Normal',hard:'Hard',nightmare:'Nightmare',madness:'Madness',alert1:'Alert I',alert2:'Alert II',alert3:'Alert III',alert4:'Alert IV',alert5:'Alert V',unknown:'Unknown'};
+  const difficultyOrder=['threatC','threatB','threatA','threatS','threatSS','threatSSS','threatDown'];
+  const difficultyZh={all:'全部难度',threatC:'危险等级 C',threatB:'危险等级 B',threatA:'危险等级 A',threatS:'危险等级 S',threatSS:'危险等级 SS',threatSSS:'危险等级 SSS',threatDown:'危险等级 ▼',unknown:'未识别'};
+  const difficultyEn={all:'All Difficulties',threatC:'Threat Level C',threatB:'Threat Level B',threatA:'Threat Level A',threatS:'Threat Level S',threatSS:'Threat Level SS',threatSSS:'Threat Level SSS',threatDown:'Threat Level ▼',unknown:'Unknown'};
   const enlightOrder=['e0_2','e3_plus3','plus4_11','plus12'];
   const enlightZh={e0_2:'0～2启',e3_plus3:'3启～+3',plus4_11:'+4～+11',plus12:'+12',unknown:'未知'};
   const enlightEn={e0_2:'E0–E2',e3_plus3:'E3–+3',plus4_11:'+4–+11',plus12:'+12',unknown:'Unknown'};
@@ -410,7 +410,7 @@
     })}));
     return changed?{...nextRecord,waves}:nextRecord;
   }
-  function difficultyOf(team,wave){const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'').toLowerCase(),alert=raw.match(/alert\s*(i{1,3}|iv|v|[1-5])(?:$|[^a-z0-9])/i);if(alert){const level={i:1,ii:2,iii:3,iv:4,v:5}[alert[1].toLowerCase()]||Number(alert[1]);return `alert${level}`}for(const d of difficultyOrder.slice(0,4))if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
+  function difficultyOf(team,wave){const raw=String(team?.stageName||wave?.stageName||team?.difficulty||wave?.difficulty||'').trim();if(/(?:threat level\s*)?▼\s*$/i.test(raw))return 'threatDown';const match=raw.match(/threat level\s*(sss|ss|s|a|b|c)(?:$|[^a-z])/i);return match?`threat${match[1].toUpperCase()}`:'unknown'}
   function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(['E0','E1','E2'].includes(ms))return 'e0_2';if(ms==='E3')return 'e3_plus3';if(ms==='OE'||ms==='OVERLIMIT')return 'plus4_11';if(ms==='AA'||ms==='LAW12')return 'plus12';return 'unknown'}
   function wheelStackClass(w){const level=Number(w?.level);if(!Number.isFinite(level)||level<=2)return 'stack0_2';if(level>=15)return 'stack12';return 'stack3_11'}
   function maxRankAvailable(){const rs=rankByUid.size?[...rankByUid.values()]:(season?.records||[]).map(rankOf).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}

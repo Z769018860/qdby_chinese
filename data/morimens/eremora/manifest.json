@@ -138,9 +138,9 @@
     "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。",
     "第69期 Top500 排名于 2026-09-22 01:00 按 CSV 覆盖：500 个 UID，较 9.21 快照 27 进 / 27 出；Top50 / Top200 / Top500 口径以本次 CSV UID 集合为准。",
     "本次 CSV 不含新的配队详情；继续保留基础 1007 条与 9.21 已解析 432 条增量按 UID 合并，共 1035 条有效记录，不因排名刷新增删旧有效详情。",
-    "第70期 新新融灾于 2026-09-29 01:00 更新：本地文件夹 70 共 500 份玩家快照，解析出 457 条可用公开配队详情；难度筛选新增警戒 I–V，并保留历史期次的普通 / 困难 / 噩梦 / 癫狂。",
     "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
-    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂 / 警戒 I–V；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
+    "第70期 新新融灾于 2026-09-29 01:00 更新：本地文件夹 70 共 500 份玩家快照，解析出 457 条可用公开配队详情；新制难度筛选按危险等级 C / B / A / S / SS / SSS / ▼ 展示。",
+    "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
     "generatedAt": "2026-09-28T21:14:02.612Z",
@@ -152,40 +152,32 @@
     ],
     "difficulties": [
       {
-        "id": "normal",
-        "label": "普通"
+        "id": "threatC",
+        "label": "危险等级 C"
       },
       {
-        "id": "hard",
-        "label": "困难"
+        "id": "threatB",
+        "label": "危险等级 B"
       },
       {
-        "id": "nightmare",
-        "label": "噩梦"
+        "id": "threatA",
+        "label": "危险等级 A"
       },
       {
-        "id": "madness",
-        "label": "癫狂"
+        "id": "threatS",
+        "label": "危险等级 S"
       },
       {
-        "id": "alert1",
-        "label": "警戒 I"
+        "id": "threatSS",
+        "label": "危险等级 SS"
       },
       {
-        "id": "alert2",
-        "label": "警戒 II"
+        "id": "threatSSS",
+        "label": "危险等级 SSS"
       },
       {
-        "id": "alert3",
-        "label": "警戒 III"
-      },
-      {
-        "id": "alert4",
-        "label": "警戒 IV"
-      },
-      {
-        "id": "alert5",
-        "label": "警戒 V"
+        "id": "threatDown",
+        "label": "危险等级 ▼"
       }
     ],
     "enlightenmentGroups": [
