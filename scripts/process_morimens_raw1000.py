@@ -193,21 +193,12 @@ def norm_member(b,base,catalog):
     wheels=[z for z in (norm_equipment(x,base,"wheel") for x in (b.get("weapons") or [])) if z]
     trink=[z for z in (norm_equipment(x,base,"trinket") for x in (b.get("trinkets") or [])) if z]
     cov=[z for z in (norm_cov(x,base) for x in (b.get("suits") or [])) if z]
-    slots=[{
-        "id":x.get("id"),"name":fix_text(x.get("name") or ""),"image":media(base,x.get("image")),
-        "slot":num(x.get("slot")),"level":num(x.get("level")),"cost":num(x.get("cost")),"isUp":bool(x.get("is_up"))
-    } for x in (b.get("slots") or []) if isinstance(x,dict)]
-    talents=[{
-        "id":x.get("id"),"name":fix_text(x.get("name") or ""),"image":media(base,x.get("image")),
-        "lv":num(x.get("lv")),"kind":str(x.get("kind") or "")
-    } for x in (b.get("talents") or []) if isinstance(x,dict)]
     assets=cat.get("assets") if isinstance(cat.get("assets"),dict) else {}
     return {"id":a.get("id"),"name":fix_text(a.get("name") or cat.get("name") or iid or "未知"),"canonicalName":cat.get("name") or fix_text(a.get("name") or "") or iid or "未知",
             "skeydbId":cat.get("id"),"ingameId":iid,"image":media(base,a.get("mini") or a.get("image"),True) or assets.get("portrait"),
             "realm":fix_text((a.get("realm") or {}).get("name") if isinstance(a.get("realm"),dict) else ""),"role":fix_text(a.get("role") or ""),"rarity":fix_text(a.get("rarity") or ""),
             "level":num(b.get("level")),"potencyLevel":num(b.get("potency_level")),"breakLevel":num(b.get("break_level")),"fighting":num(b.get("fighting")),"potential":b.get("potential"),
             "likeLevel":num(b.get("like_level")),"enlightenLevel":ec,"enlightenCount":ec,"enlightenMilestone":mil,"enlightenment":en,"progression":mil,
-            "slots":slots,"talents":talents,
             "wheels":wheels,"trinkets":trink,"covenants":cov,"covenant":cov[0] if cov else None,"covenantScore":num(b.get("covenant_score")),
             "borrowed":bool(b.get("borrowed")),"assistUid":b.get("assist_uid"),"stats":attrs(b.get("stats"))}
 
