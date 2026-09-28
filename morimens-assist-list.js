@@ -277,7 +277,7 @@
     const source=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex.path:entry.path;
     const base=await loader.loadDataset(source);
     let merged=base;
-    if(Number(id)===Number(manifest.currentSeason)&&manifest.currentOverlay?.path){
+    if(Number(id)===Number(manifest.currentSeason)&&manifest.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===Number(id)){
       const overlay=await loader.loadDataset(manifest.currentOverlay.path).catch(()=>null);
       merged=mergeByUid(base,overlay);
     }
