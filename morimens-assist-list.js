@@ -1243,11 +1243,13 @@
     if(importDelegatesBound)return;
     importDelegatesBound=true;
     document.addEventListener('click',event=>{
-      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
+      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistOpenProfileData,#assistCopyProfileDataUrl,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
       if(!target)return;
       if(target.id==='assistAutoImportAttempt'){event.preventDefault();tryDirectAutoImport();return}
       if(target.id==='assistOpenShowcase'){openShowcasePage(event);return}
       if(target.id==='assistCopyShowcaseUrl'){event.preventDefault();copyShowcaseUrl();return}
+      if(target.id==='assistOpenProfileData'){openProfileDataPage(event);return}
+      if(target.id==='assistCopyProfileDataUrl'){event.preventDefault();copyProfileDataUrl();return}
       if(target.id==='assistClipboardImport'){event.preventDefault();readClipboardAndImport();return}
       if(target.id==='assistImportPastedJson'){event.preventDefault();importPastedShowcase();return}
       if(target.id==='assistClearPastedJson'){event.preventDefault();clearPastedShowcase();return}
