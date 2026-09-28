@@ -201,7 +201,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 融灾榜单开放自行导入</strong><br>当前融灾榜单新增社区自行导入：填写 UID 后可直接打开对应 Eremora /challenges/dzone/&lt;season&gt;/__data.json 数据页，复制完整内容并粘贴解析。系统会校验 5 个 Zone 后按 UID 合并到当前榜单，记录更新时间与更新人昵称（未填写时为“匿名”）；社区提交不会修改官方排名索引，且在正式数据快照更新时间更新后会自动让位于更新的官方数据。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为剪贴板导入：填写 UID 与助战角色后打开对应 Eremora Showcase 数据页，复制 JSON，再由本站从剪贴板或粘贴框解析并导入。当前配置与同一 UID + 角色的历史融灾借用次数继续合并累计。</div>
@@ -247,11 +247,17 @@
         if(items.length<100||(Number.isFinite(total)&&page*100>=total))break;
         page++;
       }
+      try{
+        const dzoneRows=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true})||[];
+        for(const row of dzoneRows){
+          rows.push({uid:String(row.uid||''),awaker:ui('第 '+row.seasonId+' 期融灾','Season '+row.seasonId+' D-Zone'),insertedAt:row.submittedAt||'',source:'eremora-dzone',submittedBy:String(row.submittedBy||ui('匿名','Anonymous'))});
+        }
+      }catch(error){console.warn('D-Zone community submission records unavailable in About',error)}
       rows.sort((a,b)=>String(b.insertedAt).localeCompare(String(a.insertedAt)));
       const shown=rows.slice(0,50);
       host.innerHTML=shown.length?shown.map(row=>{
         const d=row.insertedAt?new Date(row.insertedAt):null,date=d&&!Number.isNaN(d.getTime())?d.toLocaleString(zh()?'zh-CN':'en-US'):'—';
-        return '<div style="padding:7px 0;border-bottom:1px solid rgba(148,163,184,.12)"><b>UID '+esc(row.uid)+'</b> · '+esc(row.awaker||ui('未知角色','Unknown Awakener'))+'<br><small>'+esc(date)+' · '+ui('Eremora Showcase 自行提交','Eremora Showcase submission')+'</small></div>';
+        return '<div style="padding:7px 0;border-bottom:1px solid rgba(148,163,184,.12)"><b>UID '+esc(row.uid)+'</b> · '+esc(row.awaker||ui('未知角色','Unknown Awakener'))+'<br><small>'+esc(date)+' · '+(row.source==='eremora-dzone'?(ui('融灾数据自行提交','D-Zone community submission')+(row.submittedBy?(' · '+ui('更新人：','By: ')+esc(row.submittedBy)):'')):ui('Eremora Showcase 自行提交','Eremora Showcase submission'))+'</small></div>';
       }).join(''):(zh()?'暂无自行提交记录。':'No community submissions yet.');
     }catch(error){
       console.warn('About submission records unavailable',error);
@@ -855,6 +861,56 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     analysisCache=null;if(season)renderAll();
   }
 
+
+  const communityDzoneMetaByUid=new Map();
+  function communityDzoneContext(){
+    const selectedSeasonId=Number(season?.seasonId??activeSeasonEntry?.sourceSeasonId??activeSeasonEntry?.seasonId??0)||0;
+    const currentSeason=Number(manifest?.currentSeason||0)||0;
+    const legacy=!!(activeSeasonEntry?.legacy||activeSeasonEntry?.coverageMode==='legacy-spreadsheet'||String(activeSeasonEntry?.seasonId)==='legacy-high-difficulty');
+    const officialUpdatedAt=season?.dataUpdatedAt||manifest?.usageIndex?.syncedAt||manifest?.source?.syncedAt||null;
+    return {selectedSeasonId,currentSeason,legacy,isCurrent:!activeSeasonEntry?.snapshotId&&!legacy&&selectedSeasonId===currentSeason,recordCount:Number(season?.recordCount||0),officialUpdatedAt};
+  }
+  function communityTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
+  function mergeCommunityDzoneRecords(items){
+    const ctx=communityDzoneContext();
+    if(!ctx.isCurrent||!season||!Array.isArray(items))return {applied:0,skipped:items?.length||0};
+    const byUid=new Map(),anonymous=[];
+    for(const record of season.records||[]){const uid=String(record?.uid??'').trim();if(uid)byUid.set(uid,record);else anonymous.push(record)}
+    let applied=0,skipped=0;
+    const officialMs=ctx.officialUpdatedAt?Date.parse(ctx.officialUpdatedAt):NaN;
+    for(const item of items){
+      const record=item?.record||item,uid=String(record?.uid??'').trim(),submittedAt=item?.submittedAt||record?.communityUpdate?.submittedAt||'';
+      if(!uid||Number(record?.seasonId)!==ctx.currentSeason||communityTeamCount(record)<5){skipped++;continue}
+      const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
+      if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
+      const previous=byUid.get(uid);
+      if(previous&&communityTeamCount(record)<communityTeamCount(previous)){skipped++;continue}
+      const next=inheritReplayMetadata(previous,{...record,
+        rank:previous?.rank??record?.rank??null,
+        leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
+        communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone'}
+      });
+      byUid.set(uid,next);communityDzoneMetaByUid.set(uid,next.communityUpdate);applied++;
+    }
+    if(!applied)return {applied:0,skipped};
+    const effectiveRank=record=>{const mapped=rankByUid.get(String(record?.uid??'')),raw=Number(record?.rank);return Number.isFinite(mapped)?mapped:(Number.isFinite(raw)?raw:999999)};
+    const records=[...byUid.values(),...anonymous].sort((a,b)=>effectiveRank(a)-effectiveRank(b)||Number(b?.score||0)-Number(a?.score||0));
+    season={...season,records,recordCount:records.length,communityRecordCount:communityDzoneMetaByUid.size,communityUpdatedAt:[...communityDzoneMetaByUid.values()].map(x=>x?.submittedAt).filter(Boolean).sort().at(-1)||null};
+    flatTeamsCache=null;analysisCache=null;seasonAssistHeatMax=fullSeasonAssistHeatMax();
+    populateFilters();renderAll();
+    const option=[...($('dtideSeason')?.options||[])].find(x=>String(x.value)===String(ctx.currentSeason));
+    if(option){
+      const name=zh()?(activeSeasonEntry?.labelZh||('第 '+ctx.currentSeason+' 期融灾')):(activeSeasonEntry?.labelEn||('Season '+ctx.currentSeason+' D-Zone'));
+      option.textContent=zh()?(name+' · '+records.length+' 条 · 社区补充 '+communityDzoneMetaByUid.size+' UID'):(name+' · '+records.length+' records · '+communityDzoneMetaByUid.size+' community UID(s)');
+    }
+    return {applied,skipped,recordCount:records.length,communityRecordCount:communityDzoneMetaByUid.size};
+  }
+  function ensureCommunityDzoneImportScript(){
+    if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.1';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+  }
+  window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
+
   async function loadSeason(id){
     const loadToken=++seasonLoadToken;
     cancelAnimationFrame(renderFrame);renderFrame=0;
@@ -917,6 +973,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     if(identitySummary.mergedAliases>0)console.info('D-Zone character identity aliases merged',identitySummary);
     renderAll();
     if(matrix)matrix.removeAttribute('aria-busy');
+    window.dispatchEvent(new CustomEvent('morimens:dtide-season-loaded',{detail:communityDzoneContext()}));
   }
   async function loadOnce(){
     if(manifest)return;
@@ -966,7 +1023,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function showError(e){console.warn('D-Zone analytics failed',e);if($('dtideStatus'))$('dtideStatus').textContent=ui('融灾数据加载失败','Failed to load D-Zone data');if($('dtideResults'))$('dtideResults').innerHTML=`<div class="dtideNotice">${esc(e?.message||e)}</div>`}
   function boot(){
-    injectStyle();setupTabs();
+    injectStyle();setupTabs();ensureCommunityDzoneImportScript();
     document.addEventListener('click',e=>{
       const download=e.target.closest('#dtideTableDownload');
       if(download){
