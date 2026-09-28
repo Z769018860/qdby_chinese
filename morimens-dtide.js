@@ -266,8 +266,12 @@
               <span id="assistSubmitStatus" aria-live="polite"></span>
             </div>
             <label class="assistPasteLabel" for="assistPasteShowcase"><span>手机 / Safari 兜底：长按下方区域并粘贴 JSON</span>
-              <textarea id="assistPasteShowcase" rows="5" spellcheck="false" placeholder="在这里粘贴 Eremora Showcase 返回的 JSON；检测到有效 JSON 后会自动导入。"></textarea>
+              <textarea id="assistPasteShowcase" rows="5" spellcheck="false" placeholder="在这里粘贴 Eremora Showcase 返回的 JSON；可自动检测，也可以点击下方按钮手动导入。"></textarea>
             </label>
+            <div class="assistSubmitActions assistPasteActions">
+              <button class="primaryBtn" id="assistImportPastedJson" type="button">导入已粘贴 JSON</button>
+              <button class="ghostBtn" id="assistClearPastedJson" type="button">清空粘贴内容</button>
+            </div>
           </div>
           <div class="assistAutoImportInfo">
             <strong>导入内容</strong>
