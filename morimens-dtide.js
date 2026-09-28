@@ -197,6 +197,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为剪贴板导入：填写 UID 与助战角色后打开对应 Eremora Showcase 数据页，复制 JSON，再由本站从剪贴板或粘贴框解析并导入。当前配置与同一 UID + 角色的历史融灾借用次数继续合并累计。</div>
         <div class="sourceItem"><strong>2026-09-24 · 英文适配完善</strong><br>完成忘忘看报英文模式的系统性审阅与补全：覆盖旧版 v0.3 启动框架、伤害计算器角色专属资源、伤害事件明细、融灾榜单与旧版425榜单、爱的节奏榜、留言板、更新日志、关于页及动态生成文本；Waline 留言板语言会随中英文切换同步更新，并修复动态文本、title、placeholder、aria-label 在重绘后的翻译监听。</div>
@@ -294,7 +295,7 @@
         <div class="dtideField assistFilterAction"><label>&nbsp;</label><button type="button" class="ghostBtn" id="assistReset">清空筛选</button></div>
       </div>
       <div class="dtideStatGrid" id="assistSummary"></div>
-      <div class="dtideNotice assistNotice" id="assistCoverageNote">数据只统计仓库现有第68、69期记录中明确标记为 borrowed 且带 assistUid 的助战角色；技能与灵塑只读取原始结构化字段，缺失时保持空白，不做推断补齐。</div>
+      <div class="dtideNotice assistNotice" id="assistCoverageNote">数据只统计仓库现有第68、69期记录中明确标记为 borrowed 且带 assistUid 的助战角色。技能与灵塑原结构化字段已确认不可靠，目前统一留空，待重新校验后再恢复。密契“最终词条”只汇总带 rollQuality 的洗练词条，不再把固定主属性计入。</div>
       <div class="dtideSection">
         <div class="dtideScroll" id="assistTable"><div class="dtideEmpty">点击“互助助战列表”后载入数据。</div></div>
         <div class="dtidePager" id="assistPager"></div>
