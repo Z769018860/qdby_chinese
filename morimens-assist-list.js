@@ -67,7 +67,7 @@
       .assistBuildMeta{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.assistBuildMeta span{padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#c4ceda}.assistBuildMeta b{color:#f0d69f;font-weight:800}.assistSource{display:flex;flex-direction:column;gap:5px;align-items:flex-start}.assistSourceTag{display:inline-flex;align-items:center;padding:4px 7px;border-radius:8px;font-size:9px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);color:#bac5d2}.assistSourceTag.online{border-color:rgba(88,220,246,.34);background:rgba(88,220,246,.08);color:#8de9fb}.assistSource small{font-size:8px;color:#758398}.assistManualUse{color:#8de9fb;font-size:10px;font-weight:800}.assistCountCell{text-align:center;vertical-align:middle!important}
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
-      .assistAutoImportInfo{margin-top:13px;padding:12px 14px;border:1px solid rgba(88,220,246,.14);border-radius:10px;background:rgba(88,220,246,.045);display:flex;flex-direction:column;gap:3px}.assistAutoImportInfo strong{color:#bceffa;font-size:11px}.assistAutoImportInfo span{color:#c4cfda;font-size:10px}.assistAutoImportInfo small{color:#718096;font-size:9px}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
+      .assistAutoImportInfo{margin-top:13px;padding:12px 14px;border:1px solid rgba(88,220,246,.14);border-radius:10px;background:rgba(88,220,246,.045);display:flex;flex-direction:column;gap:3px}.assistAutoImportInfo strong{color:#bceffa;font-size:11px}.assistAutoImportInfo span{color:#c4cfda;font-size:10px}.assistAutoImportInfo small{color:#718096;font-size:9px}.assistClipboardSteps{margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(5,10,16,.22)}.assistClipboardStep{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.assistClipboardStep>b{flex:none;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:rgba(88,220,246,.1);border:1px solid rgba(88,220,246,.28);color:#8de9fb;font-size:11px}.assistClipboardStep strong{display:block;color:#dce9f3;font-size:11px}.assistClipboardStep span{display:block;margin-top:2px;color:#8391a2;font-size:9px;line-height:1.55}.assistShowcaseUrl{margin:8px 0 12px;padding:9px 11px;border-radius:9px;background:#0a1119;border:1px solid rgba(148,163,184,.14);color:#8ea0b3;font-size:9px;word-break:break-all}.assistShowcaseUrl code{color:#bfeaf3}.assistPasteLabel{display:block;margin-top:12px;color:#96a5b6;font-size:9px}.assistPasteLabel>span{display:block;margin-bottom:6px}.assistPasteLabel textarea{width:100%;min-height:108px;resize:vertical;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0a1119;color:#dfe8f2;padding:10px;outline:none;font:10px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}.assistPasteLabel textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
             @media(max-width:850px){.assistFilters{grid-template-columns:1fr 1fr}.assistFilterAction{grid-column:span 2}}
       @media(max-width:900px){.assistSubmitGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.assistTable{min-width:900px}}
       @media(max-width:560px){.assistFilters{grid-template-columns:1fr}.assistFilterAction{grid-column:auto}.assistSubmitGrid{grid-template-columns:1fr}.assistSubmitBox>summary{align-items:flex-start;flex-direction:column;gap:3px}}
@@ -497,6 +497,7 @@
     }).filter(Boolean).sort((a,b)=>a.name.localeCompare(b.name,zh()?'zh-CN':'en'));
     char.innerHTML='<option value="">'+ui('请选择助战角色','Select Awakener')+'</option>'+options.map(x=>'<option value="'+esc(x.tid)+'" data-canonical="'+esc(x.canonical)+'">'+esc(x.name)+'</option>').join('');
     if([...char.options].some(o=>o.value===current))char.value=current;
+    updateShowcaseUrlPreview();
   }
   function aggregateShowcaseAttrs(trinkets){
     const map=new Map();
@@ -548,72 +549,124 @@
       fetchedAt:new Date().toISOString()
     };
   }
-  async function fetchShowcase(uid,tid){
-    const url='https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
-    try{
-      const response=await fetch(url,{
-        method:'GET',
-        mode:'cors',
-        credentials:'include',
-        cache:'no-store',
-        redirect:'follow',
-        headers:{Accept:'application/json'}
-      });
-      if(!response.ok)throw new Error('Eremora Showcase HTTP '+response.status);
-      const data=await response.json();
-      return {url,data,transport:'visitor-browser'};
-    }catch(error){
-      const message=error?.message||String(error);
-      const err=new Error(ui(
-        '浏览器直连 Eremora Showcase 失败。当前请求已使用你的 IP、浏览器与 Eremora Cookie；若仍失败，通常是 Eremora 的 CORS/Cloudflare 阻止跨站脚本读取。',
-        'Direct browser request to Eremora Showcase failed. The request used your IP, browser and Eremora cookies; if it still fails, Eremora CORS/Cloudflare is likely blocking cross-site script access.'
-      )+' ('+message+')');
-      err.cause=error;throw err;
+
+  function showcaseFormValues(){
+    const uid=String($('assistSubmitUid')?.value||'').trim();
+    const tid=String($('assistSubmitCharacter')?.value||'').trim();
+    return {uid,tid};
+  }
+  function showcaseUrl(uid,tid){
+    return 'https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
+  }
+  function validateShowcaseSelection(values){
+    const uid=String(values?.uid||'').trim(),tid=String(values?.tid||'').trim();
+    if(!/^\d{5,20}$/.test(uid))throw new Error(ui('请先填写正确的玩家 UID','Enter a valid player UID first'));
+    if(!tid||!gear.showcaseCanonicalByTid.has(tid))throw new Error(ui('请先选择有效的助战角色','Select a valid Assist Awakener first'));
+    return {uid,tid};
+  }
+  function updateShowcaseUrlPreview(){
+    const preview=$('assistShowcaseUrlPreview');
+    if(!preview)return;
+    const values=showcaseFormValues();
+    if(/^\d{5,20}$/.test(values.uid)&&values.tid&&gear.showcaseCanonicalByTid.has(values.tid)){
+      const url=showcaseUrl(values.uid,values.tid);
+      preview.innerHTML='<code>'+esc(url)+'</code>';
+      preview.dataset.url=url;
+    }else{
+      preview.textContent=ui('请先填写 UID 并选择助战角色。','Enter a UID and select an Assist Awakener first.');
+      delete preview.dataset.url;
     }
   }
-  async function persistShowcasePayload(payload){
-    const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
-    const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        nick:payload.player||'Eremora Showcase',
-        mail:'',
-        link:'',
-        comment,
-        url:SUBMISSION_PATH,
-        ua:navigator.userAgent||''
-      })
-    });
-    if(!response.ok)throw new Error('Waline HTTP '+response.status);
-    const result=await response.json();
-    if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
-    return result;
-  }
-  async function submitAssist(event){
-    event.preventDefault();
-    const form=event.currentTarget,button=$('assistSubmitButton'),status=$('assistSubmitStatus');
-    if(!form.reportValidity())return;
-    const uid=String($('assistSubmitUid')?.value||'').trim(),tid=String($('assistSubmitCharacter')?.value||'').trim();
-    if(!/^\d{5,20}$/.test(uid)){if(status)status.textContent=ui('UID 格式不正确','Invalid UID');return}
-    if(!tid||!gear.showcaseCanonicalByTid.has(tid)){if(status)status.textContent=ui('请选择有效的助战角色','Select a valid Awakener');return}
-    if(button)button.disabled=true;
-    if(status)status.textContent=ui('正在从 Eremora 读取 Showcase…','Reading Showcase from Eremora…');
+  function openShowcasePage(){
+    const status=$('assistSubmitStatus');
     try{
-      const {data}=await fetchShowcase(uid,tid);
-      const payload=normalizeShowcasePayload(uid,tid,data);
-      if(status)status.textContent=ui('读取成功，正在导入…','Showcase loaded. Importing…');
+      const values=validateShowcaseSelection(showcaseFormValues());
+      const url=showcaseUrl(values.uid,values.tid);
+      updateShowcaseUrlPreview();
+      const win=window.open(url,'_blank','noopener,noreferrer');
+      if(!win&&status)status.textContent=ui('浏览器阻止了新标签页，请允许弹窗或使用“复制数据页地址”。','The browser blocked the new tab. Allow popups or copy the data-page URL.');
+      else if(status)status.textContent=ui('已打开 Eremora 数据页；复制 JSON 后返回本页导入。','Eremora data page opened. Copy the JSON and return here to import it.');
+    }catch(e){
+      if(status)status.textContent=e?.message||String(e);
+    }
+  }
+  async function copyShowcaseUrl(){
+    const status=$('assistSubmitStatus');
+    try{
+      const values=validateShowcaseSelection(showcaseFormValues()),url=showcaseUrl(values.uid,values.tid);
+      if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(url);
+      else{
+        const ta=document.createElement('textarea');
+        ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+      }
+      if(status)status.textContent=ui('数据页地址已复制。','Data-page URL copied.');
+    }catch(e){
+      if(status)status.textContent=ui('复制失败：','Copy failed: ')+(e?.message||String(e));
+    }
+  }
+  function parseShowcaseText(input){
+    let text=String(input==null?'':input).replace(/^\uFEFF/,'').trim();
+    if(!text)throw new Error(ui('剪贴板中没有可导入的数据','Clipboard contains no importable data'));
+    if(/^https?:\/\/eremora\.com\/api\/showcase\?/i.test(text)&&!text.includes('{')){
+      throw new Error(ui('你复制的是 Showcase 地址，不是 JSON 数据。请打开该地址后复制页面中的 JSON。','You copied the Showcase URL, not the JSON. Open the URL and copy the JSON shown on the page.'));
+    }
+    text=text.replace(/^\x60\x60\x60(?:json)?\s*/i,'').replace(/\s*\x60\x60\x60$/,'').trim();
+    try{return JSON.parse(text)}catch(_){}
+    const first=text.indexOf('{'),last=text.lastIndexOf('}');
+    if(first>=0&&last>first){
+      const candidate=text.slice(first,last+1);
+      try{return JSON.parse(candidate)}catch(_){}
+    }
+    throw new Error(ui('无法解析剪贴板内容。请确认复制的是 Eremora Showcase 页面中的完整 JSON。','Could not parse the clipboard. Copy the complete JSON from the Eremora Showcase page.'));
+  }
+  async function importShowcaseData(data,origin){
+    const status=$('assistSubmitStatus'),button=$('assistClipboardImport');
+    const values=validateShowcaseSelection(showcaseFormValues());
+    if(button)button.disabled=true;
+    try{
+      if(status)status.textContent=ui('已读取 JSON，正在校验并导入…','JSON read. Validating and importing…');
+      const payload=normalizeShowcasePayload(values.uid,values.tid,data);
+      payload.importMethod=origin||'clipboard';
       await persistShowcasePayload(payload);
       const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
       if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
-      if(status)status.textContent=ui('自动导入成功','Imported from Eremora successfully');
-      form.reset();
+      if(status)status.textContent=ui('导入成功：当前 Showcase 配置已更新，历史融灾使用次数继续保留。','Import complete. The current Showcase build was updated and historical D-Zone usage was preserved.');
+      const paste=$('assistPasteShowcase');if(paste)paste.value='';
       await load(activeSeason);
-    }catch(e){
-      console.error('Showcase assist import failed',e);
-      if(status)status.textContent=ui('自动导入失败：','Import failed: ')+(e?.message||String(e));
     }finally{
       if(button)button.disabled=false;
+    }
+  }
+  async function importShowcaseText(text,origin){
+    const data=parseShowcaseText(text);
+    return importShowcaseData(data,origin||'clipboard');
+  }
+  async function readClipboardAndImport(){
+    const status=$('assistSubmitStatus');
+    try{
+      validateShowcaseSelection(showcaseFormValues());
+      if(!navigator.clipboard?.readText)throw new Error(ui('当前浏览器不支持网页直接读取剪贴板，请使用下方“长按粘贴 JSON”区域。','This browser cannot read the clipboard directly. Use the paste area below.'));
+      if(status)status.textContent=ui('正在读取剪贴板…','Reading clipboard…');
+      const text=await navigator.clipboard.readText();
+      await importShowcaseText(text,'clipboard-read');
+    }catch(e){
+      console.error('Showcase clipboard import failed',e);
+      if(status)status.textContent=ui('剪贴板导入失败：','Clipboard import failed: ')+(e?.message||String(e))+ui('；可改用下方粘贴区域。','; use the paste area below instead.');
+    }
+  }
+  async function handleShowcasePaste(event){
+    const status=$('assistSubmitStatus'),area=$('assistPasteShowcase');
+    const text=event.clipboardData?.getData('text/plain')||'';
+    if(!text)return;
+    event.preventDefault();
+    if(area)area.value=text;
+    try{
+      if(status)status.textContent=ui('检测到粘贴内容，正在自动导入…','Pasted content detected. Importing…');
+      await importShowcaseText(text,'paste');
+    }catch(e){
+      console.error('Showcase paste import failed',e);
+      if(status)status.textContent=ui('粘贴导入失败：','Paste import failed: ')+(e?.message||String(e));
     }
   }
   function optionRows(list,selector){
@@ -667,7 +720,7 @@
   function sourceHtml(row){
     const date=row.submittedAt?new Date(row.submittedAt):null,valid=date&&!Number.isNaN(date.getTime());
     if(row.imported||row.source==='showcase'){
-      return '<div class="assistSource"><span class="assistSourceTag online">'+ui('Eremora 自动导入','Eremora import')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+(seasonTags(row)?'<div>'+seasonTags(row)+'</div>':'<small>'+ui('暂无历史借用记录','No historical borrow record')+'</small>')+'</div>';
+      return '<div class="assistSource"><span class="assistSourceTag online">'+ui('Eremora Showcase 导入','Eremora Showcase import')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+(seasonTags(row)?'<div>'+seasonTags(row)+'</div>':'<small>'+ui('暂无历史借用记录','No historical borrow record')+'</small>')+'</div>';
     }
     if(row.manual){
       return '<div class="assistSource"><span class="assistSourceTag online">'+ui('旧版在线补充','Legacy submission')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+'</div>';
@@ -714,8 +767,8 @@
     if(note){
       const counts=bundle.map(({seasonId,data})=>'第 '+seasonId+' 期 '+Number(data?.recordCount||data?.records?.length||0)+' 条').join(' + ');
       note.innerHTML=zh()
-        ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>Eremora 自动导入</b>只覆盖当前助战配置，来源会明确标记，但同一 UID + 角色的历史融灾借用次数、借用人数与期次会继续合并累计。'
-        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
+        ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>Eremora Showcase 导入</b>只覆盖当前助战配置，来源会明确标记，但同一 UID + 角色的历史融灾借用次数、借用人数与期次会继续合并累计。'
+        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora Showcase imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
     }
   }
   function bind(){
@@ -723,7 +776,13 @@
     for(const id of ['assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
     $('assistUidFilter')?.addEventListener('input',()=>{page=1;render()});
     $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
-    $('assistSubmitForm')?.addEventListener('submit',submitAssist);
+    $('assistSubmitUid')?.addEventListener('input',updateShowcaseUrlPreview);
+    $('assistSubmitCharacter')?.addEventListener('change',updateShowcaseUrlPreview);
+    $('assistOpenShowcase')?.addEventListener('click',openShowcasePage);
+    $('assistCopyShowcaseUrl')?.addEventListener('click',copyShowcaseUrl);
+    $('assistClipboardImport')?.addEventListener('click',readClipboardAndImport);
+    $('assistPasteShowcase')?.addEventListener('paste',handleShowcasePaste);
+    updateShowcaseUrlPreview();
   }
   function error(e){
     console.error('Assist list load failed',e);
