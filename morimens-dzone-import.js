@@ -305,7 +305,8 @@
       walk(root,value=>{
         if(selected!=null||!value||Array.isArray(value))return;
         const selection=value.selection;
-        const season=numberOrNull(selection?.season??value.selectedSeason??value.season_id??value.seasonId);
+        const schedulePeriod=numberOrNull(value?.challengeSchedule?.dzone?.period);
+        const season=numberOrNull(selection?.season??value.selectedSeason??value.season_id??value.seasonId??schedulePeriod);
         const mode=String(selection?.mode||'').toLowerCase();
         if(season!=null&&(!mode||mode==='abyss'||mode==='dzone'))selected=Math.trunc(season);
       });
@@ -317,6 +318,20 @@
     const found=[],selectedSeason=findSelectedSeason(decoded);
     for(const root of decoded.roots)walk(root,(value,path)=>{
       if(!value||Array.isArray(value))return;
+
+      // Current Eremora challenge pages resolve challengeData to
+      // {profile, challengeSchedule, dzoneCatalog, ...}. The actual saved
+      // runs, when present, live under profile.challenges.abyss.
+      const abyss=value?.profile?.challenges?.abyss;
+      if(Array.isArray(abyss)){
+        for(let index=0;index<abyss.length;index++){
+          const node=abyss[index];if(!node||typeof node!=='object')continue;
+          const stages=Array.isArray(node.stages)?node.stages:[];
+          const period=numberOrNull(node?.activity?.period??node.period??selectedSeason);
+          if(period!=null)found.push({path:path+'.profile.challenges.abyss['+index+']',node,period:Math.trunc(period),stageCount:stages.length,selectedSeason});
+        }
+      }
+
       const stages=Array.isArray(value.stages)?value.stages:(Array.isArray(value.stage_list)?value.stage_list:null);
       if(!stages)return;
       const activity=value.activity&&typeof value.activity==='object'?value.activity:{};
@@ -324,7 +339,7 @@
       const looksLikeDzone=/Dissoluted Abyss|D[- ]?Effect Zone|D[- ]?Zone|Abyss/i.test(name)
         ||stages.some(row=>/(?:Wave|Zone)\s*\d+/i.test(String(row?.stage?.name||row?.name||'')));
       if(!looksLikeDzone)return;
-      const rawPeriod=numberOrNull(activity.period??value.period??value.season??value.season_id??value.seasonId);
+      const rawPeriod=numberOrNull(activity.period??value.period??value.season??value.season_id??value.seasonId??selectedSeason);
       const period=rawPeriod!=null?Math.trunc(rawPeriod):null;
       found.push({path,node:value,period,stageCount:stages.length,selectedSeason});
     });
@@ -422,19 +437,24 @@
   }
   function normalizeActivity(item,decoded){
     const node=item.node||{},activity=node.activity&&typeof node.activity==='object'?node.activity:{},base=findMediaBase(decoded),header=findHeader(decoded),catalog=catalogMap(),rows=[];
-    for(const stageRow of Array.isArray(node.stages)?node.stages:[]){
-      if(!stageRow||typeof stageRow!=='object')continue;
-      const team=stageRow.team,stage=stageRow.stage&&typeof stageRow.stage==='object'?stageRow.stage:{};
-      if(!team||typeof team!=='object'||!Array.isArray(team.awakers))continue;
-      const stageName=cleanName(stage.name||''),match=stageName.match(/(?:Wave|Zone)\s*(\d+)/i);
-      if(!match)continue;
-      const result=team.result&&typeof team.result==='object'?team.result:{};
-      rows.push({
-        wave:Number(match[1]),madness:numberOrNull(stage.rec_level??stage.recLevel),stageId:stage.id??team.stage_tid??null,stageName,
-        score:numberOrNull(stageRow.score),clearType:stageRow.extra?'extra':'clear',extraPass:!!stageRow.extra_pass,groupTid:stageRow.group_tid??null,
-        token:normalizeToken(team.keeper_skill,base),creations:(Array.isArray(result.relics)?result.relics:[]).map(x=>normalizeCreation(x,base)).filter(Boolean),
-        wid:team.wid??null,battleUuid:team.battle_uuid??null,members:team.awakers.map(x=>normalizeMember(x,base,catalog))
-      });
+    for(const rawStage of Array.isArray(node.stages)?node.stages:[]){
+      if(!rawStage||typeof rawStage!=='object')continue;
+      const candidates=(rawStage.base||rawStage.extra)
+        ?[['clear',rawStage.base],['extra',rawStage.extra]].filter(([,row])=>row&&typeof row==='object')
+        :[[rawStage.extra?'extra':'clear',rawStage]];
+      for(const [clearType,stageRow] of candidates){
+        const team=stageRow.team,stage=stageRow.stage&&typeof stageRow.stage==='object'?stageRow.stage:{};
+        if(!team||typeof team!=='object'||!Array.isArray(team.awakers))continue;
+        const stageName=cleanName(stage.name||''),match=stageName.match(/(?:Wave|Zone)\s*(\d+)/i);
+        if(!match)continue;
+        const result=team.result&&typeof team.result==='object'?team.result:{};
+        rows.push({
+          wave:Number(match[1]),madness:numberOrNull(stage.rec_level??stage.recLevel),stageId:stage.id??team.stage_tid??null,stageName,
+          score:numberOrNull(stageRow.score),clearType,extraPass:!!stageRow.extra_pass,groupTid:stageRow.group_tid??rawStage.group_tid??null,
+          token:normalizeToken(team.keeper_skill,base),creations:(Array.isArray(result.relics)?result.relics:[]).map(x=>normalizeCreation(x,base)).filter(Boolean),
+          wid:team.wid??null,battleUuid:team.battle_uuid??null,members:team.awakers.map(x=>normalizeMember(x,base,catalog))
+        });
+      }
     }
     const waves=new Map();
     for(const row of rows){
@@ -461,6 +481,12 @@
     }
     if(!target){
       const detected=[...new Set(activities.map(x=>x.period).filter(x=>x!=null).map(Number))].sort((a,b)=>b-a);
+      if(Number(selectedSeason)===Number(expectedSeason)){
+        throw new Error(ui(
+          `已识别这是第 ${expectedSeason} 期融灾页面，但这份 Eremora 返回中没有玩家的 Zone 挑战队伍记录（仅有 profile / challengeSchedule / dzoneCatalog 等元数据），因此不能作为完整榜单数据提交。请确认页面已经完整加载，并复制包含 profile.challenges.abyss / stages / team 的完整 __data.json。`,
+          `This is recognized as Season ${expectedSeason}, but the Eremora payload contains no saved Zone team records (only metadata such as profile / challengeSchedule / dzoneCatalog), so it cannot be submitted as a complete leaderboard record. Copy the fully loaded __data.json containing profile.challenges.abyss / stages / team.`
+        ));
+      }
       const extra=detected.length?(zh()?('；粘贴内容识别到期次：'+detected.join('、')):('; detected seasons: '+detected.join(', '))):'';
       throw new Error(ui(`粘贴内容里没有找到第 ${expectedSeason} 期融灾数据${extra}。`,`Season ${expectedSeason} D-Zone data was not found in the pasted payload${extra}.`));
     }
