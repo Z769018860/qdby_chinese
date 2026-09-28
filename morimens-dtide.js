@@ -259,28 +259,33 @@
           <div class="assistClipboardSteps">
             <div class="assistClipboardStep"><b>1</b><div><strong>自动导入失败时：打开 Eremora Showcase 数据页</strong><span>会根据上面的 UID 和助战角色自动生成正确的 <code>uid + tid</code> 地址。</span></div></div>
             <div class="assistSubmitActions">
-              <a class="primaryBtn" id="assistOpenShowcase" href="#" target="_blank" rel="noopener noreferrer">① 打开 Eremora 数据页</a>
-              <button class="ghostBtn" id="assistCopyShowcaseUrl" type="button">复制数据页地址</button>
+              <a class="primaryBtn" id="assistOpenShowcase" href="#" target="_blank" rel="noopener noreferrer">① 打开 Showcase 配置页</a>
+              <button class="ghostBtn" id="assistCopyShowcaseUrl" type="button">复制 Showcase 地址</button>
             </div>
             <div class="assistShowcaseUrl" id="assistShowcaseUrlPreview">请先填写 UID 并选择助战角色。</div>
-            <div class="assistClipboardStep"><b>2</b><div><strong>复制页面中的 JSON</strong><span>电脑：<code>Ctrl+A → Ctrl+C</code>；手机：长按页面内容 → 全选 → 复制。</span></div></div>
+            <div class="assistSubmitActions">
+              <a class="primaryBtn" id="assistOpenProfileData" href="#" target="_blank" rel="noopener noreferrer">② 打开完整资料数据页</a>
+              <button class="ghostBtn" id="assistCopyProfileDataUrl" type="button">复制完整资料地址</button>
+            </div>
+            <div class="assistShowcaseUrl" id="assistProfileDataUrlPreview">完整资料页会用于补充技能与灵塑。</div>
+            <div class="assistClipboardStep"><b>2</b><div><strong>分别复制需要的数据</strong><span>Showcase JSON 用于命轮/密契；完整资料 <code>__data.json</code> 用于技能与灵塑。两者可分两次粘贴，系统会更新同一 UID + 角色记录。</span></div></div>
             <div class="assistClipboardStep"><b>3</b><div><strong>返回本页并导入</strong><span>优先点击“从剪贴板读取并导入”。若手机浏览器不允许网页读取剪贴板，可在下方输入框长按“粘贴”，粘贴完成后会自动导入。</span></div></div>
             <div class="assistSubmitActions">
               <button class="primaryBtn" id="assistClipboardImport" type="button">③ 从剪贴板读取并导入</button>
               <span id="assistSubmitStatus" aria-live="polite"></span>
             </div>
             <label class="assistPasteLabel" for="assistPasteShowcase"><span>手机 / Safari 兜底：长按下方区域并粘贴 JSON</span>
-              <textarea id="assistPasteShowcase" rows="5" spellcheck="false" placeholder="在这里粘贴 Eremora Showcase 返回的 JSON；可自动检测，也可以点击下方按钮手动导入。"></textarea>
+              <textarea id="assistPasteShowcase" rows="6" spellcheck="false" placeholder="可粘贴：① Showcase JSON；② /u/UID/__data.json 完整资料数据；③ 玩家资料页复制出的文本。系统会自动识别并合并。"></textarea>
             </label>
             <div class="assistSubmitActions assistPasteActions">
-              <button class="primaryBtn" id="assistImportPastedJson" type="button">导入已粘贴 JSON</button>
+              <button class="primaryBtn" id="assistImportPastedJson" type="button">导入已粘贴内容</button>
               <button class="ghostBtn" id="assistClearPastedJson" type="button">清空粘贴内容</button>
             </div>
           </div>
           <div class="assistAutoImportInfo">
             <strong>导入内容</strong>
-            <span>角色等级、启灵、命轮及叠位、密契套装、六件密契最终汇总词条。</span>
-            <small>这种方式不会跨域读取 Eremora：Eremora 数据页由你自己正常打开，本站只读取你主动复制/粘贴回来的 JSON。导入的当前配置仍会与 68/69 期历史助战使用次数合并。</small>
+            <span>Showcase：等级、启灵、命轮、密契与最终词条；完整资料：技能 6 槽等级与灵塑 + madness / soulforge / gnostic。</span>
+            <small>自动导入会尝试同时读取 Showcase 与完整资料；若被 CORS/Cloudflare 拦截，可分别打开两个数据页复制回来。两次导入会合并到同一个 UID + 角色，不会清空历史使用次数。</small>
           </div>
           <p class="assistSubmitPrivacy">请只导入本人或已公开的助战信息。若同一 UID + 角色已有导入记录，将以最新一次导入配置为准，历史融灾使用次数不会被清零。</p>
         </form>
