@@ -508,18 +508,24 @@
     };
   }
   async function fetchShowcase(uid,tid){
-    const url='https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
-    let response;
-    try{
-      response=await fetch(url,{method:'GET',mode:'cors',credentials:'omit',cache:'no-store'});
-    }catch(e){
-      const err=new Error(ui('浏览器无法访问 Eremora Showcase，可能被 CORS 或 Cloudflare 拦截','Browser could not access Eremora Showcase; CORS or Cloudflare may be blocking the request'));
-      err.cause=e;throw err;
+    const direct='https://eremora.com/api/showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
+    const proxy='/api/morimens-showcase?uid='+encodeURIComponent(uid)+'&tid='+encodeURIComponent(tid);
+    const attempts=[
+      {url:direct,options:{method:'GET',mode:'cors',credentials:'omit',cache:'no-store'},label:'direct'},
+      {url:proxy,options:{method:'GET',credentials:'same-origin',cache:'no-store'},label:'proxy'}
+    ];
+    let lastError=null;
+    for(const attempt of attempts){
+      try{
+        const response=await fetch(attempt.url,attempt.options);
+        if(!response.ok){lastError=new Error((attempt.label==='direct'?'Eremora Showcase ':'Showcase proxy ')+'HTTP '+response.status);continue}
+        const data=await response.json();
+        if(data?.ok===false){lastError=new Error(data.message||ui('Showcase 代理请求失败','Showcase proxy request failed'));continue}
+        return {url:direct,data,transport:attempt.label};
+      }catch(e){lastError=e}
     }
-    if(!response.ok)throw new Error('Eremora Showcase HTTP '+response.status);
-    let data;
-    try{data=await response.json()}catch{throw new Error(ui('Eremora Showcase 返回的不是有效 JSON','Eremora Showcase did not return valid JSON'))}
-    return {url,data};
+    const err=new Error(ui('无法读取 Eremora Showcase；直连和站内代理均失败','Unable to read Eremora Showcase; both direct and same-origin proxy requests failed'));
+    err.cause=lastError;throw err;
   }
   async function persistShowcasePayload(payload){
     const comment=SUBMISSION_MARKER+':'+utf8ToBase64(JSON.stringify(payload));
@@ -554,9 +560,10 @@
       const payload=normalizeShowcasePayload(uid,tid,data);
       if(status)status.textContent=ui('读取成功，正在导入…','Showcase loaded. Importing…');
       await persistShowcasePayload(payload);
+      const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
+      if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
       if(status)status.textContent=ui('自动导入成功','Imported from Eremora successfully');
       form.reset();
-      await loadManualRows();
       await load(activeSeason);
     }catch(e){
       console.error('Showcase assist import failed',e);
