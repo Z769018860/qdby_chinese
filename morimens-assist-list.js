@@ -68,7 +68,7 @@
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
       .assistAutoImportInfo{margin-top:13px;padding:12px 14px;border:1px solid rgba(88,220,246,.14);border-radius:10px;background:rgba(88,220,246,.045);display:flex;flex-direction:column;gap:3px}.assistAutoImportInfo strong{color:#bceffa;font-size:11px}.assistAutoImportInfo span{color:#c4cfda;font-size:10px}.assistAutoImportInfo small{color:#718096;font-size:9px}.assistAutoAttempt{margin-top:13px;padding:12px 14px;border:1px solid rgba(240,195,111,.22);border-radius:10px;background:rgba(104,61,12,.12);display:flex;align-items:center;justify-content:space-between;gap:12px}.assistAutoAttempt>div{min-width:0}.assistAutoAttempt strong{display:block;color:#f4d99d;font-size:11px}.assistAutoAttempt span{display:block;margin-top:3px;color:#9b8e75;font-size:9px;line-height:1.55}.assistSubmitActions a.primaryBtn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}.assistSubmitActions a[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
-      .assistClipboardSteps{margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(5,10,16,.22)}.assistClipboardStep{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.assistClipboardStep>b{flex:none;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:rgba(88,220,246,.1);border:1px solid rgba(88,220,246,.28);color:#8de9fb;font-size:11px}.assistClipboardStep strong{display:block;color:#dce9f3;font-size:11px}.assistClipboardStep span{display:block;margin-top:2px;color:#8391a2;font-size:9px;line-height:1.55}.assistShowcaseUrl{margin:8px 0 12px;padding:9px 11px;border-radius:9px;background:#0a1119;border:1px solid rgba(148,163,184,.14);color:#8ea0b3;font-size:9px;word-break:break-all}.assistShowcaseUrl code{color:#bfeaf3}.assistPasteLabel{display:block;margin-top:12px;color:#96a5b6;font-size:9px}.assistPasteLabel>span{display:block;margin-bottom:6px}.assistPasteLabel textarea{width:100%;min-height:108px;resize:vertical;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0a1119;color:#dfe8f2;padding:10px;outline:none;font:10px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}.assistPasteLabel textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
+      .assistClipboardSteps{margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(5,10,16,.22)}.assistClipboardStep{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.assistClipboardStep>b{flex:none;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:rgba(88,220,246,.1);border:1px solid rgba(88,220,246,.28);color:#8de9fb;font-size:11px}.assistClipboardStep strong{display:block;color:#dce9f3;font-size:11px}.assistClipboardStep span{display:block;margin-top:2px;color:#8391a2;font-size:9px;line-height:1.55}.assistShowcaseUrl{margin:8px 0 12px;padding:9px 11px;border-radius:9px;background:#0a1119;border:1px solid rgba(148,163,184,.14);color:#8ea0b3;font-size:9px;word-break:break-all}.assistShowcaseUrl code{color:#bfeaf3}.assistPasteLabel{display:block;margin-top:12px;color:#96a5b6;font-size:9px}.assistPasteLabel>span{display:block;margin-bottom:6px}.assistPasteLabel textarea{width:100%;min-height:108px;resize:vertical;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0a1119;color:#dfe8f2;padding:10px;outline:none;font:10px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}.assistPasteLabel textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}.assistPasteActions{margin-top:8px}.assistSubmitPrivacy{margin:11px 0 0;color:#748396;font-size:9px;line-height:1.6}.assistSubmitActions{display:flex;align-items:center;gap:12px;margin-top:12px}.assistSubmitActions #assistSubmitStatus{font-size:10px;color:#9fb4c9;word-break:break-word}
             @media(max-width:850px){.assistFilters{grid-template-columns:1fr 1fr}.assistFilterAction{grid-column:span 2}}
       @media(max-width:900px){.assistSubmitGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.assistTable{min-width:900px}}
       @media(max-width:560px){.assistFilters{grid-template-columns:1fr}.assistFilterAction{grid-column:auto}.assistSubmitGrid{grid-template-columns:1fr}.assistSubmitBox>summary{align-items:flex-start;flex-direction:column;gap:3px}}
@@ -699,6 +699,24 @@
     const data=parseShowcaseText(text);
     return importShowcaseData(data,origin||'clipboard');
   }
+  async function importPastedShowcase(){
+    const status=$('assistSubmitStatus'),area=$('assistPasteShowcase');
+    try{
+      validateShowcaseSelection(showcaseFormValues());
+      const text=String(area?.value||'').trim();
+      if(!text)throw new Error(ui('请先在下方文本框粘贴 Eremora Showcase JSON','Paste the Eremora Showcase JSON into the box below first'));
+      if(status)status.textContent=ui('正在导入已粘贴 JSON…','Importing pasted JSON…');
+      await importShowcaseText(text,'paste-button');
+    }catch(e){
+      console.error('Pasted Showcase import failed',e);
+      if(status)status.textContent=ui('粘贴内容导入失败：','Pasted JSON import failed: ')+(e?.message||String(e));
+    }
+  }
+  function clearPastedShowcase(){
+    const area=$('assistPasteShowcase'),status=$('assistSubmitStatus');
+    if(area){area.value='';area.focus()}
+    if(status)status.textContent=ui('已清空粘贴内容。','Pasted content cleared.');
+  }
   async function readClipboardAndImport(){
     const status=$('assistSubmitStatus');
     try{
@@ -709,7 +727,12 @@
       await importShowcaseText(text,'clipboard-read');
     }catch(e){
       console.error('Showcase clipboard import failed',e);
-      if(status)status.textContent=ui('剪贴板导入失败：','Clipboard import failed: ')+(e?.message||String(e))+ui('；可改用下方粘贴区域。','; use the paste area below instead.');
+      const area=$('assistPasteShowcase');
+      if(area){area.focus();try{area.scrollIntoView({behavior:'smooth',block:'center'})}catch(_){}}
+      if(status)status.textContent=ui(
+        '浏览器无法直接读取剪贴板。请在下方文本框长按“粘贴”，然后点击“导入已粘贴 JSON”。',
+        'The browser could not read the clipboard directly. Paste the JSON into the box below, then click “Import pasted JSON”.'
+      );
     }
   }
   async function handleShowcasePaste(event){
@@ -832,12 +855,14 @@
     if(importDelegatesBound)return;
     importDelegatesBound=true;
     document.addEventListener('click',event=>{
-      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistClipboardImport');
+      const target=event.target?.closest?.('#assistAutoImportAttempt,#assistOpenShowcase,#assistCopyShowcaseUrl,#assistClipboardImport,#assistImportPastedJson,#assistClearPastedJson');
       if(!target)return;
       if(target.id==='assistAutoImportAttempt'){event.preventDefault();tryDirectAutoImport();return}
       if(target.id==='assistOpenShowcase'){openShowcasePage(event);return}
       if(target.id==='assistCopyShowcaseUrl'){event.preventDefault();copyShowcaseUrl();return}
       if(target.id==='assistClipboardImport'){event.preventDefault();readClipboardAndImport();return}
+      if(target.id==='assistImportPastedJson'){event.preventDefault();importPastedShowcase();return}
+      if(target.id==='assistClearPastedJson'){event.preventDefault();clearPastedShowcase();return}
     });
     document.addEventListener('input',event=>{
       if(event.target?.id==='assistSubmitUid')updateShowcaseUrlPreview();
