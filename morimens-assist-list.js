@@ -64,6 +64,7 @@
       .assistCharacter{display:flex;align-items:center;gap:9px;min-width:160px}.assistCharacter img{width:42px;height:42px;border-radius:9px;object-fit:cover;background:#0b1220;flex:none}.assistCharacter b,.assistCharacter small{display:block}.assistCharacter small{margin-top:3px;color:#7f8da1;font-size:9px}
       .assistUid a{color:#e0bd82;text-decoration:none;font-weight:800}.assistUid a:hover{text-decoration:underline}.assistUid strong{display:block;margin-top:3px;color:#d9e1eb;font-size:11px}.assistUid small{display:block;margin-top:2px;color:#718096;font-size:9px}.assistUidLine{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.assistCopyUid{border:1px solid rgba(224,189,130,.35);background:rgba(224,189,130,.08);color:#e8ca91;border-radius:7px;padding:3px 7px;font-size:9px;cursor:pointer}.assistCopyUid:hover{background:rgba(224,189,130,.16)}.assistCopyUid.copied{color:#8ed9b1;border-color:rgba(142,217,177,.4)}.assistGuideBanner{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:14px 0 2px;padding:14px 17px;border:1px solid rgba(245,194,104,.55);border-radius:12px;background:linear-gradient(100deg,rgba(104,61,12,.42),rgba(217,167,75,.12));box-shadow:0 0 22px rgba(217,167,75,.08);color:#ffe2a7;text-decoration:none;font-weight:900}.assistGuideBanner:hover{border-color:#f0c36f;background:linear-gradient(100deg,rgba(123,72,13,.5),rgba(217,167,75,.18))}.assistGuideBanner span{color:#fff3d7;font-size:11px}
       .assistGear{display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}.assistGearCard{display:grid;grid-template-columns:34px minmax(0,1fr);gap:7px;align-items:start;min-width:145px;max-width:230px;padding:6px 8px;border:1px solid rgba(148,163,184,.16);border-radius:9px;background:#111827}.assistGearCard>img{width:34px;height:34px;border-radius:7px;object-fit:contain;background:#0b1220}.assistGearCard b{display:block;font-size:10px;color:#e9eef5;line-height:1.25}.assistGearCard small{display:block;margin-top:2px;color:#8794a6;font-size:9px;line-height:1.3}.assistGearTextOnly{grid-template-columns:minmax(0,1fr)}.assistAttrList{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}.assistAttr{padding:2px 5px;border-radius:6px;background:rgba(217,179,108,.09);border:1px solid rgba(217,179,108,.16);color:#d9c59e;font-size:8px;line-height:1.25;white-space:nowrap}.assistSuitLine{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}.assistSuitTag,.assistSeasonTag{display:inline-flex;align-items:center;padding:3px 6px;border-radius:7px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);font-size:9px;color:#b6c0ce}.assistCount{font-size:16px;color:#f1d69f;font-weight:900;font-variant-numeric:tabular-nums}
+      .assistProgression{margin-top:7px;display:grid;gap:5px}.assistProgression>div{display:flex;align-items:flex-start;gap:6px}.assistProgression b{flex:none;min-width:28px;color:#8fa2b4;font-size:9px}.assistProgression span{display:flex;flex-wrap:wrap;gap:4px}.assistProgression i{font-style:normal;padding:2px 5px;border-radius:6px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.12);color:#c4ceda;font-size:8px}
       .assistBuildMeta{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.assistBuildMeta span{padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#c4ceda}.assistBuildMeta b{color:#f0d69f;font-weight:800}.assistSource{display:flex;flex-direction:column;gap:5px;align-items:flex-start}.assistSourceTag{display:inline-flex;align-items:center;padding:4px 7px;border-radius:8px;font-size:9px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);color:#bac5d2}.assistSourceTag.online{border-color:rgba(88,220,246,.34);background:rgba(88,220,246,.08);color:#8de9fb}.assistSource small{font-size:8px;color:#758398}.assistManualUse{color:#8de9fb;font-size:10px;font-weight:800}.assistCountCell{text-align:center;vertical-align:middle!important}
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
@@ -189,7 +190,7 @@
     const raw=Number(attr?.value);
     if(!Number.isFinite(raw))return name;
     if(attr?.percentage){
-      const v=attr?.percentPoints===true?raw:(Math.abs(raw)<=1?raw*100:raw);
+      const v=raw;
       const digits=Math.abs(v)<10?2:1;
       return name+' '+v.toFixed(digits).replace(/\.0+$/,'').replace(/(\.\d*[1-9])0+$/,'$1')+'%';
     }
@@ -201,12 +202,50 @@
       const id=String(a?.id||a?.name||'').trim();if(!id)continue;
       const percentage=!!a?.percentage,key=id+'|'+(percentage?1:0),raw=Number(a?.value);
       const row=map.get(key)||{id,name:a?.name||id,value:0,percentage,percentPoints:percentage,count:0};
-      if(Number.isFinite(raw))row.value+=percentage&&Math.abs(raw)<=1?raw*100:raw;row.count++;map.set(key,row);
+      if(Number.isFinite(raw))row.value+=raw;row.count++;map.set(key,row);
     }
     return [...map.values()].sort((a,b)=>statName(a).localeCompare(statName(b),'zh-CN'));
   }
   function attrsKey(items){return aggregateAttrs(items).map(a=>[a.id,a.value,a.percentage?1:0].join(':')).join(',')}
   function gearKey(items){return (items||[]).map(x=>String(x?.id??x?.name??'')).filter(Boolean).sort().join(',')}
+  function structuredProgressionList(value){
+    if(value==null||value==='')return [];
+    const atom=v=>{
+      if(v==null||v==='')return '';
+      if(['string','number','boolean'].includes(typeof v))return String(v);
+      if(Array.isArray(v))return v.map(atom).filter(Boolean).join('/');
+      if(typeof v==='object'){
+        const name=v.name??v.id??v.key??v.slot??'';
+        const level=v.level??v.lv??v.value??v.rank??v.tier??'';
+        if(name!==''&&level!=='')return String(name)+' '+String(level);
+        if(name!=='')return String(name);
+        const simple=Object.entries(v).filter(([,x])=>x==null||['string','number','boolean'].includes(typeof x));
+        if(simple.length)return simple.map(([k,x])=>k+': '+String(x??'')).join(' · ');
+        try{return JSON.stringify(v)}catch{return ''}
+      }
+      return '';
+    };
+    if(Array.isArray(value))return value.map(atom).filter(Boolean);
+    if(typeof value==='object'){
+      // For map-like structured skill data, preserve each entry as one list item.
+      const entries=Object.entries(value);
+      if(entries.length&&entries.every(([,v])=>v==null||['string','number','boolean'].includes(typeof v))){
+        return entries.map(([k,v])=>k+': '+String(v??''));
+      }
+    }
+    const one=atom(value);
+    return one?[one]:[];
+  }
+  function memberSkills(member){return structuredProgressionList(member?.potential??member?.skillLevels??member?.skills)}
+  function memberSoulforge(member){return structuredProgressionList(member?.breakLevel??member?.break_level)}
+  function progressionHtml(row){
+    const skills=Array.isArray(row?.skills)?row.skills:[],soulforge=Array.isArray(row?.soulforge)?row.soulforge:[];
+    if(!skills.length&&!soulforge.length)return '';
+    return '<div class="assistProgression">'+
+      (skills.length?'<div><b>'+ui('技能','Skills')+'</b><span>'+skills.map(x=>'<i>'+esc(x)+'</i>').join('')+'</span></div>':'')+
+      (soulforge.length?'<div><b>'+ui('灵塑','Soulforge')+'</b><span>'+soulforge.map(x=>'<i>'+esc(x)+'</i>').join('')+'</span></div>':'')+
+      '</div>';
+  }
   function configKey(uid,m){
     const cov=m?.covenants||(m?.covenant?[m.covenant]:[]);
     const trinkets=m?.trinkets||[];
@@ -283,10 +322,12 @@
             const wheels=(member?.wheels||member?.weapons||[]).map(x=>{const r=wheelRecord(x);return {id:String(r?.id??x?.id??x?.name??''),name:wheelName(x),image:wheelImage(x),level:x?.level??null,enhanceLevel:x?.enhanceLevel??x?.enhance_level??null}}).filter(x=>x.id||x.name);
             const covs=(member?.covenants||(member?.covenant?[member.covenant]:[])).map(x=>{const r=covenantRecord(x);return {id:String(r?.id??x?.id??x?.name??''),name:covenantName(x),image:covenantImage(x),count:x?.count??null}}).filter(x=>x.id||x.name);
             const trinkets=(member?.trinkets||[]).map(x=>({id:String(x?.id??x?.name??''),name:String(x?.name||x?.id||ui('密契','Covenant')),image:fallbackLocalImage(x?.image,'covenant')||x?.image||'',slot:x?.slot??null,level:x?.level??null,enhanceLevel:x?.enhanceLevel??x?.enhance_level??null,attrs:(x?.attrs||[]).map(a=>({id:a?.id,name:a?.name,value:a?.value,percentage:!!a?.percentage}))}));
-            row={uid,player:playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,level:member?.level??null,enlightenment:enlightLabel(member),wheels,covenants:covs,trinkets,finalAttrs:aggregateAttrs(trinkets),count:0,borrowers:new Set(),seasons:new Set()};
+            row={uid,player:playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,level:member?.level??null,enlightenment:enlightLabel(member),skills:memberSkills(member),soulforge:memberSoulforge(member),wheels,covenants:covs,trinkets,finalAttrs:aggregateAttrs(trinkets),count:0,borrowers:new Set(),seasons:new Set()};
             out.set(key,row);
           }
           if(!row.player&&playerNames.has(uid))row.player=playerNames.get(uid);
+          if(!row.skills?.length){const v=memberSkills(member);if(v.length)row.skills=v}
+          if(!row.soulforge?.length){const v=memberSoulforge(member);if(v.length)row.soulforge=v}
           row.count++;row.seasons.add(String(seasonId));if(borrower)row.borrowers.add(borrower);
         }
       }
@@ -317,11 +358,11 @@
   }
   function manualKey(row){return [row.uid,row.characterKey].join('|')}
   function manualRowFromPayload(payload,meta={}){
-    if(!payload||![1,2].includes(Number(payload.version)))return null;
+    if(!payload||![1,2,3].includes(Number(payload.version)))return null;
     const uid=String(payload.uid||'').trim();
     if(!/^\d{5,20}$/.test(uid))return null;
 
-    if(Number(payload.version)===2){
+    if([2,3].includes(Number(payload.version))){
       const charId=String(payload.characterId||payload.awaker?.id||'');
       const res=String(payload.awaker?.res||'').replace(/_AF$/i,'').toUpperCase();
       const rawName=normName(payload.awaker?.name||'');
@@ -376,10 +417,12 @@
         characterImage:char.image,
         level:payload.level??null,
         enlightenment:enlightLabel({potencyLevel:payload.potencyLevel}),
+        skills:structuredProgressionList(payload.potential),
+        soulforge:structuredProgressionList(payload.breakLevel),
         wheels,
         covenants,
-        trinkets:[],
-        finalAttrs:attrs,
+        trinkets:Array.isArray(payload.trinkets)?payload.trinkets:[],
+        finalAttrs:Number(payload.version)>=3&&Array.isArray(payload.trinkets)?aggregateAttrs(payload.trinkets):attrs,
         count:null,
         borrowers:new Set(),
         seasons:new Set(),
@@ -412,6 +455,8 @@
     return {
       uid,player:player||playerNames.get(uid)||'',characterKey:char.key,characterName:char.name,characterImage:char.image,
       level,enlightenment:String(payload.enlightenment||ui('未知','Unknown')).slice(0,20),
+      skills:structuredProgressionList(payload.skills??payload.potential),
+      soulforge:structuredProgressionList(payload.breakLevel),
       wheels:[wheel],covenants:[cov],trinkets:[],finalAttrs:attrs,
       count:null,borrowers:new Set(),seasons:new Set(),manual:true,source:'online',
       submittedAt:String(meta.insertedAt||payload.submittedAt||''),commentId:String(meta.objectId||'')
@@ -507,7 +552,7 @@
       const raw=Number(a?.value);if(!Number.isFinite(raw))continue;
       const percentage=!!a?.percentage,key=id+'|'+(percentage?1:0);
       const row=map.get(key)||{id,name:String(a?.name||id),value:0,percentage};
-      row.value+=percentage&&Math.abs(raw)<=1?raw*100:raw;
+      row.value+=raw;
       map.set(key,row);
     }
     return [...map.values()].sort((a,b)=>statName(a).localeCompare(statName(b),'zh-CN'));
@@ -518,7 +563,7 @@
     if(!awakerId)throw new Error(ui('Showcase 返回缺少角色 ID','Showcase response has no Awakener ID'));
     if(String(tid)!==awakerId)throw new Error(ui('返回角色与所选角色不一致','Returned Awakener does not match the selected one'));
     return {
-      version:2,
+      version:3,
       source:'eremora-showcase',
       uid:String(uid),
       player:playerNames.get(String(uid))||'',
@@ -533,6 +578,8 @@
       },
       level:data.level??null,
       potencyLevel:data.potency_level??null,
+      potential:data.potential??null,
+      breakLevel:data.break_level??null,
       weapons:(Array.isArray(data.weapons)?data.weapons:[]).map(x=>({
         id:x?.id,
         name:x?.name,
@@ -545,6 +592,23 @@
         name:x?.name,
         image:x?.image,
         count:x?.count??null
+      })),
+      trinkets:(Array.isArray(data.trinkets)?data.trinkets:[]).map(x=>({
+        id:x?.id,
+        name:x?.name,
+        image:x?.image,
+        slot:x?.slot??null,
+        level:x?.level??null,
+        enhanceLevel:x?.enhance_level??x?.enhanceLevel??null,
+        breakLevel:x?.break_level??x?.breakLevel??null,
+        suitId:x?.suit_id??x?.suitId??null,
+        attrs:(Array.isArray(x?.attrs)?x.attrs:[]).map(a=>({
+          id:a?.id,
+          name:a?.name,
+          value:a?.value,
+          percentage:!!a?.percentage,
+          rollQuality:a?.roll_quality??a?.rollQuality??null
+        }))
       })),
       attrs:aggregateShowcaseAttrs(data.trinkets),
       fetchedAt:new Date().toISOString()
@@ -685,10 +749,16 @@
       if(status)status.textContent=ui('已读取 JSON，正在校验并导入…','JSON read. Validating and importing…');
       const payload=normalizeShowcasePayload(values.uid,values.tid,data);
       payload.importMethod=origin||'clipboard';
+      const candidate=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
+      const key=candidate?manualKey(candidate):'';
+      const existed=!!key&&(manualRows.some(row=>manualKey(row)===key)||rows.some(row=>manualKey(row)===key));
+      payload.updateExisting=existed;
       await persistShowcasePayload(payload);
       const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
       if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
-      if(status)status.textContent=ui('导入成功：当前 Showcase 配置已更新，历史融灾使用次数继续保留。','Import complete. The current Showcase build was updated and historical D-Zone usage was preserved.');
+      if(status)status.textContent=existed
+        ?ui('更新成功：已用最新 Showcase 配置更新原有助战记录，历史融灾使用次数保持不变。','Updated existing assist record with the latest Showcase build; historical D-Zone usage was preserved.')
+        :ui('导入成功：已新增当前 Showcase 配置。','Import complete: current Showcase build added.');
       const paste=$('assistPasteShowcase');if(paste)paste.value='';
       await load(activeSeason);
     }finally{
@@ -760,19 +830,26 @@
     return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
   }
   function populate(){
-    const char=$('assistCharacterFilter'),wheel=$('assistWheelFilter'),cov=$('assistCovenantFilter');if(!char||!wheel||!cov)return;
-    const keep=[char.value,wheel.value,cov.value];
+    const char=$('assistCharacterFilter'),level=$('assistLevelFilter'),enlight=$('assistEnlightFilter'),wheel=$('assistWheelFilter'),cov=$('assistCovenantFilter');
+    if(!char||!level||!enlight||!wheel||!cov)return;
+    const keep=[char.value,level.value,enlight.value,wheel.value,cov.value];
     const chars=[...new Map(rows.map(r=>[r.characterKey,r.characterName]))].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
+    const levels=[...new Set(rows.map(r=>r.level).filter(x=>x!=null&&x!==''))].sort((a,b)=>Number(a)-Number(b));
+    const enlights=[...new Set(rows.map(r=>String(r.enlightenment||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'zh-CN',{numeric:true}));
     char.innerHTML='<option value="">'+ui('全部角色','All Awakeners')+'</option>'+chars.map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
+    level.innerHTML='<option value="">'+ui('全部等级','All Levels')+'</option>'+levels.map(x=>'<option value="'+esc(x)+'">Lv.'+esc(x)+'</option>').join('');
+    enlight.innerHTML='<option value="">'+ui('全部启灵','All Enlighten')+'</option>'+enlights.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
     wheel.innerHTML='<option value="">'+ui('全部命轮','All Wheels')+'</option>'+optionRows(rows,r=>r.wheels).map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
     cov.innerHTML='<option value="">'+ui('全部密契','All Covenants')+'</option>'+covenantOptions().map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
-    [char,wheel,cov].forEach((el,i)=>{if([...el.options].some(o=>o.value===keep[i]))el.value=keep[i]});
+    [char,level,enlight,wheel,cov].forEach((el,i)=>{if([...el.options].some(o=>o.value===keep[i]))el.value=keep[i]});
   }
   function filtered(){
-    const uid=String($('assistUidFilter')?.value||'').trim(),char=$('assistCharacterFilter')?.value||'',wheel=$('assistWheelFilter')?.value||'',cov=$('assistCovenantFilter')?.value||'';
+    const uid=String($('assistUidFilter')?.value||'').trim(),char=$('assistCharacterFilter')?.value||'',level=$('assistLevelFilter')?.value||'',enlight=$('assistEnlightFilter')?.value||'',wheel=$('assistWheelFilter')?.value||'',cov=$('assistCovenantFilter')?.value||'';
     return rows.filter(r=>{
       if(uid&&!r.uid.includes(uid)&&!String(r.player||'').toLowerCase().includes(uid.toLowerCase()))return false;
       if(char&&r.characterKey!==char)return false;
+      if(level&&String(r.level??'')!==String(level))return false;
+      if(enlight&&String(r.enlightenment||'')!==String(enlight))return false;
       if(wheel&&!r.wheels.some(x=>String(x.id||x.name)===wheel))return false;
       if(cov&&!r.covenants.some(x=>String(x.id||x.name)===cov))return false;
       return true;
@@ -827,7 +904,7 @@
       '<th>'+ui('使用','Uses')+'</th>'+
       '</tr></thead><tbody>'+shown.map(r=>{
         const playerCell='<td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未匹配到玩家名','Player name unavailable')+'</small>')+'</td>';
-        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+((r.imported||r.source==='showcase')?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):(r.manual?ui('旧版在线补充配置','Legacy submitted build'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players'))))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
+        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+((r.imported||r.source==='showcase')?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):(r.manual?ui('旧版在线补充配置','Legacy submitted build'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players'))))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div>'+progressionHtml(r)+'</td>';
         const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+ui('旧版补充','Legacy')+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span>'+(r.imported?'<small style="display:block;margin-top:4px;color:#718096">'+ui('历史实战累计','Historical observed uses')+'</small>':'')+'</td>';
         return '<tr class="'+(r.imported?'assistManualRow':(r.manual?'assistManualRow':'assistObservedRow'))+'">'+playerCell+roleCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
       }).join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
@@ -876,9 +953,9 @@
   }
   function bind(){
     $('assistSeason')?.addEventListener('change',()=>load($('assistSeason').value).catch(error));
-    for(const id of ['assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
+    for(const id of ['assistCharacterFilter','assistLevelFilter','assistEnlightFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
     $('assistUidFilter')?.addEventListener('input',()=>{page=1;render()});
-    $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
+    $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistLevelFilter','assistEnlightFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
     bindImportDelegates();
     updateShowcaseUrlPreview();
   }
