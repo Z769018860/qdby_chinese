@@ -703,11 +703,14 @@
     try{
       if(status)status.textContent=ui('正在尝试同时读取 Showcase 与完整资料…','Trying Showcase and full profile data…');
       const fetchOpts={method:'GET',mode:'cors',credentials:'include',cache:'no-store',redirect:'follow'};
-      const [showcaseResult,profileResult]=await Promise.allSettled([
+      const [showcaseResult,profileResult,profilePageResult]=await Promise.allSettled([
         fetch(showcaseUrl(values.uid,values.tid),{...fetchOpts,headers:{Accept:'application/json'}}).then(async r=>{if(!r.ok)throw new Error('Showcase HTTP '+r.status);return r.json()}),
-        fetch(profileDataUrl(values.uid),{...fetchOpts,headers:{Accept:'application/json,text/plain,*/*'}}).then(async r=>{if(!r.ok)throw new Error('Profile HTTP '+r.status);return r.text()})
+        fetch(profileDataUrl(values.uid),{...fetchOpts,headers:{Accept:'application/json,text/plain,*/*'}}).then(async r=>{if(!r.ok)throw new Error('Profile data HTTP '+r.status);return r.text()}),
+        fetch(profilePageUrl(values.uid),{...fetchOpts,headers:{Accept:'text/html,text/plain,*/*'}}).then(async r=>{if(!r.ok)throw new Error('Profile page HTTP '+r.status);return r.text()})
       ]);
-      const progression=profileResult.status==='fulfilled'?parseProfileProgression(profileResult.value,values.tid):null;
+      const progression=
+        (profileResult.status==='fulfilled'?parseProfileProgression(profileResult.value,values.tid):null)||
+        (profilePageResult.status==='fulfilled'?parseProfileProgression(profilePageResult.value,values.tid):null);
       if(showcaseResult.status==='fulfilled'){
         const data=showcaseResult.value;
         if(progression){
@@ -728,8 +731,9 @@
       }
       throw new Error([
         showcaseResult.status==='rejected'?(showcaseResult.reason?.message||'Showcase failed'):'',
-        profileResult.status==='rejected'?(profileResult.reason?.message||'Profile failed'):''
-      ].filter(Boolean).join(' / ')||'Both sources failed');
+        profileResult.status==='rejected'?(profileResult.reason?.message||'Profile data failed'):'',
+        profilePageResult.status==='rejected'?(profilePageResult.reason?.message||'Profile page failed'):''
+      ].filter(Boolean).join(' / ')||'All sources failed');
     }catch(e){
       console.warn('Direct dual import failed',e);
       if(status)status.textContent=ui(
