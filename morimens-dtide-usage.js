@@ -466,10 +466,11 @@
   function renderUsageLayerNote(){
     const note=$('dtideCoverageNote');if(!note||!manifest||!usage)return;
     note.querySelector('.dtideUsageLayerNote')?.remove();
-    const merged=esc(String(usage?.recordCount||usage?.records?.length||0)),base=esc(String(manifest.usageIndex?.recordCount||0)),target=esc(String(manifest.usageIndex?.target||1000));
+    const merged=esc(String(usage?.recordCount||usage?.records?.length||0)),base=esc(String(manifest.usageIndex?.recordCount||0)),target=esc(String(manifest.usageIndex?.target||1000)),community=Number(usage?.communityRecordCount||0),communityUpdated=usage?.communityUpdatedAt?new Date(usage.communityUpdatedAt):null,communityTime=communityUpdated&&!Number.isNaN(communityUpdated.getTime())?communityUpdated.toLocaleString(zh()?'zh-CN':'en-US'):'';
+    const communityText=community?(zh()?('；社区自行更新覆盖 '+community+' 个 UID'+(communityTime?'，最近更新 '+communityTime:'')):('; community imports cover '+community+' UID(s)'+(communityTime?', latest '+communityTime:''))):'';
     const html=zh()
-      ?' <span class="dtideUsageLayerNote"><strong>Top1000 出场率层：</strong>当前有效合并记录 '+merged+' 条（基础 '+base+' + Top500 增量按 UID 覆盖），榜单目标 '+target+' 名玩家。</span>'
-      :' <span class="dtideUsageLayerNote"><strong>Top 1000 appearance-rate layer:</strong> '+merged+' effective merged records (base '+base+' + Top 500 UID overlay), target '+target+' players.</span>';
+      ?' <span class="dtideUsageLayerNote"><strong>Top1000 出场率层：</strong>当前有效记录 '+merged+' 条（基础快照 '+base+' 条'+communityText+'），榜单目标 '+target+' 名玩家。</span>'
+      :' <span class="dtideUsageLayerNote"><strong>Top 1000 appearance-rate layer:</strong> '+merged+' effective records (base snapshot '+base+communityText+'), target '+target+' players.</span>';
     note.insertAdjacentHTML('beforeend',html);
   }
   async function init(){
