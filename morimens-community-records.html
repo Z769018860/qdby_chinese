@@ -94,10 +94,10 @@
     async function loadDzone(){
       window.MorimensDzoneImportEmbedded=false;
       await new Promise((resolve,reject)=>{
-        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.7';script.defer=true;
+        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.9';script.defer=true;
         script.onload=resolve;script.onerror=()=>reject(new Error('融灾记录脚本载入失败'));document.head.appendChild(script);
       });
-      const items=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true})||[];
+      const items=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true,strict:true})||[];
       for(const item of items){
         const phase=Number(item.seasonId)===69?(item.communityVariant==='postbug'?'Bug后':'Bug前'):'';
         rows.push({
