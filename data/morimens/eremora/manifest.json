@@ -10,7 +10,6 @@
   "availableSeasons": [
     {
       "seasonId": 70,
-      "label": "第70期 新新融灾",
       "labelEn": "Season 70 · New D-Zone",
       "period": "2026-09-28 – 2026-10-12",
       "recordCount": 457,
@@ -19,7 +18,9 @@
       "coverageMode": "current-leaderboard-top500-partial",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
-      "dataUpdatedAt": "2026-09-29T01:00:00+08:00"
+      "dataUpdatedAt": "2026-09-29T01:00:00+08:00",
+      "labelZh": "第70期 新新融灾",
+      "periodShort": "9.28–10.11"
     },
     {
       "seasonId": 69,
