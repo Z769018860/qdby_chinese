@@ -320,7 +320,9 @@
     "target": 500,
     "count": 457,
     "complete": false,
-    "syncedAt": "2026-09-29T01:00:00+08:00"
+    "syncedAt": "2026-09-29T07:19:58+08:00",
+    "revision": "s70-score-rebuild-20260929-071958",
+    "scorePolicy": "detailed-current-score-with-community-overrides"
   },
   "usageIndex": {
     "seasonId": 70,
