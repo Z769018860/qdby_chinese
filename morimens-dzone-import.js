@@ -32,6 +32,8 @@
   }
   function context(){return window.MorimensDtideCommunity?.getContext?.()||null}
   function selectedSeasonId(){
+    const importSelected=String($('dtideCommunitySeason')?.value||'').trim();
+    if(/^\d+$/.test(importSelected)){const value=Number(importSelected);if(Number.isFinite(value)&&value>0)return value}
     const ctx=context();
     const contextSeason=Number(ctx?.selectedSeasonId||ctx?.currentSeason||0);
     if(Number.isFinite(contextSeason)&&contextSeason>0)return contextSeason;
@@ -39,9 +41,26 @@
     if(/^\d+$/.test(selected)){const value=Number(selected);if(Number.isFinite(value)&&value>0)return value}
     return 0;
   }
-  function currentOnly(){
-    const ctx=context();
-    return !!ctx&&Number(ctx.selectedSeasonId)===Number(ctx.currentSeason)&&!ctx.legacy;
+  function canSubmitSeason(){
+    const seasonId=selectedSeasonId(),ctx=context();
+    if(!seasonId)return false;
+    const known=ctx?.availableSeasons||[];
+    return !known.length||known.some(entry=>Number(entry?.seasonId)===seasonId);
+  }
+  function syncSeasonOptions(){
+    const select=$('dtideCommunitySeason');if(!select)return;
+    const ctx=context(),known=(ctx?.availableSeasons||[]).filter(entry=>Number(entry?.seasonId)>0);
+    const previous=String(select.value||'');
+    const fallback=String(ctx?.selectedSeasonId||ctx?.currentSeason||'');
+    if(known.length){
+      select.innerHTML=known.map(entry=>`<option value="${esc(entry.seasonId)}">${esc(zh()?(entry.labelZh||('第 '+entry.seasonId+' 期融灾')):(entry.labelEn||('Season '+entry.seasonId+' D-Zone')))}${entry.periodShort?' · '+esc(entry.periodShort):''}</option>`).join('');
+      if(previous&&known.some(entry=>String(entry.seasonId)===previous))select.value=previous;
+      else if(fallback&&known.some(entry=>String(entry.seasonId)===fallback))select.value=fallback;
+      else if(select.options.length)select.selectedIndex=0;
+    }else if(!select.options.length&&fallback){
+      select.innerHTML=`<option value="${esc(fallback)}">${ui('第 '+fallback+' 期融灾','Season '+fallback+' D-Zone')}</option>`;
+      select.value=fallback;
+    }
   }
 
   function injectStyle(){
@@ -52,8 +71,8 @@
       .dtideCommunityImport>summary::-webkit-details-marker{display:none}.dtideCommunityImport>summary strong{font-size:13px;color:#81e8fb}.dtideCommunityImport>summary span{font-size:10px;color:#8998aa;text-align:right}
       .dtideCommunityImport[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .dtideCommunityImportBody{padding:15px}.dtideCommunityImportGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-      .dtideCommunityImportGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.dtideCommunityImportGrid input{width:100%;min-height:39px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}
-      .dtideCommunityImportGrid input:focus,.dtideCommunityImport textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
+      .dtideCommunityImportGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.dtideCommunityImportGrid input,.dtideCommunityImportGrid select{width:100%;min-height:39px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}
+      .dtideCommunityImportGrid input:focus,.dtideCommunityImportGrid select:focus,.dtideCommunityImport textarea:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
       .dtideCommunityUrl{margin-top:11px;padding:9px 11px;border-radius:9px;background:#0a1119;border:1px solid rgba(148,163,184,.14);color:#8ea0b3;font-size:9px;word-break:break-all}.dtideCommunityUrl code{color:#bfeaf3}
       .dtideCommunitySteps{margin-top:12px;padding:11px 12px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(5,10,16,.22);color:#8291a3;font-size:9px;line-height:1.7}
       .dtideCommunityActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.dtideCommunityActions button,.dtideCommunityActions a{display:inline-flex;align-items:center;justify-content:center;min-height:35px;padding:7px 11px;border:1px solid rgba(88,220,246,.28);border-radius:8px;background:rgba(88,220,246,.08);color:#bceffa;font:700 10px/1.25 inherit;text-decoration:none;cursor:pointer}.dtideCommunityActions button:hover,.dtideCommunityActions a:hover{background:rgba(88,220,246,.14)}.dtideCommunityActions [aria-disabled="true"],.dtideCommunityActions button:disabled{opacity:.5;cursor:not-allowed}
@@ -71,18 +90,19 @@
     injectStyle();
     const box=document.createElement('details');box.id='dtideCommunityImport';box.className='dtideCommunityImport';
     box.innerHTML=`
-      <summary><strong id="dtideCommunityImportTitle">${ui('自行导入融灾数据','Import D-Zone Data')}</strong><span id="dtideCommunityImportSummary">${ui('粘贴 Eremora 完整挑战数据，提前补充当前期榜单','Paste full Eremora challenge data to update the current season early')}</span></summary>
+      <summary><strong id="dtideCommunityImportTitle">${ui('自行导入融灾数据','Import D-Zone Data')}</strong><span id="dtideCommunityImportSummary">${ui('选择融灾期次并粘贴 Eremora 完整挑战数据，可补充当期或历史期次','Choose a D-Zone season and paste full Eremora challenge data for current or historical seasons')}</span></summary>
       <div class="dtideCommunityImportBody">
         <div class="dtideCommunityImportGrid">
+          <label><span>${ui('融灾赛季期次','D-Zone Season')}</span><select id="dtideCommunitySeason" aria-label="${ui('融灾赛季期次','D-Zone Season')}"></select></label>
           <label><span>${ui('玩家 UID','Player UID')}</span><input id="dtideCommunityUid" inputmode="numeric" autocomplete="off" placeholder="100167859"></label>
           <label><span>${ui('更新人昵称（选填）','Contributor nickname (optional)')}</span><input id="dtideCommunityNick" maxlength="32" autocomplete="nickname" placeholder="${ui('留空则记为匿名','Blank = Anonymous')}"></label>
         </div>
-        <div id="dtideCommunityUrl" class="dtideCommunityUrl">${ui('填写 UID 后会生成当前期 Eremora 数据地址。','Enter a UID to generate the current-season Eremora data URL.')}</div>
+        <div id="dtideCommunityUrl" class="dtideCommunityUrl">${ui('选择期次并填写 UID 后会生成对应 Eremora 数据地址。','Choose a season and enter a UID to generate the matching Eremora data URL.')}</div>
         <div class="dtideCommunityActions">
           <a id="dtideCommunityOpen" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">${ui('打开数据页','Open Data Page')}</a>
           <button id="dtideCommunityCopyUrl" type="button">${ui('复制地址','Copy URL')}</button>
         </div>
-        <div class="dtideCommunitySteps">${ui('操作：填写 UID → 打开数据页 → 全选复制页面中的 __data.json 内容 → 粘贴到下面 → 解析并提交。提交后会立即合并到当前榜单；同一 UID 的较新提交会覆盖旧社区提交。','Steps: enter UID → open the data page → copy all __data.json content → paste below → parse and submit. The record is merged into the current leaderboard immediately; newer submissions for the same UID supersede older community submissions.')}</div>
+        <div class="dtideCommunitySteps">${ui('操作：选择融灾期次 → 填写 UID → 打开数据页 → 全选复制页面中的 __data.json 内容 → 粘贴到下面 → 解析并提交。同一期同一 UID 的较新提交会覆盖旧社区提交；查看对应期次榜单时会自动合并社区补充。','Steps: choose a D-Zone season → enter UID → open the data page → copy all __data.json content → paste below → parse and submit. Newer submissions supersede older community submissions for the same UID and season, and are merged when viewing that season.')}</div>
         <textarea id="dtideCommunityPaste" spellcheck="false" placeholder="${ui('在这里粘贴 Eremora /__data.json 页面内容……','Paste the Eremora /__data.json page content here…')}"></textarea>
         <div class="dtideCommunityActions">
           <button id="dtideCommunityClipboard" type="button">${ui('从剪贴板读取','Read Clipboard')}</button>
@@ -99,6 +119,8 @@
     const host=anchor.closest('.dtideHero')||anchor.parentElement||anchor;
     host.insertAdjacentElement('afterend',box);
     mounted=true;
+    syncSeasonOptions();
+    $('dtideCommunitySeason')?.addEventListener('change',()=>{updateUrlPreview();renderHistory();refreshUi(false)});
     const uidInput=$('dtideCommunityUid');
     uidInput?.addEventListener('input',updateUrlPreview);
     uidInput?.addEventListener('change',updateUrlPreview);
@@ -106,7 +128,7 @@
     uidInput?.addEventListener('paste',()=>setTimeout(updateUrlPreview,0));
     uidInput?.addEventListener('focus',updateUrlPreview);
     box.addEventListener('toggle',()=>{if(box.open)updateUrlPreview()});
-    $('dtideSeason')?.addEventListener('change',()=>setTimeout(updateUrlPreview,0));
+    $('dtideSeason')?.addEventListener('change',()=>setTimeout(()=>{syncSeasonOptions();updateUrlPreview()},0));
     $('dtideCommunityCopyUrl')?.addEventListener('click',copyImportUrl);
     $('dtideCommunityClipboard')?.addEventListener('click',readClipboard);
     $('dtideCommunitySubmit')?.addEventListener('click',submitPasted);
@@ -118,17 +140,17 @@
     setTimeout(updateUrlPreview,1000);
   }
 
-  function refreshUi(){
+  function refreshUi(syncOptions=true){
     if(!$('dtideCommunityImport'))return;
+    if(syncOptions)syncSeasonOptions();
     $('dtideCommunityImportTitle').textContent=ui('自行导入融灾数据','Import D-Zone Data');
-    $('dtideCommunityImportSummary').textContent=ui('粘贴 Eremora 完整挑战数据，提前补充当前期榜单','Paste full Eremora challenge data to update the current season early');
-    const ctx=context(),note=$('dtideCommunityCurrentNote'),submit=$('dtideCommunitySubmit');
+    $('dtideCommunityImportSummary').textContent=ui('选择融灾期次并粘贴 Eremora 完整挑战数据，可补充当期或历史期次','Choose a D-Zone season and paste full Eremora challenge data for current or historical seasons');
+    const ctx=context(),note=$('dtideCommunityCurrentNote'),submit=$('dtideCommunitySubmit'),seasonId=selectedSeasonId();
     if(note){
-      if(!ctx)note.textContent=ui('正在等待融灾榜单载入。','Waiting for the D-Zone leaderboard to load.');
-      else if(!currentOnly())note.textContent=ui('自行导入只作用于当前正在进行的融灾期；历史快照不会被社区数据覆盖。','Community imports only apply to the currently active D-Zone season; historical snapshots are not overwritten.');
-      else note.textContent=ui(`当前可提交第 ${ctx.currentSeason} 期。社区数据只补充/更新对应 UID，不会改动官方排名索引。`,`Submissions currently target Season ${ctx.currentSeason}. Community data only supplements/updates that UID and does not alter the official rank index.`);
+      if(!seasonId)note.textContent=ui('请选择要导入的融灾期次。','Choose the D-Zone season to import.');
+      else note.textContent=ui(`当前将提交第 ${seasonId} 期。社区数据按“期次 + UID”独立保存；查看第 ${seasonId} 期榜单时会自动合并，不会改动官方排名索引。`,`Submission target: Season ${seasonId}. Community data is stored separately by season + UID and is merged when viewing Season ${seasonId}; official rank indexes are not modified.`);
     }
-    if(submit)submit.disabled=!currentOnly();
+    if(submit)submit.disabled=!canSubmitSeason();
     updateUrlPreview();
     renderHistory();
   }
@@ -144,7 +166,7 @@
       if(preview)preview.innerHTML='<code>'+esc(url)+'</code>';
       if(link){link.href=url;link.setAttribute('aria-disabled','false')}
     }else{
-      if(preview)preview.textContent=ui('填写 UID 后会生成当前期 Eremora 数据地址。','Enter a UID to generate the current-season Eremora data URL.');
+      if(preview)preview.textContent=ui('选择期次并填写 UID 后会生成对应 Eremora 数据地址。','Choose a season and enter a UID to generate the matching Eremora data URL.');
       if(link){link.href='#';link.setAttribute('aria-disabled','true')}
     }
   }
@@ -473,8 +495,9 @@
     syncing=true;
     try{
       if(force||!submissionHistory.length||Date.now()-lastSyncAt>60000){submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}
-      const latest=latestPerUid(submissionHistory,ctx.selectedSeasonId);
-      if(currentOnly()&&latest.length){window.MorimensDtideCommunity?.mergeRecords?.(latest);window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)}
+      const viewSeasonId=Number(ctx.selectedSeasonId)||0;
+      const latest=latestPerUid(submissionHistory,viewSeasonId);
+      if(!ctx.legacy&&viewSeasonId&&latest.length){window.MorimensDtideCommunity?.mergeRecords?.(latest);window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)}
       renderHistory();
       const newest=latest[0];
       if(force)status(newest?ui(`已刷新社区补充：${latest.length} 个 UID；最近由 ${newest.submittedBy} 更新于 ${formatTime(newest.submittedAt)}。`,`Community data refreshed: ${latest.length} UIDs; latest by ${newest.submittedBy} at ${formatTime(newest.submittedAt)}.`):ui('已刷新，当前期暂无社区补充。','Refreshed. No community data for this season.'),'ok');
@@ -485,9 +508,9 @@
   }
 
   async function submitPasted(){
-    const button=$('dtideCommunitySubmit');
-    if(!currentOnly()){status(ui('只能向当前正在进行的融灾期提交数据。','You can only submit data for the currently active D-Zone season.'),'error');return}
-    const text=String($('dtideCommunityPaste')?.value||''),ctx=context(),seasonId=Number(ctx.currentSeason),typedUid=String($('dtideCommunityUid')?.value||'').trim();
+    const button=$('dtideCommunitySubmit'),seasonId=selectedSeasonId();
+    if(!canSubmitSeason()){status(ui('请选择有效的融灾期次。','Choose a valid D-Zone season.'),'error');return}
+    const text=String($('dtideCommunityPaste')?.value||''),ctx=context(),typedUid=String($('dtideCommunityUid')?.value||'').trim();
     if(!text.trim()){status(ui('请先粘贴 Eremora __data.json 内容。','Paste the Eremora __data.json content first.'),'error');return}
     if(button)button.disabled=true;
     try{
@@ -502,13 +525,15 @@
       await persistSubmission(payload);
       const row={uid:record.uid,seasonId,record,submittedBy,submittedAt,source:'eremora-dzone'};
       submissionHistory=[row,...submissionHistory.filter(x=>!(Number(x.seasonId)===seasonId&&String(x.uid)===record.uid&&String(x.submittedAt)===submittedAt))];
-      window.MorimensDtideCommunity?.mergeRecords?.([row]);window.MorimensDtideUsageCommunity?.mergeRecords?.([row]);
+      if(Number(ctx?.selectedSeasonId)===Number(seasonId)){
+        window.MorimensDtideCommunity?.mergeRecords?.([row]);window.MorimensDtideUsageCommunity?.mergeRecords?.([row]);
+      }
       renderHistory();
       status(ui(`提交成功：UID ${record.uid} 的第 ${seasonId} 期数据已合并。更新时间 ${formatTime(submittedAt)}，更新人 ${submittedBy}。`,`Submitted: UID ${record.uid} Season ${seasonId} data was merged. Updated ${formatTime(submittedAt)} by ${submittedBy}.`),'ok');
     }catch(error){
       console.error('D-Zone community import failed',error);
       status(ui('导入失败：','Import failed: ')+(error?.message||String(error)),'error');
-    }finally{if(button)button.disabled=!currentOnly()}
+    }finally{if(button)button.disabled=!canSubmitSeason()}
   }
 
   async function listSubmissionRecords(options={}){
