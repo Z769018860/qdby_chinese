@@ -501,6 +501,123 @@
     return record;
   }
 
+  function compactEquipment(item){
+    if(!item||typeof item!=='object')return null;
+    return [
+      item.id??null,String(item.name||''),item.slot??null,item.level??null,item.enhanceLevel??null,item.breakLevel??null,
+      item.rarity??null,item.suitId??null,item.bound?1:0
+    ];
+  }
+  function expandEquipment(row,kind='wheel'){
+    if(!Array.isArray(row))return null;
+    const out={id:row[0]??null,name:String(row[1]||''),slot:row[2]??null,level:row[3]??null,enhanceLevel:row[4]??null,breakLevel:row[5]??null,rarity:row[6]??null,attrs:[]};
+    if(kind==='trinket'){out.suitId=row[7]??null;out.bound=!!row[8]}
+    return out;
+  }
+  function compactCovenant(item){
+    if(!item||typeof item!=='object')return null;
+    return [item.id??null,String(item.name||''),item.count??null];
+  }
+  function expandCovenant(row){
+    if(!Array.isArray(row))return null;
+    return {id:row[0]??null,name:String(row[1]||''),image:'',count:row[2]??null,effects:[]};
+  }
+  function compactMember(member){
+    const m=member&&typeof member==='object'?member:{};
+    return [
+      m.id??null,m.skeydbId??null,m.ingameId??null,String(m.name||''),String(m.canonicalName||''),
+      m.level??null,m.potencyLevel??null,m.breakLevel??null,m.enlightenCount??m.enlightenLevel??null,
+      String(m.progression||m.enlightenMilestone||''),m.borrowed?1:0,m.assistUid??null,String(m.realm||''),String(m.role||''),
+      (m.wheels||[]).map(compactEquipment).filter(Boolean),
+      (m.covenants||((m.covenant)?[m.covenant]:[])).map(compactCovenant).filter(Boolean),
+      m.covenantScore??null,
+      (m.trinkets||[]).map(compactEquipment).filter(Boolean)
+    ];
+  }
+  function expandMember(row){
+    if(!Array.isArray(row))return null;
+    const covenants=(row[15]||[]).map(expandCovenant).filter(Boolean),ec=row[8]??null,progression=String(row[9]||'');
+    return {
+      id:row[0]??null,skeydbId:row[1]??null,ingameId:row[2]??null,name:String(row[3]||row[4]||row[2]||''),canonicalName:String(row[4]||row[3]||row[2]||''),
+      image:'',realm:String(row[12]||''),role:String(row[13]||''),rarity:'',
+      level:row[5]??null,potencyLevel:row[6]??null,breakLevel:row[7]??null,fighting:null,potential:null,likeLevel:null,
+      enlightenLevel:ec,enlightenCount:ec,enlightenMilestone:progression,progression,
+      enlightenment:[],
+      wheels:(row[14]||[]).map(x=>expandEquipment(x,'wheel')).filter(Boolean),
+      trinkets:(row[17]||[]).map(x=>expandEquipment(x,'trinket')).filter(Boolean),
+      covenants,covenant:covenants[0]||null,covenantScore:row[16]??null,
+      borrowed:!!row[10],assistUid:row[11]??null,stats:[]
+    };
+  }
+  function compactToken(item){
+    if(!item||typeof item!=='object')return null;
+    return [item.id??null,String(item.name||''),String(item.rarity||'')];
+  }
+  function expandToken(row){
+    if(!Array.isArray(row))return null;
+    return {id:row[0]??null,name:String(row[1]||''),image:'',rarity:String(row[2]||'')};
+  }
+  function compactCreation(item){
+    if(!item||typeof item!=='object')return null;
+    return [item.id??null,String(item.name||''),String(item.quality||'')];
+  }
+  function expandCreation(row){
+    if(!Array.isArray(row))return null;
+    return {id:row[0]??null,name:String(row[1]||row[0]||''),image:'',quality:String(row[2]||''),desc:''};
+  }
+  function compactTeam(team){
+    const t=team&&typeof team==='object'?team:{};
+    return [
+      t.score??null,String(t.clearType||'clear'),t.stageId??null,String(t.stageName||''),t.extraPass?1:0,t.groupTid??null,
+      compactToken(t.token),(t.creations||[]).map(compactCreation).filter(Boolean),t.wid??null,t.battleUuid??t.battle_uuid??null,
+      (t.members||[]).map(compactMember).filter(Boolean)
+    ];
+  }
+  function expandTeam(row){
+    if(!Array.isArray(row))return null;
+    return {
+      score:row[0]??null,clearType:String(row[1]||'clear'),stageId:row[2]??null,stageName:String(row[3]||''),extraPass:!!row[4],groupTid:row[5]??null,
+      token:expandToken(row[6]),creations:(row[7]||[]).map(expandCreation).filter(Boolean),wid:row[8]??null,battleUuid:row[9]??null,
+      members:(row[10]||[]).map(expandMember).filter(Boolean)
+    };
+  }
+  function compactRecord(record){
+    const r=record&&typeof record==='object'?record:{};
+    const a=r.activity&&typeof r.activity==='object'?r.activity:{};
+    return [
+      String(r.player||''),String(r.uid||''),r.score??null,r.currentScore??null,r.leaderboardScore??null,Number(r.seasonId)||0,
+      (r.waves||[]).map(w=>[Number(w?.wave)||0,w?.madness??null,(w?.teams||[]).map(compactTeam).filter(Boolean)]),
+      [a.id??null,a.tid??null,String(a.name||'Dissoluted Abyss'),a.start??null,a.end??null,a.maxScore??null,a.stageCount??null]
+    ];
+  }
+  function expandRecord(row){
+    if(!Array.isArray(row))return null;
+    const seasonId=Number(row[5])||0,uid=String(row[1]||''),a=Array.isArray(row[7])?row[7]:[];
+    return {
+      rank:null,player:String(row[0]||''),uid,score:row[2]??null,currentScore:row[3]??row[2]??null,leaderboardScore:row[4]??null,
+      url:`https://eremora.com/u/${encodeURIComponent(uid)}/challenges/dzone/${seasonId}`,seasonId,
+      activity:{id:a[0]??null,tid:a[1]??null,name:String(a[2]||'Dissoluted Abyss'),start:a[3]??null,end:a[4]??null,maxScore:a[5]??null,stageCount:a[6]??null},
+      waves:(row[6]||[]).map(w=>({wave:Number(w?.[0])||0,madness:w?.[1]??null,teams:(w?.[2]||[]).map(expandTeam).filter(Boolean)})).filter(w=>w.wave>0),
+      sourceTransport:'Waline compact D-Zone community submission'
+    };
+  }
+  function packStoredSubmission(payload){
+    return {
+      v:5,i:String(payload.submissionId||''),s:Number(payload.seasonId)||0,q:String(payload.communityVariant||''),k:String(payload.targetKey||''),
+      u:String(payload.uid||payload.record?.uid||''),n:String(payload.submittedBy||''),t:String(payload.submittedAt||''),r:compactRecord(payload.record)
+    };
+  }
+  function unpackStoredSubmission(data){
+    if(data&&Number(data.v)===5&&Array.isArray(data.r)){
+      const record=expandRecord(data.r);
+      return {
+        version:5,submissionId:String(data.i||''),seasonId:Number(data.s)||Number(record?.seasonId)||0,communityVariant:String(data.q||''),
+        targetKey:String(data.k||''),uid:String(data.u||record?.uid||''),submittedBy:String(data.n||''),submittedAt:String(data.t||''),record
+      };
+    }
+    return data;
+  }
+
   function bytesToBase64Url(bytes){
     let binary='',chunk=0x8000;
     for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,Math.min(bytes.length,i+chunk)));
@@ -512,7 +629,8 @@
     for(let i=0;i<binary.length;i++)out[i]=binary.charCodeAt(i);return out;
   }
   async function encodeSubmission(payload){
-    const raw=new TextEncoder().encode(JSON.stringify(payload));
+    const stored=Number(payload?.version)===5&&payload?.r?payload:packStoredSubmission(payload);
+    const raw=new TextEncoder().encode(JSON.stringify(stored));
     if(typeof CompressionStream==='undefined')throw new Error(ui('当前浏览器不支持压缩提交，请使用最新版 Chrome / Edge / Safari。','This browser cannot compress submissions. Use a current Chrome, Edge, or Safari.'));
     const compressed=await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();
     return 'gz:'+bytesToBase64Url(new Uint8Array(compressed));
@@ -523,9 +641,9 @@
       if(typeof DecompressionStream==='undefined')throw new Error('gzip unsupported');
       const bytes=base64UrlToBytes(text.slice(3));
       const raw=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
-      return JSON.parse(new TextDecoder().decode(raw));
+      return unpackStoredSubmission(JSON.parse(new TextDecoder().decode(raw)));
     }
-    if(text.startsWith('json:'))return JSON.parse(new TextDecoder().decode(base64UrlToBytes(text.slice(5))));
+    if(text.startsWith('json:'))return unpackStoredSubmission(JSON.parse(new TextDecoder().decode(base64UrlToBytes(text.slice(5)))));
     throw new Error('unknown submission codec');
   }
   function extractEncodedComment(comment){
@@ -542,7 +660,15 @@
     if(!response.ok)throw new Error('Waline HTTP '+response.status);
     const result=await response.json();
     if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
-    return result;
+    const serverRow=result?.data&&typeof result.data==='object'?result.data:result;
+    const serverStatus=String(serverRow?.status||'approved').toLowerCase();
+    if(serverStatus&&serverStatus!=='approved'){
+      throw new Error(ui(
+        `Waline 已接收提交，但状态为 ${serverStatus}，公开社区记录不会显示。请在 Waline 后台审核或调整评论审核/反垃圾设置后重试。`,
+        `Waline accepted the submission with status ${serverStatus}, so it is not visible in the public community log. Approve it in Waline or adjust moderation / anti-spam settings, then retry.`
+      ));
+    }
+    return {result,encodedLength:encoded.length,objectId:String(serverRow?.objectId||'')};
   }
   async function fetchSubmissionHistory(){
     const rows=[];
@@ -559,7 +685,7 @@
           if(!uid||!seasonId||!record)continue;
           const communityVariant=normalizeVariant(seasonId,data?.communityVariant||data?.variant);
           const targetKey=String(data?.targetKey||(seasonId===69?(communityVariant==='postbug'?'69-postbug':'69-prebug'):seasonId));
-          rows.push({uid,seasonId,communityVariant,targetKey,record,submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone'});
+          rows.push({uid,seasonId,communityVariant,targetKey,record,submissionId:String(data?.submissionId||''),submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone',commentId:String(item?.objectId||'')});
         }catch(error){console.warn('Skip unreadable D-Zone community submission',error)}
       }
       const total=Number(payload?.data?.count??payload?.data?.total??payload?.count??payload?.total);
@@ -567,6 +693,23 @@
     }
     rows.sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt)));
     return rows;
+  }
+  async function verifyPersistedSubmission(submissionId,uid,seasonId,communityVariant){
+    const wantedId=String(submissionId||''),wantedUid=String(uid||''),wantedVariant=normalizeVariant(seasonId,communityVariant);
+    let last=[];
+    for(const delay of [250,900,1800]){
+      if(delay)await new Promise(resolve=>setTimeout(resolve,delay));
+      last=await fetchSubmissionHistory();
+      const hit=last.find(row=>
+        (wantedId&&String(row.submissionId||'')===wantedId)||
+        (!wantedId&&String(row.uid)===wantedUid&&Number(row.seasonId)===Number(seasonId)&&normalizeVariant(row.seasonId,row.communityVariant)===wantedVariant)
+      );
+      if(hit)return {hit,rows:last};
+    }
+    throw new Error(ui(
+      'Waline 返回了提交成功，但公开社区记录中没有回读到这条数据。它可能被评论审核/反垃圾规则隐藏，因此本次不会计入榜单统计。请检查 Waline 后台后重新提交。',
+      'Waline reported a successful post, but the submission could not be read back from the public community feed. It may be hidden by moderation / anti-spam rules, so it will not be counted in leaderboard statistics. Check Waline and resubmit.'
+    ));
   }
   function latestPerUid(rows,seasonId,communityVariant=normalizeVariant(seasonId)){
     const map=new Map();
@@ -620,17 +763,20 @@
       if(!typedUid&&$('dtideCommunityUid'))$('dtideCommunityUid').value=record.uid;
       updateUrlPreview();
       const submittedBy=cleanName($('dtideCommunityNick')?.value||'').slice(0,32)||ui('匿名','Anonymous'),submittedAt=new Date().toISOString();
-      const payload={version:2,source:'eremora-dzone',seasonId,communityVariant,targetKey,uid:record.uid,submittedBy,submittedAt,record};
-      status(ui('解析成功，正在压缩并提交……','Parsed successfully. Compressing and submitting…'));
-      await persistSubmission(payload);
-      const row={uid:record.uid,seasonId,communityVariant,targetKey,record,submittedBy,submittedAt,source:'eremora-dzone'};
-      submissionHistory=[row,...submissionHistory.filter(x=>!(Number(x.seasonId)===seasonId&&normalizeVariant(x.seasonId,x.communityVariant)===communityVariant&&String(x.uid)===record.uid&&String(x.submittedAt)===submittedAt))];
+      const submissionId=String(record.uid)+'-'+Date.now().toString(36);
+      const payload={version:5,source:'eremora-dzone',submissionId,seasonId,communityVariant,targetKey,uid:record.uid,submittedBy,submittedAt,record};
+      status(ui('解析成功，正在以紧凑格式保存到社区记录……','Parsed successfully. Saving a compact community record…'));
+      const persisted=await persistSubmission(payload);
+      status(ui(`已写入 Waline（编码 ${persisted.encodedLength} 字符），正在回读确认是否真正保留……`,`Written to Waline (${persisted.encodedLength} encoded characters). Verifying that it is publicly persisted…`));
+      const verified=await verifyPersistedSubmission(submissionId,record.uid,seasonId,communityVariant);
+      submissionHistory=verified.rows;
+      const row=verified.hit;
       if(Number(ctx?.selectedSeasonId)===Number(seasonId)&&normalizeVariant(seasonId,ctx?.communityVariant)===communityVariant){
         window.MorimensDtideCommunity?.mergeRecords?.([row]);window.MorimensDtideUsageCommunity?.mergeRecords?.([row]);
       }
       renderHistory();
       const phaseLabel=seasonId===69?(communityVariant==='postbug'?ui(' Bug后',' Post-bug'):ui(' Bug前',' Pre-bug')):'';
-      status(ui(`提交成功：UID ${record.uid} 的第 ${seasonId} 期${phaseLabel}数据已保存。更新时间 ${formatTime(submittedAt)}，更新人 ${submittedBy}。`,`Submitted: UID ${record.uid} Season ${seasonId}${phaseLabel} data was saved. Updated ${formatTime(submittedAt)} by ${submittedBy}.`),'ok');
+      status(ui(`提交并回读确认成功：UID ${record.uid} 的第 ${seasonId} 期${phaseLabel}数据已永久进入社区记录。更新时间 ${formatTime(row.submittedAt||submittedAt)}，更新人 ${submittedBy}。`,`Submitted and verified: UID ${record.uid} Season ${seasonId}${phaseLabel} is now persisted in the community log. Updated ${formatTime(row.submittedAt||submittedAt)} by ${submittedBy}.`),'ok');
     }catch(error){
       console.error('D-Zone community import failed',error);
       status(ui('导入失败：','Import failed: ')+(error?.message||String(error)),'error');
@@ -642,10 +788,10 @@
       try{submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}
       catch(error){console.warn('D-Zone submission history unavailable',error);if(options.strict)throw error}
     }
-    return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submittedBy,submittedAt,source,record})=>{
+    return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submissionId,commentId,submittedBy,submittedAt,source,record})=>{
       const variant=normalizeVariant(seasonId,communityVariant),teams=(record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0),zones=(record?.waves||[]).length;
       const phase=Number(seasonId)===69?(variant==='postbug'?'Bug后':'Bug前'):'';
-      return {uid,seasonId,communityVariant:variant,targetKey:targetKey||String(seasonId===69?(variant==='postbug'?'69-postbug':'69-prebug'):seasonId),submittedBy,submittedAt,source,summary:`第 ${seasonId} 期${phase?' · '+phase:''} · ${zones} Zone · ${teams} 支队伍 · 分数 ${record?.score??'—'}`,record};
+      return {uid,seasonId,communityVariant:variant,targetKey:targetKey||String(seasonId===69?(variant==='postbug'?'69-postbug':'69-prebug'):seasonId),submissionId,commentId,submittedBy,submittedAt,source,summary:`第 ${seasonId} 期${phase?' · '+phase:''} · ${zones} Zone · ${teams} 支队伍 · 分数 ${record?.score??'—'}`,record};
     });
   }
 
