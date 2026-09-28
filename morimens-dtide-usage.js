@@ -20,7 +20,7 @@
   const zhGear={'April Tribute':'四月礼赞','Re-evolution':'再衍化','Crimson Pulse':'猩红之悸','Dream of Medicine':'入药之梦','Steppenwolf':'荒原狼','Power of the Pious':'虔诚的伟力','Impending Sun':'陨日'};
   const covenantZh={'Deus Ex Machina':'机械降神','Re-evolution':'再衍化','Scarlet Embrace':'猩红之拥','Crimson Pulse':'猩红之悸','Twisted Twins: Black':'扭曲双子·黑','Burial Ground\'s Sighs':'埋骨地絮语','Cursed Rabbit':'诅咒兔','Organic Form':'有机形态','Photosynthesis Ritual':'光合祭礼','Paradox':'二律背反','Returnal Line':'海归线','April Tribute':'四月礼赞','Life Drain':'生机榨取','Dream of Medicine':'入药之梦','Sweet Slug':'甜蜜蛞蝓','Ring of Chamber 36':'36室之环','Twisted Twins: White':'扭曲双子·白','Feast from Afar':'远方的欢宴','Steppenwolf':'荒原狼','Unstained Chronicle':'无垢启示录','Cocoon of the Maiden':'少女之蛹'};
   const creationZhOfficial={'Black Candle':'黑烛','Chaos Ring':'「混沌指轮」','Aequor Ring':'「深海指轮」','Truth Unbound':'无拘真理','Rusted Key':'锈蚀钥匙','Tilted Scales':'失衡的天平','Kaleidoscope':'万花筒','Plague Record':'瘟疫记录','Filigree Agate':'缠丝玛瑙','Omen Ritual Bird':'厄运仪式鸟','True North Compass':'定向罗盘','Time Scarab':'时间圣甲虫','Guardian Hand':'守护之手','Alfonso\'s Artifact':'阿方索的造物','Blessed Blood':'祝福之血','Vitality Injection':'活性注射器','Silver Tongue':'巧舌','Forgotten Loom':'遗忘织机','Chronometric Device':'精密计时器','Spatial Deflector':'空间偏转器','Mythag Insignia':'弥萨格徽章','Weeping Pipe':'哭泣烟斗','In Twilight':'在夕光里','Serpent\'s Husk':'怪蛇残蜕','Silent Prelude':'无声前奏','Iron Lock':'重锁','Foreign Stamp Album':'异乡邮票夹','Malignant Child':'恶童','Preserved Butterfly':'封存蝴蝶','Celestial Astrolabe':'天体星盘','Lucky Rabbit\'s Paw':'幸运兔脚','Octahedron Dice':'偏方骰子','Lucky Windcoat':'幸运风衣','Veil of the Nameless Deity':'无名之神的面纱','Big Mouth Button':'大嘴纽扣','Forgotten Prelude':'遗忘前奏','Proto Battery':'原型电池','Hyperstring Pocketwatch':'超弦怀表','Vision Corrector':'视力矫正器','Solar Disc':'日月轮盘','Relic of the Past':'往昔遗物','Radium Jawbone':'镭制颚骨','Neurotoxin':'神经毒素','Arcana Relic':'阿尔卡纳遗物','Rite of Spring':'春之祭','Mute Jukebox':'失声唱机','Easter Moment':'复活节时刻','Bloody Pebble':'血色卵石','Highest Honor':'无上荣宠','Voyager\'s Parasol':'旅行者阳伞','Forsaken Blood':'被遗忘者之血','Putney Morning Post':'帕特尼晨报','Brand-New Wallet':'崭新的钱包','Phantom Hand':'幻影之手','Differential Engine':'银白差分机','Deceased\'s Chrono':'亡者时计','Nameless Appendage':'无名附肢','Fleeting Beauty':'美丽瞬间','Crimson Brooch':'猩红胸针','Rusted Saw':'锈蚀锯','Gilded Reverie':'镀金遐想','Our Home':'我们的家','Tiny Music Box':'小小音乐盒','Arcane Gloves':'秘法手套','Luminous Hourglass':'发光沙漏','Harford\'s Elixir':'哈福德灵药','Laurel Cufflinks':'月桂袖扣','Severed Head Worm':'断头虫','Chant of the Tides':'潮汐颂歌','Other Tongue':'异舌','Dearest Babe':'至爱宝贝','Nettle Vest':'荨麻背心','Arcana Archive':'阿尔卡纳记录','Submersible Helm':'潜水头盔','Safe Passage':'安全通行','Lemurian Delight':'利莫里亚之悦','Ritual Dagger':'仪式匕首','Trigon Prism':'三棱镜','Yellow Snail':'黄蜗牛','Prophet\'s Lamp':'先知之灯','Rhind Papyrus':'莱因德纸草','Stellar Brew':'群星之酒','Doctor\'s Case':'医生手提箱','Uncanny Salve':'诡异药膏','Rusty Lancet':'锈蚀柳叶刀','Hierophant\'s Staff':'祭司权杖'};
-  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,bound=false,dataVersion='1',gearByName=new Map(),rankByUid=new Map(),communityUsageMetaByUid=new Map();
+  let manifest=null,usage=null,usageStats=null,detailUsage=null,detailStats=null,previousUsage=null,previousDetailUsage=null,previousSeasonId=null,activeSeason=null,activeSeasonKey='',activeCommunityVariant='default',activeEntry=null,bound=false,dataVersion='1',gearByName=new Map(),rankByUid=new Map(),communityUsageMetaByUid=new Map();
 
   function scoreRange(){
     const raw=String($('dtideTotalScore')?.value||'all');
@@ -126,7 +126,8 @@
     let applied=0,skipped=0;
     for(const item of items){
       const record=item?.record||item,uid=String(record?.uid??'').trim(),submittedAt=item?.submittedAt||record?.communityUpdate?.submittedAt||'';
-      if(!uid||Number(record?.seasonId)!==Number(activeSeason)||communityUsageTeamCount(record)<5){skipped++;continue}
+      const itemVariant=String(item?.communityVariant||item?.variant||record?.communityUpdate?.communityVariant||(Number(record?.seasonId)===69?'prebug':'default'));
+      if(!uid||Number(record?.seasonId)!==Number(activeSeason)||itemVariant!==activeCommunityVariant||communityUsageTeamCount(record)<5){skipped++;continue}
       const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
       if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
       const previous=byUid.get(uid);
@@ -134,7 +135,7 @@
       const next={...record,
         rank:previous?.rank??record?.rank??null,
         leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
-        communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone'}
+        communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone',communityVariant:itemVariant,targetKey:String(item?.targetKey||activeSeasonKey)}
       };
       byUid.set(uid,next);communityUsageMetaByUid.set(uid,next.communityUpdate);applied++;
     }
@@ -426,12 +427,17 @@
     return {seasonId:activeSeason,generatedAt:new Date().toISOString(),rankTiers,maxRankAvailable:maxRank}
   }
   async function loadForSeason(id){
-    const entry=manifest?.availableSeasons?.find(x=>String(x.seasonId)===String(id));
+    const entry=manifest?.availableSeasons?.find(x=>String(x.snapshotId??x.seasonId)===String(id));
     if(!entry){usage=null;usageStats=null;return false}
     if(entry.legacy||entry.coverageMode==='legacy-spreadsheet'){usage=null;usageStats=null;detailUsage=null;detailStats=null;return false}
     try{
-      const current=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
-      activeSeason=Number(id);communityUsageMetaByUid=new Map();await loadRankMap(id);
+      const sourceSeasonId=Number(entry.sourceSeasonId??entry.seasonId);
+      const current=!entry.snapshotId&&sourceSeasonId===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
+      activeEntry=entry;
+      activeSeason=sourceSeasonId;
+      activeSeasonKey=String(entry.communityTargetKey??entry.snapshotId??entry.seasonId);
+      activeCommunityVariant=String(entry.communityVariant||(sourceSeasonId===69?'prebug':'default'));
+      communityUsageMetaByUid=new Map();await loadRankMap(sourceSeasonId);
       const baseUsage=await dataset((current||entry).path);
       let overlayUsage=null;
       if(current&&manifest?.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===activeSeason){
@@ -443,17 +449,14 @@
       detailStats=await json(entry.statsPath).catch(()=>null);
       if(overlayUsage?.records?.length)usageStats=fallbackStats(usage?.records||[]);
       else try{usageStats=await json((current||entry).statsPath)}catch(_){usageStats=fallbackStats(usage?.records||[])}
-      // Do not block the first render on the previous season.  Historical
-      // datasets can be tens of megabytes and are only needed for the
-      // comparison/rank-change panels.
       const previousEntry=(manifest.availableSeasons||[]).filter(x=>Number(x.seasonId)<activeSeason).sort((a,b)=>Number(b.seasonId)-Number(a.seasonId))[0]||null;
       previousSeasonId=previousEntry?Number(previousEntry.seasonId):null;previousUsage=null;previousDetailUsage=null;
       renderAll();
-      const cachedCommunity=window.MorimensDzoneImport?.latestForSeason?.(activeSeason)||[];
+      const cachedCommunity=window.MorimensDzoneImport?.latestForSeason?.(activeSeason,activeCommunityVariant)||[];
       if(cachedCommunity.length)mergeCommunityUsageRecords(cachedCommunity);
       if(previousEntry){
         setTimeout(async()=>{
-          if(Number(activeSeason)!==Number(id)||previousUsage)return;
+          if(String(activeSeasonKey)!==String(entry.communityTargetKey??entry.snapshotId??entry.seasonId)||previousUsage)return;
           previousUsage=await dataset(previousEntry.path).catch(()=>null);
           previousDetailUsage=previousUsage;
           renderComparisons();
@@ -467,10 +470,10 @@
   function renderUsageLayerNote(){
     const note=$('dtideCoverageNote');if(!note||!manifest||!usage)return;
     note.querySelector('.dtideUsageLayerNote')?.remove();
-    const activeEntry=(manifest.availableSeasons||[]).find(entry=>Number(entry?.seasonId)===Number(activeSeason))||{};
+    const noteEntry=activeEntry||{};
     const merged=esc(String(usage?.recordCount||usage?.records?.length||0));
-    const base=esc(String(activeEntry.recordCount??usage?.records?.length??0));
-    const targetValue=activeEntry.leaderboardEntryCount??activeEntry.recordCount??usage?.records?.length??0;
+    const base=esc(String(noteEntry.recordCount??usage?.records?.length??0));
+    const targetValue=noteEntry.leaderboardEntryCount??noteEntry.recordCount??usage?.records?.length??0;
     const target=esc(String(targetValue));
     const community=Number(usage?.communityRecordCount||0),communityUpdated=usage?.communityUpdatedAt?new Date(usage.communityUpdatedAt):null,communityTime=communityUpdated&&!Number.isNaN(communityUpdated.getTime())?communityUpdated.toLocaleString(zh()?'zh-CN':'en-US'):'';
     const communityText=community?(zh()?('；社区自行更新覆盖 '+community+' 个 UID'+(communityTime?'，最近更新 '+communityTime:'')):('; community imports cover '+community+' UID(s)'+(communityTime?', latest '+communityTime:''))):'';
