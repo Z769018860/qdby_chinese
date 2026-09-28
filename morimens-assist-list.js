@@ -619,7 +619,7 @@
     if(!awakerId)throw new Error(ui('Showcase 返回缺少角色 ID','Showcase response has no Awakener ID'));
     if(String(tid)!==awakerId)throw new Error(ui('返回角色与所选角色不一致','Returned Awakener does not match the selected one'));
     return {
-      version:3,
+      version:4,
       source:'eremora-showcase',
       uid:String(uid),
       player:playerNames.get(String(uid))||'',
@@ -978,15 +978,32 @@
       const candidate=text.slice(first,last+1);
       try{return JSON.parse(candidate)}catch(_){}
     }
-    throw new Error(ui('无法解析剪贴板内容。请确认复制的是 Eremora Showcase 页面中的完整 JSON。','Could not parse the clipboard. Copy the complete JSON from the Eremora Showcase page.'));
+    throw new Error(ui('无法解析为 Showcase JSON','Could not parse Showcase JSON'));
+  }
+  function mergeExistingProgression(payload,values){
+    const prior=existingImportedRow(values);
+    if(!prior)return payload;
+    const raw=prior?._payload||{};
+    if(!(payload.slots||[]).length){
+      if(Array.isArray(raw.slots)&&raw.slots.length)payload.slots=JSON.parse(JSON.stringify(raw.slots));
+      else if(Array.isArray(prior.skills)&&prior.skills.length)payload.slots=prior.skills.map((level,i)=>({slot:i+1,level:Number(level)}));
+    }
+    if(!(payload.talents||[]).length){
+      if(Array.isArray(raw.talents)&&raw.talents.length)payload.talents=JSON.parse(JSON.stringify(raw.talents));
+      else if(Array.isArray(prior.soulforge)&&prior.soulforge.length)payload.talents=prior.soulforge.map(x=>({kind:x.kind,lv:x.level}));
+    }
+    if(!payload.enlightenmentLabel&&prior.enlightenment)payload.enlightenmentLabel=prior.enlightenment;
+    payload.version=4;
+    return payload;
   }
   async function importShowcaseData(data,origin){
     const status=$('assistSubmitStatus'),button=$('assistClipboardImport');
     const values=validateShowcaseSelection(showcaseFormValues());
     if(button)button.disabled=true;
     try{
-      if(status)status.textContent=ui('已读取 JSON，正在校验并导入…','JSON read. Validating and importing…');
-      const payload=normalizeShowcasePayload(values.uid,values.tid,data);
+      if(status)status.textContent=ui('已读取 Showcase，正在校验并合并…','Showcase read. Validating and merging…');
+      let payload=normalizeShowcasePayload(values.uid,values.tid,data);
+      payload=mergeExistingProgression(payload,values);
       payload.importMethod=origin||'clipboard';
       const candidate=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
       const key=candidate?manualKey(candidate):'';
@@ -996,29 +1013,74 @@
       const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
       if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
       if(status)status.textContent=existed
-        ?ui('更新成功：已用最新 Showcase 配置更新原有助战记录，历史融灾使用次数保持不变。','Updated existing assist record with the latest Showcase build; historical D-Zone usage was preserved.')
-        :ui('导入成功：已新增当前 Showcase 配置。','Import complete: current Showcase build added.');
+        ?ui('Showcase 配置已更新；已有技能/灵塑数据已保留。','Showcase build updated; existing skills/soulforge were preserved.')
+        :ui('Showcase 配置已导入；如技能/灵塑为空，请继续导入完整资料。','Showcase imported; import full profile data next if skills/soulforge are empty.');
       const paste=$('assistPasteShowcase');if(paste)paste.value='';
       await load(activeSeason);
     }finally{
       if(button)button.disabled=false;
     }
   }
+  async function importProgressionPatch(progression,origin){
+    const status=$('assistSubmitStatus'),values=validateShowcaseSelection(showcaseFormValues());
+    if(!progression||(!(progression.slots||[]).length&&!(progression.talents||[]).length))throw new Error(ui('没有识别到当前角色的技能/灵塑数据','No skills/soulforge data found for the selected Awakener'));
+    const payload=payloadFromExisting(values);
+    payload.version=4;
+    payload.source='eremora-showcase';
+    payload.slots=(progression.slots||[]).map(x=>({...x}));
+    payload.talents=(progression.talents||[]).map(x=>({...x}));
+    if(progression.level!=null)payload.level=progression.level;
+    payload.importMethod=origin||'profile-data';
+    payload.fetchedAt=new Date().toISOString();
+    payload.updateExisting=true;
+    await persistShowcasePayload(payload);
+    const imported=manualRowFromPayload(payload,{insertedAt:payload.fetchedAt});
+    if(imported)manualRows=[imported,...manualRows.filter(row=>manualKey(row)!==manualKey(imported))];
+    if(status)status.textContent=ui(
+      '技能/灵塑已补充并与原有命轮、密契配置合并。',
+      'Skills/soulforge were added and merged with the existing gear/covenant build.'
+    );
+    const paste=$('assistPasteShowcase');if(paste)paste.value='';
+    await load(activeSeason);
+  }
+  function parseAssistImportText(text,values){
+    const raw=String(text==null?'':text).replace(/^\uFEFF/,'').trim();
+    if(!raw)throw new Error(ui('没有可导入内容','No importable content'));
+    // A normal Showcase JSON has an awaker object and detailed equipment.
+    try{
+      const json=JSON.parse(raw);
+      if(json?.awaker)return {kind:'showcase',data:json};
+      const p=progressionFromCandidate(json,values.tid);
+      if(p)return {kind:'progression',data:p};
+    }catch(_){}
+    // SvelteKit /u/{uid}/__data.json or copied profile text.
+    const progression=parseProfileProgression(raw,values.tid);
+    if(progression)return {kind:'progression',data:progression};
+    // Markdown/code-fenced Showcase JSON fallback.
+    try{
+      const json=parseShowcaseText(raw);
+      if(json?.awaker)return {kind:'showcase',data:json};
+    }catch(_){}
+    if(/^https?:\/\/eremora\.com\//i.test(raw))throw new Error(ui('你复制的是地址，不是数据内容。请打开该地址后复制页面内容。','You copied a URL, not the data. Open it and copy the page content.'));
+    throw new Error(ui('无法识别内容：请粘贴 Showcase JSON、完整资料 __data.json，或玩家资料页文本。','Unrecognized content. Paste Showcase JSON, full-profile __data.json, or copied profile text.'));
+  }
   async function importShowcaseText(text,origin){
-    const data=parseShowcaseText(text);
-    return importShowcaseData(data,origin||'clipboard');
+    const values=validateShowcaseSelection(showcaseFormValues());
+    const parsed=parseAssistImportText(text,values);
+    if(parsed.kind==='showcase')return importShowcaseData(parsed.data,origin||'clipboard');
+    return importProgressionPatch(parsed.data,origin||'clipboard-profile');
   }
   async function importPastedShowcase(){
     const status=$('assistSubmitStatus'),area=$('assistPasteShowcase');
     try{
       validateShowcaseSelection(showcaseFormValues());
       const text=String(area?.value||'').trim();
-      if(!text)throw new Error(ui('请先在下方文本框粘贴 Eremora Showcase JSON','Paste the Eremora Showcase JSON into the box below first'));
-      if(status)status.textContent=ui('正在导入已粘贴 JSON…','Importing pasted JSON…');
+      if(!text)throw new Error(ui('请先粘贴 Showcase / 完整资料数据','Paste Showcase or full-profile data first'));
+      if(status)status.textContent=ui('正在识别并导入已粘贴内容…','Detecting and importing pasted content…');
       await importShowcaseText(text,'paste-button');
     }catch(e){
-      console.error('Pasted Showcase import failed',e);
-      if(status)status.textContent=ui('粘贴内容导入失败：','Pasted JSON import failed: ')+(e?.message||String(e));
+      console.error('Pasted assist import failed',e);
+      if(status)status.textContent=ui('粘贴内容导入失败：','Pasted content import failed: ')+(e?.message||String(e));
     }
   }
   function clearPastedShowcase(){
@@ -1030,17 +1092,17 @@
     const status=$('assistSubmitStatus');
     try{
       validateShowcaseSelection(showcaseFormValues());
-      if(!navigator.clipboard?.readText)throw new Error(ui('当前浏览器不支持网页直接读取剪贴板，请使用下方“长按粘贴 JSON”区域。','This browser cannot read the clipboard directly. Use the paste area below.'));
-      if(status)status.textContent=ui('正在读取剪贴板…','Reading clipboard…');
+      if(!navigator.clipboard?.readText)throw new Error(ui('当前浏览器不支持网页直接读取剪贴板','This browser cannot read the clipboard directly'));
+      if(status)status.textContent=ui('正在读取剪贴板并识别数据类型…','Reading clipboard and detecting data type…');
       const text=await navigator.clipboard.readText();
       await importShowcaseText(text,'clipboard-read');
     }catch(e){
-      console.error('Showcase clipboard import failed',e);
+      console.error('Assist clipboard import failed',e);
       const area=$('assistPasteShowcase');
       if(area){area.focus();try{area.scrollIntoView({behavior:'smooth',block:'center'})}catch(_){}}
       if(status)status.textContent=ui(
-        '浏览器无法直接读取剪贴板。请在下方文本框长按“粘贴”，然后点击“导入已粘贴 JSON”。',
-        'The browser could not read the clipboard directly. Paste the JSON into the box below, then click “Import pasted JSON”.'
+        '无法直接读取剪贴板。请在下方粘贴 Showcase JSON 或完整资料数据，然后点击“导入已粘贴内容”。',
+        'Could not read the clipboard. Paste Showcase JSON or full-profile data below, then click “Import pasted content”.'
       );
     }
   }
@@ -1051,13 +1113,14 @@
     event.preventDefault();
     if(area)area.value=text;
     try{
-      if(status)status.textContent=ui('检测到粘贴内容，正在自动导入…','Pasted content detected. Importing…');
+      if(status)status.textContent=ui('检测到粘贴内容，正在识别并导入…','Pasted content detected. Detecting and importing…');
       await importShowcaseText(text,'paste');
     }catch(e){
-      console.error('Showcase paste import failed',e);
+      console.error('Assist paste import failed',e);
       if(status)status.textContent=ui('粘贴导入失败：','Paste import failed: ')+(e?.message||String(e));
     }
   }
+
   function optionRows(list,selector){
     const map=new Map();
     for(const row of list)for(const item of selector(row)||[]){const id=String(item?.id||item?.name||'');if(id)map.set(id,item?.name||id)}
