@@ -43,7 +43,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20260929.1";
+  const assetVersion="20260929.2";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -114,6 +114,7 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
     try{await import(`./morimens-calculator-export.js?v=${assetVersion}`)}catch(exportError){console.error("Damage report exporter failed to load",exportError)}
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
+    await import(`./morimens-assist-list.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
     const switchLeaderboardRenderer=()=>{
       const isLegacy=seasonSelect?.value==='legacy-high-difficulty';
