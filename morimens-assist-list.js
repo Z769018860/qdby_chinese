@@ -350,11 +350,21 @@
     if(!token)return null;
     try{return JSON.parse(base64ToUtf8(token))}catch{return null}
   }
-  function displayAwakener(rec){
-    if(!rec)return {key:'',name:ui('未知角色','Unknown'),image:''};
+  function awakenerImage(rec,fallback=''){
+    if(!rec)return String(fallback||'');
+    const assetKey=rec?.assets?.icon,asset=assetKey&&gear.assets?.[assetKey];
+    const indexedPath=String(asset?.availability?.path||'');
+    const indexedBase=safeBaseName(indexedPath);
+    if(indexedBase)return 'assets/morimens/portraits/'+indexedBase.replace(/\.(?:png|jpe?g|webp)$/i,'.webp');
+    const assetId=String(asset?.assetId||'').trim();
+    if(assetId)return 'assets/morimens/portraits/'+assetId.toLowerCase().replace(/[^a-z0-9-]+/g,'-')+'.webp';
+    return String(fallback||'');
+  }
+  function displayAwakener(rec,fallback=''){
+    if(!rec)return {key:'',name:ui('未知角色','Unknown'),image:String(fallback||'')};
     const loc=window.MorimensData?.localizedProfile?.(rec)||{};
     const name=zh()?(loc.name||rec.localizedName||rec.zhName||rec.name||rec.id):(rec.name||loc.name||rec.id);
-    return {key:String(rec.id||''),name:String(name||rec.id||''),image:localAssetPath(rec)};
+    return {key:String(rec.id||''),name:String(name||rec.id||''),image:awakenerImage(rec,fallback)};
   }
   function manualKey(row){return [row.uid,row.characterKey].join('|')}
   function manualRowFromPayload(payload,meta={}){
@@ -368,10 +378,11 @@
       const rawName=normName(payload.awaker?.name||'');
       const canonical=String(payload.canonicalId||gear.showcaseCanonicalByTid.get(charId)||'');
       const charRec=gear.awakenerById.get(canonical)||gear.awakeners.find(r=>String(r.ingameId||'').toUpperCase()===res||normName(r.name)===rawName)||null;
-      const char=charRec?displayAwakener(charRec):{
+      const showcaseFallback=String(payload.awaker?.image||payload.awaker?.mini||'');
+      const char=charRec?displayAwakener(charRec,showcaseFallback):{
         key:charId,
         name:String(payload.awaker?.name||charId||ui('未知角色','Unknown Awakener')),
-        image:String(payload.awaker?.image||'')
+        image:showcaseFallback
       };
       if(!char.key)return null;
 
