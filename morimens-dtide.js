@@ -236,6 +236,10 @@
         </div>
         <span class="statusPill" id="morimensAssistStatus">等待载入</span>
       </div>
+      <a class="assistGuideBanner" href="morimens-assist-guide.html">
+        <strong>如何在对方没关注自己的情况下使用助战</strong>
+        <span>查看图文教程 →</span>
+      </a>
       <div class="assistFilters">
         <div class="dtideField"><label for="assistSeason">期次</label><select id="assistSeason"><option value="all" selected>全部期次（68 + 69）</option><option value="69">第 69 期</option><option value="68">第 68 期</option></select></div>
         <div class="dtideField"><label for="assistUidFilter">玩家 UID</label><input id="assistUidFilter" type="search" inputmode="numeric" placeholder="输入 UID 搜索"></div>
