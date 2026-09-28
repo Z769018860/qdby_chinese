@@ -424,7 +424,7 @@
       const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick:payload.player||'匿名守密人',mail:'',link:'',comment,url:SUBMISSION_PATH,ua:navigator.userAgent||''})});
       if(!response.ok)throw new Error('HTTP '+response.status);
       const result=await response.json();if(result?.errno)throw new Error(result.errmsg||('Waline errno '+result.errno));
-      if(status)status.textContent=ui('提交成功，已刷新列表','Submitted and refreshed');
+      if(status)status.textContent=ui('提交成功；如开启审核，审核后会显示','Submitted; if moderation is enabled, it will appear after approval');
       form.reset();$('assistSubmitLevel').value='90';$('assistSubmitAttrRows').innerHTML='';addAttrRow();
       await loadManualRows();await load(activeSeason);
     }catch(e){
