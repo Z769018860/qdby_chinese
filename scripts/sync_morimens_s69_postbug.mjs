@@ -1,5 +1,6 @@
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import path from 'node:path';
+import {decodeSvelteData,walk} from './eremora_sveltekit.mjs';
 
 const ORIGIN='https://eremora.com';
 const ROOT='data/morimens/eremora';
@@ -70,7 +71,37 @@ for(const row of rows){
   if(seenUid.has(row.uid))throw new Error(`duplicate uid in live rank index: ${row.uid}`);
   seenUid.add(row.uid);
 }
-if(rows.length<MIN_ROWS)throw new Error(`Refusing to publish post-bug snapshot: only ${rows.length}/${TARGET} live rank rows were fetched (minimum ${MIN_ROWS}).`);
+if(rows.length<MIN_ROWS){
+  console.log('Legacy rank endpoint insufficient; probing current /meta/dzone SvelteKit data source...');
+  for(const target of [ORIGIN+'/meta/dzone/__data.json',ORIGIN+'/meta/dzone']){
+    try{
+      const response=await fetch(target,{headers:{'user-agent':UA,accept:'application/json,text/html,*/*'},redirect:'follow',signal:AbortSignal.timeout(30000)});
+      const text=await response.text();
+      console.log('META_PROBE',target,'status='+response.status,'type='+(response.headers.get('content-type')||''),'length='+text.length,'head='+JSON.stringify(text.slice(0,500)));
+      if(target.endsWith('/__data.json')&&response.ok){
+        try{
+          const decoded=decodeSvelteData(text),candidates=[];
+          for(const root of decoded.roots||[])walk(root,(value,p)=>{
+            if(candidates.length>=80)return;
+            if(Array.isArray(value)&&value.length>=5){
+              const obj=value.find(x=>x&&typeof x==='object'&&!Array.isArray(x));
+              if(obj){
+                const keys=Object.keys(obj);
+                if(keys.some(k=>/rank|uid|score|player|usage|awak/i.test(k)))candidates.push({path:p,length:value.length,keys:keys.slice(0,30),sample:obj});
+              }
+            }else if(value&&typeof value==='object'){
+              const keys=Object.keys(value);
+              if(keys.some(k=>/rank|players|leader|meta|usage|awak/i.test(k))&&keys.length<40)candidates.push({path:p,keys:keys.slice(0,30),sample:value});
+            }
+          });
+          console.log('META_CANDIDATES',JSON.stringify(candidates.slice(0,40)));
+        }catch(error){console.log('META_DECODE_ERROR',String(error))}
+      }
+    }catch(error){console.log('META_PROBE_ERROR',target,String(error))}
+  }
+  console.log('RANK_PAGE_FAILURES',JSON.stringify(failures));
+  throw new Error(`Refusing to publish post-bug snapshot: only ${rows.length}/${TARGET} live rank rows were fetched (minimum ${MIN_ROWS}).`);
+}
 const missing=[];for(let i=1;i<=TARGET;i++)if(!byRank.has(i))missing.push(i);
 
 const base=await readJson(path.join(ROOT,'seasons','69.json'),{records:[]});
