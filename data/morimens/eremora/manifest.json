@@ -3,11 +3,24 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-09-22T01:00:00+08:00",
+    "syncedAt": "2026-09-29T01:00:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
-  "currentSeason": 69,
+  "currentSeason": 70,
   "availableSeasons": [
+    {
+      "seasonId": 70,
+      "label": "第70期 新新融灾",
+      "labelEn": "Season 70 · New D-Zone",
+      "period": "2026-09-28 – 2026-10-12",
+      "recordCount": 457,
+      "leaderboardEntryCount": 500,
+      "complete": false,
+      "coverageMode": "current-leaderboard-top500-partial",
+      "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
+      "statsPath": "data/morimens/eremora/stats/70.json",
+      "dataUpdatedAt": "2026-09-29T01:00:00+08:00"
+    },
     {
       "seasonId": 69,
       "period": "2026-09-14 – 2026-09-28",
@@ -81,6 +94,7 @@
     }
   ],
   "discoveredSeasonIds": [
+    70,
     69,
     68,
     67,
@@ -90,6 +104,7 @@
     63
   ],
   "pendingBackfillSeasonIds": [
+    70,
     69,
     68,
     67,
@@ -99,13 +114,10 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 1000,
-    "records": 1035,
+    "leaderboardEntries": 457,
+    "records": 457,
     "complete": false,
-    "failures": 5,
-    "baseRecords": 1007,
-    "overlayParsedRecords": 432,
-    "newlyMergedRecords": 28
+    "failures": 43
   },
   "fieldCoverage": {
     "character": true,
@@ -124,13 +136,14 @@
     "榜单索引：Eremora 客户端“Show more”实际调用 /api/rank?board=abyss&start={start}&end={end}，本站按 50 条一页同步至 Top 1000；若 1–50 接口被 Cloudflare 拦截则回退同次渲染榜单快照，仅缺失名次为 0 时标记完整。",
     "出场率明细：按 Top 1000 排名索引增量缓存每位玩家公开 D-Zone 配队；Top50/200/500/1000 各自记录 covered/expected，只有 covered=expected 才标记完整。失败或限流时保留上一份成功缓存，不用小样本冒充完整榜单。",
     "本地导入 1000 份 Top 1000 玩家档案：997 份成功解析为 profile，3 份保留榜单名次但详情缺失。",
-    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
-    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
     "第69期 Top500 排名于 2026-09-22 01:00 按 CSV 覆盖：500 个 UID，较 9.21 快照 27 进 / 27 出；Top50 / Top200 / Top500 口径以本次 CSV UID 集合为准。",
-    "本次 CSV 不含新的配队详情；继续保留基础 1007 条与 9.21 已解析 432 条增量按 UID 合并，共 1035 条有效记录，不因排名刷新增删旧有效详情。"
+    "本次 CSV 不含新的配队详情；继续保留基础 1007 条与 9.21 已解析 432 条增量按 UID 合并，共 1035 条有效记录，不因排名刷新增删旧有效详情。",
+    "第70期 新新融灾于 2026-09-29 01:00 更新：本地文件夹 70 共 500 份玩家快照，解析出 457 条可用公开配队详情；难度筛选新增警戒 I–V，并保留历史期次的普通 / 困难 / 噩梦 / 癫狂。",
+    "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
+    "出场率分层：预计算 Top50 / Top200 / Top500 / Top1000 与普通 / 困难 / 噩梦 / 癫狂 / 警戒 I–V；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-09-20T10:49:14.590Z",
+    "generatedAt": "2026-09-29T01:00:00+08:00",
     "rankScopes": [
       50,
       200,
@@ -153,6 +166,26 @@
       {
         "id": "madness",
         "label": "癫狂"
+      },
+      {
+        "id": "alert1",
+        "label": "警戒 I"
+      },
+      {
+        "id": "alert2",
+        "label": "警戒 II"
+      },
+      {
+        "id": "alert3",
+        "label": "警戒 III"
+      },
+      {
+        "id": "alert4",
+        "label": "警戒 IV"
+      },
+      {
+        "id": "alert5",
+        "label": "警戒 V"
       }
     ],
     "enlightenmentGroups": [
@@ -170,6 +203,21 @@
       }
     ],
     "coverage": [
+      {
+        "seasonId": 70,
+        "maxRankAvailable": 457,
+        "difficulty": {
+          "recognizedTeams": 2871,
+          "totalTeams": 2871,
+          "complete": true
+        },
+        "rankScopes": {
+          "50": true,
+          "200": true,
+          "500": false,
+          "1000": false
+        }
+      },
       {
         "seasonId": 69,
         "maxRankAvailable": 1000,
@@ -278,34 +326,32 @@
     ]
   },
   "rankIndex": {
-    "seasonId": 69,
-    "path": "data/morimens/eremora/rank-index/69.json",
-    "target": 1000,
-    "count": 1000,
-    "complete": true,
-    "maxRank": 1000,
-    "missingCount": 0,
-    "syncedAt": "2026-09-17T21:31:57.2501951Z",
-    "endpoint": "https://eremora.com/api/rank?board=abyss&start={start}&end={end}"
+    "seasonId": 70,
+    "path": "data/morimens/eremora/rank-index/70.json",
+    "target": 500,
+    "count": 457,
+    "complete": false,
+    "syncedAt": "2026-09-29T01:00:00+08:00"
   },
   "usageIndex": {
-    "seasonId": 69,
-    "path": "data/morimens/eremora/usage/69-local-gzip/index.json",
-    "statsPath": "data/morimens/eremora/stats/69.json",
+    "seasonId": 70,
+    "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
+    "statsPath": "data/morimens/eremora/stats/70.json",
     "target": 1000,
-    "rankIndexCount": 1000,
-    "recordCount": 1007,
+    "rankIndexCount": 457,
+    "recordCount": 457,
     "coverage": {
       "expected": 1000,
-      "covered": 910,
-      "coveragePct": 91,
+      "covered": 457,
+      "coveragePct": 45.7,
       "complete": false
     },
-    "syncedAt": "2026-09-17T21:59:21.165Z",
+    "syncedAt": "2026-09-28T21:12:06.644583Z",
+    "revision": "46451db0f59c021225fee0805c428e01bda73a8976d40d82339278fcfc7497ee",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 12,
-    "chunkSize": 900000,
-    "chunkBytes": 10482653
+    "chunks": 9,
+    "chunkSize": 700000,
+    "chunkBytes": 5958180
   },
   "rawTop1000Import": {
     "seasonId": 69,

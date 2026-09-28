@@ -53,7 +53,7 @@
 '提供角色、技能、命轮及密契等结构化数据；感谢':'for structured Awakener, skill, Wheel, and Covenant data; thanks to',
 '忘却前夜中文维基':'Morimens Chinese Wiki',
 '提供中文名称、资料与文本参考。':'for Chinese names, reference material, and text.',
-'更新时间节点：9月22日 01:00':'Data updated: Sep 22, 01:00',
+'更新时间节点：9月29日 01:00':'Data updated: Sep 29, 01:00',
 '520–525 分':'520–525 pts','510–519 分':'510–519 pts','500–509 分':'500–509 pts','490–499 分':'490–499 pts',
 '480–489 分':'480–489 pts','470–479 分':'470–479 pts','460–469 分':'460–469 pts','450–459 分':'450–459 pts',
 '440–449 分':'440–449 pts','430–439 分':'430–439 pts','420–429 分':'420–429 pts','410–419 分':'410–419 pts',

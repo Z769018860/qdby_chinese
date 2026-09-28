@@ -7,9 +7,9 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const rankCaps=[50,200,500,1000];
-  const difficultyOrder=['normal','hard','nightmare','madness'];
-  const difficultyZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',unknown:'未识别'};
-  const difficultyEn={all:'All Difficulties',normal:'Normal',hard:'Hard',nightmare:'Nightmare',madness:'Madness',unknown:'Unknown'};
+  const difficultyOrder=['normal','hard','nightmare','madness','alert1','alert2','alert3','alert4','alert5'];
+  const difficultyZh={all:'全部难度',normal:'普通',hard:'困难',nightmare:'噩梦',madness:'癫狂',alert1:'警戒 I',alert2:'警戒 II',alert3:'警戒 III',alert4:'警戒 IV',alert5:'警戒 V',unknown:'未识别'};
+  const difficultyEn={all:'All Difficulties',normal:'Normal',hard:'Hard',nightmare:'Nightmare',madness:'Madness',alert1:'Alert I',alert2:'Alert II',alert3:'Alert III',alert4:'Alert IV',alert5:'Alert V',unknown:'Unknown'};
   const enlightOrder=['e0_2','e3_plus3','plus4_11','plus12'];
   const enlightZh={e0_2:'0～2启',e3_plus3:'3启～+3',plus4_11:'+4～+11',plus12:'+12',unknown:'未知'};
   const enlightEn={e0_2:'E0–E2',e3_plus3:'E3–+3',plus4_11:'+4–+11',plus12:'+12',unknown:'Unknown'};
@@ -311,7 +311,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月22日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：9月29日 01:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope"><option value="all" selected>全部范围（含未知排名）</option>${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
@@ -410,7 +410,7 @@
     })}));
     return changed?{...nextRecord,waves}:nextRecord;
   }
-  function difficultyOf(team,wave){const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'').toLowerCase();for(const d of difficultyOrder)if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
+  function difficultyOf(team,wave){const raw=String(team?.difficulty||team?.stageName||wave?.difficulty||wave?.stageName||'').toLowerCase(),alert=raw.match(/alert\s*(i{1,3}|iv|v|[1-5])(?:$|[^a-z0-9])/i);if(alert){const level={i:1,ii:2,iii:3,iv:4,v:5}[alert[1].toLowerCase()]||Number(alert[1]);return `alert${level}`}for(const d of difficultyOrder.slice(0,4))if(new RegExp(`(?:^|[^a-z])${d}(?:$|[^a-z])`,'i').test(raw))return d;return 'unknown'}
   function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(['E0','E1','E2'].includes(ms))return 'e0_2';if(ms==='E3')return 'e3_plus3';if(ms==='OE'||ms==='OVERLIMIT')return 'plus4_11';if(ms==='AA'||ms==='LAW12')return 'plus12';return 'unknown'}
   function wheelStackClass(w){const level=Number(w?.level);if(!Number.isFinite(level)||level<=2)return 'stack0_2';if(level>=15)return 'stack12';return 'stack3_11'}
   function maxRankAvailable(){const rs=rankByUid.size?[...rankByUid.values()]:(season?.records||[]).map(rankOf).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
@@ -961,7 +961,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
           const entry=(manifest.availableSeasons||[]).find(x=>String(x.seasonId)===String(option.value));if(!entry)continue;
           const legacy=entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty';
           if(legacy)option.textContent=ui('旧版融灾425出场率（来源：@却尘）','Legacy D-Zone 425 Appearance Rate (source: @却尘)');
-          else option.textContent=zh()?('第 '+entry.seasonId+' 期 · '+(entry.recordCount??0)+' 条'+(entry.complete?' · 完整':' · 部分')):('Season '+entry.seasonId+' · '+(entry.recordCount??0)+' records'+(entry.complete?' · Complete':' · Partial'));
+          else option.textContent=zh()?((entry.label||('第 '+entry.seasonId+' 期'))+' · '+(entry.recordCount??0)+' 条'+(entry.complete?' · 完整':' · 部分')):((entry.labelEn||('Season '+entry.seasonId))+' · '+(entry.recordCount??0)+' records'+(entry.complete?' · Complete':' · Partial'));
         }
         renderAll();
       }

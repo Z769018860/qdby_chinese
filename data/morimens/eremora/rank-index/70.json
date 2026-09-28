@@ -1,0 +1,4134 @@
+{
+  "source": {
+    "site": "Eremora",
+    "syncedAt": "2026-09-29T01:00:00+08:00",
+    "localFolder": "70"
+  },
+  "seasonId": 70,
+  "target": 500,
+  "complete": false,
+  "coverage": {
+    "target": 500,
+    "count": 457,
+    "maxRank": 457,
+    "missingCount": 43,
+    "profileAvailable": 457,
+    "profileMissing": 43
+  },
+  "failures": [],
+  "rows": [
+    {
+      "rank": 1,
+      "uid": "100012472",
+      "name": "明昭晞",
+      "rawName": "明昭晞",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100012472/challenges/dzone/70"
+    },
+    {
+      "rank": 2,
+      "uid": "100018361",
+      "name": "瑪爾",
+      "rawName": "瑪爾",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100018361/challenges/dzone/70"
+    },
+    {
+      "rank": 3,
+      "uid": "100021999",
+      "name": "<#fe0>瀧Taki",
+      "rawName": "<#fe0>瀧Taki",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100021999/challenges/dzone/70"
+    },
+    {
+      "rank": 4,
+      "uid": "100034764",
+      "name": "茉莉奶柏",
+      "rawName": "茉莉奶柏",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100034764/challenges/dzone/70"
+    },
+    {
+      "rank": 5,
+      "uid": "100068321",
+      "name": "柠檬红鼠",
+      "rawName": "柠檬红鼠",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100068321/challenges/dzone/70"
+    },
+    {
+      "rank": 6,
+      "uid": "100083956",
+      "name": "すごい!つよい!",
+      "rawName": "すごい!つよい!",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100083956/challenges/dzone/70"
+    },
+    {
+      "rank": 7,
+      "uid": "100104278",
+      "name": "Potatis土豆",
+      "rawName": "Potatis土豆",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100104278/challenges/dzone/70"
+    },
+    {
+      "rank": 8,
+      "uid": "100115791",
+      "name": "阿柒",
+      "rawName": "阿柒",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100115791/challenges/dzone/70"
+    },
+    {
+      "rank": 9,
+      "uid": "100132555",
+      "name": "倥偬",
+      "rawName": "倥偬",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100132555/challenges/dzone/70"
+    },
+    {
+      "rank": 10,
+      "uid": "100162235",
+      "name": "晚上吃鱼",
+      "rawName": "晚上吃鱼",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100162235/challenges/dzone/70"
+    },
+    {
+      "rank": 11,
+      "uid": "100167859",
+      "name": "金发女人I型",
+      "rawName": "金发女人I型",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100167859/challenges/dzone/70"
+    },
+    {
+      "rank": 12,
+      "uid": "100189898",
+      "name": "常守朱",
+      "rawName": "常守朱",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100189898/challenges/dzone/70"
+    },
+    {
+      "rank": 13,
+      "uid": "100201387",
+      "name": "<#FF00FF>John",
+      "rawName": "<#FF00FF>John",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100201387/challenges/dzone/70"
+    },
+    {
+      "rank": 14,
+      "uid": "100201972",
+      "name": "一条躺尸的咸鱼",
+      "rawName": "一条躺尸的咸鱼",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100201972/challenges/dzone/70"
+    },
+    {
+      "rank": 15,
+      "uid": "100211592",
+      "name": "江枢衍",
+      "rawName": "江枢衍",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100211592/challenges/dzone/70"
+    },
+    {
+      "rank": 16,
+      "uid": "100216202",
+      "name": "<#F08>子夜微雪",
+      "rawName": "<#F08>子夜微雪",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100216202/challenges/dzone/70"
+    },
+    {
+      "rank": 17,
+      "uid": "100217105",
+      "name": "莉格蕾朵",
+      "rawName": "莉格蕾朵",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100217105/challenges/dzone/70"
+    },
+    {
+      "rank": 18,
+      "uid": "100223381",
+      "name": "<#3af>尖尖",
+      "rawName": "<#3af>尖尖",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100223381/challenges/dzone/70"
+    },
+    {
+      "rank": 19,
+      "uid": "100250555",
+      "name": "表里如一",
+      "rawName": "表里如一",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100250555/challenges/dzone/70"
+    },
+    {
+      "rank": 20,
+      "uid": "100279093",
+      "name": "‎",
+      "rawName": "‎",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100279093/challenges/dzone/70"
+    },
+    {
+      "rank": 21,
+      "uid": "100284474",
+      "name": "<#DCCS>安抚物",
+      "rawName": "<#DCCS>安抚物",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100284474/challenges/dzone/70"
+    },
+    {
+      "rank": 22,
+      "uid": "100300379",
+      "name": "<#3af>bian",
+      "rawName": "<#3af>bian",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100300379/challenges/dzone/70"
+    },
+    {
+      "rank": 23,
+      "uid": "100314241",
+      "name": "哈根校猫该达斯",
+      "rawName": "哈根校猫该达斯",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100314241/challenges/dzone/70"
+    },
+    {
+      "rank": 24,
+      "uid": "100316509",
+      "name": "Mino",
+      "rawName": "Mino",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100316509/challenges/dzone/70"
+    },
+    {
+      "rank": 25,
+      "uid": "100329257",
+      "name": "夏茉琳",
+      "rawName": "夏茉琳",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100329257/challenges/dzone/70"
+    },
+    {
+      "rank": 26,
+      "uid": "100329726",
+      "name": "花岚",
+      "rawName": "花岚",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100329726/challenges/dzone/70"
+    },
+    {
+      "rank": 27,
+      "uid": "100331782",
+      "name": "<#E8C>舅舅",
+      "rawName": "<#E8C>舅舅",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100331782/challenges/dzone/70"
+    },
+    {
+      "rank": 28,
+      "uid": "100349838",
+      "name": "这是朵花",
+      "rawName": "这是朵花",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100349838/challenges/dzone/70"
+    },
+    {
+      "rank": 29,
+      "uid": "100355714",
+      "name": "<#0FF>百洛晓",
+      "rawName": "<#0FF>百洛晓",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100355714/challenges/dzone/70"
+    },
+    {
+      "rank": 30,
+      "uid": "100376977",
+      "name": "電気猫布",
+      "rawName": "電気猫布",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100376977/challenges/dzone/70"
+    },
+    {
+      "rank": 31,
+      "uid": "100405323",
+      "name": "Yoroha_NULL ",
+      "rawName": "Yoroha_NULL ",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100405323/challenges/dzone/70"
+    },
+    {
+      "rank": 32,
+      "uid": "100424712",
+      "name": "<#f8a>摩卡小空",
+      "rawName": "<#f8a>摩卡小空",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100424712/challenges/dzone/70"
+    },
+    {
+      "rank": 33,
+      "uid": "100435218",
+      "name": "莉奥诺拉123321",
+      "rawName": "莉奥诺拉123321",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100435218/challenges/dzone/70"
+    },
+    {
+      "rank": 34,
+      "uid": "100471040",
+      "name": "馬鮫魚",
+      "rawName": "馬鮫魚",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100471040/challenges/dzone/70"
+    },
+    {
+      "rank": 35,
+      "uid": "100471605",
+      "name": "久岛鸥",
+      "rawName": "久岛鸥",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100471605/challenges/dzone/70"
+    },
+    {
+      "rank": 36,
+      "uid": "100473501",
+      "name": "<#f8a>甜菜",
+      "rawName": "<#f8a>甜菜",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100473501/challenges/dzone/70"
+    },
+    {
+      "rank": 37,
+      "uid": "100523902",
+      "name": "离歌",
+      "rawName": "离歌",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100523902/challenges/dzone/70"
+    },
+    {
+      "rank": 38,
+      "uid": "100536393",
+      "name": "<#FF88C2>Kyan",
+      "rawName": "<#FF88C2>Kyan",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100536393/challenges/dzone/70"
+    },
+    {
+      "rank": 39,
+      "uid": "100545082",
+      "name": "容嬷嬷",
+      "rawName": "容嬷嬷",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100545082/challenges/dzone/70"
+    },
+    {
+      "rank": 40,
+      "uid": "100547932",
+      "name": "銀瀧",
+      "rawName": "銀瀧",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100547932/challenges/dzone/70"
+    },
+    {
+      "rank": 41,
+      "uid": "100549106",
+      "name": "Boooluu",
+      "rawName": "Boooluu",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100549106/challenges/dzone/70"
+    },
+    {
+      "rank": 42,
+      "uid": "100551332",
+      "name": "Maykia",
+      "rawName": "Maykia",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100551332/challenges/dzone/70"
+    },
+    {
+      "rank": 43,
+      "uid": "100553277",
+      "name": "볼빵빵판다곰",
+      "rawName": "볼빵빵판다곰",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100553277/challenges/dzone/70"
+    },
+    {
+      "rank": 44,
+      "uid": "100560436",
+      "name": "<#fc3>秋弥",
+      "rawName": "<#fc3>秋弥",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100560436/challenges/dzone/70"
+    },
+    {
+      "rank": 45,
+      "uid": "100569561",
+      "name": "弥海鲨",
+      "rawName": "弥海鲨",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100569561/challenges/dzone/70"
+    },
+    {
+      "rank": 46,
+      "uid": "100573930",
+      "name": "HOLLYPEI",
+      "rawName": "HOLLYPEI",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100573930/challenges/dzone/70"
+    },
+    {
+      "rank": 47,
+      "uid": "100584615",
+      "name": "小熊软糖",
+      "rawName": "小熊软糖",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100584615/challenges/dzone/70"
+    },
+    {
+      "rank": 48,
+      "uid": "100589592",
+      "name": "心境",
+      "rawName": "心境",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100589592/challenges/dzone/70"
+    },
+    {
+      "rank": 49,
+      "uid": "100597264",
+      "name": "星见",
+      "rawName": "星见",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100597264/challenges/dzone/70"
+    },
+    {
+      "rank": 50,
+      "uid": "100597447",
+      "name": "Coisini",
+      "rawName": "Coisini",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100597447/challenges/dzone/70"
+    },
+    {
+      "rank": 51,
+      "uid": "100603505",
+      "name": "商鞅知马力",
+      "rawName": "商鞅知马力",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100603505/challenges/dzone/70"
+    },
+    {
+      "rank": 52,
+      "uid": "100607245",
+      "name": "夢遊",
+      "rawName": "夢遊",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100607245/challenges/dzone/70"
+    },
+    {
+      "rank": 53,
+      "uid": "100610131",
+      "name": "Camelot",
+      "rawName": "Camelot",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100610131/challenges/dzone/70"
+    },
+    {
+      "rank": 54,
+      "uid": "100616389",
+      "name": "鱼泥啵啵",
+      "rawName": "鱼泥啵啵",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100616389/challenges/dzone/70"
+    },
+    {
+      "rank": 55,
+      "uid": "100627440",
+      "name": "Hune",
+      "rawName": "Hune",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100627440/challenges/dzone/70"
+    },
+    {
+      "rank": 56,
+      "uid": "100630930",
+      "name": "柒瑾年",
+      "rawName": "柒瑾年",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100630930/challenges/dzone/70"
+    },
+    {
+      "rank": 57,
+      "uid": "100631783",
+      "name": "으리온",
+      "rawName": "으리온",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100631783/challenges/dzone/70"
+    },
+    {
+      "rank": 58,
+      "uid": "100632957",
+      "name": "盲枭",
+      "rawName": "盲枭",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100632957/challenges/dzone/70"
+    },
+    {
+      "rank": 59,
+      "uid": "100647774",
+      "name": "<#f90>露露汤",
+      "rawName": "<#f90>露露汤",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100647774/challenges/dzone/70"
+    },
+    {
+      "rank": 60,
+      "uid": "100664445",
+      "name": "华年接代肝版",
+      "rawName": "华年接代肝版",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100664445/challenges/dzone/70"
+    },
+    {
+      "rank": 61,
+      "uid": "100672636",
+      "name": "莱西",
+      "rawName": "莱西",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100672636/challenges/dzone/70"
+    },
+    {
+      "rank": 62,
+      "uid": "100673301",
+      "name": "<#8d9>护林",
+      "rawName": "<#8d9>护林",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100673301/challenges/dzone/70"
+    },
+    {
+      "rank": 63,
+      "uid": "100674090",
+      "name": "ISTANNE",
+      "rawName": "ISTANNE",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100674090/challenges/dzone/70"
+    },
+    {
+      "rank": 64,
+      "uid": "100682661",
+      "name": "Geekz",
+      "rawName": "Geekz",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100682661/challenges/dzone/70"
+    },
+    {
+      "rank": 65,
+      "uid": "100723034",
+      "name": "修伊",
+      "rawName": "修伊",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100723034/challenges/dzone/70"
+    },
+    {
+      "rank": 66,
+      "uid": "100729018",
+      "name": "<#F9F>归还人海",
+      "rawName": "<#F9F>归还人海",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100729018/challenges/dzone/70"
+    },
+    {
+      "rank": 67,
+      "uid": "100729730",
+      "name": "Ignes",
+      "rawName": "Ignes",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100729730/challenges/dzone/70"
+    },
+    {
+      "rank": 68,
+      "uid": "100759759",
+      "name": "杨枝甘钰",
+      "rawName": "杨枝甘钰",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100759759/challenges/dzone/70"
+    },
+    {
+      "rank": 69,
+      "uid": "100764725",
+      "name": "<#0cf>游世妄想",
+      "rawName": "<#0cf>游世妄想",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100764725/challenges/dzone/70"
+    },
+    {
+      "rank": 70,
+      "uid": "100774354",
+      "name": "爱丽丝道格拉斯",
+      "rawName": "爱丽丝道格拉斯",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100774354/challenges/dzone/70"
+    },
+    {
+      "rank": 71,
+      "uid": "100775934",
+      "name": "封不觉",
+      "rawName": "封不觉",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100775934/challenges/dzone/70"
+    },
+    {
+      "rank": 72,
+      "uid": "100786647",
+      "name": "西维斯特",
+      "rawName": "西维斯特",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100786647/challenges/dzone/70"
+    },
+    {
+      "rank": 73,
+      "uid": "100794539",
+      "name": "白酒兰华",
+      "rawName": "白酒兰华",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100794539/challenges/dzone/70"
+    },
+    {
+      "rank": 74,
+      "uid": "100798835",
+      "name": "塞西莉亚",
+      "rawName": "塞西莉亚",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100798835/challenges/dzone/70"
+    },
+    {
+      "rank": 75,
+      "uid": "100829186",
+      "name": "Noir",
+      "rawName": "Noir",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100829186/challenges/dzone/70"
+    },
+    {
+      "rank": 76,
+      "uid": "100830349",
+      "name": "Flares",
+      "rawName": "Flares",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100830349/challenges/dzone/70"
+    },
+    {
+      "rank": 77,
+      "uid": "100850936",
+      "name": "Hymn",
+      "rawName": "Hymn",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100850936/challenges/dzone/70"
+    },
+    {
+      "rank": 78,
+      "uid": "100855907",
+      "name": "Vivy",
+      "rawName": "Vivy",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100855907/challenges/dzone/70"
+    },
+    {
+      "rank": 79,
+      "uid": "100872328",
+      "name": "淸淸梓燃",
+      "rawName": "淸淸梓燃",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100872328/challenges/dzone/70"
+    },
+    {
+      "rank": 80,
+      "uid": "100976218",
+      "name": "惑星",
+      "rawName": "惑星",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100976218/challenges/dzone/70"
+    },
+    {
+      "rank": 81,
+      "uid": "100981868",
+      "name": "<#ffc8dd>myls",
+      "rawName": "<#ffc8dd>myls",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100981868/challenges/dzone/70"
+    },
+    {
+      "rank": 82,
+      "uid": "100997496",
+      "name": "Mumei",
+      "rawName": "Mumei",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/100997496/challenges/dzone/70"
+    },
+    {
+      "rank": 83,
+      "uid": "101033866",
+      "name": "헌원빈",
+      "rawName": "헌원빈",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101033866/challenges/dzone/70"
+    },
+    {
+      "rank": 84,
+      "uid": "101051873",
+      "name": "<#6ae>梅贝尔",
+      "rawName": "<#6ae>梅贝尔",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101051873/challenges/dzone/70"
+    },
+    {
+      "rank": 85,
+      "uid": "101066017",
+      "name": "AbsK",
+      "rawName": "AbsK",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101066017/challenges/dzone/70"
+    },
+    {
+      "rank": 86,
+      "uid": "101070615",
+      "name": "残念",
+      "rawName": "残念",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101070615/challenges/dzone/70"
+    },
+    {
+      "rank": 87,
+      "uid": "101074259",
+      "name": "<#BFF>moonie",
+      "rawName": "<#BFF>moonie",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101074259/challenges/dzone/70"
+    },
+    {
+      "rank": 88,
+      "uid": "101105740",
+      "name": "<#0FF>Aytheus",
+      "rawName": "<#0FF>Aytheus",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101105740/challenges/dzone/70"
+    },
+    {
+      "rank": 89,
+      "uid": "101107950",
+      "name": "Guava",
+      "rawName": "Guava",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101107950/challenges/dzone/70"
+    },
+    {
+      "rank": 90,
+      "uid": "101126483",
+      "name": "赞美太阳",
+      "rawName": "赞美太阳",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101126483/challenges/dzone/70"
+    },
+    {
+      "rank": 91,
+      "uid": "101165253",
+      "name": "Chie",
+      "rawName": "Chie",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101165253/challenges/dzone/70"
+    },
+    {
+      "rank": 92,
+      "uid": "101171625",
+      "name": "Orius",
+      "rawName": "Orius",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101171625/challenges/dzone/70"
+    },
+    {
+      "rank": 93,
+      "uid": "101182120",
+      "name": "yog",
+      "rawName": "yog",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101182120/challenges/dzone/70"
+    },
+    {
+      "rank": 94,
+      "uid": "101229933",
+      "name": "枯萎化身塔姆辛",
+      "rawName": "枯萎化身塔姆辛",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101229933/challenges/dzone/70"
+    },
+    {
+      "rank": 95,
+      "uid": "101261027",
+      "name": "<#A9F>GothGf",
+      "rawName": "<#A9F>GothGf",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101261027/challenges/dzone/70"
+    },
+    {
+      "rank": 96,
+      "uid": "101278486",
+      "name": "<#3c6>Coliner",
+      "rawName": "<#3c6>Coliner",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101278486/challenges/dzone/70"
+    },
+    {
+      "rank": 97,
+      "uid": "101293414",
+      "name": "晴天雲",
+      "rawName": "晴天雲",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101293414/challenges/dzone/70"
+    },
+    {
+      "rank": 98,
+      "uid": "101302214",
+      "name": "<#0F0>Koishi",
+      "rawName": "<#0F0>Koishi",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101302214/challenges/dzone/70"
+    },
+    {
+      "rank": 99,
+      "uid": "101322933",
+      "name": "冬小麦长眠不醒",
+      "rawName": "冬小麦长眠不醒",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101322933/challenges/dzone/70"
+    },
+    {
+      "rank": 100,
+      "uid": "101329555",
+      "name": "Bocchi",
+      "rawName": "Bocchi",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101329555/challenges/dzone/70"
+    },
+    {
+      "rank": 101,
+      "uid": "101330727",
+      "name": "<#8d9>苍姝姀",
+      "rawName": "<#8d9>苍姝姀",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101330727/challenges/dzone/70"
+    },
+    {
+      "rank": 102,
+      "uid": "101345676",
+      "name": "<#FDD>不知尘世",
+      "rawName": "<#FDD>不知尘世",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101345676/challenges/dzone/70"
+    },
+    {
+      "rank": 103,
+      "uid": "101354376",
+      "name": "앤농",
+      "rawName": "앤농",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101354376/challenges/dzone/70"
+    },
+    {
+      "rank": 104,
+      "uid": "101356671",
+      "name": "<#fc3>非偌",
+      "rawName": "<#fc3>非偌",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101356671/challenges/dzone/70"
+    },
+    {
+      "rank": 105,
+      "uid": "101373736",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101373736/challenges/dzone/70"
+    },
+    {
+      "rank": 106,
+      "uid": "101375891",
+      "name": "outsider",
+      "rawName": "outsider",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101375891/challenges/dzone/70"
+    },
+    {
+      "rank": 107,
+      "uid": "101404812",
+      "name": "<#FCC>晴海千花",
+      "rawName": "<#FCC>晴海千花",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101404812/challenges/dzone/70"
+    },
+    {
+      "rank": 108,
+      "uid": "101499787",
+      "name": "<#F00>龍肆",
+      "rawName": "<#F00>龍肆",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101499787/challenges/dzone/70"
+    },
+    {
+      "rank": 109,
+      "uid": "101538149",
+      "name": "<#0FF>小小娃娃",
+      "rawName": "<#0FF>小小娃娃",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101538149/challenges/dzone/70"
+    },
+    {
+      "rank": 110,
+      "uid": "101738221",
+      "name": "sty",
+      "rawName": "sty",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101738221/challenges/dzone/70"
+    },
+    {
+      "rank": 111,
+      "uid": "101883085",
+      "name": "<#0a0>青龙",
+      "rawName": "<#0a0>青龙",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101883085/challenges/dzone/70"
+    },
+    {
+      "rank": 112,
+      "uid": "101925094",
+      "name": "棺人痴",
+      "rawName": "棺人痴",
+      "score": 525,
+      "level": 0,
+      "url": "https://eremora.com/u/101925094/challenges/dzone/70"
+    },
+    {
+      "rank": 113,
+      "uid": "100558123",
+      "name": "<#811>LasyWIK",
+      "rawName": "<#811>LasyWIK",
+      "score": 520,
+      "level": 0,
+      "url": "https://eremora.com/u/100558123/challenges/dzone/70"
+    },
+    {
+      "rank": 114,
+      "uid": "100594332",
+      "name": "维尔汀",
+      "rawName": "维尔汀",
+      "score": 520,
+      "level": 0,
+      "url": "https://eremora.com/u/100594332/challenges/dzone/70"
+    },
+    {
+      "rank": 115,
+      "uid": "100924875",
+      "name": "<#FFCB56>Noah",
+      "rawName": "<#FFCB56>Noah",
+      "score": 520,
+      "level": 0,
+      "url": "https://eremora.com/u/100924875/challenges/dzone/70"
+    },
+    {
+      "rank": 116,
+      "uid": "101067733",
+      "name": "<#0F0>苜蓿",
+      "rawName": "<#0F0>苜蓿",
+      "score": 520,
+      "level": 0,
+      "url": "https://eremora.com/u/101067733/challenges/dzone/70"
+    },
+    {
+      "rank": 117,
+      "uid": "101257882",
+      "name": "Camil",
+      "rawName": "Camil",
+      "score": 520,
+      "level": 0,
+      "url": "https://eremora.com/u/101257882/challenges/dzone/70"
+    },
+    {
+      "rank": 118,
+      "uid": "101708459",
+      "name": "坠岚",
+      "rawName": "坠岚",
+      "score": 520,
+      "level": 0,
+      "url": "https://eremora.com/u/101708459/challenges/dzone/70"
+    },
+    {
+      "rank": 119,
+      "uid": "100113922",
+      "name": "西維斯特",
+      "rawName": "西維斯特",
+      "score": 515,
+      "level": 0,
+      "url": "https://eremora.com/u/100113922/challenges/dzone/70"
+    },
+    {
+      "rank": 120,
+      "uid": "100948856",
+      "name": "<#3af>机长sama",
+      "rawName": "<#3af>机长sama",
+      "score": 515,
+      "level": 0,
+      "url": "https://eremora.com/u/100948856/challenges/dzone/70"
+    },
+    {
+      "rank": 121,
+      "uid": "100558548",
+      "name": "安歌",
+      "rawName": "安歌",
+      "score": 510,
+      "level": 0,
+      "url": "https://eremora.com/u/100558548/challenges/dzone/70"
+    },
+    {
+      "rank": 122,
+      "uid": "101260866",
+      "name": "刹暗天",
+      "rawName": "刹暗天",
+      "score": 510,
+      "level": 0,
+      "url": "https://eremora.com/u/101260866/challenges/dzone/70"
+    },
+    {
+      "rank": 123,
+      "uid": "101356847",
+      "name": "冬银official",
+      "rawName": "冬银official",
+      "score": 510,
+      "level": 0,
+      "url": "https://eremora.com/u/101356847/challenges/dzone/70"
+    },
+    {
+      "rank": 124,
+      "uid": "100391812",
+      "name": "查莉兹",
+      "rawName": "查莉兹",
+      "score": 505,
+      "level": 0,
+      "url": "https://eremora.com/u/100391812/challenges/dzone/70"
+    },
+    {
+      "rank": 125,
+      "uid": "100427882",
+      "name": "木白",
+      "rawName": "木白",
+      "score": 505,
+      "level": 0,
+      "url": "https://eremora.com/u/100427882/challenges/dzone/70"
+    },
+    {
+      "rank": 126,
+      "uid": "101819965",
+      "name": "慕旸",
+      "rawName": "慕旸",
+      "score": 505,
+      "level": 0,
+      "url": "https://eremora.com/u/101819965/challenges/dzone/70"
+    },
+    {
+      "rank": 127,
+      "uid": "101823463",
+      "name": "白雲映水",
+      "rawName": "白雲映水",
+      "score": 505,
+      "level": 0,
+      "url": "https://eremora.com/u/101823463/challenges/dzone/70"
+    },
+    {
+      "rank": 128,
+      "uid": "100048467",
+      "name": "<#C2E>藤丸立香",
+      "rawName": "<#C2E>藤丸立香",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100048467/challenges/dzone/70"
+    },
+    {
+      "rank": 129,
+      "uid": "100071588",
+      "name": "幽璃",
+      "rawName": "幽璃",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100071588/challenges/dzone/70"
+    },
+    {
+      "rank": 130,
+      "uid": "100139977",
+      "name": "<#0cf>泠塵",
+      "rawName": "<#0cf>泠塵",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100139977/challenges/dzone/70"
+    },
+    {
+      "rank": 131,
+      "uid": "100195230",
+      "name": "簌簌",
+      "rawName": "簌簌",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100195230/challenges/dzone/70"
+    },
+    {
+      "rank": 132,
+      "uid": "100204132",
+      "name": "门",
+      "rawName": "门",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100204132/challenges/dzone/70"
+    },
+    {
+      "rank": 133,
+      "uid": "100414382",
+      "name": "早春雪",
+      "rawName": "早春雪",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100414382/challenges/dzone/70"
+    },
+    {
+      "rank": 134,
+      "uid": "100470205",
+      "name": "超级欧欧欧",
+      "rawName": "超级欧欧欧",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100470205/challenges/dzone/70"
+    },
+    {
+      "rank": 135,
+      "uid": "100475061",
+      "name": "合理神恐怖了",
+      "rawName": "合理神恐怖了",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100475061/challenges/dzone/70"
+    },
+    {
+      "rank": 136,
+      "uid": "100518973",
+      "name": "奥伯龙",
+      "rawName": "奥伯龙",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100518973/challenges/dzone/70"
+    },
+    {
+      "rank": 137,
+      "uid": "100521585",
+      "name": "沈柏霜",
+      "rawName": "沈柏霜",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100521585/challenges/dzone/70"
+    },
+    {
+      "rank": 138,
+      "uid": "100544075",
+      "name": "<#94f>에프넬",
+      "rawName": "<#94f>에프넬",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100544075/challenges/dzone/70"
+    },
+    {
+      "rank": 139,
+      "uid": "100549824",
+      "name": "枫",
+      "rawName": "枫",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100549824/challenges/dzone/70"
+    },
+    {
+      "rank": 140,
+      "uid": "100550652",
+      "name": "灰花",
+      "rawName": "灰花",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100550652/challenges/dzone/70"
+    },
+    {
+      "rank": 141,
+      "uid": "100573738",
+      "name": "KHeath",
+      "rawName": "KHeath",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100573738/challenges/dzone/70"
+    },
+    {
+      "rank": 142,
+      "uid": "100578009",
+      "name": "<#f8a>浮士德",
+      "rawName": "<#f8a>浮士德",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100578009/challenges/dzone/70"
+    },
+    {
+      "rank": 143,
+      "uid": "100591741",
+      "name": "y1ngMy",
+      "rawName": "y1ngMy",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100591741/challenges/dzone/70"
+    },
+    {
+      "rank": 144,
+      "uid": "100599055",
+      "name": "Reimu",
+      "rawName": "Reimu",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100599055/challenges/dzone/70"
+    },
+    {
+      "rank": 145,
+      "uid": "100610824",
+      "name": "Newmon",
+      "rawName": "Newmon",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100610824/challenges/dzone/70"
+    },
+    {
+      "rank": 146,
+      "uid": "100695550",
+      "name": "<#ECF>艾瑞卡？",
+      "rawName": "<#ECF>艾瑞卡？",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100695550/challenges/dzone/70"
+    },
+    {
+      "rank": 147,
+      "uid": "100728236",
+      "name": "<#9E9>HakUwU",
+      "rawName": "<#9E9>HakUwU",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100728236/challenges/dzone/70"
+    },
+    {
+      "rank": 148,
+      "uid": "100737076",
+      "name": "<#e3f9fd>lutya",
+      "rawName": "<#e3f9fd>lutya",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100737076/challenges/dzone/70"
+    },
+    {
+      "rank": 149,
+      "uid": "100757518",
+      "name": "弔澈",
+      "rawName": "弔澈",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100757518/challenges/dzone/70"
+    },
+    {
+      "rank": 150,
+      "uid": "100794335",
+      "name": "37",
+      "rawName": "37",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100794335/challenges/dzone/70"
+    },
+    {
+      "rank": 151,
+      "uid": "100797680",
+      "name": "nutanonymous",
+      "rawName": "nutanonymous",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100797680/challenges/dzone/70"
+    },
+    {
+      "rank": 152,
+      "uid": "100804972",
+      "name": "<#R34>Aurora",
+      "rawName": "<#R34>Aurora",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100804972/challenges/dzone/70"
+    },
+    {
+      "rank": 153,
+      "uid": "100819294",
+      "name": "光合",
+      "rawName": "光合",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100819294/challenges/dzone/70"
+    },
+    {
+      "rank": 154,
+      "uid": "100826593",
+      "name": "Eko",
+      "rawName": "Eko",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100826593/challenges/dzone/70"
+    },
+    {
+      "rank": 155,
+      "uid": "100828620",
+      "name": "ShlzUku",
+      "rawName": "ShlzUku",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100828620/challenges/dzone/70"
+    },
+    {
+      "rank": 156,
+      "uid": "100928422",
+      "name": "风语",
+      "rawName": "风语",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/100928422/challenges/dzone/70"
+    },
+    {
+      "rank": 157,
+      "uid": "101005213",
+      "name": "Flame",
+      "rawName": "Flame",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101005213/challenges/dzone/70"
+    },
+    {
+      "rank": 158,
+      "uid": "101062617",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101062617/challenges/dzone/70"
+    },
+    {
+      "rank": 159,
+      "uid": "101096882",
+      "name": "я'аргул",
+      "rawName": "я'аргул",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101096882/challenges/dzone/70"
+    },
+    {
+      "rank": 160,
+      "uid": "101111502",
+      "name": "叶落无声丶",
+      "rawName": "叶落无声丶",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101111502/challenges/dzone/70"
+    },
+    {
+      "rank": 161,
+      "uid": "101126227",
+      "name": "别夏花",
+      "rawName": "别夏花",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101126227/challenges/dzone/70"
+    },
+    {
+      "rank": 162,
+      "uid": "101189890",
+      "name": "Reizei",
+      "rawName": "Reizei",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101189890/challenges/dzone/70"
+    },
+    {
+      "rank": 163,
+      "uid": "101207473",
+      "name": "Apath'",
+      "rawName": "Apath'",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101207473/challenges/dzone/70"
+    },
+    {
+      "rank": 164,
+      "uid": "101361657",
+      "name": "Bobice",
+      "rawName": "Bobice",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101361657/challenges/dzone/70"
+    },
+    {
+      "rank": 165,
+      "uid": "101380568",
+      "name": "21LUXsan",
+      "rawName": "21LUXsan",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101380568/challenges/dzone/70"
+    },
+    {
+      "rank": 166,
+      "uid": "101399239",
+      "name": "<#F9F>清风",
+      "rawName": "<#F9F>清风",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101399239/challenges/dzone/70"
+    },
+    {
+      "rank": 167,
+      "uid": "101721107",
+      "name": "珀玛",
+      "rawName": "珀玛",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101721107/challenges/dzone/70"
+    },
+    {
+      "rank": 168,
+      "uid": "101737224",
+      "name": "<#f8a>安娜贝尔",
+      "rawName": "<#f8a>安娜贝尔",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101737224/challenges/dzone/70"
+    },
+    {
+      "rank": 169,
+      "uid": "101824400",
+      "name": "<#ffb214>BAPHO",
+      "rawName": "<#ffb214>BAPHO",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101824400/challenges/dzone/70"
+    },
+    {
+      "rank": 170,
+      "uid": "101955384",
+      "name": "-_Sky_-",
+      "rawName": "-_Sky_-",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101955384/challenges/dzone/70"
+    },
+    {
+      "rank": 171,
+      "uid": "101994727",
+      "name": "德普",
+      "rawName": "德普",
+      "score": 500,
+      "level": 0,
+      "url": "https://eremora.com/u/101994727/challenges/dzone/70"
+    },
+    {
+      "rank": 172,
+      "uid": "101018835",
+      "name": "Faus",
+      "rawName": "Faus",
+      "score": 490,
+      "level": 0,
+      "url": "https://eremora.com/u/101018835/challenges/dzone/70"
+    },
+    {
+      "rank": 173,
+      "uid": "101437414",
+      "name": "Lucas",
+      "rawName": "Lucas",
+      "score": 490,
+      "level": 0,
+      "url": "https://eremora.com/u/101437414/challenges/dzone/70"
+    },
+    {
+      "rank": 174,
+      "uid": "101586790",
+      "name": "레오노라",
+      "rawName": "레오노라",
+      "score": 490,
+      "level": 0,
+      "url": "https://eremora.com/u/101586790/challenges/dzone/70"
+    },
+    {
+      "rank": 175,
+      "uid": "101903702",
+      "name": "Aeriff",
+      "rawName": "Aeriff",
+      "score": 480,
+      "level": 0,
+      "url": "https://eremora.com/u/101903702/challenges/dzone/70"
+    },
+    {
+      "rank": 176,
+      "uid": "100299565",
+      "name": "阿图撒斯",
+      "rawName": "阿图撒斯",
+      "score": 470,
+      "level": 0,
+      "url": "https://eremora.com/u/100299565/challenges/dzone/70"
+    },
+    {
+      "rank": 177,
+      "uid": "101182528",
+      "name": "Helleios",
+      "rawName": "Helleios",
+      "score": 470,
+      "level": 0,
+      "url": "https://eremora.com/u/101182528/challenges/dzone/70"
+    },
+    {
+      "rank": 178,
+      "uid": "101506868",
+      "name": "Arrisa",
+      "rawName": "Arrisa",
+      "score": 470,
+      "level": 0,
+      "url": "https://eremora.com/u/101506868/challenges/dzone/70"
+    },
+    {
+      "rank": 179,
+      "uid": "101530686",
+      "name": "CaTaTa",
+      "rawName": "CaTaTa",
+      "score": 470,
+      "level": 0,
+      "url": "https://eremora.com/u/101530686/challenges/dzone/70"
+    },
+    {
+      "rank": 180,
+      "uid": "100481380",
+      "name": "阿软",
+      "rawName": "阿软",
+      "score": 460,
+      "level": 0,
+      "url": "https://eremora.com/u/100481380/challenges/dzone/70"
+    },
+    {
+      "rank": 181,
+      "uid": "100595444",
+      "name": "雪月",
+      "rawName": "雪月",
+      "score": 460,
+      "level": 0,
+      "url": "https://eremora.com/u/100595444/challenges/dzone/70"
+    },
+    {
+      "rank": 182,
+      "uid": "100694233",
+      "name": "墨烨",
+      "rawName": "墨烨",
+      "score": 460,
+      "level": 0,
+      "url": "https://eremora.com/u/100694233/challenges/dzone/70"
+    },
+    {
+      "rank": 183,
+      "uid": "100791382",
+      "name": "Uxie",
+      "rawName": "Uxie",
+      "score": 460,
+      "level": 0,
+      "url": "https://eremora.com/u/100791382/challenges/dzone/70"
+    },
+    {
+      "rank": 184,
+      "uid": "101001145",
+      "name": "Limon",
+      "rawName": "Limon",
+      "score": 460,
+      "level": 0,
+      "url": "https://eremora.com/u/101001145/challenges/dzone/70"
+    },
+    {
+      "rank": 185,
+      "uid": "101101924",
+      "name": "Corvim",
+      "rawName": "Corvim",
+      "score": 460,
+      "level": 0,
+      "url": "https://eremora.com/u/101101924/challenges/dzone/70"
+    },
+    {
+      "rank": 186,
+      "uid": "100021927",
+      "name": "普里亚普斯",
+      "rawName": "普里亚普斯",
+      "score": 455,
+      "level": 0,
+      "url": "https://eremora.com/u/100021927/challenges/dzone/70"
+    },
+    {
+      "rank": 187,
+      "uid": "101183885",
+      "name": "灵雨既零",
+      "rawName": "灵雨既零",
+      "score": 455,
+      "level": 0,
+      "url": "https://eremora.com/u/101183885/challenges/dzone/70"
+    },
+    {
+      "rank": 188,
+      "uid": "101746870",
+      "name": "墓碑",
+      "rawName": "墓碑",
+      "score": 455,
+      "level": 0,
+      "url": "https://eremora.com/u/101746870/challenges/dzone/70"
+    },
+    {
+      "rank": 189,
+      "uid": "102097195",
+      "name": "케이사르",
+      "rawName": "케이사르",
+      "score": 455,
+      "level": 0,
+      "url": "https://eremora.com/u/102097195/challenges/dzone/70"
+    },
+    {
+      "rank": 190,
+      "uid": "100013997",
+      "name": "Valentine",
+      "rawName": "Valentine",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100013997/challenges/dzone/70"
+    },
+    {
+      "rank": 191,
+      "uid": "100075491",
+      "name": "tgtg",
+      "rawName": "tgtg",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100075491/challenges/dzone/70"
+    },
+    {
+      "rank": 192,
+      "uid": "100225305",
+      "name": "Shunia",
+      "rawName": "Shunia",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100225305/challenges/dzone/70"
+    },
+    {
+      "rank": 193,
+      "uid": "100273836",
+      "name": "汐萍",
+      "rawName": "汐萍",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100273836/challenges/dzone/70"
+    },
+    {
+      "rank": 194,
+      "uid": "100331634",
+      "name": "我獨自非洲",
+      "rawName": "我獨自非洲",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100331634/challenges/dzone/70"
+    },
+    {
+      "rank": 195,
+      "uid": "100390067",
+      "name": "奥兹国的大魔女",
+      "rawName": "奥兹国的大魔女",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100390067/challenges/dzone/70"
+    },
+    {
+      "rank": 196,
+      "uid": "100392828",
+      "name": "静静的顿河",
+      "rawName": "静静的顿河",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100392828/challenges/dzone/70"
+    },
+    {
+      "rank": 197,
+      "uid": "100423854",
+      "name": "Loe",
+      "rawName": "Loe",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100423854/challenges/dzone/70"
+    },
+    {
+      "rank": 198,
+      "uid": "100436868",
+      "name": "叠嶂扶影",
+      "rawName": "叠嶂扶影",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100436868/challenges/dzone/70"
+    },
+    {
+      "rank": 199,
+      "uid": "100473697",
+      "name": "栉风",
+      "rawName": "栉风",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100473697/challenges/dzone/70"
+    },
+    {
+      "rank": 200,
+      "uid": "100478139",
+      "name": "<#DA3>天命斬白",
+      "rawName": "<#DA3>天命斬白",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100478139/challenges/dzone/70"
+    },
+    {
+      "rank": 201,
+      "uid": "100484200",
+      "name": "izayoi",
+      "rawName": "izayoi",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100484200/challenges/dzone/70"
+    },
+    {
+      "rank": 202,
+      "uid": "100515607",
+      "name": "莲玖",
+      "rawName": "莲玖",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100515607/challenges/dzone/70"
+    },
+    {
+      "rank": 203,
+      "uid": "100551107",
+      "name": "苍响",
+      "rawName": "苍响",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100551107/challenges/dzone/70"
+    },
+    {
+      "rank": 204,
+      "uid": "100672217",
+      "name": "彻罗斯",
+      "rawName": "彻罗斯",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100672217/challenges/dzone/70"
+    },
+    {
+      "rank": 205,
+      "uid": "100722967",
+      "name": "haluto",
+      "rawName": "haluto",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100722967/challenges/dzone/70"
+    },
+    {
+      "rank": 206,
+      "uid": "100725682",
+      "name": "봉이",
+      "rawName": "봉이",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100725682/challenges/dzone/70"
+    },
+    {
+      "rank": 207,
+      "uid": "100803289",
+      "name": "<#f8a>two刀乐",
+      "rawName": "<#f8a>two刀乐",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100803289/challenges/dzone/70"
+    },
+    {
+      "rank": 208,
+      "uid": "100814463",
+      "name": "冬雪",
+      "rawName": "冬雪",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100814463/challenges/dzone/70"
+    },
+    {
+      "rank": 209,
+      "uid": "100993094",
+      "name": "月夜的孤寂",
+      "rawName": "月夜的孤寂",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/100993094/challenges/dzone/70"
+    },
+    {
+      "rank": 210,
+      "uid": "101121481",
+      "name": "<#DFF>梦失记",
+      "rawName": "<#DFF>梦失记",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101121481/challenges/dzone/70"
+    },
+    {
+      "rank": 211,
+      "uid": "101136608",
+      "name": "薄荷",
+      "rawName": "薄荷",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101136608/challenges/dzone/70"
+    },
+    {
+      "rank": 212,
+      "uid": "101140390",
+      "name": "ArvFolia",
+      "rawName": "ArvFolia",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101140390/challenges/dzone/70"
+    },
+    {
+      "rank": 213,
+      "uid": "101227487",
+      "name": "지망",
+      "rawName": "지망",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101227487/challenges/dzone/70"
+    },
+    {
+      "rank": 214,
+      "uid": "101271799",
+      "name": "<#f8a>Makise",
+      "rawName": "<#f8a>Makise",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101271799/challenges/dzone/70"
+    },
+    {
+      "rank": 215,
+      "uid": "101428220",
+      "name": "烛火之烬",
+      "rawName": "烛火之烬",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101428220/challenges/dzone/70"
+    },
+    {
+      "rank": 216,
+      "uid": "101555848",
+      "name": "bchedans",
+      "rawName": "bchedans",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101555848/challenges/dzone/70"
+    },
+    {
+      "rank": 217,
+      "uid": "101598402",
+      "name": "夜陨星河",
+      "rawName": "夜陨星河",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101598402/challenges/dzone/70"
+    },
+    {
+      "rank": 218,
+      "uid": "101890121",
+      "name": "电解精",
+      "rawName": "电解精",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101890121/challenges/dzone/70"
+    },
+    {
+      "rank": 219,
+      "uid": "101940828",
+      "name": "우주생명체",
+      "rawName": "우주생명체",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/101940828/challenges/dzone/70"
+    },
+    {
+      "rank": 220,
+      "uid": "102020116",
+      "name": "Soultadu",
+      "rawName": "Soultadu",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/102020116/challenges/dzone/70"
+    },
+    {
+      "rank": 221,
+      "uid": "102117126",
+      "name": "Enchantt",
+      "rawName": "Enchantt",
+      "score": 450,
+      "level": 0,
+      "url": "https://eremora.com/u/102117126/challenges/dzone/70"
+    },
+    {
+      "rank": 222,
+      "uid": "100367705",
+      "name": "春山照雪",
+      "rawName": "春山照雪",
+      "score": 440,
+      "level": 0,
+      "url": "https://eremora.com/u/100367705/challenges/dzone/70"
+    },
+    {
+      "rank": 223,
+      "uid": "101797814",
+      "name": "酥雪漾春雨",
+      "rawName": "酥雪漾春雨",
+      "score": 440,
+      "level": 0,
+      "url": "https://eremora.com/u/101797814/challenges/dzone/70"
+    },
+    {
+      "rank": 224,
+      "uid": "101223441",
+      "name": "Zzz",
+      "rawName": "Zzz",
+      "score": 435,
+      "level": 0,
+      "url": "https://eremora.com/u/101223441/challenges/dzone/70"
+    },
+    {
+      "rank": 225,
+      "uid": "100598234",
+      "name": "佚名",
+      "rawName": "佚名",
+      "score": 430,
+      "level": 0,
+      "url": "https://eremora.com/u/100598234/challenges/dzone/70"
+    },
+    {
+      "rank": 226,
+      "uid": "100678189",
+      "name": "冰鸩汐鸹丫",
+      "rawName": "冰鸩汐鸹丫",
+      "score": 430,
+      "level": 0,
+      "url": "https://eremora.com/u/100678189/challenges/dzone/70"
+    },
+    {
+      "rank": 227,
+      "uid": "101160171",
+      "name": "PsycheFu",
+      "rawName": "PsycheFu",
+      "score": 430,
+      "level": 0,
+      "url": "https://eremora.com/u/101160171/challenges/dzone/70"
+    },
+    {
+      "rank": 228,
+      "uid": "102294051",
+      "name": "레오노라",
+      "rawName": "레오노라",
+      "score": 430,
+      "level": 0,
+      "url": "https://eremora.com/u/102294051/challenges/dzone/70"
+    },
+    {
+      "rank": 229,
+      "uid": "100978157",
+      "name": "调律者",
+      "rawName": "调律者",
+      "score": 425,
+      "level": 0,
+      "url": "https://eremora.com/u/100978157/challenges/dzone/70"
+    },
+    {
+      "rank": 230,
+      "uid": "101018292",
+      "name": "克萝蒂雅",
+      "rawName": "克萝蒂雅",
+      "score": 425,
+      "level": 0,
+      "url": "https://eremora.com/u/101018292/challenges/dzone/70"
+    },
+    {
+      "rank": 231,
+      "uid": "100738712",
+      "name": "<#3af>图鲁",
+      "rawName": "<#3af>图鲁",
+      "score": 420,
+      "level": 0,
+      "url": "https://eremora.com/u/100738712/challenges/dzone/70"
+    },
+    {
+      "rank": 232,
+      "uid": "100755202",
+      "name": "淤泥之花",
+      "rawName": "淤泥之花",
+      "score": 420,
+      "level": 0,
+      "url": "https://eremora.com/u/100755202/challenges/dzone/70"
+    },
+    {
+      "rank": 233,
+      "uid": "100821339",
+      "name": "克洛瓦",
+      "rawName": "克洛瓦",
+      "score": 420,
+      "level": 0,
+      "url": "https://eremora.com/u/100821339/challenges/dzone/70"
+    },
+    {
+      "rank": 234,
+      "uid": "101006341",
+      "name": "<#f90>Kurisu",
+      "rawName": "<#f90>Kurisu",
+      "score": 420,
+      "level": 0,
+      "url": "https://eremora.com/u/101006341/challenges/dzone/70"
+    },
+    {
+      "rank": 235,
+      "uid": "101677355",
+      "name": "단테",
+      "rawName": "단테",
+      "score": 420,
+      "level": 0,
+      "url": "https://eremora.com/u/101677355/challenges/dzone/70"
+    },
+    {
+      "rank": 236,
+      "uid": "101961082",
+      "name": "Mira",
+      "rawName": "Mira",
+      "score": 415,
+      "level": 0,
+      "url": "https://eremora.com/u/101961082/challenges/dzone/70"
+    },
+    {
+      "rank": 237,
+      "uid": "100335615",
+      "name": "莱克的鹰竟吃兔",
+      "rawName": "莱克的鹰竟吃兔",
+      "score": 410,
+      "level": 0,
+      "url": "https://eremora.com/u/100335615/challenges/dzone/70"
+    },
+    {
+      "rank": 238,
+      "uid": "100450896",
+      "name": "Censini",
+      "rawName": "Censini",
+      "score": 410,
+      "level": 0,
+      "url": "https://eremora.com/u/100450896/challenges/dzone/70"
+    },
+    {
+      "rank": 239,
+      "uid": "101074325",
+      "name": "TweighT",
+      "rawName": "TweighT",
+      "score": 410,
+      "level": 0,
+      "url": "https://eremora.com/u/101074325/challenges/dzone/70"
+    },
+    {
+      "rank": 240,
+      "uid": "101080068",
+      "name": "洛哈尔特",
+      "rawName": "洛哈尔特",
+      "score": 410,
+      "level": 0,
+      "url": "https://eremora.com/u/101080068/challenges/dzone/70"
+    },
+    {
+      "rank": 241,
+      "uid": "101808011",
+      "name": "Puja",
+      "rawName": "Puja",
+      "score": 410,
+      "level": 0,
+      "url": "https://eremora.com/u/101808011/challenges/dzone/70"
+    },
+    {
+      "rank": 242,
+      "uid": "100453042",
+      "name": "山渐青",
+      "rawName": "山渐青",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/100453042/challenges/dzone/70"
+    },
+    {
+      "rank": 243,
+      "uid": "100559536",
+      "name": "暮雨晨风",
+      "rawName": "暮雨晨风",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/100559536/challenges/dzone/70"
+    },
+    {
+      "rank": 244,
+      "uid": "100652322",
+      "name": "<#4CC>茜格",
+      "rawName": "<#4CC>茜格",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/100652322/challenges/dzone/70"
+    },
+    {
+      "rank": 245,
+      "uid": "100716420",
+      "name": "<#e6b>九木染",
+      "rawName": "<#e6b>九木染",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/100716420/challenges/dzone/70"
+    },
+    {
+      "rank": 246,
+      "uid": "100825295",
+      "name": "伊莫库",
+      "rawName": "伊莫库",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/100825295/challenges/dzone/70"
+    },
+    {
+      "rank": 247,
+      "uid": "100878253",
+      "name": "月",
+      "rawName": "月",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/100878253/challenges/dzone/70"
+    },
+    {
+      "rank": 248,
+      "uid": "101025338",
+      "name": "Maurice",
+      "rawName": "Maurice",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101025338/challenges/dzone/70"
+    },
+    {
+      "rank": 249,
+      "uid": "101115178",
+      "name": "Ava",
+      "rawName": "Ava",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101115178/challenges/dzone/70"
+    },
+    {
+      "rank": 250,
+      "uid": "101180628",
+      "name": "Altherian",
+      "rawName": "Altherian",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101180628/challenges/dzone/70"
+    },
+    {
+      "rank": 251,
+      "uid": "101185828",
+      "name": "Cadenza",
+      "rawName": "Cadenza",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101185828/challenges/dzone/70"
+    },
+    {
+      "rank": 252,
+      "uid": "101223657",
+      "name": "Sylvia",
+      "rawName": "Sylvia",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101223657/challenges/dzone/70"
+    },
+    {
+      "rank": 253,
+      "uid": "101288558",
+      "name": "ElectricPower",
+      "rawName": "ElectricPower",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101288558/challenges/dzone/70"
+    },
+    {
+      "rank": 254,
+      "uid": "101782305",
+      "name": "Liny",
+      "rawName": "Liny",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101782305/challenges/dzone/70"
+    },
+    {
+      "rank": 255,
+      "uid": "101853652",
+      "name": "Epherose",
+      "rawName": "Epherose",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/101853652/challenges/dzone/70"
+    },
+    {
+      "rank": 256,
+      "uid": "102096399",
+      "name": "Teseo",
+      "rawName": "Teseo",
+      "score": 400,
+      "level": 0,
+      "url": "https://eremora.com/u/102096399/challenges/dzone/70"
+    },
+    {
+      "rank": 257,
+      "uid": "100010571",
+      "name": "<#FCC>神秘七字",
+      "rawName": "<#FCC>神秘七字",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/100010571/challenges/dzone/70"
+    },
+    {
+      "rank": 258,
+      "uid": "100446275",
+      "name": "白日夢の璃",
+      "rawName": "白日夢の璃",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/100446275/challenges/dzone/70"
+    },
+    {
+      "rank": 259,
+      "uid": "101006348",
+      "name": "dawra",
+      "rawName": "dawra",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101006348/challenges/dzone/70"
+    },
+    {
+      "rank": 260,
+      "uid": "101019236",
+      "name": "莉奧諾拉",
+      "rawName": "莉奧諾拉",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101019236/challenges/dzone/70"
+    },
+    {
+      "rank": 261,
+      "uid": "101043605",
+      "name": "漆黑色魔",
+      "rawName": "漆黑色魔",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101043605/challenges/dzone/70"
+    },
+    {
+      "rank": 262,
+      "uid": "101106685",
+      "name": "牧师",
+      "rawName": "牧师",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101106685/challenges/dzone/70"
+    },
+    {
+      "rank": 263,
+      "uid": "101145073",
+      "name": "伯特利亚伯拉罕",
+      "rawName": "伯特利亚伯拉罕",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101145073/challenges/dzone/70"
+    },
+    {
+      "rank": 264,
+      "uid": "101245338",
+      "name": "17",
+      "rawName": "17",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101245338/challenges/dzone/70"
+    },
+    {
+      "rank": 265,
+      "uid": "101259931",
+      "name": "Utenmalupet",
+      "rawName": "Utenmalupet",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101259931/challenges/dzone/70"
+    },
+    {
+      "rank": 266,
+      "uid": "101337498",
+      "name": "握住一棵小草",
+      "rawName": "握住一棵小草",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101337498/challenges/dzone/70"
+    },
+    {
+      "rank": 267,
+      "uid": "101573468",
+      "name": "[N]",
+      "rawName": "[N]",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101573468/challenges/dzone/70"
+    },
+    {
+      "rank": 268,
+      "uid": "101689367",
+      "name": "Abel",
+      "rawName": "Abel",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101689367/challenges/dzone/70"
+    },
+    {
+      "rank": 269,
+      "uid": "101708000",
+      "name": "<#f8a>Saber",
+      "rawName": "<#f8a>Saber",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101708000/challenges/dzone/70"
+    },
+    {
+      "rank": 270,
+      "uid": "101898357",
+      "name": "何某人",
+      "rawName": "何某人",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101898357/challenges/dzone/70"
+    },
+    {
+      "rank": 271,
+      "uid": "101906241",
+      "name": "sosu",
+      "rawName": "sosu",
+      "score": 390,
+      "level": 0,
+      "url": "https://eremora.com/u/101906241/challenges/dzone/70"
+    },
+    {
+      "rank": 272,
+      "uid": "100011437",
+      "name": "<#07F>Famila",
+      "rawName": "<#07F>Famila",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/100011437/challenges/dzone/70"
+    },
+    {
+      "rank": 273,
+      "uid": "100098674",
+      "name": "姒癸",
+      "rawName": "姒癸",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/100098674/challenges/dzone/70"
+    },
+    {
+      "rank": 274,
+      "uid": "100824108",
+      "name": "翎玖",
+      "rawName": "翎玖",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/100824108/challenges/dzone/70"
+    },
+    {
+      "rank": 275,
+      "uid": "100988090",
+      "name": "雨落",
+      "rawName": "雨落",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/100988090/challenges/dzone/70"
+    },
+    {
+      "rank": 276,
+      "uid": "101527146",
+      "name": "豆卸忘",
+      "rawName": "豆卸忘",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/101527146/challenges/dzone/70"
+    },
+    {
+      "rank": 277,
+      "uid": "101761766",
+      "name": "Ponlee",
+      "rawName": "Ponlee",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/101761766/challenges/dzone/70"
+    },
+    {
+      "rank": 278,
+      "uid": "101766529",
+      "name": "비스무트",
+      "rawName": "비스무트",
+      "score": 380,
+      "level": 0,
+      "url": "https://eremora.com/u/101766529/challenges/dzone/70"
+    },
+    {
+      "rank": 279,
+      "uid": "100028903",
+      "name": "昭奕秋",
+      "rawName": "昭奕秋",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100028903/challenges/dzone/70"
+    },
+    {
+      "rank": 280,
+      "uid": "100402888",
+      "name": "嘴咬嘴邊肉",
+      "rawName": "嘴咬嘴邊肉",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100402888/challenges/dzone/70"
+    },
+    {
+      "rank": 281,
+      "uid": "100403325",
+      "name": "赤渊",
+      "rawName": "赤渊",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100403325/challenges/dzone/70"
+    },
+    {
+      "rank": 282,
+      "uid": "100426293",
+      "name": "superString",
+      "rawName": "superString",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100426293/challenges/dzone/70"
+    },
+    {
+      "rank": 283,
+      "uid": "100560010",
+      "name": "二寸笔人",
+      "rawName": "二寸笔人",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100560010/challenges/dzone/70"
+    },
+    {
+      "rank": 284,
+      "uid": "100828635",
+      "name": "岚岚",
+      "rawName": "岚岚",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100828635/challenges/dzone/70"
+    },
+    {
+      "rank": 285,
+      "uid": "100931952",
+      "name": "Black Aholick",
+      "rawName": "Black Aholick",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100931952/challenges/dzone/70"
+    },
+    {
+      "rank": 286,
+      "uid": "100997334",
+      "name": "Marcus",
+      "rawName": "Marcus",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/100997334/challenges/dzone/70"
+    },
+    {
+      "rank": 287,
+      "uid": "101158851",
+      "name": "Fraud",
+      "rawName": "Fraud",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101158851/challenges/dzone/70"
+    },
+    {
+      "rank": 288,
+      "uid": "101187531",
+      "name": "Nevernight",
+      "rawName": "Nevernight",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101187531/challenges/dzone/70"
+    },
+    {
+      "rank": 289,
+      "uid": "101187676",
+      "name": "Leonora",
+      "rawName": "Leonora",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101187676/challenges/dzone/70"
+    },
+    {
+      "rank": 290,
+      "uid": "101219097",
+      "name": "Yura",
+      "rawName": "Yura",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101219097/challenges/dzone/70"
+    },
+    {
+      "rank": 291,
+      "uid": "101260222",
+      "name": "lve",
+      "rawName": "lve",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101260222/challenges/dzone/70"
+    },
+    {
+      "rank": 292,
+      "uid": "101270712",
+      "name": "Taku",
+      "rawName": "Taku",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101270712/challenges/dzone/70"
+    },
+    {
+      "rank": 293,
+      "uid": "101322941",
+      "name": "西西弗斯",
+      "rawName": "西西弗斯",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101322941/challenges/dzone/70"
+    },
+    {
+      "rank": 294,
+      "uid": "101326443",
+      "name": "台风眼",
+      "rawName": "台风眼",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101326443/challenges/dzone/70"
+    },
+    {
+      "rank": 295,
+      "uid": "101379969",
+      "name": "ヨウメイ",
+      "rawName": "ヨウメイ",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101379969/challenges/dzone/70"
+    },
+    {
+      "rank": 296,
+      "uid": "101386115",
+      "name": "Vaard",
+      "rawName": "Vaard",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101386115/challenges/dzone/70"
+    },
+    {
+      "rank": 297,
+      "uid": "101390014",
+      "name": "莹天",
+      "rawName": "莹天",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101390014/challenges/dzone/70"
+    },
+    {
+      "rank": 298,
+      "uid": "101539526",
+      "name": "MeanReversion",
+      "rawName": "MeanReversion",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101539526/challenges/dzone/70"
+    },
+    {
+      "rank": 299,
+      "uid": "101550013",
+      "name": "Rey",
+      "rawName": "Rey",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101550013/challenges/dzone/70"
+    },
+    {
+      "rank": 300,
+      "uid": "101701744",
+      "name": "星月夜",
+      "rawName": "星月夜",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101701744/challenges/dzone/70"
+    },
+    {
+      "rank": 301,
+      "uid": "101834075",
+      "name": "Носсери",
+      "rawName": "Носсери",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101834075/challenges/dzone/70"
+    },
+    {
+      "rank": 302,
+      "uid": "101834337",
+      "name": "Shiro",
+      "rawName": "Shiro",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101834337/challenges/dzone/70"
+    },
+    {
+      "rank": 303,
+      "uid": "101951389",
+      "name": "模仿鱼",
+      "rawName": "模仿鱼",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/101951389/challenges/dzone/70"
+    },
+    {
+      "rank": 304,
+      "uid": "102056356",
+      "name": "小小潇潇",
+      "rawName": "小小潇潇",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/102056356/challenges/dzone/70"
+    },
+    {
+      "rank": 305,
+      "uid": "102061020",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 370,
+      "level": 0,
+      "url": "https://eremora.com/u/102061020/challenges/dzone/70"
+    },
+    {
+      "rank": 306,
+      "uid": "100209256",
+      "name": "午司鎏景",
+      "rawName": "午司鎏景",
+      "score": 365,
+      "level": 0,
+      "url": "https://eremora.com/u/100209256/challenges/dzone/70"
+    },
+    {
+      "rank": 307,
+      "uid": "100870491",
+      "name": "Nullado",
+      "rawName": "Nullado",
+      "score": 365,
+      "level": 0,
+      "url": "https://eremora.com/u/100870491/challenges/dzone/70"
+    },
+    {
+      "rank": 308,
+      "uid": "102081262",
+      "name": "寒函含憾",
+      "rawName": "寒函含憾",
+      "score": 365,
+      "level": 0,
+      "url": "https://eremora.com/u/102081262/challenges/dzone/70"
+    },
+    {
+      "rank": 309,
+      "uid": "100009807",
+      "name": "藍寶",
+      "rawName": "藍寶",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100009807/challenges/dzone/70"
+    },
+    {
+      "rank": 310,
+      "uid": "100626931",
+      "name": "西維斯特",
+      "rawName": "西維斯特",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100626931/challenges/dzone/70"
+    },
+    {
+      "rank": 311,
+      "uid": "100628533",
+      "name": "摆烂低手",
+      "rawName": "摆烂低手",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100628533/challenges/dzone/70"
+    },
+    {
+      "rank": 312,
+      "uid": "100674410",
+      "name": "琉璃昂",
+      "rawName": "琉璃昂",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100674410/challenges/dzone/70"
+    },
+    {
+      "rank": 313,
+      "uid": "100683427",
+      "name": "南宮霸",
+      "rawName": "南宮霸",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100683427/challenges/dzone/70"
+    },
+    {
+      "rank": 314,
+      "uid": "100856608",
+      "name": "Kamiyo",
+      "rawName": "Kamiyo",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100856608/challenges/dzone/70"
+    },
+    {
+      "rank": 315,
+      "uid": "100895279",
+      "name": "Alpharius",
+      "rawName": "Alpharius",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100895279/challenges/dzone/70"
+    },
+    {
+      "rank": 316,
+      "uid": "100997297",
+      "name": "暧昧",
+      "rawName": "暧昧",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/100997297/challenges/dzone/70"
+    },
+    {
+      "rank": 317,
+      "uid": "101041175",
+      "name": "Mashiro",
+      "rawName": "Mashiro",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101041175/challenges/dzone/70"
+    },
+    {
+      "rank": 318,
+      "uid": "101069187",
+      "name": "Leonora",
+      "rawName": "Leonora",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101069187/challenges/dzone/70"
+    },
+    {
+      "rank": 319,
+      "uid": "101234345",
+      "name": "凡尔纳",
+      "rawName": "凡尔纳",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101234345/challenges/dzone/70"
+    },
+    {
+      "rank": 320,
+      "uid": "101281582",
+      "name": "soli",
+      "rawName": "soli",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101281582/challenges/dzone/70"
+    },
+    {
+      "rank": 321,
+      "uid": "101349300",
+      "name": "Noelicht",
+      "rawName": "Noelicht",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101349300/challenges/dzone/70"
+    },
+    {
+      "rank": 322,
+      "uid": "101365287",
+      "name": "Dand",
+      "rawName": "Dand",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101365287/challenges/dzone/70"
+    },
+    {
+      "rank": 323,
+      "uid": "101854509",
+      "name": "MateKiddleton",
+      "rawName": "MateKiddleton",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101854509/challenges/dzone/70"
+    },
+    {
+      "rank": 324,
+      "uid": "101871321",
+      "name": "维奥莱塔",
+      "rawName": "维奥莱塔",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101871321/challenges/dzone/70"
+    },
+    {
+      "rank": 325,
+      "uid": "101909576",
+      "name": "伊莱克斯",
+      "rawName": "伊莱克斯",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101909576/challenges/dzone/70"
+    },
+    {
+      "rank": 326,
+      "uid": "101952996",
+      "name": "烩菜栢",
+      "rawName": "烩菜栢",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/101952996/challenges/dzone/70"
+    },
+    {
+      "rank": 327,
+      "uid": "102018401",
+      "name": "千叶",
+      "rawName": "千叶",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/102018401/challenges/dzone/70"
+    },
+    {
+      "rank": 328,
+      "uid": "102105453",
+      "name": "SideStepped",
+      "rawName": "SideStepped",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/102105453/challenges/dzone/70"
+    },
+    {
+      "rank": 329,
+      "uid": "102136437",
+      "name": "Richard",
+      "rawName": "Richard",
+      "score": 360,
+      "level": 0,
+      "url": "https://eremora.com/u/102136437/challenges/dzone/70"
+    },
+    {
+      "rank": 330,
+      "uid": "101690464",
+      "name": "Adonis",
+      "rawName": "Adonis",
+      "score": 355,
+      "level": 0,
+      "url": "https://eremora.com/u/101690464/challenges/dzone/70"
+    },
+    {
+      "rank": 331,
+      "uid": "102163842",
+      "name": "Zoe",
+      "rawName": "Zoe",
+      "score": 355,
+      "level": 0,
+      "url": "https://eremora.com/u/102163842/challenges/dzone/70"
+    },
+    {
+      "rank": 332,
+      "uid": "100398967",
+      "name": "花痕墨淡",
+      "rawName": "花痕墨淡",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/100398967/challenges/dzone/70"
+    },
+    {
+      "rank": 333,
+      "uid": "100410482",
+      "name": "尼古拉絻",
+      "rawName": "尼古拉絻",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/100410482/challenges/dzone/70"
+    },
+    {
+      "rank": 334,
+      "uid": "100549760",
+      "name": "몽루",
+      "rawName": "몽루",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/100549760/challenges/dzone/70"
+    },
+    {
+      "rank": 335,
+      "uid": "100553128",
+      "name": "糖送元明清",
+      "rawName": "糖送元明清",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/100553128/challenges/dzone/70"
+    },
+    {
+      "rank": 336,
+      "uid": "100738650",
+      "name": "朔也",
+      "rawName": "朔也",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/100738650/challenges/dzone/70"
+    },
+    {
+      "rank": 337,
+      "uid": "101015012",
+      "name": "番薯味咖啡",
+      "rawName": "番薯味咖啡",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101015012/challenges/dzone/70"
+    },
+    {
+      "rank": 338,
+      "uid": "101031439",
+      "name": "Fayde",
+      "rawName": "Fayde",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101031439/challenges/dzone/70"
+    },
+    {
+      "rank": 339,
+      "uid": "101077533",
+      "name": "Angelos",
+      "rawName": "Angelos",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101077533/challenges/dzone/70"
+    },
+    {
+      "rank": 340,
+      "uid": "101312218",
+      "name": "诗之歌",
+      "rawName": "诗之歌",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101312218/challenges/dzone/70"
+    },
+    {
+      "rank": 341,
+      "uid": "101351304",
+      "name": "Makkiyato07",
+      "rawName": "Makkiyato07",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101351304/challenges/dzone/70"
+    },
+    {
+      "rank": 342,
+      "uid": "101392314",
+      "name": "LilSum",
+      "rawName": "LilSum",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101392314/challenges/dzone/70"
+    },
+    {
+      "rank": 343,
+      "uid": "101523814",
+      "name": "Solace",
+      "rawName": "Solace",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101523814/challenges/dzone/70"
+    },
+    {
+      "rank": 344,
+      "uid": "101545646",
+      "name": "Orion",
+      "rawName": "Orion",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101545646/challenges/dzone/70"
+    },
+    {
+      "rank": 345,
+      "uid": "101569860",
+      "name": "Manic",
+      "rawName": "Manic",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101569860/challenges/dzone/70"
+    },
+    {
+      "rank": 346,
+      "uid": "101706898",
+      "name": " 鸿",
+      "rawName": " 鸿",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101706898/challenges/dzone/70"
+    },
+    {
+      "rank": 347,
+      "uid": "101733548",
+      "name": "Egokitze",
+      "rawName": "Egokitze",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101733548/challenges/dzone/70"
+    },
+    {
+      "rank": 348,
+      "uid": "101744123",
+      "name": "샤론의장미",
+      "rawName": "샤론의장미",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101744123/challenges/dzone/70"
+    },
+    {
+      "rank": 349,
+      "uid": "101820966",
+      "name": "薇薇妮",
+      "rawName": "薇薇妮",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101820966/challenges/dzone/70"
+    },
+    {
+      "rank": 350,
+      "uid": "101883088",
+      "name": "Ursa",
+      "rawName": "Ursa",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101883088/challenges/dzone/70"
+    },
+    {
+      "rank": 351,
+      "uid": "101885606",
+      "name": "安",
+      "rawName": "安",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101885606/challenges/dzone/70"
+    },
+    {
+      "rank": 352,
+      "uid": "101950757",
+      "name": "allenfart",
+      "rawName": "allenfart",
+      "score": 350,
+      "level": 0,
+      "url": "https://eremora.com/u/101950757/challenges/dzone/70"
+    },
+    {
+      "rank": 353,
+      "uid": "100919437",
+      "name": "啊哦嗯呐呗",
+      "rawName": "啊哦嗯呐呗",
+      "score": 345,
+      "level": 0,
+      "url": "https://eremora.com/u/100919437/challenges/dzone/70"
+    },
+    {
+      "rank": 354,
+      "uid": "101244377",
+      "name": "Katya",
+      "rawName": "Katya",
+      "score": 345,
+      "level": 0,
+      "url": "https://eremora.com/u/101244377/challenges/dzone/70"
+    },
+    {
+      "rank": 355,
+      "uid": "101777851",
+      "name": "X_X",
+      "rawName": "X_X",
+      "score": 340,
+      "level": 0,
+      "url": "https://eremora.com/u/101777851/challenges/dzone/70"
+    },
+    {
+      "rank": 356,
+      "uid": "101806084",
+      "name": "终点",
+      "rawName": "终点",
+      "score": 340,
+      "level": 0,
+      "url": "https://eremora.com/u/101806084/challenges/dzone/70"
+    },
+    {
+      "rank": 357,
+      "uid": "101976195",
+      "name": "飘",
+      "rawName": "飘",
+      "score": 340,
+      "level": 0,
+      "url": "https://eremora.com/u/101976195/challenges/dzone/70"
+    },
+    {
+      "rank": 358,
+      "uid": "101071166",
+      "name": "言之命至",
+      "rawName": "言之命至",
+      "score": 335,
+      "level": 0,
+      "url": "https://eremora.com/u/101071166/challenges/dzone/70"
+    },
+    {
+      "rank": 359,
+      "uid": "100671900",
+      "name": "沙利葉",
+      "rawName": "沙利葉",
+      "score": 330,
+      "level": 0,
+      "url": "https://eremora.com/u/100671900/challenges/dzone/70"
+    },
+    {
+      "rank": 360,
+      "uid": "100748645",
+      "name": "尽空",
+      "rawName": "尽空",
+      "score": 330,
+      "level": 0,
+      "url": "https://eremora.com/u/100748645/challenges/dzone/70"
+    },
+    {
+      "rank": 361,
+      "uid": "100864863",
+      "name": "NoahRisencano",
+      "rawName": "NoahRisencano",
+      "score": 330,
+      "level": 0,
+      "url": "https://eremora.com/u/100864863/challenges/dzone/70"
+    },
+    {
+      "rank": 362,
+      "uid": "101113427",
+      "name": "Sans",
+      "rawName": "Sans",
+      "score": 330,
+      "level": 0,
+      "url": "https://eremora.com/u/101113427/challenges/dzone/70"
+    },
+    {
+      "rank": 363,
+      "uid": "101927557",
+      "name": "Algedi",
+      "rawName": "Algedi",
+      "score": 330,
+      "level": 0,
+      "url": "https://eremora.com/u/101927557/challenges/dzone/70"
+    },
+    {
+      "rank": 364,
+      "uid": "100739422",
+      "name": "玄武纪师",
+      "rawName": "玄武纪师",
+      "score": 325,
+      "level": 0,
+      "url": "https://eremora.com/u/100739422/challenges/dzone/70"
+    },
+    {
+      "rank": 365,
+      "uid": "100793504",
+      "name": "波卡",
+      "rawName": "波卡",
+      "score": 320,
+      "level": 0,
+      "url": "https://eremora.com/u/100793504/challenges/dzone/70"
+    },
+    {
+      "rank": 366,
+      "uid": "101097709",
+      "name": "Simon",
+      "rawName": "Simon",
+      "score": 320,
+      "level": 0,
+      "url": "https://eremora.com/u/101097709/challenges/dzone/70"
+    },
+    {
+      "rank": 367,
+      "uid": "101967894",
+      "name": "lil",
+      "rawName": "lil",
+      "score": 320,
+      "level": 0,
+      "url": "https://eremora.com/u/101967894/challenges/dzone/70"
+    },
+    {
+      "rank": 368,
+      "uid": "102003422",
+      "name": "Alliy",
+      "rawName": "Alliy",
+      "score": 320,
+      "level": 0,
+      "url": "https://eremora.com/u/102003422/challenges/dzone/70"
+    },
+    {
+      "rank": 369,
+      "uid": "100765734",
+      "name": "烛汐",
+      "rawName": "烛汐",
+      "score": 315,
+      "level": 0,
+      "url": "https://eremora.com/u/100765734/challenges/dzone/70"
+    },
+    {
+      "rank": 370,
+      "uid": "101237280",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 315,
+      "level": 0,
+      "url": "https://eremora.com/u/101237280/challenges/dzone/70"
+    },
+    {
+      "rank": 371,
+      "uid": "101311664",
+      "name": "stardust",
+      "rawName": "stardust",
+      "score": 315,
+      "level": 0,
+      "url": "https://eremora.com/u/101311664/challenges/dzone/70"
+    },
+    {
+      "rank": 372,
+      "uid": "100401798",
+      "name": "KUROI三月",
+      "rawName": "KUROI三月",
+      "score": 310,
+      "level": 0,
+      "url": "https://eremora.com/u/100401798/challenges/dzone/70"
+    },
+    {
+      "rank": 373,
+      "uid": "100416238",
+      "name": "原神",
+      "rawName": "原神",
+      "score": 310,
+      "level": 0,
+      "url": "https://eremora.com/u/100416238/challenges/dzone/70"
+    },
+    {
+      "rank": 374,
+      "uid": "101066805",
+      "name": "DA???d",
+      "rawName": "DA???d",
+      "score": 310,
+      "level": 0,
+      "url": "https://eremora.com/u/101066805/challenges/dzone/70"
+    },
+    {
+      "rank": 375,
+      "uid": "101890560",
+      "name": "Kyle",
+      "rawName": "Kyle",
+      "score": 310,
+      "level": 0,
+      "url": "https://eremora.com/u/101890560/challenges/dzone/70"
+    },
+    {
+      "rank": 376,
+      "uid": "101940283",
+      "name": "OD",
+      "rawName": "OD",
+      "score": 310,
+      "level": 0,
+      "url": "https://eremora.com/u/101940283/challenges/dzone/70"
+    },
+    {
+      "rank": 377,
+      "uid": "102094542",
+      "name": "Kunagisa",
+      "rawName": "Kunagisa",
+      "score": 310,
+      "level": 0,
+      "url": "https://eremora.com/u/102094542/challenges/dzone/70"
+    },
+    {
+      "rank": 378,
+      "uid": "100543767",
+      "name": "松鼠桂鱼",
+      "rawName": "松鼠桂鱼",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/100543767/challenges/dzone/70"
+    },
+    {
+      "rank": 379,
+      "uid": "100558455",
+      "name": "遇见盛夏童话",
+      "rawName": "遇见盛夏童话",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/100558455/challenges/dzone/70"
+    },
+    {
+      "rank": 380,
+      "uid": "100588275",
+      "name": "hanabi",
+      "rawName": "hanabi",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/100588275/challenges/dzone/70"
+    },
+    {
+      "rank": 381,
+      "uid": "100691877",
+      "name": "Crowley",
+      "rawName": "Crowley",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/100691877/challenges/dzone/70"
+    },
+    {
+      "rank": 382,
+      "uid": "100763139",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/100763139/challenges/dzone/70"
+    },
+    {
+      "rank": 383,
+      "uid": "100827327",
+      "name": "莉奧諾拉",
+      "rawName": "莉奧諾拉",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/100827327/challenges/dzone/70"
+    },
+    {
+      "rank": 384,
+      "uid": "101105048",
+      "name": "Elysia",
+      "rawName": "Elysia",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101105048/challenges/dzone/70"
+    },
+    {
+      "rank": 385,
+      "uid": "101153074",
+      "name": "gluti25",
+      "rawName": "gluti25",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101153074/challenges/dzone/70"
+    },
+    {
+      "rank": 386,
+      "uid": "101553695",
+      "name": "Dehvi",
+      "rawName": "Dehvi",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101553695/challenges/dzone/70"
+    },
+    {
+      "rank": 387,
+      "uid": "101568450",
+      "name": "Sylvester",
+      "rawName": "Sylvester",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101568450/challenges/dzone/70"
+    },
+    {
+      "rank": 388,
+      "uid": "101643849",
+      "name": "Damien Ashe",
+      "rawName": "Damien Ashe",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101643849/challenges/dzone/70"
+    },
+    {
+      "rank": 389,
+      "uid": "101650300",
+      "name": "LinY",
+      "rawName": "LinY",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101650300/challenges/dzone/70"
+    },
+    {
+      "rank": 390,
+      "uid": "101767800",
+      "name": "Shverleite",
+      "rawName": "Shverleite",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101767800/challenges/dzone/70"
+    },
+    {
+      "rank": 391,
+      "uid": "101836247",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101836247/challenges/dzone/70"
+    },
+    {
+      "rank": 392,
+      "uid": "101859219",
+      "name": "보드람",
+      "rawName": "보드람",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101859219/challenges/dzone/70"
+    },
+    {
+      "rank": 393,
+      "uid": "101874086",
+      "name": "M∀LICE",
+      "rawName": "M∀LICE",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101874086/challenges/dzone/70"
+    },
+    {
+      "rank": 394,
+      "uid": "101882374",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/101882374/challenges/dzone/70"
+    },
+    {
+      "rank": 395,
+      "uid": "102186393",
+      "name": "실베스터",
+      "rawName": "실베스터",
+      "score": 300,
+      "level": 0,
+      "url": "https://eremora.com/u/102186393/challenges/dzone/70"
+    },
+    {
+      "rank": 396,
+      "uid": "100165572",
+      "name": "李渭然",
+      "rawName": "李渭然",
+      "score": 295,
+      "level": 0,
+      "url": "https://eremora.com/u/100165572/challenges/dzone/70"
+    },
+    {
+      "rank": 397,
+      "uid": "100859478",
+      "name": "abyss",
+      "rawName": "abyss",
+      "score": 295,
+      "level": 0,
+      "url": "https://eremora.com/u/100859478/challenges/dzone/70"
+    },
+    {
+      "rank": 398,
+      "uid": "101654094",
+      "name": "茶酱ovo",
+      "rawName": "茶酱ovo",
+      "score": 295,
+      "level": 0,
+      "url": "https://eremora.com/u/101654094/challenges/dzone/70"
+    },
+    {
+      "rank": 399,
+      "uid": "100303739",
+      "name": "阿尔契亚",
+      "rawName": "阿尔契亚",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/100303739/challenges/dzone/70"
+    },
+    {
+      "rank": 400,
+      "uid": "100705360",
+      "name": "Yara",
+      "rawName": "Yara",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/100705360/challenges/dzone/70"
+    },
+    {
+      "rank": 401,
+      "uid": "100888953",
+      "name": "冷沔泠",
+      "rawName": "冷沔泠",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/100888953/challenges/dzone/70"
+    },
+    {
+      "rank": 402,
+      "uid": "101395334",
+      "name": "她念诵我名",
+      "rawName": "她念诵我名",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101395334/challenges/dzone/70"
+    },
+    {
+      "rank": 403,
+      "uid": "101564033",
+      "name": "幻渊",
+      "rawName": "幻渊",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101564033/challenges/dzone/70"
+    },
+    {
+      "rank": 404,
+      "uid": "101722400",
+      "name": "Zarina",
+      "rawName": "Zarina",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101722400/challenges/dzone/70"
+    },
+    {
+      "rank": 405,
+      "uid": "101834870",
+      "name": "Keeper-0617",
+      "rawName": "Keeper-0617",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101834870/challenges/dzone/70"
+    },
+    {
+      "rank": 406,
+      "uid": "101905666",
+      "name": "휘틀리",
+      "rawName": "휘틀리",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101905666/challenges/dzone/70"
+    },
+    {
+      "rank": 407,
+      "uid": "101919995",
+      "name": "Johan",
+      "rawName": "Johan",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101919995/challenges/dzone/70"
+    },
+    {
+      "rank": 408,
+      "uid": "101931454",
+      "name": "OldNick",
+      "rawName": "OldNick",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/101931454/challenges/dzone/70"
+    },
+    {
+      "rank": 409,
+      "uid": "102159350",
+      "name": "Lilac",
+      "rawName": "Lilac",
+      "score": 290,
+      "level": 0,
+      "url": "https://eremora.com/u/102159350/challenges/dzone/70"
+    },
+    {
+      "rank": 410,
+      "uid": "100738264",
+      "name": "人类",
+      "rawName": "人类",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/100738264/challenges/dzone/70"
+    },
+    {
+      "rank": 411,
+      "uid": "100854451",
+      "name": "萍菓",
+      "rawName": "萍菓",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/100854451/challenges/dzone/70"
+    },
+    {
+      "rank": 412,
+      "uid": "100877665",
+      "name": "折柳佳",
+      "rawName": "折柳佳",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/100877665/challenges/dzone/70"
+    },
+    {
+      "rank": 413,
+      "uid": "101028340",
+      "name": "Edelweiss",
+      "rawName": "Edelweiss",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/101028340/challenges/dzone/70"
+    },
+    {
+      "rank": 414,
+      "uid": "101160313",
+      "name": "sigmaman",
+      "rawName": "sigmaman",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/101160313/challenges/dzone/70"
+    },
+    {
+      "rank": 415,
+      "uid": "101901552",
+      "name": "<#f37>慕",
+      "rawName": "<#f37>慕",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/101901552/challenges/dzone/70"
+    },
+    {
+      "rank": 416,
+      "uid": "101996788",
+      "name": "Leonora",
+      "rawName": "Leonora",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/101996788/challenges/dzone/70"
+    },
+    {
+      "rank": 417,
+      "uid": "102026396",
+      "name": "Arno",
+      "rawName": "Arno",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/102026396/challenges/dzone/70"
+    },
+    {
+      "rank": 418,
+      "uid": "102231922",
+      "name": "维尔洛特",
+      "rawName": "维尔洛特",
+      "score": 280,
+      "level": 0,
+      "url": "https://eremora.com/u/102231922/challenges/dzone/70"
+    },
+    {
+      "rank": 419,
+      "uid": "100538138",
+      "name": "愚者",
+      "rawName": "愚者",
+      "score": 275,
+      "level": 0,
+      "url": "https://eremora.com/u/100538138/challenges/dzone/70"
+    },
+    {
+      "rank": 420,
+      "uid": "101765480",
+      "name": "Rajib",
+      "rawName": "Rajib",
+      "score": 275,
+      "level": 0,
+      "url": "https://eremora.com/u/101765480/challenges/dzone/70"
+    },
+    {
+      "rank": 421,
+      "uid": "100994030",
+      "name": "Amy",
+      "rawName": "Amy",
+      "score": 270,
+      "level": 0,
+      "url": "https://eremora.com/u/100994030/challenges/dzone/70"
+    },
+    {
+      "rank": 422,
+      "uid": "101706818",
+      "name": "Sylvester",
+      "rawName": "Sylvester",
+      "score": 270,
+      "level": 0,
+      "url": "https://eremora.com/u/101706818/challenges/dzone/70"
+    },
+    {
+      "rank": 423,
+      "uid": "101912205",
+      "name": "<#af5>瑟维",
+      "rawName": "<#af5>瑟维",
+      "score": 270,
+      "level": 0,
+      "url": "https://eremora.com/u/101912205/challenges/dzone/70"
+    },
+    {
+      "rank": 424,
+      "uid": "100333695",
+      "name": "亲吻过我的伤痕",
+      "rawName": "亲吻过我的伤痕",
+      "score": 260,
+      "level": 0,
+      "url": "https://eremora.com/u/100333695/challenges/dzone/70"
+    },
+    {
+      "rank": 425,
+      "uid": "100457080",
+      "name": "莉奧諾拉",
+      "rawName": "莉奧諾拉",
+      "score": 260,
+      "level": 0,
+      "url": "https://eremora.com/u/100457080/challenges/dzone/70"
+    },
+    {
+      "rank": 426,
+      "uid": "100552216",
+      "name": "greedy",
+      "rawName": "greedy",
+      "score": 260,
+      "level": 0,
+      "url": "https://eremora.com/u/100552216/challenges/dzone/70"
+    },
+    {
+      "rank": 427,
+      "uid": "101192537",
+      "name": "Kintark",
+      "rawName": "Kintark",
+      "score": 260,
+      "level": 0,
+      "url": "https://eremora.com/u/101192537/challenges/dzone/70"
+    },
+    {
+      "rank": 428,
+      "uid": "101563920",
+      "name": "노라",
+      "rawName": "노라",
+      "score": 260,
+      "level": 0,
+      "url": "https://eremora.com/u/101563920/challenges/dzone/70"
+    },
+    {
+      "rank": 429,
+      "uid": "100718412",
+      "name": "莉奧諾拉",
+      "rawName": "莉奧諾拉",
+      "score": 250,
+      "level": 0,
+      "url": "https://eremora.com/u/100718412/challenges/dzone/70"
+    },
+    {
+      "rank": 430,
+      "uid": "101303809",
+      "name": "将琅",
+      "rawName": "将琅",
+      "score": 250,
+      "level": 0,
+      "url": "https://eremora.com/u/101303809/challenges/dzone/70"
+    },
+    {
+      "rank": 431,
+      "uid": "101885335",
+      "name": "塔罗兰ROSA",
+      "rawName": "塔罗兰ROSA",
+      "score": 250,
+      "level": 0,
+      "url": "https://eremora.com/u/101885335/challenges/dzone/70"
+    },
+    {
+      "rank": 432,
+      "uid": "101926279",
+      "name": "가럼",
+      "rawName": "가럼",
+      "score": 250,
+      "level": 0,
+      "url": "https://eremora.com/u/101926279/challenges/dzone/70"
+    },
+    {
+      "rank": 433,
+      "uid": "102008634",
+      "name": "<#dbf>琳",
+      "rawName": "<#dbf>琳",
+      "score": 250,
+      "level": 0,
+      "url": "https://eremora.com/u/102008634/challenges/dzone/70"
+    },
+    {
+      "rank": 434,
+      "uid": "100107819",
+      "name": "QiKu",
+      "rawName": "QiKu",
+      "score": 245,
+      "level": 0,
+      "url": "https://eremora.com/u/100107819/challenges/dzone/70"
+    },
+    {
+      "rank": 435,
+      "uid": "100452378",
+      "name": "墨漪清",
+      "rawName": "墨漪清",
+      "score": 240,
+      "level": 0,
+      "url": "https://eremora.com/u/100452378/challenges/dzone/70"
+    },
+    {
+      "rank": 436,
+      "uid": "100581886",
+      "name": "小小大英雄",
+      "rawName": "小小大英雄",
+      "score": 240,
+      "level": 0,
+      "url": "https://eremora.com/u/100581886/challenges/dzone/70"
+    },
+    {
+      "rank": 437,
+      "uid": "101327895",
+      "name": "Thana",
+      "rawName": "Thana",
+      "score": 240,
+      "level": 0,
+      "url": "https://eremora.com/u/101327895/challenges/dzone/70"
+    },
+    {
+      "rank": 438,
+      "uid": "101647000",
+      "name": "白泽",
+      "rawName": "白泽",
+      "score": 240,
+      "level": 0,
+      "url": "https://eremora.com/u/101647000/challenges/dzone/70"
+    },
+    {
+      "rank": 439,
+      "uid": "100420008",
+      "name": "雾凇子",
+      "rawName": "雾凇子",
+      "score": 230,
+      "level": 0,
+      "url": "https://eremora.com/u/100420008/challenges/dzone/70"
+    },
+    {
+      "rank": 440,
+      "uid": "100654976",
+      "name": "OutcastBox",
+      "rawName": "OutcastBox",
+      "score": 230,
+      "level": 0,
+      "url": "https://eremora.com/u/100654976/challenges/dzone/70"
+    },
+    {
+      "rank": 441,
+      "uid": "101295751",
+      "name": "Echo",
+      "rawName": "Echo",
+      "score": 230,
+      "level": 0,
+      "url": "https://eremora.com/u/101295751/challenges/dzone/70"
+    },
+    {
+      "rank": 442,
+      "uid": "100669515",
+      "name": "Yukikasa",
+      "rawName": "Yukikasa",
+      "score": 220,
+      "level": 0,
+      "url": "https://eremora.com/u/100669515/challenges/dzone/70"
+    },
+    {
+      "rank": 443,
+      "uid": "100578437",
+      "name": "<#b4d>雷电派蒙",
+      "rawName": "<#b4d>雷电派蒙",
+      "score": 210,
+      "level": 0,
+      "url": "https://eremora.com/u/100578437/challenges/dzone/70"
+    },
+    {
+      "rank": 444,
+      "uid": "101177290",
+      "name": "Wesker",
+      "rawName": "Wesker",
+      "score": 210,
+      "level": 0,
+      "url": "https://eremora.com/u/101177290/challenges/dzone/70"
+    },
+    {
+      "rank": 445,
+      "uid": "101510306",
+      "name": "薇拉丽塔",
+      "rawName": "薇拉丽塔",
+      "score": 210,
+      "level": 0,
+      "url": "https://eremora.com/u/101510306/challenges/dzone/70"
+    },
+    {
+      "rank": 446,
+      "uid": "101513283",
+      "name": "Arcanites",
+      "rawName": "Arcanites",
+      "score": 210,
+      "level": 0,
+      "url": "https://eremora.com/u/101513283/challenges/dzone/70"
+    },
+    {
+      "rank": 447,
+      "uid": "100603881",
+      "name": "欧拉拉",
+      "rawName": "欧拉拉",
+      "score": 200,
+      "level": 0,
+      "url": "https://eremora.com/u/100603881/challenges/dzone/70"
+    },
+    {
+      "rank": 448,
+      "uid": "101941044",
+      "name": "Leonora",
+      "rawName": "Leonora",
+      "score": 200,
+      "level": 0,
+      "url": "https://eremora.com/u/101941044/challenges/dzone/70"
+    },
+    {
+      "rank": 449,
+      "uid": "101107470",
+      "name": "Lostboy",
+      "rawName": "Lostboy",
+      "score": 180,
+      "level": 0,
+      "url": "https://eremora.com/u/101107470/challenges/dzone/70"
+    },
+    {
+      "rank": 450,
+      "uid": "101836008",
+      "name": "Glublorb",
+      "rawName": "Glublorb",
+      "score": 180,
+      "level": 0,
+      "url": "https://eremora.com/u/101836008/challenges/dzone/70"
+    },
+    {
+      "rank": 451,
+      "uid": "100072991",
+      "name": "anh PVP 互刷\n\n",
+      "rawName": "anh PVP 互刷\n\n",
+      "score": 175,
+      "level": 0,
+      "url": "https://eremora.com/u/100072991/challenges/dzone/70"
+    },
+    {
+      "rank": 452,
+      "uid": "100226754",
+      "name": "重岳",
+      "rawName": "重岳",
+      "score": 170,
+      "level": 0,
+      "url": "https://eremora.com/u/100226754/challenges/dzone/70"
+    },
+    {
+      "rank": 453,
+      "uid": "100896150",
+      "name": "莉奥诺拉",
+      "rawName": "莉奥诺拉",
+      "score": 170,
+      "level": 0,
+      "url": "https://eremora.com/u/100896150/challenges/dzone/70"
+    },
+    {
+      "rank": 454,
+      "uid": "101066114",
+      "name": "Foleosy",
+      "rawName": "Foleosy",
+      "score": 170,
+      "level": 0,
+      "url": "https://eremora.com/u/101066114/challenges/dzone/70"
+    },
+    {
+      "rank": 455,
+      "uid": "101161275",
+      "name": "Senjougahara",
+      "rawName": "Senjougahara",
+      "score": 170,
+      "level": 0,
+      "url": "https://eremora.com/u/101161275/challenges/dzone/70"
+    },
+    {
+      "rank": 456,
+      "uid": "102064697",
+      "name": "doggystyleMVP",
+      "rawName": "doggystyleMVP",
+      "score": 70,
+      "level": 0,
+      "url": "https://eremora.com/u/102064697/challenges/dzone/70"
+    },
+    {
+      "rank": 457,
+      "uid": "100669964",
+      "name": "奥托菲尔",
+      "rawName": "奥托菲尔",
+      "score": 60,
+      "level": 0,
+      "url": "https://eremora.com/u/100669964/challenges/dzone/70"
+    }
+  ]
+}
