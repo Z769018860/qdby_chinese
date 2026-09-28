@@ -197,6 +197,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 助战角色栏两行展示</strong><br>技能与灵塑摘要移回“助战角色”栏：技能按 slots[1–6].level 显示为 6 / 6 / 6 / 6 / 6 / 6，灵塑按 talents 的 madness / soulforge / gnostic 显示为 +11 / 10 / 5。旧数据缺少 slots/talents 时保持空白。</div>
         <div class="sourceItem"><strong>2026-09-29 · 技能 / 灵塑字段重新校准</strong><br>确认原先将 potential 当作技能、break_level 当作灵塑是错误映射。正确技能等级来自 slots[1–6].level；图示的 +11 / 10 / 5 来自 talents 的 madness / soulforge / gnostic。处理脚本已开始保留 slots/talents；旧数据缺失这些字段时保持空白，不再显示错误数字。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
