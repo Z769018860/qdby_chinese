@@ -290,6 +290,7 @@
         <div class="dtideField"><label for="assistEnlightFilter">启灵</label><select id="assistEnlightFilter"><option value="">全部启灵</option></select></div>
         <div class="dtideField"><label for="assistWheelFilter">命轮</label><select id="assistWheelFilter"><option value="">全部命轮</option></select></div>
         <div class="dtideField"><label for="assistCovenantFilter">密契</label><select id="assistCovenantFilter"><option value="">全部密契</option></select></div>
+        <div class="dtideField"><label for="assistSourceFilter">来源</label><select id="assistSourceFilter"><option value="">全部来源</option><option value="historical">历史融灾记录</option><option value="showcase">Eremora Showcase 导入</option><option value="legacy">旧版在线补充</option></select></div>
         <div class="dtideField assistFilterAction"><label>&nbsp;</label><button type="button" class="ghostBtn" id="assistReset">清空筛选</button></div>
       </div>
       <div class="dtideStatGrid" id="assistSummary"></div>
