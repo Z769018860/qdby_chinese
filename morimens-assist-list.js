@@ -857,6 +857,7 @@
     enlight.innerHTML='<option value="">'+ui('全部启灵','All Enlighten')+'</option>'+enlights.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
     wheel.innerHTML='<option value="">'+ui('全部命轮','All Wheels')+'</option>'+optionRows(rows,r=>r.wheels).map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
     cov.innerHTML='<option value="">'+ui('全部密契','All Covenants')+'</option>'+covenantOptions().map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
+    source.innerHTML='<option value="">'+ui('全部来源','All Sources')+'</option><option value="historical">'+ui('历史融灾记录','Historical D-Zone records')+'</option><option value="showcase">'+ui('Eremora Showcase 导入','Eremora Showcase import')+'</option><option value="legacy">'+ui('旧版在线补充','Legacy online submission')+'</option>';
     [char,level,enlight,wheel,cov,source].forEach((el,i)=>{if([...el.options].some(o=>o.value===keep[i]))el.value=keep[i]});
   }
   function filtered(){
