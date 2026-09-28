@@ -60,11 +60,11 @@
     const s=document.createElement('style');s.id='morimensAssistStyle';s.textContent=`
       .assistFilters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
       .assistFilterAction{justify-content:end}.assistFilterAction button{min-height:40px}
-      .assistNotice{margin-top:12px}.assistTable{min-width:1040px;table-layout:fixed}.assistTable th,.assistTable td{vertical-align:top}.assistTable th:nth-child(1){width:17%}.assistTable th:nth-child(2){width:23%}.assistTable th:nth-child(3){width:15%}.assistTable th:nth-child(4){width:27%}.assistTable th:nth-child(5){width:10%}.assistTable th:nth-child(6){width:8%}.assistTable tbody tr{transition:background .16s ease}.assistTable tbody tr:hover{background:rgba(255,255,255,.018)}.assistTable tbody tr.assistManualRow{background:linear-gradient(90deg,rgba(88,220,246,.045),transparent 55%)}.assistTable tbody tr.assistManualRow:hover{background:linear-gradient(90deg,rgba(88,220,246,.075),rgba(255,255,255,.012) 70%)}
+      .assistNotice{margin-top:12px}.assistTable{min-width:1360px;table-layout:fixed}.assistTable th,.assistTable td{vertical-align:top}.assistTable th:nth-child(1){width:14%}.assistTable th:nth-child(2){width:15%}.assistTable th:nth-child(3){width:10%}.assistTable th:nth-child(4){width:8%}.assistTable th:nth-child(5){width:12%}.assistTable th:nth-child(6){width:24%}.assistTable th:nth-child(7){width:10%}.assistTable th:nth-child(8){width:7%}.assistTable tbody tr{transition:background .16s ease}.assistTable tbody tr:hover{background:rgba(255,255,255,.018)}.assistTable tbody tr.assistManualRow{background:linear-gradient(90deg,rgba(88,220,246,.045),transparent 55%)}.assistTable tbody tr.assistManualRow:hover{background:linear-gradient(90deg,rgba(88,220,246,.075),rgba(255,255,255,.012) 70%)}
       .assistCharacter{display:flex;align-items:center;gap:9px;min-width:160px}.assistCharacter img{width:42px;height:42px;border-radius:9px;object-fit:cover;background:#0b1220;flex:none}.assistCharacter b,.assistCharacter small{display:block}.assistCharacter small{margin-top:3px;color:#7f8da1;font-size:9px}
       .assistUid a{color:#e0bd82;text-decoration:none;font-weight:800}.assistUid a:hover{text-decoration:underline}.assistUid strong{display:block;margin-top:3px;color:#d9e1eb;font-size:11px}.assistUid small{display:block;margin-top:2px;color:#718096;font-size:9px}.assistUidLine{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.assistCopyUid{border:1px solid rgba(224,189,130,.35);background:rgba(224,189,130,.08);color:#e8ca91;border-radius:7px;padding:3px 7px;font-size:9px;cursor:pointer}.assistCopyUid:hover{background:rgba(224,189,130,.16)}.assistCopyUid.copied{color:#8ed9b1;border-color:rgba(142,217,177,.4)}.assistGuideBanner{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:14px 0 2px;padding:14px 17px;border:1px solid rgba(245,194,104,.55);border-radius:12px;background:linear-gradient(100deg,rgba(104,61,12,.42),rgba(217,167,75,.12));box-shadow:0 0 22px rgba(217,167,75,.08);color:#ffe2a7;text-decoration:none;font-weight:900}.assistGuideBanner:hover{border-color:#f0c36f;background:linear-gradient(100deg,rgba(123,72,13,.5),rgba(217,167,75,.18))}.assistGuideBanner span{color:#fff3d7;font-size:11px}
       .assistGear{display:flex;flex-wrap:wrap;gap:7px;align-items:flex-start}.assistGearCard{display:grid;grid-template-columns:34px minmax(0,1fr);gap:7px;align-items:start;min-width:145px;max-width:230px;padding:6px 8px;border:1px solid rgba(148,163,184,.16);border-radius:9px;background:#111827}.assistGearCard>img{width:34px;height:34px;border-radius:7px;object-fit:contain;background:#0b1220}.assistGearCard b{display:block;font-size:10px;color:#e9eef5;line-height:1.25}.assistGearCard small{display:block;margin-top:2px;color:#8794a6;font-size:9px;line-height:1.3}.assistGearTextOnly{grid-template-columns:minmax(0,1fr)}.assistAttrList{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}.assistAttr{padding:2px 5px;border-radius:6px;background:rgba(217,179,108,.09);border:1px solid rgba(217,179,108,.16);color:#d9c59e;font-size:8px;line-height:1.25;white-space:nowrap}.assistSuitLine{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}.assistSuitTag,.assistSeasonTag{display:inline-flex;align-items:center;padding:3px 6px;border-radius:7px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);font-size:9px;color:#b6c0ce}.assistCount{font-size:16px;color:#f1d69f;font-weight:900;font-variant-numeric:tabular-nums}
-      .assistProgression{margin-top:7px;display:grid;gap:5px}.assistProgression>div{display:flex;align-items:flex-start;gap:6px}.assistProgression b{flex:none;min-width:28px;color:#8fa2b4;font-size:9px}.assistProgression span{display:flex;flex-wrap:wrap;gap:4px}.assistProgression i{font-style:normal;padding:2px 5px;border-radius:6px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.12);color:#c4ceda;font-size:8px}
+      .assistProgression{margin-top:7px;display:grid;gap:5px}.assistProgression>div{display:flex;align-items:flex-start;gap:6px}.assistProgression b{flex:none;min-width:28px;color:#8fa2b4;font-size:9px}.assistProgression span{display:flex;flex-wrap:wrap;gap:4px}.assistProgression i{font-style:normal;padding:2px 5px;border-radius:6px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.12);color:#c4ceda;font-size:8px}.assistProgressionColumn{vertical-align:top!important}.assistProgressionCell{display:flex;flex-wrap:wrap;gap:4px}.assistProgressionCell span{display:inline-flex;padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14);color:#cbd5e1;font-size:9px;line-height:1.3;word-break:break-word}
       .assistBuildMeta{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.assistBuildMeta span{padding:3px 6px;border-radius:7px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#c4ceda}.assistBuildMeta b{color:#f0d69f;font-weight:800}.assistSource{display:flex;flex-direction:column;gap:5px;align-items:flex-start}.assistSourceTag{display:inline-flex;align-items:center;padding:4px 7px;border-radius:8px;font-size:9px;border:1px solid rgba(148,163,184,.17);background:rgba(255,255,255,.035);color:#bac5d2}.assistSourceTag.online{border-color:rgba(88,220,246,.34);background:rgba(88,220,246,.08);color:#8de9fb}.assistSource small{font-size:8px;color:#758398}.assistManualUse{color:#8de9fb;font-size:10px;font-weight:800}.assistCountCell{text-align:center;vertical-align:middle!important}
       .assistSubmitBox{margin:14px 0;border:1px solid rgba(88,220,246,.22);border-radius:14px;background:linear-gradient(145deg,rgba(14,28,40,.82),rgba(10,18,27,.7));overflow:hidden}.assistSubmitBox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;color:#dff8ff}.assistSubmitBox>summary::-webkit-details-marker{display:none}.assistSubmitBox>summary strong{color:#81e8fb;font-size:13px}.assistSubmitBox>summary span{color:#8697aa;font-size:10px}.assistSubmitBox[open]>summary{border-bottom:1px solid rgba(88,220,246,.14);background:rgba(88,220,246,.035)}
       .assistSubmitForm{padding:16px}.assistSubmitGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.assistSubmitGridCompact{max-width:760px}.assistSubmitGrid label{display:flex;flex-direction:column;gap:6px;color:#8f9daf;font-size:10px}.assistSubmitGrid label>span b{color:#f0ba7a}.assistSubmitGrid input,.assistSubmitGrid select{width:100%;min-height:38px;border:1px solid rgba(148,163,184,.2);border-radius:9px;background:#0d1621;color:#e9eef5;padding:0 10px;outline:none}.assistSubmitGrid input:focus,.assistSubmitGrid select:focus{border-color:rgba(88,220,246,.55);box-shadow:0 0 0 3px rgba(88,220,246,.07)}
@@ -245,6 +245,11 @@
       (skills.length?'<div><b>'+ui('技能','Skills')+'</b><span>'+skills.map(x=>'<i>'+esc(x)+'</i>').join('')+'</span></div>':'')+
       (soulforge.length?'<div><b>'+ui('灵塑','Soulforge')+'</b><span>'+soulforge.map(x=>'<i>'+esc(x)+'</i>').join('')+'</span></div>':'')+
       '</div>';
+  }
+  function progressionCell(items){
+    const list=Array.isArray(items)?items.filter(x=>String(x??'').trim()!==''):[];
+    if(!list.length)return '';
+    return '<div class="assistProgressionCell">'+list.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div>';
   }
   function configKey(uid,m){
     const cov=m?.covenants||(m?.covenant?[m.covenant]:[]);
@@ -841,9 +846,9 @@
     return [...map].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
   }
   function populate(){
-    const char=$('assistCharacterFilter'),level=$('assistLevelFilter'),enlight=$('assistEnlightFilter'),wheel=$('assistWheelFilter'),cov=$('assistCovenantFilter');
-    if(!char||!level||!enlight||!wheel||!cov)return;
-    const keep=[char.value,level.value,enlight.value,wheel.value,cov.value];
+    const char=$('assistCharacterFilter'),level=$('assistLevelFilter'),enlight=$('assistEnlightFilter'),wheel=$('assistWheelFilter'),cov=$('assistCovenantFilter'),source=$('assistSourceFilter');
+    if(!char||!level||!enlight||!wheel||!cov||!source)return;
+    const keep=[char.value,level.value,enlight.value,wheel.value,cov.value,source.value];
     const chars=[...new Map(rows.map(r=>[r.characterKey,r.characterName]))].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'zh-CN'));
     const levels=[...new Set(rows.map(r=>r.level).filter(x=>x!=null&&x!==''))].sort((a,b)=>Number(a)-Number(b));
     const enlights=[...new Set(rows.map(r=>String(r.enlightenment||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'zh-CN',{numeric:true}));
@@ -852,10 +857,10 @@
     enlight.innerHTML='<option value="">'+ui('全部启灵','All Enlighten')+'</option>'+enlights.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
     wheel.innerHTML='<option value="">'+ui('全部命轮','All Wheels')+'</option>'+optionRows(rows,r=>r.wheels).map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
     cov.innerHTML='<option value="">'+ui('全部密契','All Covenants')+'</option>'+covenantOptions().map(([id,name])=>'<option value="'+esc(id)+'">'+esc(name)+'</option>').join('');
-    [char,level,enlight,wheel,cov].forEach((el,i)=>{if([...el.options].some(o=>o.value===keep[i]))el.value=keep[i]});
+    [char,level,enlight,wheel,cov,source].forEach((el,i)=>{if([...el.options].some(o=>o.value===keep[i]))el.value=keep[i]});
   }
   function filtered(){
-    const uid=String($('assistUidFilter')?.value||'').trim(),char=$('assistCharacterFilter')?.value||'',level=$('assistLevelFilter')?.value||'',enlight=$('assistEnlightFilter')?.value||'',wheel=$('assistWheelFilter')?.value||'',cov=$('assistCovenantFilter')?.value||'';
+    const uid=String($('assistUidFilter')?.value||'').trim(),char=$('assistCharacterFilter')?.value||'',level=$('assistLevelFilter')?.value||'',enlight=$('assistEnlightFilter')?.value||'',wheel=$('assistWheelFilter')?.value||'',cov=$('assistCovenantFilter')?.value||'',source=$('assistSourceFilter')?.value||'';
     return rows.filter(r=>{
       if(uid&&!r.uid.includes(uid)&&!String(r.player||'').toLowerCase().includes(uid.toLowerCase()))return false;
       if(char&&r.characterKey!==char)return false;
@@ -863,6 +868,7 @@
       if(enlight&&String(r.enlightenment||'')!==String(enlight))return false;
       if(wheel&&!r.wheels.some(x=>String(x.id||x.name)===wheel))return false;
       if(cov&&!r.covenants.some(x=>String(x.id||x.name)===cov))return false;
+      if(source&&sourceKey(r)!==source)return false;
       return true;
     });
   }
@@ -884,6 +890,11 @@
   }
   function seasonTags(row){
     return [...(row.seasons||[])].sort((a,b)=>Number(a)-Number(b)).map(s=>'<span class="assistSeasonTag">'+ui('第 '+s+' 期','Season '+s)+'</span>').join('');
+  }
+  function sourceKey(row){
+    if(row?.imported||row?.source==='showcase')return 'showcase';
+    if(row?.manual)return 'legacy';
+    return 'historical';
   }
   function sourceHtml(row){
     const date=row.submittedAt?new Date(row.submittedAt):null,valid=date&&!Number.isNaN(date.getTime());
@@ -909,15 +920,19 @@
     if(host)host.innerHTML=shown.length?'<table class="dtideTable assistTable"><thead><tr>'+
       '<th>'+ui('玩家','Player')+'</th>'+
       '<th>'+ui('助战角色','Assist Awakener')+'</th>'+
+      '<th>'+ui('技能','Skills')+'</th>'+
+      '<th>'+ui('灵塑','Soulforge')+'</th>'+
       '<th>'+ui('命轮','Wheel')+'</th>'+
       '<th>'+ui('密契 / 最终词条','Covenant / Final Stats')+'</th>'+
       '<th>'+ui('来源','Source')+'</th>'+
       '<th>'+ui('使用','Uses')+'</th>'+
       '</tr></thead><tbody>'+shown.map(r=>{
         const playerCell='<td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未匹配到玩家名','Player name unavailable')+'</small>')+'</td>';
-        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+((r.imported||r.source==='showcase')?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):(r.manual?ui('旧版在线补充配置','Legacy submitted build'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players'))))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div>'+progressionHtml(r)+'</td>';
+        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+((r.imported||r.source==='showcase')?ui('Eremora Showcase 当前配置','Current Eremora Showcase build'):(r.manual?ui('旧版在线补充配置','Legacy submitted build'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players'))))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div></td>';
         const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+ui('旧版补充','Legacy')+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span>'+(r.imported?'<small style="display:block;margin-top:4px;color:#718096">'+ui('历史实战累计','Historical observed uses')+'</small>':'')+'</td>';
-        return '<tr class="'+(r.imported?'assistManualRow':(r.manual?'assistManualRow':'assistObservedRow'))+'">'+playerCell+roleCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
+        const skillsCell='<td class="assistProgressionColumn">'+progressionCell(r.skills)+'</td>';
+        const soulforgeCell='<td class="assistProgressionColumn">'+progressionCell(r.soulforge)+'</td>';
+        return '<tr class="'+(r.imported?'assistManualRow':(r.manual?'assistManualRow':'assistObservedRow'))+'">'+playerCell+roleCell+skillsCell+soulforgeCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
       }).join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
     host?.querySelectorAll('[data-copy-uid]').forEach(btn=>btn.addEventListener('click',()=>copyUid(btn.dataset.copyUid,btn)));
     const pager=$('assistPager');
@@ -964,9 +979,9 @@
   }
   function bind(){
     $('assistSeason')?.addEventListener('change',()=>load($('assistSeason').value).catch(error));
-    for(const id of ['assistCharacterFilter','assistLevelFilter','assistEnlightFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
+    for(const id of ['assistCharacterFilter','assistLevelFilter','assistEnlightFilter','assistWheelFilter','assistCovenantFilter','assistSourceFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
     $('assistUidFilter')?.addEventListener('input',()=>{page=1;render()});
-    $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistLevelFilter','assistEnlightFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
+    $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistLevelFilter','assistEnlightFilter','assistWheelFilter','assistCovenantFilter','assistSourceFilter'])if($(id))$(id).value='';page=1;render()});
     bindImportDelegates();
     updateShowcaseUrlPreview();
   }
