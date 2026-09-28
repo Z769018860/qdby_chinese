@@ -238,8 +238,33 @@
       </div>
       <a class="assistGuideBanner" href="morimens-assist-guide.html">
         <strong>如何在对方没关注自己的情况下使用助战</strong>
-        <span>查看图文教程 →</span>
+        <span>查看图文 / 视频教程 →</span>
       </a>
+      <details class="assistSubmitBox" id="assistSubmitBox">
+        <summary><strong>＋ 在线补充助战信息</strong><span>跨设备公开显示 · 可补充当前常用助战配置</span></summary>
+        <form id="assistSubmitForm" class="assistSubmitForm">
+          <div class="assistSubmitGrid">
+            <label><span>玩家 UID <b>*</b></span><input id="assistSubmitUid" name="uid" inputmode="numeric" autocomplete="off" pattern="[0-9]{5,20}" maxlength="20" required placeholder="例如 100239011"></label>
+            <label><span>玩家名</span><input id="assistSubmitPlayer" name="player" maxlength="30" placeholder="选填"></label>
+            <label><span>助战角色 <b>*</b></span><select id="assistSubmitCharacter" name="character" required><option value="">正在读取角色…</option></select></label>
+            <label><span>角色等级 <b>*</b></span><input id="assistSubmitLevel" name="level" type="number" min="1" max="100" value="90" required></label>
+            <label><span>启灵 <b>*</b></span><select id="assistSubmitEnlightenment" name="enlightenment" required>
+              <option value="0启">0启</option><option value="1启">1启</option><option value="2启">2启</option><option value="3启">3启</option><option value="+4超限">+4 超限</option><option value="最终法则">最终法则（AA）</option>
+            </select></label>
+            <label><span>技能等级</span><input id="assistSubmitSkills" name="skills" maxlength="40" placeholder="选填，如 6/6/6/6/6/6"></label>
+            <label><span>灵塑</span><input id="assistSubmitBreak" name="breakLevel" type="number" min="0" max="20" placeholder="选填"></label>
+            <label><span>命轮 <b>*</b></span><select id="assistSubmitWheel" name="wheel" required><option value="">正在读取命轮…</option></select></label>
+            <label><span>命轮叠位 <b>*</b></span><select id="assistSubmitWheelStack" name="wheelStack" required><option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option><option value="4">+4</option><option value="5">+5</option><option value="6">+6</option><option value="7">+7</option><option value="8">+8</option><option value="9">+9</option><option value="10">+10</option><option value="11">+11</option><option value="12">+12</option></select></label>
+            <label><span>密契套装 <b>*</b></span><select id="assistSubmitCovenant" name="covenant" required><option value="">正在读取密契…</option></select></label>
+          </div>
+          <div class="assistSubmitAttrs">
+            <div class="assistSubmitAttrsHead"><div><strong>密契最终词条属性</strong><small>选填；填写六件密契最终汇总值，不需要逐片填写</small></div><button type="button" class="ghostBtn" id="assistAddAttr">＋ 增加词条</button></div>
+            <div id="assistSubmitAttrRows"></div>
+          </div>
+          <p class="assistSubmitPrivacy">提交后 UID、玩家名（如填写）和助战配置会公开显示。请只提交本人或已公开的助战信息。</p>
+          <div class="assistSubmitActions"><button class="primaryBtn" id="assistSubmitButton" type="submit">提交助战信息</button><span id="assistSubmitStatus" aria-live="polite"></span></div>
+        </form>
+      </details>
       <div class="assistFilters">
         <div class="dtideField"><label for="assistSeason">期次</label><select id="assistSeason"><option value="all" selected>全部期次（68 + 69）</option><option value="69">第 69 期</option><option value="68">第 68 期</option></select></div>
         <div class="dtideField"><label for="assistUidFilter">玩家 UID</label><input id="assistUidFilter" type="search" inputmode="numeric" placeholder="输入 UID 搜索"></div>
