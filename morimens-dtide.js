@@ -272,7 +272,7 @@
       <div class="panelHead"><div><p class="eyebrow">ABOUT · CREDITS</p><h2 id="morimensAboutTitle">关于忘忘看报</h2><p class="panelLead">本工具箱为《忘却前夜》玩家制作的粉丝向项目，免费使用，不进行任何商业化运营。</p></div><span class="statusPill">非官方 · 非商业</span></div>
       <div class="sourceList">
         <div class="sourceItem"><strong>数据与资料来源</strong><br>感谢 <a href="https://eremora.com/leaderboard/abyss" target="_blank" rel="noopener noreferrer">Eremora</a> 提供融灾榜单与挑战记录；感谢 <a href="https://github.com/dansa/SKeyDB" target="_blank" rel="noopener noreferrer">dansa/SKeyDB</a> 提供角色、技能、命轮及密契等结构化数据；感谢 <a href="https://morimens.huijiwiki.com/" target="_blank" rel="noopener noreferrer">忘却前夜中文维基</a> 提供中文名称、资料与文本参考。</div>
-        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>\n        <div class="sourceItem"><strong>社区 / 自行提交记录</strong><br><span>融灾数据自行提交已移至独立表单页；第69期提交时需区分 Bug前 / Bug后。</span><br><a href="morimens-dzone-submit.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;margin:10px 0 6px;padding:7px 11px;border:1px solid rgba(88,220,246,.28);border-radius:8px;color:#bceffa;text-decoration:none">打开融灾数据自行提交表单</a><div id="morimensSubmissionRecords">正在载入自行提交记录……</div></div>
+        <div class="sourceItem"><strong>特别说明</strong><br>本页面不是官方产品，与游戏官方及上述数据网站不存在隶属或商业合作关系。《忘却前夜》相关角色、图片、文本及其他素材版权归各自权利方所有；本站仅用于玩家交流与资料查询。</div>\n        <div class="sourceItem"><strong>社区 / 自行提交记录</strong><br><span>社区维护记录单独汇总提交人昵称、UID、提交内容与提交时间；第69期记录会区分 Bug前 / Bug后。</span><br><a href="morimens-community-records.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;margin:10px 8px 6px 0;padding:7px 11px;border:1px solid rgba(88,220,246,.28);border-radius:8px;color:#bceffa;text-decoration:none">查看社区维护记录</a><a href="morimens-dzone-submit.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;margin:10px 0 6px;padding:7px 11px;border:1px solid rgba(148,163,184,.22);border-radius:8px;color:#aebdca;text-decoration:none">融灾数据自行提交</a><div id="morimensSubmissionRecords">正在载入近期提交记录……</div></div>
         <div class="sourceItem"><strong>GitHub · 半成品 MMA 工具</strong><br>如果有大佬愿意继续做，可以提供一点微不足道的帮助：<a href="https://github.com/Z769018860/MMA-5771" target="_blank" rel="noopener noreferrer">MMA-5771</a></div><div class="sourceItem"><strong>制作者</strong><br>B站：<a href="https://space.bilibili.com/95687310?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">@青灯不弈</a></div>
       </div>
     </section>
@@ -933,7 +933,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
     window.MorimensDzoneImportEmbedded=false;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.5';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.6';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
