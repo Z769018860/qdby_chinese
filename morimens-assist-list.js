@@ -457,7 +457,10 @@
   }
   function wheelCards(items){
     if(!items?.length)return '<span class="assistSuitTag">'+ui('无记录','No record')+'</span>';
-    return '<div class="assistGear">'+items.map(x=>'<div class="assistGearCard'+(x.image?'':' assistGearTextOnly')+'">'+(x.image?'<img src="'+esc(x.image)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<div><b>'+esc(x.name)+'</b>'+(x.level!=null?'<small>Lv.'+esc(x.level)+(x.enhanceLevel!=null?' · +'+esc(x.enhanceLevel):'')+'</small>':'')+'</div></div>').join('')+'</div>';
+    return '<div class="assistGear">'+items.map(x=>{
+      const meta=[];if(x.level!=null)meta.push('Lv.'+x.level);if(x.enhanceLevel!=null)meta.push(ui('叠位 ','Stack ')+(Number(x.enhanceLevel)>0?('+'+x.enhanceLevel):'0'));
+      return '<div class="assistGearCard'+(x.image?'':' assistGearTextOnly')+'">'+(x.image?'<img src="'+esc(x.image)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<div><b>'+esc(x.name)+'</b>'+(meta.length?'<small>'+esc(meta.join(' · '))+'</small>':'')+'</div></div>';
+    }).join('')+'</div>';
   }
   function covenantSummary(row){
     const suits=row.covenants||[],attrs=row.finalAttrs||aggregateAttrs(row.trinkets||[]);
@@ -475,30 +478,55 @@
   function seasonTags(row){
     return [...(row.seasons||[])].sort((a,b)=>Number(a)-Number(b)).map(s=>'<span class="assistSeasonTag">'+ui('第 '+s+' 期','Season '+s)+'</span>').join('');
   }
+  function sourceHtml(row){
+    if(row.manual){
+      const date=row.submittedAt?new Date(row.submittedAt):null,valid=date&&!Number.isNaN(date.getTime());
+      return '<div class="assistSource"><span class="assistSourceTag online">'+ui('在线补充','Online submission')+'</span>'+(valid?'<small>'+esc(date.toLocaleDateString(zh()?'zh-CN':'en-US'))+'</small>':'')+'</div>';
+    }
+    return '<div class="assistSource">'+(seasonTags(row)||'<span class="assistSourceTag">'+ui('历史记录','Historical')+'</span>')+'</div>';
+  }
   function render(){
     const list=filtered(),pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE));page=Math.min(page,pages);
-    const shown=list.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE),uses=list.reduce((n,r)=>n+r.count,0),uids=new Set(list.map(r=>r.uid)),chars=new Set(list.map(r=>r.characterKey));
-    if($('assistSummary'))$('assistSummary').innerHTML=[[ui('助战提供者','Assist Providers'),uids.size],[ui('助战配置','Assist Configurations'),list.length],[ui('被使用次数','Times Borrowed'),uses],[ui('助战角色','Assist Awakeners'),chars.size]].map(([a,b])=>'<div class="dtideStat"><small>'+esc(a)+'</small><strong>'+esc(b)+'</strong></div>').join('');
+    const shown=list.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE);
+    const uses=list.reduce((n,r)=>n+(Number.isFinite(Number(r.count))?Number(r.count):0),0),manualCount=list.filter(r=>r.manual).length,uids=new Set(list.map(r=>r.uid)),chars=new Set(list.map(r=>r.characterKey));
+    if($('assistSummary'))$('assistSummary').innerHTML=[
+      [ui('助战提供者','Assist Providers'),uids.size],
+      [ui('助战配置','Assist Configurations'),list.length],
+      [ui('融灾使用次数','D-Zone Uses'),uses],
+      [ui('在线补充','Online Submissions'),manualCount]
+    ].map(([a,b])=>'<div class="dtideStat"><small>'+esc(a)+'</small><strong>'+esc(b)+'</strong></div>').join('');
     const host=$('assistTable');
-    if(host)host.innerHTML=shown.length?'<table class="dtideTable assistTable"><thead><tr><th>'+ui('玩家 UID / 玩家名','Player UID / Name')+'</th><th>'+ui('挂的助战角色','Assist Awakener')+'</th><th>'+ui('等级','Level')+'</th><th>'+ui('启灵','Enlighten')+'</th><th>'+ui('技能 / 灵塑等养成','Skills / Progression')+'</th><th>'+ui('命轮','Wheel')+'</th><th>'+ui('密契 / 最终词条','Covenant / Final Stats')+'</th><th>'+ui('期次','Season')+'</th><th>'+ui('融灾中被使用次数','D-Zone Uses')+'</th></tr></thead><tbody>'+shown.map(r=>'<tr><td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未在现有68/69玩家记录中匹配到名字','Name not found in stored S68/S69 player records')+'</small>')+'</td><td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players')+'</small></span></div></td><td>'+esc(r.level??'—')+'</td><td>'+esc(r.enlightenment||'—')+'</td><td>'+growthHtml(r)+'</td><td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td><div class="assistSuitLine">'+seasonTags(r)+'</div></td><td><span class="assistCount">'+r.count+'</span></td></tr>').join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
+    if(host)host.innerHTML=shown.length?'<table class="dtideTable assistTable"><thead><tr>'+
+      '<th>'+ui('玩家','Player')+'</th>'+
+      '<th>'+ui('助战角色 / 养成','Assist / Progression')+'</th>'+
+      '<th>'+ui('命轮','Wheel')+'</th>'+
+      '<th>'+ui('密契 / 最终词条','Covenant / Final Stats')+'</th>'+
+      '<th>'+ui('来源','Source')+'</th>'+
+      '<th>'+ui('使用','Uses')+'</th>'+
+      '</tr></thead><tbody>'+shown.map(r=>{
+        const playerCell='<td class="assistUid"><div class="assistUidLine"><a href="https://eremora.com/u/'+encodeURIComponent(r.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(r.uid)+'</a><button type="button" class="assistCopyUid" data-copy-uid="'+esc(r.uid)+'">'+ui('复制 UID','Copy UID')+'</button></div>'+(r.player?'<strong>'+esc(r.player)+'</strong>':'<small>'+ui('未匹配到玩家名','Player name unavailable')+'</small>')+'</td>';
+        const roleCell='<td><div class="assistCharacter">'+(r.characterImage?'<img src="'+esc(r.characterImage)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span><b>'+esc(r.characterName)+'</b><small>'+(r.manual?ui('玩家在线补充的当前配置','Current build submitted online'):(ui('被 ','Borrowed by ')+r.borrowers.size+ui(' 名玩家',' players')))+'</small></span></div><div class="assistBuildMeta"><span><b>Lv.</b> '+esc(r.level??'—')+'</span><span><b>'+ui('启灵','Enlighten')+'</b> '+esc(r.enlightenment||'—')+'</span></div>'+growthHtml(r)+'</td>';
+        const useCell=r.manual?'<td class="assistCountCell"><span class="assistManualUse">'+ui('玩家补充','Submitted')+'</span><small style="display:block;margin-top:4px;color:#718096">'+ui('不计入融灾使用次数','Not counted as D-Zone use')+'</small></td>':'<td class="assistCountCell"><span class="assistCount">'+esc(r.count??0)+'</span></td>';
+        return '<tr class="'+(r.manual?'assistManualRow':'assistObservedRow')+'">'+playerCell+roleCell+'<td>'+wheelCards(r.wheels)+'</td><td>'+covenantSummary(r)+'</td><td>'+sourceHtml(r)+'</td>'+useCell+'</tr>';
+      }).join('')+'</tbody></table>':'<div class="dtideEmpty">'+ui('当前筛选条件下没有助战配置记录。','No assist configurations match the current filters.')+'</div>';
     host?.querySelectorAll('[data-copy-uid]').forEach(btn=>btn.addEventListener('click',()=>copyUid(btn.dataset.copyUid,btn)));
     const pager=$('assistPager');
     if(pager)pager.innerHTML=pages>1?'<button type="button" class="ghostBtn" id="assistPrev" '+(page<=1?'disabled':'')+'>'+ui('上一页','Previous')+'</button><span>'+ui('第 ','Page ')+page+' / '+pages+ui(' 页','')+' · '+list.length+ui(' 条',' rows')+'</span><button type="button" class="ghostBtn" id="assistNext" '+(page>=pages?'disabled':'')+'>'+ui('下一页','Next')+'</button>':'<span>'+list.length+ui(' 条配置',' configurations')+'</span>';
     $('assistPrev')?.addEventListener('click',()=>{if(page>1){page--;render()}});
     $('assistNext')?.addEventListener('click',()=>{if(page<pages){page++;render()}});
-    if($('morimensAssistStatus'))$('morimensAssistStatus').textContent=activeSeason==='all'?ui('全部期次 · 已载入','All Seasons · Loaded'):(ui('第 ','Season ')+activeSeason+ui(' 期 · 已载入',' · Loaded'));
+    if($('morimensAssistStatus'))$('morimensAssistStatus').textContent=(activeSeason==='all'?ui('全部期次','All Seasons'):(ui('第 ','Season ')+activeSeason+ui(' 期','')))+' · '+ui('实战记录 + 在线补充','Observed + Online');
   }
   async function load(id){
     activeSeason=String(id||'all');page=1;
     if($('morimensAssistStatus'))$('morimensAssistStatus').textContent=ui('正在载入…','Loading…');
     if($('assistTable'))$('assistTable').innerHTML='<div class="dtideEmpty">'+ui('正在读取助战配置…','Loading assist configurations…')+'</div>';
-    const bundle=await bundleFor(activeSeason);rows=extract(bundle);populate();render();
+    const bundle=await bundleFor(activeSeason),observed=extract(bundle);rows=mergeManual(observed);populate();populateSubmitForm();render();
     const note=$('assistCoverageNote');
     if(note){
       const counts=bundle.map(({seasonId,data})=>'第 '+seasonId+' 期 '+Number(data?.recordCount||data?.records?.length||0)+' 条').join(' + ');
       note.innerHTML=zh()
-        ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用；相同借用玩家、助战提供者、期次、战斗、波次与角色会去重。同一 UID 同一角色若观测到不同等级、启灵、命轮、密契或密契词条，会拆成不同配置行。UID 玩家名会从已载入的 68/69 玩家记录中尽量反查。'
-        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Only actual borrows with <code>borrowed=true</code> and an <code>assistUid</code> are counted. Duplicate season/borrower/provider/battle/wave/Awakener events are removed. Distinct observed levels, Enlighten states, Wheels, Covenants, or Covenant stat rolls remain separate configurations. Player names are resolved from stored S68/S69 player records when available.';
+        ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>在线补充</b>是玩家提交的当前常用助战配置，会单独标记且不计入“融灾使用次数”。同一 UID + 同一助战角色的在线补充只显示最新一条。'
+        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Online submissions are shown as current player-provided builds and are never counted as observed D-Zone uses.';
     }
   }
   function bind(){
@@ -506,6 +534,8 @@
     for(const id of ['assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])$(id)?.addEventListener('change',()=>{page=1;render()});
     $('assistUidFilter')?.addEventListener('input',()=>{page=1;render()});
     $('assistReset')?.addEventListener('click',()=>{for(const id of ['assistUidFilter','assistCharacterFilter','assistWheelFilter','assistCovenantFilter'])if($(id))$(id).value='';page=1;render()});
+    $('assistAddAttr')?.addEventListener('click',()=>addAttrRow());
+    $('assistSubmitForm')?.addEventListener('submit',submitAssist);
   }
   function error(e){
     console.error('Assist list load failed',e);
@@ -518,13 +548,13 @@
       for(let i=0;i<50&&!$('morimensAssistPanel');i++)await new Promise(r=>setTimeout(r,100));
       if(!$('morimensAssistPanel'))return;
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error('manifest HTTP '+response.status);
-      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);bind();initialized=true;await load($('assistSeason')?.value||'all');
+      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();populateSubmitForm();if($('assistSubmitAttrRows')&&!$('assistSubmitAttrRows').children.length)addAttrRow();bind();initialized=true;await load($('assistSeason')?.value||'all');
     }catch(e){error(e)}finally{loading=false}
   }
   function relocalize(){
     if($('morimensAssistTab'))$('morimensAssistTab').textContent=ui('互助助战列表','Assist List');
     if($('morimensAssistTitle'))$('morimensAssistTitle').textContent=ui('互助助战列表','Assist List');
-    if(initialized)load(activeSeason).catch(error)
+    if(initialized){populateSubmitForm();load(activeSeason).catch(error)}
   }
   window.MorimensAssistList={open:init,reload:()=>load($('assistSeason')?.value||activeSeason||'all')};
   window.addEventListener('morimens-assist-list-open',init);
