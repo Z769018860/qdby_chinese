@@ -10,16 +10,16 @@
   "availableSeasons": [
     {
       "seasonId": 70,
-      "labelEn": "Season 70 · New D-Zone",
+      "labelEn": "Season 70 · Aequor Ring",
       "period": "2026-09-28 – 2026-10-12",
-      "recordCount": 457,
+      "recordCount": 459,
       "leaderboardEntryCount": 500,
       "complete": false,
       "coverageMode": "current-leaderboard-top500-partial",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
-      "dataUpdatedAt": "2026-09-29T01:00:00+08:00",
-      "labelZh": "第70期 新新融灾",
+      "dataUpdatedAt": "2026-09-29T07:15:00+09:00",
+      "labelZh": "第70期 新新融灾 · 深海戒指",
       "periodShort": "9.28–10.11"
     },
     {
@@ -116,9 +116,9 @@
   ],
   "current": {
     "leaderboardEntries": 500,
-    "records": 457,
+    "records": 459,
     "complete": false,
-    "failures": 43
+    "failures": 41
   },
   "fieldCoverage": {
     "character": true,
@@ -286,12 +286,12 @@
     "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/70.json",
     "target": 500,
-    "rankIndexCount": 500,
-    "recordCount": 457,
+    "rankIndexCount": 457,
+    "recordCount": 459,
     "coverage": {
       "expected": 500,
-      "covered": 457,
-      "coveragePct": 91.4,
+      "covered": 459,
+      "coveragePct": 91.8,
       "complete": false
     },
     "syncedAt": "2026-09-28T21:12:06.644583Z",
@@ -310,32 +310,17 @@
     "structuredIndex": "data/morimens/eremora/top1000/69.json",
     "updatedBy": "scripts/process_morimens_raw1000.py"
   },
-  "currentOverlay": {
-    "seasonId": 69,
-    "scope": 500,
-    "path": "data/morimens/eremora/updates/69-top500-20260922/index.json",
-    "rankPath": "data/morimens/eremora/updates/69-top500-20260922/ranks.json",
-    "reportPath": "data/morimens/eremora/updates/69-top500-20260922/report.json",
-    "updatedAt": "2026-09-22T01:00:00+08:00",
-    "revision": "s69-top500-20260922-0100",
-    "deltaUidCount": 453,
-    "parsedDeltaRecordCount": 432,
-    "rankCount": 500,
-    "mergeMode": "replace-top500-ranks + reuse-previous-detail-overlay",
-    "baseRecordCount": 1007,
-    "mergedRecordCount": 1035,
-    "newlyMergedRecordCount": 28,
-    "newParsedCount": 19,
-    "recoveredPreviousParseFailureCount": 9,
-    "rankAddedCount": 27,
-    "rankDroppedCount": 27,
-    "detailSnapshotUpdatedAt": "2026-09-21T01:00:00+08:00"
-  },
   "top500RankOverride": {
     "seasonId": 69,
     "scope": 500,
     "path": "data/morimens/eremora/updates/69-top500-20260922/ranks.json",
     "count": 500,
     "updatedAt": "2026-09-22T01:00:00+08:00"
+  },
+  "seasonRing": {
+    "seasonId": 70,
+    "realm": "Aequor",
+    "nameZh": "深海戒指",
+    "nameEn": "Aequor Ring"
   }
 }
