@@ -201,7 +201,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 融灾榜单开放自行导入</strong><br>当前融灾榜单新增社区自行导入：填写 UID 后可直接打开对应 Eremora /challenges/dzone/&lt;season&gt;/__data.json 数据页，复制完整内容并粘贴解析。系统会校验 5 个 Zone 后按 UID 合并到当前榜单，记录更新时间与更新人昵称（未填写时为“匿名”）；社区提交不会修改官方排名索引，且在正式数据快照更新时间更新后会自动让位于更新的官方数据。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 融灾榜单自行导入</strong><br>当前期融灾榜单新增社区自行导入：可按 UID 打开 Eremora <code>/challenges/dzone/&lt;season&gt;/__data.json</code>，粘贴完整数据后解析 5 个 Zone 并即时合并到角色、命轮、造物与配队统计。同一 UID 采用最新提交，保留官方排名；记录提交时间与可选更新人昵称，未填写昵称时记为“匿名”。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
+        <div class="sourceItem"><strong>2026-09-29 · 融灾榜单开放自行导入</strong><br>社区自行导入新增独立“融灾赛季期次”选择，可补充当前期与历史期次。选择期次并填写 UID 后会生成对应 Eremora <code>/challenges/dzone/&lt;season&gt;/__data.json</code> 地址；系统校验 5 个 Zone 后按“期次 + UID”保存并合并，记录更新时间与可选更新人昵称（留空为“匿名”）。查看对应期次榜单时，社区数据会进入角色、命轮、造物与配队搜索统计，同时保留官方排名索引。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 第70期融灾数据修复</strong><br>第70期改用最新本地详情数据，修复 Eremora 将波次命名改为 Zone 1–5 后旧解析器无法识别的问题；移除误套用的第69期 Top500 增量层，并确认第70期固定戒指为深海戒指（Aequor Ring）。当前有效样本 459 条。</div>\n        <div class="sourceItem"><strong>2026-09-29 · 助战导入简化为 Showcase</strong><br>助战导入恢复为单一 Eremora Showcase 数据源，仅维护等级、启灵、命轮、密契及密契词条；技能、灵塑不再采集或展示。如需查看完整养成详情，可直接点击助战列表中的 UID 跳转 Eremora 玩家页。</div>
         <div class="sourceItem"><strong>2026-09-29 · 密契词条口径校准</strong><br>自动导入与新版结构化数据的密契汇总改为只统计带 rollQuality 的洗练词条，固定主属性不再并入“最终词条”；旧 version 2 导入因缺少逐片原始词条会提示重新导入。历史技能/灵塑字段已确认不可靠，暂统一留空。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表开放共建</strong><br>新增与融灾榜单平级的“互助助战列表”：支持按 UID、角色、等级、启灵、命轮和密契筛选；显示当前助战配置与历史融灾使用次数。玩家可自行导入或更新 Eremora Showcase 配置，已有同一 UID + 角色会更新原记录并保留历史使用统计；同时完善本地角色头像、命轮/密契图标与密契最终词条汇总。欢迎大家一起补充和维护助战信息。</div>
         <div class="sourceItem"><strong>2026-09-29 · 互助助战列表在线补充</strong><br>优化互助助战列表排版与密契词条中文化；在线补充改为剪贴板导入：填写 UID 与助战角色后打开对应 Eremora Showcase 数据页，复制 JSON，再由本站从剪贴板或粘贴框解析并导入。当前配置与同一 UID + 角色的历史融灾借用次数继续合并累计。</div>
@@ -868,7 +868,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const currentSeason=Number(manifest?.currentSeason||0)||0;
     const legacy=!!(activeSeasonEntry?.legacy||activeSeasonEntry?.coverageMode==='legacy-spreadsheet'||String(activeSeasonEntry?.seasonId)==='legacy-high-difficulty');
     const isCurrent=!activeSeasonEntry?.snapshotId&&!legacy&&selectedSeasonId===currentSeason;
-    const officialUpdatedAt=season?.dataUpdatedAt||activeSeasonEntry?.dataUpdatedAt||(isCurrent?manifest?.usageIndex?.syncedAt:null)||manifest?.source?.syncedAt||null;
+    const officialUpdatedAt=season?.dataUpdatedAt||activeSeasonEntry?.dataUpdatedAt||(isCurrent?manifest?.usageIndex?.syncedAt:null)||null;
     const availableSeasons=(manifest?.availableSeasons||[]).filter(entry=>!(entry?.legacy||entry?.coverageMode==='legacy-spreadsheet'||String(entry?.seasonId)==='legacy-high-difficulty')).map(entry=>({
       seasonId:Number(entry.seasonId)||0,
       labelZh:entry.labelZh||('第 '+entry.seasonId+' 期融灾'),
@@ -914,7 +914,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.3';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.4';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
