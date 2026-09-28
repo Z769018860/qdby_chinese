@@ -94,19 +94,19 @@
     const raw=Number(attr?.value);
     if(!Number.isFinite(raw))return name;
     if(attr?.percentage){
-      const v=Math.abs(raw)<=1?raw*100:raw;
+      const v=attr?.percentPoints===true?raw:(Math.abs(raw)<=1?raw*100:raw);
       const digits=Math.abs(v)<10?2:1;
       return name+' '+v.toFixed(digits).replace(/\.0+$/,'').replace(/(\.\d*[1-9])0+$/,'$1')+'%';
     }
-    return name+' '+String(raw);
+    return name+' '+String(Number.isInteger(raw)?raw:Number(raw.toFixed(2)));
   }
   function aggregateAttrs(items){
     const map=new Map();
     for(const item of items||[])for(const a of item?.attrs||[]){
       const id=String(a?.id||a?.name||'').trim();if(!id)continue;
       const percentage=!!a?.percentage,key=id+'|'+(percentage?1:0),raw=Number(a?.value);
-      const row=map.get(key)||{id,name:a?.name||id,value:0,percentage,count:0};
-      if(Number.isFinite(raw))row.value+=raw;row.count++;map.set(key,row);
+      const row=map.get(key)||{id,name:a?.name||id,value:0,percentage,percentPoints:percentage,count:0};
+      if(Number.isFinite(raw))row.value+=percentage&&Math.abs(raw)<=1?raw*100:raw;row.count++;map.set(key,row);
     }
     return [...map.values()].sort((a,b)=>statName(a).localeCompare(statName(b),'zh-CN'));
   }
