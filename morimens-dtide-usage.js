@@ -122,6 +122,15 @@
     return {...base,records,recordCount:records.length,overlayRecordCount:overlay.records.length,dataUpdatedAt:overlay.updatedAt||base?.dataUpdatedAt||null};
   }
   function communityUsageTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
+  function communityUsageZoneComplete(record){
+    const waves=Array.isArray(record?.waves)?record.waves:[];
+    const byWave=new Map();
+    for(const wave of waves){
+      const id=Number(wave?.wave),teams=Array.isArray(wave?.teams)?wave.teams:[];
+      if(id>=1&&id<=5&&teams.length)byWave.set(id,teams.length);
+    }
+    return byWave.size===5&&[1,2,3,4,5].every(id=>(byWave.get(id)||0)>=1);
+  }
   function mergeCommunityUsageRecords(items){
     if(!activeSeason||!usage||!Array.isArray(items))return {applied:0,skipped:items?.length||0};
     const byUid=new Map(),anonymous=[];
@@ -134,17 +143,19 @@
     for(const item of items){
       const record=item?.record||item,uid=String(record?.uid??'').trim(),submittedAt=item?.submittedAt||record?.communityUpdate?.submittedAt||'';
       const itemVariant=String(item?.communityVariant||item?.variant||record?.communityUpdate?.communityVariant||(Number(record?.seasonId)===69?'prebug':'default'));
-      if(!uid||Number(record?.seasonId)!==Number(activeSeason)||itemVariant!==activeCommunityVariant||communityUsageTeamCount(record)<5){skipped++;continue}
+      if(!uid||Number(record?.seasonId)!==Number(activeSeason)||itemVariant!==activeCommunityVariant||!communityUsageZoneComplete(record)){skipped++;continue}
       const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
       if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
       const previous=byUid.get(uid);
-      if(previous&&communityUsageTeamCount(record)<communityUsageTeamCount(previous)){skipped++;continue}
       const next={...record,
         rank:previous?.rank??record?.rank??null,
         leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
         communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone',communityVariant:itemVariant,targetKey:String(item?.targetKey||activeSeasonKey)}
       };
-      byUid.set(uid,next);communityUsageMetaByUid.set(uid,next.communityUpdate);applied++;
+      byUid.set(uid,next);communityUsageMetaByUid.set(uid,next.communityUpdate);
+      const effectiveScore=Number(next?.score??next?.currentScore);
+      if(Number.isFinite(effectiveScore))rankScoreByUid.set(uid,effectiveScore);
+      applied++;
     }
     if(!applied)return {applied:0,skipped};
     const records=[...byUid.values(),...anonymous].sort((a,b)=>(rankOf(a)??999999)-(rankOf(b)??999999)||Number(b?.score||0)-Number(a?.score||0));
