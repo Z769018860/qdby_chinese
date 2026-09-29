@@ -98,7 +98,7 @@
     async function loadDzone(){
       window.MorimensDzoneImportEmbedded=false;
       await new Promise((resolve,reject)=>{
-        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.15';script.defer=true;
+        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.16';script.defer=true;
         script.onload=resolve;script.onerror=()=>reject(new Error('融灾记录脚本载入失败'));document.head.appendChild(script);
       });
       const items=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true,strict:true})||[];
