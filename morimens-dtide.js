@@ -208,6 +208,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 社区数据三天归档到 GitHub</strong><br>Waline 改为短期社区数据队列：GitHub Action 每天检查，距离上次归档满 72 小时才执行。融灾按“期次/阶段/UID”保留最新完整版本，助战按“UID/角色”保留最新 Showcase，维护历史只保存轻量元数据。GitHub 提交成功后才删除 Waline 中已归档的机器记录；普通留言和互动数据不受影响。</div>
         <div class="sourceItem"><strong>2026-09-29 · Waline approved 社区记录读取修复</strong><br>公开 API 已 approved 的融灾记录改为优先读取 Waline 的 <code>orig</code> 原始评论字段，避免 Markdown/HTML 渲染破坏 MORIMENS_DZONE_V1 标记。新提交只在可见评论中显示一行摘要，机器 payload 放在 HTML 注释中并从 orig 读取，因此后台列表不再被长 Base64 正文铺满；旧 comment 内的长记录继续兼容。</div>
         <div class="sourceItem"><strong>2026-09-29 · 社区融灾读取与后台显示优化</strong><br>修复 Waline 已 approved 且公开 API 可见、但网页读取器无法解码的问题：兼容 HTML/实体/换行包装，并同时读取 comment / ua。新融灾提交的评论正文只显示 UID、期次、分数、队伍数和提交人摘要，机器数据改存 wl_comment.ua，避免 Waline 后台被长 Base64 内容占满；旧 comment 内的 V1/V5 记录继续兼容读取。</div>
         <div class="sourceItem"><strong>2026-09-29 · 修复社区融灾提交刷新后消失</strong><br>融灾自行提交改为紧凑 V5 持久化格式，并要求提交后从 Waline 公开列表回读同一 submissionId 才判定成功；若被 waiting/spam/审核隐藏会直接报错，不再出现前端临时“成功”但刷新丢失。回读后还会校验 5 Zone、队伍数和角色槽位完整性。</div>
@@ -944,7 +945,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
     window.MorimensDzoneImportEmbedded=true;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.11';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.14';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
