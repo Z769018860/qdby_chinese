@@ -506,6 +506,23 @@
     if(waveSet.size<5)throw new Error(ui(`只解析到 ${waveSet.size}/5 个 Zone；为避免覆盖完整数据，本次提交已拒绝。`,`Only ${waveSet.size}/5 Zones were parsed. The submission was rejected to avoid replacing complete data with a partial record.`));
     const teams=(record.waves||[]).reduce((sum,w)=>sum+(w.teams?.length||0),0);
     if(teams<5)throw new Error(ui('挑战数据不完整：有效队伍少于 5 支。','Challenge data is incomplete: fewer than 5 valid teams.'));
+    const teamRows=(record.waves||[]).flatMap(w=>(w.teams||[]).map(team=>({wave:Number(w.wave),team})));
+    const incompleteTeam=teamRows.find(({team})=>!Array.isArray(team?.members)||team.members.length!==4);
+    if(incompleteTeam)throw new Error(ui(
+      `队伍数据不完整：Zone ${incompleteTeam.wave} 存在不足 4 人的队伍，本次提交已拒绝。`,
+      `Team data is incomplete: Zone ${incompleteTeam.wave} contains a team with fewer than 4 members. The submission was rejected.`
+    ));
+    const extraTeams=teamRows.filter(({team})=>String(team?.clearType||'')==='extra').length;
+    const score=Number(record.score??record.currentScore);
+    const minExtras=Number.isFinite(score)&&score>500?Math.ceil((score-500)/5):0;
+    if(extraTeams<minExtras)throw new Error(ui(
+      `分数与队伍数量不一致：${score} 分至少需要 ${minExtras} 支额外队伍，但只解析到 ${extraTeams} 支。本次提交已拒绝。`,
+      `Score/team mismatch: ${score} points requires at least ${minExtras} extra teams, but only ${extraTeams} were parsed. The submission was rejected.`
+    ));
+    if(score===525&&(teams!==10||extraTeams!==5))throw new Error(ui(
+      `525 分必须包含 5 支基础队伍 + 5 支额外队伍，共 10 支；当前解析为 ${teams} 支（额外 ${extraTeams} 支），本次提交已拒绝。`,
+      `A 525-point record must contain 5 base teams + 5 extra teams, 10 total. Parsed: ${teams} teams (${extraTeams} extra). The submission was rejected.`
+    ));
     if(Number(record.sourceTeamCount)>0&&teams!==Number(record.sourceTeamCount)){
       throw new Error(ui(
         `队伍解析不完整：源数据有 ${record.sourceTeamCount} 支有效队伍，但标准化后只有 ${teams} 支。为避免丢失第二支队伍，本次提交已拒绝。`,
@@ -881,6 +898,28 @@
       if(!typedUid&&$('dtideCommunityUid'))$('dtideCommunityUid').value=record.uid;
       updateUrlPreview();
       const submittedBy=cleanName($('dtideCommunityNick')?.value||'').slice(0,32)||ui('匿名','Anonymous'),submittedAt=new Date().toISOString();
+      if(!submissionHistory.length||Date.now()-lastSyncAt>30000){
+        try{submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}catch(error){console.warn('preflight community history unavailable',error)}
+      }
+      const priorCommunity=submissionHistory.find(row=>String(row.uid)===String(record.uid)&&Number(row.seasonId)===Number(seasonId)&&normalizeVariant(row.seasonId,row.communityVariant)===communityVariant)||null;
+      const validator=window.MorimensDtideCommunity?.validateCandidate;
+      if(typeof validator==='function'){
+        const decision=await validator({record,submittedAt,seasonId,communityVariant,priorCommunity});
+        if(!decision?.ok)throw new Error(decision?.message||ui('当前数据未通过更新条件。','The submitted data did not pass update validation.'));
+        const currentScore=decision.currentScore;
+        const currentAt=decision.currentUpdatedAt;
+        status(ui(
+          `更新校验通过：新分数 ${record.score} ≥ 当前分数 ${currentScore??'—'}；${record.sourceTeamCount||teams} 支队伍完整；提交时间晚于当前数据${currentAt?'（'+formatTime(currentAt)+'）':''}。`,
+          `Update validation passed: new score ${record.score} ≥ current score ${currentScore??'—'}; ${record.sourceTeamCount||teams} complete teams; submission is newer than current data${currentAt?' ('+formatTime(currentAt)+')':''}.`
+        ));
+      }else if(priorCommunity){
+        const priorScore=Number(priorCommunity.record?.score??priorCommunity.record?.currentScore);
+        const newScore=Number(record.score??record.currentScore);
+        if(Number.isFinite(priorScore)&&Number.isFinite(newScore)&&newScore<priorScore)throw new Error(ui(
+          `更新失败：新分数 ${newScore} 低于当前社区分数 ${priorScore}。`,
+          `Update failed: new score ${newScore} is lower than current community score ${priorScore}.`
+        ));
+      }
       const submissionId=String(record.uid)+'-'+Date.now().toString(36);
       const payload={version:5,source:'eremora-dzone',submissionId,seasonId,communityVariant,targetKey,uid:record.uid,submittedBy,submittedAt,record};
       status(ui('解析成功，正在以紧凑格式保存到社区记录……','Parsed successfully. Saving a compact community record…'));
