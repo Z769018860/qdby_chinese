@@ -208,6 +208,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">更新日志</h2><p class="panelLead">记录忘忘看报的重要功能与重大更新。</p></div><span class="statusPill">持续更新</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 社区融灾读取与后台显示优化</strong><br>修复 Waline 已 approved 且公开 API 可见、但网页读取器无法解码的问题：兼容 HTML/实体/换行包装，并同时读取 comment / ua。新融灾提交的评论正文只显示 UID、期次、分数、队伍数和提交人摘要，机器数据改存 wl_comment.ua，避免 Waline 后台被长 Base64 内容占满；旧 comment 内的 V1/V5 记录继续兼容读取。</div>
         <div class="sourceItem"><strong>2026-09-29 · 修复社区融灾提交刷新后消失</strong><br>融灾自行提交改为紧凑 V5 持久化格式，并要求提交后从 Waline 公开列表回读同一 submissionId 才判定成功；若被 waiting/spam/审核隐藏会直接报错，不再出现前端临时“成功”但刷新丢失。回读后还会校验 5 Zone、队伍数和角色槽位完整性。</div>
         <div class="sourceItem"><strong>2026-09-29 · 第69期 1035 条数据恢复</strong><br>Bug前 / Bug后两个逻辑选项都重新使用原第69期完整数据栈：1007 条基础数据 + 2026-09-22 Top500 增量层，合并后 1035 条。Bug后仍仅作为“数据待填充”的占位展示，两者社区提交继续分开保存。</div>
         <div class="sourceItem"><strong>2026-09-29 · 第69期拆分 Bug前 / Bug后</strong><br>第69期榜单拆分为“Bug前”和“Bug后”两个逻辑期次；两者访问 Eremora 时仍统一使用 <code>/dzone/69/__data.json</code>。Bug前沿用现有第69期数据；Bug后暂沿用同一份数据作为占位并明确标注“数据待填充”。社区提交按“69 + Bug阶段 + UID”隔离保存；提交入口移至关于页链接的独立表单。</div>
