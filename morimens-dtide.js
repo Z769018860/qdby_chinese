@@ -889,12 +889,12 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const show=seasonId===70&&!season?.legacy;
     host.hidden=!show;
     if(!show){host.innerHTML='';return}
-    const mapUrl='https://github.com/Z769018860/qdby_chinese/blob/main/data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.jpg';
-    const overviewUrl='https://github.com/Z769018860/qdby_chinese/blob/main/data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.jpg';
+    const mapUrl='https://raw.githubusercontent.com/Z769018860/qdby_chinese/main/data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.jpg';
+    const overviewUrl='https://raw.githubusercontent.com/Z769018860/qdby_chinese/main/data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.jpg';
     host.innerHTML=`
       <a class="dtideSeasonResourceLink" href="${mapUrl}" target="_blank" rel="noopener noreferrer">【${ui('当期融灾地图','Current D-Zone Map')}】↗</a>
       <a class="dtideSeasonResourceLink" href="${overviewUrl}" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a>
-      <span class="dtideSeasonResourceHint">${ui('点击打开仓库中的原始 JPG，不进行网页压缩。','Open the original JPG in the repository; no web compression is applied.')}</span>
+      <span class="dtideSeasonResourceHint">${ui('点击直接打开原始 JPG 文件，不进行网页压缩或转码。','Open the original JPG directly; no web compression or transcoding is applied.')}</span>
     `;
   }
   function renderAll(){renderSeasonDate();renderSeasonResources();if(window.MorimensDtideRenderer==='legacy')return;renderSummary();renderMatrix();renderUsage();renderComparisons();if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt();$('dtideMatrix')?.removeAttribute('aria-busy')}
