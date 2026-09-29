@@ -915,6 +915,15 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     return {selectedSeasonId,currentSeason,legacy,isCurrent,communityVariant,selectedTargetKey,recordCount:Number(season?.recordCount||0),officialUpdatedAt,availableSeasons};
   }
   function communityTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
+  function communityZoneComplete(record){
+    const waves=Array.isArray(record?.waves)?record.waves:[];
+    const byWave=new Map();
+    for(const wave of waves){
+      const id=Number(wave?.wave),teams=Array.isArray(wave?.teams)?wave.teams:[];
+      if(id>=1&&id<=5&&teams.length)byWave.set(id,teams.length);
+    }
+    return byWave.size===5&&[1,2,3,4,5].every(id=>(byWave.get(id)||0)>=1);
+  }
   function communityVariantOf(item,record){
     const explicit=String(item?.communityVariant||item?.variant||record?.communityUpdate?.communityVariant||'').trim();
     if(explicit)return explicit;
@@ -930,17 +939,19 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     for(const item of items){
       const record=item?.record||item,uid=String(record?.uid??'').trim(),submittedAt=item?.submittedAt||record?.communityUpdate?.submittedAt||'';
       const itemVariant=communityVariantOf(item,record);
-      if(!uid||Number(record?.seasonId)!==Number(ctx.selectedSeasonId)||itemVariant!==ctx.communityVariant||communityTeamCount(record)<5){skipped++;continue}
+      if(!uid||Number(record?.seasonId)!==Number(ctx.selectedSeasonId)||itemVariant!==ctx.communityVariant||!communityZoneComplete(record)){skipped++;continue}
       const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
       if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
       const previous=byUid.get(uid);
-      if(previous&&communityTeamCount(record)<communityTeamCount(previous)){skipped++;continue}
       const next=inheritReplayMetadata(previous,{...record,
         rank:previous?.rank??record?.rank??null,
         leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
         communityUpdate:{submittedAt:submittedAt||null,submittedBy:String(item?.submittedBy||record?.communityUpdate?.submittedBy||'匿名'),source:'community-eremora-dzone',communityVariant:itemVariant,targetKey:String(item?.targetKey||ctx.selectedTargetKey)}
       });
-      byUid.set(uid,next);communityDzoneMetaByUid.set(uid,next.communityUpdate);applied++;
+      byUid.set(uid,next);communityDzoneMetaByUid.set(uid,next.communityUpdate);
+      const effectiveScore=Number(next?.score??next?.currentScore);
+      if(Number.isFinite(effectiveScore))rankScoreByUid.set(uid,effectiveScore);
+      applied++;
     }
     if(!applied)return {applied:0,skipped};
     const effectiveRank=record=>{const mapped=rankByUid.get(String(record?.uid??'')),raw=Number(record?.rank);return Number.isFinite(mapped)?mapped:(Number.isFinite(raw)?raw:999999)};
@@ -958,7 +969,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
     window.MorimensDzoneImportEmbedded=true;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.15';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.16';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
