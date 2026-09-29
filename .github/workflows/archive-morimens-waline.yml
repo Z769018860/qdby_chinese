@@ -2,8 +2,8 @@ name: Archive Morimens Waline community data
 
 on:
   schedule:
-    # Run daily; the script archives only when >=72 hours have elapsed.
-    - cron: "37 18 * * *"
+    # Check daily at 01:37 UTC (09:37 UTC+8); archive only when >=72 hours elapsed.
+    - cron: "37 1 * * *"
   workflow_dispatch:
     inputs:
       force:
