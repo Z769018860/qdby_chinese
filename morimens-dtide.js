@@ -889,8 +889,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const show=seasonId===70&&!season?.legacy;
     host.hidden=!show;
     if(!show){host.innerHTML='';return}
-    const mapUrl='https://github.com/Z769018860/qdby_chinese/blob/main/data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.jpg';
-    const overviewUrl='https://github.com/Z769018860/qdby_chinese/blob/main/data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.jpg';
+    const mapUrl='data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.jpg';
+    const overviewUrl='data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.jpg';
     host.innerHTML=`
       <a class="dtideSeasonResourceLink" href="${mapUrl}" target="_blank" rel="noopener noreferrer">【${ui('当期融灾地图','Current D-Zone Map')}】↗</a>
       <a class="dtideSeasonResourceLink" href="${overviewUrl}" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a>
