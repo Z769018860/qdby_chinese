@@ -1,8 +1,13 @@
 {
   "version": 1,
-  "lastArchiveAt": null,
-  "dzoneLatestCount": 0,
-  "assistLatestCount": 0,
-  "historyCount": 0,
-  "lastBatch": null
+  "lastArchiveAt": "2026-09-29T01:08:19Z",
+  "dzoneLatestCount": 3,
+  "assistLatestCount": 1,
+  "historyCount": 10,
+  "lastBatch": {
+    "dzone": 7,
+    "assist": 3,
+    "skipped": 0,
+    "cleanupCount": 10
+  }
 }

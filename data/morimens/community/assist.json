@@ -1,6 +1,329 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "recordCount": 0,
-  "records": []
+  "updatedAt": "2026-09-29T01:08:19Z",
+  "recordCount": 1,
+  "records": [
+    {
+      "key": "100366990:15589",
+      "uid": "100366990",
+      "characterId": "15589",
+      "submittedBy": "姜酒",
+      "submittedAt": "2026-09-28T20:44:19.460Z",
+      "summary": "助战 Showcase · Murphy: Fauxborn",
+      "summaryZh": "助战 Showcase · Murphy: Fauxborn",
+      "summaryEn": "Assist Showcase · Murphy: Fauxborn",
+      "awakerName": "Murphy: Fauxborn",
+      "commentId": "28",
+      "payload": {
+        "version": 3,
+        "source": "eremora-showcase",
+        "uid": "100366990",
+        "player": "姜酒",
+        "characterId": "15589",
+        "canonicalId": "awakener-0035",
+        "awaker": {
+          "id": 15589,
+          "name": "Murphy: Fauxborn",
+          "image": "portraits/Portrait_Middle_Awaker_O02EX_AF.webp",
+          "mini": "portraits/Portrait_Minihead_Awaker_O02EX_AF.webp",
+          "res": "O02EX_AF"
+        },
+        "level": 80,
+        "potencyLevel": 8,
+        "potential": 13459,
+        "breakLevel": 5,
+        "slots": [],
+        "talents": [],
+        "weapons": [
+          {
+            "id": 78774,
+            "name": "Uteri Somnia",
+            "image": "icon/Weapon_Full_O02EX.webp",
+            "level": 4,
+            "enhanceLevel": 1
+          },
+          {
+            "id": 9827,
+            "name": "Blade of the Titan",
+            "image": "icon/Weapon_Full_O06.webp",
+            "level": 15,
+            "enhanceLevel": 1
+          }
+        ],
+        "suits": [
+          {
+            "id": 18348,
+            "name": "Dream of Medicine",
+            "image": "icon/Icon_Trinket_019_Box.webp",
+            "count": 6
+          }
+        ],
+        "trinkets": [
+          {
+            "id": 9683,
+            "name": "Dream of Medicine I",
+            "image": "icon/Icon_Trinket_019_Orange_1.webp",
+            "slot": 0,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18348,
+            "attrs": [
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 6,
+                "percentage": false,
+                "rollQuality": null
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 0.8999999999999999,
+                "percentage": true,
+                "rollQuality": 3
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.4,
+                "percentage": false,
+                "rollQuality": 8
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              }
+            ]
+          },
+          {
+            "id": 9900,
+            "name": "Dream of Medicine II",
+            "image": "icon/Icon_Trinket_019_Orange_2.webp",
+            "slot": 1,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18348,
+            "attrs": [
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 6,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.4,
+                "percentage": false,
+                "rollQuality": 8
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 1.2,
+                "percentage": false,
+                "rollQuality": 4
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.4,
+                "percentage": false,
+                "rollQuality": 8
+              }
+            ]
+          },
+          {
+            "id": 9525,
+            "name": "Dream of Medicine III",
+            "image": "icon/Icon_Trinket_019_Orange_3.webp",
+            "slot": 2,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18348,
+            "attrs": [
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 6,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 1.5,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.4,
+                "percentage": false,
+                "rollQuality": 8
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.1,
+                "percentage": false,
+                "rollQuality": 7
+              }
+            ]
+          },
+          {
+            "id": 9889,
+            "name": "Dream of Medicine IV",
+            "image": "icon/Icon_Trinket_019_Orange_4.webp",
+            "slot": 3,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18348,
+            "attrs": [
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 6,
+                "percentage": false,
+                "rollQuality": null
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.2000000000000002,
+                "percentage": true,
+                "rollQuality": 6
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 2.4,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.2000000000000002,
+                "percentage": true,
+                "rollQuality": 6
+              }
+            ]
+          },
+          {
+            "id": 9573,
+            "name": "Dream of Medicine V",
+            "image": "icon/Icon_Trinket_019_Orange_5.webp",
+            "slot": 4,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18348,
+            "attrs": [
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 6,
+                "percentage": false,
+                "rollQuality": null
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.4,
+                "percentage": false,
+                "rollQuality": 8
+              },
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 2.4,
+                "percentage": false,
+                "rollQuality": 8
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              }
+            ]
+          },
+          {
+            "id": 9788,
+            "name": "Dream of Medicine VI",
+            "image": "icon/Icon_Trinket_019_Orange_6.webp",
+            "slot": 5,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18348,
+            "attrs": [
+              {
+                "id": 18126,
+                "name": "Realm Mastery",
+                "value": 10,
+                "percentage": false,
+                "rollQuality": null
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 1.5,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 2.4,
+                "percentage": true,
+                "rollQuality": 8
+              }
+            ]
+          }
+        ],
+        "attrs": [
+          {
+            "id": "18159",
+            "name": "Crit. Rate",
+            "value": 6.200000000000001,
+            "percentage": true
+          },
+          {
+            "id": "18105",
+            "name": "Crit. DMG",
+            "value": 8.7,
+            "percentage": true
+          },
+          {
+            "id": "18139",
+            "name": "Keyflare Regen Lv.",
+            "value": 17.7,
+            "percentage": false
+          }
+        ],
+        "fetchedAt": "2026-09-28T20:44:19.460Z",
+        "importMethod": "paste",
+        "updateExisting": true
+      }
+    }
+  ]
 }
