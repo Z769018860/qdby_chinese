@@ -546,23 +546,51 @@
     return Math.max(0,...[...counts.values()].map(x=>x.count?x.borrowed/x.count*100:0));
   }
 
+  function detailCoverageForCap(cap){
+    const seen=new Set();let covered=0;
+    for(const record of season?.records||[]){
+      const uid=String(record?.uid??'').trim();
+      if(uid&&seen.has(uid))continue;
+      const rank=rankOf(record);
+      if(cap&&(!Number.isFinite(rank)||rank>Number(cap)))continue;
+      if(uid)seen.add(uid);
+      covered++;
+    }
+    const officialCount=Number(manifest?.rankIndex?.count)||rankByUid.size||Number(season?.recordCount)||0;
+    const expected=cap?Number(cap):officialCount;
+    return {covered,expected,complete:expected>0&&covered>=expected};
+  }
   function renderCoverage(){
     const cap=selectedRankCap(),max=maxRankAvailable(),box=$('dtideCoverageWarn');if(!box)return;
     const pending=activeSeasonEntry?.dataPending
       ?(zh()?'<div class="dtideNotice"><b>数据待填充：</b>第69期 Bug后正式数据尚未录入，当前暂沿用原第69期 Bug前数据作为占位，不代表 Bug后正式统计结果。</div>':'<div class="dtideNotice"><b>Data pending:</b> official post-bug Season 69 data has not been populated yet. The original pre-bug Season 69 dataset is temporarily reused as a placeholder and does not represent final post-bug statistics.</div>')
       :'';
-    if(!cap)box.innerHTML=pending+(zh()?'<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载用户，并包含暂时无法匹配榜单名次的用户。</div>':'<div class="dtideNotice">Current scope is <b>All Ranks</b>. All downloaded users are included, including users whose leaderboard rank cannot currently be matched.</div>');
-    else{
-      const complete=max>=cap;
-      const coverage=complete?'':(zh()
-        ?`<div class="dtideNotice">当前快照实际抓取到的最高榜单名次为 <b>#${esc(max||'—')}</b>。Top ${cap} 统计目前属于不完整样本。</div>`
-        :`<div class="dtideNotice">The current snapshot reaches rank <b>#${esc(max||'—')}</b>. Top ${cap} statistics are currently based on an incomplete sample.</div>`);
+    const details=detailCoverageForCap(cap);
+    const rankCount=Number(manifest?.rankIndex?.count)||rankByUid.size||0;
+    if(!cap){
+      const detailNotice=rankCount>0&&details.covered<details.expected
+        ?(zh()?`<div class="dtideNotice"><b>官方排名索引：</b>已覆盖 ${esc(rankCount)} 名；当前可用于角色/命轮/造物与配队统计的完整配队详情为 <b>${esc(details.covered)}/${esc(details.expected)}</b>。其余 UID 只具备排名/关卡索引，尚未计入配队统计。</div>`
+          :`<div class="dtideNotice"><b>Official rank index:</b> ${esc(rankCount)} players; complete team details currently available for <b>${esc(details.covered)}/${esc(details.expected)}</b>. Remaining UIDs have rank/stage index only and are not counted in team analytics yet.</div>`)
+        :(zh()?'<div class="dtideNotice">当前为 <b>全部范围</b>，统计所有已下载的完整配队详情。</div>':'<div class="dtideNotice">Current scope is <b>All Ranks</b> and includes all downloaded detailed records.</div>');
+      box.innerHTML=pending+detailNotice;
+    }else{
+      const rankComplete=max>=cap&&rankCount>=cap;
+      let coverage='';
+      if(!rankComplete){
+        coverage=zh()
+          ?`<div class="dtideNotice">当前官方排名索引实际覆盖到 <b>#${esc(max||'—')}</b>。Top ${cap} 仍缺少排名数据。</div>`
+          :`<div class="dtideNotice">The official rank index currently reaches <b>#${esc(max||'—')}</b>. Top ${cap} rank data is still incomplete.</div>`;
+      }else if(!details.complete){
+        coverage=zh()
+          ?`<div class="dtideNotice">官方排名索引已完整覆盖 <b>Top ${cap}</b>，但完整配队详情仅 <b>${esc(details.covered)}/${cap}</b>。当前角色出场率、命轮、造物与配队搜索仍属于不完整详情样本。</div>`
+          :`<div class="dtideNotice">The official rank index fully covers <b>Top ${cap}</b>, but complete team details are available for only <b>${esc(details.covered)}/${cap}</b>. Character, Wheel, Creation, and team-search analytics remain a partial-detail sample.</div>`;
+      }
       box.innerHTML=pending+coverage;
     }
     for(const opt of $('dtideRankScope')?.options||[]){
       if(opt.value==='all'||opt.value==='0'){opt.textContent=ui('全部范围（含未知排名）','All Ranks (including unknown ranks)');continue}
-      const n=Number(opt.value),ok=max>=n;
-      opt.textContent=`Top ${n}${ok?'':ui(' · 当前样本不足',' · incomplete sample')}`;
+      const n=Number(opt.value),d=detailCoverageForCap(n),rankOk=max>=n&&rankCount>=n;
+      opt.textContent=`Top ${n}${!rankOk?ui(' · 排名不足',' · rank incomplete'):(!d.complete?ui(` · 配队 ${d.covered}/${n}`,` · teams ${d.covered}/${n}`):'')}`;
     }
   }
   function identityNormalizationSummary(){
@@ -575,10 +603,11 @@
     return {characters:aliases.size,mergedAliases:merged};
   }
   function renderSummary(){
-    const g=currentGroup(),coverage=manifest.fieldCoverage||{},cap=selectedRankCap(),max=maxRankAvailable();
+    const g=currentGroup(),coverage=manifest.fieldCoverage||{},cap=selectedRankCap(),max=maxRankAvailable(),details=detailCoverageForCap(cap);
+    const rankCount=Number(manifest?.rankIndex?.count)||rankByUid.size||max||0;
     const difficulty=$('dtideDifficulty').value,diff=zh()?(difficultyZh[difficulty]||difficultyZh.all):(difficultyEn[difficulty]||difficultyEn.all);
     $('dtideSummary').innerHTML=[
-      [ui('榜单样本','Leaderboard Sample'),zh()?`${season.recordCount} 条 / 最深 #${max||'—'}`:`${season.recordCount} records / deepest #${max||'—'}`],
+      [ui('排名索引 / 配队详情','Rank Index / Team Details'),cap?`${Math.min(rankCount,cap)} / ${details.covered}`:`${rankCount} / ${details.covered}`],
       [ui('当前范围','Current Scope'),rankScopeLabel(cap)],
       [ui('统计队伍','Teams Counted'),g.teamCount],
       [ui('角色槽位','Character Slots'),g.memberSlots]
