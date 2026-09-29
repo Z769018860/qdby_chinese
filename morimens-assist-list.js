@@ -485,6 +485,16 @@
   async function loadManualRows(){
     const collected=[];let pageNo=1,totalPages=1;
     try{
+      try{
+        const archivedResponse=await fetch('data/morimens/community/assist.json',{cache:'no-store'});
+        if(archivedResponse.ok){
+          const archived=await archivedResponse.json();
+          for(const item of Array.isArray(archived?.records)?archived.records:[]){
+            const row=manualRowFromPayload(item?.payload,{insertedAt:item?.submittedAt,objectId:item?.commentId});
+            if(row)collected.push(row);
+          }
+        }
+      }catch(error){console.warn('Archived Assist submissions unavailable',error)}
       do{
         const url=WALINE_SERVER+'/api/comment?path='+encodeURIComponent(SUBMISSION_PATH)+'&page='+pageNo+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN';
         const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
@@ -492,16 +502,26 @@
         const box=payload?.data&&typeof payload.data==='object'&&!Array.isArray(payload.data)?payload.data:payload;
         const items=Array.isArray(box?.data)?box.data:Array.isArray(payload?.data)?payload.data:[];
         for(const item of items){
-          const parsed=extractSubmission(item?.comment),row=manualRowFromPayload(parsed,{insertedAt:item?.insertedAt,objectId:item?.objectId});
+          const parsed=extractSubmission(item?.orig||item?.comment),row=manualRowFromPayload(parsed,{insertedAt:item?.insertedAt,objectId:item?.objectId});
           if(row)collected.push(row);
         }
         totalPages=Math.min(20,Math.max(1,Number(box?.totalPages)||1));pageNo++;
       }while(pageNo<=totalPages);
       const latest=new Map();
-      for(const row of collected)if(!latest.has(manualKey(row)))latest.set(manualKey(row),row);
+      for(const row of collected){
+        const key=manualKey(row),old=latest.get(key);
+        if(!old||String(row.submittedAt||'')>String(old.submittedAt||''))latest.set(key,row);
+      }
       manualRows=[...latest.values()];
     }catch(e){
-      console.warn('Online assist submissions unavailable',e);manualRows=[];
+      console.warn('Online assist submissions unavailable',e);
+      // Keep successfully loaded GitHub archive even when Waline is temporarily unavailable.
+      const latest=new Map();
+      for(const row of collected){
+        const key=manualKey(row),old=latest.get(key);
+        if(!old||String(row.submittedAt||'')>String(old.submittedAt||''))latest.set(key,row);
+      }
+      manualRows=[...latest.values()];
     }
     return manualRows;
   }
