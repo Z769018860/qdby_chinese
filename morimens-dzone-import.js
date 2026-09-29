@@ -710,8 +710,33 @@
     }
     return {result,encodedLength:encoded.length,objectId:String(serverRow?.objectId||''),visibleComment};
   }
+  async function archivedSubmissionRows(){
+    const out=[];
+    try{
+      const response=await fetch('data/morimens/community/dzone.json',{cache:'no-store'});
+      if(!response.ok)return out;
+      const doc=await response.json();
+      for(const item of Array.isArray(doc?.records)?doc.records:[]){
+        const encoded=String(item?.encoded||'').trim();if(!encoded)continue;
+        try{
+          const data=await decodeSubmission(encoded),record=data?.record,uid=String(data?.uid||record?.uid||item?.uid||'').trim();
+          const seasonId=Number(data?.seasonId||record?.seasonId||item?.seasonId||0);if(!uid||!seasonId||!record)continue;
+          const communityVariant=normalizeVariant(seasonId,data?.communityVariant||data?.variant||item?.communityVariant);
+          const targetKey=String(data?.targetKey||item?.targetKey||(seasonId===69?(communityVariant==='postbug'?'69-postbug':'69-prebug'):seasonId));
+          out.push({
+            uid,seasonId,communityVariant,targetKey,record,
+            submissionId:String(data?.submissionId||item?.submissionId||''),
+            submittedBy:cleanName(data?.submittedBy||item?.submittedBy||'')||ui('匿名','Anonymous'),
+            submittedAt:String(data?.submittedAt||item?.submittedAt||''),
+            source:'github-dzone-archive',commentId:String(item?.commentId||''),archived:true
+          });
+        }catch(error){console.warn('Skip unreadable archived D-Zone submission',error)}
+      }
+    }catch(error){console.warn('D-Zone GitHub archive unavailable',error)}
+    return out;
+  }
   async function fetchSubmissionHistory(){
-    const rows=[];let seenItems=0,markedItems=0,decodeFailures=0;
+    const rows=await archivedSubmissionRows();let seenItems=0,markedItems=0,decodeFailures=0;
     for(let page=1;page<=5;page++){
       const response=await fetch(WALINE_SERVER+'/api/comment?path='+encodeURIComponent(SUBMISSION_PATH)+'&page='+page+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN',{cache:'no-store'});
       if(!response.ok)throw new Error('Waline HTTP '+response.status);
@@ -727,15 +752,21 @@
           if(!uid||!seasonId||!record)continue;
           const communityVariant=normalizeVariant(seasonId,data?.communityVariant||data?.variant);
           const targetKey=String(data?.targetKey||(seasonId===69?(communityVariant==='postbug'?'69-postbug':'69-prebug'):seasonId));
-          rows.push({uid,seasonId,communityVariant,targetKey,record,submissionId:String(data?.submissionId||''),submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone',commentId:String(item?.objectId||'')});
+          rows.push({uid,seasonId,communityVariant,targetKey,record,submissionId:String(data?.submissionId||''),submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone',commentId:String(item?.objectId||''),archived:false});
         }catch(error){decodeFailures++;console.warn('Skip unreadable D-Zone community submission',error)}
       }
       const total=Number(payload?.data?.count??payload?.data?.total??payload?.count??payload?.total);
       if(items.length<100||(Number.isFinite(total)&&page*100>=total))break;
     }
-    rows.sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt)));
-    if(seenItems&&(!rows.length||decodeFailures))console.info('D-Zone community readback',{seenItems,markedItems,decodedRows:rows.length,decodeFailures});
-    return rows;
+    const dedup=new Map();
+    for(const row of rows){
+      const key=row.commentId?('comment:'+row.commentId):(row.submissionId?('submission:'+row.submissionId):[row.targetKey,row.uid,row.submittedAt].join('|'));
+      const old=dedup.get(key);
+      if(!old||String(row.submittedAt||'')>String(old.submittedAt||''))dedup.set(key,row);
+    }
+    const merged=[...dedup.values()].sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt)));
+    if(seenItems&&(!merged.length||decodeFailures))console.info('D-Zone community readback',{seenItems,markedItems,decodedRows:merged.length,decodeFailures});
+    return merged;
   }
   async function verifyPersistedSubmission(submissionId,uid,seasonId,communityVariant){
     const wantedId=String(submissionId||''),wantedUid=String(uid||''),wantedVariant=normalizeVariant(seasonId,communityVariant);
