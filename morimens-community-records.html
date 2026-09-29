@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>社区维护记录 · 忘忘看报</title>
+  <title id="pageTitle">社区维护记录 · 忘忘看报</title>
   <style>
     :root{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:#e8eef5;background:#081019}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 0%,rgba(55,136,165,.16),transparent 36%),linear-gradient(180deg,#0b131d,#070d14);color:#e8eef5}
@@ -21,15 +21,15 @@
 <body>
   <main class="wrap">
     <div class="top">
-      <a class="btn" href="morimens-tools.html#about">← 返回忘忘看报 · 关于</a>
+      <a class="btn" id="backBtn" href="morimens-tools.html#about">← 返回忘忘看报 · 关于</a>
       <div class="topActions">
-        <a class="btn" href="morimens-dzone-submit.html">融灾数据自行提交</a>
+        <button class="btn" id="langToggle" type="button">English</button><a class="btn" id="submitBtn" href="morimens-dzone-submit.html">融灾数据自行提交</a>
       </div>
     </div>
     <section class="hero">
       <p class="eyebrow">COMMUNITY MAINTENANCE LOG</p>
-      <h1>社区维护记录</h1>
-      <p>集中记录社区自行维护产生的提交。表格展示提交人昵称、提交 UID、提交内容、提交时间与来源；第69期融灾记录会区分 Bug前 / Bug后。</p>
+      <h1 id="heroTitle">社区维护记录</h1>
+      <p id="heroLead">集中记录社区自行维护产生的提交。表格展示提交人昵称、提交 UID、提交内容、提交时间与来源；第69期融灾记录会区分 Bug前 / Bug后。</p>
     </section>
     <div class="filters">
       <input id="search" type="search" placeholder="搜索提交人、UID、内容……">
@@ -38,7 +38,7 @@
     <div id="status" class="status">正在载入社区维护记录……</div>
     <div class="tableWrap">
       <table>
-        <thead><tr><th>提交人昵称</th><th>UID</th><th>提交内容</th><th>提交时间</th><th>来源</th></tr></thead>
+        <thead><tr><th id="thNick">提交人昵称</th><th>UID</th><th id="thContent">提交内容</th><th id="thTime">提交时间</th><th id="thSource">来源</th></tr></thead>
         <tbody id="rows"><tr><td colspan="5" class="empty">正在载入……</td></tr></tbody>
       </table>
     </div>
@@ -49,8 +49,10 @@
     const ASSIST_PATH='/__morimens_assist_submissions__/';
     const ASSIST_MARKER='MORIMENS_ASSIST_V1:';
     const rows=[];
+    const zh=()=>localStorage.getItem('morimens.language')!=='en';
+    const ui=(cn,en)=>zh()?cn:en;
     const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    const fmt=value=>{const d=value?new Date(value):null;return d&&!Number.isNaN(d.getTime())?d.toLocaleString('zh-CN'):'—'};
+    const fmt=value=>{const d=value?new Date(value):null;return d&&!Number.isNaN(d.getTime())?d.toLocaleString(zh()?'zh-CN':'en-US'):'—'};
     function utf8FromBase64(encoded){
       const binary=atob(String(encoded||'')),bytes=Uint8Array.from(binary,ch=>ch.charCodeAt(0));
       return new TextDecoder().decode(bytes);
@@ -84,10 +86,11 @@
           rows.push({
             id:'waline-assist:'+String(item?.objectId||[uid,item?.insertedAt].join('|')),
             kind:'assist',nick,uid,
-            content:'助战 Showcase · '+name,
-            detail:[level,wheels.length?('命轮：'+wheels.join(' / ')):'',suits.length?('密契：'+suits.join(' / ')):''].filter(Boolean).join(' · '),
+            contentZh:'助战 Showcase · '+name,contentEn:'Assist Showcase · '+name,
+            detailZh:[level,wheels.length?('命轮：'+wheels.join(' / ')):'',suits.length?('密契：'+suits.join(' / ')):''].filter(Boolean).join(' · '),
+            detailEn:[level,wheels.length?('Wheel: '+wheels.join(' / ')):'',suits.length?('Covenant: '+suits.join(' / ')):''].filter(Boolean).join(' · '),
             time:item?.insertedAt||data?.fetchedAt||'',
-            source:'助战 Showcase'
+            sourceZh:'助战 Showcase',sourceEn:'Assist Showcase'
           });
         }catch(error){console.warn('Skip assist maintenance row',error)}
       }
@@ -95,7 +98,7 @@
     async function loadDzone(){
       window.MorimensDzoneImportEmbedded=false;
       await new Promise((resolve,reject)=>{
-        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.14';script.defer=true;
+        const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.15';script.defer=true;
         script.onload=resolve;script.onerror=()=>reject(new Error('融灾记录脚本载入失败'));document.head.appendChild(script);
       });
       const items=await window.MorimensDzoneImport?.listSubmissionRecords?.({refresh:true,strict:true})||[];
@@ -106,12 +109,34 @@
           kind:'dzone',
           nick:String(item.submittedBy||'匿名'),
           uid:String(item.uid||''),
-          content:item.summary||('第 '+item.seasonId+' 期融灾'+(phase?' · '+phase:'')),
-          detail:'归档键：'+String(item.targetKey||item.seasonId),
+          contentZh:item.summaryZh||item.summary||('第 '+item.seasonId+' 期融灾'+(phase?' · '+phase:'')),
+          contentEn:item.summaryEn||('Season '+item.seasonId+' D-Zone'+(Number(item.seasonId)===69?' · '+(item.communityVariant==='postbug'?'Post-bug':'Pre-bug') :'')),
+          detailZh:'归档键：'+String(item.targetKey||item.seasonId),detailEn:'Archive key: '+String(item.targetKey||item.seasonId),
           time:item.submittedAt||'',
-          source:'融灾数据'
+          sourceZh:'融灾数据',sourceEn:'D-Zone Data'
         });
       }
+    }
+    function rowContent(row){
+      if(zh())return {content:row.contentZh||row.content||'',detail:row.detailZh||row.detail||''};
+      return {content:row.contentEn||row.content||row.contentZh||'',detail:row.detailEn||row.detail||row.detailZh||''};
+    }
+    function applyLanguage(){
+      const isZh=zh();document.documentElement.lang=isZh?'zh-CN':'en';
+      document.title=ui('社区维护记录 · 忘忘看报','Community Maintenance Log · Morimens Weekly');
+      document.getElementById('backBtn').textContent=ui('← 返回忘忘看报 · 关于','← Back to Morimens Weekly · About');
+      document.getElementById('submitBtn').textContent=ui('融灾数据自行提交','Submit D-Zone Data');
+      document.getElementById('langToggle').textContent=isZh?'English':'中文';
+      document.getElementById('heroTitle').textContent=ui('社区维护记录','Community Maintenance Log');
+      document.getElementById('heroLead').textContent=ui('集中记录社区自行维护产生的提交。表格展示提交人昵称、提交 UID、提交内容、提交时间与来源；第69期融灾记录会区分 Bug前 / Bug后。','A consolidated log of community-maintained submissions, including contributor name, UID, submitted content, time, and source. Season 69 D-Zone records distinguish pre-bug and post-bug data.');
+      document.getElementById('search').placeholder=ui('搜索提交人、UID、内容……','Search contributor, UID, or content…');
+      const source=document.getElementById('source');
+      source.options[0].textContent=ui('全部来源','All sources');source.options[1].textContent=ui('融灾数据','D-Zone Data');source.options[2].textContent=ui('助战 Showcase','Assist Showcase');
+      document.getElementById('thNick').textContent=ui('提交人昵称','Contributor');
+      document.getElementById('thContent').textContent=ui('提交内容','Submission');
+      document.getElementById('thTime').textContent=ui('提交时间','Submitted at');
+      document.getElementById('thSource').textContent=ui('来源','Source');
+      render();
     }
     function render(){
       const body=document.getElementById('rows'),status=document.getElementById('status'),q=String(document.getElementById('search').value||'').trim().toLowerCase(),source=document.getElementById('source').value;
@@ -121,15 +146,18 @@
         if(!unique.has(key))unique.set(key,row);
       }
       const all=[...unique.values()];
-      const filtered=all.filter(row=>(!source||row.kind===source)&&(!q||[row.nick,row.uid,row.content,row.detail,row.source].join(' ').toLowerCase().includes(q))).sort((a,b)=>String(b.time).localeCompare(String(a.time)));
-      status.textContent='共 '+all.length+' 条维护记录'+(filtered.length!==all.length?' · 当前显示 '+filtered.length+' 条':'');
-      body.innerHTML=filtered.length?filtered.map(row=>'<tr>'+
-        '<td class="nick">'+esc(row.nick||'匿名')+'</td>'+
+      const filtered=all.filter(row=>{
+        const shown=rowContent(row),searchable=[row.nick,row.uid,row.contentZh,row.contentEn,row.detailZh,row.detailEn,row.sourceZh,row.sourceEn,shown.content,shown.detail].join(' ').toLowerCase();
+        return (!source||row.kind===source)&&(!q||searchable.includes(q));
+      }).sort((a,b)=>String(b.time).localeCompare(String(a.time)));
+      status.textContent=ui('共 '+all.length+' 条维护记录'+(filtered.length!==all.length?' · 当前显示 '+filtered.length+' 条':''),all.length+' maintenance records'+(filtered.length!==all.length?' · showing '+filtered.length:''));
+      body.innerHTML=filtered.length?filtered.map(row=>{const shown=rowContent(row),sourceLabel=row.kind==='assist'?ui('助战 Showcase','Assist Showcase'):ui('融灾数据','D-Zone Data');return '<tr>'+
+        '<td class="nick">'+esc(row.nick||ui('匿名','Anonymous'))+'</td>'+
         '<td class="uid"><a href="https://eremora.com/u/'+encodeURIComponent(row.uid)+'" target="_blank" rel="noopener noreferrer">'+esc(row.uid)+'</a></td>'+
-        '<td><span class="contentMain">'+esc(row.content)+'</span>'+(row.detail?'<span class="contentSub">'+esc(row.detail)+'</span>':'')+'</td>'+
+        '<td><span class="contentMain">'+esc(shown.content)+'</span>'+(shown.detail?'<span class="contentSub">'+esc(shown.detail)+'</span>':'')+'</td>'+
         '<td>'+esc(fmt(row.time))+'</td>'+
-        '<td><span class="tag">'+esc(row.source)+'</span></td>'+
-      '</tr>').join(''):'<tr><td colspan="5" class="empty">没有符合条件的社区维护记录。</td></tr>';
+        '<td><span class="tag">'+esc(sourceLabel)+'</span></td>'+
+      '</tr>'}).join(''):'<tr><td colspan="5" class="empty">'+ui('没有符合条件的社区维护记录。','No matching community maintenance records.')+'</td></tr>';
     }
     async function loadArchivedHistory(){
       try{
@@ -141,10 +169,12 @@
             kind:item.type==='assist'?'assist':'dzone',
             nick:String(item.submittedBy||'匿名'),
             uid:String(item.uid||''),
-            content:String(item.summary||'社区维护记录'),
-            detail:item.type==='dzone'&&item.seasonId?('第 '+item.seasonId+' 期'+(item.communityVariant&&item.communityVariant!=='default'?' · '+item.communityVariant:'')):'',
+            contentZh:String(item.summaryZh||item.summary||'社区维护记录'),
+            contentEn:String(item.summaryEn||item.summary||'Community maintenance record'),
+            detailZh:item.type==='dzone'&&item.seasonId?('第 '+item.seasonId+' 期'+(item.communityVariant&&item.communityVariant!=='default'?' · '+(item.communityVariant==='postbug'?'Bug后':'Bug前'):'')):'',
+            detailEn:item.type==='dzone'&&item.seasonId?('Season '+item.seasonId+(item.communityVariant&&item.communityVariant!=='default'?' · '+(item.communityVariant==='postbug'?'Post-bug':'Pre-bug'):'')):'',
             time:item.submittedAt||'',
-            source:item.type==='assist'?'助战 Showcase':'融灾数据'
+            sourceZh:item.type==='assist'?'助战 Showcase':'融灾数据',sourceEn:item.type==='assist'?'Assist Showcase':'D-Zone Data'
           });
         }
       }catch(error){console.warn('Archived community history unavailable',error)}
@@ -156,12 +186,13 @@
         const settled=await Promise.allSettled([loadDzone(),loadAssist()]);
         const errors=settled.filter(x=>x.status==='rejected').map(x=>x.reason?.message||String(x.reason));
         render();
-        if(errors.length){status.textContent+='；部分来源载入失败：'+errors.join('；');status.classList.add('error')}
-      }catch(error){status.textContent='社区维护记录载入失败：'+(error?.message||error);status.classList.add('error')}
+        if(errors.length){status.textContent+=ui('；部分来源载入失败：','; some sources failed: ')+errors.join(zh()?'；':'; ');status.classList.add('error')}
+      }catch(error){status.textContent=ui('社区维护记录载入失败：','Failed to load community maintenance records: ')+(error?.message||error);status.classList.add('error')}
     }
     document.getElementById('search').addEventListener('input',render);
     document.getElementById('source').addEventListener('change',render);
-    init();
+    document.getElementById('langToggle').addEventListener('click',()=>{localStorage.setItem('morimens.language',zh()?'en':'zh');applyLanguage()});
+    applyLanguage();init();
   })();
   </script>
 </body>
