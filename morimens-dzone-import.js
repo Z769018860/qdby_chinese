@@ -513,16 +513,7 @@
       `Team data is incomplete: Zone ${incompleteTeam.wave} contains a team with fewer than 4 members. The submission was rejected.`
     ));
     const extraTeams=teamRows.filter(({team})=>String(team?.clearType||'')==='extra').length;
-    const score=Number(record.score??record.currentScore);
-    const minExtras=Number.isFinite(score)&&score>500?Math.ceil((score-500)/5):0;
-    if(extraTeams<minExtras)throw new Error(ui(
-      `分数与队伍数量不一致：${score} 分至少需要 ${minExtras} 支额外队伍，但只解析到 ${extraTeams} 支。本次提交已拒绝。`,
-      `Score/team mismatch: ${score} points requires at least ${minExtras} extra teams, but only ${extraTeams} were parsed. The submission was rejected.`
-    ));
-    if(score===525&&(teams!==10||extraTeams!==5))throw new Error(ui(
-      `525 分必须包含 5 支基础队伍 + 5 支额外队伍，共 10 支；当前解析为 ${teams} 支（额外 ${extraTeams} 支），本次提交已拒绝。`,
-      `A 525-point record must contain 5 base teams + 5 extra teams, 10 total. Parsed: ${teams} teams (${extraTeams} extra). The submission was rejected.`
-    ));
+    record.extraTeamCount=extraTeams;
     if(Number(record.sourceTeamCount)>0&&teams!==Number(record.sourceTeamCount)){
       throw new Error(ui(
         `队伍解析不完整：源数据有 ${record.sourceTeamCount} 支有效队伍，但标准化后只有 ${teams} 支。为避免丢失第二支队伍，本次提交已拒绝。`,
