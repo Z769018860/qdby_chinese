@@ -435,24 +435,29 @@
     if(!item||typeof item!=='object')return null;
     return {id:item.id,name:cleanName(item.name||String(item.id??'')),image:media(base,item.image),quality:cleanName(item.quality||''),desc:cleanName(item.desc||'')};
   }
+  function stageCandidates(rawStage){
+    if(!rawStage||typeof rawStage!=='object')return [];
+    const nested=[];
+    if(rawStage.base&&typeof rawStage.base==='object')nested.push(['clear',rawStage.base]);
+    if(rawStage.extra&&typeof rawStage.extra==='object')nested.push(['extra',rawStage.extra]);
+    return nested.length?nested:[[rawStage.extra===true?'extra':'clear',rawStage]];
+  }
   function normalizeActivity(item,decoded){
     const node=item.node||{},activity=node.activity&&typeof node.activity==='object'?node.activity:{},base=findMediaBase(decoded),header=findHeader(decoded),catalog=catalogMap(),rows=[];
+    const sourceDistribution=new Map();let sourceTeamCount=0;
     for(const rawStage of Array.isArray(node.stages)?node.stages:[]){
-      if(!rawStage||typeof rawStage!=='object')continue;
-      const candidates=(rawStage.base||rawStage.extra)
-        ?[['clear',rawStage.base],['extra',rawStage.extra]].filter(([,row])=>row&&typeof row==='object')
-        :[[rawStage.extra?'extra':'clear',rawStage]];
-      for(const [clearType,stageRow] of candidates){
-        const team=stageRow.team,stage=stageRow.stage&&typeof stageRow.stage==='object'?stageRow.stage:{};
+      for(const [clearType,stageRow] of stageCandidates(rawStage)){
+        const team=stageRow?.team,stage=stageRow?.stage&&typeof stageRow.stage==='object'?stageRow.stage:{};
         if(!team||typeof team!=='object'||!Array.isArray(team.awakers))continue;
         const stageName=cleanName(stage.name||''),match=stageName.match(/(?:Wave|Zone)\s*(\d+)/i);
         if(!match)continue;
+        const wave=Number(match[1]);sourceTeamCount++;sourceDistribution.set(wave,(sourceDistribution.get(wave)||0)+1);
         const result=team.result&&typeof team.result==='object'?team.result:{};
         rows.push({
-          wave:Number(match[1]),madness:numberOrNull(stage.rec_level??stage.recLevel),stageId:stage.id??team.stage_tid??null,stageName,
+          wave,madness:numberOrNull(stage.rec_level??stage.recLevel),stageId:stage.id??team.stage_tid??null,stageName,
           score:numberOrNull(stageRow.score),clearType,extraPass:!!stageRow.extra_pass,groupTid:stageRow.group_tid??rawStage.group_tid??null,
           token:normalizeToken(team.keeper_skill,base),creations:(Array.isArray(result.relics)?result.relics:[]).map(x=>normalizeCreation(x,base)).filter(Boolean),
-          wid:team.wid??null,battleUuid:team.battle_uuid??null,members:team.awakers.map(x=>normalizeMember(x,base,catalog))
+          wid:team.wid??null,battleUuid:team.battle_uuid??team.battleUuid??null,members:team.awakers.map(x=>normalizeMember(x,base,catalog))
         });
       }
     }
@@ -462,11 +467,14 @@
       const copy={...row};delete copy.wave;delete copy.madness;waves.get(row.wave).teams.push(copy);
     }
     const uid=String(header.uid??'').trim(),score=rows.reduce((sum,row)=>sum+(Number(row.score)||0),0);
+    const sourceTeamDistribution=[1,2,3,4,5].map(wave=>sourceDistribution.get(wave)||0);
     return {
       rank:null,player:cleanName(header.name||''),uid,score,currentScore:score,leaderboardScore:null,
       url:`https://eremora.com/u/${encodeURIComponent(uid)}/challenges/dzone/${item.period}`,seasonId:item.period,
-      activity:{id:activity.id??null,tid:node.activity_tid??null,name:cleanName(activity.name||'Dissoluted Abyss'),start:numberOrNull(activity.start),end:numberOrNull(activity.end),maxScore:numberOrNull(node.max_score),stageCount:numberOrNull(node.stage_count)||rows.length},
-      waves:[...waves.values()].sort((a,b)=>a.wave-b.wave),sourceTransport:'Eremora SvelteKit __data.json community import'
+      activity:{id:activity.id??null,tid:node.activity_tid??null,name:cleanName(activity.name||'Dissoluted Abyss'),start:numberOrNull(activity.start),end:numberOrNull(activity.end),maxScore:numberOrNull(node.max_score),stageCount:numberOrNull(node.stage_count)||waves.size},
+      waves:[...waves.values()].sort((a,b)=>a.wave-b.wave),
+      sourceTeamCount,sourceTeamDistribution,
+      sourceTransport:'Eremora SvelteKit __data.json community import'
     };
   }
   function parseDzonePayload(text,expectedSeason){
@@ -498,6 +506,16 @@
     if(waveSet.size<5)throw new Error(ui(`只解析到 ${waveSet.size}/5 个 Zone；为避免覆盖完整数据，本次提交已拒绝。`,`Only ${waveSet.size}/5 Zones were parsed. The submission was rejected to avoid replacing complete data with a partial record.`));
     const teams=(record.waves||[]).reduce((sum,w)=>sum+(w.teams?.length||0),0);
     if(teams<5)throw new Error(ui('挑战数据不完整：有效队伍少于 5 支。','Challenge data is incomplete: fewer than 5 valid teams.'));
+    if(Number(record.sourceTeamCount)>0&&teams!==Number(record.sourceTeamCount)){
+      throw new Error(ui(
+        `队伍解析不完整：源数据有 ${record.sourceTeamCount} 支有效队伍，但标准化后只有 ${teams} 支。为避免丢失第二支队伍，本次提交已拒绝。`,
+        `Team parsing is incomplete: the source contains ${record.sourceTeamCount} valid teams, but only ${teams} survived normalization. The submission was rejected to avoid losing secondary teams.`
+      ));
+    }
+    const dist=(record.sourceTeamDistribution||[]).map(Number);
+    if(dist.length===5&&dist.some((expected,index)=>expected>0&&Number(record.waves?.find(w=>Number(w.wave)===index+1)?.teams?.length||0)!==expected)){
+      throw new Error(ui('各 Zone 队伍数量与源数据不一致，本次提交已拒绝。','Per-Zone team counts do not match the source payload. The submission was rejected.'));
+    }
     return record;
   }
 
@@ -587,7 +605,9 @@
     return [
       String(r.player||''),String(r.uid||''),r.score??null,r.currentScore??null,r.leaderboardScore??null,Number(r.seasonId)||0,
       (r.waves||[]).map(w=>[Number(w?.wave)||0,w?.madness??null,(w?.teams||[]).map(compactTeam).filter(Boolean)]),
-      [a.id??null,a.tid??null,String(a.name||'Dissoluted Abyss'),a.start??null,a.end??null,a.maxScore??null,a.stageCount??null]
+      [a.id??null,a.tid??null,String(a.name||'Dissoluted Abyss'),a.start??null,a.end??null,a.maxScore??null,a.stageCount??null],
+      Number(r.sourceTeamCount)||null,
+      Array.isArray(r.sourceTeamDistribution)?r.sourceTeamDistribution.map(x=>Number(x)||0):null
     ];
   }
   function expandRecord(row){
@@ -598,6 +618,8 @@
       url:`https://eremora.com/u/${encodeURIComponent(uid)}/challenges/dzone/${seasonId}`,seasonId,
       activity:{id:a[0]??null,tid:a[1]??null,name:String(a[2]||'Dissoluted Abyss'),start:a[3]??null,end:a[4]??null,maxScore:a[5]??null,stageCount:a[6]??null},
       waves:(row[6]||[]).map(w=>({wave:Number(w?.[0])||0,madness:w?.[1]??null,teams:(w?.[2]||[]).map(expandTeam).filter(Boolean)})).filter(w=>w.wave>0),
+      sourceTeamCount:Number(row[8])||null,
+      sourceTeamDistribution:Array.isArray(row[9])?row[9].map(x=>Number(x)||0):null,
       sourceTransport:'Waline compact D-Zone community submission'
     };
   }
@@ -782,10 +804,13 @@
         const zones=new Set((hit.record?.waves||[]).map(w=>Number(w?.wave)).filter(n=>n>=1&&n<=5));
         const teams=(hit.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0);
         const members=(hit.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams||[]).reduce((n,t)=>n+(t?.members?.length||0),0),0);
-        if(zones.size<5||teams<5||members<20){
+        const expectedTeams=Number(hit.record?.sourceTeamCount)||0;
+        const expectedDist=Array.isArray(hit.record?.sourceTeamDistribution)?hit.record.sourceTeamDistribution.map(Number):[];
+        const actualDist=[1,2,3,4,5].map(wave=>(hit.record?.waves||[]).find(w=>Number(w?.wave)===wave)?.teams?.length||0);
+        if(zones.size<5||teams<5||members<20||(expectedTeams>0&&teams!==expectedTeams)||(expectedDist.length===5&&expectedDist.some((n,i)=>n>0&&actualDist[i]!==n))){
           throw new Error(ui(
-            `社区记录已经回读，但紧凑数据还原不完整（${zones.size}/5 Zone、${teams} 支队伍、${members} 个角色槽位），本次不会合并统计。`,
-            `The community record was read back, but compact-data restoration is incomplete (${zones.size}/5 Zones, ${teams} teams, ${members} member slots), so it will not be merged into statistics.`
+            `社区记录已经回读，但紧凑数据还原不完整（${zones.size}/5 Zone、${teams}/${expectedTeams||teams} 支队伍、分布 ${actualDist.join('/')}），本次不会合并统计。`,
+            `The community record was read back, but compact-data restoration is incomplete (${zones.size}/5 Zones, ${teams}/${expectedTeams||teams} teams, distribution ${actualDist.join('/')}), so it will not be merged into statistics.`
           ));
         }
         return {hit,rows:last};
@@ -813,7 +838,8 @@
       const teams=(row.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0),zones=(row.record?.waves||[]).length;
       const score=row.record?.score??row.record?.currentScore??'—';
       const phase=Number(row.seasonId)===69?(normalizeVariant(row.seasonId,row.communityVariant)==='postbug'?ui('Bug后','Post-bug'):ui('Bug前','Pre-bug')):'';
-      const detail=ui(`第 ${row.seasonId} 期${phase?' · '+phase:''} · ${score} 分 · ${zones} Zone · ${teams} 支队伍`,`Season ${row.seasonId}${phase?' · '+phase:''} · ${score} pts · ${zones} Zones · ${teams} teams`);
+      const dist=[1,2,3,4,5].map(wave=>(row.record?.waves||[]).find(w=>Number(w?.wave)===wave)?.teams?.length||0);
+      const detail=ui(`第 ${row.seasonId} 期${phase?' · '+phase:''} · ${score} 分 · ${zones} Zone · ${teams} 支队伍（${dist.join('/')}）`,`Season ${row.seasonId}${phase?' · '+phase:''} · ${score} pts · ${zones} Zones · ${teams} teams (${dist.join('/')})`);
       return `<div class="dtideCommunityHistoryRow"><b>UID ${esc(row.uid)}</b><span>${esc(detail)}<br>${esc(formatTime(row.submittedAt))}</span><span>${ui('更新人：','By: ')}${esc(row.submittedBy||ui('匿名','Anonymous'))}</span></div>`;
     }).join(''):`<div class="dtideCommunityHistoryRow"><span>${ui('所选期次暂无自行更新记录。','No community updates for the selected season yet.')}</span></div>`;
   }
