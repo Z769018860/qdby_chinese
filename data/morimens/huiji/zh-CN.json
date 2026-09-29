@@ -3,16 +3,22 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-18T12:44:40.108Z",
+    "syncedAt": "2026-09-29T10:00:39.487Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
-  "count": 60,
-  "mapped": 60,
-  "enriched": 12,
-  "jinaRecords": 59,
-  "cachedRecords": 3,
+  "count": 61,
+  "mapped": 61,
+  "enriched": 13,
+  "jinaRecords": 48,
+  "cachedRecords": 13,
   "voiceRecords": 29,
   "failed": [
+    {
+      "title": "「24」",
+      "skeydbId": "awakener-0001",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
     {
       "title": "阿格里帕",
       "skeydbId": "awakener-0002",
@@ -26,16 +32,34 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "艾尔瓦",
+      "skeydbId": "awakener-0004",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "奥瑞塔",
+      "skeydbId": "awakener-0005",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "凯刻斯",
       "skeydbId": "awakener-0006",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "卡斯托尔",
-      "skeydbId": "awakener-0008",
+      "title": "卡茜亚",
+      "skeydbId": "awakener-0007",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "卡斯托尔",
+      "skeydbId": "awakener-0008",
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94: unusable reader response"
     },
     {
       "title": "希莱斯特",
@@ -46,6 +70,12 @@
     {
       "title": "克莱门汀",
       "skeydbId": "awakener-0010",
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
+    },
+    {
+      "title": "克珀珊特",
+      "skeydbId": "awakener-0011",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -58,8 +88,8 @@
     {
       "title": "朵尔",
       "skeydbId": "awakener-0013",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%9C%B5%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94: unusable reader response"
     },
     {
       "title": "杜勒赛因",
@@ -76,12 +106,6 @@
     {
       "title": "菲茵特",
       "skeydbId": "awakener-0016",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "法洛思",
-      "skeydbId": "awakener-0017",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -104,12 +128,6 @@
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "戈利亚",
-      "skeydbId": "awakener-0021",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
       "title": "哈姆林",
       "skeydbId": "awakener-0022",
       "status": "no-voice",
@@ -122,14 +140,8 @@
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "奥尔拉",
-      "skeydbId": "awakener-0024",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "珈伦",
-      "skeydbId": "awakener-0026",
+      "title": "詹金",
+      "skeydbId": "awakener-0025",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -142,14 +154,8 @@
     {
       "title": "雷娅",
       "skeydbId": "awakener-0028",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "莉莉",
-      "skeydbId": "awakener-0029",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%9B%B7%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85: unusable reader response"
     },
     {
       "title": "莉兹",
@@ -160,8 +166,8 @@
     {
       "title": "萝坦",
       "skeydbId": "awakener-0031",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: unusable reader response"
     },
     {
       "title": "弥利亚姆",
@@ -196,14 +202,14 @@
     {
       "title": "潘狄娅",
       "skeydbId": "awakener-0039",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%BD%98%E7%8B%84%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85: unusable reader response"
     },
     {
       "title": "皮克曼",
       "skeydbId": "awakener-0040",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: unusable reader response"
     },
     {
       "title": "波吕克斯",
@@ -220,8 +226,8 @@
     {
       "title": "莱克",
       "skeydbId": "awakener-0043",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: unusable reader response"
     },
     {
       "title": "萨尔瓦多",
@@ -232,24 +238,18 @@
     {
       "title": "珊",
       "skeydbId": "awakener-0045",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%8F%8A&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "索蕾尔",
       "skeydbId": "awakener-0046",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: unusable reader response"
     },
     {
       "title": "塔薇",
       "skeydbId": "awakener-0047",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "泰旖丝",
-      "skeydbId": "awakener-0048",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -266,22 +266,16 @@
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "温柯尔",
-      "skeydbId": "awakener-0053",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
       "title": "徐",
       "skeydbId": "awakener-0054",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: unusable reader response"
     },
     {
       "title": "莫丝",
       "skeydbId": "awakener-0055",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: unusable reader response"
     },
     {
       "title": "沙耶",
@@ -292,12 +286,18 @@
     {
       "title": "庞托斯",
       "skeydbId": "awakener-0058",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: unusable reader response"
     },
     {
       "title": "卡拉布",
       "skeydbId": "awakener-0060",
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: unusable reader response"
+    },
+    {
+      "title": "负誓·奥吉尔",
+      "skeydbId": "awakener-0061",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     }
@@ -368,232 +368,13 @@
           "content": "请放心，我们几个都是很有用的。我可以缝纫、打扫，另一个我擅长战斗，还有其他的我。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "暴击率+1.6% 狂气回充等级+0.4",
-              "",
-              "",
-              "暴击率+3.2% 狂气回充等级+0.8",
-              "",
-              "",
-              "暴击率+4.8% 狂气回充等级+1.2",
-              "",
-              "",
-              "暴击率+6.4% 狂气回充等级+1.6 「畸变的解剖」已解锁 超限爆发：获得 24 点 界域精通，「24」的下一张指令卡生效 3 次。",
-              "",
-              "",
-              "暴击率+8.0% 狂气回充等级+2.0",
-              "",
-              "",
-              "暴击率+9.6% 狂气回充等级+2.4",
-              "",
-              "",
-              "暴击率+11.2% 狂气回充等级+2.8",
-              "",
-              "",
-              "暴击率+12.8% 狂气回充等级+3.2 等级上限提升 +5",
-              "",
-              "",
-              "暴击率+14.4% 狂气回充等级+3.6",
-              "",
-              "",
-              "暴击率+16.0% 狂气回充等级+4.0",
-              "",
-              "",
-              "暴击率+17.6% 狂气回充等级+4.4",
-              "",
-              "",
-              "暴击率+19.2% 狂气回充等级+4.8 等级上限提升 +10 「阿尼姆斯投射」已解锁 最终法则： 灵知觉醒「调停人格」获得强化，「24」的指令卡人格效果加成翻倍。「24」释放狂气爆发后人格加成翻倍效果本回合失效。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0002",
@@ -756,7 +537,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0005",
@@ -828,7 +609,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0006",
@@ -841,186 +622,7 @@
         "englishName": "Caecus"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "血脉觉醒",
-              "「破碎沉戟」获得 20 狂气。（效果随「破碎沉戟」的等级提升）"
-            ],
-            [
-              "",
-              "鳞刺聚合",
-              "「逆鳞之护」护盾提高 20%，并获得 保留。"
-            ],
-            [
-              "",
-              "不被接纳之痛",
-              "回合结束时回复等同于体质 7.5% 的生命。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%87%AF%E5%88%BB%E6%96%AF",
         "mode": "jina-reader",
@@ -1092,232 +694,13 @@
           "content": "我知道，你是特殊的观众，可不能把你嗖的一下丢到异次元去，不然会惹上大麻烦的。诶，有没有对别人这么做过？讨厌，不要问啦，是人家的秘密！"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "界域精通+4 狂气回充等级+0.4",
-              "",
-              "",
-              "界域精通+8 狂气回充等级+0.8",
-              "",
-              "",
-              "界域精通+12 狂气回充等级+1.2",
-              "",
-              "",
-              "界域精通+16 狂气回充等级+1.6 「纵情欢笑」已解锁 超限爆发：本次狂气爆发伤害次数变为三倍。之后 5 次打出卡茜亚的指令卡后，获得攻击力 10% 的 力量。",
-              "",
-              "",
-              "界域精通+20 狂气回充等级+2.0",
-              "",
-              "",
-              "界域精通+24 狂气回充等级+2.4",
-              "",
-              "",
-              "界域精通+28 狂气回充等级+2.8",
-              "",
-              "",
-              "界域精通+32 狂气回充等级+3.2 等级上限提升 +5",
-              "",
-              "",
-              "界域精通+36 狂气回充等级+3.6",
-              "",
-              "",
-              "界域精通+40 狂气回充等级+4.0",
-              "",
-              "",
-              "界域精通+44 狂气回充等级+4.4",
-              "",
-              "",
-              "界域精通+48 狂气回充等级+4.8 等级上限提升 +10 「一千零一场奇迹」已解锁 最终法则： 灵知觉醒「演出序幕」获得强化，所有唤醒体打出「打击」时都能触发该效果获得临时 力量。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0008",
@@ -1333,10 +716,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94: unusable reader response"
     },
     {
       "skeydbId": "awakener-0009",
@@ -1371,10 +754,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
     },
     {
       "skeydbId": "awakener-0011",
@@ -1440,232 +823,13 @@
           "content": "我对您只有敬重，并会誓死完成您下达的所有命令。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "暴击率+0.8% 死亡抵抗+5.6%",
-              "",
-              "",
-              "暴击率+1.6% 死亡抵抗+11.2%",
-              "",
-              "",
-              "暴击率+2.4% 死亡抵抗+16.8%",
-              "",
-              "",
-              "暴击率+3.2% 死亡抵抗+22.4% 「赴死如归的天火」已解锁 超限爆发：获得 3 条触腕，弃置的手牌 余波 效果额外生效 1 次。",
-              "",
-              "",
-              "暴击率+4.0% 死亡抵抗+28.0%",
-              "",
-              "",
-              "暴击率+4.8% 死亡抵抗+33.6%",
-              "",
-              "",
-              "暴击率+5.6% 死亡抵抗+39.2%",
-              "",
-              "",
-              "暴击率+6.4% 死亡抵抗+44.8% 等级上限提升 +5",
-              "",
-              "",
-              "暴击率+7.2% 死亡抵抗+50.4%",
-              "",
-              "",
-              "暴击率+8.0% 死亡抵抗+56.0%",
-              "",
-              "",
-              "暴击率+8.8% 死亡抵抗+61.6%",
-              "",
-              "",
-              "暴击率+9.6% 死亡抵抗+67.2% 等级上限提升 +10 「不熄、不灭、不烬」已解锁 最终法则： 灵知觉醒「沉没于远海」获得强化，克珀珊特每回合首张「惩戒雷霆」和「混沌旗语」额外置入 1 张「领航」到手中，「领航」效果提高 50%。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0012",
@@ -1731,186 +895,7 @@
           "content": "您是我尊贵的客人。要知道，我可只能容许您一个人赊账。毕竟，好多年没见过这么完美的头颅了……"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "无限通道",
-              "「基础打击」享受 2 倍 力量 加成，获得 跃迁：获得 1 点算力。「基础防御」获得等同于攻击力 1% 的 力量（效果随「防御」的等级提升，满级时为 2%），获得 跃迁：获得 1 点算力。"
-            ],
-            [
-              "",
-              "贪婪灰雾",
-              "达芙黛尔以任意方式击杀敌人后，使队伍在本次关卡中暴击率永久提高 5%。"
-            ],
-            [
-              "",
-              "原质沉淀",
-              "每打出 1 张「 灵感」就使达芙黛尔获得 2 点狂气，获得等同于 1% 攻击力的 力量，每回合最多触发 5 次。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94",
         "mode": "jina-reader",
@@ -1932,10 +917,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%9C%B5%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94: unusable reader response"
     },
     {
       "skeydbId": "awakener-0014",
@@ -2142,7 +1127,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0018",
@@ -2373,7 +1358,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0022",
@@ -2523,7 +1508,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0025",
@@ -2589,252 +1574,13 @@
           "content": "我们现在算是同伙了吧。哪天你沦落街头，我不会让你靠吃垃圾为生的。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "红色缎带",
-              "本场战斗每释放 1 次「布朗出动！」，「鼠群冲击」的基础伤害就提高等同于攻击力 2.5% 的伤害（效果随「布朗出动！」的等级提升，满级时为 5%）。"
-            ],
-            [
-              "",
-              "金蝴蝶回忆",
-              "「基础防御」抽 2 张牌，若不是詹金的卡牌则将其丢弃。"
-            ],
-            [
-              "",
-              "黑色溶解",
-              "「雾都街童」额外获得 1 张「布朗出动！」。"
-            ]
-          ]
-        },
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "暴击率+1.6% 界域精通+2",
-              "",
-              "",
-              "暴击率+3.2% 界域精通+4",
-              "",
-              "",
-              "暴击率+4.8% 界域精通+6",
-              "",
-              "",
-              "暴击率+6.4% 界域精通+8 「偷袭！」已解锁 超限爆发：将 1 张附加 消耗 的「超级大集结！」置入手牌。",
-              "",
-              "",
-              "暴击率+8.0% 界域精通+10",
-              "",
-              "",
-              "暴击率+9.6% 界域精通+12",
-              "",
-              "",
-              "暴击率+11.2% 界域精通+14",
-              "",
-              "",
-              "暴击率+12.8% 界域精通+16 等级上限提升 +5",
-              "",
-              "",
-              "暴击率+14.4% 界域精通+18",
-              "",
-              "",
-              "暴击率+16.0% 界域精通+20",
-              "",
-              "",
-              "暴击率+17.6% 界域精通+22",
-              "",
-              "",
-              "暴击率+19.2% 界域精通+24 等级上限提升 +10 「自雾中归来」已解锁 最终法则： 灵知觉醒「空间折叠」获得强化，詹金自身从「空间折叠」和「雾都街童」中获得 2 倍暴击伤害效果。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0026",
@@ -2906,7 +1652,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0027",
@@ -2998,10 +1744,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%9B%B7%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85: unusable reader response"
     },
     {
       "skeydbId": "awakener-0029",
@@ -3073,7 +1819,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0030",
@@ -3108,10 +1854,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: unusable reader response"
     },
     {
       "skeydbId": "awakener-0032",
@@ -3162,189 +1908,7 @@
         "englishName": "Murphy"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "无法剥离之血",
-              "「基础打击」获得等同于墨菲攻击力 2% 的 触腕伤害。「基础防御」获得等同于墨菲攻击力 2% 的触腕伤害（效果随「打击」和「防御」的等级提升，满级时为 4%）。"
-            ],
-            [
-              "",
-              "解放与自由之触",
-              "回合结束时墨菲获得 5 点狂气。释放钥令后，移除 2% 最大生命的 献祭 层数。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2",
         "mode": "jina-reader",
@@ -4039,7 +2603,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0038",
@@ -4052,190 +2616,7 @@
         "englishName": "Ogier"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "牺牲，以全大义",
-              "「不定壁垒」获得的护盾提高 43%，获得等同于攻击力 4% 的 力量（效果随「不定壁垒」的等级提高，满级时为 8%）。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "13 1300"
-            ],
-            [
-              "Lv.10→20",
-              "68 6800"
-            ],
-            [
-              "Lv.20→30",
-              "174 17400"
-            ],
-            [
-              "Lv.30→40",
-              "261 26100"
-            ],
-            [
-              "Lv.40→50",
-              "347 34700"
-            ],
-            [
-              "Lv.50→60",
-              "434 43400"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "6 2100",
-              "2→3",
-              "6 8100",
-              "3→4",
-              "1 10 16500"
-            ],
-            [
-              "4→5",
-              "2 6 29700",
-              "5→6",
-              "1 3 12 59400"
-            ],
-            [
-              "1→2",
-              "12 4200",
-              "2→3",
-              "12 16200",
-              "3→4",
-              "1 20 33000"
-            ],
-            [
-              "4→5",
-              "2 12 59400",
-              "5→6",
-              "1 3 24 118800"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94",
         "mode": "jina-reader",
@@ -4254,211 +2635,13 @@
         "englishName": "Pandia"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "享受疼痛",
-              "「基础打击」获得 50% 伤害的临时 反击。「基础防御」获得等同于攻击力 10% 的 反击（效果随「基础防御」的等级提高，满级时为 20%）。"
-            ],
-            [
-              "",
-              "欲火焚身",
-              "「灼燃蜡滴之欲」获得 20 点狂气。"
-            ]
-          ]
-        },
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "你不乖",
-              "「蜜糖色悲惨幻象」基础伤害翻倍，并获得等同于攻击力 15% 的 反击（效果随「蜜糖色悲惨幻象」的等级提高，满级时为 30%）。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%BD%98%E7%8B%84%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85: unusable reader response"
     },
     {
       "skeydbId": "awakener-0040",
@@ -4474,10 +2657,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: unusable reader response"
     },
     {
       "skeydbId": "awakener-0041",
@@ -4509,186 +2692,7 @@
         "englishName": "Ramona"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "懵懂的启程",
-              "「女王之剑」伤害次数 +1，每次造成伤害时，获得等同于攻击力 2.5% 的临时 力量（效果随「女王之剑」的等级提升，满级时为 5%）。「女王之剑」弃掉后，获得和打出相等的银钥能量。"
-            ],
-            [
-              "",
-              "未知的期待",
-              "「攻势推演」所抽的牌每有 1点算力消耗，额外获得 35 点银钥充能。"
-            ],
-            [
-              "",
-              "珍贵的羁绊",
-              "释放钥令后，拉蒙娜临时暴击率提高 50%。「世界演绎法」将 1 张 灵感 洗入抽牌推。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "13 1300"
-            ],
-            [
-              "Lv.10→20",
-              "68 6800"
-            ],
-            [
-              "Lv.20→30",
-              "174 17400"
-            ],
-            [
-              "Lv.30→40",
-              "261 26100"
-            ],
-            [
-              "Lv.40→50",
-              "347 34700"
-            ],
-            [
-              "Lv.50→60",
-              "434 43400"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "6 2100",
-              "2→3",
-              "6 8100",
-              "3→4",
-              "1 10 16500"
-            ],
-            [
-              "4→5",
-              "2 6 29700",
-              "5→6",
-              "1 3 12 59400"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C",
         "mode": "jina-reader",
@@ -4710,10 +2714,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: unusable reader response"
     },
     {
       "skeydbId": "awakener-0044",
@@ -4748,10 +2752,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8F%8A",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%8F%8A&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0046",
@@ -4767,10 +2771,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: unusable reader response"
     },
     {
       "skeydbId": "awakener-0047",
@@ -4921,7 +2925,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%B0%E6%97%96%E4%B8%9D"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0049",
@@ -5283,7 +3287,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0051",
@@ -5374,7 +3378,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0053",
@@ -5398,7 +3402,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0054",
@@ -5414,10 +3418,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: unusable reader response"
     },
     {
       "skeydbId": "awakener-0055",
@@ -5433,10 +3437,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: unusable reader response"
     },
     {
       "skeydbId": "awakener-0056",
@@ -5512,7 +3516,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0057",
@@ -5600,10 +3604,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: unusable reader response"
     },
     {
       "skeydbId": "awakener-0059",
@@ -5675,7 +3679,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0060",
@@ -5691,8 +3695,27 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
+        "mode": "static-identity"
+      },
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: unusable reader response"
+    },
+    {
+      "skeydbId": "awakener-0061",
+      "ingameId": "C03EX",
+      "slug": "ogier-oathbound",
+      "name": "负誓·奥吉尔",
+      "englishName": "Ogier: Oathbound",
+      "profile": {
+        "name": "负誓·奥吉尔",
+        "englishName": "Ogier: Oathbound"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94",
         "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94"
       },
       "syncStatus": "no-voice"
     }
@@ -5762,232 +3785,13 @@
           "content": "请放心，我们几个都是很有用的。我可以缝纫、打扫，另一个我擅长战斗，还有其他的我。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "暴击率+1.6% 狂气回充等级+0.4",
-              "",
-              "",
-              "暴击率+3.2% 狂气回充等级+0.8",
-              "",
-              "",
-              "暴击率+4.8% 狂气回充等级+1.2",
-              "",
-              "",
-              "暴击率+6.4% 狂气回充等级+1.6 「畸变的解剖」已解锁 超限爆发：获得 24 点 界域精通，「24」的下一张指令卡生效 3 次。",
-              "",
-              "",
-              "暴击率+8.0% 狂气回充等级+2.0",
-              "",
-              "",
-              "暴击率+9.6% 狂气回充等级+2.4",
-              "",
-              "",
-              "暴击率+11.2% 狂气回充等级+2.8",
-              "",
-              "",
-              "暴击率+12.8% 狂气回充等级+3.2 等级上限提升 +5",
-              "",
-              "",
-              "暴击率+14.4% 狂气回充等级+3.6",
-              "",
-              "",
-              "暴击率+16.0% 狂气回充等级+4.0",
-              "",
-              "",
-              "暴击率+17.6% 狂气回充等级+4.4",
-              "",
-              "",
-              "暴击率+19.2% 狂气回充等级+4.8 等级上限提升 +10 「阿尼姆斯投射」已解锁 最终法则： 灵知觉醒「调停人格」获得强化，「24」的指令卡人格效果加成翻倍。「24」释放狂气爆发后人格加成翻倍效果本回合失效。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0002": {
       "skeydbId": "awakener-0002",
@@ -6150,7 +3954,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0005": {
       "skeydbId": "awakener-0005",
@@ -6222,7 +4026,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E7%91%9E%E5%A1%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0006": {
       "skeydbId": "awakener-0006",
@@ -6235,186 +4039,7 @@
         "englishName": "Caecus"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "血脉觉醒",
-              "「破碎沉戟」获得 20 狂气。（效果随「破碎沉戟」的等级提升）"
-            ],
-            [
-              "",
-              "鳞刺聚合",
-              "「逆鳞之护」护盾提高 20%，并获得 保留。"
-            ],
-            [
-              "",
-              "不被接纳之痛",
-              "回合结束时回复等同于体质 7.5% 的生命。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%87%AF%E5%88%BB%E6%96%AF",
         "mode": "jina-reader",
@@ -6486,232 +4111,13 @@
           "content": "我知道，你是特殊的观众，可不能把你嗖的一下丢到异次元去，不然会惹上大麻烦的。诶，有没有对别人这么做过？讨厌，不要问啦，是人家的秘密！"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "界域精通+4 狂气回充等级+0.4",
-              "",
-              "",
-              "界域精通+8 狂气回充等级+0.8",
-              "",
-              "",
-              "界域精通+12 狂气回充等级+1.2",
-              "",
-              "",
-              "界域精通+16 狂气回充等级+1.6 「纵情欢笑」已解锁 超限爆发：本次狂气爆发伤害次数变为三倍。之后 5 次打出卡茜亚的指令卡后，获得攻击力 10% 的 力量。",
-              "",
-              "",
-              "界域精通+20 狂气回充等级+2.0",
-              "",
-              "",
-              "界域精通+24 狂气回充等级+2.4",
-              "",
-              "",
-              "界域精通+28 狂气回充等级+2.8",
-              "",
-              "",
-              "界域精通+32 狂气回充等级+3.2 等级上限提升 +5",
-              "",
-              "",
-              "界域精通+36 狂气回充等级+3.6",
-              "",
-              "",
-              "界域精通+40 狂气回充等级+4.0",
-              "",
-              "",
-              "界域精通+44 狂气回充等级+4.4",
-              "",
-              "",
-              "界域精通+48 狂气回充等级+4.8 等级上限提升 +10 「一千零一场奇迹」已解锁 最终法则： 灵知觉醒「演出序幕」获得强化，所有唤醒体打出「打击」时都能触发该效果获得临时 力量。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E8%8C%9C%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0008": {
       "skeydbId": "awakener-0008",
@@ -6727,10 +4133,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%96%AF%E6%89%98%E5%B0%94: unusable reader response"
     },
     "awakener-0009": {
       "skeydbId": "awakener-0009",
@@ -6765,10 +4171,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
     },
     "awakener-0011": {
       "skeydbId": "awakener-0011",
@@ -6834,232 +4240,13 @@
           "content": "我对您只有敬重，并会誓死完成您下达的所有命令。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "暴击率+0.8% 死亡抵抗+5.6%",
-              "",
-              "",
-              "暴击率+1.6% 死亡抵抗+11.2%",
-              "",
-              "",
-              "暴击率+2.4% 死亡抵抗+16.8%",
-              "",
-              "",
-              "暴击率+3.2% 死亡抵抗+22.4% 「赴死如归的天火」已解锁 超限爆发：获得 3 条触腕，弃置的手牌 余波 效果额外生效 1 次。",
-              "",
-              "",
-              "暴击率+4.0% 死亡抵抗+28.0%",
-              "",
-              "",
-              "暴击率+4.8% 死亡抵抗+33.6%",
-              "",
-              "",
-              "暴击率+5.6% 死亡抵抗+39.2%",
-              "",
-              "",
-              "暴击率+6.4% 死亡抵抗+44.8% 等级上限提升 +5",
-              "",
-              "",
-              "暴击率+7.2% 死亡抵抗+50.4%",
-              "",
-              "",
-              "暴击率+8.0% 死亡抵抗+56.0%",
-              "",
-              "",
-              "暴击率+8.8% 死亡抵抗+61.6%",
-              "",
-              "",
-              "暴击率+9.6% 死亡抵抗+67.2% 等级上限提升 +10 「不熄、不灭、不烬」已解锁 最终法则： 灵知觉醒「沉没于远海」获得强化，克珀珊特每回合首张「惩戒雷霆」和「混沌旗语」额外置入 1 张「领航」到手中，「领航」效果提高 50%。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0012": {
       "skeydbId": "awakener-0012",
@@ -7125,186 +4312,7 @@
           "content": "您是我尊贵的客人。要知道，我可只能容许您一个人赊账。毕竟，好多年没见过这么完美的头颅了……"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "无限通道",
-              "「基础打击」享受 2 倍 力量 加成，获得 跃迁：获得 1 点算力。「基础防御」获得等同于攻击力 1% 的 力量（效果随「防御」的等级提升，满级时为 2%），获得 跃迁：获得 1 点算力。"
-            ],
-            [
-              "",
-              "贪婪灰雾",
-              "达芙黛尔以任意方式击杀敌人后，使队伍在本次关卡中暴击率永久提高 5%。"
-            ],
-            [
-              "",
-              "原质沉淀",
-              "每打出 1 张「 灵感」就使达芙黛尔获得 2 点狂气，获得等同于 1% 攻击力的 力量，每回合最多触发 5 次。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94",
         "mode": "jina-reader",
@@ -7326,10 +4334,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%9C%B5%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94: unusable reader response"
     },
     "awakener-0014": {
       "skeydbId": "awakener-0014",
@@ -7536,7 +4544,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0018": {
       "skeydbId": "awakener-0018",
@@ -7767,7 +4775,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0022": {
       "skeydbId": "awakener-0022",
@@ -7917,7 +4925,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0025": {
       "skeydbId": "awakener-0025",
@@ -7983,252 +4991,13 @@
           "content": "我们现在算是同伙了吧。哪天你沦落街头，我不会让你靠吃垃圾为生的。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "红色缎带",
-              "本场战斗每释放 1 次「布朗出动！」，「鼠群冲击」的基础伤害就提高等同于攻击力 2.5% 的伤害（效果随「布朗出动！」的等级提升，满级时为 5%）。"
-            ],
-            [
-              "",
-              "金蝴蝶回忆",
-              "「基础防御」抽 2 张牌，若不是詹金的卡牌则将其丢弃。"
-            ],
-            [
-              "",
-              "黑色溶解",
-              "「雾都街童」额外获得 1 张「布朗出动！」。"
-            ]
-          ]
-        },
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "暴击率+1.6% 界域精通+2",
-              "",
-              "",
-              "暴击率+3.2% 界域精通+4",
-              "",
-              "",
-              "暴击率+4.8% 界域精通+6",
-              "",
-              "",
-              "暴击率+6.4% 界域精通+8 「偷袭！」已解锁 超限爆发：将 1 张附加 消耗 的「超级大集结！」置入手牌。",
-              "",
-              "",
-              "暴击率+8.0% 界域精通+10",
-              "",
-              "",
-              "暴击率+9.6% 界域精通+12",
-              "",
-              "",
-              "暴击率+11.2% 界域精通+14",
-              "",
-              "",
-              "暴击率+12.8% 界域精通+16 等级上限提升 +5",
-              "",
-              "",
-              "暴击率+14.4% 界域精通+18",
-              "",
-              "",
-              "暴击率+16.0% 界域精通+20",
-              "",
-              "",
-              "暴击率+17.6% 界域精通+22",
-              "",
-              "",
-              "暴击率+19.2% 界域精通+24 等级上限提升 +10 「自雾中归来」已解锁 最终法则： 灵知觉醒「空间折叠」获得强化，詹金自身从「空间折叠」和「雾都街童」中获得 2 倍暴击伤害效果。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ],
-            [
-              "激活",
-              "激活条件",
-              "调查等级达到 30 级"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%A9%B9%E9%87%91"
       },
-      "syncStatus": "ok"
+      "syncStatus": "no-voice"
     },
     "awakener-0026": {
       "skeydbId": "awakener-0026",
@@ -8300,7 +5069,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0027": {
       "skeydbId": "awakener-0027",
@@ -8392,10 +5161,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%9B%B7%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85: unusable reader response"
     },
     "awakener-0029": {
       "skeydbId": "awakener-0029",
@@ -8467,7 +5236,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0030": {
       "skeydbId": "awakener-0030",
@@ -8502,10 +5271,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: unusable reader response"
     },
     "awakener-0032": {
       "skeydbId": "awakener-0032",
@@ -8556,189 +5325,7 @@
         "englishName": "Murphy"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "无法剥离之血",
-              "「基础打击」获得等同于墨菲攻击力 2% 的 触腕伤害。「基础防御」获得等同于墨菲攻击力 2% 的触腕伤害（效果随「打击」和「防御」的等级提升，满级时为 4%）。"
-            ],
-            [
-              "",
-              "解放与自由之触",
-              "回合结束时墨菲获得 5 点狂气。释放钥令后，移除 2% 最大生命的 献祭 层数。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2",
         "mode": "jina-reader",
@@ -9433,7 +6020,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0038": {
       "skeydbId": "awakener-0038",
@@ -9446,190 +6033,7 @@
         "englishName": "Ogier"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "牺牲，以全大义",
-              "「不定壁垒」获得的护盾提高 43%，获得等同于攻击力 4% 的 力量（效果随「不定壁垒」的等级提高，满级时为 8%）。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "13 1300"
-            ],
-            [
-              "Lv.10→20",
-              "68 6800"
-            ],
-            [
-              "Lv.20→30",
-              "174 17400"
-            ],
-            [
-              "Lv.30→40",
-              "261 26100"
-            ],
-            [
-              "Lv.40→50",
-              "347 34700"
-            ],
-            [
-              "Lv.50→60",
-              "434 43400"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "6 2100",
-              "2→3",
-              "6 8100",
-              "3→4",
-              "1 10 16500"
-            ],
-            [
-              "4→5",
-              "2 6 29700",
-              "5→6",
-              "1 3 12 59400"
-            ],
-            [
-              "1→2",
-              "12 4200",
-              "2→3",
-              "12 16200",
-              "3→4",
-              "1 20 33000"
-            ],
-            [
-              "4→5",
-              "2 12 59400",
-              "5→6",
-              "1 3 24 118800"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%90%89%E5%B0%94",
         "mode": "jina-reader",
@@ -9648,211 +6052,13 @@
         "englishName": "Pandia"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "享受疼痛",
-              "「基础打击」获得 50% 伤害的临时 反击。「基础防御」获得等同于攻击力 10% 的 反击（效果随「基础防御」的等级提高，满级时为 20%）。"
-            ],
-            [
-              "",
-              "欲火焚身",
-              "「灼燃蜡滴之欲」获得 20 点狂气。"
-            ]
-          ]
-        },
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "你不乖",
-              "「蜜糖色悲惨幻象」基础伤害翻倍，并获得等同于攻击力 15% 的 反击（效果随「蜜糖色悲惨幻象」的等级提高，满级时为 30%）。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%BD%98%E7%8B%84%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%BD%98%E7%8B%84%E5%A8%85: unusable reader response"
     },
     "awakener-0040": {
       "skeydbId": "awakener-0040",
@@ -9868,10 +6074,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: unusable reader response"
     },
     "awakener-0041": {
       "skeydbId": "awakener-0041",
@@ -9903,186 +6109,7 @@
         "englishName": "Ramona"
       },
       "voiceLines": [],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "懵懂的启程",
-              "「女王之剑」伤害次数 +1，每次造成伤害时，获得等同于攻击力 2.5% 的临时 力量（效果随「女王之剑」的等级提升，满级时为 5%）。「女王之剑」弃掉后，获得和打出相等的银钥能量。"
-            ],
-            [
-              "",
-              "未知的期待",
-              "「攻势推演」所抽的牌每有 1点算力消耗，额外获得 35 点银钥充能。"
-            ],
-            [
-              "",
-              "珍贵的羁绊",
-              "释放钥令后，拉蒙娜临时暴击率提高 50%。「世界演绎法」将 1 张 灵感 洗入抽牌推。"
-            ],
-            [
-              "",
-              "展开人格深化",
-              "",
-              "---",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "13 1300"
-            ],
-            [
-              "Lv.10→20",
-              "68 6800"
-            ],
-            [
-              "Lv.20→30",
-              "174 17400"
-            ],
-            [
-              "Lv.30→40",
-              "261 26100"
-            ],
-            [
-              "Lv.40→50",
-              "347 34700"
-            ],
-            [
-              "Lv.50→60",
-              "434 43400"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "6 2100",
-              "2→3",
-              "6 8100",
-              "3→4",
-              "1 10 16500"
-            ],
-            [
-              "4→5",
-              "2 6 29700",
-              "5→6",
-              "1 3 12 59400"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%8B%89%E8%92%99%E5%A8%9C",
         "mode": "jina-reader",
@@ -10104,10 +6131,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: unusable reader response"
     },
     "awakener-0044": {
       "skeydbId": "awakener-0044",
@@ -10142,10 +6169,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%8F%8A",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%8F%8A&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%8A: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0046": {
       "skeydbId": "awakener-0046",
@@ -10161,10 +6188,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: unusable reader response"
     },
     "awakener-0047": {
       "skeydbId": "awakener-0047",
@@ -10315,7 +6342,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%B0%E6%97%96%E4%B8%9D"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0049": {
       "skeydbId": "awakener-0049",
@@ -10677,7 +6704,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0051": {
       "skeydbId": "awakener-0051",
@@ -10768,7 +6795,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0053": {
       "skeydbId": "awakener-0053",
@@ -10792,7 +6819,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0054": {
       "skeydbId": "awakener-0054",
@@ -10808,10 +6835,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: unusable reader response"
     },
     "awakener-0055": {
       "skeydbId": "awakener-0055",
@@ -10827,10 +6854,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: unusable reader response"
     },
     "awakener-0056": {
       "skeydbId": "awakener-0056",
@@ -10906,7 +6933,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0057": {
       "skeydbId": "awakener-0057",
@@ -10994,10 +7021,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: unusable reader response"
     },
     "awakener-0059": {
       "skeydbId": "awakener-0059",
@@ -11069,7 +7096,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0060": {
       "skeydbId": "awakener-0060",
@@ -11085,8 +7112,27 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
+        "mode": "static-identity"
+      },
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: unusable reader response"
+    },
+    "awakener-0061": {
+      "skeydbId": "awakener-0061",
+      "ingameId": "C03EX",
+      "slug": "ogier-oathbound",
+      "name": "负誓·奥吉尔",
+      "englishName": "Ogier: Oathbound",
+      "profile": {
+        "name": "负誓·奥吉尔",
+        "englishName": "Ogier: Oathbound"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94",
         "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94"
       },
       "syncStatus": "no-voice"
     }
