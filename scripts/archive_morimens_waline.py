@@ -135,6 +135,8 @@ def dzone_meta(stored: dict, inserted_at: str, nick: str):
         "score": score,
         "teams": teams,
         "summary": f"第 {season_id} 期{phase} · {score if score is not None else '—'} 分 · {teams} 支队伍",
+        "summaryZh": f"第 {season_id} 期{phase} · {score if score is not None else '—'} 分 · {teams} 支队伍",
+        "summaryEn": f"Season {season_id}{' · Post-bug' if season_id == 69 and variant == 'postbug' else ' · Pre-bug' if season_id == 69 else ''} · {score if score is not None else '—'} pts · {teams} teams",
     }
 
 
@@ -159,6 +161,9 @@ def assist_meta(payload: dict, inserted_at: str, nick: str):
         "submittedBy": player,
         "submittedAt": submitted_at,
         "summary": f"助战 Showcase · {awaker_name}",
+        "summaryZh": f"助战 Showcase · {awaker_name}",
+        "summaryEn": f"Assist Showcase · {awaker_name}",
+        "awakerName": awaker_name,
     }
 
 
@@ -232,7 +237,8 @@ def archive(force: bool) -> int:
                 history_by_id[str(comment_id)] = {
                     "commentId": str(comment_id), "type": "dzone", "uid": meta["uid"],
                     "submittedBy": meta["submittedBy"], "submittedAt": meta["submittedAt"],
-                    "summary": meta["summary"], "seasonId": meta["seasonId"],
+                    "summary": meta["summary"], "summaryZh": meta["summaryZh"], "summaryEn": meta["summaryEn"],
+                    "score": meta["score"], "teams": meta["teams"], "seasonId": meta["seasonId"],
                     "communityVariant": meta["communityVariant"],
                 }
                 decoded_dzone += 1
@@ -250,7 +256,8 @@ def archive(force: bool) -> int:
                 history_by_id[str(comment_id)] = {
                     "commentId": str(comment_id), "type": "assist", "uid": meta["uid"],
                     "submittedBy": meta["submittedBy"], "submittedAt": meta["submittedAt"],
-                    "summary": meta["summary"], "characterId": meta["characterId"],
+                    "summary": meta["summary"], "summaryZh": meta["summaryZh"], "summaryEn": meta["summaryEn"],
+                    "awakerName": meta["awakerName"], "characterId": meta["characterId"],
                 }
                 decoded_assist += 1
                 cleanup_ids.append(int(comment_id))
