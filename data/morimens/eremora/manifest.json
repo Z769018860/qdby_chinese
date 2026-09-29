@@ -13,16 +13,19 @@
       "labelEn": "Season 70 · Aequor Ring",
       "period": "2026-09-28 – 2026-10-12",
       "recordCount": 459,
-      "leaderboardEntryCount": 500,
+      "leaderboardEntryCount": 1000,
       "complete": false,
-      "coverageMode": "current-leaderboard-top500-partial",
+      "coverageMode": "official-top1000-rank-partial-detail",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
       "dataUpdatedAt": "2026-09-29T05:51:00+08:00",
       "labelZh": "第70期 新新融灾 · 深海戒指",
       "periodShort": "9.28–10.11",
       "ringRealm": "Aequor",
-      "ringRealmZh": "深海"
+      "ringRealmZh": "深海",
+      "rankPath": "data/morimens/eremora/rank-index/70.json",
+      "officialStageIndexPath": "data/morimens/official/70/stage-index.json",
+      "rankUpdatedAt": "2026-09-30T03:24:00+08:00"
     },
     {
       "seasonId": 69,
@@ -156,10 +159,15 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 500,
+    "leaderboardEntries": 1000,
     "records": 459,
     "complete": false,
-    "failures": 41
+    "failures": 41,
+    "officialRankIndexComplete": true,
+    "officialStageIndexPlayers": 1000,
+    "officialStageIndexRows": 4934,
+    "detailRecords": 459,
+    "detailPending": 541
   },
   "fieldCoverage": {
     "character": true,
@@ -172,6 +180,7 @@
     "difficulty": true
   },
   "notes": [
+    "Season 70 official Top1000 rank/stage index is complete (1000 players, 4934 stage rows); team-detail statistics remain partial until Facade.QueryFacadeFields responses are fully hydrated.",
     "当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。",
     "命轮映射 Eremora weapons 字段；密契明细映射 trinkets，套装统计映射 suits；启灵数表示 enlightenment 数组中 unlocked=true 的已解锁命名节点，0–5 对应 E0/E1/E2/E3/OE/AA 里已跨越的节点数。",
     "历史期次会从玩家挑战数据中增量发现并保存；只有曾按完整榜单抓取的期次标记 complete=true，profile-history-partial 不冒充完整历史榜单。",
@@ -239,7 +248,7 @@
     "coverage": [
       {
         "seasonId": 70,
-        "maxRankAvailable": 457,
+        "maxRankAvailable": 1000,
         "difficulty": {
           "recognizedTeams": 2871,
           "totalTeams": 2871,
@@ -248,9 +257,12 @@
         "rankScopes": {
           "50": true,
           "200": true,
-          "500": false,
-          "1000": false
-        }
+          "500": true,
+          "1000": true
+        },
+        "detailRecordCount": 459,
+        "detailCoveragePct": 459,
+        "detailComplete": false
       },
       {
         "seasonId": 69,
@@ -317,24 +329,24 @@
   "rankIndex": {
     "seasonId": 70,
     "path": "data/morimens/eremora/rank-index/70.json",
-    "target": 500,
-    "count": 457,
-    "complete": false,
-    "syncedAt": "2026-09-29T07:19:58+08:00",
-    "revision": "s70-score-rebuild-20260929-071958",
-    "scorePolicy": "detailed-current-score-with-community-overrides"
+    "target": 1000,
+    "count": 1000,
+    "complete": true,
+    "syncedAt": "2026-09-30T03:24:00+08:00",
+    "revision": "s70-official-top1000-stage-index-20260930",
+    "scorePolicy": "official-current-top1000-totalScore"
   },
   "usageIndex": {
     "seasonId": 70,
     "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/70.json",
-    "target": 500,
-    "rankIndexCount": 457,
+    "target": 1000,
+    "rankIndexCount": 1000,
     "recordCount": 459,
     "coverage": {
-      "expected": 500,
+      "expected": 1000,
       "covered": 459,
-      "coveragePct": 91.8,
+      "coveragePct": 459,
       "complete": false
     },
     "syncedAt": "2026-09-29T05:51:00+08:00",
@@ -377,5 +389,24 @@
     "stageNaming": "Zone 1-5",
     "updatedAt": "2026-09-29T05:51:00+08:00",
     "revision": "42f46490db8cd85de41552a936e04e623329df197737f391f6f910a53cd627a3"
+  },
+  "officialStageIndex": {
+    "seasonId": 70,
+    "activityTid": 83315,
+    "path": "data/morimens/official/70/stage-index.json",
+    "source": "Morimens official client decoded stage index",
+    "capturedAt": "2026-09-30T03:24:00+08:00",
+    "playerCount": 1000,
+    "stageRowCount": 4934,
+    "stageGroups": [
+      83439,
+      83440,
+      83441,
+      83442,
+      83444
+    ],
+    "extraTeamPointers": 474,
+    "detailMethod": "Facade.QueryFacadeFields",
+    "detailStatus": "pending-full-hydration"
   }
 }
