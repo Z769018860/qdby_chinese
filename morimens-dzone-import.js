@@ -825,10 +825,17 @@
       if(force||!submissionHistory.length||Date.now()-lastSyncAt>60000){submissionHistory=await fetchSubmissionHistory();lastSyncAt=Date.now()}
       const viewSeasonId=Number(ctx.selectedSeasonId)||0,viewVariant=normalizeVariant(viewSeasonId,ctx.communityVariant);
       const latest=latestPerUid(submissionHistory,viewSeasonId,viewVariant);
-      if(!ctx.legacy&&viewSeasonId&&latest.length){window.MorimensDtideCommunity?.mergeRecords?.(latest);window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)}
+      let detailMerge={applied:0,skipped:0},usageMerge={applied:0,skipped:0};
+      if(!ctx.legacy&&viewSeasonId&&latest.length){
+        detailMerge=window.MorimensDtideCommunity?.mergeRecords?.(latest)||detailMerge;
+        usageMerge=window.MorimensDtideUsageCommunity?.mergeRecords?.(latest)||usageMerge;
+      }
       renderHistory();
-      const newest=latest[0];
-      if(force)status(newest?ui(`已刷新社区补充：${latest.length} 个 UID；最近由 ${newest.submittedBy} 更新于 ${formatTime(newest.submittedAt)}。`,`Community data refreshed: ${latest.length} UIDs; latest by ${newest.submittedBy} at ${formatTime(newest.submittedAt)}.`):ui('已刷新，当前查看期次暂无社区补充。','Refreshed. No community data for the viewed season.'),'ok');
+      const newest=latest[0],merged=Math.max(Number(detailMerge?.applied)||0,Number(usageMerge?.applied)||0);
+      if(force)status(newest?ui(
+        `已刷新社区补充：读取 ${latest.length} 个 UID，实际合并 ${merged} 个；最近由 ${newest.submittedBy} 更新于 ${formatTime(newest.submittedAt)}。`,
+        `Community data refreshed: ${latest.length} UIDs read, ${merged} merged; latest by ${newest.submittedBy} at ${formatTime(newest.submittedAt)}.`
+      ):ui('已刷新，当前查看期次暂无社区补充。','Refreshed. No community data for the viewed season.'),'ok');
     }catch(error){
       console.warn('D-Zone community submission sync failed',error);
       if(force)status(ui('社区补充载入失败：','Failed to load community data: ')+(error?.message||String(error)),'error');
@@ -856,8 +863,10 @@
       const verified=await verifyPersistedSubmission(submissionId,record.uid,seasonId,communityVariant);
       submissionHistory=verified.rows;
       const row=verified.hit;
+      let detailMerge={applied:0},usageMerge={applied:0};
       if(Number(ctx?.selectedSeasonId)===Number(seasonId)&&normalizeVariant(seasonId,ctx?.communityVariant)===communityVariant){
-        window.MorimensDtideCommunity?.mergeRecords?.([row]);window.MorimensDtideUsageCommunity?.mergeRecords?.([row]);
+        detailMerge=window.MorimensDtideCommunity?.mergeRecords?.([row])||detailMerge;
+        usageMerge=window.MorimensDtideUsageCommunity?.mergeRecords?.([row])||usageMerge;
       }
       renderHistory();
       const phaseLabel=seasonId===69?(communityVariant==='postbug'?ui(' Bug后',' Post-bug'):ui(' Bug前',' Pre-bug')):'';
