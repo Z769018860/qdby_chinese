@@ -26,7 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: preview
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -55,8 +54,8 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "chore: archive Morimens Waline community data"
-            git pull --rebase origin preview
-            git push origin HEAD:preview
+            git pull --rebase origin main
+            git push origin HEAD:main
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
