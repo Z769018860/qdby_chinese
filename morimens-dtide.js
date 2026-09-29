@@ -970,7 +970,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
     window.MorimensDzoneImportEmbedded=true;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.16';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.17';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
 
