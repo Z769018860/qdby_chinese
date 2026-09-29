@@ -210,8 +210,8 @@ def archive(force: bool) -> int:
     with psycopg.connect(dsn) as conn:
         with conn.cursor() as cur:
             cur.execute(
-                'SELECT id, nick, comment, ua, url, status, "insertedAt" '
-                'FROM wl_comment WHERE url = ANY(%s) AND status = %s ORDER BY "insertedAt" ASC',
+                'SELECT id, nick, comment, ua, url, status, insertedat '
+                'FROM wl_comment WHERE url = ANY(%s) AND status = %s ORDER BY insertedat ASC',
                 ([DZONE_PATH, ASSIST_PATH], "approved"),
             )
             rows = cur.fetchall()
