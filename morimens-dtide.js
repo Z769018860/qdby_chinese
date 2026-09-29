@@ -219,7 +219,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
-        <div class="sourceItem"><strong>2026-09-29 · 融灾社区更新完整性校验</strong><br>修正额外队伍解析：<code>extra=true</code> 现在作为同一 Zone 的第二支队伍保留。525 分必须解析为 5 支基础 + 5 支额外，共 10 支队伍。社区更新仅在“提交时间晚于当前数据、分数不低于当前分数、5 个 Zone / 4 人队伍 / 队伍数量与源数据一致”同时满足时写入榜单和统计，否则明确提示更新失败。<br><span class="en">D-Zone community updates now preserve <code>extra=true</code> as the second team in the same Zone. A 525-point record must contain 5 base + 5 extra teams (10 total). An update is accepted only when it is newer than current data, does not lower the score, and passes full 5-Zone/team-integrity checks.</span></div>
+        <div class="sourceItem"><strong>2026-09-29 · 融灾社区更新完整性校验</strong><br>修正额外队伍解析：<code>extra=true</code> 现在作为同一 Zone 的第二支队伍保留。额外队伍会被独立计入队伍统计，并按源数据本身的分数累计（额外队伍为 +5）；不同难度的基础分不使用固定公式反推。社区更新仅在“提交时间晚于当前数据、分数不低于当前分数、5 个 Zone / 4 人队伍 / 队伍数量与源数据一致”同时满足时写入榜单和统计，否则明确提示更新失败。<br><span class="en">Extra teams are counted separately and their +5 contribution is taken directly from the source payload; no fixed formula is used to infer base scores across difficulties. An update is accepted only when it is newer than current data, does not lower the score, and passes full 5-Zone/team-integrity checks.</span></div>
         <div class="sourceItem"><strong>2026-09-29 · 修复融灾第二支队伍丢失</strong><br>重新校验 Eremora 第70期原始 JSON：满分记录可包含每个 Zone 两支不同队伍。导入器现在逐条保留所有 stage/team，并记录源队伍总数与 5 个 Zone 的队伍分布；源数据 10 支队伍时必须完整还原为 10 支，否则拒绝提交。近期记录会显示类似 10 支队伍（2/2/2/2/2）。</div>
         <div class="sourceItem"><strong>${ui('2026-09-29 · 融灾数据开放社区自行上传','2026-09-29 · Community D-Zone uploads enabled')}</strong><br>${ui('现在可在融灾榜单中自行选择期次、填写 UID 并上传 Eremora 融灾数据，不必等待本人手动更新。通过校验的社区数据会立即参与对应期次的榜单、角色/命轮/造物统计与配队搜索；提交记录会保留提交人、UID、内容与时间。','You can now choose a D-Zone season, enter a UID, and submit Eremora D-Zone data directly from the leaderboard without waiting for my manual updates. Valid community submissions immediately participate in the matching leaderboard, Awakener/Wheel/Creation statistics, and team search. The maintenance log keeps the contributor, UID, content, and time.')}</div>
         <div class="sourceItem"><strong>${ui('2026-09-29 · 社区数据三天归档到 GitHub','2026-09-29 · Community data archived to GitHub every three days')}</strong><br>${ui('Waline 改为短期社区数据队列：GitHub Action 每天检查，距离上次归档满 72 小时才执行。融灾按“期次/阶段/UID”保留最新完整版本，助战按“UID/角色”保留最新 Showcase，维护历史只保存轻量元数据。GitHub 提交成功后才删除 Waline 中已归档的机器记录；普通留言和互动数据不受影响。','Waline now acts as a short-lived community-data queue. A GitHub Action checks daily and archives only after at least 72 hours. D-Zone keeps the latest complete version per season/phase/UID, Assist keeps the latest Showcase per UID/Awakener, and the maintenance history stores only lightweight metadata. Waline machine records are deleted only after the GitHub archive is committed successfully; normal comments and interaction data are untouched.')}</div>
@@ -929,7 +929,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     }
     const teamCount=teams.length,extraCount=teams.filter(x=>String(x.team?.clearType||'')==='extra').length;
     const baseCount=teams.filter(x=>String(x.team?.clearType||'')!=='extra').length;
-    const score=communityRecordScore(record),minExtras=score!=null&&score>500?Math.ceil((score-500)/5):0;
+    const score=communityRecordScore(record);
     const sourceCount=Number(record?.sourceTeamCount)||0;
     const sourceDist=Array.isArray(record?.sourceTeamDistribution)?record.sourceTeamDistribution.map(Number):[];
     const actualDist=[1,2,3,4,5].map(id=>byWave.get(id)||0);
@@ -938,8 +938,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     else if(teams.some(x=>!Array.isArray(x.team?.members)||x.team.members.length!==4))reason=ui('每支队伍必须包含完整的 4 名角色。','Every team must contain all 4 members.');
     else if(sourceCount>0&&teamCount!==sourceCount)reason=ui(`标准化队伍数 ${teamCount} 与源数据 ${sourceCount} 不一致。`,`Normalized team count ${teamCount} does not match source count ${sourceCount}.`);
     else if(sourceDist.length===5&&sourceDist.some((n,i)=>n>0&&actualDist[i]!==n))reason=ui(`各 Zone 队伍分布与源数据不一致（${actualDist.join('/')}）。`,`Per-Zone team distribution does not match source data (${actualDist.join('/')}).`);
-    else if(extraCount<minExtras)reason=ui(`${score} 分至少需要 ${minExtras} 支额外队伍，当前只有 ${extraCount} 支。`,`${score} points requires at least ${minExtras} extra teams; only ${extraCount} are present.`);
-    else if(score===525&&(teamCount!==10||extraCount!==5))reason=ui(`525 分必须是 10 支完整队伍（5 基础 + 5 额外），当前为 ${teamCount} 支。`,`525 points requires 10 complete teams (5 base + 5 extra); current record has ${teamCount}.`);
+
     return {ok:!reason,reason,score,teamCount,baseCount,extraCount,distribution:actualDist};
   }
   function communityZoneComplete(record){return communityRecordQuality(record).ok}
@@ -949,7 +948,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   function communityCandidateDecision(previous,record,submittedAt,officialUpdatedAt){
     const quality=communityRecordQuality(record);
-    if(!quality.ok)return {ok:false,message:ui('更新失败：队伍数据不完整或与分数不匹配：','Update failed: team data is incomplete or inconsistent with the score: ')+quality.reason,quality};
+    if(!quality.ok)return {ok:false,message:ui('更新失败：队伍数据不完整或与源数据不一致：','Update failed: team data is incomplete or inconsistent with the source payload: ')+quality.reason,quality};
     const previousCommunityAt=previous?.communityUpdate?.submittedAt||null;
     const currentUpdatedAt=latestTimestamp(previousCommunityAt,officialUpdatedAt);
     const submittedMs=submittedAt?Date.parse(submittedAt):NaN,currentMs=currentUpdatedAt?Date.parse(currentUpdatedAt):NaN;
@@ -1045,7 +1044,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function ensureCommunityDzoneImportScript(){
     if(window.MorimensDzoneImport||document.querySelector('script[data-morimens-dzone-import]'))return;
     window.MorimensDzoneImportEmbedded=true;
-    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.17';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.18';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords,validateCandidate:validateCommunityCandidate,getRecordState:communityCurrentRecordState};
 
