@@ -18,21 +18,37 @@
 <body>
   <main class="wrap">
     <div class="top">
-      <a class="back" href="morimens-tools.html#about">← 返回忘忘看报 · 关于</a>
+      <a class="back" id="backBtn" href="morimens-tools.html#about">← 返回忘忘看报 · 关于</a><button class="back" id="langToggle" type="button">English</button>
       <span style="color:#617284;font-size:11px">COMMUNITY D-ZONE IMPORT</span>
     </div>
     <section class="hero">
-      <p class="eyebrow">忘忘看报 · 社区共建</p>
-      <h1>融灾数据自行提交</h1>
-      <p>选择融灾期次、填写玩家 UID，然后打开 Eremora 对应的 <code>__data.json</code> 页面，将完整内容粘贴到表单中解析并提交。提交记录会在“关于”页面统一展示。</p>
-      <div class="notice"><b>第69期说明：</b>提交时必须区分 <b>Bug前</b> 与 <b>Bug后</b>。两者的 Eremora 地址都仍然使用 <code>/challenges/dzone/69/__data.json</code>；区别只用于本站的数据归档、榜单合并与社区记录。当前 Bug后榜单正式数据待填充。</div>
+      <p class="eyebrow" id="eyebrow">忘忘看报 · 社区共建</p>
+      <h1 id="heroTitle">融灾数据自行提交</h1>
+      <p id="heroLead">选择融灾期次、填写玩家 UID，然后打开 Eremora 对应的 <code>__data.json</code> 页面，将完整内容粘贴到表单中解析并提交。提交记录会在“关于”页面统一展示。</p>
+      <div class="notice" id="season69Notice"><b>第69期说明：</b>提交时必须区分 <b>Bug前</b> 与 <b>Bug后</b>。两者的 Eremora 地址都仍然使用 <code>/challenges/dzone/69/__data.json</code>；区别只用于本站的数据归档、榜单合并与社区记录。当前 Bug后榜单正式数据待填充。</div>
       <div id="dtideStatus" class="loading">正在载入融灾期次与提交表单……</div>
     </section>
-    <p class="footer">数据来源：Eremora。本站仅保存用于榜单统计的结构化社区提交记录；同一逻辑期次 + UID 的较新提交会覆盖旧社区版本。</p>
+    <p class="footer" id="footerText">数据来源：Eremora。本站仅保存用于榜单统计的结构化社区提交记录；同一逻辑期次 + UID 的较新提交会覆盖旧社区版本。</p>
   </main>
   <script>
   (async()=>{
+    const zh=()=>localStorage.getItem('morimens.language')!=='en';
+    const ui=(cn,en)=>zh()?cn:en;
     const status=document.getElementById('dtideStatus');
+    function applyLanguage(){
+      const isZh=zh();document.documentElement.lang=isZh?'zh-CN':'en';
+      document.title=ui('融灾数据自行提交 · 忘忘看报','Submit D-Zone Data · Morimens Weekly');
+      document.getElementById('backBtn').textContent=ui('← 返回忘忘看报 · 关于','← Back to Morimens Weekly · About');
+      document.getElementById('langToggle').textContent=isZh?'English':'中文';
+      document.getElementById('eyebrow').textContent=ui('忘忘看报 · 社区共建','Morimens Weekly · Community');
+      document.getElementById('heroTitle').textContent=ui('融灾数据自行提交','Submit D-Zone Data');
+      document.getElementById('heroLead').innerHTML=ui('选择融灾期次、填写玩家 UID，然后打开 Eremora 对应的 <code>__data.json</code> 页面，将完整内容粘贴到表单中解析并提交。提交后会立即合并到对应榜单，不必等待本人手动更新。','Choose a D-Zone season and enter a player UID, then open the matching Eremora <code>__data.json</code> page and paste its full contents here. Valid submissions are merged into the matching leaderboard immediately—you do not need to wait for my manual update.');
+      document.getElementById('season69Notice').innerHTML=ui('<b>第69期说明：</b>提交时必须区分 <b>Bug前</b> 与 <b>Bug后</b>。两者的 Eremora 地址都仍然使用 <code>/challenges/dzone/69/__data.json</code>；区别只用于本站的数据归档、榜单合并与社区记录。当前 Bug后榜单正式数据待填充。','<b>Season 69:</b> submissions must distinguish <b>Pre-bug</b> and <b>Post-bug</b>. Both still use the Eremora path <code>/challenges/dzone/69/__data.json</code>; the distinction is only for site archiving, leaderboard merging, and community records. Official post-bug data is still pending.');
+      document.getElementById('footerText').textContent=ui('数据来源：Eremora。本站仅保存用于榜单统计的结构化社区提交记录；同一逻辑期次 + UID 的较新提交会覆盖旧社区版本。社区机器数据每三天归档到 GitHub。','Source: Eremora. This site stores only structured community submissions used for leaderboard statistics; newer submissions replace older community versions for the same logical season + UID. Machine submissions are archived to GitHub every three days.');
+      window.dispatchEvent(new CustomEvent('morimens-language-change'));
+    }
+    document.getElementById('langToggle').addEventListener('click',()=>{localStorage.setItem('morimens.language',zh()?'en':'zh');applyLanguage()});
+    applyLanguage();
     try{
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});
       if(!response.ok)throw new Error('manifest HTTP '+response.status);
@@ -68,10 +84,10 @@
         }),
         mergeRecords:()=>({applied:0,skipped:0})
       };
-      status.textContent='表单已载入，可选择期次后提交。';
+      status.textContent=ui('表单已载入，可选择期次后提交。','Form loaded. Choose a season and submit.');
       status.classList.remove('loading');
       const script=document.createElement('script');
-      script.src='morimens-dzone-import.js?v=20260929.14';
+      script.src='morimens-dzone-import.js?v=20260929.15';
       script.defer=true;
       script.onload=()=>{
         setTimeout(()=>{
@@ -85,10 +101,10 @@
           }
         },0);
       };
-      script.onerror=()=>{status.textContent='提交表单脚本载入失败，请刷新后重试。';status.className='error'};
+      script.onerror=()=>{status.textContent=ui('提交表单脚本载入失败，请刷新后重试。','Submission script failed to load. Refresh and try again.');status.className='error'};
       document.head.appendChild(script);
     }catch(error){
-      status.textContent='无法载入融灾期次：'+(error?.message||error);
+      status.textContent=ui('无法载入融灾期次：','Unable to load D-Zone seasons: ')+(error?.message||error);
       status.className='error';
     }
   })();
