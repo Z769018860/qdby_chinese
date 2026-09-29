@@ -122,6 +122,14 @@
     return {...base,records,recordCount:records.length,overlayRecordCount:overlay.records.length,dataUpdatedAt:overlay.updatedAt||base?.dataUpdatedAt||null};
   }
   function communityUsageTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
+  function communityUsageScore(record){
+    const score=Number(record?.score??record?.currentScore);
+    return Number.isFinite(score)?score:null;
+  }
+  function communityUsageLatestTimestamp(...values){
+    const valid=values.map(value=>({value,ms:value?Date.parse(value):NaN})).filter(x=>Number.isFinite(x.ms)).sort((a,b)=>b.ms-a.ms);
+    return valid[0]?.value||null;
+  }
   function communityUsageZoneComplete(record){
     const waves=Array.isArray(record?.waves)?record.waves:[];
     const byWave=new Map();
@@ -145,8 +153,12 @@
       const itemVariant=String(item?.communityVariant||item?.variant||record?.communityUpdate?.communityVariant||(Number(record?.seasonId)===69?'prebug':'default'));
       if(!uid||Number(record?.seasonId)!==Number(activeSeason)||itemVariant!==activeCommunityVariant||!communityUsageZoneComplete(record)){skipped++;continue}
       const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
-      if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
       const previous=byUid.get(uid);
+      const currentUpdatedAt=communityUsageLatestTimestamp(previous?.communityUpdate?.submittedAt,officialUpdatedAt);
+      const currentMs=currentUpdatedAt?Date.parse(currentUpdatedAt):NaN;
+      if(!Number.isFinite(submittedMs)||(Number.isFinite(currentMs)&&submittedMs<=currentMs)){skipped++;continue}
+      const previousScore=communityUsageScore(previous),nextScore=communityUsageScore(record);
+      if(previousScore!=null&&nextScore!=null&&nextScore<previousScore){skipped++;continue}
       const next={...record,
         rank:previous?.rank??record?.rank??null,
         leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
