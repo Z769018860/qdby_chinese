@@ -876,7 +876,10 @@
     return submissionHistory.map(({uid,seasonId,communityVariant,targetKey,submissionId,commentId,submittedBy,submittedAt,source,record})=>{
       const variant=normalizeVariant(seasonId,communityVariant),teams=(record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0),zones=(record?.waves||[]).length;
       const phase=Number(seasonId)===69?(variant==='postbug'?'Bug后':'Bug前'):'';
-      return {uid,seasonId,communityVariant:variant,targetKey:targetKey||String(seasonId===69?(variant==='postbug'?'69-postbug':'69-prebug'):seasonId),submissionId,commentId,submittedBy,submittedAt,source,summary:`第 ${seasonId} 期${phase?' · '+phase:''} · ${zones} Zone · ${teams} 支队伍 · 分数 ${record?.score??'—'}`,record};
+      const phaseEn=Number(seasonId)===69?(variant==='postbug'?'Post-bug':'Pre-bug'):'';
+      const summaryZh=`第 ${seasonId} 期${phase?' · '+phase:''} · ${zones} Zone · ${teams} 支队伍 · 分数 ${record?.score??'—'}`;
+      const summaryEn=`Season ${seasonId}${phaseEn?' · '+phaseEn:''} · ${zones} Zones · ${teams} teams · ${record?.score??'—'} pts`;
+      return {uid,seasonId,communityVariant:variant,targetKey:targetKey||String(seasonId===69?(variant==='postbug'?'69-postbug':'69-prebug'):seasonId),submissionId,commentId,submittedBy,submittedAt,source,summary:ui(summaryZh,summaryEn),summaryZh,summaryEn,record};
     });
   }
 
