@@ -644,18 +644,56 @@
       return unpackStoredSubmission(JSON.parse(new TextDecoder().decode(raw)));
     }
     if(text.startsWith('json:'))return unpackStoredSubmission(JSON.parse(new TextDecoder().decode(base64UrlToBytes(text.slice(5)))));
+    try{
+      const raw=new TextDecoder().decode(base64UrlToBytes(text));
+      return unpackStoredSubmission(JSON.parse(raw));
+    }catch(_){}
     throw new Error('unknown submission codec');
   }
-  function extractEncodedComment(comment){
-    const raw=String(comment||''),needle=SUBMISSION_MARKER+':',idx=raw.indexOf(needle);
-    if(idx<0)return '';
-    return raw.slice(idx+needle.length).trim().split(/\s|</)[0];
+  function decodeHtmlEntities(value){
+    const text=String(value??'');
+    if(typeof document!=='undefined'){
+      try{const ta=document.createElement('textarea');ta.innerHTML=text;return ta.value}catch(_){}
+    }
+    return text.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+  }
+  function extractEncodedSubmission(...sources){
+    const needle=SUBMISSION_MARKER+':';
+    for(const source of sources){
+      if(source==null)continue;
+      let raw=decodeHtmlEntities(String(source));
+      // Waline may return rendered HTML. Strip tags but preserve token characters.
+      raw=raw.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,' ');
+      const idx=raw.indexOf(needle);
+      if(idx<0)continue;
+      let tail=raw.slice(idx+needle.length);
+      // Base64/base64url payloads may be line-wrapped by an admin/API renderer.
+      tail=tail.replace(/[\r\n\t ]+/g,'');
+      const match=tail.match(/((?:gz|json):[A-Za-z0-9_-]+={0,2})/);
+      if(match)return match[1];
+      // Backward compatibility: older comments may contain plain base64 tokens.
+      const legacy=tail.match(/([A-Za-z0-9+/_=-]{16,})/);
+      if(legacy)return legacy[1];
+    }
+    return '';
   }
   async function persistSubmission(payload){
-    const encoded=await encodeSubmission(payload),comment=SUBMISSION_MARKER+':'+encoded;
+    const encoded=await encodeSubmission(payload);
+    const phase=Number(payload.seasonId)===69?(normalizeVariant(payload.seasonId,payload.communityVariant)==='postbug'?' · Bug后':' · Bug前'):'';
+    const teams=(payload.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0);
+    const visibleComment=`融灾社区补充 · UID ${payload.uid} · 第 ${payload.seasonId} 期${phase} · ${payload.record?.score??'—'} 分 · ${teams} 支队伍 · ${payload.submittedBy||ui('匿名','Anonymous')}`;
+    const machinePayload=SUBMISSION_MARKER+':'+encoded;
     const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nick:payload.submittedBy||ui('匿名','Anonymous'),mail:'',link:'',comment,url:SUBMISSION_PATH,ua:navigator.userAgent||''})
+      body:JSON.stringify({
+        nick:payload.submittedBy||ui('匿名','Anonymous'),
+        mail:'',
+        link:'',
+        comment:visibleComment,
+        url:SUBMISSION_PATH,
+        // wl_comment.ua is TEXT. Keep the machine payload out of the visible comment body.
+        ua:machinePayload
+      })
     });
     if(!response.ok)throw new Error('Waline HTTP '+response.status);
     const result=await response.json();
@@ -668,7 +706,7 @@
         `Waline accepted the submission with status ${serverStatus}, so it is not visible in the public community log. Approve it in Waline or adjust moderation / anti-spam settings, then retry.`
       ));
     }
-    return {result,encodedLength:encoded.length,objectId:String(serverRow?.objectId||'')};
+    return {result,encodedLength:encoded.length,objectId:String(serverRow?.objectId||''),visibleComment};
   }
   async function fetchSubmissionHistory(){
     const rows=[];
@@ -678,7 +716,7 @@
       const payload=await response.json();if(payload?.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
       const items=Array.isArray(payload?.data)?payload.data:Array.isArray(payload?.data?.data)?payload.data.data:[];
       for(const item of items){
-        const encoded=extractEncodedComment(item?.comment);if(!encoded)continue;
+        const encoded=extractEncodedSubmission(item?.ua,item?.comment,item?.comment_html,item?.commentHtml);if(!encoded)continue;
         try{
           const data=await decodeSubmission(encoded);
           const record=data?.record,uid=String(data?.uid||record?.uid||'').trim(),seasonId=Number(data?.seasonId||record?.seasonId||0);
