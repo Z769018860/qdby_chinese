@@ -219,6 +219,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-09-29 · 融灾社区更新完整性校验</strong><br>修正额外队伍解析：<code>extra=true</code> 现在作为同一 Zone 的第二支队伍保留。525 分必须解析为 5 支基础 + 5 支额外，共 10 支队伍。社区更新仅在“提交时间晚于当前数据、分数不低于当前分数、5 个 Zone / 4 人队伍 / 队伍数量与源数据一致”同时满足时写入榜单和统计，否则明确提示更新失败。<br><span class="en">D-Zone community updates now preserve <code>extra=true</code> as the second team in the same Zone. A 525-point record must contain 5 base + 5 extra teams (10 total). An update is accepted only when it is newer than current data, does not lower the score, and passes full 5-Zone/team-integrity checks.</span></div>
         <div class="sourceItem"><strong>2026-09-29 · 修复融灾第二支队伍丢失</strong><br>重新校验 Eremora 第70期原始 JSON：满分记录可包含每个 Zone 两支不同队伍。导入器现在逐条保留所有 stage/team，并记录源队伍总数与 5 个 Zone 的队伍分布；源数据 10 支队伍时必须完整还原为 10 支，否则拒绝提交。近期记录会显示类似 10 支队伍（2/2/2/2/2）。</div>
         <div class="sourceItem"><strong>${ui('2026-09-29 · 融灾数据开放社区自行上传','2026-09-29 · Community D-Zone uploads enabled')}</strong><br>${ui('现在可在融灾榜单中自行选择期次、填写 UID 并上传 Eremora 融灾数据，不必等待本人手动更新。通过校验的社区数据会立即参与对应期次的榜单、角色/命轮/造物统计与配队搜索；提交记录会保留提交人、UID、内容与时间。','You can now choose a D-Zone season, enter a UID, and submit Eremora D-Zone data directly from the leaderboard without waiting for my manual updates. Valid community submissions immediately participate in the matching leaderboard, Awakener/Wheel/Creation statistics, and team search. The maintenance log keeps the contributor, UID, content, and time.')}</div>
         <div class="sourceItem"><strong>${ui('2026-09-29 · 社区数据三天归档到 GitHub','2026-09-29 · Community data archived to GitHub every three days')}</strong><br>${ui('Waline 改为短期社区数据队列：GitHub Action 每天检查，距离上次归档满 72 小时才执行。融灾按“期次/阶段/UID”保留最新完整版本，助战按“UID/角色”保留最新 Showcase，维护历史只保存轻量元数据。GitHub 提交成功后才删除 Waline 中已归档的机器记录；普通留言和互动数据不受影响。','Waline now acts as a short-lived community-data queue. A GitHub Action checks daily and archives only after at least 72 hours. D-Zone keeps the latest complete version per season/phase/UID, Assist keeps the latest Showcase per UID/Awakener, and the maintenance history stores only lightweight metadata. Waline machine records are deleted only after the GitHub archive is committed successfully; normal comments and interaction data are untouched.')}</div>
@@ -916,14 +917,88 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     return {selectedSeasonId,currentSeason,legacy,isCurrent,communityVariant,selectedTargetKey,recordCount:Number(season?.recordCount||0),officialUpdatedAt,availableSeasons};
   }
   function communityTeamCount(record){return (record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0)}
-  function communityZoneComplete(record){
-    const waves=Array.isArray(record?.waves)?record.waves:[];
-    const byWave=new Map();
+  function communityRecordScore(record){
+    const score=Number(record?.score??record?.currentScore);
+    return Number.isFinite(score)?score:null;
+  }
+  function communityRecordQuality(record){
+    const waves=Array.isArray(record?.waves)?record.waves:[],byWave=new Map(),teams=[];
     for(const wave of waves){
-      const id=Number(wave?.wave),teams=Array.isArray(wave?.teams)?wave.teams:[];
-      if(id>=1&&id<=5&&teams.length)byWave.set(id,teams.length);
+      const id=Number(wave?.wave),rows=Array.isArray(wave?.teams)?wave.teams:[];
+      if(id>=1&&id<=5&&rows.length){byWave.set(id,rows.length);for(const team of rows)teams.push({wave:id,team})}
     }
-    return byWave.size===5&&[1,2,3,4,5].every(id=>(byWave.get(id)||0)>=1);
+    const teamCount=teams.length,extraCount=teams.filter(x=>String(x.team?.clearType||'')==='extra').length;
+    const baseCount=teams.filter(x=>String(x.team?.clearType||'')!=='extra').length;
+    const score=communityRecordScore(record),minExtras=score!=null&&score>500?Math.ceil((score-500)/5):0;
+    const sourceCount=Number(record?.sourceTeamCount)||0;
+    const sourceDist=Array.isArray(record?.sourceTeamDistribution)?record.sourceTeamDistribution.map(Number):[];
+    const actualDist=[1,2,3,4,5].map(id=>byWave.get(id)||0);
+    let reason='';
+    if(byWave.size!==5||actualDist.some(n=>n<1))reason=ui('必须包含完整的 5 个 Zone。','All 5 Zones must be present.');
+    else if(teams.some(x=>!Array.isArray(x.team?.members)||x.team.members.length!==4))reason=ui('每支队伍必须包含完整的 4 名角色。','Every team must contain all 4 members.');
+    else if(sourceCount>0&&teamCount!==sourceCount)reason=ui(`标准化队伍数 ${teamCount} 与源数据 ${sourceCount} 不一致。`,`Normalized team count ${teamCount} does not match source count ${sourceCount}.`);
+    else if(sourceDist.length===5&&sourceDist.some((n,i)=>n>0&&actualDist[i]!==n))reason=ui(`各 Zone 队伍分布与源数据不一致（${actualDist.join('/')}）。`,`Per-Zone team distribution does not match source data (${actualDist.join('/')}).`);
+    else if(extraCount<minExtras)reason=ui(`${score} 分至少需要 ${minExtras} 支额外队伍，当前只有 ${extraCount} 支。`,`${score} points requires at least ${minExtras} extra teams; only ${extraCount} are present.`);
+    else if(score===525&&(teamCount!==10||extraCount!==5))reason=ui(`525 分必须是 10 支完整队伍（5 基础 + 5 额外），当前为 ${teamCount} 支。`,`525 points requires 10 complete teams (5 base + 5 extra); current record has ${teamCount}.`);
+    return {ok:!reason,reason,score,teamCount,baseCount,extraCount,distribution:actualDist};
+  }
+  function communityZoneComplete(record){return communityRecordQuality(record).ok}
+  function latestTimestamp(...values){
+    const valid=values.map(value=>({value,ms:value?Date.parse(value):NaN})).filter(x=>Number.isFinite(x.ms)).sort((a,b)=>b.ms-a.ms);
+    return valid[0]?.value||null;
+  }
+  function communityCandidateDecision(previous,record,submittedAt,officialUpdatedAt){
+    const quality=communityRecordQuality(record);
+    if(!quality.ok)return {ok:false,message:ui('更新失败：队伍数据不完整或与分数不匹配：','Update failed: team data is incomplete or inconsistent with the score: ')+quality.reason,quality};
+    const previousCommunityAt=previous?.communityUpdate?.submittedAt||null;
+    const currentUpdatedAt=latestTimestamp(previousCommunityAt,officialUpdatedAt);
+    const submittedMs=submittedAt?Date.parse(submittedAt):NaN,currentMs=currentUpdatedAt?Date.parse(currentUpdatedAt):NaN;
+    if(!Number.isFinite(submittedMs))return {ok:false,message:ui('更新失败：提交时间无效。','Update failed: submission timestamp is invalid.'),quality};
+    if(Number.isFinite(currentMs)&&submittedMs<=currentMs)return {ok:false,message:ui(`更新失败：提交时间 ${submittedAt} 不晚于当前数据时间 ${currentUpdatedAt}。`,`Update failed: submission time ${submittedAt} is not newer than current data time ${currentUpdatedAt}.`),quality,currentUpdatedAt};
+    const currentScore=communityRecordScore(previous);
+    if(currentScore!=null&&quality.score!=null&&quality.score<currentScore)return {ok:false,message:ui(`更新失败：新分数 ${quality.score} 低于当前分数 ${currentScore}。`,`Update failed: new score ${quality.score} is lower than current score ${currentScore}.`),quality,currentScore,currentUpdatedAt};
+    return {ok:true,quality,currentScore,currentUpdatedAt};
+  }
+  async function communityCurrentRecordState(uid,seasonId,communityVariant='default'){
+    const wantedUid=String(uid??'').trim(),wantedSeason=Number(seasonId),wantedVariant=String(communityVariant||(wantedSeason===69?'prebug':'default'));
+    const active=communityDzoneContext();
+    if(wantedUid&&Number(active.selectedSeasonId)===wantedSeason&&String(active.communityVariant)===wantedVariant){
+      const record=(season?.records||[]).find(row=>String(row?.uid??'').trim()===wantedUid)||null;
+      return {record,officialUpdatedAt:active.officialUpdatedAt||null};
+    }
+    const entry=(manifest?.availableSeasons||[]).find(row=>{
+      const sid=Number(row?.sourceSeasonId??row?.seasonId),variant=String(row?.communityVariant||((sid===69&&!row?.snapshotId)?'prebug':'default'));
+      return sid===wantedSeason&&variant===wantedVariant&&!(row?.legacy||row?.coverageMode==='legacy-spreadsheet');
+    });
+    if(!entry)return {record:null,officialUpdatedAt:null};
+    const loader=window.MorimensDtideDataLoader;if(!loader?.loadDataset)return {record:null,officialUpdatedAt:entry?.dataUpdatedAt||null};
+    const isCurrent=!entry.snapshotId&&wantedSeason===Number(manifest?.currentSeason);
+    const baseMeta=isCurrent&&manifest?.usageIndex?.path?manifest.usageIndex:entry;
+    let base=null,overlay=null;
+    try{base=await loader.loadDataset(baseMeta.path)}catch(error){console.warn('community validation base unavailable',error)}
+    const overlayMeta=isCurrent&&manifest?.currentOverlay?.path&&Number(manifest.currentOverlay.seasonId)===wantedSeason
+      ?manifest.currentOverlay
+      :(entry.overlayPath?{path:entry.overlayPath,updatedAt:entry.overlayUpdatedAt||entry.dataUpdatedAt||null}:null);
+    if(overlayMeta?.path)overlay=await loader.loadDataset(overlayMeta.path).catch(error=>{console.warn('community validation overlay unavailable',error);return null});
+    const baseRecord=(base?.records||[]).find(row=>String(row?.uid??'').trim()===wantedUid)||null;
+    const overlayRecord=(overlay?.records||[]).find(row=>String(row?.uid??'').trim()===wantedUid)||null;
+    return {
+      record:overlayRecord?inheritReplayMetadata(baseRecord,overlayRecord):baseRecord,
+      officialUpdatedAt:overlayMeta?.updatedAt||overlay?.updatedAt||base?.dataUpdatedAt||entry?.dataUpdatedAt||(isCurrent?manifest?.usageIndex?.syncedAt:null)||null
+    };
+  }
+  async function validateCommunityCandidate({record,submittedAt,seasonId,communityVariant,priorCommunity}={}){
+    const state=await communityCurrentRecordState(record?.uid,seasonId??record?.seasonId,communityVariant);
+    let previous=state.record;
+    const priorRecord=priorCommunity?.record||null;
+    if(priorRecord&&communityRecordQuality(priorRecord).ok){
+      const priorAt=priorCommunity?.submittedAt||priorRecord?.communityUpdate?.submittedAt||null;
+      const officialAt=state.officialUpdatedAt||null;
+      if(!officialAt||!priorAt||Date.parse(priorAt)>Date.parse(officialAt)){
+        previous={...priorRecord,communityUpdate:{...(priorRecord.communityUpdate||{}),submittedAt:priorAt}};
+      }
+    }
+    return communityCandidateDecision(previous,record,submittedAt,state.officialUpdatedAt);
   }
   function communityVariantOf(item,record){
     const explicit=String(item?.communityVariant||item?.variant||record?.communityUpdate?.communityVariant||'').trim();
@@ -940,10 +1015,10 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     for(const item of items){
       const record=item?.record||item,uid=String(record?.uid??'').trim(),submittedAt=item?.submittedAt||record?.communityUpdate?.submittedAt||'';
       const itemVariant=communityVariantOf(item,record);
-      if(!uid||Number(record?.seasonId)!==Number(ctx.selectedSeasonId)||itemVariant!==ctx.communityVariant||!communityZoneComplete(record)){skipped++;continue}
-      const submittedMs=submittedAt?Date.parse(submittedAt):NaN;
-      if(Number.isFinite(officialMs)&&Number.isFinite(submittedMs)&&submittedMs<=officialMs){skipped++;continue}
+      if(!uid||Number(record?.seasonId)!==Number(ctx.selectedSeasonId)||itemVariant!==ctx.communityVariant){skipped++;continue}
       const previous=byUid.get(uid);
+      const decision=communityCandidateDecision(previous,record,submittedAt,ctx.officialUpdatedAt);
+      if(!decision.ok){console.warn('Skip D-Zone community update',uid,decision.message);skipped++;continue}
       const next=inheritReplayMetadata(previous,{...record,
         rank:previous?.rank??record?.rank??null,
         leaderboardScore:previous?.leaderboardScore??record?.leaderboardScore??null,
@@ -972,7 +1047,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     window.MorimensDzoneImportEmbedded=true;
     const script=document.createElement('script');script.src='morimens-dzone-import.js?v=20260929.17';script.defer=true;script.dataset.morimensDzoneImport='true';document.head.appendChild(script);
   }
-  window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords};
+  window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords,validateCandidate:validateCommunityCandidate,getRecordState:communityCurrentRecordState};
 
   async function loadSeason(id){
     const loadToken=++seasonLoadToken;
