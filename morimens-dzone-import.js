@@ -657,23 +657,25 @@
     }
     return text.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
   }
-  function extractEncodedSubmission(...sources){
+  function tokenAfterMarker(rawValue){
     const needle=SUBMISSION_MARKER+':';
+    let raw=decodeHtmlEntities(String(rawValue??'')),idx=raw.indexOf(needle);
+    if(idx<0)return '';
+    let tail=raw.slice(idx+needle.length);
+    const commentEnd=tail.indexOf('-->');
+    if(commentEnd>=0)tail=tail.slice(0,commentEnd);
+    const tagEnd=tail.indexOf('<');
+    if(tagEnd>=0)tail=tail.slice(0,tagEnd);
+    tail=tail.replace(/[\r\n\t ]+/g,'').trim();
+    const modern=tail.match(/^((?:gz|json):[A-Za-z0-9_-]+={0,2})/);
+    if(modern)return modern[1];
+    const legacy=tail.match(/^([A-Za-z0-9+/_=-]{16,})/);
+    return legacy?.[1]||'';
+  }
+  function extractEncodedSubmission(...sources){
     for(const source of sources){
-      if(source==null)continue;
-      let raw=decodeHtmlEntities(String(source));
-      // Waline may return rendered HTML. Strip tags but preserve token characters.
-      raw=raw.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,' ');
-      const idx=raw.indexOf(needle);
-      if(idx<0)continue;
-      let tail=raw.slice(idx+needle.length);
-      // Base64/base64url payloads may be line-wrapped by an admin/API renderer.
-      tail=tail.replace(/[\r\n\t ]+/g,'');
-      const match=tail.match(/((?:gz|json):[A-Za-z0-9_-]+={0,2})/);
-      if(match)return match[1];
-      // Backward compatibility: older comments may contain plain base64 tokens.
-      const legacy=tail.match(/([A-Za-z0-9+/_=-]{16,})/);
-      if(legacy)return legacy[1];
+      const token=tokenAfterMarker(source);
+      if(token)return token;
     }
     return '';
   }
@@ -683,16 +685,16 @@
     const teams=(payload.record?.waves||[]).reduce((sum,w)=>sum+(w?.teams?.length||0),0);
     const visibleComment=`融灾社区补充 · UID ${payload.uid} · 第 ${payload.seasonId} 期${phase} · ${payload.record?.score??'—'} 分 · ${teams} 支队伍 · ${payload.submittedBy||ui('匿名','Anonymous')}`;
     const machinePayload=SUBMISSION_MARKER+':'+encoded;
+    const comment=visibleComment+'\n\n<!--'+machinePayload+'-->';
     const response=await fetch(WALINE_SERVER+'/api/comment?lang=zh-CN',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         nick:payload.submittedBy||ui('匿名','Anonymous'),
         mail:'',
         link:'',
-        comment:visibleComment,
+        comment,
         url:SUBMISSION_PATH,
-        // wl_comment.ua is TEXT. Keep the machine payload out of the visible comment body.
-        ua:machinePayload
+        ua:navigator.userAgent||''
       })
     });
     if(!response.ok)throw new Error('Waline HTTP '+response.status);
@@ -709,14 +711,16 @@
     return {result,encodedLength:encoded.length,objectId:String(serverRow?.objectId||''),visibleComment};
   }
   async function fetchSubmissionHistory(){
-    const rows=[];
+    const rows=[];let seenItems=0,markedItems=0,decodeFailures=0;
     for(let page=1;page<=5;page++){
       const response=await fetch(WALINE_SERVER+'/api/comment?path='+encodeURIComponent(SUBMISSION_PATH)+'&page='+page+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN',{cache:'no-store'});
       if(!response.ok)throw new Error('Waline HTTP '+response.status);
       const payload=await response.json();if(payload?.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
       const items=Array.isArray(payload?.data)?payload.data:Array.isArray(payload?.data?.data)?payload.data.data:[];
       for(const item of items){
-        const encoded=extractEncodedSubmission(item?.ua,item?.comment,item?.comment_html,item?.commentHtml);if(!encoded)continue;
+        seenItems++;
+        const encoded=extractEncodedSubmission(item?.orig,item?.comment,item?.ua,item?.comment_html,item?.commentHtml);if(!encoded)continue;
+        markedItems++;
         try{
           const data=await decodeSubmission(encoded);
           const record=data?.record,uid=String(data?.uid||record?.uid||'').trim(),seasonId=Number(data?.seasonId||record?.seasonId||0);
@@ -724,12 +728,13 @@
           const communityVariant=normalizeVariant(seasonId,data?.communityVariant||data?.variant);
           const targetKey=String(data?.targetKey||(seasonId===69?(communityVariant==='postbug'?'69-postbug':'69-prebug'):seasonId));
           rows.push({uid,seasonId,communityVariant,targetKey,record,submissionId:String(data?.submissionId||''),submittedBy:cleanName(data?.submittedBy||item?.nick||'')||ui('匿名','Anonymous'),submittedAt:item?.insertedAt||data?.submittedAt||'',source:'eremora-dzone',commentId:String(item?.objectId||'')});
-        }catch(error){console.warn('Skip unreadable D-Zone community submission',error)}
+        }catch(error){decodeFailures++;console.warn('Skip unreadable D-Zone community submission',error)}
       }
       const total=Number(payload?.data?.count??payload?.data?.total??payload?.count??payload?.total);
       if(items.length<100||(Number.isFinite(total)&&page*100>=total))break;
     }
     rows.sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt)));
+    if(seenItems&&(!rows.length||decodeFailures))console.info('D-Zone community readback',{seenItems,markedItems,decodedRows:rows.length,decodeFailures});
     return rows;
   }
   async function verifyPersistedSubmission(submissionId,uid,seasonId,communityVariant){
