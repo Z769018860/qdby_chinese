@@ -1,0 +1,11 @@
+{
+  "season":70,
+  "updatedAt":"2026-10-01 05:00",
+  "rankCount":2000,
+  "details":{
+    "rawTeamData":true,
+    "stageGroups":true,
+    "futureFields":["deadHoldTriggerCount","battleRounds","stageBattleDetails"]
+  },
+  "note":"保留原始战斗结构字段，避免仅统计角色/命轮/队伍而丢失战斗过程数据"
+}
