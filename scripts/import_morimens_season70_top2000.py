@@ -166,8 +166,8 @@ def main():
     rank_of = {r["uid"]: r for r in rows}
 
     raw_dir, raw_shards = out / "raw-teams", []
-    for old in (raw_dir.glob("teams-*.jsonl.gz") if raw_dir.exists() else []):
-        old.unlink()
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    stale_shards = list(raw_dir.glob("teams-*.jsonl.gz"))  # removed only after a successful run
     summary, site_teams, buf, shard_no, lines = [], {}, [], 0, 0
     death = Counter()
 
@@ -205,11 +205,17 @@ def main():
                 if extra_pass:
                     e = convert_team(extra_side, stages[str(extra_side["recordStageData"]["stageId"])]["name"], names, "extra")
                     teams.append(e)
+            if wave in site_teams.get(row["uid"], {}):
+                raise SystemExit(f"duplicate row for uid {row['uid']} wave {wave}")
             site_teams.setdefault(row["uid"], {})[wave] = {
                 "wave": wave, "madness": st["madness"], "teams": teams, "stageGroupId": row["stageGroupId"],
                 "stageTid": resp["stageTid"],
             }
     flush()
+    new_names = {x["file"].split("/")[-1] for x in raw_shards}
+    for old in stale_shards:
+        if old.name not in new_names:
+            old.unlink()
 
     # --- site-format season document --------------------------------------
     records = []
@@ -225,9 +231,9 @@ def main():
         })
     season_doc = {
         "seasonId": SEASON, "period": "2026-09-28 – 2026-10-12", "leaderboardEntryCount": len(rows),
-        "recordCount": len(records), "complete": True, "coverageMode": "official-rank-top2000",
+        "recordCount": len(records), "complete": len(records) == len(rows), "coverageMode": "official-rank-top2000",
         "source": {"site": "Morimens official", "activityTid": ACTIVITY, "syncedAt": args.updated_at_iso},
-        "failures": [], "records": records,
+        "failures": [str(r["uid"]) for r in rows if r["uid"] not in site_teams], "records": records,
     }
     dump_json(work / "seasons/70.json", season_doc)
     dump_json(work / "rank-index/70.json", {
@@ -235,7 +241,7 @@ def main():
                    "retrievedAt": ranking["retrievedAt"]},
         "seasonId": SEASON, "target": len(rows), "complete": len(rows) >= 2000,
         "coverage": {"target": len(rows), "count": len(rows), "maxRank": max(r["rank"] for r in rows),
-                     "missingCount": 0, "profileAvailable": len(records), "profileMissing": len(rows) - len(records)},
+                     "missingCount": len(rows) - len(records), "profileAvailable": len(records), "profileMissing": len(rows) - len(records)},
         "failures": [], "recordCount": len(rows),
         "rows": [{"rank": r["rank"], "uid": str(r["uid"]), "name": r["name"], "rawName": r["name"],
                   "score": r["score"], "level": 0,
