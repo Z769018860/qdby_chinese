@@ -5,7 +5,7 @@
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
-  const rankCaps=[50,200,500,1000];
+  const rankCaps=[50,200,500,1000,2000];
   const diffs=['threatC','threatB','threatA','threatS','threatSS','threatSSS','threatDown'];
   const diffZh={all:'全部难度',threatC:'危险等级 C',threatB:'危险等级 B',threatA:'危险等级 A',threatS:'危险等级 S',threatSS:'危险等级 SS',threatSSS:'危险等级 SSS',threatDown:'危险等级 ▼',unknown:'未识别'};
   const diffEn={all:'All Difficulties',threatC:'Threat Level C',threatB:'Threat Level B',threatA:'Threat Level A',threatS:'Threat Level S',threatSS:'Threat Level SS',threatSSS:'Threat Level SSS',threatDown:'Threat Level ▼',unknown:'Unknown'};
@@ -475,6 +475,7 @@
     const entry=manifest?.availableSeasons?.find(x=>String(x.snapshotId??x.seasonId)===String(id));
     if(!entry){usage=null;usageStats=null;return false}
     if(entry.legacy||entry.coverageMode==='legacy-spreadsheet'){usage=null;usageStats=null;detailUsage=null;detailStats=null;return false}
+    if(entry.aggregatePath){usage=null;usageStats=null;detailUsage=null;detailStats=null;activeEntry=entry;activeSeason=Number(entry.sourceSeasonId??entry.seasonId);return false}
     try{
       const sourceSeasonId=Number(entry.sourceSeasonId??entry.seasonId);
       const current=!entry.snapshotId&&sourceSeasonId===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex:null;
