@@ -12,7 +12,13 @@ const DELAY=Math.max(500,Number(process.env.EREMORA_POSTBUG_PAGE_DELAY_MS||1600)
 const UA='qdby-chinese-s69-postbug/1.0 (+https://github.com/Z769018860/qdby_chinese)';
 
 if(process.env.EREMORA_ALLOW_LEGACY_POSTBUG_SYNC!=='1'){
-  console.log('Season 69 post-bug live /api/rank sync is retired by default: the endpoint now represents the current season. Using the checked-in Top 2000 meta summary instead.');
+  const summaryFile=path.join(ROOT,'meta-summary','69-postbug.json');
+  const summary=JSON.parse(await readFile(summaryFile,'utf8'));
+  const characters=Array.isArray(summary?.characters)?summary.characters:[];
+  if(Number(summary?.seasonId)!==69||Number(summary?.population)!==2000||characters.length<61){
+    throw new Error('Season 69 post-bug Top 2000 summary validation failed.');
+  }
+  console.log('Season 69 post-bug Top 2000 summary validated:',characters.length,'Awakeners /',summary.population,'players.');
   process.exit(0);
 }
 
