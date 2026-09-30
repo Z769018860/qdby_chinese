@@ -1,11 +1,87 @@
 {
-  "season":70,
-  "activityTid":83315,
-  "name":"第70期 新新融灾 · 深海戒指",
-  "date":"9.28-10.11",
-  "updatedAt":"2026-10-01 05:00",
-  "source":"official live Rank.QueryRank response",
-  "rankRange":[1,2000],
-  "recordCount":2000,
-  "note":"包含原始榜单字段及队伍详情索引，后续可继续扩展死扛触发次数、战斗回合数等统计字段"
+  "season": 70,
+  "activityTid": 83315,
+  "name": "第70期 新新融灾 · 深海戒指",
+  "date": "9.28-10.11",
+  "updatedAt": "2026-10-01 05:00",
+  "source": "official live Rank.QueryRank response",
+  "sourceRetrievedAt": "2026-10-01T05:46:26.585894+08:00",
+  "rankRange": [
+    1,
+    2000
+  ],
+  "recordCount": 2000,
+  "playersWithTeamDetail": 2000,
+  "teamRows": 9560,
+  "stageGroupIds": [
+    83439,
+    83440,
+    83441,
+    83442,
+    83444
+  ],
+  "files": {
+    "ranking": "ranking.json.gz",
+    "rankingPrevious": "ranking-previous.json.gz",
+    "battleSummary": "battle-summary.jsonl.gz",
+    "rawTeams": [
+      {
+        "file": "raw-teams/teams-000.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-001.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-002.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-003.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-004.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-005.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-006.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-007.jsonl.gz",
+        "lines": 1160
+      }
+    ],
+    "uids": "uids.csv",
+    "teamErrors": "team-errors.jsonl",
+    "pendingQueries": "pending-queries.jsonl.gz",
+    "idNames": "id-names.json",
+    "scores": "scores.json",
+    "statistics": "statistics.json"
+  },
+  "battleFields": [
+    "stageRoundCount",
+    "bossBattleRoundCount",
+    "deathResistCount",
+    "respawnedNum",
+    "totalUseCard",
+    "totalEnergyCost",
+    "maxBoutUseCard",
+    "maxBoutEnergyCost",
+    "maxBoutDamage",
+    "maxCounterAtt",
+    "maxTentacleDamage",
+    "maxStrength",
+    "maxPosion",
+    "maxHp",
+    "leftHp",
+    "playerLevel",
+    "recordTime"
+  ]
 }

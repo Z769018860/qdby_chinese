@@ -1,8 +1,0 @@
-{
-  "season": 70,
-  "updated": "2026-10-01 05:00",
-  "records": 7705,
-  "source": "season_83315 teams_latest.jsonl",
-  "description": "Top2000 battle detail summary shards. Keep round/death resist/card/energy/counter/tentacle statistics for future analysis.",
-  "fields": ["bossBattleRoundCount", "stageRoundCount", "deathResistCount", "totalUseCard", "totalEnergyCost", "maxCounterAtt", "maxTentacleDamage", "maxBoutDamage", "battleUuid"]
-}
