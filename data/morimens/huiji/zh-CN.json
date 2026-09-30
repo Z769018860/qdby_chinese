@@ -3,14 +3,14 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-29T10:00:39.487Z",
+    "syncedAt": "2026-09-30T09:52:12.832Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 61,
   "mapped": 61,
-  "enriched": 13,
-  "jinaRecords": 48,
-  "cachedRecords": 13,
+  "enriched": 12,
+  "jinaRecords": 55,
+  "cachedRecords": 12,
   "voiceRecords": 29,
   "failed": [
     {
@@ -64,20 +64,14 @@
     {
       "title": "希莱斯特",
       "skeydbId": "awakener-0009",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9: unusable reader response"
     },
     {
       "title": "克莱门汀",
       "skeydbId": "awakener-0010",
       "status": "fallback",
       "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
-    },
-    {
-      "title": "克珀珊特",
-      "skeydbId": "awakener-0011",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "达芙黛尔",
@@ -88,8 +82,8 @@
     {
       "title": "朵尔",
       "skeydbId": "awakener-0013",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%9C%B5%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "杜勒赛因",
@@ -146,6 +140,12 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "珈伦",
+      "skeydbId": "awakener-0026",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "凯蒂古拉",
       "skeydbId": "awakener-0027",
       "status": "no-voice",
@@ -154,8 +154,8 @@
     {
       "title": "雷娅",
       "skeydbId": "awakener-0028",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%9B%B7%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "莉兹",
@@ -226,8 +226,8 @@
     {
       "title": "莱克",
       "skeydbId": "awakener-0043",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "萨尔瓦多",
@@ -244,12 +244,18 @@
     {
       "title": "索蕾尔",
       "skeydbId": "awakener-0046",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "塔薇",
       "skeydbId": "awakener-0047",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "泰旖丝",
+      "skeydbId": "awakener-0048",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -268,14 +274,14 @@
     {
       "title": "徐",
       "skeydbId": "awakener-0054",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "莫丝",
       "skeydbId": "awakener-0055",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "沙耶",
@@ -286,14 +292,14 @@
     {
       "title": "庞托斯",
       "skeydbId": "awakener-0058",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "卡拉布",
       "skeydbId": "awakener-0060",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "负誓·奥吉尔",
@@ -735,10 +741,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9: unusable reader response"
     },
     {
       "skeydbId": "awakener-0010",
@@ -829,7 +835,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0012",
@@ -917,10 +923,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%9C%B5%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0014",
@@ -1652,7 +1658,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0027",
@@ -1744,10 +1750,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%9B%B7%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0029",
@@ -2714,10 +2720,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0044",
@@ -2771,10 +2777,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0047",
@@ -2925,7 +2931,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%B0%E6%97%96%E4%B8%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0049",
@@ -3418,10 +3424,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0055",
@@ -3437,10 +3443,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0056",
@@ -3604,10 +3610,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0059",
@@ -3695,10 +3701,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0061",
@@ -4152,10 +4158,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
+        "mode": "static-identity"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9: unusable reader response"
     },
     "awakener-0010": {
       "skeydbId": "awakener-0010",
@@ -4246,7 +4252,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0012": {
       "skeydbId": "awakener-0012",
@@ -4334,10 +4340,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E6%9C%B5%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%9C%B5%E5%B0%94: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0014": {
       "skeydbId": "awakener-0014",
@@ -5069,7 +5075,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%8F%88%E4%BC%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0027": {
       "skeydbId": "awakener-0027",
@@ -5161,10 +5167,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E9%9B%B7%E5%A8%85&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0029": {
       "skeydbId": "awakener-0029",
@@ -6131,10 +6137,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%B1%E5%85%8B&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%B1%E5%85%8B: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0044": {
       "skeydbId": "awakener-0044",
@@ -6188,10 +6194,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%B4%A2%E8%95%BE%E5%B0%94&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0047": {
       "skeydbId": "awakener-0047",
@@ -6342,7 +6348,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%B0%E6%97%96%E4%B8%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0049": {
       "skeydbId": "awakener-0049",
@@ -6835,10 +6841,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BE%90",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BE%90&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BE%90: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0055": {
       "skeydbId": "awakener-0055",
@@ -6854,10 +6860,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%8E%AB%E4%B8%9D&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%AB%E4%B8%9D: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0056": {
       "skeydbId": "awakener-0056",
@@ -7021,10 +7027,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%BA%9E%E6%89%98%E6%96%AF&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BA%9E%E6%89%98%E6%96%AF: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0059": {
       "skeydbId": "awakener-0059",
@@ -7112,10 +7118,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%8D%A1%E6%8B%89%E5%B8%83&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%8D%A1%E6%8B%89%E5%B8%83: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0061": {
       "skeydbId": "awakener-0061",
