@@ -48,6 +48,7 @@ jobs:
           node --check scripts/sync_morimens_s69_postbug.mjs
           node --check scripts/postprocess_morimens_eremora.mjs
           node --check morimens-dtide.js
+          node --check morimens-dtide-usage.js
       - name: Discover Eremora public data
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.fetch_from_eremora }}
         continue-on-error: true
@@ -60,11 +61,11 @@ jobs:
           EREMORA_BATCH_SIZE: "3"
           EREMORA_BATCH_DELAY_MS: "2200"
         run: node scripts/sync_morimens_eremora.mjs
-      - name: Build Season 69 post-bug Top 1000 snapshot
+      - name: Validate Season 69 post-bug Top 2000 snapshot
         if: ${{ github.ref_name == 'preview' || (github.event_name == 'workflow_dispatch' && inputs.fetch_from_eremora) }}
         env:
-          EREMORA_POSTBUG_TARGET: "1000"
-          EREMORA_POSTBUG_MIN_ROWS: "950"
+          EREMORA_POSTBUG_TARGET: "2000"
+          EREMORA_POSTBUG_MIN_ROWS: "2000"
           EREMORA_POSTBUG_PAGE_DELAY_MS: "1600"
         run: node scripts/sync_morimens_s69_postbug.mjs
       - name: Precompute detailed rank, difficulty and enlightenment analytics
