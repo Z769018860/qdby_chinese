@@ -1,0 +1,11 @@
+{
+  "season":70,
+  "activityTid":83315,
+  "name":"第70期 新新融灾 · 深海戒指",
+  "date":"9.28-10.11",
+  "updatedAt":"2026-10-01 05:00",
+  "source":"official live Rank.QueryRank response",
+  "rankRange":[1,2000],
+  "recordCount":2000,
+  "note":"包含原始榜单字段及队伍详情索引，后续可继续扩展死扛触发次数、战斗回合数等统计字段"
+}
