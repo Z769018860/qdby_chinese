@@ -140,7 +140,12 @@ def main() -> int:
         manifest["current"] = current
 
     for entry in manifest.get("availableSeasons") or []:
-        if isinstance(entry, dict) and int(entry.get("seasonId") or -1) == args.season:
+        if (
+            isinstance(entry, dict)
+            and int(entry.get("seasonId") or -1) == args.season
+            and not entry.get("snapshotId")
+            and not entry.get("aggregatePath")
+        ):
             entry["recordCount"] = covered
 
     save_json(manifest_file, manifest)
