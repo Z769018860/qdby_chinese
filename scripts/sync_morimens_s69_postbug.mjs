@@ -11,6 +11,11 @@ const MIN_ROWS=Math.max(1,Math.min(TARGET,Number(process.env.EREMORA_POSTBUG_MIN
 const DELAY=Math.max(500,Number(process.env.EREMORA_POSTBUG_PAGE_DELAY_MS||1600));
 const UA='qdby-chinese-s69-postbug/1.0 (+https://github.com/Z769018860/qdby_chinese)';
 
+if(process.env.EREMORA_ALLOW_LEGACY_POSTBUG_SYNC!=='1'){
+  console.log('Season 69 post-bug live /api/rank sync is retired by default: the endpoint now represents the current season. Using the checked-in Top 2000 meta summary instead.');
+  process.exit(0);
+}
+
 async function readJson(file,fallback=null){try{return JSON.parse(await readFile(file,'utf8'))}catch{return fallback}}
 async function saveJson(file,data){await mkdir(path.dirname(file),{recursive:true});await writeFile(file,JSON.stringify(data,null,2)+'\n')}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
