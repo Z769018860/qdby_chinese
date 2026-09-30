@@ -1,0 +1,875 @@
+{
+  "schema": "eremora-dzone-meta-summary-v1",
+  "snapshotId": "69-postbug",
+  "seasonId": 69,
+  "labelZh": "第69期 · Bug后",
+  "labelEn": "Season 69 · Post-bug",
+  "period": "2026-09-14 – 2026-09-28",
+  "periodShort": "9.14–9.28",
+  "final": true,
+  "population": 2000,
+  "totalPlayers": 26478,
+  "source": {
+    "site": "Eremora",
+    "page": "https://eremora.com/meta/dzone",
+    "dumpRoot": "https://media.eremora.com/resdumps/dzone/69/",
+    "capturedAt": "2026-10-01",
+    "note": "Official rendered Season 69 final Top 2,000 meta summary. Total-player counts are exact; per-wave and borrowed rates preserve Eremora's displayed percentages."
+  },
+  "characters": [
+    {
+      "rank": 1,
+      "name": "Saya",
+      "players": 1531,
+      "ratePct": 76.55,
+      "waveRates": [
+        "17%",
+        "9%",
+        "3%",
+        "8%",
+        "39%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 2,
+      "name": "Mouchette",
+      "players": 1457,
+      "ratePct": 72.85,
+      "waveRates": [
+        "26%",
+        "7%",
+        "14%",
+        "6%",
+        "9%"
+      ],
+      "borrowedRate": "24%"
+    },
+    {
+      "rank": 3,
+      "name": "Lotan: Cetarchon",
+      "players": 1316,
+      "ratePct": 65.8,
+      "waveRates": [
+        "33%",
+        "12%",
+        "3%",
+        "5%",
+        "11%"
+      ],
+      "borrowedRate": "4%"
+    },
+    {
+      "rank": 4,
+      "name": "Murphy: Fauxborn",
+      "players": 1300,
+      "ratePct": 65,
+      "waveRates": [
+        "6%",
+        "10%",
+        "16%",
+        "25%",
+        "6%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 5,
+      "name": "Doll: Inferno",
+      "players": 1258,
+      "ratePct": 62.9,
+      "waveRates": [
+        "4%",
+        "5%",
+        "32%",
+        "13%",
+        "9%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 6,
+      "name": "Horla",
+      "players": 1240,
+      "ratePct": 62,
+      "waveRates": [
+        "15%",
+        "22%",
+        "5%",
+        "9%",
+        "12%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 7,
+      "name": "Miryam",
+      "players": 1213,
+      "ratePct": 60.65,
+      "waveRates": [
+        "5%",
+        "9%",
+        "16%",
+        "25%",
+        "5%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 8,
+      "name": "Arachne",
+      "players": 1179,
+      "ratePct": 58.95,
+      "waveRates": [
+        "11%",
+        "19%",
+        "7%",
+        "10%",
+        "12%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 9,
+      "name": "Tulu",
+      "players": 1177,
+      "ratePct": 58.85,
+      "waveRates": [
+        "4%",
+        "9%",
+        "15%",
+        "25%",
+        "6%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 10,
+      "name": "Thais",
+      "players": 1166,
+      "ratePct": 58.3,
+      "waveRates": [
+        "14%",
+        "13%",
+        "8%",
+        "12%",
+        "12%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 11,
+      "name": "Goliath",
+      "players": 1143,
+      "ratePct": 57.15,
+      "waveRates": [
+        "4%",
+        "8%",
+        "16%",
+        "24%",
+        "5%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 12,
+      "name": "Castor",
+      "players": 1021,
+      "ratePct": 51.05,
+      "waveRates": [
+        "9%",
+        "23%",
+        "2%",
+        "5%",
+        "12%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 13,
+      "name": "Murphy",
+      "players": 1011,
+      "ratePct": 50.55,
+      "waveRates": [
+        "6%",
+        "7%",
+        "4%",
+        "5%",
+        "29%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 14,
+      "name": "Aigis",
+      "players": 1004,
+      "ratePct": 50.2,
+      "waveRates": [
+        "12%",
+        "17%",
+        "6%",
+        "7%",
+        "8%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 15,
+      "name": "Clementine",
+      "players": 981,
+      "ratePct": 49.05,
+      "waveRates": [
+        "11%",
+        "19%",
+        "4%",
+        "6%",
+        "10%"
+      ],
+      "borrowedRate": "1%"
+    },
+    {
+      "rank": 16,
+      "name": "Ryker",
+      "players": 964,
+      "ratePct": 48.2,
+      "waveRates": [
+        "21%",
+        "13%",
+        "1%",
+        "5%",
+        "8%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 17,
+      "name": "Xu",
+      "players": 963,
+      "ratePct": 48.15,
+      "waveRates": [
+        "3%",
+        "4%",
+        "30%",
+        "5%",
+        "6%"
+      ],
+      "borrowedRate": "1%"
+    },
+    {
+      "rank": 18,
+      "name": "Pollux",
+      "players": 890,
+      "ratePct": 44.5,
+      "waveRates": [
+        "8%",
+        "21%",
+        "<1%",
+        "3%",
+        "10%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 19,
+      "name": "Vortice",
+      "players": 887,
+      "ratePct": 44.35,
+      "waveRates": [
+        "4%",
+        "4%",
+        "2%",
+        "3%",
+        "21%"
+      ],
+      "borrowedRate": "11%"
+    },
+    {
+      "rank": 20,
+      "name": "Tawil",
+      "players": 885,
+      "ratePct": 44.25,
+      "waveRates": [
+        "6%",
+        "5%",
+        "7%",
+        "20%",
+        "5%"
+      ],
+      "borrowedRate": "1%"
+    },
+    {
+      "rank": 21,
+      "name": "Ogier",
+      "players": 884,
+      "ratePct": 44.2,
+      "waveRates": [
+        "9%",
+        "6%",
+        "9%",
+        "17%",
+        "4%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 22,
+      "name": "24",
+      "players": 791,
+      "ratePct": 39.55,
+      "waveRates": [
+        "2%",
+        "2%",
+        "10%",
+        "21%",
+        "2%"
+      ],
+      "borrowedRate": "4%"
+    },
+    {
+      "rank": 23,
+      "name": "Helot",
+      "players": 788,
+      "ratePct": 39.4,
+      "waveRates": [
+        "9%",
+        "7%",
+        "9%",
+        "9%",
+        "6%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 24,
+      "name": "Faint",
+      "players": 778,
+      "ratePct": 38.9,
+      "waveRates": [
+        "5%",
+        "6%",
+        "18%",
+        "5%",
+        "5%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 25,
+      "name": "Hameln",
+      "players": 763,
+      "ratePct": 38.15,
+      "waveRates": [
+        "10%",
+        "8%",
+        "5%",
+        "8%",
+        "7%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 26,
+      "name": "Lily",
+      "players": 722,
+      "ratePct": 36.1,
+      "waveRates": [
+        "3%",
+        "3%",
+        "22%",
+        "5%",
+        "3%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 27,
+      "name": "Salvador",
+      "players": 704,
+      "ratePct": 35.2,
+      "waveRates": [
+        "4%",
+        "6%",
+        "4%",
+        "2%",
+        "20%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 28,
+      "name": "Ramona",
+      "players": 662,
+      "ratePct": 33.1,
+      "waveRates": [
+        "7%",
+        "5%",
+        "7%",
+        "9%",
+        "5%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 29,
+      "name": "Caraboo",
+      "players": 650,
+      "ratePct": 32.5,
+      "waveRates": [
+        "5%",
+        "6%",
+        "6%",
+        "3%",
+        "13%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 30,
+      "name": "Kathigu-Ra",
+      "players": 620,
+      "ratePct": 31,
+      "waveRates": [
+        "6%",
+        "14%",
+        "<1%",
+        "6%",
+        "3%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 31,
+      "name": "Nymphaea",
+      "players": 590,
+      "ratePct": 29.5,
+      "waveRates": [
+        "2%",
+        "2%",
+        "22%",
+        "2%",
+        "2%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 32,
+      "name": "Karen",
+      "players": 562,
+      "ratePct": 28.1,
+      "waveRates": [
+        "6%",
+        "6%",
+        "6%",
+        "4%",
+        "5%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 33,
+      "name": "Doll",
+      "players": 556,
+      "ratePct": 27.8,
+      "waveRates": [
+        "3%",
+        "2%",
+        "8%",
+        "13%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 34,
+      "name": "Lotan",
+      "players": 507,
+      "ratePct": 25.35,
+      "waveRates": [
+        "14%",
+        "2%",
+        "5%",
+        "3%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 35,
+      "name": "Celeste",
+      "players": 460,
+      "ratePct": 23,
+      "waveRates": [
+        "4%",
+        "5%",
+        "4%",
+        "3%",
+        "7%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 36,
+      "name": "Ogier: Oathbound",
+      "players": 450,
+      "ratePct": 22.5,
+      "waveRates": [
+        "6%",
+        "5%",
+        "3%",
+        "3%",
+        "5%"
+      ],
+      "borrowedRate": "2%"
+    },
+    {
+      "rank": 37,
+      "name": "Corposant",
+      "players": 426,
+      "ratePct": 21.3,
+      "waveRates": [
+        "6%",
+        "6%",
+        "2%",
+        "3%",
+        "5%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 38,
+      "name": "Helot: Catena",
+      "players": 419,
+      "ratePct": 20.95,
+      "waveRates": [
+        "3%",
+        "8%",
+        "2%",
+        "7%",
+        "1%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 39,
+      "name": "Casiah",
+      "players": 399,
+      "ratePct": 19.95,
+      "waveRates": [
+        "7%",
+        "6%",
+        "2%",
+        "2%",
+        "3%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 40,
+      "name": "Ramona: Timeworn",
+      "players": 397,
+      "ratePct": 19.85,
+      "waveRates": [
+        "3%",
+        "3%",
+        "3%",
+        "8%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 41,
+      "name": "Pontos",
+      "players": 390,
+      "ratePct": 19.5,
+      "waveRates": [
+        "5%",
+        "6%",
+        "2%",
+        "1%",
+        "4%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 42,
+      "name": "Alva",
+      "players": 363,
+      "ratePct": 18.15,
+      "waveRates": [
+        "5%",
+        "2%",
+        "7%",
+        "2%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 43,
+      "name": "Pickman",
+      "players": 360,
+      "ratePct": 18,
+      "waveRates": [
+        "8%",
+        "4%",
+        "2%",
+        "2%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 44,
+      "name": "Caecus",
+      "players": 353,
+      "ratePct": 17.65,
+      "waveRates": [
+        "3%",
+        "3%",
+        "6%",
+        "3%",
+        "3%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 45,
+      "name": "Nautila",
+      "players": 325,
+      "ratePct": 16.25,
+      "waveRates": [
+        "3%",
+        "2%",
+        "3%",
+        "6%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 46,
+      "name": "Winkle",
+      "players": 318,
+      "ratePct": 15.9,
+      "waveRates": [
+        "3%",
+        "5%",
+        "3%",
+        "2%",
+        "3%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 47,
+      "name": "Erica",
+      "players": 262,
+      "ratePct": 13.1,
+      "waveRates": [
+        "3%",
+        "4%",
+        "2%",
+        "1%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 48,
+      "name": "Doresain",
+      "players": 214,
+      "ratePct": 10.7,
+      "waveRates": [
+        "6%",
+        "2%",
+        "<1%",
+        "<1%",
+        "1%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 49,
+      "name": "Sanga",
+      "players": 212,
+      "ratePct": 10.6,
+      "waveRates": [
+        "2%",
+        "1%",
+        "1%",
+        "2%",
+        "4%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 50,
+      "name": "Aurita",
+      "players": 191,
+      "ratePct": 9.55,
+      "waveRates": [
+        "4%",
+        "3%",
+        "1%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 51,
+      "name": "Leigh",
+      "players": 191,
+      "ratePct": 9.55,
+      "waveRates": [
+        "2%",
+        "2%",
+        "2%",
+        "<1%",
+        "2%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 52,
+      "name": "Tinct",
+      "players": 187,
+      "ratePct": 9.35,
+      "waveRates": [
+        "<1%",
+        "5%",
+        "<1%",
+        "2%",
+        "1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 53,
+      "name": "Agrippa",
+      "players": 174,
+      "ratePct": 8.7,
+      "waveRates": [
+        "<1%",
+        "3%",
+        "3%",
+        "<1%",
+        "1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 54,
+      "name": "Wanda",
+      "players": 155,
+      "ratePct": 7.75,
+      "waveRates": [
+        "<1%",
+        "<1%",
+        "6%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "<1%"
+    },
+    {
+      "rank": 55,
+      "name": "Daffodil",
+      "players": 131,
+      "ratePct": 6.55,
+      "waveRates": [
+        "2%",
+        "2%",
+        "2%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 56,
+      "name": "Faros",
+      "players": 130,
+      "ratePct": 6.5,
+      "waveRates": [
+        "1%",
+        "1%",
+        "2%",
+        "2%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 57,
+      "name": "Pandia",
+      "players": 84,
+      "ratePct": 4.2,
+      "waveRates": [
+        "1%",
+        "<1%",
+        "1%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 58,
+      "name": "Jenkin",
+      "players": 49,
+      "ratePct": 2.45,
+      "waveRates": [
+        "<1%",
+        "<1%",
+        "<1%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 59,
+      "name": "Liz",
+      "players": 31,
+      "ratePct": 1.55,
+      "waveRates": [
+        "<1%",
+        "<1%",
+        "<1%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 60,
+      "name": "Sorel",
+      "players": 30,
+      "ratePct": 1.5,
+      "waveRates": [
+        "<1%",
+        "<1%",
+        "<1%",
+        "<1%",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    },
+    {
+      "rank": 61,
+      "name": "Uvhash",
+      "players": 22,
+      "ratePct": 1.1,
+      "waveRates": [
+        "<1%",
+        "<1%",
+        "<1%",
+        "–",
+        "<1%"
+      ],
+      "borrowedRate": "–"
+    }
+  ]
+}
