@@ -6,7 +6,7 @@
   const pct=v=>Number.isFinite(Number(v))?`${Number(v).toFixed(1)}%`:'—';
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
-  const rankCaps=[50,200,500,1000];
+  const rankCaps=[50,200,500,1000,2000];
   const difficultyOrder=['threatC','threatB','threatA','threatS','threatSS','threatSSS','threatDown'];
   const difficultyZh={all:'全部难度',threatC:'危险等级 C',threatB:'危险等级 B',threatA:'危险等级 A',threatS:'危险等级 S',threatSS:'危险等级 SS',threatSSS:'危险等级 SSS',threatDown:'危险等级 ▼',unknown:'未识别'};
   const difficultyEn={all:'All Difficulties',threatC:'Threat Level C',threatB:'Threat Level B',threatA:'Threat Level A',threatS:'Threat Level S',threatSS:'Threat Level SS',threatSSS:'Threat Level SSS',threatDown:'Threat Level ▼',unknown:'Unknown'};
@@ -30,7 +30,7 @@
   const roleZh={Warden:'防御型',Chorus:'辅助型',Assault:'伤害型'};
   const realmIconSrc=name=>'assets/morimens/realms-svg/'+(realmIcons[name]||'Icon_Career2_Hundun.webp').replace(/\.webp$/i,'.svg');
   function localAsset(src,kind){const raw=String(src||'');if(!raw)return '';const file=raw.split(/[\\/]/).pop().split('?')[0];if(kind==='wheel'&&/^Weapon_(Full|Mini)_/.test(file))return 'assets/morimens/wheels/'+(file.startsWith('Weapon_Mini_')?'Mini/':'')+file;if(kind==='creation'&&/^Icon_Creation_/.test(file))return 'assets/morimens/relics/'+file;if(kind==='covenant'&&/^Icon_Trinket_/.test(file))return 'assets/morimens/covenants/Icon/'+file;if(kind==='portrait'&&raw.startsWith('assets/'))return raw;return raw;}
-  let manifest=null,season=null,stats=null,legacyStructured=null,activeSeasonEntry=null,awakenerMap=new Map(),rankByUid=new Map(),rankScoreByUid=new Map(),rankOverrideByUid=new Map(),rankOverrideScope=0,filtersReady=false,searchPerformed=false;
+  let manifest=null,season=null,stats=null,legacyStructured=null,aggregateMeta=null,activeSeasonEntry=null,awakenerMap=new Map(),rankByUid=new Map(),rankScoreByUid=new Map(),rankOverrideByUid=new Map(),rankOverrideScope=0,filtersReady=false,searchPerformed=false;
   let flatTeamsCache=null,analysisCache=null,seasonAssistHeatMax=0,seasonLoadToken=0,renderFrame=0;
   const currentSeasonRosterSupplementIds=['awakener-0061'];
   function currentSeasonRosterSupplements(){
@@ -486,6 +486,34 @@
   function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(['E0','E1','E2'].includes(ms))return 'e0_2';if(ms==='E3')return 'e3_plus3';if(ms==='OE'||ms==='OVERLIMIT')return 'plus4_11';if(ms==='AA'||ms==='LAW12')return 'plus12';return 'unknown'}
   function wheelStackClass(w){const level=Number(w?.level);if(!Number.isFinite(level)||level<=2)return 'stack0_2';if(level>=15)return 'stack12';return 'stack3_11'}
   function maxRankAvailable(){const rs=rankByUid.size?[...rankByUid.values()]:(season?.records||[]).map(rankOf).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
+  function aggregateActive(){return Boolean(activeSeasonEntry?.aggregatePath&&aggregateMeta?.characters?.length)}
+  function aggregateRateValue(value){const text=String(value??'').trim();if(!text||text==='–'||text==='—')return 0;if(/^<\s*1%?$/.test(text))return .5;const n=Number(text.replace('%',''));return Number.isFinite(n)?n:0}
+  function setAggregateControls(active){
+    const rank=$('dtideRankScope');
+    if(rank){for(const option of rank.options)option.disabled=active&&String(option.value)!=='2000';if(active&&[...rank.options].some(x=>x.value==='2000'))rank.value='2000'}
+    for(const id of ['dtideDifficulty','dtideTotalScore','dtideClearType','dtideRateMode']){const el=$(id);if(!el)continue;el.disabled=active;if(active){const preferred=id==='dtideRateMode'?'team':'all';if([...el.options||[]].some(x=>x.value===preferred))el.value=preferred}}
+    for(const id of ['dtideSearch','dtideReset']){const el=$(id);if(el)el.disabled=active}
+  }
+  function renderAggregateMatrix(){
+    const host=$('dtideMatrix');if(!host||!aggregateActive())return false;
+    const entity=$('dtideEntityType')?.value||'character';
+    if(entity!=='character'){
+      host.innerHTML='<div class="dtideNotice">'+ui('第69期 Bug后当前接入的是 Eremora 官方 Top 2000 角色汇总；命轮、造物和逐 UID 配装没有混用旧 Bug前数据。','Season 69 Post-bug currently uses Eremora’s official Top 2,000 Awakener summary. Wheels, Creations, and per-UID builds are not backfilled with the old pre-bug snapshot.')+'</div>';
+      return true;
+    }
+    const rows=[...(aggregateMeta.characters||[])],spec=$('dtideSort')?.value||'total-desc',waveMatch=spec.match(/^wave(\d+)-(asc|desc)$/),asc=spec.endsWith('-asc');
+    const value=row=>waveMatch?aggregateRateValue(row.waveRates?.[Number(waveMatch[1])-1]):Number(row.players||0);
+    rows.sort((a,b)=>{const d=value(b)-value(a);return (asc?-d:d)||Number(a.rank||0)-Number(b.rank||0)});
+    const totalMax=Math.max(0,...rows.map(x=>Number(x.ratePct)||0)),waveMax=[0,1,2,3,4].map(i=>Math.max(0,...rows.map(x=>aggregateRateValue(x.waveRates?.[i])))),assistMax=Math.max(0,...rows.map(x=>aggregateRateValue(x.borrowedRate)));
+    const cell=(label,max)=>{const n=aggregateRateValue(label);return '<td class="dtideRate dtideHeat" style="'+dtideHeatStyle(n,max)+'">'+esc(label||'—')+'</td>'};
+    host.innerHTML='<table class="dtideTable"><thead><tr><th>'+ui('角色','Awakener')+'</th><th>'+ui('总出场率','Overall Usage')+'</th>'+[1,2,3,4,5].map(w=>'<th>Wave '+w+'</th>').join('')+'<th>'+ui('助战率','Borrowed')+'</th></tr></thead><tbody>'+rows.map(row=>{const info=characterInfo(row.name,{name:row.name}),rate=Number(row.ratePct||0);return '<tr><td><div class="dtideChar">'+(info.image?'<img src="'+esc(info.image)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<span>'+esc(info.name||row.name)+'</span></div></td><td class="dtideHeat" style="'+dtideHeatStyle(rate,totalMax)+'"><strong class="dtideRate">'+rate.toFixed(1)+'%</strong><small style="display:block;color:#7f8da1">'+Number(row.players||0).toLocaleString()+' / '+Number(aggregateMeta.population||2000).toLocaleString()+'</small></td>'+[0,1,2,3,4].map(i=>cell(row.waveRates?.[i],waveMax[i])).join('')+cell(row.borrowedRate,assistMax)+'</tr>'}).join('')+'</tbody></table>';
+    return true;
+  }
+  function renderAggregateUsage(){
+    const host=$('dtideUsage');if(!host||!aggregateActive())return false;
+    host.innerHTML=(aggregateMeta.characters||[]).slice(0,18).map(row=>{const info=characterInfo(row.name,{name:row.name});return '<div class="dtideUsage"><div class="dtideChar">'+(info.image?'<img src="'+esc(info.image)+'" alt="">':'')+'<span><b>'+esc(info.name||row.name)+'</b><small>'+Number(row.players||0).toLocaleString()+' / '+Number(aggregateMeta.population||2000).toLocaleString()+' '+ui('名玩家','players')+'</small></span></div><strong>'+Number(row.ratePct||0).toFixed(1)+'%</strong></div>'}).join('');
+    return true;
+  }
   function getSelectedValues(id){return Array.from($(id)?.querySelectorAll('.dtideCharacterChoice.isSelected')||[]).map(x=>x.dataset.characterKey).filter(Boolean)}
   function flattenTeams(){
     if(flatTeamsCache)return flatTeamsCache;
@@ -548,6 +576,12 @@
 
   function renderCoverage(){
     const cap=selectedRankCap(),max=maxRankAvailable(),box=$('dtideCoverageWarn');if(!box)return;
+    if(aggregateActive()){
+      box.innerHTML=zh()?'<div class="dtideNotice"><b>官方 Top 2000 最终汇总：</b>本期角色总使用人数为精确计数；逐 Wave 与助战率保留 Eremora 页面公开的显示百分比。此快照不把 Bug前 的逐 UID、命轮、造物或配装详情混入 Bug后 统计。</div>':'<div class="dtideNotice"><b>Official final Top 2,000 summary:</b> total Awakener player counts are exact; per-wave and borrowed rates preserve Eremora’s published display percentages. Pre-bug per-UID, Wheel, Creation, and build details are not mixed into the post-bug snapshot.</div>';
+      for(const opt of $('dtideRankScope')?.options||[]){const n=Number(opt.value);opt.disabled=n!==2000;opt.textContent=n===2000?'Top 2000 · '+ui('官方最终','Official Final'):(opt.value==='all'?ui('全部范围 · 本快照固定 Top 2000','All Ranks · fixed to Top 2,000'):'Top '+n+' · '+ui('汇总未分层','not split in summary'))}
+      return;
+    }
+    for(const opt of $('dtideRankScope')?.options||[])opt.disabled=false;
     const pending=activeSeasonEntry?.dataPending
       ?(zh()?'<div class="dtideNotice"><b>数据待填充：</b>第69期 Bug后正式数据尚未录入，当前暂沿用原第69期 Bug前数据作为占位，不代表 Bug后正式统计结果。</div>':'<div class="dtideNotice"><b>Data pending:</b> official post-bug Season 69 data has not been populated yet. The original pre-bug Season 69 dataset is temporarily reused as a placeholder and does not represent final post-bug statistics.</div>')
       :'';
@@ -575,6 +609,13 @@
     return {characters:aliases.size,mergedAliases:merged};
   }
   function renderSummary(){
+    if(aggregateActive()){
+      const a=aggregateMeta,pop=Number(a.population||2000),total=Number(a.totalPlayers||0),name=zh()?(activeSeasonEntry?.labelZh||'第69期 · Bug后'):(activeSeasonEntry?.labelEn||'Season 69 · Post-bug');
+      $('dtideSummary').innerHTML=[[ui('榜单样本','Leaderboard Sample'),'Top '+pop.toLocaleString()],[ui('赛季总人数','Season Population'),total?total.toLocaleString():'—'],[ui('统计角色','Awakeners Counted'),a.characters?.length||0],[ui('状态','Status'),ui('最终榜单','Final')]].map(([x,y])=>'<div class="dtideStat"><small>'+x+'</small><strong>'+esc(y)+'</strong></div>').join('');
+      $('dtideStatus').textContent=name+' · Top '+pop.toLocaleString()+' · '+ui('官方最终汇总','Official Final Summary');
+      $('dtideFilterCoverage').textContent=ui('角色 ✓ · 逐 Wave ✓ · 助战 ✓ · 逐 UID / 命轮 / 造物 —','Awakeners ✓ · Waves ✓ · Borrowed ✓ · per-UID / Wheels / Creations —');
+      renderCoverage();return;
+    }
     const g=currentGroup(),coverage=manifest.fieldCoverage||{},cap=selectedRankCap(),max=maxRankAvailable();
     const difficulty=$('dtideDifficulty').value,diff=zh()?(difficultyZh[difficulty]||difficultyZh.all):(difficultyEn[difficulty]||difficultyEn.all);
     $('dtideSummary').innerHTML=[
@@ -735,6 +776,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     return true;
   }
   function renderMatrix(){
+    if(aggregateActive()&&renderAggregateMatrix())return;
     if((season?.legacy||season?.legacyRates||legacyStructured)&&renderLegacyMatrix())return;
     const cap=selectedRankCap(),difficulty=$('dtideDifficulty')?.value||'all',ct=$('dtideClearType')?.value||'all',mode=$('dtideRateMode')?.value||'team',entity=$('dtideEntityType')?.value||'character';
     const analysis=currentAnalysis(),all=analysis.rows,waves=analysis.waves,groups=analysis.groups,host=$('dtideMatrix');if(!host)return;
@@ -780,6 +822,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     host.onclick=e=>{const btn=e.target.closest('[data-sort-key]');if(!btn)return;const key=String(btn.dataset.sortKey);if(window.__dtideMatrixSort===key)window.__dtideMatrixAsc=!window.__dtideMatrixAsc;else{window.__dtideMatrixSort=key;window.__dtideMatrixAsc=false}renderMatrix()};
   }
   function renderUsage(){
+    if(aggregateActive()&&renderAggregateUsage())return;
     const host=$('dtideUsage');if(!host)return;
     const g=currentGroup(),mode=$('dtideRateMode')?.value||'team';
     host.innerHTML=g.characters.slice(0,18).map((c,i)=>{
@@ -896,7 +939,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       <a class="dtideSeasonResourceLink" href="${overviewUrl}" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a>
     `;
   }
-  function renderAll(){renderSeasonDate();renderSeasonResources();if(window.MorimensDtideRenderer==='legacy')return;renderSummary();renderMatrix();renderUsage();renderComparisons();if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt();$('dtideMatrix')?.removeAttribute('aria-busy')}
+  function renderAll(){renderSeasonDate();renderSeasonResources();if(window.MorimensDtideRenderer==='legacy')return;renderSummary();renderMatrix();renderUsage();renderComparisons();if(aggregateActive()){if($('dtideResults'))$('dtideResults').innerHTML='<div class="dtideNotice">'+ui('该快照为官方 Top 2000 汇总，不提供逐 UID 配队搜索；不会回退使用 Bug前 记录。','This snapshot is the official Top 2,000 summary and does not expose per-UID team search; pre-bug records are not used as a fallback.')+'</div>';if($('dtidePager'))$('dtidePager').innerHTML=''}else if(filtersReady&&searchPerformed)renderResults();else if(filtersReady)renderSearchPrompt();$('dtideMatrix')?.removeAttribute('aria-busy')}
   function scheduleRender(){if(window.MorimensDtideRenderer==='legacy')return;cancelAnimationFrame(renderFrame);renderFrame=requestAnimationFrame(()=>{renderFrame=0;if(season&&filtersReady)renderAll()})}
   function relocalizeControls(){
     for(const option of $('dtideEquipCharacter')?.options||[]){if(!option.value)continue;option.textContent=characterInfo(option.value).name}
@@ -1079,6 +1122,22 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       :entry;
     const loader=window.MorimensDtideDataLoader;
     if(!loader?.loadDataset)throw new Error('D-Zone shared data loader unavailable');
+    if(entry.aggregatePath){
+      aggregateMeta=await loader.loadJson(entry.aggregatePath,{revision:entry.revision||entry.dataUpdatedAt||'69-postbug-top2000',fresh:true});
+      if(loadToken!==seasonLoadToken)return;
+      if(!aggregateMeta?.characters?.length)throw new Error('Season 69 post-bug aggregate summary is empty');
+      rankByUid=new Map();rankScoreByUid=new Map();rankOverrideByUid=new Map();rankOverrideScope=0;
+      season={seasonId:sourceSeasonId,snapshotId:entry.snapshotId,recordCount:Number(aggregateMeta.population||2000),records:[],aggregateOnly:true,dataUpdatedAt:entry.dataUpdatedAt||aggregateMeta?.source?.capturedAt||null};
+      stats={seasonId:sourceSeasonId,recordCount:season.recordCount,maxRankAvailable:Number(aggregateMeta.population||2000),aggregateOnly:true};legacyStructured=null;flatTeamsCache=[];analysisCache=null;seasonAssistHeatMax=0;
+      setAggregateControls(true);
+      if($('dtideSearchWave'))$('dtideSearchWave').innerHTML='<option value="all">'+ui('官方 Top 2000 汇总','Official Top 2,000 Summary')+'</option>';
+      if($('dtideCharacters'))$('dtideCharacters').innerHTML='';if($('dtideExcludeCharacters'))$('dtideExcludeCharacters').innerHTML='';
+      if($('dtideTotalScore'))$('dtideTotalScore').innerHTML='<option value="all">'+ui('汇总未公开分数分层','Score split not published in summary')+'</option>';
+      filtersReady=true;renderAll();if(matrix)matrix.removeAttribute('aria-busy');
+      const seasonOption=[...($('dtideSeason')?.options||[])].find(option=>String(option.value)===String(id));if(seasonOption){const seasonName=zh()?(entry.labelZh||'第69期 · Bug后'):(entry.labelEn||'Season 69 · Post-bug');seasonOption.textContent=seasonName+' · Top '+Number(aggregateMeta.population||2000).toLocaleString()+' · '+ui('官方最终','Official Final')}
+      window.dispatchEvent(new CustomEvent('morimens:dtide-season-loaded',{detail:communityDzoneContext()}));return;
+    }
+    aggregateMeta=null;setAggregateControls(false);
     const revision=current.revision||manifest.usageIndex?.revision||manifest.usageIndex?.syncedAt||manifest.analytics?.generatedAt||manifest.source?.syncedAt||'1';
     const archivedOverlay=entry.overlayPath?{
       seasonId:sourceSeasonId,
