@@ -48,31 +48,32 @@
     },
     {
       "seasonId": 69,
-      "period": "2026-09-14 – 2026-09-28",
-      "recordCount": 1035,
-      "leaderboardEntryCount": 1000,
-      "complete": false,
-      "coverageMode": "placeholder-prebug-data",
-      "path": "data/morimens/eremora/usage/69-local-gzip/index.json",
-      "statsPath": "data/morimens/eremora/stats/69.json",
-      "dataUpdatedAt": "2026-09-22T01:00:00+08:00",
-      "snapshotId": "69-postbug",
       "sourceSeasonId": 69,
-      "labelZh": "第69期 · Bug后（数据待填充）",
-      "labelEn": "Season 69 · Post-bug (data pending)",
+      "snapshotId": "69-postbug",
+      "period": "2026-09-14 – 2026-09-28",
+      "periodShort": "9.14–9.28",
+      "labelZh": "第69期 · Bug后",
+      "labelEn": "Season 69 · Post-bug",
+      "recordCount": 2000,
+      "leaderboardEntryCount": 2000,
+      "complete": true,
+      "coverageMode": "eremora-meta-top2000-final",
+      "aggregateOnly": true,
+      "aggregatePath": "data/morimens/eremora/meta-summary/69-postbug.json",
+      "aggregateFields": [
+        "character-total-players",
+        "character-total-rate",
+        "wave-1-5-rate",
+        "borrowed-rate"
+      ],
+      "detailDataAvailable": false,
+      "dataUpdatedAt": "2026-10-01T00:00:00Z",
+      "sourceUrl": "https://eremora.com/meta/dzone",
+      "sourceDumpRoot": "https://media.eremora.com/resdumps/dzone/69/",
       "communityVariant": "postbug",
       "communityTargetKey": "69-postbug",
-      "rankPath": "data/morimens/eremora/rank-index/69.json",
-      "dataPending": true,
-      "placeholderSource": "69-prebug",
-      "placeholderNoteZh": "Bug后正式数据待填充；当前暂沿用原第69期（Bug前）数据作为占位。",
-      "placeholderNoteEn": "Post-bug data is pending; the original Season 69 pre-bug dataset is temporarily reused as a placeholder.",
-      "baseRecordCount": 1007,
-      "overlayPath": "data/morimens/eremora/updates/69-top500-20260922/index.json",
-      "overlayRankPath": "data/morimens/eremora/updates/69-top500-20260922/ranks.json",
-      "overlayScope": 500,
-      "overlayUpdatedAt": "2026-09-22T01:00:00+08:00",
-      "overlayRevision": "s69-top500-20260922-0100"
+      "noteZh": "Eremora 第69期最终 Top 2000 官方汇总。角色总使用人数为精确计数；逐 Wave 与助战率按 Eremora 页面公开显示值保存。未混入 Bug前 逐 UID/命轮/造物数据。",
+      "noteEn": "Eremora Season 69 final Top 2,000 official summary. Awakener player totals are exact; per-wave and borrowed rates preserve Eremora's published display values. Pre-bug per-UID, Wheel, and Creation data are not mixed into this snapshot."
     },
     {
       "seasonId": 68,
@@ -182,7 +183,8 @@
     "本次 CSV 不含新的配队详情；继续保留基础 1007 条与 9.21 已解析 432 条增量按 UID 合并，共 1035 条有效记录，不因排名刷新增删旧有效详情。",
     "启灵分组：E0/E1/E2/E3 统一归为“最高三启”，OE 归为“最高超限”，AA 归为“最高+12法则”。",
     "第70期 新新融灾于 2026-09-29 01:00 更新：本地文件夹 70 共 500 份玩家快照，解析出 457 条可用公开配队详情；新制难度筛选按危险等级 C / B / A / S / SS / SSS / ▼ 展示。",
-    "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
+    "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。",
+    "第69期 Bug后使用 Eremora 最终 Top 2000 官方汇总；不再复用 Bug前 1035 条占位数据。"
   ],
   "analytics": {
     "generatedAt": "2026-09-28T21:14:02.612Z",
@@ -190,7 +192,8 @@
       50,
       200,
       500,
-      1000
+      1000,
+      2000
     ],
     "difficulties": [
       {
