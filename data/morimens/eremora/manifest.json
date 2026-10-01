@@ -67,7 +67,7 @@
       "battleDetailPath": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
       "battleArchivePath": "data/morimens/dzone/season69-postbug/meta.json",
       "dataUpdatedAt": "2026-10-01T10:19:00+08:00",
-      "revision": "5df83fb26e6d81c494ec1b99a08007c43e77c0ab2176a45a61cb5d050be2531b",
+      "revision": "6410eb1bd1240c152e7b1a929951331926a62f8251d0f3062176ff7966944a14",
       "communityVariant": "postbug",
       "communityTargetKey": "69-postbug",
       "noteZh": "第69期 Bug后终榜：官方 Top 2000 排名、分数与逐 UID 队伍详情完整（2000 名）。Bug前数据不会混入。",
@@ -328,11 +328,11 @@
       "complete": true
     },
     "syncedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "922dad85e82c2768d41af1739c4212293ce278592d167b3a5456942436c8b51b",
+    "revision": "779bdb5950ed469e588ed62cd1500a839041d757224af9e9852da8e3b638109b",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 4,
+    "chunks": 5,
     "chunkSize": 600000,
-    "chunkBytes": 2332157
+    "chunkBytes": 2781211
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -372,7 +372,7 @@
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
     "updatedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "922dad85e82c2768d41af1739c4212293ce278592d167b3a5456942436c8b51b",
+    "revision": "779bdb5950ed469e588ed62cd1500a839041d757224af9e9852da8e3b638109b",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json",
     "note": "Updated 2026-10-02 03:14: rank snapshot 02:50 + the complete teams_latest.jsonl of that capture (all 2000 players have team details)."
@@ -388,7 +388,7 @@
     "battleRows": 18368,
     "maxRankWithDetail": 2000,
     "updatedAt": "2026-10-01T10:19:00+08:00",
-    "revision": "5df83fb26e6d81c494ec1b99a08007c43e77c0ab2176a45a61cb5d050be2531b",
+    "revision": "6410eb1bd1240c152e7b1a929951331926a62f8251d0f3062176ff7966944a14",
     "battleDetail": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
     "note": "Complete teams_latest.jsonl (all 2000 players have team details)."
   }

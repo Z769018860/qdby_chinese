@@ -60,6 +60,35 @@ def write_gz(path: Path, data: bytes):
         fh.write(gzip.compress(data, compresslevel=9, mtime=0))
 
 
+ROMAN = ["I", "II", "III", "IV", "V", "VI"]
+# attrId -> (English name, is percentage); main stat has index 1, rolled stats index >= 2
+ATTR = {18159: ("Crit. Rate", True), 18151: ("Death Resistance", True), 18105: ("Crit. DMG", True),
+        18142: ("DMG Amplification", True), 18139: ("Keyflare Regen Level", False), 18155: ("Sigil Yield", True),
+        18126: ("Realm Mastery", False), 22207: ("Aliemus Regen Level", False)}
+
+
+def build_trinkets(awaker, items, names):
+    """Covenant pieces of a borrowed (assist) awakener, in the structure the Assist List reads.
+    rollQuality = (valIndex + 1) / 2 for rolled stats, null for the fixed main stat (verified against the old Eremora import)."""
+    out = []
+    for slot, uid in enumerate(awaker.get("trinkets") or []):
+        it = items.get(str(uid))
+        if not it:
+            continue
+        suit = it.get("suitId") or None
+        name = (f"{names['covenant'].get(str(suit), '#' + str(suit))} {ROMAN[slot] if slot < 6 else slot + 1}" if suit
+                else names.get("trinket", {}).get(str(it.get("tid")), f"#{it.get('tid')}"))
+        attrs = []
+        for at in sorted(it.get("attrs") or [], key=lambda x: x.get("index", 0)):
+            spec = ATTR.get(at["attrId"], (f"#{at['attrId']}", False))
+            attrs.append({"id": at["attrId"], "name": spec[0], "value": at["val"], "percentage": spec[1],
+                          "rollQuality": None if at.get("index") == 1 else (int(at.get("valIndex", 0)) + 1) // 2})
+        out.append({"id": it.get("tid"), "name": name, "image": None, "rarity": "SSR", "slot": slot,
+                    "level": it.get("level"), "enhanceLevel": it.get("enhanceLevel"), "breakLevel": it.get("breakLevel"),
+                    "attrs": attrs, "suitId": suit, "bound": True})
+    return out
+
+
 def weapon_slots(awaker):
     slots = awaker.get("weaponSlots") or []
     if isinstance(slots, dict):  # some rows key the slots by index
@@ -104,6 +133,7 @@ def convert_team(side, stage_name, names, kind):
             "tid": a["tid"],
             "breakLevel": a.get("breakLevel"),
             "levelLimitIncreaseIdx": a.get("levelLimitIncreaseIdx"),
+            **({"trinkets": build_trinkets(a, items, names)} if assist else {}),
             "damage": stat(rsd.get("AwakerDoDamage"), str(a["tid"])) or 0,
             "block": stat(rsd.get("AwakerDoBlock"), str(a["tid"])) or 0,
             "heal": stat(rsd.get("AwakerDoHeal"), str(a["tid"])) or 0,

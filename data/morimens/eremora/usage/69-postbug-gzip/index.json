@@ -4,15 +4,16 @@
   "snapshotId": "69-postbug",
   "recordCount": 2000,
   "source": "season_83329 Top2000 (post-bug final)",
-  "revision": "5df83fb26e6d81c494ec1b99a08007c43e77c0ab2176a45a61cb5d050be2531b",
+  "revision": "6410eb1bd1240c152e7b1a929951331926a62f8251d0f3062176ff7966944a14",
   "generatedAt": "2026-10-01T10:19:00+08:00",
   "chunks": [
     "data/morimens/eremora/usage/69-postbug-gzip/chunk-000.b64",
     "data/morimens/eremora/usage/69-postbug-gzip/chunk-001.b64",
     "data/morimens/eremora/usage/69-postbug-gzip/chunk-002.b64",
     "data/morimens/eremora/usage/69-postbug-gzip/chunk-003.b64",
-    "data/morimens/eremora/usage/69-postbug-gzip/chunk-004.b64"
+    "data/morimens/eremora/usage/69-postbug-gzip/chunk-004.b64",
+    "data/morimens/eremora/usage/69-postbug-gzip/chunk-005.b64"
   ],
   "chunkSize": 600000,
-  "compressedBytes": 2705670
+  "compressedBytes": 3182435
 }
