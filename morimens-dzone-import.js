@@ -952,7 +952,19 @@
     mount();refreshUi();syncCommunity(false);
   }
   window.addEventListener('morimens:dtide-season-loaded',onSeasonLoaded);
-  window.addEventListener('morimens-language-change',()=>{mount();refreshUi()});
+  window.addEventListener('morimens-language-change',()=>{
+    // the panel is built from ui() strings once, so rebuild it and keep what the user already typed
+    const old=$('dtideCommunityImport');
+    if(old){
+      const keep={season:$('dtideCommunitySeason')?.value,uid:$('dtideCommunityUid')?.value,nick:$('dtideCommunityNick')?.value,paste:$('dtideCommunityPaste')?.value,open:old.open};
+      old.remove();mounted=false;mount();
+      const set=(id,v)=>{const el=$(id);if(el&&v)el.value=v};
+      set('dtideCommunitySeason',keep.season);set('dtideCommunityUid',keep.uid);set('dtideCommunityNick',keep.nick);set('dtideCommunityPaste',keep.paste);
+      const box=$('dtideCommunityImport');if(box&&keep.open)box.open=true;
+      updateUrlPreview();renderHistory();
+    }else mount();
+    refreshUi();
+  });
   window.MorimensDzoneImport={mount,refresh:()=>syncCommunity(true),parseDzonePayload,listSubmissionRecords,latestForSeason:(seasonId,communityVariant)=>latestPerUid(submissionHistory,seasonId,communityVariant)};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{mount();setTimeout(onSeasonLoaded,0)});else{mount();setTimeout(onSeasonLoaded,0)}
 })();
