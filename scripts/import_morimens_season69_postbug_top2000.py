@@ -345,7 +345,8 @@ def main():
         "sourceRetrievedAt": ranking["retrievedAt"], "rankRange": ranking["rankRange"],
         "recordCount": len(rows), "playersWithTeamDetail": len(records), "teamRows": lines, "skippedTailLines": skipped,
         "maxRankWithDetail": max((rec["rank"] for rec in records), default=0),
-        "note": "The uploaded archive was truncated: team detail exists for ranks 1-%d only; ranks above are rank-only." % max((rec["rank"] for rec in records), default=0),
+        "note": ("Team details cover all ranked players." if len(records) == len(rows) else
+                 "Team detail exists for %d of %d ranked players; the others are rank-only." % (len(records), len(rows))),
         "stageGroupIds": ranking["stageGroupIds"],
         "files": {
             "ranking": "ranking.json.gz",

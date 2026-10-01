@@ -12,11 +12,11 @@
     2000
   ],
   "recordCount": 2000,
-  "playersWithTeamDetail": 1559,
-  "teamRows": 7694,
-  "skippedTailLines": 1,
-  "maxRankWithDetail": 1559,
-  "note": "The uploaded archive was truncated: team detail exists for ranks 1-1559 only; ranks above are rank-only.",
+  "playersWithTeamDetail": 2000,
+  "teamRows": 9846,
+  "skippedTailLines": 0,
+  "maxRankWithDetail": 2000,
+  "note": "Team details cover all ranked players.",
   "stageGroupIds": [
     83394,
     83395,
@@ -54,7 +54,15 @@
       },
       {
         "file": "raw-teams/teams-006.jsonl.gz",
-        "lines": 494
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-007.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-008.jsonl.gz",
+        "lines": 246
       }
     ],
     "uids": "uids.csv",

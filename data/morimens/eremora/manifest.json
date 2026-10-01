@@ -57,9 +57,9 @@
       "periodShort": "9.14–9.28",
       "labelZh": "第69期 · Bug后",
       "labelEn": "Season 69 · Post-bug",
-      "recordCount": 1559,
+      "recordCount": 2000,
       "leaderboardEntryCount": 2000,
-      "complete": false,
+      "complete": true,
       "coverageMode": "official-rank-top2000-final",
       "path": "data/morimens/eremora/usage/69-postbug-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/69-postbug.json",
@@ -67,11 +67,11 @@
       "battleDetailPath": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
       "battleArchivePath": "data/morimens/dzone/season69-postbug/meta.json",
       "dataUpdatedAt": "2026-10-01T10:19:00+08:00",
-      "revision": "fe8e3ebdccbc485fce28d6dff60890d6b1c400ba7ff494e5d66c3fb9ac437049",
+      "revision": "5df83fb26e6d81c494ec1b99a08007c43e77c0ab2176a45a61cb5d050be2531b",
       "communityVariant": "postbug",
       "communityTargetKey": "69-postbug",
-      "noteZh": "第69期 Bug后终榜：官方 Top 2000 排名与分数完整；逐 UID 配队详情保留了前 1559 名（上传的压缩包被截断）。Bug前数据不会混入。",
-      "noteEn": "Season 69 post-bug final board: the official Top 2,000 ranks and scores are complete; per-UID team details cover ranks 1–1559 (the uploaded archive was truncated). Pre-bug data is not mixed in."
+      "noteZh": "第69期 Bug后终榜：官方 Top 2000 排名、分数与逐 UID 队伍详情完整（2000 名）。Bug前数据不会混入。",
+      "noteEn": "Season 69 post-bug final board: official Top 2,000 ranks, scores and per-UID team details are complete (2,000 players). Pre-bug data is not mixed in."
     },
     {
       "seasonId": 68,
@@ -383,13 +383,13 @@
     "activityTid": 83329,
     "archive": "season_83329.zip",
     "rankedPlayers": 2000,
-    "playersWithTeamDetail": 1559,
-    "teamRows": 7694,
-    "battleRows": 14298,
-    "maxRankWithDetail": 1559,
+    "playersWithTeamDetail": 2000,
+    "teamRows": 9846,
+    "battleRows": 18368,
+    "maxRankWithDetail": 2000,
     "updatedAt": "2026-10-01T10:19:00+08:00",
-    "revision": "fe8e3ebdccbc485fce28d6dff60890d6b1c400ba7ff494e5d66c3fb9ac437049",
+    "revision": "5df83fb26e6d81c494ec1b99a08007c43e77c0ab2176a45a61cb5d050be2531b",
     "battleDetail": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
-    "note": "teams_latest.jsonl and teams.jsonl.gz in the archive were truncated; rows were recovered from the readable prefix of teams.jsonl.gz."
+    "note": "Complete teams_latest.jsonl (all 2000 players have team details)."
   }
 }
