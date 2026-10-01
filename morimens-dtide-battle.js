@@ -79,7 +79,7 @@
     ['avgDeath',{zh:'队伍平均死扛',en:'Team Avg Death Resist'},v=>v.toFixed(2)],
     ['avgRounds',{zh:'队伍平均回合数',en:'Team Avg Rounds'},v=>v.toFixed(2)],
     ['avgCards',{zh:'队伍平均出牌数',en:'Team Avg Cards'},v=>v.toFixed(1)],
-    ['avgBoutCost',{zh:'队伍平均单回合最多算力消耗',en:'Team Avg Max Round Compute'},v=>v.toFixed(1)],
+    ['avgCost',{zh:'队伍平均算力消耗',en:'Team Avg Compute Cost'},v=>v.toFixed(1)],
     ['maxBoutCost',{zh:'队伍单回合最多算力消耗',en:'Team Max Round Compute'},v=>String(v)],
     ['avgBout',{zh:'队伍平均单回合最高伤害',en:'Team Avg Max Round Dmg'},dmg],
     ['maxBout',{zh:'队伍单回合最高伤害',en:'Team Max Round Dmg'},dmg]
@@ -96,19 +96,19 @@
         const total=(t.members||[]).reduce((s,m)=>s+(Number(m.damage)||0),0);
         if(!(total>0))continue;
         for(const m of t.members||[]){
-          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,entries:[],n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sBoutCost:0,maxBoutCost:0,sBout:0,maxBout:0};
+          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,entries:[],n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sCost:0,sBoutCost:0,maxBoutCost:0,sBout:0,maxBout:0};
           const d=Number(m.damage)||0,share=d/total;
           a.entries.push({rec,w,t,m,share,d});
           a.n++;a.sShare+=share;a.maxShare=Math.max(a.maxShare,share);a.sDmg+=d;a.maxDmg=Math.max(a.maxDmg,d);
           a.sBlock+=Number(m.block)||0;a.sHeal+=Number(m.heal)||0;a.sDeath+=Number(b.deathResistCount)||0;a.sRounds+=Number(b.stageRoundCount)||0;
-          a.sCards+=Number(b.totalUseCard)||0;a.sBoutCost+=Number(b.maxBoutEnergyCost)||0;a.maxBoutCost=Math.max(a.maxBoutCost,Number(b.maxBoutEnergyCost)||0);a.sBout+=Number(b.maxBoutDamage)||0;a.maxBout=Math.max(a.maxBout,Number(b.maxBoutDamage)||0);
+          a.sCards+=Number(b.totalUseCard)||0;a.sCost+=Number(b.totalEnergyCost)||0;a.sBoutCost+=Number(b.maxBoutEnergyCost)||0;a.maxBoutCost=Math.max(a.maxBoutCost,Number(b.maxBoutEnergyCost)||0);a.sBout+=Number(b.maxBoutDamage)||0;a.maxBout=Math.max(a.maxBout,Number(b.maxBoutDamage)||0);
           map.set(key,a);
         }
       }
     }
     return [...map.values()].map(a=>{
       const info=characterInfo?characterInfo(a.m):{name:a.m.canonicalName||a.m.name,image:''};
-      return {key:a.key,entries:a.entries,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgBoutCost:a.sBoutCost/a.n,maxBoutCost:a.maxBoutCost,avgBout:a.sBout/a.n,maxBout:a.maxBout};
+      return {key:a.key,entries:a.entries,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgCost:a.sCost/a.n,maxBoutCost:a.maxBoutCost,avgBout:a.sBout/a.n,maxBout:a.maxBout};
     });
   }
 
@@ -147,7 +147,7 @@
         <div class="dtideField"><label>${ui('搜索角色','Search awakener')}</label><input type="search" data-cq value="${esc(cs.q)}" placeholder="${ui('角色名','Name')}"></div>
         <div class="dtideField"><label>${ui('最少出场队伍数','Min teams')}</label><input type="number" min="1" data-cmin value="${esc(cs.min)}"></div>
       </div>
-      <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。算力消耗来自游戏字段 maxBoutEnergyCost（单回合出牌累计消耗的算力），“队伍”开头的列是整支队伍的战斗数据，其余为该角色自身数据。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”. Compute cost comes from the game field maxBoutEnergyCost (compute spent on cards in one round). Columns starting with “Team” are whole-team battle data; the others are the awakener’s own.')}</p>
+      <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。算力消耗来自游戏字段：队伍平均算力消耗 = 每场战斗出牌累计消耗的算力（totalEnergyCost）的平均值；队伍单回合最多算力消耗 = 单个回合内消耗算力的最大值（maxBoutEnergyCost）。“队伍”开头的列是整支队伍的战斗数据，其余为该角色自身数据。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”. Compute cost comes from game fields: Team Avg Compute Cost = mean compute spent on cards per battle (totalEnergyCost); Team Max Round Compute = highest compute spent in a single round (maxBoutEnergyCost). Columns starting with “Team” are whole-team battle data; the others are the awakener’s own.')}</p>
       <div class="dtideBattleScroll"><table class="dtideBattleTable dtideBattleChars"><thead><tr><th>${ui('排名','Rank')}</th><th><button type="button" data-csort="name">${ui('角色','Awakener')}${cs.sort==='name'?(cs.dir>0?' ▲':' ▼'):''}</button></th>${CCOLS.map(th).join('')}</tr></thead><tbody>${
         slice.map((r,i)=>`<tr class="dtideBattleCharRow" data-cchar="${esc(r.key)}" aria-expanded="${cs.open.has(r.key)}" title="${ui('点击展开：查看最高伤害 / 最高死扛等队伍并复制回放','Click to expand: top teams and replay codes')}"><td>${i+1}</td><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>${cs.open.has(r.key)?detailRow(r):''}`).join('')||`<tr><td colspan="${CCOLS.length+2}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
       }</tbody></table></div>`;
