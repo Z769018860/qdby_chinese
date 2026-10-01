@@ -10,7 +10,7 @@
     bout:{zh:'单回合最高伤害',en:'Max Single-Round Damage',get:r=>r.maxBout,fmt:dmg,teamVal:b=>b.maxBoutDamage}
   };
   const TIERS=[[1,50],[51,200],[201,500],[501,1000],[1001,2000]];
-  const BINS=10,PAGE=50;
+  const BINS=10;
   const state={active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0}};
   let ctx=null,rows=[],host=null;
 
@@ -20,7 +20,8 @@
     return n>=1e6?`${(n/1e6).toFixed(2)}M`:n>=1e3?`${(n/1e3).toFixed(1)}K`:String(Math.round(n));
   }
   const num=v=>v===''||v==null?null:Number(v);
-  const heat=p=>`background:rgba(215,168,91,${(.05+.55*Math.max(0,Math.min(1,p))).toFixed(3)})`;
+  // same colour scale as the awakener leaderboard (usage heatStyle): hue 215 -> 0, alpha .08 -> .42
+  const heat=p=>{const t=Math.max(0,Math.min(1,p));return `background:hsla(${Math.round(215-215*t)},78%,46%,${(.08+.34*t).toFixed(2)})`};
 
   function ensureStyle(){
     if(document.getElementById('dtideBattleStyle'))return;
@@ -33,14 +34,13 @@
       .dtideBattleFilters .pair{display:flex;gap:4px;align-items:center}.dtideBattleFilters input,.dtideBattleFilters select{width:100%;min-width:0}
       .dtideBattleScroll{overflow:auto}.dtideBattleTable{width:100%;border-collapse:collapse;font-size:12px}
       .dtideBattleTable th,.dtideBattleTable td{padding:6px 9px;border-bottom:1px solid rgba(148,163,184,.12);text-align:right;white-space:nowrap}
-      .dtideBattleTable th:nth-child(2),.dtideBattleTable td:nth-child(2){text-align:left}.dtideBattleChars th:first-child,.dtideBattleChars td:first-child{text-align:left}.dtideBattleChars th:nth-child(2),.dtideBattleChars td:nth-child(2){text-align:right}
+      .dtideBattleTable:not(.dtideBattleChars) th:nth-child(2),.dtideBattleTable:not(.dtideBattleChars) td:nth-child(2){text-align:left}.dtideBattleChars th:nth-child(2),.dtideBattleChars td:nth-child(2){text-align:left}
       .dtideBattleTable th button{all:unset;cursor:pointer;font-weight:700;color:#ead9b9}.dtideBattleTable th button:hover{text-decoration:underline}
       .dtideBattleTable td.heat{font-variant-numeric:tabular-nums}
       .dtideHeatGrid{display:grid;gap:2px;font-size:11px;min-width:520px}.dtideHeatGrid>div{padding:6px 4px;text-align:center;border-radius:4px;background:rgba(255,255,255,.03)}
       .dtideHeatGrid .hd{background:none;color:#8290a2}.dtideHeatGrid .rowhd{text-align:left;background:none;color:#ead9b9;font-weight:700}
       .dtideHeatGrid .cell{cursor:pointer;color:#f4f7fb}.dtideHeatGrid .cell:hover{outline:1px solid #f1d69f}.dtideHeatGrid .cell.empty{cursor:default;color:#5b6676}
-      .dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,rgba(215,168,91,.05),rgba(215,168,91,.6))}
-      .dtideBattlePager{display:flex;gap:8px;align-items:center;justify-content:center;margin:10px 0;font-size:12px}`;
+      .dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
     document.head.appendChild(st);
   }
 
@@ -112,18 +112,16 @@
     let list=all.filter(r=>r.n>=minN&&(!q||String(r.name).toLowerCase().includes(q)));
     const sorted=[...list].sort((a,b)=>cs.sort==='name'?String(a.name).localeCompare(String(b.name),'zh-CN')*cs.dir*-1:(a[cs.sort]-b[cs.sort])*cs.dir||b.n-a.n);
     const cols={};for(const [k] of CCOLS)cols[k]=all.map(r=>r[k]).sort((a,b)=>a-b);
-    const pages=Math.max(1,Math.ceil(sorted.length/PAGE));cs.page=Math.min(cs.page,pages-1);
-    const slice=sorted.slice(cs.page*PAGE,(cs.page+1)*PAGE);
+    const slice=sorted;
     const th=([k,l])=>`<th><button type="button" data-csort="${k}">${ui(l.zh,l.en)}${cs.sort===k?(cs.dir>0?' ▲':' ▼'):''}</button></th>`;
     return `<div class="dtideBattleFilters">
         <div class="dtideField"><label>${ui('搜索角色','Search awakener')}</label><input type="search" data-cq value="${esc(cs.q)}" placeholder="${ui('角色名','Name')}"></div>
         <div class="dtideField"><label>${ui('最少出场队伍数','Min teams')}</label><input type="number" min="1" data-cmin value="${esc(cs.min)}"></div>
       </div>
       <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”.')}</p>
-      <div class="dtideBattleScroll"><table class="dtideBattleTable dtideBattleChars"><thead><tr><th><button type="button" data-csort="name">${ui('角色','Awakener')}${cs.sort==='name'?(cs.dir>0?' ▲':' ▼'):''}</button></th>${CCOLS.map(th).join('')}</tr></thead><tbody>${
-        slice.map(r=>`<tr><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${CCOLS.length+1}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
-      }</tbody></table></div>
-      <div class="dtideBattlePager"><button type="button" class="ghostBtn" data-cpage="-1"${cs.page<=0?' disabled':''}>${ui('上一页','Prev')}</button><span>${cs.page+1} / ${pages} · ${sorted.length}</span><button type="button" class="ghostBtn" data-cpage="1"${cs.page>=pages-1?' disabled':''}>${ui('下一页','Next')}</button></div>`;
+      <div class="dtideBattleScroll"><table class="dtideBattleTable dtideBattleChars"><thead><tr><th>${ui('排名','Rank')}</th><th><button type="button" data-csort="name">${ui('角色','Awakener')}${cs.sort==='name'?(cs.dir>0?' ▲':' ▼'):''}</button></th>${CCOLS.map(th).join('')}</tr></thead><tbody>${
+        slice.map((r,i)=>`<tr><td>${i+1}</td><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${CCOLS.length+2}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
+      }</tbody></table></div>`;
   }
 
   function passes(r){
@@ -215,8 +213,7 @@
   }
   function drawPlayers(){
     const f=state.f,base=rows,list=sortRows(base.filter(passes)),stats=colStats(base);
-    const pages=Math.max(1,Math.ceil(list.length/PAGE));state.page=Math.min(state.page,pages-1);
-    const slice=list.slice(state.page*PAGE,(state.page+1)*PAGE);
+    const slice=list;
     const pair=(k,label,unit)=>`<div class="dtideField"><label>${label}${unit?` (${unit})`:''}</label><div class="pair"><input type="number" min="0" step="any" data-bf="${k}:0" value="${esc(f[k][0])}" placeholder="${ui('最低','min')}"><input type="number" min="0" step="any" data-bf="${k}:1" value="${esc(f[k][1])}" placeholder="${ui('最高','max')}"></div></div>`;
     const th=(k,label)=>`<th><button type="button" data-bsort="${k}">${label}${state.sort===k?(state.dir>0?' ▲':' ▼'):''}</button></th>`;
     return `      <p class="dtideBattleNote">${ui('统计口径：平均死扛 = 每场战斗死扛触发次数的平均值；平均回合数 = 每场战斗回合数（stageRoundCount）的平均值；单回合最高伤害 = 该玩家所有战斗中的最大单回合伤害。受上方期次、榜单范围、难度、总得分与队伍类型筛选影响。','Avg Death Resist = mean Death Resist triggers per battle; Avg Rounds = mean stageRoundCount per battle; Max Single-Round Damage = highest single-round damage across the player’s battles. Follows the season, rank scope, difficulty, total score and team-type filters above.')}</p>
@@ -231,8 +228,7 @@
       <h4>${ui('榜单','Leaderboard')} <small style="color:#8290a2">${ui(`匹配 ${list.length} / ${base.length} 名玩家`,`${list.length} / ${base.length} players`)}</small></h4>
       <div class="dtideBattleScroll"><table class="dtideBattleTable"><thead><tr>${th('rank',ui('排名','Rank'))}<th>${ui('玩家','Player')}</th>${th('score',ui('总分','Score'))}${th('death',ui('平均死扛','Avg Death Resist'))}${th('rounds',ui('平均回合数','Avg Rounds'))}${th('bout',ui('单回合最高伤害','Max Round Damage'))}${th('n',ui('战斗数','Battles'))}</tr></thead><tbody>${
         slice.map(r=>`<tr><td>#${esc(r.rank??'—')}</td><td>${r.rec.url?`<a href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer">${esc(r.name)}</a>`:esc(r.name)}</td><td>${esc(r.score??'—')}</td><td class="heat" style="${heat(pctile(stats.death,r.avgDeath))}">${r.avgDeath.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.rounds,r.avgRounds))}">${r.avgRounds.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.bout,r.maxBout))}">${dmg(r.maxBout)}</td><td>${r.n}</td></tr>`).join('')||`<tr><td colspan="7" style="text-align:center">${ui('没有符合条件的玩家','No players match')}</td></tr>`
-      }</tbody></table></div>
-      <div class="dtideBattlePager"><button type="button" class="ghostBtn" data-bpage="-1"${state.page<=0?' disabled':''}>${ui('上一页','Prev')}</button><span>${state.page+1} / ${pages}</span><button type="button" class="ghostBtn" data-bpage="1"${state.page>=pages-1?' disabled':''}>${ui('下一页','Next')}</button></div>`;
+      }</tbody></table></div>`;
   }
 
   document.addEventListener('input',e=>{
@@ -259,12 +255,8 @@
     if(view){state.view=view.dataset.bview;draw();return}
     const cs=e.target.closest('[data-csort]');
     if(cs){const k=cs.dataset.csort;if(state.cs.sort===k)state.cs.dir*=-1;else{state.cs.sort=k;state.cs.dir=k==='name'?1:-1}state.cs.page=0;draw();return}
-    const cp=e.target.closest('[data-cpage]');
-    if(cp){state.cs.page=Math.max(0,state.cs.page+Number(cp.dataset.cpage));draw();return}
     const sort=e.target.closest('[data-bsort]');
     if(sort){const k=sort.dataset.bsort;if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=k==='rank'?1:-1}state.page=0;draw();return}
-    const page=e.target.closest('[data-bpage]');
-    if(page){state.page=Math.max(0,state.page+Number(page.dataset.bpage));draw();return}
     if(e.target.closest('[data-breset]')){state.f={rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']};state.page=0;draw();return}
     const cell=e.target.closest('[data-heat-tier]');
     if(cell){
