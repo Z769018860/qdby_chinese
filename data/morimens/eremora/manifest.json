@@ -12,9 +12,9 @@
       "seasonId": 70,
       "labelEn": "Season 70 · Aequor Ring",
       "period": "2026-09-28 – 2026-10-12",
-      "recordCount": 1946,
+      "recordCount": 2000,
       "leaderboardEntryCount": 2000,
-      "complete": false,
+      "complete": true,
       "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
@@ -156,9 +156,9 @@
   ],
   "current": {
     "leaderboardEntries": 2000,
-    "records": 1946,
-    "complete": false,
-    "failures": 54
+    "records": 2000,
+    "complete": true,
+    "failures": 0
   },
   "fieldCoverage": {
     "character": true,
@@ -320,19 +320,19 @@
     "statsPath": "data/morimens/eremora/stats/70.json",
     "target": 2000,
     "rankIndexCount": 2000,
-    "recordCount": 1946,
+    "recordCount": 2000,
     "coverage": {
       "expected": 2000,
-      "covered": 1946,
-      "coveragePct": 97.3,
-      "complete": false
+      "covered": 2000,
+      "coveragePct": 100.0,
+      "complete": true
     },
     "syncedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "5263a8ace5b5accf87a8a272200280bce7d3923d235e19f09fa2ec0b512059c8",
+    "revision": "922dad85e82c2768d41af1739c4212293ce278592d167b3a5456942436c8b51b",
     "format": "gzip-base64-chunked-v1",
     "chunks": 4,
     "chunkSize": 600000,
-    "chunkBytes": 2272964
+    "chunkBytes": 2332157
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -365,17 +365,17 @@
       2000
     ],
     "rankedPlayers": 2000,
-    "parsedRecords": 1946,
+    "parsedRecords": 2000,
     "teamRows": 9560,
     "battleRows": 17265,
     "ringRealm": "Aequor",
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
     "updatedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "5263a8ace5b5accf87a8a272200280bce7d3923d235e19f09fa2ec0b512059c8",
+    "revision": "922dad85e82c2768d41af1739c4212293ce278592d167b3a5456942436c8b51b",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json",
-    "note": "Updated 2026-10-02 03:14: rank snapshot 02:50 + team rows merged over previous captures; the uploaded archive was truncated, so 54 players still lack team details."
+    "note": "Updated 2026-10-02 03:14: rank snapshot 02:50 + the complete teams_latest.jsonl of that capture (all 2000 players have team details)."
   },
   "postbug69Import": {
     "seasonId": 69,

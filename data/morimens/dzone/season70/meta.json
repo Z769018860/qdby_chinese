@@ -11,15 +11,14 @@
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest_partial.jsonl": 8122,
-    "previous-capture": 2803,
-    "teams_gz_partial.jsonl": 16
+    "teams_latest.jsonl": 9715,
+    "previous-capture": 1477
   },
-  "skippedTailLines": 3,
+  "skippedTailLines": 0,
   "duplicateRankRowsDropped": [],
   "recordCount": 2000,
-  "playersWithTeamDetail": 1946,
-  "teamRows": 10941,
+  "playersWithTeamDetail": 2000,
+  "teamRows": 11192,
   "stageGroupIds": [
     83439,
     83440,
@@ -70,7 +69,7 @@
       },
       {
         "file": "raw-teams/teams-009.jsonl.gz",
-        "lines": 141
+        "lines": 392
       }
     ],
     "uids": "uids.csv",
