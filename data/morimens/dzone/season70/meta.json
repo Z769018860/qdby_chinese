@@ -3,16 +3,29 @@
   "activityTid": 83315,
   "name": "第70期 新新融灾 · 深海戒指",
   "date": "9.28-10.11",
-  "updatedAt": "2026-10-01 05:00",
+  "updatedAt": "2026-10-02 02:26",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-01T05:46:26.585894+08:00",
+  "sourceRetrievedAt": "2026-10-02T02:21:28.584285+08:00",
   "rankRange": [
     1,
     2000
   ],
-  "recordCount": 2000,
-  "playersWithTeamDetail": 2000,
-  "teamRows": 9560,
+  "teamRowsBySource": {
+    "teams_latest.jsonl": 9194,
+    "previous-capture": 237,
+    "teams_gz_partial.jsonl": 130
+  },
+  "skippedTailLines": 6,
+  "duplicateRankRowsDropped": [
+    {
+      "uid": 101070973,
+      "rank": 811,
+      "score": 400
+    }
+  ],
+  "recordCount": 1999,
+  "playersWithTeamDetail": 1673,
+  "teamRows": 9561,
   "stageGroupIds": [
     83439,
     83440,
@@ -55,7 +68,7 @@
       },
       {
         "file": "raw-teams/teams-007.jsonl.gz",
-        "lines": 1160
+        "lines": 1161
       }
     ],
     "uids": "uids.csv",

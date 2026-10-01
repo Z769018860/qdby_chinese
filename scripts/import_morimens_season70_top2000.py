@@ -176,6 +176,10 @@ def summary_row(row, side, slot, names, wave, extra_pass):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", required=True, help="extracted season_83315 directory")
+    ap.add_argument("--ranking", default="ranking.json", help="rank snapshot file inside --src (e.g. ranking_partial.json)")
+    ap.add_argument("--teams", action="append", default=[],
+                    help="team-row JSONL files (default: <src>/teams_latest.jsonl); later files win; cut-off tail lines are skipped")
+    ap.add_argument("--fallback-raw", default="", help="older raw-teams shard dir: rows used only where --teams has none")
     ap.add_argument("--root", default=".", help="repository root")
     ap.add_argument("--work", required=True, help="scratch dir receiving seasons/70.json and rank-index/70.json")
     ap.add_argument("--updated-at", default="2026-10-01 05:00")
@@ -188,8 +192,17 @@ def main():
     names = json.loads((out / "id-names.json").read_text(encoding="utf-8"))
     stages = names["stages"]
 
-    ranking = json.loads((src / "ranking.json").read_text(encoding="utf-8"))
-    rows = ranking["rows"]
+    ranking = json.loads((src / args.ranking).read_text(encoding="utf-8"))
+    rows, seen_uid, dup_rows = [], set(), []
+    for r in ranking["rows"]:  # a snapshot can list one uid on two adjacent ranks; keep the first
+        if r["uid"] in seen_uid:
+            dup_rows.append({"uid": r["uid"], "rank": r["rank"], "score": r["score"]})
+            continue
+        seen_uid.add(r["uid"])
+        rows.append(r)
+    ranking.setdefault("rankRange", [1, 2000])
+    ranking.setdefault("stageGroupIds", sorted(GROUP_WAVE))
+    ranking.setdefault("source", "official live Rank.QueryRank response")
     rank_of = {r["uid"]: r for r in rows}
 
     raw_dir, raw_shards = out / "raw-teams", []
@@ -207,37 +220,61 @@ def main():
         raw_shards.append({"file": f"raw-teams/{name}", "lines": len(buf)})
         buf, shard_no = [], shard_no + 1
 
-    with open(src / "teams_latest.jsonl", "rb") as fh:  # binary: keep the original CRLF bytes
-        for line in fh:
-            if not line.strip():
-                continue
-            buf.append(line)
-            lines += 1
-            if len(buf) >= args.shard_lines:
-                flush()
+    # ---- gather team rows: older raw shards < --teams files (later wins); skip cut-off lines -------------
+    chosen, origin, skipped = {}, Counter(), 0
+
+    def consider(line, tag):
+        nonlocal skipped
+        try:
             row = json.loads(line)
-            resp = row["response"]
-            wave = GROUP_WAVE[row["stageGroupId"]]
-            st = stages[str(resp["stageTid"])]
-            main_side, extra_side = resp["team"], resp.get("teamExtra")
-            extra_pass = bool(resp.get("extraPass"))
-            teams = []
-            t = convert_team(main_side, st["name"], names, "clear")
-            t["score"] = resp["score"]
-            teams.append(t)
-            summary.append(summary_row(row, main_side, "clear", names, wave, extra_pass))
-            death[row["uid"]] += main_side["recordStageData"].get("deathResistCount") or 0
-            if isinstance(extra_side, dict) and extra_side:
-                summary.append(summary_row(row, extra_side, "extra", names, wave, extra_pass))
-                if extra_pass:
-                    e = convert_team(extra_side, stages[str(extra_side["recordStageData"]["stageId"])]["name"], names, "extra")
-                    teams.append(e)
-            if wave in site_teams.get(row["uid"], {}):
-                raise SystemExit(f"duplicate row for uid {row['uid']} wave {wave}")
-            site_teams.setdefault(row["uid"], {})[wave] = {
-                "wave": wave, "madness": st["madness"], "teams": teams, "stageGroupId": row["stageGroupId"],
-                "stageTid": resp["stageTid"],
-            }
+            row["response"]["team"]["recordStageData"]  # noqa: B018 - a cut-off tail line fails here
+        except Exception:
+            skipped += 1
+            return
+        chosen[(row["uid"], row["stageGroupId"])] = (line, row, tag)
+
+    if args.fallback_raw:
+        for shard in sorted(Path(args.fallback_raw).glob("teams-*.jsonl.gz")):
+            for line in gzip.decompress(shard.read_bytes()).splitlines(keepends=True):
+                if line.strip():
+                    consider(line, "previous-capture")
+    for tf in (args.teams or [str(src / "teams_latest.jsonl")]):
+        with open(tf, "rb") as fh:  # binary: keep the original CRLF bytes
+            for line in fh:
+                if line.strip():
+                    consider(line, Path(tf).name)
+    rank_pos = {r["uid"]: r["rank"] for r in rows}
+    for key in sorted(chosen, key=lambda k: (rank_pos.get(k[0], 10**9), k[0], k[1])):
+        line, row, tag = chosen[key]
+        origin[tag] += 1
+        buf.append(line)
+        lines += 1
+        if len(buf) >= args.shard_lines:
+            flush()
+        in_board = row["uid"] in rank_pos
+        resp = row["response"]
+        wave = GROUP_WAVE[row["stageGroupId"]]
+        st = stages[str(resp["stageTid"])]
+        main_side, extra_side = resp["team"], resp.get("teamExtra")
+        extra_pass = bool(resp.get("extraPass"))
+        row = {**row, "rank": rank_pos.get(row["uid"], row.get("rank"))}
+        summary.append(summary_row(row, main_side, "clear", names, wave, extra_pass))
+        if isinstance(extra_side, dict) and extra_side:
+            summary.append(summary_row(row, extra_side, "extra", names, wave, extra_pass))
+        if not in_board:  # players that left the Top 2000 stay in the raw archive / summary only
+            continue
+        teams = []
+        t = convert_team(main_side, st["name"], names, "clear")
+        t["score"] = resp["score"]
+        teams.append(t)
+        if isinstance(extra_side, dict) and extra_side and extra_pass:
+            teams.append(convert_team(extra_side, st["name"], names, "extra"))
+        if wave in site_teams.get(row["uid"], {}):
+            raise SystemExit(f"duplicate row for uid {row['uid']} wave {wave}")
+        site_teams.setdefault(row["uid"], {})[wave] = {
+            "wave": wave, "madness": st["madness"], "teams": teams, "stageGroupId": row["stageGroupId"],
+            "stageTid": resp["stageTid"],
+        }
     flush()
     new_names = {x["file"].split("/")[-1] for x in raw_shards}
     for old in stale_shards:
@@ -289,8 +326,9 @@ def main():
     # --- archive under data/morimens/dzone/season70 -------------------------
     write_gz(out / "battle-summary.jsonl.gz",
              "".join(json.dumps(s, ensure_ascii=False, separators=(",", ":")) + "\n" for s in summary).encode("utf-8"))
-    write_gz(out / "ranking.json.gz", (src / "ranking.json").read_bytes())
-    write_gz(out / "ranking-previous.json.gz", (src / "ranking_previous.json").read_bytes())
+    write_gz(out / "ranking.json.gz", (src / args.ranking).read_bytes())
+    if (src / "ranking_previous.json").exists():
+        write_gz(out / "ranking-previous.json.gz", (src / "ranking_previous.json").read_bytes())
     write_gz(out / "pending-queries.jsonl.gz", (src / "pending_queries.jsonl").read_bytes())
     shutil.copyfile(src / "uids.csv", out / "uids.csv")
     shutil.copyfile(src / "team_errors.jsonl", out / "team-errors.jsonl")
@@ -313,6 +351,7 @@ def main():
         "season": SEASON, "activityTid": ACTIVITY, "name": "第70期 新新融灾 · 深海戒指", "date": "9.28-10.11",
         "updatedAt": args.updated_at, "source": "official live Rank.QueryRank response",
         "sourceRetrievedAt": ranking["retrievedAt"], "rankRange": ranking["rankRange"],
+        "teamRowsBySource": dict(origin), "skippedTailLines": skipped, "duplicateRankRowsDropped": dup_rows,
         "recordCount": len(rows), "playersWithTeamDetail": len(records), "teamRows": lines,
         "stageGroupIds": ranking["stageGroupIds"],
         "files": {
