@@ -190,7 +190,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-09-30T23:01:25.149Z",
+    "generatedAt": "2026-10-01T00:45:47.758Z",
     "rankScopes": [
       50,
       200,
@@ -243,22 +243,6 @@
       }
     ],
     "coverage": [
-      {
-        "seasonId": 70,
-        "maxRankAvailable": 2000,
-        "difficulty": {
-          "recognizedTeams": 10371,
-          "totalTeams": 10371,
-          "complete": true
-        },
-        "rankScopes": {
-          "50": true,
-          "200": true,
-          "500": true,
-          "1000": true,
-          "2000": true
-        }
-      },
       {
         "seasonId": 69,
         "maxRankAvailable": 48,
@@ -345,7 +329,7 @@
     "coverage": {
       "expected": 2000,
       "covered": 2000,
-      "coveragePct": 100.0,
+      "coveragePct": 100,
       "complete": true
     },
     "syncedAt": "2026-10-01T05:00:00+08:00",

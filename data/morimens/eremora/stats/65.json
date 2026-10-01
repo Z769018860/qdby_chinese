@@ -1,1 +1,573 @@
-{"seasonId":65,"generatedAt":"2026-09-30T23:01:24.783Z","recordCount":24,"maxRankAvailable":0,"all":{"teamCount":205,"memberSlots":820,"characters":[{"key":"awakener-0033","count":36,"id":"awakener-0033","ingameId":"C17","name":"Mouchette","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C17_AF.webp","teamRatePct":17.56},{"key":"awakener-0010","count":24,"id":"awakener-0010","ingameId":"D13","name":"Clementine","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D13_AF.webp","teamRatePct":11.71},{"key":"awakener-0021","count":23,"id":"awakener-0021","ingameId":"O06","name":"Goliath","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O06_AF.webp","teamRatePct":11.22},{"key":"awakener-0035","count":23,"id":"awakener-0035","ingameId":"O02EX","name":"Murphy: Fauxborn","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O02EX_AF.webp","teamRatePct":11.22},{"key":"awakener-0018","count":22,"id":"awakener-0018","ingameId":"C02EX","name":"Doll: Inferno","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C02EX_AF.webp","teamRatePct":10.73},{"key":"awakener-0032","count":22,"id":"awakener-0032","ingameId":"O07","name":"Miryam","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O07_AF.webp","teamRatePct":10.73},{"key":"awakener-0057","count":22,"id":"awakener-0057","ingameId":"B15","name":"Saya","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B15_AF.webp","teamRatePct":10.73},{"key":"awakener-0050","count":22,"id":"awakener-0050","ingameId":"O01","name":"Tulu","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O01_AF.webp","teamRatePct":10.73},{"key":"awakener-0056","count":21,"id":"awakener-0056","ingameId":"D10","name":"Arachne","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D10_AF.webp","teamRatePct":10.24},{"key":"awakener-0008","count":21,"id":"awakener-0008","ingameId":"D11","name":"Castor","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D11_AF.webp","teamRatePct":10.24},{"key":"awakener-0022","count":21,"id":"awakener-0022","ingameId":"D12","name":"Hameln","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D12_AF.webp","teamRatePct":10.24},{"key":"awakener-0024","count":21,"id":"awakener-0024","ingameId":"D06","name":"Horla","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D06_AF.webp","teamRatePct":10.24},{"key":"awakener-0003","count":20,"id":"awakener-0003","ingameId":"B03","name":"Aigis","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B03_AF.webp","teamRatePct":9.76},{"key":"awakener-0027","count":20,"id":"awakener-0027","ingameId":"C16","name":"Kathigu-Ra","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C16_AF.webp","teamRatePct":9.76},{"key":"awakener-0038","count":20,"id":"awakener-0038","ingameId":"C03","name":"Ogier","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C03_AF.webp","teamRatePct":9.76},{"key":"awakener-0043","count":19,"id":"awakener-0043","ingameId":"C05","name":"Ryker","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C05_AF.webp","teamRatePct":9.27},{"key":"awakener-0047","count":19,"id":"awakener-0047","ingameId":"C15","name":"Tawil","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C15_AF.webp","teamRatePct":9.27},{"key":"awakener-0054","count":19,"id":"awakener-0054","ingameId":"B14","name":"Xu","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B14_AF.webp","teamRatePct":9.27},{"key":"awakener-0001","count":18,"id":"awakener-0001","ingameId":"C06","name":"\"24\"","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C06_AF.webp","teamRatePct":8.78},{"key":"awakener-0023","count":18,"id":"awakener-0023","ingameId":"B05","name":"Helot","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B05_AF.webp","teamRatePct":8.78},{"key":"awakener-0029","count":18,"id":"awakener-0029","ingameId":"C10","name":"Lily","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C10_AF.webp","teamRatePct":8.78},{"key":"awakener-0048","count":18,"id":"awakener-0048","ingameId":"B01","name":"Thais","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B01_AF.webp","teamRatePct":8.78},{"key":"awakener-0034","count":17,"id":"awakener-0034","ingameId":"O02","name":"Murphy","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O02_AF.webp","teamRatePct":8.29},{"key":"awakener-0004","count":16,"id":"awakener-0004","ingameId":"C11","name":"Alva","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C11_AF.webp","teamRatePct":7.8},{"key":"awakener-0041","count":16,"id":"awakener-0041","ingameId":"D14","name":"Pollux","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D14_AF.webp","teamRatePct":7.8},{"key":"awakener-0042","count":16,"id":"awakener-0042","ingameId":"C01","name":"Ramona","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C01_AF.webp","teamRatePct":7.8},{"key":"awakener-0055","count":16,"id":"awakener-0055","ingameId":"O11","name":"Vortice","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O11_AF.webp","teamRatePct":7.8},{"key":"awakener-0009","count":15,"id":"awakener-0009","ingameId":"O09","name":"Celeste","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O09_AF.webp","teamRatePct":7.32},{"key":"awakener-0040","count":15,"id":"awakener-0040","ingameId":"B12","name":"Pickman","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B12_AF.webp","teamRatePct":7.32},{"key":"awakener-0036","count":14,"id":"awakener-0036","ingameId":"C07","name":"Nautila","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C07_AF.webp","teamRatePct":6.83},{"key":"awakener-0053","count":14,"id":"awakener-0053","ingameId":"D05","name":"Winkle","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D05_AF.webp","teamRatePct":6.83},{"key":"awakener-0019","count":13,"id":"awakener-0019","ingameId":"B05EX","name":"Helot: Catena","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B05EX_AF.webp","teamRatePct":6.34},{"key":"awakener-0031","count":13,"id":"awakener-0031","ingameId":"C04","name":"Lotan","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C04_AF.webp","teamRatePct":6.34},{"key":"awakener-0037","count":13,"id":"awakener-0037","ingameId":"C08","name":"Nymphaea","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C08_AF.webp","teamRatePct":6.34},{"key":"awakener-0044","count":13,"id":"awakener-0044","ingameId":"B02","name":"Salvador","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B02_AF.webp","teamRatePct":6.34},{"key":"awakener-0013","count":12,"id":"awakener-0013","ingameId":"C02","name":"Doll","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C02_AF.webp","teamRatePct":5.85},{"key":"awakener-0015","count":12,"id":"awakener-0015","ingameId":"D08","name":"Erica","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D08_AF.webp","teamRatePct":5.85},{"key":"awakener-0026","count":12,"id":"awakener-0026","ingameId":"C12","name":"Karen","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C12_AF.webp","teamRatePct":5.85},{"key":"awakener-0039","count":12,"id":"awakener-0039","ingameId":"C09","name":"Pandia","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C09_AF.webp","teamRatePct":5.85},{"key":"awakener-0007","count":11,"id":"awakener-0007","ingameId":"D09","name":"Casiah","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D09_AF.webp","teamRatePct":5.37},{"key":"awakener-0011","count":11,"id":"awakener-0011","ingameId":"O10","name":"Corposant","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O10_AF.webp","teamRatePct":5.37},{"key":"awakener-0049","count":11,"id":"awakener-0049","ingameId":"D03","name":"Tinct","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D03_AF.webp","teamRatePct":5.37},{"key":"awakener-0006","count":10,"id":"awakener-0006","ingameId":"O04","name":"Caecus","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O04_AF.webp","teamRatePct":4.88},{"key":"awakener-0016","count":10,"id":"awakener-0016","ingameId":"B09","name":"Faint","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B09_AF.webp","teamRatePct":4.88},{"key":"awakener-0012","count":9,"id":"awakener-0012","ingameId":"D02","name":"Daffodil","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D02_AF.webp","teamRatePct":4.39},{"key":"awakener-0058","count":9,"id":"awakener-0058","ingameId":"O13","name":"Pontos","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O13_AF.webp","teamRatePct":4.39},{"key":"awakener-0028","count":8,"id":"awakener-0028","ingameId":"B08","name":"Leigh","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B08_AF.webp","teamRatePct":3.9},{"key":"awakener-0014","count":6,"id":"awakener-0014","ingameId":"B10","name":"Doresain","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B10_AF.webp","teamRatePct":2.93},{"key":"awakener-0020","count":6,"id":"awakener-0020","ingameId":"C01EX","name":"Ramona: Timeworn","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C01EX_AF.webp","teamRatePct":2.93},{"key":"awakener-0045","count":5,"id":"awakener-0045","ingameId":"O08","name":"Sanga","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O08_AF.webp","teamRatePct":2.44},{"key":"awakener-0002","count":4,"id":"awakener-0002","ingameId":"B06","name":"Agrippa","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B06_AF.webp","teamRatePct":1.95},{"key":"awakener-0059","count":4,"id":"awakener-0059","ingameId":"C04EX","name":"Lotan: Cetarchon","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C04EX_AF.webp","teamRatePct":1.95},{"key":"awakener-0005","count":3,"id":"awakener-0005","ingameId":"O05","name":"Aurita","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O05_AF.webp","teamRatePct":1.46},{"key":"awakener-0017","count":2,"id":"awakener-0017","ingameId":"O03","name":"Faros","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O03_AF.webp","teamRatePct":0.98},{"key":"awakener-0025","count":2,"id":"awakener-0025","ingameId":"D07","name":"Jenkin","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D07_AF.webp","teamRatePct":0.98},{"key":"awakener-0052","count":2,"id":"awakener-0052","ingameId":"D04","name":"Wanda","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D04_AF.webp","teamRatePct":0.98},{"key":"awakener-0030","count":1,"id":"awakener-0030","ingameId":"D01","name":"Liz","image":"https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D01_AF.webp","teamRatePct":0.49}]},"rankTiers":{"50":{"cap":50,"complete":false,"recordCount":24,"maxRankAvailable":0},"200":{"cap":200,"complete":false,"recordCount":24,"maxRankAvailable":0},"500":{"cap":500,"complete":false,"recordCount":24,"maxRankAvailable":0},"1000":{"cap":1000,"complete":false,"recordCount":24,"maxRankAvailable":0},"2000":{"cap":2000,"complete":false,"recordCount":24,"maxRankAvailable":0}},"coverage":{"difficulty":{"recognizedTeams":0,"totalTeams":205,"complete":false},"rankScopes":{"50":false,"200":false,"500":false,"1000":false,"2000":false},"enlightenment":true},"slim":true}
+{
+  "seasonId": 65,
+  "generatedAt": "2026-10-01T00:45:47.576Z",
+  "recordCount": 24,
+  "maxRankAvailable": 0,
+  "all": {
+    "teamCount": 205,
+    "memberSlots": 820,
+    "characters": [
+      {
+        "key": "awakener-0033",
+        "count": 36,
+        "id": "awakener-0033",
+        "ingameId": "C17",
+        "name": "Mouchette",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C17_AF.webp",
+        "teamRatePct": 17.56
+      },
+      {
+        "key": "awakener-0010",
+        "count": 24,
+        "id": "awakener-0010",
+        "ingameId": "D13",
+        "name": "Clementine",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D13_AF.webp",
+        "teamRatePct": 11.71
+      },
+      {
+        "key": "awakener-0021",
+        "count": 23,
+        "id": "awakener-0021",
+        "ingameId": "O06",
+        "name": "Goliath",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O06_AF.webp",
+        "teamRatePct": 11.22
+      },
+      {
+        "key": "awakener-0035",
+        "count": 23,
+        "id": "awakener-0035",
+        "ingameId": "O02EX",
+        "name": "Murphy: Fauxborn",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O02EX_AF.webp",
+        "teamRatePct": 11.22
+      },
+      {
+        "key": "awakener-0018",
+        "count": 22,
+        "id": "awakener-0018",
+        "ingameId": "C02EX",
+        "name": "Doll: Inferno",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C02EX_AF.webp",
+        "teamRatePct": 10.73
+      },
+      {
+        "key": "awakener-0032",
+        "count": 22,
+        "id": "awakener-0032",
+        "ingameId": "O07",
+        "name": "Miryam",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O07_AF.webp",
+        "teamRatePct": 10.73
+      },
+      {
+        "key": "awakener-0057",
+        "count": 22,
+        "id": "awakener-0057",
+        "ingameId": "B15",
+        "name": "Saya",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B15_AF.webp",
+        "teamRatePct": 10.73
+      },
+      {
+        "key": "awakener-0050",
+        "count": 22,
+        "id": "awakener-0050",
+        "ingameId": "O01",
+        "name": "Tulu",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O01_AF.webp",
+        "teamRatePct": 10.73
+      },
+      {
+        "key": "awakener-0056",
+        "count": 21,
+        "id": "awakener-0056",
+        "ingameId": "D10",
+        "name": "Arachne",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D10_AF.webp",
+        "teamRatePct": 10.24
+      },
+      {
+        "key": "awakener-0008",
+        "count": 21,
+        "id": "awakener-0008",
+        "ingameId": "D11",
+        "name": "Castor",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D11_AF.webp",
+        "teamRatePct": 10.24
+      },
+      {
+        "key": "awakener-0022",
+        "count": 21,
+        "id": "awakener-0022",
+        "ingameId": "D12",
+        "name": "Hameln",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D12_AF.webp",
+        "teamRatePct": 10.24
+      },
+      {
+        "key": "awakener-0024",
+        "count": 21,
+        "id": "awakener-0024",
+        "ingameId": "D06",
+        "name": "Horla",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D06_AF.webp",
+        "teamRatePct": 10.24
+      },
+      {
+        "key": "awakener-0003",
+        "count": 20,
+        "id": "awakener-0003",
+        "ingameId": "B03",
+        "name": "Aigis",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B03_AF.webp",
+        "teamRatePct": 9.76
+      },
+      {
+        "key": "awakener-0027",
+        "count": 20,
+        "id": "awakener-0027",
+        "ingameId": "C16",
+        "name": "Kathigu-Ra",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C16_AF.webp",
+        "teamRatePct": 9.76
+      },
+      {
+        "key": "awakener-0038",
+        "count": 20,
+        "id": "awakener-0038",
+        "ingameId": "C03",
+        "name": "Ogier",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C03_AF.webp",
+        "teamRatePct": 9.76
+      },
+      {
+        "key": "awakener-0043",
+        "count": 19,
+        "id": "awakener-0043",
+        "ingameId": "C05",
+        "name": "Ryker",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C05_AF.webp",
+        "teamRatePct": 9.27
+      },
+      {
+        "key": "awakener-0047",
+        "count": 19,
+        "id": "awakener-0047",
+        "ingameId": "C15",
+        "name": "Tawil",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C15_AF.webp",
+        "teamRatePct": 9.27
+      },
+      {
+        "key": "awakener-0054",
+        "count": 19,
+        "id": "awakener-0054",
+        "ingameId": "B14",
+        "name": "Xu",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B14_AF.webp",
+        "teamRatePct": 9.27
+      },
+      {
+        "key": "awakener-0001",
+        "count": 18,
+        "id": "awakener-0001",
+        "ingameId": "C06",
+        "name": "\"24\"",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C06_AF.webp",
+        "teamRatePct": 8.78
+      },
+      {
+        "key": "awakener-0023",
+        "count": 18,
+        "id": "awakener-0023",
+        "ingameId": "B05",
+        "name": "Helot",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B05_AF.webp",
+        "teamRatePct": 8.78
+      },
+      {
+        "key": "awakener-0029",
+        "count": 18,
+        "id": "awakener-0029",
+        "ingameId": "C10",
+        "name": "Lily",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C10_AF.webp",
+        "teamRatePct": 8.78
+      },
+      {
+        "key": "awakener-0048",
+        "count": 18,
+        "id": "awakener-0048",
+        "ingameId": "B01",
+        "name": "Thais",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B01_AF.webp",
+        "teamRatePct": 8.78
+      },
+      {
+        "key": "awakener-0034",
+        "count": 17,
+        "id": "awakener-0034",
+        "ingameId": "O02",
+        "name": "Murphy",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O02_AF.webp",
+        "teamRatePct": 8.29
+      },
+      {
+        "key": "awakener-0004",
+        "count": 16,
+        "id": "awakener-0004",
+        "ingameId": "C11",
+        "name": "Alva",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C11_AF.webp",
+        "teamRatePct": 7.8
+      },
+      {
+        "key": "awakener-0041",
+        "count": 16,
+        "id": "awakener-0041",
+        "ingameId": "D14",
+        "name": "Pollux",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D14_AF.webp",
+        "teamRatePct": 7.8
+      },
+      {
+        "key": "awakener-0042",
+        "count": 16,
+        "id": "awakener-0042",
+        "ingameId": "C01",
+        "name": "Ramona",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C01_AF.webp",
+        "teamRatePct": 7.8
+      },
+      {
+        "key": "awakener-0055",
+        "count": 16,
+        "id": "awakener-0055",
+        "ingameId": "O11",
+        "name": "Vortice",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O11_AF.webp",
+        "teamRatePct": 7.8
+      },
+      {
+        "key": "awakener-0009",
+        "count": 15,
+        "id": "awakener-0009",
+        "ingameId": "O09",
+        "name": "Celeste",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O09_AF.webp",
+        "teamRatePct": 7.32
+      },
+      {
+        "key": "awakener-0040",
+        "count": 15,
+        "id": "awakener-0040",
+        "ingameId": "B12",
+        "name": "Pickman",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B12_AF.webp",
+        "teamRatePct": 7.32
+      },
+      {
+        "key": "awakener-0036",
+        "count": 14,
+        "id": "awakener-0036",
+        "ingameId": "C07",
+        "name": "Nautila",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C07_AF.webp",
+        "teamRatePct": 6.83
+      },
+      {
+        "key": "awakener-0053",
+        "count": 14,
+        "id": "awakener-0053",
+        "ingameId": "D05",
+        "name": "Winkle",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D05_AF.webp",
+        "teamRatePct": 6.83
+      },
+      {
+        "key": "awakener-0019",
+        "count": 13,
+        "id": "awakener-0019",
+        "ingameId": "B05EX",
+        "name": "Helot: Catena",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B05EX_AF.webp",
+        "teamRatePct": 6.34
+      },
+      {
+        "key": "awakener-0031",
+        "count": 13,
+        "id": "awakener-0031",
+        "ingameId": "C04",
+        "name": "Lotan",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C04_AF.webp",
+        "teamRatePct": 6.34
+      },
+      {
+        "key": "awakener-0037",
+        "count": 13,
+        "id": "awakener-0037",
+        "ingameId": "C08",
+        "name": "Nymphaea",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C08_AF.webp",
+        "teamRatePct": 6.34
+      },
+      {
+        "key": "awakener-0044",
+        "count": 13,
+        "id": "awakener-0044",
+        "ingameId": "B02",
+        "name": "Salvador",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B02_AF.webp",
+        "teamRatePct": 6.34
+      },
+      {
+        "key": "awakener-0013",
+        "count": 12,
+        "id": "awakener-0013",
+        "ingameId": "C02",
+        "name": "Doll",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C02_AF.webp",
+        "teamRatePct": 5.85
+      },
+      {
+        "key": "awakener-0015",
+        "count": 12,
+        "id": "awakener-0015",
+        "ingameId": "D08",
+        "name": "Erica",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D08_AF.webp",
+        "teamRatePct": 5.85
+      },
+      {
+        "key": "awakener-0026",
+        "count": 12,
+        "id": "awakener-0026",
+        "ingameId": "C12",
+        "name": "Karen",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C12_AF.webp",
+        "teamRatePct": 5.85
+      },
+      {
+        "key": "awakener-0039",
+        "count": 12,
+        "id": "awakener-0039",
+        "ingameId": "C09",
+        "name": "Pandia",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C09_AF.webp",
+        "teamRatePct": 5.85
+      },
+      {
+        "key": "awakener-0007",
+        "count": 11,
+        "id": "awakener-0007",
+        "ingameId": "D09",
+        "name": "Casiah",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D09_AF.webp",
+        "teamRatePct": 5.37
+      },
+      {
+        "key": "awakener-0011",
+        "count": 11,
+        "id": "awakener-0011",
+        "ingameId": "O10",
+        "name": "Corposant",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O10_AF.webp",
+        "teamRatePct": 5.37
+      },
+      {
+        "key": "awakener-0049",
+        "count": 11,
+        "id": "awakener-0049",
+        "ingameId": "D03",
+        "name": "Tinct",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D03_AF.webp",
+        "teamRatePct": 5.37
+      },
+      {
+        "key": "awakener-0006",
+        "count": 10,
+        "id": "awakener-0006",
+        "ingameId": "O04",
+        "name": "Caecus",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O04_AF.webp",
+        "teamRatePct": 4.88
+      },
+      {
+        "key": "awakener-0016",
+        "count": 10,
+        "id": "awakener-0016",
+        "ingameId": "B09",
+        "name": "Faint",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B09_AF.webp",
+        "teamRatePct": 4.88
+      },
+      {
+        "key": "awakener-0012",
+        "count": 9,
+        "id": "awakener-0012",
+        "ingameId": "D02",
+        "name": "Daffodil",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D02_AF.webp",
+        "teamRatePct": 4.39
+      },
+      {
+        "key": "awakener-0058",
+        "count": 9,
+        "id": "awakener-0058",
+        "ingameId": "O13",
+        "name": "Pontos",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O13_AF.webp",
+        "teamRatePct": 4.39
+      },
+      {
+        "key": "awakener-0028",
+        "count": 8,
+        "id": "awakener-0028",
+        "ingameId": "B08",
+        "name": "Leigh",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B08_AF.webp",
+        "teamRatePct": 3.9
+      },
+      {
+        "key": "awakener-0014",
+        "count": 6,
+        "id": "awakener-0014",
+        "ingameId": "B10",
+        "name": "Doresain",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B10_AF.webp",
+        "teamRatePct": 2.93
+      },
+      {
+        "key": "awakener-0020",
+        "count": 6,
+        "id": "awakener-0020",
+        "ingameId": "C01EX",
+        "name": "Ramona: Timeworn",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C01EX_AF.webp",
+        "teamRatePct": 2.93
+      },
+      {
+        "key": "awakener-0045",
+        "count": 5,
+        "id": "awakener-0045",
+        "ingameId": "O08",
+        "name": "Sanga",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O08_AF.webp",
+        "teamRatePct": 2.44
+      },
+      {
+        "key": "awakener-0002",
+        "count": 4,
+        "id": "awakener-0002",
+        "ingameId": "B06",
+        "name": "Agrippa",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_B06_AF.webp",
+        "teamRatePct": 1.95
+      },
+      {
+        "key": "awakener-0059",
+        "count": 4,
+        "id": "awakener-0059",
+        "ingameId": "C04EX",
+        "name": "Lotan: Cetarchon",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_C04EX_AF.webp",
+        "teamRatePct": 1.95
+      },
+      {
+        "key": "awakener-0005",
+        "count": 3,
+        "id": "awakener-0005",
+        "ingameId": "O05",
+        "name": "Aurita",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O05_AF.webp",
+        "teamRatePct": 1.46
+      },
+      {
+        "key": "awakener-0017",
+        "count": 2,
+        "id": "awakener-0017",
+        "ingameId": "O03",
+        "name": "Faros",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_O03_AF.webp",
+        "teamRatePct": 0.98
+      },
+      {
+        "key": "awakener-0025",
+        "count": 2,
+        "id": "awakener-0025",
+        "ingameId": "D07",
+        "name": "Jenkin",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D07_AF.webp",
+        "teamRatePct": 0.98
+      },
+      {
+        "key": "awakener-0052",
+        "count": 2,
+        "id": "awakener-0052",
+        "ingameId": "D04",
+        "name": "Wanda",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D04_AF.webp",
+        "teamRatePct": 0.98
+      },
+      {
+        "key": "awakener-0030",
+        "count": 1,
+        "id": "awakener-0030",
+        "ingameId": "D01",
+        "name": "Liz",
+        "image": "https://media.eremora.com/media/90a58fb3327e/thumb/portraits/Portrait_Minihead_Awaker_D01_AF.webp",
+        "teamRatePct": 0.49
+      }
+    ]
+  },
+  "rankTiers": {
+    "50": {
+      "cap": 50,
+      "complete": false,
+      "recordCount": 24,
+      "maxRankAvailable": 0
+    },
+    "200": {
+      "cap": 200,
+      "complete": false,
+      "recordCount": 24,
+      "maxRankAvailable": 0
+    },
+    "500": {
+      "cap": 500,
+      "complete": false,
+      "recordCount": 24,
+      "maxRankAvailable": 0
+    },
+    "1000": {
+      "cap": 1000,
+      "complete": false,
+      "recordCount": 24,
+      "maxRankAvailable": 0
+    },
+    "2000": {
+      "cap": 2000,
+      "complete": false,
+      "recordCount": 24,
+      "maxRankAvailable": 0
+    }
+  },
+  "slim": true,
+  "coverage": {
+    "difficulty": {
+      "recognizedTeams": 0,
+      "totalTeams": 205,
+      "complete": false
+    },
+    "rankScopes": {
+      "50": false,
+      "200": false,
+      "500": false,
+      "1000": false,
+      "2000": false
+    },
+    "enlightenment": true
+  }
+}
