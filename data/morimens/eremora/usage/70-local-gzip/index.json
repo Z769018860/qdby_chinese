@@ -3,7 +3,7 @@
   "seasonId": 70,
   "recordCount": 2000,
   "source": "local detailed __data.json import",
-  "revision": "a4549a5f8f7f78942dac3fdba642558b8633efbd5bf44ffbeb590396110e72bc",
+  "revision": "ecba4f47ee4dd2609b60afe9dbd63d7228031073ab63d6145421ad59b078c721",
   "generatedAt": "2026-10-01T05:00:00+08:00",
   "chunks": [
     "data/morimens/eremora/usage/70-local-gzip/chunk-000.b64",
@@ -13,5 +13,5 @@
     "data/morimens/eremora/usage/70-local-gzip/chunk-004.b64"
   ],
   "chunkSize": 700000,
-  "compressedBytes": 2933060
+  "compressedBytes": 3421445
 }

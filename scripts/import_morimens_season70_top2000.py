@@ -64,6 +64,7 @@ def weapon_slots(awaker):
 
 def convert_team(side, stage_name, names, kind):
     items = side.get("items") or {}
+    rsd = side["recordStageData"]
     members = []
     for a in side["awakers"]:
         info = names["awakers"][str(a["tid"])]
@@ -98,8 +99,10 @@ def convert_team(side, stage_name, names, kind):
             "tid": a["tid"],
             "breakLevel": a.get("breakLevel"),
             "levelLimitIncreaseIdx": a.get("levelLimitIncreaseIdx"),
+            "damage": stat(rsd.get("AwakerDoDamage"), str(a["tid"])) or 0,
+            "block": stat(rsd.get("AwakerDoBlock"), str(a["tid"])) or 0,
+            "heal": stat(rsd.get("AwakerDoHeal"), str(a["tid"])) or 0,
         })
-    rsd = side["recordStageData"]
     token = side.get("keeperSkill")
     return {
         "stageName": stage_name,
@@ -112,7 +115,8 @@ def convert_team(side, stage_name, names, kind):
         ],
         "battleUuid": rsd["battleUuid"],
         "members": members,
-        "battle": {k: rsd.get(k) for k in BATTLE_FIELDS},
+        "battle": {**{k: rsd.get(k) for k in BATTLE_FIELDS},
+                   "otherDamage": stat(rsd.get("AwakerDoDamage"), "1") or 0},  # damage not attributed to an awakener (map key "1")
     }
 
 

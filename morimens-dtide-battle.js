@@ -11,7 +11,7 @@
   };
   const TIERS=[[1,50],[51,200],[201,500],[501,1000],[1001,2000]];
   const BINS=10,PAGE=50;
-  const state={sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']}};
+  const state={active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0}};
   let ctx=null,rows=[],host=null;
 
   function dmg(n){
@@ -33,7 +33,7 @@
       .dtideBattleFilters .pair{display:flex;gap:4px;align-items:center}.dtideBattleFilters input,.dtideBattleFilters select{width:100%;min-width:0}
       .dtideBattleScroll{overflow:auto}.dtideBattleTable{width:100%;border-collapse:collapse;font-size:12px}
       .dtideBattleTable th,.dtideBattleTable td{padding:6px 9px;border-bottom:1px solid rgba(148,163,184,.12);text-align:right;white-space:nowrap}
-      .dtideBattleTable th:nth-child(2),.dtideBattleTable td:nth-child(2){text-align:left}
+      .dtideBattleTable th:nth-child(2),.dtideBattleTable td:nth-child(2){text-align:left}.dtideBattleChars th:first-child,.dtideBattleChars td:first-child{text-align:left}.dtideBattleChars th:nth-child(2),.dtideBattleChars td:nth-child(2){text-align:right}
       .dtideBattleTable th button{all:unset;cursor:pointer;font-weight:700;color:#ead9b9}.dtideBattleTable th button:hover{text-decoration:underline}
       .dtideBattleTable td.heat{font-variant-numeric:tabular-nums}
       .dtideHeatGrid{display:grid;gap:2px;font-size:11px;min-width:520px}.dtideHeatGrid>div{padding:6px 4px;text-align:center;border-radius:4px;background:rgba(255,255,255,.03)}
@@ -62,6 +62,68 @@
       out.push({rec,rank:rankOf(rec),uid:rec.uid,name:rec.player,score:scoreOf(rec),n,avgDeath:death/n,avgRounds:rounds/n,maxBout:bout,waves});
     }
     return out;
+  }
+
+
+  const SHARE=v=>Number.isFinite(v)?`${(v*100).toFixed(1)}%`:'—';
+  const CCOLS=[
+    ['n',{zh:'出场队伍',en:'Teams'},v=>String(v)],
+    ['avgShare',{zh:'平均伤害占比',en:'Avg Dmg Share'},SHARE],
+    ['maxShare',{zh:'最高伤害占比',en:'Max Dmg Share'},SHARE],
+    ['avgDmg',{zh:'平均伤害',en:'Avg Damage'},dmg],
+    ['maxDmg',{zh:'单场最高伤害',en:'Max Damage'},dmg],
+    ['avgBlock',{zh:'平均格挡',en:'Avg Block'},dmg],
+    ['avgHeal',{zh:'平均治疗',en:'Avg Heal'},dmg],
+    ['avgDeath',{zh:'平均死扛',en:'Avg Death Resist'},v=>v.toFixed(2)],
+    ['avgRounds',{zh:'平均回合数',en:'Avg Rounds'},v=>v.toFixed(2)],
+    ['avgCards',{zh:'平均出牌数',en:'Avg Cards'},v=>v.toFixed(1)],
+    ['avgEnergy',{zh:'平均能量消耗',en:'Avg Energy'},v=>v.toFixed(1)],
+    ['avgBout',{zh:'队伍平均单回合最高伤害',en:'Team Avg Max Round Dmg'},dmg],
+    ['maxBout',{zh:'队伍单回合最高伤害',en:'Team Max Round Dmg'},dmg]
+  ];
+  function buildChars(){
+    const {records,rankMatches,scoreMatches,rankCap,difficulty,clearType,difficultyOf,memberKey,characterInfo}=ctx;
+    const map=new Map();
+    for(const rec of records){
+      if(!rankMatches(rec,rankCap)||!scoreMatches(rec))continue;
+      for(const w of rec.waves||[])for(const t of w.teams||[]){
+        const b=t.battle;if(!b)continue;
+        if(difficulty!=='all'&&difficultyOf(t,w)!==difficulty)continue;
+        if(clearType!=='all'&&clearType!==t.clearType)continue;
+        const total=(t.members||[]).reduce((s,m)=>s+(Number(m.damage)||0),0);
+        if(!(total>0))continue;
+        for(const m of t.members||[]){
+          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sEnergy:0,sBout:0,maxBout:0};
+          const d=Number(m.damage)||0,share=d/total;
+          a.n++;a.sShare+=share;a.maxShare=Math.max(a.maxShare,share);a.sDmg+=d;a.maxDmg=Math.max(a.maxDmg,d);
+          a.sBlock+=Number(m.block)||0;a.sHeal+=Number(m.heal)||0;a.sDeath+=Number(b.deathResistCount)||0;a.sRounds+=Number(b.stageRoundCount)||0;
+          a.sCards+=Number(b.totalUseCard)||0;a.sEnergy+=Number(b.totalEnergyCost)||0;a.sBout+=Number(b.maxBoutDamage)||0;a.maxBout=Math.max(a.maxBout,Number(b.maxBoutDamage)||0);
+          map.set(key,a);
+        }
+      }
+    }
+    return [...map.values()].map(a=>{
+      const info=characterInfo?characterInfo(a.m):{name:a.m.canonicalName||a.m.name,image:''};
+      return {key:a.key,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgEnergy:a.sEnergy/a.n,avgBout:a.sBout/a.n,maxBout:a.maxBout};
+    });
+  }
+  function drawChars(){
+    const cs=state.cs,all=buildChars(),minN=Math.max(1,Number(cs.min)||1),q=cs.q.trim().toLowerCase();
+    let list=all.filter(r=>r.n>=minN&&(!q||String(r.name).toLowerCase().includes(q)));
+    const sorted=[...list].sort((a,b)=>cs.sort==='name'?String(a.name).localeCompare(String(b.name),'zh-CN')*cs.dir*-1:(a[cs.sort]-b[cs.sort])*cs.dir||b.n-a.n);
+    const cols={};for(const [k] of CCOLS)cols[k]=all.map(r=>r[k]).sort((a,b)=>a-b);
+    const pages=Math.max(1,Math.ceil(sorted.length/PAGE));cs.page=Math.min(cs.page,pages-1);
+    const slice=sorted.slice(cs.page*PAGE,(cs.page+1)*PAGE);
+    const th=([k,l])=>`<th><button type="button" data-csort="${k}">${ui(l.zh,l.en)}${cs.sort===k?(cs.dir>0?' ▲':' ▼'):''}</button></th>`;
+    return `<div class="dtideBattleFilters">
+        <div class="dtideField"><label>${ui('搜索角色','Search awakener')}</label><input type="search" data-cq value="${esc(cs.q)}" placeholder="${ui('角色名','Name')}"></div>
+        <div class="dtideField"><label>${ui('最少出场队伍数','Min teams')}</label><input type="number" min="1" data-cmin value="${esc(cs.min)}"></div>
+      </div>
+      <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”.')}</p>
+      <div class="dtideBattleScroll"><table class="dtideBattleTable dtideBattleChars"><thead><tr><th><button type="button" data-csort="name">${ui('角色','Awakener')}${cs.sort==='name'?(cs.dir>0?' ▲':' ▼'):''}</button></th>${CCOLS.map(th).join('')}</tr></thead><tbody>${
+        slice.map(r=>`<tr><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${CCOLS.length+1}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
+      }</tbody></table></div>
+      <div class="dtideBattlePager"><button type="button" class="ghostBtn" data-cpage="-1"${cs.page<=0?' disabled':''}>${ui('上一页','Prev')}</button><span>${cs.page+1} / ${pages} · ${sorted.length}</span><button type="button" class="ghostBtn" data-cpage="1"${cs.page>=pages-1?' disabled':''}>${ui('下一页','Next')}</button></div>`;
   }
 
   function passes(r){
@@ -118,29 +180,51 @@
     return h+`</div></div><div class="dtideHeatLegend"><span>${m.fmt(min)}</span><i></i><span>${m.fmt(max)}</span><span>· ${ui('各排名段在每个 Wave 的队伍平均值','Mean per team for each rank band and wave')}</span></div>`;
   }
 
+  const tabBtn=()=>document.querySelector('[data-dtide-battle-tab]');
+  const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
+  let savedTitle=null;
+  function applyActive(){
+    const on=state.active&&!!ctx&&hasBattle(ctx.records);
+    document.querySelectorAll('.dtideLeaderboardTab').forEach(x=>x.setAttribute('aria-selected',String(on?x.hasAttribute('data-dtide-battle-tab'):(!x.hasAttribute('data-dtide-battle-tab')&&x.getAttribute('aria-selected')==='true'))));
+    for(const sel of SWAP){const el=document.querySelector(sel);if(el)el.style.display=on?'none':''}
+    const title=document.getElementById('dtideMatrixTitle');
+    if(title){if(on){if(savedTitle==null)savedTitle=title.textContent;title.textContent=ui('战斗数据榜','Battle Stats Leaderboard')}else if(savedTitle!=null){title.textContent=savedTitle;savedTitle=null}}
+  }
+  const hasBattle=records=>(records||[]).some(r=>(r.waves||[]).some(w=>(w.teams||[]).some(t=>t.battle)));
+  function setActive(on){
+    state.active=!!on;applyActive();
+    if(!on){document.getElementById('dtideEntityType')?.dispatchEvent(new Event('change',{bubbles:true}));if(host)host.hidden=true;return}
+    if(host&&ctx){host.hidden=false;rows=buildRows();draw()}
+  }
   function render(el,context){
     host=el;ctx=context;if(!host)return;
     ensureStyle();
-    const hasData=(ctx.records||[]).some(r=>(r.waves||[]).some(w=>(w.teams||[]).some(t=>t.battle)));
-    host.hidden=!hasData;
-    if(!hasData){host.innerHTML='';return}
+    const hasData=hasBattle(ctx.records),btn=tabBtn();
+    if(btn)btn.hidden=!hasData;
+    if(!hasData&&state.active){state.active=false;document.getElementById('dtideEntityType')?.dispatchEvent(new Event('change',{bubbles:true}))}
+    applyActive();
+    host.hidden=!(hasData&&state.active);
+    if(host.hidden){host.innerHTML='';return}
     rows=buildRows();
     draw();
   }
 
   function draw(){
+    const sub=(k,l)=>`<button type="button" class="dtideLeaderboardTab" data-bview="${k}" aria-selected="${state.view===k}">${l}</button>`;
+    host.innerHTML=`<div class="dtideLeaderboardTabs">${sub('chars',ui('角色战斗数据','By Awakener'))}${sub('players',ui('玩家战斗榜 · 热力图','By Player · Heatmaps'))}</div>`+(state.view==='chars'?drawChars():drawPlayers());
+  }
+  function drawPlayers(){
     const f=state.f,base=rows,list=sortRows(base.filter(passes)),stats=colStats(base);
     const pages=Math.max(1,Math.ceil(list.length/PAGE));state.page=Math.min(state.page,pages-1);
     const slice=list.slice(state.page*PAGE,(state.page+1)*PAGE);
-    const pair=(k,label,unit)=>`<div><label>${label}${unit?` (${unit})`:''}</label><div class="pair"><input type="number" min="0" step="any" data-bf="${k}:0" value="${esc(f[k][0])}" placeholder="${ui('最低','min')}"><input type="number" min="0" step="any" data-bf="${k}:1" value="${esc(f[k][1])}" placeholder="${ui('最高','max')}"></div></div>`;
+    const pair=(k,label,unit)=>`<div class="dtideField"><label>${label}${unit?` (${unit})`:''}</label><div class="pair"><input type="number" min="0" step="any" data-bf="${k}:0" value="${esc(f[k][0])}" placeholder="${ui('最低','min')}"><input type="number" min="0" step="any" data-bf="${k}:1" value="${esc(f[k][1])}" placeholder="${ui('最高','max')}"></div></div>`;
     const th=(k,label)=>`<th><button type="button" data-bsort="${k}">${label}${state.sort===k?(state.dir>0?' ▲':' ▼'):''}</button></th>`;
-    host.innerHTML=`<h3>${ui('战斗数据榜','Battle Stats Leaderboard')}</h3>
-      <p class="dtideBattleNote">${ui('统计口径：平均死扛 = 每场战斗死扛触发次数的平均值；平均回合数 = 每场战斗回合数（stageRoundCount）的平均值；单回合最高伤害 = 该玩家所有战斗中的最大单回合伤害。受上方期次、榜单范围、难度、总得分与队伍类型筛选影响。','Avg Death Resist = mean Death Resist triggers per battle; Avg Rounds = mean stageRoundCount per battle; Max Single-Round Damage = highest single-round damage across the player’s battles. Follows the season, rank scope, difficulty, total score and team-type filters above.')}</p>
+    return `      <p class="dtideBattleNote">${ui('统计口径：平均死扛 = 每场战斗死扛触发次数的平均值；平均回合数 = 每场战斗回合数（stageRoundCount）的平均值；单回合最高伤害 = 该玩家所有战斗中的最大单回合伤害。受上方期次、榜单范围、难度、总得分与队伍类型筛选影响。','Avg Death Resist = mean Death Resist triggers per battle; Avg Rounds = mean stageRoundCount per battle; Max Single-Round Damage = highest single-round damage across the player’s battles. Follows the season, rank scope, difficulty, total score and team-type filters above.')}</p>
       <div class="dtideBattleFilters">
-        <div><label>${ui('排名区间','Rank range')}</label><div class="pair"><input type="number" min="1" max="2000" data-bf="rankFrom" value="${esc(f.rankFrom)}" placeholder="1"><input type="number" min="1" max="2000" data-bf="rankTo" value="${esc(f.rankTo)}" placeholder="2000"></div></div>
+        <div class="dtideField"><label>${ui('排名区间','Rank range')}</label><div class="pair"><input type="number" min="1" max="2000" data-bf="rankFrom" value="${esc(f.rankFrom)}" placeholder="1"><input type="number" min="1" max="2000" data-bf="rankTo" value="${esc(f.rankTo)}" placeholder="2000"></div></div>
         ${pair('death',ui('平均死扛','Avg Death Resist'))}${pair('rounds',ui('平均回合数','Avg Rounds'))}${pair('bout',ui('单回合最高伤害','Max Round Damage'),ui('万','×10k'))}
-        <div><label>${ui('热力图指标','Heatmap metric')}</label><select data-bmetric>${Object.entries(METRICS).map(([k,v])=>`<option value="${k}"${state.metric===k?' selected':''}>${ui(v.zh,v.en)}</option>`).join('')}</select></div>
-        <div><label>&nbsp;</label><button type="button" class="ghostBtn" data-breset>${ui('清空筛选','Reset')}</button></div>
+        <div class="dtideField"><label>${ui('热力图指标','Heatmap metric')}</label><select data-bmetric>${Object.entries(METRICS).map(([k,v])=>`<option value="${k}"${state.metric===k?' selected':''}>${ui(v.zh,v.en)}</option>`).join('')}</select></div>
+        <div class="dtideField"><label>&nbsp;</label><button type="button" class="ghostBtn" data-breset>${ui('清空筛选','Reset')}</button></div>
       </div>
       <h4>${ui('热力图 · 数值分布','Heatmap · Distribution')} — ${ui(METRICS[state.metric].zh,METRICS[state.metric].en)}</h4>${distHeat(base)}
       <h4>${ui('热力图 · 各 Wave 平均值','Heatmap · Mean by Wave')}</h4>${waveHeat(base)}
@@ -152,6 +236,12 @@
   }
 
   document.addEventListener('input',e=>{
+    const cq=e.target.closest?.('[data-cq],[data-cmin]');
+    if(cq&&host?.contains(cq)){
+      if(cq.hasAttribute('data-cq'))state.cs.q=cq.value;else state.cs.min=cq.value;
+      state.cs.page=0;clearTimeout(draw.t);draw.t=setTimeout(()=>{const pos=cq.selectionStart,attr=cq.hasAttribute('data-cq')?'[data-cq]':'[data-cmin]';draw();const again=host.querySelector(attr);again?.focus();try{again?.setSelectionRange(pos,pos)}catch{}},300);
+      return;
+    }
     const el=e.target.closest?.('[data-bf]');if(!el||!host?.contains(el))return;
     const [k,i]=el.dataset.bf.split(':');
     if(i==null)state.f[k]=el.value;else state.f[k][Number(i)]=el.value;
@@ -162,7 +252,15 @@
     state.metric=el.value;draw();
   });
   document.addEventListener('click',e=>{
+    if(e.target.closest?.('[data-dtide-battle-tab]')){if(!state.active)setActive(true);return}
+    if(state.active&&e.target.closest?.('[data-dtide-entity]')){setActive(false);return}
     if(!host||!host.contains(e.target))return;
+    const view=e.target.closest('[data-bview]');
+    if(view){state.view=view.dataset.bview;draw();return}
+    const cs=e.target.closest('[data-csort]');
+    if(cs){const k=cs.dataset.csort;if(state.cs.sort===k)state.cs.dir*=-1;else{state.cs.sort=k;state.cs.dir=k==='name'?1:-1}state.cs.page=0;draw();return}
+    const cp=e.target.closest('[data-cpage]');
+    if(cp){state.cs.page=Math.max(0,state.cs.page+Number(cp.dataset.cpage));draw();return}
     const sort=e.target.closest('[data-bsort]');
     if(sort){const k=sort.dataset.bsort;if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=k==='rank'?1:-1}state.page=0;draw();return}
     const page=e.target.closest('[data-bpage]');
