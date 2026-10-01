@@ -1,38 +1,8 @@
+{"uid": 101877246, "stageGroupId": 83441, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100763468, "stageGroupId": 83442, "reason": "response did not contain expected abyssChallenge stage group"}
 {"uid": 100672217, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
 {"uid": 101263116, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100458620, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
 {"uid": 100351985, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101087638, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100559906, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
 {"uid": 101384380, "stageGroupId": 83441, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101341781, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101781292, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101106507, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100726844, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100973746, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100339020, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101118836, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100028237, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100653137, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100716237, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：score"}
-{"uid": 101213847, "stageGroupId": 83442, "reason": "response did not contain expected abyssChallenge stage group"}
-{"uid": 101823463, "stageGroupId": 83441, "reason": "详情与最新榜单不一致：score,team.wid,team.battleUuid"}
-{"uid": 101207473, "stageGroupId": 83441, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
-{"uid": 101380568, "stageGroupId": 83440, "reason": "response did not contain expected abyssChallenge stage group"}
-{"uid": 100672217, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100553686, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
-{"uid": 100755202, "stageGroupId": 83441, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
-{"uid": 100557849, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
-{"uid": 101263116, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101864256, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：team.wid,team.battleUuid"}
-{"uid": 101864256, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
-{"uid": 100351985, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101087638, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid,score,teamExtra.wid"}
-{"uid": 101384380, "stageGroupId": 83441, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101341781, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101781292, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101106507, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100726844, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100973746, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100339020, "stageGroupId": 83444, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 101118836, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100028237, "stageGroupId": 83442, "reason": "详情与最新榜单不一致：stageTid"}
-{"uid": 100653137, "stageGroupId": 83439, "reason": "详情与最新榜单不一致：stageTid"}

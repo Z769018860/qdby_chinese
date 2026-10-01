@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-10-02T02:26:00+08:00",
+    "syncedAt": "2026-10-02T03:14:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 70,
@@ -12,13 +12,13 @@
       "seasonId": 70,
       "labelEn": "Season 70 · Aequor Ring",
       "period": "2026-09-28 – 2026-10-12",
-      "recordCount": 1673,
-      "leaderboardEntryCount": 1999,
+      "recordCount": 1946,
+      "leaderboardEntryCount": 2000,
       "complete": false,
       "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
-      "dataUpdatedAt": "2026-10-02T02:26:00+08:00",
+      "dataUpdatedAt": "2026-10-02T03:14:00+08:00",
       "labelZh": "第70期 新新融灾 · 深海戒指",
       "periodShort": "9.28–10.11",
       "ringRealm": "Aequor",
@@ -155,10 +155,10 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 1999,
-    "records": 1673,
+    "leaderboardEntries": 2000,
+    "records": 1946,
     "complete": false,
-    "failures": 326
+    "failures": 54
   },
   "fieldCoverage": {
     "character": true,
@@ -308,10 +308,10 @@
     "seasonId": 70,
     "path": "data/morimens/eremora/rank-index/70.json",
     "target": 2000,
-    "count": 1999,
-    "complete": false,
-    "syncedAt": "2026-10-02T02:26:00+08:00",
-    "revision": "s70-top2000-20261002-0226",
+    "count": 2000,
+    "complete": true,
+    "syncedAt": "2026-10-02T03:14:00+08:00",
+    "revision": "s70-top2000-20261002-0314",
     "scorePolicy": "official-rank-score"
   },
   "usageIndex": {
@@ -319,20 +319,20 @@
     "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/70.json",
     "target": 2000,
-    "rankIndexCount": 1999,
-    "recordCount": 1673,
+    "rankIndexCount": 2000,
+    "recordCount": 1946,
     "coverage": {
       "expected": 2000,
-      "covered": 1673,
-      "coveragePct": 83.65,
+      "covered": 1946,
+      "coveragePct": 97.3,
       "complete": false
     },
-    "syncedAt": "2026-10-02T02:26:00+08:00",
-    "revision": "50eb46301d497034cf8147a25377d9701e80fe31e632a552803327b0ed49256e",
+    "syncedAt": "2026-10-02T03:14:00+08:00",
+    "revision": "5263a8ace5b5accf87a8a272200280bce7d3923d235e19f09fa2ec0b512059c8",
     "format": "gzip-base64-chunked-v1",
     "chunks": 4,
     "chunkSize": 600000,
-    "chunkBytes": 1936903
+    "chunkBytes": 2272964
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -364,18 +364,18 @@
       1,
       2000
     ],
-    "rankedPlayers": 1999,
-    "parsedRecords": 1673,
+    "rankedPlayers": 2000,
+    "parsedRecords": 1946,
     "teamRows": 9560,
     "battleRows": 17265,
     "ringRealm": "Aequor",
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-10-02T02:26:00+08:00",
-    "revision": "50eb46301d497034cf8147a25377d9701e80fe31e632a552803327b0ed49256e",
+    "updatedAt": "2026-10-02T03:14:00+08:00",
+    "revision": "5263a8ace5b5accf87a8a272200280bce7d3923d235e19f09fa2ec0b512059c8",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json",
-    "note": "Updated 2026-10-02 02:26: new rank snapshot (02:21) + team rows merged with the previous capture; the uploaded archive was truncated, so players that entered the Top 2000 after the previous capture have rank and score only."
+    "note": "Updated 2026-10-02 03:14: rank snapshot 02:50 + team rows merged over previous captures; the uploaded archive was truncated, so 54 players still lack team details."
   },
   "postbug69Import": {
     "seasonId": 69,

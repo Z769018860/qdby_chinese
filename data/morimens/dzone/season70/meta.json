@@ -3,29 +3,23 @@
   "activityTid": 83315,
   "name": "第70期 新新融灾 · 深海戒指",
   "date": "9.28-10.11",
-  "updatedAt": "2026-10-02 02:26",
+  "updatedAt": "2026-10-02 03:14",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-02T02:21:28.584285+08:00",
+  "sourceRetrievedAt": "2026-10-02T02:50:50.291573+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 9194,
-    "previous-capture": 237,
-    "teams_gz_partial.jsonl": 130
+    "teams_latest_partial.jsonl": 8122,
+    "previous-capture": 2803,
+    "teams_gz_partial.jsonl": 16
   },
-  "skippedTailLines": 6,
-  "duplicateRankRowsDropped": [
-    {
-      "uid": 101070973,
-      "rank": 811,
-      "score": 400
-    }
-  ],
-  "recordCount": 1999,
-  "playersWithTeamDetail": 1673,
-  "teamRows": 9561,
+  "skippedTailLines": 3,
+  "duplicateRankRowsDropped": [],
+  "recordCount": 2000,
+  "playersWithTeamDetail": 1946,
+  "teamRows": 10941,
   "stageGroupIds": [
     83439,
     83440,
@@ -68,7 +62,15 @@
       },
       {
         "file": "raw-teams/teams-007.jsonl.gz",
-        "lines": 1161
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-008.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-009.jsonl.gz",
+        "lines": 141
       }
     ],
     "uids": "uids.csv",
