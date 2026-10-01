@@ -67,7 +67,7 @@
       "battleDetailPath": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
       "battleArchivePath": "data/morimens/dzone/season69-postbug/meta.json",
       "dataUpdatedAt": "2026-10-01T10:19:00+08:00",
-      "revision": "8024697b4da3e44e2d876750cac3854b3a9d6b0fe781cb085f0f0f4a08a0b3b2",
+      "revision": "fe8e3ebdccbc485fce28d6dff60890d6b1c400ba7ff494e5d66c3fb9ac437049",
       "communityVariant": "postbug",
       "communityTargetKey": "69-postbug",
       "noteZh": "第69期 Bug后终榜：官方 Top 2000 排名与分数完整；逐 UID 配队详情保留了前 1559 名（上传的压缩包被截断）。Bug前数据不会混入。",
@@ -328,11 +328,11 @@
       "complete": true
     },
     "syncedAt": "2026-10-01T05:00:00+08:00",
-    "revision": "5fbe0c04ced0ffe88911238fe66d79649c57fc0b16027f05264a1decd98dfcb6",
+    "revision": "6e750e0c653c4db8a3a5b6f61b6053dc8c9132a2c1fbce48c8d14b7b041c07e4",
     "format": "gzip-base64-chunked-v1",
     "chunks": 4,
     "chunkSize": 600000,
-    "chunkBytes": 2275172
+    "chunkBytes": 2275155
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -372,7 +372,7 @@
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
     "updatedAt": "2026-10-01T05:00:00+08:00",
-    "revision": "5fbe0c04ced0ffe88911238fe66d79649c57fc0b16027f05264a1decd98dfcb6",
+    "revision": "6e750e0c653c4db8a3a5b6f61b6053dc8c9132a2c1fbce48c8d14b7b041c07e4",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json"
   },
@@ -387,7 +387,7 @@
     "battleRows": 14298,
     "maxRankWithDetail": 1559,
     "updatedAt": "2026-10-01T10:19:00+08:00",
-    "revision": "8024697b4da3e44e2d876750cac3854b3a9d6b0fe781cb085f0f0f4a08a0b3b2",
+    "revision": "fe8e3ebdccbc485fce28d6dff60890d6b1c400ba7ff494e5d66c3fb9ac437049",
     "battleDetail": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
     "note": "teams_latest.jsonl and teams.jsonl.gz in the archive were truncated; rows were recovered from the readable prefix of teams.jsonl.gz."
   }

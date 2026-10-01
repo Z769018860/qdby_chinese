@@ -144,7 +144,8 @@
   "53767": "Million Loving Gaze",
   "10019": "Insight",
   "9531": "Suction",
-  "10004": "Hope"
+  "10004": "Hope",
+  "9550": "Aged"
  },
  "creation": {
   "98412": "Stellar Brew+",
@@ -971,6 +972,14 @@
   "81826": {
    "name": "D-Effect Zone: Wave 1: Normal",
    "madness": 36
+  }
+ },
+ "_inferred": {
+  "wheel": {
+   "9550": "Aged — by elimination: main stat Crit DMG (attrId 18105, R rarity) and the only other R Crit DMG wheel, Suction, is tid 9531"
+  },
+  "creation": {
+   "98397": "Chronometric Device+ — read from the earlier Eremora Season 69 import (battleUuid match)"
   }
  }
 }

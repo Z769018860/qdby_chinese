@@ -4,7 +4,7 @@
   "snapshotId": "69-postbug",
   "recordCount": 1559,
   "source": "season_83329 Top2000 (post-bug final)",
-  "revision": "8024697b4da3e44e2d876750cac3854b3a9d6b0fe781cb085f0f0f4a08a0b3b2",
+  "revision": "fe8e3ebdccbc485fce28d6dff60890d6b1c400ba7ff494e5d66c3fb9ac437049",
   "generatedAt": "2026-10-01T10:19:00+08:00",
   "chunks": [
     "data/morimens/eremora/usage/69-postbug-gzip/chunk-000.b64",
@@ -13,5 +13,5 @@
     "data/morimens/eremora/usage/69-postbug-gzip/chunk-003.b64"
   ],
   "chunkSize": 600000,
-  "compressedBytes": 2217018
+  "compressedBytes": 2217014
 }

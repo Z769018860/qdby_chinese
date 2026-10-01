@@ -144,7 +144,8 @@
   "53767": "Million Loving Gaze",
   "10019": "Insight",
   "9531": "Suction",
-  "10004": "Hope"
+  "10004": "Hope",
+  "9550": "Aged"
  },
  "creation": {
   "98412": "Stellar Brew+",
@@ -378,7 +379,8 @@
   "71196": "Dimensional Image: Lotan",
   "78675": "Sacred Agony",
   "78672": "Swarm Mind",
-  "98378": "Safe Passage+"
+  "98378": "Safe Passage+",
+  "98397": "Chronometric Device+"
  },
  "token": {
   "10065": "Tiny Wish",
@@ -1030,5 +1032,13 @@
    "madness": 47
   }
  },
- "_note": "id->name dictionaries derived from the previous Eremora Season 70 import by matching battleUuid; ids without a known name are rendered as '#<id>'."
+ "_note": "id->name dictionaries derived from the previous Eremora Season 70 import by matching battleUuid; ids without a known name are rendered as '#<id>'.",
+ "_inferred": {
+  "wheel": {
+   "9550": "Aged — by elimination: main stat Crit DMG (attrId 18105, R rarity) and the only other R Crit DMG wheel, Suction, is tid 9531"
+  },
+  "creation": {
+   "98397": "Chronometric Device+ — read from the earlier Eremora Season 69 import (battleUuid match)"
+  }
+ }
 }
