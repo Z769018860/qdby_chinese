@@ -178,6 +178,52 @@
     return h+`</div></div><div class="dtideHeatLegend"><span>${m.fmt(min)}</span><i></i><span>${m.fmt(max)}</span><span>· ${ui('各排名段在每个 Wave 的队伍平均值','Mean per team for each rank band and wave')}</span></div>`;
   }
 
+
+  async function downloadImage(button){
+    const table=host?.querySelector('.dtideBattleTable');if(!table)return;
+    const MAX=800,pad=36,rowH=38,headH=64,headY=142,footH=100;
+    const heads=[...table.querySelectorAll('thead th')].map(th=>th.innerText.replace(/[▲▼]/g,'').trim());
+    const allRows=[...table.tBodies[0].rows].filter(tr=>tr.cells.length===heads.length);
+    if(!allRows.length)return;
+    const rows=allRows.slice(0,MAX).map(tr=>[...tr.cells].map(td=>({text:td.innerText.trim(),bg:getComputedStyle(td).backgroundColor,img:td.querySelector('img')?.getAttribute('src')||''})));
+    const label=id=>document.getElementById(id)?.selectedOptions?.[0]?.textContent?.trim()||'';
+    const season=ctx?.seasonId||document.getElementById('dtideSeason')?.value||'';
+    const view=state.view==='chars'?ui('角色战斗数据','By Awakener'):ui('玩家战斗榜','By Player');
+    const title=zh()?`第 ${season} 期 · 战斗数据榜 · ${view}`:`Season ${season} · Battle Stats · ${view}`;
+    const status=[label('dtideRankScope'),label('dtideDifficulty'),label('dtideTotalScore')].filter(Boolean).join(' · ');
+    const widths=heads.map((h,i)=>{const longest=Math.max(h.length*1.1,...rows.slice(0,60).map(r=>r[i].text.length));return Math.max(i===0?70:96,Math.min(i===1&&state.view==='players'?260:200,Math.round(longest*10+36)))});
+    const width=pad*2+widths.reduce((a,b)=>a+b,0),height=headY+headH+rows.length*rowH+footH;
+    const before=button.textContent;button.disabled=true;button.textContent=ui('正在生成图片…','Generating image…');
+    try{
+      const canvas=document.createElement('canvas');canvas.width=Math.max(width,900);canvas.height=height;
+      const c=canvas.getContext('2d');if(!c)throw new Error('canvas');
+      c.fillStyle='#0e1624';c.fillRect(0,0,canvas.width,canvas.height);
+      c.textBaseline='middle';c.textAlign='left';c.fillStyle='#f1d69f';c.font='bold 27px system-ui,sans-serif';c.fillText(title,pad,45,canvas.width-pad*2);
+      c.fillStyle='#b8c5d6';c.font='16px system-ui,sans-serif';c.fillText(status,pad,86,canvas.width-pad*2);
+      c.fillText(zh()?`当前表格 · ${allRows.length} 条${allRows.length>MAX?`（仅导出前 ${MAX} 条）`:''} · 更新时间 10月1日 05:00`:`Current table · ${allRows.length} rows${allRows.length>MAX?` (first ${MAX} exported)`:''}`,pad,116);
+      const xs=widths.map((_,i)=>pad+widths.slice(0,i).reduce((a,b)=>a+b,0)),left=i=>(state.view==='chars'?i===1:i===1);
+      c.fillStyle='#192638';c.fillRect(pad,headY,widths.reduce((a,b)=>a+b,0),headH);
+      heads.forEach((h,i)=>{c.textAlign=left(i)?'left':'center';c.font='bold 14px system-ui,sans-serif';c.fillStyle='#f0f4fa';c.fillText(h,xs[i]+(left(i)?12:widths[i]/2),headY+headH/2,widths[i]-10)});
+      const imgs=new Map(await Promise.all([...new Set(rows.flat().map(x=>x.img).filter(Boolean))].map(async src=>{try{const u=new URL(src,document.baseURI);if(u.origin!==location.origin)return [src,null];const im=new Image();im.src=u.href;await im.decode();return [src,im]}catch{return [src,null]}})));
+      rows.forEach((r,ri)=>{
+        const y=headY+headH+ri*rowH;c.fillStyle=ri%2?'#152031':'#111b2a';c.fillRect(pad,y,widths.reduce((a,b)=>a+b,0),rowH);
+        r.forEach((cell,i)=>{
+          if(cell.bg&&cell.bg!=='rgba(0, 0, 0, 0)'&&cell.bg!=='transparent'){c.fillStyle=cell.bg;c.fillRect(xs[i],y,widths[i],rowH)}
+          const im=imgs.get(cell.img);if(im){c.save();c.beginPath();c.roundRect(xs[i]+8,y+5,28,28,6);c.clip();c.drawImage(im,xs[i]+8,y+5,28,28);c.restore()}
+          c.textAlign=left(i)?'left':'center';c.font='bold 14px system-ui,sans-serif';c.fillStyle='#edf2f7';
+          c.fillText(cell.text,xs[i]+(left(i)?(im?44:12):widths[i]/2),y+rowH/2,widths[i]-(im?52:16));
+        });
+        c.fillStyle='rgba(148,163,184,.13)';c.fillRect(pad,y+rowH-1,widths.reduce((a,b)=>a+b,0),1);
+      });
+      c.textAlign='right';c.fillStyle='#b8c5d6';c.font='15px system-ui,sans-serif';c.fillText('https://qingdengbuyi.top/morimens-tools.html#dtide',canvas.width-pad,canvas.height-58);
+      c.fillStyle='#f1d69f';c.font='bold 16px system-ui,sans-serif';c.fillText('copyright@青灯不弈',canvas.width-pad,canvas.height-27);
+      const blob=await new Promise(res=>canvas.toBlob(res,'image/png'));if(!blob)throw new Error('blob');
+      const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=zh()?`融灾战斗数据榜-${season}-${state.view==='chars'?'角色':'玩家'}.png`:`dzone-battle-stats-${season}-${state.view}.png`;
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+    }catch(e){console.warn('battle stats image export failed',e);alert(ui('图片生成失败，请缩小筛选范围后重试','Image generation failed; narrow the filters and retry'))}
+    finally{button.disabled=false;button.textContent=before}
+  }
+
   const tabBtn=()=>document.querySelector('[data-dtide-battle-tab]');
   const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
   let savedTitle=null;
@@ -209,7 +255,7 @@
 
   function draw(){
     const sub=(k,l)=>`<button type="button" class="dtideLeaderboardTab" data-bview="${k}" aria-selected="${state.view===k}">${l}</button>`;
-    host.innerHTML=`<div class="dtideLeaderboardTabs">${sub('chars',ui('角色战斗数据','By Awakener'))}${sub('players',ui('玩家战斗榜 · 热力图','By Player · Heatmaps'))}</div>`+(state.view==='chars'?drawChars():drawPlayers());
+    host.innerHTML=`<div class="dtideLeaderboardTabs">${sub('chars',ui('角色战斗数据','By Awakener'))}${sub('players',ui('玩家战斗榜 · 热力图','By Player · Heatmaps'))}<button type="button" class="dtideTableDownload" data-bdownload style="margin-left:auto">${ui('下载图片','Download Image')}</button></div>`+(state.view==='chars'?drawChars():drawPlayers());
   }
   function drawPlayers(){
     const f=state.f,base=rows,list=sortRows(base.filter(passes)),stats=colStats(base);
@@ -251,6 +297,8 @@
     if(e.target.closest?.('[data-dtide-battle-tab]')){if(!state.active)setActive(true);return}
     if(state.active&&e.target.closest?.('[data-dtide-entity]')){setActive(false);return}
     if(!host||!host.contains(e.target))return;
+    const dl=e.target.closest('[data-bdownload]');
+    if(dl){downloadImage(dl);return}
     const view=e.target.closest('[data-bview]');
     if(view){state.view=view.dataset.bview;draw();return}
     const cs=e.target.closest('[data-csort]');
