@@ -11,7 +11,7 @@
   };
   const TIERS=[[1,50],[51,200],[201,500],[501,1000],[1001,2000]];
   const BINS=10;
-  const state={active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0}};
+  const state={active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0,open:new Set()}};
   let ctx=null,rows=[],host=null;
 
   function dmg(n){
@@ -40,7 +40,7 @@
       .dtideHeatGrid{display:grid;gap:2px;font-size:11px;min-width:520px}.dtideHeatGrid>div{padding:6px 4px;text-align:center;border-radius:4px;background:rgba(255,255,255,.03)}
       .dtideHeatGrid .hd{background:none;color:#8290a2}.dtideHeatGrid .rowhd{text-align:left;background:none;color:#ead9b9;font-weight:700}
       .dtideHeatGrid .cell{cursor:pointer;color:#f4f7fb}.dtideHeatGrid .cell:hover{outline:1px solid #f1d69f}.dtideHeatGrid .cell.empty{cursor:default;color:#5b6676}
-      .dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
+      .dtideBattleCharRow{cursor:pointer}.dtideBattleCharRow:hover td:first-child,.dtideBattleCharRow[aria-expanded=true] td:first-child{box-shadow:inset 3px 0 0 #f1d69f}.dtideBattleDetail td{padding:10px;text-align:left!important;white-space:normal!important;background:rgba(255,255,255,.02)}.dtideBattleBlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.dtideBattleBlock{min-width:0}.dtideBattleBlock h5{margin:0 0 6px;font-size:12px;color:#f1d69f}.dtideBattleTeam{padding:8px;margin-bottom:6px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(255,255,255,.025)}.dtideBattleTeam .hd{display:flex;justify-content:space-between;gap:8px;font-size:12px}.dtideBattleTeam .hd span{color:#f1d69f;font-weight:700;white-space:nowrap}.dtideBattleTeam .mem{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.dtideBattleTeam .mem i{font-style:normal;font-size:11px;padding:2px 6px;border-radius:6px;background:rgba(148,163,184,.12)}.dtideBattleTeam .mem i.me{background:rgba(241,214,159,.22);color:#f1d69f}.dtideBattleTeam .ft{display:flex;justify-content:space-between;align-items:center;gap:8px}.dtideBattleTeam .ft small{color:#8290a2}.dtideBattleTeam .ft button{white-space:nowrap;flex:0 0 auto}.dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
     document.head.appendChild(st);
   }
 
@@ -93,8 +93,9 @@
         const total=(t.members||[]).reduce((s,m)=>s+(Number(m.damage)||0),0);
         if(!(total>0))continue;
         for(const m of t.members||[]){
-          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sEnergy:0,sBout:0,maxBout:0};
+          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,entries:[],n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sEnergy:0,sBout:0,maxBout:0};
           const d=Number(m.damage)||0,share=d/total;
+          a.entries.push({rec,w,t,m,share,d});
           a.n++;a.sShare+=share;a.maxShare=Math.max(a.maxShare,share);a.sDmg+=d;a.maxDmg=Math.max(a.maxDmg,d);
           a.sBlock+=Number(m.block)||0;a.sHeal+=Number(m.heal)||0;a.sDeath+=Number(b.deathResistCount)||0;a.sRounds+=Number(b.stageRoundCount)||0;
           a.sCards+=Number(b.totalUseCard)||0;a.sEnergy+=Number(b.totalEnergyCost)||0;a.sBout+=Number(b.maxBoutDamage)||0;a.maxBout=Math.max(a.maxBout,Number(b.maxBoutDamage)||0);
@@ -104,8 +105,32 @@
     }
     return [...map.values()].map(a=>{
       const info=characterInfo?characterInfo(a.m):{name:a.m.canonicalName||a.m.name,image:''};
-      return {key:a.key,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgEnergy:a.sEnergy/a.n,avgBout:a.sBout/a.n,maxBout:a.maxBout};
+      return {key:a.key,entries:a.entries,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgEnergy:a.sEnergy/a.n,avgBout:a.sBout/a.n,maxBout:a.maxBout};
     });
+  }
+
+  const TOP=5;
+  const DETAIL_BLOCKS=[
+    ['maxShare',{zh:'最高伤害占比',en:'Highest damage share'},e=>e.share,e=>`${SHARE(e.share)} · ${dmg(e.d)}`,'desc'],
+    ['maxDmg',{zh:'最高伤害',en:'Highest damage'},e=>e.d,e=>`${dmg(e.d)} · ${SHARE(e.share)}`,'desc'],
+    ['death',{zh:'最高死扛',en:'Most Death Resist'},e=>Number(e.t.battle.deathResistCount)||0,e=>`${e.t.battle.deathResistCount||0} ${ui('次','times')}`,'desc'],
+    ['bout',{zh:'队伍单回合最高伤害',en:'Highest team round damage'},e=>Number(e.t.battle.maxBoutDamage)||0,e=>dmg(Number(e.t.battle.maxBoutDamage)||0),'desc'],
+    ['rounds',{zh:'最少回合通关',en:'Fewest rounds'},e=>Number(e.t.battle.stageRoundCount)||1e9,e=>`${e.t.battle.stageRoundCount} ${ui('回合','rounds')}`,'asc'],
+    ['block',{zh:'最高格挡',en:'Highest block'},e=>Number(e.m.block)||0,e=>dmg(Number(e.m.block)||0),'desc'],
+    ['heal',{zh:'最高治疗',en:'Highest heal'},e=>Number(e.m.heal)||0,e=>dmg(Number(e.m.heal)||0),'desc']
+  ];
+  function detailRow(r){
+    const info=n=>ctx.characterInfo?ctx.characterInfo(n).name:(n.canonicalName||n.name);
+    const blocks=DETAIL_BLOCKS.map(([k,l,val,fmt,dir])=>{
+      let list=[...r.entries].sort((a,b)=>dir==='asc'?val(a)-val(b):val(b)-val(a));
+      // one entry per player so a single account does not fill the whole top list
+      const seen=new Set();list=list.filter(e=>{const u=String(e.rec.uid);if(seen.has(u))return false;seen.add(u);return true}).slice(0,TOP);
+      if(k==='block'||k==='heal')list=list.filter(e=>val(e)>0);
+      return `<div class="dtideBattleBlock"><h5>${ui(l.zh,l.en)}</h5>${list.map((e,i)=>{
+        const code=String(e.t.battleUuid||'');
+        return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. #${esc(e.rec.rank??'—')} ${esc(e.rec.player)}</b><span>${fmt(e)}</span></div><div class="mem">${(e.t.members||[]).map(m=>`<i${m===e.m?' class="me"':''}>${esc(info(m))}</i>`).join('')}</div><div class="ft"><small>Wave ${esc(e.w.wave)} · ${esc(e.t.stageName||'')} · ${esc(e.rec.score??'')}${ui('分','pts')}${e.t.clearType==='extra'?' · Extra':''}</small>${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}</div></div>`}).join('')||`<div class="dtideEmpty">${ui('暂无','None')}</div>`}</div>`;
+    }).join('');
+    return `<tr class="dtideBattleDetail"><td colspan="${CCOLS.length+2}"><div class="dtideBattleBlocks">${blocks}</div></td></tr>`;
   }
   function drawChars(){
     const cs=state.cs,all=buildChars(),minN=Math.max(1,Number(cs.min)||1),q=cs.q.trim().toLowerCase();
@@ -120,7 +145,7 @@
       </div>
       <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”.')}</p>
       <div class="dtideBattleScroll"><table class="dtideBattleTable dtideBattleChars"><thead><tr><th>${ui('排名','Rank')}</th><th><button type="button" data-csort="name">${ui('角色','Awakener')}${cs.sort==='name'?(cs.dir>0?' ▲':' ▼'):''}</button></th>${CCOLS.map(th).join('')}</tr></thead><tbody>${
-        slice.map((r,i)=>`<tr><td>${i+1}</td><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${CCOLS.length+2}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
+        slice.map((r,i)=>`<tr class="dtideBattleCharRow" data-cchar="${esc(r.key)}" aria-expanded="${cs.open.has(r.key)}" title="${ui('点击展开：查看最高伤害 / 最高死扛等队伍并复制回放','Click to expand: top teams and replay codes')}"><td>${i+1}</td><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>${cs.open.has(r.key)?detailRow(r):''}`).join('')||`<tr><td colspan="${CCOLS.length+2}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
       }</tbody></table></div>`;
   }
 
@@ -326,6 +351,8 @@
     if(dl){downloadImage(dl);return}
     const view=e.target.closest('[data-bview]');
     if(view){state.view=view.dataset.bview;draw();return}
+    const crow=e.target.closest('[data-cchar]');
+    if(crow&&!e.target.closest('.dtideBattleDetail')){const k=crow.dataset.cchar;if(state.cs.open.has(k))state.cs.open.delete(k);else state.cs.open.add(k);draw();return}
     const cs=e.target.closest('[data-csort]');
     if(cs){const k=cs.dataset.csort;if(state.cs.sort===k)state.cs.dir*=-1;else{state.cs.sort=k;state.cs.dir=k==='name'?1:-1}state.cs.page=0;draw();return}
     const sort=e.target.closest('[data-bsort]');
