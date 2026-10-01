@@ -272,7 +272,8 @@
   async function datasetFor(id){
     const key=String(id);if(cache.has(key))return cache.get(key);
     const loader=window.MorimensDtideDataLoader;if(!loader?.loadDataset)throw new Error('D-Zone loader unavailable');
-    const entry=manifest.availableSeasons?.find(x=>String(x.seasonId)===key);
+    // '69-postbug' is a snapshot entry (final Top 2000 after the fix); plain ids match the main entry of the season
+    const entry=manifest.availableSeasons?.find(x=>key.includes('-')?String(x.snapshotId)===key:(String(x.seasonId)===key&&!x.snapshotId));
     if(!entry)throw new Error('Season '+key+' unavailable');
     const source=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex.path:entry.path;
     const base=await loader.loadDataset(source);
@@ -284,11 +285,12 @@
     cache.set(key,merged);return merged;
   }
   async function bundleFor(id){
-    if(String(id)==='all'){
-      const [s68,s69]=await Promise.all([datasetFor('68'),datasetFor('69')]);
-      return [{seasonId:'68',data:s68},{seasonId:'69',data:s69}];
-    }
-    return [{seasonId:String(id),data:await datasetFor(id)}];
+    // Season 69 = pre-bug stack + post-bug final Top 2000 (events are de-duplicated by battle id)
+    const one=async sid=>sid==='69'
+      ?[{seasonId:'69',data:await datasetFor('69')},{seasonId:'69',data:await datasetFor('69-postbug').catch(()=>null)}].filter(x=>x.data)
+      :[{seasonId:sid,data:await datasetFor(sid)}];
+    if(String(id)==='all')return (await Promise.all(['68','69','70'].map(one))).flat();
+    return one(String(id));
   }
 
   function indexShowcaseTids(bundle){
@@ -871,8 +873,8 @@
     const bySel=sel=>root.querySelector(sel);
     setText($('morimensAssistTitle'),'互助助战列表','Assist List');
     setText($('morimensAssistLead'),
-      '整理第68、69期融灾记录中实际被借用的助战配置。按助战提供者 UID 与角色配装聚合，统计被使用次数。',
-      'Aggregates Assist builds actually borrowed in D-Zone Seasons 68 and 69, grouped by provider UID and Awakener build with observed use counts.'
+      '整理第68、69、70期融灾记录中实际被借用的助战配置。按助战提供者 UID 与角色配装聚合，统计被使用次数。',
+      'Aggregates Assist builds actually borrowed in D-Zone Seasons 68, 69 and 70, grouped by provider UID and Awakener build with observed use counts.'
     );
     if($('morimensAssistStatus')&&!initialized)setText($('morimensAssistStatus'),'等待载入','Waiting to load');
 
@@ -989,7 +991,8 @@
     const season=$('assistSeason');
     if(season){
       const texts={
-        all:ui('全部期次（68 + 69）','All Seasons (68 + 69)'),
+        all:ui('全部期次（68 + 69 + 70）','All Seasons (68 + 69 + 70)'),
+        '70':ui('第 70 期','Season 70'),
         '69':ui('第 69 期','Season 69'),
         '68':ui('第 68 期','Season 68')
       };
@@ -999,8 +1002,8 @@
 
     const coverage=$('assistCoverageNote');
     if(coverage)coverage.innerHTML=zh()
-      ?'数据只统计仓库现有第68、69期记录中明确标记为 <code>borrowed</code> 且带 <code>assistUid</code> 的助战角色。当前手动/自动导入仅使用 Eremora Showcase，不包含技能、灵塑；需要完整养成信息请点击 UID 查看 Eremora 玩家详情。密契“最终词条”只汇总带 <code>rollQuality</code> 的洗练词条。'
-      :'Only Assist Awakeners explicitly marked <code>borrowed</code> with an <code>assistUid</code> in the stored Season 68/69 records are counted. Manual/automatic imports use Eremora Showcase only and do not include Skills or Soulforge; click a UID for full progression details on Eremora. “Final substats” include only rolled Covenant substats carrying <code>rollQuality</code>.';
+      ?'数据只统计仓库现有第68、69、70期记录中明确标记为 <code>borrowed</code> 且带 <code>assistUid</code> 的助战角色。当前手动/自动导入仅使用 Eremora Showcase，不包含技能、灵塑；需要完整养成信息请点击 UID 查看 Eremora 玩家详情。密契“最终词条”只汇总带 <code>rollQuality</code> 的洗练词条。'
+      :'Only Assist Awakeners explicitly marked <code>borrowed</code> with an <code>assistUid</code> in the stored Season 68/69/70 records are counted. Manual/automatic imports use Eremora Showcase only and do not include Skills or Soulforge; click a UID for full progression details on Eremora. “Final substats” include only rolled Covenant substats carrying <code>rollQuality</code>.';
 
     const table=$('assistTable');
     if(table&&!initialized&&table.querySelector('.dtideEmpty')){
@@ -1137,7 +1140,7 @@
       const counts=bundle.map(({seasonId,data})=>'第 '+seasonId+' 期 '+Number(data?.recordCount||data?.records?.length||0)+' 条').join(' + ');
       note.innerHTML=zh()
         ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>Eremora Showcase 导入</b>只覆盖当前助战配置，来源会明确标记，但同一 UID + 角色的历史融灾借用次数、借用人数与期次会继续合并累计。'
-        :(activeSeason==='all'?'All stored Season 68 and 69 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora Showcase imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
+        :(activeSeason==='all'?'All stored Season 68, 69 and 70 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora Showcase imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
     }
   }
   function bindImportDelegates(){

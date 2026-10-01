@@ -34,7 +34,12 @@
       .dtideBattleFilters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
       .dtideBattleFilters label{display:block;font-size:11px;color:#8290a2;margin-bottom:3px}
       .dtideBattleFilters .pair{display:flex;gap:4px;align-items:center}.dtideBattleFilters input,.dtideBattleFilters select{width:100%;min-width:0}
-      .dtideBattleScroll{overflow:auto}.dtideBattleTable{width:100%;border-collapse:collapse;font-size:12px}
+      .dtideBattleScroll{overflow:auto}
+      /* rank + name columns stay visible while dragging right */
+      .dtideBattleTable th:nth-child(1),.dtideBattleTable td:nth-child(1){position:sticky;left:0;z-index:2;width:58px;min-width:58px;max-width:58px;text-align:center;background:#0f1927}
+      .dtideBattleTable th:nth-child(2),.dtideBattleTable td:nth-child(2){position:sticky;left:58px;z-index:2;background:#0f1927;box-shadow:1px 0 0 rgba(148,163,184,.18)}
+      .dtideBattleTable thead th:nth-child(1),.dtideBattleTable thead th:nth-child(2){z-index:3;background:#111827}
+      .dtideBattleChars td:nth-child(2){min-width:110px}.dtideBattleTable{width:100%;border-collapse:collapse;font-size:12px}
       .dtideBattleTable th,.dtideBattleTable td{padding:6px 9px;border-bottom:1px solid rgba(148,163,184,.12);text-align:right;white-space:nowrap}
       .dtideBattleTable:not(.dtideBattleChars) th:nth-child(2),.dtideBattleTable:not(.dtideBattleChars) td:nth-child(2){text-align:left}.dtideBattleChars th:nth-child(2),.dtideBattleChars td:nth-child(2){text-align:left}
       .dtideBattleTable th button{all:unset;cursor:pointer;font-weight:700;color:#ead9b9}.dtideBattleTable th button:hover{text-decoration:underline}
