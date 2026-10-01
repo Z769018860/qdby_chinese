@@ -464,7 +464,7 @@
   function renderEnlight(){
     $('dtideUsageEnlight')?.remove();
   }
-  function renderBattleStats(){const host=$('dtideBattle');if(!host||!window.MorimensDtideBattle)return;window.MorimensDtideBattle.render(host,{records:usage?.aggregateOnly?[]:(usage?.records||[]),rankOf,scoreOf,rankMatches,scoreMatches,rankCap:selectedRankCap(),difficulty:$('dtideDifficulty')?.value||'all',clearType:$('dtideClearType')?.value||'all',difficultyOf,memberKey,characterInfo,battlePath:activeEntry?.battleDetailPath||null})}
+  function renderBattleStats(){const host=$('dtideBattle');if(!host||!window.MorimensDtideBattle)return;window.MorimensDtideBattle.render(host,{records:usage?.aggregateOnly?[]:(usage?.records||[]),rankOf,scoreOf,rankMatches,scoreMatches,rankCap:selectedRankCap(),difficulty:$('dtideDifficulty')?.value||'all',clearType:$('dtideClearType')?.value||'all',difficultyOf,memberKey,characterInfo,wheelName,covenantName,tokenName,creationName:itemName,battlePath:activeEntry?.battleDetailPath||null})}
   function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight();renderBattleStats()})}
 
   function fallbackStats(records){

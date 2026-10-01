@@ -5,9 +5,9 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const METRICS={
-    death:{zh:'平均死扛',en:'Avg Death Resist',get:r=>r.avgDeath,fmt:v=>v.toFixed(2),teamVal:b=>b.deathResistCount},
-    rounds:{zh:'平均回合数',en:'Avg Rounds',get:r=>r.avgRounds,fmt:v=>v.toFixed(2),teamVal:b=>b.stageRoundCount},
-    bout:{zh:'单回合最高伤害',en:'Max Single-Round Damage',get:r=>r.maxBout,fmt:dmg,teamVal:b=>b.maxBoutDamage}
+    death:{zh:'队伍平均死扛',en:'Team Avg Death Resist',get:r=>r.avgDeath,fmt:v=>v.toFixed(2),teamVal:b=>b.deathResistCount},
+    rounds:{zh:'队伍平均回合数',en:'Team Avg Rounds',get:r=>r.avgRounds,fmt:v=>v.toFixed(2),teamVal:b=>b.stageRoundCount},
+    bout:{zh:'队伍单回合最高伤害',en:'Team Max Single-Round Damage',get:r=>r.maxBout,fmt:dmg,teamVal:b=>b.maxBoutDamage}
   };
   const TIERS=[[1,50],[51,200],[201,500],[501,1000],[1001,2000]];
   const BINS=10;
@@ -42,7 +42,7 @@
       .dtideHeatGrid{display:grid;gap:2px;font-size:11px;min-width:520px}.dtideHeatGrid>div{padding:6px 4px;text-align:center;border-radius:4px;background:rgba(255,255,255,.03)}
       .dtideHeatGrid .hd{background:none;color:#8290a2}.dtideHeatGrid .rowhd{text-align:left;background:none;color:#ead9b9;font-weight:700}
       .dtideHeatGrid .cell{cursor:pointer;color:#f4f7fb}.dtideHeatGrid .cell:hover{outline:1px solid #f1d69f}.dtideHeatGrid .cell.empty{cursor:default;color:#5b6676}
-      .dtideBattleCharRow{cursor:pointer}.dtideBattleCharRow:hover td:first-child,.dtideBattleCharRow[aria-expanded=true] td:first-child{box-shadow:inset 3px 0 0 #f1d69f}.dtideBattleDetail td{padding:10px;text-align:left!important;white-space:normal!important;background:rgba(255,255,255,.02)}.dtideBattleBlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.dtideBattleBlock{min-width:0}.dtideBattleBlock h5{margin:0 0 6px;font-size:12px;color:#f1d69f}.dtideBattleTeam{padding:8px;margin-bottom:6px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(255,255,255,.025)}.dtideBattleTeam .hd{display:flex;justify-content:space-between;gap:8px;font-size:12px}.dtideBattleTeam .hd span{color:#f1d69f;font-weight:700;white-space:nowrap}.dtideBattleTeam .mem{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.dtideBattleTeam .mem i{font-style:normal;font-size:11px;padding:2px 6px;border-radius:6px;background:rgba(148,163,184,.12)}.dtideBattleTeam .mem i.me{background:rgba(241,214,159,.22);color:#f1d69f}.dtideBattleTeam .ft{display:flex;justify-content:space-between;align-items:center;gap:8px}.dtideBattleTeam .ft small{color:#8290a2}.dtideBattleTeam .ft .btns{display:flex;gap:6px;flex:0 0 auto}.dtideBattleTeam .ft button,.dtideBattleLink{white-space:nowrap;flex:0 0 auto}.dtideBattleLink{border:1px solid rgba(213,177,118,.34);border-radius:7px;background:rgba(213,177,118,.09);color:#e5c894;padding:5px 8px;font:700 10px/1.2 inherit;text-decoration:none}.dtideBattleLink:hover{background:rgba(213,177,118,.18);border-color:rgba(213,177,118,.62)}.dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
+      .dtideBattleCharRow{cursor:pointer}.dtideBattleCharRow:hover td:first-child,.dtideBattleCharRow[aria-expanded=true] td:first-child{box-shadow:inset 3px 0 0 #f1d69f}.dtideBattleDetail td{padding:10px;text-align:left!important;white-space:normal!important;background:rgba(255,255,255,.02)}.dtideBattleBlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.dtideBattleBlock{min-width:0}.dtideBattleBlock h5{margin:0 0 6px;font-size:12px;color:#f1d69f}.dtideBattleTeam{padding:8px;margin-bottom:6px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(255,255,255,.025)}.dtideBattleTeam .hd{display:flex;justify-content:space-between;gap:8px;font-size:12px}.dtideBattleTeam .hd span{color:#f1d69f;font-weight:700;white-space:nowrap}.dtideBattleTeam .mem{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.dtideBattleTeam .mem i{font-style:normal;font-size:11px;padding:2px 6px;border-radius:6px;background:rgba(148,163,184,.12)}.dtideBattleTeam .mem i.me{background:rgba(241,214,159,.22);color:#f1d69f}.dtideBattleTeam .ft{display:flex;justify-content:space-between;align-items:center;gap:8px}.dtideBattleTeam .ft small{color:#8290a2}.dtideBattleTeam .ft .btns{display:flex;gap:6px;flex:0 0 auto}.dtideBattleTeam .ft button,.dtideBattleLink{white-space:nowrap;flex:0 0 auto}.dtideBattleLink{border:1px solid rgba(213,177,118,.34);border-radius:7px;background:rgba(213,177,118,.09);color:#e5c894;padding:5px 8px;font:700 10px/1.2 inherit;text-decoration:none}.dtideBattleLink:hover{background:rgba(213,177,118,.18);border-color:rgba(213,177,118,.62)}.dtideBattleTeam .gears{display:grid;gap:3px;margin:6px 0}.dtideBattleTeam .gear{font-size:12px;line-height:1.4}.dtideBattleTeam .gear b{color:#f4f7fb}.dtideBattleTeam .gear em{font-style:normal;font-size:10px;margin-left:5px;padding:1px 5px;border-radius:5px;background:rgba(98,183,255,.18);color:#9fd0ff}.dtideBattleTeam .gear small,.dtideBattleTeam .extra small{display:block;color:#8d9aac;font-size:11px}.dtideBattleTeam .extra{margin-bottom:6px}.dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
     document.head.appendChild(st);
   }
 
@@ -51,17 +51,17 @@
     const out=[];
     for(const rec of records){
       if(!rankMatches(rec,rankCap)||!scoreMatches(rec))continue;
-      let n=0,death=0,rounds=0,bout=0;const waves={};
+      let n=0,death=0,rounds=0,bout=0;const waves={},teams=[];
       for(const w of rec.waves||[])for(const t of w.teams||[]){
         if(!t.battle)continue;
         if(difficulty!=='all'&&difficultyOf(t,w)!==difficulty)continue;
         if(clearType!=='all'&&clearType!==t.clearType)continue;
         n++;death+=Number(t.battle.deathResistCount)||0;rounds+=Number(t.battle.stageRoundCount)||0;
         bout=Math.max(bout,Number(t.battle.maxBoutDamage)||0);
-        (waves[w.wave]??=[]).push(t.battle);
+        (waves[w.wave]??=[]).push(t.battle);teams.push({w,t});
       }
       if(!n)continue;
-      out.push({rec,rank:rankOf(rec),uid:rec.uid,name:rec.player,score:scoreOf(rec),n,avgDeath:death/n,avgRounds:rounds/n,maxBout:bout,waves});
+      out.push({rec,rank:rankOf(rec),uid:rec.uid,name:rec.player,score:scoreOf(rec),n,avgDeath:death/n,avgRounds:rounds/n,maxBout:bout,waves,teams});
     }
     return out;
   }
@@ -76,10 +76,11 @@
     ['maxDmg',{zh:'单场最高伤害',en:'Max Damage'},dmg],
     ['avgBlock',{zh:'平均格挡',en:'Avg Block'},dmg],
     ['avgHeal',{zh:'平均治疗',en:'Avg Heal'},dmg],
-    ['avgDeath',{zh:'平均死扛',en:'Avg Death Resist'},v=>v.toFixed(2)],
-    ['avgRounds',{zh:'平均回合数',en:'Avg Rounds'},v=>v.toFixed(2)],
-    ['avgCards',{zh:'平均出牌数',en:'Avg Cards'},v=>v.toFixed(1)],
-    ['avgEnergy',{zh:'平均能量（银钥）消耗',en:'Avg Energy (Silver Key) Cost'},v=>v.toFixed(1)],
+    ['avgDeath',{zh:'队伍平均死扛',en:'Team Avg Death Resist'},v=>v.toFixed(2)],
+    ['avgRounds',{zh:'队伍平均回合数',en:'Team Avg Rounds'},v=>v.toFixed(2)],
+    ['avgCards',{zh:'队伍平均出牌数',en:'Team Avg Cards'},v=>v.toFixed(1)],
+    ['avgBoutCost',{zh:'队伍平均单回合最多算力消耗',en:'Team Avg Max Round Compute'},v=>v.toFixed(1)],
+    ['maxBoutCost',{zh:'队伍单回合最多算力消耗',en:'Team Max Round Compute'},v=>String(v)],
     ['avgBout',{zh:'队伍平均单回合最高伤害',en:'Team Avg Max Round Dmg'},dmg],
     ['maxBout',{zh:'队伍单回合最高伤害',en:'Team Max Round Dmg'},dmg]
   ];
@@ -95,19 +96,19 @@
         const total=(t.members||[]).reduce((s,m)=>s+(Number(m.damage)||0),0);
         if(!(total>0))continue;
         for(const m of t.members||[]){
-          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,entries:[],n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sEnergy:0,sBout:0,maxBout:0};
+          const key=String((memberKey&&memberKey(m))||m.ingameId||m.name),a=map.get(key)||{key,m,entries:[],n:0,sShare:0,maxShare:0,sDmg:0,maxDmg:0,sBlock:0,sHeal:0,sDeath:0,sRounds:0,sCards:0,sBoutCost:0,maxBoutCost:0,sBout:0,maxBout:0};
           const d=Number(m.damage)||0,share=d/total;
           a.entries.push({rec,w,t,m,share,d});
           a.n++;a.sShare+=share;a.maxShare=Math.max(a.maxShare,share);a.sDmg+=d;a.maxDmg=Math.max(a.maxDmg,d);
           a.sBlock+=Number(m.block)||0;a.sHeal+=Number(m.heal)||0;a.sDeath+=Number(b.deathResistCount)||0;a.sRounds+=Number(b.stageRoundCount)||0;
-          a.sCards+=Number(b.totalUseCard)||0;a.sEnergy+=Number(b.totalEnergyCost)||0;a.sBout+=Number(b.maxBoutDamage)||0;a.maxBout=Math.max(a.maxBout,Number(b.maxBoutDamage)||0);
+          a.sCards+=Number(b.totalUseCard)||0;a.sBoutCost+=Number(b.maxBoutEnergyCost)||0;a.maxBoutCost=Math.max(a.maxBoutCost,Number(b.maxBoutEnergyCost)||0);a.sBout+=Number(b.maxBoutDamage)||0;a.maxBout=Math.max(a.maxBout,Number(b.maxBoutDamage)||0);
           map.set(key,a);
         }
       }
     }
     return [...map.values()].map(a=>{
       const info=characterInfo?characterInfo(a.m):{name:a.m.canonicalName||a.m.name,image:''};
-      return {key:a.key,entries:a.entries,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgEnergy:a.sEnergy/a.n,avgBout:a.sBout/a.n,maxBout:a.maxBout};
+      return {key:a.key,entries:a.entries,name:info.name||a.m.name,image:info.image||'',n:a.n,avgShare:a.sShare/a.n,maxShare:a.maxShare,avgDmg:a.sDmg/a.n,maxDmg:a.maxDmg,avgBlock:a.sBlock/a.n,avgHeal:a.sHeal/a.n,avgDeath:a.sDeath/a.n,avgRounds:a.sRounds/a.n,avgCards:a.sCards/a.n,avgBoutCost:a.sBoutCost/a.n,maxBoutCost:a.maxBoutCost,avgBout:a.sBout/a.n,maxBout:a.maxBout};
     });
   }
 
@@ -115,9 +116,10 @@
   const DETAIL_BLOCKS=[
     ['maxShare',{zh:'最高伤害占比',en:'Highest damage share'},e=>e.share,e=>`${SHARE(e.share)} · ${dmg(e.d)}`,'desc'],
     ['maxDmg',{zh:'最高伤害',en:'Highest damage'},e=>e.d,e=>`${dmg(e.d)} · ${SHARE(e.share)}`,'desc'],
-    ['death',{zh:'最高死扛',en:'Most Death Resist'},e=>Number(e.t.battle.deathResistCount)||0,e=>`${e.t.battle.deathResistCount||0} ${ui('次','times')}`,'desc'],
+    ['death',{zh:'队伍最高死扛',en:'Team most Death Resist'},e=>Number(e.t.battle.deathResistCount)||0,e=>`${e.t.battle.deathResistCount||0} ${ui('次','times')}`,'desc'],
     ['bout',{zh:'队伍单回合最高伤害',en:'Highest team round damage'},e=>Number(e.t.battle.maxBoutDamage)||0,e=>dmg(Number(e.t.battle.maxBoutDamage)||0),'desc'],
-    ['rounds',{zh:'最少回合通关',en:'Fewest rounds'},e=>Number(e.t.battle.stageRoundCount)||1e9,e=>`${e.t.battle.stageRoundCount} ${ui('回合','rounds')}`,'asc'],
+    ['rounds',{zh:'队伍最少回合通关',en:'Team fewest rounds'},e=>Number(e.t.battle.stageRoundCount)||1e9,e=>`${e.t.battle.stageRoundCount} ${ui('回合','rounds')}`,'asc'],
+    ['cost',{zh:'队伍单回合最多算力消耗',en:'Team highest round compute'},e=>Number(e.t.battle.maxBoutEnergyCost)||0,e=>`${e.t.battle.maxBoutEnergyCost||0} ${ui('算力','compute')}`,'desc'],
     ['block',{zh:'最高格挡',en:'Highest block'},e=>Number(e.m.block)||0,e=>dmg(Number(e.m.block)||0),'desc'],
     ['heal',{zh:'最高治疗',en:'Highest heal'},e=>Number(e.m.heal)||0,e=>dmg(Number(e.m.heal)||0),'desc']
   ];
@@ -145,7 +147,7 @@
         <div class="dtideField"><label>${ui('搜索角色','Search awakener')}</label><input type="search" data-cq value="${esc(cs.q)}" placeholder="${ui('角色名','Name')}"></div>
         <div class="dtideField"><label>${ui('最少出场队伍数','Min teams')}</label><input type="number" min="1" data-cmin value="${esc(cs.min)}"></div>
       </div>
-      <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。能量（银钥）消耗 = 每场战斗出牌累计消耗的能量（游戏字段 totalEnergyCost，平均约 1.1 点/张牌，与出牌数同量级），按“银钥”理解。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”. Energy (Silver Key) cost = total energy spent on cards per battle (game field totalEnergyCost, ≈1.1 per card), interpreted as Silver Keys.')}</p>
+      <p class="dtideBattleNote">${ui('伤害占比 = 角色造成的伤害 ÷ 同队 4 名角色伤害之和（不含未归属角色的伤害，如灵魂/战场效果）。最高伤害占比对出场很少的角色参考价值低，可调高“最少出场队伍数”。算力消耗来自游戏字段 maxBoutEnergyCost（单回合出牌累计消耗的算力），“队伍”开头的列是整支队伍的战斗数据，其余为该角色自身数据。','Damage share = awakener damage ÷ total damage of the 4 awakeners in the team (unattributed damage excluded). Max share is noisy for rarely used awakeners — raise “Min teams”. Compute cost comes from the game field maxBoutEnergyCost (compute spent on cards in one round). Columns starting with “Team” are whole-team battle data; the others are the awakener’s own.')}</p>
       <div class="dtideBattleScroll"><table class="dtideBattleTable dtideBattleChars"><thead><tr><th>${ui('排名','Rank')}</th><th><button type="button" data-csort="name">${ui('角色','Awakener')}${cs.sort==='name'?(cs.dir>0?' ▲':' ▼'):''}</button></th>${CCOLS.map(th).join('')}</tr></thead><tbody>${
         slice.map((r,i)=>`<tr class="dtideBattleCharRow" data-cchar="${esc(r.key)}" aria-expanded="${cs.open.has(r.key)}" title="${ui('点击展开：查看最高伤害 / 最高死扛等队伍并复制回放','Click to expand: top teams and replay codes')}"><td>${i+1}</td><td>${r.image?`<img src="${esc(r.image)}" alt="" loading="lazy" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:6px">`:''}${esc(r.name)}</td>${CCOLS.map(([k,,f])=>`<td class="heat" style="${k==='n'?'':heat(pctile(cols[k],r[k]))}">${f(r[k])}</td>`).join('')}</tr>${cs.open.has(r.key)?detailRow(r):''}`).join('')||`<tr><td colspan="${CCOLS.length+2}" style="text-align:center">${ui('没有符合条件的角色','No awakeners match')}</td></tr>`
       }</tbody></table></div>`;
@@ -309,22 +311,51 @@
     const sub=(k,l)=>`<button type="button" class="dtideLeaderboardTab" data-bview="${k}" aria-selected="${state.view===k}">${l}</button>`;
     host.innerHTML=`<div class="dtideLeaderboardTabs">${sub('chars',ui('角色战斗数据','By Awakener'))}${sub('players',ui('玩家战斗榜 · 热力图','By Player · Heatmaps'))}<button type="button" class="dtideTableDownload" data-bdownload style="margin-left:auto">${ui('下载图片','Download Image')}</button></div>`+(state.view==='chars'?drawChars():drawPlayers());
   }
+
+  // Top-5 teams for the "peak" battle statistics that are shown as concrete teams instead of table columns
+  const PEAKS=[
+    ['maxStrength',{zh:'最高力量',en:'Highest Strength'},b=>Number(b.maxStrength)||0,v=>String(v)],
+    ['maxPosion',{zh:'最高中毒',en:'Highest Poison'},b=>Number(b.maxPosion)||0,v=>dmg(v)],
+    ['maxCounterAtt',{zh:'最高反击',en:'Highest Counter'},b=>Number(b.maxCounterAtt)||0,v=>dmg(v)],
+    ['maxTentacleDamage',{zh:'最高触腕伤害',en:'Highest Tentacle Damage'},b=>Number(b.maxTentacleDamage)||0,v=>dmg(v)]
+  ];
+  function peakTeams(list){
+    const nm=(f,x)=>{try{return (f?f(x):x.name)||x.name}catch{return x?.name}};
+    const blocks=PEAKS.map(([k,l,get,fmt])=>{
+      const all=[];for(const r of list)for(const {w,t} of r.teams||[]){const v=get(t.battle);if(v>0)all.push({r,w,t,v})}
+      all.sort((a,b)=>b.v-a.v);
+      const seen=new Set(),top=[];for(const e of all){if(seen.has(e.r.uid))continue;seen.add(e.r.uid);top.push(e);if(top.length>=5)break}
+      return `<div class="dtideBattleBlock"><h5>${ui(l.zh,l.en)} · Top 5</h5>${top.map((e,i)=>{
+        const code=String(e.t.battleUuid||'');
+        const members=(e.t.members||[]).map(m=>{
+          const name=ctx.characterInfo?ctx.characterInfo(m).name:(m.canonicalName||m.name);
+          const wheels=(m.wheels||[]).map(x=>nm(ctx.wheelName,x)).filter(Boolean).join(' / ');
+          const cov=(m.covenants||[]).map(x=>nm(ctx.covenantName,x)).filter(Boolean).join(' / ');
+          return `<div class="gear"><b>${esc(name)}</b>${m.borrowed?`<em>${ui('助战','assist')}</em>`:''}<small>${wheels?esc(wheels):'—'}${cov?` · ${esc(cov)}`:''}</small></div>`;
+        }).join('');
+        const extra=[e.t.token?nm(ctx.tokenName,e.t.token):'',...(e.t.creations||[]).map(x=>nm(ctx.creationName,x))].filter(Boolean);
+        return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. #${esc(e.r.rank??'—')} ${esc(clean(e.r.name))}</b><span>${fmt(e.v)}</span></div><div class="gears">${members}</div>${extra.length?`<div class="extra"><small>${ui('守密人技能 / 造物：','Keeper skill / creations: ')}${esc(extra.join(' · '))}</small></div>`:''}<div class="ft"><small>Wave ${esc(e.w.wave)} · ${esc(e.t.stageName||'')} · ${esc(e.r.score??'')}${ui('分','pts')}${e.t.clearType==='extra'?' · Extra':''}</small><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}${e.r.rec.url?`<a class="dtideBattleLink" href="${esc(e.r.rec.url)}" target="_blank" rel="noopener noreferrer">${ui('Eremora 队伍','Eremora Teams')} ↗</a>`:''}</span></div></div>`;
+      }).join('')||`<div class="dtideEmpty">${ui('暂无','None')}</div>`}</div>`;
+    }).join('');
+    return `<h4>${ui('极值队伍 Top 5（含具体配置）','Peak-stat teams, Top 5 (with builds)')}</h4><div class="dtideBattleBlocks">${blocks}</div>`;
+  }
   function drawPlayers(){
     const f=state.f,base=rows,list=sortRows(base.filter(passes)),stats=colStats(base);
     const slice=list;
     const pair=(k,label,unit)=>`<div class="dtideField"><label>${label}${unit?` (${unit})`:''}</label><div class="pair"><input type="number" min="0" step="any" data-bf="${k}:0" value="${esc(f[k][0])}" placeholder="${ui('最低','min')}"><input type="number" min="0" step="any" data-bf="${k}:1" value="${esc(f[k][1])}" placeholder="${ui('最高','max')}"></div></div>`;
     const th=(k,label)=>`<th><button type="button" data-bsort="${k}">${label}${state.sort===k?(state.dir>0?' ▲':' ▼'):''}</button></th>`;
-    return `      <p class="dtideBattleNote">${ui('统计口径：平均死扛 = 每场战斗死扛触发次数的平均值；平均回合数 = 每场战斗回合数（stageRoundCount）的平均值；单回合最高伤害 = 该玩家所有战斗中的最大单回合伤害。受上方期次、榜单范围、难度、总得分与队伍类型筛选影响。','Avg Death Resist = mean Death Resist triggers per battle; Avg Rounds = mean stageRoundCount per battle; Max Single-Round Damage = highest single-round damage across the player’s battles. Follows the season, rank scope, difficulty, total score and team-type filters above.')}</p>
+    return `      <p class="dtideBattleNote">${ui('统计口径：队伍平均死扛 = 每场战斗死扛触发次数的平均值；队伍平均回合数 = 每场战斗回合数（stageRoundCount）的平均值；队伍单回合最高伤害 = 该玩家所有战斗中的最大单回合伤害。受上方期次、榜单范围、难度、总得分与队伍类型筛选影响。','Avg Death Resist = mean Death Resist triggers per battle; Avg Rounds = mean stageRoundCount per battle; Max Single-Round Damage = highest single-round damage across the player’s battles. Follows the season, rank scope, difficulty, total score and team-type filters above.')}</p>
       <div class="dtideBattleFilters">
         <div class="dtideField"><label>${ui('排名区间','Rank range')}</label><div class="pair"><input type="number" min="1" max="2000" data-bf="rankFrom" value="${esc(f.rankFrom)}" placeholder="1"><input type="number" min="1" max="2000" data-bf="rankTo" value="${esc(f.rankTo)}" placeholder="2000"></div></div>
-        ${pair('death',ui('平均死扛','Avg Death Resist'))}${pair('rounds',ui('平均回合数','Avg Rounds'))}${pair('bout',ui('单回合最高伤害','Max Round Damage'),ui('万','×10k'))}
+        ${pair('death',ui('队伍平均死扛','Team Avg Death Resist'))}${pair('rounds',ui('队伍平均回合数','Team Avg Rounds'))}${pair('bout',ui('队伍单回合最高伤害','Team Max Round Damage'),ui('万','×10k'))}
         <div class="dtideField"><label>${ui('热力图指标','Heatmap metric')}</label><select data-bmetric>${Object.entries(METRICS).map(([k,v])=>`<option value="${k}"${state.metric===k?' selected':''}>${ui(v.zh,v.en)}</option>`).join('')}</select></div>
         <div class="dtideField"><label>&nbsp;</label><button type="button" class="ghostBtn" data-breset>${ui('清空筛选','Reset')}</button></div>
       </div>
+      ${peakTeams(list)}
       <h4>${ui('热力图 · 数值分布','Heatmap · Distribution')} — ${ui(METRICS[state.metric].zh,METRICS[state.metric].en)}</h4>${distHeat(base)}
       <h4>${ui('热力图 · 各 Wave 平均值','Heatmap · Mean by Wave')}</h4>${waveHeat(base)}
       <h4>${ui('榜单','Leaderboard')} <small style="color:#8290a2">${ui(`匹配 ${list.length} / ${base.length} 名玩家`,`${list.length} / ${base.length} players`)}</small></h4>
-      <div class="dtideBattleScroll"><table class="dtideBattleTable"><thead><tr>${th('rank',ui('排名','Rank'))}<th>${ui('玩家','Player')}</th>${th('score',ui('总分','Score'))}${th('death',ui('平均死扛','Avg Death Resist'))}${th('rounds',ui('平均回合数','Avg Rounds'))}${th('bout',ui('单回合最高伤害','Max Round Damage'))}${th('n',ui('战斗数','Battles'))}</tr></thead><tbody>${
+      <div class="dtideBattleScroll"><table class="dtideBattleTable"><thead><tr>${th('rank',ui('排名','Rank'))}<th>${ui('玩家','Player')}</th>${th('score',ui('总分','Score'))}${th('death',ui('队伍平均死扛','Team Avg Death Resist'))}${th('rounds',ui('队伍平均回合数','Team Avg Rounds'))}${th('bout',ui('队伍单回合最高伤害','Team Max Round Damage'))}${th('n',ui('战斗数','Battles'))}</tr></thead><tbody>${
         slice.map(r=>`<tr><td>#${esc(r.rank??'—')}</td><td>${r.rec.url?`<a href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer">${esc(clean(r.name))}</a>`:esc(clean(r.name))}</td><td>${esc(r.score??'—')}</td><td class="heat" style="${heat(pctile(stats.death,r.avgDeath))}">${r.avgDeath.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.rounds,r.avgRounds))}">${r.avgRounds.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.bout,r.maxBout))}">${dmg(r.maxBout)}</td><td>${r.n}</td></tr>`).join('')||`<tr><td colspan="7" style="text-align:center">${ui('没有符合条件的玩家','No players match')}</td></tr>`
       }</tbody></table></div>`;
   }
