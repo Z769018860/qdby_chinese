@@ -1,0 +1,86 @@
+{
+  "season": 69,
+  "snapshot": "69-postbug",
+  "activityTid": 83329,
+  "name": "第69期 · Bug后 终榜 Top 2000",
+  "date": "9.14-9.28",
+  "updatedAt": "2026-10-01 10:19",
+  "source": "official live Rank.QueryRank response",
+  "sourceRetrievedAt": "2026-10-01T09:43:08.970183+08:00",
+  "rankRange": [
+    1,
+    2000
+  ],
+  "recordCount": 2000,
+  "playersWithTeamDetail": 1559,
+  "teamRows": 7694,
+  "skippedTailLines": 1,
+  "maxRankWithDetail": 1559,
+  "note": "The uploaded archive was truncated: team detail exists for ranks 1-1559 only; ranks above are rank-only.",
+  "stageGroupIds": [
+    83394,
+    83395,
+    83396,
+    83397,
+    83398
+  ],
+  "files": {
+    "ranking": "ranking.json.gz",
+    "battleSummary": "battle-summary.jsonl.gz",
+    "rawTeams": [
+      {
+        "file": "raw-teams/teams-000.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-001.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-002.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-003.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-004.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-005.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-006.jsonl.gz",
+        "lines": 494
+      }
+    ],
+    "uids": "uids.csv",
+    "teamErrors": "team-errors.jsonl",
+    "pendingQueries": "pending-queries.jsonl.gz",
+    "idNames": "id-names.json",
+    "scores": "scores.json",
+    "statistics": "statistics.json"
+  },
+  "battleFields": [
+    "stageRoundCount",
+    "bossBattleRoundCount",
+    "deathResistCount",
+    "respawnedNum",
+    "totalUseCard",
+    "totalEnergyCost",
+    "maxBoutUseCard",
+    "maxBoutEnergyCost",
+    "maxBoutDamage",
+    "maxCounterAtt",
+    "maxTentacleDamage",
+    "maxStrength",
+    "maxPosion",
+    "maxHp",
+    "leftHp",
+    "playerLevel",
+    "recordTime"
+  ]
+}

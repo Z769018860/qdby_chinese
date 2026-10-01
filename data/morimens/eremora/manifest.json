@@ -57,26 +57,21 @@
       "periodShort": "9.14–9.28",
       "labelZh": "第69期 · Bug后",
       "labelEn": "Season 69 · Post-bug",
-      "recordCount": 2000,
+      "recordCount": 1559,
       "leaderboardEntryCount": 2000,
-      "complete": true,
-      "coverageMode": "eremora-meta-top2000-final",
-      "aggregateOnly": true,
-      "aggregatePath": "data/morimens/eremora/meta-summary/69-postbug.json",
-      "aggregateFields": [
-        "character-total-players",
-        "character-total-rate",
-        "wave-1-5-rate",
-        "borrowed-rate"
-      ],
-      "detailDataAvailable": false,
-      "dataUpdatedAt": "2026-10-01T00:00:00Z",
-      "sourceUrl": "https://eremora.com/meta/dzone",
-      "sourceDumpRoot": "https://media.eremora.com/resdumps/dzone/69/",
+      "complete": false,
+      "coverageMode": "official-rank-top2000-final",
+      "path": "data/morimens/eremora/usage/69-postbug-gzip/index.json",
+      "statsPath": "data/morimens/eremora/stats/69-postbug.json",
+      "rankPath": "data/morimens/eremora/rank-index/69-postbug.json",
+      "battleDetailPath": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
+      "battleArchivePath": "data/morimens/dzone/season69-postbug/meta.json",
+      "dataUpdatedAt": "2026-10-01T10:19:00+08:00",
+      "revision": "8024697b4da3e44e2d876750cac3854b3a9d6b0fe781cb085f0f0f4a08a0b3b2",
       "communityVariant": "postbug",
       "communityTargetKey": "69-postbug",
-      "noteZh": "Eremora 第69期最终 Top 2000 官方汇总。角色总使用人数为精确计数；逐 Wave 与助战率按 Eremora 页面公开显示值保存。未混入 Bug前 逐 UID/命轮/造物数据。",
-      "noteEn": "Eremora Season 69 final Top 2,000 official summary. Awakener player totals are exact; per-wave and borrowed rates preserve Eremora's published display values. Pre-bug per-UID, Wheel, and Creation data are not mixed into this snapshot."
+      "noteZh": "第69期 Bug后终榜：官方 Top 2000 排名与分数完整；逐 UID 配队详情保留了前 1559 名（上传的压缩包被截断）。Bug前数据不会混入。",
+      "noteEn": "Season 69 post-bug final board: the official Top 2,000 ranks and scores are complete; per-UID team details cover ranks 1–1559 (the uploaded archive was truncated). Pre-bug data is not mixed in."
     },
     {
       "seasonId": 68,
@@ -380,5 +375,20 @@
     "revision": "5fbe0c04ced0ffe88911238fe66d79649c57fc0b16027f05264a1decd98dfcb6",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json"
+  },
+  "postbug69Import": {
+    "seasonId": 69,
+    "snapshotId": "69-postbug",
+    "activityTid": 83329,
+    "archive": "season_83329.zip",
+    "rankedPlayers": 2000,
+    "playersWithTeamDetail": 1559,
+    "teamRows": 7694,
+    "battleRows": 14298,
+    "maxRankWithDetail": 1559,
+    "updatedAt": "2026-10-01T10:19:00+08:00",
+    "revision": "8024697b4da3e44e2d876750cac3854b3a9d6b0fe781cb085f0f0f4a08a0b3b2",
+    "battleDetail": "data/morimens/eremora/usage/69-postbug-battle-gzip/index.json",
+    "note": "teams_latest.jsonl and teams.jsonl.gz in the archive were truncated; rows were recovered from the readable prefix of teams.jsonl.gz."
   }
 }

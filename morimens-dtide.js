@@ -219,6 +219,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>${ui('2026-10-01 · 第69期 Bug后终榜 Top 2000','2026-10-01 · Season 69 post-bug final Top 2000')}</strong><br>${ui('第69期 Bug后改用官方终榜 Top 2000：排名与分数完整（2000 名）；逐 UID 配队详情覆盖前 1559 名（上传的压缩包被截断，其余名次仅有排名与分数）。同样提供“战斗数据榜”（死扛、回合数、伤害占比、复制回放等）。“更新时间节点”现在跟随所选期次。','Season 69 post-bug now uses the official final Top 2,000: ranks and scores are complete (2,000 players); per-UID team details cover ranks 1–1559 (the uploaded archive was truncated, the remaining ranks have rank and score only). The “Battle Stats” tab (Death Resist, rounds, damage share, replay copy …) is available as in Season 70. The “data updated” time now follows the selected season.')}</div>
         <div class="sourceItem"><strong>${ui('2026-10-01 · 加载速度优化','2026-10-01 · Faster loading')}</strong><br>${ui('大图与动图（背景、融灾地图、桌面角色 GIF 等）转为 WebP，首页图片流量约 12.7 MB → 2 MB，融灾榜单首屏约 35 MB → 10 MB；榜单统计文件瘦身（每期约 1 MB → 13 KB），重复请求合并并启用浏览器缓存；第70期战斗数据拆成独立文件，打开“战斗数据榜”标签时才加载。','Large images and GIFs (backgrounds, D-Zone maps, desktop mascots …) are now WebP — home page images ~12.7 MB → 2 MB and the D-Zone board ~35 MB → 10 MB on first load; per-season stats files shrank from ~1 MB to ~13 KB; duplicate requests are merged and the browser cache is used; Season 70 battle data is split out and only fetched when the “Battle Stats” tab is opened.')}</div>
         <div class="sourceItem"><strong>${ui('2026-10-01 · 新增战斗数据榜','2026-10-01 · Battle Stats Leaderboard added')}</strong><br>${ui('融灾榜单新增“战斗数据榜”标签（第70期）：角色战斗数据包含平均 / 最高伤害占比、平均 / 单场最高伤害、平均格挡、平均治疗、平均死扛、平均回合数、平均出牌数、平均能量（银钥）消耗与队伍单回合最高伤害；玩家战斗榜提供平均死扛、平均回合数、单回合最高伤害三列，以及数值分布和各 Wave 平均值热力图（配色同角色榜单）与区间筛选。表格一次完整显示，并支持下载图片。点击角色行可展开该角色最高伤害占比 / 最高伤害 / 最高死扛 / 队伍单回合最高伤害 / 最少回合 / 最高格挡 / 最高治疗的队伍，并一键复制录像回放代码、跳转 Eremora 队伍页。','New “Battle Stats” tab (Season 70): per-awakener average / max damage share, average / max damage, block, heal, Death Resist, rounds, cards, energy and team max round damage; per-player Avg Death Resist, Avg Rounds and Max Single-Round Damage with distribution / per-wave heatmaps (same colour scale as the awakener board) and range filters. Tables show in full and can be downloaded as an image. Click an awakener row to expand its top teams (highest damage share / damage, most Death Resist, highest round damage, fewest rounds, block, heal) with a one-click replay-code copy.')}</div>
         <div class="sourceItem"><strong>${ui('2026-10-01 · 第70期 Top 2000 数据更新','2026-10-01 · Season 70 Top 2000 data update')}</strong><br>${ui('第70期融灾榜单更新为官方榜单 Top 2000（2000 名玩家、9560 条分区队伍记录），更新时间节点 10月1日 05:00。每场战斗的死扛触发次数、回合数、出牌数、能量消耗、反击 / 触手伤害等尚未计入榜单统计的字段已随队伍一并保存，完整原始数据归档于 data/morimens/dzone/season70。','Season 70 D-Zone leaderboard now uses the official Top 2000 (2,000 players, 9,560 zone team records); data updated Oct 1, 05:00. Per-battle Death Resist triggers, round counts, cards played, energy spent, counter / tentacle damage and other fields not yet used in leaderboard statistics are stored with each team; the complete raw archive lives in data/morimens/dzone/season70.')}</div>
@@ -386,7 +387,7 @@
 
   function panelHtml(){return `
     <section class="panel" aria-labelledby="dtideTitle">
-      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead">更新时间节点：10月1日 05:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
+      <div class="dtideHero"><div><p class="eyebrow">EREMORA · D-ZONE ANALYTICS</p><h2 id="dtideTitle">融灾榜单</h2><p class="panelLead" id="dtideUpdatedAt">更新时间节点：10月1日 05:00</p></div><span class="statusPill" id="dtideStatus">等待数据</span></div>
       <div class="dtideControls">
         <div class="dtideField"><label>期次</label><select id="dtideSeason"></select></div>
         <div class="dtideField"><label>榜单范围</label><select id="dtideRankScope"><option value="all" selected>全部范围（含未知排名）</option>${rankCaps.map(x=>`<option value="${x}">Top ${x}</option>`).join('')}</select></div>
@@ -1109,6 +1110,16 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   }
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords,validateCandidate:validateCommunityCandidate,getRecordState:communityCurrentRecordState};
 
+  // “更新时间节点” follows the selected season's data update time (shown in UTC+8, the site's reference time)
+  function renderUpdatedAt(){
+    const el=$('dtideUpdatedAt');if(!el)return;
+    const t=Date.parse(activeSeasonEntry?.dataUpdatedAt||'');
+    if(!Number.isFinite(t)){el.hidden=true;return}
+    const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(t)).reduce((o,x)=>(o[x.type]=x.value,o),{});
+    const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    el.hidden=false;
+    el.textContent=zh()?`更新时间节点：${p.month}月${p.day}日 ${p.hour}:${p.minute}`:`Data updated: ${months[Number(p.month)-1]} ${p.day}, ${p.hour}:${p.minute}`;
+  }
   async function loadSeason(id){
     const loadToken=++seasonLoadToken;
     cancelAnimationFrame(renderFrame);renderFrame=0;
@@ -1120,6 +1131,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const entry=manifest.availableSeasons.find(x=>String(x.snapshotId??x.seasonId)===String(id));
     if(!entry)throw new Error(`Season ${id} snapshot unavailable`);
     activeSeasonEntry=entry;
+    renderUpdatedAt();
     const sourceSeasonId=Number(entry.sourceSeasonId??entry.seasonId);
     const isCurrent=!entry.snapshotId&&sourceSeasonId===Number(manifest.currentSeason);
     const current=isCurrent&&manifest.usageIndex?.path
@@ -1283,7 +1295,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
         if($('morimensLoveTab'))$('morimensLoveTab').textContent=zh()?'爱的节奏榜':'Love Rhythm';
         if($('morimensCommentsTab'))$('morimensCommentsTab').textContent=zh()?'留言板':'Guestbook';
       }
-      relocalizeControls();if(!document.querySelector('#morimensAboutPanel')?.hidden)loadAboutSubmissionRecords();
+      relocalizeControls();renderUpdatedAt();if(!document.querySelector('#morimensAboutPanel')?.hidden)loadAboutSubmissionRecords();
       if(manifest){
         const sel=$('dtideSeason');
         if(sel)for(const option of sel.options){

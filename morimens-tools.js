@@ -44,7 +44,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20261001.14";
+  const assetVersion="20261001.17";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -119,7 +119,7 @@ setupMorimensMascotToggle();
     await import(`./morimens-assist-list.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
     const switchLeaderboardRenderer=()=>{
-      const useDetailedRenderer=seasonSelect?.value==='legacy-high-difficulty'||seasonSelect?.value==='69-postbug';
+      const useDetailedRenderer=seasonSelect?.value==='legacy-high-difficulty';
       if(useDetailedRenderer){
         delete window.MorimensDtideRenderer;
       }else{
