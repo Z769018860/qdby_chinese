@@ -37,7 +37,7 @@
       const chunk=ids.slice(i,i+CHUNK_SIZE);
       const paths=chunk.map(votePath);
       const url=`${SERVER}/api/article?path=${encodeURIComponent(paths.join(','))}&type=${encodeURIComponent('reaction0,reaction1')}&lang=zh-CN`;
-      const response=await fetch(url,{cache:'no-store'});
+      const response=await fetch(url,{cache:'no-cache'});
       if(!response.ok)throw new Error('Waline counter HTTP '+response.status);
       const data=parsePayload(await response.json());
       chunk.forEach((id,index)=>{

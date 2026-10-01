@@ -24,7 +24,8 @@
       "ringRealm": "Aequor",
       "ringRealmZh": "深海",
       "rankPath": "data/morimens/eremora/rank-index/70.json",
-      "battleArchivePath": "data/morimens/dzone/season70/meta.json"
+      "battleArchivePath": "data/morimens/dzone/season70/meta.json",
+      "battleDetailPath": "data/morimens/eremora/usage/70-battle-gzip/index.json"
     },
     {
       "seasonId": 69,
@@ -348,11 +349,11 @@
       "complete": true
     },
     "syncedAt": "2026-10-01T05:00:00+08:00",
-    "revision": "ecba4f47ee4dd2609b60afe9dbd63d7228031073ab63d6145421ad59b078c721",
+    "revision": "5fbe0c04ced0ffe88911238fe66d79649c57fc0b16027f05264a1decd98dfcb6",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 5,
-    "chunkSize": 700000,
-    "chunkBytes": 3421445
+    "chunks": 4,
+    "chunkSize": 600000,
+    "chunkBytes": 2275172
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -392,7 +393,8 @@
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
     "updatedAt": "2026-10-01T05:00:00+08:00",
-    "revision": "ecba4f47ee4dd2609b60afe9dbd63d7228031073ab63d6145421ad59b078c721",
-    "battleArchive": "data/morimens/dzone/season70/meta.json"
+    "revision": "5fbe0c04ced0ffe88911238fe66d79649c57fc0b16027f05264a1decd98dfcb6",
+    "battleArchive": "data/morimens/dzone/season70/meta.json",
+    "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json"
   }
 }

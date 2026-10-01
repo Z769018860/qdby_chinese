@@ -24,21 +24,17 @@
 
   async function fetchText(url,{revision='',fresh=false}={}){
     const target=versioned(url,revision);
-    const response=await fetch(target,{cache:fresh?'no-store':'force-cache'});
+    // Revisioned URLs are immutable, so they may come from the HTTP cache; unversioned ones are revalidated (304) instead of re-downloaded.
+    const response=await fetch(target,{cache:revision?'force-cache':(fresh?'no-cache':'force-cache')});
     if(!response.ok)throw new Error(`${url}: HTTP ${response.status}`);
     return response.text();
   }
 
   async function loadJson(url,{revision='',fresh=false}={}){
     const target=versioned(url,revision);
-    if(fresh){
-      const response=await fetch(target,{cache:'no-store'});
-      if(!response.ok)throw new Error(`${url}: HTTP ${response.status}`);
-      return response.json();
-    }
-    if(jsonCache.has(target))return jsonCache.get(target);
+    if(jsonCache.has(target))return jsonCache.get(target);  // also de-duplicates concurrent loads of the same URL
     const task=(async()=>{
-      const response=await fetch(target,{cache:'force-cache'});
+      const response=await fetch(target,{cache:revision?'force-cache':(fresh?'no-cache':'force-cache')});
       if(!response.ok)throw new Error(`${url}: HTTP ${response.status}`);
       return response.json();
     })().catch(error=>{jsonCache.delete(target);throw error});
@@ -86,7 +82,7 @@
 
   async function loadRankMap(url,{revision='',fresh=true}={}){
     const target=versioned(url,revision);
-    if(!fresh&&rankCache.has(target))return rankCache.get(target);
+    if(rankCache.has(target))return rankCache.get(target);
     const task=(async()=>{
       const text=await fetchText(url,{revision,fresh});
       const map=rankMapFromText(text);

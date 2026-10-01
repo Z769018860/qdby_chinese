@@ -358,8 +358,8 @@ tbody tr:hover{ background:#fcfcff; }
   border:1px solid #d9e2ef;
   box-shadow:0 12px 28px rgba(17,24,39,.12);
 }
-.coinFace.front{ background-image:url("catdog-main/正面.png"); transform:translateZ(1px); }
-.coinFace.back{ background-image:url("catdog-main/反面.png"); transform:rotateY(180deg); }
+.coinFace.front{ background-image:url("catdog-main/正面.webp"); transform:translateZ(1px); }
+.coinFace.back{ background-image:url("catdog-main/反面.webp"); transform:rotateY(180deg); }
 .coinLabActions{
   margin-top:12px;
   display:flex;
@@ -686,12 +686,12 @@ code{ background:#f3f4f6; border:1px solid var(--line); padding:2px 6px; border-
 .bgLeft{
   left:max(-3vw, -46px);
   background-position:left 56%;
-  background-image:url("assets/bg-left.png");
+  background-image:url("assets/bg-left.webp");
 }
 .bgRight{
   right:max(-3vw, -46px);
   background-position:right 56%;
-  background-image:url("assets/bg-right.png");
+  background-image:url("assets/bg-right.webp");
 }
 @media (min-width: 1600px){
   .bgLayer{ width:min(31vw, 620px); opacity:.34; }

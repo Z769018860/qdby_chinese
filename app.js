@@ -658,7 +658,7 @@ function initCoinLab(){
   bindUploader(backInput, backFace);
 }
 async function loadData(){
-  const res = await fetch("./data.json", { cache: "no-store" });
+  const res = await fetch("./data.json", { cache: "no-cache" });
   state.data = await res.json();
 }
 

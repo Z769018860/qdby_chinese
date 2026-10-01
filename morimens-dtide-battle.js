@@ -228,29 +228,54 @@
   const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
   let savedTitle=null;
   function applyActive(){
-    const on=state.active&&!!ctx&&hasBattle(ctx.records);
+    const on=state.active&&!!ctx&&hasBattle(ctx);
     document.querySelectorAll('.dtideLeaderboardTab').forEach(x=>x.setAttribute('aria-selected',String(on?x.hasAttribute('data-dtide-battle-tab'):(!x.hasAttribute('data-dtide-battle-tab')&&x.getAttribute('aria-selected')==='true'))));
     for(const sel of SWAP){const el=document.querySelector(sel);if(el)el.style.display=on?'none':''}
     const title=document.getElementById('dtideMatrixTitle');
     if(title){if(on){if(savedTitle==null)savedTitle=title.textContent;title.textContent=ui('战斗数据榜','Battle Stats Leaderboard')}else if(savedTitle!=null){title.textContent=savedTitle;savedTitle=null}}
   }
-  const hasBattle=records=>(records||[]).some(r=>(r.waves||[]).some(w=>(w.teams||[]).some(t=>t.battle)));
+  const hasBattle=c=>!!(c&&(c.battlePath||(c.records||[]).some(r=>(r.waves||[]).some(w=>(w.teams||[]).some(t=>t.battle)))));
+  // Per-battle statistics are a separate, lazily fetched payload (only needed once the tab is opened).
+  const detail={path:null,promise:null,battles:null,error:null};
+  function attachDetail(){
+    if(!detail.battles||!ctx)return;
+    for(const rec of ctx.records||[])for(const w of rec.waves||[])for(const t of w.teams||[]){
+      if(t.battle)continue;
+      const d=detail.battles[t.battleUuid];if(!d)continue;
+      t.battle=d.b;(t.members||[]).forEach((m,i)=>{const x=d.m?.[i];if(x){m.damage=x[1];m.block=x[2];m.heal=x[3]}});
+    }
+  }
+  function ensureDetail(){
+    if(!ctx?.battlePath||detail.battles&&detail.path===ctx.battlePath){attachDetail();return Promise.resolve()}
+    if(detail.promise&&detail.path===ctx.battlePath)return detail.promise;
+    detail.path=ctx.battlePath;detail.error=null;
+    const loader=window.MorimensDtideDataLoader;
+    detail.promise=(loader?.loadDataset?loader.loadDataset(ctx.battlePath):Promise.reject(new Error('loader unavailable')))
+      .then(d=>{detail.battles=d.battles||{};attachDetail()})
+      .catch(e=>{console.warn('battle detail unavailable',e);detail.error=e;detail.promise=null});
+    return detail.promise;
+  }
+  const ready=()=>!ctx?.battlePath||!!detail.battles;
   function setActive(on){
     state.active=!!on;applyActive();
     if(!on){document.getElementById('dtideEntityType')?.dispatchEvent(new Event('change',{bubbles:true}));if(host)host.hidden=true;return}
-    if(host&&ctx){host.hidden=false;rows=buildRows();draw()}
+    if(host&&ctx){host.hidden=false;showActive()}
   }
   function render(el,context){
     host=el;ctx=context;if(!host)return;
     ensureStyle();
-    const hasData=hasBattle(ctx.records),btn=tabBtn();
+    const hasData=hasBattle(ctx),btn=tabBtn();
     if(btn)btn.hidden=!hasData;
     if(!hasData&&state.active){state.active=false;document.getElementById('dtideEntityType')?.dispatchEvent(new Event('change',{bubbles:true}))}
     applyActive();
     host.hidden=!(hasData&&state.active);
     if(host.hidden){host.innerHTML='';return}
-    rows=buildRows();
-    draw();
+    showActive();
+  }
+  function showActive(){
+    if(ready()){attachDetail();rows=buildRows();draw();return}
+    host.innerHTML=`<p class="dtideBattleNote">${detail.error?ui('战斗数据加载失败，请刷新重试。','Failed to load battle data; please refresh.'):ui('正在加载战斗数据…','Loading battle data…')}</p>`;
+    if(!detail.error)ensureDetail().then(()=>{if(state.active&&host&&!host.hidden)showActive()});
   }
 
   function draw(){

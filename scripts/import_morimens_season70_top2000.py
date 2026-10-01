@@ -20,8 +20,10 @@ card/energy usage, counter/tentacle damage ...) are attached to every team as
 from __future__ import annotations
 
 import argparse
+import base64
 import csv
 import gzip
+import hashlib
 import json
 import shutil
 from collections import Counter
@@ -122,6 +124,27 @@ def convert_team(side, stage_name, names, kind):
 
 def stat(d, key):
     return d.get(key) if isinstance(d, dict) else None  # empty maps arrive as []
+
+
+def pack_battle(root: Path, battles: dict, generated_at: str, chunk_size: int = 600_000):
+    """gzip + base64 chunks, same layout as the usage chunks (see morimens-dtide-loader.js)."""
+    out_dir = root / "data/morimens/eremora/usage/70-battle-gzip"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for old in out_dir.glob("chunk-*.b64"):
+        old.unlink()
+    payload = json.dumps({"seasonId": SEASON, "battles": battles}, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    comp = gzip.compress(payload, compresslevel=9, mtime=0)
+    chunks = []
+    for n, off in enumerate(range(0, len(comp), chunk_size)):
+        f = out_dir / f"chunk-{n:03d}.b64"
+        f.write_text(base64.b64encode(comp[off:off + chunk_size]).decode("ascii") + "\n", encoding="ascii")
+        chunks.append(f"data/morimens/eremora/usage/70-battle-gzip/{f.name}")
+    dump_json(out_dir / "index.json", {
+        "format": "gzip-base64-chunked-v1", "seasonId": SEASON, "recordCount": 0, "battleCount": len(battles),
+        "source": "season_83315 per-battle statistics (death resist, rounds, damage split ...)",
+        "revision": hashlib.sha256(comp).hexdigest(), "generatedAt": generated_at,
+        "chunks": chunks, "chunkSize": chunk_size, "compressedBytes": len(comp),
+    }, indent=2)
 
 
 def summary_row(row, side, slot, names, wave, extra_pass):
@@ -239,6 +262,17 @@ def main():
         "source": {"site": "Morimens official", "activityTid": ACTIVITY, "syncedAt": args.updated_at_iso},
         "failures": [str(r["uid"]) for r in rows if r["uid"] not in site_teams], "records": records,
     }
+    # Per-battle statistics go to a separate lazily loaded payload so the leaderboard itself stays small.
+    battles = {}
+    for rec in records:
+        for w in rec["waves"]:
+            for t in w["teams"]:
+                b = t.pop("battle")
+                members = []
+                for m in t["members"]:
+                    members.append([m["tid"], m.pop("damage", 0), m.pop("block", 0), m.pop("heal", 0)])
+                battles[t["battleUuid"]] = {"b": b, "m": members}
+    pack_battle(root, battles, args.updated_at_iso)
     dump_json(work / "seasons/70.json", season_doc)
     dump_json(work / "rank-index/70.json", {
         "source": {"site": "Morimens official", "activityTid": ACTIVITY, "syncedAt": args.updated_at_iso,

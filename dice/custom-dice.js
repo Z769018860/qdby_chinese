@@ -2,8 +2,8 @@ const FACE_COUNT = 6;
 const faceImageMap = new Map();
 const faceTextMap = new Map();
 const DEFAULT_IMAGE_POOL = [
-  '1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg', '6.jpeg',
-  '7.png', '8.png', '9.png', '10.png', '11.png', '12.jpeg',
+  '1.webp', '2.webp', '3.jpeg', '4.jpeg', '5.jpeg', '6.jpeg',
+  '7.webp', '8.webp', '9.png', '10.webp', '11.webp', '12.jpeg',
 ];
 
 const faceToCubeClass = {

@@ -6,7 +6,7 @@
   async function json(path){
     const key=path.replace(/^\/+/, '');
     if(cache.has(key))return cache.get(key);
-    const p=fetch(`${BASE}/${key}`,{cache:'no-store'}).then(async r=>{if(!r.ok)throw new Error(`${key}: HTTP ${r.status}`);return r.json()});
+    const p=fetch(`${BASE}/${key}`,{cache:'no-cache'}).then(async r=>{if(!r.ok)throw new Error(`${key}: HTTP ${r.status}`);return r.json()});
     cache.set(key,p);
     try{return await p}catch(e){cache.delete(key);throw e}
   }

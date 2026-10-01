@@ -63,7 +63,11 @@ function buildStats(doc){
     return [String(cap),{cap,complete:maxRank>=cap,recordCount:(doc.records||[]).filter(r=>Number.isFinite(Number(r.rank))&&Number(r.rank)<=cap).length,maxRankAvailable:maxRank,all:usage(rr),difficulties:Object.fromEntries(DIFFICULTIES.map(d=>[d,usage(rr.filter(x=>x.team.difficulty===d))]))}];
   }));
   const recognized=rows.filter(x=>DIFFICULTIES.includes(x.team.difficulty)).length;
-  return {seasonId:doc.seasonId,generatedAt:new Date().toISOString(),recordCount:doc.records?.length||0,maxRankAvailable:maxRank,all:usage(rows),waves:byWave,difficulties,rankTiers,coverage:{difficulty:{recognizedTeams:recognized,totalTeams:rows.length,complete:rows.length>0&&recognized===rows.length},rankScopes:Object.fromEntries(RANK_CAPS.map(x=>[String(x),maxRank>=x])),enlightenment:true}};
+  // The site only reads all.characters / all.teamCount and the rank-tier coverage flags; the per-wave and per-difficulty tables
+  // were multi-MB, downloaded on every page and never used, so they are no longer emitted.
+  const slimTiers=Object.fromEntries(Object.entries(rankTiers).map(([k,v])=>[k,{cap:v.cap,complete:v.complete,recordCount:v.recordCount,maxRankAvailable:v.maxRankAvailable}]));
+  const allUsage=usage(rows);
+  return {seasonId:doc.seasonId,generatedAt:new Date().toISOString(),recordCount:doc.records?.length||0,maxRankAvailable:maxRank,all:{teamCount:allUsage.teamCount,memberSlots:allUsage.memberSlots,characters:allUsage.characters},rankTiers:slimTiers,slim:true,coverage:{difficulty:{recognizedTeams:recognized,totalTeams:rows.length,complete:rows.length>0&&recognized===rows.length},rankScopes:Object.fromEntries(RANK_CAPS.map(x=>[String(x),maxRank>=x])),enlightenment:true}};
 }
 
 const files=(await readdir(SEASON_DIR)).filter(x=>/^(?:\d+|69bug)\.json$/.test(x));

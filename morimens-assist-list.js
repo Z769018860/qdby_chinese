@@ -486,7 +486,7 @@
     const collected=[];let pageNo=1,totalPages=1;
     try{
       try{
-        const archivedResponse=await fetch('data/morimens/community/assist.json',{cache:'no-store'});
+        const archivedResponse=await fetch('data/morimens/community/assist.json',{cache:'no-cache'});
         if(archivedResponse.ok){
           const archived=await archivedResponse.json();
           for(const item of Array.isArray(archived?.records)?archived.records:[]){
