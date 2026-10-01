@@ -53,7 +53,7 @@
 '提供角色、技能、命轮及密契等结构化数据；感谢':'for structured Awakener, skill, Wheel, and Covenant data; thanks to',
 '忘却前夜中文维基':'Morimens Chinese Wiki',
 '提供中文名称、资料与文本参考。':'for Chinese names, reference material, and text.',
-'更新时间节点：9月29日 01:00':'Data updated: Sep 29, 01:00','更新时间节点：10月1日 05:00':'Data updated: Oct 1, 05:00',
+'更新时间节点：9月29日 01:00':'Data updated: Sep 29, 01:00','更新时间节点：10月1日 05:00':'Data updated: Oct 1, 05:00','危险等级 C':'Threat Level C','危险等级 B':'Threat Level B','危险等级 A':'Threat Level A','危险等级 S':'Threat Level S','危险等级 SS':'Threat Level SS','危险等级 SSS':'Threat Level SSS','危险等级 ▼':'Threat Level ▼','出场率榜单类型':'Leaderboard type','包含角色':'Include awakeners','排除角色':'Exclude awakeners','热力图图例':'Heatmap legend','匿名头像':'Anonymous avatar','已选择头像':'Avatar selected','随机一个':'Random','选择头像':'Choose avatar','选择匿名头像':'Choose an anonymous avatar','选择会保存在本浏览器；下次默认使用上次头像':'Your choice is saved in this browser and reused next time','关闭':'Close',
 '520–525 分':'520–525 pts','510–519 分':'510–519 pts','500–509 分':'500–509 pts','490–499 分':'490–499 pts',
 '480–489 分':'480–489 pts','470–479 分':'470–479 pts','460–469 分':'460–469 pts','450–459 分':'450–459 pts',
 '440–449 分':'440–449 pts','430–439 分':'430–439 pts','420–429 分':'420–429 pts','410–419 分':'410–419 pts',

@@ -130,6 +130,8 @@
 
   const pctFactor=pct=>Math.max(0,1+(Number(pct)||0)/100);
   const poolProduct=pools=>(pools||[]).reduce((factor,pct)=>factor*pctFactor(pct),1);
+  // A multiplier of exactly 0 is valid (100% fortify, zero 'other' multiplier); only a missing / non-numeric value defaults to 1.
+  const multOrOne=v=>{const x=v===undefined||v===null||v===''?NaN:Number(v);return Number.isFinite(x)?Math.max(0,x):1};
   function evaluateUniversalCore(input={}){
     const baseRaw=Math.max(0,Number(input.baseRaw)||0);
     const legacyBasePools=(input.basePools||[]).map(Number).filter(Number.isFinite);
@@ -138,10 +140,10 @@
     const damageAmpPct=Number(input.damageAmpPct)||0;
     const strengthAdd=Number(input.strengthAdd)||0;
     const additiveAdd=Number(input.additiveAdd)||0;
-    const outgoingStateMult=Math.max(0,Number(input.outgoingStateMult)||1);
+    const outgoingStateMult=multOrOne(input.outgoingStateMult);
     const finalPools=(input.finalPools||[]).map(Number).filter(Number.isFinite);
-    const enemyStateMult=Math.max(0,Number(input.enemyStateMult)||1);
-    const postMult=Math.max(0,Number(input.postMult)||1);
+    const enemyStateMult=multOrOne(input.enemyStateMult);
+    const postMult=multOrOne(input.postMult);
     const outOfBattleBase=baseRaw*poolProduct(outOfBattleBasePools);
     const baseAfterPools=outOfBattleBase*poolProduct(inBattleBasePools);
     const amplifiedBase=baseAfterPools*pctFactor(damageAmpPct);

@@ -19,6 +19,8 @@
     if(zh())return n>=1e8?`${(n/1e8).toFixed(2)}亿`:n>=1e4?`${(n/1e4).toFixed(1)}万`:String(Math.round(n));
     return n>=1e6?`${(n/1e6).toFixed(2)}M`:n>=1e3?`${(n/1e3).toFixed(1)}K`:String(Math.round(n));
   }
+  // in-game nicknames may carry rich-text colour tags such as <#3af>name</color>
+  const clean=n=>String(n??'').replace(/<\/?(?:#[^<>]{1,12}|color[^<>]{0,16})>/g,'').trim()||String(n??'');
   const num=v=>v===''||v==null?null:Number(v);
   // same colour scale as the awakener leaderboard (usage heatStyle): hue 215 -> 0, alpha .08 -> .42
   const heat=p=>{const t=Math.max(0,Math.min(1,p));return `background:hsla(${Math.round(215-215*t)},78%,46%,${(.08+.34*t).toFixed(2)})`};
@@ -128,7 +130,7 @@
       if(k==='block'||k==='heal')list=list.filter(e=>val(e)>0);
       return `<div class="dtideBattleBlock"><h5>${ui(l.zh,l.en)}</h5>${list.map((e,i)=>{
         const code=String(e.t.battleUuid||'');
-        return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. #${esc(e.rec.rank??'—')} ${esc(e.rec.player)}</b><span>${fmt(e)}</span></div><div class="mem">${(e.t.members||[]).map(m=>`<i${m===e.m?' class="me"':''}>${esc(info(m))}</i>`).join('')}</div><div class="ft"><small>Wave ${esc(e.w.wave)} · ${esc(e.t.stageName||'')} · ${esc(e.rec.score??'')}${ui('分','pts')}${e.t.clearType==='extra'?' · Extra':''}</small><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}${e.rec.url?`<a class="dtideBattleLink" href="${esc(e.rec.url)}" target="_blank" rel="noopener noreferrer" title="${ui('在 Eremora 查看该玩家的第70期融灾队伍','Open this player’s D-Zone teams on Eremora')}">${ui('Eremora 队伍','Eremora Teams')} ↗</a>`:''}</span></div></div>`}).join('')||`<div class="dtideEmpty">${ui('暂无','None')}</div>`}</div>`;
+        return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. #${esc(e.rec.rank??'—')} ${esc(clean(e.rec.player))}</b><span>${fmt(e)}</span></div><div class="mem">${(e.t.members||[]).map(m=>`<i${m===e.m?' class="me"':''}>${esc(info(m))}</i>`).join('')}</div><div class="ft"><small>Wave ${esc(e.w.wave)} · ${esc(e.t.stageName||'')} · ${esc(e.rec.score??'')}${ui('分','pts')}${e.t.clearType==='extra'?' · Extra':''}</small><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}${e.rec.url?`<a class="dtideBattleLink" href="${esc(e.rec.url)}" target="_blank" rel="noopener noreferrer" title="${ui('在 Eremora 查看该玩家的第70期融灾队伍','Open this player’s D-Zone teams on Eremora')}">${ui('Eremora 队伍','Eremora Teams')} ↗</a>`:''}</span></div></div>`}).join('')||`<div class="dtideEmpty">${ui('暂无','None')}</div>`}</div>`;
     }).join('');
     return `<tr class="dtideBattleDetail"><td colspan="${CCOLS.length+2}"><div class="dtideBattleBlocks">${blocks}</div></td></tr>`;
   }
@@ -323,7 +325,7 @@
       <h4>${ui('热力图 · 各 Wave 平均值','Heatmap · Mean by Wave')}</h4>${waveHeat(base)}
       <h4>${ui('榜单','Leaderboard')} <small style="color:#8290a2">${ui(`匹配 ${list.length} / ${base.length} 名玩家`,`${list.length} / ${base.length} players`)}</small></h4>
       <div class="dtideBattleScroll"><table class="dtideBattleTable"><thead><tr>${th('rank',ui('排名','Rank'))}<th>${ui('玩家','Player')}</th>${th('score',ui('总分','Score'))}${th('death',ui('平均死扛','Avg Death Resist'))}${th('rounds',ui('平均回合数','Avg Rounds'))}${th('bout',ui('单回合最高伤害','Max Round Damage'))}${th('n',ui('战斗数','Battles'))}</tr></thead><tbody>${
-        slice.map(r=>`<tr><td>#${esc(r.rank??'—')}</td><td>${r.rec.url?`<a href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer">${esc(r.name)}</a>`:esc(r.name)}</td><td>${esc(r.score??'—')}</td><td class="heat" style="${heat(pctile(stats.death,r.avgDeath))}">${r.avgDeath.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.rounds,r.avgRounds))}">${r.avgRounds.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.bout,r.maxBout))}">${dmg(r.maxBout)}</td><td>${r.n}</td></tr>`).join('')||`<tr><td colspan="7" style="text-align:center">${ui('没有符合条件的玩家','No players match')}</td></tr>`
+        slice.map(r=>`<tr><td>#${esc(r.rank??'—')}</td><td>${r.rec.url?`<a href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer">${esc(clean(r.name))}</a>`:esc(clean(r.name))}</td><td>${esc(r.score??'—')}</td><td class="heat" style="${heat(pctile(stats.death,r.avgDeath))}">${r.avgDeath.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.rounds,r.avgRounds))}">${r.avgRounds.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.bout,r.maxBout))}">${dmg(r.maxBout)}</td><td>${r.n}</td></tr>`).join('')||`<tr><td colspan="7" style="text-align:center">${ui('没有符合条件的玩家','No players match')}</td></tr>`
       }</tbody></table></div>`;
   }
 
