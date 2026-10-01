@@ -3,15 +3,15 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-09-30T09:52:12.832Z",
+    "syncedAt": "2026-10-01T10:19:45.751Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 61,
   "mapped": 61,
-  "enriched": 12,
-  "jinaRecords": 55,
-  "cachedRecords": 12,
-  "voiceRecords": 29,
+  "enriched": 7,
+  "jinaRecords": 58,
+  "cachedRecords": 2,
+  "voiceRecords": 33,
   "failed": [
     {
       "title": "「24」",
@@ -64,18 +64,18 @@
     {
       "title": "希莱斯特",
       "skeydbId": "awakener-0009",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "克莱门汀",
       "skeydbId": "awakener-0010",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "达芙黛尔",
-      "skeydbId": "awakener-0012",
+      "title": "克珀珊特",
+      "skeydbId": "awakener-0011",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -104,6 +104,12 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "法洛思",
+      "skeydbId": "awakener-0017",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "熔毁·朵尔",
       "skeydbId": "awakener-0018",
       "status": "no-voice",
@@ -122,14 +128,20 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "戈利亚",
+      "skeydbId": "awakener-0021",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "哈姆林",
       "skeydbId": "awakener-0022",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "希洛",
-      "skeydbId": "awakener-0023",
+      "title": "奥尔拉",
+      "skeydbId": "awakener-0024",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -158,16 +170,10 @@
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "莉兹",
-      "skeydbId": "awakener-0030",
+      "title": "莉莉",
+      "skeydbId": "awakener-0029",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "萝坦",
-      "skeydbId": "awakener-0031",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: unusable reader response"
     },
     {
       "title": "弥利亚姆",
@@ -184,12 +190,18 @@
     {
       "title": "墨菲",
       "skeydbId": "awakener-0034",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
+      "status": "fallback",
+      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A2%A8%E8%8F%B2&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2: unusable reader response"
     },
     {
       "title": "诞妄·墨菲",
       "skeydbId": "awakener-0035",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "诺缔拉",
+      "skeydbId": "awakener-0036",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -208,8 +220,8 @@
     {
       "title": "皮克曼",
       "skeydbId": "awakener-0040",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "波吕克斯",
@@ -242,12 +254,6 @@
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "索蕾尔",
-      "skeydbId": "awakener-0046",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
       "title": "塔薇",
       "skeydbId": "awakener-0047",
       "status": "no-voice",
@@ -266,8 +272,20 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "图鲁",
+      "skeydbId": "awakener-0050",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "尤乌哈希",
       "skeydbId": "awakener-0051",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "旺达",
+      "skeydbId": "awakener-0052",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -284,6 +302,12 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "阿拉克涅",
+      "skeydbId": "awakener-0056",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "沙耶",
       "skeydbId": "awakener-0057",
       "status": "no-voice",
@@ -292,6 +316,12 @@
     {
       "title": "庞托斯",
       "skeydbId": "awakener-0058",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "蚀灭·萝坦",
+      "skeydbId": "awakener-0059",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -741,10 +771,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0010",
@@ -760,10 +790,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0011",
@@ -835,7 +865,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0012",
@@ -907,7 +937,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0013",
@@ -1133,7 +1163,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0018",
@@ -1364,7 +1394,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0022",
@@ -1395,14 +1425,67 @@
         "name": "希洛",
         "englishName": "Helot"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "目标在哪？作为将我唤醒的回报，我会为你解决掉对方。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "复仇的血，正在沸腾……"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "我将用这力量吞噬背叛者。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "……多谢了。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "想死吗？"
+        },
+        {
+          "title": "闲话·关于莉莉",
+          "content": "我能感觉到，那个小女孩拥有和我相似的力量。她还没完全理解这份力量的强大，看在你的份上，我会适当训练她的。 （获得唤醒体「莉莉」后解锁）"
+        },
+        {
+          "title": "闲话·关于阿格里帕",
+          "content": "那个干瘪的重瞳女人，闻起来和斯巴达臭虫如出一辙。 （获得唤醒体「阿格里帕」后解锁）"
+        },
+        {
+          "title": "闲话·关于艾继丝",
+          "content": "究竟是怎样不负责的父母，才会以女妖之盾命名自己的女儿？你说那孩子没有父母？嗯……我们这段对话，没必要让她知道。 （获得唤醒体「艾继丝」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "人会有背叛之心，工具不会。只要利用得当，融蚀也是复仇的工具。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "在我的时代，学校是训练战士的场所，看来现在也如此。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "喜欢的东西？在伯罗奔尼撒的战场上，也有人问过我这个问题……太晚了，我早已舍弃了这类私人的好恶。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "背叛会使人变成怪物，无论对哪一方来说都是如此。所以，我憎恶叛徒。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "你一直都这样吗？向所有人托付后背，交付信任？太天真了。"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0024",
@@ -1514,7 +1597,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0025",
@@ -1825,7 +1908,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0030",
@@ -1837,248 +1920,61 @@
         "name": "莉兹",
         "englishName": "Liz"
       },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
-      },
-      "syncStatus": "no-voice"
-    },
-    {
-      "skeydbId": "awakener-0031",
-      "ingameId": "C04",
-      "slug": "lotan",
-      "name": "萝坦",
-      "englishName": "Lotan",
-      "profile": {
-        "name": "萝坦",
-        "englishName": "Lotan"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
-        "mode": "static-identity"
-      },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: unusable reader response"
-    },
-    {
-      "skeydbId": "awakener-0032",
-      "ingameId": "O07",
-      "slug": "miryam",
-      "name": "弥利亚姆",
-      "englishName": "Miryam",
-      "profile": {
-        "name": "弥利亚姆",
-        "englishName": "Miryam"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
-      },
-      "syncStatus": "no-voice"
-    },
-    {
-      "skeydbId": "awakener-0033",
-      "ingameId": "C17",
-      "slug": "mouchette",
-      "name": "茉夏",
-      "englishName": "Mouchette",
-      "profile": {
-        "name": "茉夏",
-        "englishName": "Mouchette"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
-      },
-      "syncStatus": "no-voice"
-    },
-    {
-      "skeydbId": "awakener-0034",
-      "ingameId": "O02",
-      "slug": "murphy",
-      "name": "墨菲",
-      "englishName": "Murphy",
-      "profile": {
-        "name": "墨菲",
-        "englishName": "Murphy"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2"
-      },
-      "syncStatus": "no-voice"
-    },
-    {
-      "skeydbId": "awakener-0035",
-      "ingameId": "O02EX",
-      "slug": "murphy-fauxborn",
-      "name": "诞妄·墨菲",
-      "englishName": "Murphy: Fauxborn",
-      "profile": {
-        "name": "诞妄·墨菲",
-        "englishName": "Murphy: Fauxborn"
-      },
       "voiceLines": [
         {
           "title": "唤醒",
-          "content": "不知好歹的东西，为何执着于唤醒我？"
+          "content": "您为我提供落脚之处，我很感激。但请原谅，我已经不配再次立于舞台之上了。"
         },
         {
           "title": "获得提升·一",
-          "content": "祂的孕育……在我腹中……"
+          "content": "继续提升仪态吧。"
         },
         {
           "title": "获得提升·二",
-          "content": "这就是你献给祂的贡品？"
+          "content": "我的动作足够准确吗？"
         },
         {
           "title": "获得提升·三",
-          "content": "你以为这样便可改变未来？"
+          "content": "再练习二十遍挥鞭转。"
         },
         {
           "title": "闲话·触摸",
-          "content": "若你是为了感知祂的存在，我就暂时宽恕你的无礼吧。"
+          "content": "您也想葬身于绿炎中吗？"
         },
         {
-          "title": "闲话·关于「墨菲」",
-          "content": "我当然知道，那是我的另一个侧面。但她为何要反抗？接受成为被选中者的命运，祈求之物不是信手拈来？ （获得唤醒体「墨菲」后解锁）"
+          "title": "闲话·关于舞蹈",
+          "content": "舞蹈是纯粹的。言语会招致误解，但舞步不会。"
         },
         {
-          "title": "闲话·关于弥利亚姆",
-          "content": "她也是个可怜人，终将被命运蹂躏。因为，祂真正降生之刻，就是我将死亡赐予她之时。 （获得唤醒体「弥利亚姆」后解锁）"
+          "title": "闲话·关于火焰",
+          "content": "有传言说，在焚烧的火焰中抽搐的人体就像在跳舞一样。"
         },
         {
-          "title": "闲话·关于图鲁",
-          "content": "那便是祂的切片吗？不错，倒是很有王之威仪。 （获得唤醒体「图鲁」后解锁）"
-        },
-        {
-          "title": "闲话·关于融蚀",
-          "content": "祂的降临，会让这种黑色死亡带来的痛苦终结，不是吗？"
-        },
-        {
-          "title": "闲话·关于弥萨格大学",
-          "content": "遍地蝼蚁……不，连蝼蚁都算不上，只是面包屑而已，为祂的降生提供养分。"
-        },
-        {
-          "title": "闲话·喜欢的东西",
-          "content": "自然是赐予我无上尊荣之物。你觉得这很不像我？"
-        },
-        {
-          "title": "闲话·讨厌的东西",
-          "content": "……不要让我回忆起来……被囚禁在艾尔沃斯的日子……"
-        },
-        {
-          "title": "闲话·关于守密人",
-          "content": "我是祂的王女，亦是祂的母亲。至于你，在祂的面前只是无关紧要的蝼蚁罢了。"
-        }
-      ],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
-      },
-      "syncStatus": "no-voice"
-    },
-    {
-      "skeydbId": "awakener-0036",
-      "ingameId": "C07",
-      "slug": "nautila",
-      "name": "诺缔拉",
-      "englishName": "Nautila",
-      "profile": {
-        "name": "诺缔拉",
-        "englishName": "Nautila"
-      },
-      "voiceLines": [
-        {
-          "title": "唤醒",
-          "content": "你好，我是……你能告诉我我叫什么吗？"
-        },
-        {
-          "title": "获得提升·一",
-          "content": "距离正式冒险又近了一步。"
-        },
-        {
-          "title": "获得提升·二",
-          "content": "良好的工具是成功的一半！"
-        },
-        {
-          "title": "获得提升·三",
-          "content": "不管是螺丝还是钉子，当然是多多益善啦。"
-        },
-        {
-          "title": "闲话·触摸",
-          "content": "……这个可能需要用到扭力扳手……唔，抱歉，你刚才有叫我吗？"
-        },
-        {
-          "title": "闲话·关于冒险",
-          "content": "怎么会有人不喜欢冒险呢？深入没人去过的神秘领域，探访未知，编织属于自己的故事……多么刺激！"
-        },
-        {
-          "title": "闲话·关于零件",
-          "content": "啊，这正是我需要的零件，谢谢你！……诶？我叫你帮忙找的？我一点印象也没有耶，你是不是记错啦？"
-        },
-        {
-          "title": "闲话·关于詹金",
-          "content": "不好意思，你有见到我的螺丝吗？真奇怪啊，只要有那个老鼠耳朵的孩子在，我好像更容易忘了自己都把东西放到哪儿去了…… （获得唤醒体「詹金」后解锁）"
+          "title": "闲话·关于汀克特",
+          "content": "汀克特……听到她哀婉的歌声，就会忍不住想要起舞…… （获得唤醒体「汀克特」后解锁）"
         },
         {
           "title": "闲话·关于融蚀",
-          "content": "融蚀啊……我的脑容量有限，没法理解那么复杂的疾病……如果有需要修缮的机械再找我吧！"
+          "content": "……等一下，我见过这种东西。他们喂给我的水里有这种黑色的黏液。我获得绿炎的力量或许与此有关？那也算是因祸得福吧。"
         },
         {
           "title": "闲话·关于弥萨格大学",
-          "content": "我很喜欢学院的记录仪，要是能改造出一个随身版本，实时提醒我忘了什么就好了……"
+          "content": "我的生活里只有舞蹈，就算让我学习其他知识，也很难成长。但大家都是善良的人，不会为了虚荣或金钱将我贩售出去，我能感觉到。"
         },
         {
           "title": "闲话·喜欢的东西",
-          "content": "呆扳手、活扳手、梅花扳手、一字螺丝刀、十字螺丝刀、沉头螺丝、盘头螺丝……只要是能把坏掉的东西修好的，我都喜欢。"
+          "content": "《天鹅之死》，舞蹈者以肢体语言诠释生命的渴望与挣扎的剧目。那烈火中扭曲的身姿何尝不是如此呢。"
         },
         {
           "title": "闲话·讨厌的东西",
-          "content": "其实……悄悄告诉你，我对现在的摩托挺不满意的——我不是不喜欢它！只是，我总感觉，它好像缺了什么……"
+          "content": "《胡桃夹子》本是女孩子的浪漫幻想童话，那些面目可憎的家伙却只在其中看见了横飞的曼妙肢体与庸俗的生理欲望……令人作呕。"
         },
         {
           "title": "闲话·关于守密人",
-          "content": "很奇怪，我记其他东西总是很困难，记你却只用了几天……什么，已经三个月了吗？真抱歉，我又忘记了。"
+          "content": "您是来拯救我的，对吗？从腐朽的世道中，从浸染双目的仇恨中，从永恒的绿炎中……"
         }
       ],
       "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "空白的过去",
-              "「基础打击」获得等同于 15% 攻击力的 反击（效果随「基础打击」的等级提高，满级时为 30%）。"
-            ],
-            [
-              "",
-              "缺失的螺母",
-              "「高热区禁入」获得 预备1。"
-            ],
-            [
-              "",
-              "模糊的梦想",
-              "「整装待发」触发 反击 倍率 +50%，释放后自身免疫 脆弱、 虚弱、 易伤1 回合。"
-            ]
-          ]
-        },
         {
           "section": "技能",
           "rows": [
@@ -2089,40 +1985,40 @@
               "---",
               "",
               "",
-              "界域精通+4 伤害强效+0.8%",
+              "暴击率+1.6% 暴击伤害+1.2%",
               "",
               "",
-              "界域精通+8 伤害强效+1.6%",
+              "暴击率+3.2% 暴击伤害+2.4%",
               "",
               "",
-              "界域精通+12 伤害强效+2.4%",
+              "暴击率+4.8% 暴击伤害+3.6%",
               "",
               "",
-              "界域精通+16 伤害强效+3.2% 「引擎启动！」已解锁 超限爆发：提高当前护盾 50% 的效果变为无视护盾上限，对所有敌人造成的 固定伤害 提高为 反击 的 500%。",
+              "暴击率+6.4% 暴击伤害+4.8% 「死兆降临」已解锁 超限爆发：将手牌中所有的「绿炎」与「腐化绿炎」升级为「死灭绿炎」， 之后 3 个回合，每回合开始时重复 1 次该效果。",
               "",
               "",
-              "界域精通+20 伤害强效+4.0%",
+              "暴击率+8.0% 暴击伤害+6.0%",
               "",
               "",
-              "界域精通+24 伤害强效+4.8%",
+              "暴击率+9.6% 暴击伤害+7.2%",
               "",
               "",
-              "界域精通+28 伤害强效+5.6%",
+              "暴击率+11.2% 暴击伤害+8.4%",
               "",
               "",
-              "界域精通+32 伤害强效+6.4% 等级上限提升 +5",
+              "暴击率+12.8% 暴击伤害+9.6% 等级上限提升 +5",
               "",
               "",
-              "界域精通+36 伤害强效+7.2%",
+              "暴击率+14.4% 暴击伤害+10.8%",
               "",
               "",
-              "界域精通+40 伤害强效+8.0%",
+              "暴击率+16.0% 暴击伤害+12.0%",
               "",
               "",
-              "界域精通+44 伤害强效+8.8%",
+              "暴击率+17.6% 暴击伤害+13.2%",
               "",
               "",
-              "界域精通+48 伤害强效+9.6% 等级上限提升 +10 「王牌机械师」已解锁 最终法则： 灵知觉醒「维修大师」获得强化，所有唤醒体固定 反击 提高 30%。",
+              "暴击率+19.2% 暴击伤害+14.4% 等级上限提升 +10 「燃烧的致礼」已解锁 最终法则： 灵知觉醒「翡翠映像」获得强化，莉兹每造成 3 次伤害还会使莉兹本场战斗造成的伤害提高攻击力的 15%。",
               ""
             ],
             [
@@ -2299,11 +2195,280 @@
         }
       ],
       "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
+      },
+      "syncStatus": "ok"
+    },
+    {
+      "skeydbId": "awakener-0031",
+      "ingameId": "C04",
+      "slug": "lotan",
+      "name": "萝坦",
+      "englishName": "Lotan",
+      "profile": {
+        "name": "萝坦",
+        "englishName": "Lotan"
+      },
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "新任守密人？使出你的全力吧，让我看看你是否有资格成为我的对手。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "能挥出更强的一剑了。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "不错嘛。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "感觉就像活过来了一样。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "怎么，要打一场？"
+        },
+        {
+          "title": "闲话·关于工作",
+          "content": "除了战斗外，我当然还有其他工作要做。就算在大古宙，我也不是无所事事的……喂，你不会真把我当只会打架的粗人了吧！"
+        },
+        {
+          "title": "闲话·关于图鲁",
+          "content": "你怎么会把他召唤出来！那个没用的瞌睡虫！自甘堕落、不思进取……枉我曾对他寄予厚望！我们走！我不想见到这个家伙！ （获得唤醒体「图鲁」后解锁）"
+        },
+        {
+          "title": "闲话·关于关于星外之人",
+          "content": "那些家伙的气息很陌生，他们不是这颗星球自然诞生的生命吧。 （获得唤醒体「温柯尔」「汀克特」「菲茵特」「旺达」其一后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "融蚀现象……我无法向你透露太多。不过这东西的出现，可比你们想象中要早得多。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "我喜欢有信念的家伙，不管是动物、唤醒体还是人类。要是这些家伙武技超群，那就更棒了。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "讨厌的东西啊……果然，还是做事中途放弃的家伙吧。一想起那种人，昨天的晚餐都要呕上来了。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "回应人类的唤醒，缔结合作关系，是为了完成我未竟的职责——如果你能成长到能与我一战的程度，那就再好不过了。"
+        }
+      ],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
+      },
+      "syncStatus": "ok"
+    },
+    {
+      "skeydbId": "awakener-0032",
+      "ingameId": "O07",
+      "slug": "miryam",
+      "name": "弥利亚姆",
+      "englishName": "Miryam",
+      "profile": {
+        "name": "弥利亚姆",
+        "englishName": "Miryam"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
+      },
+      "syncStatus": "no-voice"
+    },
+    {
+      "skeydbId": "awakener-0033",
+      "ingameId": "C17",
+      "slug": "mouchette",
+      "name": "茉夏",
+      "englishName": "Mouchette",
+      "profile": {
+        "name": "茉夏",
+        "englishName": "Mouchette"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
+      },
+      "syncStatus": "no-voice"
+    },
+    {
+      "skeydbId": "awakener-0034",
+      "ingameId": "O02",
+      "slug": "murphy",
+      "name": "墨菲",
+      "englishName": "Murphy",
+      "profile": {
+        "name": "墨菲",
+        "englishName": "Murphy"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2",
+        "mode": "static-identity"
+      },
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A2%A8%E8%8F%B2&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2: unusable reader response"
+    },
+    {
+      "skeydbId": "awakener-0035",
+      "ingameId": "O02EX",
+      "slug": "murphy-fauxborn",
+      "name": "诞妄·墨菲",
+      "englishName": "Murphy: Fauxborn",
+      "profile": {
+        "name": "诞妄·墨菲",
+        "englishName": "Murphy: Fauxborn"
+      },
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "不知好歹的东西，为何执着于唤醒我？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "祂的孕育……在我腹中……"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "这就是你献给祂的贡品？"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "你以为这样便可改变未来？"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "若你是为了感知祂的存在，我就暂时宽恕你的无礼吧。"
+        },
+        {
+          "title": "闲话·关于「墨菲」",
+          "content": "我当然知道，那是我的另一个侧面。但她为何要反抗？接受成为被选中者的命运，祈求之物不是信手拈来？ （获得唤醒体「墨菲」后解锁）"
+        },
+        {
+          "title": "闲话·关于弥利亚姆",
+          "content": "她也是个可怜人，终将被命运蹂躏。因为，祂真正降生之刻，就是我将死亡赐予她之时。 （获得唤醒体「弥利亚姆」后解锁）"
+        },
+        {
+          "title": "闲话·关于图鲁",
+          "content": "那便是祂的切片吗？不错，倒是很有王之威仪。 （获得唤醒体「图鲁」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "祂的降临，会让这种黑色死亡带来的痛苦终结，不是吗？"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "遍地蝼蚁……不，连蝼蚁都算不上，只是面包屑而已，为祂的降生提供养分。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "自然是赐予我无上尊荣之物。你觉得这很不像我？"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "……不要让我回忆起来……被囚禁在艾尔沃斯的日子……"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "我是祂的王女，亦是祂的母亲。至于你，在祂的面前只是无关紧要的蝼蚁罢了。"
+        }
+      ],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
+      },
+      "syncStatus": "no-voice"
+    },
+    {
+      "skeydbId": "awakener-0036",
+      "ingameId": "C07",
+      "slug": "nautila",
+      "name": "诺缔拉",
+      "englishName": "Nautila",
+      "profile": {
+        "name": "诺缔拉",
+        "englishName": "Nautila"
+      },
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "你好，我是……你能告诉我我叫什么吗？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "距离正式冒险又近了一步。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "良好的工具是成功的一半！"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "不管是螺丝还是钉子，当然是多多益善啦。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "……这个可能需要用到扭力扳手……唔，抱歉，你刚才有叫我吗？"
+        },
+        {
+          "title": "闲话·关于冒险",
+          "content": "怎么会有人不喜欢冒险呢？深入没人去过的神秘领域，探访未知，编织属于自己的故事……多么刺激！"
+        },
+        {
+          "title": "闲话·关于零件",
+          "content": "啊，这正是我需要的零件，谢谢你！……诶？我叫你帮忙找的？我一点印象也没有耶，你是不是记错啦？"
+        },
+        {
+          "title": "闲话·关于詹金",
+          "content": "不好意思，你有见到我的螺丝吗？真奇怪啊，只要有那个老鼠耳朵的孩子在，我好像更容易忘了自己都把东西放到哪儿去了…… （获得唤醒体「詹金」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "融蚀啊……我的脑容量有限，没法理解那么复杂的疾病……如果有需要修缮的机械再找我吧！"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "我很喜欢学院的记录仪，要是能改造出一个随身版本，实时提醒我忘了什么就好了……"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "呆扳手、活扳手、梅花扳手、一字螺丝刀、十字螺丝刀、沉头螺丝、盘头螺丝……只要是能把坏掉的东西修好的，我都喜欢。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "其实……悄悄告诉你，我对现在的摩托挺不满意的——我不是不喜欢它！只是，我总感觉，它好像缺了什么……"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "很奇怪，我记其他东西总是很困难，记你却只用了几天……什么，已经三个月了吗？真抱歉，我又忘记了。"
+        }
+      ],
+      "skillTables": [],
+      "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0037",
@@ -2609,7 +2774,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0038",
@@ -2663,10 +2828,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0041",
@@ -2773,14 +2938,67 @@
         "name": "索蕾尔",
         "englishName": "Sorel"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "造访沙龙的客人，能得到最佳的款待……作为入场券，客人是否准备了足以匹配这场盛宴的密辛呢？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "您的礼物，我就满怀敬意地收下了。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "怎样的回礼，才能与您的付出相匹配呢？"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "何等瑰丽……"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "如此急切，对您这般的才杰而言，未免有些粗鄙了。"
+        },
+        {
+          "title": "闲话·关于人类",
+          "content": "说到底，人类也只是一种肤浅的动物罢了。只需几句话语，一点暗示，就能挑起相互的争斗……唉，这种程度可无法让人打起精神啊。"
+        },
+        {
+          "title": "闲话·关于达芙黛尔",
+          "content": "我向您发誓，那位店主绝对在枫丹白露的沙龙中露过脸……原来如此，从那时起，她就是如此模样吗。不知道从她手中，能换得多少密辛呢？ （获得唤醒体「达芙黛尔」后解锁）"
+        },
+        {
+          "title": "闲话·关于珈伦",
+          "content": "一名优秀的侍女能为沙龙增色不少，但蓝绿色的侍女……容我再斟酌一番…… （获得唤醒体「珈伦」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "融蚀……不得不承认，这世界上确实存在着权力无法操控之物。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "您这里倒是人才济济，值得一场盛大的沙龙……放心，届时，邀请函一定会由我的仆从送到您手中。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "我喜欢枫丹白露的花窗，它给人们的面容染上看不同的颜色：绝望的紫、谄媚的蓝，当然，还有我最喜欢的野心之红……"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "讨厌容易熄灭的火烛，讨厌黑面包，讨厌裙摆上的线头……没什么理由，讨厌这些，不是理所当然的吗？"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "您是这里的主人，但也是我沙龙的客人。我会为您的造访，准备最上乘的款待——您喜欢艳红的衬裙，还是白蔷色的睡衣呢？"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0047",
@@ -3069,231 +3287,13 @@
           "content": "作为臣子而言，你还算识趣。在迎来下一次长眠前，余就屈尊纡贵，暂留此时。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "复苏之触",
-              "「基础打击」获得图鲁攻击力的 6% 的临时 力量 和临时 触腕伤害，「基础防御」获得图鲁攻击力的 6% 的临时 力量 和临时 触腕伤害，（效果随「打击」、「防御」的等级提升，满级时为 12%）。"
-            ],
-            [
-              "",
-              "群星归位",
-              "回合结束时图鲁获得 5 点狂气。「螺湮重临」提高 15% 临时暴击率。"
-            ],
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "狂气回充等级+0.4 银钥充能等级+2.4",
-              "",
-              "",
-              "狂气回充等级+0.8 银钥充能等级+4.8",
-              "",
-              "",
-              "狂气回充等级+1.2 银钥充能等级+7.2",
-              "",
-              "",
-              "狂气回充等级+1.6 银钥充能等级+9.6 「应许之日」已解锁 超限爆发：回合结束时，号令所有触腕攻击 2 次。",
-              "",
-              "",
-              "狂气回充等级+2.0 银钥充能等级+12.0",
-              "",
-              "",
-              "狂气回充等级+2.4 银钥充能等级+14.4",
-              "",
-              "",
-              "狂气回充等级+2.8 银钥充能等级+16.8",
-              "",
-              "",
-              "狂气回充等级+3.2 银钥充能等级+19.2 等级上限提升 +5",
-              "",
-              "",
-              "狂气回充等级+3.6 银钥充能等级+21.6",
-              "",
-              "",
-              "狂气回充等级+4.0 银钥充能等级+24.0",
-              "",
-              "",
-              "狂气回充等级+4.4 银钥充能等级+26.4",
-              "",
-              "",
-              "狂气回充等级+4.8 银钥充能等级+28.8 等级上限提升 +10 「孤王」已解锁 最终法则： 灵知觉醒「不朽威仪」获得强化，图鲁释放狂气爆发后，所有敌人受到的触腕伤害提高 10%，最多叠加 5 次。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0051",
@@ -3384,7 +3384,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0053",
@@ -3522,7 +3522,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0057",
@@ -3685,7 +3685,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0060",
@@ -4158,10 +4158,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E8%8E%B1%E6%96%AF%E7%89%B9: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0010": {
       "skeydbId": "awakener-0010",
@@ -4177,10 +4177,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E8%8E%B1%E9%97%A8%E6%B1%80: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0011": {
       "skeydbId": "awakener-0011",
@@ -4252,7 +4252,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%85%8B%E7%8F%80%E7%8F%8A%E7%89%B9"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0012": {
       "skeydbId": "awakener-0012",
@@ -4324,7 +4324,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%BE%BE%E8%8A%99%E9%BB%9B%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0013": {
       "skeydbId": "awakener-0013",
@@ -4550,7 +4550,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B3%95%E6%B4%9B%E6%80%9D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0018": {
       "skeydbId": "awakener-0018",
@@ -4781,7 +4781,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%88%88%E5%88%A9%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0022": {
       "skeydbId": "awakener-0022",
@@ -4812,14 +4812,67 @@
         "name": "希洛",
         "englishName": "Helot"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "目标在哪？作为将我唤醒的回报，我会为你解决掉对方。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "复仇的血，正在沸腾……"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "我将用这力量吞噬背叛者。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "……多谢了。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "想死吗？"
+        },
+        {
+          "title": "闲话·关于莉莉",
+          "content": "我能感觉到，那个小女孩拥有和我相似的力量。她还没完全理解这份力量的强大，看在你的份上，我会适当训练她的。 （获得唤醒体「莉莉」后解锁）"
+        },
+        {
+          "title": "闲话·关于阿格里帕",
+          "content": "那个干瘪的重瞳女人，闻起来和斯巴达臭虫如出一辙。 （获得唤醒体「阿格里帕」后解锁）"
+        },
+        {
+          "title": "闲话·关于艾继丝",
+          "content": "究竟是怎样不负责的父母，才会以女妖之盾命名自己的女儿？你说那孩子没有父母？嗯……我们这段对话，没必要让她知道。 （获得唤醒体「艾继丝」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "人会有背叛之心，工具不会。只要利用得当，融蚀也是复仇的工具。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "在我的时代，学校是训练战士的场所，看来现在也如此。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "喜欢的东西？在伯罗奔尼撒的战场上，也有人问过我这个问题……太晚了，我早已舍弃了这类私人的好恶。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "背叛会使人变成怪物，无论对哪一方来说都是如此。所以，我憎恶叛徒。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "你一直都这样吗？向所有人托付后背，交付信任？太天真了。"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     "awakener-0024": {
       "skeydbId": "awakener-0024",
@@ -4931,7 +4984,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0025": {
       "skeydbId": "awakener-0025",
@@ -5242,7 +5295,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E8%8E%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0030": {
       "skeydbId": "awakener-0030",
@@ -5254,248 +5307,61 @@
         "name": "莉兹",
         "englishName": "Liz"
       },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
-      },
-      "syncStatus": "no-voice"
-    },
-    "awakener-0031": {
-      "skeydbId": "awakener-0031",
-      "ingameId": "C04",
-      "slug": "lotan",
-      "name": "萝坦",
-      "englishName": "Lotan",
-      "profile": {
-        "name": "萝坦",
-        "englishName": "Lotan"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
-        "mode": "static-identity"
-      },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E8%90%9D%E5%9D%A6&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6: unusable reader response"
-    },
-    "awakener-0032": {
-      "skeydbId": "awakener-0032",
-      "ingameId": "O07",
-      "slug": "miryam",
-      "name": "弥利亚姆",
-      "englishName": "Miryam",
-      "profile": {
-        "name": "弥利亚姆",
-        "englishName": "Miryam"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
-      },
-      "syncStatus": "no-voice"
-    },
-    "awakener-0033": {
-      "skeydbId": "awakener-0033",
-      "ingameId": "C17",
-      "slug": "mouchette",
-      "name": "茉夏",
-      "englishName": "Mouchette",
-      "profile": {
-        "name": "茉夏",
-        "englishName": "Mouchette"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
-      },
-      "syncStatus": "no-voice"
-    },
-    "awakener-0034": {
-      "skeydbId": "awakener-0034",
-      "ingameId": "O02",
-      "slug": "murphy",
-      "name": "墨菲",
-      "englishName": "Murphy",
-      "profile": {
-        "name": "墨菲",
-        "englishName": "Murphy"
-      },
-      "voiceLines": [],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2"
-      },
-      "syncStatus": "no-voice"
-    },
-    "awakener-0035": {
-      "skeydbId": "awakener-0035",
-      "ingameId": "O02EX",
-      "slug": "murphy-fauxborn",
-      "name": "诞妄·墨菲",
-      "englishName": "Murphy: Fauxborn",
-      "profile": {
-        "name": "诞妄·墨菲",
-        "englishName": "Murphy: Fauxborn"
-      },
       "voiceLines": [
         {
           "title": "唤醒",
-          "content": "不知好歹的东西，为何执着于唤醒我？"
+          "content": "您为我提供落脚之处，我很感激。但请原谅，我已经不配再次立于舞台之上了。"
         },
         {
           "title": "获得提升·一",
-          "content": "祂的孕育……在我腹中……"
+          "content": "继续提升仪态吧。"
         },
         {
           "title": "获得提升·二",
-          "content": "这就是你献给祂的贡品？"
+          "content": "我的动作足够准确吗？"
         },
         {
           "title": "获得提升·三",
-          "content": "你以为这样便可改变未来？"
+          "content": "再练习二十遍挥鞭转。"
         },
         {
           "title": "闲话·触摸",
-          "content": "若你是为了感知祂的存在，我就暂时宽恕你的无礼吧。"
+          "content": "您也想葬身于绿炎中吗？"
         },
         {
-          "title": "闲话·关于「墨菲」",
-          "content": "我当然知道，那是我的另一个侧面。但她为何要反抗？接受成为被选中者的命运，祈求之物不是信手拈来？ （获得唤醒体「墨菲」后解锁）"
+          "title": "闲话·关于舞蹈",
+          "content": "舞蹈是纯粹的。言语会招致误解，但舞步不会。"
         },
         {
-          "title": "闲话·关于弥利亚姆",
-          "content": "她也是个可怜人，终将被命运蹂躏。因为，祂真正降生之刻，就是我将死亡赐予她之时。 （获得唤醒体「弥利亚姆」后解锁）"
+          "title": "闲话·关于火焰",
+          "content": "有传言说，在焚烧的火焰中抽搐的人体就像在跳舞一样。"
         },
         {
-          "title": "闲话·关于图鲁",
-          "content": "那便是祂的切片吗？不错，倒是很有王之威仪。 （获得唤醒体「图鲁」后解锁）"
-        },
-        {
-          "title": "闲话·关于融蚀",
-          "content": "祂的降临，会让这种黑色死亡带来的痛苦终结，不是吗？"
-        },
-        {
-          "title": "闲话·关于弥萨格大学",
-          "content": "遍地蝼蚁……不，连蝼蚁都算不上，只是面包屑而已，为祂的降生提供养分。"
-        },
-        {
-          "title": "闲话·喜欢的东西",
-          "content": "自然是赐予我无上尊荣之物。你觉得这很不像我？"
-        },
-        {
-          "title": "闲话·讨厌的东西",
-          "content": "……不要让我回忆起来……被囚禁在艾尔沃斯的日子……"
-        },
-        {
-          "title": "闲话·关于守密人",
-          "content": "我是祂的王女，亦是祂的母亲。至于你，在祂的面前只是无关紧要的蝼蚁罢了。"
-        }
-      ],
-      "skillTables": [],
-      "source": {
-        "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
-        "mode": "jina-reader",
-        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
-      },
-      "syncStatus": "no-voice"
-    },
-    "awakener-0036": {
-      "skeydbId": "awakener-0036",
-      "ingameId": "C07",
-      "slug": "nautila",
-      "name": "诺缔拉",
-      "englishName": "Nautila",
-      "profile": {
-        "name": "诺缔拉",
-        "englishName": "Nautila"
-      },
-      "voiceLines": [
-        {
-          "title": "唤醒",
-          "content": "你好，我是……你能告诉我我叫什么吗？"
-        },
-        {
-          "title": "获得提升·一",
-          "content": "距离正式冒险又近了一步。"
-        },
-        {
-          "title": "获得提升·二",
-          "content": "良好的工具是成功的一半！"
-        },
-        {
-          "title": "获得提升·三",
-          "content": "不管是螺丝还是钉子，当然是多多益善啦。"
-        },
-        {
-          "title": "闲话·触摸",
-          "content": "……这个可能需要用到扭力扳手……唔，抱歉，你刚才有叫我吗？"
-        },
-        {
-          "title": "闲话·关于冒险",
-          "content": "怎么会有人不喜欢冒险呢？深入没人去过的神秘领域，探访未知，编织属于自己的故事……多么刺激！"
-        },
-        {
-          "title": "闲话·关于零件",
-          "content": "啊，这正是我需要的零件，谢谢你！……诶？我叫你帮忙找的？我一点印象也没有耶，你是不是记错啦？"
-        },
-        {
-          "title": "闲话·关于詹金",
-          "content": "不好意思，你有见到我的螺丝吗？真奇怪啊，只要有那个老鼠耳朵的孩子在，我好像更容易忘了自己都把东西放到哪儿去了…… （获得唤醒体「詹金」后解锁）"
+          "title": "闲话·关于汀克特",
+          "content": "汀克特……听到她哀婉的歌声，就会忍不住想要起舞…… （获得唤醒体「汀克特」后解锁）"
         },
         {
           "title": "闲话·关于融蚀",
-          "content": "融蚀啊……我的脑容量有限，没法理解那么复杂的疾病……如果有需要修缮的机械再找我吧！"
+          "content": "……等一下，我见过这种东西。他们喂给我的水里有这种黑色的黏液。我获得绿炎的力量或许与此有关？那也算是因祸得福吧。"
         },
         {
           "title": "闲话·关于弥萨格大学",
-          "content": "我很喜欢学院的记录仪，要是能改造出一个随身版本，实时提醒我忘了什么就好了……"
+          "content": "我的生活里只有舞蹈，就算让我学习其他知识，也很难成长。但大家都是善良的人，不会为了虚荣或金钱将我贩售出去，我能感觉到。"
         },
         {
           "title": "闲话·喜欢的东西",
-          "content": "呆扳手、活扳手、梅花扳手、一字螺丝刀、十字螺丝刀、沉头螺丝、盘头螺丝……只要是能把坏掉的东西修好的，我都喜欢。"
+          "content": "《天鹅之死》，舞蹈者以肢体语言诠释生命的渴望与挣扎的剧目。那烈火中扭曲的身姿何尝不是如此呢。"
         },
         {
           "title": "闲话·讨厌的东西",
-          "content": "其实……悄悄告诉你，我对现在的摩托挺不满意的——我不是不喜欢它！只是，我总感觉，它好像缺了什么……"
+          "content": "《胡桃夹子》本是女孩子的浪漫幻想童话，那些面目可憎的家伙却只在其中看见了横飞的曼妙肢体与庸俗的生理欲望……令人作呕。"
         },
         {
           "title": "闲话·关于守密人",
-          "content": "很奇怪，我记其他东西总是很困难，记你却只用了几天……什么，已经三个月了吗？真抱歉，我又忘记了。"
+          "content": "您是来拯救我的，对吗？从腐朽的世道中，从浸染双目的仇恨中，从永恒的绿炎中……"
         }
       ],
       "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "空白的过去",
-              "「基础打击」获得等同于 15% 攻击力的 反击（效果随「基础打击」的等级提高，满级时为 30%）。"
-            ],
-            [
-              "",
-              "缺失的螺母",
-              "「高热区禁入」获得 预备1。"
-            ],
-            [
-              "",
-              "模糊的梦想",
-              "「整装待发」触发 反击 倍率 +50%，释放后自身免疫 脆弱、 虚弱、 易伤1 回合。"
-            ]
-          ]
-        },
         {
           "section": "技能",
           "rows": [
@@ -5506,40 +5372,40 @@
               "---",
               "",
               "",
-              "界域精通+4 伤害强效+0.8%",
+              "暴击率+1.6% 暴击伤害+1.2%",
               "",
               "",
-              "界域精通+8 伤害强效+1.6%",
+              "暴击率+3.2% 暴击伤害+2.4%",
               "",
               "",
-              "界域精通+12 伤害强效+2.4%",
+              "暴击率+4.8% 暴击伤害+3.6%",
               "",
               "",
-              "界域精通+16 伤害强效+3.2% 「引擎启动！」已解锁 超限爆发：提高当前护盾 50% 的效果变为无视护盾上限，对所有敌人造成的 固定伤害 提高为 反击 的 500%。",
+              "暴击率+6.4% 暴击伤害+4.8% 「死兆降临」已解锁 超限爆发：将手牌中所有的「绿炎」与「腐化绿炎」升级为「死灭绿炎」， 之后 3 个回合，每回合开始时重复 1 次该效果。",
               "",
               "",
-              "界域精通+20 伤害强效+4.0%",
+              "暴击率+8.0% 暴击伤害+6.0%",
               "",
               "",
-              "界域精通+24 伤害强效+4.8%",
+              "暴击率+9.6% 暴击伤害+7.2%",
               "",
               "",
-              "界域精通+28 伤害强效+5.6%",
+              "暴击率+11.2% 暴击伤害+8.4%",
               "",
               "",
-              "界域精通+32 伤害强效+6.4% 等级上限提升 +5",
+              "暴击率+12.8% 暴击伤害+9.6% 等级上限提升 +5",
               "",
               "",
-              "界域精通+36 伤害强效+7.2%",
+              "暴击率+14.4% 暴击伤害+10.8%",
               "",
               "",
-              "界域精通+40 伤害强效+8.0%",
+              "暴击率+16.0% 暴击伤害+12.0%",
               "",
               "",
-              "界域精通+44 伤害强效+8.8%",
+              "暴击率+17.6% 暴击伤害+13.2%",
               "",
               "",
-              "界域精通+48 伤害强效+9.6% 等级上限提升 +10 「王牌机械师」已解锁 最终法则： 灵知觉醒「维修大师」获得强化，所有唤醒体固定 反击 提高 30%。",
+              "暴击率+19.2% 暴击伤害+14.4% 等级上限提升 +10 「燃烧的致礼」已解锁 最终法则： 灵知觉醒「翡翠映像」获得强化，莉兹每造成 3 次伤害还会使莉兹本场战斗造成的伤害提高攻击力的 15%。",
               ""
             ],
             [
@@ -5716,11 +5582,280 @@
         }
       ],
       "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8E%89%E5%85%B9"
+      },
+      "syncStatus": "ok"
+    },
+    "awakener-0031": {
+      "skeydbId": "awakener-0031",
+      "ingameId": "C04",
+      "slug": "lotan",
+      "name": "萝坦",
+      "englishName": "Lotan",
+      "profile": {
+        "name": "萝坦",
+        "englishName": "Lotan"
+      },
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "新任守密人？使出你的全力吧，让我看看你是否有资格成为我的对手。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "能挥出更强的一剑了。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "不错嘛。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "感觉就像活过来了一样。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "怎么，要打一场？"
+        },
+        {
+          "title": "闲话·关于工作",
+          "content": "除了战斗外，我当然还有其他工作要做。就算在大古宙，我也不是无所事事的……喂，你不会真把我当只会打架的粗人了吧！"
+        },
+        {
+          "title": "闲话·关于图鲁",
+          "content": "你怎么会把他召唤出来！那个没用的瞌睡虫！自甘堕落、不思进取……枉我曾对他寄予厚望！我们走！我不想见到这个家伙！ （获得唤醒体「图鲁」后解锁）"
+        },
+        {
+          "title": "闲话·关于关于星外之人",
+          "content": "那些家伙的气息很陌生，他们不是这颗星球自然诞生的生命吧。 （获得唤醒体「温柯尔」「汀克特」「菲茵特」「旺达」其一后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "融蚀现象……我无法向你透露太多。不过这东西的出现，可比你们想象中要早得多。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "我喜欢有信念的家伙，不管是动物、唤醒体还是人类。要是这些家伙武技超群，那就更棒了。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "讨厌的东西啊……果然，还是做事中途放弃的家伙吧。一想起那种人，昨天的晚餐都要呕上来了。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "回应人类的唤醒，缔结合作关系，是为了完成我未竟的职责——如果你能成长到能与我一战的程度，那就再好不过了。"
+        }
+      ],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%90%9D%E5%9D%A6"
+      },
+      "syncStatus": "ok"
+    },
+    "awakener-0032": {
+      "skeydbId": "awakener-0032",
+      "ingameId": "O07",
+      "slug": "miryam",
+      "name": "弥利亚姆",
+      "englishName": "Miryam",
+      "profile": {
+        "name": "弥利亚姆",
+        "englishName": "Miryam"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%BC%A5%E5%88%A9%E4%BA%9A%E5%A7%86"
+      },
+      "syncStatus": "no-voice"
+    },
+    "awakener-0033": {
+      "skeydbId": "awakener-0033",
+      "ingameId": "C17",
+      "slug": "mouchette",
+      "name": "茉夏",
+      "englishName": "Mouchette",
+      "profile": {
+        "name": "茉夏",
+        "englishName": "Mouchette"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%8C%89%E5%A4%8F"
+      },
+      "syncStatus": "no-voice"
+    },
+    "awakener-0034": {
+      "skeydbId": "awakener-0034",
+      "ingameId": "O02",
+      "slug": "murphy",
+      "name": "墨菲",
+      "englishName": "Murphy",
+      "profile": {
+        "name": "墨菲",
+        "englishName": "Murphy"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2",
+        "mode": "static-identity"
+      },
+      "syncStatus": "fallback",
+      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%A2%A8%E8%8F%B2&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A2%A8%E8%8F%B2: unusable reader response"
+    },
+    "awakener-0035": {
+      "skeydbId": "awakener-0035",
+      "ingameId": "O02EX",
+      "slug": "murphy-fauxborn",
+      "name": "诞妄·墨菲",
+      "englishName": "Murphy: Fauxborn",
+      "profile": {
+        "name": "诞妄·墨菲",
+        "englishName": "Murphy: Fauxborn"
+      },
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "不知好歹的东西，为何执着于唤醒我？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "祂的孕育……在我腹中……"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "这就是你献给祂的贡品？"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "你以为这样便可改变未来？"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "若你是为了感知祂的存在，我就暂时宽恕你的无礼吧。"
+        },
+        {
+          "title": "闲话·关于「墨菲」",
+          "content": "我当然知道，那是我的另一个侧面。但她为何要反抗？接受成为被选中者的命运，祈求之物不是信手拈来？ （获得唤醒体「墨菲」后解锁）"
+        },
+        {
+          "title": "闲话·关于弥利亚姆",
+          "content": "她也是个可怜人，终将被命运蹂躏。因为，祂真正降生之刻，就是我将死亡赐予她之时。 （获得唤醒体「弥利亚姆」后解锁）"
+        },
+        {
+          "title": "闲话·关于图鲁",
+          "content": "那便是祂的切片吗？不错，倒是很有王之威仪。 （获得唤醒体「图鲁」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "祂的降临，会让这种黑色死亡带来的痛苦终结，不是吗？"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "遍地蝼蚁……不，连蝼蚁都算不上，只是面包屑而已，为祂的降生提供养分。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "自然是赐予我无上尊荣之物。你觉得这很不像我？"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "……不要让我回忆起来……被囚禁在艾尔沃斯的日子……"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "我是祂的王女，亦是祂的母亲。至于你，在祂的面前只是无关紧要的蝼蚁罢了。"
+        }
+      ],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
+      },
+      "syncStatus": "no-voice"
+    },
+    "awakener-0036": {
+      "skeydbId": "awakener-0036",
+      "ingameId": "C07",
+      "slug": "nautila",
+      "name": "诺缔拉",
+      "englishName": "Nautila",
+      "profile": {
+        "name": "诺缔拉",
+        "englishName": "Nautila"
+      },
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "你好，我是……你能告诉我我叫什么吗？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "距离正式冒险又近了一步。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "良好的工具是成功的一半！"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "不管是螺丝还是钉子，当然是多多益善啦。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "……这个可能需要用到扭力扳手……唔，抱歉，你刚才有叫我吗？"
+        },
+        {
+          "title": "闲话·关于冒险",
+          "content": "怎么会有人不喜欢冒险呢？深入没人去过的神秘领域，探访未知，编织属于自己的故事……多么刺激！"
+        },
+        {
+          "title": "闲话·关于零件",
+          "content": "啊，这正是我需要的零件，谢谢你！……诶？我叫你帮忙找的？我一点印象也没有耶，你是不是记错啦？"
+        },
+        {
+          "title": "闲话·关于詹金",
+          "content": "不好意思，你有见到我的螺丝吗？真奇怪啊，只要有那个老鼠耳朵的孩子在，我好像更容易忘了自己都把东西放到哪儿去了…… （获得唤醒体「詹金」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "融蚀啊……我的脑容量有限，没法理解那么复杂的疾病……如果有需要修缮的机械再找我吧！"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "我很喜欢学院的记录仪，要是能改造出一个随身版本，实时提醒我忘了什么就好了……"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "呆扳手、活扳手、梅花扳手、一字螺丝刀、十字螺丝刀、沉头螺丝、盘头螺丝……只要是能把坏掉的东西修好的，我都喜欢。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "其实……悄悄告诉你，我对现在的摩托挺不满意的——我不是不喜欢它！只是，我总感觉，它好像缺了什么……"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "很奇怪，我记其他东西总是很困难，记你却只用了几天……什么，已经三个月了吗？真抱歉，我又忘记了。"
+        }
+      ],
+      "skillTables": [],
+      "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%BA%E7%BC%94%E6%8B%89"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0037": {
       "skeydbId": "awakener-0037",
@@ -6026,7 +6161,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "ok"
     },
     "awakener-0038": {
       "skeydbId": "awakener-0038",
@@ -6080,10 +6215,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E7%9A%AE%E5%85%8B%E6%9B%BC&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0041": {
       "skeydbId": "awakener-0041",
@@ -6190,14 +6325,67 @@
         "name": "索蕾尔",
         "englishName": "Sorel"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "造访沙龙的客人，能得到最佳的款待……作为入场券，客人是否准备了足以匹配这场盛宴的密辛呢？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "您的礼物，我就满怀敬意地收下了。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "怎样的回礼，才能与您的付出相匹配呢？"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "何等瑰丽……"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "如此急切，对您这般的才杰而言，未免有些粗鄙了。"
+        },
+        {
+          "title": "闲话·关于人类",
+          "content": "说到底，人类也只是一种肤浅的动物罢了。只需几句话语，一点暗示，就能挑起相互的争斗……唉，这种程度可无法让人打起精神啊。"
+        },
+        {
+          "title": "闲话·关于达芙黛尔",
+          "content": "我向您发誓，那位店主绝对在枫丹白露的沙龙中露过脸……原来如此，从那时起，她就是如此模样吗。不知道从她手中，能换得多少密辛呢？ （获得唤醒体「达芙黛尔」后解锁）"
+        },
+        {
+          "title": "闲话·关于珈伦",
+          "content": "一名优秀的侍女能为沙龙增色不少，但蓝绿色的侍女……容我再斟酌一番…… （获得唤醒体「珈伦」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "融蚀……不得不承认，这世界上确实存在着权力无法操控之物。"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "您这里倒是人才济济，值得一场盛大的沙龙……放心，届时，邀请函一定会由我的仆从送到您手中。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "我喜欢枫丹白露的花窗，它给人们的面容染上看不同的颜色：绝望的紫、谄媚的蓝，当然，还有我最喜欢的野心之红……"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "讨厌容易熄灭的火烛，讨厌黑面包，讨厌裙摆上的线头……没什么理由，讨厌这些，不是理所当然的吗？"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "您是这里的主人，但也是我沙龙的客人。我会为您的造访，准备最上乘的款待——您喜欢艳红的衬裙，还是白蔷色的睡衣呢？"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     "awakener-0047": {
       "skeydbId": "awakener-0047",
@@ -6486,231 +6674,13 @@
           "content": "作为臣子而言，你还算识趣。在迎来下一次长眠前，余就屈尊纡贵，暂留此时。"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "复苏之触",
-              "「基础打击」获得图鲁攻击力的 6% 的临时 力量 和临时 触腕伤害，「基础防御」获得图鲁攻击力的 6% 的临时 力量 和临时 触腕伤害，（效果随「打击」、「防御」的等级提升，满级时为 12%）。"
-            ],
-            [
-              "",
-              "群星归位",
-              "回合结束时图鲁获得 5 点狂气。「螺湮重临」提高 15% 临时暴击率。"
-            ],
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "狂气回充等级+0.4 银钥充能等级+2.4",
-              "",
-              "",
-              "狂气回充等级+0.8 银钥充能等级+4.8",
-              "",
-              "",
-              "狂气回充等级+1.2 银钥充能等级+7.2",
-              "",
-              "",
-              "狂气回充等级+1.6 银钥充能等级+9.6 「应许之日」已解锁 超限爆发：回合结束时，号令所有触腕攻击 2 次。",
-              "",
-              "",
-              "狂气回充等级+2.0 银钥充能等级+12.0",
-              "",
-              "",
-              "狂气回充等级+2.4 银钥充能等级+14.4",
-              "",
-              "",
-              "狂气回充等级+2.8 银钥充能等级+16.8",
-              "",
-              "",
-              "狂气回充等级+3.2 银钥充能等级+19.2 等级上限提升 +5",
-              "",
-              "",
-              "狂气回充等级+3.6 银钥充能等级+21.6",
-              "",
-              "",
-              "狂气回充等级+4.0 银钥充能等级+24.0",
-              "",
-              "",
-              "狂气回充等级+4.4 银钥充能等级+26.4",
-              "",
-              "",
-              "狂气回充等级+4.8 银钥充能等级+28.8 等级上限提升 +10 「孤王」已解锁 最终法则： 灵知觉醒「不朽威仪」获得强化，图鲁释放狂气爆发后，所有敌人受到的触腕伤害提高 10%，最多叠加 5 次。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0051": {
       "skeydbId": "awakener-0051",
@@ -6801,7 +6771,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%97%BA%E8%BE%BE"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0053": {
       "skeydbId": "awakener-0053",
@@ -6939,7 +6909,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%98%BF%E6%8B%89%E5%85%8B%E6%B6%85"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0057": {
       "skeydbId": "awakener-0057",
@@ -7102,7 +7072,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0060": {
       "skeydbId": "awakener-0060",
