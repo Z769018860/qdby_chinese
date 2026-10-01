@@ -464,7 +464,8 @@
   function renderEnlight(){
     $('dtideUsageEnlight')?.remove();
   }
-  function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight()})}
+  function renderBattleStats(){const host=$('dtideBattle');if(!host||!window.MorimensDtideBattle)return;window.MorimensDtideBattle.render(host,{records:usage?.aggregateOnly?[]:(usage?.records||[]),rankOf,scoreOf,rankMatches,scoreMatches,rankCap:selectedRankCap(),difficulty:$('dtideDifficulty')?.value||'all',clearType:$('dtideClearType')?.value||'all',difficultyOf})}
+  function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight();renderBattleStats()})}
 
   function fallbackStats(records){
     const ranks=(records||[]).map(rankOf).filter(Number.isFinite),maxRank=ranks.length?Math.max(...ranks):0;
