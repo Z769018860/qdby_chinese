@@ -39,12 +39,13 @@ for(const r of relicsCatalog.records){
 }
 
 await rm(path.join(OUT,'seasons'),{recursive:true,force:true});
-const seasons=[];
+const seasons=[];const appears={};
 for(const s of dzones.records){
   const doc=await readJson(`src/data/dzone/${s.seasonPath}`);
   const rec=doc.records[0];
   const file=`seasons/${String(s.period)}.json`;
   await save(path.join(OUT,file),rec);
+  for(const w of rec.waves||[])for(const id of w.monsterIds||[]){const l=appears[id]||(appears[id]=[]);if(!l.includes(s.period))l.push(s.period)}
   seasons.push({period:s.period,name:s.name,start:s.start,end:s.end,stageEffect:s.stageEffect,realm:s.realm,path:file,waves:rec.waves?.length||0});
 }
 let commit='';
@@ -52,7 +53,7 @@ if(local){try{commit=execFileSync('git',['-C',SOURCE_ROOT,'rev-parse','HEAD'],{e
 await save(path.join(OUT,'index.json'),{
   schemaVersion:1,
   source:{repository:`${OWNER}/${REPO}`,ref:REF,commit,syncedAt:new Date().toISOString(),license:'CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded'},
-  seasons,monsters,characteristics,relics
+  seasons,monsters,characteristics,relics,appears
 });
 
 if(local){

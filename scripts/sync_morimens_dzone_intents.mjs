@@ -21,8 +21,10 @@ async function readSource(rel){
 const cjk=/[一-鿿]/;
 const display=a=>a?.value?.display??a?.value?.raw??null;
 
-await rm(OUT,{recursive:true,force:true});await mkdir(OUT,{recursive:true});
-const seasons=[];
+// only the files this script owns are replaced (huiji-monsters.json is built by parse_huiji_monsters.mjs)
+await mkdir(OUT,{recursive:true});
+for(const f of await readdir(OUT)) if(/^(\d+|by-monster|index)\.json$/.test(f)) await rm(path.join(OUT,f));
+const seasons=[];const docs=[];
 for(const [periodStr,file] of Object.entries(FILES)){
   const period=Number(periodStr);
   let src;try{src=await readSource(`data/${file}`)}catch(e){console.warn('skip',period,e.message);continue}
@@ -58,7 +60,13 @@ for(const [periodStr,file] of Object.entries(FILES)){
             }
             const key=m.level+':'+m.hp,list=pool.get(key);let skId=null;
             if(list?.length){skId=list.shift();joined++}
+            const sa={};
+            for(const st of m.resolvedStates||[]){
+              const da=(st.descArgs||[]).map(display),sg=(st.stateArgs||[]).map(display),la=display(st.initialLayer);
+              if(da.length||sg.length||la!=null)sa[st.id]={...(da.length?{da}:{}),...(sg.length?{sg}:{}),...(la!=null?{la}:{})};
+            }
             const out={tid:m.tid,lv:m.level,hp:m.hp,atk:m.attack,def:m.defense,a:args};
+            if(Object.keys(sa).length)out.sa=sa;
             if(skId)out.sk=skId;
             if((m.phases||[]).length>1)out.ph=m.phases.map(p=>p.hp);
             return out;
@@ -67,10 +75,24 @@ for(const [periodStr,file] of Object.entries(FILES)){
       })
     };
   });
+  docs.push({period,monsters,waves});
   await writeFile(path.join(OUT,`${period}.json`),JSON.stringify({period,generatedAt:src.generatedAt,monsters,waves})+'\n');
   seasons.push({period,generatedAt:src.generatedAt,waves:waves.length,monsters:Object.keys(monsters).length});
   console.log(`season ${period}: ${Object.keys(monsters).length} monsters, ${joined}/${total} joined to SKeyDB`);
 }
+// Static intent data per SKeyDB monster id, taken from the latest season in which the monster was seen, so seasons
+// without their own intent data can still show a monster's skills / action pattern (numbers come from the closest level).
+const byMonster={};
+for(const doc of docs.sort((a,b)=>a.period-b.period)){
+  const rows={};
+  for(const w of doc.waves)for(const a of w.alerts)for(const m of a.ms)if(m.sk)(rows[m.sk]||(rows[m.sk]=[])).push({tid:m.tid,lv:m.lv,hp:m.hp,atk:m.atk,def:m.def,a:m.a,...(m.sa?{sa:m.sa}:{}),...(m.ph?{ph:m.ph}:{})});
+  for(const [sk,list] of Object.entries(rows)){
+    const st=doc.monsters[list[0].tid];
+    byMonster[sk]={period:doc.period,tid:list[0].tid,...st,rows:list.map(({tid,...r})=>r)};
+  }
+}
+await writeFile(path.join(OUT,'by-monster.json'),JSON.stringify(byMonster)+'\n');
+console.log(`by-monster: ${Object.keys(byMonster).length} SKeyDB monsters with intent data`);
 // intent icons (game art, same treatment as the SKeyDB assets)
 if(local&&await exists(path.join(SOURCE_ROOT,'images/dzone/intent'))){
   await mkdir('assets/morimens/dzone-intent',{recursive:true});

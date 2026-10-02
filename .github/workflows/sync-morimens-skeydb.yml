@@ -86,6 +86,7 @@ jobs:
         run: |
           node scripts/sync_morimens_dzone.mjs
           node scripts/sync_morimens_dzone_intents.mjs
+          node scripts/parse_huiji_monsters.mjs
 
       - name: Sync Chinese localization from HuijiWiki
         if: github.ref_name == 'main'

@@ -88,3 +88,8 @@ assets/morimens/
 ## GitHub Pages 注意
 - 建议在仓库根目录放置 index.html / app.js / styles.css / data.json / images/
 - 在仓库根目录放一个空文件 `.nojekyll`，避免 GitHub Pages 的 Jekyll 处理影响静态资源
+
+
+## 融灾地图数据与翻译
+- 怪物 / 地图：SKeyDB（`scripts/sync_morimens_dzone.mjs`）；怪物技能与意图：Morimens.Info.kr（`scripts/sync_morimens_dzone_intents.mjs`）；中英文翻译：Morimens-Localizations 游戏翻译表（`scripts/build_dzone_translations.py`）。
+- 翻译表尚未收录的新赛季条目（技能 / 状态 / 条件文本、部分怪物名与介绍）由 AI 辅助翻译，维护在 `scripts/data/dzone_ko_*.py`、`scripts/data/dzone_monsters_zh.py`，译名并非官方，翻译表更新后会被官方文本自动覆盖。
