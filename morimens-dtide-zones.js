@@ -6,7 +6,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
   const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
-  const state={active:false,season:null,index:null,seasons:new Map(),error:null,loading:null};
+  const state={active:false,season:null,index:null,wiki:{},seasons:new Map(),error:null,loading:null};
   let host=null,ctx=null,tab=null,savedTitle=null,switching=false;
 
   function ensureStyle(){
@@ -35,6 +35,9 @@
       .dzBadge{font-size:10px;border-radius:4px;padding:1px 5px;margin-left:5px;font-weight:700}.dzBadge.Boss{background:#7f1d1d;color:#fecaca}.dzBadge.Elite{background:#78350f;color:#fde68a}
       .dzChar{display:inline-block;font-size:11px;border:1px solid rgba(148,163,184,.25);border-radius:999px;padding:0 7px;margin:1px 3px 1px 0;color:#c7d2e2;cursor:help}
       .dzDesc{color:#8290a2;max-width:360px;white-space:normal;line-height:1.35}
+      .dzMonDetails{min-width:190px}.dzMonDetails>summary{cursor:pointer;list-style:none}.dzMonDetails>summary::-webkit-details-marker{display:none}
+      .dzMonDetails>summary:after{content:' ▸';color:#8290a2}.dzMonDetails[open]>summary:after{content:' ▾'}
+      .dzIntent{padding:9px 0 4px 48px;color:#c7d2e2;line-height:1.5;max-width:560px}.dzIntent p{margin:5px 0}.dzIntent ol{margin:5px 0;padding-left:20px}.dzIntent a{color:#9cc9ef}
       .dzEmpty{color:#8290a2;padding:12px;font-size:13px}
       @media(max-width:700px){.dzDesc{display:none}.dzAlert .dzTag{margin-left:0}}`;
     document.head.appendChild(s);
@@ -43,7 +46,7 @@
   async function getJson(url){const r=await fetch(url,{cache:'no-cache'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.json()}
   function load(){
     if(state.index)return Promise.resolve();
-    if(!state.loading)state.loading=getJson(BASE+'index.json').then(d=>{state.index=d}).catch(e=>{state.error=e;state.loading=null;throw e});
+    if(!state.loading)state.loading=Promise.all([getJson(BASE+'index.json'),getJson('data/morimens/huiji/dzone-monsters.zh-CN.json').catch(()=>({monsters:{}}))]).then(([d,w])=>{state.index=d;state.wiki=w.monsters||{}}).catch(e=>{state.error=e;state.loading=null;throw e});
     return state.loading;
   }
   async function loadSeason(period){
@@ -70,14 +73,21 @@
     const img=r.i?`<img src="assets/morimens/relics/${esc(r.i)}.webp" alt="" loading="lazy" onerror="this.style.display='none'">`:'';
     return `<span class="dzRelic" title="${esc(r.n)}">${img}${esc(r.n)}</span>`;
   };
+  function wikiMonster(id){
+    const entry=state.wiki[id];return entry?.alias?state.wiki[entry.alias]||{}:entry||{};
+  }
+  function wikiLink(name){return `https://morimens.huijiwiki.com/wiki/${encodeURIComponent(name)}`}
   function monsterRows(alert){
     const mons=state.index.monsters,chars=state.index.characteristics;
     return alert.monsters.map(x=>{
       const m=mons[x.monsterId]||{n:x.monsterId,d:'',a:'',b:[],c:[]};
+      const w=wikiMonster(x.monsterId),name=zh()&&w.name?w.name:m.n;
       const img=m.a?`<img src="assets/morimens/monster-preview/${esc(m.a)}.webp" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:'';
       const badges=(m.b||[]).map(b=>`<span class="dzBadge ${esc(b)}">${b==='Boss'?ui('首领','Boss'):ui('精英','Elite')}</span>`).join('');
       const cs=(m.c||[]).map(id=>chars[id]?`<span class="dzChar" title="${esc(chars[id].d)}">${esc(chars[id].n)}</span>`:'').join('');
-      return `<tr><td><div class="dzMon">${img}<span>${esc(m.n)}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(m.d)}</td></tr>`;
+      const intents=w.intents?.length?`<p><b>${ui('意图效果','Intent effects')}</b></p><ol>${w.intents.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:`<p>${ui('中文 Wiki 暂无可核实的意图说明。','No verified intent details available yet.')}</p>`;
+      const detail=`${w.trait?`<p><b>${ui('特性','Trait')}：</b>${esc(w.trait)}</p>`:''}${intents}${w.cycle?`<p><b>${ui('行动顺序','Action order')}：</b>${esc(w.cycle)}</p>`:''}${w.name?`<a href="${esc(wikiLink(w.name))}" target="_blank" rel="noopener noreferrer">${ui('查看中文 Wiki 原文','Open Chinese Wiki')} ↗</a>`:`<a href="${esc(wikiLink('怪物'))}" target="_blank" rel="noopener noreferrer">${ui('查看中文 Wiki 怪物列表','Open Chinese Wiki monster list')} ↗</a>`}`;
+      return `<tr><td><details class="dzMonDetails"><summary><span class="dzMon">${img}<span>${esc(name)}${badges}</span></span></summary><div class="dzIntent">${detail}</div></details></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()&&w.description?w.description:m.d)}</td></tr>`;
     }).join('');
   }
   function alertBody(alert){
@@ -96,7 +106,7 @@
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
-    const head=`<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB，CC BY-NC-SA 4.0）。点击区域 → 威胁等级逐级展开怪物。怪物名称、介绍暂为英文原文。','Synced from SKeyDB (dansa/SKeyDB, CC BY-NC-SA 4.0). Expand a zone, then a threat level, to see its monsters. Monster names and descriptions are in English for now.')}</p>
+    const head=`<p class="dzNote">${ui('地图数据来自 SKeyDB，已核对的怪物中文名称与意图来自忘却前夜中文维基（CC BY-NC-SA 4.0）。依次展开区域、威胁等级和怪物查看详情；未核实条目保留原文。','Map data from SKeyDB; verified Chinese names and intents from the Morimens Chinese Wiki (CC BY-NC-SA 4.0). Expand a zone, threat level, then monster for details.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
     if(!doc){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;loadSeason(meta.period).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
