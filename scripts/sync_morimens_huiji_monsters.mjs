@@ -22,7 +22,7 @@ async function request(url){
     try{
       const r=await fetch(t.url,{headers:t.headers,signal:AbortSignal.timeout(30000)});
       const body=await r.text();
-      if(!r.ok){last=new Error(`${t.name}: HTTP ${r.status} ${body.slice(0,120).replace(/\s+/g,' ')}`);log.push(last.message);continue}
+      if(!r.ok){last=new Error(`${t.name}: HTTP ${r.status} [server=${r.headers.get('server')||''} cf-mitigated=${r.headers.get('cf-mitigated')||''}] ${body.slice(0,160).replace(/\s+/g,' ')}`);log.push(last.message);continue}
       let j;
       try{j=JSON.parse(body)}catch{
         const i=body.indexOf('{'),k=body.lastIndexOf('}');
@@ -41,7 +41,7 @@ async function api(params,retries=2){
         const j=await request(`${base}?${q}`);
         if(j.error)throw new Error(`${j.error.code}: ${j.error.info}`);
         console.log(`ok via ${base} (${params.action})`);return j;
-      }catch(e){last=new Error(`${base}: ${e.message}`);console.warn('attempt failed:',last.message)}
+      }catch(e){last=new Error(`${base}: ${e.message}`);console.warn('attempt failed:',last.message);for(const m of log.splice(0))console.warn('  detail:',m)}
       await new Promise(r=>setTimeout(r,1200*(i+1)));
     }
   }
