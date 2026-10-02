@@ -9,15 +9,39 @@ const OUT='data/morimens/huiji/monsters.json';
 const UA='Mozilla/5.0 (compatible; qdby-chinese-morimens-sync/1.3; +https://github.com/Z769018860/qdby_chinese)';
 const ROOT_PAGE='怪物';
 
-async function api(params,retries=3){
+const BROWSER_UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
+const log=[];
+// Transports tried in order for every endpoint: direct request, then the r.jina.ai reader proxy (Huiji answers 403 to some datacenter IPs).
+async function request(url){
+  const attempts=[
+    {name:'direct',url,headers:{'User-Agent':BROWSER_UA,'Accept':'application/json,text/plain,*/*','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.5','Referer':'https://morimens.huijiwiki.com/'}},
+    {name:'jina',url:`https://r.jina.ai/${url}`,headers:{'User-Agent':UA,'Accept':'text/plain','X-Return-Format':'text'}}
+  ];
+  let last;
+  for(const t of attempts){
+    try{
+      const r=await fetch(t.url,{headers:t.headers,signal:AbortSignal.timeout(30000)});
+      const body=await r.text();
+      if(!r.ok){last=new Error(`${t.name}: HTTP ${r.status} ${body.slice(0,120).replace(/\s+/g,' ')}`);log.push(last.message);continue}
+      let j;
+      try{j=JSON.parse(body)}catch{
+        const i=body.indexOf('{'),k=body.lastIndexOf('}');
+        try{j=JSON.parse(body.slice(i,k+1))}catch{last=new Error(`${t.name}: not JSON (${body.slice(0,120).replace(/\s+/g,' ')})`);log.push(last.message);continue}
+      }
+      return j;
+    }catch(e){last=new Error(`${t.name}: ${e.message}`);log.push(last.message)}
+  }
+  throw last;
+}
+async function api(params,retries=2){
   const q=new URLSearchParams({format:'json',formatversion:'2',...params});let last;
   for(const base of ENDPOINTS){
     for(let i=0;i<retries;i++){
       try{
-        const r=await fetch(`${base}?${q}`,{headers:{'User-Agent':UA,'Accept':'application/json'},signal:AbortSignal.timeout(25000)});
-        if(r.ok){const j=await r.json();if(j.error)throw new Error(`${j.error.code}: ${j.error.info}`);return j}
-        last=new Error(`${base}: HTTP ${r.status}`);if(r.status!==429&&r.status<500)break;
-      }catch(e){last=e}
+        const j=await request(`${base}?${q}`);
+        if(j.error)throw new Error(`${j.error.code}: ${j.error.info}`);
+        console.log(`ok via ${base} (${params.action})`);return j;
+      }catch(e){last=new Error(`${base}: ${e.message}`);console.warn('attempt failed:',last.message)}
       await new Promise(r=>setTimeout(r,1200*(i+1)));
     }
   }
