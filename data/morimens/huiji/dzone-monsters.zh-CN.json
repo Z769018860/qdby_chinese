@@ -32,7 +32,7 @@
     "dzone-monster-0107": {"alias":"dzone-monster-0106"},
     "dzone-monster-0013": {"name":"裁缝"},
     "dzone-monster-0134": {"name":"扳手杰克逊"},
-    "dzone-monster-0007": {"name":"疯狂碎石工"},
+    "dzone-monster-0007": {"name":"疯狂碎石工","trait":"冲动的代价：每次受到攻击后，失去特性层数对应的临时力量。","intents":["获得力量，并施加 1 回合脆弱。","造成 4 次伤害，并施加 1 回合虚弱。","颅骨猛击：造成一次重击伤害。"]},
     "dzone-monster-0266": {"name":"库姆"},
     "dzone-monster-0269": {"alias":"dzone-monster-0266"},
     "dzone-monster-0287": {"name":"亚兰圣鹭"}
