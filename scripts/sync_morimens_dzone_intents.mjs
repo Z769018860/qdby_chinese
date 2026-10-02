@@ -1,0 +1,78 @@
+// Build per-season D-Zone monster intent data (skills, action patterns, per-threat-level stats, Chinese names)
+// from the Morimenz-kr/Morimens.Info.kr community data (CC BY-NC-SA 4.0), joined to the SKeyDB dzone index.
+// MORIMENZ_SOURCE points at a local checkout; otherwise files are fetched from raw.githubusercontent.com.
+import {mkdir, readFile, rm, stat, writeFile} from 'node:fs/promises';
+import path from 'node:path';
+
+const OWNER='Morimenz-kr', REPO='Morimens.Info.kr', REF='main';
+const RAW=`https://raw.githubusercontent.com/${OWNER}/${REPO}/${REF}`;
+const SOURCE_ROOT=process.env.MORIMENZ_SOURCE||'.morimenz';
+const OUT='data/morimens/dzone-info';
+const SKEYDB_SEASONS='data/morimens/skeydb/dzone/seasons';
+const FILES={67:'dzone_season67.json',68:'dzone_season68.json',69:'dzone_season69.json',70:'dzone_current.json'};
+const exists=async f=>{try{await stat(f);return true}catch{return false}};
+const local=await exists(path.join(SOURCE_ROOT,'data'));
+async function readSource(rel){
+  if(local) return JSON.parse(await readFile(path.join(SOURCE_ROOT,rel),'utf8'));
+  const r=await fetch(`${RAW}/${rel}`,{headers:{'User-Agent':'qdby-chinese-dzone-intents'}});
+  if(!r.ok) throw new Error(`${rel}: HTTP ${r.status}`);
+  return r.json();
+}
+const cjk=/[一-鿿]/;
+const display=a=>a?.value?.display??a?.value?.raw??null;
+
+await rm(OUT,{recursive:true,force:true});await mkdir(OUT,{recursive:true});
+const seasons=[];
+for(const [periodStr,file] of Object.entries(FILES)){
+  const period=Number(periodStr);
+  let src;try{src=await readSource(`data/${file}`)}catch(e){console.warn('skip',period,e.message);continue}
+  let sk=null;try{sk=JSON.parse(await readFile(`${SKEYDB_SEASONS}/${period}.json`,'utf8'))}catch{}
+  const monsters={};let joined=0,total=0;
+  const waves=src.waves.map((w,wi)=>{
+    for(const m of w.monsters){
+      if(monsters[m.tid]) continue;
+      const zh=String(m.nameSource||'').split('|').pop();
+      const states=(m.states||[]).filter(s=>s.descriptionTemplate).map(s=>({id:s.id,n:s.name||'',d:s.descriptionTemplate,v:s.visible?1:0}));
+      monsters[m.tid]={
+        zh:cjk.test(zh)?zh:'',ko:m.nameKo||'',img:String(m.image||'').split('/').pop().replace(/\.\w+$/,''),cls:m.monsterClass||'',desc:m.description||'',
+        sk:(m.skills||[]).map(s=>({id:s.id,t:s.type,g:s.target,n:s.hasOfficialName===false?'':s.name,d:s.descriptionTemplate})),
+        pat:(m.patterns||[]).map(p=>({id:p.id,s:p.skillIds})),
+        st:states,
+        cond:(m.conditionalActions||[]).map(c=>({t:c.conditionText||'',e:(c.transitionEffects||[]).map(x=>({y:x.type,n:x.stateName||''}))})),
+        ph:(m.phaseTransitions||[]).map(c=>({t:c.conditionText||''}))
+      };
+    }
+    const sw=sk?.waves?.[wi];
+    return {
+      group:w.stageGroupId,
+      alerts:(w.alerts||[]).map((a,ai)=>{
+        const sa=sw?.alerts?.[ai];const pool=new Map();
+        for(const sm of sa?.monsters||[]){const k=sm.level+':'+sm.hp;if(!pool.has(k))pool.set(k,[]);pool.get(k).push(sm.monsterId)}
+        return {
+          stage:a.stageId,
+          ms:(a.monsters||[]).map(m=>{
+            total++;
+            const own=monsters[m.tid];const args={};
+            for(const [id,r] of Object.entries(m.resolvedSkills||{})){
+              const vals=(r.args||[]).map(display);args[id]=vals;
+            }
+            const key=m.level+':'+m.hp,list=pool.get(key);let skId=null;
+            if(list?.length){skId=list.shift();joined++}
+            const out={tid:m.tid,lv:m.level,hp:m.hp,atk:m.attack,def:m.defense,a:args};
+            if(skId)out.sk=skId;
+            if((m.phases||[]).length>1)out.ph=m.phases.map(p=>p.hp);
+            return out;
+          })
+        };
+      })
+    };
+  });
+  await writeFile(path.join(OUT,`${period}.json`),JSON.stringify({period,generatedAt:src.generatedAt,monsters,waves})+'\n');
+  seasons.push({period,generatedAt:src.generatedAt,waves:waves.length,monsters:Object.keys(monsters).length});
+  console.log(`season ${period}: ${Object.keys(monsters).length} monsters, ${joined}/${total} joined to SKeyDB`);
+}
+await writeFile(path.join(OUT,'index.json'),JSON.stringify({
+  schemaVersion:1,
+  source:{repository:`${OWNER}/${REPO}`,ref:REF,syncedAt:new Date().toISOString(),license:'CC-BY-NC-SA-4.0 (Morimens.Info.kr contributors); game-owned text excluded',language:'ko (skill/state text), zh (monster names)'},
+  seasons
+})+'\n');
