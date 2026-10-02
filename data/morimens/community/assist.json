@@ -1,8 +1,332 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-29T01:08:19Z",
-  "recordCount": 1,
+  "updatedAt": "2026-10-02T07:28:09Z",
+  "recordCount": 2,
   "records": [
+    {
+      "key": "100168076:15600",
+      "uid": "100168076",
+      "characterId": "15600",
+      "submittedBy": "五妖",
+      "submittedAt": "2026-09-29T01:50:54.088Z",
+      "summary": "助战 Showcase · Agrippa",
+      "summaryZh": "助战 Showcase · Agrippa",
+      "summaryEn": "Assist Showcase · Agrippa",
+      "awakerName": "Agrippa",
+      "commentId": "38",
+      "payload": {
+        "version": 4,
+        "source": "eremora-showcase",
+        "uid": "100168076",
+        "player": "五妖",
+        "characterId": "15600",
+        "canonicalId": "awakener-0002",
+        "awaker": {
+          "id": 15600,
+          "name": "Agrippa",
+          "image": "portraits/Portrait_Middle_Awaker_B06_AF.webp",
+          "mini": "portraits/Portrait_Minihead_Awaker_B06_AF.webp",
+          "res": "B06_AF"
+        },
+        "level": 86,
+        "potencyLevel": 15,
+        "weapons": [
+          {
+            "id": 10025,
+            "name": "Pale Descendant",
+            "image": "icon/Weapon_Full_B06.webp",
+            "level": 6,
+            "enhanceLevel": 1
+          },
+          {
+            "id": 9855,
+            "name": "Cursed Binding",
+            "image": "icon/Weapon_Full_SR03.webp",
+            "level": 15,
+            "enhanceLevel": 1
+          }
+        ],
+        "suits": [
+          {
+            "id": 18358,
+            "name": "Twisted Twins: Black",
+            "image": "icon/Icon_Trinket_006_Box.webp",
+            "count": 6
+          }
+        ],
+        "trinkets": [
+          {
+            "id": 9962,
+            "name": "Twisted Twins: Black I",
+            "image": "icon/Icon_Trinket_006_Orange_1.webp",
+            "slot": 0,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18358,
+            "attrs": [
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 4,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18126,
+                "name": "Realm Mastery",
+                "value": 1,
+                "percentage": false,
+                "rollQuality": 2
+              },
+              {
+                "id": 18126,
+                "name": "Realm Mastery",
+                "value": 1.5,
+                "percentage": false,
+                "rollQuality": 3
+              }
+            ]
+          },
+          {
+            "id": 10041,
+            "name": "Twisted Twins: Black II",
+            "image": "icon/Icon_Trinket_006_Orange_2.webp",
+            "slot": 1,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18358,
+            "attrs": [
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 4,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 0.6000000000000001,
+                "percentage": true,
+                "rollQuality": 3
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              }
+            ]
+          },
+          {
+            "id": 9894,
+            "name": "Twisted Twins: Black III",
+            "image": "icon/Icon_Trinket_006_Orange_3.webp",
+            "slot": 2,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18358,
+            "attrs": [
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 4,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 1.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 1,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 2.4,
+                "percentage": true,
+                "rollQuality": 8
+              }
+            ]
+          },
+          {
+            "id": 9879,
+            "name": "Twisted Twins: Black IV",
+            "image": "icon/Icon_Trinket_006_Orange_4.webp",
+            "slot": 3,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18358,
+            "attrs": [
+              {
+                "id": 18126,
+                "name": "Realm Mastery",
+                "value": 10,
+                "percentage": false,
+                "rollQuality": null
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 1.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 1.2,
+                "percentage": true,
+                "rollQuality": 4
+              }
+            ]
+          },
+          {
+            "id": 9650,
+            "name": "Twisted Twins: Black V",
+            "image": "icon/Icon_Trinket_006_Orange_5.webp",
+            "slot": 4,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18358,
+            "attrs": [
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 4,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 1,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 0.6000000000000001,
+                "percentage": true,
+                "rollQuality": 3
+              }
+            ]
+          },
+          {
+            "id": 9797,
+            "name": "Twisted Twins: Black VI",
+            "image": "icon/Icon_Trinket_006_Orange_6.webp",
+            "slot": 5,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18358,
+            "attrs": [
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 4,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.2000000000000002,
+                "percentage": true,
+                "rollQuality": 6
+              },
+              {
+                "id": 18142,
+                "name": "DMG Amplification",
+                "value": 0.4,
+                "percentage": true,
+                "rollQuality": 2
+              }
+            ]
+          }
+        ],
+        "attrs": [
+          {
+            "id": "18159",
+            "name": "Crit. Rate",
+            "value": 7.800000000000002,
+            "percentage": true
+          },
+          {
+            "id": "18105",
+            "name": "Crit. DMG",
+            "value": 3.5999999999999996,
+            "percentage": true
+          },
+          {
+            "id": "18126",
+            "name": "Realm Mastery",
+            "value": 2.5,
+            "percentage": false
+          },
+          {
+            "id": "18142",
+            "name": "DMG Amplification",
+            "value": 8.4,
+            "percentage": true
+          }
+        ],
+        "fetchedAt": "2026-09-29T01:50:54.088Z",
+        "importMethod": "paste",
+        "updateExisting": false
+      }
+    },
     {
       "key": "100366990:15589",
       "uid": "100366990",
