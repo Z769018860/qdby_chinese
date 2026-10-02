@@ -2,6 +2,11 @@ name: Sync Huiji Monsters (browser)
 
 on:
   workflow_dispatch:
+  push:
+    branches: [preview]
+    paths:
+      - ".github/workflows/sync-morimens-huiji-browser.yml"
+      - "scripts/sync_morimens_huiji_browser.mjs"
 
 permissions:
   contents: write
