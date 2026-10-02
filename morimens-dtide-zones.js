@@ -6,7 +6,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
   const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
-  const state={active:false,season:null,index:null,wiki:{},game:{},seasons:new Map(),error:null,loading:null};
+  const state={active:false,season:null,index:null,wiki:{},game:{},rotations:{},seasons:new Map(),error:null,loading:null};
   let host=null,ctx=null,tab=null,savedTitle=null,switching=false;
 
   function ensureStyle(){
@@ -46,7 +46,7 @@
   async function getJson(url){const r=await fetch(url,{cache:'no-cache'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.json()}
   function load(){
     if(state.index)return Promise.resolve();
-    if(!state.loading)state.loading=Promise.all([getJson(BASE+'index.json'),getJson('data/morimens/huiji/dzone-monsters.zh-CN.json').catch(()=>({monsters:{}})),getJson('data/morimens/game/dzone-localization.json').catch(()=>({monsters:{}}))]).then(([d,w,g])=>{state.index=d;state.wiki=w.monsters||{};state.game=g.monsters||{}}).catch(e=>{state.error=e;state.loading=null;throw e});
+    if(!state.loading)state.loading=Promise.all([getJson(BASE+'index.json'),getJson('data/morimens/huiji/dzone-monsters.zh-CN.json').catch(()=>({monsters:{}})),getJson('data/morimens/game/dzone-localization.json').catch(()=>({monsters:{}})),getJson('data/morimens/kaiden/intent-rotations.json').catch(()=>({monsters:{}}))]).then(([d,w,g,k])=>{state.index=d;state.wiki=w.monsters||{};state.game=g.monsters||{};state.rotations=k.monsters||{}}).catch(e=>{state.error=e;state.loading=null;throw e});
     return state.loading;
   }
   async function loadSeason(period){
@@ -81,11 +81,11 @@
     const mons=state.index.monsters,chars=state.index.characteristics;
     return alert.monsters.map(x=>{
       const m=mons[x.monsterId]||{n:x.monsterId,d:'',a:'',b:[],c:[]};
-      const w=wikiMonster(x.monsterId),g=state.game[x.monsterId]||{},name=zh()?(g.zh||w.name||m.n):m.n;
+      const w=wikiMonster(x.monsterId),g=state.game[x.monsterId]||{},rotation=state.rotations[x.monsterId],name=zh()?(g.zh||w.name||m.n):m.n;
       const img=m.a?`<img src="assets/morimens/monster-preview/${esc(m.a)}.webp" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:'';
       const badges=(m.b||[]).map(b=>`<span class="dzBadge ${esc(b)}">${b==='Boss'?ui('首领','Boss'):ui('精英','Elite')}</span>`).join('');
       const cs=(m.c||[]).map(id=>chars[id]?`<span class="dzChar" title="${esc(chars[id].d)}">${esc(chars[id].n)}</span>`:'').join('');
-      const intents=w.intents?.length?`<p><b>${ui('意图效果','Intent effects')}</b></p><ol>${w.intents.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:`<p>${ui('中文 Wiki 暂无可核实的意图说明。','No verified intent details available yet.')}</p>`;
+      const intents=w.intents?.length?`<p><b>${ui('意图效果','Intent effects')}</b></p><ol>${w.intents.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:rotation?.rotation?.length?`<p><b>${ui('意图轮换（效果文本为英文）','Intent rotation')}</b></p><ol>${rotation.rotation.map(t=>`<li><b>${esc(zh()&&t.nameZh?t.nameZh:t.name)}</b>${t.type?` · ${esc(t.type)}`:''}：${esc(t.effect)}</li>`).join('')}</ol><a href="${esc(rotation.url)}" target="_blank" rel="noopener noreferrer">${ui('查看意图资料原文','Open rotation source')} ↗</a>`:`<p>${ui('尚无可核实的意图说明。','No verified intent details available yet.')}</p>`;
       const names=g.zh?`<p><b>${ui('名称对照','Names')}：</b>${esc(g.zh)} / ${esc(g.en)}${g.ko?` / ${esc(g.ko)}`:''}</p>`:'';
       const detail=`${names}${w.trait?`<p><b>${ui('特性','Trait')}：</b>${esc(w.trait)}</p>`:''}${intents}${w.cycle?`<p><b>${ui('行动顺序','Action order')}：</b>${esc(w.cycle)}</p>`:''}${w.name?`<a href="${esc(wikiLink(w.name))}" target="_blank" rel="noopener noreferrer">${ui('查看中文 Wiki 原文','Open Chinese Wiki')} ↗</a>`:`<a href="${esc(wikiLink('怪物'))}" target="_blank" rel="noopener noreferrer">${ui('查看中文 Wiki 怪物列表','Open Chinese Wiki monster list')} ↗</a>`}`;
       return `<tr><td><details class="dzMonDetails"><summary><span class="dzMon">${img}<span>${esc(name)}${badges}</span></span></summary><div class="dzIntent">${detail}</div></details></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()&&w.description?w.description:m.d)}</td></tr>`;
@@ -107,7 +107,7 @@
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
-    const head=`<p class="dzNote">${ui('地图数据来自 SKeyDB；怪物名称对照来自 Morimens-Localizations 游戏翻译表，已核对的意图来自忘却前夜中文维基（CC BY-NC-SA 4.0）。依次展开区域、威胁等级和怪物查看详情。','Map data from SKeyDB; name translations from Morimens-Localizations and verified intents from the Morimens Chinese Wiki (CC BY-NC-SA 4.0). Expand a zone, threat level, then monster for details.')}</p>
+    const head=`<p class="dzNote">${ui('地图数据来自 SKeyDB；中英韩名称来自 Morimens-Localizations；意图详情来自忘却前夜中文维基或 Kaiden.gg，并附原文链接。依次展开区域、威胁等级和怪物查看详情。','Map data from SKeyDB; multilingual names from Morimens-Localizations; intent details from the Chinese Wiki or Kaiden.gg, with source links. Expand a zone, threat level, then monster for details.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
     if(!doc){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;loadSeason(meta.period).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
