@@ -44,7 +44,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20261002.22";
+  const assetVersion="20261002.23";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -65,6 +65,7 @@ setupMorimensMascotToggle();
     await import(`./morimens-dtide-loader.js?v=${assetVersion}`);
     await import(`./morimens-dtide-battle.js?v=${assetVersion}`);
     await import(`./morimens-dtide-zones.js?v=${assetVersion}`);
+    await import(`./morimens-tierlist.js?v=${assetVersion}`);
     await import(`./morimens-dtide.js?v=${assetVersion}`);
     await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
     const parts=await legacyParts;

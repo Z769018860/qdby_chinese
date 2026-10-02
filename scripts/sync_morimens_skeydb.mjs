@@ -39,6 +39,11 @@ if(hasLocal){
     const src=path.join(SOURCE_ROOT,'src/assets',dir);
     if(await exists(src)) await replaceDir(src,path.join(OUT_ASSETS,dir==='awk-portraits'?'portraits':dir==='awk-cards'?'cards':dir));
   }
+  // key tokens ("posses"): only the small Icon / Badge art, not the full-size illustrations
+  for(const sub of ['Icon','Badge']){
+    const src=path.join(SOURCE_ROOT,'src/assets/posse',sub);
+    if(await exists(src)) await replaceDir(src,path.join(OUT_ASSETS,'posse',sub));
+  }
 }else{
   const commit=await getJson(`${API}/repos/${OWNER}/${REPO}/commits/${REF}`);commitSha=commit.sha;
   catalog=await getJson(`${RAW}/${OWNER}/${REPO}/${REF}/src/data/public-v3/catalogs/awakeners.json`);

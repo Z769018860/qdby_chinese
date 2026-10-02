@@ -93,3 +93,6 @@ assets/morimens/
 ## 融灾地图数据与翻译
 - 怪物 / 地图：SKeyDB（`scripts/sync_morimens_dzone.mjs`）；怪物技能与意图：Morimens.Info.kr（`scripts/sync_morimens_dzone_intents.mjs`）；中英文翻译：Morimens-Localizations 游戏翻译表（`scripts/build_dzone_translations.py`）。
 - 翻译表尚未收录的新赛季条目（技能 / 状态 / 条件文本、部分怪物名与介绍）由 AI 辅助翻译，维护在 `scripts/data/dzone_ko_*.py`、`scripts/data/dzone_monsters_zh.py`，译名并非官方，翻译表更新后会被官方文本自动覆盖。
+
+## 自定义 T 表
+`morimens-tierlist.js`：拖放式 T 表，图标池来自 `data/morimens/game/tier-pool.json`（由 `scripts/build_morimens_tier_pool.mjs` 生成，含唤醒体 / 命轮 / 造物 / 钥令 / 密契 / 头像 / 怪物，中英文名与本地图片路径）。支持导出 / 导入结构化 JSON（`format: morimens-tierlist`）与下载分享图片；数据只保存在访问者浏览器本地。
