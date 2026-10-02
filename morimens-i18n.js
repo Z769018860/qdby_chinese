@@ -177,6 +177,7 @@
     '今日挑战':'Today’s Challenge','完成一次融灾挑战':'Complete one D-Zone challenge','角色语录':'Character Quote','正在读取角色语音快照…':'Reading character voice snapshot…',
     '签级结合当前融灾期唤醒体出场率排名与当日运势生成，仅供娱乐。':'The fortune tier combines the current D-Zone appearance ranking with today’s seed and is for entertainment only.',
     '查看今日运势':'View Today’s Fortune',
+    '本站整理、统计与说明内容按':'Compilations, statistics and notes on this site are shared under','协议共享（署名-非商业性使用-相同方式共享）。数据来源：':'(Attribution-NonCommercial-ShareAlike). Data sources: ','灰机维基':'Huiji Wiki','、':', ','，均以其各自授权为准；游戏素材版权归原权利方所有。':', each under its own license; game assets remain the property of their rights holders.',
     '© 2026 青灯不弈 · 忘忘看报':'© 2026 青灯不弈 · Morimens Weekly','粉丝向免费工具；':'Free fan-made tool;','《忘却前夜》':'Morimens','相关角色、图片与游戏素材版权归原权利方所有。':'characters, images, and game assets belong to their respective rights holders.',
     '爱的节奏榜':'Love Rhythm Ranking','留言板':'Guestbook','自动局外基础伤害':'Auto Out-of-Battle Base DMG','自动局内基础伤害':'Auto In-Battle Base DMG',
     '未启灵':'No Enlighten','灵知觉醒已发动':'Rouse Active','本次实际伤害段数':'Actual Hit Count','按技能默认/最低段数':'Use skill default/minimum hits',

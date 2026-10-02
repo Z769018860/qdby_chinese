@@ -81,6 +81,8 @@ assets/morimens/
   covenants/
 ```
 
+本站自行整理的数据、统计与说明内容按 CC BY-NC-SA 4.0 共享，页面底部已署名标注；数据来源包括 SKeyDB、Morimens.Info.kr 与灰机维基（`scripts/sync_morimens_huiji_monsters.mjs` 通过 `https://morimens.huijiwiki.com/api.php` 获取怪物页）。
+
 同步工作流：`.github/workflows/sync-morimens-skeydb.yml`。默认每天执行一次，也可在 GitHub Actions 中手动触发。SKeyDB 原创数据与中文维基原创内容按各自声明的 CC BY-NC-SA 4.0 条款使用；游戏本身的角色图片、卡面、原始文本等不因此改变其权利归属。
 
 ## GitHub Pages 注意
