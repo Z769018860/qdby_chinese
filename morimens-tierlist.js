@@ -34,7 +34,8 @@
       .tlBoard{border:1px solid rgba(148,163,184,.25);border-radius:10px;overflow:hidden;background:#0d121a}
       .tlRow{display:grid;grid-template-columns:110px 1fr 34px;min-height:84px;border-bottom:2px solid #060a10}.tlRow:last-child{border-bottom:0}
       .tlLabel{display:flex;align-items:center;justify-content:center;padding:6px;position:relative}
-      .tlLabel textarea{width:100%;height:100%;min-height:60px;resize:none;background:transparent;border:0;text-align:center;font-weight:800;font-size:20px;color:#111;outline:none;overflow:hidden;font-family:inherit}
+      .tlLabel{cursor:text}.tlLabel:hover{box-shadow:inset 0 0 0 2px rgba(0,0,0,.25)}
+      .tlLabel textarea{cursor:text;width:100%;height:100%;min-height:60px;resize:none;background:transparent;border:0;text-align:center;font-weight:800;font-size:20px;color:#111;outline:none;overflow:hidden;font-family:inherit}
       .tlLabel input[type=color]{position:absolute;right:3px;bottom:3px;width:20px;height:20px;padding:0;border:1px solid rgba(0,0,0,.35);border-radius:5px;background:none;cursor:pointer}
       .tlItems{display:flex;flex-wrap:wrap;gap:4px;padding:4px;align-content:flex-start;background:#1a1f29;min-height:84px;cursor:copy}
       .tlItems.over,.tlPool.over{outline:2px dashed #f1d69f;outline-offset:-3px}
@@ -89,7 +90,7 @@
       <div class="tlBoard" id="tlBoard">${state.rows.map((r,i)=>`<div class="tlRow" data-row="${r.id}">
         <div class="tlLabel" style="background:${esc(r.color)}"><textarea data-tllabel="${r.id}" rows="2" maxlength="24" aria-label="${esc(ui('分级名称','Tier label'))}">${esc(r.label)}</textarea><input type="color" value="${esc(r.color)}" data-tlcolor="${r.id}" title="${esc(ui('更改颜色','Change color'))}"></div>
         <div class="tlItems" data-drop="${r.id}">${r.items.map(k=>tile(k)).join('')}</div>
-        <div class="tlCtl"><button type="button" data-tlup="${r.id}" title="${esc(ui('上移','Move up'))}"${i===0?' disabled':''}>▲</button><button type="button" data-tldel="${r.id}" title="${esc(ui('删除此行','Delete row'))}">✕</button><button type="button" data-tldown="${r.id}" title="${esc(ui('下移','Move down'))}"${i===state.rows.length-1?' disabled':''}>▼</button></div>
+        <div class="tlCtl"><button type="button" data-tlren="${r.id}" title="${esc(ui('修改分级名称','Rename tier'))}">✎</button><button type="button" data-tlup="${r.id}" title="${esc(ui('上移','Move up'))}"${i===0?' disabled':''}>▲</button><button type="button" data-tldel="${r.id}" title="${esc(ui('删除此行','Delete row'))}">✕</button><button type="button" data-tldown="${r.id}" title="${esc(ui('下移','Move down'))}"${i===state.rows.length-1?' disabled':''}>▼</button></div>
       </div>`).join('')}</div>
       <div class="tlTabs" role="tablist" aria-label="${esc(ui('图片资源','Image sources'))}">${kindTabs}</div>
       <div class="tlTools"><input type="search" id="tlSearch" value="${esc(ui$.query)}" placeholder="${esc(ui('搜索名称（中 / 英）','Search name (zh / en)'))}"><label><input type="checkbox" id="tlHide"${ui$.hidePlaced?' checked':''}> ${ui('隐藏已放置','Hide placed')}</label><span id="tlCount"></span></div>
@@ -178,8 +179,11 @@
         });
         y+=r.h+3;
       }
-      g.fillStyle='#8290a2';g.font='13px sans-serif';g.textBaseline='middle';
-      g.fillText(`${ui('忘忘看报 · 自定义 T 表','Morimens Weekly · Custom Tier List')} · ${new Date().toISOString().slice(0,10)}`,PAD+4,H-FOOT/2-2);
+      g.fillStyle='#aab6c8';g.font='14px sans-serif';g.textBaseline='middle';g.textAlign='left';
+      const siteUrl=(location.origin&&location.origin!=='null'?location.origin+location.pathname:location.href).replace(/index\.html$/,'');
+      g.fillText(siteUrl,PAD+4,H-FOOT/2-2);
+      g.fillStyle='#8290a2';g.font='13px sans-serif';g.textAlign='right';
+      g.fillText(`${ui('忘忘看报 · 自定义 T 表','Morimens Weekly · Custom Tier List')} · ${new Date().toISOString().slice(0,10)}`,W-PAD-4,H-FOOT/2-2);g.textAlign='left';
       await new Promise(res=>cv.toBlob(b=>{if(b)download(b,`morimens-tierlist-${fileStem()}.png`);res()},'image/png'));
       say(ui('图片已生成并开始下载。','Image generated and downloading.'));
     }catch(e){console.warn('tier image failed',e);say(ui('图片生成失败，请重试。','Image generation failed, please retry.'))}
@@ -206,6 +210,10 @@
         return;
       }
       const kt=t.closest('[data-tlkind]');if(kt){ui$.kind=kt.dataset.tlkind;ui$.selected=null;draw();return}
+      const rn=t.closest('[data-tlren]');
+      if(rn){const r=state.rows.find(x=>x.id===rn.dataset.tlren);if(r){const v=prompt(ui('分级名称：','Tier name:'),r.label);if(v!==null){r.label=v.slice(0,24);save();draw()}}return}
+      const lab=t.closest('.tlLabel');
+      if(lab&&!t.closest('input[type=color]')&&t.tagName!=='TEXTAREA'){const ta=lab.querySelector('textarea');ta?.focus();ta?.select();return}
       const mv=t.closest('[data-tlup],[data-tldown],[data-tldel]');
       if(mv){
         const id=mv.dataset.tlup||mv.dataset.tldown||mv.dataset.tldel,i=state.rows.findIndex(r=>r.id===id);
@@ -234,6 +242,7 @@
       if(t.id==='tlHide'){ui$.hidePlaced=t.checked;drawPool()}
       else if(t.id==='tlFile'&&t.files?.[0]){const f=t.files[0],rd=new FileReader();rd.onload=()=>{if(importData(String(rd.result)))host.querySelector('#tlImport')?.setAttribute('hidden','')};rd.readAsText(f);t.value=''}
     });
+    document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset?.tllabel&&host?.contains(e.target)){e.preventDefault();e.target.blur()}});
     // drag & drop
     let dragKey=null;
     document.addEventListener('dragstart',e=>{const it=e.target.closest?.('.tlItem');if(!it||!host?.contains(it))return;dragKey=it.dataset.k;it.classList.add('dragging');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',dragKey)}catch{}});
