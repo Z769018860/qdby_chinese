@@ -1,7 +1,7 @@
 // Build per-season D-Zone monster intent data (skills, action patterns, per-threat-level stats, Chinese names)
 // from the Morimenz-kr/Morimens.Info.kr community data (CC BY-NC-SA 4.0), joined to the SKeyDB dzone index.
 // MORIMENZ_SOURCE points at a local checkout; otherwise files are fetched from raw.githubusercontent.com.
-import {mkdir, readFile, rm, stat, writeFile} from 'node:fs/promises';
+import {cp, mkdir, readFile, readdir, rm, stat, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 
 const OWNER='Morimenz-kr', REPO='Morimens.Info.kr', REF='main';
@@ -70,6 +70,11 @@ for(const [periodStr,file] of Object.entries(FILES)){
   await writeFile(path.join(OUT,`${period}.json`),JSON.stringify({period,generatedAt:src.generatedAt,monsters,waves})+'\n');
   seasons.push({period,generatedAt:src.generatedAt,waves:waves.length,monsters:Object.keys(monsters).length});
   console.log(`season ${period}: ${Object.keys(monsters).length} monsters, ${joined}/${total} joined to SKeyDB`);
+}
+// intent icons (game art, same treatment as the SKeyDB assets)
+if(local&&await exists(path.join(SOURCE_ROOT,'images/dzone/intent'))){
+  await mkdir('assets/morimens/dzone-intent',{recursive:true});
+  for(const f of await readdir(path.join(SOURCE_ROOT,'images/dzone/intent'))) if(f.endsWith('.png')) await cp(path.join(SOURCE_ROOT,'images/dzone/intent',f),path.join('assets/morimens/dzone-intent',f));
 }
 await writeFile(path.join(OUT,'index.json'),JSON.stringify({
   schemaVersion:1,

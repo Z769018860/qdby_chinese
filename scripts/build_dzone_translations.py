@@ -20,7 +20,7 @@ for row in sheet.values:
     if len(row) < 9:
         continue
     key = str(row[0] or '')
-    if key.startswith(('MonsterConfig_', 'Skill_', 'State_')) and (row[7] or row[8]):
+    if key.startswith(('MonsterConfig_', 'Skill_', 'State_', 'TagConfig_')) and (row[7] or row[8]):
         table[key] = (str(row[7] or '').strip(), str(row[8] or '').strip())
 
 def clean(text):
@@ -36,7 +36,7 @@ def pick(kind, id_, fields):
             return got
     return None
 
-out = {'monsters': {}, 'skills': {}, 'states': {}}
+out = {'monsters': {}, 'skills': {}, 'states': {}, 'characteristics': {}}
 for file in sorted((base / 'data/morimens/dzone-info').glob('[0-9]*.json')):
     season = json.loads(file.read_text(encoding='utf-8'))
     for tid, monster in season['monsters'].items():
@@ -57,6 +57,17 @@ for file in sorted((base / 'data/morimens/dzone-info').glob('[0-9]*.json')):
             n, d = pick('State', sid, ['Name']), pick('State', sid, ['Desc'])
             if n or d:
                 out['states'][sid] = {k: v for k, v in {'zn': n and n[0], 'en': n and n[1], 'zd': d and clean(d[0]), 'ed': d and clean(d[1])}.items() if v}
+
+# monster characteristics (TagConfig): joined by English name to the SKeyDB characteristic names
+index = json.loads((base / 'data/morimens/skeydb/dzone/index.json').read_text(encoding='utf-8'))
+tags = {}
+for key, (cn, en) in table.items():
+    m = re.match(r'TagConfig_(\d+)_TagName$', key)
+    if m:
+        desc = table.get(f'TagConfig_{m.group(1)}_TagDesc', ('', ''))
+        tags[en.strip().lower()] = {'zh': cn, 'zd': clean(desc[0])}
+ALIAS = {'mutant': 'aberration'}  # SKeyDB 'Mutant' is TagConfig 'Aberration' (异变体)
+out['characteristics'] = {c['n']: tags[ALIAS.get(c['n'].lower(), c['n'].lower())] for c in index['characteristics'].values() if ALIAS.get(c['n'].lower(), c['n'].lower()) in tags}
 
 dest = base / 'data/morimens/game/dzone-translations.json'
 dest.parent.mkdir(parents=True, exist_ok=True)

@@ -60,6 +60,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             data
+            images/dzone/intent
 
       - name: Check Morimens sync and frontend scripts
         run: |

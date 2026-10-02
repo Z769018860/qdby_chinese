@@ -5,9 +5,8 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
-  const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
   const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,game:{},cw:{},error:null,loading:null,openMon:new Set()};
-  let host=null,ctx=null,tab=null,savedTitle=null,switching=false;
+  let host=null,ctx=null;
 
   function ensureStyle(){
     if(document.getElementById('dtideZonesStyle'))return;
@@ -42,6 +41,7 @@
       .dzSec{font-size:12px;font-weight:700;color:#ead9b9;margin:10px 0 5px}
       .dzPat{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:4px 0}.dzPatName{min-width:64px;color:#8290a2}
       .dzIntent{display:inline-flex;flex-direction:column;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:3px 9px;background:#111827;cursor:help}.dzIntent small{color:#8290a2;font-size:10px}
+      .dzIntent{flex-direction:row!important;align-items:center;gap:7px}.dzIntentText{display:flex;flex-direction:column}.dzIcon{width:28px;height:28px;object-fit:contain;flex:none}.dzIconSm{width:20px;height:20px}.dzTypeCell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
       .dzArrow{color:#566377}.dzScroll{overflow:auto}.dzSkill td.dzKo{white-space:normal;min-width:260px;color:#aab6c8}.dzSkill td b{color:#ead9b9}
       .dzWiki{color:#c7d2e2;line-height:1.5}.dzWikiPat{white-space:pre-line;color:#aab6c8;margin-top:4px}
       .dzList{margin:4px 0 0;padding-left:18px;color:#aab6c8;line-height:1.5}
@@ -88,7 +88,7 @@
       getJson('data/morimens/game/dzone-localization.json').catch(()=>({})),
       getJson('data/morimens/huiji/dzone-monsters.zh-CN.json').catch(()=>({}))
     ]);
-    state.tr={monsters:t.monsters||{},skills:t.skills||{},states:t.states||{}};state.game=g.monsters||{};state.cw=w.monsters||{};
+    state.tr={monsters:t.monsters||{},skills:t.skills||{},states:t.states||{},characteristics:t.characteristics||{}};state.game=g.monsters||{};state.cw=w.monsters||{};
     return state.tr;
   }
   const trText=(rec,zhKey,enKey)=>rec?(zh()?rec[zhKey]:rec[enKey])||'':'';
@@ -102,13 +102,17 @@
     for(const rec of ctx.records||[])for(const w of rec.waves||[])for(const t of w.teams||[]){
       const m=String(t.stageName||w.stageName||'').match(/Zone\s*(\d+)\s*:\s*(.+)$/i);if(!m)continue;
       const key=m[1]+'|'+m[2].replace(/^Threat Level\s*/i,'').trim();
-      const o=out.get(key)||{n:0,best:0,sum:0};o.n++;const sc=Number(t.score)||0;o.sum+=sc;if(sc>o.best)o.best=sc;out.set(key,o);
+      const o=out.get(key)||{n:0,hist:new Map(),score:0};o.n++;const sc=Number(t.score)||0;o.hist.set(sc,(o.hist.get(sc)||0)+1);out.set(key,o);
     }
+    // D-Zone score of a stage = its most common clear score (a few clears carry a +5 bonus)
+    for(const o of out.values()){let best=0,n=0;for(const [sc,c] of o.hist)if(c>n||(c===n&&sc<best)){best=sc;n=c}o.score=best}
     return out;
   }
 
   const TYPE_LABEL={Intent_Attack:['攻击','Attack'],Intent_HeavyAttack:['强力攻击','Heavy Attack'],Intent_AttackDebuff:['攻击·削弱','Attack · Debuff'],Intent_AttackBuff:['攻击·强化','Attack · Buff'],Intent_AttackDefence:['攻击·防御','Attack · Defense'],Intent_Debuff:['削弱','Debuff'],Intent_Buff:['强化','Buff'],Intent_DefenceBuff:['防御·强化','Defense · Buff'],Intent_DefenceDebuff:['防御·削弱','Defense · Debuff'],Intent_StrongBuff:['强力强化','Strong Buff'],Intent_StrongDebuff:['强力削弱','Strong Debuff'],Intent_Burst:['特殊行动','Special'],Intent_Burst2:['特殊行动','Special'],Intent_Burst3:['行动','Action'],Intent_Unknown:['特殊行动','Special']};
   const TARGET_LABEL={FrontEnemy:['前排觉醒者','Front Awakener'],PlayerRole:['我方','Player side'],CmdCaster:['自身','Self'],RandomAwaker:['随机觉醒者','Random Awakener'],'':['视条件而定','Conditional']};
+  const ICON_ID={Intent_Attack:'001',Intent_HeavyAttack:'002',Intent_Debuff:'003',Intent_StrongDebuff:'004',Intent_Buff:'005',Intent_StrongBuff:'006',Intent_Defence:'007',Intent_AttackDefence:'008',Intent_AttackDebuff:'009',Intent_AttackBuff:'010',Intent_DefenceBuff:'011',Intent_DefenceDebuff:'012',Intent_Dizzy:'013',Intent_Unknown:'014',Intent_Burst:'015',Intent_Burst2:'015',Intent_Burst3:'015'};
+  const intentIcon=(t,cls='dzIcon')=>`<img class="${cls}" src="assets/morimens/dzone-intent/intent_${ICON_ID[t]||'014'}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
   const typeLabel=t=>{const l=TYPE_LABEL[t];return l?ui(l[0],l[1]):String(t||'').replace(/^Intent_/,'')};
   const targetLabel=g=>{const l=TARGET_LABEL[g];return l?ui(l[0],l[1]):(g&&g.length<24?g:ui('视条件而定','Conditional'))};
   const fill=(tpl,args)=>String(tpl||'').replace(/\[(?:\w+:)?Arg(\d+)\]/g,(m,n)=>{const a=args?.[Number(n)-1];return a==null?m:String(a)});
@@ -143,7 +147,7 @@
       const open=state.openMon.has(key);
       const img=m.a?`<img src="assets/morimens/monster-preview/${esc(m.a)}.webp" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:'';
       const badges=(m.b||[]).map(b=>`<span class="dzBadge ${esc(b)}">${b==='Boss'?ui('首领','Boss'):ui('精英','Elite')}</span>`).join('');
-      const cs=(m.c||[]).map(id=>chars[id]?`<span class="dzChar" title="${esc(chars[id].d)}">${esc(chars[id].n)}</span>`:'').join('');
+      const cs=(m.c||[]).map(id=>{const c=chars[id];if(!c)return '';const t=zh()?state.tr.characteristics[c.n]:null;return `<span class="dzChar" title="${esc(t?.zd||c.d)}">${esc(t?.zh||c.n)}</span>`}).join('');
       const tr=intel?state.tr.monsters[row.tid]:null,g=state.game[x.monsterId]||{},cw=state.cw[x.monsterId]||{};
       const zhName=tr?.zh||intel?.zh||g.zh||'';const wiki=wikiOf(zhName)||wikiOf(cw.name);
       const enName=tr?.en||m.n;
@@ -171,10 +175,10 @@
   function intelBody(row,intel,wiki){
     const skills=new Map(intel.sk.map(s=>[s.id,s]));
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${row.lv}</b></span><span>${ui('攻击力','ATK')} <b>${fmt(row.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmt(row.def)}</b></span><span>${ui('生命','HP')} <b>${fmt(row.hp)}</b></span>${row.ph?`<span>${ui('多段血条','HP bars')} <b>${row.ph.map(fmt).join(' → ')}</b></span>`:''}</div>`;
-    const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(sk?.d,row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(skDesc(sk,row.a[id]).text)}">${esc(skName(sk)||typeLabel(sk?.t))}<small>${esc((skName(sk)?typeLabel(sk?.t):'')+(skName(sk)&&nm?' · ':'')+nm)}</small></span>`}).join('')}</div>`).join('');
+    const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(sk?.d,row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(skDesc(sk,row.a[id]).text)}">${intentIcon(sk?.t)}<span class="dzIntentText">${esc(skName(sk)||typeLabel(sk?.t))}<small>${esc((skName(sk)?typeLabel(sk?.t):'')+(skName(sk)&&nm?' · ':'')+nm)}</small></span></span>`}).join('')}</div>`).join('');
     const rows=intel.sk.map(sk=>{
       const nums=numbers(sk.d,row.a[sk.id]),nm=skName(sk),d=skDesc(sk,row.a[sk.id]);
-      return `<tr><td${!trText(state.tr.skills[sk.id],'zn','en')&&sk.n?' lang="ko"':''}>${nm?esc(nm):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}</td><td>${esc(typeLabel(sk.t))}</td><td>${esc(targetLabel(sk.g))}</td><td>${nums||'—'}</td><td class="dzKo"${d.ko?' lang="ko"':''}>${esc(d.text)}</td></tr>`;
+      return `<tr><td${!trText(state.tr.skills[sk.id],'zn','en')&&sk.n?' lang="ko"':''}>${nm?esc(nm):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}</td><td><span class="dzTypeCell">${intentIcon(sk.t,'dzIcon dzIconSm')}${esc(typeLabel(sk.t))}</span></td><td>${esc(targetLabel(sk.g))}</td><td>${nums||'—'}</td><td class="dzKo"${d.ko?' lang="ko"':''}>${esc(d.text)}</td></tr>`;
     }).join('');
     const sts=intel.st.map(x=>{const t=state.tr.states[x.id],n=trText(t,'zn','en'),d=trText(t,'zd','ed');const ko=!d;return `<li>${(n||x.n)?`<b${n?'':' lang="ko"'}>${esc(n||x.n)}</b> `:''}<span${ko?' lang="ko"':''}>${esc(d||x.d)}</span></li>`}).join('');
     const conds=intel.cond.filter(c=>c.t).map(c=>`<li lang="ko">${esc(c.t)}${c.e.filter(e=>e.n).length?` → ${esc(c.e.filter(e=>e.n).map(e=>e.n).join(', '))}`:''}</li>`).join('');
@@ -200,7 +204,8 @@
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
-    const head=`<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期起）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，缺失处为韩文原文），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (Season 67+). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; Korean original where missing); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
+    const links=state.season===70?`<div class="dtideSeasonResources"><a class="dtideSeasonResourceLink" href="data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.webp" target="_blank" rel="noopener noreferrer">【${ui('当期融灾地图','Current D-Zone Map')}】↗</a> <a class="dtideSeasonResourceLink" href="data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.webp" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a></div>`:'';
+    const head=`${links}<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期起）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，缺失处为韩文原文），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (Season 67+). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; Korean original where missing); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
     if(!doc||!state.info.has(meta.period)||!state.wiki||!state.tr){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadWiki(),loadTr()]).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
@@ -212,7 +217,7 @@
         const st=stats.get(zoneNo+'|'+letter);
         const total=a.monsters.reduce((s,x)=>s+(x.hp||0)*(x.hpBars||1),0);
         const bosses=a.monsters.filter(x=>(state.index.monsters[x.monsterId]?.b||[]).includes('Boss')).length;
-        const tag=`<span class="dzTag"><span>${a.monsters.length} ${ui('只怪','monsters')}${bosses?` · ${bosses} ${ui('首领','Boss')}`:''}</span><span>${ui('总生命','Total HP')} ${fmt(total)}</span>${st?`<span>${st.n} ${ui('队','teams')} · ${ui('最高','Best')} ${st.best}</span>`:''}</span>`;
+        const tag=`<span class="dzTag"><span>${a.monsters.length} ${ui('只怪','monsters')}${bosses?` · ${bosses} ${ui('首领','Boss')}`:''}</span><span>${ui('总生命','Total HP')} ${fmt(total)}</span>${st?`<span>${ui('融灾计分','D-Zone score')} <b>${st.score}</b> ${ui('分','pts')} · ${st.n} ${ui('队','teams')}</span>`:''}</span>`;
         return `<details class="dzAlert" data-dzalert="${wi}:${ai}"><summary><b>${esc(a.name)}</b>${tag}</summary></details>`;
       }).join('');
       return `<details class="dzZone"${wi===0?' open':''}><summary>${esc(w.name)}<span class="dzNote" style="margin:0">${w.alerts.length} ${ui('个威胁等级','threat levels')}</span></summary><div class="dzZoneBody">${relics?`<div class="dzRelics"><span>${ui('初始造物','Starting Creations')}</span>${relics}</div>`:''}${alerts}</div></details>`;
@@ -227,46 +232,18 @@
     el.insertAdjacentHTML('beforeend',alertBody(a,wi,ai,state.info.get(state.season)));el.dataset.filled='1';
   }
 
-  function applySwap(on){
-    for(const sel of SWAP){const el=document.querySelector(sel);if(el)el.style.display=on?'none':''}
-    const title=document.getElementById('dtideMatrixTitle');
-    if(title){if(on){if(savedTitle==null)savedTitle=title.textContent;title.textContent=ui('禁区地图与怪物','D-Zone Maps & Monsters')}else if(savedTitle!=null){title.textContent=savedTitle;savedTitle=null}}
-    document.querySelectorAll('.dtideLeaderboardTab').forEach(x=>{if(x===tab)x.setAttribute('aria-selected',String(on));else if(on)x.setAttribute('aria-selected','false')});
-  }
-  function setActive(on,restore=true){
-    state.active=on;
-    if(on){
-      // reset the leaderboard to the awakener view first (also switches the battle tab off), then take over the panel
-      switching=true;try{document.querySelector('[data-dtide-entity=character]')?.click()}finally{switching=false}
-      host.hidden=false;document.getElementById('dtideBattle')?.setAttribute('hidden','');
-      applySwap(true);
-      load().then(draw,draw);draw();
-    }else{
-      host.hidden=true;
-      if(restore)applySwap(false);else{const t=document.getElementById('dtideMatrixTitle');if(t&&savedTitle!=null){t.textContent=savedTitle;savedTitle=null}if(tab)tab.setAttribute('aria-selected','false')}
-    }
-  }
-
   function mount(){
-    const bar=document.querySelector('.dtideLeaderboardTabs');if(!bar)return false;
-    if(!tab||!bar.contains(tab)){
-      tab=document.createElement('button');tab.type='button';tab.className='dtideLeaderboardTab';tab.setAttribute('data-dtide-zones-tab','');tab.setAttribute('role','tab');tab.setAttribute('aria-selected','false');
-      const filter=bar.querySelector('.dtideCreationFilter');bar.insertBefore(tab,filter||null);
-    }
-    tab.textContent=ui('禁区地图','Zone Maps');
-    const after=document.getElementById('dtideBattle')||document.getElementById('dtideMatrix');
-    if(after&&(!host||!host.isConnected)){host=document.createElement('div');host.id='dtideZones';host.className='dtideZones';host.hidden=!state.active;after.after(host)}
+    const el=document.getElementById('morimensZonesPanel');if(!el)return false;
+    if(host!==el){host=el;host.classList.add('dtideZones')}
     ensureStyle();return true;
   }
-  function render(context){ctx=context||ctx;if(!mount())return;if(state.active&&state.season!==null&&ctx&&!state.seasons.size)draw();else if(state.active)draw()}
+  function draw0(){if(mount()&&!host.hidden)draw()}
+  function render(context){ctx=context||ctx;if(state.index)draw0()}
+  function open(){
+    if(!mount())return;
+    load().then(draw,draw);draw();
+  }
 
-  document.addEventListener('click',e=>{
-    if(e.target.closest?.('[data-dtide-zones-tab]')){if(!state.active)setActive(true);return}
-    if(!switching&&state.active&&e.target.closest?.('.dtideLeaderboardTab')){
-      // another tab: the battle tab re-hides the matrix itself, entity tabs rely on us restoring it
-      setActive(false,!e.target.closest('[data-dtide-battle-tab]'));
-    }
-  },true);
   document.addEventListener('click',e=>{
     const row=e.target.closest?.('[data-dzmon]');if(!row||!host?.contains(row))return;
     const key=row.dataset.dzmon;if(state.openMon.has(key))state.openMon.delete(key);else state.openMon.add(key);
@@ -279,5 +256,6 @@
   document.addEventListener('toggle',e=>{
     const el=e.target;if(el?.matches?.('.dzAlert')&&el.open&&host?.contains(el))fillAlert(el);
   },true);
-  window.MorimensDtideZones={render};
+  window.addEventListener('morimens-language-change',()=>{if(host&&!host.hidden&&state.index)draw()});
+  window.MorimensDtideZones={render,open};
 })();
