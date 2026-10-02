@@ -6,7 +6,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
   const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
-  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,error:null,loading:null,openMon:new Set()};
+  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,game:{},cw:{},error:null,loading:null,openMon:new Set()};
   let host=null,ctx=null,tab=null,savedTitle=null,switching=false;
 
   function ensureStyle(){
@@ -80,6 +80,18 @@
     try{state.wiki=(await getJson('data/morimens/dzone-info/huiji-monsters.json')).monsters||{}}catch{state.wiki={}}
     return state.wiki;
   }
+  // Game translation table (BIAVGit/Morimens-Localizations): zh/en names + descriptions keyed by game ids.
+  async function loadTr(){
+    if(state.tr)return state.tr;
+    const [t,g,w]=await Promise.all([
+      getJson('data/morimens/game/dzone-translations.json').catch(()=>({})),
+      getJson('data/morimens/game/dzone-localization.json').catch(()=>({})),
+      getJson('data/morimens/huiji/dzone-monsters.zh-CN.json').catch(()=>({}))
+    ]);
+    state.tr={monsters:t.monsters||{},skills:t.skills||{},states:t.states||{}};state.game=g.monsters||{};state.cw=w.monsters||{};
+    return state.tr;
+  }
+  const trText=(rec,zhKey,enKey)=>rec?(zh()?rec[zhKey]:rec[enKey])||'':'';
   const normName=n=>String(n||'').replace(/[「」『』\s]/g,'');
   const wikiOf=name=>name?state.wiki?.[normName(name)]||null:null;
 
@@ -132,13 +144,22 @@
       const img=m.a?`<img src="assets/morimens/monster-preview/${esc(m.a)}.webp" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:'';
       const badges=(m.b||[]).map(b=>`<span class="dzBadge ${esc(b)}">${b==='Boss'?ui('首领','Boss'):ui('精英','Elite')}</span>`).join('');
       const cs=(m.c||[]).map(id=>chars[id]?`<span class="dzChar" title="${esc(chars[id].d)}">${esc(chars[id].n)}</span>`:'').join('');
-      const zhName=intel?.zh;const wiki=wikiOf(zhName);
-      const nameHtml=zhName&&zh()?`${esc(zhName)}<small class="dzSub">${esc(m.n)}</small>`:`${esc(m.n)}${zhName?`<small class="dzSub">${esc(zhName)}</small>`:''}`;
-      const caret=intel?`<span class="dzCaret">${open?'▾':'▸'}</span>`:'<span class="dzCaret"></span>';
-      const main=`<tr class="dzMonRow${intel?' dzHasIntel':''}"${intel?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()&&wiki?.desc?wiki.desc:m.d)}</td></tr>`;
-      return main+(intel&&open?`<tr class="dzIntel"><td colspan="5">${intelBody(row,intel,wiki)}</td></tr>`:'');
+      const tr=intel?state.tr.monsters[row.tid]:null,g=state.game[x.monsterId]||{},cw=state.cw[x.monsterId]||{};
+      const zhName=tr?.zh||intel?.zh||g.zh||'';const wiki=wikiOf(zhName)||wikiOf(cw.name);
+      const enName=tr?.en||m.n;
+      const nameHtml=zh()?`${esc(zhName||enName)}${zhName?`<small class="dzSub">${esc(enName)}</small>`:''}`:`${esc(enName)}${zhName?`<small class="dzSub">${esc(zhName)}</small>`:''}`;
+      const fallback=!intel&&(cw.intents?.length||cw.trait);const caret=intel||fallback?`<span class="dzCaret">${open?'▾':'▸'}</span>`:'<span class="dzCaret"></span>';
+      const main=`<tr class="dzMonRow${intel||fallback?' dzHasIntel':''}"${intel||fallback?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()?(tr?.zd||wiki?.desc||cw.description||m.d):(tr?.ed||m.d))}</td></tr>`;
+      return main+(open&&intel?`<tr class="dzIntel"><td colspan="5">${intelBody(row,intel,wiki)}</td></tr>`:open&&fallback?`<tr class="dzIntel"><td colspan="5">${cwBlock(cw)}</td></tr>`:'');
     }).join('');
   }
+  function cwBlock(w){
+    const li=a=>(a||[]).map(t=>`<li>${esc(t)}</li>`).join('');
+    return `<div class="dzIntelBody"><div class="dzSec">${ui('中文 Wiki 意图说明','Chinese Wiki intent notes')}</div>${w.trait?`<div>${ui('特性','Trait')}：${esc(w.trait)}</div>`:''}${w.intents?.length?`<ol class="dzList">${li(w.intents)}</ol>`:''}${w.cycle?`<div>${ui('行动顺序','Action order')}：${esc(w.cycle)}</div>`:''}</div>`;
+  }
+  const skName=sk=>trText(state.tr.skills[sk?.id],'zn','en')||sk?.n||'';
+  // translated description with numbers filled in; falls back to the Korean original (flagged by lang="ko")
+  function skDesc(sk,args){const t=trText(state.tr.skills[sk?.id],'zd','ed');return t?{text:fill(t,args),ko:false}:{text:fill(sk?.d,args),ko:true}}
   function wikiBlock(w){
     if(!w)return '';
     const meta=[w.kind&&`${ui('种类','Kind')}：${esc(w.kind)}`,w.rank&&`${ui('地位','Rank')}：${esc(w.rank)}`].filter(Boolean).join(' · ');
@@ -150,16 +171,16 @@
   function intelBody(row,intel,wiki){
     const skills=new Map(intel.sk.map(s=>[s.id,s]));
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${row.lv}</b></span><span>${ui('攻击力','ATK')} <b>${fmt(row.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmt(row.def)}</b></span><span>${ui('生命','HP')} <b>${fmt(row.hp)}</b></span>${row.ph?`<span>${ui('多段血条','HP bars')} <b>${row.ph.map(fmt).join(' → ')}</b></span>`:''}</div>`;
-    const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(sk?.d,row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(fill(sk?.d,row.a[id]))}">${esc(sk?.n||typeLabel(sk?.t))}<small>${esc((sk?.n?typeLabel(sk?.t):'')+(sk?.n&&nm?' · ':'')+nm)}</small></span>`}).join('')}</div>`).join('');
+    const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(sk?.d,row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(skDesc(sk,row.a[id]).text)}">${esc(skName(sk)||typeLabel(sk?.t))}<small>${esc((skName(sk)?typeLabel(sk?.t):'')+(skName(sk)&&nm?' · ':'')+nm)}</small></span>`}).join('')}</div>`).join('');
     const rows=intel.sk.map(sk=>{
-      const nums=numbers(sk.d,row.a[sk.id]);
-      return `<tr><td>${sk.n?esc(sk.n):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}</td><td>${esc(typeLabel(sk.t))}</td><td>${esc(targetLabel(sk.g))}</td><td>${nums||'—'}</td><td class="dzKo" lang="ko">${esc(fill(sk.d,row.a[sk.id]))}</td></tr>`;
+      const nums=numbers(sk.d,row.a[sk.id]),nm=skName(sk),d=skDesc(sk,row.a[sk.id]);
+      return `<tr><td${!trText(state.tr.skills[sk.id],'zn','en')&&sk.n?' lang="ko"':''}>${nm?esc(nm):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}</td><td>${esc(typeLabel(sk.t))}</td><td>${esc(targetLabel(sk.g))}</td><td>${nums||'—'}</td><td class="dzKo"${d.ko?' lang="ko"':''}>${esc(d.text)}</td></tr>`;
     }).join('');
-    const sts=intel.st.map(x=>`<li>${x.n?`<b lang="ko">${esc(x.n)}</b> `:''}<span lang="ko">${esc(x.d)}</span></li>`).join('');
+    const sts=intel.st.map(x=>{const t=state.tr.states[x.id],n=trText(t,'zn','en'),d=trText(t,'zd','ed');const ko=!d;return `<li>${(n||x.n)?`<b${n?'':' lang="ko"'}>${esc(n||x.n)}</b> `:''}<span${ko?' lang="ko"':''}>${esc(d||x.d)}</span></li>`}).join('');
     const conds=intel.cond.filter(c=>c.t).map(c=>`<li lang="ko">${esc(c.t)}${c.e.filter(e=>e.n).length?` → ${esc(c.e.filter(e=>e.n).map(e=>e.n).join(', '))}`:''}</li>`).join('');
     return `<div class="dzIntelBody">${stats}${wikiBlock(wiki)}
       <div class="dzSec">${ui('行动意图（按回合顺序）','Intent pattern (in turn order)')}</div>${pats||`<div class="dzEmpty">${ui('无固定行动序列','No fixed pattern')}</div>`}
-      <div class="dzSec">${ui('技能详情','Skill details')}</div><div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能（韩文）','Skill (ko)')}</th><th>${ui('类型','Type')}</th><th>${ui('目标','Target')}</th><th>${ui('数值','Values')}</th><th>${ui('官方描述（韩文）','Official text (ko)')}</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="dzSec">${ui('技能详情','Skill details')}</div><div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('目标','Target')}</th><th>${ui('数值','Values')}</th><th>${ui('官方描述','Official text')}</th></tr></thead><tbody>${rows}</tbody></table></div>
       ${sts?`<div class="dzSec">${ui('状态 / 条件规则','States & conditional rules')}</div><ul class="dzList">${sts}${conds}</ul>`:(conds?`<ul class="dzList">${conds}</ul>`:'')}
     </div>`;
   }
@@ -179,9 +200,9 @@
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
-    const head=`<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期起）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（技能文本为韩文原文），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (Season 67+). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (skill text is the Korean original); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
+    const head=`<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期起）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，缺失处为韩文原文），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (Season 67+). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; Korean original where missing); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
-    if(!doc||!state.info.has(meta.period)||!state.wiki){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadWiki()]).then(draw).catch(e=>{state.error=e;draw()});return}
+    if(!doc||!state.info.has(meta.period)||!state.wiki||!state.tr){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadWiki(),loadTr()]).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
     const zones=doc.waves.map((w,wi)=>{
       const zoneNo=wi+1;
