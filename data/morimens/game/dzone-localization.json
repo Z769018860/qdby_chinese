@@ -1,0 +1,2290 @@
+{
+  "source": "BIAVGit/Morimens-Localizations; joined to dansa/SKeyDB by unique English monster name",
+  "monsters": {
+    "dzone-monster-0264": {
+      "zh": "「24」",
+      "en": "\"24\"",
+      "sourceKeys": [
+        "MonsterConfig_14044_MonsterName"
+      ],
+      "ko": "「24」"
+    },
+    "dzone-monster-0034": {
+      "zh": "「@2赐福者」",
+      "en": "\"@2 Blesser\"",
+      "sourceKeys": [
+        "MonsterConfig_79943_MonsterName"
+      ],
+      "ko": "「@2 축복자」"
+    },
+    "dzone-monster-0300": {
+      "zh": "「@2奏者」",
+      "en": "\"@2 Performer\"",
+      "sourceKeys": [
+        "MonsterConfig_60096_MonsterName"
+      ],
+      "ko": "「@2주자」"
+    },
+    "dzone-monster-0226": {
+      "zh": "「@2庇护者」",
+      "en": "\"@2 Protector\"",
+      "sourceKeys": [
+        "MonsterConfig_80818_MonsterName"
+      ],
+      "ko": "「@2 수호자」"
+    },
+    "dzone-monster-0214": {
+      "zh": "「@2银芯@1一体」",
+      "en": "\"@2 Silver @1 Integration\"",
+      "sourceKeys": [
+        "MonsterConfig_72143_MonsterName"
+      ],
+      "ko": "「@2은심@1일체」"
+    },
+    "dzone-monster-0305": {
+      "zh": "「@2无法@1传递」",
+      "en": "\"@2 cannot @1 transfer\"",
+      "sourceKeys": [
+        "MonsterConfig_72149_MonsterName"
+      ],
+      "ko": "「@2 전달@1 없음」"
+    },
+    "dzone-monster-0279": {
+      "zh": "「沉渊者」",
+      "en": "\"Abyss Dweller\"",
+      "sourceKeys": [
+        "MonsterConfig_23417_MonsterName"
+      ],
+      "ko": "「심연의 주민」"
+    },
+    "dzone-monster-0080": {
+      "zh": "「以眼还眼」",
+      "en": "\"An Eye for an Eye\"",
+      "sourceKeys": [
+        "MonsterConfig_13986_MonsterName"
+      ],
+      "ko": "「눈에는 눈」"
+    },
+    "dzone-monster-0052": {
+      "zh": "「海之使徒」",
+      "en": "\"Apostle of the Sea\"",
+      "sourceKeys": [
+        "MonsterConfig_51698_MonsterName"
+      ],
+      "ko": "「바다의 사도」"
+    },
+    "dzone-monster-0174": {
+      "zh": "「海之使徒」",
+      "en": "\"Apostle of the Sea\"",
+      "sourceKeys": [
+        "MonsterConfig_51698_MonsterName"
+      ],
+      "ko": "「바다의 사도」"
+    },
+    "dzone-monster-0154": {
+      "zh": "「阿戈纳斯」",
+      "en": "\"Argonas\"",
+      "sourceKeys": [
+        "MonsterConfig_36008_MonsterName"
+      ],
+      "ko": "「아르고나스」"
+    },
+    "dzone-monster-0293": {
+      "zh": "「空想利刃」",
+      "en": "\"Blade of Utopia\"",
+      "sourceKeys": [
+        "MonsterConfig_49592_MonsterName"
+      ],
+      "ko": "「공상의 칼날」"
+    },
+    "dzone-monster-0270": {
+      "zh": "「淤泥之花」",
+      "en": "\"Blossom of Sludge\"",
+      "sourceKeys": [
+        "MonsterConfig_14071_MonsterName"
+      ],
+      "ko": "「진흙 속의 꽃」"
+    },
+    "dzone-monster-0211": {
+      "zh": "「缸中之脑」",
+      "en": "\"Brain in a Vat\"",
+      "sourceKeys": [
+        "MonsterConfig_67344_MonsterName",
+        "MonsterConfig_67103_MonsterName"
+      ],
+      "ko": "「통 속의 뇌」"
+    },
+    "dzone-monster-0304": {
+      "zh": "「缸中之脑」",
+      "en": "\"Brain in a Vat\"",
+      "sourceKeys": [
+        "MonsterConfig_67344_MonsterName",
+        "MonsterConfig_67103_MonsterName"
+      ],
+      "ko": "「통 속의 뇌」"
+    },
+    "dzone-monster-0196": {
+      "zh": "「丰穰之息」",
+      "en": "\"Breath of Fertility\"",
+      "sourceKeys": [
+        "MonsterConfig_60092_MonsterName"
+      ],
+      "ko": "「번식의 숨결」"
+    },
+    "dzone-monster-0150": {
+      "zh": "「养育者」",
+      "en": "\"Caregiver\"",
+      "sourceKeys": [
+        "MonsterConfig_35580_MonsterName"
+      ],
+      "ko": "「양육자」"
+    },
+    "dzone-monster-0129": {
+      "zh": "「刻耳柏洛斯」",
+      "en": "\"Cerberus\"",
+      "sourceKeys": [
+        "MonsterConfig_14108_MonsterName"
+      ],
+      "ko": "「케르베로스」"
+    },
+    "dzone-monster-0065": {
+      "zh": "「破链者」",
+      "en": "\"Chainbreaker\"",
+      "sourceKeys": [
+        "MonsterConfig_13952_MonsterName"
+      ],
+      "ko": "「사슬을 끊는 자」"
+    },
+    "dzone-monster-0023": {
+      "zh": "「乐善好施」肯尼",
+      "en": "\"Charitable\" Kenny",
+      "sourceKeys": [
+        "MonsterConfig_44630_MonsterName"
+      ],
+      "ko": "「자비로운」케니"
+    },
+    "dzone-monster-0022": {
+      "zh": "「受控者」",
+      "en": "\"Controlled\"",
+      "sourceKeys": [
+        "MonsterConfig_36369_MonsterName"
+      ],
+      "ko": "「조종당한 자」"
+    },
+    "dzone-monster-0209": {
+      "zh": "「腐坏之脑」",
+      "en": "\"Corrupted Brain\"",
+      "sourceKeys": [
+        "MonsterConfig_67100_MonsterName"
+      ],
+      "ko": "「부패한 뇌」"
+    },
+    "dzone-monster-0135": {
+      "zh": "「猩红」",
+      "en": "\"Crimson\"",
+      "sourceKeys": [
+        "MonsterConfig_20804_MonsterName"
+      ],
+      "ko": "「진홍」"
+    },
+    "dzone-monster-0145": {
+      "zh": "「洋流」",
+      "en": "\"Current\"",
+      "sourceKeys": [
+        "MonsterConfig_34678_MonsterName"
+      ],
+      "ko": "「해류」"
+    },
+    "dzone-monster-0128": {
+      "zh": "「维度之孔」",
+      "en": "\"Dimensional Hole\"",
+      "sourceKeys": [
+        "MonsterConfig_14106_MonsterName",
+        "MonsterConfig_14032_MonsterName"
+      ],
+      "ko": "「차원의 구멍」"
+    },
+    "dzone-monster-0231": {
+      "zh": "「圣子·黑羽」",
+      "en": "\"Divus: The Onyx Plume\"",
+      "sourceKeys": [
+        "MonsterConfig_91739_MonsterName"
+      ],
+      "ko": "「성자·검은 깃털」"
+    },
+    "dzone-monster-0074": {
+      "zh": "「垂死嘶鸣」",
+      "en": "\"Dying Whistle\"",
+      "sourceKeys": [
+        "MonsterConfig_13972_MonsterName",
+        "MonsterConfig_14107_MonsterName"
+      ],
+      "ko": "「죽어가는 비명」"
+    },
+    "dzone-monster-0246": {
+      "zh": "「无尽饥渊」",
+      "en": "\"Endless Hunger\"",
+      "sourceKeys": [
+        "MonsterConfig_96324_MonsterName"
+      ],
+      "ko": "「끝없는 굶주림」"
+    },
+    "dzone-monster-0071": {
+      "zh": "「永恒助祭」",
+      "en": "\"Eternal Assistant\"",
+      "sourceKeys": [
+        "MonsterConfig_13967_MonsterName"
+      ],
+      "ko": "「영원의 제사 보조」"
+    },
+    "dzone-monster-0155": {
+      "zh": "「永恒寄主」",
+      "en": "\"Eternal Host\"",
+      "sourceKeys": [
+        "MonsterConfig_36065_MonsterName"
+      ],
+      "ko": "「영원한 숙주」"
+    },
+    "dzone-monster-0018": {
+      "zh": "「永恒狂热者」",
+      "en": "\"Eternal Zealot\"",
+      "sourceKeys": [
+        "MonsterConfig_14073_MonsterName"
+      ],
+      "ko": "「영원한 광신도」"
+    },
+    "dzone-monster-0081": {
+      "zh": "「求诸己身」",
+      "en": "\"Find the Answer Within\"",
+      "sourceKeys": [
+        "MonsterConfig_13987_MonsterName"
+      ],
+      "ko": "「자아 탐구」"
+    },
+    "dzone-monster-0184": {
+      "zh": "「绅士」",
+      "en": "\"Gentleman\"",
+      "sourceKeys": [
+        "MonsterConfig_59741_MonsterName"
+      ],
+      "ko": "「신사」"
+    },
+    "dzone-monster-0146": {
+      "zh": "「几何体」",
+      "en": "\"Geometric Shape\"",
+      "sourceKeys": [
+        "MonsterConfig_34679_MonsterName"
+      ],
+      "ko": "「기하학 도형」"
+    },
+    "dzone-monster-0283": {
+      "zh": "「伊恩斯莫的守卫」",
+      "en": "\"Guard of Iensmo\"",
+      "sourceKeys": [
+        "MonsterConfig_36118_MonsterName"
+      ],
+      "ko": "「이엔스모의 수호자」"
+    },
+    "dzone-monster-0252": {
+      "zh": "「守灯人」",
+      "en": "\"Guardian of the Lantern\"",
+      "sourceKeys": [
+        "MonsterConfig_14087_MonsterName",
+        "MonsterConfig_13956_MonsterName"
+      ],
+      "ko": "「등불지기」"
+    },
+    "dzone-monster-0024": {
+      "zh": "「助人为乐」杰克逊",
+      "en": "\"Helpful\" Jackson",
+      "sourceKeys": [
+        "MonsterConfig_44631_MonsterName"
+      ],
+      "ko": "「이타적인」잭슨"
+    },
+    "dzone-monster-0157": {
+      "zh": "「寄主」",
+      "en": "\"Host\"",
+      "sourceKeys": [
+        "MonsterConfig_36114_MonsterName"
+      ],
+      "ko": "「숙주」"
+    },
+    "dzone-monster-0218": {
+      "zh": "「催眠妖虫」",
+      "en": "\"Hypnotic Shaggai\"",
+      "sourceKeys": [
+        "MonsterConfig_73521_MonsterName"
+      ],
+      "ko": "「최면 곤충」"
+    },
+    "dzone-monster-0277": {
+      "zh": "「歇斯底里患者」",
+      "en": "\"Hysteric\"",
+      "sourceKeys": [
+        "MonsterConfig_22335_MonsterName"
+      ],
+      "ko": "「히스테리 환자」"
+    },
+    "dzone-monster-0109": {
+      "zh": "「铁镐」卢森",
+      "en": "\"Iron Pickaxe\" Lucen",
+      "sourceKeys": [
+        "MonsterConfig_14061_MonsterName"
+      ],
+      "ko": "「철곡괭이」 루센"
+    },
+    "dzone-monster-0164": {
+      "zh": "「心地善良」弗里曼",
+      "en": "\"Kind-hearted\" Freeman",
+      "sourceKeys": [
+        "MonsterConfig_44632_MonsterName"
+      ],
+      "ko": "「친절한」프리맨"
+    },
+    "dzone-monster-0103": {
+      "zh": "「查泰德夫人」",
+      "en": "\"Lady Chatterley\"",
+      "sourceKeys": [
+        "MonsterConfig_14047_MonsterName"
+      ],
+      "ko": "「채털리 부인」"
+    },
+    "dzone-monster-0185": {
+      "zh": "「淑女」",
+      "en": "\"Lady\"",
+      "sourceKeys": [
+        "MonsterConfig_59742_MonsterName"
+      ],
+      "ko": "「숙녀」"
+    },
+    "dzone-monster-0203": {
+      "zh": "「灯罩」阿依莎",
+      "en": "\"Lampshade\" Aisha",
+      "sourceKeys": [
+        "MonsterConfig_60103_MonsterName"
+      ],
+      "ko": "「등불의 그림자」아이샤"
+    },
+    "dzone-monster-0075": {
+      "zh": "「聆听启示」",
+      "en": "\"Listen to the Revelation\"",
+      "sourceKeys": [
+        "MonsterConfig_13973_MonsterName"
+      ],
+      "ko": "「계시를 듣는 자」"
+    },
+    "dzone-monster-0190": {
+      "zh": "「小蜜蜂」",
+      "en": "\"Little Bee\"",
+      "sourceKeys": [
+        "MonsterConfig_59750_MonsterName"
+      ],
+      "ko": "「작은 꿀벌」"
+    },
+    "dzone-monster-0187": {
+      "zh": "「小马蜂」",
+      "en": "\"Little Wasp\"",
+      "sourceKeys": [
+        "MonsterConfig_59746_MonsterName"
+      ],
+      "ko": "「작은 말벌」"
+    },
+    "dzone-monster-0245": {
+      "zh": "「葬骸之主」",
+      "en": "\"Lord of Necrovia\"",
+      "sourceKeys": [
+        "MonsterConfig_95784_MonsterName"
+      ],
+      "ko": "「유해의 군주」"
+    },
+    "dzone-monster-0144": {
+      "zh": "「凸月侍女」",
+      "en": "\"Maiden of the Gibbous Moon\"",
+      "sourceKeys": [
+        "MonsterConfig_24743_MonsterName"
+      ],
+      "ko": "「상현달의 시녀」"
+    },
+    "dzone-monster-0229": {
+      "zh": "「冷光」",
+      "en": "\"Mareel Glow\"",
+      "sourceKeys": [
+        "MonsterConfig_84437_MonsterName"
+      ],
+      "ko": "「차가운 광휘」"
+    },
+    "dzone-monster-0268": {
+      "zh": "「院长」莎拉",
+      "en": "\"Matron\" Sarah",
+      "sourceKeys": [
+        "MonsterConfig_14067_MonsterName",
+        "MonsterConfig_74035_MonsterName"
+      ],
+      "ko": "「원장」사라"
+    },
+    "dzone-monster-0219": {
+      "zh": "「院长」莎拉",
+      "en": "\"Matron\" Sarah",
+      "sourceKeys": [
+        "MonsterConfig_14067_MonsterName",
+        "MonsterConfig_74035_MonsterName"
+      ],
+      "ko": "「원장」사라"
+    },
+    "dzone-monster-0008": {
+      "zh": "「劳伦斯先生」",
+      "en": "\"Mr. Lawrence\"",
+      "sourceKeys": [
+        "MonsterConfig_13958_MonsterName"
+      ],
+      "ko": "「로렌스 선생」"
+    },
+    "dzone-monster-0161": {
+      "zh": "「涅弗鲁瑞」",
+      "en": "\"Neferure\"",
+      "sourceKeys": [
+        "MonsterConfig_43794_MonsterName"
+      ],
+      "ko": "「네프루리」"
+    },
+    "dzone-monster-0276": {
+      "zh": "「海洋之星」",
+      "en": "\"Ocean Star\"",
+      "sourceKeys": [
+        "MonsterConfig_22201_MonsterName"
+      ],
+      "ko": "「바다의 별」"
+    },
+    "dzone-monster-0120": {
+      "zh": "「远洋回忆」",
+      "en": "\"Oceanic Memories\"",
+      "sourceKeys": [
+        "MonsterConfig_14090_MonsterName"
+      ],
+      "ko": "「먼바다의 추억」"
+    },
+    "dzone-monster-0153": {
+      "zh": "「奥格诺茨」",
+      "en": "\"Ognotz\"",
+      "sourceKeys": [
+        "MonsterConfig_36007_MonsterName"
+      ],
+      "ko": "「오그노츠」"
+    },
+    "dzone-monster-0151": {
+      "zh": "「佩因」",
+      "en": "\"Pain\"",
+      "sourceKeys": [
+        "MonsterConfig_35581_MonsterName"
+      ],
+      "ko": "「페인」"
+    },
+    "dzone-monster-0089": {
+      "zh": "「镇痛剂」",
+      "en": "\"Painkiller\"",
+      "sourceKeys": [
+        "MonsterConfig_14008_MonsterName",
+        "MonsterConfig_13981_MonsterName"
+      ],
+      "ko": "「진통제」"
+    },
+    "dzone-monster-0240": {
+      "zh": "「王邸管家」弗兰",
+      "en": "\"Palace Housekeeper\" Fran",
+      "sourceKeys": [
+        "MonsterConfig_94940_MonsterName"
+      ],
+      "ko": "「궁전 집사」프란"
+    },
+    "dzone-monster-0152": {
+      "zh": "「寄生种」",
+      "en": "\"Parasite\"",
+      "sourceKeys": [
+        "MonsterConfig_35584_MonsterName"
+      ],
+      "ko": "「기생생물」"
+    },
+    "dzone-monster-0257": {
+      "zh": "「石之眼」",
+      "en": "\"Petrifying Eyes\"",
+      "sourceKeys": [
+        "MonsterConfig_14011_MonsterName"
+      ],
+      "ko": "「석화의 눈」"
+    },
+    "dzone-monster-0254": {
+      "zh": "「波纳佩颂歌」",
+      "en": "\"Pohnpei Hymn\"",
+      "sourceKeys": [
+        "MonsterConfig_13964_MonsterName"
+      ],
+      "ko": "「포나페 찬송가」"
+    },
+    "dzone-monster-0311": {
+      "zh": "「瞑海祭司」",
+      "en": "\"Priest of the Abyss\"",
+      "sourceKeys": [
+        "MonsterConfig_94943_MonsterName"
+      ],
+      "ko": "「저승 바다의 제사장」"
+    },
+    "dzone-monster-0149": {
+      "zh": "「塞勒菲斯的倒影」",
+      "en": "\"Reflection of Celephais\"",
+      "sourceKeys": [
+        "MonsterConfig_35579_MonsterName"
+      ],
+      "ko": "「셀레파이스의 환영」"
+    },
+    "dzone-monster-0067": {
+      "zh": "「替代品」",
+      "en": "\"Replacement\"",
+      "sourceKeys": [
+        "MonsterConfig_13960_MonsterName"
+      ],
+      "ko": "「대체품」"
+    },
+    "dzone-monster-0085": {
+      "zh": "「渴血患者」",
+      "en": "\"Sanguivore Patient\"",
+      "sourceKeys": [
+        "MonsterConfig_14052_MonsterName",
+        "MonsterConfig_13994_MonsterName"
+      ],
+      "ko": "「피에 목마른 환자」"
+    },
+    "dzone-monster-0171": {
+      "zh": "「海窟特」",
+      "en": "\"Sea Cave Special\"",
+      "sourceKeys": [
+        "MonsterConfig_49482_MonsterName"
+      ],
+      "ko": "「바다 동굴 특공」"
+    },
+    "dzone-monster-0170": {
+      "zh": "「塞尔凯特」",
+      "en": "\"Serket\"",
+      "sourceKeys": [
+        "MonsterConfig_49481_MonsterName"
+      ],
+      "ko": "「셀케트」"
+    },
+    "dzone-monster-0280": {
+      "zh": "「猎颅魔女」",
+      "en": "\"Skull Huntress\"",
+      "sourceKeys": [
+        "MonsterConfig_23537_MonsterName"
+      ],
+      "ko": "「머리를 수집하는 마녀」"
+    },
+    "dzone-monster-0183": {
+      "zh": "「沉睡之主」",
+      "en": "\"Slumbering Sovereign\"",
+      "sourceKeys": [
+        "MonsterConfig_57954_MonsterName"
+      ],
+      "ko": "「잠자는 왕」"
+    },
+    "dzone-monster-0284": {
+      "zh": "「索菲亚」",
+      "en": "\"Sophia\"",
+      "sourceKeys": [
+        "MonsterConfig_44479_MonsterName"
+      ],
+      "ko": "「소피아」"
+    },
+    "dzone-monster-0147": {
+      "zh": "「立体」",
+      "en": "\"Stereo\"",
+      "sourceKeys": [
+        "MonsterConfig_34680_MonsterName"
+      ],
+      "ko": "「입체」"
+    },
+    "dzone-monster-0091": {
+      "zh": "「手术利刃」",
+      "en": "\"Surgical Blade\"",
+      "sourceKeys": [
+        "MonsterConfig_14013_MonsterName",
+        "MonsterConfig_14000_MonsterName"
+      ],
+      "ko": "「수술용 칼」"
+    },
+    "dzone-monster-0099": {
+      "zh": "「甜蜜恶鬼」",
+      "en": "\"Sweet Demon\"",
+      "sourceKeys": [
+        "MonsterConfig_14037_MonsterName"
+      ],
+      "ko": "「달콤한 소악마」"
+    },
+    "dzone-monster-0202": {
+      "zh": "「塔薇」",
+      "en": "\"Tawil\"",
+      "sourceKeys": [
+        "MonsterConfig_14041_MonsterName",
+        "MonsterConfig_24742_MonsterName",
+        "MonsterConfig_60102_MonsterName"
+      ],
+      "ko": "「타비」"
+    },
+    "dzone-monster-0163": {
+      "zh": "「审判」的使徒",
+      "en": "\"The Apostle of Judgment\"",
+      "sourceKeys": [
+        "MonsterConfig_44480_MonsterName"
+      ],
+      "ko": "「심판」의 사도"
+    },
+    "dzone-monster-0160": {
+      "zh": "「恩瑟雷的回音」",
+      "en": "\"The Echo of Ensereire\"",
+      "sourceKeys": [
+        "MonsterConfig_36120_MonsterName"
+      ],
+      "ko": "「엔세레어의 메아리」"
+    },
+    "dzone-monster-0262": {
+      "zh": "「终末泥淖」",
+      "en": "\"The Final Mire\"",
+      "sourceKeys": [
+        "MonsterConfig_14033_MonsterName"
+      ],
+      "ko": "「종말의 늪」"
+    },
+    "dzone-monster-0143": {
+      "zh": "「大魔术师霍迪妮」",
+      "en": "\"The Great Magician Houdini\"",
+      "sourceKeys": [
+        "MonsterConfig_23774_MonsterName"
+      ],
+      "ko": "「위대한 마술사 후디니」"
+    },
+    "dzone-monster-0073": {
+      "zh": "「斯特里戈伊之心？」",
+      "en": "\"The Heart of Strigoi?\"",
+      "sourceKeys": [
+        "MonsterConfig_13971_MonsterName"
+      ],
+      "ko": "「스트리고이의 심장?」"
+    },
+    "dzone-monster-0301": {
+      "zh": "「知者」",
+      "en": "\"The Sage\"",
+      "sourceKeys": [
+        "MonsterConfig_67097_MonsterName",
+        "MonsterConfig_81279_MonsterName"
+      ],
+      "ko": "「지혜로운 자」"
+    },
+    "dzone-monster-0309": {
+      "zh": "「知者」",
+      "en": "\"The Sage\"",
+      "sourceKeys": [
+        "MonsterConfig_67097_MonsterName",
+        "MonsterConfig_81279_MonsterName"
+      ],
+      "ko": "「지혜로운 자」"
+    },
+    "dzone-monster-0142": {
+      "zh": "「奇术师」",
+      "en": "\"The Sorcerer\"",
+      "sourceKeys": [
+        "MonsterConfig_23773_MonsterName"
+      ],
+      "ko": "「마술사」"
+    },
+    "dzone-monster-0113": {
+      "zh": "「万物寂灭」",
+      "en": "\"The Void Claims All\"",
+      "sourceKeys": [
+        "MonsterConfig_13976_MonsterName",
+        "MonsterConfig_14066_MonsterName"
+      ],
+      "ko": "「만물의 소멸」"
+    },
+    "dzone-monster-0200": {
+      "zh": "「嘀嗒人」",
+      "en": "\"Tick-Tock Man\"",
+      "sourceKeys": [
+        "MonsterConfig_60099_MonsterName"
+      ],
+      "ko": "「틱톡맨」"
+    },
+    "dzone-monster-0148": {
+      "zh": "「潮汐」",
+      "en": "\"Tide\"",
+      "sourceKeys": [
+        "MonsterConfig_34681_MonsterName"
+      ],
+      "ko": "「조석」"
+    },
+    "dzone-monster-0285": {
+      "zh": "「以图存续」",
+      "en": "\"To Ensure Continuity\"",
+      "sourceKeys": [
+        "MonsterConfig_46083_MonsterName"
+      ],
+      "ko": "「도면의 영생」"
+    },
+    "dzone-monster-0175": {
+      "zh": "「致奥尔拉」",
+      "en": "\"To Horla\"",
+      "sourceKeys": [
+        "MonsterConfig_52080_MonsterName"
+      ],
+      "ko": "「오를라에게」"
+    },
+    "dzone-monster-0111": {
+      "zh": "「复仇巨刃」",
+      "en": "\"Vengeance Blade\"",
+      "sourceKeys": [
+        "MonsterConfig_14064_MonsterName"
+      ],
+      "ko": "「복수의 검」"
+    },
+    "dzone-monster-0210": {
+      "zh": "「美德骑士」",
+      "en": "\"Virtue Knight\"",
+      "sourceKeys": [
+        "MonsterConfig_67342_MonsterName",
+        "MonsterConfig_67102_MonsterName"
+      ],
+      "ko": "「미덕의 기사」"
+    },
+    "dzone-monster-0302": {
+      "zh": "「美德骑士」",
+      "en": "\"Virtue Knight\"",
+      "sourceKeys": [
+        "MonsterConfig_67342_MonsterName",
+        "MonsterConfig_67102_MonsterName"
+      ],
+      "ko": "「미덕의 기사」"
+    },
+    "dzone-monster-0159": {
+      "zh": "「瓦拉几亚」",
+      "en": "\"Wallachia\"",
+      "sourceKeys": [
+        "MonsterConfig_36117_MonsterName"
+      ],
+      "ko": "「왈라키아」"
+    },
+    "dzone-monster-0263": {
+      "zh": "「睡莲」",
+      "en": "\"Water Lily\"",
+      "sourceKeys": [
+        "MonsterConfig_14039_MonsterName"
+      ],
+      "ko": "「수련」"
+    },
+    "dzone-monster-0094": {
+      "zh": "「鲸跃」",
+      "en": "\"Whale Leap\"",
+      "sourceKeys": [
+        "MonsterConfig_14017_MonsterName",
+        "MonsterConfig_67343_MonsterName"
+      ],
+      "ko": "「고래의 도약」"
+    },
+    "dzone-monster-0303": {
+      "zh": "「鲸跃」",
+      "en": "\"Whale Leap\"",
+      "sourceKeys": [
+        "MonsterConfig_14017_MonsterName",
+        "MonsterConfig_67343_MonsterName"
+      ],
+      "ko": "「고래의 도약」"
+    },
+    "dzone-monster-0108": {
+      "zh": "「灯芯侍者」",
+      "en": "\"Wick Attendant\"",
+      "sourceKeys": [
+        "MonsterConfig_14060_MonsterName",
+        "MonsterConfig_14010_MonsterName"
+      ],
+      "ko": "「등불 심지의 사자」"
+    },
+    "dzone-monster-0136": {
+      "zh": "深海型复合异变体",
+      "en": "Aequor Hybrid Mutant",
+      "sourceKeys": [
+        "MonsterConfig_22159_MonsterName"
+      ],
+      "ko": "심해 복합형 융식체"
+    },
+    "dzone-monster-0275": {
+      "zh": "深海型超变异变体",
+      "en": "Aequor Super Mutant",
+      "sourceKeys": [
+        "MonsterConfig_22163_MonsterName"
+      ],
+      "ko": "심해 초변 융식체"
+    },
+    "dzone-monster-0182": {
+      "zh": "亚弗姆扎",
+      "en": "Afumza",
+      "sourceKeys": [
+        "MonsterConfig_57143_MonsterName"
+      ],
+      "ko": "아품-자"
+    },
+    "dzone-monster-0297": {
+      "zh": "探员",
+      "en": "Agent",
+      "sourceKeys": [
+        "MonsterConfig_59748_MonsterName"
+      ],
+      "ko": "요원"
+    },
+    "dzone-monster-0286": {
+      "zh": "亚兰卫队长",
+      "en": "Aram Guard Captain",
+      "sourceKeys": [
+        "MonsterConfig_48881_MonsterName"
+      ],
+      "ko": "아란 수비대 대장"
+    },
+    "dzone-monster-0287": {
+      "zh": "亚兰圣鹭",
+      "en": "Aram Heron",
+      "sourceKeys": [
+        "MonsterConfig_48892_MonsterName"
+      ],
+      "ko": "아란의 신성한 백로"
+    },
+    "dzone-monster-0289": {
+      "zh": "亚兰行灯",
+      "en": "Aram Lantern",
+      "sourceKeys": [
+        "MonsterConfig_49239_MonsterName",
+        "MonsterConfig_49238_MonsterName"
+      ],
+      "ko": "아란 등불"
+    },
+    "dzone-monster-0025": {
+      "zh": "亚兰行灯",
+      "en": "Aram Lantern",
+      "sourceKeys": [
+        "MonsterConfig_49239_MonsterName",
+        "MonsterConfig_49238_MonsterName"
+      ],
+      "ko": "아란 등불"
+    },
+    "dzone-monster-0288": {
+      "zh": "亚兰战士",
+      "en": "Aram Warrior",
+      "sourceKeys": [
+        "MonsterConfig_49240_MonsterName",
+        "MonsterConfig_49237_MonsterName",
+        "MonsterConfig_52491_MonsterName",
+        "MonsterConfig_53768_MonsterName"
+      ],
+      "ko": "아란 전사"
+    },
+    "dzone-monster-0168": {
+      "zh": "亚兰战士",
+      "en": "Aram Warrior",
+      "sourceKeys": [
+        "MonsterConfig_49240_MonsterName",
+        "MonsterConfig_49237_MonsterName",
+        "MonsterConfig_52491_MonsterName",
+        "MonsterConfig_53768_MonsterName"
+      ],
+      "ko": "아란 전사"
+    },
+    "dzone-monster-0176": {
+      "zh": "亚兰战士",
+      "en": "Aram Warrior",
+      "sourceKeys": [
+        "MonsterConfig_49240_MonsterName",
+        "MonsterConfig_49237_MonsterName",
+        "MonsterConfig_52491_MonsterName",
+        "MonsterConfig_53768_MonsterName"
+      ],
+      "ko": "아란 전사"
+    },
+    "dzone-monster-0178": {
+      "zh": "亚兰战士",
+      "en": "Aram Warrior",
+      "sourceKeys": [
+        "MonsterConfig_49240_MonsterName",
+        "MonsterConfig_49237_MonsterName",
+        "MonsterConfig_52491_MonsterName",
+        "MonsterConfig_53768_MonsterName"
+      ],
+      "ko": "아란 전사"
+    },
+    "dzone-monster-0213": {
+      "zh": "灰烬融蚀体",
+      "en": "Ashen Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_72142_MonsterName",
+        "MonsterConfig_72144_MonsterName"
+      ],
+      "ko": "잿빛 융식체"
+    },
+    "dzone-monster-0031": {
+      "zh": "灰烬融蚀体",
+      "en": "Ashen Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_72142_MonsterName",
+        "MonsterConfig_72144_MonsterName"
+      ],
+      "ko": "잿빛 융식체"
+    },
+    "dzone-monster-0014": {
+      "zh": "先锋艺术",
+      "en": "Avant-Garde Art",
+      "sourceKeys": [
+        "MonsterConfig_14003_MonsterName"
+      ],
+      "ko": "아방가르드 예술"
+    },
+    "dzone-monster-0101": {
+      "zh": "简单习作Ⅰ",
+      "en": "Basic Exercise I",
+      "sourceKeys": [
+        "MonsterConfig_14040_MonsterName"
+      ],
+      "ko": "단순한 습작 I"
+    },
+    "dzone-monster-0118": {
+      "zh": "简单习作Ⅱ",
+      "en": "Basic Exercise II",
+      "sourceKeys": [
+        "MonsterConfig_14080_MonsterName"
+      ],
+      "ko": "단순한 습작 II"
+    },
+    "dzone-monster-0298": {
+      "zh": "上尉",
+      "en": "Captain",
+      "sourceKeys": [
+        "MonsterConfig_60090_MonsterName"
+      ],
+      "ko": "대위"
+    },
+    "dzone-monster-0029": {
+      "zh": "陆战猫",
+      "en": "Cat Warrior",
+      "sourceKeys": [
+        "MonsterConfig_59745_MonsterName"
+      ],
+      "ko": "전투 고양이"
+    },
+    "dzone-monster-0272": {
+      "zh": "吟诵者",
+      "en": "Chanter",
+      "sourceKeys": [
+        "MonsterConfig_14081_MonsterName"
+      ],
+      "ko": "찬송자"
+    },
+    "dzone-monster-0282": {
+      "zh": "灵觉之子",
+      "en": "Child of Enchantment",
+      "sourceKeys": [
+        "MonsterConfig_36116_MonsterName",
+        "MonsterConfig_35585_MonsterName"
+      ],
+      "ko": "영혼의 자식"
+    },
+    "dzone-monster-0156": {
+      "zh": "睡梦之子",
+      "en": "Child of Slumber",
+      "sourceKeys": [
+        "MonsterConfig_36113_MonsterName",
+        "MonsterConfig_36112_MonsterName"
+      ],
+      "ko": "잠의 자식"
+    },
+    "dzone-monster-0158": {
+      "zh": "水之子",
+      "en": "Child of Water",
+      "sourceKeys": [
+        "MonsterConfig_36115_MonsterName",
+        "MonsterConfig_36119_MonsterName"
+      ],
+      "ko": "물의 자식"
+    },
+    "dzone-monster-0256": {
+      "zh": "奔袭之足",
+      "en": "Claw of Swift Assault",
+      "sourceKeys": [
+        "MonsterConfig_13988_MonsterName"
+      ],
+      "ko": "맹렬한 발톱"
+    },
+    "dzone-monster-0076": {
+      "zh": "协作型融蚀体",
+      "en": "Collaborative Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_13975_MonsterName",
+        "MonsterConfig_13974_MonsterName",
+        "MonsterConfig_14101_MonsterName"
+      ],
+      "ko": "협동형 융식체"
+    },
+    "dzone-monster-0011": {
+      "zh": "协作型融蚀体",
+      "en": "Collaborative Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_13975_MonsterName",
+        "MonsterConfig_13974_MonsterName",
+        "MonsterConfig_14101_MonsterName"
+      ],
+      "ko": "협동형 융식체"
+    },
+    "dzone-monster-0086": {
+      "zh": "复合型融蚀体",
+      "en": "Composite Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_13998_MonsterName"
+      ],
+      "ko": "복합형 융식체"
+    },
+    "dzone-monster-0310": {
+      "zh": "腐尸分殖体",
+      "en": "Corpse Excrescence",
+      "sourceKeys": [
+        "MonsterConfig_94654_MonsterName",
+        "MonsterConfig_94679_MonsterName",
+        "MonsterConfig_94680_MonsterName"
+      ],
+      "ko": "부패한 시체 분열체"
+    },
+    "dzone-monster-0232": {
+      "zh": "腐尸分殖体",
+      "en": "Corpse Excrescence",
+      "sourceKeys": [
+        "MonsterConfig_94654_MonsterName",
+        "MonsterConfig_94679_MonsterName",
+        "MonsterConfig_94680_MonsterName"
+      ],
+      "ko": "부패한 시체 분열체"
+    },
+    "dzone-monster-0233": {
+      "zh": "腐尸分殖体",
+      "en": "Corpse Excrescence",
+      "sourceKeys": [
+        "MonsterConfig_94654_MonsterName",
+        "MonsterConfig_94679_MonsterName",
+        "MonsterConfig_94680_MonsterName"
+      ],
+      "ko": "부패한 시체 분열체"
+    },
+    "dzone-monster-0295": {
+      "zh": "伯爵夫人",
+      "en": "Countess",
+      "sourceKeys": [
+        "MonsterConfig_56170_MonsterName",
+        "MonsterConfig_96657_MonsterName"
+      ],
+      "ko": "백작 부인"
+    },
+    "dzone-monster-0224": {
+      "zh": "残酷的「父亲」",
+      "en": "Cruel \"Father\"",
+      "sourceKeys": [
+        "MonsterConfig_80576_MonsterName"
+      ],
+      "ko": "잔혹한 「아버지」"
+    },
+    "dzone-monster-0112": {
+      "zh": "融蚀浆",
+      "en": "D-Slime",
+      "sourceKeys": [
+        "MonsterConfig_14065_MonsterName"
+      ],
+      "ko": "융식액"
+    },
+    "dzone-monster-0009": {
+      "zh": "吞噬之吠",
+      "en": "Devouring Howl",
+      "sourceKeys": [
+        "MonsterConfig_14078_MonsterName",
+        "MonsterConfig_13966_MonsterName"
+      ],
+      "ko": "포식의 포효"
+    },
+    "dzone-monster-0095": {
+      "zh": "虔心教众",
+      "en": "Devout Followers",
+      "sourceKeys": [
+        "MonsterConfig_14022_MonsterName"
+      ],
+      "ko": "경건한 신도"
+    },
+    "dzone-monster-0105": {
+      "zh": "维度碎片",
+      "en": "Dimension Fragment",
+      "sourceKeys": [
+        "MonsterConfig_14093_MonsterName",
+        "MonsterConfig_14055_MonsterName"
+      ],
+      "ko": "차원의 파편"
+    },
+    "dzone-monster-0123": {
+      "zh": "维度碎片",
+      "en": "Dimension Fragment",
+      "sourceKeys": [
+        "MonsterConfig_14093_MonsterName",
+        "MonsterConfig_14055_MonsterName"
+      ],
+      "ko": "차원의 파편"
+    },
+    "dzone-monster-0127": {
+      "zh": "维度异兽",
+      "en": "Dimensional Beasts",
+      "sourceKeys": [
+        "MonsterConfig_14099_MonsterName",
+        "MonsterConfig_50376_MonsterName"
+      ],
+      "ko": "차원 야수"
+    },
+    "dzone-monster-0119": {
+      "zh": "维度猎手",
+      "en": "Dimensional Hunter",
+      "sourceKeys": [
+        "MonsterConfig_14084_MonsterName"
+      ],
+      "ko": "차원 사냥꾼"
+    },
+    "dzone-monster-0069": {
+      "zh": "融蚀野犬",
+      "en": "Dissoluted Hound",
+      "sourceKeys": [
+        "MonsterConfig_13962_MonsterName"
+      ],
+      "ko": "융식된 들개"
+    },
+    "dzone-monster-0066": {
+      "zh": "融蚀人型",
+      "en": "Dissoluted Humanoid",
+      "sourceKeys": [
+        "MonsterConfig_13957_MonsterName",
+        "MonsterConfig_13984_MonsterName"
+      ],
+      "ko": "융식된 인형"
+    },
+    "dzone-monster-0079": {
+      "zh": "融蚀人型",
+      "en": "Dissoluted Humanoid",
+      "sourceKeys": [
+        "MonsterConfig_13957_MonsterName",
+        "MonsterConfig_13984_MonsterName"
+      ],
+      "ko": "융식된 인형"
+    },
+    "dzone-monster-0104": {
+      "zh": "融蚀疯马",
+      "en": "Dissoluted Mad Horse",
+      "sourceKeys": [
+        "MonsterConfig_14051_MonsterName"
+      ],
+      "ko": "융식된 광마"
+    },
+    "dzone-monster-0084": {
+      "zh": "融蚀鼠王",
+      "en": "Dissoluted Rat King",
+      "sourceKeys": [
+        "MonsterConfig_14088_MonsterName",
+        "MonsterConfig_14046_MonsterName",
+        "MonsterConfig_14075_MonsterName",
+        "MonsterConfig_14077_MonsterName",
+        "MonsterConfig_13993_MonsterName",
+        "MonsterConfig_14103_MonsterName",
+        "MonsterConfig_14104_MonsterName",
+        "MonsterConfig_55851_MonsterName",
+        "MonsterConfig_74804_MonsterName"
+      ],
+      "ko": "융식된 대왕 쥐"
+    },
+    "dzone-monster-0115": {
+      "zh": "融蚀鼠王",
+      "en": "Dissoluted Rat King",
+      "sourceKeys": [
+        "MonsterConfig_14088_MonsterName",
+        "MonsterConfig_14046_MonsterName",
+        "MonsterConfig_14075_MonsterName",
+        "MonsterConfig_14077_MonsterName",
+        "MonsterConfig_13993_MonsterName",
+        "MonsterConfig_14103_MonsterName",
+        "MonsterConfig_14104_MonsterName",
+        "MonsterConfig_55851_MonsterName",
+        "MonsterConfig_74804_MonsterName"
+      ],
+      "ko": "융식된 대왕 쥐"
+    },
+    "dzone-monster-0116": {
+      "zh": "融蚀鼠王",
+      "en": "Dissoluted Rat King",
+      "sourceKeys": [
+        "MonsterConfig_14088_MonsterName",
+        "MonsterConfig_14046_MonsterName",
+        "MonsterConfig_14075_MonsterName",
+        "MonsterConfig_14077_MonsterName",
+        "MonsterConfig_13993_MonsterName",
+        "MonsterConfig_14103_MonsterName",
+        "MonsterConfig_14104_MonsterName",
+        "MonsterConfig_55851_MonsterName",
+        "MonsterConfig_74804_MonsterName"
+      ],
+      "ko": "융식된 대왕 쥐"
+    },
+    "dzone-monster-0078": {
+      "zh": "诊疗医生",
+      "en": "Doctor",
+      "sourceKeys": [
+        "MonsterConfig_13979_MonsterName",
+        "MonsterConfig_55833_MonsterName"
+      ],
+      "ko": "주치의"
+    },
+    "dzone-monster-0292": {
+      "zh": "精英亚兰护卫",
+      "en": "Elite Aram Guard",
+      "sourceKeys": [
+        "MonsterConfig_49535_MonsterName",
+        "MonsterConfig_49534_MonsterName"
+      ],
+      "ko": "아란 정예 수비대"
+    },
+    "dzone-monster-0198": {
+      "zh": "高级作战员",
+      "en": "Elite Operative",
+      "sourceKeys": [
+        "MonsterConfig_60095_MonsterName"
+      ],
+      "ko": "고급 전투원"
+    },
+    "dzone-monster-0227": {
+      "zh": "拥抱进化",
+      "en": "Embrace Evolution",
+      "sourceKeys": [
+        "MonsterConfig_80819_MonsterName"
+      ],
+      "ko": "진화의 수용"
+    },
+    "dzone-monster-0217": {
+      "zh": "拥抱你我",
+      "en": "Embrace You and Me",
+      "sourceKeys": [
+        "MonsterConfig_72151_MonsterName"
+      ],
+      "ko": "너와 나의 포옹"
+    },
+    "dzone-monster-0216": {
+      "zh": "紧急联络",
+      "en": "Emergency Contact",
+      "sourceKeys": [
+        "MonsterConfig_72150_MonsterName",
+        "MonsterConfig_72152_MonsterName"
+      ],
+      "ko": "긴급 연락"
+    },
+    "dzone-monster-0032": {
+      "zh": "紧急联络",
+      "en": "Emergency Contact",
+      "sourceKeys": [
+        "MonsterConfig_72150_MonsterName",
+        "MonsterConfig_72152_MonsterName"
+      ],
+      "ko": "긴급 연락"
+    },
+    "dzone-monster-0291": {
+      "zh": "长明·努比亚巨木",
+      "en": "Eternal Light: Nubian Giant Tree",
+      "sourceKeys": [
+        "MonsterConfig_49480_MonsterName"
+      ],
+      "ko": "장명·누비아 거목"
+    },
+    "dzone-monster-0207": {
+      "zh": "探险者领队",
+      "en": "Expedition Leader",
+      "sourceKeys": [
+        "MonsterConfig_65533_MonsterName"
+      ],
+      "ko": "탐험대장"
+    },
+    "dzone-monster-0117": {
+      "zh": "实验习作Ⅰ",
+      "en": "Experimental Work I",
+      "sourceKeys": [
+        "MonsterConfig_14079_MonsterName"
+      ],
+      "ko": "실험 작품Ⅰ"
+    },
+    "dzone-monster-0100": {
+      "zh": "实验习作Ⅱ",
+      "en": "Experimental Work II",
+      "sourceKeys": [
+        "MonsterConfig_14038_MonsterName"
+      ],
+      "ko": "실험 작품Ⅱ"
+    },
+    "dzone-monster-0015": {
+      "zh": "快步跑",
+      "en": "Fastrunner",
+      "sourceKeys": [
+        "MonsterConfig_14034_MonsterName"
+      ],
+      "ko": "발 빠른 아이"
+    },
+    "dzone-monster-0220": {
+      "zh": "感受进化",
+      "en": "Feel the Evolution",
+      "sourceKeys": [
+        "MonsterConfig_79933_MonsterName"
+      ],
+      "ko": "감각의 진화"
+    },
+    "dzone-monster-0294": {
+      "zh": "胎动·努比亚幼崽",
+      "en": "Fetal Movement: Nubia Cub",
+      "sourceKeys": [
+        "MonsterConfig_48867_MonsterName",
+        "MonsterConfig_48866_MonsterName",
+        "MonsterConfig_49629_MonsterName"
+      ],
+      "ko": "태동·누비아 유생"
+    },
+    "dzone-monster-0222": {
+      "zh": "初变者",
+      "en": "First Variant",
+      "sourceKeys": [
+        "MonsterConfig_79935_MonsterName",
+        "MonsterConfig_79944_MonsterName",
+        "MonsterConfig_81360_MonsterName",
+        "MonsterConfig_81359_MonsterName"
+      ],
+      "ko": "최초 변이체"
+    },
+    "dzone-monster-0035": {
+      "zh": "初变者",
+      "en": "First Variant",
+      "sourceKeys": [
+        "MonsterConfig_79935_MonsterName",
+        "MonsterConfig_79944_MonsterName",
+        "MonsterConfig_81360_MonsterName",
+        "MonsterConfig_81359_MonsterName"
+      ],
+      "ko": "최초 변이체"
+    },
+    "dzone-monster-0180": {
+      "zh": "婪之花",
+      "en": "Flower of Avarice",
+      "sourceKeys": [
+        "MonsterConfig_54103_MonsterName"
+      ],
+      "ko": "탐욕의 꽃"
+    },
+    "dzone-monster-0179": {
+      "zh": "欲之花",
+      "en": "Flower of Desire",
+      "sourceKeys": [
+        "MonsterConfig_54102_MonsterName"
+      ],
+      "ko": "욕망의 꽃"
+    },
+    "dzone-monster-0181": {
+      "zh": "追随者",
+      "en": "Follower",
+      "sourceKeys": [
+        "MonsterConfig_56172_MonsterName",
+        "MonsterConfig_96656_MonsterName"
+      ],
+      "ko": "추종자"
+    },
+    "dzone-monster-0130": {
+      "zh": "狂躁野犬",
+      "en": "Frenzied Wild Dog",
+      "sourceKeys": [
+        "MonsterConfig_14110_MonsterName"
+      ],
+      "ko": "광기에 빠진 들개"
+    },
+    "dzone-monster-0236": {
+      "zh": "食尸鬼侍从",
+      "en": "Ghoul Attendant",
+      "sourceKeys": [
+        "MonsterConfig_94718_MonsterName",
+        "MonsterConfig_94715_MonsterName"
+      ],
+      "ko": "구울 시종"
+    },
+    "dzone-monster-0239": {
+      "zh": "食尸鬼侍从",
+      "en": "Ghoul Attendant",
+      "sourceKeys": [
+        "MonsterConfig_94718_MonsterName",
+        "MonsterConfig_94715_MonsterName"
+      ],
+      "ko": "구울 시종"
+    },
+    "dzone-monster-0238": {
+      "zh": "食尸鬼护卫",
+      "en": "Ghoul Guard",
+      "sourceKeys": [
+        "MonsterConfig_94717_MonsterName"
+      ],
+      "ko": "구울 호위"
+    },
+    "dzone-monster-0237": {
+      "zh": "食尸鬼卫队长",
+      "en": "Ghoul Guard Captain",
+      "sourceKeys": [
+        "MonsterConfig_94716_MonsterName"
+      ],
+      "ko": "구울 경비대장"
+    },
+    "dzone-monster-0097": {
+      "zh": "大力气",
+      "en": "Hardhitter",
+      "sourceKeys": [
+        "MonsterConfig_14035_MonsterName"
+      ],
+      "ko": "힘 센 아이"
+    },
+    "dzone-monster-0260": {
+      "zh": "希洛",
+      "en": "Helot",
+      "sourceKeys": [
+        "MonsterConfig_14027_MonsterName",
+        "MonsterConfig_22057_MonsterName"
+      ],
+      "ko": "히로"
+    },
+    "dzone-monster-0092": {
+      "zh": "猎犬之足",
+      "en": "Hunting Dog's Claw",
+      "sourceKeys": [
+        "MonsterConfig_14014_MonsterName"
+      ],
+      "ko": "사냥개의 발톱"
+    },
+    "dzone-monster-0188": {
+      "zh": "异维学子",
+      "en": "Interdimensional Student",
+      "sourceKeys": [
+        "MonsterConfig_59749_MonsterName",
+        "MonsterConfig_59747_MonsterName"
+      ],
+      "ko": "이계의 학생"
+    },
+    "dzone-monster-0189": {
+      "zh": "异维学子",
+      "en": "Interdimensional Student",
+      "sourceKeys": [
+        "MonsterConfig_59749_MonsterName",
+        "MonsterConfig_59747_MonsterName"
+      ],
+      "ko": "이계의 학생"
+    },
+    "dzone-monster-0124": {
+      "zh": "干涉型融蚀体",
+      "en": "Interference-Type Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_14094_MonsterName",
+        "MonsterConfig_14095_MonsterName"
+      ],
+      "ko": "간섭형 융식체"
+    },
+    "dzone-monster-0125": {
+      "zh": "干涉型融蚀体",
+      "en": "Interference-Type Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_14094_MonsterName",
+        "MonsterConfig_14095_MonsterName"
+      ],
+      "ko": "간섭형 융식체"
+    },
+    "dzone-monster-0098": {
+      "zh": "孩子王",
+      "en": "King of Kids",
+      "sourceKeys": [
+        "MonsterConfig_14036_MonsterName",
+        "MonsterConfig_80957_MonsterName"
+      ],
+      "ko": "아이들의 왕"
+    },
+    "dzone-monster-0088": {
+      "zh": "提灯",
+      "en": "Lantern",
+      "sourceKeys": [
+        "MonsterConfig_14007_MonsterName",
+        "MonsterConfig_14111_MonsterName",
+        "MonsterConfig_14059_MonsterName"
+      ],
+      "ko": "등불"
+    },
+    "dzone-monster-0131": {
+      "zh": "提灯",
+      "en": "Lantern",
+      "sourceKeys": [
+        "MonsterConfig_14007_MonsterName",
+        "MonsterConfig_14111_MonsterName",
+        "MonsterConfig_14059_MonsterName"
+      ],
+      "ko": "등불"
+    },
+    "dzone-monster-0250": {
+      "zh": "提灯教牧",
+      "en": "Lantern Pastor",
+      "sourceKeys": [
+        "MonsterConfig_13950_MonsterName"
+      ],
+      "ko": "등불 교회 목사"
+    },
+    "dzone-monster-0201": {
+      "zh": "提灯·指挥官",
+      "en": "Lantern: Commander",
+      "sourceKeys": [
+        "MonsterConfig_60101_MonsterName"
+      ],
+      "ko": "등불·지휘관"
+    },
+    "dzone-monster-0197": {
+      "zh": "提灯·卫道士",
+      "en": "Lantern: Defender",
+      "sourceKeys": [
+        "MonsterConfig_60094_MonsterName"
+      ],
+      "ko": "등불·수호자"
+    },
+    "dzone-monster-0253": {
+      "zh": "大裙摆",
+      "en": "Large Skirt",
+      "sourceKeys": [
+        "MonsterConfig_13963_MonsterName",
+        "MonsterConfig_53763_MonsterName"
+      ],
+      "ko": "넓은 치맛자락"
+    },
+    "dzone-monster-0026": {
+      "zh": "大裙摆",
+      "en": "Large Skirt",
+      "sourceKeys": [
+        "MonsterConfig_13963_MonsterName",
+        "MonsterConfig_53763_MonsterName"
+      ],
+      "ko": "넓은 치맛자락"
+    },
+    "dzone-monster-0072": {
+      "zh": "提灯教众",
+      "en": "Lightbearer Followers",
+      "sourceKeys": [
+        "MonsterConfig_13970_MonsterName"
+      ],
+      "ko": "등불 교도들"
+    },
+    "dzone-monster-0251": {
+      "zh": "创痛疯马",
+      "en": "Mad Horse of Agony",
+      "sourceKeys": [
+        "MonsterConfig_13954_MonsterName"
+      ],
+      "ko": "고통의 광마"
+    },
+    "dzone-monster-0007": {
+      "zh": "疯狂碎石工",
+      "en": "Mad Stonebreaker",
+      "sourceKeys": [
+        "MonsterConfig_13955_MonsterName"
+      ],
+      "ko": "광기의 채석공"
+    },
+    "dzone-monster-0194": {
+      "zh": "少校",
+      "en": "Major",
+      "sourceKeys": [
+        "MonsterConfig_60008_MonsterName"
+      ],
+      "ko": "소령"
+    },
+    "dzone-monster-0242": {
+      "zh": "殉道者",
+      "en": "Martyr",
+      "sourceKeys": [
+        "MonsterConfig_94942_MonsterName"
+      ],
+      "ko": "순교자"
+    },
+    "dzone-monster-0215": {
+      "zh": "融合你我",
+      "en": "Merge You and Me",
+      "sourceKeys": [
+        "MonsterConfig_72145_MonsterName"
+      ],
+      "ko": "너와 나의 융합"
+    },
+    "dzone-monster-0221": {
+      "zh": "融为一体",
+      "en": "Merge into One",
+      "sourceKeys": [
+        "MonsterConfig_79934_MonsterName"
+      ],
+      "ko": "하나로의 융합"
+    },
+    "dzone-monster-0033": {
+      "zh": "蜕化者",
+      "en": "Metamorph",
+      "sourceKeys": [
+        "MonsterConfig_79942_MonsterName",
+        "MonsterConfig_79941_MonsterName",
+        "MonsterConfig_81358_MonsterName",
+        "MonsterConfig_81363_MonsterName",
+        "MonsterConfig_81364_MonsterName",
+        "MonsterConfig_81366_MonsterName"
+      ],
+      "ko": "탈피자"
+    },
+    "dzone-monster-0223": {
+      "zh": "蜕化者",
+      "en": "Metamorph",
+      "sourceKeys": [
+        "MonsterConfig_79942_MonsterName",
+        "MonsterConfig_79941_MonsterName",
+        "MonsterConfig_81358_MonsterName",
+        "MonsterConfig_81363_MonsterName",
+        "MonsterConfig_81364_MonsterName",
+        "MonsterConfig_81366_MonsterName"
+      ],
+      "ko": "탈피자"
+    },
+    "dzone-monster-0228": {
+      "zh": "蜕化者",
+      "en": "Metamorph",
+      "sourceKeys": [
+        "MonsterConfig_79942_MonsterName",
+        "MonsterConfig_79941_MonsterName",
+        "MonsterConfig_81358_MonsterName",
+        "MonsterConfig_81363_MonsterName",
+        "MonsterConfig_81364_MonsterName",
+        "MonsterConfig_81366_MonsterName"
+      ],
+      "ko": "탈피자"
+    },
+    "dzone-monster-0195": {
+      "zh": "正直先生",
+      "en": "Mr. Integrity",
+      "sourceKeys": [
+        "MonsterConfig_60009_MonsterName"
+      ],
+      "ko": "정직 선생"
+    },
+    "dzone-monster-0192": {
+      "zh": "谦和女士",
+      "en": "Ms. Humility",
+      "sourceKeys": [
+        "MonsterConfig_60006_MonsterName"
+      ],
+      "ko": "겸손 여사"
+    },
+    "dzone-monster-0020": {
+      "zh": "多维者",
+      "en": "Multidimensional Entity",
+      "sourceKeys": [
+        "MonsterConfig_22235_MonsterName"
+      ],
+      "ko": "다차원 존재"
+    },
+    "dzone-monster-0206": {
+      "zh": "异化企鹅",
+      "en": "Mutated Penguin",
+      "sourceKeys": [
+        "MonsterConfig_65534_MonsterName",
+        "MonsterConfig_65532_MonsterName"
+      ],
+      "ko": "기형 펭귄"
+    },
+    "dzone-monster-0208": {
+      "zh": "异化企鹅",
+      "en": "Mutated Penguin",
+      "sourceKeys": [
+        "MonsterConfig_65534_MonsterName",
+        "MonsterConfig_65532_MonsterName"
+      ],
+      "ko": "기형 펭귄"
+    },
+    "dzone-monster-0169": {
+      "zh": "努比亚",
+      "en": "Nubia",
+      "sourceKeys": [
+        "MonsterConfig_49283_MonsterName"
+      ],
+      "ko": "누비아"
+    },
+    "dzone-monster-0167": {
+      "zh": "努比亚幼崽",
+      "en": "Nubia Cub",
+      "sourceKeys": [
+        "MonsterConfig_49157_MonsterName",
+        "MonsterConfig_49156_MonsterName"
+      ],
+      "ko": "누비아 유생"
+    },
+    "dzone-monster-0290": {
+      "zh": "圣河努比亚",
+      "en": "Nubia, the Holy River",
+      "sourceKeys": [
+        "MonsterConfig_49479_MonsterName"
+      ],
+      "ko": "신성한 강의 누비아"
+    },
+    "dzone-monster-0172": {
+      "zh": "努比亚巨木",
+      "en": "Nubian Giant Tree",
+      "sourceKeys": [
+        "MonsterConfig_49483_MonsterName"
+      ],
+      "ko": "누비아 거목"
+    },
+    "dzone-monster-0296": {
+      "zh": "作战员",
+      "en": "Operative",
+      "sourceKeys": [
+        "MonsterConfig_59743_MonsterName"
+      ],
+      "ko": "전투원"
+    },
+    "dzone-monster-0137": {
+      "zh": "纯白鼠王",
+      "en": "Pure White Rat King",
+      "sourceKeys": [
+        "MonsterConfig_22221_MonsterName",
+        "MonsterConfig_22220_MonsterName",
+        "MonsterConfig_22219_MonsterName"
+      ],
+      "ko": "순백의 대왕 쥐"
+    },
+    "dzone-monster-0138": {
+      "zh": "纯白鼠王",
+      "en": "Pure White Rat King",
+      "sourceKeys": [
+        "MonsterConfig_22221_MonsterName",
+        "MonsterConfig_22220_MonsterName",
+        "MonsterConfig_22219_MonsterName"
+      ],
+      "ko": "순백의 대왕 쥐"
+    },
+    "dzone-monster-0019": {
+      "zh": "纯白鼠王",
+      "en": "Pure White Rat King",
+      "sourceKeys": [
+        "MonsterConfig_22221_MonsterName",
+        "MonsterConfig_22220_MonsterName",
+        "MonsterConfig_22219_MonsterName"
+      ],
+      "ko": "순백의 대왕 쥐"
+    },
+    "dzone-monster-0016": {
+      "zh": "脓疱",
+      "en": "Pustules",
+      "sourceKeys": [
+        "MonsterConfig_14049_MonsterName",
+        "MonsterConfig_14050_MonsterName"
+      ],
+      "ko": "농포"
+    },
+    "dzone-monster-0265": {
+      "zh": "脓疱",
+      "en": "Pustules",
+      "sourceKeys": [
+        "MonsterConfig_14049_MonsterName",
+        "MonsterConfig_14050_MonsterName"
+      ],
+      "ko": "농포"
+    },
+    "dzone-monster-0255": {
+      "zh": "暴走猎颅者",
+      "en": "Rampaging Skull Hunter",
+      "sourceKeys": [
+        "MonsterConfig_13980_MonsterName"
+      ],
+      "ko": "폭주하는 두개골 사냥꾼"
+    },
+    "dzone-monster-0090": {
+      "zh": "反叛宿命之子",
+      "en": "Rebel Child of Fate",
+      "sourceKeys": [
+        "MonsterConfig_14012_MonsterName"
+      ],
+      "ko": "운명의 반항아"
+    },
+    "dzone-monster-0306": {
+      "zh": "精神分裂患者",
+      "en": "Schizophrenic",
+      "sourceKeys": [
+        "MonsterConfig_80795_MonsterName"
+      ],
+      "ko": "정신 분열 환자"
+    },
+    "dzone-monster-0121": {
+      "zh": "海中之物",
+      "en": "Sea Creature",
+      "sourceKeys": [
+        "MonsterConfig_14092_MonsterName",
+        "MonsterConfig_14091_MonsterName"
+      ],
+      "ko": "바다의 존재"
+    },
+    "dzone-monster-0122": {
+      "zh": "海中之物",
+      "en": "Sea Creature",
+      "sourceKeys": [
+        "MonsterConfig_14092_MonsterName",
+        "MonsterConfig_14091_MonsterName"
+      ],
+      "ko": "바다의 존재"
+    },
+    "dzone-monster-0087": {
+      "zh": "蹈海者",
+      "en": "Seafarer",
+      "sourceKeys": [
+        "MonsterConfig_13999_MonsterName"
+      ],
+      "ko": "도해자"
+    },
+    "dzone-monster-0234": {
+      "zh": "深海分殖体",
+      "en": "Seafarer Excrescence",
+      "sourceKeys": [
+        "MonsterConfig_94700_MonsterName",
+        "MonsterConfig_94701_MonsterName",
+        "MonsterConfig_94702_MonsterName"
+      ],
+      "ko": "심해 분열체"
+    },
+    "dzone-monster-0235": {
+      "zh": "深海分殖体",
+      "en": "Seafarer Excrescence",
+      "sourceKeys": [
+        "MonsterConfig_94700_MonsterName",
+        "MonsterConfig_94701_MonsterName",
+        "MonsterConfig_94702_MonsterName"
+      ],
+      "ko": "심해 분열체"
+    },
+    "dzone-monster-0141": {
+      "zh": "蹈海者近卫",
+      "en": "Seafarer Guard",
+      "sourceKeys": [
+        "MonsterConfig_22339_MonsterName"
+      ],
+      "ko": "도해자 근위"
+    },
+    "dzone-monster-0271": {
+      "zh": "蹈海者亲卫",
+      "en": "Seafarer's Elite Guard",
+      "sourceKeys": [
+        "MonsterConfig_14076_MonsterName"
+      ],
+      "ko": "도해자 친위대"
+    },
+    "dzone-monster-0241": {
+      "zh": "蹈海者之骸",
+      "en": "Seafarer's Remains",
+      "sourceKeys": [
+        "MonsterConfig_94941_MonsterName"
+      ],
+      "ko": "도해자의 유해"
+    },
+    "dzone-monster-0299": {
+      "zh": "高级探员",
+      "en": "Senior Agent",
+      "sourceKeys": [
+        "MonsterConfig_60091_MonsterName"
+      ],
+      "ko": "고급 탐사원"
+    },
+    "dzone-monster-0102": {
+      "zh": "核心教牧",
+      "en": "Senior Pastor",
+      "sourceKeys": [
+        "MonsterConfig_14043_MonsterName"
+      ],
+      "ko": "고위 주교"
+    },
+    "dzone-monster-0193": {
+      "zh": "军士长",
+      "en": "Sergeant Major",
+      "sourceKeys": [
+        "MonsterConfig_60007_MonsterName"
+      ],
+      "ko": "군사장"
+    },
+    "dzone-monster-0166": {
+      "zh": "影子「24」",
+      "en": "Shadow\"24\"",
+      "sourceKeys": [
+        "MonsterConfig_47981_MonsterName"
+      ],
+      "ko": "그림자「24」"
+    },
+    "dzone-monster-0199": {
+      "zh": "阴影的忠犬",
+      "en": "Shadow's Loyal Hound",
+      "sourceKeys": [
+        "MonsterConfig_60097_MonsterName"
+      ],
+      "ko": "그림자 충견"
+    },
+    "dzone-monster-0225": {
+      "zh": "沉默的「母亲」",
+      "en": "Silent \"Mother\"",
+      "sourceKeys": [
+        "MonsterConfig_80577_MonsterName"
+      ],
+      "ko": "침묵하는 「어머니」"
+    },
+    "dzone-monster-0162": {
+      "zh": "孳乳·努比亚幼崽",
+      "en": "Sinful Offspring: Nubia Cub",
+      "sourceKeys": [
+        "MonsterConfig_48862_MonsterName",
+        "MonsterConfig_48861_MonsterName",
+        "MonsterConfig_44456_MonsterName"
+      ],
+      "ko": "증식·누비아 유생"
+    },
+    "dzone-monster-0244": {
+      "zh": "骸骨哨卫",
+      "en": "Skeletal Sentinel",
+      "sourceKeys": [
+        "MonsterConfig_94945_MonsterName"
+      ],
+      "ko": "해골 경비병"
+    },
+    "dzone-monster-0204": {
+      "zh": "雪山之蛹",
+      "en": "Snow Mountain's Cocoon",
+      "sourceKeys": [
+        "MonsterConfig_65527_MonsterName"
+      ],
+      "ko": "설산의 번데기"
+    },
+    "dzone-monster-0205": {
+      "zh": "雪之祭品",
+      "en": "Snow Offering",
+      "sourceKeys": [
+        "MonsterConfig_65528_MonsterName"
+      ],
+      "ko": "눈의 제물"
+    },
+    "dzone-monster-0139": {
+      "zh": "覆雪之芽",
+      "en": "Snow-Covered Bud",
+      "sourceKeys": [
+        "MonsterConfig_22308_MonsterName"
+      ],
+      "ko": "눈에 덮인 싹"
+    },
+    "dzone-monster-0021": {
+      "zh": "渴雪之芽",
+      "en": "Snowthirst Bud",
+      "sourceKeys": [
+        "MonsterConfig_22307_MonsterName"
+      ],
+      "ko": "눈에 목마른 싹"
+    },
+    "dzone-monster-0083": {
+      "zh": "碎石工",
+      "en": "Stonebreaker",
+      "sourceKeys": [
+        "MonsterConfig_13992_MonsterName"
+      ],
+      "ko": "석공"
+    },
+    "dzone-monster-0030": {
+      "zh": "遇难探险队",
+      "en": "Stranded Exploration Team",
+      "sourceKeys": [
+        "MonsterConfig_65530_MonsterName",
+        "MonsterConfig_65531_MonsterName"
+      ],
+      "ko": "조난한 탐험대"
+    },
+    "dzone-monster-0082": {
+      "zh": "固守之执妄",
+      "en": "Stubborn Obssession",
+      "sourceKeys": [
+        "MonsterConfig_13990_MonsterName"
+      ],
+      "ko": "고집스러운 집착"
+    },
+    "dzone-monster-0312": {
+      "zh": "剑术教官",
+      "en": "Swordsmanship Instructor",
+      "sourceKeys": [
+        "MonsterConfig_89528_MonsterName"
+      ],
+      "ko": "검술 교관"
+    },
+    "dzone-monster-0230": {
+      "zh": "剑术教官",
+      "en": "Swordsmanship Instructor",
+      "sourceKeys": [
+        "MonsterConfig_89528_MonsterName"
+      ],
+      "ko": "검술 교관"
+    },
+    "dzone-monster-0013": {
+      "zh": "裁缝",
+      "en": "Tailor",
+      "sourceKeys": [
+        "MonsterConfig_13991_MonsterName"
+      ],
+      "ko": "재봉사"
+    },
+    "dzone-monster-0173": {
+      "zh": "苏醒者",
+      "en": "The Awakened",
+      "sourceKeys": [
+        "MonsterConfig_51385_MonsterName"
+      ],
+      "ko": "각성자"
+    },
+    "dzone-monster-0278": {
+      "zh": "谵妄之人",
+      "en": "The Delirious",
+      "sourceKeys": [
+        "MonsterConfig_22336_MonsterName"
+      ],
+      "ko": "환각을 보는 자"
+    },
+    "dzone-monster-0140": {
+      "zh": "离弃之人",
+      "en": "The Forsaken",
+      "sourceKeys": [
+        "MonsterConfig_22337_MonsterName"
+      ],
+      "ko": "버려진 자"
+    },
+    "dzone-monster-0212": {
+      "zh": "失联之人",
+      "en": "The Missing One",
+      "sourceKeys": [
+        "MonsterConfig_72141_MonsterName"
+      ],
+      "ko": "실종자"
+    },
+    "dzone-monster-0126": {
+      "zh": "执妄者",
+      "en": "The Obsessed",
+      "sourceKeys": [
+        "MonsterConfig_14098_MonsterName"
+      ],
+      "ko": "집착하는 자"
+    },
+    "dzone-monster-0027": {
+      "zh": "诗中人",
+      "en": "The Poet",
+      "sourceKeys": [
+        "MonsterConfig_56169_MonsterName",
+        "MonsterConfig_96659_MonsterName"
+      ],
+      "ko": "시 속 인물"
+    },
+    "dzone-monster-0096": {
+      "zh": "宣言者",
+      "en": "The Proclaimer",
+      "sourceKeys": [
+        "MonsterConfig_14026_MonsterName"
+      ],
+      "ko": "선언자"
+    },
+    "dzone-monster-0261": {
+      "zh": "无垢之孔",
+      "en": "The Pure Cavity",
+      "sourceKeys": [
+        "MonsterConfig_14016_MonsterName",
+        "MonsterConfig_14019_MonsterName",
+        "MonsterConfig_14018_MonsterName",
+        "MonsterConfig_14021_MonsterName",
+        "MonsterConfig_14020_MonsterName",
+        "MonsterConfig_14030_MonsterName"
+      ],
+      "ko": "무구의 공허"
+    },
+    "dzone-monster-0017": {
+      "zh": "求告者",
+      "en": "The Supplicant",
+      "sourceKeys": [
+        "MonsterConfig_14070_MonsterName"
+      ],
+      "ko": "애원자"
+    },
+    "dzone-monster-0028": {
+      "zh": "渴求者",
+      "en": "The Thirster",
+      "sourceKeys": [
+        "MonsterConfig_56173_MonsterName"
+      ],
+      "ko": "갈구하는 자"
+    },
+    "dzone-monster-0259": {
+      "zh": "俯仰者",
+      "en": "The Worshipper",
+      "sourceKeys": [
+        "MonsterConfig_14025_MonsterName"
+      ],
+      "ko": "광신자"
+    },
+    "dzone-monster-0313": {
+      "zh": "诗中人",
+      "en": "The poet",
+      "sourceKeys": [
+        "MonsterConfig_56169_MonsterName",
+        "MonsterConfig_96659_MonsterName"
+      ],
+      "ko": "시 속 인물"
+    },
+    "dzone-monster-0314": {
+      "zh": "渴求者",
+      "en": "Thirster",
+      "sourceKeys": [
+        "MonsterConfig_96658_MonsterName"
+      ],
+      "ko": "갈구하는 자"
+    },
+    "dzone-monster-0243": {
+      "zh": "墓穴督工",
+      "en": "Tomb Overseer",
+      "sourceKeys": [
+        "MonsterConfig_94944_MonsterName"
+      ],
+      "ko": "묘지 감독관"
+    },
+    "dzone-monster-0267": {
+      "zh": "高礼帽",
+      "en": "Top Hat",
+      "sourceKeys": [
+        "MonsterConfig_14056_MonsterName",
+        "MonsterConfig_53764_MonsterName"
+      ],
+      "ko": "실크햇"
+    },
+    "dzone-monster-0177": {
+      "zh": "高礼帽",
+      "en": "Top Hat",
+      "sourceKeys": [
+        "MonsterConfig_14056_MonsterName",
+        "MonsterConfig_53764_MonsterName"
+      ],
+      "ko": "실크햇"
+    },
+    "dzone-monster-0258": {
+      "zh": "超脱之俯仰",
+      "en": "Transcendent Gaze",
+      "sourceKeys": [
+        "MonsterConfig_14023_MonsterName"
+      ],
+      "ko": "초월의 순간"
+    },
+    "dzone-monster-0070": {
+      "zh": "双生脓疱",
+      "en": "Twin Abscesses",
+      "sourceKeys": [
+        "MonsterConfig_13965_MonsterName"
+      ],
+      "ko": "쌍둥이 농포"
+    },
+    "dzone-monster-0307": {
+      "zh": "至善至美",
+      "en": "Ultimate Beauty",
+      "sourceKeys": [
+        "MonsterConfig_80817_MonsterName",
+        "MonsterConfig_80816_MonsterName",
+        "MonsterConfig_81361_MonsterName",
+        "MonsterConfig_81362_MonsterName"
+      ],
+      "ko": "궁극의 미"
+    },
+    "dzone-monster-0308": {
+      "zh": "至善至美",
+      "en": "Ultimate Beauty",
+      "sourceKeys": [
+        "MonsterConfig_80817_MonsterName",
+        "MonsterConfig_80816_MonsterName",
+        "MonsterConfig_81361_MonsterName",
+        "MonsterConfig_81362_MonsterName"
+      ],
+      "ko": "궁극의 미"
+    },
+    "dzone-monster-0114": {
+      "zh": "超变融蚀体",
+      "en": "Ultra-Dissolute",
+      "sourceKeys": [
+        "MonsterConfig_14074_MonsterName"
+      ],
+      "ko": "초변 융식체"
+    },
+    "dzone-monster-0165": {
+      "zh": "窥视者",
+      "en": "Watcher",
+      "sourceKeys": [
+        "MonsterConfig_46084_MonsterName"
+      ],
+      "ko": "엿보기꾼"
+    },
+    "dzone-monster-0273": {
+      "zh": "蜡像护工",
+      "en": "Wax Sculpture Caretaker",
+      "sourceKeys": [
+        "MonsterConfig_14085_MonsterName"
+      ],
+      "ko": "밀랍상 간병인"
+    },
+    "dzone-monster-0274": {
+      "zh": "蜡像医生",
+      "en": "Wax Sculpture Doctor",
+      "sourceKeys": [
+        "MonsterConfig_14096_MonsterName"
+      ],
+      "ko": "밀랍상 의사"
+    },
+    "dzone-monster-0010": {
+      "zh": "蜡像绅士",
+      "en": "Wax Sculpture Gentleman",
+      "sourceKeys": [
+        "MonsterConfig_13969_MonsterName"
+      ],
+      "ko": "밀랍 신사"
+    },
+    "dzone-monster-0132": {
+      "zh": "蜡像家猫",
+      "en": "Wax Sculpture Housecat",
+      "sourceKeys": [
+        "MonsterConfig_14113_MonsterName"
+      ],
+      "ko": "밀랍 집고양이"
+    },
+    "dzone-monster-0012": {
+      "zh": "蜡像淑女",
+      "en": "Wax Sculpture Lady",
+      "sourceKeys": [
+        "MonsterConfig_13985_MonsterName"
+      ],
+      "ko": "밀랍 숙녀"
+    },
+    "dzone-monster-0133": {
+      "zh": "蜡像野猫",
+      "en": "Wax Sculpture Wildcat",
+      "sourceKeys": [
+        "MonsterConfig_14115_MonsterName"
+      ],
+      "ko": "밀랍 들고양이"
+    },
+    "dzone-monster-0134": {
+      "zh": "扳手杰克逊",
+      "en": "Wrench Jackson",
+      "sourceKeys": [
+        "MonsterConfig_14116_MonsterName"
+      ],
+      "ko": "스패너 잭슨"
+    }
+  }
+}
