@@ -464,8 +464,9 @@
   function renderEnlight(){
     $('dtideUsageEnlight')?.remove();
   }
+  function renderZones(){window.MorimensDtideZones?.render({season:activeSeason,records:usage?.aggregateOnly?[]:(usage?.records||[])})}
   function renderBattleStats(){const host=$('dtideBattle');if(!host||!window.MorimensDtideBattle)return;window.MorimensDtideBattle.render(host,{records:usage?.aggregateOnly?[]:(usage?.records||[]),rankOf,scoreOf,rankMatches,scoreMatches,rankCap:selectedRankCap(),difficulty:$('dtideDifficulty')?.value||'all',clearType:$('dtideClearType')?.value||'all',difficultyOf,memberKey,characterInfo,wheelName,covenantName,tokenName,creationName:itemName,battlePath:activeEntry?.battleDetailPath||null})}
-  function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight();renderBattleStats()})}
+  function renderAll(){if(!usage)return;queueMicrotask(()=>{renderCoverage();renderSummary();renderMatrix();renderUsage();renderComparisons();renderEnlight();renderBattleStats();renderZones()})}
 
   function fallbackStats(records){
     const ranks=(records||[]).map(rankOf).filter(Number.isFinite),maxRank=ranks.length?Math.max(...ranks):0;
