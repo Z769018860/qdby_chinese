@@ -6,7 +6,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
   const SWAP=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
-  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),error:null,loading:null,openMon:new Set()};
+  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,error:null,loading:null,openMon:new Set()};
   let host=null,ctx=null,tab=null,savedTitle=null,switching=false;
 
   function ensureStyle(){
@@ -43,6 +43,7 @@
       .dzPat{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:4px 0}.dzPatName{min-width:64px;color:#8290a2}
       .dzIntent{display:inline-flex;flex-direction:column;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:3px 9px;background:#111827;cursor:help}.dzIntent small{color:#8290a2;font-size:10px}
       .dzArrow{color:#566377}.dzScroll{overflow:auto}.dzSkill td.dzKo{white-space:normal;min-width:260px;color:#aab6c8}.dzSkill td b{color:#ead9b9}
+      .dzWiki{color:#c7d2e2;line-height:1.5}.dzWikiPat{white-space:pre-line;color:#aab6c8;margin-top:4px}
       .dzList{margin:4px 0 0;padding-left:18px;color:#aab6c8;line-height:1.5}
       .dzEmpty{color:#8290a2;padding:12px;font-size:13px}
       @media(max-width:700px){.dzDesc{display:none}.dzAlert .dzTag{margin-left:0}}`;
@@ -72,6 +73,15 @@
     }
     state.info.set(period,doc);return doc;
   }
+
+  // Chinese monster pages from HuijiWiki (descriptions, traits, a few skill lists); keyed by name without 「」.
+  async function loadWiki(){
+    if(state.wiki)return state.wiki;
+    try{state.wiki=(await getJson('data/morimens/dzone-info/huiji-monsters.json')).monsters||{}}catch{state.wiki={}}
+    return state.wiki;
+  }
+  const normName=n=>String(n||'').replace(/[「」『』\s]/g,'');
+  const wikiOf=name=>name?state.wiki?.[normName(name)]||null:null;
 
   // Players' stage stats (only for seasons whose usage records are loaded): key "zoneNumber|threat name".
   function stageStats(period){
@@ -122,14 +132,22 @@
       const img=m.a?`<img src="assets/morimens/monster-preview/${esc(m.a)}.webp" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:'';
       const badges=(m.b||[]).map(b=>`<span class="dzBadge ${esc(b)}">${b==='Boss'?ui('首领','Boss'):ui('精英','Elite')}</span>`).join('');
       const cs=(m.c||[]).map(id=>chars[id]?`<span class="dzChar" title="${esc(chars[id].d)}">${esc(chars[id].n)}</span>`:'').join('');
-      const zhName=intel?.zh;
+      const zhName=intel?.zh;const wiki=wikiOf(zhName);
       const nameHtml=zhName&&zh()?`${esc(zhName)}<small class="dzSub">${esc(m.n)}</small>`:`${esc(m.n)}${zhName?`<small class="dzSub">${esc(zhName)}</small>`:''}`;
       const caret=intel?`<span class="dzCaret">${open?'▾':'▸'}</span>`:'<span class="dzCaret"></span>';
-      const main=`<tr class="dzMonRow${intel?' dzHasIntel':''}"${intel?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(m.d)}</td></tr>`;
-      return main+(intel&&open?`<tr class="dzIntel"><td colspan="5">${intelBody(row,intel)}</td></tr>`:'');
+      const main=`<tr class="dzMonRow${intel?' dzHasIntel':''}"${intel?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()&&wiki?.desc?wiki.desc:m.d)}</td></tr>`;
+      return main+(intel&&open?`<tr class="dzIntel"><td colspan="5">${intelBody(row,intel,wiki)}</td></tr>`:'');
     }).join('');
   }
-  function intelBody(row,intel){
+  function wikiBlock(w){
+    if(!w)return '';
+    const meta=[w.kind&&`${ui('种类','Kind')}：${esc(w.kind)}`,w.rank&&`${ui('地位','Rank')}：${esc(w.rank)}`].filter(Boolean).join(' · ');
+    const traits=(w.traits||[]).map(t=>`<li><b>${esc(t.n)}</b> ${esc(t.d)}</li>`).join('');
+    const skills=(w.skills||[]).map(k=>`<li><b>${esc(k.n)}</b> ${esc(k.e)}</li>`).join('');
+    const pat=w.pattern?`<div class="dzWikiPat">${esc(w.pattern)}</div>`:'';
+    return `<div class="dzSec">${ui('灰机维基（中文）','Huiji Wiki (Chinese)')}</div><div class="dzWiki">${meta?`<div>${meta}</div>`:''}${w.desc?`<div>${esc(w.desc)}</div>`:''}${traits?`<ul class="dzList">${traits}</ul>`:''}${skills?`<div class="dzSec">${ui('技能（维基）','Skills (wiki)')}</div><ul class="dzList">${skills}</ul>`:''}${pat}</div>`;
+  }
+  function intelBody(row,intel,wiki){
     const skills=new Map(intel.sk.map(s=>[s.id,s]));
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${row.lv}</b></span><span>${ui('攻击力','ATK')} <b>${fmt(row.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmt(row.def)}</b></span><span>${ui('生命','HP')} <b>${fmt(row.hp)}</b></span>${row.ph?`<span>${ui('多段血条','HP bars')} <b>${row.ph.map(fmt).join(' → ')}</b></span>`:''}</div>`;
     const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(sk?.d,row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(fill(sk?.d,row.a[id]))}">${esc(sk?.n||typeLabel(sk?.t))}<small>${esc((sk?.n?typeLabel(sk?.t):'')+(sk?.n&&nm?' · ':'')+nm)}</small></span>`}).join('')}</div>`).join('');
@@ -139,7 +157,7 @@
     }).join('');
     const sts=intel.st.map(x=>`<li>${x.n?`<b lang="ko">${esc(x.n)}</b> `:''}<span lang="ko">${esc(x.d)}</span></li>`).join('');
     const conds=intel.cond.filter(c=>c.t).map(c=>`<li lang="ko">${esc(c.t)}${c.e.filter(e=>e.n).length?` → ${esc(c.e.filter(e=>e.n).map(e=>e.n).join(', '))}`:''}</li>`).join('');
-    return `<div class="dzIntelBody">${stats}
+    return `<div class="dzIntelBody">${stats}${wikiBlock(wiki)}
       <div class="dzSec">${ui('行动意图（按回合顺序）','Intent pattern (in turn order)')}</div>${pats||`<div class="dzEmpty">${ui('无固定行动序列','No fixed pattern')}</div>`}
       <div class="dzSec">${ui('技能详情','Skill details')}</div><div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能（韩文）','Skill (ko)')}</th><th>${ui('类型','Type')}</th><th>${ui('目标','Target')}</th><th>${ui('数值','Values')}</th><th>${ui('官方描述（韩文）','Official text (ko)')}</th></tr></thead><tbody>${rows}</tbody></table></div>
       ${sts?`<div class="dzSec">${ui('状态 / 条件规则','States & conditional rules')}</div><ul class="dzList">${sts}${conds}</ul>`:(conds?`<ul class="dzList">${conds}</ul>`:'')}
@@ -161,9 +179,9 @@
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
-    const head=`<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期起）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（技能文本为韩文原文）。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (Season 67+). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (skill text is the Korean original).')}</p>
+    const head=`<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期起）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（技能文本为韩文原文），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (Season 67+). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (skill text is the Korean original); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
-    if(!doc||!state.info.has(meta.period)){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period)]).then(draw).catch(e=>{state.error=e;draw()});return}
+    if(!doc||!state.info.has(meta.period)||!state.wiki){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadWiki()]).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
     const zones=doc.waves.map((w,wi)=>{
       const zoneNo=wi+1;
