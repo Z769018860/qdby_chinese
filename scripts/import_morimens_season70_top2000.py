@@ -359,9 +359,13 @@ def main():
     write_gz(out / "ranking.json.gz", (src / args.ranking).read_bytes())
     if (src / "ranking_previous.json").exists():
         write_gz(out / "ranking-previous.json.gz", (src / "ranking_previous.json").read_bytes())
-    write_gz(out / "pending-queries.jsonl.gz", (src / "pending_queries.jsonl").read_bytes())
-    shutil.copyfile(src / "uids.csv", out / "uids.csv")
-    shutil.copyfile(src / "team_errors.jsonl", out / "team-errors.jsonl")
+    # bookkeeping files are optional: a partial upload may only contain ranking.json + teams_latest.jsonl
+    if (src / "pending_queries.jsonl").exists():
+        write_gz(out / "pending-queries.jsonl.gz", (src / "pending_queries.jsonl").read_bytes())
+    if (src / "uids.csv").exists():
+        shutil.copyfile(src / "uids.csv", out / "uids.csv")
+    if (src / "team_errors.jsonl").exists():
+        shutil.copyfile(src / "team_errors.jsonl", out / "team-errors.jsonl")
 
     scores = Counter(r["score"] for r in rows)
     dump_json(out / "scores.json", {

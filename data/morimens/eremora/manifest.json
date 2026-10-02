@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-10-02T03:14:00+08:00",
+    "syncedAt": "2026-10-02T23:53:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 70,
@@ -18,7 +18,7 @@
       "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
-      "dataUpdatedAt": "2026-10-02T03:14:00+08:00",
+      "dataUpdatedAt": "2026-10-02T23:53:00+08:00",
       "labelZh": "第70期 新新融灾 · 深海戒指",
       "periodShort": "9.28–10.11",
       "ringRealm": "Aequor",
@@ -310,8 +310,8 @@
     "target": 2000,
     "count": 2000,
     "complete": true,
-    "syncedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "s70-top2000-20261002-0314",
+    "syncedAt": "2026-10-02T23:53:00+08:00",
+    "revision": "s70-top2000-20261002-2353",
     "scorePolicy": "official-rank-score"
   },
   "usageIndex": {
@@ -327,12 +327,12 @@
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "779bdb5950ed469e588ed62cd1500a839041d757224af9e9852da8e3b638109b",
+    "syncedAt": "2026-10-02T23:53:00+08:00",
+    "revision": "5b797e8539d10b085cd3c76a00cc5a1a6edce8d0b2c2fc8fcef668141922ee91",
     "format": "gzip-base64-chunked-v1",
     "chunks": 5,
     "chunkSize": 600000,
-    "chunkBytes": 2781211
+    "chunkBytes": 2838392
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -371,11 +371,11 @@
     "ringRealm": "Aequor",
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-10-02T03:14:00+08:00",
-    "revision": "779bdb5950ed469e588ed62cd1500a839041d757224af9e9852da8e3b638109b",
+    "updatedAt": "2026-10-02T23:53:00+08:00",
+    "revision": "5b797e8539d10b085cd3c76a00cc5a1a6edce8d0b2c2fc8fcef668141922ee91",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json",
-    "note": "Updated 2026-10-02 03:14: rank snapshot 02:50 + the complete teams_latest.jsonl of that capture (all 2000 players have team details)."
+    "note": "Updated 2026-10-02 23:53: rank snapshot 23:53 + complete teams_latest.jsonl of that capture (all 2000 players have team details)."
   },
   "postbug69Import": {
     "seasonId": 69,
