@@ -71,6 +71,7 @@ jobs:
           node --check scripts/sync_morimens_dzone_intents.mjs
           node --check scripts/sync_morimens_huiji_monsters.mjs
           node --check scripts/build_morimens_tier_pool.mjs
+          node --check scripts/sync_kaiden_monsters.mjs
           node --check morimens-tierlist.js
           node --check morimens-dtide-zones.js
           node --check scripts/sync_morimens_huiji_jina.mjs
@@ -99,6 +100,10 @@ jobs:
           MORIMENS_REFRESH_ALL: "1"
         run: node scripts/sync_morimens_huiji_jina.mjs
 
+      - name: Sync monster intents from Kaiden.gg
+        continue-on-error: true
+        run: node scripts/sync_kaiden_monsters.mjs
+
       - name: Sync monster pages from HuijiWiki API
         continue-on-error: true
         run: node scripts/sync_morimens_huiji_monsters.mjs
@@ -109,13 +114,13 @@ jobs:
 
       - name: Commit synchronized snapshots
         run: |
-          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/dzone-info data/morimens/huiji data/morimens/almanac assets/morimens)" ]; then
+          if [ -z "$(git status --porcelain -- data/morimens/skeydb data/morimens/dzone-info data/morimens/kaiden data/morimens/huiji data/morimens/almanac assets/morimens)" ]; then
             echo "Morimens snapshots are unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/morimens/skeydb data/morimens/dzone-info data/morimens/huiji data/morimens/almanac assets/morimens
+          git add data/morimens/skeydb data/morimens/dzone-info data/morimens/kaiden data/morimens/huiji data/morimens/almanac assets/morimens
           git commit -m "chore: refresh Morimens SKeyDB and Huiji snapshots"
           TARGET_BRANCH="${GITHUB_REF_NAME:-main}"
           for attempt in 1 2 3 4 5 6; do

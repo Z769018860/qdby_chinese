@@ -5,7 +5,7 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
-  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,byMon:null,byName:null,game:{},cw:{},error:null,loading:null,openMon:new Set(),openZone:new Set(),openAlert:new Set(),zoneInit:new Set()};
+  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,byMon:null,byName:null,kd:null,skEn:null,game:{},cw:{},error:null,loading:null,openMon:new Set(),openZone:new Set(),openAlert:new Set(),zoneInit:new Set()};
   let host=null,ctx=null;
 
   function ensureStyle(){
@@ -102,6 +102,21 @@
     for(const id of Object.keys(state.byMon)){const n=state.index?.monsters?.[id]?.n;if(n&&!state.byName.has(normEn(n)))state.byName.set(normEn(n),id)}
     return state.byMon;
   }
+  // Kaiden.gg intents (English): passives + rotation for every monster, used when there is no Morimens.Info.kr data
+  async function loadKd(){
+    if(state.kd)return state.kd;
+    try{state.kd=(await getJson('data/morimens/kaiden/intents.json')).monsters||{}}catch{state.kd={}}
+    // English skill / state name -> Chinese name from the game translation table (unique matches only)
+    const m=new Map(),bad=new Set();
+    for(const group of [state.tr?.skills,state.tr?.states])for(const t of Object.values(group||{})){
+      if(!t.en||!t.zn)continue;const k=t.en.toLowerCase();
+      if(m.has(k)&&m.get(k)!==t.zn)bad.add(k);else m.set(k,t.zn);
+    }
+    for(const k of bad)m.delete(k);
+    state.skEn=m;
+    return state.kd;
+  }
+  const kdName=n=>zh()?(state.skEn?.get(String(n).toLowerCase())||n):n;
   const xl=(str)=>{const e=state.tr?.extra?.[str];return e?(zh()?e.zh:e.en):''};
   const tx=(str)=>xl(str)||str;
   const trText=(rec,zhKey,enKey)=>rec?(zh()?rec[zhKey]:rec[enKey])||'':'';
@@ -212,7 +227,20 @@
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${x.level??'—'}</b></span><span>${ui('生命','HP')} <b>${x.hp!=null?fmt(x.hp):'—'}</b>${x.hpBars>1?` ×${x.hpBars}`:''}</span></div>`;
     const wiki=zh()&&o.wiki?wikiBlock(o.wiki):'';
     const cw=zh()&&(o.cw?.intents?.length||o.cw?.trait)?cwBlock(o.cw,true):'';
-    return `<div class="dzIntelBody"><div class="dzNote">${ui('暂无该怪物的行动意图数据（意图数据仅覆盖第 67 期起出现过的怪物）。','No intent data for this monster yet (intent data only covers monsters seen since Season 67).')}</div>${stats}${wiki&&o.wiki?.desc?'':`<div>${esc(desc)}</div>`}${traits?`<div class="dzSec">${ui('特性','Traits')}</div><ul class="dzList">${traits}</ul>`:''}${wiki}${cw}</div>`;
+    const kd=state.kd?.[normEn(m.n)];
+    const kdHtml=kd?kdBlock(kd):'';
+    return `<div class="dzIntelBody">${kd?'':`<div class="dzNote">${ui('暂无该怪物的行动意图数据。','No intent data for this monster yet.')}</div>`}${stats}${wiki&&o.wiki?.desc?'':`<div>${esc(desc)}</div>`}${traits?`<div class="dzSec">${ui('特性','Traits')}</div><ul class="dzList">${traits}</ul>`:''}${wiki}${cw}${kdHtml}</div>`;
+  }
+  function kdBlock(kd){
+    const iconId=i=>`<img class="dzIcon" src="assets/morimens/dzone-intent/intent_${esc(i)}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
+    const pas=(kd.p||[]).map(x=>`<li><b>${esc(kdName(x.n))}</b> <span lang="en">${esc(x.d)}</span></li>`).join('');
+    const rot=(kd.r||[]).map((x,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(x.d)}">${iconId(x.i)}<span class="dzIntentText">${esc(kdName(x.n))}<small>${esc(x.t)}</small></span></span>`).join('');
+    const rows=(kd.r||[]).map(x=>`<tr><td>${esc(kdName(x.n))}</td><td><span class="dzTypeCell">${iconId(x.i)}${esc(x.t)}</span></td><td class="dzKo" lang="en">${esc(x.d)}</td></tr>`).join('');
+    return `<div class="dzSec">${ui('行动意图（来源 Kaiden.gg，英文；数值为攻击力百分比）','Intent rotation (source: Kaiden.gg; values are % of ATK)')}</div>
+      ${rot?`<div class="dzPat"><span class="dzPatName">${ui('循环顺序','Rotation')}</span>${rot}</div>`:''}
+      ${rows?`<div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('描述','Description')}</th></tr></thead><tbody>${rows}</tbody></table></div>`:''}
+      ${pas?`<div class="dzSec">${ui('被动 / 开场状态','Passives')}</div><ul class="dzList">${pas}</ul>`:''}
+      <div class="dzNote"><a href="https://www.kaiden.gg/morimens/monsters/" target="_blank" rel="noopener noreferrer">Kaiden.gg ↗</a></div>`;
   }
   function cwBlock(w,inner){
     const li=a=>(a||[]).map(t=>`<li>${esc(t)}</li>`).join('');
@@ -268,7 +296,7 @@
     const links=state.season===70?`<div class="dtideSeasonResources"><a class="dtideSeasonResourceLink" href="data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.webp" target="_blank" rel="noopener noreferrer">【${ui('当期融灾地图','Current D-Zone Map')}】↗</a> <a class="dtideSeasonResourceLink" href="data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.webp" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a></div>`:'';
     const head=`${links}<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期前沿用最近出现期次的数据）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，翻译表缺失的条目为 AI 辅助翻译），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (before Season 67 the latest appearance is reused). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; entries missing there are AI-assisted translations); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
-    if(!doc||!state.info.has(meta.period)||!state.wiki||!state.tr||!state.byMon){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadWiki(),loadTr(),loadByMon()]).then(draw).catch(e=>{state.error=e;draw()});return}
+    if(!doc||!state.info.has(meta.period)||!state.wiki||!state.tr||!state.byMon||!state.kd){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadWiki(),loadTr(),loadByMon()]).then(loadKd).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
     const zones=doc.waves.map((w,wi)=>{
       const zoneNo=wi+1;
