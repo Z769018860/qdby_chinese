@@ -1,8 +1,34 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-29T01:08:19Z",
-  "recordCount": 10,
+  "updatedAt": "2026-10-02T07:28:09Z",
+  "recordCount": 12,
   "records": [
+    {
+      "commentId": "38",
+      "type": "assist",
+      "uid": "100168076",
+      "submittedBy": "五妖",
+      "submittedAt": "2026-09-29T01:50:54.088Z",
+      "summary": "助战 Showcase · Agrippa",
+      "summaryZh": "助战 Showcase · Agrippa",
+      "summaryEn": "Assist Showcase · Agrippa",
+      "awakerName": "Agrippa",
+      "characterId": "15600"
+    },
+    {
+      "commentId": "37",
+      "type": "dzone",
+      "uid": "100068321",
+      "submittedBy": "姜酒",
+      "submittedAt": "2026-09-29T01:47:40.661Z",
+      "summary": "第 70 期 · 505 分 · 6 支队伍",
+      "summaryZh": "第 70 期 · 505 分 · 6 支队伍",
+      "summaryEn": "Season 70 · 505 pts · 6 teams",
+      "score": 505,
+      "teams": 6,
+      "seasonId": 70,
+      "communityVariant": "default"
+    },
     {
       "commentId": "36",
       "type": "dzone",
