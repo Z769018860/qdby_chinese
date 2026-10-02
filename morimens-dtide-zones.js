@@ -5,7 +5,7 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
-  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,byMon:null,game:{},cw:{},error:null,loading:null,openMon:new Set()};
+  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,byMon:null,byName:null,game:{},cw:{},error:null,loading:null,openMon:new Set(),openZone:new Set(),openAlert:new Set(),zoneInit:new Set()};
   let host=null,ctx=null;
 
   function ensureStyle(){
@@ -93,9 +93,13 @@
     return state.tr;
   }
   // Static intent data of every monster seen in seasons 67+, used for older seasons (numbers come from the closest level).
+  const normEn=n=>String(n||'').toLowerCase().replace(/[^a-z0-9]/g,'');
   async function loadByMon(){
     if(state.byMon)return state.byMon;
     try{state.byMon=await getJson('data/morimens/dzone-info/by-monster.json')}catch{state.byMon={}}
+    // the same monster can have several SKeyDB ids (same English name): let them share intent data
+    state.byName=new Map();
+    for(const id of Object.keys(state.byMon)){const n=state.index?.monsters?.[id]?.n;if(n&&!state.byName.has(normEn(n)))state.byName.set(normEn(n),id)}
     return state.byMon;
   }
   const xl=(str)=>{const e=state.tr?.extra?.[str];return e?(zh()?e.zh:e.en):''};
@@ -179,7 +183,7 @@
       let note='';
       if(!row){
         // older seasons: reuse the monster's skills / pattern from the latest season it was seen in (closest level)
-        const bm=state.byMon?.[x.monsterId];
+        const bm=state.byMon?.[x.monsterId]||state.byMon?.[state.byName?.get(normEn(m.n))];
         if(bm?.rows?.length){
           const r=bm.rows.reduce((a,b)=>Math.abs(b.lv-(x.level??b.lv))<Math.abs(a.lv-(x.level??a.lv))?b:a);
           row={...r,tid:bm.tid};intel=bm;
@@ -193,16 +197,26 @@
       const cs=(m.c||[]).map(id=>{const c=chars[id];if(!c)return '';const t=zh()?state.tr.characteristics[c.n]:null;return `<span class="dzChar" title="${esc(t?.zd||c.d)}">${esc(t?.zh||c.n)}</span>`}).join('');
       const tr=intel?state.tr.monsters[row.tid]:null,smz=state.tr.skMonsters[x.monsterId]||{},g=state.game[x.monsterId]||{},cw=state.cw[x.monsterId]||{};
       const zhName=tr?.zh||smz.zh||intel?.zh||g.zh||'';const wiki=zh()?(wikiOf(zhName)||wikiOf(cw.name)):null;
-      const enName=tr?.en||m.n;
+      const enName=m.n||tr?.en||'';
       const nameHtml=zh()?`${esc(zhName||enName)}${zhName?`<small class="dzSub">${esc(enName)}</small>`:''}`:`${esc(enName)}${zhName?`<small class="dzSub">${esc(zhName)}</small>`:''}`;
-      const fallback=zh()&&!intel&&(cw.intents?.length||cw.trait);const caret=intel||fallback?`<span class="dzCaret">${open?'▾':'▸'}</span>`:'<span class="dzCaret"></span>';
-      const main=`<tr class="dzMonRow${intel||fallback?' dzHasIntel':''}"${intel||fallback?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()?(tr?.zd||smz.zd||wiki?.desc||cw.description||m.d):(tr?.ed||m.d))}</td>${appearCell(x.monsterId)}</tr>`;
-      return main+(open&&intel?`<tr class="dzIntel"><td colspan="6">${intelBody(row,intel,wiki,note)}</td></tr>`:open&&fallback?`<tr class="dzIntel"><td colspan="6">${cwBlock(cw)}</td></tr>`:'');
+      const fallback=!intel;const caret=intel||fallback?`<span class="dzCaret">${open?'▾':'▸'}</span>`:'<span class="dzCaret"></span>';
+      const main=`<tr class="dzMonRow${intel||fallback?' dzHasIntel':''}"${intel||fallback?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()?(tr?.zd||smz.zd||wiki?.desc||cw.description||m.d):(m.d||tr?.ed))}</td>${appearCell(x.monsterId)}</tr>`;
+      return main+(open&&intel?`<tr class="dzIntel"><td colspan="6">${intelBody(row,intel,wiki,note)}</td></tr>`:open&&fallback?`<tr class="dzIntel"><td colspan="6">${basicBody(x,m,{wiki,cw,tr,smz,zhName})}</td></tr>`:'');
     }).join('');
   }
-  function cwBlock(w){
+  // monsters without any intent data: still expandable, showing everything else we know about them
+  function basicBody(x,m,o){
+    const chars=state.index.characteristics;
+    const traits=(m.c||[]).map(id=>{const c=chars[id];if(!c)return '';const t=zh()?state.tr.characteristics[c.n]:null;return `<li><b>${esc(t?.zh||c.n)}</b> ${esc(t?.zd||c.d)}</li>`}).join('');
+    const desc=zh()?(o.tr?.zd||o.smz?.zd||o.wiki?.desc||o.cw?.description||m.d):(m.d||o.tr?.ed||'');
+    const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${x.level??'—'}</b></span><span>${ui('生命','HP')} <b>${x.hp!=null?fmt(x.hp):'—'}</b>${x.hpBars>1?` ×${x.hpBars}`:''}</span></div>`;
+    const wiki=zh()&&o.wiki?wikiBlock(o.wiki):'';
+    const cw=zh()&&(o.cw?.intents?.length||o.cw?.trait)?cwBlock(o.cw,true):'';
+    return `<div class="dzIntelBody"><div class="dzNote">${ui('暂无该怪物的行动意图数据（意图数据仅覆盖第 67 期起出现过的怪物）。','No intent data for this monster yet (intent data only covers monsters seen since Season 67).')}</div>${stats}${wiki&&o.wiki?.desc?'':`<div>${esc(desc)}</div>`}${traits?`<div class="dzSec">${ui('特性','Traits')}</div><ul class="dzList">${traits}</ul>`:''}${wiki}${cw}</div>`;
+  }
+  function cwBlock(w,inner){
     const li=a=>(a||[]).map(t=>`<li>${esc(t)}</li>`).join('');
-    return `<div class="dzIntelBody"><div class="dzSec">${ui('中文 Wiki 意图说明','Chinese Wiki intent notes')}</div>${w.trait?`<div>${ui('特性','Trait')}：${esc(w.trait)}</div>`:''}${w.intents?.length?`<ol class="dzList">${li(w.intents)}</ol>`:''}${w.cycle?`<div>${ui('行动顺序','Action order')}：${esc(w.cycle)}</div>`:''}</div>`;
+    return `${inner?'':'<div class="dzIntelBody">'}<div class="dzSec">${ui('中文 Wiki 意图说明','Chinese Wiki intent notes')}</div>${w.trait?`<div>${ui('特性','Trait')}：${esc(w.trait)}</div>`:''}${w.intents?.length?`<ol class="dzList">${li(w.intents)}</ol>`:''}${w.cycle?`<div>${ui('行动顺序','Action order')}：${esc(w.cycle)}</div>`:''}${inner?'':'</div>'}`;
   }
   const skName=sk=>trText(state.tr.skills[sk?.id],'zn','en')||xl(sk?.n)||sk?.n||'';
   const skNameKo=sk=>!trText(state.tr.skills[sk?.id],'zn','en')&&!xl(sk?.n)&&!!sk?.n;
@@ -241,6 +255,8 @@
     const d=v=>String(v||'').slice(0,10);
     return `${ui('第','S')}${s.period}${ui('期','')} · ${effectName(s.stageEffect||s.name)} · ${ringName(s.realm)} · ${d(s.start)} ~ ${d(s.end)}`;
   }
+  // zones / threat levels stay open across language switches and re-renders
+  const zoneOpen=wi=>{const k=state.season+':'+wi;if(!state.zoneInit.has(state.season)){return wi===0}return state.openZone.has(k)};
   function draw(){
     if(!host)return;
     if(state.error){host.innerHTML=`<div class="dzEmpty">${ui('禁区地图数据加载失败：','Failed to load D-Zone map data: ')}${esc(state.error.message)}</div>`;return}
@@ -263,11 +279,13 @@
         const total=a.monsters.reduce((s,x)=>s+(x.hp||0)*(x.hpBars||1),0);
         const bosses=a.monsters.filter(x=>(state.index.monsters[x.monsterId]?.b||[]).includes('Boss')).length;
         const tag=`<span class="dzTag"><span>${a.monsters.length} ${ui('只怪','monsters')}${bosses?` · ${bosses} ${ui('首领','Boss')}`:''}</span><span>${ui('总生命','Total HP')} ${fmt(total)}</span>${st?`<span>${ui('融灾计分','D-Zone score')} <b>${st.score}</b> ${ui('分','pts')} · ${st.n} ${ui('队','teams')}</span>`:''}</span>`;
-        return `<details class="dzAlert" data-dzalert="${wi}:${ai}"><summary><b>${esc(alertName(a.name))}</b>${tag}</summary></details>`;
+        return `<details class="dzAlert" data-dzalert="${wi}:${ai}"${state.openAlert.has(state.season+':'+wi+':'+ai)?' open':''}><summary><b>${esc(alertName(a.name))}</b>${tag}</summary></details>`;
       }).join('');
-      return `<details class="dzZone"${wi===0?' open':''}><summary>${esc(zoneName(w.name))}<span class="dzNote" style="margin:0">${w.alerts.length} ${ui('个威胁等级','threat levels')}</span></summary><div class="dzZoneBody">${relics?`<div class="dzRelics"><span>${ui('初始造物','Starting Creations')}</span>${relics}</div>`:''}${alerts}</div></details>`;
+      return `<details class="dzZone" data-dzzone="${wi}"${zoneOpen(wi)?' open':''}><summary>${esc(zoneName(w.name))}<span class="dzNote" style="margin:0">${w.alerts.length} ${ui('个威胁等级','threat levels')}</span></summary><div class="dzZoneBody">${relics?`<div class="dzRelics"><span>${ui('初始造物','Starting Creations')}</span>${relics}</div>`:''}${alerts}</div></details>`;
     }).join('');
+    if(!state.zoneInit.has(state.season)){state.zoneInit.add(state.season);state.openZone.add(state.season+':0')}
     host.innerHTML=head+`<div class="dzMeta"><span>${esc(ui('融灾',meta.name))}</span><span>${esc(ringName(meta.realm))}</span><span>${ui('区域数','Zones')} ${doc.waves.length}</span>${doc.stageEffect?`<span>${ui('篇章','Chapter')}：${esc(effectName(doc.stageEffect))}</span>`:''}</div>`+zones;
+    host.querySelectorAll('.dzAlert[open]').forEach(fillAlert);
   }
   function fillAlert(el){
     if(el.dataset.filled)return;
@@ -299,7 +317,9 @@
     state.season=Number(sel.value);draw();
   });
   document.addEventListener('toggle',e=>{
-    const el=e.target;if(el?.matches?.('.dzAlert')&&el.open&&host?.contains(el))fillAlert(el);
+    const el=e.target;if(!el?.matches||!host?.contains(el))return;
+    if(el.matches('.dzZone')){const k=state.season+':'+el.dataset.dzzone;if(el.open)state.openZone.add(k);else state.openZone.delete(k)}
+    if(el.matches('.dzAlert')){const k=state.season+':'+el.dataset.dzalert;if(el.open){state.openAlert.add(k);fillAlert(el)}else state.openAlert.delete(k)}
   },true);
   window.addEventListener('morimens-language-change',()=>{if(host&&!host.hidden&&state.index)draw()});
   window.MorimensDtideZones={render,open};

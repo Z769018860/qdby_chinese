@@ -340,7 +340,7 @@
   function creationGroup(rows){
     const map=new Map();
     for(const {team} of rows){const seen=new Set();for(const creation of team.creations||[]){const key=String(creation.id??creation.name??'');if(!key||seen.has(key))continue;seen.add(key);const remote=creation.image||'',item=map.get(key)||{key,id:creation.id??null,name:itemName(creation),image:localGearImage('creation',remote,creation.name),fallbackImage:remote,count:0};item.count++;map.set(key,item)}}
-    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>{if(!$('dtideCreationFilter')?.checked)return true;const name=String(x.name||'').replace(/^"|"$/g,'').trim();return x.teamRatePct<100&&!/^维度影像(?:：|$)/.test(name)&&!/^(?:锈蚀钥匙|Rusted Key)$/i.test(name)}).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
+    const teamCount=rows.length||0,items=[...map.values()].map(x=>({...x,teamRatePct:teamCount?x.count/teamCount*100:0})).filter(x=>{if(!$('dtideCreationFilter')?.checked)return true;const name=String(x.name||'').replace(/^"|"$/g,'').trim();return x.teamRatePct<100&&!/^(?:维度影像|Dimensional Image)(?:\s*[:：]|$)/i.test(name)&&!/^(?:锈蚀钥匙|Rusted Key)$/i.test(name)}).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'zh-CN'));
     return {teamCount,items};
   }
   const entityGroup=(rows,entity)=>entity==='character'?group(rows):entity==='creation'?creationGroup(rows):wheelGroup(rows);
