@@ -92,6 +92,20 @@ for(const f of (await readdir('assets/waline-avatars')).sort()){
 }
 kinds.avatar=avatars;
 
+// battle emojis (表情包): files assets/waline-emojis/morimens/Emoji_<CODE>_<LETTER>_<NN>.*; the acquisition method comes from
+// data/morimens/game/emoji-sources.json ({sources:{"<file id>":"core|season|invite|..."}} exported from the wiki, see scripts/huiji_emoji_console.js)
+const emojiSrc=(await readJsonOr(`${D}/game/emoji-sources.json`,{})).sources||{};
+const emojis=[];
+for(const f of (await readdir('assets/waline-emojis/morimens')).sort()){
+  const m=/^(Emoji_(.+))\.(png|webp)$/.exec(f);if(!m)continue;
+  const id=m[1],parts=m[2].split('_');
+  const t=[];
+  t.push(/^Myturn$/i.test(parts[0])?'cat:myturn':/^SY$/i.test(parts[0])?'cat:sy':'cat:char');
+  if(emojiSrc[id])t.push('get:'+emojiSrc[id]);
+  emojis.push({id,en:m[2].replace(/_/g,' '),zh:'',img:`assets/waline-emojis/morimens/${f}`,t});
+}
+kinds.emoji=emojis;
+
 // monsters (deduplicated by art + name)
 const idx=await readJson(`${D}/skeydb/dzone/index.json`);
 const seen=new Set(),mons=[];

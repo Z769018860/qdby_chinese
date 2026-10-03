@@ -6,7 +6,7 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const STORE='morimens.tierlist.v1';
-  const KINDS=[['awakener','唤醒体','Awakeners'],['wheel','命轮','Wheels'],['relic','造物','Creations'],['posse','钥令','Key Tokens'],['covenant','密契','Covenants'],['avatar','头像','Avatars'],['monster','怪物','Monsters']];
+  const KINDS=[['awakener','唤醒体','Awakeners'],['wheel','命轮','Wheels'],['relic','造物','Creations'],['posse','钥令','Key Tokens'],['covenant','密契','Covenants'],['avatar','头像','Avatars'],['emoji','表情包','Emojis'],['monster','怪物','Monsters']];
   // pool filters: per kind, facet groups of [tag, 中文, English]; items carry tags in `t` (scripts/build_morimens_tier_pool.mjs)
   const REALMS=[['realm:CHAOS','混沌','Chaos'],['realm:CARO','血肉','Caro'],['realm:AEQUOR','深海','Aequor'],['realm:ULTRA','超维','Ultra']];
   const FACETS={
@@ -14,10 +14,12 @@
     wheel:[['主属性','Main stat',[['stat:CRIT_RATE','暴击率','Crit Rate'],['stat:CRIT_DMG','暴击伤害','Crit DMG'],['stat:DMG_AMP','伤害强效','DMG Amp'],['stat:REALM_MASTERY','界域精通','Realm Mastery'],['stat:DEATH_RESISTANCE','死亡抵抗','Death Resistance'],['stat:ALIEMUS_REGEN','狂气回充','Aliemus Regen'],['stat:KEYFLARE_REGEN','银钥充能','Keyflare Regen'],['stat:SIGIL_YIELD','黑印掉落','Sigil Yield']]],['界域','Realm',[...REALMS,['realm:NEUTRAL','中立','Neutral']]]],
     relic:[['来源','Source',[['src:FADED_LEGACY','忘却篇造物','Faded Legacy'],['src:ASTRAL_REIGN','星辰篇造物','Astral Reign'],['src:DZONE','融灾造物','D-Zone'],['src:PENDULUM','时灵摆（列车）','Chrono Pendulum'],['src:DIMENSIONAL_IMAGE','维度影像','Dimensional Image'],['src:EVENT','活动造物','Event'],['src:OTHER','其他','Other']]]],
     posse:[['界域','Realm',[...REALMS,['realm:FADED_LEGACY','忘却篇','Faded Legacy'],['realm:OTHER','其他','Other']]]],
+    emoji:[['类型','Type',[['cat:char','角色表情','Character'],['cat:myturn','回合提示','My turn'],['cat:sy','系统表情','System']]],['获取方式','How to get',[['get:core','核心课题奖励','Core Quest reward'],['get:season','赛季奖励','Season reward'],['get:invite','无形者的请柬','Invitation'],['get:shop','商店 / 兑换','Shop / exchange'],['get:event','活动奖励','Event reward'],['get:other','其他','Other']]]],
     monster:[['阶级','Rank',[['rank:Boss','首领','Boss'],['rank:Elite','精英','Elite'],['rank:Normal','普通','Normal']]],['特性','Trait',[['trait:Humanoid','人型','Humanoid'],['trait:Departed','亡灵','Departed'],['trait:Beast','野兽','Beast'],['trait:Insectoid','虫族','Insectoid'],['trait:Plant','植物','Plant'],['trait:Mutant','异变体','Mutant'],['trait:Empty Shell','空壳','Empty Shell'],['trait:Kynde','眷族','Kynde'],['trait:Dominion','主宰','Dominion'],['trait:Awakener','唤醒体','Awakener'],['trait:Sculptors','雕塑家协会','Sculptors'],['trait:Lightbearers','提灯教会','Lightbearers'],['trait:Committee','审查会','Committee'],['trait:Snowfield','雪原','Snowfield'],['trait:Primordial Shadow','原初投影','Primordial Shadow'],['trait:Caro','血肉','Caro'],['trait:Aequor','深海','Aequor'],['trait:Ultra','超维','Ultra'],['trait:Unknown','未知','Unknown']]]]
   };
   const facetSel={};  // kind -> {facetIndex: tag}
-  const facetHtml=()=>(FACETS[ui$.kind]||[]).map(([cn,en,opts],fi)=>{
+  const facetHtml=()=>((ui$.kind==='emoji'&&![...catalog.values()].some(it=>it.kind==='emoji'&&(it.t||[]).some(t=>t.startsWith('get:'))))?`<div class="tlNote">${ui('获取方式数据尚未导入（data/morimens/game/emoji-sources.json），导入后这里会出现「获取方式」筛选。','Acquisition data is not imported yet (data/morimens/game/emoji-sources.json); the “How to get” filter appears once it is.')}</div>`:'')+(FACETS[ui$.kind]||[]).map(([cn,en,opts],fi)=>{
+    if(!opts.some(([t])=>[...catalog.values()].some(it=>it.kind===ui$.kind&&(it.t||[]).includes(t))))return '';
     const cur=(facetSel[ui$.kind]||{})[fi]||'';
     return `<div class="tlFacet"><span class="tlFacetName">${ui(cn,en)}</span><button type="button" class="tlChip${cur?'':' on'}" data-tlfacet="${fi}" data-tlval="">${ui('全部','All')}</button>${opts.map(([t,c,e])=>`<button type="button" class="tlChip${cur===t?' on':''}" data-tlfacet="${fi}" data-tlval="${esc(t)}">${ui(c,e)}</button>`).join('')}</div>`;
   }).join('');
