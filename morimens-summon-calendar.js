@@ -147,6 +147,104 @@
       <div class="scSec">${year} ${ui('全年','full year')} · ${yi.length} ${ui('个卡池 / 活动','banners / events')}</div>
       <div class="fyList">${legend||`<div class="scNote">${ui('这一年没有记录','Nothing recorded this year')}</div>`}</div>`;
   }
+  // ---------- PNG export of the current calendar view (month bars or full year) ----------
+  const FONT='"Microsoft YaHei",PingFang SC,sans-serif';
+  const loadImg=src=>new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src});
+  const clipText=(g,t,maxW)=>{if(g.measureText(t).width<=maxW)return t;while(t.length>1&&g.measureText(t+'…').width>maxW)t=t.slice(0,-1);return t+'…'};
+  const rr=(g,x,y,w,h,r)=>{g.beginPath();g.roundRect?g.roundRect(x,y,w,h,r):g.rect(x,y,w,h)};
+  async function exportImage(btn){
+    const before=btn.textContent;btn.disabled=true;btn.textContent=ui('生成中…','Rendering…');
+    try{
+      const now=Date.now(),items=all().filter(match),year=state.year,month=state.month;
+      const catName=state.cat==='all'?ui('全部','All'):ui(...CATS.find(c=>c[0]===state.cat).slice(1));
+      const span=x=>{const a=day(x.start);let b=day(x.end||x.start);if(b<=a)b=addDays(a,1);return {a,b}};
+      const imgs=new Map();
+      const need=new Set();for(const x of items)for(const f of x.featured)if(f.id&&state.pool.get(f.id))need.add(f.id);
+      await Promise.all([...need].map(async id=>imgs.set(id,await loadImg(state.pool.get(id).img))));
+      const W=1400,PAD=20,TOP=64,FOOT=36;
+      const title=state.ymode==='year'?`${year} ${ui('卡池 / 活动年历','banner & event calendar')} · ${catName}`:`${year}-${p2(month)} ${ui('卡池 / 活动月历','banner & event calendar')} · ${catName}`;
+      const cv=document.createElement('canvas'),g0=cv.getContext('2d');
+      const draw=(H,fn)=>{cv.width=W;cv.height=H;const g=cv.getContext('2d');g.fillStyle='#0b0f16';g.fillRect(0,0,W,H);g.fillStyle='#ead9b9';g.font=`700 28px ${FONT}`;g.textBaseline='middle';g.textAlign='left';g.fillText(title,PAD,TOP/2+4);fn(g);
+        g.fillStyle='#8290a2';g.font=`13px ${FONT}`;g.textBaseline='middle';g.textAlign='left';
+        const url=(location.origin&&location.origin!=='null'?location.origin+location.pathname:location.href).replace(/index\.html$/,'');
+        g.fillText(url,PAD,H-FOOT/2);g.textAlign='right';g.fillText(`${ui('忘忘看报 · 卡池活动复刻日历','Morimens Weekly · Banner & Rerun Calendar')} · ${new Date().toISOString().slice(0,10)}`,W-PAD,H-FOOT/2)};
+      const avatar=(g,id,x,y,sz)=>{const im=imgs.get(id);g.save();g.beginPath();g.arc(x+sz/2,y+sz/2,sz/2,0,Math.PI*2);g.clip();g.fillStyle='#0b0f16';g.fillRect(x,y,sz,sz);if(im){const sc=Math.max(sz/im.width,sz/im.height),w=im.width*sc,h=im.height*sc;g.drawImage(im,x+(sz-w)/2,y+(sz-h)/2,w,h)}g.restore()};
+      const MN=zh()?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      if(state.ymode==='year'){
+        const lo=`${year}-01-01`,hi=`${year}-12-31`;
+        const yi=items.filter(x=>{const {a,b}=span(x);return a<=hi&&b>lo}).sort((p,q)=>span(p).a.localeCompare(span(q).a)||p.id.localeCompare(q.id));
+        const perItem=state.cat!=='all',color=new Map(yi.map((x,i)=>[x.id,perItem?PALETTE[i%PALETTE.length]:(CATCOLOR[x.cat]||'#8c97a8')]));
+        const cov=new Map(),startsOn=new Map();
+        for(const x of yi){const {a,b}=span(x);for(let k=a<lo?lo:a;k<b&&k<=hi;k=addDays(k,1)){(cov.get(k)||cov.set(k,[]).get(k)).push(x)}if(a>=lo&&a<=hi)(startsOn.get(a)||startsOn.set(a,[]).get(a)).push(x)}
+        const COLS=4,GAP=12,MW=(W-PAD*2-GAP*(COLS-1))/COLS,CW=(MW-16)/7,CH=38,MH=24+16+6*(CH+2)+10;
+        const legendCols=2,LW=(W-PAD*2-GAP)/legendCols,LH=44,legendRows=Math.ceil(yi.length/legendCols);
+        const catLeg=perItem?0:26;
+        const H=TOP+catLeg+3*(MH+GAP)+30+legendRows*(LH+6)+FOOT+10;
+        draw(H,g=>{
+          let y=TOP;
+          if(!perItem){let x=PAD;g.font=`12px ${FONT}`;for(const [k,cn,en] of CATS.filter(c=>c[0]!=='all')){g.fillStyle=CATCOLOR[k];g.fillRect(x,y+4,12,12);g.fillStyle='#aab6c8';g.textAlign='left';g.textBaseline='middle';const t=ui(cn,en);g.fillText(t,x+17,y+10);x+=17+g.measureText(t).width+16}y+=catLeg}
+          for(let mi=0;mi<12;mi++){
+            const col=mi%COLS,row=Math.floor(mi/COLS),mx=PAD+col*(MW+GAP),my=y+row*(MH+GAP);
+            g.fillStyle='#0d121a';rr(g,mx,my,MW,MH,10);g.fill();g.strokeStyle='rgba(148,163,184,.2)';g.stroke();
+            g.fillStyle='#ead9b9';g.font=`700 15px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(MN[mi],mx+8,my+13);
+            const WD=zh()?['一','二','三','四','五','六','日']:['M','T','W','T','F','S','S'];
+            g.fillStyle='#8290a2';g.font=`10px ${FONT}`;g.textAlign='center';WD.forEach((w,i)=>g.fillText(w,mx+8+i*CW+CW/2,my+31));
+            const first=`${year}-${p2(mi+1)}-01`,len=new Date(Date.UTC(year,mi+1,0)).getUTCDate(),lead=(new Date(first+'T00:00:00Z').getUTCDay()+6)%7;
+            for(let d=1;d<=len;d++){
+              const k=`${year}-${p2(mi+1)}-${p2(d)}`,idx=lead+d-1,cx=mx+8+(idx%7)*CW,cy=my+38+Math.floor(idx/7)*(CH+2),l=cov.get(k)||[];
+              g.save();rr(g,cx+1,cy,CW-2,CH,4);g.clip();g.fillStyle='#111827';g.fillRect(cx,cy,CW,CH);
+              l.forEach((x,i)=>{g.fillStyle=color.get(x.id);g.fillRect(cx,cy+i*CH/l.length,CW,CH/l.length+0.5)});
+              g.restore();
+              const st=startsOn.get(k)||[];st.slice(0,2).forEach((x,i)=>{const f=x.featured.find(f=>f.id&&imgs.get(f.id));if(f)avatar(g,f.id,cx+CW-18-i*17,cy+CH-18,17)});
+              g.fillStyle='#fff';g.font=`700 10.5px ${FONT}`;g.textAlign='left';g.textBaseline='top';g.shadowColor='#000';g.shadowBlur=3;g.fillText(String(d),cx+4,cy+2);g.shadowBlur=0;g.textBaseline='middle';
+            }
+          }
+          y+=3*(MH+GAP)+8;
+          g.fillStyle='#ead9b9';g.font=`700 15px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(`${year} · ${yi.length} ${ui('个卡池 / 活动','banners / events')}`,PAD,y+10);y+=24;
+          yi.forEach((x,i)=>{
+            const lx=PAD+(i%legendCols)*(LW+GAP),ly=y+Math.floor(i/legendCols)*(LH+6);
+            g.fillStyle='#0f1927';rr(g,lx,ly,LW,LH,8);g.fill();g.fillStyle=color.get(x.id);g.fillRect(lx,ly+4,6,LH-8);
+            let ax=lx+14;x.featured.filter(f=>f.id&&imgs.get(f.id)).slice(0,4).forEach(f=>{avatar(g,f.id,ax,ly+8,28);ax+=22});ax+=16;
+            g.fillStyle='#ead9b9';g.font=`700 13px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(clipText(g,tName(x.title),lx+LW-ax-8),ax,ly+15);
+            g.fillStyle='#8fa2bd';g.font=`11.5px ${FONT}`;g.fillText(clipText(g,`${span(x).a} ~ ${day(x.end)}${x.featured.length?' · '+x.featured.map(f=>nm(f.en,f.zh)).join(zh()?'、':', '):''}`,lx+LW-ax-8),ax,ly+32);
+          });
+        });
+      }else{
+        const first=`${year}-${p2(month)}-01`,len=new Date(Date.UTC(year,month,0)).getUTCDate(),last=`${year}-${p2(month)}-${p2(len)}`,lead=(new Date(first+'T00:00:00Z').getUTCDay()+6)%7;
+        const gridStart=addDays(first,-lead),weeks=Math.ceil((lead+len)/7);
+        const inMonth=items.filter(x=>{const {a,b}=span(x);return a<=last&&b>first}).sort((p,q)=>span(p).a.localeCompare(span(q).a)||(dayDiff(span(q).a,span(q).b)-dayDiff(span(p).a,span(p).b)));
+        const CW=(W-PAD*2)/7,BH=38,DAYH=22;
+        const wk=[];
+        for(let w=0;w<weeks;w++){
+          const w0=addDays(gridStart,w*7),w1=addDays(w0,7),bars=[];
+          for(const x of inMonth){const {a,b}=span(x),s0=a>w0?a:w0,e0=b<w1?b:w1;if(s0>=e0)continue;bars.push({x,col:dayDiff(w0,s0),len:dayDiff(s0,e0),left:a<w0,right:b>w1})}
+          const laneEnd=[];for(const bar of bars){let l=0;while((laneEnd[l]??-1)>bar.col)l++;laneEnd[l]=bar.col+bar.len;bar.lane=l}
+          wk.push({w0,bars,lanes:Math.max(1,laneEnd.length)});
+        }
+        const H=TOP+24+wk.reduce((a,w)=>a+DAYH+w.lanes*(BH+3)+12,0)+FOOT+10;
+        draw(H,g=>{
+          let y=TOP;g.fillStyle='#8290a2';g.font=`12px ${FONT}`;g.textAlign='center';g.textBaseline='middle';
+          (zh()?['周一','周二','周三','周四','周五','周六','周日']:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']).forEach((w,i)=>g.fillText(w,PAD+i*CW+CW/2,y+10));y+=24;
+          for(const w of wk){
+            const h=DAYH+w.lanes*(BH+3)+8;
+            g.fillStyle='#0d121a';g.fillRect(PAD,y,W-PAD*2,h);
+            for(let c=0;c<7;c++){const k=addDays(w.w0,c),inM=k>=first&&k<=last;g.strokeStyle='rgba(148,163,184,.12)';g.strokeRect(PAD+c*CW,y,CW,h);g.fillStyle=inM?'#dbe4f0':'#4b5668';g.font=`700 12px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(String(+k.slice(8)),PAD+c*CW+6,y+11)}
+            for(const b of w.bars){
+              const bx=PAD+b.col*CW+2,bw=b.len*CW-4,by=y+DAYH+b.lane*(BH+3);
+              g.fillStyle=CATCOLOR[b.x.cat]||'#8c97a8';rr(g,bx,by,bw,BH,6);g.fill();
+              let tx=bx+6;b.x.featured.filter(f=>f.id&&imgs.get(f.id)).slice(0,4).forEach(f=>{avatar(g,f.id,tx,by+5,28);tx+=22});tx+=10;
+              g.save();g.beginPath();g.rect(bx,by,bw,BH);g.clip();
+              g.fillStyle='#10151d';g.font=`700 12.5px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(clipText(g,tName(b.x.title),bx+bw-tx-6),tx,by+13);
+              g.font=`11.5px ${FONT}`;g.fillText(clipText(g,b.x.featured.map(f=>nm(f.en,f.zh)).join(zh()?'、':', '),bx+bw-tx-6),tx,by+28);g.restore();
+            }
+            y+=h+4;
+          }
+        });
+      }
+      await new Promise(res=>cv.toBlob(b=>{if(b){const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=`morimens-calendar-${state.ymode==='year'?year:year+'-'+p2(month)}-${state.cat}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)}res()},'image/png'));
+    }catch(e){console.warn('calendar image failed',e)}
+    finally{btn.disabled=false;btn.textContent=before}
+  }
   function yearHtml(items,now){
     if(state.ymode==='year')return fullYearHtml(items,now);
     const year=state.year,todayK=dstr(new Date(now+8*3600e3)),cur=new Date(now+8*3600e3);
@@ -254,7 +352,7 @@
       <div class="scBar">${CATS.map(([k,cn,en])=>`<button type="button" class="scChip" data-sccat="${k}" aria-pressed="${state.cat===k}">${ui(cn,en)}</button>`).join('')}<input type="search" id="scQuery" value="${esc(state.query)}" placeholder="${esc(ui('搜索角色 / 命轮 / 活动','Search Awakener / wheel / event'))}"><button type="button" class="scChip" data-scdir>${state.dir==='desc'?ui('最新在前 ↓','Newest first ↓'):ui('最早在前 ↑','Oldest first ↑')}</button></div>
       ${live.length?`<div class="scSec">${ui('进行中','Live now')}</div>${live.map(x=>row(x,now)).join('')}`:''}
       ${soon.length?`<div class="scSec">${ui('即将开始','Coming up')}</div>${soon.map(x=>row(x,now)).join('')}`:''}
-      <div class="scSec">${ui('全部卡池与活动','All banners & events')} <span class="scNote">${list.length} ${ui('条','entries')}</span> <button type="button" class="scChip" data-scview="year" aria-pressed="${state.view==='year'}">${ui('年历','Year calendar')}</button> <button type="button" class="scChip" data-scview="list" aria-pressed="${state.view==='list'}">${ui('列表','List')}</button>${state.view==='year'?` <button type="button" class="scChip" data-scymode="month" aria-pressed="${state.ymode!=='year'}">${ui('月视图','Month')}</button> <button type="button" class="scChip" data-scymode="year" aria-pressed="${state.ymode==='year'}">${ui('全年视图','Full year')}</button>`:''}</div>
+      <div class="scSec">${ui('全部卡池与活动','All banners & events')} <span class="scNote">${list.length} ${ui('条','entries')}</span> <button type="button" class="scChip" data-scview="year" aria-pressed="${state.view==='year'}">${ui('年历','Year calendar')}</button> <button type="button" class="scChip" data-scview="list" aria-pressed="${state.view==='list'}">${ui('列表','List')}</button>${state.view==='year'?` <button type="button" class="scChip" data-scymode="month" aria-pressed="${state.ymode!=='year'}">${ui('月视图','Month')}</button> <button type="button" class="scChip" data-scymode="year" aria-pressed="${state.ymode==='year'}">${ui('全年视图','Full year')}</button> <button type="button" class="scChip" data-scdl>${ui('下载图片','Download image')}</button>`:''}</div>
       ${state.view==='year'?yearHtml(list,now):`${shown.map(x=>row(x,now)).join('')||`<div class="scNote">${ui('没有符合条件的条目','No entries match')}</div>`}
       ${list.length>shown.length?`<button type="button" class="scChip" data-scmore>${ui(`显示更多（还有 ${list.length-shown.length} 条）`,`Show more (${list.length-shown.length} left)`)}</button>`:''}`}
       ${state.data.forecast?.length?`<div class="scSec">${ui('未来唤醒预测（灰机维基，仅供参考）','Forecast (Huiji Wiki, for entertainment only)')}</div><div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('开启时间','Starts')}</th><th>${ui('内容','Content')}</th></tr></thead><tbody>${state.data.forecast.map(f=>`<tr><td>${esc(day(f.start))}${f.end?` ~ ${esc(day(f.end))}`:''}</td><td>${esc(zh()?f.text:(FC[f.text]||f.text))}</td></tr>`).join('')}</tbody></table></div>`:''}
@@ -283,6 +381,7 @@
       const c=e.target.closest('[data-sccat]');if(c){state.cat=c.dataset.sccat;state.limit=40;draw();return}
       if(e.target.closest('[data-scdir]')){state.dir=state.dir==='desc'?'asc':'desc';draw();return}
       if(e.target.closest('[data-scmore]')){state.limit+=60;draw();return}
+      const dl=e.target.closest('[data-scdl]');if(dl){exportImage(dl);return}
       const ym=e.target.closest('[data-scymode]');if(ym){state.ymode=ym.dataset.scymode;draw();return}
       const v=e.target.closest('[data-scview]');if(v){state.view=v.dataset.scview;draw();return}
       const yb=e.target.closest('[data-scyear]');if(yb&&!yb.disabled){state.year=+yb.dataset.scyear;state.day=null;state.pick=null;draw();return}
