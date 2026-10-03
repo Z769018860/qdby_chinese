@@ -99,6 +99,8 @@ assets/morimens/
 
 怪物行动意图（英文）补充自 Kaiden.gg（`scripts/sync_kaiden_monsters.mjs` → `data/morimens/kaiden/intents.json`，317 个怪物），仅在没有 Morimens.Info.kr 数据时使用，页面内标注来源；其版权归 Kaiden.gg / 游戏方所有。
 
+融灾地图：`scripts/sync_morimens_dzone_map.mjs` 从 Morimens.Info.kr 的 `dzone_maps*.json`（六边形节点网格）与 `dzone_season*.json`（战斗 → 怪物）生成 `data/morimens/dzone-info/map-<期次>.json`（第 68 期起），图标复制到 `assets/morimens/dzone-map/`；页面在每个区域内用这些数据绘制地图，战斗节点旁标注怪物头像与名称。名称带 `@1` / `@2` 的怪物是游戏内乱码名，行动意图使用去掉标记后的对应怪物（Kaiden.gg）。
+
 T 表悬浮提示 / 标签说明：详情数据 `data/morimens/game/tier-details.json` 由 `python scripts/build_tier_details.py <Morimens-Localizations 路径>` 生成（唤醒体界域 / 定位、命轮主属性与效果、造物特性、钥令效果、密契套装效果；英文来自 SKeyDB 记录，中文优先取游戏翻译表，且只有英文对照与 SKeyDB 一致时才采用；其余使用 `scripts/data/tier_details_zh.json` 的 AI 辅助译文，键为数字替换为 `{n}` 的英文，值中 `{k}` 还原第 k 个数字，未收录的新文本会回退显示英文）。怪物详情（特性、行动意图）在页面中由 `MorimensDtideZones.brief()` 现场生成。
 
 Kaiden.gg 英文意图文本的中文译文：`scripts/build_kaiden_zh.py` 按“句子 → 译文”生成 `data/morimens/kaiden/zh.json`（数字抽出后查表再还原）。译文来自游戏翻译表（技能 / 状态名）与 AI 辅助翻译（`scripts/data/kaiden_zh_*.txt`、`kaiden_names_manual.py`），Kaiden 新增的句子在翻译前会显示英文原文。

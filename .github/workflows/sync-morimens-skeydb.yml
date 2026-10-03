@@ -69,6 +69,7 @@ jobs:
           node --check scripts/sync_morimens_skeydb.mjs
           node --check scripts/sync_morimens_dzone.mjs
           node --check scripts/sync_morimens_dzone_intents.mjs
+          node --check scripts/sync_morimens_dzone_map.mjs
           node --check scripts/sync_morimens_huiji_monsters.mjs
           node --check scripts/build_morimens_tier_pool.mjs
           node --check scripts/sync_kaiden_monsters.mjs
@@ -91,6 +92,7 @@ jobs:
         run: |
           node scripts/sync_morimens_dzone.mjs
           node scripts/sync_morimens_dzone_intents.mjs
+          node scripts/sync_morimens_dzone_map.mjs
           node scripts/parse_huiji_monsters.mjs
           node scripts/build_morimens_tier_pool.mjs
 
