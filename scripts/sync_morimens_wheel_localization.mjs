@@ -10,7 +10,11 @@ const input=process.argv[2];
 const overrides={
   'wheel-0049':'踏过泥泞的玫瑰',
   'wheel-0124':'纯银的初心',
-  'wheel-0166':'致群星'
+  'wheel-0166':'致群星',
+  // newer wheels not on the wiki list yet (names from Z769018860/morimens-summon web/catalog.json)
+  'wheel-0178':'向阳而生',
+  'wheel-0179':'往日如影随形',
+  'wheel-0180':'从黑暗到黑暗'
 };
 
 const markdown=input

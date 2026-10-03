@@ -2,7 +2,7 @@
   const DATA_URL='data/morimens/skeydb/awakeners.json';
   const ZH_URL='data/morimens/huiji/zh-CN.json';
   const IDENTITY_URL='data/morimens/huiji/identity.zh-CN.json?v=20260921.61';
-  const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json?v=20260918.35';
+  const WHEEL_ZH_URL='data/morimens/huiji/wheels.zh-CN.json?v=20261003.22';
   const USAGE_MANIFEST_URL='data/morimens/eremora/manifest.json';
   let db=null,zhDb=null,identityDb=null,wheelZhDb=null,wheelCatalog=[],wheelAssets=null,usageStats=null,current=null,quoteIndex=0;
   const $=id=>document.getElementById(id);
@@ -94,8 +94,9 @@
   function canonicalWheel(wheel){
     if(!wheel)return null;
     const zh=wheelZhDb?.bySkeydbId?.[wheel.id],assetKey=wheel.assets?.icon,asset=assetKey&&wheelAssets?.assets?.[assetKey];
-    if(zh?.skeydbId!==wheel.id||asset?.ownerId!==wheel.id){console.warn('Rejected unbound wheel metadata',wheel.id,zh?.skeydbId,asset?.ownerId);return null}
-    return {...wheel,displayName:isZh()?zh.name:(zh.englishName||wheel.name),englishName:zh.englishName||wheel.name,assetId:asset.assetId};
+    // the icon must belong to this wheel; a missing Chinese name (very new wheel) only falls back to the English name instead of failing the whole card
+    if(asset?.ownerId!==wheel.id||(zh&&zh.skeydbId!==wheel.id)){console.warn('Rejected unbound wheel metadata',wheel.id,zh?.skeydbId,asset?.ownerId);return null}
+    return {...wheel,displayName:isZh()?(zh?.name||wheel.name):(zh?.englishName||wheel.name),englishName:zh?.englishName||wheel.name,assetId:asset.assetId};
   }
   function wheelArtFor(wheel){
     return wheel?.assetId?`assets/morimens/wheels/${wheel.assetId}.webp?v=${assetVersion()}`:'';

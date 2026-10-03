@@ -4,7 +4,7 @@
     "skeydb": "dansa/SKeyDB public-v3",
     "syncedAt": "2026-09-17T09:08:34.121Z"
   },
-  "count": 143,
+  "count": 146,
   "records": [
     {
       "skeydbId": "wheel-0001",
@@ -1006,6 +1006,27 @@
       "name": "魂灵同调",
       "ownerAwakenerId": null,
       "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E9%AD%82%E7%81%B5%E5%90%8C%E8%B0%83"
+    },
+    {
+      "skeydbId": "wheel-0178",
+      "englishName": "Ever Sunward",
+      "name": "向阳而生",
+      "ownerAwakenerId": "awakener-0061",
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    {
+      "skeydbId": "wheel-0179",
+      "englishName": "Shadowed by the Past",
+      "name": "往日如影随形",
+      "ownerAwakenerId": "awakener-0061",
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    {
+      "skeydbId": "wheel-0180",
+      "englishName": "Darker than Darkness",
+      "name": "从黑暗到黑暗",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
     }
   ],
   "bySkeydbId": {
@@ -2009,6 +2030,27 @@
       "name": "魂灵同调",
       "ownerAwakenerId": null,
       "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E9%AD%82%E7%81%B5%E5%90%8C%E8%B0%83"
+    },
+    "wheel-0178": {
+      "skeydbId": "wheel-0178",
+      "englishName": "Ever Sunward",
+      "name": "向阳而生",
+      "ownerAwakenerId": "awakener-0061",
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    "wheel-0179": {
+      "skeydbId": "wheel-0179",
+      "englishName": "Shadowed by the Past",
+      "name": "往日如影随形",
+      "ownerAwakenerId": "awakener-0061",
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    "wheel-0180": {
+      "skeydbId": "wheel-0180",
+      "englishName": "Darker than Darkness",
+      "name": "从黑暗到黑暗",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
     }
   },
   "byEnglishName": {
@@ -3012,6 +3054,27 @@
       "name": "魂灵同调",
       "ownerAwakenerId": null,
       "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E9%AD%82%E7%81%B5%E5%90%8C%E8%B0%83"
+    },
+    "Ever Sunward": {
+      "skeydbId": "wheel-0178",
+      "englishName": "Ever Sunward",
+      "name": "向阳而生",
+      "ownerAwakenerId": "awakener-0061",
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    "Shadowed by the Past": {
+      "skeydbId": "wheel-0179",
+      "englishName": "Shadowed by the Past",
+      "name": "往日如影随形",
+      "ownerAwakenerId": "awakener-0061",
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    "Darker than Darkness": {
+      "skeydbId": "wheel-0180",
+      "englishName": "Darker than Darkness",
+      "name": "从黑暗到黑暗",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
     }
   }
 }
