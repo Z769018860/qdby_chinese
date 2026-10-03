@@ -142,7 +142,9 @@ for rel in index['relics'].values():
     got = names.get(re.sub(r'[+☆\s]+$', '', rel['n'].strip().lower()), set())
     if len(got) == 1:
         out['relics'][rel['n']] = next(iter(got))
-out['relics'].update({'Aequor Ring': '深海戒指', 'Caro Ring': '血肉戒指', 'Chaos Ring': '混沌戒指', 'Ultra Ring': '超维戒指', 'Crystal Globe': '水晶球'})
+    elif got:  # several official spellings: keep the alphabetically first for a stable result
+        out['relics'][rel['n']] = sorted(got)[0]
+out['relics'].update({'Aequor Ring': '深海戒指', 'Caro Ring': '血肉戒指', 'Chaos Ring': '混沌戒指', 'Ultra Ring': '超维戒指', 'Crystal Globe': '水晶球', 'Chrono Pendulum "Wish"': '时灵摆「祈愿」', 'Chrono Pendulum "Proliferate"': '时灵摆「增殖」'})
 
 dest = base / 'data/morimens/game/dzone-translations.json'
 dest.parent.mkdir(parents=True, exist_ok=True)

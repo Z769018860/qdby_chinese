@@ -5,7 +5,7 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/skeydb/dzone/';
-  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,byMon:null,byName:null,kd:null,skEn:null,game:{},cw:{},error:null,loading:null,openMon:new Set(),openZone:new Set(),openAlert:new Set(),zoneInit:new Set()};
+  const state={active:false,season:null,index:null,seasons:new Map(),info:new Map(),wiki:null,tr:null,byMon:null,byName:null,kd:null,kdZh:null,skEn:null,game:{},cw:{},error:null,loading:null,openMon:new Set(),openZone:new Set(),openAlert:new Set(),zoneInit:new Set()};
   let host=null,ctx=null;
 
   function ensureStyle(){
@@ -106,6 +106,7 @@
   async function loadKd(){
     if(state.kd)return state.kd;
     try{state.kd=(await getJson('data/morimens/kaiden/intents.json')).monsters||{}}catch{state.kd={}}
+    try{state.kdZh=await getJson('data/morimens/kaiden/zh.json')}catch{state.kdZh={sent:{},names:{},types:{}}}
     // English skill / state name -> Chinese name from the game translation table (unique matches only)
     const m=new Map(),bad=new Set();
     for(const group of [state.tr?.skills,state.tr?.states])for(const t of Object.values(group||{})){
@@ -116,7 +117,21 @@
     state.skEn=m;
     return state.kd;
   }
-  const kdName=n=>zh()?(state.skEn?.get(String(n).toLowerCase())||n):n;
+  const kdName=n=>zh()?(state.kdZh?.names?.[n]||state.skEn?.get(String(n).toLowerCase())||n):n;
+  const kdType=t=>zh()?(state.kdZh?.types?.[t]||t):t;
+  // Kaiden text -> Chinese: numbers are lifted out (50% -> {n}%), the sentence is looked up, numbers are put back
+  const kdSplit=d=>String(d).split(/(?<=[.!?])(?<!Crit\.)\s+/).filter(Boolean);
+  function kdText(d){
+    if(!zh())return {text:d,en:false};
+    let en=false;
+    const out=kdSplit(d).map(sent=>{
+      const nums=[];const norm=sent.replace(/(?<![\w{])\d+(?:\.\d+)?/g,m=>{nums.push(m);return '{n}'});
+      const z=state.kdZh?.sent?.[norm];
+      if(!z){en=true;return sent}
+      return z.replace(/\{(\d+)\}/g,(m,k)=>nums[Number(k)-1]??m);
+    }).join('');
+    return {text:out,en};
+  }
   const xl=(str)=>{const e=state.tr?.extra?.[str];return e?(zh()?e.zh:e.en):''};
   const tx=(str)=>xl(str)||str;
   const trText=(rec,zhKey,enKey)=>rec?(zh()?rec[zhKey]:rec[enKey])||'':'';
@@ -233,10 +248,11 @@
   }
   function kdBlock(kd){
     const iconId=i=>`<img class="dzIcon" src="assets/morimens/dzone-intent/intent_${esc(i)}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
-    const pas=(kd.p||[]).map(x=>`<li><b>${esc(kdName(x.n))}</b> <span lang="en">${esc(x.d)}</span></li>`).join('');
-    const rot=(kd.r||[]).map((x,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(x.d)}">${iconId(x.i)}<span class="dzIntentText">${esc(kdName(x.n))}<small>${esc(x.t)}</small></span></span>`).join('');
-    const rows=(kd.r||[]).map(x=>`<tr><td>${esc(kdName(x.n))}</td><td><span class="dzTypeCell">${iconId(x.i)}${esc(x.t)}</span></td><td class="dzKo" lang="en">${esc(x.d)}</td></tr>`).join('');
-    return `<div class="dzSec">${ui('行动意图（来源 Kaiden.gg，英文；数值为攻击力百分比）','Intent rotation (source: Kaiden.gg; values are % of ATK)')}</div>
+    const span=d=>{const t=kdText(d);return `<span${t.en?' lang="en"':''}>${esc(t.text)}</span>`};
+    const pas=(kd.p||[]).map(x=>`<li><b>${esc(kdName(x.n))}</b> ${span(x.d)}</li>`).join('');
+    const rot=(kd.r||[]).map((x,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(kdText(x.d).text)}">${iconId(x.i)}<span class="dzIntentText">${esc(kdName(x.n))}<small>${esc(kdType(x.t))}</small></span></span>`).join('');
+    const rows=(kd.r||[]).map(x=>`<tr><td>${esc(kdName(x.n))}</td><td><span class="dzTypeCell">${iconId(x.i)}${esc(kdType(x.t))}</span></td><td class="dzKo">${span(x.d)}</td></tr>`).join('');
+    return `<div class="dzSec">${ui('行动意图（来源 Kaiden.gg；数值为攻击力 / 防御的百分比，中文为 AI 辅助翻译）','Intent rotation (source: Kaiden.gg; values are % of ATK / DEF)')}</div>
       ${rot?`<div class="dzPat"><span class="dzPatName">${ui('循环顺序','Rotation')}</span>${rot}</div>`:''}
       ${rows?`<div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('描述','Description')}</th></tr></thead><tbody>${rows}</tbody></table></div>`:''}
       ${pas?`<div class="dzSec">${ui('被动 / 开场状态','Passives')}</div><ul class="dzList">${pas}</ul>`:''}

@@ -98,3 +98,5 @@ assets/morimens/
 `morimens-tierlist.js`：拖放式 T 表，图标池来自 `data/morimens/game/tier-pool.json`（由 `scripts/build_morimens_tier_pool.mjs` 生成，含唤醒体 / 命轮 / 造物 / 钥令 / 密契 / 头像 / 怪物，中英文名与本地图片路径）。支持导出 / 导入结构化 JSON（`format: morimens-tierlist`）与下载分享图片；数据只保存在访问者浏览器本地。
 
 怪物行动意图（英文）补充自 Kaiden.gg（`scripts/sync_kaiden_monsters.mjs` → `data/morimens/kaiden/intents.json`，317 个怪物），仅在没有 Morimens.Info.kr 数据时使用，页面内标注来源；其版权归 Kaiden.gg / 游戏方所有。
+
+Kaiden.gg 英文意图文本的中文译文：`scripts/build_kaiden_zh.py` 按“句子 → 译文”生成 `data/morimens/kaiden/zh.json`（数字抽出后查表再还原）。译文来自游戏翻译表（技能 / 状态名）与 AI 辅助翻译（`scripts/data/kaiden_zh_*.txt`、`kaiden_names_manual.py`），Kaiden 新增的句子在翻译前会显示英文原文。
