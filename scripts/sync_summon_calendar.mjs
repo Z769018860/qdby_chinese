@@ -106,9 +106,32 @@ const outEvents=events.filter(e=>/^event-(story|skin|wheel|preorder)/.test(e.id)
   id:e.id,kind:e.id.startsWith('event-story-rerun')?'story-rerun':e.id.startsWith('event-story')?'story':e.id.startsWith('event-skin')?'skin':'wheel',
   title:title(e.title),start:iso(e.startDate),end:iso(e.endDate),featured:featuredList(e.featured).map(f=>ref(f.name,f.kind&&f.kind!=='other'?f.kind:undefined))
 }));
+// ---------- Huiji wiki story events (data/morimens/huiji/events.json, from scripts/huiji_events_console.js): 2023-12 .. 2024-11 ----------
+let wikiEv={pages:{},eventChars:{},eventEn:{}};
+try{wikiEv=JSON.parse(await readFile('data/morimens/huiji/events.json','utf8'))}catch{}
+const DT=/(?:(\d{4})\s*年\s*)?(\d{1,2})\s*月\s*(\d{1,2})\s*日\s*(\d{1,2}):(\d\d)/g;
+const pad=n=>String(n).padStart(2,'0');
+function eventPeriod(text){
+  const sec=/==\s*活动时间\s*==\s*([\s\S]*?)(?:\n==|$)/.exec(text)?.[1]||'';
+  const lines=sec.replace(/<br\s*\/?>/g,'\n').split('\n').map(l=>l.replace(/<s>.*?<\/s>/g,'').trim()).filter(l=>/\d\s*日/.test(l));
+  const parse=line=>{let year=null,out=[];for(const m of line.matchAll(DT)){year=m[1]?+m[1]:year;if(year==null)return null;out.push(`${year}-${pad(m[2])}-${pad(m[3])}T${pad(m[4])}:${m[5]}+08:00`)}return out};
+  const l1=parse(lines[0]||'');if(!l1||!l1.length)return null;
+  let [start,end]=l1;
+  if(/延期/.test(lines[0]||'')&&l1.length>2)end=l1[l1.length-1];       // "(延期至 …)": the extended end wins
+  if(!end||end<=start){const l2=parse(lines[1]||'');end=l2?.[1]||l2?.[0]||start}
+  return {start,end};
+}
+const wikiEvents=[];
+for(const [title,text] of Object.entries(wikiEv.pages)){
+  const nm=/^限时活动「(.+?)」(.*)$/.exec(title);if(!nm)continue;
+  const per=eventPeriod(text);if(!per)continue;
+  const rerun=/复刻/.test(nm[2]);
+  const en=wikiEv.eventEn[nm[1]]||'';
+  wikiEvents.push({id:`wiki-event-${per.start.slice(0,10)}`,kind:rerun?'story-rerun':'story',title:{en:en+(rerun?(/轻量/.test(nm[2])?' (light rerun)':' (rerun)'):''),zh:nm[1]+(rerun?(/轻量/.test(nm[2])?'·轻量复刻':'·复刻'):''),zs:'game'},...per,featured:(wikiEv.eventChars[nm[1]]||[]).map(c=>refZh(c,'awakener')),src:'wiki'});
+}
 // monthly history (Info.kr): chars with the n-th appearance (1 = first release) of that month
 const history=rerun.history.map(h=>({month:h.month,chars:h.characters.map(c=>({...charOf(c.id),n:c.appearance}))}));
 const periods=Object.fromEntries(Object.entries(rerun.verified_periods).map(([id,p])=>[charOf(id).id||id,{start:p.start_date+(p.start_time?` ${p.start_time}`:''),end:p.end_date+(p.end_time?` ${p.end_time}`:''),tz:p.timezone||'',src:p.source_url||p.source_note||''}]));
-const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:outEvents,history,periods};
+const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:[...outEvents,...wikiEvents.filter(e=>e.start<skMin)].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
 await writeFile('data/morimens/game/summon-calendar.json',JSON.stringify(out)+'\n');
-console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
+console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
