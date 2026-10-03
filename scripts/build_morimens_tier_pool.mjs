@@ -2,6 +2,7 @@
 // (awakeners, wheels, creations, key tokens, covenants, avatars, monsters) with zh / en names and local image paths.
 import {readFile, readdir, stat, writeFile, mkdir} from 'node:fs/promises';
 import path from 'node:path';
+import {gunzipSync} from 'node:zlib';
 
 const D='data/morimens';
 const exists=async f=>{try{await stat(f);return true}catch{return false}};
@@ -54,9 +55,24 @@ for(const r of (await readJson(`${D}/skeydb/awakeners.json`)).records){
 }
 kinds.awakener=aw;
 kinds.wheel=await fromCatalog('wheels.json',{zh:Object.fromEntries(Object.entries(huijiWh).map(([k,v])=>[k,v.name])),tags:r=>[`stat:${r.mainstatKey}`,`realm:${r.realm}`]});
-// relics that are offered as initial creations in some D-Zone season
+// relics seen in the D-Zone leaderboards (recordStageData.relics of every ranked team, all seasons that have raw team data)
+const nrm=v=>String(v||'').toLowerCase().replace(/\+/g,'').replace(/[^a-z0-9]/g,'');
+const relicIdByName=new Map((await readJson(`${D}/skeydb/public-v3/catalogs/relics.json`)).records.map(r=>[nrm(r.name),r.id]));
 const dzRelics=new Set();
-for(const f of await readdir(`${D}/skeydb/dzone/seasons`))for(const w of (await readJson(`${D}/skeydb/dzone/seasons/${f}`)).waves||[])for(const id of w.initialRelicIds||[])dzRelics.add(id);
+for(const season of await readdir(`${D}/dzone`)){
+  const dir=`${D}/dzone/${season}/raw-teams`;
+  if(!await exists(dir)||!await exists(`${D}/dzone/${season}/id-names.json`))continue;
+  const names=(await readJson(`${D}/dzone/${season}/id-names.json`)).creation||{};
+  for(const f of await readdir(dir)){
+    if(!f.endsWith('.gz'))continue;
+    for(const line of gunzipSync(await readFile(`${dir}/${f}`)).toString('utf8').split('\n')){
+      if(!line)continue;
+      for(const r of JSON.parse(line).response?.teamExtra?.recordStageData?.relics||[]){
+        const id=relicIdByName.get(nrm(names[String(r.tid)]));if(id)dzRelics.add(id);
+      }
+    }
+  }
+}
 kinds.relic=await fromCatalog('relics.json',{zh:trans.relics||{},tags:r=>{
   const t=(r.categories||[]).map(c=>`src:${c}`);
   if(r.relicType==='Pendulum')t.push('src:PENDULUM');
