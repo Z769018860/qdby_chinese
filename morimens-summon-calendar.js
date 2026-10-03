@@ -5,7 +5,7 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener',showNext:true,view:'year',year:null,day:null};
+  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener',showNext:true,view:'year',year:null,month:null,day:null,pick:null};
   let host=null;
 
   const CATS=[['all','全部','All'],['triune','三相衡生（角色复刻）','Triune Verdant (character reruns)'],['sylvan','因果苗圃（命轮复刻）','Sylvan Omen (wheel reruns)'],['limited','限时唤醒（新角色 + 专属命轮）','Limited (new Awakener + wheel)'],['premium','精选 / 命轨合契 / 循序命理 / 界域锚定 / 自选等','Premium / Walks / Fated Soiree / Realm Anchor / selectors'],['event','角色活动（含复刻）','Character events (incl. reruns)'],['other','时装 / 命轮活动','Skins / wheel events']];
@@ -33,12 +33,14 @@
       .scMonths{display:flex;gap:4px;flex-wrap:wrap}.scMonths span{font-size:11px;border:1px solid rgba(148,163,184,.25);border-radius:4px;padding:0 5px;color:#c7d2e2;font-variant-numeric:tabular-nums}.scMonths span.first{border-color:#d9a441;color:#f1d69f}
       .scAv{display:flex;gap:8px;align-items:center;min-width:130px}.scAv img{width:30px;height:30px;border-radius:50%;object-fit:cover}
       .scH{border:1px solid rgba(148,163,184,.18);border-radius:10px;background:#0d121a}.scH>summary{cursor:pointer;padding:9px 12px;color:#ead9b9;font-weight:700}.scH .body{padding:0 12px 12px}
-      .ycWrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-      .ycM{border:1px solid rgba(148,163,184,.18);border-radius:10px;background:#0d121a;padding:8px}.ycH{font-weight:700;color:#ead9b9;margin:0 2px 4px}
-      .ycW,.ycG{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.ycW i{font-style:normal;text-align:center;font-size:10px;color:#8290a2}
-      .ycE{display:block}.ycD{position:relative;height:34px;border:1px solid rgba(148,163,184,.12);border-radius:5px;background:#111827;padding:0;cursor:pointer;overflow:hidden;color:#dbe4f0}
-      .ycS{position:absolute;inset:0;display:flex;flex-direction:column}.ycS span{flex:1;opacity:.85}.ycD b{position:relative;font-size:10.5px;font-weight:700;text-shadow:0 0 3px #000,0 0 2px #000}
-      .ycD.today{outline:2px solid #fff;outline-offset:-2px}.ycD.sel{outline:2px solid #f1d69f;outline-offset:-2px}.ycD:hover{filter:brightness(1.25)}
+      .ymBox{border:1px solid rgba(148,163,184,.18);border-radius:10px;background:#0d121a;padding:6px;overflow-x:auto}
+      .ymHead{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:2px;margin-bottom:2px;min-width:640px}.ymHead i{font-style:normal;text-align:center;font-size:11px;color:#8290a2}
+      .ymWeek{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));grid-auto-rows:auto;gap:2px;min-width:640px;margin-bottom:6px;border-bottom:1px dashed rgba(148,163,184,.12);padding-bottom:4px;background-image:repeating-linear-gradient(90deg,transparent 0,transparent calc(100%/7 - 1px),rgba(148,163,184,.1) calc(100%/7 - 1px),rgba(148,163,184,.1) calc(100%/7))}
+      .ymD{height:20px;border:0;border-radius:4px;background:#111827;color:#dbe4f0;font-size:11px;font-weight:700;text-align:left;padding:0 5px;cursor:pointer}.ymD.out{opacity:.35}.ymD.today{background:#3a2f17;color:#f1d69f;outline:1px solid #f1d69f}.ymD.sel{outline:2px solid #fff}
+      .ymB{display:flex;align-items:center;gap:4px;min-height:34px;border:0;border-radius:6px;padding:2px 5px;color:#10151d;text-align:left;cursor:pointer;overflow:hidden;font-family:inherit}.ymB.cl{border-top-left-radius:0;border-bottom-left-radius:0}.ymB.cr{border-top-right-radius:0;border-bottom-right-radius:0}
+      .ymB img{width:28px;height:28px;border-radius:50%;object-fit:cover;flex:none;border:1px solid rgba(0,0,0,.4);background:#0b0f16;margin-left:-6px}.ymB img:first-child{margin-left:0}
+      .ymT{display:flex;flex-direction:column;min-width:0;line-height:1.2}.ymT b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ymT i{font-style:normal;font-size:11px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .ymB:hover{filter:brightness(1.12)}.ymB.sel{outline:2px solid #fff;outline-offset:-2px}
       .ycLegend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12px;color:#aab6c8}.ycL i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
       @media(max-width:700px){.scRow{grid-template-columns:1fr}}`;
     document.head.appendChild(s);
@@ -76,41 +78,64 @@
   // ---------- year calendar: every banner paints the days it covers in its category colour ----------
   const CATCOLOR={triune:'#62b7ff',sylvan:'#4fc58a',limited:'#e0a83a',premium:'#d978d0',event:'#ef7d62',other:'#8c97a8'};
   const CATORDER=['limited','triune','sylvan','premium','event','other'];
+  const p2=n=>String(n).padStart(2,'0');
   const dstr=d=>d.toISOString().slice(0,10);
-  function coverage(items,year){
-    const map=new Map(),lo=`${year}-01-01`,hi=`${year}-12-31`;
-    for(const x of items){
-      let a=day(x.start),b=day(x.end||x.start);if(b<=a)b=a;
-      const endExcl=b>a;                      // a banner ending 09:00 on day D does not paint D itself
-      for(let t=Date.UTC(+a.slice(0,4),+a.slice(5,7)-1,+a.slice(8,10));;t+=86400000){
-        const k=dstr(new Date(t));if(k>hi||k>b||(endExcl&&k===b))break;
-        if(k>=lo){const l=map.get(k)||[];l.push(x);map.set(k,l)}
-      }
-    }
-    return map;
+  // Month view: every banner / event is a labelled bar (icons + names) spanning its days; the year is navigated by month chips.
+  const addDays=(k,n)=>dstr(new Date(Date.parse(k+'T00:00:00Z')+n*86400000));
+  const dayDiff=(a,b)=>Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/86400000);
+  function barLabel(x){
+    const names=x.featured.map(f=>nm(f.en,f.zh)).filter(Boolean);
+    const t=tName(x.title);
+    return {t,names:names.join(zh()?'、':', ')};
   }
   function yearHtml(items,now){
-    const year=state.year,cov=coverage(items,year),todayK=dstr(new Date(now+8*3600e3));
+    const year=state.year,todayK=dstr(new Date(now+8*3600e3)),cur=new Date(now+8*3600e3);
+    if(state.month==null)state.month=year===cur.getUTCFullYear()?cur.getUTCMonth()+1:1;
+    const month=state.month;
     const MN=zh()?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const WD=zh()?['一','二','三','四','五','六','日']:['M','T','W','T','F','S','S'];
-    const months=MN.map((mn,mi)=>{
-      const first=new Date(Date.UTC(year,mi,1)),len=new Date(Date.UTC(year,mi+1,0)).getUTCDate(),lead=(first.getUTCDay()+6)%7;
-      let cells='';for(let i=0;i<lead;i++)cells+='<i class="ycE"></i>';
-      for(let d=1;d<=len;d++){
-        const k=`${year}-${String(mi+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,l=(cov.get(k)||[]).slice().sort((a,b)=>CATORDER.indexOf(a.cat)-CATORDER.indexOf(b.cat));
-        const stripes=l.map(x=>`<span style="background:${CATCOLOR[x.cat]||'#8c97a8'}"></span>`).join('');
-        const tip=l.map(x=>tName(x.title)+(x.featured.length?'：'+x.featured.map(f=>nm(f.en,f.zh)).join('、'):'')).join('\n');
-        cells+=`<button type="button" class="ycD${k===todayK?' today':''}${state.day===k?' sel':''}" data-scday="${k}" title="${esc(k+(tip?'\n'+tip:''))}"><span class="ycS">${stripes}</span><b>${d}</b></button>`;
+    const WD=zh()?['周一','周二','周三','周四','周五','周六','周日']:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const first=`${year}-${p2(month)}-01`,len=new Date(Date.UTC(year,month,0)).getUTCDate(),last=`${year}-${p2(month)}-${p2(len)}`;
+    const lead=(new Date(first+'T00:00:00Z').getUTCDay()+6)%7;
+    const gridStart=addDays(first,-lead),weeks=Math.ceil((lead+len)/7);
+    // per-item day span [a, b)
+    const span=x=>{const a=day(x.start);let b=day(x.end||x.start);if(b<=a)b=addDays(a,1);return {a,b}};
+    const inMonth=items.filter(x=>{const {a,b}=span(x);return a<=last&&b>first}).sort((p,q)=>span(p).a.localeCompare(span(q).a)||(dayDiff(span(q).a,span(q).b)-dayDiff(span(p).a,span(p).b)));
+    const counts=MN.map((_,mi)=>{const f=`${year}-${p2(mi+1)}-01`,l=`${year}-${p2(mi+1)}-${p2(new Date(Date.UTC(year,mi+1,0)).getUTCDate())}`;return items.filter(x=>{const {a,b}=span(x);return a<=l&&b>f}).length});
+    let weeksHtml='';
+    for(let w=0;w<weeks;w++){
+      const w0=addDays(gridStart,w*7),w1=addDays(w0,7);
+      const bars=[];
+      for(const x of inMonth){
+        const {a,b}=span(x),s0=a>w0?a:w0,e0=b<w1?b:w1;
+        if(s0>=e0)continue;
+        bars.push({x,col:dayDiff(w0,s0),len:dayDiff(s0,e0),left:a<w0,right:b>w1});
       }
-      return `<div class="ycM"><div class="ycH">${mn}</div><div class="ycW">${WD.map(w=>`<i>${w}</i>`).join('')}</div><div class="ycG">${cells}</div></div>`;
-    }).join('');
+      const laneEnd=[];
+      for(const bar of bars){let l=0;while((laneEnd[l]??-1)>bar.col)l++;laneEnd[l]=bar.col+bar.len;bar.lane=l}
+      const cells=Array.from({length:7},(_,c)=>{
+        const k=addDays(w0,c),inM=k>=first&&k<=last;
+        return `<button type="button" class="ymD${inM?'':' out'}${k===todayK?' today':''}${state.day===k?' sel':''}" style="grid-column:${c+1};grid-row:1" data-scday="${k}">${+k.slice(8)}</button>`;
+      }).join('');
+      const bh=bars.map(b=>{
+        const x=b.x,lb=barLabel(x),color=CATCOLOR[x.cat]||'#8c97a8';
+        const icons=x.featured.slice(0,4).map(f=>{const it=f.id?state.pool.get(f.id):null;return it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}).join('');
+        const tip=`${lb.t}${lb.names?'：'+lb.names:''}\n${day(x.start)} ~ ${day(x.end)}`;
+        return `<button type="button" class="ymB${b.left?' cl':''}${b.right?' cr':''}${state.pick===x.id?' sel':''}" style="grid-column:${b.col+1}/span ${b.len};grid-row:${b.lane+2};background:${color}" data-scpick="${esc(x.id)}" title="${esc(tip)}">${icons}<span class="ymT"><b>${esc(lb.t)}</b>${lb.names?`<i>${esc(lb.names)}</i>`:''}</span></button>`;
+      }).join('');
+      weeksHtml+=`<div class="ymWeek">${cells}${bh}</div>`;
+    }
     const legend=CATS.filter(c=>c[0]!=='all').map(([k,cn,en])=>`<span class="ycL"><i style="background:${CATCOLOR[k]}"></i>${esc(ui(cn,en))}</span>`).join('');
-    const sel=state.day?(cov.get(state.day)||[]):null;
     const years=[];for(let y=2023;y<=new Date(now).getUTCFullYear()+1;y++)years.push(y);
+    const picked=state.pick?items.find(x=>x.id===state.pick):null;
+    const dayItems=state.day?items.filter(x=>{const {a,b}=span(x);return a<=state.day&&b>state.day}):null;
     return `<div class="scBar"><button type="button" class="scChip" data-scyear="${year-1}"${year<=2023?' disabled':''}>←</button>${years.map(y=>`<button type="button" class="scChip" data-scyear="${y}" aria-pressed="${y===year}">${y}</button>`).join('')}<button type="button" class="scChip" data-scyear="${year+1}"${year>=years[years.length-1]?' disabled':''}>→</button></div>
+      <div class="scBar">${MN.map((mn,mi)=>`<button type="button" class="scChip" data-scmonth="${mi+1}" aria-pressed="${mi+1===month}">${mn}${counts[mi]?` <small>${counts[mi]}</small>`:''}</button>`).join('')}</div>
       <div class="ycLegend">${legend}</div>
-      <div class="ycWrap">${months}</div>
-      ${state.day?`<div class="scSec">${esc(state.day)} ${ui('当天的卡池 / 活动','banners / events on this day')}</div>${sel.length?sel.map(x=>row(x,now)).join(''):`<div class="scNote">${ui('这一天没有记录的卡池或活动','Nothing recorded for this day')}</div>`}`:`<div class="scNote">${ui('点击日期查看当天卡池详情；颜色条从上到下按「限时 / 三相衡生 / 因果苗圃 / 精选等 / 角色活动 / 其他」排列，同一天多个卡池会并排叠色。','Click a day for its banners. Overlapping banners stack as stripes in the order limited / Triune / Sylvan / premium / events / other.')}</div>`}`;
+      <div class="ymBox"><div class="ymHead">${WD.map(w=>`<i>${w}</i>`).join('')}</div>${weeksHtml}</div>
+      ${picked?`<div class="scSec">${ui('所选条目','Selected')}</div>${row(picked,now)}`:''}
+      ${dayItems?`<div class="scSec">${esc(state.day)} ${ui('当天的卡池 / 活动','banners / events on this day')}</div>${dayItems.length?dayItems.map(x=>row(x,now)).join(''):`<div class="scNote">${ui('这一天没有记录的卡池或活动','Nothing recorded for this day')}</div>`}`:''}
+      <div class="scSec">${year} ${MN[month-1]} · ${inMonth.length} ${ui('个卡池 / 活动','banners / events')}</div>
+      ${inMonth.map(x=>row(x,now)).join('')||`<div class="scNote">${ui('这个月没有记录','Nothing recorded this month')}</div>`}`;
   }
   function row(x,now){
     const live=ms(x.start)<=now&&now<ms(x.end),soon=ms(x.start)>now,t=TYPE[x.kindKey]||['活动','Event'];
@@ -199,8 +224,10 @@
       if(e.target.closest('[data-scdir]')){state.dir=state.dir==='desc'?'asc':'desc';draw();return}
       if(e.target.closest('[data-scmore]')){state.limit+=60;draw();return}
       const v=e.target.closest('[data-scview]');if(v){state.view=v.dataset.scview;draw();return}
-      const yb=e.target.closest('[data-scyear]');if(yb&&!yb.disabled){state.year=+yb.dataset.scyear;state.day=null;draw();return}
-      const dd=e.target.closest('[data-scday]');if(dd){state.day=state.day===dd.dataset.scday?null:dd.dataset.scday;draw();return}
+      const yb=e.target.closest('[data-scyear]');if(yb&&!yb.disabled){state.year=+yb.dataset.scyear;state.day=null;state.pick=null;draw();return}
+      const mb=e.target.closest('[data-scmonth]');if(mb){state.month=+mb.dataset.scmonth;state.day=null;state.pick=null;draw();return}
+      const pk=e.target.closest('[data-scpick]');if(pk){state.pick=state.pick===pk.dataset.scpick?null:pk.dataset.scpick;draw();return}
+      const dd=e.target.closest('[data-scday]');if(dd){state.day=state.day===dd.dataset.scday?null:dd.dataset.scday;state.pick=null;draw();return}
       if(e.target.closest('[data-scnext]')){state.showNext=e.target.checked;draw();return}
       const g=e.target.closest('[data-scgap]');if(g){state.gapKind=g.dataset.scgap;draw()}
     });
