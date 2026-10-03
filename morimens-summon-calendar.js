@@ -5,12 +5,13 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',showHistory:false,loading:false,error:null};
+  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener'};
   let host=null;
 
-  const CATS=[['all','全部','All'],['triune','三相衡生（角色复刻）','Triune Verdant (character reruns)'],['sylvan','因果苗圃（命轮复刻）','Sylvan Omen (wheel reruns)'],['limited','限时唤醒（新角色 + 专属命轮）','Limited (new Awakener + wheel)'],['premium','精选 / 组合 / 自选 / 每日','Premium / combo / selector / daily'],['event','角色活动（含复刻）','Character events (incl. reruns)'],['other','时装 / 命轮活动','Skins / wheel events']];
-  const TYPE={awaken:['限时唤醒','Limited banner'],rerun:['复刻唤醒','Rerun banner'],premium:['精选唤醒','Premium banner'],combo:['组合唤醒','Combo banner'],selector:['自选唤醒','Selector banner'],daily:['每日唤醒','Daily banner'],story:['角色活动','Character event'],'story-rerun':['角色活动复刻','Event rerun'],skin:['时装活动','Skin event'],wheel:['命轮活动','Wheel event']};
-  const COLOR={awaken:'#d9a441',rerun:'#62b7ff',premium:'#d978d0',combo:'#d978d0',selector:'#d978d0',daily:'#8c97a8',story:'#71aa86','story-rerun':'#71aa86',skin:'#c75e68',wheel:'#6fb1a8'};
+  const CATS=[['all','全部','All'],['triune','三相衡生（角色复刻）','Triune Verdant (character reruns)'],['sylvan','因果苗圃（命轮复刻）','Sylvan Omen (wheel reruns)'],['limited','限时唤醒（新角色 + 专属命轮）','Limited (new Awakener + wheel)'],['premium','精选 / 命轨合契 / 循序命理 / 界域锚定 / 自选等','Premium / Walks / Fated Soiree / Realm Anchor / selectors'],['event','角色活动（含复刻）','Character events (incl. reruns)'],['other','时装 / 命轮活动','Skins / wheel events']];
+  const TYPE={awaken:['限时唤醒','Limited banner'],rerun:['复刻唤醒','Rerun banner'],premium:['精选唤醒','Premium banner'],combo:['组合唤醒','Combo banner'],selector:['自选唤醒','Selector banner'],daily:['每日唤醒','Daily banner'],walks:['命轨合契','Walks of All Life'],fated:['循序命理','Fated Soiree'],anchor:['界域锚定','Realm Anchor'],novice:['众生百相','Novice pool'],select:['角色自选','Self-select'],oath:['缚誓之谕','Oathbound Oracle'],story:['角色活动','Character event'],'story-rerun':['角色活动复刻','Event rerun'],skin:['时装活动','Skin event'],wheel:['命轮活动','Wheel event']};
+  const FC={'混沌辅助型':'Chaos support banner','超维防御型':'Ultra defense banner','小版本':'Minor version','神王·图鲁':'Tulu: Sovereign (reissue)'};
+  const COLOR={awaken:'#d9a441',rerun:'#62b7ff',premium:'#d978d0',combo:'#d978d0',selector:'#d978d0',daily:'#8c97a8',walks:'#d978d0',fated:'#8c97a8',anchor:'#8c97a8',novice:'#8c97a8',select:'#8c97a8',oath:'#8c97a8',story:'#71aa86','story-rerun':'#71aa86',skin:'#c75e68',wheel:'#6fb1a8'};
 
   function ensureStyle(){
     if(document.getElementById('scStyle'))return;
@@ -44,13 +45,14 @@
   const nk=s=>String(s||'').toLowerCase().replace(/[^a-z0-9一-鿿]/g,'');
 
   function cat(x){
+    if(x.cat)return x.cat;
     if(x.type==='rerun')return /Sylvan/i.test(x.title.en)?'sylvan':'triune';
     if(x.type==='awaken')return 'limited';
     if(['premium','combo','selector','daily'].includes(x.type))return 'premium';
     if(x.kind==='story'||x.kind==='story-rerun')return 'event';
     return 'other';
   }
-  const tName=t=>zh()?(t.zh||t.en):t.en;
+  const tName=t=>zh()?(t.zh||t.en):(t.en||t.zh);
   const fChip=f=>{
     const it=f.id?state.pool.get(f.id):null;
     return `<span class="scF ${f.k==='wheel'?'wheel':''}">${it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}<span>${esc(nm(f.en,f.zh))}</span></span>`;
@@ -72,17 +74,20 @@
     return `<div class="scRow${live?' now':''}${!live&&!soon?' past':''}"><div class="scDate">${esc(day(x.start))} ~ ${esc(day(x.end))}<small>${days(x.start,x.end)} ${ui('天','days')} · ${esc(hhmm(x.start))} (UTC+8)</small></div><div><div><span class="scBadge" style="background:${COLOR[x.kindKey]||'#8c97a8'}">${esc(ui(...t))}</span><span class="scTitle">${esc(tName(x.title))}${ai}${sub}</span>${st}</div>${x.featured.length?`<div class="scFeat">${x.featured.map(fChip).join('')}</div>`:''}</div></div>`;
   }
 
-  // appearance months of every awakener: Info.kr monthly history + banners after the history ends
-  function appearances(){
-    const d=state.data,map=new Map(),last=d.history.length?d.history[d.history.length-1].month:'';
-    const add=(c,month,n)=>{if(!c.id)return;const e=map.get(c.id)||{c,months:[]};if(!e.months.some(m=>m.month===month))e.months.push({month,n});map.set(c.id,e)};
-    for(const h of d.history)for(const c of h.chars)add(c,h.month,c.n);
-    for(const b of d.banners)if(['rerun','awaken'].includes(b.type)){
-      const month=day(b.start).slice(0,7);if(month<=last)continue;
-      for(const f of b.featured)if(f.k==='awakener')add(f,month,0);
+  // Rerun gap leaderboard: how long ago each Awakener / wheel last had an event banner (limited or rerun), longest gap first
+  function gaps(kind,now){
+    const map=new Map();
+    for(const b of state.data.banners){
+      if(!['awaken','rerun'].includes(b.type))continue;
+      for(const f of b.featured)if(f.k===kind&&f.id){const e=map.get(f.id)||{ref:f,runs:[]};if(!e.runs.some(r=>r.start===b.start))e.runs.push({start:b.start,end:b.end});map.set(f.id,e)}
     }
-    for(const e of map.values())e.months.sort((a,b)=>b.month<a.month?-1:1);
-    return [...map.values()];
+    return [...map.values()].map(e=>{
+      e.runs.sort((a,b)=>ms(a.start)-ms(b.start));
+      const live=e.runs.find(r=>ms(r.start)<=now&&now<ms(r.end)),ended=e.runs.filter(r=>ms(r.end)<=now),next=e.runs.find(r=>ms(r.start)>now),last=ended[ended.length-1]||null;
+      const gap=live?0:last?Math.floor((now-ms(last.end))/86400000):null;
+      let sum=0,n=0;for(let i=1;i<e.runs.length;i++){const d=(ms(e.runs[i].start)-ms(e.runs[i-1].end))/86400000;if(d>=0){sum+=d;n++}}
+      return {...e,live,next,last,gap,avg:n?Math.round(sum/n):null,count:e.runs.length,first:e.runs[0]};
+    }).sort((a,b)=>(b.live?-1:0)-(a.live?-1:0)||((b.gap??-1)-(a.gap??-1)));
   }
   function draw(){
     if(!host)return;
@@ -92,20 +97,22 @@
     const live=list.filter(x=>ms(x.start)<=now&&now<ms(x.end)).sort((a,b)=>ms(a.end)-ms(b.end));
     const soon=all().filter(match).filter(x=>ms(x.start)>now).sort((a,b)=>ms(a.start)-ms(b.start)).slice(0,6);
     const q=nk(state.query);
-    const ap=appearances().filter(e=>!q||nk(e.c.en+e.c.zh).includes(q)).sort((a,b)=>(b.months[0]?.month||'').localeCompare(a.months[0]?.month||'')||a.c.en.localeCompare(b.c.en));
-    const nowMonth=new Date(now+8*3600e3).toISOString().slice(0,7);
-    const monthsAgo=m=>{const [y,mo]=m.split('-').map(Number),[ny,nmo]=nowMonth.split('-').map(Number);return (ny-y)*12+(nmo-mo)};
-    const histYears=[...state.data.history].reverse().map(h=>`<tr><td>${esc(h.month)}</td><td>${h.chars.map(c=>`${esc(nm(c.en,c.zh))}${c.n===1?`（${ui('首次','first')}）`:c.n>1?` #${c.n}`:''}`).join('、')}</td></tr>`).join('');
+    const gp=gaps(state.gapKind,now).filter(e=>!q||nk(e.ref.en+e.ref.zh).includes(q));
+    const rank=new Map(gaps(state.gapKind,now).filter(e=>!e.live&&e.gap!=null).map((e,i)=>[e.ref.id,i+1]));
+    const shown=list.slice(0,state.limit);
     host.innerHTML=`<div class="scWrap">
-      <div class="scNote">${ui('卡池 / 活动日期来自 SKeyDB 时间线（游戏服务器时间 UTC+8，2026-02 起有精确到天的记录）；2023-11 至今的角色复刻月份来自 Morimens.Info.kr（韩服记录，只精确到月）；中文名来自游戏翻译表与灰机维基，无官方译名的标题为 AI 辅助翻译（标 *）。三相衡生 = 3 位角色复刻池，因果苗圃 = 3 个命轮复刻池。灰机维基受 Cloudflare 限制，2026-02 之前的卡池精确日期与角色活动日期暂时无法补全。','Banner / event dates come from the SKeyDB timeline (game server time, UTC+8; day-level records from 2026-02). Monthly character rerun history since 2023-11 comes from Morimens.Info.kr (Korean server, month precision). Chinese names come from the game localization table and Huiji Wiki; titles without an official name are AI-assisted (marked *). Triune Verdant = three character reruns, Sylvan Omen = three wheel reruns. Huiji Wiki is blocked by Cloudflare, so exact banner dates before 2026-02 and older character event dates cannot be filled in yet.')}</div>
+      <div class="scNote">${ui('卡池日期来自灰机维基「唤醒」页（2023-11 起，含复刻、三相衡生 / 因果苗圃、命轨合契、循序命理、界域锚定等）与 SKeyDB 时间线（2026-02 起，含英文名与角色活动），时间为游戏服务器时间 UTC+8；Morimens.Info.kr 的复刻记录用于交叉核对。中文名来自游戏翻译表与灰机维基，无官方译名的标题为 AI 辅助翻译（标 *）。三相衡生 = 3 位角色复刻池，因果苗圃 = 3 个命轮复刻池。角色活动（剧情活动）日期目前只有 2026-02 之后的记录。','Banner dates come from the Huiji Wiki 唤醒 page (since 2023-11: reruns, Triune Verdant / Sylvan Omen, Walks of All Life, Fated Soiree, Realm Anchor, …) and the SKeyDB timeline (since 2026-02, with English names and character events); times are game server time (UTC+8). Morimens.Info.kr rerun records are used for cross-checking. Chinese names come from the game localization table and Huiji Wiki; titles without an official name are AI-assisted (marked *). Triune Verdant = three character reruns, Sylvan Omen = three wheel reruns. Character (story) event dates only exist from 2026-02 on.')}</div>
       <div class="scBar">${CATS.map(([k,cn,en])=>`<button type="button" class="scChip" data-sccat="${k}" aria-pressed="${state.cat===k}">${ui(cn,en)}</button>`).join('')}<input type="search" id="scQuery" value="${esc(state.query)}" placeholder="${esc(ui('搜索角色 / 命轮 / 活动','Search Awakener / wheel / event'))}"><button type="button" class="scChip" data-scdir>${state.dir==='desc'?ui('最新在前 ↓','Newest first ↓'):ui('最早在前 ↑','Oldest first ↑')}</button></div>
       ${live.length?`<div class="scSec">${ui('进行中','Live now')}</div>${live.map(x=>row(x,now)).join('')}`:''}
       ${soon.length?`<div class="scSec">${ui('即将开始','Coming up')}</div>${soon.map(x=>row(x,now)).join('')}`:''}
       <div class="scSec">${ui('全部卡池与活动','All banners & events')} <span class="scNote">${list.length} ${ui('条','entries')}</span></div>
-      ${list.map(x=>row(x,now)).join('')||`<div class="scNote">${ui('没有符合条件的条目','No entries match')}</div>`}
-      <div class="scSec">${ui('角色复刻统计','Awakener rerun statistics')}</div>
-      <div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('角色','Awakener')}</th><th>${ui('出现次数','Times')}</th><th>${ui('最近一次','Latest')}</th><th>${ui('各次出现月份（含首次）','Months (first release marked)')}</th></tr></thead><tbody>${ap.map(e=>{const it=state.pool.get(e.c.id),latest=e.months[0]?.month||'';return `<tr><td><div class="scAv">${it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}<span>${esc(nm(e.c.en,e.c.zh))}</span></div></td><td>${e.months.length}</td><td>${esc(latest)}${latest?` <span class="scNote">${monthsAgo(latest)<=0?ui('本月','this month'):ui(`${monthsAgo(latest)} 个月前`,`${monthsAgo(latest)} mo ago`)}</span>`:''}</td><td><div class="scMonths">${e.months.map(m=>`<span class="${m.n===1?'first':''}">${esc(m.month)}</span>`).join('')}</div></td></tr>`}).join('')}</tbody></table></div>
-      <details class="scH"${state.showHistory?' open':''}><summary>${ui('按月份的复刻记录（2023-11 起，Morimens.Info.kr）','Monthly rerun history (since 2023-11, Morimens.Info.kr)')}</summary><div class="body"><table class="scTable"><thead><tr><th>${ui('月份','Month')}</th><th>${ui('角色（#n = 第 n 次出现）','Awakeners (#n = n-th appearance)')}</th></tr></thead><tbody>${histYears}</tbody></table></div></details>
+      ${shown.map(x=>row(x,now)).join('')||`<div class="scNote">${ui('没有符合条件的条目','No entries match')}</div>`}
+      ${list.length>shown.length?`<button type="button" class="scChip" data-scmore>${ui(`显示更多（还有 ${list.length-shown.length} 条）`,`Show more (${list.length-shown.length} left)`)}</button>`:''}
+      ${state.data.forecast?.length?`<div class="scSec">${ui('未来唤醒预测（灰机维基，仅供参考）','Forecast (Huiji Wiki, for entertainment only)')}</div><div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('开启时间','Starts')}</th><th>${ui('内容','Content')}</th></tr></thead><tbody>${state.data.forecast.map(f=>`<tr><td>${esc(day(f.start))}${f.end?` ~ ${esc(day(f.end))}`:''}</td><td>${esc(zh()?f.text:(FC[f.text]||f.text))}</td></tr>`).join('')}</tbody></table></div>`:''}
+      <div class="scSec">${ui('复刻空白期榜单','Rerun gap leaderboard')}</div>
+      <div class="scNote">${ui('统计限时 / 复刻活动唤醒（含三相衡生、因果苗圃），从最近一次卡池结束算起，空白越久越靠前；进行中的排在最前。1 期 = 28 天。仅作参考，官方排期以公告为准。','Counts limited and rerun event banners (incl. Triune Verdant / Sylvan Omen); the gap runs from the end of the latest banner, longest first; live ones come first. 1 cycle = 28 days. For reference only — follow official announcements.')}</div>
+      <div class="scBar"><button type="button" class="scChip" data-scgap="awakener" aria-pressed="${state.gapKind==='awakener'}">${ui('唤醒体','Awakeners')}</button><button type="button" class="scChip" data-scgap="wheel" aria-pressed="${state.gapKind==='wheel'}">${ui('命轮','Wheels')}</button></div>
+      <div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('排名','#')}</th><th>${ui('名称','Name')}</th><th>${ui('首次出现','First')}</th><th>${ui('出现次数','Times')}</th><th>${ui('最近一次','Latest')}</th><th>${ui('空白期','Gap')}</th><th>${ui('平均间隔','Avg. gap')}</th></tr></thead><tbody>${gp.map(e=>{const it=state.pool.get(e.ref.id);const st=e.live?`<span class="scState on">${ui('进行中','Live')}</span>`:e.gap==null?'—':`<b>${e.gap}</b> ${ui('天','d')} <span class="scNote">(${(e.gap/28).toFixed(1)} ${ui('期','cycles')})</span>`;return `<tr><td>${rank.get(e.ref.id)||''}</td><td><div class="scAv">${it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}<span>${esc(nm(e.ref.en,e.ref.zh))}</span></div></td><td>${esc(day(e.first.start))}</td><td>${e.count}</td><td>${e.last?`${esc(day(e.last.start))} ~ ${esc(day(e.last.end))}`:esc(day(e.live?.start||''))}${e.next?` <span class="scState soon">${ui('已排期 ','Next ')}${esc(day(e.next.start))}</span>`:''}</td><td>${st}</td><td>${e.avg==null?'—':`${e.avg} ${ui('天','d')}`}</td></tr>`}).join('')}</tbody></table></div>
     </div>`;
   }
   async function load(){
@@ -124,11 +131,12 @@
     if(bound)return;bound=true;
     document.addEventListener('click',e=>{
       if(!host?.contains(e.target))return;
-      const c=e.target.closest('[data-sccat]');if(c){state.cat=c.dataset.sccat;draw();return}
-      if(e.target.closest('[data-scdir]')){state.dir=state.dir==='desc'?'asc':'desc';draw()}
+      const c=e.target.closest('[data-sccat]');if(c){state.cat=c.dataset.sccat;state.limit=40;draw();return}
+      if(e.target.closest('[data-scdir]')){state.dir=state.dir==='desc'?'asc':'desc';draw();return}
+      if(e.target.closest('[data-scmore]')){state.limit+=60;draw();return}
+      const g=e.target.closest('[data-scgap]');if(g){state.gapKind=g.dataset.scgap;draw()}
     });
     document.addEventListener('input',e=>{if(e.target?.id==='scQuery'){state.query=e.target.value;const pos=e.target.selectionStart;draw();const i=document.getElementById('scQuery');if(i){i.focus();i.setSelectionRange(pos,pos)}}});
-    document.addEventListener('toggle',e=>{if(e.target?.classList?.contains('scH'))state.showHistory=e.target.open},true);
     window.addEventListener('morimens-language-change',()=>{if(host&&!host.hidden)draw()});
   }
   window.MorimensSummonCalendar={open};

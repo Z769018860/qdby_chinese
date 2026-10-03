@@ -42,6 +42,65 @@ const outBanners=banners.map(b=>{
   const feat=featuredList(b.featured).map((f,i)=>{const r=ref(f.name,f.kind);if(!r.zh&&cz?.featuredZh?.[i]&&cz.featured?.length===featuredList(b.featured).length)r.zh=cz.featuredZh[i];return r});
   return {id:b.id,type:b.type,title:title(b.title),start:iso(b.startDate),end:iso(b.endDate),featured:feat,desc:b.description||''};
 });
+// ---------- HuijiWiki 唤醒 page (data/morimens/huiji/summon.json, from scripts/huiji_summon_console.js) ----------
+const poolNames=JSON.parse(await readFile('scripts/data/summon_pool_names.json','utf8'));
+let wikiPages={};
+try{wikiPages=JSON.parse(await readFile('data/morimens/huiji/summon.json','utf8')).pages||{}}catch{}
+const zhKey=s=>String(s||'').replace(/[「」\s]/g,'');
+const byZh={awakener:new Map(),wheel:new Map()};
+for(const k of ['awakener','wheel'])for(const it of pool[k])if(it.zh)byZh[k].set(zhKey(it.zh),it);
+const refZh=(name,kind)=>{
+  const it=byZh[kind].get(zhKey(name));
+  return it?{k:kind,id:it.id,en:it.en.replace(/^"|"$/g,''),zh:it.zh}:{k:kind,id:'',en:'',zh:String(name).replace(/[「」]/g,'')};
+};
+const list=v=>String(v||'').split(',').map(x=>x.trim()).filter(Boolean);
+const parseLua=text=>{
+  const body=text.replace(/--[^\n]*/g,'');
+  return [...body.matchAll(/\{([^{}]*)\}/g)].map(m=>Object.fromEntries([...m[1].matchAll(/(\w+)\s*=\s*"([^"]*)"/g)].map(x=>[x[1],x[2]])));
+};
+const T=/(\d{4}-\d\d-\d\d \d\d:\d\d)\s*(?:~|至)\s*(?:<br>)?\s*(\d{4}-\d\d-\d\d \d\d:\d\d)?/;
+const parseTime=t=>{const m=T.exec(String(t||''));return m?{start:m[1].replace(' ','T')+'+08:00',end:m[2]?m[2].replace(' ','T')+'+08:00':''}:null};
+const pn=zh=>({zh,en:poolNames[zh]||'',zs:poolNames[zh]?'game':'',});
+const lastSeg=l=>String(l||'').split('/').pop();
+const OTHER={'命轨合契':'walks','循序命理':'fated','界域锚定':'anchor','众生百相':'novice','百相自选1':'select','角色自选':'select','缚誓之谕':'oath'};
+const wikiBanners=[];
+for(const [title,text] of Object.entries(wikiPages)){
+  const m=/^模块:SummonAwkTable\/(\w+)\/[Dd]ata$/.exec(title);if(!m)continue;
+  for(const e of parseLua(text)){
+    const t=parseTime(e.time);if(!t)continue;
+    const chars=list(e.chars).map(c=>refZh(c,'awakener')),gears=list(e.gears).map(g=>refZh(g,'wheel'));
+    if(/^\d{4}$/.test(m[1])){
+      if(e.type!=='活动唤醒')continue;
+      const body=lastSeg(e.bodyLink),gear=lastSeg(e.gearLink);
+      if(e.tag==='复刻'){
+        const tri=/^三相衡生/.test(e.bodyImg||''),syl=/^因果苗圃/.test(e.gearImg||'');
+        if(chars.length)wikiBanners.push({id:`wiki-${t.start.slice(0,10)}-rerun-c`,type:'rerun',cat:'triune',title:tri?{zh:'三相衡生',en:'Triune Verdant',zs:'game'}:{zh:'角色复刻唤醒',en:'Character rerun banner',zs:'ai'},...t,featured:chars,src:'wiki'});
+        if(gears.length)wikiBanners.push({id:`wiki-${t.start.slice(0,10)}-rerun-w`,type:'rerun',cat:'sylvan',title:syl?{zh:'因果苗圃',en:'Sylvan Omen',zs:'game'}:{zh:'命轮复刻唤醒',en:'Wheel rerun banner',zs:'ai'},...t,featured:gears,src:'wiki'});
+      }else{
+        const names=[body,gear].filter(x=>x&&x!=='港澳台新马公测');
+        wikiBanners.push({id:`wiki-${t.start.slice(0,10)}-awaken`,type:'awaken',cat:'limited',title:{zh:names.join(' / '),en:names.map(x=>poolNames[x]||'').filter(Boolean).join(' / '),zs:'game'},...t,featured:[...chars,...gears],src:'wiki'});
+      }
+    }else if(OTHER[e.type]){
+      const g=e.group||e.type,sub=e.subType||e.realm||'';
+      wikiBanners.push({id:`wiki-${t.start.slice(0,10)}-${OTHER[e.type]}-${sub||g}`,type:OTHER[e.type],cat:'premium',title:{zh:sub?`${g} · ${sub}`:g,en:(poolNames[g]||'')+(sub?` · ${sub}`:''),zs:poolNames[g]?'game':'ai'},sub,...t,featured:[...chars,...gears],src:'wiki'});
+    }
+  }
+}
+// forecast table
+const forecast=[];
+for(const text of [wikiPages['唤醒/未来唤醒预测']||'']){
+  for(const row of text.split('|-').slice(2)){
+    const cells=row.split('||');if(cells.length<2)continue;
+    const t=parseTime(cells[0].replace(/^[^\d]*/,''));
+    const label=cells[1].replace(/<br>/g,' ').replace(/\{\{唤醒体头像\|([^}]*)\}\}/g,'$1').replace(/\|\}.*$/s,'').trim();
+    if(t||label)forecast.push({start:t?.start||'',end:t?.end||'',text:label});
+  }
+}
+// merge: SKeyDB is authoritative from its first banner on (has English titles); the wiki fills everything before and the pool types SKeyDB lacks
+const skMin=outBanners.reduce((m,b)=>b.start<m?b.start:m,'9999');
+const skDays=new Set(outBanners.filter(b=>['premium','combo','selector','daily'].includes(b.type)).map(b=>b.start.slice(0,10)));
+const wikiKeep=wikiBanners.filter(b=>['awaken','rerun'].includes(b.type)?b.start<skMin:(b.start<skMin||!(b.type==='walks'&&skDays.has(b.start.slice(0,10)))));
+const mergedBanners=[...outBanners,...wikiKeep].sort((a,b)=>b.start.localeCompare(a.start));
 // character / wheel / skin events (story events of each character, wheel archives, skins)
 const outEvents=events.filter(e=>/^event-(story|skin|wheel|preorder)/.test(e.id)&&!/^event-preorder/.test(e.id)).map(e=>({
   id:e.id,kind:e.id.startsWith('event-story-rerun')?'story-rerun':e.id.startsWith('event-story')?'story':e.id.startsWith('event-skin')?'skin':'wheel',
@@ -50,6 +109,6 @@ const outEvents=events.filter(e=>/^event-(story|skin|wheel|preorder)/.test(e.id)
 // monthly history (Info.kr): chars with the n-th appearance (1 = first release) of that month
 const history=rerun.history.map(h=>({month:h.month,chars:h.characters.map(c=>({...charOf(c.id),n:c.appearance}))}));
 const periods=Object.fromEntries(Object.entries(rerun.verified_periods).map(([id,p])=>[charOf(id).id||id,{start:p.start_date+(p.start_time?` ${p.start_time}`:''),end:p.end_date+(p.end_time?` ${p.end_time}`:''),tz:p.timezone||'',src:p.source_url||p.source_note||''}]));
-const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)'},updatedAtInfoKr:rerun.updated_at,banners:outBanners,events:outEvents,history,periods};
+const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:outEvents,history,periods};
 await writeFile('data/morimens/game/summon-calendar.json',JSON.stringify(out)+'\n');
-console.log('banners',outBanners.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
+console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
