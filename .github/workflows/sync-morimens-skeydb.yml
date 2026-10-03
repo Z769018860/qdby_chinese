@@ -95,9 +95,9 @@ jobs:
         run: |
           node scripts/sync_morimens_dzone.mjs
           node scripts/sync_morimens_dzone_intents.mjs
-          node scripts/sync_morimens_dzone_map.mjs
-          node scripts/parse_huiji_monsters.mjs
-          node scripts/build_morimens_tier_pool.mjs
+          node scripts/sync_morimens_dzone_map.mjs || echo "sync_morimens_dzone_map skipped"
+          node scripts/parse_huiji_monsters.mjs || echo "parse_huiji_monsters skipped"
+          node scripts/build_morimens_tier_pool.mjs || echo "build_morimens_tier_pool skipped"
           node scripts/sync_steam_events.mjs || echo "steam events sync skipped"
           node scripts/sync_summon_calendar.mjs || echo "summon calendar sync skipped"
 
