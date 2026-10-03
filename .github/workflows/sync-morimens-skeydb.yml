@@ -73,6 +73,7 @@ jobs:
           node --check scripts/sync_morimens_huiji_monsters.mjs
           node --check scripts/build_morimens_tier_pool.mjs
           node --check scripts/sync_summon_calendar.mjs
+          node --check scripts/sync_steam_events.mjs
           node --check morimens-summon-calendar.js
           node --check scripts/sync_kaiden_monsters.mjs
           node --check morimens-tierlist.js
@@ -97,6 +98,7 @@ jobs:
           node scripts/sync_morimens_dzone_map.mjs
           node scripts/parse_huiji_monsters.mjs
           node scripts/build_morimens_tier_pool.mjs
+          node scripts/sync_steam_events.mjs || echo "steam events sync skipped"
           node scripts/sync_summon_calendar.mjs || echo "summon calendar sync skipped"
 
       - name: Sync Chinese localization from HuijiWiki

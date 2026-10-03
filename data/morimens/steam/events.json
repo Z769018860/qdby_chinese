@@ -1,0 +1,980 @@
+{
+ "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
+ "fetchedAt": "2026-10-03T01:57:33.260Z",
+ "posts": [
+  {
+   "title": "An Apology and Further Adjustments to the D-Effect Zone",
+   "date": "2026-09-21",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010501618"
+  },
+  {
+   "title": "V2.6.1.0 Maintenance Announcement",
+   "date": "2026-09-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010496819"
+  },
+  {
+   "title": "🎧 V2.6.1 Radio Drama - Sheep Gone Astray",
+   "date": "2026-09-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010496735"
+  },
+  {
+   "title": "📜 V2.6.1 Version Outlook",
+   "date": "2026-09-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010492037"
+  },
+  {
+   "title": "V2.6.1 Ogier: Oathbound✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-09-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010488873"
+  },
+  {
+   "title": "V2.6.1 The Sinner’s Exile",
+   "date": "2026-09-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1843481262703776"
+  },
+  {
+   "title": "V2.6.1 New Awakener✦Ogier: Oathbound",
+   "date": "2026-09-14",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1843481262700992"
+  },
+  {
+   "title": "V2.6.1 You've Been Warned...",
+   "date": "2026-09-11",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1843481262694246"
+  },
+  {
+   "title": "On the D-Effect Zone Adjustments",
+   "date": "2026-09-04",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1842846814446131"
+  },
+  {
+   "title": "🎧 V2.6.0 Radio Drama - A Snowy Night",
+   "date": "2026-08-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1842212951296009"
+  },
+  {
+   "title": "V2.6.0.0 Maintenance Announcement",
+   "date": "2026-08-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228672780"
+  },
+  {
+   "title": "📜 V2.6.0 Version Outlook",
+   "date": "2026-08-21",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228668541"
+  },
+  {
+   "title": "🎬 V2.6 PV - Summit of Voided Wills (VA: Kugimiya Rie)",
+   "date": "2026-08-21",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228667891"
+  },
+  {
+   "title": "V2.6.0 Caraboo✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-08-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228662742"
+  },
+  {
+   "title": "V2.6.0 His, Her, and Its Wishes",
+   "date": "2026-08-18",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840944183788011"
+  },
+  {
+   "title": "V2.6.0 New Awakener✦Caraboo",
+   "date": "2026-08-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840944183785282"
+  },
+  {
+   "title": "V2.6.0 The \"Truly Breathtaking\" Snowy Peak 7-Day VIP Blitz!",
+   "date": "2026-08-14",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840944183778742"
+  },
+  {
+   "title": "🎧 V2.5.3 Radio Drama - Principles",
+   "date": "2026-08-07",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840310314344436"
+  },
+  {
+   "title": "V2.5.3.0 Maintenance Announcement",
+   "date": "2026-07-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357033310"
+  },
+  {
+   "title": "V2.5.3 Lotan: Cetarchon✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-07-24",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357029310"
+  },
+  {
+   "title": "📜 V2.5.3 Version Outlook",
+   "date": "2026-07-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357026531"
+  },
+  {
+   "title": "V2.5.3 Fight to the Astral Doom",
+   "date": "2026-07-21",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1838407329268256"
+  },
+  {
+   "title": "🎧 V2.5.2 Radio Drama - Addiction",
+   "date": "2026-07-21",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1838407329267996"
+  },
+  {
+   "title": "V2.5.3 New Awakener✦Lotan: Cetarchon",
+   "date": "2026-07-20",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1838407329264878"
+  },
+  {
+   "title": "V2.5.2.0 Maintenance Announcement",
+   "date": "2026-06-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165557679"
+  },
+  {
+   "title": "📜 V2.5.2 Version Outlook",
+   "date": "2026-06-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165553820"
+  },
+  {
+   "title": "V2.5.2 Pontos✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-06-25",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165549148"
+  },
+  {
+   "title": "V2.5.2 What the Abyss Keeps",
+   "date": "2026-06-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835871199314869"
+  },
+  {
+   "title": "V2.5.2 New Awakener✦Pontos",
+   "date": "2026-06-22",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835871199312323"
+  },
+  {
+   "title": "🎧 V2.5.1 Radio Drama - Messenger",
+   "date": "2026-06-04",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1834602721187080"
+  },
+  {
+   "title": "🎬 Morimens × Saya no Uta丨V2.5.1 PV - Song of Perennial Wandering",
+   "date": "2026-05-22",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1833334318571210"
+  },
+  {
+   "title": "V2.5.1.0 Maintenance Announcement",
+   "date": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "title": "📜 V2.5.1 Version Outlook - Part Ⅲ",
+   "date": "2026-05-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592791584"
+  },
+  {
+   "title": "📜 V2.5.1 Version Outlook - Part Ⅱ",
+   "date": "2026-05-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592791527"
+  },
+  {
+   "title": "📜 V2.5.1 Version Outlook - Part Ⅰ",
+   "date": "2026-05-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592791483"
+  },
+  {
+   "title": "V2.5.1 Saya✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-05-14",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592789228"
+  },
+  {
+   "title": "V2.5.1 New Awakener✦Saya",
+   "date": "2026-05-12",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832065502823286"
+  },
+  {
+   "title": "✨ Morimens × Saya no Uta 2.5th Anniversary Collaboration",
+   "date": "2026-05-11",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832065502820516"
+  },
+  {
+   "title": "🎧 V2.5.0 Radio Drama - Grace of Forsaken",
+   "date": "2026-04-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830797770232368"
+  },
+  {
+   "title": "V2.5.0.0 Maintenance Announcement",
+   "date": "2026-04-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047263589"
+  },
+  {
+   "title": "V2.5.0 Arachne✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-04-18",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047261938"
+  },
+  {
+   "title": "📜 V2.5.0 Version Outlook - Part Ⅲ",
+   "date": "2026-04-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047260152"
+  },
+  {
+   "title": "📜 V2.5.0 Version Outlook - Part Ⅱ",
+   "date": "2026-04-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047260151"
+  },
+  {
+   "title": "📜 V2.5.0 Version Outlook - Part Ⅰ",
+   "date": "2026-04-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047257302"
+  },
+  {
+   "title": "🎬 V2.5 PV - Web of the Moirai (VA: Ōnishi Saori)",
+   "date": "2026-04-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047254566"
+  },
+  {
+   "title": "V2.5.0 About Arachne: Perpetual Thrall",
+   "date": "2026-04-14",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1829528821317063"
+  },
+  {
+   "title": "V2.5.0 New Awakener✦Arachne",
+   "date": "2026-04-13",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1829528821314760"
+  },
+  {
+   "title": "V2.4.3.5 Claim the New Wanda Skin: \"With Spikenard And Myrrh\" for Free",
+   "date": "2026-03-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1827626365769956"
+  },
+  {
+   "title": "Morimens × Saya No Uta Collab Preview",
+   "date": "2026-03-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1826992588600782"
+  },
+  {
+   "title": "V2.4.2.2 Maintenance Announcement",
+   "date": "2026-02-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466499508"
+  },
+  {
+   "title": "V2.4.2.2 Version Outlook",
+   "date": "2026-02-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466495775"
+  },
+  {
+   "title": "V2.4.2.0 Maintenance Announcement",
+   "date": "2026-01-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1822556746161336"
+  },
+  {
+   "title": "V2.4.2 Version Outlook",
+   "date": "2026-01-22",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1822556746159016"
+  },
+  {
+   "title": "V2.4.2 Xu ✦ Awakener & Wheel of Destiny Introduction",
+   "date": "2026-01-21",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1822556746156540"
+  },
+  {
+   "title": "V2.4.1 Version Outlook",
+   "date": "2025-12-25",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1819386365107531"
+  },
+  {
+   "title": "V2.4.1 Mouchette✦Awaker & Wheel of Destiny Introduction",
+   "date": "2025-12-24",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1819386365106733"
+  },
+  {
+   "title": "V2.4.0.0 Maintenance Announcement",
+   "date": "2025-11-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1816307528966176"
+  },
+  {
+   "title": "V2.4.0 Murphy: Fauxborn ✦Awakener & Wheel of Destiny Introduction",
+   "date": "2025-11-13",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1816307528914177"
+  },
+  {
+   "title": "V2.4.0 Version Outlook - Part II",
+   "date": "2025-11-07",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1815580768293569"
+  },
+  {
+   "title": "V2.4.0 Version Outlook - Part Ⅰ",
+   "date": "2025-11-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1815580768228497"
+  },
+  {
+   "title": "Morimens┊V2.4 New Awakener✦Murphy: Fauxborn",
+   "date": "2025-11-02",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1815034432957252"
+  },
+  {
+   "title": "Mist Sequence × Morimens: COLLAB COMING SOON!",
+   "date": "2025-10-29",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1814942955092713"
+  },
+  {
+   "title": "Morimens┊2nd Anniversary Reward Preview",
+   "date": "2025-10-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1814309641602477"
+  },
+  {
+   "title": "V2.3.4.0 Maintenance Announcement",
+   "date": "2025-10-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674389021054"
+  },
+  {
+   "title": "📜Morimens┊ V2.3.4 Version Outlook",
+   "date": "2025-10-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674388969227"
+  },
+  {
+   "title": "V2.3.4 Pollux✦Awaker & Wheel of Destiny Introduction",
+   "date": "2025-10-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674388938736"
+  },
+  {
+   "title": "Morimens┊V2.3.4 Murphy's 4-Star Skin \"Candy Snatcher\" Available！",
+   "date": "2025-10-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674388898569"
+  },
+  {
+   "title": "Morimens┊V2.3.4 New Awakener✦Pollux",
+   "date": "2025-10-13",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813041031338869"
+  },
+  {
+   "title": "V2.3.3.0 Maintenance Announcement",
+   "date": "2025-09-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1811772772336678"
+  },
+  {
+   "title": "Morimens┊V2.3.3.0 Special Event \"If Life Was As Usual\" Rewards Overview!",
+   "date": "2025-09-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1811772772269981"
+  },
+  {
+   "title": "Morimens┊V2.3.3.0 Ramona: Timeworn's Two-Star Skin \"Dreamy Vacation\" Preview！",
+   "date": "2025-09-25",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1811772772240027"
+  },
+  {
+   "title": "V2.3.2.0 Maintenance Announcement",
+   "date": "2025-09-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1809869180065192"
+  },
+  {
+   "title": "V2.3.2 Pickman✦Awaker & Wheel of Destiny Introduction",
+   "date": "2025-09-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1809869180064755"
+  },
+  {
+   "title": "📜《Morimens》 V2.3.2 Coming Soon! All the Exciting Details!",
+   "date": "2025-09-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1809869180061803"
+  },
+  {
+   "title": "Shout out to Slay the Spire",
+   "date": "2025-08-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1808061939408473"
+  },
+  {
+   "title": "V2.3.0.0 Maintenance Announcement",
+   "date": "2025-07-18",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1805431065371002"
+  },
+  {
+   "title": "V2.2.2.0 Maintenance Notice",
+   "date": "2025-05-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1800357164443373"
+  },
+  {
+   "title": "📜《Morimens》 V2.2.2 Coming Soon! All the Exciting Details!",
+   "date": "2025-05-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1800357164443368"
+  },
+  {
+   "title": "Awaker Revelations:The Dark Feather",
+   "date": "2025-05-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1800357164443343"
+  },
+  {
+   "title": "1.5th Anniversary Benefits Preview",
+   "date": "2025-05-20",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1799817379627918"
+  },
+  {
+   "title": "2.2.0.0 Maintenance Notice",
+   "date": "2025-04-04",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1795917897348938"
+  },
+  {
+   "title": "2.1.0.0 Maintenance Notice",
+   "date": "2025-02-07",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1790848102651283"
+  },
+  {
+   "title": "V2.0.0.0 Maintenance Notice",
+   "date": "2025-01-10",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1788311419045791"
+  },
+  {
+   "title": "V1.7.3.0 Maintenance Notice",
+   "date": "2024-12-11",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1785774543489616"
+  },
+  {
+   "title": "V1.7.2.0 Maintenance Notice",
+   "date": "2024-11-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1784506359008341"
+  },
+  {
+   "title": "V1.7.1.0 Maintenance Notice",
+   "date": "2024-11-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1783238125241773"
+  },
+  {
+   "title": "V1.6.5.0 Maintenance Notice",
+   "date": "2024-11-01",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6146943657173929780"
+  },
+  {
+   "title": "Morimens adds support for the following languages",
+   "date": "2024-10-27",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6212245217911930146"
+  },
+  {
+   "title": "Steam account data issue explanation",
+   "date": "2024-10-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6212245217911789737"
+  },
+  {
+   "title": "V1.6.3.0 Online Maintenance Notice",
+   "date": "2024-10-04",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6350729003497649448"
+  },
+  {
+   "title": "📜《Morimens》 V1.6.3 Coming Soon! All the Exciting Details!",
+   "date": "2024-10-04",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6350729003497640404"
+  },
+  {
+   "title": "V1.6.1.0 Maintenance Notice",
+   "date": "2024-09-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6242640076600591370"
+  },
+  {
+   "title": "📜《Morimens》 V1.6.1 Coming Soon! All the Exciting Details!",
+   "date": "2024-09-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/6242640076600401560"
+  },
+  {
+   "title": "V1.5.3.0 Maintenance Notice",
+   "date": "2024-08-09",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/5963414363394588793"
+  },
+  {
+   "title": "📜《Morimens》 V1.5.3 Coming Soon! All the Exciting Details!",
+   "date": "2024-08-09",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/5963414363393775242"
+  },
+  {
+   "title": "Mythag University Opening Soon",
+   "date": "2024-08-02",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/5963413728337114478"
+  },
+  {
+   "title": "Mythag University Opening Soon",
+   "date": "2024-08-01",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/5963413728335104403"
+  }
+ ],
+ "events": [
+  {
+   "kind": "special",
+   "title": "Witch's Nocturnal Operation",
+   "section": "Advance Order Archives: Witch's Nocturnal Operation",
+   "start": "2026-10-12T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [],
+   "post": "V2.6.1.0 Maintenance Announcement",
+   "postDate": "2026-09-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010496819"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Mirrored Prisoner",
+   "section": "Awakener Event Rerun: Castor",
+   "start": "2026-10-05T09:00+08:00",
+   "end": "2026-11-02T09:00+08:00",
+   "featured": [
+    "Castor"
+   ],
+   "post": "V2.6.1.0 Maintenance Announcement",
+   "postDate": "2026-09-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010496819"
+  },
+  {
+   "kind": "story",
+   "title": "If Glory Fades No More",
+   "section": "Awakener Event: Oath-Breaker·Ogier",
+   "start": "2026-09-21T09:00+08:00",
+   "end": "2026-10-19T09:00+08:00",
+   "featured": [
+    "Oath-Breaker·Ogier"
+   ],
+   "post": "V2.6.1.0 Maintenance Announcement",
+   "postDate": "2026-09-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010496819"
+  },
+  {
+   "kind": "special",
+   "title": "Born of Night",
+   "section": "Special Archives: Born of Night",
+   "start": "2026-09-21T09:00+08:00",
+   "end": "2026-10-19T09:00+08:00",
+   "featured": [],
+   "post": "V2.6.1.0 Maintenance Announcement",
+   "postDate": "2026-09-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844115010496819"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Kathigu-Ra event",
+   "section": "Character Event Rerun: Kathigu-Ra",
+   "start": "2026-09-07T09:00+08:00",
+   "end": "2026-10-05T09:00+08:00",
+   "featured": [
+    "Kathigu-Ra"
+   ],
+   "post": "V2.6.0.0 Maintenance Announcement",
+   "postDate": "2026-08-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228672780"
+  },
+  {
+   "kind": "story",
+   "title": "Caraboo event",
+   "section": "Character Event: Caraboo",
+   "start": "2026-08-24T09:00+08:00",
+   "end": "2026-09-21T09:00+08:00",
+   "featured": [
+    "Caraboo"
+   ],
+   "post": "V2.6.0.0 Maintenance Announcement",
+   "postDate": "2026-08-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228672780"
+  },
+  {
+   "kind": "special",
+   "title": "After School Hours",
+   "section": "Special Chronicle: After School Hours",
+   "start": "2026-08-24T09:00+08:00",
+   "end": "2026-09-21T09:00+08:00",
+   "featured": [],
+   "post": "V2.6.0.0 Maintenance Announcement",
+   "postDate": "2026-08-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1841579228672780"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Horla event",
+   "section": "Character Event Rerun: Horla",
+   "start": "2026-08-10T09:00+08:00",
+   "end": "2026-09-07T09:00+08:00",
+   "featured": [
+    "Horla"
+   ],
+   "post": "V2.5.3.0 Maintenance Announcement",
+   "postDate": "2026-07-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357033310"
+  },
+  {
+   "kind": "special",
+   "title": "If Life Was As Usual",
+   "section": "Special Event Rerun: If Life Was As Usual",
+   "start": "2026-08-03T09:00+08:00",
+   "end": "2026-08-17T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.3.0 Maintenance Announcement",
+   "postDate": "2026-07-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357033310"
+  },
+  {
+   "kind": "story",
+   "title": "Lotan: Cetarchon event",
+   "section": "Character Event: Lotan: Cetarchon",
+   "start": "2026-07-27T09:00+08:00",
+   "end": "2026-08-24T09:00+08:00",
+   "featured": [
+    "Lotan: Cetarchon"
+   ],
+   "post": "V2.5.3.0 Maintenance Announcement",
+   "postDate": "2026-07-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357033310"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Helot: Catena event",
+   "section": "Character Activity Rerun: Helot: Catena",
+   "start": "2026-07-13T09:00+08:00",
+   "end": "2026-08-10T09:00+08:00",
+   "featured": [
+    "Helot: Catena"
+   ],
+   "post": "V2.5.2.0 Maintenance Announcement",
+   "postDate": "2026-06-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165557679"
+  },
+  {
+   "kind": "special",
+   "title": "Summer under Black Sun",
+   "section": "Special Event Rerun: Summer under Black Sun",
+   "start": "2026-07-06T09:00+08:00",
+   "end": "2026-07-20T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.2.0 Maintenance Announcement",
+   "postDate": "2026-06-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165557679"
+  },
+  {
+   "kind": "story",
+   "title": "Ebwynnos Evermore",
+   "section": "Character Event: Pontos",
+   "start": "2026-06-29T09:00+08:00",
+   "end": "2026-07-27T09:00+08:00",
+   "featured": [
+    "Pontos"
+   ],
+   "post": "V2.5.2.0 Maintenance Announcement",
+   "postDate": "2026-06-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165557679"
+  },
+  {
+   "kind": "special",
+   "title": "Wonderland Diary",
+   "section": "Special Record: Wonderland Diary",
+   "start": "2026-06-29T09:00+08:00",
+   "end": "2026-07-27T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.2.0 Maintenance Announcement",
+   "postDate": "2026-06-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165557679"
+  },
+  {
+   "kind": "skin",
+   "title": "Ouvertüre Universell",
+   "section": "Phantom Attire Event: Ouvertüre Universell",
+   "start": "2026-06-15T09:00+08:00",
+   "end": "2026-06-29T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Hameln event",
+   "section": "Character Event Rerun: Hameln",
+   "start": "2026-06-15T09:00+08:00",
+   "end": "2026-07-13T09:00+08:00",
+   "featured": [
+    "Hameln"
+   ],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "story",
+   "title": "Inverted Rebirth",
+   "section": "Character Event: Saya",
+   "start": "2026-05-30T09:00+08:00",
+   "end": "2026-08-24T09:00+08:00",
+   "featured": [
+    "Saya"
+   ],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "To the Stars",
+   "section": "Commemorative Event: To the Stars",
+   "start": "2026-05-18T09:00+08:00",
+   "end": "2026-06-29T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "Dreamy Rendezvous",
+   "section": "Commemorative Event: Dreamy Rendezvous",
+   "start": "2026-05-18T09:00+08:00",
+   "end": "2026-06-29T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "Meowch Obliged!",
+   "section": "Anniversary Event: Meowch Obliged!",
+   "start": "2026-05-18T09:00+08:00",
+   "end": "2026-06-15T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "Stream of Infatuation",
+   "section": "Limited-Time Event: Stream of Infatuation",
+   "start": "2026-05-18T09:00+08:00",
+   "end": "2026-06-29T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "Blossom Court",
+   "section": "Wheel of Destiny Chronicles: Blossom Court",
+   "start": "2026-05-18T09:00+08:00",
+   "end": "2026-06-15T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "Dreamy Offering",
+   "section": "Limited-Time Event: Dreamy Offering",
+   "start": "2026-05-18T09:00+08:00",
+   "end": "2026-08-24T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.1.0 Maintenance Announcement",
+   "postDate": "2026-05-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832700592794352"
+  },
+  {
+   "kind": "special",
+   "title": "The Great Conquering",
+   "section": "Gameplay Event Rerun: The Great Conquering",
+   "start": "2026-05-04T09:00+08:00",
+   "end": "2026-05-18T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.0.0 Maintenance Announcement",
+   "postDate": "2026-04-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047263589"
+  },
+  {
+   "kind": "story",
+   "title": "Bound Weaver",
+   "section": "Character Event: Arachne",
+   "start": "2026-04-20T09:00+08:00",
+   "end": "2026-05-18T09:00+08:00",
+   "featured": [
+    "Arachne"
+   ],
+   "post": "V2.5.0.0 Maintenance Announcement",
+   "postDate": "2026-04-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047263589"
+  },
+  {
+   "kind": "special",
+   "title": "L'Heure du Thé",
+   "section": "Wheel of Destiny Chronicles: L'Heure du Thé",
+   "start": "2026-04-20T09:00+08:00",
+   "end": "2026-05-18T09:00+08:00",
+   "featured": [],
+   "post": "V2.5.0.0 Maintenance Announcement",
+   "postDate": "2026-04-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1830163047263589"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Manifold Healing",
+   "section": "Recurrence Event: \"24\"",
+   "start": "2026-02-23T09:00+08:00",
+   "end": "2026-03-23T09:00+08:00",
+   "featured": [
+    "24"
+   ],
+   "post": "V2.4.2.2 Maintenance Announcement",
+   "postDate": "2026-02-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466499508"
+  },
+  {
+   "kind": "skin",
+   "title": "Several Shades of Maple Red",
+   "section": "Garment Archives: Several Shades of Maple Red",
+   "start": "2026-02-23T09:00+08:00",
+   "end": "2026-03-23T09:00+08:00",
+   "featured": [],
+   "post": "V2.4.2.2 Maintenance Announcement",
+   "postDate": "2026-02-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466499508"
+  },
+  {
+   "kind": "special",
+   "title": "Auspicious Shards",
+   "section": "Festive Event: Auspicious Shards",
+   "start": "2026-02-16T09:00+08:00",
+   "end": "2026-03-02T09:00+08:00",
+   "featured": [],
+   "post": "V2.4.2.2 Maintenance Announcement",
+   "postDate": "2026-02-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466499508"
+  },
+  {
+   "kind": "special",
+   "title": "Rapture Express!",
+   "section": "Gameplay Event: Rapture Express!",
+   "start": "2026-02-09T09:00+08:00",
+   "end": "2026-03-09T09:00+08:00",
+   "featured": [],
+   "post": "V2.4.2.2 Maintenance Announcement",
+   "postDate": "2026-02-06",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466499508"
+  },
+  {
+   "kind": "story",
+   "title": "Huangpu Whispers",
+   "section": "Character Event: Xu",
+   "start": "2026-01-26T09:00+08:00",
+   "end": "2026-02-23T09:00+08:00",
+   "featured": [
+    "Xu"
+   ],
+   "post": "V2.4.2.0 Maintenance Announcement",
+   "postDate": "2026-01-23",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1822556746161336"
+  },
+  {
+   "kind": "special",
+   "title": "By the Silver Key",
+   "section": "Memorial Event: By the Silver Key",
+   "start": "2025-12-01T09:00+08:00",
+   "end": "2026-01-26T09:00+08:00",
+   "featured": [],
+   "post": "V2.4.0.0 Maintenance Announcement",
+   "postDate": "2025-11-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1816307528966176"
+  },
+  {
+   "kind": "story",
+   "title": "Rites of Divine Birth",
+   "section": "Character Event: Murphy: Fauxborn",
+   "start": "2025-11-24T09:00+08:00",
+   "end": "2025-12-29T09:00+08:00",
+   "featured": [
+    "Murphy: Fauxborn"
+   ],
+   "post": "V2.4.0.0 Maintenance Announcement",
+   "postDate": "2025-11-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1816307528966176"
+  },
+  {
+   "kind": "special",
+   "title": "Dawnbringer's Guidance",
+   "section": "Memorial Archives: Dawnbringer's Guidance",
+   "start": "2025-11-17T09:00+08:00",
+   "end": "2026-01-26T09:00+08:00",
+   "featured": [],
+   "post": "V2.4.0.0 Maintenance Announcement",
+   "postDate": "2025-11-15",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1816307528966176"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Gateway of All Realms",
+   "section": "Character Event Reprint: Tawil",
+   "start": "2025-11-03T09:00+08:00",
+   "end": "2025-12-01T09:00+08:00",
+   "featured": [
+    "Tawil"
+   ],
+   "post": "V2.3.4.0 Maintenance Announcement",
+   "postDate": "2025-10-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674389021054"
+  },
+  {
+   "kind": "story",
+   "title": "Everbright Nightfall",
+   "section": "Character event: Pollux",
+   "start": "2025-10-20T09:00+08:00",
+   "end": "2025-11-17T09:00+08:00",
+   "featured": [
+    "Pollux"
+   ],
+   "post": "V2.3.4.0 Maintenance Announcement",
+   "postDate": "2025-10-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674389021054"
+  },
+  {
+   "kind": "skin",
+   "title": "Trick or Treat",
+   "section": "Phantom Garment Event: Trick or Treat",
+   "start": "2025-10-20T09:00+08:00",
+   "end": "2025-12-15T09:00+08:00",
+   "featured": [],
+   "post": "V2.3.4.0 Maintenance Announcement",
+   "postDate": "2025-10-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674389021054"
+  },
+  {
+   "kind": "special",
+   "title": "Engraved Journey's Start",
+   "section": "Wheel of Destiny: Engraved Journey's Start",
+   "start": "2025-10-20T09:00+08:00",
+   "end": "2025-11-03T09:00+08:00",
+   "featured": [],
+   "post": "V2.3.4.0 Maintenance Announcement",
+   "postDate": "2025-10-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1813674389021054"
+  },
+  {
+   "kind": "special",
+   "title": "If Life Was As Usual",
+   "section": "Gameplay Event: If Life Was As Usual",
+   "start": "2025-10-06T09:00+08:00",
+   "end": "2025-10-20T09:00+08:00",
+   "featured": [],
+   "post": "V2.3.3.0 Maintenance Announcement",
+   "postDate": "2025-09-28",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1811772772336678"
+  },
+  {
+   "kind": "story-rerun",
+   "title": "Detective Handbook",
+   "section": "Event Reenactment: Ryker",
+   "start": "2025-09-22T09:00+08:00",
+   "end": "2025-10-06T09:00+08:00",
+   "featured": [
+    "Ryker"
+   ],
+   "post": "V2.3.2.0 Maintenance Announcement",
+   "postDate": "2025-09-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1809869180065192"
+  },
+  {
+   "kind": "story",
+   "title": "Dark Side of the Canvas",
+   "section": "Character Event: Pickman",
+   "start": "2025-09-08T09:00+08:00",
+   "end": "2025-10-06T09:00+08:00",
+   "featured": [
+    "Pickman"
+   ],
+   "post": "V2.3.2.0 Maintenance Announcement",
+   "postDate": "2025-09-05",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1809869180065192"
+  }
+ ]
+}

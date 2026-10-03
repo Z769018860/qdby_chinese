@@ -129,9 +129,18 @@ for(const [title,text] of Object.entries(wikiEv.pages)){
   const en=wikiEv.eventEn[nm[1]]||'';
   wikiEvents.push({id:`wiki-event-${per.start.slice(0,10)}`,kind:rerun?'story-rerun':'story',title:{en:en+(rerun?(/轻量/.test(nm[2])?' (light rerun)':' (rerun)'):''),zh:nm[1]+(rerun?(/轻量/.test(nm[2])?'·轻量复刻':'·复刻'):''),zs:'game'},...per,featured:(wikiEv.eventChars[nm[1]]||[]).map(c=>refZh(c,'awakener')),src:'wiki'});
 }
+// ---------- Steam announcements (data/morimens/steam/events.json, scripts/sync_steam_events.mjs): fills the gap after the wiki pages ----------
+let steam={events:[]};
+try{steam=JSON.parse(await readFile('data/morimens/steam/events.json','utf8'))}catch{}
+const evMin=outEvents.reduce((m,e)=>e.start<m?e.start:m,'9999');
+const wikiMax=wikiEvents.reduce((m,e)=>e.end>m?e.end:m,'0');
+const steamEvents=steam.events.filter(e=>e.start<evMin&&e.start>wikiMax&&e.kind!=='special'||(e.kind==='special'&&e.start<evMin&&e.start>wikiMax)).map(e=>({
+  id:`steam-${e.start.slice(0,10)}-${nk(e.title).slice(0,24)}`,kind:e.kind==='special'?'special':e.kind,title:{en:e.title,zh:titles[e.title]?.zh||'',zs:titles[e.title]?.s||''},start:e.start,end:e.end,
+  featured:e.featured.map(f=>ref(f,'awakener')).filter(f=>f.id),src:'steam'
+}));
 // monthly history (Info.kr): chars with the n-th appearance (1 = first release) of that month
 const history=rerun.history.map(h=>({month:h.month,chars:h.characters.map(c=>({...charOf(c.id),n:c.appearance}))}));
 const periods=Object.fromEntries(Object.entries(rerun.verified_periods).map(([id,p])=>[charOf(id).id||id,{start:p.start_date+(p.start_time?` ${p.start_time}`:''),end:p.end_date+(p.end_time?` ${p.end_time}`:''),tz:p.timezone||'',src:p.source_url||p.source_note||''}]));
-const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:[...outEvents,...wikiEvents.filter(e=>e.start<skMin)].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
+const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:[...outEvents,...wikiEvents.filter(e=>e.start<skMin),...steamEvents].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
 await writeFile('data/morimens/game/summon-calendar.json',JSON.stringify(out)+'\n');
-console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
+console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'steam events',steamEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
