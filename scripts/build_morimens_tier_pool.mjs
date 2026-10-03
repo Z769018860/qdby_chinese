@@ -76,7 +76,7 @@ for(const season of await readdir(`${D}/dzone`)){
 kinds.relic=await fromCatalog('relics.json',{zh:trans.relics||{},tags:r=>{
   const t=(r.categories||[]).map(c=>`src:${c}`);
   if(r.relicType==='Pendulum')t.push('src:PENDULUM');
-  if(dzRelics.has(r.id))t.push('src:DZONE');
+  if(dzRelics.has(r.id)&&r.relicType!=='Dimensional Image')t.push('src:DZONE');
   return [...new Set(t)];
 }});
 kinds.posse=await fromCatalog('posses.json',{tags:r=>[`realm:${r.realm}`]});
