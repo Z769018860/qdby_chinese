@@ -146,7 +146,7 @@ for kind in ['wheels', 'relics', 'posses', 'covenants']:
                 terms[m] = terms.get(m, 0) + 1
 MANUAL = {'Team Unique': '队伍唯一', 'Caro': '血肉', 'Aequor': '深海', 'Ultra': '超维', 'Chaos': '混沌', 'Ultra Round': '超维回合', 'Ultra Rounds': '超维回合', 'Astral Reign': '星界统御',
           'Fleeting': '转瞬即逝', 'Pure DMG': '纯粹伤害', 'Palette': '调色板', 'Color': '颜色', 'Resonance': '共鸣', 'Steal': '偷取', 'Creativity': '创意', 'Undertow': '暗流',
-          'Perception Warp': '感知扭曲', 'Ashen Ruins': '灰烬废墟', 'Orisons': '刻印', 'Prepare 1': '预备 1', 'Paintover': '涂改', 'Lost': '迷失', 'Sacred Heart': '圣心',
+          'Perception Warp': '感知扭曲', 'Ashen Ruins': '灰烬遗迹', 'Orisons': '刻印', 'Prepare 1': '预备 1', 'Paintover': '涂改', 'Lost': '迷失', 'Sacred Heart': '圣心',
           'Exhausted': '已消耗', 'Blackened Flame': '焦黑之焰', 'Spellbound': '咒缚', 'Soul Synchronization': '灵魂同步', 'Mortal Sojourn': '凡世之旅', 'Alight': '燃起',
           'Dawn': '黎明', 'Depletion': '枯竭', 'Multiply': '倍增', 'Golden Harmony': '黄金和谐', 'Occult Research': '神秘学研究', 'Transit Fatigue': '旅途疲劳', 'Crumble': '崩解',
           'Divine Dedication': '神圣奉献', 'Endless Combustion': '无尽燃烧', 'Guilt': '罪责', 'Seal': '封印', 'Daze': '恍惚', 'Rebirth': '重生', 'Formless': '无形',

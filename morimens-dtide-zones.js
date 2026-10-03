@@ -67,7 +67,8 @@
       .dzBat{display:flex;gap:8px;align-items:flex-start;border:1px solid rgba(148,163,184,.2);border-radius:8px;padding:6px 8px;margin:5px 0;background:#0f1927;cursor:pointer}
       .dzBat.sel{border-color:#f1d69f}.dzBat b.n{flex:none;min-width:20px;height:20px;line-height:20px;text-align:center;border-radius:10px;background:#f1d69f;color:#1a1a1a;font-size:11px}
       .dzBat .ms{display:flex;flex-direction:column;gap:3px}.dzBat .m{display:flex;gap:6px;align-items:center}.dzBat .m img{width:24px;height:24px;border-radius:50%;object-fit:cover;background:#111827}
-      .dzBat small{color:#8290a2}.dzLegend{display:flex;gap:6px 12px;flex-wrap:wrap;color:#8290a2;font-size:11px;margin-top:8px}
+      .dzBat small{color:#8290a2}.dzLegend{display:grid;gap:6px;color:#aab6c8;font-size:11.5px;margin-top:10px}.dzLegend span{color:#8290a2}.dzBat .rot{display:block;color:#8290a2;font-size:11px;line-height:1.35;max-width:300px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal}
+      .dzTileInfo{display:flex;gap:8px;align-items:flex-start}.dzTileIcon{flex:none;width:30px;height:30px;border-radius:6px;background:#1b2536;display:flex;align-items:center;justify-content:center;overflow:hidden}.dzTileIcon img{width:24px;height:24px;object-fit:contain}.dzTileIcon.tex-poison-floor{background:#1d3a1d url(assets/morimens/dzone-map/tile-poison-floor.webp) center/cover}.dzTileIcon.tex-unstable-floor{background:#3a2d1d url(assets/morimens/dzone-map/tile-unstable-floor.webp) center/cover}.aiTag{color:#e8c987;border:1px solid rgba(232,201,135,.4);border-radius:4px;padding:0 4px;font-size:10px}
       @media(max-width:700px){.dzDesc{display:none}.dzAlert .dzTag{margin-left:0}}`;
     document.head.appendChild(s);
   }
@@ -87,6 +88,7 @@
   // Monster intent data (Morimenz-kr community dataset; seasons 67+). Missing seasons resolve to null.
   // hex node layout of each zone (Morimens.Info.kr): data/morimens/dzone-info/map-<period>.json, seasons 68+
   async function loadMap(period){
+    if(!state.nodes)state.nodes=(await getJson('data/morimens/game/map-nodes.json').catch(()=>({nodes:{}}))).nodes||{};
     if(state.maps.has(period))return state.maps.get(period);
     let doc=null;try{doc=await getJson(`data/morimens/dzone-info/map-${period}.json`)}catch{doc=null}
     state.maps.set(period,doc);return doc;
@@ -326,8 +328,23 @@
   }
 
   // ---------- generated zone map ----------
-  const NODE_LABEL={combat:['战斗','Battle'],elite:['精英','Elite'],boss:['最终战','Final Battle'],event:['事件','Event'],bones:['褪色白骨','Faded Bones'],'ash-ruins':['灰烬废墟','Ashen Ruins'],'black-seal':['黑印','Black Sigil'],'locked-door':['生锈的门','Rusted Door'],'rusted-key':['生锈的钥匙','Rusted Key'],illusion:['幻象','Illusion'],lamp:['照明灯','Lamp'],'passage-in':['密道入口','Secret Passage In'],'passage-out':['密道出口','Secret Passage Out'],tunnel:['隧道','Tunnel'],passage:['密道','Passage'],start:['起点','Start'],normal:['普通节点','Node'],'poison-floor':['毒气地面','Poison Floor'],'unstable-floor':['不稳定的地面','Unstable Floor']};
-  const nodeLabel=n=>{const l=NODE_LABEL[n.i||n.t||n.k];return l?ui(l[0],l[1]):''};
+  const nodeKey=n=>n.i||n.t||n.k;
+  const nodeInfo=n=>state.nodes?.[nodeKey(n)]||null;
+  const nodeLabel=n=>{const x=nodeInfo(n);return x?ui(x.zh,x.en):''};
+  const nodeDesc=n=>{const x=nodeInfo(n);return x?ui(x.dz,x.de):''};
+  // short intent cycle of a monster (opening, then the repeating cycle) for the map side list
+  function rotationOf(period,tid){
+    const info=state.info.get(period),im=info?.monsters?.[tid];
+    const names=(sk,ids)=>{const byId=new Map(sk.map(k=>[k.id,k]));return ids.map(i=>{const k=byId.get(i);return k?(skName(k)||typeLabel(k.t)):''}).filter(Boolean)};
+    if(im?.sk?.length&&im.pat?.length){
+      const a=im.pat.find(x=>x.id==='opening'),c=im.pat.find(x=>/^cycle/.test(x.id))||im.pat[0];
+      const open=a?names(im.sk,a.s):[],cyc=c?names(im.sk,c.s):[];
+      const same=open.join()===cyc.join();
+      return same||!open.length?cyc.join(' → '):`${open.join(' → ')} ｜ ${ui('循环','Loop')}: ${cyc.join(' → ')}`;
+    }
+    const sk=info?.tidSk?.get(tid);
+    try{return (sk&&brief(sk)?.rot)||''}catch{return ''}
+  }
   function monName(period,tid){
     const info=state.info.get(period),im=info?.monsters?.[tid]||{},t=state.tr?.monsters?.[tid]||{};
     if(zh())return t.zh||im.zh||t.en||'';
@@ -352,13 +369,14 @@
       const cls=`dzNode ${esc(n.k)}${n.t?' tex-'+esc(n.t):''}${n.b&&state.mapSel===n.b?' sel':''}`;
       const mons=e?`<span class="dzMapMons">${e.m.map(x=>`<span title="${esc(monName(period,x.tid))}">${monImg(period,x.tid)}</span>`).join('')}</span>`:'';
       const lab=n.t?'':`<span>${esc(nodeLabel(n))}</span>`;
-      return `<div class="${cls}" style="left:${x}px;top:${y}px"${n.b?` data-dzbat="${n.b}"`:''} title="${esc(nodeLabel(n)+(e?': '+e.m.map(x=>monName(period,x.tid)).join(' / '):''))}">${n.b?`<span class="dzNum">${num.get(n.b)}</span>`:''}<div class="dzHex">${icon}${lab}</div>${mons}</div>`;
+      return `<div class="${cls}" style="left:${x}px;top:${y}px"${n.b?` data-dzbat="${n.b}"`:''} title="${esc(nodeLabel(n)+(e?': '+e.m.map(x=>monName(period,x.tid)).join(' / '):nodeDesc(n)?' — '+nodeDesc(n):''))}">${n.b?`<span class="dzNum">${num.get(n.b)}</span>`:''}<div class="dzHex">${icon}${lab}</div>${mons}</div>`;
     }).join('');
     const side=order.map(n=>{
       const e=m.enc[n.b];if(!e)return '';
-      return `<div class="dzBat${state.mapSel===n.b?' sel':''}" data-dzbat="${n.b}"><b class="n">${num.get(n.b)}</b><div class="ms"><small>${esc(nodeLabel(n))} · ${esc(typeof e.t==='string'&&e.t==='Boss'?ui('首领','Boss'):e.t==='Elite'?ui('精英','Elite'):ui('普通','Common'))}</small>${e.m.map(x=>`<span class="m">${monImg(period,x.tid)}<span>${esc(monName(period,x.tid))}</span></span>`).join('')}</div></div>`;
+      return `<div class="dzBat${state.mapSel===n.b?' sel':''}" data-dzbat="${n.b}"><b class="n">${num.get(n.b)}</b><div class="ms"><small>${esc(nodeLabel(n))} · ${esc(typeof e.t==='string'&&e.t==='Boss'?ui('首领','Boss'):e.t==='Elite'?ui('精英','Elite'):ui('普通','Common'))}</small>${e.m.map(x=>`<span class="m">${monImg(period,x.tid)}<span>${esc(monName(period,x.tid))}${(r=>r?` <small class="rot" title="${esc(r)}">${esc(r)}</small>`:'')(rotationOf(period,x.tid))}</span></span>`).join('')}</div></div>`;
     }).join('');
-    const kinds=[...new Set(vis.filter(n=>!n.b).map(n=>n.i||n.t||n.k))].map(k=>`<span>${esc(ui(NODE_LABEL[k]?.[0]||k,NODE_LABEL[k]?.[1]||k))}</span>`).join('');
+    const seenK=new Map();for(const n of vis)if(!n.b&&!seenK.has(nodeKey(n)))seenK.set(nodeKey(n),n);
+    const kinds=[...seenK.values()].map(n=>{const x=nodeInfo(n);if(!x)return '';const ai=/ai/.test(x.s)?` <small class="aiTag">${ui('推测','inferred')}</small>`:'';return `<div class="dzTileInfo"><span class="dzTileIcon ${n.t?'tex-'+esc(n.t):''}">${n.i?`<img src="assets/morimens/dzone-map/node-${esc(n.i)}.webp" alt="" loading="lazy">`:''}</span><div><b>${esc(ui(x.zh,x.en))}</b>${ai}<br><span>${esc(ui(x.dz,x.de))}</span></div></div>`}).join('');
     return `<div class="dzMapWrap"><div class="dzMapView"><div class="dzMapBoard" style="width:${w}px;height:${h}px">${nodes}</div></div><div class="dzMapSide"><h4>${ui('战斗与怪物','Battles & monsters')}</h4>${side||`<div class="dzNote">${ui('本区域没有战斗节点。','No battle nodes in this zone.')}</div>`}<div class="dzLegend">${kinds}</div></div></div>`;
   }
 

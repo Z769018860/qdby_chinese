@@ -1,0 +1,131 @@
+{
+ "source": "BIAVGit/Morimens-Localizations (MapNodeType rows); entries marked ai / game+ai are AI-assisted",
+ "nodes": {
+  "combat": {
+   "zh": "战斗",
+   "en": "Battle",
+   "dz": "一些不期而遇的敌人，会触发一场战斗。",
+   "de": "Some unexpected enemies will trigger a battle.",
+   "s": "game"
+  },
+  "elite": {
+   "zh": "精英",
+   "en": "Elite",
+   "dz": "一些略有挑战的敌人，会触发一场稍难的战斗。",
+   "de": "Some moderately challenging enemies will trigger a tougher battle.",
+   "s": "game"
+  },
+  "boss": {
+   "zh": "最终战",
+   "en": "Final Battle",
+   "dz": "最终，亦是最强的敌人，击败后将结束这场调查。",
+   "de": "Ultimately, the strongest enemy. Defeat them to conclude this investigation.",
+   "s": "game"
+  },
+  "event": {
+   "zh": "事件",
+   "en": "Event",
+   "dz": "危险还是机遇，取决于你的抉择。",
+   "de": "Danger or opportunity, the choice is yours.",
+   "s": "game"
+  },
+  "bones": {
+   "zh": "褪色遗骨",
+   "en": "Faded Bone",
+   "dz": "一截苍白的骸骨，半数浸没于漆黑的融蚀浆中",
+   "de": "A section of pale bone, half-submerged in black D-Slime",
+   "s": "game"
+  },
+  "ash-ruins": {
+   "zh": "灰烬遗迹",
+   "en": "Ashen Ruins",
+   "dz": "利莫利亚沉没的遗迹，其后的存在渴求着用神秘力量交换你手中的黑印。",
+   "de": "The sunken ruins of Limoria, where the presence behind them desires to exchange mysterious powers for Black Sigil in your hands.",
+   "s": "game"
+  },
+  "black-seal": {
+   "zh": "黑印",
+   "en": "Black Sigil",
+   "dz": "获得黑印——一种在幻梦空间中的通行货币。",
+   "de": "Gain Black Sigil, a currency in Dreamscape.",
+   "s": "game"
+  },
+  "locked-door": {
+   "zh": "锈蚀门扉",
+   "en": "Rusted Door",
+   "dz": "沉默矗立的坚固门扉。需要使用锈蚀钥匙开启。",
+   "de": "A sturdy, silent door. Requires a Rusted Key to open.",
+   "s": "game"
+  },
+  "rusted-key": {
+   "zh": "锈蚀钥匙",
+   "en": "Rusted Keys",
+   "dz": "它耐心地寻找着属于它的那一扇门扉。",
+   "de": "It patiently searches for its Door.",
+   "s": "game"
+  },
+  "illusion": {
+   "zh": "幻象",
+   "en": "Illusion",
+   "dz": "扭曲的幻象阻挡了你的前进，若选择破除，将会感染未知的症状。",
+   "de": "A twisted illusion blocks your path; choosing to break it will infect you with an unknown symptom",
+   "s": "game"
+  },
+  "lamp": {
+   "zh": "探照灯",
+   "en": "Searchlight",
+   "dz": "前人遗留下来的照明装置，可驱散四周的浓雾。",
+   "de": "An ancient lighting device that can dispel the surrounding thick fog.",
+   "s": "game"
+  },
+  "passage-in": {
+   "zh": "单行密道",
+   "en": "One-Way Path",
+   "dz": "一条有去无回的不稳定通路，进入后将无法从出口折返。",
+   "de": "An unstable one-way path; once entered, there is no way to return from the exit.",
+   "s": "game"
+  },
+  "passage-out": {
+   "zh": "密道出口",
+   "en": "Secret Passage Exit",
+   "dz": "单行密道的出口，内部已经坍缩，无法从此处折返回密道入口。",
+   "de": "The One-Way Passage's exit. It has already collapsed, making it impossible to go back.",
+   "s": "game"
+  },
+  "tunnel": {
+   "zh": "隧道",
+   "en": "Tunnel",
+   "dz": "漆黑的道路通向未知，进入后将传送至通道的另一端。",
+   "de": "The pitch-black road leads to the unknown, and upon entry, it will transport you to the other end of the passage.",
+   "s": "game"
+  },
+  "unstable-floor": {
+   "zh": "不牢固的地板",
+   "en": "Unstable Floor",
+   "dz": "不牢固的地板（官方只给出名称）。推测踏过后可能塌陷，无法折返。",
+   "de": "Unstable Floor (the game only gives the name). Presumably it can collapse after being crossed, so you may not be able to go back.",
+   "s": "game+ai"
+  },
+  "start": {
+   "zh": "起点",
+   "en": "Start",
+   "dz": "本区域的出发位置。",
+   "de": "Where this zone starts.",
+   "s": "ai"
+  },
+  "normal": {
+   "zh": "普通节点",
+   "en": "Normal node",
+   "dz": "没有特殊效果的可通行节点。",
+   "de": "A walkable node without special effects.",
+   "s": "ai"
+  },
+  "poison-floor": {
+   "zh": "毒气地面",
+   "en": "Poison floor",
+   "dz": "紫色格子。游戏内没有官方说明，推测为带有毒气效果的危险地面，经过前请留意。",
+   "de": "Purple tile. No official description exists; presumably a hazardous floor with a poison-gas effect, so be careful when crossing it.",
+   "s": "ai"
+  }
+ }
+}

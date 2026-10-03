@@ -128,7 +128,7 @@ RARITY = {'SSR': 'SSR', 'SR': 'SR', 'R': 'R', 'N': 'N', 'Genesis': ('创世', 'G
 MAIN = {'CRIT_RATE': ('暴击率', 'Crit. Rate'), 'CRIT_DMG': ('暴击伤害', 'Crit. DMG'), 'REALM_MASTERY': ('界域精通', 'Realm Mastery'),
         'DMG_AMP': ('伤害强效', 'DMG Amp'), 'ALIEMUS_REGEN': ('狂气回充', 'Aliemus Regen'), 'KEYFLARE_REGEN': ('银钥充能', 'Keyflare Regen'),
         'SIGIL_YIELD': ('黑印掉落', 'Sigil Yield'), 'DEATH_RESISTANCE': ('死亡抵抗', 'Death Resistance')}
-ATYPE = {'ASSAULT': ('攻击型', 'Assault'), 'WARDEN': ('防御型', 'Warden'), 'CHORUS': ('辅助型', 'Support')}
+ATYPE = {'ASSAULT': ('伤害型', 'Damage'), 'WARDEN': ('防御型', 'Warden'), 'CHORUS': ('辅助型', 'Support')}
 RTYPE = {'Relic': ('造物', 'Relic'), 'Dimensional Image': ('维度影像', 'Dimensional Image'), 'Event': ('事件造物', 'Event'), 'Pendulum': ('摆锤', 'Pendulum')}
 
 

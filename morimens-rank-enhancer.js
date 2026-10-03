@@ -8,12 +8,12 @@
   };
 
   const DOMAINS=["全部","混沌","深海","血肉","超维"];
-  const TYPES=["全部","防御型","辅助型","攻击型"];
+  const TYPES=["全部","防御型","辅助型","伤害型"];
 
   const TYPE_COLOR={
     "防御型":"#6fb3ae",
     "辅助型":"#d7a85b",
-    "攻击型":"#c75e68"
+    "伤害型":"#c75e68"
   };
 
   const RATE_LEVELS=[
