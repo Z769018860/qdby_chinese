@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>卡池 / 活动复刻空窗榜 · 忘忘看报</title>
+  <style>
+    :root{--bg:#080b11;--panel:rgba(14,20,30,.78);--panel2:rgba(8,13,21,.72);--text:#edf2f7;--muted:#9eabba;--line:rgba(148,163,184,.22);--accent:#e0bd82;--accent2:#9d7a4a;--teal:#6fb3ae;--blood:#9f4654;--warn:#d5a95f;--radius:20px;--shadow:0 22px 70px rgba(0,0,0,.38)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 0,rgba(89,117,145,.13),transparent 32%),radial-gradient(circle at 88% 12%,rgba(196,151,89,.09),transparent 28%),linear-gradient(180deg,#090d14,#06090e 68%,#05070b);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Microsoft YaHei","PingFang SC",sans-serif}.wrap{width:min(1320px,calc(100% - 28px));margin:auto}.topbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:22px 0 6px}.back{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;color:#d9e0ea;text-decoration:none;font-size:13px;border:1px solid rgba(255,255,255,.11);background:rgba(8,12,19,.58);backdrop-filter:blur(12px)}.back:hover{border-color:rgba(224,189,130,.48);color:#fff}
+    .hero{position:relative;overflow:hidden;margin:16px 0 20px;padding:34px 30px;border:1px solid rgba(224,189,130,.24);border-radius:28px;background:linear-gradient(135deg,rgba(24,31,43,.82),rgba(8,13,21,.72));box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-110px;top:-190px;border:1px solid rgba(224,189,130,.16);box-shadow:0 0 90px rgba(224,189,130,.08)}.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--accent);font-weight:900}.hero h1{margin:7px 0 0;font-size:clamp(31px,5vw,54px);line-height:1.05}.hero p{max-width:930px;margin:14px 0 0;color:#c0cad7;line-height:1.75}.heroMeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.chip{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;border:1px solid rgba(224,189,130,.21);background:rgba(8,13,21,.46);color:#d8c7aa;font-size:11px}
+    .summaryGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.stat{padding:17px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(150deg,rgba(18,25,37,.76),rgba(8,13,21,.68));box-shadow:0 12px 32px rgba(0,0,0,.2)}.stat span{display:block;color:#8795a8;font-size:11px}.stat strong{display:block;margin-top:7px;font-size:25px;color:#f1dfbf;font-variant-numeric:tabular-nums}.stat.wide{grid-column:span 2}.stat.wide strong{font-size:13px;line-height:1.55;color:#dce4ed;font-weight:700}.stat.wide strong span{display:inline;color:#9aa8ba;margin-left:5px}
+    .panel{margin-bottom:20px;padding:22px;border:1px solid rgba(197,211,229,.17);border-radius:var(--radius);background:linear-gradient(160deg,rgba(18,25,37,.78),rgba(8,13,21,.70));box-shadow:var(--shadow)}.panelHead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}.panel h2{margin:0;font-size:21px}.panelLead{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.7;max-width:940px}.sourceNotice{margin:14px 0 0;padding:12px 14px;border:1px solid rgba(224,189,130,.25);border-radius:13px;background:linear-gradient(135deg,rgba(224,189,130,.08),rgba(111,179,174,.045));color:#c9d2dc;font-size:12px;line-height:1.75}.sourceNotice strong{color:#ead2a7}.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:17px 0 12px}.segmented{display:inline-flex;padding:3px;border-radius:12px;border:1px solid var(--line);background:rgba(3,7,13,.44)}.segmented button{border:0;background:transparent;color:#9daabc;padding:8px 13px;border-radius:9px;cursor:pointer;font:inherit;font-size:12px;font-weight:800}.segmented button[aria-pressed="true"]{background:rgba(224,189,130,.14);color:#f0d9b0;box-shadow:inset 0 0 0 1px rgba(224,189,130,.18)}.search,.select{height:38px;min-width:190px;border:1px solid var(--line);border-radius:10px;background:#0d1420;color:#e5ebf2;padding:0 11px;outline:none}.search:focus,.select:focus{border-color:#947b58;box-shadow:0 0 0 3px rgba(224,189,130,.08)}.check{display:inline-flex;align-items:center;gap:7px;color:#a8b4c3;font-size:12px}.check input{accent-color:#b88f55}.caption{font-size:11px;color:#7f8da0;margin:5px 0 9px}
+    .tableWrap{overflow:auto;border:1px solid rgba(148,163,184,.14);border-radius:14px;background:rgba(4,8,14,.25)}table{width:100%;border-collapse:collapse;min-width:920px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid rgba(148,163,184,.11);vertical-align:top;font-size:12px}th{position:sticky;top:0;z-index:1;background:#111925;color:#8e9bad;font-size:10px;letter-spacing:.04em;text-transform:uppercase}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:rgba(255,255,255,.025)}tbody tr.has-next{background:linear-gradient(90deg,rgba(224,189,130,.04),transparent 40%)}td strong{color:#e7edf4}td small{display:block;color:#758398;font-size:10px;margin-top:4px;line-height:1.45}.rank{width:54px;color:#d7b879;font-weight:900;font-size:15px}.gap{white-space:nowrap}.gap strong{font-size:19px;color:#e8c788}.gap span{margin-left:3px;color:#8694a7}.badge{display:inline-flex;align-items:center;white-space:nowrap;padding:4px 7px;border-radius:999px;border:1px solid rgba(148,163,184,.22);font-size:10px;font-weight:800}.badge.good{color:#9addc2;border-color:rgba(111,179,142,.32);background:rgba(61,134,101,.10)}.badge.soon{color:#f0cd8f;border-color:rgba(224,189,130,.34);background:rgba(158,116,55,.11)}.badge.warn{color:#edb1b9;border-color:rgba(184,78,92,.36);background:rgba(143,52,65,.12)}.badge.quiet{color:#a8b3c2}.badge.rerun{color:#dfc08c;border-color:rgba(224,189,130,.32);background:rgba(224,189,130,.08)}.badge.new{color:#8fd0ca;border-color:rgba(111,179,174,.30);background:rgba(111,179,174,.07)}.source-note{margin-top:6px;padding:6px 8px;border-radius:8px;border:1px solid rgba(213,169,95,.18);background:rgba(213,169,95,.06);color:#c9ae7d;font-size:10px;line-height:1.55}.empty{text-align:center!important;color:#7f8da1!important;padding:24px!important}
+    .methodGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:14px}.methodCard{padding:13px;border-radius:13px;border:1px solid rgba(148,163,184,.13);background:rgba(3,7,13,.27)}.methodCard strong{display:block;color:#e1c89f;font-size:12px}.methodCard p{margin:7px 0 0;color:#99a7b8;font-size:11px;line-height:1.65}.error{margin:0 0 20px;padding:13px 15px;border-radius:13px;border:1px solid rgba(197,75,87,.35);background:rgba(127,29,29,.28);color:#ffd9dd}.footer{padding:8px 0 35px;color:#738195;font-size:11px;line-height:1.7}.footer a{color:#baa37b}.loading .dataReady{opacity:.56;pointer-events:none}.loading .hero:before{content:"正在读取 Wiki 卡池历史…";position:absolute;right:22px;bottom:18px;color:#8d9aad;font-size:11px}
+    @media(max-width:960px){.summaryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.stat.wide{grid-column:span 1}.methodGrid{grid-template-columns:1fr}.panel{padding:17px}.hero{padding:27px 21px}}
+    @media(max-width:560px){.wrap{width:min(100% - 18px,1320px)}.summaryGrid{grid-template-columns:1fr}.search,.select{width:100%;min-width:0}.toolbar{align-items:stretch}.segmented{width:100%}.segmented button{flex:1}.hero{border-radius:21px}.panel{border-radius:16px}}
+  </style>
+</head>
+<body class="loading">
+  <header class="wrap topbar">
+    <a class="back" href="morimens-tools.html">← 返回忘忘看报</a>
+    <a class="back" href="https://morimens.huijiwiki.com/wiki/%E5%94%A4%E9%86%92" target="_blank" rel="noopener noreferrer">灰机 Wiki · 唤醒历史 ↗</a>
+  </header>
+
+  <main class="wrap dataReady">
+    <section class="hero">
+      <div class="eyebrow">MORIMENS · SUMMON ARCHIVE</div>
+      <h1>卡池 / 活动复刻空窗榜</h1>
+      <p>依据灰机 Wiki 的活动唤醒历史，整理唤醒体、命轮与首发活动唤醒组合的复刻记录。已公布但尚未开始的未来复刻只做提示，不会提前重置当前空窗。</p>
+      <div class="heroMeta"><span class="chip">Wiki 抓取：<b id="sourceTime">—</b></span><span class="chip">榜单基准：<b id="asOfTime">—</b></span><span class="chip">CC BY-NC-SA 来源数据</span></div>
+    </section>
+
+    <div class="summaryGrid">
+      <div class="stat"><span>活动唤醒历史</span><strong id="historyCount">—</strong></div>
+      <div class="stat"><span>复刻记录</span><strong id="rerunCount">—</strong></div>
+      <div class="stat"><span>首发组合</span><strong id="pairCount">—</strong></div>
+      <div class="stat wide"><span>当前卡池</span><strong id="currentPool">—</strong></div>
+      <div class="stat wide"><span>下一期已公布</span><strong id="nextPool">—</strong></div>
+    </div>
+
+    <div class="error" id="loadError" hidden></div>
+
+    <section class="panel">
+      <div class="panelHead"><div><h2>卡池复刻空窗期榜单</h2><p class="panelLead">按每个唤醒体 / 命轮最近一次活动唤醒可获取窗口的结束时间计算。截至基准时间仍在池内记 0 天；未来卡池单独标注。</p></div></div>
+      <div class="toolbar">
+        <div class="segmented" role="group" aria-label="榜单类型"><button type="button" data-card-kind="character" aria-pressed="true">唤醒体</button><button type="button" data-card-kind="wheel" aria-pressed="false">命轮</button></div>
+        <input class="search" id="cardSearch" type="search" placeholder="搜索唤醒体 / 命轮">
+        <label class="check"><input id="showScheduled" type="checkbox" checked>显示已公布未来复刻</label>
+      </div>
+      <div class="caption" id="cardRankingCaption">正在计算…</div>
+      <div class="tableWrap"><table><thead><tr><th>#</th><th>对象</th><th>最近一次可获取</th><th>空窗</th><th>已复刻卡池数</th><th>状态</th><th>已公布下次</th></tr></thead><tbody id="cardRankingBody"><tr><td colspan="7" class="empty">正在读取…</td></tr></tbody></table></div>
+    </section>
+
+    <section class="panel">
+      <div class="panelHead"><div><h2>活动复刻空窗期榜单</h2><p class="panelLead">这里的“活动”采用 Wiki 卡池历史可直接支持的口径：角色首发活动唤醒与其同期命轮组成的首发组合。只有同一“角色 + 命轮”组合后续再次出现才计为组合复刻。</p></div></div>
+      <div class="sourceNotice"><strong>口径提示：</strong>当前上传的 Wiki 数据包是“唤醒 / 卡池历史”，没有完整的剧情、节庆或玩法活动起止历史。因此本榜不是“剧情/玩法活动多久没复刻”的榜单，不会把缺失的活动记录自行推断进去。</div>
+      <div class="toolbar"><input class="search" id="activitySearch" type="search" placeholder="搜索卡池名 / 角色 / 命轮"><label class="check"><input id="showActivityScheduled" type="checkbox" checked>显示已公布未来复刻</label></div>
+      <div class="caption" id="activityRankingCaption">正在计算…</div>
+      <div class="tableWrap"><table><thead><tr><th>#</th><th>首发活动唤醒组合</th><th>最近一次可获取</th><th>空窗</th><th>已复刻卡池数</th><th>状态</th><th>已公布下次</th></tr></thead><tbody id="activityRankingBody"><tr><td colspan="7" class="empty">正在读取…</td></tr></tbody></table></div>
+    </section>
+
+    <section class="panel">
+      <div class="panelHead"><div><h2>Wiki 卡池历史</h2><p class="panelLead">2023–2026 活动唤醒记录统一整理。原 Wiki 时间字段保留在每条记录中；若源表内部存在冲突，会在对应行直接显示说明。</p></div></div>
+      <div class="toolbar">
+        <select class="select" id="historyYear" aria-label="年份"><option value="all">全部年份</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option></select>
+        <select class="select" id="historyTag" aria-label="类型"><option value="all">全部类型</option><option value="首发">首发</option><option value="复刻">复刻</option><option value="每日轮换复刻">每日轮换复刻</option></select>
+      </div>
+      <div class="caption" id="historyCaption">正在读取…</div>
+      <div class="tableWrap"><table><thead><tr><th>状态</th><th>开放时间</th><th>类型</th><th>唤醒体</th><th>命轮</th></tr></thead><tbody id="historyBody"><tr><td colspan="5" class="empty">正在读取…</td></tr></tbody></table></div>
+    </section>
+
+    <section class="panel">
+      <div class="panelHead"><div><h2>统计口径与来源</h2><p class="panelLead">本页只计算数据中能够明确复现的记录，避免把预测、印象或未收录活动混入历史。</p></div></div>
+      <div class="methodGrid">
+        <article class="methodCard"><strong>卡池空窗</strong><p>取对象最近一次活动唤醒结束时间至数据基准时间的完整天数；正在开放记 0 天。已公布未来池只显示日期，不提前清零。</p></article>
+        <article class="methodCard"><strong>活动唤醒组合空窗</strong><p>以首发时一一对应的角色 + 命轮为组合。后续复刻若拆池或换搭配，不会误算为原组合完整复刻。</p></article>
+        <article class="methodCard"><strong>每日轮换</strong><p>按 Wiki 给出的角色/命轮顺序与重复轮数展开为逐日窗口。2024 每日轮换源字段的结束年份冲突会保留原值并在历史表中标注归一化说明。</p></article>
+      </div>
+      <div class="sourceNotice"><strong>数据来源：</strong>morimens.huijiwiki.com「唤醒」及其 SummonAwkTable 2023 / 2024 / 2025 / 2026 历史模块；社区内容许可为 CC BY-NC-SA。本站仅作结构化整理与空窗计算。</div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">© 2026 青灯不弈 · 忘忘看报<br>粉丝向免费工具；《忘却前夜》相关角色、图片与游戏素材版权归原权利方所有。</footer>
+  <script src="morimens-rerun.js?v=20261003.1"></script>
+</body>
+</html>
