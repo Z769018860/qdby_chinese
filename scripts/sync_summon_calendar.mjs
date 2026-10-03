@@ -209,6 +209,17 @@ for(const b of [...mergedBanners]){
     if(pools.length===1&&sameKind.length===1)b.title={...b.title,zh:pools[0].name,zs:'weibo'};
   }
 }
+// generic early rerun banners (before Triune Verdant / Sylvan Omen existed): name them after the launch pool of the Awakener / wheel,
+// confirmed by the Weibo banner-pair announcement of the same day when there is one
+for(const b of mergedBanners){
+  if(b.type!=='rerun'||b.title.zs!=='ai'||!/复刻唤醒/.test(b.title.zh))continue;
+  const f=b.featured[0];if(!f?.id)continue;
+  const pair=launchPairs.find(p=>b.cat==='sylvan'?p.w===f.id:p.c===f.id);if(!pair)continue;
+  const name=b.cat==='sylvan'?pair.wb:pair.cb;if(!name)continue;
+  const day=b.start.slice(0,10),pairs=weibo.events.filter(w=>w.type==='banner-pair'&&w.start.slice(0,10)===day).map(w=>w.name);
+  const confirmed=pairs.includes(`${pair.cb} / ${pair.wb}`);
+  b.title={zh:name,en:poolNames[name]||'',zs:confirmed?'weibo':'game'};
+}
 // ---------- character events: reclassify reruns by name, attach the Awakener of every event ----------
 const finalEvents=[...allEvents,...addedEvents].sort((a,b)=>a.start.localeCompare(b.start));
 const seenBase=new Map(),nameChar=new Map();
