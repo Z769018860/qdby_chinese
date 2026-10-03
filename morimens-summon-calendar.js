@@ -47,7 +47,7 @@
       .fyD{position:relative;height:40px;border:1px solid rgba(148,163,184,.12);border-radius:5px;background:#111827;padding:0;cursor:pointer;overflow:hidden;color:#fff}
       .fyS{position:absolute;inset:0;display:flex;flex-direction:column}.fyS span{flex:1;opacity:.9}
       .fyD b{position:absolute;left:3px;top:1px;font-size:10.5px;font-weight:800;text-shadow:0 0 3px #000,0 0 2px #000,1px 1px 2px #000;z-index:2}
-      .fyA{position:absolute;right:1px;bottom:1px;display:flex;gap:1px;z-index:2}.fyA img{width:20px;height:20px;border-radius:50%;object-fit:cover;border:1px solid rgba(0,0,0,.6);background:#0b0f16}
+      .fyA{position:absolute;right:1px;bottom:1px;display:flex;z-index:2}.fyA img+img{margin-left:-6px}.fyA img{width:17px;height:17px;border-radius:50%;object-fit:cover;border:1px solid rgba(0,0,0,.6);background:#0b0f16}
       .fyD.today{outline:2px solid #fff;outline-offset:-2px}.fyD.sel{outline:2px solid #f1d69f;outline-offset:-2px}.fyD.hit{box-shadow:inset 0 0 0 2px #fff}.fyD:hover{filter:brightness(1.2)}
       .fyList{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:6px}
       .fyL{display:flex;gap:6px;align-items:center;text-align:left;background:#0f1927;border:1px solid rgba(148,163,184,.18);border-radius:8px;padding:5px 8px;color:#dbe4f0;cursor:pointer;font-family:inherit}.fyL.sel{border-color:#fff}
@@ -58,6 +58,7 @@
     document.head.appendChild(s);
   }
 
+  const uniqF=fs=>{const seen=new Set();return (fs||[]).filter(f=>{const k=f.id||f.en||f.zh;if(seen.has(k))return false;seen.add(k);return true})};
   const day=s=>String(s||'').slice(0,10);
   const hhmm=s=>String(s||'').slice(11,16);
   const ms=s=>Date.parse(s);
@@ -96,7 +97,7 @@
   const addDays=(k,n)=>dstr(new Date(Date.parse(k+'T00:00:00Z')+n*86400000));
   const dayDiff=(a,b)=>Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/86400000);
   function barLabel(x){
-    const names=x.featured.map(f=>nm(f.en,f.zh)).filter(Boolean);
+    const names=uniqF(x.featured).map(f=>nm(f.en,f.zh)).filter(Boolean);
     const t=tName(x.title);
     return {t,names:names.join(zh()?'、':', ')};
   }
@@ -116,14 +117,14 @@
     }
     const MN=zh()?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const WD=zh()?['一','二','三','四','五','六','日']:['M','T','W','T','F','S','S'];
-    const av=x=>{const f=x.featured.find(f=>f.id&&state.pool.get(f.id));return f?state.pool.get(f.id).img:''};
+    const startIds=st=>{const ids=[];for(const x of st)for(const f of uniqF(x.featured))if(f.id&&state.pool.get(f.id)&&!ids.includes(f.id))ids.push(f.id);return ids};
     const months=MN.map((mn,mi)=>{
       const first=`${year}-${p2(mi+1)}-01`,len=new Date(Date.UTC(year,mi+1,0)).getUTCDate(),lead=(new Date(first+'T00:00:00Z').getUTCDay()+6)%7;
       let cells='';for(let i=0;i<lead;i++)cells+='<i></i>';
       for(let d=1;d<=len;d++){
         const k=`${year}-${p2(mi+1)}-${p2(d)}`,l=cov.get(k)||[],st=startsOn.get(k)||[];
         const stripes=l.map(x=>`<span style="background:${color.get(x.id)}"></span>`).join('');
-        const avs=st.slice(0,2).map(x=>av(x)).filter(Boolean).map(u=>`<img src="${esc(u)}" alt="" loading="lazy">`).join('');
+        const avs=startIds(st).slice(0,3).map(id=>`<img src="${esc(state.pool.get(id).img)}" alt="" loading="lazy">`).join('');
         const tip=l.map(x=>`${tName(x.title)}${x.featured.length?'：'+x.featured.map(f=>nm(f.en,f.zh)).join('、'):''}`).join('\n');
         const hit=state.pick&&l.some(x=>x.id===state.pick);
         cells+=`<button type="button" class="fyD${k===todayK?' today':''}${state.day===k?' sel':''}${hit?' hit':''}" data-scday="${k}" title="${esc(k+(tip?'\n'+tip:''))}"><span class="fyS">${stripes}</span>${avs?`<span class="fyA">${avs}</span>`:''}<b>${d}</b></button>`;
@@ -131,7 +132,7 @@
       return `<div class="ycM"><div class="ycH">${mn}</div><div class="ycW">${WD.map(w=>`<i>${w}</i>`).join('')}</div><div class="ycG">${cells}</div></div>`;
     }).join('');
     const legend=yi.map(x=>{
-      const {a,b}=span(x),icons=x.featured.slice(0,4).map(f=>{const it=f.id?state.pool.get(f.id):null;return it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}).join('');
+      const {a,b}=span(x),icons=uniqF(x.featured).slice(0,4).map(f=>{const it=f.id?state.pool.get(f.id):null;return it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}).join('');
       const names=x.featured.map(f=>nm(f.en,f.zh)).join(zh()?'、':', ');
       return `<button type="button" class="fyL${state.pick===x.id?' sel':''}" data-scpick="${esc(x.id)}"><i style="background:${color.get(x.id)}"></i>${icons}<span><b>${esc(tName(x.title))}</b><small>${esc(a)} ~ ${esc(day(x.end))}${names?' · '+esc(names):''}</small></span></button>`;
     }).join('');
@@ -195,7 +196,7 @@
               g.save();rr(g,cx+1,cy,CW-2,CH,4);g.clip();g.fillStyle='#111827';g.fillRect(cx,cy,CW,CH);
               l.forEach((x,i)=>{g.fillStyle=color.get(x.id);g.fillRect(cx,cy+i*CH/l.length,CW,CH/l.length+0.5)});
               g.restore();
-              const st=startsOn.get(k)||[];st.slice(0,2).forEach((x,i)=>{const f=x.featured.find(f=>f.id&&imgs.get(f.id));if(f)avatar(g,f.id,cx+CW-18-i*17,cy+CH-18,17)});
+              const st=startsOn.get(k)||[],ids=[];for(const x of st)for(const f of uniqF(x.featured))if(f.id&&imgs.get(f.id)&&!ids.includes(f.id))ids.push(f.id);ids.slice(0,3).forEach((id,i,a)=>avatar(g,id,cx+CW-18-(a.length-1-i)*11,cy+CH-18,17));
               g.fillStyle='#fff';g.font=`700 10.5px ${FONT}`;g.textAlign='left';g.textBaseline='top';g.shadowColor='#000';g.shadowBlur=3;g.fillText(String(d),cx+4,cy+2);g.shadowBlur=0;g.textBaseline='middle';
             }
           }
@@ -204,7 +205,7 @@
           yi.forEach((x,i)=>{
             const lx=PAD+(i%legendCols)*(LW+GAP),ly=y+Math.floor(i/legendCols)*(LH+6);
             g.fillStyle='#0f1927';rr(g,lx,ly,LW,LH,8);g.fill();g.fillStyle=color.get(x.id);g.fillRect(lx,ly+4,6,LH-8);
-            let ax=lx+14;x.featured.filter(f=>f.id&&imgs.get(f.id)).slice(0,4).forEach(f=>{avatar(g,f.id,ax,ly+8,28);ax+=22});ax+=16;
+            let ax=lx+14;uniqF(x.featured).filter(f=>f.id&&imgs.get(f.id)).slice(0,4).forEach(f=>{avatar(g,f.id,ax,ly+8,28);ax+=22});ax+=16;
             g.fillStyle='#ead9b9';g.font=`700 13px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(clipText(g,tName(x.title),lx+LW-ax-8),ax,ly+15);
             g.fillStyle='#8fa2bd';g.font=`11.5px ${FONT}`;g.fillText(clipText(g,`${span(x).a} ~ ${day(x.end)}${x.featured.length?' · '+x.featured.map(f=>nm(f.en,f.zh)).join(zh()?'、':', '):''}`,lx+LW-ax-8),ax,ly+32);
           });
@@ -232,7 +233,7 @@
             for(const b of w.bars){
               const bx=PAD+b.col*CW+2,bw=b.len*CW-4,by=y+DAYH+b.lane*(BH+3);
               g.fillStyle=CATCOLOR[b.x.cat]||'#8c97a8';rr(g,bx,by,bw,BH,6);g.fill();
-              let tx=bx+6;b.x.featured.filter(f=>f.id&&imgs.get(f.id)).slice(0,4).forEach(f=>{avatar(g,f.id,tx,by+5,28);tx+=22});tx+=10;
+              let tx=bx+6;uniqF(b.x.featured).filter(f=>f.id&&imgs.get(f.id)).slice(0,4).forEach(f=>{avatar(g,f.id,tx,by+5,28);tx+=22});tx+=10;
               g.save();g.beginPath();g.rect(bx,by,bw,BH);g.clip();
               g.fillStyle='#10151d';g.font=`700 12.5px ${FONT}`;g.textAlign='left';g.textBaseline='middle';g.fillText(clipText(g,tName(b.x.title),bx+bw-tx-6),tx,by+13);
               g.font=`11.5px ${FONT}`;g.fillText(clipText(g,b.x.featured.map(f=>nm(f.en,f.zh)).join(zh()?'、':', '),bx+bw-tx-6),tx,by+28);g.restore();
@@ -276,7 +277,7 @@
       }).join('');
       const bh=bars.map(b=>{
         const x=b.x,lb=barLabel(x),color=CATCOLOR[x.cat]||'#8c97a8';
-        const icons=x.featured.slice(0,4).map(f=>{const it=f.id?state.pool.get(f.id):null;return it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}).join('');
+        const icons=uniqF(x.featured).slice(0,4).map(f=>{const it=f.id?state.pool.get(f.id):null;return it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}).join('');
         const tip=`${lb.t}${lb.names?'：'+lb.names:''}\n${day(x.start)} ~ ${day(x.end)}`;
         return `<button type="button" class="ymB${b.left?' cl':''}${b.right?' cr':''}${state.pick===x.id?' sel':''}" style="grid-column:${b.col+1}/span ${b.len};grid-row:${b.lane+2};background:${color}" data-scpick="${esc(x.id)}" title="${esc(tip)}">${icons}<span class="ymT"><b>${esc(lb.t)}</b>${lb.names?`<i>${esc(lb.names)}</i>`:''}</span></button>`;
       }).join('');
@@ -348,7 +349,6 @@
     const gp=gAll.filter(e=>!q||nk(e.ref.en+e.ref.zh).includes(q)).filter(e=>state.showNext||!e.next);
     const shown=list.slice(0,state.limit);
     host.innerHTML=`<div class="scWrap">
-      <div class="scNote">${ui('卡池日期来自灰机维基「唤醒」页（2023-11 起，含复刻、三相衡生 / 因果苗圃、命轨合契、循序命理、界域锚定等）与 SKeyDB 时间线（2026-02 起，含英文名与角色活动），时间为游戏服务器时间 UTC+8；微博「忘却前夜记录局」公告（2025-12 起的官方中文活动 / 卡池名与日期）、Steam 公告的版本更新说明（2025-09 起的各期活动日期）与 Morimens.Info.kr 的复刻记录用于补充和交叉核对。中文名来自游戏翻译表与灰机维基，无官方译名的标题为 AI 辅助翻译（标 *）。三相衡生 = 3 位角色复刻池，因果苗圃 = 3 个命轮复刻池。角色活动日期：2023-12 至 2024-11 来自灰机维基，2025-09 起来自 Steam 公告，2024-04 起以微博「忘却前夜记录局」公告为准（官方中文名与起止日期，已覆盖到现在），2025-09 起另有 Steam 公告、2026-03 起另有 SKeyDB 校对。','Banner dates come from the Huiji Wiki 唤醒 page (since 2023-11: reruns, Triune Verdant / Sylvan Omen, Walks of All Life, Fated Soiree, Realm Anchor, …) and the SKeyDB timeline (since 2026-02, with English names and character events); times are game server time (UTC+8). Weibo announcements of 忘却前夜记录局 (official Chinese event / banner names and dates since 2025-12), Steam announcements (event schedules since 2025-09) and Morimens.Info.kr rerun records fill gaps and cross-check. Chinese names come from the game localization table and Huiji Wiki; titles without an official name are AI-assisted (marked *). Triune Verdant = three character reruns, Sylvan Omen = three wheel reruns. Character event dates: 2023-12 to 2024-11 from the Huiji Wiki, 2025-09 onwards from Steam announcements, authoritative from 2024-04 on via the Weibo announcements of 忘却前夜记录局 (official Chinese names and dates up to now), cross-checked with Steam announcements (2025-09+) and SKeyDB (2026-03+).')}</div>
       <div class="scBar">${CATS.map(([k,cn,en])=>`<button type="button" class="scChip" data-sccat="${k}" aria-pressed="${state.cat===k}">${ui(cn,en)}</button>`).join('')}<input type="search" id="scQuery" value="${esc(state.query)}" placeholder="${esc(ui('搜索角色 / 命轮 / 活动','Search Awakener / wheel / event'))}"><button type="button" class="scChip" data-scdir>${state.dir==='desc'?ui('最新在前 ↓','Newest first ↓'):ui('最早在前 ↑','Oldest first ↑')}</button></div>
       ${live.length?`<div class="scSec">${ui('进行中','Live now')}</div>${live.map(x=>row(x,now)).join('')}`:''}
       ${soon.length?`<div class="scSec">${ui('即将开始','Coming up')}</div>${soon.map(x=>row(x,now)).join('')}`:''}
