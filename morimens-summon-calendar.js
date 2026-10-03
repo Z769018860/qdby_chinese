@@ -5,7 +5,7 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener'};
+  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener',view:'year',year:null,day:null};
   let host=null;
 
   const CATS=[['all','全部','All'],['triune','三相衡生（角色复刻）','Triune Verdant (character reruns)'],['sylvan','因果苗圃（命轮复刻）','Sylvan Omen (wheel reruns)'],['limited','限时唤醒（新角色 + 专属命轮）','Limited (new Awakener + wheel)'],['premium','精选 / 命轨合契 / 循序命理 / 界域锚定 / 自选等','Premium / Walks / Fated Soiree / Realm Anchor / selectors'],['event','角色活动（含复刻）','Character events (incl. reruns)'],['other','时装 / 命轮活动','Skins / wheel events']];
@@ -33,6 +33,13 @@
       .scMonths{display:flex;gap:4px;flex-wrap:wrap}.scMonths span{font-size:11px;border:1px solid rgba(148,163,184,.25);border-radius:4px;padding:0 5px;color:#c7d2e2;font-variant-numeric:tabular-nums}.scMonths span.first{border-color:#d9a441;color:#f1d69f}
       .scAv{display:flex;gap:8px;align-items:center;min-width:130px}.scAv img{width:30px;height:30px;border-radius:50%;object-fit:cover}
       .scH{border:1px solid rgba(148,163,184,.18);border-radius:10px;background:#0d121a}.scH>summary{cursor:pointer;padding:9px 12px;color:#ead9b9;font-weight:700}.scH .body{padding:0 12px 12px}
+      .ycWrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+      .ycM{border:1px solid rgba(148,163,184,.18);border-radius:10px;background:#0d121a;padding:8px}.ycH{font-weight:700;color:#ead9b9;margin:0 2px 4px}
+      .ycW,.ycG{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.ycW i{font-style:normal;text-align:center;font-size:10px;color:#8290a2}
+      .ycE{display:block}.ycD{position:relative;height:34px;border:1px solid rgba(148,163,184,.12);border-radius:5px;background:#111827;padding:0;cursor:pointer;overflow:hidden;color:#dbe4f0}
+      .ycS{position:absolute;inset:0;display:flex;flex-direction:column}.ycS span{flex:1;opacity:.85}.ycD b{position:relative;font-size:10.5px;font-weight:700;text-shadow:0 0 3px #000,0 0 2px #000}
+      .ycD.today{outline:2px solid #fff;outline-offset:-2px}.ycD.sel{outline:2px solid #f1d69f;outline-offset:-2px}.ycD:hover{filter:brightness(1.25)}
+      .ycLegend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12px;color:#aab6c8}.ycL i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
       @media(max-width:700px){.scRow{grid-template-columns:1fr}}`;
     document.head.appendChild(s);
   }
@@ -66,6 +73,45 @@
     const q=nk(state.query);if(!q)return true;
     return nk(x.title.en+x.title.zh).includes(q)||x.featured.some(f=>nk(f.en+f.zh).includes(q));
   }
+  // ---------- year calendar: every banner paints the days it covers in its category colour ----------
+  const CATCOLOR={triune:'#62b7ff',sylvan:'#4fc58a',limited:'#e0a83a',premium:'#d978d0',event:'#ef7d62',other:'#8c97a8'};
+  const CATORDER=['limited','triune','sylvan','premium','event','other'];
+  const dstr=d=>d.toISOString().slice(0,10);
+  function coverage(items,year){
+    const map=new Map(),lo=`${year}-01-01`,hi=`${year}-12-31`;
+    for(const x of items){
+      let a=day(x.start),b=day(x.end||x.start);if(b<=a)b=a;
+      const endExcl=b>a;                      // a banner ending 09:00 on day D does not paint D itself
+      for(let t=Date.UTC(+a.slice(0,4),+a.slice(5,7)-1,+a.slice(8,10));;t+=86400000){
+        const k=dstr(new Date(t));if(k>hi||k>b||(endExcl&&k===b))break;
+        if(k>=lo){const l=map.get(k)||[];l.push(x);map.set(k,l)}
+      }
+    }
+    return map;
+  }
+  function yearHtml(items,now){
+    const year=state.year,cov=coverage(items,year),todayK=dstr(new Date(now+8*3600e3));
+    const MN=zh()?['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const WD=zh()?['一','二','三','四','五','六','日']:['M','T','W','T','F','S','S'];
+    const months=MN.map((mn,mi)=>{
+      const first=new Date(Date.UTC(year,mi,1)),len=new Date(Date.UTC(year,mi+1,0)).getUTCDate(),lead=(first.getUTCDay()+6)%7;
+      let cells='';for(let i=0;i<lead;i++)cells+='<i class="ycE"></i>';
+      for(let d=1;d<=len;d++){
+        const k=`${year}-${String(mi+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,l=(cov.get(k)||[]).slice().sort((a,b)=>CATORDER.indexOf(a.cat)-CATORDER.indexOf(b.cat));
+        const stripes=l.map(x=>`<span style="background:${CATCOLOR[x.cat]||'#8c97a8'}"></span>`).join('');
+        const tip=l.map(x=>tName(x.title)+(x.featured.length?'：'+x.featured.map(f=>nm(f.en,f.zh)).join('、'):'')).join('\n');
+        cells+=`<button type="button" class="ycD${k===todayK?' today':''}${state.day===k?' sel':''}" data-scday="${k}" title="${esc(k+(tip?'\n'+tip:''))}"><span class="ycS">${stripes}</span><b>${d}</b></button>`;
+      }
+      return `<div class="ycM"><div class="ycH">${mn}</div><div class="ycW">${WD.map(w=>`<i>${w}</i>`).join('')}</div><div class="ycG">${cells}</div></div>`;
+    }).join('');
+    const legend=CATS.filter(c=>c[0]!=='all').map(([k,cn,en])=>`<span class="ycL"><i style="background:${CATCOLOR[k]}"></i>${esc(ui(cn,en))}</span>`).join('');
+    const sel=state.day?(cov.get(state.day)||[]):null;
+    const years=[];for(let y=2023;y<=new Date(now).getUTCFullYear()+1;y++)years.push(y);
+    return `<div class="scBar"><button type="button" class="scChip" data-scyear="${year-1}"${year<=2023?' disabled':''}>←</button>${years.map(y=>`<button type="button" class="scChip" data-scyear="${y}" aria-pressed="${y===year}">${y}</button>`).join('')}<button type="button" class="scChip" data-scyear="${year+1}"${year>=years[years.length-1]?' disabled':''}>→</button></div>
+      <div class="ycLegend">${legend}</div>
+      <div class="ycWrap">${months}</div>
+      ${state.day?`<div class="scSec">${esc(state.day)} ${ui('当天的卡池 / 活动','banners / events on this day')}</div>${sel.length?sel.map(x=>row(x,now)).join(''):`<div class="scNote">${ui('这一天没有记录的卡池或活动','Nothing recorded for this day')}</div>`}`:`<div class="scNote">${ui('点击日期查看当天卡池详情；颜色条从上到下按「限时 / 三相衡生 / 因果苗圃 / 精选等 / 角色活动 / 其他」排列，同一天多个卡池会并排叠色。','Click a day for its banners. Overlapping banners stack as stripes in the order limited / Triune / Sylvan / premium / events / other.')}</div>`}`;
+  }
   function row(x,now){
     const live=ms(x.start)<=now&&now<ms(x.end),soon=ms(x.start)>now,t=TYPE[x.kindKey]||['活动','Event'];
     const st=live?`<span class="scState on">${ui('进行中','Live')}</span>`:soon?`<span class="scState soon">${ui('未开始','Upcoming')}</span>`:'';
@@ -93,7 +139,8 @@
     if(!host)return;
     if(state.error){host.innerHTML=`<div class="scNote">${ui('日历数据加载失败：','Failed to load calendar data: ')}${esc(state.error)}</div>`;return}
     if(!state.data){host.innerHTML=`<div class="scNote">${ui('正在加载日历数据…','Loading calendar data…')}</div>`;return}
-    const now=Date.now(),list=all().filter(match).sort((a,b)=>state.dir==='desc'?ms(b.start)-ms(a.start)||ms(b.end)-ms(a.end):ms(a.start)-ms(b.start));
+    const now=Date.now();if(state.year==null)state.year=new Date(now+8*3600e3).getUTCFullYear();
+    const list=all().filter(match).sort((a,b)=>state.dir==='desc'?ms(b.start)-ms(a.start)||ms(b.end)-ms(a.end):ms(a.start)-ms(b.start));
     const live=list.filter(x=>ms(x.start)<=now&&now<ms(x.end)).sort((a,b)=>ms(a.end)-ms(b.end));
     const soon=all().filter(match).filter(x=>ms(x.start)>now).sort((a,b)=>ms(a.start)-ms(b.start)).slice(0,6);
     const q=nk(state.query);
@@ -105,9 +152,9 @@
       <div class="scBar">${CATS.map(([k,cn,en])=>`<button type="button" class="scChip" data-sccat="${k}" aria-pressed="${state.cat===k}">${ui(cn,en)}</button>`).join('')}<input type="search" id="scQuery" value="${esc(state.query)}" placeholder="${esc(ui('搜索角色 / 命轮 / 活动','Search Awakener / wheel / event'))}"><button type="button" class="scChip" data-scdir>${state.dir==='desc'?ui('最新在前 ↓','Newest first ↓'):ui('最早在前 ↑','Oldest first ↑')}</button></div>
       ${live.length?`<div class="scSec">${ui('进行中','Live now')}</div>${live.map(x=>row(x,now)).join('')}`:''}
       ${soon.length?`<div class="scSec">${ui('即将开始','Coming up')}</div>${soon.map(x=>row(x,now)).join('')}`:''}
-      <div class="scSec">${ui('全部卡池与活动','All banners & events')} <span class="scNote">${list.length} ${ui('条','entries')}</span></div>
-      ${shown.map(x=>row(x,now)).join('')||`<div class="scNote">${ui('没有符合条件的条目','No entries match')}</div>`}
-      ${list.length>shown.length?`<button type="button" class="scChip" data-scmore>${ui(`显示更多（还有 ${list.length-shown.length} 条）`,`Show more (${list.length-shown.length} left)`)}</button>`:''}
+      <div class="scSec">${ui('全部卡池与活动','All banners & events')} <span class="scNote">${list.length} ${ui('条','entries')}</span> <button type="button" class="scChip" data-scview="year" aria-pressed="${state.view==='year'}">${ui('年历','Year calendar')}</button> <button type="button" class="scChip" data-scview="list" aria-pressed="${state.view==='list'}">${ui('列表','List')}</button></div>
+      ${state.view==='year'?yearHtml(list,now):`${shown.map(x=>row(x,now)).join('')||`<div class="scNote">${ui('没有符合条件的条目','No entries match')}</div>`}
+      ${list.length>shown.length?`<button type="button" class="scChip" data-scmore>${ui(`显示更多（还有 ${list.length-shown.length} 条）`,`Show more (${list.length-shown.length} left)`)}</button>`:''}`}
       ${state.data.forecast?.length?`<div class="scSec">${ui('未来唤醒预测（灰机维基，仅供参考）','Forecast (Huiji Wiki, for entertainment only)')}</div><div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('开启时间','Starts')}</th><th>${ui('内容','Content')}</th></tr></thead><tbody>${state.data.forecast.map(f=>`<tr><td>${esc(day(f.start))}${f.end?` ~ ${esc(day(f.end))}`:''}</td><td>${esc(zh()?f.text:(FC[f.text]||f.text))}</td></tr>`).join('')}</tbody></table></div>`:''}
       <div class="scSec">${ui('复刻空白期榜单','Rerun gap leaderboard')}</div>
       <div class="scNote">${ui('统计限时 / 复刻活动唤醒（含三相衡生、因果苗圃），从最近一次卡池结束算起，空白越久越靠前；进行中的排在最前。1 期 = 28 天。仅作参考，官方排期以公告为准。','Counts limited and rerun event banners (incl. Triune Verdant / Sylvan Omen); the gap runs from the end of the latest banner, longest first; live ones come first. 1 cycle = 28 days. For reference only — follow official announcements.')}</div>
@@ -134,6 +181,9 @@
       const c=e.target.closest('[data-sccat]');if(c){state.cat=c.dataset.sccat;state.limit=40;draw();return}
       if(e.target.closest('[data-scdir]')){state.dir=state.dir==='desc'?'asc':'desc';draw();return}
       if(e.target.closest('[data-scmore]')){state.limit+=60;draw();return}
+      const v=e.target.closest('[data-scview]');if(v){state.view=v.dataset.scview;draw();return}
+      const yb=e.target.closest('[data-scyear]');if(yb&&!yb.disabled){state.year=+yb.dataset.scyear;state.day=null;draw();return}
+      const dd=e.target.closest('[data-scday]');if(dd){state.day=state.day===dd.dataset.scday?null:dd.dataset.scday;draw();return}
       const g=e.target.closest('[data-scgap]');if(g){state.gapKind=g.dataset.scgap;draw()}
     });
     document.addEventListener('input',e=>{if(e.target?.id==='scQuery'){state.query=e.target.value;const pos=e.target.selectionStart;draw();const i=document.getElementById('scQuery');if(i){i.focus();i.setSelectionRange(pos,pos)}}});
