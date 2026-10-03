@@ -7,6 +7,20 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const STORE='morimens.tierlist.v1';
   const KINDS=[['awakener','唤醒体','Awakeners'],['wheel','命轮','Wheels'],['relic','造物','Creations'],['posse','钥令','Key Tokens'],['covenant','密契','Covenants'],['avatar','头像','Avatars'],['monster','怪物','Monsters']];
+  // pool filters: per kind, facet groups of [tag, 中文, English]; items carry tags in `t` (scripts/build_morimens_tier_pool.mjs)
+  const REALMS=[['realm:CHAOS','混沌','Chaos'],['realm:CARO','血肉','Caro'],['realm:AEQUOR','深海','Aequor'],['realm:ULTRA','超维','Ultra']];
+  const FACETS={
+    awakener:[['类型','Type',[['type:ASSAULT','伤害型','Assault'],['type:CHORUS','辅助型','Chorus'],['type:WARDEN','防御型','Warden']]],['界域','Realm',REALMS]],
+    wheel:[['主属性','Main stat',[['stat:CRIT_RATE','暴击率','Crit Rate'],['stat:CRIT_DMG','暴击伤害','Crit DMG'],['stat:DMG_AMP','伤害强效','DMG Amp'],['stat:REALM_MASTERY','界域精通','Realm Mastery'],['stat:DEATH_RESISTANCE','死亡抵抗','Death Resistance'],['stat:ALIEMUS_REGEN','Aliemus 回复','Aliemus Regen'],['stat:KEYFLARE_REGEN','钥令回复','Keyflare Regen'],['stat:SIGIL_YIELD','印记产出','Sigil Yield']]],['界域','Realm',[...REALMS,['realm:NEUTRAL','中立','Neutral']]]],
+    relic:[['来源','Source',[['src:FADED_LEGACY','忘却篇造物','Faded Legacy'],['src:ASTRAL_REIGN','星辰篇造物','Astral Reign'],['src:DZONE','融灾造物','D-Zone'],['src:PENDULUM','时灵摆（列车）','Chrono Pendulum'],['src:DIMENSIONAL_IMAGE','维度影像','Dimensional Image'],['src:EVENT','活动造物','Event'],['src:OTHER','其他','Other']]]],
+    posse:[['界域','Realm',[...REALMS,['realm:FADED_LEGACY','忘却篇','Faded Legacy'],['realm:OTHER','其他','Other']]]],
+    monster:[['阶级','Rank',[['rank:Boss','首领','Boss'],['rank:Elite','精英','Elite'],['rank:Normal','普通','Normal']]],['特性','Trait',[['trait:Humanoid','人型','Humanoid'],['trait:Departed','亡灵','Departed'],['trait:Beast','野兽','Beast'],['trait:Insectoid','虫族','Insectoid'],['trait:Plant','植物','Plant'],['trait:Mutant','异变体','Mutant'],['trait:Empty Shell','空壳','Empty Shell'],['trait:Kynde','眷族','Kynde'],['trait:Dominion','主宰','Dominion'],['trait:Awakener','唤醒体','Awakener'],['trait:Sculptors','雕塑家协会','Sculptors'],['trait:Lightbearers','提灯教会','Lightbearers'],['trait:Committee','审查会','Committee'],['trait:Snowfield','雪原','Snowfield'],['trait:Primordial Shadow','原初投影','Primordial Shadow'],['trait:Caro','血肉','Caro'],['trait:Aequor','深海','Aequor'],['trait:Ultra','超维','Ultra'],['trait:Unknown','未知','Unknown']]]]
+  };
+  const facetSel={};  // kind -> {facetIndex: tag}
+  const facetHtml=()=>(FACETS[ui$.kind]||[]).map(([cn,en,opts],fi)=>{
+    const cur=(facetSel[ui$.kind]||{})[fi]||'';
+    return `<div class="tlFacet"><span class="tlFacetName">${ui(cn,en)}</span><button type="button" class="tlChip${cur?'':' on'}" data-tlfacet="${fi}" data-tlval="">${ui('全部','All')}</button>${opts.map(([t,c,e])=>`<button type="button" class="tlChip${cur===t?' on':''}" data-tlfacet="${fi}" data-tlval="${esc(t)}">${ui(c,e)}</button>`).join('')}</div>`;
+  }).join('');
   const DEFAULT_ROWS=[['S','#ff7f7f'],['A','#ffbf7f'],['B','#ffdf7f'],['C','#ffff7f'],['D','#bfff7f']];
   const uid=()=>Math.random().toString(36).slice(2,9);
   const defaults=()=>({title:'',rows:DEFAULT_ROWS.map(([label,color])=>({id:uid(),label,color,items:[]}))});
@@ -48,7 +62,7 @@
       .tlItem .tlTxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;color:#aab6c8;padding:2px}
       .tlTabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.tlTab{background:#111827;color:#aab6c8;border:1px solid rgba(148,163,184,.25);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer}
       .tlTab[aria-selected=true]{background:#3a2f17;color:#f1d69f;border-color:#f1d69f}
-      .tlTools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:#8290a2}.tlTools input[type=search]{background:#111827;color:#dbe4f0;border:1px solid rgba(148,163,184,.3);border-radius:8px;padding:6px 10px;min-width:180px}
+      .tlFacets{display:flex;flex-direction:column;gap:6px;margin:6px 0}.tlFacet{display:flex;flex-wrap:wrap;gap:5px;align-items:center}.tlFacetName{font-size:12px;color:#8290a2;min-width:52px}.tlChip{border:1px solid rgba(148,163,184,.3);background:#111827;color:#aeb8c7;border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer}.tlChip:hover{border-color:#f1d69f;color:#f1d69f}.tlChip.on{background:#d5b176;border-color:#d5b176;color:#1a1305;font-weight:700}.tlTools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:#8290a2}.tlTools input[type=search]{background:#111827;color:#dbe4f0;border:1px solid rgba(148,163,184,.3);border-radius:8px;padding:6px 10px;min-width:180px}
       .tlPool{display:flex;flex-wrap:wrap;gap:4px;padding:8px;border:1px solid rgba(148,163,184,.25);border-radius:10px;background:#0d121a;min-height:110px;max-height:520px;overflow:auto;align-content:flex-start}
       .tlNote{font-size:12px;color:#8290a2;line-height:1.6}.tlMsg{font-size:12px;color:#f1d69f;min-height:18px}
       .tlImport{border:1px solid rgba(148,163,184,.25);border-radius:10px;padding:10px;background:#0d121a}.tlImport textarea{width:100%;min-height:110px;background:#111827;color:#dbe4f0;border:1px solid rgba(148,163,184,.3);border-radius:8px;padding:8px;font-family:ui-monospace,monospace;font-size:12px}
@@ -159,6 +173,7 @@
         <div class="tlCtl"><button type="button" data-tlren="${r.id}" title="${esc(ui('修改分级名称','Rename tier'))}">✎</button><button type="button" data-tlup="${r.id}" title="${esc(ui('上移','Move up'))}"${i===0?' disabled':''}>▲</button><button type="button" data-tldel="${r.id}" title="${esc(ui('删除此行','Delete row'))}">✕</button><button type="button" data-tldown="${r.id}" title="${esc(ui('下移','Move down'))}"${i===state.rows.length-1?' disabled':''}>▼</button></div>
       </div>`).join('')}</div>
       <div class="tlTabs" role="tablist" aria-label="${esc(ui('图片资源','Image sources'))}">${kindTabs}</div>
+      <div class="tlFacets" id="tlFacets">${facetHtml()}</div>
       <div class="tlTools"><input type="search" id="tlSearch" value="${esc(ui$.query)}" placeholder="${esc(ui('搜索名称（中 / 英）','Search name (zh / en)'))}"><label><input type="checkbox" id="tlHide"${ui$.hidePlaced?' checked':''}> ${ui('隐藏已放置','Hide placed')}</label><span id="tlCount"></span></div>
       <div class="tlPool" id="tlPool" data-drop="__pool"></div>
       <div class="tlNote">${ui('操作：把图标拖到分级行里（也可先点选图标，再点击目标行）；已放置的图标可在行之间拖动，双击移回图库。鼠标悬浮在图标上可查看名称和详细属性。数据保存在本机浏览器中。','How to use: drag icons into tier rows (or click an icon, then click a row); drag placed icons between rows, double-click to return one to the pool. Hover an icon for its name and details. Data is kept in this browser.')}</div>
@@ -170,7 +185,8 @@
   function drawPool(){
     if(!pool)return;
     const q=ui$.query.trim().toLowerCase(),used=placed();
-    const list=[...catalog.values()].filter(it=>it.kind===ui$.kind&&(!ui$.hidePlaced||!used.has(key(it.kind,it.id)))&&(!q||(it.zh||'').toLowerCase().includes(q)||(it.en||'').toLowerCase().includes(q)));
+    const sel=Object.values(facetSel[ui$.kind]||{}).filter(Boolean);
+    const list=[...catalog.values()].filter(it=>it.kind===ui$.kind&&sel.every(t=>(it.t||[]).includes(t))&&(!ui$.hidePlaced||!used.has(key(it.kind,it.id)))&&(!q||(it.zh||'').toLowerCase().includes(q)||(it.en||'').toLowerCase().includes(q)));
     pool.innerHTML=list.map(it=>tile(key(it.kind,it.id))).join('')||`<div class="tlNote">${ui('没有符合条件的图标','No icons match')}</div>`;
     const c=host.querySelector('#tlCount');if(c)c.textContent=`${list.length} ${ui('个','items')}`;
   }
@@ -325,6 +341,8 @@
         else if(a==='reset'){if(confirm(ui('重置为默认 T 表？当前内容将丢失。','Reset to the default tier list? Current content will be lost.'))){state=defaults();save();draw()}}
         return;
       }
+      const ft=t.closest('[data-tlfacet]');if(ft){const m=facetSel[ui$.kind]||(facetSel[ui$.kind]={});m[ft.dataset.tlfacet]=ft.dataset.tlval;host.querySelector('#tlFacets').innerHTML=facetHtml();drawPool();return}
+      const fct=t.closest('[data-tlfacet]');if(fct){const m=facetSel[ui$.kind]||(facetSel[ui$.kind]={});m[fct.dataset.tlfacet]=fct.dataset.tlval;host.querySelector('#tlFacets').innerHTML=facetHtml();drawPool();return}
       const kt=t.closest('[data-tlkind]');if(kt){ui$.kind=kt.dataset.tlkind;ui$.selected=null;draw();return}
       const rn=t.closest('[data-tlren]');
       if(rn){const r=state.rows.find(x=>x.id===rn.dataset.tlren);if(r){const v=prompt(ui('分级名称：','Tier name:'),r.label);if(v!==null){r.label=v.slice(0,24);save();draw()}}return}

@@ -21,12 +21,12 @@ async function imageOf(assetId){
   }
   return '';
 }
-async function fromCatalog(file,{zh={}}={}){
+async function fromCatalog(file,{zh={},tags}={}){
   const out=[];
   for(const r of (await readJson(`${D}/skeydb/public-v3/catalogs/${file}`)).records){
     const img=await imageOf(r.assets?.icon);
     if(!img)continue;
-    out.push({id:r.id,en:strip(r.name),zh:zh[r.id]||zh[strip(r.name)]||'',img});
+    out.push({id:r.id,en:strip(r.name),zh:zh[r.id]||zh[strip(r.name)]||'',img,...(tags?{t:tags(r)}:{})});
   }
   return out;
 }
@@ -50,12 +50,20 @@ const aw=[];
 for(const r of (await readJson(`${D}/skeydb/awakeners.json`)).records){
   const img=`assets/morimens/portraits/${r.assetSlug}.webp`;
   if(!await exists(img))continue;
-  aw.push({id:r.id,en:strip(r.name),zh:strip(huijiAw[r.id]?.name).replace(/^「|」$/g,''),img});
+  aw.push({id:r.id,en:strip(r.name),zh:strip(huijiAw[r.id]?.name).replace(/^「|」$/g,''),img,t:[`type:${r.type}`,`realm:${r.realm}`]});
 }
 kinds.awakener=aw;
-kinds.wheel=await fromCatalog('wheels.json',{zh:Object.fromEntries(Object.entries(huijiWh).map(([k,v])=>[k,v.name]))});
-kinds.relic=await fromCatalog('relics.json',{zh:trans.relics||{}});
-kinds.posse=await fromCatalog('posses.json');
+kinds.wheel=await fromCatalog('wheels.json',{zh:Object.fromEntries(Object.entries(huijiWh).map(([k,v])=>[k,v.name])),tags:r=>[`stat:${r.mainstatKey}`,`realm:${r.realm}`]});
+// relics that are offered as initial creations in some D-Zone season
+const dzRelics=new Set();
+for(const f of await readdir(`${D}/skeydb/dzone/seasons`))for(const w of (await readJson(`${D}/skeydb/dzone/seasons/${f}`)).waves||[])for(const id of w.initialRelicIds||[])dzRelics.add(id);
+kinds.relic=await fromCatalog('relics.json',{zh:trans.relics||{},tags:r=>{
+  const t=(r.categories||[]).map(c=>`src:${c}`);
+  if(r.relicType==='Pendulum')t.push('src:PENDULUM');
+  if(dzRelics.has(r.id))t.push('src:DZONE');
+  return [...new Set(t)];
+}});
+kinds.posse=await fromCatalog('posses.json',{tags:r=>[`realm:${r.realm}`]});
 kinds.covenant=await fromCatalog('covenants.json',{zh:covenantZh});
 
 // avatars
@@ -76,7 +84,7 @@ for(const [id,m] of Object.entries(idx.monsters)){
   if(!m.a||!await exists(img))continue;
   const key=`${m.a}|${strip(m.n).toLowerCase()}`;
   if(seen.has(key))continue;seen.add(key);
-  mons.push({id,en:strip(m.n),zh:strip(trans.skMonsters?.[id]?.zh||gloc[id]?.zh).replace(/^「|」$/g,''),img});
+  mons.push({id,en:strip(m.n),zh:strip(trans.skMonsters?.[id]?.zh||gloc[id]?.zh).replace(/^「|」$/g,''),img,t:[...((m.b||[]).length?m.b:['Normal']).map(b=>`rank:${b}`),...(m.c||[]).map(c=>`trait:${idx.characteristics?.[c]?.n}`)]});
 }
 kinds.monster=mons;
 
