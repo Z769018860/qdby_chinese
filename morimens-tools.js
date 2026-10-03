@@ -56,7 +56,7 @@ setupMorimensRerunLink();
 
 (async()=>{
   try{
-  const assetVersion="20261003.11";
+  const assetVersion="20261003.12";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",

@@ -141,6 +141,38 @@ const steamEvents=steam.events.filter(e=>e.start<evMin&&e.start>wikiMax&&e.kind!
 // monthly history (Info.kr): chars with the n-th appearance (1 = first release) of that month
 const history=rerun.history.map(h=>({month:h.month,chars:h.characters.map(c=>({...charOf(c.id),n:c.appearance}))}));
 const periods=Object.fromEntries(Object.entries(rerun.verified_periods).map(([id,p])=>[charOf(id).id||id,{start:p.start_date+(p.start_time?` ${p.start_time}`:''),end:p.end_date+(p.end_time?` ${p.end_time}`:''),tz:p.timezone||'',src:p.source_url||p.source_note||''}]));
-const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:[...outEvents,...wikiEvents.filter(e=>e.start<skMin),...steamEvents].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
+// ---------- Weibo 忘却前夜记录局 (data/morimens/weibo/events.json): official Chinese names + events missing elsewhere ----------
+let weibo={events:[]};
+try{weibo=JSON.parse(await readFile('data/morimens/weibo/events.json','utf8'))}catch{}
+const allEvents=[...outEvents,...wikiEvents.filter(e=>e.start<skMin),...steamEvents];
+const dayOf=x=>x.start.slice(0,10);
+const used=new Set();
+const matchEv=(w,kinds)=>{
+  const c=allEvents.filter(e=>dayOf(e)===dayOf(w)&&kinds.includes(e.kind)&&!used.has(e));
+  if(!c.length)return null;
+  return c.find(e=>(w.rerun?e.kind==='story-rerun':e.kind==='story'))||c[0];
+};
+const addedEvents=[];
+const zhEn=JSON.parse(await readFile('scripts/data/calendar_titles_en.json','utf8'));
+for(const w of weibo.events.filter(w=>w.type==='gameplay')){
+  const e=matchEv(w,['story','story-rerun','special']);
+  if(e){used.add(e);e.title={...e.title,en:e.title.en||zhEn[w.name]||'',zh:w.name,zs:'weibo'}}
+  else addedEvents.push({id:`weibo-${dayOf(w)}-${nk(w.name)}`,kind:w.rerun?'story-rerun':'story',title:{en:zhEn[w.name]||'',zh:w.name,zs:'weibo'},start:w.start,end:w.end,featured:[],src:'weibo'});
+}
+for(const w of weibo.events.filter(w=>['chronicle','special','recharge','login'].includes(w.type))){
+  const e=matchEv(w,w.type==='chronicle'?['wheel','special','skin']:['special','skin']);
+  if(e){used.add(e);e.title={...e.title,en:e.title.en||zhEn[w.name]||'',zh:w.name,zs:'weibo'}}
+  else addedEvents.push({id:`weibo-${dayOf(w)}-${nk(w.name)}`,kind:w.type==='chronicle'?'chronicle':'special',title:{en:zhEn[w.name]||'',zh:w.name,zs:'weibo'},start:w.start,end:w.end,featured:[],src:'weibo'});
+}
+// banners: official pair / pool names
+for(const b of [...mergedBanners]){
+  const cand=weibo.events.filter(w=>dayOf(w)===dayOf(b));
+  if(b.type==='awaken'){const w=cand.find(x=>x.type==='banner-pair');if(w)b.title={...b.title,zh:w.name,zs:'weibo'}}
+  else if(['premium','combo','selector','daily'].includes(b.type)&&b.title.zs!=='game'){
+    const pools=cand.filter(x=>x.type==='pool');const sameKind=mergedBanners.filter(x=>dayOf(x)===dayOf(b)&&['premium','combo','selector','daily'].includes(x.type)&&x.title.zs!=='game');
+    if(pools.length===1&&sameKind.length===1)b.title={...b.title,zh:pools[0].name,zs:'weibo'};
+  }
+}
+const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',weibo:'Weibo 忘却前夜记录局 announcement posts (official Chinese event / banner names, 2025-12 onwards)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:[...allEvents,...addedEvents].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
 await writeFile('data/morimens/game/summon-calendar.json',JSON.stringify(out)+'\n');
-console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'steam events',steamEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
+console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'steam events',steamEvents.length,'weibo added',addedEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
