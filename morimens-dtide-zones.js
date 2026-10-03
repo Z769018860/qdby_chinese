@@ -366,5 +366,27 @@
     if(el.matches('.dzAlert')){const k=state.season+':'+el.dataset.dzalert;if(el.open){state.openAlert.add(k);fillAlert(el)}else state.openAlert.delete(k)}
   },true);
   window.addEventListener('morimens-language-change',()=>{if(host&&!host.hidden&&state.index)draw()});
-  window.MorimensDtideZones={render,open};
+  // Compact monster details for the tier list: prepare() loads the data, brief(id) returns {traits,rot,intents} in the current language.
+  const prepare=()=>load().then(()=>Promise.all([loadTr(),loadByMon()])).then(loadKd);
+  function brief(id){
+    const m=state.index?.monsters?.[id];if(!m||!state.tr)return null;
+    const chars=state.index.characteristics;
+    const traits=(m.c||[]).map(c=>{const ch=chars[c];if(!ch)return null;const t=zh()?state.tr.characteristics[ch.n]:null;return {h:t?.zh||ch.n,t:t?.zd||ch.d}}).filter(Boolean);
+    const bm=state.byMon?.[id]||state.byMon?.[state.byName?.get(normEn(m.n))];
+    const intents=[];let rot='';
+    if(bm?.sk?.length){
+      const row=bm.rows?.[bm.rows.length-1],byId=new Map(bm.sk.map(k=>[k.id,k]));
+      for(const sk of bm.sk){const d=skDesc(sk,row?.a?.[sk.id]);intents.push({h:`${skName(sk)||typeLabel(sk.t)} · ${typeLabel(sk.t)}`,t:d.ko?'':d.text.replace(/<[^>]+>/g,'')})}
+      const p=bm.pat?.[0];if(p)rot=p.s.map(i=>{const k=byId.get(i);return k?(skName(k)||typeLabel(k.t)):''}).filter(Boolean).join(' → ');
+    }else{
+      const kd=state.kd?.[normEn(m.n)];
+      if(kd){
+        for(const x of kd.r||[])intents.push({h:`${kdName(x.n)} · ${kdType(x.t)}`,t:kdText(x.d).text});
+        for(const x of kd.p||[])intents.push({h:kdName(x.n),t:kdText(x.d).text});
+        rot=(kd.r||[]).map(x=>kdName(x.n)).join(' → ');
+      }
+    }
+    return {traits,intents,rot};
+  }
+  window.MorimensDtideZones={render,open,prepare,brief};
 })();
