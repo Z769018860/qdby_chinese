@@ -7,7 +7,7 @@ const D='data/morimens';
 const exists=async f=>{try{await stat(f);return true}catch{return false}};
 const readJson=async f=>JSON.parse(await readFile(f,'utf8'));
 const readJsonOr=async(f,d)=>{try{return await readJson(f)}catch{return d}};
-const strip=s=>String(s||'').replace(/^"|"$/g,'').trim();
+const strip=s=>{s=String(s||'').trim();return /^".*"$/.test(s)?s.slice(1,-1):s};
 
 const assetsIdx=await readJson(`${D}/skeydb/public-v3/indexes/assets.json`);
 const assets=assetsIdx.assets||assetsIdx;
@@ -80,6 +80,10 @@ for(const [id,m] of Object.entries(idx.monsters)){
 }
 kinds.monster=mons;
 
+// names still missing a Chinese name: take them from the glossary (scripts/build_glossary.py: game table / composed names)
+const gl=await readJsonOr(`${D}/game/glossary.json`,{entries:[]});
+const glMap=new Map(gl.entries.filter(e=>e.zh).map(e=>[`${e.k}|${e.en.toLowerCase().replace(/[^a-z0-9]/g,'')}`,e.zh]));
+for(const [kind,list] of Object.entries(kinds))for(const it of list)if(!it.zh){const z=glMap.get(`${kind}|${it.en.toLowerCase().replace(/[^a-z0-9]/g,'')}`);if(z)it.zh=z}
 await mkdir(`${D}/game`,{recursive:true});
 await writeFile(`${D}/game/tier-pool.json`,JSON.stringify({version:1,generatedAt:new Date().toISOString(),kinds})+'\n');
 console.log(Object.entries(kinds).map(([k,v])=>`${k}:${v.length}`).join(' '));

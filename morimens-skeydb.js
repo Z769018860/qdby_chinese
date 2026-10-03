@@ -15,7 +15,7 @@
   const realms={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维'};
   const realmIcons={CHAOS:'Hundun',AEQUOR:'Shenhai',CARO:'Xuerou',ULTRA:'Chaowei'};
   const realmMarks={CHAOS:'混',AEQUOR:'海',CARO:'血',ULTRA:'维'};
-  const types={ASSAULT:'伤害型',WARDEN:'防御型',CHORUS:'辅助型'};
+  const types={ASSAULT:'攻击型',WARDEN:'防御型',CHORUS:'辅助型'};
   const ART_SLUG_GUARD={'awakener-0014':'doresain','awakener-0053':'winkle'};
 
   function identityFor(rec){return identityDb?.bySkeydbId?.[rec?.id]||null}
