@@ -42,21 +42,9 @@ function setupMorimensMascotToggle(){
 }
 setupMorimensMascotToggle();
 
-function setupMorimensRerunLink(){
-  const topbar=document.querySelector(".topbar");
-  if(!topbar||topbar.querySelector('a[href="morimens-rerun.html"]'))return;
-  const link=document.createElement("a");
-  link.className="back";
-  link.href="morimens-rerun.html";
-  link.textContent="卡池 / 活动复刻榜单";
-  const first=topbar.querySelector(".back");
-  if(first&&first.nextSibling)topbar.insertBefore(link,first.nextSibling);else topbar.prepend(link);
-}
-setupMorimensRerunLink();
-
 (async()=>{
   try{
-  const assetVersion="20261003.12";
+  const assetVersion="20261003.13";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",

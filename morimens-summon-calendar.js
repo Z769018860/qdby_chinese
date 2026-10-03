@@ -5,7 +5,7 @@
   const zh=()=>localStorage.getItem('morimens.language')!=='en';
   const ui=(cn,en)=>zh()?cn:en;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener',view:'year',year:null,day:null};
+  const state={data:null,pool:new Map(),cat:'all',query:'',dir:'desc',loading:false,error:null,limit:40,gapKind:'awakener',showNext:true,view:'year',year:null,day:null};
   let host=null;
 
   const CATS=[['all','全部','All'],['triune','三相衡生（角色复刻）','Triune Verdant (character reruns)'],['sylvan','因果苗圃（命轮复刻）','Sylvan Omen (wheel reruns)'],['limited','限时唤醒（新角色 + 专属命轮）','Limited (new Awakener + wheel)'],['premium','精选 / 命轨合契 / 循序命理 / 界域锚定 / 自选等','Premium / Walks / Fated Soiree / Realm Anchor / selectors'],['event','角色活动（含复刻）','Character events (incl. reruns)'],['other','时装 / 命轮活动','Skins / wheel events']];
@@ -120,20 +120,36 @@
     return `<div class="scRow${live?' now':''}${!live&&!soon?' past':''}"><div class="scDate">${esc(day(x.start))} ~ ${esc(day(x.end))}<small>${days(x.start,x.end)} ${ui('天','days')} · ${esc(hhmm(x.start))} (UTC+8)</small></div><div><div><span class="scBadge" style="background:${COLOR[x.kindKey]||'#8c97a8'}">${esc(ui(...t))}</span><span class="scTitle">${esc(tName(x.title))}${ai}${sub}</span>${st}</div>${x.featured.length?`<div class="scFeat">${x.featured.map(fChip).join('')}</div>`:''}</div></div>`;
   }
 
-  // Rerun gap leaderboard: how long ago each Awakener / wheel last had an event banner (limited or rerun), longest gap first
+  // Rerun gap leaderboard (day-level appearances from the normalized Huiji history; daily rotations are expanded to 1-day windows)
   function gaps(kind,now){
-    const map=new Map();
-    for(const b of state.data.banners){
-      if(!['awaken','rerun'].includes(b.type))continue;
-      for(const f of b.featured)if(f.k===kind&&f.id){const e=map.get(f.id)||{ref:f,runs:[]};if(!e.runs.some(r=>r.start===b.start))e.runs.push({start:b.start,end:b.end});map.set(f.id,e)}
+    const rows=state.data.appearances||[],groups=new Map();
+    const add=(key,ref,r)=>{const g=groups.get(key)||{ref,rows:[]};g.rows.push(r);groups.set(key,g)};
+    if(kind==='pair'){
+      for(const p of state.data.launchPairs||[]){
+        const ch=state.pool.get(p.c),wh=state.pool.get(p.w);
+        groups.set(p.c+'|'+p.w,{ref:{id:p.c,w:p.w,zh:[p.cb,p.wb].filter(Boolean).join(' / ')||`${p.cz} / ${p.wz}`,en:[ch?.en,wh?.en].filter(Boolean).join(' / ')||''},rows:rows.filter(r=>r.c===p.c&&r.w===p.w)});
+      }
+    }else{
+      const key=kind==='wheel'?'w':'c';
+      for(const r of rows)if(r[key]){const it=state.pool.get(r[key]);add(r[key],{id:r[key],zh:kind==='wheel'?r.wz:r.cz,en:it?.en||''},r)}
     }
-    return [...map.values()].map(e=>{
-      e.runs.sort((a,b)=>ms(a.start)-ms(b.start));
-      const live=e.runs.find(r=>ms(r.start)<=now&&now<ms(r.end)),ended=e.runs.filter(r=>ms(r.end)<=now),next=e.runs.find(r=>ms(r.start)>now),last=ended[ended.length-1]||null;
+    return [...groups.values()].map(g=>{
+      const runs=g.rows.map(r=>({start:r.s,end:r.e,rerun:!!r.r,cid:r.id})).sort((a,b)=>ms(a.start)-ms(b.start));
+      const live=runs.find(r=>ms(r.start)<=now&&now<ms(r.end)),ended=runs.filter(r=>ms(r.end)<=now).sort((a,b)=>ms(a.end)-ms(b.end)),next=runs.find(r=>ms(r.start)>now),last=ended[ended.length-1]||null;
       const gap=live?0:last?Math.floor((now-ms(last.end))/86400000):null;
-      let sum=0,n=0;for(let i=1;i<e.runs.length;i++){const d=(ms(e.runs[i].start)-ms(e.runs[i-1].end))/86400000;if(d>=0){sum+=d;n++}}
-      return {...e,live,next,last,gap,avg:n?Math.round(sum/n):null,count:e.runs.length,first:e.runs[0]};
-    }).sort((a,b)=>(b.live?-1:0)-(a.live?-1:0)||((b.gap??-1)-(a.gap??-1)));
+      // merge windows of one campaign (daily rotations) before measuring intervals
+      const camp=[];for(const r of runs){const c=camp.find(x=>x.cid===r.cid);if(c){c.end=ms(r.end)>ms(c.end)?r.end:c.end}else camp.push({...r})}
+      let sum=0,n=0;for(let i=1;i<camp.length;i++){const d=(ms(camp[i].start)-ms(camp[i-1].end))/86400000;if(d>=0){sum+=d;n++}}
+      const rerunCount=new Set(runs.filter(r=>r.rerun&&ms(r.start)<=now).map(r=>r.cid)).size;
+      return {...g,live,next,last,gap,avg:n?Math.round(sum/n):null,count:camp.length,rerunCount,first:runs[0]};
+    }).filter(e=>e.first&&(e.gap!=null||e.live||e.next)).sort((a,b)=>(b.live?-1:0)-(a.live?-1:0)||((b.gap??-1)-(a.gap??-1)));
+  }
+  function gapRow(e,rank,now){
+    const it=state.pool.get(e.ref.id),it2=e.ref.w?state.pool.get(e.ref.w):null;
+    const st=e.live?`<span class="scState on">${e.live.rerun?ui('复刻进行中','Rerun live'):ui('首发进行中','Launch live')}</span>`:e.next?`<span class="scState soon">${ui('已公布 ','Next ')}${esc(day(e.next.start))}</span>`:e.rerunCount===0?`<span class="scState">${ui('尚未复刻','Never rerun')}</span>`:`<span class="scState">${ui('等待复刻','Waiting')}</span>`;
+    const gap=e.live?'0':e.gap==null?'—':`<b>${e.gap}</b> ${ui('天','d')} <span class="scNote">(${(e.gap/28).toFixed(1)} ${ui('期','cycles')})</span>`;
+    const lastTxt=e.live?`${esc(day(e.live.start))} ~ ${esc(day(e.live.end))}`:e.last?`${e.last.rerun?ui('复刻','Rerun'):ui('首发','Launch')} · ${esc(day(e.last.end))}`:'—';
+    return `<tr><td>${rank??''}</td><td><div class="scAv">${it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}${it2?`<img src="${esc(it2.img)}" alt="" loading="lazy" style="border-radius:6px">`:''}<span>${esc(nm(e.ref.en,e.ref.zh))}</span></div></td><td>${esc(day(e.first.start))}</td><td>${e.rerunCount}</td><td>${lastTxt}</td><td>${gap}</td><td>${e.avg==null?'—':`${e.avg} ${ui('天','d')}`}</td><td>${st}</td></tr>`;
   }
   function draw(){
     if(!host)return;
@@ -144,8 +160,8 @@
     const live=list.filter(x=>ms(x.start)<=now&&now<ms(x.end)).sort((a,b)=>ms(a.end)-ms(b.end));
     const soon=all().filter(match).filter(x=>ms(x.start)>now).sort((a,b)=>ms(a.start)-ms(b.start)).slice(0,6);
     const q=nk(state.query);
-    const gp=gaps(state.gapKind,now).filter(e=>!q||nk(e.ref.en+e.ref.zh).includes(q));
-    const rank=new Map(gaps(state.gapKind,now).filter(e=>!e.live&&e.gap!=null).map((e,i)=>[e.ref.id,i+1]));
+    const gAll=gaps(state.gapKind,now),rank=new Map(gAll.filter(e=>!e.live&&e.gap!=null).map((e,i)=>[e.ref.id+(e.ref.w||''),i+1]));
+    const gp=gAll.filter(e=>!q||nk(e.ref.en+e.ref.zh).includes(q)).filter(e=>state.showNext||!e.next);
     const shown=list.slice(0,state.limit);
     host.innerHTML=`<div class="scWrap">
       <div class="scNote">${ui('卡池日期来自灰机维基「唤醒」页（2023-11 起，含复刻、三相衡生 / 因果苗圃、命轨合契、循序命理、界域锚定等）与 SKeyDB 时间线（2026-02 起，含英文名与角色活动），时间为游戏服务器时间 UTC+8；微博「忘却前夜记录局」公告（2025-12 起的官方中文活动 / 卡池名与日期）、Steam 公告的版本更新说明（2025-09 起的各期活动日期）与 Morimens.Info.kr 的复刻记录用于补充和交叉核对。中文名来自游戏翻译表与灰机维基，无官方译名的标题为 AI 辅助翻译（标 *）。三相衡生 = 3 位角色复刻池，因果苗圃 = 3 个命轮复刻池。角色活动日期：2023-12 至 2024-11 来自灰机维基，2025-09 起来自 Steam 公告，2025-12 起用微博公告校对并补齐中文名与遗漏的活动，2026-03 起另有 SKeyDB；2024-12 至 2025-08 暂缺（微博导出只到 2025-12，Steam 公告未列出）。','Banner dates come from the Huiji Wiki 唤醒 page (since 2023-11: reruns, Triune Verdant / Sylvan Omen, Walks of All Life, Fated Soiree, Realm Anchor, …) and the SKeyDB timeline (since 2026-02, with English names and character events); times are game server time (UTC+8). Weibo announcements of 忘却前夜记录局 (official Chinese event / banner names and dates since 2025-12), Steam announcements (event schedules since 2025-09) and Morimens.Info.kr rerun records fill gaps and cross-check. Chinese names come from the game localization table and Huiji Wiki; titles without an official name are AI-assisted (marked *). Triune Verdant = three character reruns, Sylvan Omen = three wheel reruns. Character event dates: 2023-12 to 2024-11 from the Huiji Wiki, 2025-09 onwards from Steam announcements, cross-checked and completed with the Weibo announcements from 2025-12, and SKeyDB from 2026-03; 2024-12 to 2025-08 are still missing (the Weibo export only reaches back to 2025-12 and Steam does not list them).')}</div>
@@ -157,9 +173,9 @@
       ${list.length>shown.length?`<button type="button" class="scChip" data-scmore>${ui(`显示更多（还有 ${list.length-shown.length} 条）`,`Show more (${list.length-shown.length} left)`)}</button>`:''}`}
       ${state.data.forecast?.length?`<div class="scSec">${ui('未来唤醒预测（灰机维基，仅供参考）','Forecast (Huiji Wiki, for entertainment only)')}</div><div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('开启时间','Starts')}</th><th>${ui('内容','Content')}</th></tr></thead><tbody>${state.data.forecast.map(f=>`<tr><td>${esc(day(f.start))}${f.end?` ~ ${esc(day(f.end))}`:''}</td><td>${esc(zh()?f.text:(FC[f.text]||f.text))}</td></tr>`).join('')}</tbody></table></div>`:''}
       <div class="scSec">${ui('复刻空白期榜单','Rerun gap leaderboard')}</div>
-      <div class="scNote">${ui('统计限时 / 复刻活动唤醒（含三相衡生、因果苗圃），从最近一次卡池结束算起，空白越久越靠前；进行中的排在最前。1 期 = 28 天。仅作参考，官方排期以公告为准。','Counts limited and rerun event banners (incl. Triune Verdant / Sylvan Omen); the gap runs from the end of the latest banner, longest first; live ones come first. 1 cycle = 28 days. For reference only — follow official announcements.')}</div>
-      <div class="scBar"><button type="button" class="scChip" data-scgap="awakener" aria-pressed="${state.gapKind==='awakener'}">${ui('唤醒体','Awakeners')}</button><button type="button" class="scChip" data-scgap="wheel" aria-pressed="${state.gapKind==='wheel'}">${ui('命轮','Wheels')}</button></div>
-      <div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('排名','#')}</th><th>${ui('名称','Name')}</th><th>${ui('首次出现','First')}</th><th>${ui('出现次数','Times')}</th><th>${ui('最近一次','Latest')}</th><th>${ui('空白期','Gap')}</th><th>${ui('平均间隔','Avg. gap')}</th></tr></thead><tbody>${gp.map(e=>{const it=state.pool.get(e.ref.id);const st=e.live?`<span class="scState on">${ui('进行中','Live')}</span>`:e.gap==null?'—':`<b>${e.gap}</b> ${ui('天','d')} <span class="scNote">(${(e.gap/28).toFixed(1)} ${ui('期','cycles')})</span>`;return `<tr><td>${rank.get(e.ref.id)||''}</td><td><div class="scAv">${it?`<img src="${esc(it.img)}" alt="" loading="lazy">`:''}<span>${esc(nm(e.ref.en,e.ref.zh))}</span></div></td><td>${esc(day(e.first.start))}</td><td>${e.count}</td><td>${e.last?`${esc(day(e.last.start))} ~ ${esc(day(e.last.end))}`:esc(day(e.live?.start||''))}${e.next?` <span class="scState soon">${ui('已排期 ','Next ')}${esc(day(e.next.start))}</span>`:''}</td><td>${st}</td><td>${e.avg==null?'—':`${e.avg} ${ui('天','d')}`}</td></tr>`}).join('')}</tbody></table></div>
+      <div class="scNote">${ui('按每个唤醒体 / 命轮 / 首发组合最近一次活动唤醒可获取窗口的结束时间计算：正在开放记 0 天，已公布的未来复刻只做提示。每日轮换复刻按逐日窗口展开；灰机维基源表里个别结束年份有误（如 2024-06-17 ~ 2025-07-15），已按下一期首发日期校正。1 期 = 28 天。','Gap = days since the end of the latest event-banner window of each Awakener / wheel / launch pair; live counts as 0 and announced future reruns are only flagged. Daily rotations are expanded to 1-day windows; a few wrong end years in the wiki source (e.g. 2024-06-17 ~ 2025-07-15) are clamped to the next launch. 1 cycle = 28 days.')}</div>
+      <div class="scBar"><button type="button" class="scChip" data-scgap="awakener" aria-pressed="${state.gapKind==='awakener'}">${ui('唤醒体','Awakeners')}</button><button type="button" class="scChip" data-scgap="wheel" aria-pressed="${state.gapKind==='wheel'}">${ui('命轮','Wheels')}</button><button type="button" class="scChip" data-scgap="pair" aria-pressed="${state.gapKind==='pair'}">${ui('首发活动唤醒组合（角色 + 命轮）','Launch pairs (Awakener + wheel)')}</button><label class="scNote"><input type="checkbox" data-scnext${state.showNext?' checked':''}> ${ui('显示已公布的未来复刻','Show announced reruns')}</label><span class="scNote">${gp.length} ${ui('项','items')}</span></div>
+      <div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('排名','#')}</th><th>${ui('名称','Name')}</th><th>${ui('首次出现','First')}</th><th>${ui('已复刻次数','Reruns')}</th><th>${ui('最近一次','Latest')}</th><th>${ui('空白期','Gap')}</th><th>${ui('平均间隔','Avg. gap')}</th><th>${ui('状态','Status')}</th></tr></thead><tbody>${gp.map(e=>gapRow(e,rank.get(e.ref.id+(e.ref.w||'')),now)).join('')}</tbody></table></div>
     </div>`;
   }
   async function load(){
@@ -184,6 +200,7 @@
       const v=e.target.closest('[data-scview]');if(v){state.view=v.dataset.scview;draw();return}
       const yb=e.target.closest('[data-scyear]');if(yb&&!yb.disabled){state.year=+yb.dataset.scyear;state.day=null;draw();return}
       const dd=e.target.closest('[data-scday]');if(dd){state.day=state.day===dd.dataset.scday?null:dd.dataset.scday;draw();return}
+      if(e.target.closest('[data-scnext]')){state.showNext=e.target.checked;draw();return}
       const g=e.target.closest('[data-scgap]');if(g){state.gapKind=g.dataset.scgap;draw()}
     });
     document.addEventListener('input',e=>{if(e.target?.id==='scQuery'){state.query=e.target.value;const pos=e.target.selectionStart;draw();const i=document.getElementById('scQuery');if(i){i.focus();i.setSelectionRange(pos,pos)}}});

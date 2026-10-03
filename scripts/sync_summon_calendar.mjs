@@ -42,6 +42,10 @@ const outBanners=banners.map(b=>{
   const feat=featuredList(b.featured).map((f,i)=>{const r=ref(f.name,f.kind);if(!r.zh&&cz?.featuredZh?.[i]&&cz.featured?.length===featuredList(b.featured).length)r.zh=cz.featuredZh[i];return r});
   return {id:b.id,type:b.type,title:title(b.title),start:iso(b.startDate),end:iso(b.endDate),featured:feat,desc:b.description||''};
 });
+// ---------- normalized wiki history (data/morimens/huiji/summon-rerun/): day-level appearances for the gap leaderboards ----------
+// The wiki module has year typos in a few end dates (e.g. 2024-06-17 ~ 2025-07-15); they are clamped to the next launch banner.
+const END_FIX={'2024-06-17':'2024-07-15','2024-07-15':'2024-08-12','2024-08-05':'2024-08-12','2024-08-12':'2024-09-09','2024-11-18':'2024-12-16'};
+const fixEnd=(start,end)=>{const d=start.slice(0,10);return END_FIX[d]&&end.slice(0,10)>END_FIX[d]?END_FIX[d]+end.slice(10):end};
 // ---------- HuijiWiki 唤醒 page (data/morimens/huiji/summon.json, from scripts/huiji_summon_console.js) ----------
 const poolNames=JSON.parse(await readFile('scripts/data/summon_pool_names.json','utf8'));
 let wikiPages={};
@@ -96,6 +100,35 @@ for(const text of [wikiPages['唤醒/未来唤醒预测']||'']){
     if(t||label)forecast.push({start:t?.start||'',end:t?.end||'',text:label});
   }
 }
+let rerunIndex={launchPairs:[]};const history0=[];
+try{
+  rerunIndex=JSON.parse(await readFile('data/morimens/huiji/summon-rerun/index.json','utf8'));
+  for(const f of rerunIndex.historyFiles||[])history0.push(...JSON.parse(await readFile(`data/morimens/huiji/summon-rerun/${f}`,'utf8')));
+}catch{}
+const DAYMS=86400000;
+const appearances=[];
+for(const r of history0){
+  const end0=fixEnd(r.start,r.end),rerun=/复刻/.test(r.tag);
+  const push=(c,w,start,end)=>{
+    const ch=c?refZh(c,'awakener'):null,wh=w?refZh(w,'wheel'):null;
+    appearances.push({c:ch?.id||'',w:wh?.id||'',cz:ch?.zh||c||'',wz:wh?.zh||w||'',s:start,e:end,r:rerun?1:0,id:r.id});
+  };
+  if(r.dailyRotation?.slots?.length){
+    const slots=r.dailyRotation.slots,reps=+r.dailyRotation.repeats||1,t0=Date.parse(r.start);
+    for(let k=0;k<reps;k++)slots.forEach((slot,si)=>{
+      const st=new Date(t0+(k*slots.length+si)*DAYMS),en=new Date(st.getTime()+DAYMS);
+      const iso=d=>d.toISOString().replace('.000Z','').replace(/Z$/,'');   // keep +08:00 instants
+      const n=Math.max(slot.characters?.length||0,slot.wheels?.length||0);
+      for(let i=0;i<n;i++)push(slot.characters?.[i],slot.wheels?.[i],new Date(st).toISOString(),new Date(en).toISOString());
+    });
+  }else{
+    const n=Math.max(r.characters?.length||0,r.wheels?.length||0);
+    for(let i=0;i<n;i++)push(r.characters?.[i],r.wheels?.[i],new Date(Date.parse(r.start)).toISOString(),new Date(Date.parse(end0)).toISOString());
+  }
+}
+const launchPairs=(rerunIndex.launchPairs||[]).map(p=>({c:refZh(p.character,'awakener').id,w:refZh(p.wheel,'wheel').id,cz:p.character,wz:p.wheel,cb:p.characterBanner||'',wb:p.wheelBanner||''}));
+// fix the clamped end dates on the calendar banners as well
+for(const b of wikiBanners)if(['awaken','rerun'].includes(b.type))b.end=fixEnd(b.start,b.end);
 // merge: SKeyDB is authoritative from its first banner on (has English titles); the wiki fills everything before and the pool types SKeyDB lacks
 const skMin=outBanners.reduce((m,b)=>b.start<m?b.start:m,'9999');
 const skDays=new Set(outBanners.filter(b=>['premium','combo','selector','daily'].includes(b.type)).map(b=>b.start.slice(0,10)));
@@ -173,6 +206,6 @@ for(const b of [...mergedBanners]){
     if(pools.length===1&&sameKind.length===1)b.title={...b.title,zh:pools[0].name,zs:'weibo'};
   }
 }
-const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',weibo:'Weibo 忘却前夜记录局 announcement posts (official Chinese event / banner names, 2025-12 onwards)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,forecast,events:[...allEvents,...addedEvents].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
+const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',weibo:'Weibo 忘却前夜记录局 announcement posts (official Chinese event / banner names, 2025-12 onwards)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,appearances,launchPairs,forecast,events:[...allEvents,...addedEvents].sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
 await writeFile('data/morimens/game/summon-calendar.json',JSON.stringify(out)+'\n');
 console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'steam events',steamEvents.length,'weibo added',addedEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');
