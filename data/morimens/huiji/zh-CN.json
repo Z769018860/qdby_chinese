@@ -3,14 +3,14 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-10-02T21:40:11.101Z",
+    "syncedAt": "2026-10-03T02:56:49.405Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
   "count": 61,
   "mapped": 61,
   "enriched": 8,
   "jinaRecords": 59,
-  "cachedRecords": 7,
+  "cachedRecords": 8,
   "voiceRecords": 34,
   "failed": [
     {
@@ -28,12 +28,6 @@
     {
       "title": "艾继丝",
       "skeydbId": "awakener-0003",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "艾尔瓦",
-      "skeydbId": "awakener-0004",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -308,6 +302,12 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "沙耶",
+      "skeydbId": "awakener-0057",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "庞托斯",
       "skeydbId": "awakener-0058",
       "status": "no-voice",
@@ -567,7 +567,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0005",
@@ -2659,7 +2659,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0041",
@@ -3640,7 +3640,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0058",
@@ -4006,7 +4006,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%89%BE%E5%B0%94%E7%93%A6"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0005": {
       "skeydbId": "awakener-0005",
@@ -6098,7 +6098,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "ok"
+      "syncStatus": "cached"
     },
     "awakener-0041": {
       "skeydbId": "awakener-0041",
@@ -7079,7 +7079,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B2%99%E8%80%B6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0058": {
       "skeydbId": "awakener-0058",
