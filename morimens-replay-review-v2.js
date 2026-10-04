@@ -1450,7 +1450,10 @@
       const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
       const lines=[];for(const c of (e.channels||[])){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;for(const l of gearEffectLines(tl.res,e,c,cnt))lines.push(l)}
       {const dyn=tl.gearDyn?.get(e.key);if(dyn?.length){for(let i=lines.length-1;i>=0;i--)if(/随层数|scales with state/.test(lines[i]))lines.splice(i,1);
-        for(const d of dyn){const t=d.types.map(x=>CMD_LABEL[x]).find(Boolean);lines.push(ui(`${t?t[0]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}（「${d.state}」峰值 ${d.peak} 层）`,`${t?t[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)} (${d.state} peak ${d.peak})`))}}}
+        for(const d of dyn){const t=d.types.map(x=>CMD_LABEL[x]).find(Boolean);
+          // the command record can be absent from every replay: name the quantity from the item's own effect text ("银钥充能提高 …")
+          const KW='(银钥充能|银钥能量|狂气|算力|基础伤害|暴击伤害|暴击率)',m=!t?(String(d.state||'').match(new RegExp(KW))?.slice(0,2).concat(String(e.desc||'').includes(String(d.state||'').match(new RegExp(KW))?.[1]+'提高')?['提高']:[''])||String(e.desc||'').match(new RegExp(KW+'[^，。]{0,4}(提高|增加|获得)'))):null,pct=m&&m[2]==='提高'?'%':'';
+          lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak})`))}}}
       return {...e,n,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
