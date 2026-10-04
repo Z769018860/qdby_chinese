@@ -130,5 +130,5 @@
   const observe=()=>{attachProgressUi();const host=document.getElementById('mrReplayResult');if(!host)return;const done=()=>{if(host.querySelector('.mr2sum')){setProgress(100,ui('完整复盘已生成','Replay review ready'),ui('下载、LZ4、MessagePack 与事件时间线解析完成。','Download, LZ4, MessagePack and event timeline parsing completed.'));setTimeout(()=>{const box=document.getElementById('mrRelayProgress');if(box)box.classList.remove('isActive')},1200)}else if(host.querySelector('.mr2status.err')){const box=document.getElementById('mrRelayProgress');if(box)box.classList.add('isActive')}};done();new MutationObserver(done).observe(host,{childList:true,subtree:true})};
   const bodyObserver=new MutationObserver(()=>{if(document.getElementById('morimensReplayPanel')){observe();bodyObserver.disconnect()}});bodyObserver.observe(document.documentElement,{childList:true,subtree:true});
 
-  import('./morimens-replay-review-v2.js?v=20261004.51').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
+  import('./morimens-replay-review-v2.js?v=20261004.52').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
 })();
