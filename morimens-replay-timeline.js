@@ -6,6 +6,7 @@
   const nativeFetch=window.fetch.bind(window);
   const replayUrl=/^https:\/\/z1g-warreport\.qookkagames\.com\/publish\/BattleReplay_([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.json(?:[?#].*)?$/i;
   const isGitHubPagesHost=/\.github\.io$/i.test(location.hostname);
+  const MAX_RELAY_BYTES=20_000_000;
 
   function inputUrl(input){
     if(typeof input==='string')return input;
@@ -22,22 +23,52 @@
     return out;
   }
 
+  function containsAscii(bytes,text){
+    const needle=Array.from(text,c=>c.charCodeAt(0));
+    outer:for(let i=0;i<=bytes.length-needle.length;i++){
+      for(let j=0;j<needle.length;j++)if(bytes[i+j]!==needle[j])continue outer;
+      return true;
+    }
+    return false;
+  }
+
+  async function validatedRelayResponse(response,candidate,safe){
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    if(safe.method==='HEAD')return response;
+    const type=String(response.headers.get('content-type')||'').toLowerCase();
+    if(type.includes('text/html'))throw new Error('unexpected HTML response');
+    const declared=Number(response.headers.get('content-length')||0);
+    if(declared>MAX_RELAY_BYTES)throw new Error(`response too large (${declared} bytes)`);
+    const body=new Uint8Array(await response.arrayBuffer());
+    if(!body.length)throw new Error('empty response');
+    if(body.length>MAX_RELAY_BYTES)throw new Error(`response too large (${body.length} bytes)`);
+    // Public BattleReplay objects are JSON envelopes containing a compStr field.  Validate
+    // the relay body before returning it so an intermittent proxy error cannot masquerade
+    // as a successful HTTP 200 and prevent the next fallback from being tried.
+    if(!containsAscii(body,'"compStr"'))throw new Error(`response is not a BattleReplay envelope (${body.length} bytes)`);
+    const headers=new Headers(response.headers);
+    headers.set('X-Morimens-Replay-Relay',candidate.name);
+    headers.set('Content-Length',String(body.length));
+    return new Response(body,{status:200,statusText:'OK',headers});
+  }
+
   async function fetchGitHubPagesReplay(target,uuid,input,init){
     const safe=safeReplayInit(input,init);
     if(safe.method!=='GET'&&safe.method!=='HEAD')throw new Error('Replay relay only supports GET/HEAD');
+    // AllOrigins is the primary keyless raw-body CORS bridge. cors.dev is a second
+    // keyless GET fallback for preview/testing. Neither request forwards cookies or
+    // Authorization, and the target is hard-coded by replayUrl above.
     const candidates=[
       {name:'AllOrigins',url:`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`},
-      {name:'isomorphic-git CORS proxy',url:`https://cors.isomorphic-git.org/${target}`}
+      {name:'cors.dev',url:`https://proxy.cors.dev/${target}`}
     ];
     const errors=[];
     for(const candidate of candidates){
       try{
         const response=await nativeFetch(candidate.url,{...safe,mode:'cors'});
-        if(!response.ok){errors.push(`${candidate.name}: HTTP ${response.status}`);continue}
-        const type=String(response.headers.get('content-type')||'').toLowerCase();
-        if(type.includes('text/html')){errors.push(`${candidate.name}: unexpected HTML response`);continue}
+        const validated=await validatedRelayResponse(response,candidate,safe);
         window.MorimensReplayTransport=`github-pages-cors-relay:${candidate.name}`;
-        return response;
+        return validated;
       }catch(error){
         errors.push(`${candidate.name}: ${error?.message||error}`);
       }
@@ -76,6 +107,6 @@
     };
   }
 
-  import('./morimens-replay-review-v2.js?v=20261004.6')
+  import('./morimens-replay-review-v2.js?v=20261004.7')
     .catch(error=>console.error('Replay review failed to load',error));
 })();
