@@ -321,7 +321,7 @@
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
-    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;
+    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];
     const buffOf=tid=>{const k=String(tid);if(!relicBuffs.has(k))relicBuffs.set(k,{tid:k,kind:relicKind(tid),gain:0,extra:0,instances:[]});return relicBuffs.get(k)};
     // one relic trigger -> one instance (gain counted once per trigger, per-awakener amounts used for the damage split)
     const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
@@ -384,8 +384,13 @@
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
-            if(typ==='damage'){const list=activeBuff.get(String(h.castRoleUid));if(list?.length){const pr=board.get(String(h.castRoleUid))?.props||{},A=(pr.atk||0)*(1+(pr.atk_per||0)/100),P=pr.damage_plus||0,Bt=(pr.basic_damage_per||0)+(pr.i_basic_damage_per||0);
-              for(const b of list){const frac=b.kind==='power'?b.amt/(A+Math.max(P,b.amt)):(b.amt/100)/(1+Bt/100),x=amt*Math.max(0,Math.min(1,frac));b.inst.extra+=x;b.inst.hits++;b.rel.extra+=x}}}
+            if(typ==='damage'&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
+              const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
+              const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
+              hitLog.push({uid:String(h.castRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,
+                P:{atk:pr.atk||0,atkPer:pr.atk_per||0,basic:(pr.basic_damage_per||0)+(pr.i_basic_damage_per||0),S:pr.damage_plus||0,sp:pr.strikecard_damage_plus||0,cd:pr.crit_damage||0,cdu:pr.crit_damage_from_ulti||0,usm:pr.ulti_strength_multiple||0},
+                vOn,vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+            }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
             push(typ,`${plainName(h.castRoleUid)} → ${plainName(h.targetRoleUid)} · ${sname} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,html,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue;
@@ -424,7 +429,7 @@
       }
     }
     if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
-    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs};
+    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -513,6 +518,11 @@
 
     .mr2relicwrap{display:grid;gap:2px}.mr2sout em.p{color:#ffd86b;border-color:rgba(255,210,74,.4);background:rgba(255,210,74,.08)}.mr2relicinst{margin:0 0 4px 46px}.mr2srow.inst{grid-template-columns:minmax(110px,170px) minmax(110px,1fr) auto auto}
     .mr2buffsum{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,210,74,.06);border:1px solid rgba(255,210,74,.28);font-size:12px;color:#e6edf6}.mr2buffsum b{color:#ffd86b}.mr2buffsum .d{color:#ffb2a8;font-weight:800}.mr2buffsum small{flex-basis:100%;color:#8fa0b5;font-size:10px;line-height:1.6}
+
+    .mr2crow{display:grid;grid-template-columns:minmax(80px,1.1fr) repeat(5,minmax(80px,1fr));gap:8px;align-items:center;font-size:12px;color:#e6edf6;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.03)}.mr2crow span{display:grid;line-height:1.3;font-weight:700;font-variant-numeric:tabular-nums}.mr2crow small{font-size:9px;color:#7f8ea2;font-weight:400}.mr2crow.head{background:none;color:#7f8ea2;font-size:10px}.mr2crow .good{color:#8fe0b2}.mr2crow .bad{color:#ff9e93}
+    .mr2calib{display:grid;gap:4px;padding:8px 12px;border-radius:10px;background:rgba(98,183,255,.06);border:1px solid rgba(98,183,255,.2);font-size:12px;line-height:1.7;color:#d6e4f4}.mr2calib small{color:#8fa0b5;font-size:10px;line-height:1.6}
+    @media(max-width:760px){.mr2crow{grid-template-columns:repeat(3,1fr)}}
+    .mr2crow b small.lowc{display:block;color:#ffb26b;font-size:9px;font-weight:400}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -731,8 +741,64 @@
     }).join('');
     return `<details class="mr2round mr2opening" open><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}</div></details>`;
   }
+  // ---- damage-formula calibration ------------------------------------------------------
+  // Calculator order: ATK x coefficient x base-damage pools -> + STR x strength multiplier -> x vulnerability -> x crit.
+  // Per awakener we fit  D/(crit*vuln) = a_skill * (ATK_force * basePool) + m * STR  on this replay's own hits,
+  // where m is the real strength multiplier (the calculator assumes 1 for active damage).
+  function solveLeastSquares(rows,y,w){
+    const n=rows[0].length,A=Array.from({length:n},()=>new Array(n+1).fill(0));
+    rows.forEach((r,i)=>{const ww=w[i]*w[i];for(let a=0;a<n;a++){for(let b=0;b<n;b++)A[a][b]+=r[a]*r[b]*ww;A[a][n]+=r[a]*y[i]*ww}});
+    for(let a=0;a<n;a++)A[a][a]+=1e-9;
+    for(let c=0;c<n;c++){let piv=c;for(let r=c+1;r<n;r++)if(Math.abs(A[r][c])>Math.abs(A[piv][c]))piv=r;[A[c],A[piv]]=[A[piv],A[c]];if(Math.abs(A[c][c])<1e-12)return null;
+      for(let r=c+1;r<n;r++){const f=A[r][c]/A[c][c];for(let k=c;k<=n;k++)A[r][k]-=f*A[c][k]}}
+    const x=new Array(n).fill(0);for(let r=n-1;r>=0;r--){let sum=A[r][n];for(let k=r+1;k<n;k++)sum-=A[r][k]*x[k];x[r]=sum/A[r][r]}return x;
+  }
+  function calibrateHits(tl){
+    if(tl.calib)return tl.calib;
+    const res=tl.res,log=tl.hitLog||[],isUlt=h=>(res.skill[String(h.skill)]?.Type||[]).includes('Ulti_Skill'),isStrike=h=>(res.skill[String(h.skill)]?.Type||[]).includes('Card_Strike');
+    const norm=(h,Vmode)=>{const cm=h.crit?1+((h.P.cd||0)+(isUlt(h)?h.P.cdu||0:0))/100:1,V=h.vOn&&Vmode?1+h.vPct/100:1;return h.dmg/cm/V};
+    const feat=h=>({T:Math.ceil(h.P.atk*(1+h.P.atkPer/100))*(1+h.P.basic/100),S:h.P.S+(isStrike(h)?h.P.sp:0)});
+    const byActor=new Map();for(const h of log){if(isUlt(h))continue;if(!byActor.has(h.uid))byActor.set(h.uid,[]);byActor.get(h.uid).push(h)}
+    const fits=new Map(),report=[];
+    for(const [uid,hits] of byActor){
+      const uniq=new Map();for(const h of hits){const f=feat(h),key=`${h.skill}|${Math.round(norm(h,true))}|${f.S}|${f.T.toFixed(1)}`;if(!uniq.has(key))uniq.set(key,{h,f,n:0});uniq.get(key).n++}
+      const pts=[...uniq.values()],skills=[...new Set(pts.map(p=>p.h.skill))],sIdx=new Map(skills.map((s,i)=>[s,i]));
+      const distinctS=new Set(pts.map(p=>p.f.S)).size;
+      const run=Vmode=>{
+        const rows=pts.map(p=>{const r=new Array(skills.length+1).fill(0);r[sIdx.get(p.h.skill)]=p.f.T;r[skills.length]=p.f.S;return r}),y=pts.map(p=>norm(p.h,Vmode)),w=y.map(v=>1/Math.max(1,v));
+        const x=distinctS>=2&&pts.length>skills.length?solveLeastSquares(rows,y,w):null;if(!x)return null;
+        const errs=rows.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)-y[i])/y[i]);
+        return {x,mean:errs.reduce((a,b)=>a+b,0)/errs.length,max:Math.max(...errs)};
+      };
+      const f1=run(true),f0=run(false);
+      // crit check: identical-context crit vs non-crit pairs
+      const pairs=new Map();for(const h of hits){const f=feat(h),k=`${h.skill}|${h.round}|${h.P.S}|${h.P.sp}|${h.P.basic}|${h.P.cd}`;const o=pairs.get(k)||{};o[h.crit?'c':'n']=h.dmg;o.cd=h.P.cd;pairs.set(k,o)}
+      const crit=[...pairs.values()].filter(o=>o.c&&o.n).map(o=>({got:o.c/o.n,want:1+o.cd/100}));
+      const a=tl.actors.get(uid),m=f1?Math.max(0,Math.min(10,f1.x[skills.length])):null;
+      if(m!=null)fits.set(uid,{m,confident:distinctS>=3&&pts.length>=skills.length+3&&f1.mean<.25});
+      report.push({uid,name:a?.name||uid,confident:distinctS>=3&&pts.length>=skills.length+3&&f1!=null&&f1.mean<.25,hits:hits.length,contexts:pts.length,distinctS,m,meanErr:f1?.mean??null,maxErr:f1?.max??null,meanErrNoVuln:f0?.mean??null,crit,
+        calcErr:(()=>{ // calculator default m=1: refit only the per-skill coefficients
+          const rows=pts.map(p=>{const r=new Array(skills.length).fill(0);r[sIdx.get(p.h.skill)]=p.f.T;return r}),y=pts.map(p=>norm(p.h,true)-p.f.S),w=y.map(()=>1);
+          const x=solveLeastSquares(rows,pts.map(p=>norm(p.h,true)-p.f.S),pts.map(p=>1/Math.max(1,norm(p.h,true))));if(!x)return null;
+          const e=rows.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)+pts[i].f.S-norm(pts[i].h,true))/norm(pts[i].h,true));return e.reduce((a,b)=>a+b,0)/e.length})()});
+    }
+    // attribute relic buffs with the fitted multipliers
+    for(const rec of tl.relicBuffs.values()){rec.extra=0;for(const i of rec.instances){i.extra=0;i.hits=0}}
+    const fallbackM=(()=>{const ms=[...fits.values()].filter(f=>f.confident).map(f=>f.m).sort((a,b)=>a-b);return ms.length?ms[Math.floor(ms.length/2)]:1})();
+    for(const h of log){
+      if(!h.buffs.length)continue;
+      const fit=fits.get(h.uid),m=isUlt(h)&&h.P.usm?h.P.usm/100:(fit?fit.m:fallbackM),f=feat(h),dn=norm(h,true),strPart=Math.min(dn,m*f.S),basePart=Math.max(0,dn-strPart);
+      for(const b of h.buffs){
+        const frac=b.kind==='power'?Math.min(1,(m*b.amt)/dn):(basePart/dn)*(b.amt/100)/(1+h.P.basic/100);
+        const x=h.dmg*Math.max(0,Math.min(1,frac));b.inst.extra+=x;b.inst.hits++;b.rel.extra+=x;
+      }
+    }
+    tl.calib={report,fallbackM,fits};
+    return tl.calib;
+  }
   // ---- statistics ---------------------------------------------------------------------
   function computeStats(full,tl){
+    calibrateHits(tl);
     const res=tl.res,bd=full.battleDat||{},actors=tl.actors;
     const events=[];for(const r of tl.rounds)for(const e of r.events)if(e.kind!=='snap')events.push({...e,round:r.round});
     const actorByTid=new Map();for(const a of actors.values())if(a.kind==='awakener')actorByTid.set(String(a.tid),a);
@@ -789,6 +855,26 @@
   }
   const pctOf=(a,b)=>b>0?Math.round(a/b*1000)/10:0;
   const bar=(frac,cls='')=>`<span class="mr2sbar ${cls}"><i style="width:${Math.max(0,Math.min(100,frac*100)).toFixed(1)}%"></i></span>`;
+  function renderCalib(tl){
+    const c=tl.calib;if(!c||!c.report.length)return '';
+    const pc=v=>v==null?'—':`${(v*100).toFixed(1)}%`;
+    const rows=c.report.map(r=>{
+      const critMax=r.crit.length?Math.max(...r.crit.map(x=>Math.abs(x.got/x.want-1))):null;
+      return `<div class="mr2crow"><b>${esc(r.name)}${r.confident?'':`<small class="lowc">${ui('样本不足','low sample')}</small>`}</b><span>${r.hits}<small>${ui('次命中','hits')} · ${r.contexts} ${ui('种条件','ctx')}</small></span><span>${r.m==null?'—':`×${r.m.toFixed(2)}`}<small>${ui('拟合力量倍率','fitted STR mult')}</small></span><span class="${r.calcErr!=null&&r.meanErr!=null&&r.calcErr>r.meanErr*1.5?'bad':''}">${pc(r.calcErr)}<small>${ui('计算器默认 ×1 误差','calc ×1 error')}</small></span><span class="${r.meanErr!=null&&r.meanErr<.1?'good':''}">${pc(r.meanErr)}<small>${ui('拟合后误差','fitted error')}</small></span><span>${r.crit.length?`${(100*(1-critMax)).toFixed(1)}%`:'—'}<small>${ui(`暴击倍率吻合（${r.crit.length} 组）`,`crit match (${r.crit.length})`)}</small></span></div>`;
+    }).join('');
+    const fitted=c.report.filter(r=>r.m!=null&&r.confident),ms=fitted.map(r=>r.m).sort((a,b)=>a-b),med=ms.length?ms[Math.floor(ms.length/2)]:null;
+    const critAll=c.report.flatMap(r=>r.crit),critDev=critAll.length?Math.max(...critAll.map(x=>Math.abs(x.got/x.want-1))):null;
+    const vBetter=fitted.filter(r=>r.meanErr!=null&&r.meanErrNoVuln!=null&&r.meanErr<r.meanErrNoVuln).length;
+    const lines=[
+      critDev==null?null:(critDev<.01?`✓ ${ui('暴击：伤害 = 非暴击 × (1 + 暴击伤害%)，在',' Crit: ×(1 + crit damage%) verified on ')}${critAll.length} ${ui('组同条件命中上精确成立（最大偏差','same-context pairs (max deviation ')} ${(critDev*100).toFixed(2)}%）`:`✗ ${ui('暴击倍率与 1 + 暴击伤害% 有偏差，最大','Crit multiplier deviates from 1 + crit damage%, max ')} ${(critDev*100).toFixed(1)}%`),
+      med==null?(c.report.some(r=>r.m!=null)?`△ ${ui('可拟合的角色样本太少（需要至少 3 种力量取值且条件数多于技能数），暂不下结论','Too few contexts to conclude')}`:null):(Math.abs(med-1)>.3?`✗ ${ui(`力量倍率：计算器对主动伤害默认按 1 倍计入力量，本场实测拟合约 ×${med.toFixed(2)}（中位数）。计算器对应角色/技能的“力量倍率”可能偏低，或缺少“力量额外享受百分比”这类乘区。`,`Strength multiplier: the calculator counts STR at ×1 for active damage; this replay fits ≈×${med.toFixed(2)}.`)}`:`✓ ${ui('力量倍率与计算器默认的 ×1 基本一致','Strength multiplier matches the calculator default ×1')}`),
+      fitted.length?(vBetter>=Math.ceil(fitted.length/2)?`✓ ${ui('易伤：对带易伤的目标按 ×(1 + 易伤增幅) 计入后拟合更准','Vulnerability ×(1 + amp) improves the fit')}`:`? ${ui('易伤乘区本场无法确认（样本不足或已被其他乘区吸收）','Vulnerability could not be confirmed on this sample')}`):null,
+      fitted.length?`${fitted.every(r=>r.meanErr<.1)?'✓':'△'} ${ui('公式顺序（攻击力×系数×基伤池 → +力量 → ×易伤 → ×暴击）拟合后平均误差','Formula order fits with mean error ')}${pc(fitted.reduce((a,r)=>a+r.meanErr,0)/fitted.length)}${fitted.some(r=>r.maxErr>.2)?ui('，个别条件偏差超过 20%，说明还有未建模的乘区（如终伤池、伤害强效、状态加成）','; some contexts deviate >20%: unmodelled multipliers'):''}`:null
+    ].filter(Boolean);
+    return `<div class="mr2ssec"><h5>${ui('伤害公式校验（用本场每次命中拟合）','Damage formula check (fitted on this replay)')}</h5>
+      <div class="mr2crow head"><b>${ui('角色','Awakener')}</b><span>${ui('样本','Sample')}</span><span>${ui('力量倍率','STR mult')}</span><span>${ui('按计算器 ×1','Calc ×1')}</span><span>${ui('拟合后','Fitted')}</span><span>${ui('暴击','Crit')}</span></div>${rows}
+      <div class="mr2calib">${lines.map(l=>`<div>${esc(l)}</div>`).join('')}<small>${ui('说明：狂气爆发的伤害使用独立的力量/暴击修正，这里不参与拟合；上面的造物额外伤害已改用拟合出的力量倍率重新折算。样本越多、力量取值越分散，拟合越可信；狂气爆发的力量倍率按角色的 ulti_strength_multiple 估算，未经本场数据验证。','Ultimates use separate strength/crit modifiers and are excluded from the fit. The relic damage above uses the fitted multipliers.')}</small></div></div>`;
+  }
   function renderStats(full,tl){
     const st=computeStats(full,tl),res=tl.res;if(!st.per.length&&!st.relicRows.length)return '';
     const srcName=o=>o.typ==='state'?res.nameState(o.id):res.nameSkill(o.id);
@@ -820,7 +906,7 @@
       const inst=b?`<details class="mr2minor relicinst"><summary>${ui(`每次触发明细 ${b.instances.length}`,`Per trigger ${b.instances.length}`)}</summary><div class="mr2srcs">${b.instances.map(i=>`<div class="mr2srow inst"><span class="mr2sname">${ui(`第 ${i.round||'开局'} 回合`,i.round?`R${i.round}`:'Opening')}${i.temp?`<small>${ui('临时力量（本回合）','Temporary')}</small>`:''}</span><span>${b.kind==='power'?`+${fmt(i.gain)} ${ui('力量','power')}`:`+${fmt(Math.round(i.gain*10)/10)}%`}${i.awakeners.size>1?` <small>${ui(`作用 ${i.awakeners.size} 名唤醒体`,`${i.awakeners.size} awakeners`)}</small>`:''}</span><b>${fmt(Math.round(i.extra))}</b><small>${ui(`${i.hits} 次命中`,`${i.hits} hits`)}</small></div>`).join('')}</div></details>`:'';
       return `<div class="mr2relicwrap"><div class="mr2srow relicrow"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<span class="mr2sname">${esc(res.nameRelic(r.tid))}<small>${r.start?ui('开局携带','Starting'):ui('战斗中获得','Gained in battle')}</small></span>${bar(r.n/maxR,'relic')}<b>${r.n?ui(`${r.n} 次`,`${r.n}×`):b?ui('开局生效','At start'):ui('未触发','—')}</b><span class="mr2sout">${r.dmg?`<em class="d">${ui('额外伤害','DMG')} ${fmt(r.dmg)}${st.totalDmg?` (${pctOf(r.dmg,st.totalDmg)}%)`:''}</em>`:''}${r.block?`<em class="b">${ui('护盾','Shield')} ${fmt(r.block)}</em>`:''}${r.heal?`<em class="h">${ui('治疗','Heal')} ${fmt(r.heal)}</em>`:''}${buffEm}${!r.dmg&&!r.block&&!r.heal&&!b?`<em class="n">${r.mapped?ui('无直接产出（增益类）','No direct output'):ui('产出未知','Output unknown')}</em>`:''}</span></div>${inst}</div>`;
     }).join('');
-    const buffSummary=st.powerGain||st.basicGain?`<div class="mr2buffsum"><b>${ui('增益类造物合计','Buff relics total')}</b><span>${st.powerGain?ui(`产生力量 +${fmt(st.powerGain)}`,`power +${fmt(st.powerGain)}`):''}</span><span>${st.basicGain?ui(`基础伤害累计 +${fmt(Math.round(st.basicGain*10)/10)}%（每名唤醒体）`,`basic dmg +${fmt(Math.round(st.basicGain*10)/10)}% each`):''}</span><span class="d">${ui('估算额外伤害','Est. extra DMG')} ${fmt(Math.round(st.buffExtra))}${st.totalDmg?` (${pctOf(st.buffExtra,st.totalDmg)}%)`:''}</span><small>${ui('估算方法：回放没有伤害公式，这里把每次命中的伤害，按该造物提供的力量（占 攻击强度+力量）或基础伤害（占 1+基伤）的比例折算，仅作参考。','Estimate: each hit is split by the relic\'s share of power (of attack force + power) or basic damage (of 1 + basic damage). Indicative only.')}</small></div>`:'';
+    const buffSummary=st.powerGain||st.basicGain?`<div class="mr2buffsum"><b>${ui('增益类造物合计','Buff relics total')}</b><span>${st.powerGain?ui(`产生力量 +${fmt(st.powerGain)}`,`power +${fmt(st.powerGain)}`):''}</span><span>${st.basicGain?ui(`基础伤害累计 +${fmt(Math.round(st.basicGain*10)/10)}%（每名唤醒体）`,`basic dmg +${fmt(Math.round(st.basicGain*10)/10)}% each`):''}</span><span class="d">${ui('估算额外伤害','Est. extra DMG')} ${fmt(Math.round(st.buffExtra))}${st.totalDmg?` (${pctOf(st.buffExtra,st.totalDmg)}%)`:''}</span><small>${ui('估算方法：先用本场每次命中拟合出各角色的力量倍率，再按该造物提供的力量（力量×倍率占该次命中非暴击伤害的比例）或基础伤害（基伤部分占 1+基伤 的比例）折算，详见下方“伤害公式校验”。','Estimate: each hit is split by the relic\'s share of power (of attack force + power) or basic damage (of 1 + basic damage). Indicative only.')}</small></div>`:'';
     const stateHtml=st.stateRows.length?`<div class="mr2ssec"><h5>${ui('状态伤害来源（出血、旧日余烬等）','Damage from states (bleed, ...)')}</h5>${st.stateRows.map(x=>`<div class="mr2srow"${stateTipAttr(res,x.id,{})}><span class="mr2sname">${esc(res.nameState(x.id))}</span>${bar(x.dmg/st.stateRows[0].dmg,'dmg')}<b>${fmt(x.dmg)}</b><small>${pctOf(x.dmg,st.totalDmg)}%</small></div>`).join('')}</div>`:'';
     const sum=[[ui('总伤害','Total damage'),fmt(st.totalDmg)],[ui('回合数','Rounds'),st.rounds],[ui('出牌数','Cards played'),st.totalPlays],[ui('消耗算力','Energy spent'),fmt(st.totalEnergy)],[ui('抽牌','Draws'),st.draws],[ui('弃牌','Discards'),st.discards],[ui('消耗牌','Exhausted'),st.exhausts],[ui('钥令使用','Keyflare casts'),st.keeperUses],[ui('造物额外伤害','Relic damage'),fmt(st.relicDmg)],[ui('增益造物估算伤害','Buff relic est. dmg'),fmt(Math.round(st.buffExtra))]].map(([k,v])=>`<span><small>${esc(k)}</small><strong>${esc(v)}</strong></span>`).join('');
     return `<details class="mr2round mr2stats" open><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('出牌 / 算力 / 觉醒 / 钥令 / 造物','cards / energy / awakening / keyflare / relics')}</small></summary><div class="mr2rbody">
@@ -830,6 +916,7 @@
       <div class="mr2ssec"><h5>${ui('钥令使用与选择偏好','Keyflare skills & picks')}</h5>${keeperHtml}</div>
       <div class="mr2ssec"><h5>${ui('造物触发与产出','Relics')}${st.relicDmg?` <em class="mr2hot">${ui('造物额外伤害合计','Relic damage')} ${fmt(st.relicDmg)}</em>`:''}</h5>${relicHtml||`<div class="mr2empty">—</div>`}${buffSummary}</div>
       ${stateHtml}
+      ${renderCalib(tl)}
       ${st.havePacks?'':`<div class="mr2status">${ui('此回放缺少游戏内统计包，伤害按逐次命中事件重建，造物额外伤害无法归因。','This replay has no in-game stat packs; damage is rebuilt from hit events and relic damage cannot be attributed.')}</div>`}
     </div></details>`;
   }
