@@ -13,6 +13,7 @@
   const fmt=n=>(Number(n)||0).toLocaleString(isEn()?'en-US':'zh-CN');
   const uuidRe=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const decoder=new TextDecoder('utf-8');
+  const strictDecoder=new TextDecoder('utf-8',{fatal:true});
   const cache=new Map();
 
   function parseReplayCode(raw){
@@ -72,7 +73,8 @@
     u64(){this.need(8);const x=this.v.getBigUint64(this.p,false);this.p+=8;return Number(x)}
     i64(){this.need(8);const x=this.v.getBigInt64(this.p,false);this.p+=8;return Number(x)}
     bytes(n){this.need(n);const x=this.a.slice(this.p,this.p+n);this.p+=n;return x}
-    str(n){return decoder.decode(this.bytes(n))}
+    // recordZips are LZ4 frames stored with MessagePack str headers; keep non-UTF-8 payloads as raw bytes
+    str(n){const b=this.bytes(n);if(b.length>3&&b[0]===0x04&&b[1]===0x22&&b[2]===0x4d&&b[3]===0x18)return b;try{return strictDecoder.decode(b)}catch{return b}}
     arr(n){const a=new Array(n);for(let i=0;i<n;i++)a[i]=this.read();return a}
     map(n){const o={};for(let i=0;i<n;i++){let k=this.read();if(k instanceof Uint8Array){try{k=decoder.decode(k)}catch{k=String(k)}}o[String(k)]=this.read()}return o}
     ext(n){const type=this.i8();return {$extType:type,$data:this.bytes(n)}}
