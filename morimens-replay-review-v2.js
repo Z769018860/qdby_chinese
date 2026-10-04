@@ -287,15 +287,24 @@
       if(typeof t==='string'){
         const parts=[];let d=0,cur='';for(const ch of t){if(ch==='(')d++;if(ch===')')d--;if(ch===','&&d===0){parts.push(cur);cur=''}else cur+=ch}parts.push(cur);
         const e=parts.find(x=>/Battle(Atk|Def|Physique)Force/.test(x));
-        if(e&&!/\b(and|or|not)\b|HandDeck|GetStateParam|OwnerCard|Monster|Enemy|tentacle|GetCard|Deck/.test(e)&&/GetStateLayer|CmdCaster\.|PlayerRole\./.test(e)){
-          let js=e.replace(/(PlayerRole|CmdCaster)\.GetStateLayer\((\d+)\)/g,'L("$1",$2)').replace(/(PlayerRole|CmdCaster)\.(\w+)/g,'V("$1","$2")').replace(/math\.(floor|ceil|min|max)/g,'Math.$1').replace(/Battle(Atk|Def|Physique)Force/g,'1').replace(/GrowArgValue\d|GrowValue\d/g,'1');
+        if(e&&!/\bnot\b|HandDeck|GetStateParam|Monster|Enemy|GetCard|Deck/.test(e)&&/GetStateLayer|CmdCaster\.|PlayerRole\./.test(e)){
+          let js=e.replace(/(PlayerRole|CmdCaster|OwnerCard)\.GetStateLayer\((\d+)\)/g,'L("$1",$2)').replace(/(PlayerRole|CmdCaster)\.(\w+)/g,'V("$1","$2")').replace(/math\.(floor|ceil|min|max)/g,'Math.$1').replace(/Battle(Atk|Def|Physique)Force/g,'1').replace(/GrowArgValue\d|GrowValue\d/g,'1').replace(/\band\b/g,'&&').replace(/\bor\b/g,'||').replace(/~=/g,'!=');
           const rest=js.replace(/L\("\w+",\d+\)|V\("\w+","\w+"\)|Math\.(floor|ceil|min|max)/g,'');
-          if(/^[0-9+\-*/().,\s]*$/.test(rest))fn=new Function('L','V',`return (${js})`);
+          if(/^[0-9+\-*/().,\s<>=!&|]*$/.test(rest))fn=new Function('L','V',`return (${js})`);
         }
       }
     }catch{fn=null}
     paraCache.set(k,fn);return fn;
   }
+  function compileFormula(e){
+    if(!e||/\bnot\b|HandDeck|GetStateParam|Monster|Enemy|GetCard|Deck|CurCard/.test(e))return null;
+    let js=e.replace(/(PlayerRole|CmdCaster|OwnerCard)\.GetStateLayer\((\d+)\)/g,'L("$1",$2)').replace(/(PlayerRole|CmdCaster)\.(\w+)/g,'V("$1","$2")').replace(/math\.(floor|ceil|min|max)/g,'Math.$1').replace(/Battle(Atk|Def|Physique)Force/g,'1').replace(/GrowArgValue\d|GrowValue\d/g,'1').replace(/\band\b/g,'&&').replace(/\bor\b/g,'||').replace(/~=/g,'!=');
+    const rest=js.replace(/L\("\w+",\d+\)|V\("\w+","\w+"\)|Math\.(floor|ceil|min|max)/g,'');
+    if(!/^[0-9+\-*/().,\s<>=!&|]*$/.test(rest))return null;
+    try{return new Function('L','V',`return (${js})`)}catch{return null}
+  }
+  const plusCache=new Map();
+  function paraPlusFn(res,tid){const k=String(tid);if(!plusCache.has(k)){const pp=res.skill[k]?.ParaPlus;plusCache.set(k,typeof pp==='string'?compileFormula(pp):null)}return plusCache.get(k)}
   function buildTimeline(full){
     const res=resources(full),bd=full.battleDat||{},ent=buildEntities(full,res),{actors,cards,relics,stateInst}=ent;
     const actorOf=uid=>actors.get(String(uid));
@@ -341,7 +350,16 @@
 
     // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
     const board=new Map(),bstates=new Map();
-    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;
+    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;const cardSt=new Map(),cardStOf=new Map();
+    // character-specific formula parts, evaluated against the live state: pf = multiplier inside the damage term of Para,
+    // pp = ParaPlus (extra flat damage, e.g. team shield x stacks). Evaluated when the card is played, because that is when the game computes them.
+    const evalPara=(tid,caster,cuid)=>{
+      const layer=(who,id)=>{let n=0;if(who==='OwnerCard'){for(const v of (cardSt.get(String(cuid))?.values()||[]))if(v.stateId===id)n+=v.layer||0}else if(who==='CmdCaster'){for(const v of (bstates.get(String(caster))?.values()||[]))if(v.stateId===id)n+=v.layer||0}else{for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===id)n+=v.layer||0}return n};
+      const val=(who,key)=>{const u=board.get(String(who==='CmdCaster'?caster:ent.keeperUid))||{};const v=u.props?.[key];if(v!=null)return v;return key==='block'?(u.block||0):key==='hp'?(u.hp||0):key==='max_hp'?(u.max||0):0};
+      let pf=1,pp=0;
+      try{const f1=paraFactorFn(res,tid);if(f1){const r=Number(f1(layer,val));if(Number.isFinite(r)&&r>0)pf=r}}catch{}
+      try{const f2=paraPlusFn(res,tid);if(f2){const r=Number(f2(layer,val));if(Number.isFinite(r))pp=r}}catch{}
+      return {pf,pp}};
     const fiaBonus=()=>{let B=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98469||v.stateId===133285)B+=v.layer||0;return B};
     const fiaPct=(role,lvl)=>lvl*(30+fiaBonus());
     const PROP={hp:'hp',max_hp:'max',block:'block',energy:'energy',max_energy:'maxEnergy',ulti_energy:'ulti',ulti_energy_max:'ultiMax',keeper_energy:'kEnergy',max_keeper_energy:'kMax'};
@@ -360,7 +378,7 @@
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];
-    const HIT_PROPS=['atk','atk_per','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
+    const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
     // ---- equipment: wheels (命轮, 'Weapon' state source) and covenant sets (密契, '状态@饰品X' states)
     const PROP_KIND={awaker_ulti_dmg_per:['final','ult'],o_damage_per:['out','all'],o_damage_per_card:['out','card'],o_damage_per_strikecard:['out','strike'],o_damage_per_attachpost:['out','attach'],o_damage_per_ulti:['out','ult'],basic_damage_per:['out','all'],i_basic_damage_per:['in','all'],
       i_damage_per:['final','all'],i_damage_per_strikecard:['final','strike'],damage_per2monster_boss:['final','all'],crit_damage:['crit','all'],crit_damage_from_strikecard:['crit','strike'],crit_damage_from_ulti:['crit','ult'],damage_plus:['power','all'],strikecard_damage_plus:['power','strike']};
@@ -543,6 +561,12 @@
           if(e===1028&&d.propertyType==='card_strength_multiple'&&d.uid!=null&&typeof d.value==='number')cardMul.set(String(d.uid),d.value);
           if(e===1028&&d.value!=null&&d.uid!=null&&typeof d.value==='number'&&actors.has(String(d.uid))){const u=unit(d.uid);(u.props=u.props||{})[d.propertyType]=d.value;if(PROP[d.propertyType])u[PROP[d.propertyType]]=d.value}
           else if(e===1014&&d.beHitConfig?.targetRoleUid!=null){const h=d.beHitConfig,u=unit(h.targetRoleUid);if(h.curHp!=null)u.hp=h.curHp;if(h.curMaxHp!=null)u.max=h.curMaxHp}
+          if((e===1004||e===1006||e===1007||e===1005)&&d.stateUid!=null){
+            const su=String(d.stateUid);
+            if(e===1005){const cu=cardStOf.get(su);if(cu){cardSt.get(cu)?.delete(su);cardStOf.delete(su)}}
+            else if(e===1007){const cu=cardStOf.get(su);if(cu){const o=cardSt.get(cu)?.get(su);if(o)o.layer=d.newLayer??o.layer}}
+            else if(d.stateId!=null&&d.ownerUid!=null&&!actors.has(String(d.ownerUid))&&(d.stateType===3||cards.has(String(d.ownerUid)))){const cu=String(d.ownerUid);if(!cardSt.has(cu))cardSt.set(cu,new Map());cardSt.get(cu).set(su,{stateId:d.stateId,layer:d.layer??1});cardStOf.set(su,cu)}
+          }
           if((e===1004||e===1006)&&FIA_LVL[d.stateId]&&d.stateUid!=null){fiaByState.set(String(d.stateUid),String(d.ownerUid));fiaCard.set(String(d.ownerUid),FIA_LVL[d.stateId])}
           else if(e===1005&&d.stateUid!=null&&fiaByState.has(String(d.stateUid))){const cu=fiaByState.get(String(d.stateUid));fiaByState.delete(String(d.stateUid));if(fiaCard.get(cu)&&![...fiaByState.values()].includes(cu))fiaCard.delete(cu)}
           else if(e===1004&&d.stateUid!=null&&(d.stateType===1||actors.has(String(d.ownerUid??d.roleUid)))){stateMap(d.ownerUid??d.roleUid).set(String(d.stateUid),{stateId:d.stateId,layer:d.layer??1,args:d.descArgs?.curValues})}
@@ -569,7 +593,7 @@
           }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia={uid:String(ownerUid),lvl:fiaLvl,pct:fiaP,args:d.descArgs?.curValues||null,tid,cmul:cardMul.get(String(d.uid))||0};if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
+            const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia={ev:evalPara(tid,ownerUid,d.uid),uid:String(ownerUid),lvl:fiaLvl,pct:fiaP,args:d.descArgs?.curValues||null,tid,cmul:cardMul.get(String(d.uid))||0,cuid:String(d.uid)};if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
             push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,fiaLvl,fiaPct:fiaP,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});
             if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid},fr.time);
             continue;
@@ -583,10 +607,7 @@
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
               hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
-                vOn,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),pf:(()=>{const fn=paraFactorFn(res,h.skillConfigId);if(!fn)return 1;try{
-                const layer=(who,id)=>{let n=0;if(who==='CmdCaster'){for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.stateId===id)n+=v.layer||0}else{for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===id)n+=v.layer||0}return n},
-                val=(who,key)=>who==='CmdCaster'?(pr[key]||0):(board.get(String(ent.keeperUid))?.props?.[key]||0);
-                const r=Number(fn(layer,val));return Number.isFinite(r)&&r>0?r:1}catch{return 1}})(),comb:fiaBonus&&(()=>{let n=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98181)n+=v.layer||0;return n})(),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+                vOn,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(curFia&&curFia.uid===String(h.castRoleUid)&&String(curFia.tid)===String(h.skillConfigId)&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,curFia&&curFia.uid===String(h.castRoleUid)?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -1003,6 +1024,17 @@
   function calibrateHits(tl){
     if(tl.calib)return tl.calib;
     const res=tl.res,log=tl.hitLog||[];
+    // skill text -> where each number sits in the card's displayed values (display order = order of first appearance in the text),
+    // which one is the damage, and the per-skill strength / tentacle share ("享受 [Arg2]% 力量加成")
+    const descMemo=new Map(),descInfo=tid=>{const k=String(tid);if(descMemo.has(k))return descMemo.get(k);
+      let d=res.skill[k]?.Desc;if(d&&typeof d==='object'){const keys=Object.keys(d).sort((a,b)=>Number(b)-Number(a));d=d[keys[0]]}
+      d=pipeName(String(d||''));const order=[];for(const m of d.matchAll(/Arg(\d+)/g)){if(!order.includes(m[1]))order.push(m[1])}
+      const pos=n=>{const i=order.indexOf(String(n));return i<0?-1:i};
+      const dm=d.match(/Damage:\[?Damage:Arg(\d+)/),xm=d.match(/力量[^。]{0,12}发挥\s*\[Arg(\d+)\]\s*倍/),sm=d.match(/享受\s*(?:\[Arg(\d+)\]|(\d+(?:\.\d+)?))\s*[%％]\s*力量加成/),tm=d.match(/享受\s*(?:\[Arg(\d+)\]|(\d+(?:\.\d+)?))\s*[%％]\s*触腕伤害加成/);
+      const info={dmgPos:dm?pos(dm[1]):-1,strPos:sm&&sm[1]?pos(sm[1]):-1,timesPos:xm?pos(xm[1]):-1,strFix:sm&&sm[2]?Number(sm[2]):null,tenPos:tm&&tm[1]?pos(tm[1]):-1,tenFix:tm&&tm[2]?Number(tm[2]):null};
+      descMemo.set(k,info);return info};
+    const strMul=h=>{const i=descInfo(h.skill);if(i.timesPos>=0){const v=h.arg?.[i.timesPos];if(v>=1&&v<=50)return v}if(i.strPos>=0){const v=h.arg?.[i.strPos];if(v>=10&&v<=2000&&v%5===0)return v/100;return 1}if(i.strFix!=null)return i.strFix/100;return 1};
+    const tenMul=h=>{const i=descInfo(h.skill);if(i.tenPos>=0&&h.arg?.[i.tenPos]>0)return h.arg[i.tenPos]/100;if(i.tenFix!=null)return i.tenFix/100;return 0};
     // which stat a skill scales with: the first Battle*Force token in its parameter formula (default ATK)
     const fkMemo=new Map(),forceKind=tid=>{const k=String(tid);if(!fkMemo.has(k)){const pa=res.skill[k]?.Para,t=typeof pa==='string'?pa:JSON.stringify(pa?.['0']??pa?.['1']??pa??''),m=t.match(/Battle(Atk|Def|Physique)Force/);fkMemo.set(k,m?(m[1]==='Def'?'def':m[1]==='Physique'?'phys':'atk'):'atk')}return fkMemo.get(k)};
     const types=h=>asList(res.skill[String(h.skill)]?.Type);
@@ -1051,11 +1083,19 @@
       // the card shows its numbers in display order, so find per skill which entry is the damage: the one equal to hit damage / (crit x vulnerability x final pool)
       const cand=hits.filter(h=>!h.blind&&h.arg&&String(h.ptid)===String(h.skill)),votes=new Map();
       for(const h of cand){const c=ctxOf(h),dn=dnOf(h,c,true),v=votes.get(h.skill)||{n:0,k:new Map()};v.n++;h.arg.forEach((a,k)=>{if(a>0&&Math.abs(a-dn*(1+c.fin/100)*1)<=Math.max(2,a*0.02)||a>0&&Math.abs(a-dn)<=Math.max(2,a*0.02))v.k.set(k,(v.k.get(k)||0)+1)});votes.set(h.skill,v)}
-      const idxOf=new Map();for(const [sk,v] of votes){let best=-1,bn=0;for(const [k,n] of v.k)if(n>bn){best=k;bn=n}if(best>=0&&bn>=Math.max(2,v.n*0.5))idxOf.set(sk,best)}
+      const idxOf=new Map();
+      for(const [sk,v] of votes){let best=-1,bn=0;for(const [k,n] of v.k)if(n>bn){best=k;bn=n}if(best>=0&&bn>=Math.max(2,v.n*0.5))idxOf.set(sk,best)}
+      for(const h of cand){if(!idxOf.has(h.skill)){const di=descInfo(h.skill).dmgPos;if(di>=0&&h.arg?.[di]>0){const c=ctxOf(h),dn=dnOf(h,c,true)*(1+c.fin/100);if(Math.abs(h.arg[di]/dn-1)<.5)idxOf.set(h.skill,di)}}}
       const av=h=>{const k=idxOf.get(h.skill);if(k!=null)return h.arg?.[k]||0;const a=h.arg?.[0]||0,c=ctxOf(h),dn=dnOf(h,c,true);return a>0&&Math.abs(a/(dn*(1+c.fin/100))-1)<.5?a:0};
       const hs=cand.filter(h=>av(h)>0);if(hs.length<4)return null;
       const plain=hs.filter(h=>!h.crit&&!h.vOn);const match=plain.length?plain.filter(h=>Math.abs(h.dmg-av(h))<=Math.max(2,av(h)*0.01)).length/plain.length:null;
-      const uniq=new Map();for(const h of hs){const c=ctxOf(h),y=av(h)/(1+c.fin/100),key=`${h.skill}|${Math.round(y)}|${c.S}|${c.T.toFixed(1)}`;if(!uniq.has(key))uniq.set(key,{h,c,y})}
+      // strength share per skill ("享受 N% 力量加成"): keep the reading (described share vs plain x1) that fits that skill better
+      const build=(useShare,usePlus)=>{const u=new Map();for(const h of hs){const c0=ctxOf(h),sm=useShare?strMul(h):1,c={...c0,S:c0.S*sm+(useShare?(h.P.tentacle_dmg||0)*tenMul(h):0)+(usePlus?(h.pp||0):0)},y=av(h)/(1+c.fin/100),key=`${h.skill}|${Math.round(y)}|${c.S.toFixed(1)}|${c.T.toFixed(1)}`;if(!u.has(key))u.set(key,{h,c,y})}return [...u.values()]};
+      const skillErr=ps=>{const g=new Map();for(const p of ps){const o=g.get(p.h.skill)||[];o.push(p);g.set(p.h.skill,o)}const out=new Map();for(const [k,l] of g){let num=0,den=0;for(const p of l){const w=1/(p.y*p.y);num+=w*p.c.T*(p.y-p.c.S);den+=w*p.c.T*p.c.T}const A=den>0?num/den:0;out.set(k,l.reduce((t,p)=>t+Math.abs(A*p.c.T+p.c.S-p.y)/p.y,0)/l.length)}return out};
+      // keep, per skill, the reading (plain / described strength share / ParaPlus extra) that fits that skill best
+      const vars=[build(false,false),build(true,false),build(false,true),build(true,true)],errs=vars.map(skillErr);
+      const bestVar=new Map();for(const k of errs[0].keys()){let bi=0;for(let i=1;i<vars.length;i++)if((errs[i].get(k)??9)<(errs[bi].get(k)??9)-0.005)bi=i;bestVar.set(k,bi)}
+      const uniq=new Map(vars.flatMap((ps,i)=>ps.filter(p=>bestVar.get(p.h.skill)===i)).map((p,i)=>[i,p]));
       let pts=[...uniq.values()],trimmed=0;
       const solve=ps=>{const sk=[...new Set(ps.map(p=>p.h.skill))],si=new Map(sk.map((v,i)=>[v,i])),rw=ps.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=ps.map(p=>p.y),ww=yy.map(v=>1/Math.max(1,v));
         const x=new Set(ps.map(p=>p.c.S)).size>=2&&ps.length>sk.length+2?solveLeastSquares(rw,yy,ww):null;
@@ -1067,7 +1107,8 @@
       let r=solve(pts);
       for(let pass=0;pass<2&&r.errs;pass++){const keep=pts.filter((p,i)=>r.errs[i]<=0.3);if(keep.length===pts.length||keep.length<r.sk.length+3)break;trimmed+=pts.length-keep.length;pts=keep;r=solve(pts);if(!r.errs)break}
       const mean=a=>a&&a.length?a.reduce((t,v)=>t+v,0)/a.length:null;
-      return {hits:hs.length,ctx:pts.length,trimmed,match,m:r.x?Math.max(0,Math.min(10,r.x[r.sk.length])):null,mean:mean(r.errs),calcErr:mean(r.e1)};
+      const perSkill=(()=>{const g=new Map();pts.forEach((p,i)=>{if(!r.e1)return;const o=g.get(p.h.skill)||{tid:p.h.skill,name:res.nameSkill(p.h.skill),n:0,err:0,idx:idxOf.get(p.h.skill)??0};o.n++;o.err+=r.e1[i];g.set(p.h.skill,o)});return [...g.values()].map(o=>({...o,err:o.err/o.n}))})();
+      return {perSkill,hits:hs.length,ctx:pts.length,trimmed,match,m:r.x?Math.max(0,Math.min(10,r.x[r.sk.length])):null,mean:mean(r.errs),calcErr:mean(r.e1)};
     };
     for(const rep of report){rep.arg=argFit(log.filter(h=>h.uid===rep.uid&&!scopeOf(h).ult))}
     // attribute every buff (relics + wheels + covenants) with the fitted multipliers
