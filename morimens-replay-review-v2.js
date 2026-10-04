@@ -337,7 +337,7 @@
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];
     const HIT_PROPS=['atk','atk_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
     // ---- equipment: wheels (命轮, 'Weapon' state source) and covenant sets (密契, '状态@饰品X' states)
-    const PROP_KIND={o_damage_per:['out','all'],o_damage_per_card:['out','card'],o_damage_per_strikecard:['out','strike'],o_damage_per_attachpost:['out','attach'],o_damage_per_ulti:['out','ult'],basic_damage_per:['out','all'],i_basic_damage_per:['in','all'],
+    const PROP_KIND={awaker_ulti_dmg_per:['final','ult'],o_damage_per:['out','all'],o_damage_per_card:['out','card'],o_damage_per_strikecard:['out','strike'],o_damage_per_attachpost:['out','attach'],o_damage_per_ulti:['out','ult'],basic_damage_per:['out','all'],i_basic_damage_per:['in','all'],
       i_damage_per:['final','all'],i_damage_per_strikecard:['final','strike'],damage_per2monster_boss:['final','all'],crit_damage:['crit','all'],crit_damage_from_strikecard:['crit','strike'],crit_damage_from_ulti:['crit','ult'],damage_plus:['power','all'],strikecard_damage_plus:['power','strike']};
     const gearCat=gearCatalog||{wheels:{},covenants:{}},covByZh=new Map(Object.values(gearCat.covenants||{}).map(c=>[c.zh,c]));
     const gears=new Map(),gearsOfState=new Map();
@@ -358,10 +358,68 @@
       if(!e.desc){const d0=pipeName(mainRec.Desc||'');if(d0)e.desc=fillArgs(d0,g.params&&g.params.length?g.params:g.args)}
     }
     for(const e of gears.values())for(const sid of e.related){if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
+    // Trigger channels: every TriggerCondN/TriggerCmdN pair on the equipped state is one way the item fires.
+    const COND_LABEL={BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
+    const TYPE_QUAL={Card_Strike:'打击',Card_Defend:'防御'};
+    for(const e of gears.values()){
+      e.channels=[];const rec=res.state[String(e.mainStates[0]?.stateId)]||{},desc=e.desc||'';
+      const anyOwner=/任意唤醒体|所有唤醒体/.test(desc),strikeOnly=/打出[^。，]{0,12}「打击」/.test(desc),capM=desc.match(/每回合(?:最多)?(?:触发|生效)?\s*(\d+)\s*次/);
+      for(let n=1;n<=4;n++){
+        const cond=asList(rec['TriggerCond'+n])[0],cmdId=rec['TriggerCmd'+n];if(!cond)continue;
+        const [base,qual]=String(cond).split('.');
+        if(e.channels.some(c=>c.base===base&&c.cmd===cmdId))continue;
+        e.channels.push({n,base,qual:qual||(strikeOnly&&base==='BSTAfterUseCard'?'Card_Strike':''),cmd:cmdId,label:(COND_LABEL[base]||base)+(TYPE_QUAL[qual]?`（${TYPE_QUAL[qual]}）`:strikeOnly&&base==='BSTAfterUseCard'?'（打击）':''),once:base==='StageState'||base==='BSTBattleBegin',ownerOnly:!anyOwner,cap:capM?Number(capM[1]):0,count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n]});
+      }
+      // wheels that shuffle a card of their own name into the deck ("将 1 张「X」洗入…") fire when that card is played
+      const cm=desc.match(/将[^「]{0,12}「([^」]+)」[^。]{0,6}(?:洗入|加入)/);
+      if(cm){const tids=Object.entries(res.skill).filter(([id,r])=>pipeName(r.Name||'')===cm[1]&&asList(r.Type).includes('Card_Potion')).map(([id])=>id);if(tids.length){e.cardTids=new Set(tids);e.channels.push({n:99,base:'CARD',qual:'',cmd:null,label:`打出「${cm[1]}」`,once:false,ownerOnly:false,cap:0,count:0,rounds:new Set(),perRound:new Map(),card:cm[1],para:null})}}
+    }
+    for(const e of gears.values())for(const ch of e.channels){
+      ch.confirm=new Set();const cmd=res.rr?.Cmd?.[String(ch.cmd)],adds=(cmd?.data_list||[]).filter(dl=>dl.Type==='BEAddState');
+      // a conditional add (chance / per-turn cap) is the real proof of a trigger; unconditional counters would also tick when the effect is capped
+      const pool=adds.some(dl=>dl.Cond)?adds.filter(dl=>dl.Cond):adds;
+      ch.powerKind=adds.some(dl=>/^(3130|2900)\b/.test(String(dl.Para)));
+      for(const dl of pool){let tok=String(dl.Para).split(',')[0].trim();if(/^Arg\d*$/.test(tok))tok=String(ch.para??'').split(',')[0].trim();if(/^\d+$/.test(tok)&&res.state[tok]&&!['2900','3130','3902'].includes(tok))ch.confirm.add(tok)}
+    }
+    // states a trigger command creates (or names in its TriggerPara) belong to the item even if their names do not repeat its stem
+    for(const e of gears.values()){
+      const extra=new Set();
+      for(const ch of e.channels){
+        for(const dl of res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]){if(dl.Type!=='BEAddState')continue;const tok=String(dl.Para).split(',')[0].trim();if(/^\d+$/.test(tok))extra.add(tok)}
+        for(const m of String(ch.para??'').matchAll(/(?:^|,)\s*(\d{3,})\s*(?=,|$)/g))extra.add(m[1]);
+      }
+      for(const sid of extra){if(['2900','3130','3902'].includes(sid)||!res.state[sid]||e.related.has(sid))continue;e.related.add(sid);if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
+    }
+    let pendingConf=[];const tsPower=new Map(),tsPlus=new Map();
+    const attributePower=(e,time)=>{const p=tsPower.get(time);if(!p)return;const rel={tid:'gear:'+e.key,kind:'power'},ctx=newInstance({time},rel,p.delta,p.stateId===3130);const pl=tsPlus.get(time);if(pl)for(const [uid,amt] of pl)grant(ctx,uid,amt,rel,p.stateId===3130);tsPower.delete(time)};
+    const channelHit=(e,ch)=>{const r=bout;const pr=ch.perRound.get(r)||0;if(ch.cap&&pr>=ch.cap)return false;ch.perRound.set(r,pr+1);ch.count++;ch.rounds.add(r);return true};
+    // gear-side effect windows: what lands in the same frame group after a trigger belongs to that item
+    const openGearWindow=(e,time,kind,predict)=>{const rel={tid:'gear:'+e.key,kind,predict};if(relWin&&relWin.time===time){relWin.queue.push(rel);relWin.gear=true;relWin.until=Math.max(relWin.until||0,time+6)}else relWin={time,queue:[rel],pi:0,bi:0,pend:new Map(),basicCtx:null,ci:0,gear:true,until:time+6}};
+    const gearTrigger=(type,info,time)=>{
+      for(const e of gears.values())for(const ch of e.channels){
+        let ok=false;
+        if(type==='card'){
+          if(ch.base==='BSTAfterUseCard'&&(!ch.qual||info.types.includes(ch.qual))&&(!ch.ownerOnly||e.owners.includes(String(info.owner))))ok=true;
+          if(ch.base==='CARD'&&e.cardTids?.has(String(info.tid)))ok=true;
+        }else if(type==='ulti'){ok=ch.base==='BSTAfterUltiSkill'&&(!ch.ownerOnly||e.owners.includes(String(info.owner)))}
+        else if(type==='keeper')ok=ch.base==='BSTAfterUseKeeperSkill';
+        else if(type==='boutBegin')ok=ch.base==='BSTAfterBoutBegin';
+        else if(type==='boutEnd')ok=ch.base==='BSTAfterBoutEnd';
+        else if(type==='swallow')ok=ch.base==='BSTAfterLaunchSwallow';
+        if(!ok)continue;
+        if(ch.confirm.size)pendingConf.push({e,ch,time,done:false,win:ch.base==='BSTAfterUltiSkill'?15:6});else if(!channelHit(e,ch))continue;
+        const desc=e.desc||'',kinds=new Set();
+        if(ch.base==='CARD'&&/暴击伤害/.test(desc))kinds.add('crit');
+        let predict=null;if(kinds.has('power')&&ch.para!=null){const own=board.get(String(e.owners[0]))?.props||{},af=Math.ceil((own.atk||0)*(1+(own.atk_per||0)/100)),params=e.mainStates[0]?.params||[];
+          const ex=String(ch.para).replace(/StateOwner\.AtkForce/g,String(af)).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#').replace(/math\./g,'Math.');
+          if(/^[0-9+\-*/().\s]*(Math\.(ceil|floor)[0-9+\-*/().\s]*)*$/.test(ex)){try{const v=Function(`"use strict";return (${ex})`)();if(Number.isFinite(v))predict=v}catch{}}}
+        for(const k of kinds)openGearWindow(e,time,k,k==='power'?predict:null);
+      }
+    };
 
     const buffOf=tid=>{const k=String(tid);if(!relicBuffs.has(k))relicBuffs.set(k,{tid:k,kind:relicKind(tid),gain:0,extra:0,instances:[]});return relicBuffs.get(k)};
     // one relic trigger -> one instance (gain counted once per trigger, per-awakener amounts used for the damage split)
-    const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
+    const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp,kind:rel.kind};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
     const grant=(ctx,uid,amt,rel,temp)=>{const k=String(uid);ctx.inst.awakeners.add(k);if(!activeBuff.has(k))activeBuff.set(k,[]);activeBuff.get(k).push({inst:ctx.inst,kind:rel.kind,amt,temp,rel:ctx.rec})};
     const expireTemp=()=>{for(const [k,v] of activeBuff)activeBuff.set(k,v.filter(x=>!x.temp))};
 
@@ -394,6 +452,34 @@
         const fl=rec?.msgData?.frameList;if(!Array.isArray(fl))continue;
         for(let fi=0;fi<fl.length;fi++){
           const fr=fl[fi]||{};frameCount++;const e=fr.eventId,d=fr.data||{};
+          // ---- what lands at each timestamp (power gains / per-awakener damage_plus) so a confirmed trigger can claim it
+          if((e===1004||e===1007)&&(d.stateId===3130||d.stateId===2900)){const dl=e===1004?(d.layer||0):((d.newLayer||0)-(d.oldLayer||0));if(dl>0&&(d.stateId===3130||!tsPower.has(fr.time))){tsPower.set(fr.time,{delta:dl,stateId:d.stateId});if(tsPower.size>40)tsPower.delete(tsPower.keys().next().value)}}
+          if(e===1028&&d.propertyType==='damage_plus'&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'){if(!tsPlus.has(fr.time))tsPlus.set(fr.time,new Map());tsPlus.get(fr.time).set(String(d.uid),Number(d.changedValue));if(tsPlus.size>40)tsPlus.delete(tsPlus.keys().next().value)}
+          // ---- confirm conditional triggers: the command's state really appeared right after the trigger
+          if(pendingConf.length){
+            if((e===1004||e===1006||e===1007)&&d.stateId!=null&&(e!==1007||(d.newLayer??0)>(d.oldLayer??0))){const pc=pendingConf.find(x=>!x.done&&x.ch.confirm.has(String(x.ch.confirm.has(String(d.stateId))?d.stateId:''))&&fr.time-x.time<=x.win&&fr.time>=x.time-1e-6&&x.ch.lastT!==fr.time);if(pc){pc.done=true;pc.ch.lastT=fr.time;if(channelHit(pc.e,pc.ch)&&pc.ch.powerKind)attributePower(pc.e,fr.time)}}
+            pendingConf=pendingConf.filter(pc=>!pc.done&&(fr.time||0)-pc.time<=pc.win);
+          }
+          // ---- dynamic equipment buffs: related states that declare ExistProperty (value = layer x coefficient)
+          if((e===1004||e===1006||e===1007||e===1005)&&d.stateId!=null||(e===1005&&d.stateUid!=null)){
+            const sidN=e===1005?stateMap(d.ownerUid).get(String(d.stateUid))?.stateId:d.stateId,gl2=sidN!=null?gearsOfState.get(String(sidN)):null;
+            if(gl2){
+              const rec2=res.state[String(sidN)]||{},ex2=rec2.ExistProperty||{},ow=String(d.ownerUid??d.roleUid);
+              const prevL=e===1005?(stateMap(d.ownerUid).get(String(d.stateUid))?.layer||0):0;
+              const delta=e===1004||e===1006?(d.layer||1):e===1007?((d.newLayer||0)-(d.oldLayer||0)):-prevL;
+              if(delta&&actors.get(ow)?.kind==='awakener')for(const ge of gl2){
+                if(ge.mainStates.some(m=>String(m.stateId)===String(sidN)))continue;
+                const rec=gearRecs.get(ge.key);if(!rec)continue;
+                for(const [prop,expr] of Object.entries(ex2)){
+                  const pk=PROP_KIND[prop];const cm=String(expr).match(/^ChangedLayer(?:\*([0-9.]+))?$/);if(!pk||!cm)continue;
+                  const amt=delta*(cm[1]?Number(cm[1]):1),temp=asList(rec2.ClearCond).some(c=>/BoutEnd/.test(c));
+                  if(amt>0&&bout>0){const inst={round:bout,time:fr.time,gain:amt,awakeners:new Set([ow]),extra:0,hits:0,temp,kind:pk[0],prop};rec.instances.push(inst);rec.gain+=amt;
+                    if(!activeBuff.has(ow))activeBuff.set(ow,[]);activeBuff.get(ow).push({inst,kind:pk[0],scope:pk[1],amt,temp,rel:rec,prop,state:String(sidN)})}
+                  else if(amt<0){let rest=-amt;const list=activeBuff.get(ow)||[];for(let i=list.length-1;i>=0&&rest>1e-9;i--){const b=list[i];if(b.state!==String(sidN)||b.prop!==prop)continue;const take=Math.min(b.amt,rest);b.amt-=take;rest-=take;if(b.amt<=1e-9)list.splice(i,1)}}
+                }
+              }
+            }
+          }
           // ---- equipment triggers: a positive layer event on any state belonging to a wheel / covenant
           if(bout>0&&(e===1004||e===1006||e===1007)&&d.stateId!=null){
             const gl=gearsOfState.get(String(d.stateId));
@@ -401,7 +487,7 @@
           }
           // ---- relic trigger windows: effects landing in the same frame group belong to that relic
           if(e===1050){const rel={tid:String(d.relicTid),kind:relicKind(d.relicTid)};if(relWin&&relWin.time===fr.time)relWin.queue.push(rel);else relWin={time:fr.time,queue:[rel],pi:0,bi:0,pend:new Map(),basicCtx:null}}
-          else if(relWin&&(fr.time!==relWin.time||e===1067||e===1064||e===1013||e===1019||e===1093||e===1014))relWin=null;
+          else if(relWin&&((relWin.gear?(fr.time||0)>relWin.until:fr.time!==relWin.time)||e===1067||e===1064||e===1019||(!relWin.gear&&(e===1013||e===1093||e===1014))))relWin=null;
           if(relWin){
             const powers=relWin.queue.filter(r=>r.kind==='power'),basics=relWin.queue.filter(r=>r.kind==='basic');
             if(powers.length){
@@ -410,6 +496,11 @@
                 const delta=e===1004?(d.layer||0):((d.newLayer||0)-(d.oldLayer||0));
                 if(delta>0&&relWin.pi<powers.length){const rel=powers[relWin.pi++],ctx=newInstance(relWin,rel,delta,d.stateId===3130);for(const [uid,amt] of relWin.pend)grant(ctx,uid,amt,rel,d.stateId===3130);relWin.pend.clear()}
               }
+            }
+            const crits=relWin.queue.filter(r=>r.kind==='crit');
+            if(crits.length&&e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'){
+              if(!relWin.critCtx||relWin.critCtx.inst.awakeners.has(String(d.uid))){const rel=crits[Math.min(relWin.ci||0,crits.length-1)];relWin.ci=(relWin.ci||0)+1;relWin.critCtx=newInstance(relWin,rel,Number(d.changedValue),true);relWin.critCtx.rel=rel}
+              grant(relWin.critCtx,d.uid,Number(d.changedValue),relWin.critCtx.rel,true);
             }
             if(basics.length&&e===1028&&(d.propertyType==='i_basic_damage_per'||d.propertyType==='basic_damage_per')&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'){
               const uid=String(d.uid);
@@ -424,6 +515,7 @@
           else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues}else if(cur){if(cur.stateId===3130)expireTemp();m.delete(String(d.stateUid))}}
           else if(e===1005&&d.stateUid!=null){const cur=stateMap(d.ownerUid).get(String(d.stateUid));if(cur?.stateId===3130)expireTemp();stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
+          if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
           else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
           if(e===1019&&d?.boutNumber){
@@ -432,6 +524,7 @@
             if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(bout))getRound(bout).snapEnd=snap();getRound(nb).snapStart=snap()}
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;
             if(camp===1&&phase===1)push('round',ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
+            if(camp===1&&phase===1)gearTrigger('boutBegin',{},fr.time);else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
             continue;
           }
           if(!bout)continue;
@@ -442,9 +535,11 @@
           }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});continue;
+            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});
+            if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid},fr.time);
+            continue;
           }
-          if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});continue}
+          if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});gearTrigger('keeper',{},fr.time);continue}
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
@@ -464,7 +559,7 @@
           if(e===1046&&Array.isArray(d.targetUids)&&d.targetUids.length>1&&d.targetUids.every(t=>typeof t==='number'&&asList(res.skill[String(t)]?.Type).includes('Keeper_Skill')))keeperPicks.push({round:bout,time:fr.time,options:d.targetUids.slice(),chosen:null,via:d.skillConfigId});
           if(e===1064){const pk=[...keeperPicks].reverse().find(x=>x.chosen==null&&x.options.includes(d.skillId));if(pk)pk.chosen=d.skillId}
           if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${d.targetRelicList?ui('选择造物','Relic choice'):ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${d.targetRelicList?ui('选择造物','Pick relic'):ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
-          if(e===1049){const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
+          if(e===1049){gearTrigger('swallow',{},fr.time);const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
           if(e===1004||e===1007){
             const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner),tipS=stateTipAttr(res,sid,{args:d.descArgs?.curValues,layer:d.newLayer??d.layer,props:board.get(String(owner))?.props});
             if(e===1004){const layer=d.layer>1?`×${d.layer}`:'';push('state',`${ui('状态添加','State add')} · ${res.nameState(sid)} → ${plainName(owner)}`,`${stateBadge(sid,layer,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});}
@@ -594,6 +689,7 @@
     .mr2ico.gi{width:44px;height:44px;flex:0 0 44px;border-radius:9px}.mr2ico.gi img{object-fit:contain}.mr2ico.gi.cov{border-radius:50%}
     .mr2gmetrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}.mr2gmetrics span{display:grid;gap:1px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.04)}.mr2gmetrics small{font-size:9px;color:#758398}.mr2gmetrics b{font-size:15px;color:#f4f7fb;font-variant-numeric:tabular-nums}.mr2gmetrics em{font-style:normal;font-size:10px;color:#8fa0b5}.mr2gmetrics .hot b{color:#ffb2a8}
     .mr2gdesc{font-size:11px;line-height:1.7;color:#c3cedd;white-space:pre-line;padding:2px 0}.mr2gdesc b{color:#ffd86b;margin-right:4px}
+    .mr2tag.trig{background:rgba(98,183,255,.14);color:#9fd0ff;padding:2px 8px}.mr2tag.trig small{color:#7f8ea2;margin-left:3px}.mr2geff{display:flex;flex-wrap:wrap;gap:5px}.mr2geff span{font-size:10px;padding:1px 8px;border-radius:999px;background:rgba(255,196,87,.1);border:1px solid rgba(255,196,87,.25);color:#ffd27a}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -839,7 +935,7 @@
       const out=g('basic_damage_per')+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
       const inn=g('i_basic_damage_per');
       const fin=full?g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
-      const cd=g('crit_damage');
+      const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
       const S=g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0);
       const atkForce=Math.ceil(g('atk')*(1+g('atk_per')/100));
       return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)};
@@ -945,7 +1041,12 @@
     const gearRows=[...(tl.gears?.values()||[])].map(e=>{
       const out={dmg:0,block:0,heal:0};for(const sid of e.related){const t=stateTotals.get(sid);if(t){out.dmg+=t.dmg;out.block+=t.block;out.heal+=t.heal}}
       const rec=tl.gearRecs?.get(e.key);
-      return {...e,n:e.triggers.times.size,rounds:[...e.triggers.rounds].sort((a,b)=>a-b),out,extra:rec?.extra||0,buffs:rec?.instances||[]};
+      const SUPPORTED=new Set(['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','CARD']);
+      const chs=(e.channels||[]).filter(c=>SUPPORTED.has(c.base)),sup=chs.length>0;
+      const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
+      const n=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
+      const lines=[];for(const c of (e.channels||[])){if(c.cmd==null||!c.count)continue;for(const l of gearEffectLines(tl.res,e,c))lines.push(l)}
+      return {...e,n,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
     const stateRows=[...stateTotals.entries()].map(([id,t])=>({id,...t})).filter(x=>x.dmg>0).sort((a,b)=>b.dmg-a.dmg);
@@ -973,12 +1074,28 @@
       <div class="mr2crow head"><b>${ui('角色','Awakener')}</b><span>${ui('样本','Sample')}</span><span>${ui('力量倍率','STR mult')}</span><span>${ui('按计算器 ×1','Calc ×1')}</span><span>${ui('拟合后','Fitted')}</span><span>${ui('暴击','Crit')}</span></div>${rows}
       <div class="mr2calib">${lines.map(l=>`<div>${esc(l)}</div>`).join('')}<small>${ui('说明：狂气爆发的伤害使用独立的力量/暴击修正，这里不参与拟合；上面的造物额外伤害已改用拟合出的力量倍率重新折算。样本越多、力量取值越分散，拟合越可信；狂气爆发的力量倍率按角色的 ulti_strength_multiple 估算，未经本场数据验证。','Ultimates use separate strength/crit modifiers and are excluded from the fit. The relic damage above uses the fitted multipliers.')}</small></div></div>`;
   }
+  // human-readable effect of a trigger command (looked up in the replay's Cmd table)
+  function gearEffectLines(res,e,ch){
+    const cmd=res.rr?.Cmd?.[String(ch.cmd)];if(!cmd)return [];
+    const params=e.mainStates[0]?.params||[],out=[];
+    const evalPara=expr=>expr==null?null:evalNum(String(expr).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
+    for(const dl of cmd.data_list||[]){
+      if(dl.Type==='BEGainUltiEnergy'){const v=evalPara(ch.para);out.push(v!=null?`${ui('狂气','Aliemus')} +${fmt(v)}${ch.count?` × ${ch.count} = +${fmt(v*ch.count)}`:''}`:ui('获得狂气','Gain Aliemus'))}
+      else if(dl.Type==='BECreateCard')out.push(ui('生成卡牌','Create card'));
+    }
+    return out;
+  }
   function renderGear(st,tl){
     if(!st.gearRows.length)return '';
     const res=tl.res,total=st.totalDmg;
     const ownerChips=g=>g.owners.map(u=>tl.chip(u)).join('');
     const staticChips=g=>g.statics.map(x=>`<span class="mr2stat pos" title="${esc(x.prop)}">${esc(statName(res,x.prop))} +${esc(fmtStat(x.prop,x.val))}</span>`).join('');
     const outChips=g=>`${g.out.dmg?`<em class="d">${ui('伤害','DMG')} ${fmt(g.out.dmg)}</em>`:''}${g.out.block?`<em class="b">${ui('护盾','Shield')} ${fmt(g.out.block)}</em>`:''}${g.out.heal?`<em class="h">${ui('治疗','Heal')} ${fmt(g.out.heal)}</em>`:''}`;
+    const dynLines=g=>{
+      const by=new Map(),seen=new Set();for(const i of g.buffs||[]){if(!(i.round>0)&&!i.temp)continue;const k=`${i.kind}|${i.prop||''}`,tk=`${k}|${i.time}`;const o=by.get(k)||{kind:i.kind,prop:i.prop,sum:0,n:0,extra:0,temp:i.temp};o.extra+=i.extra;if(!seen.has(tk)){seen.add(tk);o.sum+=i.gain;o.n++}by.set(k,o)}
+      const nm={power:ui('临时力量','Temp power'),crit:ui('暴击伤害','Crit damage'),final:ui('最终伤害','Final dmg'),out:ui('基础伤害','Base dmg'),in:ui('基础伤害','Base dmg')};
+      return [...by.values()].map(o=>`${o.prop?statName(res,o.prop):(nm[o.kind]||o.kind)} ${o.kind==='power'?'+':'+'}${fmt(Math.round(o.sum*10)/10)}${o.kind==='power'?'':'%'}${ui(`（累计 ${o.n} 次${o.temp?'，临时':''}）`,` (${o.n}× total)`)}`);
+    };
     const card=g=>{
       const isW=g.kind==='wheel',kindTag=isW?ui('命轮','Wheel'):ui('密契','Covenant');
       const counters=[...g.stateCounts.entries()].sort((a,b)=>b[1]-a[1]).map(([sid,n])=>`<div class="mr2srow inst"><span class="mr2sname">${esc(res.nameState(sid))}<small>${ui('状态','State')} #${esc(sid)}</small></span><span></span><b>${n}</b><small>${ui('次层数增加','increments')}</small></div>`).join('');
@@ -986,19 +1103,21 @@
       const hasBuff=g.extra>0;
       return `<div class="mr2gcard ${isW?'wheel':'cov'}"${g.desc||g.effectsEn.length?tipAttr(`${g.name}${g.en?` · ${g.en}`:''}`,kindTag,isW?g.desc:g.effectsEn.map(e=>`${e.pieces}${ui('件','pc')}：${e.desc}`).join('\n')):''}>
         <div class="mr2ghead">${ico(g.icon,g.name,`gi ${isW?'':'cov'}`)}<div class="mr2gtitle"><b>${esc(g.name)}</b><small>${g.en?esc(g.en):''}${g.rarity?` · ${esc(g.rarity)}`:''}</small></div><span class="mr2tag ${isW?'wheelTag':'covTag'}">${kindTag}</span><span class="mr2gowners">${ownerChips(g)}</span></div>
-        <div class="mr2gmetrics"><span><small>${ui('触发次数','Triggers')}</small><b>${g.n}</b><em>${g.rounds.length?ui(`第 ${g.rounds.join('/')} 回合`,`R${g.rounds.join('/')}`):ui('仅开局生效','Static')}</em></span>
+        <div class="mr2gmetrics"><span><small>${ui('触发次数','Triggers')}</small><b>${g.n}</b><em>${g.rounds.length?ui(`第 ${g.rounds.join('/')} 回合`,`R${g.rounds.join('/')}`):ui('仅开局生效','Static')}${g.byChannels?'':ui(' · 按相关状态计','')}</em></span>
           ${g.extra||g.out.dmg?`<span class="hot"><small>${ui('估算额外伤害','Est. extra DMG')}</small><b>${fmt(Math.round(g.extra+g.out.dmg))}</b><em>${total?pctOf(g.extra+g.out.dmg,total):0}%</em></span>`:''}
           ${g.out.block||g.out.heal?`<span><small>${ui('护盾 / 治疗','Shield / Heal')}</small><b>${fmt(g.out.block)}</b><em>${fmt(g.out.heal)}</em></span>`:''}</div>
+        ${g.byChannels&&g.channelRows.length?`<div class="mr2flow">${[...new Map(g.channelRows.filter(c=>c.count).map(c=>[c.label,c])).values()].map(c=>`<span class="mr2tag trig" title="${esc(c.cap?ui(`每回合最多 ${c.cap} 次`,`max ${c.cap}/round`):'')}">${esc(c.label)} ×${c.count}${c.cap?` <small>${ui(`限 ${c.cap}/回合`,`cap ${c.cap}/r`)}</small>`:''}</span>`).join('')}</div>`:''}
+        ${g.effectLines.length||dynLines(g).length?`<div class="mr2geff">${[...g.effectLines,...dynLines(g)].map(l=>`<span>${esc(l)}</span>`).join('')}</div>`:''}
         ${g.statics.length?`<div class="mr2flow">${staticChips(g)}</div>`:''}
         ${outChips(g)?`<div class="mr2sout">${outChips(g)}</div>`:''}
         <details class="mr2minor"><summary>${ui('效果说明与触发明细','Effect text & trigger breakdown')}</summary>${eff||`<div class="mr2empty">${ui('（回放中没有该装备的效果文本）','(no effect text in the replay)')}</div>`}${!isW&&g.effectsEn.length?`<small class="mr2from">${ui('密契效果文本来自站内数据（英文）；回放只记录套装效果状态是否生效，不记录具体件数。','Covenant text comes from site data; the replay only records whether the set-effect state is active.')}</small>`:''}${counters?`<div class="mr2srcs">${counters}</div>`:''}</details>
       </div>`;
     };
     const wheels=st.gearRows.filter(g=>g.kind==='wheel'),covs=st.gearRows.filter(g=>g.kind==='covenant');
-    return `<div class="mr2ssec"><h5>${ui('命轮与密契','Wheels & covenants')}${st.gearExtra?` <em class="mr2hot">${ui('估算额外伤害合计','Est. extra DMG')} ${fmt(Math.round(st.gearExtra))}${st.totalDmg?` (${pctOf(st.gearExtra,st.totalDmg)}%)`:''}</em>`:''}</h5>
+    return `<div class="mr2ssec"><h5>${ui('命轮与密契','Wheels & covenants')}${st.gearExtra?` <em class="mr2hot">${ui('估算额外伤害合计','Est. extra DMG')} ${fmt(Math.round(st.gearExtra))}${st.totalDmg?` (${pctOf(st.gearExtra,st.totalDmg)}%)`:''} <small>${ui('各项独立估算、彼此重叠，不可当作可相加的份额','independent, overlapping estimates')}</small></em>`:''}</h5>
       ${wheels.length?`<div class="mr2gsub">${ui('命轮','Wheels')} ${wheels.length}</div><div class="mr2gcards">${wheels.map(card).join('')}</div>`:''}
       ${covs.length?`<div class="mr2gsub">${ui('密契套装','Covenant sets')} ${covs.length}</div><div class="mr2gcards">${covs.map(card).join('')}</div>`:''}
-      <small class="mr2from">${ui('触发次数 = 该装备相关状态层数增加的不同时刻数；额外伤害 = 其静态加成（基伤 / 暴击伤害 / 力量等）按上方拟合的伤害公式折算，加上统计包记录在其状态上的伤害，属估算。动态触发的临时增益（如“打出卡牌后获得临时力量”）只统计触发次数，未折算伤害。','Triggers = distinct moments a related state gains layers. Extra damage = static bonuses valued through the fitted formula plus stat-pack damage on its states (estimate). Dynamic temporary buffs only count triggers.')}</small></div>`;
+      <small class="mr2from">${ui('触发次数 = 按装备状态里记录的触发条件（打出卡牌 / 释放钥令 / 回合开始或结束 / 爆发后等）在回放里发生的次数，并遵守“每回合最多 N 次”；无法识别触发条件的装备才退回按相关状态层数增加计；额外伤害 = 其静态加成（基伤 / 暴击伤害 / 力量等）按上方拟合的伤害公式折算，加上统计包记录在其状态上的伤害，属估算。动态触发的临时增益（如“打出卡牌后获得临时力量”）只统计触发次数，未折算伤害。','Triggers = distinct moments a related state gains layers. Extra damage = static bonuses valued through the fitted formula plus stat-pack damage on its states (estimate). Dynamic temporary buffs only count triggers.')}</small></div>`;
   }
   function renderStats(full,tl){
     const st=computeStats(full,tl),res=tl.res;if(!st.per.length&&!st.relicRows.length)return '';
