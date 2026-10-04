@@ -201,7 +201,7 @@
       add('crit','暴击率',pr.crit);
       add('crit_damage','暴击伤害',pr.crit_damage);
       add('basic','基础伤害',(pr.basic_damage_per||0)+(pr.i_basic_damage_per||0));
-      add('final','终伤',pr.o_damage_per);
+      add('o_damage_per','外部伤害加成',pr.o_damage_per);
       add('idmg','局内增伤',pr.i_damage_per);
       add('keeper_energy_eff','银钥充能',pr.keeper_energy_eff);
       add('strike_crit','打击暴击',pr.crit_per_from_strikecard);
@@ -213,8 +213,11 @@
       add('outside_crit','暴击率',pr.outside_crit);
       add('outside_crit_damage','暴击伤害',pr.outside_crit_damage);
     }else if(a.kind==='monster'){
+      add('damage_plus','伤害强效',pr.damage_plus,false);
       add('vulnerable_per','易伤增幅',pr.vulnerable_per);
       add('frail_per','脆弱增幅',pr.frail_per);
+      add('def','防御',pr.def,false);
+      add('atk','攻击',pr.atk,false);
     }
     return out;
   }
@@ -290,7 +293,13 @@
 
     const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
     const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,events:[]});return rounds.get(n)};
-    const push=(kind,label,html,data,raw,meta={})=>{if(!bout)return;getRound(bout).events.push({seq:++globalSeq,kind,label,html,time:raw.time??null,eventId:raw.eventId,data,camp,phase,...meta})};
+    const HEAD_KINDS=['card','ultimate','keeper','skill','enemyact'];
+    const push=(kind,label,html,data,raw,meta={})=>{
+      if(!bout)return;
+      if(kind==='snap'){getRound(bout).events.push({kind,camp,phase,snap:meta.snap});return}
+      const isHead=HEAD_KINDS.includes(kind)||(kind==='trigger'&&camp===2&&actors.get(String(meta.actorUid))?.camp===2);
+      getRound(bout).events.push({seq:++globalSeq,kind,label,html,time:raw.time??null,eventId:raw.eventId,data,camp,phase,...(isHead?{snapBefore:snap()}:{}),...meta});
+    };
     const pct=(a,b)=>b>0?Math.max(0,Math.min(100,a/b*100)):0;
     const hpMini=(cur,max,enemy)=>cur!=null&&max>0?`<span class="mr2hpmini${enemy?' enemy':''}" title="${esc(`${fmt(cur)} / ${fmt(max)}`)}"><i style="width:${pct(cur,max).toFixed(1)}%"></i></span><span class="mr2from">${pct(cur,max).toFixed(pct(cur,max)<10?1:0)}%</span>`:'';
     const resLabels={energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')};
@@ -325,6 +334,7 @@
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
           if(e===1019&&d?.boutNumber){
+            push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
             if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(bout))getRound(bout).snapEnd=snap();getRound(nb).snapStart=snap()}
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;
@@ -452,6 +462,9 @@
     .mr2dcost{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:6px;background:rgba(var(--acr),.22);color:var(--ac);font-weight:900;font-size:13px;border:1px solid rgba(var(--acr),.5)}.mr2dname{display:grid;line-height:1.3;min-width:0}.mr2dname b{font-size:12px;color:#eef3fa}.mr2dname small{font-size:9px;color:#8fa0b5}.mr2dn{margin-left:auto;font-style:normal;font-weight:800;color:var(--ac);font-size:12px}
 
     .mr2unit.tile .mr2ustats{flex-direction:column;align-items:stretch;gap:2px;width:100%;margin-top:1px}.mr2unit.tile .mr2uss{display:flex;justify-content:space-between;gap:6px;padding:0 6px;font-size:10px}
+
+    .mr2snap{margin-top:2px}.mr2snap>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:10px;color:#7f8ea2;padding:3px 0}.mr2snap>summary::-webkit-details-marker{display:none}.mr2snap>summary::before{content:'▸';color:#6f7f93}.mr2snap[open]>summary::before{content:'▾'}.mr2snap[open]{padding-bottom:4px}.mr2snap .mr2boardwrap{margin-top:4px}
+    .mr2snapchip{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;padding:1px 8px;border-radius:8px;background:rgba(74,163,255,.07);border:1px solid rgba(74,163,255,.18);color:#c3cedd}.mr2snapchip.enemy{background:rgba(255,92,138,.07);border-color:rgba(255,92,138,.22)}.mr2snapchip b{font-size:11px;color:#e6edf6}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -541,12 +554,25 @@
     const count=states.length+others.length+stats.length;
     return `<div class="mr2settle"><div class="mr2settlehead"><span class="mr2sttl">${esc(title)}</span>${resHtml}</div>${moves.length?moveRows(moves):''}${count?`<details class="mr2minor"><summary>${ui(`状态/属性变化 ${count}${hiddenN?`（含内部 ${hiddenN}）`:''}`,`State & stat changes ${count}`)}</summary>${detail}</details>`:''}</div>`;
   }
+  // battlefield right after one action: collapsed summary line (keeper / enemy hp + enemy debuffs), full board on expand
+  function renderActionSnap(before,after,tl){
+    if(!after)return '';
+    const prevBy=new Map((before?.units||[]).map(u=>[String(u.uid),u]));
+    const chips=after.units.filter(u=>{const a=tl.actors.get(String(u.uid));return a&&(a.kind==='keeper'||a.kind==='monster')&&u.hp!=null&&u.max>0}).map(u=>{
+      const a=tl.actors.get(String(u.uid)),pr=prevBy.get(String(u.uid)),p=Math.max(0,Math.min(100,u.hp/u.max*100)),delta=pr&&pr.hp!=null?u.hp-pr.hp:0;
+      const debuffs=a.kind==='monster'?(u.states||[]).filter(x=>tl.res.state[String(x.stateId)]?.ShowType!=='Hide').sort((x,y)=>(stateClass(tl.res,x.stateId)==='debuff'?0:1)-(stateClass(tl.res,y.stateId)==='debuff'?0:1)).slice(0,8):[];
+      return `<span class="mr2snapchip${a.kind==='monster'?' enemy':''}"><b>${esc(a.name)}</b>${hpMiniBar(p,a.kind==='monster')}<span class="mr2from">${p.toFixed(p<10?2:p<100?1:0)}%</span>${delta?`<span class="mr2delta ${delta<0?'neg':'pos'}">${delta<0?'▼':'▲'}${kfmt(Math.abs(delta))}</span>`:''}${debuffs.map(x=>`<span class="mr2ust ${stateClass(tl.res,x.stateId)}"${x.tip||''}>${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer>=10000?kfmt(x.layer):x.layer}</em>`:''}</span></span>`).join('')}</span>`;
+    }).join('');
+    return `<details class="mr2snap"><summary>${ui('行动后战场','After this action')}${chips}</summary>${renderBoard(after,before,tl,'',{compact:true})}</details>`;
+  }
+  const hpMiniBar=(p,enemy)=>`<span class="mr2hpmini${enemy?' enemy':''}"><i style="width:${p.toFixed(1)}%"></i></span>`;
   function renderRound(r,tl,open){
     const sides=[];let cur=null;
     for(const e of r.events){
       if(e.kind==='round')continue;
       const key=`${e.camp}|${e.phase}`;
-      if(!cur||cur.key!==key){cur={key,camp:e.camp,phase:e.phase,events:[]};sides.push(cur)}
+      if(!cur||cur.key!==key){cur={key,camp:e.camp,phase:e.phase,events:[],endSnap:null};sides.push(cur)}
+      if(e.kind==='snap'){cur.endSnap=e.snap;continue}
       cur.events.push(e);
     }
     const dmg=r.events.filter(e=>e.kind==='damage'&&tl.campOf(e.actorUid)===1).reduce((n,e)=>n+e.amount,0);
@@ -563,7 +589,7 @@
         else if(blk)blk.fx.push(e);else pre.push(e);
       }
       const preHtml=pre.length?renderSettle(pre,ui('行动前的状态/资源变化','Before first action'),tl):'';
-      return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map(b=>`<div class="mr2act a-${actionInfo(b.head).cls}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${rawDetails(b.head)}</div>`).join('')}</div>`;
+      return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map((b,bi)=>{const after=blocks[bi+1]?.head.snapBefore||s.endSnap||r.snapEnd;return `<div class="mr2act a-${actionInfo(b.head).cls}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${renderActionSnap(b.head.snapBefore,after,tl)}${rawDetails(b.head)}</div>`}).join('')}</div>`;
     }).join('');
     const bStart=r.round===(tl.rounds[0]?.round)?renderBoard(r.snapStart,null,tl,ui('战斗开始 · 战场状态','Battle start · battlefield')):'',bEnd=renderBoard(r.snapEnd,r.snapStart,tl,ui('回合结束 · 战场状态（▲▼ 为本回合血量变化）','Round end · battlefield (▲▼ = HP change this round)'));
     return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small>${renderStrip(r,tl)}</summary><div class="mr2rbody">${bStart}${body}${bEnd}</div></details>`;
@@ -581,17 +607,17 @@
   }
   const unitStats=(u,tl)=>(u.stats||[]).length?`<div class="mr2ustats">${u.stats.map(x=>`<span class="mr2uss" title="${esc(x.k)}">${esc(x.label)}<b>${esc(`${fmt(Math.round(x.v*10)/10)}${x.pct?'%':''}`)}</b></span>`).join('')}</div>`:'';
   // Aliemus ring around the portrait: gold up to 100%, the overlapping 100-200% lap in red (as in game)
-  function renderAwakener(u,a,tl){
+  function renderAwakener(u,a,tl,opts){
     const max=u.ultiMax>0?u.ultiMax:100,val=Number(u.ulti)||0,ratio=Math.max(0,Math.min(2,val/max)),R=19,C=2*Math.PI*R;
     const gold=Math.min(ratio,1)*C,red=Math.max(0,ratio-1)*C;
     const arc=(len,color,w)=>len>0?`<circle cx="22" cy="22" r="${R}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="butt" stroke-dasharray="${len.toFixed(2)} ${(C+5).toFixed(2)}" transform="rotate(-90 22 22)"/>`:'';
     const ring=`<span class="mr2ring${ratio>=1?' full':''}${ratio>1?' over':''}" title="${esc(`${ui('狂气','Aliemus')} ${fmt(val)} / ${fmt(max)} (${Math.round(val/max*100)}%)`)}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3.2"/>${arc(gold,'#ffcf4a',3.6)}${arc(red,'#ff4545',3.6)}</svg>${ico(a.icon,a.name,'av ringav')}<em class="mr2ringnum">${fmt(val)}</em></span>`;
     const shield=u.block>0?`<span class="mr2shield" title="${esc(ui('护盾','Shield'))}">🛡 ${fmt(u.block)}</span>`:'';
-    return `<div class="mr2unit tile" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${ring}<div class="mr2uname"><b>${esc(a.name)}</b>${shield}</div>${unitStats(u,tl)}${unitStates(u,tl)}</div>`;
+    return `<div class="mr2unit tile" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${ring}<div class="mr2uname"><b>${esc(a.name)}</b>${shield}</div>${opts?.compact?'':unitStats(u,tl)}${unitStates(u,tl)}</div>`;
   }
-  function renderUnit(u,tl,prev){
+  function renderUnit(u,tl,prev,opts){
     const a=tl.actors.get(String(u.uid));if(!a)return '';
-    if(a.kind==='awakener')return renderAwakener(u,a,tl);
+    if(a.kind==='awakener')return renderAwakener(u,a,tl,opts);
     const enemy=a.camp===2,hasHp=u.hp!=null&&u.max>0,p=hasHp?Math.max(0,Math.min(100,u.hp/u.max*100)):0;
     const was=prev&&prev.hp!=null?prev.hp:null,delta=was!=null&&hasHp?u.hp-was:0;
     const portrait=a.kind==='keeper'?ico('','守','av lgx keeper'):ico(a.icon,a.kind==='monster'?'怪':a.name,`av lgx${a.kind==='monster'?' mon':''}`);
@@ -606,14 +632,14 @@
       extra=`${pips}${kk}`;
     }
     const intent=enemy&&u.intent?`<span class="mr2intent"${u.intentTip||''}>${ui('下一步','Next')}：${esc(tl.res.nameSkill(u.intent))}</span>`:'';
-    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStats(u,tl)}${unitStates(u,tl)}</div></div>`;
+    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${opts?.compact&&a.kind!=='monster'?'':unitStats(u,tl)}${unitStates(u,tl)}</div></div>`;
   }
-  function renderBoard(sn,prev,tl,title){
+  function renderBoard(sn,prev,tl,title,opts){
     if(!sn)return '';
     const prevBy=new Map((prev?.units||[]).map(u=>[String(u.uid),u]));
     const ally=sn.units.filter(u=>{const a=tl.actors.get(String(u.uid));return a&&a.camp!==2}).sort((x,y)=>(tl.actors.get(String(x.uid)).kind==='keeper'?-1:0)-(tl.actors.get(String(y.uid)).kind==='keeper'?-1:0));
     const foe=sn.units.filter(u=>tl.actors.get(String(u.uid))?.camp===2);
-    return `<div class="mr2boardwrap"><div class="mr2boardtitle">${esc(title)}</div><div class="mr2board"><div class="mr2bcol ally">${ally.filter(u=>tl.actors.get(String(u.uid)).kind!=='awakener').map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}<div class="mr2awrow">${ally.filter(u=>tl.actors.get(String(u.uid)).kind==='awakener').map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div><div class="mr2bcol enemy">${foe.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div></div>`;
+    return `<div class="mr2boardwrap"><div class="mr2boardtitle">${esc(title)}</div><div class="mr2board"><div class="mr2bcol ally">${ally.filter(u=>tl.actors.get(String(u.uid)).kind!=='awakener').map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)),opts)).join('')}<div class="mr2awrow">${ally.filter(u=>tl.actors.get(String(u.uid)).kind==='awakener').map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)),opts)).join('')}</div></div><div class="mr2bcol enemy">${foe.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)),opts)).join('')}</div></div></div>`;
   }
 
   // ---- interactions: floating tooltip + expandable descriptions ----------------------
