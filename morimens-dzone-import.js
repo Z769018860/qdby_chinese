@@ -408,11 +408,13 @@
     for(const record of window.MorimensData?.db?.records||[])if(record?.ingameId)map.set(String(record.ingameId).toUpperCase(),record);
     return map;
   }
+  // potency level -> enlighten group: 0-2 = E0-E2, 3-6 = 3启~+3, 7-14 = +4~+11, 15 = +12 (the unlocked-enlightenment count is not the potency)
+  function progressionFromPotency(p){const n=Number(p);if(!Number.isFinite(n))return null;return n<=0?'E0':n===1?'E1':n===2?'E2':n<=6?'E3':n<=14?'OE':'AA'}
   function normalizeMember(build,base,catalog){
     const b=build&&typeof build==='object'?build:{},awaker=b.awaker&&typeof b.awaker==='object'?b.awaker:{};
     const iid=ingameId(awaker),cat=iid?catalog.get(iid):null;
     const enlightenment=(Array.isArray(b.enlightenment)?b.enlightenment:[]).filter(x=>x&&typeof x==='object').map(x=>({id:x.id,name:cleanName(x.name||''),lv:numberOrNull(x.lv),unlocked:!!x.unlocked}));
-    const ec=enlightenment.filter(x=>x.unlocked).length,milestones=['E0','E1','E2','E3','OE','AA'],milestone=milestones[Math.max(0,Math.min(5,ec))];
+    const ec=enlightenment.filter(x=>x.unlocked).length,milestones=['E0','E1','E2','E3','OE','AA'],milestone=progressionFromPotency(b.potency_level??b.potencyLevel)||milestones[Math.max(0,Math.min(5,ec))];
     const wheels=(Array.isArray(b.weapons)?b.weapons:[]).map(x=>normalizeEquipment(x,base,'wheel')).filter(Boolean);
     const trinkets=(Array.isArray(b.trinkets)?b.trinkets:[]).map(x=>normalizeEquipment(x,base,'trinket')).filter(Boolean);
     const covenants=(Array.isArray(b.suits)?b.suits:[]).map(x=>normalizeCovenant(x,base)).filter(Boolean);
@@ -562,7 +564,7 @@
   }
   function expandMember(row){
     if(!Array.isArray(row))return null;
-    const covenants=(row[15]||[]).map(expandCovenant).filter(Boolean),ec=row[8]??null,progression=String(row[9]||'');
+    const covenants=(row[15]||[]).map(expandCovenant).filter(Boolean),ec=row[8]??null,progression=progressionFromPotency(row[6])||String(row[9]||'');
     return {
       id:row[0]??null,skeydbId:row[1]??null,ingameId:row[2]??null,name:String(row[3]||row[4]||row[2]||''),canonicalName:String(row[4]||row[3]||row[2]||''),
       image:'',realm:String(row[12]||''),role:String(row[13]||''),rarity:'',

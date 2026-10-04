@@ -549,7 +549,7 @@
     return changed?{...nextRecord,waves}:nextRecord;
   }
   function difficultyOf(team,wave){const raw=String(team?.stageName||wave?.stageName||team?.difficulty||wave?.difficulty||'').trim();if(/(?:threat level\s*)?▼\s*$/i.test(raw))return 'threatDown';const match=raw.match(/threat level\s*(sss|ss|s|a|b|c)(?:$|[^a-z])/i);return match?`threat${match[1].toUpperCase()}`:'unknown'}
-  function enlightClass(m){const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(['E0','E1','E2'].includes(ms))return 'e0_2';if(ms==='E3')return 'e3_plus3';if(ms==='OE'||ms==='OVERLIMIT')return 'plus4_11';if(ms==='AA'||ms==='LAW12')return 'plus12';return 'unknown'}
+  function enlightClass(m){const pl=Number(m?.potencyLevel);if(m?.potencyLevel!=null&&Number.isFinite(pl))return pl<=2?'e0_2':pl<=6?'e3_plus3':pl<=14?'plus4_11':'plus12';const ms=String(m?.enlightenMilestone||m?.enlightTier||m?.progression||'').toUpperCase();if(['E0','E1','E2'].includes(ms))return 'e0_2';if(ms==='E3')return 'e3_plus3';if(ms==='OE'||ms==='OVERLIMIT')return 'plus4_11';if(ms==='AA'||ms==='LAW12')return 'plus12';return 'unknown'}
   function wheelStackClass(w){const level=Number(w?.level);if(!Number.isFinite(level)||level<=2)return 'stack0_2';if(level>=15)return 'stack12';return 'stack3_11'}
   function maxRankAvailable(){const rs=rankByUid.size?[...rankByUid.values()]:(season?.records||[]).map(rankOf).filter(Number.isFinite);return rs.length?Math.max(...rs):(season?.recordCount||season?.records?.length||0)}
   function aggregateActive(){return Boolean(activeSeasonEntry?.aggregatePath&&aggregateMeta?.characters?.length)}
