@@ -156,8 +156,8 @@
     let k=keys[0];for(const n of keys)if(Number(n)<=(Number(level)||0))k=n;return v[k]??'';
   }
   const fmtArg=v=>typeof v==='number'?(Number.isInteger(v)?fmt(v):String(Math.round(v*100)/100)):String(v);
-  function fillArgs(text,args){
-    return stripMarkup(String(text||'').replace(/\[(?:[A-Za-z]+:)?(?:Desc|State)?Arg(\d+)\]/g,(m,n)=>{const v=args?.[Number(n)-1];return v==null?'X':fmtArg(v)})).replace(/\s+\n/g,'\n').trim();
+  function fillArgs(text,args,extra){
+    return stripMarkup(String(text||'').replace(/\[Layer\]/g,extra?.layer!=null?fmtArg(extra.layer):'X').replace(/\[(?:[A-Za-z]+:)?(?:Desc|State)?Arg(\d+)\]/g,(m,n)=>{const v=args?.[Number(n)-1];return v==null?'X':fmtArg(v)})).replace(/\s+\n/g,'\n').trim();
   }
   function splitTop(str){const out=[];let depth=0,cur='';for(const ch of String(str||'')){if(ch==='(')depth++;if(ch===')')depth--;if(ch===','&&!depth){out.push(cur);cur=''}else cur+=ch}if(cur.trim()!=='')out.push(cur);return out}
   function evalNum(expr,ctx){
@@ -184,7 +184,7 @@
     let args=o.args&&o.args.length?o.args:null;
     if(!args&&Array.isArray(r.DescPara))args=r.DescPara.map(x=>{const m=String(x).match(/^StateOwner\.(\w+)$/);return m?(o.props?.[m[1]]??null):evalNum(x,o.props||{})});
     const sub=[o.layer>1?`${ui('层数','Layers')} ×${o.layer}`:'',r.ShowType==='Affix'?ui('词缀','Affix'):''].filter(Boolean).join(' · ');
-    return {title:res.nameState(sid),sub,body:fillArgs(pipeName(r.Desc||r.WeaponDesc||''),args)||''};
+    return {title:res.nameState(sid),sub,body:fillArgs(pipeName(r.Desc||r.WeaponDesc||''),args,{layer:o.layer})||''};
   }
   const stateTipAttr=(res,sid,o)=>{const t=stateTip(res,sid,o);return tipAttr(t.title,t.sub,t.body)};
   const relicTipAttr=(res,tid,args)=>{const r=res.relic[String(tid)]||{};return tipAttr(res.nameRelic(tid),r.Quality||'',fillArgs(pipeName(pickVariant(r.BattleDesc||r.Desc,0)),args&&args.length?args:r.StatePara||[]))};
@@ -192,8 +192,32 @@
   const stateClass=(res,sid)=>res.state[String(sid)]?.ShowType==='Affix'?'affix':DEBUFF_RE.test(res.nameState(sid))?'debuff':'buff';
   const STAT_NAME={death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
   const statName=(res,k)=>STAT_NAME[k]||String(res.rr?.BattleApi?.[k]?.CnID||k).replace(/(唤醒体|角色|卡牌)属性$/,'').trim();
-  const STAT_PCT=new Set(['crit','crit_damage','vulnerable_per','frail_per','i_damage_per','i_basic_damage_per','i_damage_per_strikecard','crit_damage_from_ulti','crit_per_from_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','damage_per2petrify_resist','ulti_strength_multiple','keeper_energy_eff']);
-  const STAT_SHOW=['death_resist','damage_plus','crit','crit_damage','tentacle_dmg','vulnerable_per','frail_per','strikecard_damage_plus','keeper_energy_eff'];
+  const STAT_PCT=new Set(['o_damage_per','basic_damage_per','crit_damage_from_strikecard','keeper_energy_eff_2','i_basic_damage_per','occupation_master_pct','crit','crit_damage','vulnerable_per','frail_per','i_damage_per','i_basic_damage_per','i_damage_per_strikecard','crit_damage_from_ulti','crit_per_from_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','damage_per2petrify_resist','ulti_strength_multiple','keeper_energy_eff']);
+  // stats shown on each unit of the battlefield board (death resist / blackcoin deliberately left out)
+  function boardStats(a,pr){
+    const out=[],add=(k,label,v,pct=true)=>{if(v)out.push({k,label,v,pct})};
+    if(a.kind==='awakener'){
+      add('atk','攻击',pr.atk,false);
+      add('crit','暴击率',pr.crit);
+      add('crit_damage','暴击伤害',pr.crit_damage);
+      add('basic','基础伤害',(pr.basic_damage_per||0)+(pr.i_basic_damage_per||0));
+      add('final','终伤',pr.o_damage_per);
+      add('idmg','局内增伤',pr.i_damage_per);
+      add('keeper_energy_eff','银钥充能',pr.keeper_energy_eff);
+      add('strike_crit','打击暴击',pr.crit_per_from_strikecard);
+      add('strike_cd','打击暴伤',pr.crit_damage_from_strikecard);
+    }else if(a.kind==='keeper'){
+      add('occupation_master_final','界域精通',pr.occupation_master_final,false);
+      add('keeper_energy_eff_2','银钥充能',pr.keeper_energy_eff_2);
+      add('basic','基础伤害',pr.basic_damage_per);
+      add('outside_crit','暴击率',pr.outside_crit);
+      add('outside_crit_damage','暴击伤害',pr.outside_crit_damage);
+    }else if(a.kind==='monster'){
+      add('vulnerable_per','易伤增幅',pr.vulnerable_per);
+      add('frail_per','脆弱增幅',pr.frail_per);
+    }
+    return out;
+  }
   const fmtStat=(k,v)=>{const n=Math.round((Number(v)||0)*10)/10;return `${fmt(n)}${STAT_PCT.has(k)&&k!=='ulti_strength_multiple'?'%':''}`};
   // card movement between piles
   function moveKind(oldDeck,newDeck,reason){
@@ -279,7 +303,7 @@
     const applyRoleSnapshot=r=>{if(r?.uid==null)return;const u=unit(r.uid),p=r.properties;if(p&&typeof p==='object'&&!Array.isArray(p)){u.props=u.props||{};for(const k in p)if(typeof p[k]==='number')u.props[k]=p[k];for(const k in PROP)if(p[k]!=null)u[PROP[k]]=p[k]}if(r.skillArgs&&typeof r.skillArgs==='object')u.skillArgs=r.skillArgs};
     const stateMap=uid=>{const k=String(uid);if(!bstates.has(k))bstates.set(k,new Map());return bstates.get(k)};
     const snap=()=>{const units=[];for(const [uid,a] of actors){const u=board.get(uid)||{},pr=u.props||{};
-      const stats=STAT_SHOW.filter(k=>pr[k]).map(k=>({k,v:pr[k]}));
+      const stats=boardStats(a,pr);
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
@@ -426,6 +450,8 @@
     .mr2dcards{display:grid;gap:4px}.mr2dcard{--ac:#8aa0bd;--acr:138,160,189;display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border-radius:7px;border-left:4px solid var(--ac);background:linear-gradient(90deg,rgba(var(--acr),.14),rgba(var(--acr),.03));cursor:help}
     .mr2dcard.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2dcard.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2dcard.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2dcard.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2dcard.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2dcard.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2dcard.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2dcard.a-other{--ac:#4fd0c8;--acr:79,208,200}
     .mr2dcost{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:6px;background:rgba(var(--acr),.22);color:var(--ac);font-weight:900;font-size:13px;border:1px solid rgba(var(--acr),.5)}.mr2dname{display:grid;line-height:1.3;min-width:0}.mr2dname b{font-size:12px;color:#eef3fa}.mr2dname small{font-size:9px;color:#8fa0b5}.mr2dn{margin-left:auto;font-style:normal;font-weight:800;color:var(--ac);font-size:12px}
+
+    .mr2unit.tile .mr2ustats{flex-direction:column;align-items:stretch;gap:2px;width:100%;margin-top:1px}.mr2unit.tile .mr2uss{display:flex;justify-content:space-between;gap:6px;padding:0 6px;font-size:10px}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -553,7 +579,7 @@
     const shown=vis.slice(0,16);
     return `<div class="mr2ustates">${shown.map(x=>`<span class="mr2ust ${stateClass(tl.res,x.stateId)}"${x.tip||stateTipAttr(tl.res,x.stateId,{layer:x.layer})}>${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer}</em>`:''}</span></span>`).join('')}${vis.length>shown.length?`<span class="mr2ust more">+${vis.length-shown.length}</span>`:''}</div>`;
   }
-  const unitStats=(u,tl)=>(u.stats||[]).length?`<div class="mr2ustats">${u.stats.map(x=>`<span class="mr2uss" title="${esc(x.k)}">${esc(statName(tl.res,x.k))}<b>${esc(fmtStat(x.k,x.v))}</b></span>`).join('')}</div>`:'';
+  const unitStats=(u,tl)=>(u.stats||[]).length?`<div class="mr2ustats">${u.stats.map(x=>`<span class="mr2uss" title="${esc(x.k)}">${esc(x.label)}<b>${esc(`${fmt(Math.round(x.v*10)/10)}${x.pct?'%':''}`)}</b></span>`).join('')}</div>`:'';
   // Aliemus ring around the portrait: gold up to 100%, the overlapping 100-200% lap in red (as in game)
   function renderAwakener(u,a,tl){
     const max=u.ultiMax>0?u.ultiMax:100,val=Number(u.ulti)||0,ratio=Math.max(0,Math.min(2,val/max)),R=19,C=2*Math.PI*R;
@@ -561,7 +587,7 @@
     const arc=(len,color,w)=>len>0?`<circle cx="22" cy="22" r="${R}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="butt" stroke-dasharray="${len.toFixed(2)} ${(C+5).toFixed(2)}" transform="rotate(-90 22 22)"/>`:'';
     const ring=`<span class="mr2ring${ratio>=1?' full':''}${ratio>1?' over':''}" title="${esc(`${ui('狂气','Aliemus')} ${fmt(val)} / ${fmt(max)} (${Math.round(val/max*100)}%)`)}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3.2"/>${arc(gold,'#ffcf4a',3.6)}${arc(red,'#ff4545',3.6)}</svg>${ico(a.icon,a.name,'av ringav')}<em class="mr2ringnum">${fmt(val)}</em></span>`;
     const shield=u.block>0?`<span class="mr2shield" title="${esc(ui('护盾','Shield'))}">🛡 ${fmt(u.block)}</span>`:'';
-    return `<div class="mr2unit tile" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${ring}<div class="mr2uname"><b>${esc(a.name)}</b>${shield}</div>${unitStates(u,tl)}</div>`;
+    return `<div class="mr2unit tile" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${ring}<div class="mr2uname"><b>${esc(a.name)}</b>${shield}</div>${unitStats(u,tl)}${unitStates(u,tl)}</div>`;
   }
   function renderUnit(u,tl,prev){
     const a=tl.actors.get(String(u.uid));if(!a)return '';
@@ -580,7 +606,7 @@
       extra=`${pips}${kk}`;
     }
     const intent=enemy&&u.intent?`<span class="mr2intent"${u.intentTip||''}>${ui('下一步','Next')}：${esc(tl.res.nameSkill(u.intent))}</span>`:'';
-    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStates(u,tl)}</div></div>`;
+    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStats(u,tl)}${unitStates(u,tl)}</div></div>`;
   }
   function renderBoard(sn,prev,tl,title){
     if(!sn)return '';
