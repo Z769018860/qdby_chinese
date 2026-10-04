@@ -44,7 +44,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20261004.2";
+  const assetVersion="20261004.3";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -74,11 +74,6 @@ setupMorimensMascotToggle();
     const binary=atob(parts.join(""));
     const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
     let code=new TextDecoder("utf-8").decode(bytes);
-    // The packed legacy bundle still contains its original Wiki-based fortune
-    // renderer.  Its asynchronous roster refresh can finish after the SKeyDB
-    // renderer and overwrite the selected awakener's Chinese name (most
-    // visibly with 杜勒赛因).  Keep the legacy calculator UI bootstrap, but
-    // give the ID-aligned SKeyDB module exclusive ownership of Daily Fortune.
     window.MorimensFortuneDataOwner="skeydb";
     code=code
       .replace(
@@ -101,9 +96,6 @@ setupMorimensMascotToggle();
         "calculate();renderFortune(false);loadCategoryOptions",
         "calculate();if(!window.MorimensFortuneDataOwner)renderFortune(false);loadCategoryOptions"
       )
-      // The packed v0.3 bundle still contains the old Wiki-owned calculator.
-      // Keep only its DOM bootstrap (upgradeUI); SKeyDB modules below own
-      // character/skill selection, coefficients, stats and calculate events.
       .replace(
         /async function init\(\)\{upgradeUI\(\);populateCharacters\(\);bind\(\);loadCharacter\(\);calculate\(\);[\s\S]*?await loadCharacterRoster\(\)\}\s*init\(\);/,
         "async function init(){upgradeUI()}\ninit();"
@@ -146,4 +138,3 @@ setupMorimensMascotToggle();
     document.body.appendChild(box);
   }
 })();
-
