@@ -9,6 +9,7 @@
   const isGitHubPagesHost=/\.github\.io$/i.test(location.hostname);
   const MAX_RELAY_BYTES=20_000_000;
   const RELAY_STORAGE='morimens.replayRelayBase';
+  const DEFAULT_RELAY_BASE='https://qdbychinese.vercel.app';
   const isEn=()=>localStorage.getItem('morimens.language')==='en';
   const ui=(zh,en)=>isEn()?en:zh;
 
@@ -28,7 +29,7 @@
   function relayBase(){
     const explicit=String(window.MORIMENS_REPLAY_RELAY_BASE||'').trim();
     const saved=String(localStorage.getItem(RELAY_STORAGE)||'').trim();
-    return (explicit||saved).replace(/\/+$/,'');
+    return (explicit||saved||DEFAULT_RELAY_BASE).replace(/\/+$/,'');
   }
   function containsAscii(bytes,text){
     const needle=Array.from(text,c=>c.charCodeAt(0));

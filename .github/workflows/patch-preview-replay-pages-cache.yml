@@ -27,14 +27,14 @@ jobs:
 
           html = Path('morimens-tools.html')
           text = html.read_text(encoding='utf-8')
-          text, n = re.subn(r'morimens-tools\.js\?v=20261004\.\d+', 'morimens-tools.js?v=20261004.8', text)
+          text, n = re.subn(r'morimens-tools\.js\?v=20261004\.\d+', 'morimens-tools.js?v=20261004.9', text)
           if not n:
               raise SystemExit('morimens-tools.js version marker not found in morimens-tools.html')
           html.write_text(text, encoding='utf-8')
 
           tools = Path('morimens-tools.js')
           text = tools.read_text(encoding='utf-8')
-          text, n = re.subn(r'const assetVersion="20261004\.\d+";', 'const assetVersion="20261004.8";', text, count=1)
+          text, n = re.subn(r'const assetVersion="20261004\.\d+";', 'const assetVersion="20261004.9";', text, count=1)
           if not n:
               raise SystemExit('assetVersion marker not found in morimens-tools.js')
           tools.write_text(text, encoding='utf-8')
@@ -48,5 +48,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add morimens-tools.html morimens-tools.js
-          git commit -m 'fix(morimens): bust GitHub Pages replay cache v20261004.8'
+          git commit -m 'fix(morimens): bust GitHub Pages replay cache v20261004.9'
           git push origin HEAD:preview
