@@ -1248,13 +1248,13 @@
     // damage-relevant stats of one hit. mode 'basic' = old model (basic pools only), 'full' = calculator-style scoped pools
     const ctxOf=(h,mode='full')=>{
       const P=h.P,sc=scopeOf(h),g=k=>P[k]||0,full=mode==='full';
-      const ob=g('basic_damage_per'),out=ob+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
+      const out=g('basic_damage_per')+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
       const inn=g('i_basic_damage_per');
       const fin=full?(h.fia||0)+g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
       const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
       const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*(h.cmul>0?h.cmul/100:1);
       const fk=forceKind(h.skill),atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
-      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+ob/100)*(1+(out-ob)/100)*(1+inn/100)*(h.pf||1)};   // basic-damage pool and the scoped o_damage pools multiply (1.11 x 1.35 = 1.4985, not 1.46)
+      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(h.pf||1)};
     };
     const Vof=(h,useV=true)=>useV&&h.vOn?1+h.vPct/100:1;
     const dnOf=(h,c,useV=true)=>h.dmg/(h.crit?1+c.cd/100:1)/(1+c.fin/100)/Vof(h,useV);
@@ -1303,28 +1303,18 @@
       const bestVar=new Map();for(const k of errs[0].keys()){let bi=0;for(let i=1;i<vars.length;i++)if((errs[i].get(k)??9)<(errs[bi].get(k)??9)-0.005)bi=i;bestVar.set(k,bi)}
       const uniq=new Map(vars.flatMap((ps,i)=>ps.filter(p=>bestVar.get(p.h.skill)===i)).map((p,i)=>[i,p]));
       let pts=[...uniq.values()],trimmed=0;
-      // dynamic flat bonuses: some characters carry a stacking state whose layer count is added to the card's damage 1:1 (茉夏「打击临时固伤」, ...)
-      const dynOf=(p,dyn)=>{const k=dyn&&dyn.get(String(p.h.skill));return k?(p.h.stl?.[k]||0):0};
-      const solve=(ps,dyn=null)=>{const sk=[...new Set(ps.map(p=>p.h.skill))],si=new Map(sk.map((v,i)=>[v,i])),rw=ps.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=ps.map(p=>p.y-dynOf(p,dyn)),ww=yy.map(v=>1/Math.max(1,v));
+      const solve=ps=>{const sk=[...new Set(ps.map(p=>p.h.skill))],si=new Map(sk.map((v,i)=>[v,i])),rw=ps.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=ps.map(p=>p.y),ww=yy.map(v=>1/Math.max(1,v));
         const x=new Set(ps.map(p=>p.c.S)).size>=2&&ps.length>sk.length+2?solveLeastSquares(rw,yy,ww):null;
         const errs=x?rw.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)-yy[i])/yy[i]):null;
         // calculator default: strength x1, only the per-skill coefficient is fitted
-        const r1=ps.map(p=>{const r=new Array(sk.length).fill(0);r[si.get(p.h.skill)]=p.c.T;return r}),y1=ps.map((p,i)=>yy[i]-p.c.S),x1=solveLeastSquares(r1,y1,ww);
-        const e1=x1?r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x1[k],0)+ps[i].c.S-yy[i])/Math.max(1,ps[i].y)):null;
+        const r1=ps.map(p=>{const r=new Array(sk.length).fill(0);r[si.get(p.h.skill)]=p.c.T;return r}),y1=ps.map(p=>p.y-p.c.S),x1=solveLeastSquares(r1,y1,ww);
+        const e1=x1?r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x1[k],0)+ps[i].c.S-yy[i])/yy[i]):null;
         return {sk,x,errs,e1}};
-      let r=solve(pts),dynMap=null;
-      {const skErr=(rr,ps)=>{const g=new Map();ps.forEach((p,i)=>{if(!rr.e1)return;const o=g.get(String(p.h.skill))||{n:0,e:0};o.n++;o.e+=rr.e1[i];g.set(String(p.h.skill),o)});return g};
-        const base=skErr(r,pts),cand=new Map();
-        for(const p of pts){const k=String(p.h.skill);if(!cand.has(k))cand.set(k,new Set());for(const id of Object.keys(p.h.stl||{}))cand.get(k).add(id)}
-        const chosen=new Map();
-        for(const [sk,b] of base){if(b.n<4||b.e/b.n<=.03)continue;const sp=pts.filter(p=>String(p.h.skill)===sk);let best=null;
-          for(const id of cand.get(sk)||[]){if(new Set(sp.map(p=>p.h.stl?.[id]||0)).size<3)continue;const e=skErr(solve(pts,new Map([[sk,id]])),pts).get(sk);if(e&&(!best||e.e<best.e))best={id,e:e.e}}
-          if(best&&best.e<b.e*.75&&(b.e-best.e)/b.n>.015)chosen.set(sk,best.id)}
-        if(chosen.size){dynMap=chosen;r=solve(pts,dynMap)}}
-      for(let pass=0;pass<2&&r.errs;pass++){const keep=pts.filter((p,i)=>r.errs[i]<=0.3);if(keep.length===pts.length||keep.length<r.sk.length+3)break;trimmed+=pts.length-keep.length;pts=keep;r=solve(pts,dynMap);if(!r.errs)break}
+      let r=solve(pts);
+      for(let pass=0;pass<2&&r.errs;pass++){const keep=pts.filter((p,i)=>r.errs[i]<=0.3);if(keep.length===pts.length||keep.length<r.sk.length+3)break;trimmed+=pts.length-keep.length;pts=keep;r=solve(pts);if(!r.errs)break}
       const mean=a=>a&&a.length?a.reduce((t,v)=>t+v,0)/a.length:null;
       const perSkill=(()=>{const g=new Map();pts.forEach((p,i)=>{if(!r.e1)return;const o=g.get(p.h.skill)||{tid:p.h.skill,name:res.nameSkill(p.h.skill),n:0,err:0,idx:idxOf.get(p.h.skill)??0};o.n++;o.err+=r.e1[i];g.set(p.h.skill,o)});return [...g.values()].map(o=>({...o,err:o.err/o.n}))})();
-      return {dyn:dynMap?[...dynMap].map(([sk,id])=>({skill:res.nameSkill(sk),id,name:res.nameState(id)})):null,perSkill,hits:hs.length,ctx:pts.length,trimmed,match,m:r.x?Math.max(0,Math.min(10,r.x[r.sk.length])):null,mean:mean(r.errs),calcErr:mean(r.e1)};
+      return {perSkill,hits:hs.length,ctx:pts.length,trimmed,match,m:r.x?Math.max(0,Math.min(10,r.x[r.sk.length])):null,mean:mean(r.errs),calcErr:mean(r.e1)};
     };
     for(const rep of report){rep.arg=argFit(log.filter(h=>h.uid===rep.uid&&!scopeOf(h).ult))}
     // attribute every buff (relics + wheels + covenants) with the fitted multipliers
