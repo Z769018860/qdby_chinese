@@ -116,7 +116,7 @@
     const rr=full.resourceRecords||{};const skill=rr.Skill||{},aw=rr.AwakerConfig||{},state=rr.State||{},relic=rr.RelicConfig||{},monster=rr.MonsterConfig||{};
     const nameSkill=id=>{const x=skill[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||String(id)};
     const nameState=id=>{const x=state[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`State ${id}`};
-    const nameRelic=id=>{const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`Relic ${id}`};
+    const nameRelic=id=>{const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||(()=>{const c=relicCatalog[String(id)];return c?(isEn()?c.en||c.zh:c.zh||c.en):''})()||`Relic ${id}`};
     const nameAw=id=>{const x=aw[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||String(id)):(pipeName(x.Name)||x.NameEn||String(id))};
     const nameMonster=id=>{const x=monster[String(id)]||{};const bestiary=pipeName(x.MonsterName)||pipeName(x.Name);return isEn()?(x.NameEn||bestiary||tailCn(x.CnID)||String(id)):(bestiary||tailCn(x.CnID)||x.NameEn||String(id))};
     const clean=f=>id=>String(f(id)).replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'').trim();
@@ -126,8 +126,9 @@
   // ---- icons / entity resolution -------------------------------------------------
   const ART='assets/morimens';
   let awakenerSlugs=null;
-  let gearCatalog=null;
+  let gearCatalog=null,relicCatalog={};
   async function preloadAssets(){
+    if(!relicCatalog.loaded){try{const r=await fetch('data/morimens/replay-relics.json',{cache:'force-cache'});relicCatalog={loaded:1,...(r.ok?(await r.json()).relics:{})}}catch{relicCatalog={loaded:1}}}
     if(!gearCatalog){try{const r=await fetch('data/morimens/replay-gear.json',{cache:'force-cache'});gearCatalog=r.ok?await r.json():{wheels:{},covenants:{}}}catch{gearCatalog={wheels:{},covenants:{}}}}
     if(awakenerSlugs)return;
     try{const r=await fetch('data/morimens/skeydb/awakeners.json',{cache:'force-cache'});const j=await r.json();awakenerSlugs=new Map((j.records||[]).map(x=>[String(x.ingameId).toUpperCase(),x.assetSlug]))}
@@ -144,7 +145,7 @@
     return slug?`${ART}/portraits/${slug}.webp`:'';
   }
   const stateIconSrc=(res,id)=>{const ic=res.state[String(id)]?.Icon;return ic?`${ART}/skeydb-icons/${baseName(ic)}.webp`:''};
-  const relicIconSrc=(res,tid)=>{const r=res.relic[String(tid)]||{};const ic=r.SmallIcon||r.Icon;return ic?`${ART}/relics/${baseName(ic)}.webp`:''};
+  const relicIconSrc=(res,tid)=>{const r=res.relic[String(tid)]||{};const ic=r.SmallIcon||r.Icon;if(ic)return `${ART}/relics/${baseName(ic)}.webp`;const c=relicCatalog[String(tid)];return c?.icon?`${ART}/relics/${c.icon}.webp`:''};
   const keeperSkillIconSrc=(res,id)=>{const m=String(res.skill[String(id)]?.Icon||'').match(/Key_(\d+)/);return m?`${ART}/posse/Icon/KeyToken_Skill_${m[1]}.webp`:''};
 
 
@@ -193,7 +194,7 @@
   const relicTipAttr=(res,tid,args)=>{const r=res.relic[String(tid)]||{};return tipAttr(res.nameRelic(tid),r.Quality||'',fillArgs(pipeName(pickVariant(r.BattleDesc||r.Desc,0)),args&&args.length?args:r.StatePara||[]))};
   const DEBUFF_RE=/易伤|脆弱|中毒|石化|流血|封印|虚弱|诅咒|衰弱|灼烧|恐惧|减速|迟缓|沉默|腐蚀|破甲|畏惧|狂气封印|无用空状态/;
   const stateClass=(res,sid)=>res.state[String(sid)]?.ShowType==='Affix'?'affix':DEBUFF_RE.test(res.nameState(sid))?'debuff':'buff';
-  const STAT_NAME={o_block_per:'护盾强效',block_per_defendcard:'防御牌护盾加成',black_upgrade_plus:'黑印强化',o_heal_per:'治疗强效',block_heal_per:'护盾和治疗强效',crit_damage_from_strikecard:'打击暴击伤害',crit_damage_from_ulti:'爆发暴击伤害',o_damage_per:'基础伤害',o_damage_per_card:'卡牌基础伤害',o_damage_per_strikecard:'打击基础伤害',o_damage_per_attachpost:'追击基础伤害',o_damage_per_ulti:'爆发基础伤害',i_state_layer_per_power:'力量获取效果',ulti_energy_per:'狂气获取效果',awaker_ulti_heal_per:'爆发治疗',awaker_ulti_block_per:'爆发护盾',i_state_layer_per_posion:'中毒施加',i_state_layer_per_counterattack:'反击施加',death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
+  const STAT_NAME={ulti_energy_max:'狂气上限',o_block_per:'护盾强效',block_per_defendcard:'防御牌护盾加成',black_upgrade_plus:'黑印强化',o_heal_per:'治疗强效',block_heal_per:'护盾和治疗强效',crit_damage_from_strikecard:'打击暴击伤害',crit_damage_from_ulti:'爆发暴击伤害',o_damage_per:'基础伤害',o_damage_per_card:'卡牌基础伤害',o_damage_per_strikecard:'打击基础伤害',o_damage_per_attachpost:'追击基础伤害',o_damage_per_ulti:'爆发基础伤害',i_state_layer_per_power:'力量获取效果',ulti_energy_per:'狂气获取效果',awaker_ulti_heal_per:'爆发治疗',awaker_ulti_block_per:'爆发护盾',i_state_layer_per_posion:'中毒施加',i_state_layer_per_counterattack:'反击施加',death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
   const SCOPE_NAME={card:'卡牌',strikecard:'打击',ulti:'爆发',attachpost:'追击',defendcard:'防御牌',skill:'技能牌'};
   // generic fallback for property keys shaped like [o_]block|heal|damage_per[_scope]
   const composedStatName=k=>{const m=String(k).match(/^(o_)?(block|heal|damage)_per(?:_([a-z]+))?$/);if(!m)return '';return `${SCOPE_NAME[m[3]]||''}${{block:'护盾',heal:'治疗',damage:'伤害'}[m[2]]}加成`};
@@ -324,7 +325,8 @@
     const fiaPct=(role,lvl)=>{const m=stateMap(role);let B=0;for(const v of m.values())if(v.stateId===98469||v.stateId===133285)B+=v.layer||0;return lvl*(30+B)};
     const PROP={hp:'hp',max_hp:'max',block:'block',energy:'energy',max_energy:'maxEnergy',ulti_energy:'ulti',ulti_energy_max:'ultiMax',keeper_energy:'kEnergy',max_keeper_energy:'kMax'};
     const unit=uid=>{const k=String(uid);if(!board.has(k))board.set(k,{});return board.get(k)};
-    const applyRoleSnapshot=r=>{if(r?.uid==null)return;const u=unit(r.uid),p=r.properties;if(p&&typeof p==='object'&&!Array.isArray(p)){u.props=u.props||{};for(const k in p)if(typeof p[k]==='number')u.props[k]=p[k];for(const k in PROP)if(p[k]!=null)u[PROP[k]]=p[k]}if(r.skillArgs&&typeof r.skillArgs==='object')u.skillArgs=r.skillArgs};
+    const openProps=new Map();
+    const applyRoleSnapshot=r=>{if(r?.uid==null)return;const u=unit(r.uid),p=r.properties;if(p&&typeof p==='object'&&!Array.isArray(p)&&!openProps.has(String(r.uid)))openProps.set(String(r.uid),{...p});if(p&&typeof p==='object'&&!Array.isArray(p)){u.props=u.props||{};for(const k in p)if(typeof p[k]==='number')u.props[k]=p[k];for(const k in PROP)if(p[k]!=null)u[PROP[k]]=p[k]}if(r.skillArgs&&typeof r.skillArgs==='object')u.skillArgs=r.skillArgs};
     const stateMap=uid=>{const k=String(uid);if(!bstates.has(k))bstates.set(k,new Map());return bstates.get(k)};
     const snap=()=>{const units=[];for(const [uid,a] of actors){const u=board.get(uid)||{},pr=u.props||{};
       const stats=boardStats(a,pr);
@@ -594,7 +596,7 @@
       }
     }
     if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
-    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -609,7 +611,7 @@
     .mr2ico{position:relative;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;flex:0 0 22px;border-radius:50%;overflow:hidden;background:#1a2433;color:#aebbd0;font-size:11px;font-weight:800}.mr2ico::before{content:var(--f);position:absolute}.mr2ico img{position:relative;width:100%;height:100%;object-fit:cover}.mr2ico.sm{width:16px;height:16px;flex-basis:16px;font-size:9px}.mr2chip.mon .mr2ico::before{color:#ff9e93}.mr2chip.keeper .mr2ico{background:#3a2f1a;color:#f1d69f}.mr2ico.rl,.mr2ico.st{border-radius:5px;width:20px;height:20px;flex-basis:20px}.mr2ico.rl img,.mr2ico.st img{object-fit:contain}
     .mr2ico.big{width:30px;height:30px;flex-basis:30px;font-size:13px}.mr2ico.kk{border-radius:6px;width:28px;height:28px;flex-basis:28px}.mr2ico.kk img{object-fit:contain}
     .mr2res{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14)}.mr2res i{width:8px;height:8px;border-radius:50%;background:#6ab7ff}.mr2res.keeper_energy i{background:#e7cb96}.mr2res.ulti_energy i{background:#d07cff}.mr2res.block i{background:#7fe0c0}.mr2res.pos{color:#9fe3bb}.mr2res.neg{color:#ff9e93}
-    .mr2badge{display:inline-block;padding:2px 6px;border-radius:999px;background:rgba(98,183,255,.12);color:#acd5f6;font-size:9px}.mr2badge.ultimate{background:rgba(213,177,118,.18);color:#f1d69f}.mr2badge.keeper{background:rgba(175,130,220,.16);color:#d8b9f0}.mr2badge.mon{background:rgba(218,132,119,.14);color:#efada5}.mr2dotchip{display:inline-flex;gap:4px;align-items:baseline;font-size:11px;color:#e6b3ff;background:rgba(190,110,230,.12);border:1px solid rgba(190,110,230,.35);border-radius:6px;padding:1px 6px}.mr2cost{font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(98,183,255,.14);color:#9fd0ff;font-weight:800}
+    .mr2badge{display:inline-block;padding:2px 6px;border-radius:999px;background:rgba(98,183,255,.12);color:#acd5f6;font-size:9px}.mr2badge.ultimate{background:rgba(213,177,118,.18);color:#f1d69f}.mr2badge.keeper{background:rgba(175,130,220,.16);color:#d8b9f0}.mr2badge.mon{background:rgba(218,132,119,.14);color:#efada5}.mr2dotchip{display:inline-flex;gap:4px;align-items:baseline;font-size:11px;color:#e6b3ff;background:rgba(190,110,230,.12);border:1px solid rgba(190,110,230,.35);border-radius:6px;padding:1px 6px}.mr2statchip{display:inline-flex;gap:4px;align-items:baseline;font-size:11px;padding:1px 7px;border-radius:6px;background:rgba(255,255,255,.06);color:#dfe8f4}.mr2statchip small{color:#8fa0b5;font-size:10px}.mr2statchip.up{background:rgba(110,200,140,.12);color:#b6ecc6}.mr2ostate{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:4px}.mr2cost{font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(98,183,255,.14);color:#9fd0ff;font-weight:800}
     .mr2hid>summary{cursor:pointer;color:#6f7f93;font-size:10px}.mr2raw{margin-top:2px}.mr2raw summary{cursor:pointer;color:#6f7f93;font-size:9px}.mr2raw pre{max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all;background:#08111c;padding:7px;border-radius:7px;color:#8fa0b5;font-size:9px}.mr2empty{padding:8px 10px;color:#6f7f93;font-size:11px}
     .dtideReplayReviewOpen{white-space:nowrap;border:1px solid rgba(98,183,255,.35);border-radius:7px;background:rgba(98,183,255,.09);color:#9fd0ff;padding:5px 8px;font:700 10px/1.2 inherit;cursor:pointer}@media(max-width:760px){.mr2form{grid-template-columns:1fr}.mr2sum{grid-template-columns:repeat(2,minmax(0,1fr))}.mr2time{margin-left:0}}
 
@@ -896,6 +898,42 @@
     }
     const box=host.querySelector('#mr2ShowDesc');if(box)box.checked=host.classList.contains('mr2showdesc');
   }
+  // ---- opening formation: panel attrs (Potency/Break already folded in), then starting states grouped by where they come from
+  function openingStates(full,tl){
+    const bd=full.battleDat||{},res=tl.res,list=bd.stateList||[],roles=bd.roleData||[];
+    if(!roles.length&&!list.length)return '';
+    const chipSt=(id,layer)=>`<span class="mr2chip st ${stateClass(res,id)}"${stateTipAttr(res,id)}>${ico(stateIconSrc(res,id),res.nameState(id),'st')}<span>${esc(res.nameState(id))}${layer>1?` <em>×${esc(layer)}</em>`:''}</span></span>`;
+    const cnOf=id=>String(res.state[String(id)]?.CnID||'');
+    const hidden=id=>res.state[String(id)]?.ShowType==='Hide';
+    const catOf=st=>{const src=(st.source||[])[0]||{},cn=cnOf(st.stateId),t=src.sourceType||'';
+      if(/启灵|三启|二启|一启/.test(cn))return 'enl';
+      if(t==='AwakerTalents'||/天赋/.test(cn))return 'tal';
+      if(t==='Weapon'||/武器|专武/.test(cn))return 'wheel';
+      if(/饰品/.test(cn))return 'cov';
+      if(t==='Relic')return 'relic';
+      if(t==='School')return 'school';
+      if(t==='StageInitState')return 'stage';
+      return 'other'};
+    const CAT={enl:ui('启灵','Enlighten'),tal:ui('天赋','Talent'),wheel:ui('命轮','Wheel'),cov:ui('密契 / 饰品','Covenant'),relic:ui('造物','Relic'),school:ui('职业','School'),stage:ui('关卡','Stage'),other:ui('其他数值 / 机制','Other')};
+    const order=['enl','tal','wheel','cov','relic','school','stage','other'];
+    const group=(sts)=>{const g=new Map();for(const st of sts){if(st.ownerData?.targetType==='Card')continue;const c=catOf(st);if(!g.has(c))g.set(c,[]);g.get(c).push(st)}
+      return order.filter(c=>g.has(c)).map(c=>{const vis=g.get(c).filter(x=>!/空状态/.test(cnOf(x.stateId))),hid=0;
+        return `<div class="mr2ostate"><span class="mr2from">${esc(CAT[c])}</span>${vis.map(x=>{const w=c==='wheel'&&gearCatalog?.wheels?.[String(x.source?.[0]?.tid)];return w?`<span class="mr2chip st" title="${esc(cnOf(x.stateId))}">${w.icon?ico(`${ART}/wheels/${w.icon}.webp`,w.zh,'st'):''}<span>${esc(w.zh||w.en)}</span></span>`:chipSt(x.stateId,x.layer)}).join('')}${hid?`<small class="mr2from">+${hid} ${ui('隐藏状态','hidden')}</small>`:''}</div>`}).join('')};
+    const KEYS=['atk','hp','def','crit','crit_damage','keeper_energy_eff','ulti_energy_max','death_resist'];
+    const blocks=roles.map(ri=>{
+      const a=tl.actors.get(String(ri.uid));if(!a)return '';
+      const at=ri.attrs||{},op=tl.openProps?.get(String(ri.uid))||{};
+      const base=KEYS.filter(k=>at[k]).map(k=>`<span class="mr2statchip"><small>${esc(statName(res,k))}</small><b>${esc(fmtStat(k,at[k]))}</b></span>`).join('');
+      const diffs=Object.keys(op).filter(k=>typeof op[k]==='number'&&Math.abs(op[k]-(at[k]||0))>1.5&&!/^(hp|max_hp|energy|max_energy|ulti_energy|ulti_energy_max|keeper_energy|max_keeper_energy|block)$/.test(k)).sort().slice(0,16)
+        .map(k=>`<span class="mr2statchip up"><small>${esc(statName(res,k))}</small><b>${at[k]?`${esc(fmtStat(k,at[k]))} → `:'+'}${esc(fmtStat(k,op[k]))}</b></span>`).join('');
+      const sts=list.filter(x=>x.ownerData?.targetType==='Awaker'&&String(x.ownerData.uid)===String(ri.uid));
+      return `<div class="mr2dgroup"><div class="mr2dhead">${ico(a.icon,a.name,'av')}<b>${esc(a.name)}</b><span class="mr2from">Lv${esc(ri.level)} · ${ui('潜能','Potency')} ${esc(ri.potencyLevel)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}</span></div>
+        <div class="mr2flow">${base}</div>${diffs?`<div class="mr2flow"><small class="mr2from">${ui('开局战斗面板 = 编队面板 + 命轮 / 密契 / 造物 / 局内状态','Opening battle panel = formation + gear / relics / states')}</small>${diffs}</div>`:''}
+        ${group(sts)}</div>`}).join('');
+    const team=list.filter(x=>x.ownerData?.targetType==='PlayerRole');
+    const teamHtml=team.length?`<details class="mr2minor"><summary>${ui(`队伍级开局状态 ${team.length}`,`Team-level opening states ${team.length}`)}</summary>${group(team)}</details>`:'';
+    return `<div class="mr2osec"><div class="mr2boardtitle">${ui('唤醒体编队与开局状态','Formation & opening states')}</div><div class="mr2decks">${blocks}</div>${teamHtml}</div>`;
+  }
   // ---- battle opening: relics + starting deck ---------------------------------------
   function renderOpening(full,tl){
     const bd=full.battleDat||{},res=tl.res,cards=tl.ent.initialCards||[],relics=bd.relics||[];
@@ -915,7 +953,8 @@
       const head=a?`${ico(a.icon,a.kind==='keeper'?'守':a.name,`av ${a.kind==='keeper'?'keeper':''}`)}<b>${esc(a.name)}</b>${ri?`<span class="mr2from">Lv${esc(ri.level)} · ${ui('潜能','Potency')} ${esc(ri.potencyLevel)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}</span>`:`<span class="mr2from">${ui('守密人','Keeper')}</span>`}`:`<b>#${esc(k)}</b>`;
       return `<div class="mr2dgroup"><div class="mr2dhead">${head}<span class="mr2from">${list.length} ${ui('张','cards')}</span></div><div class="mr2dcards">${cardsHtml}</div></div>`;
     }).join('');
-    return `<details class="mr2round mr2opening" open><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}</div></details>`;
+    const stateSec=openingStates(full,tl);
+    return `<details class="mr2round mr2opening" open><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}${stateSec}</div></details>`;
   }
   // ---- damage-formula calibration ------------------------------------------------------
   // Calculator order: ATK x coefficient x base-damage pools -> + STR x strength multiplier -> x vulnerability -> x crit.
