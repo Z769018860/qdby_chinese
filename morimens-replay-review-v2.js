@@ -187,7 +187,7 @@
     return {title:res.nameState(sid),sub,body:fillArgs(pipeName(r.Desc||r.WeaponDesc||''),args)||''};
   }
   const stateTipAttr=(res,sid,o)=>{const t=stateTip(res,sid,o);return tipAttr(t.title,t.sub,t.body)};
-  const relicTipAttr=(res,tid)=>{const r=res.relic[String(tid)]||{};return tipAttr(res.nameRelic(tid),r.Quality||'',fillArgs(pipeName(pickVariant(r.BattleDesc||r.Desc,0)),r.StatePara||[]))};
+  const relicTipAttr=(res,tid,args)=>{const r=res.relic[String(tid)]||{};return tipAttr(res.nameRelic(tid),r.Quality||'',fillArgs(pipeName(pickVariant(r.BattleDesc||r.Desc,0)),args&&args.length?args:r.StatePara||[]))};
   const DEBUFF_RE=/易伤|脆弱|中毒|石化|流血|封印|虚弱|诅咒|衰弱|灼烧|恐惧|减速|迟缓|沉默|腐蚀|破甲|畏惧|狂气封印|无用空状态/;
   const stateClass=(res,sid)=>res.state[String(sid)]?.ShowType==='Affix'?'affix':DEBUFF_RE.test(res.nameState(sid))?'debuff':'buff';
   const STAT_NAME={death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
@@ -207,7 +207,7 @@
   }
   const MOVE_LABEL={draw:'抽牌',discard:'弃牌',exhaust:'消耗',shuffle:'洗牌',retrieve:'取回',create:'获得'};
   function buildEntities(full,res){
-    const bd=full.battleDat||{},actors=new Map(),cards=new Map(),relics=new Map(),stateInst=new Map(),cardArgs=new Map();
+    const bd=full.battleDat||{},actors=new Map(),cards=new Map(),relics=new Map(),stateInst=new Map(),cardArgs=new Map();let initialCards=null;
     const addActor=(uid,o)=>{if(uid!=null&&!actors.has(String(uid)))actors.set(String(uid),{uid,...o})};
     for(const r of bd.roleData||[])addActor(r.uid,{tid:r.tid,kind:'awakener',name:res.nameAw(r.tid),camp:1,icon:awakenerPortrait(res,r.tid)});
     const addCard=(uid,tid,ownerUid,c)=>{if(uid==null||tid==null)return;const o=cards.get(String(uid));cards.set(String(uid),{uid,tid,ownerUid:ownerUid??o?.ownerUid,level:c?.level??o?.level});const a=c?.descArgs?.curValues;if(Array.isArray(a)&&a.length)cardArgs.set(String(uid),a)};
@@ -220,6 +220,7 @@
           else if(r.camp===2)addActor(r.uid,{tid:r.tid,kind:'monster',name:res.nameMonster(r.tid),camp:2,icon:monsterPortrait(res,r.tid)});
           else addActor(r.uid,{tid:r.tid,kind:'awakener',name:res.nameAw(r.tid),camp:r.camp||1,icon:awakenerPortrait(res,r.tid)});
         }
+        if(!initialCards&&Array.isArray(md.cardDataList))initialCards=md.cardDataList.map(c=>({...c}));
         for(const c of md.cardDataList||[])addCard(c.uid,c.tid??c.configId,c.ownerUid,c);
         for(const r of md.relicDataList||[])if(r.uid!=null)relics.set(String(r.uid),{uid:r.uid,tid:r.tid});
       }
@@ -231,7 +232,7 @@
         else if((e===1004||e===1006)&&d.stateUid!=null)stateInst.set(String(d.stateUid),d.stateId);
       }
     }
-    return {actors,cards,relics,stateInst,cardArgs,keeperUid:[...actors.values()].find(a=>a.kind==='keeper')?.uid};
+    return {actors,cards,relics,stateInst,cardArgs,initialCards:initialCards||[],keeperUid:[...actors.values()].find(a=>a.kind==='keeper')?.uid};
   }
 
   function buildTimeline(full){
@@ -418,6 +419,13 @@
     .mr2awrow{display:flex;flex-wrap:wrap;gap:8px}.mr2unit.tile{flex:1 1 112px;max-width:150px;flex-direction:column;align-items:center;text-align:center;gap:5px;padding:9px 6px 7px}.mr2unit.tile .mr2uname{justify-content:center}.mr2unit.tile .mr2ustates{justify-content:center}
     .mr2ring{position:relative;display:inline-block;width:62px;height:62px;flex:0 0 62px}.mr2ring svg{position:absolute;inset:0;width:100%;height:100%}.mr2ring .mr2ico.ringav{position:absolute;inset:7px;width:auto;height:auto;border:0;flex:none}.mr2ring.full svg{filter:drop-shadow(0 0 3px rgba(255,207,74,.55))}.mr2ring.over svg{filter:drop-shadow(0 0 4px rgba(255,69,69,.65))}
     .mr2ringnum{position:absolute;right:-4px;bottom:-3px;min-width:22px;padding:0 4px;border-radius:999px;background:rgba(10,16,26,.92);border:1px solid rgba(255,207,74,.55);color:#ffe08a;font:700 10px/16px inherit;font-style:normal;text-align:center;font-variant-numeric:tabular-nums}.mr2ring.over .mr2ringnum{border-color:rgba(255,69,69,.7);color:#ff9a9a}
+
+    .mr2opening>summary b{color:#f1d69f}.mr2osec{display:grid;gap:6px}.mr2relics{display:flex;flex-wrap:wrap;gap:8px}.mr2relic{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:10px;background:rgba(103,190,146,.07);border:1px solid rgba(103,190,146,.28);color:#d6f0e2;font-size:12px}.mr2relic b{font-size:12px}.mr2relic.q-forged,.mr2relic.q-gold{border-color:rgba(255,210,74,.4);background:rgba(255,210,74,.07)}
+    .mr2ico.rl.big{width:34px;height:34px;flex-basis:34px;border-radius:7px}
+    .mr2decks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}.mr2dgroup{border:1px solid rgba(148,163,184,.14);border-radius:10px;padding:8px;background:rgba(255,255,255,.02);display:grid;gap:6px;align-content:start}.mr2dhead{display:flex;gap:8px;align-items:center;font-size:12px;color:#e6edf6}.mr2dhead .mr2from:last-child{margin-left:auto}
+    .mr2dcards{display:grid;gap:4px}.mr2dcard{--ac:#8aa0bd;--acr:138,160,189;display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border-radius:7px;border-left:4px solid var(--ac);background:linear-gradient(90deg,rgba(var(--acr),.14),rgba(var(--acr),.03));cursor:help}
+    .mr2dcard.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2dcard.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2dcard.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2dcard.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2dcard.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2dcard.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2dcard.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2dcard.a-other{--ac:#4fd0c8;--acr:79,208,200}
+    .mr2dcost{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:6px;background:rgba(var(--acr),.22);color:var(--ac);font-weight:900;font-size:13px;border:1px solid rgba(var(--acr),.5)}.mr2dname{display:grid;line-height:1.3;min-width:0}.mr2dname b{font-size:12px;color:#eef3fa}.mr2dname small{font-size:9px;color:#8fa0b5}.mr2dn{margin-left:auto;font-style:normal;font-weight:800;color:var(--ac);font-size:12px}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -602,10 +610,32 @@
     }
     const box=host.querySelector('#mr2ShowDesc');if(box)box.checked=host.classList.contains('mr2showdesc');
   }
+  // ---- battle opening: relics + starting deck ---------------------------------------
+  function renderOpening(full,tl){
+    const bd=full.battleDat||{},res=tl.res,cards=tl.ent.initialCards||[],relics=bd.relics||[];
+    if(!cards.length&&!relics.length)return '';
+    const relicHtml=relics.map(r=>{const rec=res.relic[String(r.tid)]||{};return `<span class="mr2relic q-${esc(String(rec.Quality||'').toLowerCase())}"${relicTipAttr(res,r.tid,r.descArgs)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<b>${esc(res.nameRelic(r.tid))}</b></span>`}).join('');
+    const byOwner=new Map();for(const c of cards){const k=String(c.ownerUid);if(!byOwner.has(k))byOwner.set(k,[]);byOwner.get(k).push(c)}
+    const roleInfo=new Map((bd.roleData||[]).map(r=>[String(r.uid),r]));
+    const owners=[...byOwner.keys()].sort((a,b)=>(tl.actors.get(a)?.kind==='keeper'?-1:0)-(tl.actors.get(b)?.kind==='keeper'?-1:0));
+    const groups=owners.map(k=>{
+      const a=tl.actors.get(k),list=byOwner.get(k),ri=roleInfo.get(k);
+      const merged=new Map();for(const c of list){const key=`${c.tid}|${c.level}|${c.deck==='NoneDeck'?'x':''}`;const o=merged.get(key)||{c,n:0};o.n++;merged.set(key,o)}
+      const cardsHtml=[...merged.values()].map(({c,n})=>{
+        const tid=c.tid??c.configId,r=res.skill[String(tid)]||{},info=actionInfo({kind:'card',stypes:r.Type||[]}),cost=c.cost??r.Cost;
+        const args=c.descArgs?.curValues;
+        return `<span class="mr2dcard a-${info.cls}"${skillTipAttr(res,tid,{args,level:c.level})}><span class="mr2dcost">${esc(cost==null?'-':cost)}</span><span class="mr2dname"><b>${esc(res.nameSkill(tid))}</b><small>${esc(info.label)}${c.level>1?` · Lv${esc(c.level)}`:''}${c.deck==='NoneDeck'?` · ${ui('场外','Off-deck')}`:''}</small></span>${n>1?`<em class="mr2dn">×${n}</em>`:''}</span>`;
+      }).join('');
+      const head=a?`${ico(a.icon,a.kind==='keeper'?'守':a.name,`av ${a.kind==='keeper'?'keeper':''}`)}<b>${esc(a.name)}</b>${ri?`<span class="mr2from">Lv${esc(ri.level)} · ${ui('潜能','Potency')} ${esc(ri.potencyLevel)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}</span>`:`<span class="mr2from">${ui('守密人','Keeper')}</span>`}`:`<b>#${esc(k)}</b>`;
+      return `<div class="mr2dgroup"><div class="mr2dhead">${head}<span class="mr2from">${list.length} ${ui('张','cards')}</span></div><div class="mr2dcards">${cardsHtml}</div></div>`;
+    }).join('');
+    return `<details class="mr2round mr2opening" open><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}</div></details>`;
+  }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
     Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
-    const eventHtml=rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
+    const openingHtml=renderOpening(full,tl);
+    const eventHtml=openingHtml+rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
     setTimeout(()=>wireInteractions(host),0);
     host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2toolbar"><label class="mr2tog"><input type="checkbox" id="mr2ShowDesc"> ${ui('展开所有效果说明','Expand all effect descriptions')}</label><span class="mr2from">${ui('鼠标悬停在卡牌、钥令、意图、状态、造物上可看详细效果；点击行动卡片标题可单独展开。','Hover cards, keyflare skills, intents, states and relics for details; click an action header to expand it.')}</span></div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
   }
