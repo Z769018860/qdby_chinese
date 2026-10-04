@@ -414,6 +414,10 @@
     .mr2ust.buff,.mr2chip.st.buff{border-color:rgba(79,209,139,.35);background:rgba(79,209,139,.07)}.mr2ust.debuff,.mr2chip.st.debuff{border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.08)}.mr2ust.affix,.mr2chip.st.affix{border-color:rgba(255,210,74,.45);background:rgba(255,210,74,.08)}.mr2ust.debuff span,.mr2chip.st.debuff span{color:#ffb8b0}.mr2ust.buff span,.mr2chip.st.buff span{color:#b9efcf}.mr2ust.affix span{color:#ffe08a}
     .mr2intent{cursor:help}
     @media(max-width:760px){.mr2desc{margin-left:0}}
+
+    .mr2awrow{display:flex;flex-wrap:wrap;gap:8px}.mr2unit.tile{flex:1 1 112px;max-width:150px;flex-direction:column;align-items:center;text-align:center;gap:5px;padding:9px 6px 7px}.mr2unit.tile .mr2uname{justify-content:center}.mr2unit.tile .mr2ustates{justify-content:center}
+    .mr2ring{position:relative;display:inline-block;width:62px;height:62px;flex:0 0 62px}.mr2ring svg{position:absolute;inset:0;width:100%;height:100%}.mr2ring .mr2ico.ringav{position:absolute;inset:7px;width:auto;height:auto;border:0;flex:none}.mr2ring.full svg{filter:drop-shadow(0 0 3px rgba(255,207,74,.55))}.mr2ring.over svg{filter:drop-shadow(0 0 4px rgba(255,69,69,.65))}
+    .mr2ringnum{position:absolute;right:-4px;bottom:-3px;min-width:22px;padding:0 4px;border-radius:999px;background:rgba(10,16,26,.92);border:1px solid rgba(255,207,74,.55);color:#ffe08a;font:700 10px/16px inherit;font-style:normal;text-align:center;font-variant-numeric:tabular-nums}.mr2ring.over .mr2ringnum{border-color:rgba(255,69,69,.7);color:#ff9a9a}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -542,8 +546,18 @@
     return `<div class="mr2ustates">${shown.map(x=>`<span class="mr2ust ${stateClass(tl.res,x.stateId)}"${x.tip||stateTipAttr(tl.res,x.stateId,{layer:x.layer})}>${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer}</em>`:''}</span></span>`).join('')}${vis.length>shown.length?`<span class="mr2ust more">+${vis.length-shown.length}</span>`:''}</div>`;
   }
   const unitStats=(u,tl)=>(u.stats||[]).length?`<div class="mr2ustats">${u.stats.map(x=>`<span class="mr2uss" title="${esc(x.k)}">${esc(statName(tl.res,x.k))}<b>${esc(fmtStat(x.k,x.v))}</b></span>`).join('')}</div>`:'';
+  // Aliemus ring around the portrait: gold up to 100%, the overlapping 100-200% lap in red (as in game)
+  function renderAwakener(u,a,tl){
+    const max=u.ultiMax>0?u.ultiMax:100,val=Number(u.ulti)||0,ratio=Math.max(0,Math.min(2,val/max)),R=19,C=2*Math.PI*R;
+    const gold=Math.min(ratio,1)*C,red=Math.max(0,ratio-1)*C;
+    const arc=(len,color,w)=>len>0?`<circle cx="22" cy="22" r="${R}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="butt" stroke-dasharray="${len.toFixed(2)} ${(C+5).toFixed(2)}" transform="rotate(-90 22 22)"/>`:'';
+    const ring=`<span class="mr2ring${ratio>=1?' full':''}${ratio>1?' over':''}" title="${esc(`${ui('狂气','Aliemus')} ${fmt(val)} / ${fmt(max)} (${Math.round(val/max*100)}%)`)}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3.2"/>${arc(gold,'#ffcf4a',3.6)}${arc(red,'#ff4545',3.6)}</svg>${ico(a.icon,a.name,'av ringav')}<em class="mr2ringnum">${fmt(val)}</em></span>`;
+    const shield=u.block>0?`<span class="mr2shield" title="${esc(ui('护盾','Shield'))}">🛡 ${fmt(u.block)}</span>`:'';
+    return `<div class="mr2unit tile" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${ring}<div class="mr2uname"><b>${esc(a.name)}</b>${shield}</div>${unitStates(u,tl)}</div>`;
+  }
   function renderUnit(u,tl,prev){
     const a=tl.actors.get(String(u.uid));if(!a)return '';
+    if(a.kind==='awakener')return renderAwakener(u,a,tl);
     const enemy=a.camp===2,hasHp=u.hp!=null&&u.max>0,p=hasHp?Math.max(0,Math.min(100,u.hp/u.max*100)):0;
     const was=prev&&prev.hp!=null?prev.hp:null,delta=was!=null&&hasHp?u.hp-was:0;
     const portrait=a.kind==='keeper'?ico('','守','av lgx keeper'):ico(a.icon,a.kind==='monster'?'怪':a.name,`av lgx${a.kind==='monster'?' mon':''}`);
@@ -558,14 +572,14 @@
       extra=`${pips}${kk}`;
     }
     const intent=enemy&&u.intent?`<span class="mr2intent"${u.intentTip||''}>${ui('下一步','Next')}：${esc(tl.res.nameSkill(u.intent))}</span>`:'';
-    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStats(u,tl)}${unitStates(u,tl)}</div></div>`;
+    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStates(u,tl)}</div></div>`;
   }
   function renderBoard(sn,prev,tl,title){
     if(!sn)return '';
     const prevBy=new Map((prev?.units||[]).map(u=>[String(u.uid),u]));
     const ally=sn.units.filter(u=>{const a=tl.actors.get(String(u.uid));return a&&a.camp!==2}).sort((x,y)=>(tl.actors.get(String(x.uid)).kind==='keeper'?-1:0)-(tl.actors.get(String(y.uid)).kind==='keeper'?-1:0));
     const foe=sn.units.filter(u=>tl.actors.get(String(u.uid))?.camp===2);
-    return `<div class="mr2boardwrap"><div class="mr2boardtitle">${esc(title)}</div><div class="mr2board"><div class="mr2bcol ally">${ally.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div><div class="mr2bcol enemy">${foe.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div></div>`;
+    return `<div class="mr2boardwrap"><div class="mr2boardtitle">${esc(title)}</div><div class="mr2board"><div class="mr2bcol ally">${ally.filter(u=>tl.actors.get(String(u.uid)).kind!=='awakener').map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}<div class="mr2awrow">${ally.filter(u=>tl.actors.get(String(u.uid)).kind==='awakener').map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div><div class="mr2bcol enemy">${foe.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div></div>`;
   }
 
   // ---- interactions: floating tooltip + expandable descriptions ----------------------
