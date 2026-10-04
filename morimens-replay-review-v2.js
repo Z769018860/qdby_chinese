@@ -348,6 +348,7 @@
 
     const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
     const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,dim:!Number.isInteger(n),events:[]});return rounds.get(n)};
+    const layerPeak=new Map();   // owner|stateId -> highest layer seen (to evaluate effects that scale with a state's layer)
     let dimOn=false;const rk=()=>dimOn?bout+.5:bout;   // the Ultra-Space (超维) bout reuses the bout number: it is stored as its own round, bout + .5
     const HEAD_KINDS=['card','ultimate','keeper','skill','enemyact'];
     const push=(kind,label,html,data,raw,meta={})=>{
@@ -489,7 +490,7 @@
         else if(type==='deathResist')ok=ch.base==='BSTRoleAfterDeathResist';
         if((type==='card'||type==='ulti')&&ch.base==='NAMED'&&info.tid!=null&&res.nameSkill(info.tid)===ch.named&&e.owners.includes(String(info.owner)))ok=true;
         if(!ok)continue;
-        if(['NAMED','BSTAfterDimensionBoutBegin','BSTRoleAfterDeathResist'].includes(ch.base)&&ch.cmd!=null){if(!gearTimes.has(time))gearTimes.set(time,new Set());gearTimes.get(time).add('gear:'+e.key)}if(['NAMED','BSTAfterDimensionBoutBegin'].includes(ch.base)&&ch.cmd!=null)gearWins.push({t0:time,t1:time+.6,keys:['gear:'+e.key],ali:(()=>{if(!(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).some(dl=>dl.Type==='BEGainUltiEnergy'))return null;const v=Number(String(ch.para??'').split(',')[0].trim().replace(/StateArg(\d+)/,(m,n)=>e.mainStates[0]?.params?.[n-1]));return Number.isFinite(v)?v:null})()})   // the command's effects land in this frame group
+        if(['NAMED','BSTAfterDimensionBoutBegin','BSTRoleAfterDeathResist'].includes(ch.base)&&ch.cmd!=null){if(!gearTimes.has(time))gearTimes.set(time,new Set());gearTimes.get(time).add('gear:'+e.key)}if(['NAMED','BSTAfterDimensionBoutBegin','BSTAfterBoutBegin','BSTAfterBoutEnd'].includes(ch.base)&&ch.cmd!=null&&(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).some(dl=>/^BE(DrawCard|ChangeEnergy|ChangeKeeperEnergy|GainKeeperEnergy|GainUltiEnergy|GainBlock|Heal|CreateCard|CopyCard|ScarletBloodChange)/.test(dl.Type)))gearWins.push({t0:time,t1:time+.6,keys:['gear:'+e.key],ali:(()=>{if(!(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).some(dl=>dl.Type==='BEGainUltiEnergy'))return null;const v=Number(String(ch.para??'').split(',')[0].trim().replace(/StateArg(\d+)/,(m,n)=>e.mainStates[0]?.params?.[n-1]));return Number.isFinite(v)?v:null})()})   // the command's effects land in this frame group
         if(ch.confirm.size)pendingConf.push({e,ch,time,done:false,win:ch.base==='BSTAfterUltiSkill'?15:6});else if(!channelHit(e,ch))continue;
         const desc=e.desc||'',kinds=new Set();
         if(ch.base==='CARD'&&/暴击伤害/.test(desc))kinds.add('crit');
@@ -671,6 +672,7 @@
           else if(e===1005&&d.stateUid!=null){const cur=stateMap(d.ownerUid).get(String(d.stateUid));if(cur?.stateId===3130)expireTemp();stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
           if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0)gearTrigger('deathResist',{},fr.time);
+          if((e===1004||e===1006||e===1007)&&d.stateId!=null){const ly=e===1007?Number(d.newLayer):Number(d.layer||1),k=String(d.ownerUid??d.roleUid)+'|'+d.stateId;if(ly>(layerPeak.get(k)||0))layerPeak.set(k,ly)}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)<0&&bout>0&&(d.propertyType==='card_cost'||d.propertyType==='awaker_cmdcard_notextend_cost_fix')){
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
@@ -814,7 +816,16 @@
       }
     }
     if(rounds.has(rk())&&!getRound(rk()).snapEnd)getRound(rk()).snapEnd=snap();
-    return {relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    // effects whose amount scales with a state's layer (e.g. 银钥充能 = layer x StateArg2%), evaluated at the highest layer reached
+    const gearDyn=new Map();
+    for(const e of gears.values())for(const ch of e.channels){
+      if(ch.cmd==null||!/GetStateLayer/.test(String(ch.para??'')))continue;
+      const params=e.mainStates[0]?.params||[],owners=e.owners;let peak=0,usedLayer=null;
+      const t=String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,(m,id)=>{let pk=0;for(const o of owners)pk=Math.max(pk,layerPeak.get(o+'|'+id)||0);peak=Math.max(peak,pk);usedLayer=id;return pk}).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
+      if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))continue;const v=evalNum(t,{});if(!Number.isFinite(v))continue;
+      const types=(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).map(dl=>dl.Type);
+      if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
+    return {gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1433,6 +1444,8 @@
       const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
       const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
       const lines=[];for(const c of (e.channels||[])){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;for(const l of gearEffectLines(tl.res,e,c,cnt))lines.push(l)}
+      {const dyn=tl.gearDyn?.get(e.key);if(dyn?.length){for(let i=lines.length-1;i>=0;i--)if(/随层数|scales with state/.test(lines[i]))lines.splice(i,1);
+        for(const d of dyn){const t=d.types.map(x=>CMD_LABEL[x]).find(Boolean);lines.push(ui(`${t?t[0]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}（「${d.state}」峰值 ${d.peak} 层）`,`${t?t[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)} (${d.state} peak ${d.peak})`))}}}
       return {...e,n,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
