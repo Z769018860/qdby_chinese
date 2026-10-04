@@ -321,7 +321,7 @@
 
     // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
     const board=new Map(),bstates=new Map();
-    const FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;
+    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;
     const fiaBonus=()=>{let B=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98469||v.stateId===133285)B+=v.layer||0;return B};
     const fiaPct=(role,lvl)=>lvl*(30+fiaBonus());
     const PROP={hp:'hp',max_hp:'max',block:'block',energy:'energy',max_energy:'maxEnergy',ulti_energy:'ulti',ulti_energy_max:'ultiMax',keeper_energy:'kEnergy',max_keeper_energy:'kMax'};
@@ -520,6 +520,7 @@
             }
           }
           // ---- state tracking (runs for every frame, including pre-battle setup)
+          if(e===1028&&d.propertyType==='card_strength_multiple'&&d.uid!=null&&typeof d.value==='number')cardMul.set(String(d.uid),d.value);
           if(e===1028&&d.value!=null&&d.uid!=null&&typeof d.value==='number'&&actors.has(String(d.uid))){const u=unit(d.uid);(u.props=u.props||{})[d.propertyType]=d.value;if(PROP[d.propertyType])u[PROP[d.propertyType]]=d.value}
           else if(e===1014&&d.beHitConfig?.targetRoleUid!=null){const h=d.beHitConfig,u=unit(h.targetRoleUid);if(h.curHp!=null)u.hp=h.curHp;if(h.curMaxHp!=null)u.max=h.curMaxHp}
           if((e===1004||e===1006)&&FIA_LVL[d.stateId]&&d.stateUid!=null){fiaByState.set(String(d.stateUid),String(d.ownerUid));fiaCard.set(String(d.ownerUid),FIA_LVL[d.stateId])}
@@ -548,7 +549,7 @@
           }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia={uid:String(ownerUid),lvl:fiaLvl,pct:fiaP,args:d.descArgs?.curValues||null,tid};if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
+            const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia={uid:String(ownerUid),lvl:fiaLvl,pct:fiaP,args:d.descArgs?.curValues||null,tid,cmul:cardMul.get(String(d.uid))||0};if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
             push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,fiaLvl,fiaPct:fiaP,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});
             if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid},fr.time);
             continue;
@@ -561,7 +562,7 @@
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
-              hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
+              hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
                 vOn,comb:fiaBonus&&(()=>{let n=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98181)n+=v.layer||0;return n})(),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
@@ -934,7 +935,8 @@
       const diffs=Object.keys(op).filter(k=>typeof op[k]==='number'&&Math.abs(op[k]-(at[k]||0))>1.5&&!/^(hp|max_hp|energy|max_energy|ulti_energy|ulti_energy_max|keeper_energy|max_keeper_energy|block)$/.test(k)).sort().slice(0,16)
         .map(k=>`<span class="mr2statchip up"><small>${esc(statName(res,k))}</small><b>${at[k]?`${esc(fmtStat(k,at[k]))} → `:'+'}${esc(fmtStat(k,op[k]))}</b></span>`).join('');
       const sts=list.filter(x=>x.ownerData?.targetType==='Awaker'&&String(x.ownerData.uid)===String(ri.uid));
-      return `<div class="mr2dgroup"><div class="mr2dhead">${ico(a.icon,a.name,'av')}<b>${esc(a.name)}</b><span class="mr2from">Lv${esc(ri.level)} · ${ui('潜能','Potency')} ${esc(ri.potencyLevel)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}</span></div>
+      const enl=Math.max(0,...sts.map(x=>{const m=cnOf(x.stateId).match(/启灵(\d)(?!\d)(?!标识|计数)/);return m?Number(m[1]):/三启/.test(cnOf(x.stateId))?3:0}));
+      return `<div class="mr2dgroup"><div class="mr2dhead">${ico(a.icon,a.name,'av')}<b>${esc(a.name)}</b><span class="mr2from">Lv${esc(ri.level)} · ${ui('潜能','Potency')} ${esc(ri.potencyLevel)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}${enl?` · ${ui('启灵','Enlighten')} E${enl}`:''}</span></div>
         <div class="mr2flow">${base}</div>${diffs?`<div class="mr2flow"><small class="mr2from">${ui('开局战斗面板 = 编队面板 + 命轮 / 密契 / 造物 / 局内状态','Opening battle panel = formation + gear / relics / states')}</small>${diffs}</div>`:''}
         ${group(sts)}</div>`}).join('');
     const team=list.filter(x=>x.ownerData?.targetType==='PlayerRole');
@@ -987,7 +989,7 @@
       const inn=g('i_basic_damage_per');
       const fin=full?(h.fia||0)+g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
       const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
-      const S=g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0);
+      const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*(h.cmul>0?h.cmul/100:1);
       const atkForce=Math.ceil(g('atk')*(1+g('atk_per')/100));
       return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(1+0.05*(h.comb||0))};
     };
