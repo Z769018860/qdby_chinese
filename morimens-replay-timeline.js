@@ -5,7 +5,7 @@
 (()=>{
   const nativeFetch=window.fetch.bind(window);
   const replayUrl=/^https:\/\/z1g-warreport\.qookkagames\.com\/publish\/BattleReplay_([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.json(?:[?#].*)?$/i;
-  const isGitHubPages=/\.github\.io$/i.test(location.hostname);
+  const isGitHubPagesHost=/\.github\.io$/i.test(location.hostname);
 
   function inputUrl(input){
     if(typeof input==='string')return input;
@@ -36,7 +36,7 @@
         if(!response.ok){errors.push(`${candidate.name}: HTTP ${response.status}`);continue}
         const type=String(response.headers.get('content-type')||'').toLowerCase();
         if(type.includes('text/html')){errors.push(`${candidate.name}: unexpected HTML response`);continue}
-        response.morimensReplayTransport=candidate.name;
+        window.MorimensReplayTransport=`github-pages-cors-relay:${candidate.name}`;
         return response;
       }catch(error){
         errors.push(`${candidate.name}: ${error?.message||error}`);
@@ -45,18 +45,34 @@
     throw new TypeError(`GitHub Pages replay relay failed for ${uuid}: ${errors.join(' | ')}`);
   }
 
+  async function fetchSameOriginOrStaticFallback(target,uuid,input,init){
+    const safe=safeReplayInit(input,init);
+    const proxy=`/api/morimens/replay/${uuid}`;
+    try{
+      const response=await nativeFetch(proxy,{...safe,mode:'same-origin'});
+      const source=response.headers.get('x-morimens-replay-source');
+      const type=String(response.headers.get('content-type')||'').toLowerCase();
+      const looksLikeStatic404=!source&&(response.status===404||response.status===405)&&type.includes('text/html');
+      if(!looksLikeStatic404){
+        window.MorimensReplayTransport='same-origin-proxy';
+        return response;
+      }
+    }catch(error){
+      console.warn('Replay same-origin proxy unavailable; trying static Pages relay.',error);
+    }
+    return fetchGitHubPagesReplay(target,uuid,input,init);
+  }
+
   if(!window.__morimensReplayProxyFetchInstalled){
     window.__morimensReplayProxyFetchInstalled=true;
-    window.MorimensReplayTransport=isGitHubPages?'github-pages-cors-relay':'same-origin-proxy';
+    window.MorimensReplayTransport=isGitHubPagesHost?'github-pages-cors-relay':'same-origin-proxy';
     window.fetch=(input,init={})=>{
       const url=inputUrl(input);
       const match=url.match(replayUrl);
       if(!match)return nativeFetch(input,init);
       const uuid=match[1].toLowerCase();
-      if(isGitHubPages)return fetchGitHubPagesReplay(url,uuid,input,init);
-      const proxy=`/api/morimens/replay/${uuid}`;
-      const safe=safeReplayInit(input,init);
-      return nativeFetch(proxy,{...safe,mode:'same-origin'});
+      if(isGitHubPagesHost)return fetchGitHubPagesReplay(url,uuid,input,init);
+      return fetchSameOriginOrStaticFallback(url,uuid,input,init);
     };
   }
 
