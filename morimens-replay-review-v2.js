@@ -563,7 +563,7 @@
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
               hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
-                vOn,comb:fiaBonus&&(()=>{let n=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98181)n+=v.layer||0;return n})(),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+                vOn,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),comb:fiaBonus&&(()=>{let n=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98181)n+=v.layer||0;return n})(),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -995,17 +995,23 @@
     };
     const Vof=(h,useV=true)=>useV&&h.vOn?1+h.vPct/100:1;
     const dnOf=(h,c,useV=true)=>h.dmg/(h.crit?1+c.cd/100:1)/(1+c.fin/100)/Vof(h,useV);
-    const byActor=new Map();for(const h of log){if(scopeOf(h).ult)continue;if(!byActor.has(h.uid))byActor.set(h.uid,[]);byActor.get(h.uid).push(h)}
+    const byActor=new Map();const blindBy=new Map();for(const h of log){if(scopeOf(h).ult)continue;if(h.blind){blindBy.set(h.uid,(blindBy.get(h.uid)||0)+1);continue}if(!byActor.has(h.uid))byActor.set(h.uid,[]);byActor.get(h.uid).push(h)}
     const fits=new Map(),report=[];
     const fitActor=(hits,mode,useV)=>{
       const uniq=new Map();for(const h of hits){const c=ctxOf(h,mode),key=`${h.skill}|${Math.round(dnOf(h,c,true))}|${c.S}|${c.T.toFixed(1)}`;if(!uniq.has(key))uniq.set(key,{h,c})}
-      const pts=[...uniq.values()],skills=[...new Set(pts.map(p=>p.h.skill))],sIdx=new Map(skills.map((s,i)=>[s,i])),distinctS=new Set(pts.map(p=>p.c.S)).size;
+      let pts=[...uniq.values()],trimmed=0;
+      for(let pass=0;pass<2&&pts.length>=6;pass++){const sk=[...new Set(pts.map(p=>p.h.skill))],si=new Map(sk.map((s,i)=>[s,i]));
+        const rw=pts.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=pts.map(p=>dnOf(p.h,p.c,useV)),ww=yy.map(v=>1/Math.max(1,v));
+        const xx=new Set(pts.map(p=>p.c.S)).size>=2&&pts.length>sk.length+4?solveLeastSquares(rw,yy,ww):null;if(!xx)break;
+        const keep=pts.filter((p,i)=>Math.abs(rw[i].reduce((t,v,k)=>t+v*xx[k],0)-yy[i])/yy[i]<=0.3);
+        if(keep.length===pts.length||keep.length<sk.length+4)break;trimmed+=pts.length-keep.length;pts=keep}
+      const skills=[...new Set(pts.map(p=>p.h.skill))],sIdx=new Map(skills.map((s,i)=>[s,i])),distinctS=new Set(pts.map(p=>p.c.S)).size;
       const rows=pts.map(p=>{const r=new Array(skills.length+1).fill(0);r[sIdx.get(p.h.skill)]=p.c.T;r[skills.length]=p.c.S;return r}),y=pts.map(p=>dnOf(p.h,p.c,useV)),w=y.map(v=>1/Math.max(1,v));
       const x=distinctS>=2&&pts.length>skills.length?solveLeastSquares(rows,y,w):null;
       let errs=null;if(x)errs=rows.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)-y[i])/y[i]);
       // calculator default (strength x1): refit only per-skill coefficients
       let calcErr=null;{const r1=pts.map(p=>{const r=new Array(skills.length).fill(0);r[sIdx.get(p.h.skill)]=p.c.T;return r}),y1=pts.map((p,i)=>y[i]-p.c.S),xx=solveLeastSquares(r1,y1,w);if(xx)calcErr=r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*xx[k],0)+pts[i].c.S-y[i])/y[i]).reduce((a,b)=>a+b,0)/pts.length}
-      return {pts,skills,distinctS,x,m:x?Math.max(0,Math.min(10,x[skills.length])):null,mean:errs?errs.reduce((a,b)=>a+b,0)/errs.length:null,max:errs?Math.max(...errs):null,calcErr};
+      return {pts,trimmed,skills,distinctS,x,m:x?Math.max(0,Math.min(10,x[skills.length])):null,mean:errs?errs.reduce((a,b)=>a+b,0)/errs.length:null,max:errs?Math.max(...errs):null,calcErr};
     };
     for(const [uid,hits] of byActor){
       const f=fitActor(hits,'full',true),fNoV=fitActor(hits,'full',false),fOld=fitActor(hits,'basic',true);
@@ -1013,7 +1019,7 @@
       const crit=[...pairs.values()].filter(o=>o.c&&o.n).map(o=>({got:o.c/o.n,want:1+o.cd/100}));
       const a=tl.actors.get(uid),confident=f.distinctS>=3&&f.pts.length>=f.skills.length+3&&f.x!=null&&f.mean<.25;
       if(f.m!=null)fits.set(uid,{m:f.m,confident});
-      report.push({uid,name:a?.name||uid,confident,hits:hits.length,contexts:f.pts.length,distinctS:f.distinctS,m:f.m,mOld:fOld.m,meanErr:f.mean,maxErr:f.max,meanErrNoVuln:fNoV.mean,meanErrOld:fOld.mean,calcErr:f.calcErr,crit});
+      report.push({uid,name:a?.name||uid,trimmed:f.trimmed,blindN:blindBy.get(uid)||0,confident,hits:hits.length,contexts:f.pts.length,distinctS:f.distinctS,m:f.m,mOld:fOld.m,meanErr:f.mean,maxErr:f.max,meanErrNoVuln:fNoV.mean,meanErrOld:fOld.mean,calcErr:f.calcErr,crit});
     }
     // attribute every buff (relics + wheels + covenants) with the fitted multipliers
     for(const rec of tl.relicBuffs.values()){rec.extra=0;for(const i of rec.instances){i.extra=0;i.hits=0}}
@@ -1127,7 +1133,7 @@
     const pc=v=>v==null?'—':`${(v*100).toFixed(1)}%`;
     const rows=c.report.map(r=>{
       const critOk=r.crit.filter(x=>Math.abs(x.got/x.want-1)<.01).length;
-      return `<div class="mr2crow"><b>${esc(r.name)}${r.confident?'':`<small class="lowc">${ui('样本不足','low sample')}</small>`}</b><span>${r.hits}<small>${ui('次命中','hits')} · ${r.contexts} ${ui('种条件','ctx')}</small></span><span>${r.m==null?'—':`×${r.m.toFixed(2)}`}<small>${ui('拟合力量倍率','fitted STR mult')}${r.mOld!=null?` · ${ui(`未计分类池 ×${r.mOld.toFixed(2)}`,`no scoped pools ×${r.mOld.toFixed(2)}`)}`:''}</small></span><span class="${r.calcErr!=null&&r.meanErr!=null&&r.calcErr>r.meanErr*1.5?'bad':''}">${pc(r.calcErr)}<small>${ui('计算器默认 ×1 误差','calc ×1 error')}</small></span><span class="${r.meanErr!=null&&r.meanErr<.1?'good':''}">${pc(r.meanErr)}<small>${ui('拟合后误差','fitted error')}</small></span><span>${r.crit.length?`${critOk}/${r.crit.length}`:'—'}<small>${ui('暴击倍率精确吻合组数','exact crit pairs')}</small></span></div>`;
+      return `<div class="mr2crow"><b>${esc(r.name)}${r.confident?'':`<small class="lowc">${ui('样本不足','low sample')}</small>`}</b><span>${r.hits}<small>${ui('次命中','hits')} · ${r.contexts} ${ui('种条件','ctx')}${r.blindN||r.trimmed?` · ${ui(`已排除 ${r.blindN?`致盲 ${r.blindN} 次`:''}${r.blindN&&r.trimmed?'、':''}${r.trimmed?`离群 ${r.trimmed} 个`:''}`,`excluded ${r.blindN||0} blind / ${r.trimmed||0} outliers`)}`:''}</small></span><span>${r.m==null?'—':`×${r.m.toFixed(2)}`}<small>${ui('拟合力量倍率','fitted STR mult')}${r.mOld!=null?` · ${ui(`未计分类池 ×${r.mOld.toFixed(2)}`,`no scoped pools ×${r.mOld.toFixed(2)}`)}`:''}</small></span><span class="${r.calcErr!=null&&r.meanErr!=null&&r.calcErr>r.meanErr*1.5?'bad':''}">${pc(r.calcErr)}<small>${ui('计算器默认 ×1 误差','calc ×1 error')}</small></span><span class="${r.meanErr!=null&&r.meanErr<.1?'good':''}">${pc(r.meanErr)}<small>${ui('拟合后误差','fitted error')}</small></span><span>${r.crit.length?`${critOk}/${r.crit.length}`:'—'}<small>${ui('暴击倍率精确吻合组数','exact crit pairs')}</small></span></div>`;
     }).join('');
     const fitted=c.report.filter(r=>r.m!=null&&r.confident),ms=fitted.map(r=>r.m).sort((a,b)=>a-b),med=ms.length?ms[Math.floor(ms.length/2)]:null,mo=fitted.filter(r=>r.mOld!=null).map(r=>r.mOld).sort((a,b)=>a-b),oldMed=mo.length?mo[Math.floor(mo.length/2)]:null;
     const critAll=c.report.flatMap(r=>r.crit),critExact=critAll.filter(x=>Math.abs(x.got/x.want-1)<.01).length;
