@@ -2,7 +2,7 @@ const UUID_RE=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const UPSTREAM='https://z1g-warreport.qookkagames.com/publish/BattleReplay_';
 const MAX_BYTES=20_000_000;
 
-export default async function handler(req,res){
+module.exports=async function handler(req,res){
   const origin=String(req.headers.origin||'');
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Methods','GET,HEAD,OPTIONS');
@@ -36,4 +36,4 @@ export default async function handler(req,res){
   if(body.length>MAX_BYTES){res.status(413).send('Replay object too large');return}
   res.setHeader('Content-Length',String(body.length));
   res.status(200).send(body);
-}
+};
