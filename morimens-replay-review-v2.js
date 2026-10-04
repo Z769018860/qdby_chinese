@@ -744,7 +744,7 @@
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
               hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
-                vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(curFia&&curFia.uid===String(h.castRoleUid)&&String(curFia.tid)===String(h.skillConfigId)&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,curFia&&curFia.uid===String(h.castRoleUid)?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+                stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(curFia&&curFia.uid===String(h.castRoleUid)&&String(curFia.tid)===String(h.skillConfigId)&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,curFia&&curFia.uid===String(h.castRoleUid)?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -1248,13 +1248,13 @@
     // damage-relevant stats of one hit. mode 'basic' = old model (basic pools only), 'full' = calculator-style scoped pools
     const ctxOf=(h,mode='full')=>{
       const P=h.P,sc=scopeOf(h),g=k=>P[k]||0,full=mode==='full';
-      const out=g('basic_damage_per')+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
+      const ob=g('basic_damage_per'),out=ob+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
       const inn=g('i_basic_damage_per');
       const fin=full?(h.fia||0)+g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
       const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
       const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*(h.cmul>0?h.cmul/100:1);
       const fk=forceKind(h.skill),atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
-      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(h.pf||1)};
+      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+ob/100)*(1+(out-ob)/100)*(1+inn/100)*(h.pf||1)};   // basic-damage pool and the scoped o_damage pools multiply (1.11 x 1.35 = 1.4985, not 1.46)
     };
     const Vof=(h,useV=true)=>useV&&h.vOn?1+h.vPct/100:1;
     const dnOf=(h,c,useV=true)=>h.dmg/(h.crit?1+c.cd/100:1)/(1+c.fin/100)/Vof(h,useV);
@@ -1303,18 +1303,28 @@
       const bestVar=new Map();for(const k of errs[0].keys()){let bi=0;for(let i=1;i<vars.length;i++)if((errs[i].get(k)??9)<(errs[bi].get(k)??9)-0.005)bi=i;bestVar.set(k,bi)}
       const uniq=new Map(vars.flatMap((ps,i)=>ps.filter(p=>bestVar.get(p.h.skill)===i)).map((p,i)=>[i,p]));
       let pts=[...uniq.values()],trimmed=0;
-      const solve=ps=>{const sk=[...new Set(ps.map(p=>p.h.skill))],si=new Map(sk.map((v,i)=>[v,i])),rw=ps.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=ps.map(p=>p.y),ww=yy.map(v=>1/Math.max(1,v));
+      // dynamic flat bonuses: some characters carry a stacking state whose layer count is added to the card's damage 1:1 (茉夏「打击临时固伤」, ...)
+      const dynOf=(p,dyn)=>{const k=dyn&&dyn.get(String(p.h.skill));return k?(p.h.stl?.[k]||0):0};
+      const solve=(ps,dyn=null)=>{const sk=[...new Set(ps.map(p=>p.h.skill))],si=new Map(sk.map((v,i)=>[v,i])),rw=ps.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=ps.map(p=>p.y-dynOf(p,dyn)),ww=yy.map(v=>1/Math.max(1,v));
         const x=new Set(ps.map(p=>p.c.S)).size>=2&&ps.length>sk.length+2?solveLeastSquares(rw,yy,ww):null;
         const errs=x?rw.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)-yy[i])/yy[i]):null;
         // calculator default: strength x1, only the per-skill coefficient is fitted
-        const r1=ps.map(p=>{const r=new Array(sk.length).fill(0);r[si.get(p.h.skill)]=p.c.T;return r}),y1=ps.map(p=>p.y-p.c.S),x1=solveLeastSquares(r1,y1,ww);
-        const e1=x1?r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x1[k],0)+ps[i].c.S-yy[i])/yy[i]):null;
+        const r1=ps.map(p=>{const r=new Array(sk.length).fill(0);r[si.get(p.h.skill)]=p.c.T;return r}),y1=ps.map((p,i)=>yy[i]-p.c.S),x1=solveLeastSquares(r1,y1,ww);
+        const e1=x1?r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x1[k],0)+ps[i].c.S-yy[i])/Math.max(1,ps[i].y)):null;
         return {sk,x,errs,e1}};
-      let r=solve(pts);
-      for(let pass=0;pass<2&&r.errs;pass++){const keep=pts.filter((p,i)=>r.errs[i]<=0.3);if(keep.length===pts.length||keep.length<r.sk.length+3)break;trimmed+=pts.length-keep.length;pts=keep;r=solve(pts);if(!r.errs)break}
+      let r=solve(pts),dynMap=null;
+      {const skErr=(rr,ps)=>{const g=new Map();ps.forEach((p,i)=>{if(!rr.e1)return;const o=g.get(String(p.h.skill))||{n:0,e:0};o.n++;o.e+=rr.e1[i];g.set(String(p.h.skill),o)});return g};
+        const base=skErr(r,pts),cand=new Map();
+        for(const p of pts){const k=String(p.h.skill);if(!cand.has(k))cand.set(k,new Set());for(const id of Object.keys(p.h.stl||{}))cand.get(k).add(id)}
+        const chosen=new Map();
+        for(const [sk,b] of base){if(b.n<4||b.e/b.n<=.03)continue;const sp=pts.filter(p=>String(p.h.skill)===sk);let best=null;
+          for(const id of cand.get(sk)||[]){if(new Set(sp.map(p=>p.h.stl?.[id]||0)).size<3)continue;const e=skErr(solve(pts,new Map([[sk,id]])),pts).get(sk);if(e&&(!best||e.e<best.e))best={id,e:e.e}}
+          if(best&&best.e<b.e*.75&&(b.e-best.e)/b.n>.015)chosen.set(sk,best.id)}
+        if(chosen.size){dynMap=chosen;r=solve(pts,dynMap)}}
+      for(let pass=0;pass<2&&r.errs;pass++){const keep=pts.filter((p,i)=>r.errs[i]<=0.3);if(keep.length===pts.length||keep.length<r.sk.length+3)break;trimmed+=pts.length-keep.length;pts=keep;r=solve(pts,dynMap);if(!r.errs)break}
       const mean=a=>a&&a.length?a.reduce((t,v)=>t+v,0)/a.length:null;
       const perSkill=(()=>{const g=new Map();pts.forEach((p,i)=>{if(!r.e1)return;const o=g.get(p.h.skill)||{tid:p.h.skill,name:res.nameSkill(p.h.skill),n:0,err:0,idx:idxOf.get(p.h.skill)??0};o.n++;o.err+=r.e1[i];g.set(p.h.skill,o)});return [...g.values()].map(o=>({...o,err:o.err/o.n}))})();
-      return {perSkill,hits:hs.length,ctx:pts.length,trimmed,match,m:r.x?Math.max(0,Math.min(10,r.x[r.sk.length])):null,mean:mean(r.errs),calcErr:mean(r.e1)};
+      return {dyn:dynMap?[...dynMap].map(([sk,id])=>({skill:res.nameSkill(sk),id,name:res.nameState(id)})):null,perSkill,hits:hs.length,ctx:pts.length,trimmed,match,m:r.x?Math.max(0,Math.min(10,r.x[r.sk.length])):null,mean:mean(r.errs),calcErr:mean(r.e1)};
     };
     for(const rep of report){rep.arg=argFit(log.filter(h=>h.uid===rep.uid&&!scopeOf(h).ult))}
     // attribute every buff (relics + wheels + covenants) with the fitted multipliers
@@ -1540,6 +1550,14 @@
         const parts=[['pick',pickScore],['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
         return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,rD,rF,eff:{e1,e2,e3,waste,spent,disc,used,over,cons},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
       })();
+      // ---- merged scoring model (morimens-replay-scoring.js): semantic gear value, role-adaptive awakeners, keeper decision quality
+      const SC=window.MorimensReplayScoring;
+      if(SC){try{
+        for(const list of [wheelItems,covItems])for(const row of SC.scoreGear(list,tl,totalDmg||1)){const it=list.find(x=>x.g===row.g);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}
+        for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff}}
+        awRows.sort((a,b)=>b.score-a.score);
+        const kr=SC.scoreKeeper({keeper},tl);if(kr&&kr.score!=null){keeper.score=kr.score;keeper.grade=kr.grade;keeper.pickScore=kr.choiceScore;keeper.effScore=kr.resourceScore;keeper.playScore=kr.playScore;keeper.enh=true}
+      }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
       return {keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
     })();
     return {roundDmg,typeDmg,mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
@@ -1783,7 +1801,8 @@
     if(!m.awakeners.length)return '';
     const W=m.model.CAT_W,T=m.model.totals,SW=m.model.SUBW;
     const cells=o=>DIM.map(([k,l])=>`<span class="${o.cats[k]==null?'na':''}"><small>${esc(l)}</small><b>${o.cats[k]==null?'—':Math.round(o.cats[k])}</b></span>`).join('');
-    const row=(icon,name,o,top)=>`<details class="mr2rrowd${top?' top':''}"><summary class="mr2rrow"><span class="mr2rn">${icon}<b>${esc(name)}</b><i class="mr2grade g${o.grade}">${o.grade}</i></span><span class="mr2rscore"><i style="width:${o.score.toFixed(1)}%"></i><b>${o.score.toFixed(1)}</b></span><span class="mr2rdims">${cells(o)}</span></summary><div class="mr2rdetail">${ratingDetail(o.x||o,res)}</div></details>`;
+    const enhLine=o=>{const chips=[];if(o.enh?.roleLabel)chips.push(`<i class="strong">${esc(o.enh.roleLabel)}</i>`);for(const f of o.enh?.features||[])chips.push(`<i${f.strong?' class="strong"':''}>${esc(f.label)}</i>`);for(const f of o._sm?.f||[])chips.push(`<i${f.strong?' class="strong"':''}>${esc(f.label)}</i>`);return chips.length?`<div class="mr2enhscore">${ui('定位 / 机制价值','Role / mechanism value')}<div class="mr2enhchips">${chips.join('')}</div></div>`:''};
+    const row=(icon,name,o,top)=>`<details class="mr2rrowd${top?' top':''}"><summary class="mr2rrow"><span class="mr2rn">${icon}<b>${esc(name)}</b><i class="mr2grade g${o.grade}">${o.grade}</i></span><span class="mr2rscore"><i style="width:${o.score.toFixed(1)}%"></i><b>${o.score.toFixed(1)}</b></span><span class="mr2rdims">${cells(o)}</span></summary><div class="mr2rdetail">${enhLine(o)}${ratingDetail(o.x||o,res)}</div></details>`;
     const awRows=m.awakeners.map((o,i)=>row(ico(o.r.a.icon,o.r.a.name,'av'),o.r.a.name,o,!i)).join('');
     const kp=m.keeper,kpRow=kp&&kp.score!=null?`<details class="mr2rrowd"><summary class="mr2rrow"><span class="mr2rn">${ico('','守','av keeper')}<b>${ui('守密人（决策）','Keeper (decisions)')}</b><i class="mr2grade g${kp.grade}">${kp.grade}</i></span><span class="mr2rscore"><i style="width:${kp.score.toFixed(1)}%"></i><b>${kp.score.toFixed(1)}</b></span><span class="mr2rdims"><span class="${kp.pickScore==null?'na':''}"><small>${ui('钥令','Keyflare')}</small><b>${kp.pickScore==null?'—':Math.round(kp.pickScore)}</b></span><span class="${kp.effScore==null?'na':''}"><small>${ui('效率','Efficiency')}</small><b>${kp.effScore==null?'—':Math.round(kp.effScore)}</b></span><span class="${kp.playScore==null?'na':''}"><small>${ui('出牌','Plays')}</small><b>${kp.playScore==null?'—':Math.round(kp.playScore)}</b></span></span></summary><div class="mr2rdetail">${keeperDetail(kp,res)}</div></details>`:'';
     const itemList=(list,iconOf,nameOf)=>list.length?list.map((o,i)=>row(iconOf(o),nameOf(o),o,!i)).join(''):`<div class="mr2empty">—</div>`;
@@ -1798,6 +1817,7 @@
       <li><b>防御</b>（小项权重 护盾+治疗 ${SW.def.sh} · 减伤 ${SW.def.mit} · 控制与弱化 ${SW.def.ctl} · 死亡抵抗 ${SW.def.dr}）：护盾 + 1.2×治疗；<u>减伤</u> = 降低敌方多少伤害（按敌方每次主动攻击的实际伤害反推：虚弱 / 痴醉 / 恐惧固着等百分比减伤 = 伤害×p/(1−p)，降力等固定减伤 = 降低的点数，按状态施加者分摊）；控制与弱化 = 眩晕 / 石化 / 冻结等控制（每次 3 点）与虚弱 / 脆弱上层（每次 2 点）；死亡抵抗 = 面板值 + 战斗中额外提供，并按占比分配「实际救场」次数（每次 100 点）。</li>
       <li><b>辅助</b>（小项权重 ${subW(SW.sup)}）：银钥能量、充狂（给队友 + 0.5×给自己）、黑印、算力（产生 + 制造灵感 + 复制减费）、易伤（带来的增伤，没有则按上层次数）、其他伤害加成（力量 / 暴击伤害 / 暴击率 / 基础伤害的间接额外伤害，用拟合的力量倍率和逐次命中估算）、减费（卡牌算力消耗降低点数）、抽牌、过牌（取回 / 置顶 / 效果弃牌）、界域精通、胚胎融合。</li></ul>
       <p><b>守密人（决策）</b>：钥令选择、战斗效率、出牌是否最优三项均分。钥令选择 = 所选钥令的实际价值 ÷ 同次可选技能里已知价值最高者；战斗效率 = 算力利用率、手牌利用率（回合末未被弃掉）、算力未溢出的平均；出牌最优 = 每回合在同一手牌、同一算力预算下，所打出的牌相对于背包最优组合所能达到的伤害 / 防御比例（每张牌的产出取本场实际平均值估算）。</p><p>归属规则：同一帧触发的造物 > 同一帧触发的命轮 / 密契 > 正在结算的行动（含派生技能的施放者）> 无来源（回合开始等被动，不计）。回放没有记录战斗内黑印的变化，黑印一项保留但通常为 0；减伤只统计敌方的主动攻击。等级：≥80 S，≥65 A，≥50 B，≥35 C，其余 D。</p>
+      <p><b>增强模型（已合并）</b>：唤醒体按主定位自适应（主职权重最高，并用贡献 / 牌权修正效率）；命轮 / 密契综合实战贡献与静态机制价值（手牌上限、算力上限、抽牌、减费、易伤、死亡抵抗、取回循环等按语义计分）；守密人按出牌决策、资源管理、钥令选择分层计分，未知信息按置信度收缩。</p>
       <p>全队合计：输出 ${fmt(T.out)}，护盾+治疗 ${fmt(Math.round(T.sh))}，减伤 ${fmt(Math.round(T.mit))}，控制弱化 ${fmt(Math.round(T.ctl))}；实际救场 ${m.model.deathSaves} 次。</p>`,`<p>Three categories (output / defense / support), each a weighted mean of share-based sub-scores; the composite is multiplied by a 0.9-1.1 card-efficiency factor. Click a row for every sub-metric.</p>`);
     return `<div class="mr2rating"><h5>${ui('唤醒体综合评分','Awakener ratings')} <small class="mr2from">${ui('点击一行展开全部评估项','click a row for every metric')}</small></h5>${awRows}${kpRow}${items}<details class="mr2minor"><summary>${ui('评分模型','Rating model')}</summary><div class="mr2rmodel">${model}</div></details></div>`;
   }
