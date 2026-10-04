@@ -374,7 +374,7 @@
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
-    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
     const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
@@ -595,6 +595,7 @@
           if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
           else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
+          if(e===1020&&d?.battleFinishData){result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType}}
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
@@ -681,7 +682,7 @@
       }
     }
     if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
-    return {counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {get result(){return result},counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -782,7 +783,23 @@
     .mr2gmetrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}.mr2gmetrics span{display:grid;gap:1px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.04)}.mr2gmetrics small{font-size:9px;color:#758398}.mr2gmetrics b{font-size:15px;color:#f4f7fb;font-variant-numeric:tabular-nums}.mr2gmetrics em{font-style:normal;font-size:10px;color:#8fa0b5}.mr2gmetrics .hot b{color:#ffb2a8}
     .mr2gdesc{font-size:11px;line-height:1.7;color:#c3cedd;white-space:pre-line;padding:2px 0}.mr2gdesc b{color:#ffd86b;margin-right:4px}
     .mr2tag.trig{background:rgba(98,183,255,.14);color:#9fd0ff;padding:2px 8px}.mr2tag.trig small{color:#7f8ea2;margin-left:3px}.mr2geff{display:flex;flex-wrap:wrap;gap:5px}.mr2geff span{font-size:10px;padding:1px 8px;border-radius:999px;background:rgba(255,196,87,.1);border:1px solid rgba(255,196,87,.25);color:#ffd27a}
-  `;document.head.appendChild(s)}
+  
+    .mr2introtop{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.mr2io{display:flex;gap:6px;margin-left:auto}.mr2io button{padding:6px 12px;border-radius:9px;border:1px solid rgba(213,177,118,.4);background:rgba(213,177,118,.1);color:#f1d69f;font-size:12px;font-weight:700;cursor:pointer}.mr2io button:hover:not(:disabled){background:rgba(213,177,118,.2)}.mr2io button:disabled{opacity:.4;cursor:not-allowed}
+    .mr2binfo{border:1px solid rgba(148,163,184,.2);border-radius:14px;padding:12px 14px;background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.015));display:grid;gap:10px}.mr2binfo.win{border-color:rgba(255,210,74,.4);background:linear-gradient(135deg,rgba(255,210,74,.1),rgba(213,177,118,.03))}.mr2binfo.lose{border-color:rgba(255,107,107,.4);background:linear-gradient(135deg,rgba(255,107,107,.1),rgba(255,255,255,.02))}
+    .mr2bhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.mr2verdict{font-size:20px;font-weight:900;letter-spacing:2px;color:#ffd24a;text-shadow:0 0 14px rgba(255,210,74,.35)}.mr2binfo.lose .mr2verdict{color:#ff8a80;text-shadow:0 0 14px rgba(255,107,107,.3)}.mr2binfo:not(.win):not(.lose) .mr2verdict{color:#aab6c7;text-shadow:none}.mr2btitle{display:grid;gap:2px;min-width:0}.mr2btitle b{font-size:15px;color:#f4f7fb}.mr2btitle small{font-size:11px;color:#9fb0c6}.mr2bnote{margin-left:auto;font-size:10px;color:#8ea0b6;max-width:340px;text-align:right}
+    .mr2bmeta{display:flex;flex-wrap:wrap;gap:6px}.mr2bmeta span{display:grid;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.04);min-width:64px}.mr2bmeta small{font-size:9px;color:#7f8ea2}.mr2bmeta b{font-size:13px;color:#e6edf6}.mr2bmeta .id{flex:1 1 260px}.mr2bmeta .id b{font-size:10px;font-weight:600;color:#8ea0b6;word-break:break-all}
+    .mr2mvps{border:1px solid rgba(213,177,118,.25);border-radius:14px;padding:12px 14px;background:linear-gradient(160deg,rgba(213,177,118,.07),rgba(98,183,255,.03));display:grid;gap:10px}.mr2mvptitle{font-size:14px;font-weight:900;color:#f1d69f;letter-spacing:1px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.mr2mvptitle small{font-size:10px;font-weight:400;color:#8ea0b6;letter-spacing:0}
+    .mr2mvpgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.mr2mvp{--ac:#d5b176;border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--ac);border-radius:11px;padding:10px 12px;background:rgba(0,0,0,.18);display:grid;gap:8px;align-content:start}.mr2mvp.aw{--ac:#ffd24a}.mr2mvp.wh{--ac:#62b7ff}.mr2mvp.rel{--ac:#67be92}.mr2mvp.cov{--ac:#b57cff}
+    .mr2mvptag{font-size:10px;font-weight:900;letter-spacing:1px;color:var(--ac);text-transform:uppercase}.mr2mvpmain{display:flex;align-items:center;gap:10px;min-width:0}.mr2mvpmain>div{display:grid;gap:1px;min-width:0}.mr2mvpmain b{font-size:15px;color:#f4f7fb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mr2mvpmain span{font-size:12px;color:#dbe4f0;font-variant-numeric:tabular-nums}.mr2mvpmain span em{font-style:normal;color:var(--ac);font-weight:800}.mr2mvpmain small{font-size:10px;color:#8ea0b6}
+    .mr2mvpsub{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:10px;color:#9fb0c6}.mr2mvpsub span{display:inline-flex;align-items:center;gap:4px}.mr2mvpsub .mr2ico{width:22px;height:22px;flex:0 0 22px;font-size:10px;border-radius:6px}.mr2mvpsub .mr2ico.av{border-radius:50%}.mr2ico.mvp{width:54px;height:54px;flex:0 0 54px;font-size:20px;border:2px solid var(--ac,#d5b176)}.mr2ico.rl.mvp,.mr2ico.gi.mvp{border-radius:12px}
+    .mr2detail{border:1px solid rgba(148,163,184,.16);border-radius:12px;background:rgba(255,255,255,.015)}.mr2detail>summary{cursor:pointer;padding:10px 14px;display:flex;align-items:baseline;gap:10px;list-style:none}.mr2detail>summary::-webkit-details-marker{display:none}.mr2detail>summary b{color:#f1d69f;font-size:14px}.mr2detail>summary small{color:#8ea0b6;font-size:10px}.mr2detail>summary::before{content:'▸';color:#d5b176}.mr2detail[open]>summary::before{content:'▾'}.mr2detail>*:not(summary){margin:0 12px 12px}.mr2detail{display:block}.mr2detail[open]{display:grid;gap:10px}
+    /* compact opening / statistics */
+    .mr2opening .mr2rbody,.mr2stats .mr2rbody{gap:8px;padding:8px 10px}.mr2opening .mr2relics{gap:4px}.mr2opening .mr2relic{padding:2px 8px 2px 3px;font-size:11px;gap:5px;border-radius:8px}.mr2opening .mr2relic .mr2ico{width:22px;height:22px;flex-basis:22px}.mr2opening .mr2relic b{font-size:11px;font-weight:600}
+    .mr2opening .mr2decks{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px}.mr2opening .mr2dgroup{padding:6px;gap:4px}.mr2opening .mr2dcards{gap:2px;grid-template-columns:repeat(2,minmax(0,1fr))}.mr2oother>summary{font-size:10px;color:#8ea0b6;cursor:pointer;margin-top:4px}.mr2oother .mr2ostate{margin-top:3px}.mr2opening .mr2dcard{padding:2px 6px 2px 3px;gap:6px}.mr2opening .mr2dname b{font-size:11px}.mr2opening .mr2dname small{font-size:8px}.mr2opening .mr2dcost{min-width:20px;height:20px;font-size:11px}.mr2opening .mr2boardtitle{font-size:11px}
+    .mr2stats .mr2ssec{gap:6px;margin:0}.mr2stats .mr2ssec h5{margin:0 0 4px;font-size:12px;color:#d9c391;padding-bottom:3px;border-bottom:1px solid rgba(213,177,118,.15)}.mr2stats .mr2ssum{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:5px}.mr2stats .mr2ssum span{padding:5px 8px;border-radius:8px}.mr2stats .mr2ssum strong,.mr2stats .mr2ssum b{font-size:14px}.mr2stats .mr2scards{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}.mr2stats .mr2scard{padding:8px;gap:5px}.mr2stats .mr2srow{padding:2px 0}
+    .mr2fold{border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(255,255,255,.015)}.mr2fold>summary{cursor:pointer;padding:6px 10px;font-size:12px;font-weight:700;color:#d9c391;list-style:none}.mr2fold>summary::-webkit-details-marker{display:none}.mr2fold>summary::before{content:'▸ ';color:#d5b176}.mr2fold[open]>summary::before{content:'▾ '}.mr2fold>*:not(summary){margin:0 10px 10px}
+    @media(max-width:700px){.mr2bnote{margin-left:0;text-align:left}.mr2io{width:100%}.mr2io button{flex:1}}
+`;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
   const rawDetails=e=>`<details class="mr2raw"><summary>${ui('原始事件','Raw event')} · eventId ${esc(e.eventId)}${e.skillTid!=null?` · tid ${esc(e.skillTid)}`:''}${e.cardUid!=null?` · cardUid ${esc(e.cardUid)}`:''}</summary><pre>${esc(JSON.stringify(e.data,null,2))}</pre></details>`;
@@ -872,7 +889,7 @@
     return `<div class="mr2settle"><div class="mr2settlehead"><span class="mr2sttl">${esc(title)}</span>${resHtml}</div>${moves.length?moveRows(moves):''}${count?`<details class="mr2minor"><summary>${ui(`状态/属性变化 ${count}${hiddenN?`（含内部 ${hiddenN}）`:''}`,`State & stat changes ${count}`)}</summary>${detail}</details>`:''}</div>`;
   }
   // the full board of each action is only built when its <details> is opened (long battles have hundreds of them)
-  let snapStore=[];
+  let lastFull=null,snapStore=[];
   // battlefield right after one action: collapsed summary line (keeper / enemy hp + enemy debuffs), full board on expand
   function renderActionSnap(before,after,tl){
     if(!after)return '';
@@ -1001,9 +1018,12 @@
       return 'other'};
     const CAT={enl:ui('启灵','Enlighten'),tal:ui('天赋','Talent'),wheel:ui('命轮','Wheel'),cov:ui('密契 / 饰品','Covenant'),relic:ui('造物','Relic'),school:ui('职业','School'),stage:ui('关卡','Stage'),other:ui('其他数值 / 机制','Other')};
     const order=['enl','tal','wheel','cov','relic','school','stage','other'];
-    const group=(sts)=>{const g=new Map();for(const st of sts){if(st.ownerData?.targetType==='Card')continue;const c=catOf(st);if(!g.has(c))g.set(c,[]);g.get(c).push(st)}
-      return order.filter(c=>g.has(c)).map(c=>{const vis=g.get(c).filter(x=>!/空状态/.test(cnOf(x.stateId))),hid=0;
-        return `<div class="mr2ostate"><span class="mr2from">${esc(CAT[c])}</span>${vis.map(x=>{const w=c==='wheel'&&gearCatalog?.wheels?.[String(x.source?.[0]?.tid)];return w?`<span class="mr2chip st" title="${esc(cnOf(x.stateId))}">${w.icon?ico(`${ART}/wheels/${w.icon}.webp`,w.zh,'st'):''}<span>${esc(w.zh||w.en)}</span></span>`:chipSt(x.stateId,x.layer)}).join('')}${hid?`<small class="mr2from">+${hid} ${ui('隐藏状态','hidden')}</small>`:''}</div>`}).join('')};
+    const group=(sts,collapseRest=true)=>{const g=new Map();for(const st of sts){if(st.ownerData?.targetType==='Card')continue;const c=catOf(st);if(!g.has(c))g.set(c,[]);g.get(c).push(st)}
+      const line=c=>{const vis=g.get(c).filter(x=>!/空状态/.test(cnOf(x.stateId)));if(!vis.length)return '';
+        return `<div class="mr2ostate"><span class="mr2from">${esc(CAT[c])}</span>${vis.map(x=>{const w=c==='wheel'&&gearCatalog?.wheels?.[String(x.source?.[0]?.tid)];return w?`<span class="mr2chip st" title="${esc(cnOf(x.stateId))}">${w.icon?ico(`${ART}/wheels/${w.icon}.webp`,w.zh,'st'):''}<span>${esc(w.zh||w.en)}</span></span>`:chipSt(x.stateId,x.layer)}).join('')}</div>`};
+      const main=['enl','tal','wheel','cov'].filter(c=>g.has(c)).map(line).join(''),rest=order.filter(c=>!['enl','tal','wheel','cov'].includes(c)&&g.has(c)),restN=rest.reduce((n,c)=>n+g.get(c).length,0);
+      if(!collapseRest)return order.filter(c=>g.has(c)).map(line).join('');
+      return main+(restN?`<details class="mr2minor mr2oother"><summary>${ui(`其他数值 / 机制 / 造物 / 关卡状态 ${restN}`,`Other states ${restN}`)}</summary>${rest.map(line).join('')}</details>`:'')};
     const KEYS=['atk','hp','def','crit','crit_damage','keeper_energy_eff','ulti_energy_max','death_resist'];
     const blocks=roles.map(ri=>{
       const a=tl.actors.get(String(ri.uid));if(!a)return '';
@@ -1017,7 +1037,7 @@
         <div class="mr2flow">${base}</div>${diffs?`<div class="mr2flow"><small class="mr2from">${ui('开局战斗面板 = 编队面板 + 命轮 / 密契 / 造物 / 局内状态','Opening battle panel = formation + gear / relics / states')}</small>${diffs}</div>`:''}
         ${group(sts)}</div>`}).join('');
     const team=list.filter(x=>x.ownerData?.targetType==='PlayerRole');
-    const teamHtml=team.length?`<details class="mr2minor"><summary>${ui(`队伍级开局状态 ${team.length}`,`Team-level opening states ${team.length}`)}</summary>${group(team)}</details>`:'';
+    const teamHtml=team.length?`<details class="mr2minor"><summary>${ui(`队伍级开局状态 ${team.length}`,`Team-level opening states ${team.length}`)}</summary>${group(team,false)}</details>`:'';
     return `<div class="mr2osec"><div class="mr2boardtitle">${ui('唤醒体编队与开局状态','Formation & opening states')}</div><div class="mr2decks">${blocks}</div>${teamHtml}</div>`;
   }
   // ---- battle opening: relics + starting deck ---------------------------------------
@@ -1040,7 +1060,7 @@
       return `<div class="mr2dgroup"><div class="mr2dhead">${head}<span class="mr2from">${list.length} ${ui('张','cards')}</span></div><div class="mr2dcards">${cardsHtml}</div></div>`;
     }).join('');
     const stateSec=openingStates(full,tl);
-    return `<details class="mr2round mr2opening" open><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}${stateSec}</div></details>`;
+    return `<details class="mr2round mr2opening"><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}${stateSec}</div></details>`;
   }
   // ---- damage-formula calibration ------------------------------------------------------
   // Calculator order: ATK x coefficient x base-damage pools -> + STR x strength multiplier -> x vulnerability -> x crit.
@@ -1167,7 +1187,8 @@
     return tl.calib;
   }
   // ---- statistics ---------------------------------------------------------------------
-  function computeStats(full,tl){
+  function computeStats(full,tl){return tl._stats||(tl._stats=computeStatsRaw(full,tl))}
+  function computeStatsRaw(full,tl){
     calibrateHits(tl);
     const res=tl.res,bd=full.battleDat||{},actors=tl.actors;
     const events=[];for(const r of tl.rounds)for(const e of r.events)if(e.kind!=='snap')events.push({...e,round:r.round});
@@ -1255,8 +1276,18 @@
       owners:[...new Set([...(tl.counterGain?.keys()||[]),...[...per.values()].filter(r=>r.src.get('state|3255')?.dmg>0).map(r=>String(r.a.uid))])].map(uid=>{const g=tl.counterGain?.get(uid)||{gain:0,init:0,bySrc:new Map()},a=actors.get(uid),r=per.get(uid);return {uid,name:a?.name||ui('队伍 / 无来源','Team'),a,gain:g.gain,init:g.init,bySrc:[...g.bySrc.values()].sort((x,y)=>y.gain-x.gain),dmg:r?.src.get('state|3255')?.dmg||0,extra:r?.src.get('state|3129')?.dmg||0}}).filter(x=>x.gain>0||x.dmg>0).sort((x,y)=>y.dmg-x.dmg||y.gain-x.gain),
       packDmg:[...per.values()].reduce((n,r)=>n+(r.src.get('state|3255')?.dmg||0),0)}:null;
     const execRows=[...(tl.execStates?.values()||[])].filter(r=>r.total>0||r.kills.length).map(r=>({sid:r.sid,total:r.total,caster:actors.get(String(r.caster)),bySrc:[...r.bySrc.values()].sort((a,b)=>b.gain-a.gain),byRound:[...r.byRound.entries()].sort((a,b)=>a[0]-b[0]),kills:r.kills,events:r.events,dmg:stateTotals.get(String(r.sid))?.dmg||0,check:execCheck(r.events)}));
-    return {ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
+    const mvp=(()=>{
+      const awRows=[...per.values()].filter(r=>r.a.kind==='awakener'&&(r.dmg>0||r.block>0||r.heal>0)).map(r=>({r,score:r.dmg,share:totalDmg?r.dmg/totalDmg:0})).sort((a,b)=>b.score-a.score||(b.r.block+b.r.heal)-(a.r.block+a.r.heal)).slice(0,3);
+      const gearVal=g=>g.extra+g.out.dmg+(g.dot||0);
+      const wheels=gearRows.filter(g=>g.kind==='wheel').map(g=>({g,score:gearVal(g)})).sort((a,b)=>b.score-a.score||b.g.n-a.g.n).slice(0,3);
+      const covs=gearRows.filter(g=>g.kind==='covenant').map(g=>({g,score:gearVal(g)})).sort((a,b)=>b.score-a.score||b.g.n-a.g.n).slice(0,2);
+      const relicVal=r=>r.dmg+(r.buff?.extra||0)+(r.dot||0);
+      const relics=relicRows.map(r=>({r,score:relicVal(r)})).sort((a,b)=>b.score-a.score||b.r.n-a.r.n).slice(0,3);
+      return {awakeners:awRows,wheels,covenants:covs,relics};
+    })();
+    return {mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
   }
+  const fold=(title,html,open=false)=>html?`<details class="mr2fold"${open?' open':''}><summary>${title}</summary>${html}</details>`:'';
   const pctOf=(a,b)=>b>0?Math.round(a/b*1000)/10:0;
   const dotChip=(o,total)=>o.dot>0?`<span class="mr2dotchip" title="${esc(ui('按效果文本匹配的持续伤害（出血/中毒/反击等）：回放不记录该状态由谁施加，多个来源时平均分摊，仅供参考','DoT matched from effect text; the replay does not record who applied the state, shared equally between candidates - indicative only'))}"><small>${ui('持续伤害（文本推测）','DoT (text-matched)')}</small> <b>${fmt(Math.round(o.dot))}</b>${total?` <em>${pctOf(o.dot,total)}%</em>`:''} <small>${esc(o.dotStates.map(x=>x.name+(x.shared>1?`÷${x.shared}`:'')).join(' / '))}</small></span>`:'';
   const bar=(frac,cls='')=>`<span class="mr2sbar ${cls}"><i style="width:${Math.max(0,Math.min(100,frac*100)).toFixed(1)}%"></i></span>`;
@@ -1378,27 +1409,58 @@
         <small class="mr2from">${ui(`规则：每次承受敌方主动伤害时，按当前「反击」+「临时反击」层数对来源造成等量纯粹伤害；逆鳞之护等会额外触发。核对：我方受敌方主动伤害 ${c.taken} 次，各次触发时层数相加 = ${fmt(c.layerSumT1)}，统计包记录的反击伤害 ${fmt(c.packDmg)}${ratio!=null?`，吻合度 ${(ratio*100).toFixed(1)}%${Math.abs(ratio-1)<.001?'（完全吻合）':c.extraTrig>0?'（有逆鳞之护等额外触发 / 触腕反击，未折算）':''}`:''}。统计包按施加层数的唤醒体归属反击伤害。`,'Each active hit taken deals the current counter stacks back as pure damage.')}</small></div>`})();
     const stateHtml=st.stateRows.length?`<div class="mr2ssec"><h5>${ui('状态伤害来源（出血、旧日余烬等）','Damage from states (bleed, ...)')}</h5>${st.stateRows.map(x=>`<div class="mr2srow"${stateTipAttr(res,x.id,{})}><span class="mr2sname">${esc(res.nameState(x.id))}</span>${bar(x.dmg/st.stateRows[0].dmg,'dmg')}<b>${fmt(x.dmg)}</b><small>${pctOf(x.dmg,st.totalDmg)}%</small></div>`).join('')}</div>`:'';
     const sum=[[ui('总伤害','Total damage'),fmt(st.totalDmg)],[ui('回合数','Rounds'),st.rounds],[ui('出牌数','Cards played'),st.totalPlays],[ui('消耗算力','Energy spent'),fmt(st.totalEnergy)],[ui('抽牌','Draws'),st.draws],[ui('弃牌','Discards'),st.discards],[ui('消耗牌','Exhausted'),st.exhausts],[ui('钥令使用','Keyflare casts'),st.keeperUses],[ui('造物额外伤害','Relic damage'),fmt(st.relicDmg)],[ui('增益造物估算伤害','Buff relic est. dmg'),fmt(Math.round(st.buffExtra))],[ui('命轮/密契估算伤害','Gear est. dmg'),fmt(Math.round(st.gearExtra))],...(st.dotAttr>0?[[ui('持续伤害（已归因到造物/命轮/密契）','DoT attributed to items'),fmt(Math.round(st.dotAttr))]]:[])].map(([k,v])=>`<span><small>${esc(k)}</small><strong>${esc(v)}</strong></span>`).join('');
-    return `<details class="mr2round mr2stats" open><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('出牌 / 算力 / 觉醒 / 钥令 / 造物','cards / energy / awakening / keyflare / relics')}</small></summary><div class="mr2rbody">
+    return `<details class="mr2round mr2stats"><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('出牌 / 算力 / 觉醒 / 钥令 / 造物','cards / energy / awakening / keyflare / relics')}</small></summary><div class="mr2rbody">
       <div class="mr2ssum">${sum}</div>
       <div class="mr2ssec"><h5>${ui('角色数据','Per character')}</h5><div class="mr2scards">${people}</div></div>
       ${execHtml}
       ${ctrHtml}
       <div class="mr2ssec"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div>
       <div class="mr2ssec"><h5>${ui('钥令使用与选择偏好','Keyflare skills & picks')}</h5>${keeperHtml}</div>
-      <div class="mr2ssec"><h5>${ui('造物触发与产出','Relics')}${st.relicDmg?` <em class="mr2hot">${ui('造物额外伤害合计','Relic damage')} ${fmt(st.relicDmg)}</em>`:''}</h5>${relicHtml||`<div class="mr2empty">—</div>`}${buffSummary}</div>
-      ${renderGear(st,tl)}
+      ${fold(`${ui('造物触发与产出','Relics')} ${st.relicRows.length}`,`<div class="mr2ssec">${st.relicDmg?`<h5><em class="mr2hot">${ui('造物额外伤害合计','Relic damage')} ${fmt(st.relicDmg)}</em></h5>`:''}${relicHtml||`<div class="mr2empty">—</div>`}${buffSummary}</div>`)}
+      ${fold(`${ui('命轮与密契','Wheels & covenants')} ${st.gearRows.length}`,renderGear(st,tl))}
       ${stateHtml}
-      ${renderCalib(tl)}
+      ${fold(ui('伤害公式校验','Damage formula check'),renderCalib(tl))}
       ${st.havePacks?'':`<div class="mr2status">${ui('此回放缺少游戏内统计包，伤害按逐次命中事件重建，造物额外伤害无法归因。','This replay has no in-game stat packs; damage is rebuilt from hit events and relic damage cannot be attributed.')}</div>`}
     </div></details>`;
   }
+  // ---- battle info header + victory-style MVP summary --------------------------------------
+  function renderBattleInfo(full,tl){
+    const bd=full.battleDat||{},res=tl.res,stage=res.rr?.Stage?.[String(bd.stageId)]||{};
+    const stageName=(pipeName(stage.Name)||tailCn(stage.CnID)||`Stage ${bd.stageId??''}`).replace(/<[^>]+>/g,'');
+    const season=(String(stage.CnID||'').match(/(\d+)期/)||[])[1];
+    const ts=(bd.cards||[]).map(c=>Number(c.ts)).find(t=>t>1e9)||(bd.backupAwakeCards||[]).map(c=>Number(c.ts)).find(t=>t>1e9);
+    const when=ts?new Date(ts*1000):null,pad=n=>String(n).padStart(2,'0');
+    const dateText=when?`${when.getFullYear()}-${pad(when.getMonth()+1)}-${pad(when.getDate())} ${pad(when.getHours())}:${pad(when.getMinutes())}`:'—';
+    const ageDays=when?Math.floor((Date.now()-when.getTime())/86400000):null;
+    const keepNote=ageDays==null?'':ageDays>=30?ui('回放已超过 30 天，原对象可能已过期，可用「导出 / 导入数据」保存的结构化数据复盘','Older than 30 days: the public object may have expired; use exported data'):ui(`回放保存 30 天，约 ${30-ageDays} 天后过期`,`Replays are kept for 30 days (~${30-ageDays} left)`);
+    const bosses=[...new Set([...tl.actors.values()].filter(a=>a.camp===2&&a.kind==='monster').map(a=>a.name))].slice(0,3);
+    const win=tl.result?.winCamp===1,lost=tl.result&&tl.result.winCamp!=null&&tl.result.winCamp!==1;
+    const verdict=win?ui('胜利','VICTORY'):lost?ui('战败','DEFEAT'):ui('结果未知','RESULT UNKNOWN');
+    const k0=bd.keeperSkill!=null?res.nameSkill(bd.keeperSkill):'',k=/^\d+$/.test(String(k0))?'':k0;
+    return `<div class="mr2binfo ${win?'win':lost?'lose':''}"><div class="mr2bhead"><span class="mr2verdict">${esc(verdict)}</span><div class="mr2btitle"><b>${esc(stageName)}</b><small>${season?`${ui('融灾','Dzone')} ${esc(season)} ${ui('期','')} · `:''}${esc(dateText)} ${when?ui('战斗','battle'):''}${bosses.length?` · ${esc(bosses.join(' / '))}`:''}</small></div><span class="mr2bnote">${esc(keepNote)}</span></div>
+      <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(bd.statistics?.UsedCardCount??'—')}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(bd.statistics?.DeathResistCount??0)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(bd.statistics?.KillCount??0)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
+  }
+  function renderMvp(full,tl,st){
+    const res=tl.res,m=st.mvp,total=st.totalDmg;if(!m)return '';
+    const tile=(label,cls,head,subs)=>head?`<div class="mr2mvp ${cls}"><div class="mr2mvptag">${label}</div>${head}${subs?`<div class="mr2mvpsub">${subs}</div>`:''}</div>`:'';
+    const a=m.awakeners[0],w=m.wheels[0],c=m.covenants[0],r=m.relics[0];
+    const awHead=a?`<div class="mr2mvpmain">${ico(a.r.a.icon,a.r.a.name,'av mvp')}<div><b>${esc(a.r.a.name)}</b><span>${ui('伤害','DMG')} ${fmt(a.r.dmg)} <em>${total?pctOf(a.r.dmg,total):0}%</em></span><small>${ui(`出牌 ${a.r.plays} · 护盾 ${fmt(a.r.block)} · 治疗 ${fmt(a.r.heal)}`,`${a.r.plays} cards · shield ${fmt(a.r.block)} · heal ${fmt(a.r.heal)}`)}</small></div></div>`:'';
+    const awSubs=m.awakeners.slice(1).map(x=>`<span>${ico(x.r.a.icon,x.r.a.name,'av xs')}${esc(x.r.a.name)} ${fmt(x.r.dmg)}</span>`).join('');
+    const gearHead=(g,score,kindLabel)=>g?`<div class="mr2mvpmain">${ico(g.icon,g.name,`gi ${g.kind==='wheel'?'':'cov'} mvp`)}<div><b>${esc(g.name)}</b><span>${score>0?`${ui('估算贡献','Est. DMG')} ${fmt(Math.round(score))} <em>${total?pctOf(score,total):0}%</em>`:`${ui('触发','Triggers')} ${g.n} ${ui('次','×')}`}</span><small>${esc(kindLabel)} · ${ui('触发','triggers')} ${g.n}${g.rounds?.length?` · ${ui('第','R')}${g.rounds.slice(0,4).join('/')}${g.rounds.length>4?'…':''}`:''}</small></div></div>`:'';
+    const gearSubs=l=>l.slice(1).map(x=>`<span>${ico(x.g.icon,x.g.name,'gi xs')}${esc(x.g.name)} ${x.score>0?fmt(Math.round(x.score)):`${x.g.n}×`}</span>`).join('');
+    const relHead=r?`<div class="mr2mvpmain">${ico(relicIconSrc(res,r.r.tid),res.nameRelic(r.r.tid),'rl mvp')}<div><b>${esc(res.nameRelic(r.r.tid))}</b><span>${r.score>0?`${ui('估算贡献','Est. DMG')} ${fmt(Math.round(r.score))} <em>${total?pctOf(r.score,total):0}%</em>`:`${ui('触发','Triggers')} ${r.r.n} ${ui('次','×')}`}</span><small>${r.r.start?ui('开局携带','Starting'):ui('战斗中获得','Gained')} · ${ui('触发','triggers')} ${r.r.n}${r.r.buff&&r.r.buff.gain>0?` · ${r.r.buff.kind==='power'?ui(`产生 ${fmt(r.r.buff.gain)} 力量`,`+${fmt(r.r.buff.gain)} power`):ui('基伤加成','base dmg')}`:''}</small></div></div>`:'';
+    const relSubs=m.relics.slice(1).map(x=>`<span>${ico(relicIconSrc(res,x.r.tid),res.nameRelic(x.r.tid),'rl xs')}${esc(res.nameRelic(x.r.tid))} ${x.score>0?fmt(Math.round(x.score)):`${x.r.n}×`}</span>`).join('');
+    return `<div class="mr2mvps"><div class="mr2mvptitle">${ui('结算 · MVP','Result · MVP')}<small>${ui('唤醒体按造成伤害；命轮 / 造物按估算额外伤害（含增益、持续伤害归因），无伤害类效果时按触发次数','Awakener by damage; wheels / relics by estimated extra damage, else by trigger count')}</small></div><div class="mr2mvpgrid">${tile(ui('MVP 唤醒体','MVP Awakener'),'aw',awHead,awSubs)}${tile(ui('MVP 命轮','MVP Wheel'),'wh',gearHead(w?.g,w?.score,ui('命轮','Wheel')),gearSubs(m.wheels))}${tile(ui('MVP 造物','MVP Relic'),'rel',relHead,relSubs)}${c&&(c.score>0||c.g.n>0)?tile(ui('MVP 密契','MVP Covenant'),'cov',gearHead(c.g,c.score,ui('密契','Covenant')),gearSubs(m.covenants)):''}</div></div>`;
+  }
   function renderFull(full){
-    const host=document.getElementById('mrReplayResult');if(!host)return;snapStore=[];const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
+    const host=document.getElementById('mrReplayResult');if(!host)return;snapStore=[];lastFull=full;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
     Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
+    const st=computeStats(full,tl);
     const openingHtml=renderOpening(full,tl)+renderStats(full,tl);
     const eventHtml=openingHtml+rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
     setTimeout(()=>wireInteractions(host),0);
-    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2toolbar"><label class="mr2tog"><input type="checkbox" id="mr2ShowDesc"> ${ui('展开所有效果说明','Expand all effect descriptions')}</label><span class="mr2from">${ui('鼠标悬停在卡牌、钥令、意图、状态、造物上可看详细效果；点击行动卡片标题可单独展开。','Hover cards, keyflare skills, intents, states and relics for details; click an action header to expand it.')}</span></div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
+    const exp=document.getElementById('mrReplayExport');if(exp)exp.disabled=false;
+    host.innerHTML=`${renderBattleInfo(full,tl)}${renderMvp(full,tl,st)}<details class="mr2detail"><summary><b>${ui('详细数据','Details')}</b><small>${ui('开局 / 数据统计 / 逐回合事件，点击展开','opening / statistics / per-round events')}</small></summary><div class="mr2sum"><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2toolbar"><label class="mr2tog"><input type="checkbox" id="mr2ShowDesc"> ${ui('展开所有效果说明','Expand all effect descriptions')}</label><span class="mr2from">${ui('鼠标悬停在卡牌、钥令、意图、状态、造物上可看详细效果；点击行动卡片标题可单独展开。','Hover cards, keyflare skills, intents, states and relics for details; click an action header to expand it.')}</span></div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}</details>`;
   }
   async function loadLegacy(uuid){try{const r=await fetch(`${LOCAL_BASE}/${uuid}.json`,{cache:'no-cache'});return r.ok?await r.json():null}catch{return null}}
   async function analyze(raw){
@@ -1406,15 +1468,44 @@
     host.innerHTML=`<div class="mr2status">${ui('正在从公开 BattleReplay 对象获取约 1MB 回放并解码 LZ4 + MessagePack…','Fetching the public BattleReplay object and decoding LZ4 + MessagePack…')}</div>`;
     try{const full=await fetchReplay(p.uuid);await preloadAssets();renderFull(full)}catch(err){console.error('Public replay fetch/decode failed',err);const legacy=await loadLegacy(p.uuid);if(legacy&&legacy.timeline){host.innerHTML=`<div class="mr2status err">${ui('公开回放对象获取失败（可能是浏览器 CORS 或对象已过期）。本站只有旧的聚合 timeline；请检查控制台错误。','Public replay fetch failed (browser CORS or expired object). Only the older aggregated local timeline is available; check console errors.')}</div>`}else host.innerHTML=`<div class="mr2status err"><strong>${ui('无法获取完整回放。','Could not fetch the full replay.')}</strong><br>${esc(err?.message||err)}<br>${ui('如果命令行 fetch_public_replay.py 能成功而浏览器失败，则原因基本是对象存储未允许本站域名的 CORS；这时需要在站点侧增加同源代理，而不是解 TLS。','If fetch_public_replay.py works but the browser fails, the likely cause is object-store CORS. The fix is a same-origin site proxy, not TLS decryption.')}</div>`}
   }
+  // ---- export / import of the decoded structure ---------------------------------------------
+  function exportData(){
+    if(!lastFull)return;
+    const name=`morimens-replay-${lastFull.replayUuid||lastFull.battleDat?.battleUuid||'battle'}.json`;
+    const blob=new Blob([JSON.stringify(lastFull)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+  }
+  async function readImportFile(file){
+    let buf=new Uint8Array(await file.arrayBuffer());
+    if(buf[0]===0x1f&&buf[1]===0x8b){if(typeof DecompressionStream==='undefined')throw new Error('Browser cannot gunzip');buf=new Uint8Array(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer())}
+    const j=JSON.parse(new TextDecoder('utf-8').decode(buf));
+    const full=j&&j.battleDat&&j.recordSegments?j:(j&&j.full&&j.full.battleDat?j.full:null);
+    if(!full)throw new Error(ui('文件不是回放结构化数据：需要包含 battleDat、resourceRecords、recordSegments（本页「导出数据」或 fetch_public_replay.py 的输出）。','Not a structured replay: battleDat, resourceRecords and recordSegments are required.'));
+    if(!full.replayUuid)full.replayUuid=full.battleDat.battleUuid||'imported';
+    if(!full.resourceRecords)full.resourceRecords={};
+    if(full.recordCount==null)full.recordCount=full.recordSegments.reduce((n,x)=>n+(Array.isArray(x)?x.length:0),0);
+    return full;
+  }
+  async function importData(file){
+    const host=document.getElementById('mrReplayResult');if(!host||!file)return;
+    host.innerHTML=`<div class="mr2status">${ui('正在读取并分析导入的数据…','Reading and analyzing imported data…')}</div>`;
+    try{const full=await readImportFile(file);await preloadAssets();const input=document.getElementById('mrReplayCode');if(input)input.value=full.replayUuid||'';renderFull(full)}
+    catch(err){console.error('Replay import failed',err);host.innerHTML=`<div class="mr2status err"><strong>${ui('导入失败。','Import failed.')}</strong><br>${esc(err?.message||err)}</div>`}
+  }
+  function wireIo(panel){
+    const exp=panel.querySelector('#mrReplayExport'),imp=panel.querySelector('#mrReplayImport'),file=panel.querySelector('#mrReplayFile');
+    exp?.addEventListener('click',exportData);imp?.addEventListener('click',()=>file?.click());
+    file?.addEventListener('change',()=>{const f=file.files?.[0];file.value='';if(f)importData(f)});
+  }
   function activateTab(){document.querySelectorAll('#morimensTabs .morimensTab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});document.querySelectorAll('[role="tabpanel"]').forEach(p=>{if(p.id!=='morimensReplayPanel'&&p.closest('main,body'))p.hidden=true});const t=document.getElementById('morimensReplayTab'),p=document.getElementById('morimensReplayPanel');if(t){t.classList.add('active');t.setAttribute('aria-selected','true')}if(p)p.hidden=false;history.replaceState(null,'','#replay')}
   function enhance(root=document){root.querySelectorAll?.('.dtideReplayCopy').forEach(copy=>{if(copy.dataset.reviewV2Bound)return;copy.dataset.reviewV2Bound='1';const b=document.createElement('button');b.type='button';b.className='dtideReplayReviewOpen';b.textContent=ui('完整复盘','Full replay');b.addEventListener('click',()=>{activateTab();analyze(copy.dataset.replayCode||'')});copy.insertAdjacentElement('afterend',b)})}
   function setup(){
     const tabs=document.getElementById('morimensTabs');if(!tabs)return false;styles();document.getElementById('morimensReplayTab')?.remove();document.getElementById('morimensReplayPanel')?.remove();
     const tab=document.createElement('button');tab.className='morimensTab';tab.id='morimensReplayTab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected','false');tab.setAttribute('aria-controls','morimensReplayPanel');tab.textContent=ui('战斗回放复盘','Replay Review');const anchor=document.getElementById('morimensDtideTab');anchor?.insertAdjacentElement('afterend',tab)||tabs.appendChild(tab);
-    const panel=document.createElement('div');panel.id='morimensReplayPanel';panel.setAttribute('role','tabpanel');panel.hidden=true;panel.innerHTML=`<section class="panel mr2"><div class="mr2intro"><h2>${ui('战斗回放复盘','Battle Replay Review')}</h2><p>${ui('输入 battleUuid 或游戏完整回放码。页面直接读取公开的 BattleReplay_<UUID>.json，在浏览器中解开 LZ4 + MessagePack，并按录像原始 frameList 顺序展示每回合的出牌、钥令、派生技能、伤害、状态和造物触发。','Enter a battleUuid or full replay code. The page directly reads the public BattleReplay_<UUID>.json, decodes LZ4 + MessagePack in-browser, and displays cards, keeper skills, derived skills, damage, states and relic triggers in original frameList order.')}</p><div class="mr2form"><input id="mrReplayCode" spellcheck="false" autocomplete="off" placeholder="bde26af0-1fdf-3645-8a01-705ce39b5ba9#E#a"><button id="mrReplayGo" type="button">${ui('获取并完整复盘','Fetch & Decode')}</button></div></div><div id="mrReplayResult"><div class="mr2status">${ui('等待输入回放 ID。','Waiting for a replay ID.')}</div></div></section>`;tabs.insertAdjacentElement('afterend',panel);
-    tab.addEventListener('click',activateTab);panel.querySelector('#mrReplayGo').addEventListener('click',()=>analyze());panel.querySelector('#mrReplayCode').addEventListener('keydown',e=>{if(e.key==='Enter')analyze()});tabs.addEventListener('click',e=>{const t=e.target.closest('.morimensTab');if(t&&t!==tab){panel.hidden=true;tab.classList.remove('active');tab.setAttribute('aria-selected','false')}},true);
+    const panel=document.createElement('div');panel.id='morimensReplayPanel';panel.setAttribute('role','tabpanel');panel.hidden=true;panel.innerHTML=`<section class="panel mr2"><div class="mr2intro"><div class="mr2introtop"><h2>${ui('战斗回放复盘','Battle Replay Review')}</h2><div class="mr2io"><button id="mrReplayExport" type="button" disabled title="${esc(ui('把当前回放导出为结构化 JSON（可在本页重新导入，也与 fetch_public_replay.py 的输出格式一致）','Export the current replay as structured JSON'))}">${ui('导出数据','Export')}</button><button id="mrReplayImport" type="button" title="${esc(ui('导入结构化 JSON（本页导出的文件，或 fetch_public_replay.py 的输出）并分析','Import structured JSON and analyze'))}">${ui('导入数据分析','Import & analyze')}</button><input id="mrReplayFile" type="file" accept=".json,.gz,application/json" hidden></div></div><p>${ui('输入回放可以获取详细数据，但回放只保存 30 天，过期回放无法获取。可输入 battleUuid 或游戏完整回放码；也可以用右上角「导入数据分析」载入之前导出的结构化 JSON。','Enter a replay to get detailed data. Replays are kept for only 30 days; expired ones cannot be fetched. You can also import a previously exported structured JSON with the button at the top right.')}</p><div class="mr2form"><input id="mrReplayCode" spellcheck="false" autocomplete="off" placeholder="bde26af0-1fdf-3645-8a01-705ce39b5ba9#E#a"><button id="mrReplayGo" type="button">${ui('获取并完整复盘','Fetch & Decode')}</button></div></div><div id="mrReplayResult"><div class="mr2status">${ui('等待输入回放 ID。','Waiting for a replay ID.')}</div></div></section>`;tabs.insertAdjacentElement('afterend',panel);
+    tab.addEventListener('click',activateTab);wireIo(panel);panel.querySelector('#mrReplayGo').addEventListener('click',()=>analyze());panel.querySelector('#mrReplayCode').addEventListener('keydown',e=>{if(e.key==='Enter')analyze()});tabs.addEventListener('click',e=>{const t=e.target.closest('.morimensTab');if(t&&t!==tab){panel.hidden=true;tab.classList.remove('active');tab.setAttribute('aria-selected','false')}},true);
     enhance();new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType===1)enhance(n)}).observe(document.body,{subtree:true,childList:true});if(location.hash==='#replay')activateTab();return true;
   }
   if(!setup()){const mo=new MutationObserver(()=>{if(setup())mo.disconnect()});mo.observe(document.documentElement,{subtree:true,childList:true})}
-  window.MorimensReplayReview={analyze,fetchReplay,buildTimeline,unpackLz4Msgpack,calibrateHits,computeStats};
+  window.MorimensReplayReview={importData,exportData,renderFull,analyze,fetchReplay,buildTimeline,unpackLz4Msgpack,calibrateHits,computeStats};
 })();
