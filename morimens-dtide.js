@@ -957,6 +957,9 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
     const smin=Number($('dtideScoreMin').value||0),rmax=Number($('dtideRankMax').value||0);if(smin&&(scoreOf(row.record)||0)<smin)return false;if(rmax&&!rankMatches(row.record,rmax))return false;return true;
   }
   function replayCodeOf(team){return String(team?.battleUuid||team?.battle_uuid||'').trim()}
+  // lets the replay review show the recorded team detail (wheel stack, covenant set, enlightenment) for a leaderboard replay
+  window.MorimensDtideTeamLookup=uuid=>{try{const id=String(uuid||'').toLowerCase(),hit=flattenTeams().find(x=>replayCodeOf(x.team).toLowerCase()===id);if(!hit)return null;
+    return {record:hit.record,wave:hit.wave,team:hit.team,names:{wheel:wheelName,covenant:covenantName,character:m=>characterInfo(m.skeydbId||m.ingameId||memberKey(m),m)}}}catch{return null}};
   async function copyReplayCode(button){
     const code=String(button?.dataset?.replayCode||'').trim();if(!code)return;
     try{

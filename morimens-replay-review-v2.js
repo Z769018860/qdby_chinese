@@ -314,7 +314,10 @@
     const mk=d.match(/算力消耗\s*-\s*\[Arg(\d+)\]/),mc=d.match(/将其\s*\[Arg(\d+)\]\s*张/);
     const info=mk?{cutPos:order.indexOf(mk[1]),copyPos:mc?order.indexOf(mc[1]):-1}:null;copyMemo.set(k,info);return info;
   }
-  function buildTimeline(full){
+  // the decoded replay is immutable, and several overlay modules ask for the timeline on every DOM mutation: build it once per replay and language
+  const tlCache=new WeakMap();
+  function buildTimeline(full){const k=isEn()?'en':'zh',c=tlCache.get(full);if(c&&c.k===k)return c.tl;const tl=buildTimelineRaw(full);tlCache.set(full,{k,tl});return tl}
+  function buildTimelineRaw(full){
     const res=resources(full),bd=full.battleDat||{},ent=buildEntities(full,res),{actors,cards,relics,stateInst}=ent;
     const actorOf=uid=>actors.get(String(uid));
     const tipIds=(uid,extra)=>`UID ${uid}${extra?` · ${extra}`:''}`;
@@ -1150,14 +1153,26 @@
     const CAT={enl:ui('启灵','Enlighten'),tal:ui('天赋','Talent'),wheel:ui('命轮','Wheel'),cov:ui('密契 / 饰品','Covenant'),relic:ui('造物','Relic'),school:ui('职业','School'),stage:ui('关卡','Stage'),other:ui('其他数值 / 机制','Other')};
     const order=['enl','tal','wheel','cov','relic','school','stage','other'];
     const group=(sts,collapseRest=true)=>{const g=new Map();for(const st of sts){if(st.ownerData?.targetType==='Card')continue;const c=catOf(st);if(!g.has(c))g.set(c,[]);g.get(c).push(st)}
-      const covLine=sts=>{const stems=[...new Set(sts.map(x=>cnOf(x.stateId).replace(/^状态@饰品/,'')).filter(Boolean))],cats=Object.values(gearCatalog?.covenants||{}),out=[];
-        for(const st of stems){const cat=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((x,y)=>y.zh.length-x.zh.length)[0];if(cat){if(!out.some(o=>o.zh===cat.zh))out.push({zh:cat.zh,icon:cat.icon})}else if(!stems.some(o=>o!==st&&st.startsWith(o))&&!/预缴|标识|计数|标记|限额|修正|效果/.test(st))out.push({zh:st,icon:''})}
-        return out.length?`<div class="mr2ostate"><span class="mr2from">${esc(CAT.cov)}</span>${out.map(o=>`<span class="mr2chip st">${o.icon?ico(`${ART}/covenants/Icon/${o.icon.replace(/_Box$/,'')}.webp`,o.zh,'st'):''}<span>${esc(o.zh)}</span></span>`).join('')}</div>`:''};
-      const line=c=>{const vis=g.get(c).filter(x=>!/空状态|标识|计数|标记|限额|预缴|效果判定/.test(cnOf(x.stateId))&&(c==='wheel'||c==='cov'||!hidden(x.stateId)||/启灵|天赋/.test(cnOf(x.stateId))&&res.state[String(x.stateId)]?.Desc));if(!vis.length)return '';
+      const line=c=>{const vis=g.get(c).filter(x=>!/空状态/.test(cnOf(x.stateId)));if(!vis.length)return '';
         return `<div class="mr2ostate"><span class="mr2from">${esc(CAT[c])}</span>${vis.map(x=>{const w=c==='wheel'&&gearCatalog?.wheels?.[String(x.source?.[0]?.tid)];return w?`<span class="mr2chip st" title="${esc((()=>{try{return fillArgs(pipeName(res.state[String(x.stateId)]?.WeaponDesc||res.state[String(x.stateId)]?.Desc||''),x.stateParams||[])||cnOf(x.stateId)}catch{return cnOf(x.stateId)}})())}">${w.icon?ico(`${ART}/wheels/${w.icon}.webp`,w.zh,'st'):''}<span>${esc(w.zh||w.en)}</span></span>`:chipSt(x.stateId,x.layer)}).join('')}</div>`};
-      const main=['enl','tal','wheel','cov'].filter(c=>g.has(c)).map(c=>c==='cov'?covLine(g.get(c)):line(c)).join('');
-      return main}; // numeric / mechanism / stage helper states stay in the backend ledger, not on screen
+      const rest=order.filter(c=>!['enl','tal','wheel','cov'].includes(c)&&g.has(c)),restN=rest.reduce((n,c)=>n+g.get(c).length,0);
+      if(!collapseRest)return order.filter(c=>g.has(c)).map(line).join('');
+      // enlightenment / talent / wheel / covenant are shown as the team detail above, not as raw state chips
+      return restN?`<details class="mr2minor mr2oother"><summary>${ui(`其他数值 / 机制 / 造物 / 关卡状态 ${restN}`,`Other states ${restN}`)}</summary>${rest.map(line).join('')}</details>`:''};
     const KEYS=['atk','hp','def','crit','crit_damage','keeper_energy_eff','ulti_energy_max','death_resist'];
+    const teamHit=window.MorimensDtideTeamLookup?.(full.replayUuid||bd.battleUuid),tMembers=teamHit?.team?.members||[];
+    const stackLabel=n=>{n=Number(n);return !Number.isFinite(n)?'—':n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`};
+    const memberOf=ri=>{const nm=String(res.aw[String(ri.tid)]?.NameEn||'').toLowerCase();return tMembers.find(m=>[m.name,m.canonicalName].some(x=>String(x||'').toLowerCase()===nm))||null};
+    const gearBlock=(ri,sts)=>{
+      const m=memberOf(ri),rows=[],nmz=teamHit?.names;
+      for(const x of sts.filter(y=>catOf(y)==='wheel')){
+        const tid=x.source?.[0]?.tid,c=gearCatalog?.wheels?.[String(tid)];if(!c)continue;
+        const stk=full.__ws?.get(String(ri.uid)+'|'+tid),tw=(m?.wheels||[]).find(w=>String(w.name).toLowerCase()===String(c.en||'').toLowerCase());
+        rows.push(`<span class="mr2chip st" title="${esc(fillArgs(pipeName(res.state[String(x.stateId)]?.WeaponDesc||res.state[String(x.stateId)]?.Desc||''),x.stateParams||[]))}">${c.icon?ico(`${ART}/wheels/${c.icon}.webp`,c.zh,'st'):''}<span>${esc(c.zh||c.en)}</span><em>${tw?.level!=null?`Lv${esc(tw.level)} · `:''}${stk?ui(`叠位 ${stk.n}/${stk.max}`,`Stack ${stk.n}/${stk.max}`):''}</em></span>`)}
+      if(m){for(const c of m.covenants||(m.covenant?[m.covenant]:[]))rows.push(`<span class="mr2chip st" title="${esc((c.effects||[]).map(e=>`${e.pieces}${ui('件','pc')}：${String(e.desc||'').replace(/<[^>]+>/g,'')}`).join('\n'))}"><span>${esc(nmz.covenant(c))}</span><em>${esc(c.count??'')}${ui('件','pc')}${m.covenantScore!=null?` · ${ui('评分','score')} ${esc(m.covenantScore)}`:''}</em></span>`)}
+      else{const cats=Object.values(gearCatalog?.covenants||{}),stems=[...new Set(sts.filter(y=>catOf(y)==='cov').map(y=>cnOf(y.stateId).replace(/^状态@饰品/,'')))],seen=new Set();
+        for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((a,b)=>b.zh.length-a.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);rows.push(`<span class="mr2chip st"><span>${esc(c.zh)}</span></span>`)}}}
+      return rows.length?`<div class="mr2ostate"><span class="mr2from">${ui('命轮 / 密契','Wheels / Covenants')}</span>${rows.join('')}</div>`:''};
     const blocks=roles.map(ri=>{
       const a=tl.actors.get(String(ri.uid));if(!a)return '';
       const at=ri.attrs||{},op=tl.openProps?.get(String(ri.uid))||{};
@@ -1170,12 +1185,12 @@
       const skillRow=(()=>{const extraN=(ri.slots||[]).filter(sl=>sl&&sl.tid&&/^Slot_Extend/.test(String((res.skill[String(sl.tid)]||{}).Slot||''))).length;const chips=(ri.slots||[]).filter(sl=>sl&&sl.tid).map(sl=>{const sk=res.skill[String(sl.tid)]||{},slot=String(sk.Slot||sk.SkillSlot||'');const lab=SLOT[slot]||'';if(!lab)return '';return `<span class="mr2statchip" title="${esc(res.nameSkill(sl.tid))}"><small>${esc(lab)}${SLOT[slot]&&!/Super|Strike|Defend/.test(slot)?` · ${esc(res.nameSkill(sl.tid))}`:''}</small><b>Lv${esc(sl.level)}</b></span>`}).join('');
         const ext=extraN?`<span class="mr2statchip" title="${esc((ri.slots||[]).filter(sl=>sl&&sl.tid&&/^Slot_Extend/.test(String((res.skill[String(sl.tid)]||{}).Slot||''))).map(sl=>res.nameSkill(sl.tid)+' Lv'+sl.level).join(' / '))}"><small>${ui('扩展技能','Extra')} ×${extraN}</small><b>Lv${esc((ri.slots||[]).filter(sl=>sl&&sl.tid&&/^Slot_Extend/.test(String((res.skill[String(sl.tid)]||{}).Slot||''))).map(sl=>sl.level).join('/'))}</b></span>`:'';const bs=Number(ri.breakSkillLevel)>0?`<span class="mr2statchip"><small>${ui('灵塑','Soulforge')}</small><b>Lv${esc(ri.breakSkillLevel)}</b></span>`:'';return chips||bs||ext?`<div class="mr2flow">${chips}${ext}${bs}</div>`:''})();
       const enl=Math.max(0,...sts.map(x=>{const m=cnOf(x.stateId).match(/启灵(\d)(?!\d)(?!标识|计数)/);return m?Number(m[1]):/三启/.test(cnOf(x.stateId))?3:0}));
-      return `<div class="mr2dgroup"><div class="mr2dhead">${ico(a.icon,a.name,'av')}<b>${esc(a.name)}</b><span class="mr2from">Lv${esc(ri.level)} · ${esc(enlTxt)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}</span></div>
+      return `<div class="mr2dgroup"><div class="mr2dhead">${ico(a.icon,a.name,'av')}<b>${esc(a.name)}</b><span class="mr2from">Lv${esc(ri.level)} · ${esc(enlTxt)} · ${ui('突破','Break')} ${esc(ri.breakLevel)}${full.__sf?.get(String(ri.uid))?` · ${ui('灵塑','Soulforge')} ${full.__sf.get(String(ri.uid))}`:''}</span></div>
         ${skillRow}
         <div class="mr2flow">${base}</div>${diffs?`<div class="mr2flow"><small class="mr2from">${ui('开局战斗面板 = 编队面板 + 命轮 / 密契 / 造物 / 局内状态','Opening battle panel = formation + gear / relics / states')}</small>${diffs}</div>`:''}
-        ${group(sts)}</div>`}).join('');
+        ${gearBlock(ri,sts)}${group(sts)}</div>`}).join('');
     const team=list.filter(x=>x.ownerData?.targetType==='PlayerRole');
-    const teamHtml='';
+    const teamHtml=team.length?`<details class="mr2minor"><summary>${ui(`队伍级开局状态 ${team.length}`,`Team-level opening states ${team.length}`)}</summary>${group(team,false)}</details>`:'';
     return `<div class="mr2osec"><div class="mr2boardtitle">${ui('唤醒体编队与开局状态','Formation & opening states')}</div><div class="mr2decks">${blocks}</div>${teamHtml}</div>`;
   }
   // ---- battle opening: relics + starting deck ---------------------------------------
@@ -1797,10 +1812,36 @@
     host.innerHTML=`${renderBattleInfo(full,tl)}${renderMvp(full,tl,st)}<details class="mr2detail"><summary><b>${ui('详细数据','Details')}</b><small>${ui('开局 / 数据统计 / 逐回合事件，点击展开','opening / statistics / per-round events')}</small></summary><div class="mr2sum"><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2toolbar"><label class="mr2tog"><input type="checkbox" id="mr2ShowDesc"> ${ui('展开所有效果说明','Expand all effect descriptions')}</label><span class="mr2from">${ui('鼠标悬停在卡牌、钥令、意图、状态、造物上可看详细效果；点击行动卡片标题可单独展开。','Hover cards, keyflare skills, intents, states and relics for details; click an action header to expand it.')}</span></div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}</details>`;
   }
   async function loadLegacy(uuid){try{const r=await fetch(`${LOCAL_BASE}/${uuid}.json`,{cache:'no-cache'});return r.ok?await r.json():null}catch{return null}}
+  // 灵塑 level: the talent state in the replay carries the soulforge arguments resolved at the real level; invert them against the talent table
+  let skAwakeners=null;
+  async function loadSoulforge(full){
+    const out=new Map();Object.defineProperty(full,'__sf',{value:out,enumerable:false,configurable:true});
+    try{
+      if(!skAwakeners){const r=await fetch('data/morimens/skeydb/awakeners.json',{cache:'force-cache'});skAwakeners=r.ok?(await r.json()).records||[]:[]}
+      const res=resources(full),list=full.battleDat?.stateList||[];
+      await Promise.all((full.battleDat?.roleData||[]).map(async ri=>{
+        const nm=String(res.aw[String(ri.tid)]?.NameEn||'').toLowerCase(),rec=skAwakeners.find(x=>String(x.name).toLowerCase()===nm);if(!rec)return;
+        const st=list.find(x=>String(x.ownerData?.uid)===String(ri.uid)&&(x.source||[]).some(q=>q.sourceType==='AwakerTalents')&&/通用天赋/.test(res.state[String(x.stateId)]?.CnID||'')),P=(st?.stateParams||[]).map(Number);if(P.length<2)return;
+        const r=await fetch(`data/morimens/skeydb/public-v3/records/talents/talent.${rec.slug}.soulforge-aptitude.json`,{cache:'force-cache'});if(!r.ok)return;const t=await r.json(),a1=t.descriptionArgs?.Arg1,a2=t.descriptionArgs?.Arg2;if(!a1||!a2)return;
+        const val=(a,L)=>a.kind==='linear'?Number(a.base)+Number(a.gainPerLevel)*(L-1):a.kind==='scaling'?Number(a.values?.[L-1]):NaN;
+        for(let L=1;L<=(t.maxLevel||0);L++)if(Math.abs(val(a1,L)-P[0])<1e-6&&Math.abs(val(a2,L)-P[1])<1e-6){out.set(String(ri.uid),L);break}
+      }));
+      // wheel stack (叠位): the wheel state carries its arguments resolved at the real stack; find which stack of the wheel table they belong to
+      const ws=new Map();Object.defineProperty(full,'__ws',{value:ws,enumerable:false,configurable:true});
+      const wcat=(await (await fetch('data/morimens/skeydb/public-v3/catalogs/wheels.json',{cache:'force-cache'})).json()).records||[];
+      await Promise.all(list.filter(x=>(x.source||[]).some(q=>q.sourceType==='Weapon')).map(async x=>{
+        const q=x.source.find(z=>z.sourceType==='Weapon'),en=String(gearCatalog?.wheels?.[String(q.tid)]?.en||'').toLowerCase(),P=(x.stateParams||[]).map(Number);if(!en||!P.length)return;
+        const rec=wcat.find(w=>String(w.name).toLowerCase()===en);if(!rec)return;
+        const r=await fetch(`data/morimens/skeydb/public-v3/records/wheels/${rec.id}.json`,{cache:'force-cache'});if(!r.ok)return;const t=await r.json(),A=t.descriptionArgs||{};
+        const vals=P.map((_,i)=>A['StateArg'+(i+1)]?.values);const max=Math.max(0,...vals.map(v=>v?.length||0));
+        for(let k=0;k<max;k++)if(vals.every((v,i)=>!v||Math.abs(Number(v[k])-P[i])<1e-6)&&vals.some(Boolean)){ws.set(String(x.ownerData?.uid)+'|'+q.tid,{n:k+1,max});break}
+      }));
+    }catch(e){console.warn('Soulforge / wheel stack lookup failed',e)}
+  }
   async function analyze(raw){
     const input=document.getElementById('mrReplayCode'),host=document.getElementById('mrReplayResult');if(raw!=null&&input)input.value=raw;const p=parseReplayCode(raw??input?.value);if(!host)return;if(!p){host.innerHTML=`<div class="mr2status err">${ui('请输入有效的 battleUuid 或 UUID#E#a 回放码。','Enter a valid battleUuid or UUID#E#a replay code.')}</div>`;return}
     host.innerHTML=`<div class="mr2status">${ui('正在从公开 BattleReplay 对象获取约 1MB 回放并解码 LZ4 + MessagePack…','Fetching the public BattleReplay object and decoding LZ4 + MessagePack…')}</div>`;
-    try{const full=await fetchReplay(p.uuid);await preloadAssets();renderFull(full)}catch(err){console.error('Public replay fetch/decode failed',err);const legacy=await loadLegacy(p.uuid);if(legacy&&legacy.timeline){host.innerHTML=`<div class="mr2status err">${ui('公开回放对象获取失败（可能是浏览器 CORS 或对象已过期）。本站只有旧的聚合 timeline；请检查控制台错误。','Public replay fetch failed (browser CORS or expired object). Only the older aggregated local timeline is available; check console errors.')}</div>`}else host.innerHTML=`<div class="mr2status err"><strong>${ui('无法获取完整回放。','Could not fetch the full replay.')}</strong><br>${esc(err?.message||err)}<br>${ui('如果命令行 fetch_public_replay.py 能成功而浏览器失败，则原因基本是对象存储未允许本站域名的 CORS；这时需要在站点侧增加同源代理，而不是解 TLS。','If fetch_public_replay.py works but the browser fails, the likely cause is object-store CORS. The fix is a same-origin site proxy, not TLS decryption.')}</div>`}
+    try{const full=await fetchReplay(p.uuid);await preloadAssets();if(!full.__sf)await loadSoulforge(full);renderFull(full)}catch(err){console.error('Public replay fetch/decode failed',err);const legacy=await loadLegacy(p.uuid);if(legacy&&legacy.timeline){host.innerHTML=`<div class="mr2status err">${ui('公开回放对象获取失败（可能是浏览器 CORS 或对象已过期）。本站只有旧的聚合 timeline；请检查控制台错误。','Public replay fetch failed (browser CORS or expired object). Only the older aggregated local timeline is available; check console errors.')}</div>`}else host.innerHTML=`<div class="mr2status err"><strong>${ui('无法获取完整回放。','Could not fetch the full replay.')}</strong><br>${esc(err?.message||err)}<br>${ui('如果命令行 fetch_public_replay.py 能成功而浏览器失败，则原因基本是对象存储未允许本站域名的 CORS；这时需要在站点侧增加同源代理，而不是解 TLS。','If fetch_public_replay.py works but the browser fails, the likely cause is object-store CORS. The fix is a same-origin site proxy, not TLS decryption.')}</div>`}
   }
   // ---- export / import of the decoded structure ---------------------------------------------
   async function exportData(){
@@ -1827,7 +1868,7 @@
   async function importData(file){
     const host=document.getElementById('mrReplayResult');if(!host||!file)return;
     host.innerHTML=`<div class="mr2status">${ui('正在读取并分析导入的数据…','Reading and analyzing imported data…')}</div>`;
-    try{const full=await readImportFile(file);await preloadAssets();const input=document.getElementById('mrReplayCode');if(input)input.value=full.replayUuid||'';renderFull(full)}
+    try{const full=await readImportFile(file);await preloadAssets();await loadSoulforge(full);const input=document.getElementById('mrReplayCode');if(input)input.value=full.replayUuid||'';renderFull(full)}
     catch(err){console.error('Replay import failed',err);host.innerHTML=`<div class="mr2status err"><strong>${ui('导入失败。','Import failed.')}</strong><br>${esc(err?.message||err)}</div>`}
   }
   function wireIo(panel){
