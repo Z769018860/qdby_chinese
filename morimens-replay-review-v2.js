@@ -385,7 +385,7 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
-    const intents=new Map();let lastStats=null;const keeperPicks=[];
+    const intents=new Map();let lastStats=null,lastDim=0;const keeperPicks=[];
     // Relic buff accounting. Power / basic-damage relics are matched to the state & property
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
@@ -421,14 +421,18 @@
     }
     for(const e of gears.values())for(const sid of e.related){if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
     // Trigger channels: every TriggerCondN/TriggerCmdN pair on the equipped state is one way the item fires.
-    const COND_LABEL={BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
+    const COND_LABEL={BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTAfterDimensionBoutBegin:'进入超维回合后',NAMED:'释放指定技能后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
     const TYPE_QUAL={Card_Strike:'打击',Card_Defend:'防御'};
     for(const e of gears.values()){
       e.channels=[];const desc=e.desc||'';
       const anyOwner=/任意唤醒体|所有唤醒体/.test(desc),strikeOnly=/打出[^。，]{0,12}「打击」/.test(desc),capM=desc.match(/每回合(?:最多)?(?:触发|生效)?\s*(\d+)\s*次/);
       for(const sid of new Set(e.mainStates.map(m=>String(m.stateId))))for(let n=1;n<=4;n++){
         const rec=res.state[sid]||{};
-        const cond=asList(rec['TriggerCond'+n])[0],cmdId=rec['TriggerCmd'+n];if(!cond)continue;
+        const cond=asList(rec['TriggerCond'+n])[0],cmdId=rec['TriggerCmd'+n];
+        if(!cond){ // the condition is missing from the record: recover it from the effect text ("释放「湮灭」后 ...")
+          if(cmdId!=null&&!e.channels.some(c=>c.cmd===cmdId)){const names=[...desc.matchAll(/(?:释放|打出|使用)「([^」]+)」(?:后|时)/g)].map(m=>m[1]),used=e.channels.filter(c=>c.base==='NAMED').map(c=>c.named),nm=names.find(x=>!used.includes(x));
+            if(nm)e.channels.push({n,base:'NAMED',named:nm,qual:'',cmd:cmdId,label:`释放「${nm}」后`,once:false,ownerOnly:true,cap:capM?Number(capM[1]):0,count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n]})}
+          continue}
         const [base,qual]=String(cond).split('.');
         if(e.channels.some(c=>c.base===base&&c.cmd===cmdId))continue;
         e.channels.push({n,base,qual:qual||(strikeOnly&&base==='BSTAfterUseCard'?'Card_Strike':''),cmd:cmdId,label:(COND_LABEL[base]||base)+(TYPE_QUAL[qual]?`（${TYPE_QUAL[qual]}）`:strikeOnly&&base==='BSTAfterUseCard'?'（打击）':''),once:base==='StageState'||base==='BSTBattleBegin',ownerOnly:!anyOwner,cap:capM?Number(capM[1]):0,count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n]});
@@ -469,8 +473,11 @@
         else if(type==='boutBegin')ok=ch.base==='BSTAfterBoutBegin';
         else if(type==='boutEnd')ok=ch.base==='BSTAfterBoutEnd';
         else if(type==='swallow')ok=ch.base==='BSTAfterLaunchSwallow';
+        else if(type==='dimension')ok=ch.base==='BSTAfterDimensionBoutBegin';
         else if(type==='deathResist')ok=ch.base==='BSTRoleAfterDeathResist';
+        if((type==='card'||type==='ulti')&&ch.base==='NAMED'&&info.tid!=null&&res.nameSkill(info.tid)===ch.named&&e.owners.includes(String(info.owner)))ok=true;
         if(!ok)continue;
+        if(['NAMED','BSTAfterDimensionBoutBegin','BSTRoleAfterDeathResist'].includes(ch.base)&&ch.cmd!=null){if(!gearTimes.has(time))gearTimes.set(time,new Set());gearTimes.get(time).add('gear:'+e.key)}if(['NAMED','BSTAfterDimensionBoutBegin'].includes(ch.base)&&ch.cmd!=null)gearWins.push({t0:time,t1:time+.6,keys:['gear:'+e.key],ali:(()=>{if(!(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).some(dl=>dl.Type==='BEGainUltiEnergy'))return null;const v=Number(String(ch.para??'').split(',')[0].trim().replace(/StateArg(\d+)/,(m,n)=>e.mainStates[0]?.params?.[n-1]));return Number.isFinite(v)?v:null})()})   // the command's effects land in this frame group
         if(ch.confirm.size)pendingConf.push({e,ch,time,done:false,win:ch.base==='BSTAfterUltiSkill'?15:6});else if(!channelHit(e,ch))continue;
         const desc=e.desc||'',kinds=new Set();
         if(ch.base==='CARD'&&/暴击伤害/.test(desc))kinds.add('crit');
@@ -495,7 +502,8 @@
     const keyHas=(k,re)=>{if(!keyTextCache.has(k))keyTextCache.set(k,keyText(k));return re.test(keyTextCache.get(k))};
     const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,blk:0,heal:0});return supStore.get(k)};
     // who gets credit for an effect at this timestamp: a relic firing in this frame group, else a wheel / covenant state firing now, else the awakener whose action is being resolved
-    const srcKeys=time=>{if(relWin&&!relWin.gear&&relWin.queue?.length)return relWin.queue.map(r=>'rel:'+r.tid);const g=gearTimes.get(time);if(g&&g.size)return [...g];const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]};
+    const gearWins=[];   // short windows after commands that fire without a state change (超维 bout, named skill, death resist)
+    const srcKeys=time=>{if(relWin&&!relWin.gear&&relWin.queue?.length)return relWin.queue.map(r=>'rel:'+r.tid);const g=gearTimes.get(time);if(g&&g.size)return [...g];{const w=gearWins.findLast?gearWins.findLast(x=>time>=x.t0&&time<=x.t1):null;if(w)return w.keys}const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]};
     // enemy debuffs: classify by state text
     const DB_RE=[['vuln',/易伤/,3],['weak',/虚弱/,2],['frail',/脆弱/,2],['ctrl',/眩晕|冻结|冰冻|沉默|封印|定身|石化|麻痹|缴械|恐惧|魅惑|混乱|昏迷|禁锢|睡眠|束缚/,3],['dot',/中毒|出血|灼烧|侵蚀|腐蚀|燃烧|献祭/,0.6]];
     const dbClass=sid=>{const r=res.state[String(sid)]||{};if(String(r.IsBuff).toUpperCase()!=='FALSE'||r.ShowType==='Hide')return null;const nm=res.nameState(sid);for(const [k,re,w] of DB_RE)if(re.test(nm))return {k,w,nm};return {k:'other',w:0.5,nm}};
@@ -655,7 +663,7 @@
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
-            const pt=d.propertyType,cv=Number(d.changedValue),keys=srcKeys(fr.time),rcv=actors.get(String(d.uid));
+            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01):null,keys=wm?wm.keys:srcKeys(fr.time),rcv=actors.get(String(d.uid));
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
             for(const k of keys){const sp=supOf(k);
@@ -688,7 +696,7 @@
             if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{energy:unit(ent.keeperUid).energy??0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
             if(camp===1&&phase===1)push('round',ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
-            if(camp===1&&phase===1)gearTrigger('boutBegin',{},fr.time);else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
+            /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1){if(bout===lastDim)gearTrigger('dimension',{},fr.time);else lastDim=bout;gearTrigger('boutBegin',{},fr.time)}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
             continue;
           }
           if(!bout)continue;
@@ -706,7 +714,7 @@
               if(kind==='ultimate')supOf('act:'+ownerUid).ultCasts+=1;
               if(ci&&ci.cutPos>=0&&Array.isArray(vals)){const cut=Number(vals[ci.cutPos])||0,cp=ci.copyPos>=0?Number(vals[ci.copyPos])||1:1;if(cut>0){const sp=supOf('act:'+ownerUid);sp.copies+=cp;sp.costCut+=cut*cp}}}
             push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,fiaLvl,fiaPct:fiaP,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});
-            if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid},fr.time);
+            if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid,tid},fr.time);
             continue;
           }
           if(e===1064){const name=res.nameSkill(d.skillId);execSrc.cur={name:`${ui('钥令','Keeper skill')} · ${name}`,actor:d.roleUid};{const play={round:bout,time:fr.time,tid:d.skillId,owner:String(d.roleUid),kind:'keeper',dmg:0,block:0,heal:0,eng:0,ali:0,draw:0};playLog.push(play);execSrc.cur.play=play}push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});gearTrigger('keeper',{},fr.time);continue}
@@ -1406,11 +1414,11 @@
     const gearRows=[...(tl.gears?.values()||[])].map(e=>{
       const out={dmg:0,block:0,heal:0};for(const sid of e.related){const t=stateTotals.get(sid);if(t){out.dmg+=t.dmg;out.block+=t.block;out.heal+=t.heal}}
       const rec=tl.gearRecs?.get(e.key);{const sp=tl.supStore?.get('gear:'+e.key);if(sp){out.block+=sp.blk||0;out.heal+=sp.heal||0}}
-      const SUPPORTED=new Set(['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','CARD']);
+      const SUPPORTED=new Set(['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED','CARD']);
       const chs=(e.channels||[]).filter(c=>SUPPORTED.has(c.base)),sup=chs.length>0;
       const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
       const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
-      const lines=[];for(const c of (e.channels||[])){if(c.cmd==null||!c.count)continue;for(const l of gearEffectLines(tl.res,e,c))lines.push(l)}
+      const lines=[];for(const c of (e.channels||[])){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;for(const l of gearEffectLines(tl.res,e,c,cnt))lines.push(l)}
       return {...e,n,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
@@ -1578,13 +1586,20 @@
       <div class="mr2calib">${lines.map(l=>`<div>${esc(l)}</div>`).join('')}<small>${ui('说明：狂气爆发的伤害使用独立的力量/暴击修正，这里不参与拟合；上面的造物额外伤害已改用拟合出的力量倍率重新折算。样本越多、力量取值越分散，拟合越可信；狂气爆发的力量倍率按角色的 ulti_strength_multiple 估算，未经本场数据验证。','Ultimates use separate strength/crit modifiers and are excluded from the fit. The relic damage above uses the fitted multipliers.')}</small></div></div>`;
   }
   // human-readable effect of a trigger command (looked up in the replay's Cmd table)
-  function gearEffectLines(res,e,ch){
+  // what a wheel / covenant trigger command does, read from the command's own data list (amount from the trigger parameter when it can be evaluated)
+  const CMD_LABEL={BEGainUltiEnergy:['狂气','Aliemus'],BEChangeKeeperEnergy:['银钥能量','Keyflare'],BEGainKeeperEnergy:['银钥能量','Keyflare'],BEChangeEnergy:['算力','Energy'],BEHeal:['治疗','Heal'],BEGainBlock:['护盾','Shield'],BEDrawCard:['抽牌','Draw'],BEScarletBloodChange:['胚胎融合','Embryo fusion'],BEChangeTentacleCount:['触手数量','Tentacles'],BEChangeMaxTentacleCount:['触手上限','Tentacle cap']};
+  function gearEffectLines(res,e,ch,cnt){
     const cmd=res.rr?.Cmd?.[String(ch.cmd)];if(!cmd)return [];
     const params=e.mainStates[0]?.params||[],out=[];
-    const evalPara=expr=>expr==null?null:evalNum(String(expr).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
+    const paras=String(ch.para??'').split(',').map(x=>x.trim());
+    const evalExpr=expr=>{if(expr==null)return null;let t=String(expr).replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#');t=t.replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');return /#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,''))?null:evalNum(t,{})};
     for(const dl of cmd.data_list||[]){
-      if(dl.Type==='BEGainUltiEnergy'){const v=evalPara(ch.para);out.push(v!=null?`${ui('狂气','Aliemus')} +${fmt(v)}${ch.count?` × ${ch.count} = +${fmt(v*ch.count)}`:''}`:ui('获得狂气','Gain Aliemus'))}
-      else if(dl.Type==='BECreateCard')out.push(ui('生成卡牌','Create card'));
+      const lab=CMD_LABEL[dl.Type];
+      if(lab){const v=evalExpr(dl.Para);const sign=dl.Type==='BEChangeKeeperEnergy'||dl.Type==='BEChangeEnergy'?'':'+';out.push(v!=null?`${ui(lab[0],lab[1])} ${v>=0?sign:''}${fmt(v)}${cnt>1?` × ${cnt} = ${fmt(v*cnt)}`:''}`:ui(`${lab[0]}（随层数 / 状态变化）`,`${lab[1]} (scales with state)`))}
+      else if(dl.Type==='BECreateCard'||dl.Type==='BECreateCardWithOwner')out.push(ui('生成卡牌','Create card'));
+      else if(dl.Type==='BECopyCard')out.push(ui('复制卡牌','Copy card'));
+      else if(dl.Type==='BEAddState'){const sid=String(dl.Para).split(',')[0].trim();if(/^\d+$/.test(sid)&&res.state[sid]&&!['2900','3130','3902'].includes(sid)&&res.state[sid].ShowType!=='Hide')out.push(ui(`施加「${res.nameState(sid)}」`,`Apply ${res.nameState(sid)}`))}
+      else if(/^BEChangeAttr\./.test(dl.Type)){const pr=dl.Type.split('.')[1];const v=evalExpr(dl.Para);out.push(`${statName(res,pr)}${v!=null?` ${v>=0?'+':''}${fmt(v)}${cnt>1?` × ${cnt}`:''}`:''}`)}
     }
     return out;
   }
