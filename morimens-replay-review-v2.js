@@ -347,13 +347,14 @@
     const campOf=uid=>actorOf(uid)?.camp||(cards.get(String(uid))&&actorOf(cards.get(String(uid)).ownerUid)?.camp)||0;
 
     const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
-    const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,events:[]});return rounds.get(n)};
+    const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,dim:!Number.isInteger(n),events:[]});return rounds.get(n)};
+    let dimOn=false;const rk=()=>dimOn?bout+.5:bout;   // the Ultra-Space (超维) bout reuses the bout number: it is stored as its own round, bout + .5
     const HEAD_KINDS=['card','ultimate','keeper','skill','enemyact'];
     const push=(kind,label,html,data,raw,meta={})=>{
       if(!bout)return;
-      if(kind==='snap'){getRound(bout).events.push({kind,camp,phase,snap:meta.snap});return}
+      if(kind==='snap'){getRound(rk()).events.push({kind,camp,phase,snap:meta.snap});return}
       const isHead=HEAD_KINDS.includes(kind)||(kind==='trigger'&&camp===2&&actors.get(String(meta.actorUid))?.camp===2);
-      getRound(bout).events.push({seq:++globalSeq,kind,label,html,time:raw.time??null,eventId:raw.eventId,data,camp,phase,...(isHead?{snapBefore:snap()}:{}),...meta});
+      getRound(rk()).events.push({seq:++globalSeq,kind,label,html,time:raw.time??null,eventId:raw.eventId,data,camp,phase,...(isHead?{snapBefore:snap()}:{}),...meta});
     };
     const pct=(a,b)=>b>0?Math.max(0,Math.min(100,a/b*100)):0;
     const hpMini=(cur,max,enemy)=>cur!=null&&max>0?`<span class="mr2hpmini${enemy?' enemy':''}" title="${esc(`${fmt(cur)} / ${fmt(max)}`)}"><i style="width:${pct(cur,max).toFixed(1)}%"></i></span><span class="mr2from">${pct(cur,max).toFixed(pct(cur,max)<10?1:0)}%</span>`:'';
@@ -456,6 +457,17 @@
         for(const m of String(ch.para??'').matchAll(/(?:^|,)\s*(\d{3,})\s*(?=,|$)/g))extra.add(m[1]);
       }
       for(const sid of extra){if(['2900','3130','3902'].includes(sid)||!res.state[sid]||e.related.has(sid))continue;e.related.add(sid);if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
+    }
+    // effect evidence: a trigger command that gives a fixed amount (aliemus / keyflare energy / energy / shield / heal) leaves property changes whose nominal
+    // cast value equals that amount. Matching them (when exactly one item can explain the change) credits the value to the item and counts the trigger.
+    const EV_PROP={BEGainUltiEnergy:'ulti_energy',BEChangeKeeperEnergy:'keeper_energy',BEGainKeeperEnergy:'keeper_energy',BEChangeEnergy:'energy',BEGainBlock:'block',BEHeal:'hp'};
+    const evList=[];
+    for(const e of gears.values())for(const ch of e.channels){
+      if(ch.cmd==null)continue;const params=e.mainStates[0]?.params||[],paras=String(ch.para??'').split(',').map(x=>x.trim());
+      for(const dl of res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]){const prop=EV_PROP[dl.Type];if(!prop)continue;
+        let t=String(dl.Para??'').replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
+        if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))continue;const amt=evalNum(t,{});if(!(Number.isFinite(amt)&&amt!==0))continue;
+        evList.push({e,ch,prop,amt:Math.abs(amt)});ch.evTimes=ch.evTimes||new Set();ch.evRounds=ch.evRounds||new Set()}
     }
     let pendingConf=[];const tsPower=new Map(),tsPlus=new Map();
     const attributePower=(e,time)=>{const p=tsPower.get(time);if(!p)return;const rel={tid:'gear:'+e.key,kind:'power'},ctx=newInstance({time},rel,p.delta,p.stateId===3130);const pl=tsPlus.get(time);if(pl)for(const [uid,amt] of pl)grant(ctx,uid,amt,rel,p.stateId===3130);tsPower.delete(time)};
@@ -663,7 +675,8 @@
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
-            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01):null,keys=wm?wm.keys:srcKeys(fr.time),rcv=actors.get(String(d.uid));
+            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0))return null;const hit=evList.filter(x=>x.prop===pt&&Math.abs(x.amt-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),rcv=actors.get(String(d.uid));
+            if(evm)for(const x of evm){x.ch.evTimes.add(Math.round(fr.time*10));x.ch.evRounds.add(bout)}
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
             for(const k of keys){const sp=supOf(k);
@@ -692,11 +705,11 @@
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
-            if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(bout))getRound(bout).snapEnd=snap();getRound(nb).snapStart=snap()}
+            if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(rk()))getRound(rk()).snapEnd=snap();dimOn=nb===lastDim;getRound(dimOn?nb+.5:nb).snapStart=snap()}
             if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{energy:unit(ent.keeperUid).energy??0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
-            if(camp===1&&phase===1)push('round',ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
-            /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1){if(bout===lastDim)gearTrigger('dimension',{},fr.time);else lastDim=bout;gearTrigger('boutBegin',{},fr.time)}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
+            if(camp===1&&phase===1)push('round',dimOn?ui(`第 ${bout} 回合后 · 超维回合开始`,`Ultra-Space bout after round ${bout}`):ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
+            /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1){if(dimOn)gearTrigger('dimension',{},fr.time);else{lastDim=bout;gearTrigger('boutBegin',{},fr.time)}}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
             continue;
           }
           if(!bout)continue;
@@ -800,7 +813,7 @@
         }
       }
     }
-    if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
+    if(rounds.has(rk())&&!getRound(rk()).snapEnd)getRound(rk()).snapEnd=snap();
     return {relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
@@ -1070,7 +1083,7 @@
       return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map((b,bi)=>{const after=blocks[bi+1]?.head.snapBefore||s.endSnap||r.snapEnd;return `<div class="mr2act a-${actionInfo(b.head).cls}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${renderActionSnap(b.head.snapBefore,after,tl)}${rawDetails(b.head)}</div>`}).join('')}</div>`;
     }).join('');
     const bStart=r.round===(tl.rounds[0]?.round)?renderBoard(r.snapStart,null,tl,ui('战斗开始 · 战场状态','Battle start · battlefield')):'',bEnd=renderBoard(r.snapEnd,r.snapStart,tl,ui('回合结束 · 战场状态（▲▼ 为本回合血量变化）','Round end · battlefield (▲▼ = HP change this round)'));
-    return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small>${renderStrip(r,tl)}</summary><div class="mr2rbody">${bStart}${body}${bEnd}</div></details>`;
+    return `<details class="mr2round"${open?' open':''}><summary><b>${r.dim?ui(`超维回合（第 ${Math.floor(r.round)} 回合之后）`,`Ultra-Space bout (after round ${Math.floor(r.round)})`):ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small>${renderStrip(r,tl)}</summary><div class="mr2rbody">${bStart}${body}${bEnd}</div></details>`;
   }
 
   // ---- battlefield board: allies left-aligned, enemies right-aligned -----------------
@@ -1355,7 +1368,7 @@
   function computeStatsRaw(full,tl){
     calibrateHits(tl);
     const res=tl.res,bd=full.battleDat||{},actors=tl.actors;
-    const events=[];for(const r of tl.rounds)for(const e of r.events)if(e.kind!=='snap')events.push({...e,round:r.round});
+    const events=[];for(const r of tl.rounds)for(const e of r.events)if(e.kind!=='snap')events.push({...e,round:Math.floor(r.round),dim:!!r.dim});
     const actorByTid=new Map();for(const a of actors.values())if(a.kind==='awakener')actorByTid.set(String(a.tid),a);
     const keeper=[...actors.values()].find(a=>a.kind==='keeper');
     const per=new Map();
@@ -1415,7 +1428,8 @@
       const out={dmg:0,block:0,heal:0};for(const sid of e.related){const t=stateTotals.get(sid);if(t){out.dmg+=t.dmg;out.block+=t.block;out.heal+=t.heal}}
       const rec=tl.gearRecs?.get(e.key);{const sp=tl.supStore?.get('gear:'+e.key);if(sp){out.block+=sp.blk||0;out.heal+=sp.heal||0}}
       const SUPPORTED=new Set(['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED','CARD']);
-      const chs=(e.channels||[]).filter(c=>SUPPORTED.has(c.base)),sup=chs.length>0;
+      for(const c of e.channels||[])if(!SUPPORTED.has(c.base)&&!c.once&&c.evTimes?.size){c.count=c.evTimes.size;c.rounds=c.evRounds}   // triggers proven by their own effect
+      const chs=(e.channels||[]).filter(c=>SUPPORTED.has(c.base)||(!c.once&&c.evTimes?.size)),sup=chs.length>0;
       const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
       const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
       const lines=[];for(const c of (e.channels||[])){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;for(const l of gearEffectLines(tl.res,e,c,cnt))lines.push(l)}
@@ -1739,7 +1753,7 @@
     const verdict=win?ui('胜利','VICTORY'):lost?ui('战败','DEFEAT'):ui('结果未知','RESULT UNKNOWN');
     const k0=bd.keeperSkill!=null?res.nameSkill(bd.keeperSkill):'',k=/^\d+$/.test(String(k0))?'':k0;
     return `<div class="mr2binfo ${win?'win':lost?'lose':''}"><div class="mr2bhead"><span class="mr2verdict">${esc(verdict)}</span><div class="mr2btitle"><b>${esc(stageName)}</b><small>${season?`${ui('融灾','Dzone')} ${esc(season)} ${ui('期','')} · `:''}${esc(dateText)} ${when?ui('战斗','battle'):''}${bosses.length?` · ${esc(bosses.join(' / '))}`:''}</small></div><span class="mr2bnote">${esc(keepNote)}</span></div>
-      <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(bd.statistics?.UsedCardCount??'—')}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(bd.statistics?.DeathResistCount??0)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(bd.statistics?.KillCount??0)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
+      <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.filter(r=>!r.dim).length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(bd.statistics?.UsedCardCount??'—')}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(bd.statistics?.DeathResistCount??0)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(bd.statistics?.KillCount??0)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
   }
   const DIMS_UI=()=>[['out',ui('输出','Output')],['def',ui('防御','Defense')],['sup',ui('辅助','Support')]];
   function renderMvp(full,tl,st){
