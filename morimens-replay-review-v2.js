@@ -119,7 +119,7 @@
     const nameRelic=id=>{const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||(()=>{const c=relicCatalog[String(id)];return c?(isEn()?c.en||c.zh:c.zh||c.en):''})()||`Relic ${id}`};
     const nameAw=id=>{const x=aw[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||String(id)):(pipeName(x.Name)||x.NameEn||String(id))};
     const nameMonster=id=>{const x=monster[String(id)]||{};const bestiary=pipeName(x.MonsterName)||pipeName(x.Name);return isEn()?(x.NameEn||bestiary||tailCn(x.CnID)||String(id)):(bestiary||tailCn(x.CnID)||x.NameEn||String(id))};
-    const clean=f=>id=>String(f(id)).replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'').trim();
+    const clean=f=>id=>String(f(id)).replace(/^日服[^命密造]{0,8}(?:插画)?(?:命轮|密契|造物)/,'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'').trim();
     return {rr,skill,aw,state,relic,monster,nameSkill:clean(nameSkill),nameState:clean(nameState),nameRelic:clean(nameRelic),nameAw:clean(nameAw),nameMonster:clean(nameMonster)};
   }
 
@@ -322,7 +322,8 @@
     // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
     const board=new Map(),bstates=new Map();
     const FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;
-    const fiaPct=(role,lvl)=>{const m=stateMap(role);let B=0;for(const v of m.values())if(v.stateId===98469||v.stateId===133285)B+=v.layer||0;return lvl*(30+B)};
+    const fiaBonus=()=>{let B=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98469||v.stateId===133285)B+=v.layer||0;return B};
+    const fiaPct=(role,lvl)=>lvl*(30+fiaBonus());
     const PROP={hp:'hp',max_hp:'max',block:'block',energy:'energy',max_energy:'maxEnergy',ulti_energy:'ulti',ulti_energy_max:'ultiMax',keeper_energy:'kEnergy',max_keeper_energy:'kMax'};
     const unit=uid=>{const k=String(uid);if(!board.has(k))board.set(k,{});return board.get(k)};
     const openProps=new Map();
@@ -485,6 +486,12 @@
             }
           }
           // ---- equipment triggers: a positive layer event on any state belonging to a wheel / covenant
+          if((e===1004||e===1006||e===1007)&&d.stateId!=null&&(gearsOfState.get(String(d.stateId))||[]).length){
+            const gl3=gearsOfState.get(String(d.stateId)),delta3=e===1007?((d.newLayer||0)-(d.oldLayer||0)):(d.layer||1),cur3=e===1007?d.newLayer:(d.layer||1);
+            for(const ge of gl3){const m=ge.stateGain||(ge.stateGain=new Map()),o=m.get(String(d.stateId))||{n:0,gain:0,init:null,last:0,rounds:new Set()};
+              if(!bout&&e!==1007){o.init=cur3}else if(delta3>0){o.n++;o.gain+=delta3;o.rounds.add(bout)}
+              o.last=cur3;m.set(String(d.stateId),o)}
+          }
           if(bout>0&&(e===1004||e===1006||e===1007)&&d.stateId!=null){
             const gl=gearsOfState.get(String(d.stateId));
             if(gl&&(e!==1007||(d.newLayer??0)>(d.oldLayer??0)))for(const ge of gl){ge.triggers.times.add(Math.round((fr.time||0)*100)/100);ge.triggers.rounds.add(bout);ge.stateCounts.set(String(d.stateId),(ge.stateCounts.get(String(d.stateId))||0)+1)}
@@ -541,7 +548,7 @@
           }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia=fiaLvl?{uid:String(ownerUid),lvl:fiaLvl,pct:fiaP}:null;if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
+            const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia={uid:String(ownerUid),lvl:fiaLvl,pct:fiaP,args:d.descArgs?.curValues||null,tid};if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
             push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,fiaLvl,fiaPct:fiaP,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});
             if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid},fr.time);
             continue;
@@ -554,8 +561,8 @@
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
-              hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
-                vOn,vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+              hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
+                vOn,comb:fiaBonus&&(()=>{let n=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98181)n+=v.layer||0;return n})(),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -982,7 +989,7 @@
       const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
       const S=g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0);
       const atkForce=Math.ceil(g('atk')*(1+g('atk_per')/100));
-      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)};
+      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(1+0.05*(h.comb||0))};
     };
     const Vof=(h,useV=true)=>useV&&h.vOn?1+h.vPct/100:1;
     const dnOf=(h,c,useV=true)=>h.dmg/(h.crit?1+c.cd/100:1)/(1+c.fin/100)/Vof(h,useV);
@@ -1157,7 +1164,7 @@
     };
     const card=g=>{
       const isW=g.kind==='wheel',kindTag=isW?ui('命轮','Wheel'):ui('密契','Covenant');
-      const counters=[...g.stateCounts.entries()].sort((a,b)=>b[1]-a[1]).map(([sid,n])=>`<div class="mr2srow inst"><span class="mr2sname">${esc(res.nameState(sid))}<small>${ui('状态','State')} #${esc(sid)}</small></span><span></span><b>${n}</b><small>${ui('次层数增加','increments')}</small></div>`).join('');
+      const counters=[...(g.stateGain?.entries()||[])].sort((a,b)=>b[1].n-a[1].n).map(([sid,o])=>`<div class="mr2srow inst"><span class="mr2sname">${esc(res.nameState(sid))}<small>${ui('内部计数状态','Internal counter')} #${esc(sid)}</small></span><span>${o.init!=null?ui(`开局 ${fmt(o.init)}`,`start ${fmt(o.init)}`):''}${o.n?` → ${ui(`当前 ${fmt(o.last)}`,`now ${fmt(o.last)}`)}`:''}</span><b>${o.n?`+${fmt(o.gain)}`:'—'}</b><small>${o.n?ui(`${o.n} 次增加（第 ${[...o.rounds].join('/')} 回合）`,`${o.n} increments`):ui('本场未增加','no change')}</small></div>`).join('');
       const eff=isW?(g.desc?`<div class="mr2gdesc">${esc(g.desc)}</div>`:''):g.effectsEn.map(e=>`<div class="mr2gdesc"><b>${esc(e.pieces)} ${ui('件','pc')}</b> ${esc(e.desc)}</div>`).join('');
       const hasBuff=g.extra>0;
       return `<div class="mr2gcard ${isW?'wheel':'cov'}"${g.desc||g.effectsEn.length?tipAttr(`${g.name}${g.en?` · ${g.en}`:''}`,kindTag,isW?g.desc:g.effectsEn.map(e=>`${e.pieces}${ui('件','pc')}：${e.desc}`).join('\n')):''}>
