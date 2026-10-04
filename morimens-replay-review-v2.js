@@ -118,7 +118,7 @@
     const nameState=id=>{const x=state[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`State ${id}`};
     const nameRelic=id=>{const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`Relic ${id}`};
     const nameAw=id=>{const x=aw[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||String(id)):(pipeName(x.Name)||x.NameEn||String(id))};
-    const nameMonster=id=>{const x=monster[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||tailCn(x.CnID)||String(id)):(pipeName(x.Name)||tailCn(x.CnID)||x.NameEn||String(id))};
+    const nameMonster=id=>{const x=monster[String(id)]||{};const bestiary=pipeName(x.MonsterName)||pipeName(x.Name);return isEn()?(x.NameEn||bestiary||tailCn(x.CnID)||String(id)):(bestiary||tailCn(x.CnID)||x.NameEn||String(id))};
     const clean=f=>id=>String(f(id)).replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'').trim();
     return {rr,skill,aw,state,relic,monster,nameSkill:clean(nameSkill),nameState:clean(nameState),nameRelic:clean(nameRelic),nameAw:clean(nameAw),nameMonster:clean(nameMonster)};
   }
@@ -145,32 +145,93 @@
   const relicIconSrc=(res,tid)=>{const r=res.relic[String(tid)]||{};const ic=r.SmallIcon||r.Icon;return ic?`${ART}/relics/${baseName(ic)}.webp`:''};
   const keeperSkillIconSrc=(res,id)=>{const m=String(res.skill[String(id)]?.Icon||'').match(/Key_(\d+)/);return m?`${ART}/posse/Icon/KeyToken_Skill_${m[1]}.webp`:''};
 
+
+  const monsterPortrait=(res,tid)=>{const b=baseName(res.monster[String(tid)]?.MiniIcon);return b?`${ART}/monster-preview/${b}.webp`:''};
+
+  // ---- description engine (tooltips / expandable details) ----------------------------
+  const stripMarkup=t=>String(t||'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'');
+  function pickVariant(v,level){
+    if(v==null)return '';if(typeof v==='string')return v;if(Array.isArray(v))return pickVariant(v[0],level);
+    const keys=Object.keys(v).filter(k=>!isNaN(Number(k))).sort((a,b)=>a-b);if(!keys.length)return '';
+    let k=keys[0];for(const n of keys)if(Number(n)<=(Number(level)||0))k=n;return v[k]??'';
+  }
+  const fmtArg=v=>typeof v==='number'?(Number.isInteger(v)?fmt(v):String(Math.round(v*100)/100)):String(v);
+  function fillArgs(text,args){
+    return stripMarkup(String(text||'').replace(/\[(?:[A-Za-z]+:)?(?:Desc|State)?Arg(\d+)\]/g,(m,n)=>{const v=args?.[Number(n)-1];return v==null?'X':fmtArg(v)})).replace(/\s+\n/g,'\n').trim();
+  }
+  function splitTop(str){const out=[];let depth=0,cur='';for(const ch of String(str||'')){if(ch==='(')depth++;if(ch===')')depth--;if(ch===','&&!depth){out.push(cur);cur=''}else cur+=ch}if(cur.trim()!=='')out.push(cur);return out}
+  function evalNum(expr,ctx){
+    let t=String(expr||'').trim();if(!t)return null;
+    t=t.replace(/[A-Za-z_][A-Za-z0-9_.]*/g,w=>ctx&&ctx[w]!=null?String(ctx[w]):'#');
+    if(!/^[0-9+\-*/(). ]+$/.test(t))return null;
+    try{const v=Function(`"use strict";return (${t})`)();return Number.isFinite(v)?Math.round(v*100)/100:null}catch{return null}
+  }
+  const argList=o=>o&&typeof o==='object'?Array.from({length:Math.max(0,(Number(o.n)||1)-1)},(_,i)=>o[i+1]):null;
+  const paramsToArgs=(para,ctx)=>{const p=typeof para==='string'?para:pickVariant(para,0);return splitTop(p).map(x=>evalNum(x,ctx))};
+  const TYPE_LABEL={Card_Strike:'打击',Card_Defend:'防御',Card_Skill:'技能牌',Card_Extend:'技能牌',Card_Awake:'灵知觉醒',Card_Curse:'诅咒',Card_Potion:'道具牌',Card_AttachPost:'附带',Ulti_Skill:'狂气爆发',Keeper_Skill:'钥令',Intent_Attack:'敌方·攻击',Intent_HeavyAttack:'敌方·重击',Intent_StrongDebuff:'敌方·强力减益',Intent_Debuff:'敌方·减益',Intent_Buff:'敌方·增益',Intent_Defend:'敌方·防御'};
+  const typeLabel=types=>(types||[]).map(t=>TYPE_LABEL[t]||String(t).replace(/^(Card|Intent)_/,'')).filter((x,i,a)=>a.indexOf(x)===i).join(' / ');
+  const tipAttr=(title,sub,body)=>` data-tipt="${esc(title)}" data-tips="${esc(sub||'')}" data-tip="${esc(body||'')}"`;
+  function skillTip(res,id,o={}){
+    const r=res.skill[String(id)];if(!r)return {title:`#${id}`,sub:'',body:''};
+    const tpl=pickVariant(r.BattleDesc,o.level)||pickVariant(r.Desc,o.level);
+    const args=o.args&&o.args.length?o.args:paramsToArgs(r.Para,o.ctx||{});
+    const sub=[typeLabel(r.Type),r.Cost!=null&&!(r.Type||[]).some(t=>/Ulti|Keeper|Intent/.test(t))?`${ui('算力','Cost')} ${r.Cost}`:''].filter(Boolean).join(' · ');
+    return {title:res.nameSkill(id),sub,body:fillArgs(pipeName(tpl),args)||ui('（无描述）','(no description)')};
+  }
+  const skillTipAttr=(res,id,o)=>{const t=skillTip(res,id,o);return tipAttr(t.title,t.sub,t.body)};
+  function stateTip(res,sid,o={}){
+    const r=res.state[String(sid)]||{};
+    let args=o.args&&o.args.length?o.args:null;
+    if(!args&&Array.isArray(r.DescPara))args=r.DescPara.map(x=>{const m=String(x).match(/^StateOwner\.(\w+)$/);return m?(o.props?.[m[1]]??null):evalNum(x,o.props||{})});
+    const sub=[o.layer>1?`${ui('层数','Layers')} ×${o.layer}`:'',r.ShowType==='Affix'?ui('词缀','Affix'):''].filter(Boolean).join(' · ');
+    return {title:res.nameState(sid),sub,body:fillArgs(pipeName(r.Desc||r.WeaponDesc||''),args)||''};
+  }
+  const stateTipAttr=(res,sid,o)=>{const t=stateTip(res,sid,o);return tipAttr(t.title,t.sub,t.body)};
+  const relicTipAttr=(res,tid)=>{const r=res.relic[String(tid)]||{};return tipAttr(res.nameRelic(tid),r.Quality||'',fillArgs(pipeName(pickVariant(r.BattleDesc||r.Desc,0)),r.StatePara||[]))};
+  const DEBUFF_RE=/易伤|脆弱|中毒|石化|流血|封印|虚弱|诅咒|衰弱|灼烧|恐惧|减速|迟缓|沉默|腐蚀|破甲|畏惧|狂气封印|无用空状态/;
+  const stateClass=(res,sid)=>res.state[String(sid)]?.ShowType==='Affix'?'affix':DEBUFF_RE.test(res.nameState(sid))?'debuff':'buff';
+  const STAT_NAME={death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
+  const statName=(res,k)=>STAT_NAME[k]||String(res.rr?.BattleApi?.[k]?.CnID||k).replace(/(唤醒体|角色|卡牌)属性$/,'').trim();
+  const STAT_PCT=new Set(['crit','crit_damage','vulnerable_per','frail_per','i_damage_per','i_basic_damage_per','i_damage_per_strikecard','crit_damage_from_ulti','crit_per_from_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','damage_per2petrify_resist','ulti_strength_multiple','keeper_energy_eff']);
+  const STAT_SHOW=['death_resist','damage_plus','crit','crit_damage','tentacle_dmg','vulnerable_per','frail_per','strikecard_damage_plus','keeper_energy_eff'];
+  const fmtStat=(k,v)=>{const n=Math.round((Number(v)||0)*10)/10;return `${fmt(n)}${STAT_PCT.has(k)&&k!=='ulti_strength_multiple'?'%':''}`};
+  // card movement between piles
+  function moveKind(oldDeck,newDeck,reason){
+    if(oldDeck==='DrawDeck'&&newDeck==='HandDeck')return 'draw';
+    if(oldDeck==='HandDeck'&&newDeck==='GraveyardDeck')return 'discard';
+    if((oldDeck==='HandDeck'||oldDeck==='UsingDeck')&&newDeck==='ConsumedDeck')return 'exhaust';
+    if(oldDeck==='GraveyardDeck'&&newDeck==='DrawDeck')return 'shuffle';
+    if(oldDeck==='GraveyardDeck'&&newDeck==='HandDeck')return 'retrieve';
+    if((oldDeck==='NoneDeck'||oldDeck==='TempDeck1')&&newDeck==='HandDeck')return 'create';
+    return null;
+  }
+  const MOVE_LABEL={draw:'抽牌',discard:'弃牌',exhaust:'消耗',shuffle:'洗牌',retrieve:'取回',create:'获得'};
   function buildEntities(full,res){
-    const bd=full.battleDat||{},actors=new Map(),cards=new Map(),relics=new Map(),stateInst=new Map();
+    const bd=full.battleDat||{},actors=new Map(),cards=new Map(),relics=new Map(),stateInst=new Map(),cardArgs=new Map();
     const addActor=(uid,o)=>{if(uid!=null&&!actors.has(String(uid)))actors.set(String(uid),{uid,...o})};
     for(const r of bd.roleData||[])addActor(r.uid,{tid:r.tid,kind:'awakener',name:res.nameAw(r.tid),camp:1,icon:awakenerPortrait(res,r.tid)});
-    const addCard=(uid,tid,ownerUid)=>{if(uid==null||tid==null)return;const o=cards.get(String(uid));cards.set(String(uid),{uid,tid,ownerUid:ownerUid??o?.ownerUid})};
+    const addCard=(uid,tid,ownerUid,c)=>{if(uid==null||tid==null)return;const o=cards.get(String(uid));cards.set(String(uid),{uid,tid,ownerUid:ownerUid??o?.ownerUid,level:c?.level??o?.level});const a=c?.descArgs?.curValues;if(Array.isArray(a)&&a.length)cardArgs.set(String(uid),a)};
     for(const seg of full.recordSegments||[])for(const rec of seg||[]){
       const md=rec?.msgData;
       if(rec?.msgId===1001&&md){
-        for(const m of md.monsterDataList||[])addActor(m.uid,{tid:m.tid,kind:'monster',name:res.nameMonster(m.tid),camp:2,icon:''});
+        for(const m of md.monsterDataList||[])addActor(m.uid,{tid:m.tid,kind:'monster',name:res.nameMonster(m.tid),camp:2,icon:monsterPortrait(res,m.tid)});
         for(const r of md.roleDataList||[]){
           if(r.roleType===3)addActor(r.uid,{tid:r.tid,kind:'keeper',name:r.playerName||ui('守密人','Keeper'),camp:1,icon:''});
-          else if(r.camp===2)addActor(r.uid,{tid:r.tid,kind:'monster',name:res.nameMonster(r.tid),camp:2,icon:''});
+          else if(r.camp===2)addActor(r.uid,{tid:r.tid,kind:'monster',name:res.nameMonster(r.tid),camp:2,icon:monsterPortrait(res,r.tid)});
           else addActor(r.uid,{tid:r.tid,kind:'awakener',name:res.nameAw(r.tid),camp:r.camp||1,icon:awakenerPortrait(res,r.tid)});
         }
-        for(const c of md.cardDataList||[])addCard(c.uid,c.tid??c.configId,c.ownerUid);
+        for(const c of md.cardDataList||[])addCard(c.uid,c.tid??c.configId,c.ownerUid,c);
         for(const r of md.relicDataList||[])if(r.uid!=null)relics.set(String(r.uid),{uid:r.uid,tid:r.tid});
       }
       for(const fr of md?.frameList||[]){
         const d=fr?.data||{},e=fr?.eventId;
-        if(e===1025)for(const c of d.cards||[])addCard(c.uid,c.tid??c.configId,c.ownerUid);
-        else if(e===1067)addCard(d.uid,d.tid??d.configId,d.ownerUid);
-        else if(e===1035)addCard(d.cardUid,d.tid??d.configId,d.ownerUid);
+        if(e===1025)for(const c of d.cards||[])addCard(c.uid,c.tid??c.configId,c.ownerUid,c);
+        else if(e===1067)addCard(d.uid,d.tid??d.configId,d.ownerUid,d);
+        else if(e===1035)addCard(d.cardUid,d.tid??d.configId,d.ownerUid,d);
         else if((e===1004||e===1006)&&d.stateUid!=null)stateInst.set(String(d.stateUid),d.stateId);
       }
     }
-    return {actors,cards,relics,stateInst,keeperUid:[...actors.values()].find(a=>a.kind==='keeper')?.uid};
+    return {actors,cards,relics,stateInst,cardArgs,keeperUid:[...actors.values()].find(a=>a.kind==='keeper')?.uid};
   }
 
   function buildTimeline(full){
@@ -184,17 +245,18 @@
       if(a){
         const cls=a.kind==='monster'?'mon':a.kind==='keeper'?'keeper':`aw c${a.camp||1}`;
         const fb=a.kind==='keeper'?'守':a.kind==='monster'?'怪':a.name;
-        return `<span class="mr2chip ${cls}" title="${esc(tipIds(uid,`tid ${a.tid??'?'}`))}">${ico(a.icon,fb,'av')}<span>${esc(a.name)}</span></span>`;
+        const mr=a.kind==='monster'?res.monster[String(a.tid)]:null,tipA=mr?tipAttr(a.name,[mr.MonsterClass,mr.BattleTag].filter(Boolean).join(' · '),pipeName(mr.Desc)):'';
+        return `<span class="mr2chip ${cls}" title="${tipA?'':esc(tipIds(uid,`tid ${a.tid??'?'}`))}"${tipA}>${ico(a.icon,fb,'av')}<span>${esc(a.name)}</span></span>`;
       }
       const c=cards.get(String(uid));
       if(c){
         const o=actorOf(c.ownerUid);
-        return `<span class="mr2chip card" title="${esc(tipIds(uid,`card tid ${c.tid}`))}">${o?ico(o.icon,o.name,'av sm'):''}<span>「${esc(res.nameSkill(c.tid))}」</span></span>`;
+        return `<span class="mr2chip card"${skillTipAttr(res,c.tid,{args:ent.cardArgs.get(String(uid)),level:c.level})}>${o?ico(o.icon,o.name,'av sm'):''}<span>「${esc(res.nameSkill(c.tid))}」</span></span>`;
       }
       const r=relics.get(String(uid));
-      if(r)return `<span class="mr2chip relic" title="${esc(tipIds(uid,`relic tid ${r.tid}`))}">${ico(relicIconSrc(res,r.tid),'物','rl')}<span>${esc(res.nameRelic(r.tid))}</span></span>`;
+      if(r)return `<span class="mr2chip relic"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),'物','rl')}<span>${esc(res.nameRelic(r.tid))}</span></span>`;
       const sid=stateInst.get(String(uid));
-      if(sid!=null)return `<span class="mr2chip st" title="${esc(tipIds(uid,`state ${sid}`))}">${ico(stateIconSrc(res,sid),res.nameState(sid),'st')}<span>${esc(res.nameState(sid))}</span></span>`;
+      if(sid!=null)return `<span class="mr2chip st"${stateTipAttr(res,sid)}>${ico(stateIconSrc(res,sid),res.nameState(sid),'st')}<span>${esc(res.nameState(sid))}</span></span>`;
       if(String(uid)===String(bd.battleUid)||String(uid)===String(ent.keeperUid))return `<span class="mr2chip keeper" title="${esc(tipIds(uid))}">${ico('','守','av')}<span>${esc(ui('守密人','Keeper'))}</span></span>`;
       return `<span class="mr2chip unk" title="${esc(tipIds(uid))}">${esc(ui('未知对象','Unknown'))} #${esc(uid)}</span>`;
     }
@@ -207,15 +269,19 @@
     const pct=(a,b)=>b>0?Math.max(0,Math.min(100,a/b*100)):0;
     const hpMini=(cur,max,enemy)=>cur!=null&&max>0?`<span class="mr2hpmini${enemy?' enemy':''}" title="${esc(`${fmt(cur)} / ${fmt(max)}`)}"><i style="width:${pct(cur,max).toFixed(1)}%"></i></span><span class="mr2from">${pct(cur,max).toFixed(pct(cur,max)<10?1:0)}%</span>`:'';
     const resLabels={energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')};
-    const stateBadge=(id,layerText)=>`<span class="mr2chip st" title="${esc(`state ${id}`)}">${ico(stateIconSrc(res,id),res.nameState(id),'st')}<span>${esc(res.nameState(id))}${layerText?` <em>${esc(layerText)}</em>`:''}</span></span>`;
+    const stateBadge=(id,layerText,tip='')=>`<span class="mr2chip st ${stateClass(res,id)}"${tip||stateTipAttr(res,id)}>${ico(stateIconSrc(res,id),res.nameState(id),'st')}<span>${esc(res.nameState(id))}${layerText?` <em>${esc(layerText)}</em>`:''}</span></span>`;
 
     // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
     const board=new Map(),bstates=new Map();
     const PROP={hp:'hp',max_hp:'max',block:'block',energy:'energy',max_energy:'maxEnergy',ulti_energy:'ulti',ulti_energy_max:'ultiMax',keeper_energy:'kEnergy',max_keeper_energy:'kMax'};
     const unit=uid=>{const k=String(uid);if(!board.has(k))board.set(k,{});return board.get(k)};
-    const applyRoleSnapshot=r=>{if(r?.uid==null)return;const u=unit(r.uid),p=r.properties;if(p&&typeof p==='object')for(const k in PROP)if(p[k]!=null&&!Array.isArray(p))u[PROP[k]]=p[k]};
+    const applyRoleSnapshot=r=>{if(r?.uid==null)return;const u=unit(r.uid),p=r.properties;if(p&&typeof p==='object'&&!Array.isArray(p)){u.props=u.props||{};for(const k in p)if(typeof p[k]==='number')u.props[k]=p[k];for(const k in PROP)if(p[k]!=null)u[PROP[k]]=p[k]}if(r.skillArgs&&typeof r.skillArgs==='object')u.skillArgs=r.skillArgs};
     const stateMap=uid=>{const k=String(uid);if(!bstates.has(k))bstates.set(k,new Map());return bstates.get(k)};
-    const snap=()=>{const units=[];for(const [uid,a] of actors){const u=board.get(uid)||{};units.push({uid:a.uid,...u,states:[...(bstates.get(uid)?.values()||[])].map(x=>({...x}))})}return {units}};
+    const snap=()=>{const units=[];for(const [uid,a] of actors){const u=board.get(uid)||{},pr=u.props||{};
+      const stats=STAT_SHOW.filter(k=>pr[k]).map(k=>({k,v:pr[k]}));
+      const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
+      units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
+        states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
     const intents=new Map();
 
     for(let si=0;si<(full.recordSegments||[]).length;si++){
@@ -226,12 +292,13 @@
         for(let fi=0;fi<fl.length;fi++){
           const fr=fl[fi]||{};frameCount++;const e=fr.eventId,d=fr.data||{};
           // ---- state tracking (runs for every frame, including pre-battle setup)
-          if(e===1028&&PROP[d.propertyType]&&d.value!=null&&d.uid!=null&&typeof d.value==='number')unit(d.uid)[PROP[d.propertyType]]=d.value;
+          if(e===1028&&d.value!=null&&d.uid!=null&&typeof d.value==='number'&&actors.has(String(d.uid))){const u=unit(d.uid);(u.props=u.props||{})[d.propertyType]=d.value;if(PROP[d.propertyType])u[PROP[d.propertyType]]=d.value}
           else if(e===1014&&d.beHitConfig?.targetRoleUid!=null){const h=d.beHitConfig,u=unit(h.targetRoleUid);if(h.curHp!=null)u.hp=h.curHp;if(h.curMaxHp!=null)u.max=h.curMaxHp}
-          else if(e===1004&&d.stateUid!=null&&(d.stateType===1||actors.has(String(d.ownerUid??d.roleUid)))){stateMap(d.ownerUid??d.roleUid).set(String(d.stateUid),{stateId:d.stateId,layer:d.layer??1})}
-          else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??1)>0)cur.layer=d.newLayer;else if(cur)m.delete(String(d.stateUid))}
+          else if(e===1004&&d.stateUid!=null&&(d.stateType===1||actors.has(String(d.ownerUid??d.roleUid)))){stateMap(d.ownerUid??d.roleUid).set(String(d.stateUid),{stateId:d.stateId,layer:d.layer??1,args:d.descArgs?.curValues})}
+          else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues}else if(cur)m.delete(String(d.stateUid))}
           else if(e===1005&&d.stateUid!=null){stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
+          else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
           if(e===1019&&d?.boutNumber){
             const nb=Number(d.boutNumber)||bout;
             if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(bout))getRound(bout).snapEnd=snap();getRound(nb).snapStart=snap()}
@@ -243,13 +310,13 @@
           // enemy acting: monster fsm switches into the action state with the skill it performs
           if(e===1013&&camp===2&&phase===2&&d.newState===2&&d.config?.skillConfigId!=null&&actors.get(String(d.uid))?.kind==='monster'){
             const name=res.nameSkill(d.config.skillConfigId),tgt=d.config.targetRoleUid;
-            push('enemyact',`${plainName(d.uid)} · ${name}`,'',d,fr,{skillTid:d.config.skillConfigId,actorUid:d.uid,targetUid:tgt,skillName:name});continue;
+            push('enemyact',`${plainName(d.uid)} · ${name}`,'',d,fr,{skillTid:d.config.skillConfigId,actorUid:d.uid,targetUid:tgt,skillName:name,tip:skillTip(res,d.config.skillConfigId,{ctx:{BattleAtkForce:unit(d.uid).props?.atk}})});continue;
           }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:res.skill[String(tid)]?.Type||[]});continue;
+            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:res.skill[String(tid)]?.Type||[],tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});continue;
           }
-          if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId)});continue}
+          if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});continue}
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
@@ -257,13 +324,28 @@
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
             push(typ,`${plainName(h.castRoleUid)} → ${plainName(h.targetRoleUid)} · ${sname} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,html,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue;
           }
-          if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic" title="${esc(`relic tid ${d.relicTid}`)}">${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
+          if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic"${relicTipAttr(res,d.relicTid)}>${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
           if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
           if(e===1049){const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
           if(e===1004||e===1007){
-            const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner);
-            if(e===1004){const layer=d.layer>1?`×${d.layer}`:'';push('state',`${ui('状态添加','State add')} · ${res.nameState(sid)} → ${plainName(owner)}`,`${stateBadge(sid,layer)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});}
-            else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
+            const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner),tipS=stateTipAttr(res,sid,{args:d.descArgs?.curValues,layer:d.newLayer??d.layer,props:board.get(String(owner))?.props});
+            if(e===1004){const layer=d.layer>1?`×${d.layer}`:'';push('state',`${ui('状态添加','State add')} · ${res.nameState(sid)} → ${plainName(owner)}`,`${stateBadge(sid,layer,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});}
+            else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
+            continue;
+          }
+          if(e===1027&&Array.isArray(d.cardUidList)&&d.cardUidList.length){
+            const mk=moveKind(d.oldDeck,d.newDeck,d.changeReason);
+            if(mk){const list=d.cardUidList;push('move',`${MOVE_LABEL[mk]} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead mv ${mk}">${ui(MOVE_LABEL[mk],mk)}</span>${list.slice(0,10).map(t=>chip(t)).join('')}${list.length>10?`<span class="mr2from">+${list.length-10}</span>`:''}`,d,fr,{mv:mk,count:list.length,cardUids:list})}
+            continue;
+          }
+          if((e===1025&&d.cards?.length&&(d.deck==='HandDeck'||d.deck==='GraveyardDeck'||d.deck==='DrawDeck'))||(e===1035&&d.isPlayEffect&&(d.deck==='DrawDeck'||d.deck==='GraveyardDeck'||d.deck==='HandDeck'))){
+            const list=e===1025?d.cards.map(c=>c.uid):[d.cardUid],mk=d.deck==='HandDeck'?'create':d.deck==='GraveyardDeck'?'tograve':'todraw',lab={create:'获得',tograve:'加入弃牌堆',todraw:'加入抽牌堆'}[mk];
+            push('move',`${lab} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead mv ${mk}">${ui(lab,mk)}</span>${list.slice(0,10).map(t=>chip(t)).join('')}`,d,fr,{mv:mk,count:list.length,cardUids:list});
+            continue;
+          }
+          if(e===1028&&actors.has(String(d.uid))&&!resLabels[d.propertyType]&&d.propertyType!=='hp'&&d.propertyType!=='max_hp'&&Number(d.changedValue)){
+            const v=Number(d.changedValue),nm=statName(res,d.propertyType),total=fmtStat(d.propertyType,d.value);
+            push('stat',`${plainName(d.uid)} · ${nm} ${v>0?'+':''}${fmt(v)}`,`<span class="mr2stat ${v<0?'neg':'pos'}" title="${esc(`${d.propertyType}`)}">${esc(nm)} ${v>0?'+':''}${fmtStat(d.propertyType,v)}<small>→ ${esc(total)}</small></span>${chip(d.uid)}`,d,fr,{actorUid:d.uid,statKey:d.propertyType,changedValue:v});
             continue;
           }
           if(e===1028&&resLabels[d.propertyType]){
@@ -320,6 +402,18 @@
     .mr2shield{font-size:10px;padding:0 6px;border-radius:999px;background:rgba(127,224,192,.14);color:#8fe8cb;border:1px solid rgba(127,224,192,.3)}.mr2delta{font-size:10px;font-weight:800;font-variant-numeric:tabular-nums}.mr2delta.neg{color:#ff9e93}.mr2delta.pos{color:#8fe0b2}.mr2intent{font-size:10px;padding:0 6px;border-radius:5px;background:rgba(255,196,87,.14);color:#ffd27a;border:1px solid rgba(255,196,87,.3)}
     .mr2ustates{display:flex;flex-wrap:wrap;gap:3px}.mr2unit.enemy .mr2ustates{justify-content:flex-end}.mr2ust{display:inline-flex;align-items:center;gap:3px;padding:0 5px 0 1px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#b8c4d6}.mr2ust em{font-style:normal;color:#ffd27a;margin-left:2px}.mr2ust .mr2ico{width:14px;height:14px;flex-basis:14px;font-size:8px;border-radius:4px}.mr2ust.more{padding:0 6px;color:#8392a6}
     @media(max-width:760px){.mr2board{grid-template-columns:1fr}.mr2bcol.enemy{text-align:left}}
+
+    #mr2tip{position:fixed;display:none;z-index:99999;max-width:380px;min-width:160px;padding:10px 12px;border-radius:10px;background:rgba(10,16,26,.97);border:1px solid rgba(213,177,118,.4);box-shadow:0 10px 30px rgba(0,0,0,.55);color:#dbe4f0;font-size:12px;line-height:1.6;pointer-events:none}#mr2tip b{display:block;color:#f1d69f;font-size:13px}#mr2tip small{display:block;color:#8fa0b5;font-size:10px;margin-top:1px}#mr2tip p{margin:6px 0 0;white-space:pre-line;word-break:break-word}
+    .mr2toolbar{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:11px;color:#9aa8bb}.mr2tog{display:inline-flex;gap:6px;align-items:center;cursor:pointer;padding:3px 9px;border-radius:7px;border:1px solid rgba(213,177,118,.3);background:rgba(213,177,118,.08);color:#f1d69f;font-weight:700}
+    [data-tipt]{cursor:help}.mr2acthead[data-toggle]{cursor:pointer}
+    .mr2desc{display:none;margin:2px 0 0 60px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.04);border-left:3px solid var(--ac,#8aa0bd);color:#c3cedd;font-size:12px;line-height:1.7;white-space:pre-line}.mr2desc small{display:block;color:var(--ac,#8aa0bd);font-size:10px;font-weight:800;margin-bottom:2px}.mr2showdesc .mr2desc,.mr2act.descopen .mr2desc{display:block}
+    .mr2lead.mv{font-weight:800}.mr2lead.mv.draw{background:rgba(79,208,200,.2);color:#6fe3da}.mr2lead.mv.discard{background:rgba(255,160,90,.2);color:#ffb783}.mr2lead.mv.exhaust{background:rgba(181,124,255,.2);color:#cfa4ff}.mr2lead.mv.shuffle{background:rgba(120,160,255,.2);color:#a9c1ff}.mr2lead.mv.retrieve,.mr2lead.mv.create,.mr2lead.mv.tograve,.mr2lead.mv.todraw{background:rgba(255,210,74,.18);color:#ffd86b}.mr2row.mv{padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.035)}
+    .mr2fx .mr2row.mv .mr2lead{font-size:10px}
+    .mr2stat{display:inline-flex;gap:4px;align-items:center;font-size:10px;font-weight:700;padding:0 7px;border-radius:999px;border:1px solid rgba(98,183,255,.28);background:rgba(98,183,255,.08);color:#9fd0ff}.mr2stat.neg{border-color:rgba(255,158,147,.3);background:rgba(255,158,147,.08);color:#ffb2a8}.mr2stat small{font-weight:500;color:#8fa0b5}
+    .mr2ustats{display:flex;flex-wrap:wrap;gap:3px}.mr2unit.enemy .mr2ustats{justify-content:flex-end}.mr2uss{font-size:9px;padding:0 6px;border-radius:5px;background:rgba(98,183,255,.08);color:#9aaabd;border:1px solid rgba(98,183,255,.16)}.mr2uss b{margin-left:4px;color:#e6edf6;font-weight:700}
+    .mr2ust.buff,.mr2chip.st.buff{border-color:rgba(79,209,139,.35);background:rgba(79,209,139,.07)}.mr2ust.debuff,.mr2chip.st.debuff{border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.08)}.mr2ust.affix,.mr2chip.st.affix{border-color:rgba(255,210,74,.45);background:rgba(255,210,74,.08)}.mr2ust.debuff span,.mr2chip.st.debuff span{color:#ffb8b0}.mr2ust.buff span,.mr2chip.st.buff span{color:#b9efcf}.mr2ust.affix span{color:#ffe08a}
+    .mr2intent{cursor:help}
+    @media(max-width:760px){.mr2desc{margin-left:0}}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -356,7 +450,8 @@
     const who=e.kind==='keeper'?'':owner?`<span class="mr2who">${esc(owner.name)}</span>`:'';
     const cost=e.cost!=null?`<span class="mr2cost" title="${esc(ui('算力消耗','Energy cost'))}">⚡${esc(e.cost)}</span>`:'';
     const tgt=e.kind==='enemyact'&&e.targetUid!=null?`<div class="mr2actline"><span class="mr2from">${ui('目标','Target')}</span>${tl.chip(e.targetUid)}</div>`:'';
-    return `<div class="mr2acthead">${portrait}<div class="mr2acttitle"><div class="mr2actline"><span class="mr2atype">${esc(info.label)}</span>${who}</div><b class="mr2actname">${esc(e.skillName)}</b>${tgt}</div>${cost}${timeText(e)}</div>`;
+    const t=e.tip,tipA=t?tipAttr(t.title,t.sub,t.body):'';
+    return `<div class="mr2acthead"${tipA} data-toggle="1">${portrait}<div class="mr2acttitle"><div class="mr2actline"><span class="mr2atype">${esc(info.label)}</span>${who}</div><b class="mr2actname">${esc(e.skillName)}</b>${tgt}</div>${cost}${timeText(e)}</div>${t&&t.body?`<div class="mr2desc"><small>${esc(t.sub||'')}</small>${esc(t.body)}</div>`:''}`;
   }
   // overview strip shown on the round header: one coloured mark per action, in order
   function renderStrip(r,tl){
@@ -366,10 +461,18 @@
     }).join('');
     return marks?`<span class="mr2strip">${marks}</span>`:'';
   }
+  const MOVE_ORDER=['draw','discard','exhaust','shuffle','retrieve','create','tograve','todraw'];
+  // merge same-kind card moves so a turn's draw / discard reads as one line
+  function moveRows(list){
+    const by=new Map();for(const e of list){const o=by.get(e.mv)||{mv:e.mv,uids:[],html:[],n:0};o.n+=e.count||1;o.html.push(e.html);by.set(e.mv,o)}
+    return MOVE_ORDER.filter(k=>by.has(k)).map(k=>{const o=by.get(k);return `<div class="mr2row mv">${o.html.join('')}${o.n>1?`<span class="mr2tag">${ui(`共 ${o.n} 张`,`${o.n} cards`)}</span>`:''}</div>`}).join('');
+  }
   function renderEffects(fx,tl){
-    const rows=[],chips=[],hidden=[],props=[];
+    const rows=[],moves=[],stats=[],chips=[],hidden=[],props=[];
     for(const e of fx){
       if(['damage','heal'].includes(e.kind))rows.push(e);
+      else if(e.kind==='move')moves.push(e);
+      else if(e.kind==='stat')stats.push(e);
       else if(e.kind==='state'&&e.hidden)hidden.push(e);
       else if(e.kind==='property')props.push(e);
       else chips.push(e);
@@ -379,23 +482,26 @@
     const flow=list=>list.length?`<div class="mr2flow">${list.map(e=>e.html).join('')}</div>`:'';
     const small=[...chips.filter(e=>['trigger','select','swallow','relic'].includes(e.kind)).map(e=>`<div class="mr2row">${e.html}</div>`)].join('');
     const stateChips=chips.filter(e=>!['trigger','select','swallow','relic'].includes(e.kind));
-    const minor=props.length+stateChips.length+hidden.length;
-    return `${hit}${small}${minor?`<details class="mr2minor"><summary>${[props.length?ui(`资源变化 ${props.length}`,`Resources ${props.length}`):'',stateChips.length?ui(`状态变化 ${stateChips.length}`,`States ${stateChips.length}`):'',hidden.length?ui(`内部状态 ${hidden.length}`,`Hidden ${hidden.length}`):''].filter(Boolean).join(' · ')}</summary>${props.length?`<div class="mr2flow">${propGroups(props,tl)}</div>`:''}${flow(stateChips)}${flow(hidden)}</details>`:''}`;
+    const minor=props.length+stateChips.length+hidden.length+stats.length;
+    const label=[props.length?ui(`资源变化 ${props.length}`,`Resources ${props.length}`):'',stats.length?ui(`属性变化 ${stats.length}`,`Stats ${stats.length}`):'',stateChips.length?ui(`状态变化 ${stateChips.length}`,`States ${stateChips.length}`):'',hidden.length?ui(`内部状态 ${hidden.length}`,`Hidden ${hidden.length}`):''].filter(Boolean).join(' · ');
+    return `${hit}${moveRows(moves)}${small}${minor?`<details class="mr2minor"><summary>${label}</summary>${props.length?`<div class="mr2flow">${propGroups(props,tl)}</div>`:''}${flow(stats)}${flow(stateChips)}${flow(hidden)}</details>`:''}`;
   }
   function renderSettle(events,title,tl){
     if(!events.length)return '';
-    const agg=new Map(),states=[],others=[];
+    const agg=new Map(),states=[],others=[],moves=[],stats=[];
     for(const e of events){
       if(e.kind==='property'){const k=`${e.actorUid}|${e.property}`;const o=agg.get(k)||{e,sum:0};o.sum+=e.changedValue;agg.set(k,o)}
       else if(e.kind==='state')states.push(e);
+      else if(e.kind==='move')moves.push(e);
+      else if(e.kind==='stat')stats.push(e);
       else others.push(e);
     }
     const resBy=new Map();for(const {e,sum} of agg.values()){if(!sum)continue;const o=resBy.get(String(e.actorUid))||{uid:e.actorUid,items:[]};o.items.push(`<span class="mr2res ${esc(e.property)} ${sum<0?'neg':'pos'}"><i></i>${esc(RES_LABEL[e.property]||e.property)} ${sum>0?'+':''}${fmt(sum)}</span>`);resBy.set(String(e.actorUid),o)}
     const resHtml=resBy.size?`<span class="mr2flow">${[...resBy.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.join('')}</span>`).join('')}</span>`:'';
     const hiddenN=states.filter(e=>e.hidden).length,shown=states.filter(e=>!e.hidden);
-    const detail=`${shown.length?`<div class="mr2flow">${shown.map(e=>e.html).join('')}</div>`:''}${hiddenN?`<div class="mr2flow">${states.filter(e=>e.hidden).map(e=>e.html).join('')}</div>`:''}${others.map(e=>`<div class="mr2row">${e.html}</div>`).join('')}`;
-    const count=states.length+others.length;
-    return `<div class="mr2settle"><div class="mr2settlehead"><span class="mr2sttl">${esc(title)}</span>${resHtml}</div>${count?`<details class="mr2minor"><summary>${ui(`状态变化 ${count}${hiddenN?`（含内部 ${hiddenN}）`:''}`,`State changes ${count}`)}</summary>${detail}</details>`:''}</div>`;
+    const detail=`${stats.length?`<div class="mr2flow">${stats.map(e=>e.html).join('')}</div>`:''}${shown.length?`<div class="mr2flow">${shown.map(e=>e.html).join('')}</div>`:''}${hiddenN?`<div class="mr2flow">${states.filter(e=>e.hidden).map(e=>e.html).join('')}</div>`:''}${others.map(e=>`<div class="mr2row">${e.html}</div>`).join('')}`;
+    const count=states.length+others.length+stats.length;
+    return `<div class="mr2settle"><div class="mr2settlehead"><span class="mr2sttl">${esc(title)}</span>${resHtml}</div>${moves.length?moveRows(moves):''}${count?`<details class="mr2minor"><summary>${ui(`状态/属性变化 ${count}${hiddenN?`（含内部 ${hiddenN}）`:''}`,`State & stat changes ${count}`)}</summary>${detail}</details>`:''}</div>`;
   }
   function renderRound(r,tl,open){
     const sides=[];let cur=null;
@@ -430,9 +536,12 @@
   function unitStates(u,tl){
     const vis=(u.states||[]).filter(x=>tl.res.state[String(x.stateId)]?.ShowType!=='Hide');
     if(!vis.length)return '';
-    const shown=vis.slice(0,14);
-    return `<div class="mr2ustates">${shown.map(x=>`<span class="mr2ust" title="${esc(`${tl.res.nameState(x.stateId)} ×${x.layer} · state ${x.stateId}`)}">${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer}</em>`:''}</span></span>`).join('')}${vis.length>shown.length?`<span class="mr2ust more">+${vis.length-shown.length}</span>`:''}</div>`;
+    const rank={affix:0,debuff:1,buff:2};
+    vis.sort((a,b)=>rank[stateClass(tl.res,a.stateId)]-rank[stateClass(tl.res,b.stateId)]||b.layer-a.layer);
+    const shown=vis.slice(0,16);
+    return `<div class="mr2ustates">${shown.map(x=>`<span class="mr2ust ${stateClass(tl.res,x.stateId)}"${x.tip||stateTipAttr(tl.res,x.stateId,{layer:x.layer})}>${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer}</em>`:''}</span></span>`).join('')}${vis.length>shown.length?`<span class="mr2ust more">+${vis.length-shown.length}</span>`:''}</div>`;
   }
+  const unitStats=(u,tl)=>(u.stats||[]).length?`<div class="mr2ustats">${u.stats.map(x=>`<span class="mr2uss" title="${esc(x.k)}">${esc(statName(tl.res,x.k))}<b>${esc(fmtStat(x.k,x.v))}</b></span>`).join('')}</div>`:'';
   function renderUnit(u,tl,prev){
     const a=tl.actors.get(String(u.uid));if(!a)return '';
     const enemy=a.camp===2,hasHp=u.hp!=null&&u.max>0,p=hasHp?Math.max(0,Math.min(100,u.hp/u.max*100)):0;
@@ -448,8 +557,8 @@
       const kk=u.kMax>0?`<div class="mr2mini key" title="${esc(ui('钥令能量','Keyflare'))} ${fmt(u.kEnergy||0)} / ${fmt(u.kMax)}"><i style="width:${Math.min(100,(u.kEnergy||0)/u.kMax*100).toFixed(1)}%"></i><span>${ui('钥令能量','Keyflare')} ${fmt(u.kEnergy||0)}</span></div>`:'';
       extra=`${pips}${kk}`;
     }
-    const intent=enemy&&u.intent?`<span class="mr2intent">${ui('下一步','Next')}：${esc(tl.res.nameSkill(u.intent))}</span>`:'';
-    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStates(u,tl)}</div></div>`;
+    const intent=enemy&&u.intent?`<span class="mr2intent"${u.intentTip||''}>${ui('下一步','Next')}：${esc(tl.res.nameSkill(u.intent))}</span>`:'';
+    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStats(u,tl)}${unitStates(u,tl)}</div></div>`;
   }
   function renderBoard(sn,prev,tl,title){
     if(!sn)return '';
@@ -458,11 +567,33 @@
     const foe=sn.units.filter(u=>tl.actors.get(String(u.uid))?.camp===2);
     return `<div class="mr2boardwrap"><div class="mr2boardtitle">${esc(title)}</div><div class="mr2board"><div class="mr2bcol ally">${ally.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div><div class="mr2bcol enemy">${foe.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div></div>`;
   }
+
+  // ---- interactions: floating tooltip + expandable descriptions ----------------------
+  function wireInteractions(host){
+    let tip=document.getElementById('mr2tip');
+    if(!tip){tip=document.createElement('div');tip.id='mr2tip';document.body.appendChild(tip)}
+    const hide=()=>{tip.style.display='none'};
+    const place=(x,y)=>{const w=tip.offsetWidth,h=tip.offsetHeight,vw=innerWidth,vh=innerHeight;let l=x+16,t=y+16;if(l+w>vw-8)l=Math.max(8,x-w-16);if(t+h>vh-8)t=Math.max(8,y-h-16);tip.style.left=`${l}px`;tip.style.top=`${t}px`};
+    const show=(el,x,y)=>{const t=el.getAttribute('data-tipt'),sub=el.getAttribute('data-tips'),b=el.getAttribute('data-tip');tip.innerHTML=`<b>${esc(t)}</b>${sub?`<small>${esc(sub)}</small>`:''}${b?`<p>${esc(b)}</p>`:''}`;tip.style.display='block';place(x,y)};
+    if(!host.__mr2wired){
+      host.__mr2wired=true;
+      host.addEventListener('mouseover',e=>{const el=e.target.closest?.('[data-tipt]');if(el)show(el,e.clientX,e.clientY);else hide()});
+      host.addEventListener('mousemove',e=>{if(tip.style.display==='block')place(e.clientX,e.clientY)});
+      host.addEventListener('mouseleave',hide);
+      host.addEventListener('click',e=>{
+        const head=e.target.closest?.('.mr2acthead[data-toggle]');if(head&&!e.target.closest('a,button'))head.closest('.mr2act')?.classList.toggle('descopen');
+        if(e.target.id==='mr2ShowDesc')host.classList.toggle('mr2showdesc',e.target.checked);
+        const el=e.target.closest?.('[data-tipt]');if(el&&matchMedia('(hover:none)').matches)show(el,e.clientX,e.clientY)
+      });
+    }
+    const box=host.querySelector('#mr2ShowDesc');if(box)box.checked=host.classList.contains('mr2showdesc');
+  }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
     Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
     const eventHtml=rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
-    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
+    setTimeout(()=>wireInteractions(host),0);
+    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2toolbar"><label class="mr2tog"><input type="checkbox" id="mr2ShowDesc"> ${ui('展开所有效果说明','Expand all effect descriptions')}</label><span class="mr2from">${ui('鼠标悬停在卡牌、钥令、意图、状态、造物上可看详细效果；点击行动卡片标题可单独展开。','Hover cards, keyflare skills, intents, states and relics for details; click an action header to expand it.')}</span></div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
   }
   async function loadLegacy(uuid){try{const r=await fetch(`${LOCAL_BASE}/${uuid}.json`,{cache:'no-cache'});return r.ok?await r.json():null}catch{return null}}
   async function analyze(raw){
