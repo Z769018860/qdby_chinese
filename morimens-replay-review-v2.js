@@ -151,6 +151,7 @@
   const monsterPortrait=(res,tid)=>{const b=baseName(res.monster[String(tid)]?.MiniIcon);return b?`${ART}/monster-preview/${b}.webp`:''};
 
   // ---- description engine (tooltips / expandable details) ----------------------------
+  const asList=v=>Array.isArray(v)?v:(v==null||v===''?[]:typeof v==='object'?Object.values(v):[v]);
   const stripMarkup=t=>String(t||'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'');
   function pickVariant(v,level){
     if(v==null)return '';if(typeof v==='string')return v;if(Array.isArray(v))return pickVariant(v[0],level);
@@ -177,7 +178,7 @@
     const r=res.skill[String(id)];if(!r)return {title:`#${id}`,sub:'',body:''};
     const tpl=pickVariant(r.BattleDesc,o.level)||pickVariant(r.Desc,o.level);
     const args=o.args&&o.args.length?o.args:paramsToArgs(r.Para,o.ctx||{});
-    const sub=[typeLabel(r.Type),r.Cost!=null&&!(r.Type||[]).some(t=>/Ulti|Keeper|Intent/.test(t))?`${ui('算力','Cost')} ${r.Cost}`:''].filter(Boolean).join(' · ');
+    const sub=[typeLabel(asList(r.Type)),r.Cost!=null&&!asList(r.Type).some(t=>/Ulti|Keeper|Intent/.test(t))?`${ui('算力','Cost')} ${r.Cost}`:''].filter(Boolean).join(' · ');
     return {title:res.nameSkill(id),sub,body:fillArgs(pipeName(tpl),args)||ui('（无描述）','(no description)')};
   }
   const skillTipAttr=(res,id,o)=>{const t=skillTip(res,id,o);return tipAttr(t.title,t.sub,t.body)};
@@ -192,9 +193,12 @@
   const relicTipAttr=(res,tid,args)=>{const r=res.relic[String(tid)]||{};return tipAttr(res.nameRelic(tid),r.Quality||'',fillArgs(pipeName(pickVariant(r.BattleDesc||r.Desc,0)),args&&args.length?args:r.StatePara||[]))};
   const DEBUFF_RE=/易伤|脆弱|中毒|石化|流血|封印|虚弱|诅咒|衰弱|灼烧|恐惧|减速|迟缓|沉默|腐蚀|破甲|畏惧|狂气封印|无用空状态/;
   const stateClass=(res,sid)=>res.state[String(sid)]?.ShowType==='Affix'?'affix':DEBUFF_RE.test(res.nameState(sid))?'debuff':'buff';
-  const STAT_NAME={crit_damage_from_strikecard:'打击暴击伤害',crit_damage_from_ulti:'爆发暴击伤害',o_damage_per:'基础伤害',o_damage_per_card:'卡牌基础伤害',o_damage_per_strikecard:'打击基础伤害',o_damage_per_attachpost:'追击基础伤害',o_damage_per_ulti:'爆发基础伤害',i_state_layer_per_power:'力量获取效果',ulti_energy_per:'狂气获取效果',awaker_ulti_heal_per:'爆发治疗',awaker_ulti_block_per:'爆发护盾',i_state_layer_per_posion:'中毒施加',i_state_layer_per_counterattack:'反击施加',death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
-  const statName=(res,k)=>STAT_NAME[k]||String(res.rr?.BattleApi?.[k]?.CnID||k).replace(/(唤醒体|角色|卡牌)属性$/,'').trim();
-  const STAT_PCT=new Set(['o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_state_layer_per_power','ulti_energy_per','awaker_ulti_heal_per','awaker_ulti_block_per','i_state_layer_per_posion','i_state_layer_per_counterattack','awaker_ulti_dmg_per','o_damage_per','basic_damage_per','crit_damage_from_strikecard','keeper_energy_eff_2','i_basic_damage_per','occupation_master_pct','crit','crit_damage','vulnerable_per','frail_per','i_damage_per','i_basic_damage_per','i_damage_per_strikecard','crit_damage_from_ulti','crit_per_from_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','damage_per2petrify_resist','ulti_strength_multiple','keeper_energy_eff']);
+  const STAT_NAME={o_block_per:'护盾强效',block_per_defendcard:'防御牌护盾加成',black_upgrade_plus:'黑印强化',o_heal_per:'治疗强效',block_heal_per:'护盾和治疗强效',crit_damage_from_strikecard:'打击暴击伤害',crit_damage_from_ulti:'爆发暴击伤害',o_damage_per:'基础伤害',o_damage_per_card:'卡牌基础伤害',o_damage_per_strikecard:'打击基础伤害',o_damage_per_attachpost:'追击基础伤害',o_damage_per_ulti:'爆发基础伤害',i_state_layer_per_power:'力量获取效果',ulti_energy_per:'狂气获取效果',awaker_ulti_heal_per:'爆发治疗',awaker_ulti_block_per:'爆发护盾',i_state_layer_per_posion:'中毒施加',i_state_layer_per_counterattack:'反击施加',death_resist:'死亡抵抗',death_resist_times:'死亡抵抗次数',damage_plus:'伤害强效',strikecard_damage_plus:'打击伤害强效',crit:'暴击率',crit_damage:'暴击伤害',tentacle_dmg:'触腕伤害',vulnerable_per:'易伤增幅',frail_per:'脆弱增幅',i_damage_per:'伤害加成',i_basic_damage_per:'基础伤害加成',i_damage_per_strikecard:'打击伤害加成',keeper_energy_eff:'钥能效率',scarlet_blood_count:'胚胎融合度',relic_num_limit:'造物上限',ulti_strength_multiple:'爆发倍率',atk:'攻击',def:'防御',certain_crit:'必暴击',seal_ulti:'狂气封印',bout_ulti_times:'本回合爆发次数',awaked:'觉醒',rewind_bout:'回溯',crit_damage_from_ulti:'爆发暴击伤害',crit_per_from_strikecard:'打击暴击率',awaker_ulti_dmg_per:'爆发伤害加成',damage_per2monster_boss:'对首领增伤',damage_per2petrify_resist:'对石化抗性增伤',max_energy:'算力上限',bout_skill_times:'本回合钥令次数'};
+  const SCOPE_NAME={card:'卡牌',strikecard:'打击',ulti:'爆发',attachpost:'追击',defendcard:'防御牌',skill:'技能牌'};
+  // generic fallback for property keys shaped like [o_]block|heal|damage_per[_scope]
+  const composedStatName=k=>{const m=String(k).match(/^(o_)?(block|heal|damage)_per(?:_([a-z]+))?$/);if(!m)return '';return `${SCOPE_NAME[m[3]]||''}${{block:'护盾',heal:'治疗',damage:'伤害'}[m[2]]}加成`};
+  const statName=(res,k)=>STAT_NAME[k]||composedStatName(k)||String(res.rr?.BattleApi?.[k]?.CnID||k).replace(/(唤醒体|角色|卡牌)属性$/,'').trim();
+  const STAT_PCT=new Set(['o_block_per','block_per_defendcard','o_heal_per','block_heal_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_state_layer_per_power','ulti_energy_per','awaker_ulti_heal_per','awaker_ulti_block_per','i_state_layer_per_posion','i_state_layer_per_counterattack','awaker_ulti_dmg_per','o_damage_per','basic_damage_per','crit_damage_from_strikecard','keeper_energy_eff_2','i_basic_damage_per','occupation_master_pct','crit','crit_damage','vulnerable_per','frail_per','i_damage_per','i_basic_damage_per','i_damage_per_strikecard','crit_damage_from_ulti','crit_per_from_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','damage_per2petrify_resist','ulti_strength_multiple','keeper_energy_eff']);
   // stats shown on each unit of the battlefield board (death resist / blackcoin deliberately left out)
   function boardStats(a,pr){
     const out=[],add=(k,label,v,pct=true)=>{if(v)out.push({k,label,v,pct})};
@@ -223,7 +227,7 @@
     }
     return out;
   }
-  const fmtStat=(k,v)=>{const n=Math.round((Number(v)||0)*10)/10;return `${fmt(n)}${STAT_PCT.has(k)&&k!=='ulti_strength_multiple'?'%':''}`};
+  const fmtStat=(k,v)=>{const n=Math.round((Number(v)||0)*10)/10;return `${fmt(n)}${(STAT_PCT.has(k)||/_per(_|$)/.test(k))&&k!=='ulti_strength_multiple'?'%':''}`};
   // card movement between piles
   function moveKind(oldDeck,newDeck,reason){
     if(oldDeck==='DrawDeck'&&newDeck==='HandDeck')return 'draw';
@@ -255,6 +259,8 @@
       }
       for(const fr of md?.frameList||[]){
         const d=fr?.data||{},e=fr?.eventId;
+        if(e===1046&&d.targetRelicList&&typeof d.targetRelicList==='object')for(const r of Object.values(d.targetRelicList))if(r?.uid!=null)relics.set(String(r.uid),{uid:r.uid,tid:r.tid});
+        if(e===1084&&d.relic?.uid!=null)relics.set(String(d.relic.uid),{uid:d.relic.uid,tid:d.relic.tid});
         if(e===1025)for(const c of d.cards||[])addCard(c.uid,c.tid??c.configId,c.ownerUid,c);
         else if(e===1067)addCard(d.uid,d.tid??d.configId,d.ownerUid,d);
         else if(e===1035)addCard(d.cardUid,d.tid??d.configId,d.ownerUid,d);
@@ -436,7 +442,7 @@
           }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:res.skill[String(tid)]?.Type||[],tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});continue;
+            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});continue;
           }
           if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});continue}
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
@@ -446,17 +452,18 @@
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
-              hitLog.push({uid:String(h.castRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,
+              hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,
                 vOn,vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
             push(typ,`${plainName(h.castRoleUid)} → ${plainName(h.targetRoleUid)} · ${sname} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,html,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue;
           }
+          if(e===1084&&d.relic?.tid!=null){const nm=res.nameRelic(d.relic.tid);push('relic',`${ui('获得造物','Relic gained')} · ${nm}`,`<span class="mr2lead">${ui('获得造物','Gained')}</span><span class="mr2chip relic"${relicTipAttr(res,d.relic.tid)}>${ico(relicIconSrc(res,d.relic.tid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relic.tid,gained:true});continue}
           if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic"${relicTipAttr(res,d.relicTid)}>${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
-          if(e===1046&&Array.isArray(d.targetUids)&&d.targetUids.length>1&&d.targetUids.every(t=>typeof t==='number'&&(res.skill[String(t)]?.Type||[]).includes('Keeper_Skill')))keeperPicks.push({round:bout,time:fr.time,options:d.targetUids.slice(),chosen:null,via:d.skillConfigId});
+          if(e===1046&&Array.isArray(d.targetUids)&&d.targetUids.length>1&&d.targetUids.every(t=>typeof t==='number'&&asList(res.skill[String(t)]?.Type).includes('Keeper_Skill')))keeperPicks.push({round:bout,time:fr.time,options:d.targetUids.slice(),chosen:null,via:d.skillConfigId});
           if(e===1064){const pk=[...keeperPicks].reverse().find(x=>x.chosen==null&&x.options.includes(d.skillId));if(pk)pk.chosen=d.skillId}
-          if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
+          if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${d.targetRelicList?ui('选择造物','Relic choice'):ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${d.targetRelicList?ui('选择造物','Pick relic'):ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
           if(e===1049){const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
           if(e===1004||e===1007){
             const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner),tipS=stateTipAttr(res,sid,{args:d.descArgs?.curValues,layer:d.newLayer??d.layer,props:board.get(String(owner))?.props});
@@ -676,6 +683,8 @@
     const count=states.length+others.length+stats.length;
     return `<div class="mr2settle"><div class="mr2settlehead"><span class="mr2sttl">${esc(title)}</span>${resHtml}</div>${moves.length?moveRows(moves):''}${count?`<details class="mr2minor"><summary>${ui(`状态/属性变化 ${count}${hiddenN?`（含内部 ${hiddenN}）`:''}`,`State & stat changes ${count}`)}</summary>${detail}</details>`:''}</div>`;
   }
+  // the full board of each action is only built when its <details> is opened (long battles have hundreds of them)
+  let snapStore=[];
   // battlefield right after one action: collapsed summary line (keeper / enemy hp + enemy debuffs), full board on expand
   function renderActionSnap(before,after,tl){
     if(!after)return '';
@@ -685,7 +694,8 @@
       const debuffs=a.kind==='monster'?(u.states||[]).filter(x=>tl.res.state[String(x.stateId)]?.ShowType!=='Hide').sort((x,y)=>(stateClass(tl.res,x.stateId)==='debuff'?0:1)-(stateClass(tl.res,y.stateId)==='debuff'?0:1)).slice(0,8):[];
       return `<span class="mr2snapchip${a.kind==='monster'?' enemy':''}"><b>${esc(a.name)}</b>${hpMiniBar(p,a.kind==='monster')}<span class="mr2from">${p.toFixed(p<10?2:p<100?1:0)}%</span>${delta?`<span class="mr2delta ${delta<0?'neg':'pos'}">${delta<0?'▼':'▲'}${kfmt(Math.abs(delta))}</span>`:''}${debuffs.map(x=>`<span class="mr2ust ${stateClass(tl.res,x.stateId)}"${x.tip||''}>${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer>=10000?kfmt(x.layer):x.layer}</em>`:''}</span></span>`).join('')}</span>`;
     }).join('');
-    return `<details class="mr2snap"><summary>${ui('行动后战场','After this action')}${chips}</summary>${renderBoard(after,before,tl,'',{compact:true})}</details>`;
+    const idx=snapStore.push({before,after,tl})-1;
+    return `<details class="mr2snap" data-snap="${idx}"><summary>${ui('行动后战场','After this action')}${chips}</summary><div class="mr2snapbody"></div></details>`;
   }
   const hpMiniBar=(p,enemy)=>`<span class="mr2hpmini${enemy?' enemy':''}"><i style="width:${p.toFixed(1)}%"></i></span>`;
   function renderRound(r,tl,open){
@@ -773,6 +783,7 @@
     const show=(el,x,y)=>{const t=el.getAttribute('data-tipt'),sub=el.getAttribute('data-tips'),b=el.getAttribute('data-tip');tip.innerHTML=`<b>${esc(t)}</b>${sub?`<small>${esc(sub)}</small>`:''}${b?`<p>${esc(b)}</p>`:''}`;tip.style.display='block';place(x,y)};
     if(!host.__mr2wired){
       host.__mr2wired=true;
+      host.addEventListener('toggle',e=>{const d=e.target;if(d?.matches?.('details.mr2snap')&&d.open&&!d.dataset.built){const x=snapStore[Number(d.dataset.snap)];if(x){d.querySelector('.mr2snapbody').innerHTML=renderBoard(x.after,x.before,x.tl,'',{compact:true});d.dataset.built='1'}}},true);
       host.addEventListener('mouseover',e=>{const el=e.target.closest?.('[data-tipt]');if(el)show(el,e.clientX,e.clientY);else hide()});
       host.addEventListener('mousemove',e=>{if(tip.style.display==='block')place(e.clientX,e.clientY)});
       host.addEventListener('mouseleave',hide);
@@ -796,7 +807,7 @@
       const a=tl.actors.get(k),list=byOwner.get(k),ri=roleInfo.get(k);
       const merged=new Map();for(const c of list){const key=`${c.tid}|${c.level}|${c.deck==='NoneDeck'?'x':''}`;const o=merged.get(key)||{c,n:0};o.n++;merged.set(key,o)}
       const cardsHtml=[...merged.values()].map(({c,n})=>{
-        const tid=c.tid??c.configId,r=res.skill[String(tid)]||{},info=actionInfo({kind:'card',stypes:r.Type||[]}),cost=c.cost??r.Cost;
+        const tid=c.tid??c.configId,r=res.skill[String(tid)]||{},info=actionInfo({kind:'card',stypes:asList(r.Type)}),cost=c.cost??r.Cost;
         const args=c.descArgs?.curValues;
         return `<span class="mr2dcard a-${info.cls}"${skillTipAttr(res,tid,{args,level:c.level})}><span class="mr2dcost">${esc(cost==null?'-':cost)}</span><span class="mr2dname"><b>${esc(res.nameSkill(tid))}</b><small>${esc(info.label)}${c.level>1?` · Lv${esc(c.level)}`:''}${c.deck==='NoneDeck'?` · ${ui('场外','Off-deck')}`:''}</small></span>${n>1?`<em class="mr2dn">×${n}</em>`:''}</span>`;
       }).join('');
@@ -820,7 +831,7 @@
   function calibrateHits(tl){
     if(tl.calib)return tl.calib;
     const res=tl.res,log=tl.hitLog||[];
-    const types=h=>res.skill[String(h.skill)]?.Type||[];
+    const types=h=>asList(res.skill[String(h.skill)]?.Type);
     const scopeOf=h=>{const T=types(h);return {card:T.some(t=>String(t).startsWith('Card_')),strike:T.includes('Card_Strike'),attach:T.includes('Card_AttachPost'),ult:T.includes('Ulti_Skill')}};
     // damage-relevant stats of one hit. mode 'basic' = old model (basic pools only), 'full' = calculator-style scoped pools
     const ctxOf=(h,mode='full')=>{
@@ -828,7 +839,7 @@
       const out=g('basic_damage_per')+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
       const inn=g('i_basic_damage_per');
       const fin=full?g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
-      const cd=g('crit_damage')+(full?(sc.strike?g('crit_damage_from_strikecard'):0)+(sc.ult?g('crit_damage_from_ulti'):0):0);
+      const cd=g('crit_damage');
       const S=g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0);
       const atkForce=Math.ceil(g('atk')*(1+g('atk_per')/100));
       return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)};
@@ -849,7 +860,7 @@
     };
     for(const [uid,hits] of byActor){
       const f=fitActor(hits,'full',true),fNoV=fitActor(hits,'full',false),fOld=fitActor(hits,'basic',true);
-      const pairs=new Map();for(const h of hits){const k=`${h.skill}|${h.round}|${JSON.stringify(h.P)}`;const o=pairs.get(k)||{};o[h.crit?'c':'n']=h.dmg;o.cd=ctxOf(h).cd;pairs.set(k,o)}
+      const pairs=new Map();for(const h of hits){const k=`${h.cmd}|${h.skill}|${h.target}|${JSON.stringify(h.P)}|${h.vOn}`;const o=pairs.get(k)||{};o[h.crit?'c':'n']=h.dmg;o.cd=ctxOf(h).cd;pairs.set(k,o)}
       const crit=[...pairs.values()].filter(o=>o.c&&o.n).map(o=>({got:o.c/o.n,want:1+o.cd/100}));
       const a=tl.actors.get(uid),confident=f.distinctS>=3&&f.pts.length>=f.skills.length+3&&f.x!=null&&f.mean<.25;
       if(f.m!=null)fits.set(uid,{m:f.m,confident});
@@ -915,7 +926,7 @@
     if(!havePacks)for(const e of events){if(e.kind!=='damage'&&e.kind!=='heal')continue;const a=actors.get(String(e.actorUid));if(!a||a.camp===2)continue;addSrc(row(a),'skill',e.skillTid,e.kind==='damage'?'AwakerDoDamage':'AwakerDoHeal',e.amount)}
     const totalDmg=[...per.values()].reduce((n,r)=>n+r.dmg,0);
     // relics: trigger counts + output attributed through the states each relic carries
-    const trig=new Map();for(const e of events)if(e.kind==='relic'){const o=trig.get(String(e.relicTid))||{n:0,rounds:new Set()};o.n++;o.rounds.add(e.round);trig.set(String(e.relicTid),o)}
+    const trig=new Map();for(const e of events)if(e.kind==='relic'&&!e.gained){const o=trig.get(String(e.relicTid))||{n:0,rounds:new Set()};o.n++;o.rounds.add(e.round);trig.set(String(e.relicTid),o)}
     const startTids=(bd.relics||[]).map(r=>String(r.tid)),all=[...new Set([...startTids,...trig.keys()])];
     const relicRows=all.map(tid=>{
       const rec=res.relic[tid]||{},sids=[];for(const [k,v] of Object.entries(rec))if(/^State\d+$/.test(k)&&Array.isArray(v))sids.push(...v.map(String));
@@ -946,15 +957,15 @@
     const c=tl.calib;if(!c||!c.report.length)return '';
     const pc=v=>v==null?'—':`${(v*100).toFixed(1)}%`;
     const rows=c.report.map(r=>{
-      const critMax=r.crit.length?Math.max(...r.crit.map(x=>Math.abs(x.got/x.want-1))):null;
-      return `<div class="mr2crow"><b>${esc(r.name)}${r.confident?'':`<small class="lowc">${ui('样本不足','low sample')}</small>`}</b><span>${r.hits}<small>${ui('次命中','hits')} · ${r.contexts} ${ui('种条件','ctx')}</small></span><span>${r.m==null?'—':`×${r.m.toFixed(2)}`}<small>${ui('拟合力量倍率','fitted STR mult')}${r.mOld!=null?` · ${ui(`未计分类池 ×${r.mOld.toFixed(2)}`,`no scoped pools ×${r.mOld.toFixed(2)}`)}`:''}</small></span><span class="${r.calcErr!=null&&r.meanErr!=null&&r.calcErr>r.meanErr*1.5?'bad':''}">${pc(r.calcErr)}<small>${ui('计算器默认 ×1 误差','calc ×1 error')}</small></span><span class="${r.meanErr!=null&&r.meanErr<.1?'good':''}">${pc(r.meanErr)}<small>${ui('拟合后误差','fitted error')}</small></span><span>${r.crit.length?`${(100*(1-critMax)).toFixed(1)}%`:'—'}<small>${ui(`暴击倍率吻合（${r.crit.length} 组）`,`crit match (${r.crit.length})`)}</small></span></div>`;
+      const critOk=r.crit.filter(x=>Math.abs(x.got/x.want-1)<.01).length;
+      return `<div class="mr2crow"><b>${esc(r.name)}${r.confident?'':`<small class="lowc">${ui('样本不足','low sample')}</small>`}</b><span>${r.hits}<small>${ui('次命中','hits')} · ${r.contexts} ${ui('种条件','ctx')}</small></span><span>${r.m==null?'—':`×${r.m.toFixed(2)}`}<small>${ui('拟合力量倍率','fitted STR mult')}${r.mOld!=null?` · ${ui(`未计分类池 ×${r.mOld.toFixed(2)}`,`no scoped pools ×${r.mOld.toFixed(2)}`)}`:''}</small></span><span class="${r.calcErr!=null&&r.meanErr!=null&&r.calcErr>r.meanErr*1.5?'bad':''}">${pc(r.calcErr)}<small>${ui('计算器默认 ×1 误差','calc ×1 error')}</small></span><span class="${r.meanErr!=null&&r.meanErr<.1?'good':''}">${pc(r.meanErr)}<small>${ui('拟合后误差','fitted error')}</small></span><span>${r.crit.length?`${critOk}/${r.crit.length}`:'—'}<small>${ui('暴击倍率精确吻合组数','exact crit pairs')}</small></span></div>`;
     }).join('');
     const fitted=c.report.filter(r=>r.m!=null&&r.confident),ms=fitted.map(r=>r.m).sort((a,b)=>a-b),med=ms.length?ms[Math.floor(ms.length/2)]:null,mo=fitted.filter(r=>r.mOld!=null).map(r=>r.mOld).sort((a,b)=>a-b),oldMed=mo.length?mo[Math.floor(mo.length/2)]:null;
-    const critAll=c.report.flatMap(r=>r.crit),critDev=critAll.length?Math.max(...critAll.map(x=>Math.abs(x.got/x.want-1))):null;
+    const critAll=c.report.flatMap(r=>r.crit),critExact=critAll.filter(x=>Math.abs(x.got/x.want-1)<.01).length;
     const vBetter=fitted.filter(r=>r.meanErr!=null&&r.meanErrNoVuln!=null&&r.meanErr<r.meanErrNoVuln).length;
     const lines=[
-      critDev==null?null:(critDev<.01?`✓ ${ui('暴击：伤害 = 非暴击 × (1 + 暴击伤害%)，在',' Crit: ×(1 + crit damage%) verified on ')}${critAll.length} ${ui('组同条件命中上精确成立（最大偏差','same-context pairs (max deviation ')} ${(critDev*100).toFixed(2)}%）`:`✗ ${ui('暴击倍率与 1 + 暴击伤害% 有偏差，最大','Crit multiplier deviates from 1 + crit damage%, max ')} ${(critDev*100).toFixed(1)}%`),
-      med==null?(c.report.some(r=>r.m!=null)?`△ ${ui('可拟合的角色样本太少（需要至少 3 种力量取值且条件数多于技能数），暂不下结论','Too few contexts to conclude')}`:null):`${Math.abs(med-1)>.3?'✗':'✓'} ${ui(`力量倍率：计入分类基伤池（卡牌 / 打击 / 追击 / 爆发）和终伤池（局内伤害、对首领增伤）后，拟合力量倍率由约 ×${(oldMed||med).toFixed(2)} 降到 ×${med.toFixed(2)}（计算器默认 ×1）。${Math.abs(med-1)>.3?'剩余差距可能来自触腕/其他加算项或未识别的乘区。':'与计算器默认基本一致。'}`,`Strength multiplier: with scoped base pools and final pools the fit drops from ×${(oldMed||med).toFixed(2)} to ×${med.toFixed(2)} (calculator: ×1).`)}`,
+      !critAll.length?null:(critExact/critAll.length>=.85?`✓ ${ui(`暴击：伤害 = 非暴击 × (1 + 暴击伤害%)，在 ${critAll.length} 组同条件命中中有 ${critExact} 组精确成立（偏差 <1%）${critAll.length>critExact?'；其余个别组可能是该次命中被护盾抵挡/溢出等拆分了伤害':''}`,`Crit: ×(1 + crit damage%) holds exactly in ${critExact}/${critAll.length} same-context pairs`)}`:`✗ ${ui(`暴击倍率只有 ${critExact}/${critAll.length} 组与 1 + 暴击伤害% 吻合`,`Crit multiplier matches 1 + crit damage% in only ${critExact}/${critAll.length} pairs`)}`),
+      med==null?(c.report.some(r=>r.m!=null)?`△ ${ui('可拟合的角色样本太少（需要至少 3 种力量取值且条件数多于技能数），暂不下结论','Too few contexts to conclude')}`:null):`${Math.abs(med-1)>.3?'✗':'✓'} ${ui(`力量倍率：计入分类基伤池（卡牌 / 打击 / 追击 / 爆发）和终伤池（局内伤害、对首领增伤）后，${oldMed&&Math.abs(oldMed-med)>.1*med?`拟合力量倍率由约 ×${oldMed.toFixed(2)} 降到 ×${med.toFixed(2)}`:`拟合力量倍率约 ×${med.toFixed(2)}`}（计算器默认 ×1）。${Math.abs(med-1)>.3?'剩余差距可能来自触腕/其他加算项或未识别的乘区。':'与计算器默认基本一致。'}`,`Strength multiplier: with scoped base pools and final pools the fit drops from ×${(oldMed||med).toFixed(2)} to ×${med.toFixed(2)} (calculator: ×1).`)}`,
       fitted.length?(vBetter>=Math.ceil(fitted.length/2)?`✓ ${ui('易伤：对带易伤的目标按 ×(1 + 易伤增幅) 计入后拟合更准','Vulnerability ×(1 + amp) improves the fit')}`:`? ${ui('易伤乘区本场无法确认（样本不足或已被其他乘区吸收）','Vulnerability could not be confirmed on this sample')}`):null,
       fitted.length?`${fitted.every(r=>r.meanErr<.1)?'✓':'△'} ${ui('公式顺序（攻击力×系数×基伤池 → +力量 → ×易伤 → ×暴击）拟合后平均误差','Formula order fits with mean error ')}${pc(fitted.reduce((a,r)=>a+r.meanErr,0)/fitted.length)}${fitted.some(r=>r.maxErr>.2)?ui('，个别条件偏差超过 20%，说明还有未建模的乘区（如终伤池、伤害强效、状态加成）','; some contexts deviate >20%: unmodelled multipliers'):''}`:null
     ].filter(Boolean);
@@ -966,7 +977,7 @@
     if(!st.gearRows.length)return '';
     const res=tl.res,total=st.totalDmg;
     const ownerChips=g=>g.owners.map(u=>tl.chip(u)).join('');
-    const staticChips=g=>g.statics.map(x=>`<span class="mr2stat pos" title="${esc(x.prop)}">${esc(statName(res,x.prop))} +${esc(fmtStat(x.prop,x.val))}${STAT_PCT.has(x.prop)||/_per/.test(x.prop)?'%':''}</span>`).join('');
+    const staticChips=g=>g.statics.map(x=>`<span class="mr2stat pos" title="${esc(x.prop)}">${esc(statName(res,x.prop))} +${esc(fmtStat(x.prop,x.val))}</span>`).join('');
     const outChips=g=>`${g.out.dmg?`<em class="d">${ui('伤害','DMG')} ${fmt(g.out.dmg)}</em>`:''}${g.out.block?`<em class="b">${ui('护盾','Shield')} ${fmt(g.out.block)}</em>`:''}${g.out.heal?`<em class="h">${ui('治疗','Heal')} ${fmt(g.out.heal)}</em>`:''}`;
     const card=g=>{
       const isW=g.kind==='wheel',kindTag=isW?ui('命轮','Wheel'):ui('密契','Covenant');
@@ -1007,7 +1018,7 @@
         </div>
         ${bar(r.dmg/maxDmg,'dmg')}
         ${types?`<div class="mr2flow">${types}</div>`:''}
-        ${srcs.length?`<details class="mr2minor"><summary>${ui('伤害/护盾来源明细','Output by source')} ${srcs.length}</summary><div class="mr2srcs">${srcs.map(o=>{const v=o.dmg||o.block||o.heal,lab=o.dmg?ui('伤害','DMG'):o.block?ui('护盾','Shield'):ui('治疗','Heal'),sk=o.typ==='state'?'':(res.skill[String(o.id)]?.Type||[]);return `<div class="mr2srow"><span class="mr2sname">${esc(srcName(o))}${o.typ==='utilSkill'?`<small>${ui('爆发','Burst')}</small>`:o.typ==='state'?`<small>${ui('状态','State')}</small>`:''}</span>${bar(v/top,o.dmg?'dmg':o.block?'blk':'heal')}<b>${fmt(v)}</b><small>${lab}${o.dmg&&r.dmg?` ${pctOf(o.dmg,r.dmg)}%`:''}</small></div>`}).join('')}</div></details>`:''}
+        ${srcs.length?`<details class="mr2minor"><summary>${ui('伤害/护盾来源明细','Output by source')} ${srcs.length}</summary><div class="mr2srcs">${srcs.map(o=>{const v=o.dmg||o.block||o.heal,lab=o.dmg?ui('伤害','DMG'):o.block?ui('护盾','Shield'):ui('治疗','Heal'),sk=o.typ==='state'?'':asList(res.skill[String(o.id)]?.Type);return `<div class="mr2srow"><span class="mr2sname">${esc(srcName(o))}${o.typ==='utilSkill'?`<small>${ui('爆发','Burst')}</small>`:o.typ==='state'?`<small>${ui('状态','State')}</small>`:''}</span>${bar(v/top,o.dmg?'dmg':o.block?'blk':'heal')}<b>${fmt(v)}</b><small>${lab}${o.dmg&&r.dmg?` ${pctOf(o.dmg,r.dmg)}%`:''}</small></div>`}).join('')}</div></details>`:''}
       </div>`;
     }).join('');
     const orderRow=(list,label)=>list.length?`<div class="mr2sorder"><h5>${label}</h5><div class="mr2flow">${list.map((o,i)=>`<span class="mr2step"><i>${i+1}</i>${ico(o.a.icon,o.a.name,'av sm2')}<span><b>${esc(o.a.name)}</b><small>${ui(`第 ${o.round} 回合`,`R${o.round}`)} · ${esc(o.name)}</small></span></span>`).join('')}</div></div>`:'';
@@ -1036,7 +1047,7 @@
     </div></details>`;
   }
   function renderFull(full){
-    const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
+    const host=document.getElementById('mrReplayResult');if(!host)return;snapStore=[];const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
     Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
     const openingHtml=renderOpening(full,tl)+renderStats(full,tl);
     const eventHtml=openingHtml+rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
@@ -1059,5 +1070,5 @@
     enhance();new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType===1)enhance(n)}).observe(document.body,{subtree:true,childList:true});if(location.hash==='#replay')activateTab();return true;
   }
   if(!setup()){const mo=new MutationObserver(()=>{if(setup())mo.disconnect()});mo.observe(document.documentElement,{subtree:true,childList:true})}
-  window.MorimensReplayReview={analyze,fetchReplay,buildTimeline,unpackLz4Msgpack};
+  window.MorimensReplayReview={analyze,fetchReplay,buildTimeline,unpackLz4Msgpack,calibrateHits,computeStats};
 })();

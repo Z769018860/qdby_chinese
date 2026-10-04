@@ -20,8 +20,9 @@ def basename(url):
 
 def main():
     gloss = json.load(open(os.path.join(ROOT, "data/morimens/game/glossary.json"), encoding="utf-8"))["entries"]
-    zh_wheel = {e["en"]: e["zh"] for e in gloss if e.get("k") == "wheel"}
-    zh_cov = {e["en"]: e["zh"] for e in gloss if e.get("k") == "covenant"}
+    norm = lambda t: str(t or "").replace("\xa0", " ").strip()
+    zh_wheel = {norm(e["en"]): e["zh"] for e in gloss if e.get("k") == "wheel"}
+    zh_cov = {norm(e["en"]): e["zh"] for e in gloss if e.get("k") == "covenant"}
     wheels, covenants = {}, {}
     for path in sorted(glob.glob(os.path.join(ROOT, "data/morimens/eremora/seasons/*.json"))):
         try:
@@ -36,11 +37,11 @@ def main():
                         for w in m.get("wheels") or []:
                             wid = str(w.get("id"))
                             if wid not in wheels and w.get("name"):
-                                wheels[wid] = {"en": w["name"], "zh": zh_wheel.get(w["name"], ""), "icon": basename(w.get("image")), "rarity": w.get("rarity", "")}
+                                wheels[wid] = {"en": norm(w["name"]), "zh": zh_wheel.get(norm(w["name"]), ""), "icon": basename(w.get("image")), "rarity": w.get("rarity", "")}
                         for c in m.get("covenants") or []:
                             cid = str(c.get("id"))
                             if cid not in covenants and c.get("name"):
-                                covenants[cid] = {"en": c["name"], "zh": zh_cov.get(c["name"], ""), "icon": basename(c.get("image")), "effects": [{"pieces": e.get("pieces"), "desc": re.sub(r"<[A-Za-z]+:([^>]*)>", r"\1", e.get("desc", ""))} for e in c.get("effects", [])]}
+                                covenants[cid] = {"en": norm(c["name"]), "zh": zh_cov.get(norm(c["name"]), ""), "icon": basename(c.get("image")), "effects": [{"pieces": e.get("pieces"), "desc": re.sub(r"<[A-Za-z]+:([^>]*)>", r"\1", e.get("desc", ""))} for e in c.get("effects", [])]}
     # covenants known only from the glossary (never seen in the season data)
     seen = {v["en"] for v in covenants.values()}
     for en, zh in zh_cov.items():
