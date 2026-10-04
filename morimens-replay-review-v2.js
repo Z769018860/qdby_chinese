@@ -340,7 +340,7 @@
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];
-    const HIT_PROPS=['atk','atk_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
+    const HIT_PROPS=['atk','atk_per','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
     // ---- equipment: wheels (命轮, 'Weapon' state source) and covenant sets (密契, '状态@饰品X' states)
     const PROP_KIND={awaker_ulti_dmg_per:['final','ult'],o_damage_per:['out','all'],o_damage_per_card:['out','card'],o_damage_per_strikecard:['out','strike'],o_damage_per_attachpost:['out','attach'],o_damage_per_ulti:['out','ult'],basic_damage_per:['out','all'],i_basic_damage_per:['in','all'],
       i_damage_per:['final','all'],i_damage_per_strikecard:['final','strike'],damage_per2monster_boss:['final','all'],crit_damage:['crit','all'],crit_damage_from_strikecard:['crit','strike'],crit_damage_from_ulti:['crit','ult'],damage_plus:['power','all'],strikecard_damage_plus:['power','strike']};
@@ -980,6 +980,8 @@
   function calibrateHits(tl){
     if(tl.calib)return tl.calib;
     const res=tl.res,log=tl.hitLog||[];
+    // which stat a skill scales with: the first Battle*Force token in its parameter formula (default ATK)
+    const fkMemo=new Map(),forceKind=tid=>{const k=String(tid);if(!fkMemo.has(k)){const pa=res.skill[k]?.Para,t=typeof pa==='string'?pa:JSON.stringify(pa?.['0']??pa?.['1']??pa??''),m=t.match(/Battle(Atk|Def|Physique)Force/);fkMemo.set(k,m?(m[1]==='Def'?'def':m[1]==='Physique'?'phys':'atk'):'atk')}return fkMemo.get(k)};
     const types=h=>asList(res.skill[String(h.skill)]?.Type);
     const scopeOf=h=>{const T=types(h);return {card:T.some(t=>String(t).startsWith('Card_')),strike:T.includes('Card_Strike'),attach:T.includes('Card_AttachPost'),ult:T.includes('Ulti_Skill')}};
     // damage-relevant stats of one hit. mode 'basic' = old model (basic pools only), 'full' = calculator-style scoped pools
@@ -990,7 +992,7 @@
       const fin=full?(h.fia||0)+g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
       const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
       const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*(h.cmul>0?h.cmul/100:1);
-      const atkForce=Math.ceil(g('atk')*(1+g('atk_per')/100));
+      const fk=forceKind(h.skill),atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
       return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(1+0.05*(h.comb||0))};
     };
     const Vof=(h,useV=true)=>useV&&h.vOn?1+h.vPct/100:1;

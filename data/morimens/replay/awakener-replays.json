@@ -1,0 +1,6453 @@
+{
+ "note": "Eremora season records (65-69) containing each awakener (English name), newest first, max 30 each. Seasons 63-65 replay objects may have expired.",
+ "awakeners": {
+  "\"24\"": [
+   {
+    "season": 69,
+    "battleUuid": "ff029c5a-0a30-37ae-8882-be6d06e21872"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f21cfd09-3605-3f48-adda-791627984af8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f1f970c8-24d0-389f-a732-affd3f2f86f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e080cee6-4742-3911-99f6-bc042aadc836"
+   },
+   {
+    "season": 69,
+    "battleUuid": "da827058-8e7b-3d90-ad2a-48ef451f3b0c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d64a155d-d41c-3951-b1f6-9b15a44507e8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b7cdd730-c761-33a9-8e83-00291b249ad3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a1451eff-0990-3719-bb6a-267bfe2797e0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9debbb3a-0d85-39b7-8de2-b9f28ee1cf39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "94dc11f6-4361-3921-bd36-3cabd9eab707"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8ee2ed7e-edd1-3c4d-abdf-6e56e8a10a16"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7a7bd190-78b3-3f8e-b61a-30ce3b645f14"
+   },
+   {
+    "season": 69,
+    "battleUuid": "775b6412-8522-3152-9898-8bed714f4b1e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "760f1bfa-91d3-36f8-9e0a-c2b6782aae30"
+   },
+   {
+    "season": 69,
+    "battleUuid": "75b0dbde-8a0f-3c48-936a-ae373805553f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "52949b2d-5081-3178-93a1-aba2159d770b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3f4cdf37-78c9-3f43-867b-ac945ec45895"
+   },
+   {
+    "season": 69,
+    "battleUuid": "365f9e63-52dc-3fca-ac0b-17bac54f5947"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33128cab-e644-33a5-85cd-cc8f8298ba6d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2e4af8f9-22ac-3d06-9dfe-920cce5d583d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1adc1027-d70c-3b5c-88c0-14641cc84859"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1abfd0b0-4337-3db4-bd59-b9757e65a713"
+   },
+   {
+    "season": 69,
+    "battleUuid": "12581f70-243c-3832-a9e5-a55bf1263b05"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0bf7c66b-6dca-3e11-aac3-971066e197ca"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d9fec9b0-dc04-3c9e-995a-c27843918ce2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c648e8fb-9946-3cc0-8696-630bce1b3e2c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c2d25114-e487-30a6-a954-8c040ea2ad5f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "aa3c3fb1-3a52-35fd-a66e-77575edb6977"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9c284645-89b6-3806-a0ee-08220beb46f8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "961abd23-4df6-3763-810b-9deafd88c919"
+   }
+  ],
+  "Agrippa": [
+   {
+    "season": 69,
+    "battleUuid": "38d14db9-c5b0-3e70-aea8-2106f7b24c22"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77a90a48-0aa8-3315-8781-a59ac87d31b1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "64b8ba82-e460-319f-a491-9a45b48da5a1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "14fd8667-d850-36b7-beb1-67243d443387"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d0f4bb34-a019-358a-8103-555d4c4c5838"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9f853622-a9c5-3f01-acef-9b70539479d7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "986f8d47-803d-32af-a5f7-68f57aa1df7a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "8e22c0b5-e885-3c75-83a1-0b3eaf2614a7"
+   },
+   {
+    "season": 65,
+    "battleUuid": "f137d9e3-c78a-31f3-90b0-b8e0bd7c0d5d"
+   },
+   {
+    "season": 65,
+    "battleUuid": "c4273f0f-2d56-366b-bfe2-c324acf9ed1a"
+   },
+   {
+    "season": 65,
+    "battleUuid": "ba245b2e-f331-3f98-b385-39feb785ea0a"
+   },
+   {
+    "season": 65,
+    "battleUuid": "3510e306-0d2d-3af6-8c15-116e8ec939b1"
+   }
+  ],
+  "Aigis": [
+   {
+    "season": 69,
+    "battleUuid": "fc5db626-8b39-366d-b70b-3594c7f9885d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "eeb062b3-bd98-3283-9902-547f076c33f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2ee196c-bfea-31c2-a078-15c0fbe5e2da"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d2f80ac2-4111-31de-8790-67907feaaa03"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d0961e1b-9352-364a-91c4-14f8227b87d2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b461b151-f017-362b-8d3e-6bbc886af14c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b369070f-2358-3795-95cb-74aa83bd5eb8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "80e8fba4-0462-3a8d-8b51-946b526d2124"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7db0fdd4-f46a-3f95-9cbe-0b79e72ccc97"
+   },
+   {
+    "season": 69,
+    "battleUuid": "671d2851-e775-3091-82bc-915f6c2a61ee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "54abd1a0-a289-3828-a66a-0e2a53a74497"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3ffea7b9-bb91-36d2-b2f4-73f9db766076"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e075a645-c735-3716-9a0e-599e9e259689"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d2bf4c37-ebdf-34b2-b982-a82637e4b5ce"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c552d260-778f-34c2-ab9b-be45d6a9bf57"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a5573161-e7f4-3aab-a5d6-a43e4c378b28"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7863bb15-56c6-3b85-9d35-818947ac1752"
+   },
+   {
+    "season": 67,
+    "battleUuid": "62d0e75d-9806-39da-b5fa-a03c4d86d7b3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5ef1098b-1c02-3840-8ab8-ecb2976ed4aa"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5b517746-cb7d-3501-8186-2db8a0ca6a50"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4c3db49e-7260-366a-8997-f13b4f4a236a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "30b4d1ab-614f-300c-80ab-af91e25f246b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "285c44e9-2f42-38a4-b637-29aab18251e4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1bd4079a-54ee-3227-b777-71ba0da6d9f6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e4c62394-aaad-3f8f-abbc-5466b357d9a1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e3411d75-9ce7-3d5b-8481-dfbb147a5532"
+   },
+   {
+    "season": 66,
+    "battleUuid": "dbbd705d-eb83-3120-bcbf-a772247f57b7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "cdc9830b-9b77-3506-92ff-85ff27474dca"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c88883a1-110f-3dea-8802-aca16e995d43"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b911278b-0aea-3d04-85c4-9ac193388922"
+   }
+  ],
+  "Alva": [
+   {
+    "season": 69,
+    "battleUuid": "fcf6ce4d-ba8d-33a7-ab43-b6568b1c1c79"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f82f3b5a-c3f2-352a-be00-ed0f0bbeb7bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b2519cc2-b74f-301b-93cf-8a7ecb11d671"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a3a03d8-d680-3661-b3fb-a36ca6e717cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7b1f6212-c29b-3cbc-84e5-5f93fd920608"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36f73729-c05a-32d7-b547-7415e47ebe0d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c2d25114-e487-30a6-a954-8c040ea2ad5f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9c284645-89b6-3806-a0ee-08220beb46f8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "762588a1-c48e-3c4b-9269-df1f1361c4ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "72cf5dfe-75e3-3336-965c-cce83bfaeecc"
+   },
+   {
+    "season": 67,
+    "battleUuid": "67399963-89a5-3424-9074-fa5cd97d42ba"
+   },
+   {
+    "season": 67,
+    "battleUuid": "64cebcf1-0745-3cc4-bb70-23afa80a6772"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2d47da98-a64a-3ee9-a42c-8fc28e449f25"
+   },
+   {
+    "season": 67,
+    "battleUuid": "153206bd-5d6c-32db-8f17-770c1308ea35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "052f9024-66b6-3c76-b9e6-a9fce99288b7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ffcab6d8-52d1-3cf5-addf-c432c52825e8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ee403e9c-fda6-3f03-acfb-7253e336b4e3"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d3bd1257-9354-38c0-8a2d-d4bfd7c46022"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c88a7fac-a604-3ffb-b344-6f0102c85a49"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c0a52e67-1fcd-3e06-aeed-8288e398f32c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "bac6273b-07e2-3ba6-ab87-65d3cedab2de"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b442fc4e-6f27-3207-932e-19753224ed9d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b2ff232f-efce-3f4a-8f64-b33526c8832a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9b9dcc38-99e1-3169-93d0-ef5fff7a7d14"
+   },
+   {
+    "season": 66,
+    "battleUuid": "874e4986-9ef3-37ca-af61-ee5bdce797e6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "7c640eda-6cad-3c94-ad46-82b892946bf5"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5ed398ea-8e3a-3fa4-b745-359b94a969c8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2f13d31a-c093-3e02-8470-0e65f49f3c86"
+   },
+   {
+    "season": 66,
+    "battleUuid": "28da9e53-ceef-33f3-8064-32bc6ae92ceb"
+   },
+   {
+    "season": 66,
+    "battleUuid": "189e48c3-21b8-34be-a333-67b69e577087"
+   }
+  ],
+  "Arachne": [
+   {
+    "season": 69,
+    "battleUuid": "e325e407-158c-3df3-99ae-1fc6c7a17e3e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2a38e0a-fc7a-36f7-9f29-51de8089491c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "de4b2c8c-d54c-37e6-a968-e0903da2c5eb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d9dcb67d-325c-3e02-bad1-bd8f34962a4f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5ed1a1d-c213-3115-8e6c-f676bd95d521"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ca90c0cf-4504-3d4c-9c3f-26b25d63f547"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c52f758d-31d6-33e8-b531-9deb406df1b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c10e6cf8-3014-33eb-8e01-e692b4714869"
+   },
+   {
+    "season": 69,
+    "battleUuid": "be83a88e-52af-3b4b-a4c8-b5c2c55d1835"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b369070f-2358-3795-95cb-74aa83bd5eb8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a729b22b-f28b-3fe7-b33f-73e4ca8ca6a7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6ca044ed-d7fb-3771-a4fb-4bae4d57b62b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5f427b50-364b-37d9-9578-e988024039f5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4fb4d82c-8cca-3348-8d8a-659b86530ebc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36a2fe3e-7ef5-3fbc-a557-34ed05c0ea42"
+   },
+   {
+    "season": 69,
+    "battleUuid": "282d512c-fda2-3bd7-839f-3da451ca5703"
+   },
+   {
+    "season": 69,
+    "battleUuid": "270b35bc-cc24-364b-811e-76b8e33b5217"
+   },
+   {
+    "season": 69,
+    "battleUuid": "16380e40-27c7-3f47-affe-3d4db84c4fe4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "113e1df7-3b09-35a1-bd89-f4e630ca829e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0cfaa0c8-0466-325d-9c82-e5ecfa5c34fe"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f271fd60-e389-3f58-adcc-0fffd6540074"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d8097484-c2ef-391f-ab1f-017f6b0f5e92"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d07881c4-c1ff-3dda-a8b4-0225eedc9a92"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ce57e2af-188e-399d-b041-fcdb30f276e7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bd6ff1a6-e2c9-3ebd-ba29-e4634ed39ca9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ae594b60-a68e-3f5d-978c-867737e33dc9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a8010bcf-ac0f-3fe1-9266-581cff23c94f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8979aeda-2864-3d66-a6dd-e6c4f374f31e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "86a1a04d-b268-378b-8f48-271784a7f10b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "62d0e75d-9806-39da-b5fa-a03c4d86d7b3"
+   }
+  ],
+  "Aurita": [
+   {
+    "season": 69,
+    "battleUuid": "8254f1f5-02c5-30b1-a529-4ff52e16b645"
+   },
+   {
+    "season": 69,
+    "battleUuid": "096e1914-43b7-3d59-ba52-cc807d36a2ab"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7b5951ec-2bb1-339c-b8ad-e136d1679470"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77056762-af87-3f13-81f0-642577082d2a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "05f44ad3-f3ad-3982-beba-ed89d92a2316"
+   },
+   {
+    "season": 66,
+    "battleUuid": "dd2acaad-3e89-3985-acdb-3f1c2c61a73d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d5b1e048-bf8a-34b7-8747-e07aeede89a6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c9aaf90e-a7b3-331f-a165-60ef9c3c843f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b30b5061-7843-32f3-9f8c-27b933473b9d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a53e0d0e-da53-3b49-b3d1-0dda099c0a24"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4592d7a5-1ae3-36ad-a0b9-55df7bab8fdb"
+   },
+   {
+    "season": 65,
+    "battleUuid": "fb75d3d5-2fba-3aef-8f52-8236c19b12a4"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e21b602c-df5d-302a-ac02-806e660f8f0f"
+   },
+   {
+    "season": 65,
+    "battleUuid": "db1635a9-f47e-38a7-84ef-1558f05ef95d"
+   }
+  ],
+  "Caecus": [
+   {
+    "season": 69,
+    "battleUuid": "db37b177-0d9b-3e07-8ace-985303110007"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d8638615-8552-335b-aafe-bf668fd3006f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c0defec5-925a-3b68-b9fa-370622262878"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4f92f5da-474c-3e14-bdcf-b5648c040790"
+   },
+   {
+    "season": 69,
+    "battleUuid": "320ed058-5a02-35f6-b28d-89b7a6a9e41b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b9817e44-1a96-3f1d-804a-fb3b66a836b9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b2357e61-0fe9-3a15-a0de-864a28abffd3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ac42d59d-698e-3019-b045-41dfbfe74e19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8afb544a-c8c8-3a8c-8e34-97fa6b3fbceb"
+   },
+   {
+    "season": 67,
+    "battleUuid": "61b6e96c-8907-3864-bba1-9417d0f58f56"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4e4d8d06-3605-3b87-8e79-c83a80b07bee"
+   },
+   {
+    "season": 67,
+    "battleUuid": "031ce52c-08b3-3a85-ab7a-79a1846a632f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ef25f9c8-32fb-3948-84d0-41c5acdaa60a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "beef5d0a-1898-30c8-a789-fe4786dc3be9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "be98ae70-839c-36a0-a8c0-3851ec499550"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b8c36475-15d1-399a-9f90-db33040f3d78"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b2ff232f-efce-3f4a-8f64-b33526c8832a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a3010b81-3874-3c80-bf22-d59545880f52"
+   },
+   {
+    "season": 66,
+    "battleUuid": "96523fad-298f-30b5-b666-2a6d57b4f97a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "95ee0a41-3edc-3a8c-9d1f-04f92bfb68b1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6e92e1dc-f448-3c53-bb90-2aa66d0dc6c0"
+   },
+   {
+    "season": 66,
+    "battleUuid": "44e6f077-8184-3abc-89f4-252b6bc8799f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "427d4ae6-e104-3091-8e3c-f143c663fbd8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "407df472-88ec-3138-8ecc-2e9eaf0d6457"
+   },
+   {
+    "season": 66,
+    "battleUuid": "35638dc5-bf7e-3675-b07c-56015dd4c772"
+   },
+   {
+    "season": 66,
+    "battleUuid": "09915f1d-f91b-314b-a58c-32c2dfaf30bd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "09696a4f-4e7b-3f3e-98cf-ac412c5f7614"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e26e6541-2aea-3c81-bb70-496b67c6d324"
+   },
+   {
+    "season": 65,
+    "battleUuid": "dbea92a7-d047-3f0c-8912-62d164d8fee2"
+   },
+   {
+    "season": 65,
+    "battleUuid": "7c186270-9ef5-3a4e-a547-0dc8e9570128"
+   }
+  ],
+  "Caraboo": [
+   {
+    "season": 69,
+    "battleUuid": "e54a6cf9-0392-34fc-963a-52e59cb7c9c7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d50ffb97-cb2a-3ca0-ba89-430cf371fb99"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7b99982-e738-32b2-a797-2a0e976779aa"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b8bff6d8-75ba-3d06-8428-f71b8083cf1b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aab9cdfa-0821-30a8-bc3a-d78bf36748c8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a93cc58-d41e-3325-9fb2-7fcf5ec8eccb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "89bd6c7d-552f-3edc-b5f8-ab50e8559d11"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6b04d37f-55e6-3512-b902-5bc3c6c83f1a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "563bd0aa-94bb-360f-b263-7f6d6ff0aeb3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4f92f5da-474c-3e14-bdcf-b5648c040790"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4597ac80-a9a2-3902-9fd3-592a0c502511"
+   },
+   {
+    "season": 69,
+    "battleUuid": "421ac7c0-6e9b-3d0a-a760-b26b6c02d424"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3fd1717e-f301-3337-abcd-98da11d60f7a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3d7433f9-9cc2-30d4-ada1-b32104a8a065"
+   },
+   {
+    "season": 69,
+    "battleUuid": "392eacfb-d361-3f18-9560-fbd315a6e029"
+   },
+   {
+    "season": 69,
+    "battleUuid": "31994044-d79f-3125-8ef7-6518bb2e6dbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "223c40ef-bc41-3e6e-af25-448260bd37cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1884c645-2dde-3c3c-9340-1c0df2c00e89"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c1472fc2-d23b-31bd-8005-b1bea83551fd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b205a7d7-86ac-34d8-9ca6-e32549e459c0"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ac42d59d-698e-3019-b045-41dfbfe74e19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8d0ede27-20b0-3548-b0b8-353469fca5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "84d7d5a4-9c56-3e9f-ab77-061a9b256019"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5a1a9935-cf47-3485-b899-35d1ef496f8b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "389bfb51-05c7-3845-8938-ccc42ebfc634"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3845ddab-8415-351f-9eca-1a5e265eda74"
+   }
+  ],
+  "Casiah": [
+   {
+    "season": 69,
+    "battleUuid": "c34b408a-d7aa-331f-8843-b0ab1b622842"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c0defec5-925a-3b68-b9fa-370622262878"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8e4b197c-1097-3009-8cf5-8f9f6836786a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8254f1f5-02c5-30b1-a529-4ff52e16b645"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4d9f77df-47af-341e-99a1-4983010f2afd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36f73729-c05a-32d7-b547-7415e47ebe0d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e39b742d-81d2-3eaa-9c7e-db9d8fdfd0a2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "86a1a04d-b268-378b-8f48-271784a7f10b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7b5951ec-2bb1-339c-b8ad-e136d1679470"
+   },
+   {
+    "season": 67,
+    "battleUuid": "762588a1-c48e-3c4b-9269-df1f1361c4ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "75a284e5-bcd0-3600-be56-12f140f8d036"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5bec27d1-bc23-32a2-a971-10b60ea64a5d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "406c1011-4833-33c6-ab0d-de7a777ce03d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3d3cc763-76d1-30b0-ae4f-e25941af3c19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2ef8fe89-13f1-3abc-bfb8-7558cc6dd980"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2c673c43-97de-33be-8c2a-7071411abf9f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1702702a-f5d0-3426-a4ab-5ddc07a59902"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0d70e618-c753-3725-ba78-9be0dde35808"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e01c955c-a183-31cc-948d-5e1340234ca1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c9aaf90e-a7b3-331f-a165-60ef9c3c843f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ab5597ff-bf1c-370c-8e4b-6076f87237fe"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9f853622-a9c5-3f01-acef-9b70539479d7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9e001b0f-7bfc-3352-a82e-105f65d2e35c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "7ab5c411-3a30-3cb9-9775-50ea19de1420"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4b16cf0c-3da9-3f64-afa1-8c965f359b34"
+   },
+   {
+    "season": 66,
+    "battleUuid": "48cf136d-2cd2-30d1-bcd3-b0de62c68279"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4592d7a5-1ae3-36ad-a0b9-55df7bab8fdb"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3f8a9827-67cf-3b09-85ff-38a032fc92b8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3acb6fb7-5c43-3a86-8cc3-91357b7be35d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2b036672-0b9c-3b05-9f34-8403d4e6083b"
+   }
+  ],
+  "Castor": [
+   {
+    "season": 69,
+    "battleUuid": "fc7f98ff-a6a2-36c4-9014-f06919d65561"
+   },
+   {
+    "season": 69,
+    "battleUuid": "fc5db626-8b39-366d-b70b-3594c7f9885d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e3ee5918-3462-3f38-af48-2bc317cbd4db"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2a38e0a-fc7a-36f7-9f29-51de8089491c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b369070f-2358-3795-95cb-74aa83bd5eb8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b2519cc2-b74f-301b-93cf-8a7ecb11d671"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9fa0d3f0-b969-3f95-88f9-e249edfad5d9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "87c3cb1e-9687-37be-8008-09d4522df554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "80e8fba4-0462-3a8d-8b51-946b526d2124"
+   },
+   {
+    "season": 69,
+    "battleUuid": "671d2851-e775-3091-82bc-915f6c2a61ee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5775c197-b99a-36ea-b51c-c930f4674ce1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e8d74174-2546-3b3a-8b47-fd18d0830592"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d07881c4-c1ff-3dda-a8b4-0225eedc9a92"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ce57e2af-188e-399d-b041-fcdb30f276e7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ccd104ee-4d8f-378c-a5cd-4e2c4511964f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bd6ff1a6-e2c9-3ebd-ba29-e4634ed39ca9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77a90a48-0aa8-3315-8781-a59ac87d31b1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "62d0e75d-9806-39da-b5fa-a03c4d86d7b3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "60f13756-f56c-3717-8e5b-21ba514ec25f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "409b79c1-1f61-317b-8e19-7cafb054c5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3dd0a114-1967-36d9-a2d7-cc972ff5a948"
+   },
+   {
+    "season": 67,
+    "battleUuid": "188c090d-f787-30fc-bc29-50be78a85357"
+   },
+   {
+    "season": 67,
+    "battleUuid": "071e1cb9-001a-37d2-bdd0-3cc432d6ddb9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ffcab6d8-52d1-3cf5-addf-c432c52825e8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f95bf7dd-b702-355e-8dd9-c066f87f26d3"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e6476d73-e636-336c-a799-078df5a81363"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ddee0cb3-b455-34a5-bea0-c3f84018c012"
+   },
+   {
+    "season": 66,
+    "battleUuid": "dd2acaad-3e89-3985-acdb-3f1c2c61a73d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d5293c6e-a4ba-36b3-952e-ae42c9475c4e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d276456e-fd89-3922-ad1d-69faa332e744"
+   }
+  ],
+  "Celeste": [
+   {
+    "season": 69,
+    "battleUuid": "a14af1b2-3d30-36e0-9305-82faf925be39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4597ac80-a9a2-3902-9fd3-592a0c502511"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0b7e1508-743b-3f2d-a3d6-fe48f3ba871f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b2357e61-0fe9-3a15-a0de-864a28abffd3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ace7c12f-ad56-372d-b1de-3462ad9b5a29"
+   },
+   {
+    "season": 67,
+    "battleUuid": "86a1a04d-b268-378b-8f48-271784a7f10b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7863bb15-56c6-3b85-9d35-818947ac1752"
+   },
+   {
+    "season": 67,
+    "battleUuid": "61b6e96c-8907-3864-bba1-9417d0f58f56"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f79b99e-9dd3-39c8-87ea-4ea349dd2061"
+   },
+   {
+    "season": 67,
+    "battleUuid": "30b4d1ab-614f-300c-80ab-af91e25f246b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2ef8fe89-13f1-3abc-bfb8-7558cc6dd980"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1bd4079a-54ee-3227-b777-71ba0da6d9f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "08018004-1969-3381-bb40-d3bd64eecaef"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e814154f-f6a8-37bb-bd1c-6b35d26d5693"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e3411d75-9ce7-3d5b-8481-dfbb147a5532"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d629047e-8e47-3229-813e-daaa775f0bb6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "bde1ed07-37be-3f3c-8620-88e2318d023e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "95ee0a41-3edc-3a8c-9d1f-04f92bfb68b1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "93ee4d81-99e6-3ebc-b628-61ed825d1531"
+   },
+   {
+    "season": 66,
+    "battleUuid": "65f4743b-9b7e-3c94-aac2-831c254ee306"
+   },
+   {
+    "season": 66,
+    "battleUuid": "51477400-79d1-33f6-b983-ceff61fd5c2b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4fd02d7c-89d8-38b0-94ed-1bc2a107973f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "43cbf53b-48dc-3b25-95b4-cf3884e6164d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "427d4ae6-e104-3091-8e3c-f143c663fbd8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "40bd25bb-1fec-3af7-ac43-8329d70b77cd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3f8a9827-67cf-3b09-85ff-38a032fc92b8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "367cd91b-40e1-33d3-b5ff-5f7a6847b0f7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "23082f6e-9358-352d-82f2-acf6c439a191"
+   },
+   {
+    "season": 66,
+    "battleUuid": "154f9ff7-29c9-37d2-8c5a-a28f53561b9a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "09915f1d-f91b-314b-a58c-32c2dfaf30bd"
+   }
+  ],
+  "Clementine": [
+   {
+    "season": 69,
+    "battleUuid": "fc7f98ff-a6a2-36c4-9014-f06919d65561"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2a38e0a-fc7a-36f7-9f29-51de8089491c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c64e8ddc-143f-3a2e-a824-dca8729f9553"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c52f758d-31d6-33e8-b531-9deb406df1b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bab09402-6f66-3b1f-ae8c-99af57b25c7f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ae3815e6-eca3-349b-97fc-c850676af377"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9fa0d3f0-b969-3f95-88f9-e249edfad5d9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "87c3cb1e-9687-37be-8008-09d4522df554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8211638e-1659-3899-897f-4f9efb4ad098"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7174fd1d-7a2b-3234-af7f-db9d4756408f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6f63404c-8dca-36da-9d6a-8baedb2e9782"
+   },
+   {
+    "season": 69,
+    "battleUuid": "68c4325c-2e8c-30ca-bc75-f81aa9b776a2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "590fb617-a3b2-36a5-b063-94b881c1ad21"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4faf6809-22e2-3162-bb49-90211f8f5f94"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4b7f16fd-5e81-3a9a-821b-ee2732f5f8c9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "49d313c8-ecd9-3e57-b0f6-7cea1e6910c1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "38d14db9-c5b0-3e70-aea8-2106f7b24c22"
+   },
+   {
+    "season": 69,
+    "battleUuid": "35c68165-54dc-3dcd-9a67-d27182bc760a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "278886eb-a5aa-3087-b5d0-b804dbe886bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "270b35bc-cc24-364b-811e-76b8e33b5217"
+   },
+   {
+    "season": 69,
+    "battleUuid": "26441ab8-c498-37aa-be20-facef3623d74"
+   },
+   {
+    "season": 69,
+    "battleUuid": "18c69dc0-c7b1-30d4-a898-9919a8fcfaf1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "096e1914-43b7-3d59-ba52-cc807d36a2ab"
+   },
+   {
+    "season": 69,
+    "battleUuid": "08f54d4b-ec3a-3604-899e-1f38d8470335"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f36ea8c6-0d0a-3c2a-b43f-0ac601e427c4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e3b5dbcb-8141-3477-adaa-d45ef2721eac"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d8097484-c2ef-391f-ab1f-017f6b0f5e92"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ce57e2af-188e-399d-b041-fcdb30f276e7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c3b6a0d8-469d-3f7d-a42c-e4a2c5d118c2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bd6ff1a6-e2c9-3ebd-ba29-e4634ed39ca9"
+   }
+  ],
+  "Corposant": [
+   {
+    "season": 69,
+    "battleUuid": "f84738f4-fd4e-3b0f-b1cd-1a1af9be11d0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d8638615-8552-335b-aafe-bf668fd3006f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c34b408a-d7aa-331f-8843-b0ab1b622842"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b8bff6d8-75ba-3d06-8428-f71b8083cf1b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a12bd775-155b-3e68-b56a-e1cdab1f85ae"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8e4b197c-1097-3009-8cf5-8f9f6836786a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8254f1f5-02c5-30b1-a529-4ff52e16b645"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71418998-2a5e-3b08-be3e-bd938dc08b0b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0b7e1508-743b-3f2d-a3d6-fe48f3ba871f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "096e1914-43b7-3d59-ba52-cc807d36a2ab"
+   },
+   {
+    "season": 67,
+    "battleUuid": "fcb6979e-8cc1-3f4a-a398-c61f9e9f179d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e39b742d-81d2-3eaa-9c7e-db9d8fdfd0a2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ace7c12f-ad56-372d-b1de-3462ad9b5a29"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0d0dac4-859d-3788-ab94-9c82bf9dfe13"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8d0ede27-20b0-3548-b0b8-353469fca5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7b5951ec-2bb1-339c-b8ad-e136d1679470"
+   },
+   {
+    "season": 67,
+    "battleUuid": "781471f0-d828-37e4-b5cd-de5f24772f9c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77056762-af87-3f13-81f0-642577082d2a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "75a284e5-bcd0-3600-be56-12f140f8d036"
+   },
+   {
+    "season": 67,
+    "battleUuid": "57730227-1214-300d-bc83-9e5972092dbd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "50825f6c-48f8-33eb-9c1e-708b62f2dcdf"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3d3cc763-76d1-30b0-ae4f-e25941af3c19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3845ddab-8415-351f-9eca-1a5e265eda74"
+   },
+   {
+    "season": 67,
+    "battleUuid": "08018004-1969-3381-bb40-d3bd64eecaef"
+   },
+   {
+    "season": 67,
+    "battleUuid": "05f44ad3-f3ad-3982-beba-ed89d92a2316"
+   },
+   {
+    "season": 66,
+    "battleUuid": "dd2acaad-3e89-3985-acdb-3f1c2c61a73d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d5b1e048-bf8a-34b7-8747-e07aeede89a6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c9aaf90e-a7b3-331f-a165-60ef9c3c843f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b30b5061-7843-32f3-9f8c-27b933473b9d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a66519d3-4508-3a16-b4ff-1e287990b0b1"
+   }
+  ],
+  "Daffodil": [
+   {
+    "season": 69,
+    "battleUuid": "bab09402-6f66-3b1f-ae8c-99af57b25c7f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8211638e-1659-3899-897f-4f9efb4ad098"
+   },
+   {
+    "season": 69,
+    "battleUuid": "35c68165-54dc-3dcd-9a67-d27182bc760a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "282d512c-fda2-3bd7-839f-3da451ca5703"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a8010bcf-ac0f-3fe1-9266-581cff23c94f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "86a1a04d-b268-378b-8f48-271784a7f10b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "80b96261-b5de-347e-a6fb-f1a09f4d6caf"
+   },
+   {
+    "season": 67,
+    "battleUuid": "317b54fa-cdc6-3487-aff8-342ef6f5905f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f7acc47f-b5a7-3685-b538-d232f7d296fa"
+   },
+   {
+    "season": 66,
+    "battleUuid": "7b41256b-f1bc-3294-b90a-9340997e356d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6ab809ab-0f72-354f-8d24-1bb1e4df0435"
+   },
+   {
+    "season": 66,
+    "battleUuid": "40b46cc9-5c95-3637-a61a-8ba6cdaf5036"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3f8a9827-67cf-3b09-85ff-38a032fc92b8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3cdf6dc5-eab3-39a7-b204-dd3af823e929"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2485f457-27cc-366d-8a5b-390cf7d146fd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "189e48c3-21b8-34be-a333-67b69e577087"
+   },
+   {
+    "season": 66,
+    "battleUuid": "17ef03db-efeb-372c-995f-1908f1007abd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "024770c2-55c7-34be-9e1f-3c94f8c550b3"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e869b616-6616-32e6-a4f0-72a1a61cb757"
+   },
+   {
+    "season": 65,
+    "battleUuid": "b82effd0-d5ba-31b9-85d1-5f69a2735101"
+   },
+   {
+    "season": 65,
+    "battleUuid": "96501d50-6a76-34c4-b760-c07ae27909c7"
+   },
+   {
+    "season": 65,
+    "battleUuid": "7ac8e129-f405-3164-af62-ba8c86d74b65"
+   },
+   {
+    "season": 65,
+    "battleUuid": "5cfd3e73-14fb-3f70-b07f-bf94ed62480f"
+   },
+   {
+    "season": 65,
+    "battleUuid": "59134c47-4f22-31f9-bd5d-f912520ca799"
+   },
+   {
+    "season": 65,
+    "battleUuid": "09c5afd6-383e-32c9-bb7c-87e6b3f16832"
+   },
+   {
+    "season": 65,
+    "battleUuid": "065b0f18-97c3-3e8d-ae1c-04a5e2c80dff"
+   },
+   {
+    "season": 65,
+    "battleUuid": "04b5d9a3-3f4d-396a-8a9b-a3292168ccaa"
+   }
+  ],
+  "Doll": [
+   {
+    "season": 69,
+    "battleUuid": "f8a8efdd-5630-3f54-978a-4fac4272b426"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f82f3b5a-c3f2-352a-be00-ed0f0bbeb7bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e0bed944-1c62-3b99-9e34-42b3c45f8ed5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "da827058-8e7b-3d90-ad2a-48ef451f3b0c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a1451eff-0990-3719-bb6a-267bfe2797e0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "94dc11f6-4361-3921-bd36-3cabd9eab707"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7b1f6212-c29b-3cbc-84e5-5f93fd920608"
+   },
+   {
+    "season": 69,
+    "battleUuid": "775b6412-8522-3152-9898-8bed714f4b1e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "47b9f0bf-f670-3144-9518-30d9baea3a20"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3d7433f9-9cc2-30d4-ada1-b32104a8a065"
+   },
+   {
+    "season": 69,
+    "battleUuid": "365f9e63-52dc-3fca-ac0b-17bac54f5947"
+   },
+   {
+    "season": 69,
+    "battleUuid": "34b2a86b-a62d-35e4-9c8d-dd61b0e2a0ef"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1abfd0b0-4337-3db4-bd59-b9757e65a713"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d9fec9b0-dc04-3c9e-995a-c27843918ce2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d20d6c05-c637-3047-abc2-e348046093aa"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c648e8fb-9946-3cc0-8696-630bce1b3e2c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "aa3c3fb1-3a52-35fd-a66e-77575edb6977"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9c284645-89b6-3806-a0ee-08220beb46f8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "46e6b547-9916-3452-b689-70134565daf7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0d70e618-c753-3725-ba78-9be0dde35808"
+   },
+   {
+    "season": 67,
+    "battleUuid": "02fffdea-ef87-32de-9368-076897875c6e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f4546f93-7439-3a20-93bd-119f265afee9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ed9c1a9b-e690-38c7-87d1-bbe76481f6d0"
+   },
+   {
+    "season": 66,
+    "battleUuid": "df1f348b-7888-3630-9e90-700234065b3c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c311c936-7ee7-3088-980f-fa5bfa359c4b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b442fc4e-6f27-3207-932e-19753224ed9d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "826ab274-c688-3eb5-8c1b-0a0875dec364"
+   },
+   {
+    "season": 66,
+    "battleUuid": "55ebedf1-2950-37f4-9ec9-7f6dc5d2bb7f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "51477400-79d1-33f6-b983-ceff61fd5c2b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "46de7204-bd63-388e-ab4b-43479f3381f0"
+   }
+  ],
+  "Doll: Inferno": [
+   {
+    "season": 69,
+    "battleUuid": "ff029c5a-0a30-37ae-8882-be6d06e21872"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f999a4b4-df6d-3ff4-9a86-3d7e41d4a250"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f1f970c8-24d0-389f-a732-affd3f2f86f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e54a6cf9-0392-34fc-963a-52e59cb7c9c7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "df0049ac-e50c-33a8-8ead-33d73fae3b01"
+   },
+   {
+    "season": 69,
+    "battleUuid": "dea0b5a8-4931-3642-834f-755947080f64"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d64a155d-d41c-3951-b1f6-9b15a44507e8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d025d14f-cffe-34e9-9bfa-d2e4f0ce5cdc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7b99982-e738-32b2-a797-2a0e976779aa"
+   },
+   {
+    "season": 69,
+    "battleUuid": "beb1c42f-4c78-3342-907a-a6be69316af5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bdfdd732-00e8-3147-9731-0f37b325a595"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9debbb3a-0d85-39b7-8de2-b9f28ee1cf39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8ee2ed7e-edd1-3c4d-abdf-6e56e8a10a16"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8de05559-5726-3a9b-aaf9-f25faf5bff7b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7a7bd190-78b3-3f8e-b61a-30ce3b645f14"
+   },
+   {
+    "season": 69,
+    "battleUuid": "760f1bfa-91d3-36f8-9e0a-c2b6782aae30"
+   },
+   {
+    "season": 69,
+    "battleUuid": "75b0dbde-8a0f-3c48-936a-ae373805553f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6b04d37f-55e6-3512-b902-5bc3c6c83f1a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ff85499-5975-30bd-892a-876b57b31fbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ef44c5d-847a-3a0a-bdd2-3f5150175a41"
+   },
+   {
+    "season": 69,
+    "battleUuid": "421ac7c0-6e9b-3d0a-a760-b26b6c02d424"
+   },
+   {
+    "season": 69,
+    "battleUuid": "41b2508c-7e96-3cd4-9c5e-c49b22eb5ad7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3fd1717e-f301-3337-abcd-98da11d60f7a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "392eacfb-d361-3f18-9560-fbd315a6e029"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33128cab-e644-33a5-85cd-cc8f8298ba6d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2e4af8f9-22ac-3d06-9dfe-920cce5d583d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "282d512c-fda2-3bd7-839f-3da451ca5703"
+   },
+   {
+    "season": 69,
+    "battleUuid": "223c40ef-bc41-3e6e-af25-448260bd37cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1de36b8d-ceba-3102-ab51-4d428b372b89"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1bb8b504-6dc4-3cd4-8fe2-07037416a360"
+   }
+  ],
+  "Doresain": [
+   {
+    "season": 69,
+    "battleUuid": "fb14c257-6e34-3e6b-8fe0-6dc1c9ee7063"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c3833088-e8fe-366b-819c-018e3c10d825"
+   },
+   {
+    "season": 69,
+    "battleUuid": "639a9647-9c93-3c43-988a-5e46ecd74dee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5775c197-b99a-36ea-b51c-c930f4674ce1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "54abd1a0-a289-3828-a66a-0e2a53a74497"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2414b518-4953-334e-a180-28f87b7511f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "240b5683-507d-3ac7-b837-aae5f7a85460"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9cc587c1-d906-3dc7-b909-67d2206a1082"
+   },
+   {
+    "season": 67,
+    "battleUuid": "884c218c-fcbd-30ac-916b-19727c87289a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "625ec0f2-98d1-3f32-8383-e6fa3671e8ad"
+   },
+   {
+    "season": 67,
+    "battleUuid": "60f13756-f56c-3717-8e5b-21ba514ec25f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "57468f04-46ca-3236-a203-12c0a1a280b6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4398d876-f7dc-3401-91da-acd65aece34e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "fa5121a1-d8e3-33ce-9bb9-2615c46fd7b8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4e41ac6f-9127-3ddb-88a9-1448dc9be8d2"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4b33627e-ed6b-367d-9051-ba0410c35471"
+   },
+   {
+    "season": 66,
+    "battleUuid": "094c373e-9350-37d2-aa84-4823f0287345"
+   },
+   {
+    "season": 66,
+    "battleUuid": "0553bcb9-b494-391f-8046-662ec9839fa5"
+   },
+   {
+    "season": 65,
+    "battleUuid": "f4a1cf25-8f13-3240-924e-555f2313d863"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e0507dd6-beff-370e-a604-8795bc367cf0"
+   },
+   {
+    "season": 65,
+    "battleUuid": "cdff60c6-2c37-3c26-a69e-22ce57928b7b"
+   },
+   {
+    "season": 65,
+    "battleUuid": "9a590b34-bd0e-31d8-b143-51f8440a395a"
+   },
+   {
+    "season": 65,
+    "battleUuid": "6fdb4166-e109-3efd-9695-fcd71381743c"
+   },
+   {
+    "season": 65,
+    "battleUuid": "6df9b9e8-0269-31df-9c51-9145091d59a2"
+   }
+  ],
+  "Erica": [
+   {
+    "season": 69,
+    "battleUuid": "d750a616-ba0c-38ef-8c46-9b078f244b77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b2519cc2-b74f-301b-93cf-8a7ecb11d671"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4faf6809-22e2-3162-bb49-90211f8f5f94"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4b7f16fd-5e81-3a9a-821b-ee2732f5f8c9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0b7e1508-743b-3f2d-a3d6-fe48f3ba871f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e3b5dbcb-8141-3477-adaa-d45ef2721eac"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bd6ff1a6-e2c9-3ebd-ba29-e4634ed39ca9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77a90a48-0aa8-3315-8781-a59ac87d31b1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "75a284e5-bcd0-3600-be56-12f140f8d036"
+   },
+   {
+    "season": 67,
+    "battleUuid": "47a641e9-8ba2-3b02-ae12-f4b4981529b5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3dd0a114-1967-36d9-a2d7-cc972ff5a948"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2c673c43-97de-33be-8c2a-7071411abf9f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "08018004-1969-3381-bb40-d3bd64eecaef"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ffcab6d8-52d1-3cf5-addf-c432c52825e8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e8f27bc7-02fa-30b3-8e2f-f2ef3ac5d9e6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e7bbcee5-ac46-3f80-a35b-45d092b8b5f1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e22b937b-f429-33b8-a480-15cc547da31d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e01c955c-a183-31cc-948d-5e1340234ca1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d276456e-fd89-3922-ad1d-69faa332e744"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d24ea159-d31f-3eab-a2e2-bb9011146fd8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "cffd4418-2c7d-3e8b-a8ed-87ef87b9f37b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9e001b0f-7bfc-3352-a82e-105f65d2e35c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "80e470f2-a936-36a7-8aad-ef2f4255a353"
+   },
+   {
+    "season": 66,
+    "battleUuid": "7c640eda-6cad-3c94-ad46-82b892946bf5"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2b036672-0b9c-3b05-9f34-8403d4e6083b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "28bf1ce4-ed95-3792-9261-e2bc5f9bf674"
+   },
+   {
+    "season": 66,
+    "battleUuid": "20857183-9b49-3da1-b31f-e2b710cb9120"
+   },
+   {
+    "season": 65,
+    "battleUuid": "dc863d78-58f7-3a5c-a38c-0329d5c1d6a7"
+   },
+   {
+    "season": 65,
+    "battleUuid": "c1a5beb8-23aa-37bd-9bc7-29497e9f5c8d"
+   },
+   {
+    "season": 65,
+    "battleUuid": "bc6f3b19-bdd1-3217-825c-844f1ce900f5"
+   }
+  ],
+  "Faint": [
+   {
+    "season": 69,
+    "battleUuid": "f999a4b4-df6d-3ff4-9a86-3d7e41d4a250"
+   },
+   {
+    "season": 69,
+    "battleUuid": "dea0b5a8-4931-3642-834f-755947080f64"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c3833088-e8fe-366b-819c-018e3c10d825"
+   },
+   {
+    "season": 69,
+    "battleUuid": "beb1c42f-4c78-3342-907a-a6be69316af5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8de05559-5726-3a9b-aaf9-f25faf5bff7b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a93cc58-d41e-3325-9fb2-7fcf5ec8eccb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "295a5032-41f3-3d82-ac5c-6c8d4557424e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1bb8b504-6dc4-3cd4-8fe2-07037416a360"
+   },
+   {
+    "season": 67,
+    "battleUuid": "fcb6979e-8cc1-3f4a-a398-c61f9e9f179d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e5b02fbf-3a62-3da8-b14b-78e9b5942d35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bf97124f-bddf-3f7e-8f7c-137c02b854a8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b2357e61-0fe9-3a15-a0de-864a28abffd3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "956776ef-2a6f-3fb1-8c75-e1465ad6dba8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "884c218c-fcbd-30ac-916b-19727c87289a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "64cebcf1-0745-3cc4-bb70-23afa80a6772"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5b517746-cb7d-3501-8186-2db8a0ca6a50"
+   },
+   {
+    "season": 67,
+    "battleUuid": "57468f04-46ca-3236-a203-12c0a1a280b6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4c3db49e-7260-366a-8997-f13b4f4a236a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "052f9024-66b6-3c76-b9e6-a9fce99288b7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "011f63c4-ea21-3b17-aad4-1f98ebaa6688"
+   },
+   {
+    "season": 66,
+    "battleUuid": "df71585b-368d-379e-96a0-fb877a8bd733"
+   },
+   {
+    "season": 66,
+    "battleUuid": "dbbd705d-eb83-3120-bcbf-a772247f57b7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d629047e-8e47-3229-813e-daaa775f0bb6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d55039bf-4538-3918-a679-fdcb1490d71e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b911278b-0aea-3d04-85c4-9ac193388922"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b0f73346-04ed-3f70-8a8e-7f95590351b2"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ade6da33-d684-36dc-a445-ddd28e7b7e62"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a66519d3-4508-3a16-b4ff-1e287990b0b1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "8e22c0b5-e885-3c75-83a1-0b3eaf2614a7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "72711372-1710-39b5-9e0f-3f03be890bae"
+   }
+  ],
+  "Faros": [
+   {
+    "season": 69,
+    "battleUuid": "f5f22e60-6d7b-3708-aa08-199842f6bd6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4597ac80-a9a2-3902-9fd3-592a0c502511"
+   },
+   {
+    "season": 67,
+    "battleUuid": "61b6e96c-8907-3864-bba1-9417d0f58f56"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0d96a573-09fb-3172-9b71-bd3fb2f6ab3e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "05ee499c-151d-3998-8cb1-98b793e0b029"
+   },
+   {
+    "season": 66,
+    "battleUuid": "fa619cb0-b767-38d5-b119-f390038f315c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d629047e-8e47-3229-813e-daaa775f0bb6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a3010b81-3874-3c80-bf22-d59545880f52"
+   },
+   {
+    "season": 66,
+    "battleUuid": "35638dc5-bf7e-3675-b07c-56015dd4c772"
+   },
+   {
+    "season": 66,
+    "battleUuid": "1d20f6bd-ab98-3657-9c82-38478041150d"
+   },
+   {
+    "season": 65,
+    "battleUuid": "c2fdedd0-4ca5-3499-95e8-f8ff7621a712"
+   },
+   {
+    "season": 65,
+    "battleUuid": "8f5eceb7-b530-3e7d-bf40-eab394b3dbb5"
+   }
+  ],
+  "Goliath": [
+   {
+    "season": 69,
+    "battleUuid": "f5f22e60-6d7b-3708-aa08-199842f6bd6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "db37b177-0d9b-3e07-8ace-985303110007"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d9544048-322e-3782-8ee2-9f435407c7ea"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5c335ea-fbf8-309e-ad1d-66eb796b66d6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7561c09-7d98-36d0-88ef-0721e932f6e1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bc375856-2ee5-3994-b8ef-d4734b8cc26a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b9bf3678-54d3-3fbe-bedf-6030bbc08b36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b51ac994-efab-3ae6-b439-1a64080d37b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7ffab129-cdd1-3cc9-b495-d26ebcacc83b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71efc254-4dba-3773-9c4d-326d3955f8df"
+   },
+   {
+    "season": 69,
+    "battleUuid": "62a6ee4f-4bf6-3f86-a937-594d451536ac"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51b5759d-029a-3fa3-9222-950e9df6e303"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1e8848f0-6e04-3f93-afe0-f1e19961c332"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1a225c50-40b0-36eb-987b-a1b53c07ea86"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1034a3d0-0c14-343b-a7c1-168e11c4eb09"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0ae31ce7-b791-32e3-9c3a-a6db4f626e57"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02508799-e51c-3ebd-b101-e726021daf27"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02209565-6f41-31ff-84af-04a1f0c85d9e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f2f850c4-539b-330b-ab95-d950bd8a02df"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eab5cf7b-dbec-345c-8cd6-55c91e1a188e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bfba79ef-e3d3-3937-92d9-4c1ad2c855ef"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b63cc79f-1ed7-3f5d-94bb-ada8de16d8e2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "852e0ef9-8b4c-366f-b537-6cde42b7b921"
+   },
+   {
+    "season": 67,
+    "battleUuid": "727cf3d0-7971-3d01-ac8b-82dfc265139a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3728c232-4541-3116-b026-2c333f255ff1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2c50eabb-7a95-3d80-b9f3-b6a26cb613f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2a2e9632-3af4-37dd-8b3e-8ee898ac8ebe"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2888b513-81f8-33e5-9bc9-c89a83953b73"
+   },
+   {
+    "season": 67,
+    "battleUuid": "217ba6fe-035a-3ed4-a622-7bf61acbc177"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0f31526a-bb3b-36d1-bf42-5f8c6a9ed07d"
+   }
+  ],
+  "Hameln": [
+   {
+    "season": 69,
+    "battleUuid": "f746a1dc-c2ae-34c3-af08-c00baee5acf0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f21cfd09-3605-3f48-adda-791627984af8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e7ea5a53-920c-3e2d-a943-c828cd850e6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d8638615-8552-335b-aafe-bf668fd3006f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c10e6cf8-3014-33eb-8e01-e692b4714869"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b7cdd730-c761-33a9-8e83-00291b249ad3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "47b9f0bf-f670-3144-9518-30d9baea3a20"
+   },
+   {
+    "season": 69,
+    "battleUuid": "320ed058-5a02-35f6-b28d-89b7a6a9e41b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0bf7c66b-6dca-3e11-aac3-971066e197ca"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e60a13a7-ecdb-3ace-8feb-01b33d224046"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b9817e44-1a96-3f1d-804a-fb3b66a836b9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b4a93d0d-9026-330b-8df9-3264aeb4aa6d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8afb544a-c8c8-3a8c-8e34-97fa6b3fbceb"
+   },
+   {
+    "season": 67,
+    "battleUuid": "73ea9c1f-ddf6-3f90-af0e-05b1dce41cc8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "66d59d69-cfcf-389f-b3e9-df900d3efe4b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "64cebcf1-0745-3cc4-bb70-23afa80a6772"
+   },
+   {
+    "season": 67,
+    "battleUuid": "46c0e6b7-5045-3cb5-8aca-11143a385f5e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "406c1011-4833-33c6-ab0d-de7a777ce03d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "35a46f14-78af-3941-bb7b-06a6893b9769"
+   },
+   {
+    "season": 67,
+    "battleUuid": "27f90429-1861-31ca-97ca-6e09eec256e3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "06e82169-be5c-3d45-a384-1b04cb69634e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ef25f9c8-32fb-3948-84d0-41c5acdaa60a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "edf55cfc-d9c3-3ff1-a33e-fcd3c28e1e20"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d9899fac-6128-3e20-a120-4bd0f5d5a6a6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d55c9984-af8d-3b8e-bf05-398772a362f1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c8a11c19-131a-3223-9b9a-066159cc93ea"
+   },
+   {
+    "season": 66,
+    "battleUuid": "bde1ed07-37be-3f3c-8620-88e2318d023e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b911278b-0aea-3d04-85c4-9ac193388922"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b8c36475-15d1-399a-9f90-db33040f3d78"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a05d7a67-360d-3e20-ad87-e3f1f2bbd866"
+   }
+  ],
+  "Helot": [
+   {
+    "season": 69,
+    "battleUuid": "e2ee196c-bfea-31c2-a078-15c0fbe5e2da"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d9dcb67d-325c-3e02-bad1-bd8f34962a4f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5ed1a1d-c213-3115-8e6c-f676bd95d521"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bd2d537e-7c0f-3665-af28-8a54c3415bbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b667fedb-e55b-3edf-887b-10657619881a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b461b151-f017-362b-8d3e-6bbc886af14c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5f427b50-364b-37d9-9578-e988024039f5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4fb4d82c-8cca-3348-8d8a-659b86530ebc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3ffea7b9-bb91-36d2-b2f4-73f9db766076"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36a2fe3e-7ef5-3fbc-a557-34ed05c0ea42"
+   },
+   {
+    "season": 69,
+    "battleUuid": "295a5032-41f3-3d82-ac5c-6c8d4557424e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "16380e40-27c7-3f47-affe-3d4db84c4fe4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "113e1df7-3b09-35a1-bd89-f4e630ca829e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d2bf4c37-ebdf-34b2-b982-a82637e4b5ce"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c552d260-778f-34c2-ab9b-be45d6a9bf57"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c2d25114-e487-30a6-a954-8c040ea2ad5f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a5573161-e7f4-3aab-a5d6-a43e4c378b28"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7863bb15-56c6-3b85-9d35-818947ac1752"
+   },
+   {
+    "season": 67,
+    "battleUuid": "67399963-89a5-3424-9074-fa5cd97d42ba"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f79b99e-9dd3-39c8-87ea-4ea349dd2061"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4c3db49e-7260-366a-8997-f13b4f4a236a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4747bc07-1c28-3664-adeb-0d65510e5a9c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "30b4d1ab-614f-300c-80ab-af91e25f246b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "285c44e9-2f42-38a4-b637-29aab18251e4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1bd4079a-54ee-3227-b777-71ba0da6d9f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "15da4351-5df8-33b5-979e-9cde81347be8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "12212303-4903-3510-b939-bf8819f5d826"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e6476d73-e636-336c-a799-078df5a81363"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e4c62394-aaad-3f8f-abbc-5466b357d9a1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e3411d75-9ce7-3d5b-8481-dfbb147a5532"
+   }
+  ],
+  "Helot: Catena": [
+   {
+    "season": 69,
+    "battleUuid": "d9dcb67d-325c-3e02-bad1-bd8f34962a4f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5ed1a1d-c213-3115-8e6c-f676bd95d521"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5f427b50-364b-37d9-9578-e988024039f5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4fb4d82c-8cca-3348-8d8a-659b86530ebc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3ffea7b9-bb91-36d2-b2f4-73f9db766076"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36a2fe3e-7ef5-3fbc-a557-34ed05c0ea42"
+   },
+   {
+    "season": 69,
+    "battleUuid": "16380e40-27c7-3f47-affe-3d4db84c4fe4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "113e1df7-3b09-35a1-bd89-f4e630ca829e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e075a645-c735-3716-9a0e-599e9e259689"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c552d260-778f-34c2-ab9b-be45d6a9bf57"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a5573161-e7f4-3aab-a5d6-a43e4c378b28"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7863bb15-56c6-3b85-9d35-818947ac1752"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5ef1098b-1c02-3840-8ab8-ecb2976ed4aa"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f79b99e-9dd3-39c8-87ea-4ea349dd2061"
+   },
+   {
+    "season": 67,
+    "battleUuid": "30b4d1ab-614f-300c-80ab-af91e25f246b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1bd4079a-54ee-3227-b777-71ba0da6d9f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "15da4351-5df8-33b5-979e-9cde81347be8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e6476d73-e636-336c-a799-078df5a81363"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e4c62394-aaad-3f8f-abbc-5466b357d9a1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e3411d75-9ce7-3d5b-8481-dfbb147a5532"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c88883a1-110f-3dea-8802-aca16e995d43"
+   },
+   {
+    "season": 66,
+    "battleUuid": "95ee0a41-3edc-3a8c-9d1f-04f92bfb68b1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5f8e18b7-044a-3fbb-802d-5dd477fb6600"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4fd02d7c-89d8-38b0-94ed-1bc2a107973f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "43cbf53b-48dc-3b25-95b4-cf3884e6164d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "43bb30cb-e0d7-308b-af6c-e9259e707e18"
+   },
+   {
+    "season": 66,
+    "battleUuid": "40bd25bb-1fec-3af7-ac43-8329d70b77cd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3cf158e0-c371-32de-b708-ca54ac4da0c9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "1b53cc2e-9d6f-3f96-8ed2-ecdb064c4115"
+   },
+   {
+    "season": 66,
+    "battleUuid": "158c1979-39f4-3745-8776-a91e7d9339e1"
+   }
+  ],
+  "Horla": [
+   {
+    "season": 69,
+    "battleUuid": "fcf6ce4d-ba8d-33a7-ab43-b6568b1c1c79"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e325e407-158c-3df3-99ae-1fc6c7a17e3e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "de4b2c8c-d54c-37e6-a968-e0903da2c5eb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d750a616-ba0c-38ef-8c46-9b078f244b77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ca90c0cf-4504-3d4c-9c3f-26b25d63f547"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c52f758d-31d6-33e8-b531-9deb406df1b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c10e6cf8-3014-33eb-8e01-e692b4714869"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bab09402-6f66-3b1f-ae8c-99af57b25c7f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ae3815e6-eca3-349b-97fc-c850676af377"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a10d10a8-257c-3b15-99a1-269792fff11c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9fa0d3f0-b969-3f95-88f9-e249edfad5d9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9bfb7395-cf74-345f-8015-63dbee614759"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a3a03d8-d680-3661-b3fb-a36ca6e717cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "87c3cb1e-9687-37be-8008-09d4522df554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8211638e-1659-3899-897f-4f9efb4ad098"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78f44c10-4cb2-34c7-9d56-d04399a4447f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6f63404c-8dca-36da-9d6a-8baedb2e9782"
+   },
+   {
+    "season": 69,
+    "battleUuid": "590fb617-a3b2-36a5-b063-94b881c1ad21"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4faf6809-22e2-3162-bb49-90211f8f5f94"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4d9f77df-47af-341e-99a1-4983010f2afd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4b7f16fd-5e81-3a9a-821b-ee2732f5f8c9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "38d14db9-c5b0-3e70-aea8-2106f7b24c22"
+   },
+   {
+    "season": 69,
+    "battleUuid": "35c68165-54dc-3dcd-9a67-d27182bc760a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "278886eb-a5aa-3087-b5d0-b804dbe886bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "270b35bc-cc24-364b-811e-76b8e33b5217"
+   },
+   {
+    "season": 69,
+    "battleUuid": "26441ab8-c498-37aa-be20-facef3623d74"
+   },
+   {
+    "season": 69,
+    "battleUuid": "18c69dc0-c7b1-30d4-a898-9919a8fcfaf1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0cfaa0c8-0466-325d-9c82-e5ecfa5c34fe"
+   },
+   {
+    "season": 69,
+    "battleUuid": "08f54d4b-ec3a-3604-899e-1f38d8470335"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e075a645-c735-3716-9a0e-599e9e259689"
+   }
+  ],
+  "Jenkin": [
+   {
+    "season": 69,
+    "battleUuid": "d9544048-322e-3782-8ee2-9f435407c7ea"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f271fd60-e389-3f58-adcc-0fffd6540074"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f592e4b9-3859-3cf7-bb59-2fc1e61e115c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a53e0d0e-da53-3b49-b3d1-0dda099c0a24"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9a15d10f-34fe-375e-8561-67874580f706"
+   },
+   {
+    "season": 66,
+    "battleUuid": "7c640eda-6cad-3c94-ad46-82b892946bf5"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2be14f43-142e-3da7-94cc-2c9dab0f4c2c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "0f0a7316-1093-39d1-9b1c-67df42b65001"
+   },
+   {
+    "season": 65,
+    "battleUuid": "cdff60c6-2c37-3c26-a69e-22ce57928b7b"
+   },
+   {
+    "season": 65,
+    "battleUuid": "2283bbf1-d3fe-31bd-be3b-aa2b9d337b15"
+   }
+  ],
+  "Karen": [
+   {
+    "season": 69,
+    "battleUuid": "c7b99982-e738-32b2-a797-2a0e976779aa"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b7cdd730-c761-33a9-8e83-00291b249ad3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aac29dbf-0c4a-344b-85c1-7fdcd6e0f22a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "94dc11f6-4361-3921-bd36-3cabd9eab707"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7174fd1d-7a2b-3234-af7f-db9d4756408f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "68c4325c-2e8c-30ca-bc75-f81aa9b776a2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "55794bf1-7c8d-3ef3-98a6-d029d02a6554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "49d313c8-ecd9-3e57-b0f6-7cea1e6910c1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "421ac7c0-6e9b-3d0a-a760-b26b6c02d424"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3fd1717e-f301-3337-abcd-98da11d60f7a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "26441ab8-c498-37aa-be20-facef3623d74"
+   },
+   {
+    "season": 69,
+    "battleUuid": "18c69dc0-c7b1-30d4-a898-9919a8fcfaf1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1884c645-2dde-3c3c-9340-1c0df2c00e89"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c3b6a0d8-469d-3f7d-a42c-e4a2c5d118c2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c1472fc2-d23b-31bd-8005-b1bea83551fd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ab5a6007-456d-39aa-ba7b-4177d5028a7c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "500e38da-11e9-3e7a-9f67-2ccff1ae2585"
+   },
+   {
+    "season": 67,
+    "battleUuid": "47a641e9-8ba2-3b02-ae12-f4b4981529b5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3bca9c07-2b54-3a85-9182-9ce2e24ab66b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "317b54fa-cdc6-3487-aff8-342ef6f5905f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1dfc7df6-58b6-3285-bbe0-194b5f281bb8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "036171f1-c4be-3a72-88f5-b685a0c53c47"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f565f1e2-d8eb-3c6e-b760-7f75c7904ed9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e22b937b-f429-33b8-a480-15cc547da31d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e0eb1269-fa78-3165-a48d-32c2bfbbf8c7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "cffd4418-2c7d-3e8b-a8ed-87ef87b9f37b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ce715fa7-7c76-3bea-866d-18a54d657e5d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c88a7fac-a604-3ffb-b344-6f0102c85a49"
+   },
+   {
+    "season": 66,
+    "battleUuid": "60be3a82-b967-35b1-b4cc-a6900a5beda2"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5ae9292a-25af-31ac-960f-ba3baa49d51e"
+   }
+  ],
+  "Kathigu-Ra": [
+   {
+    "season": 69,
+    "battleUuid": "fcf6ce4d-ba8d-33a7-ab43-b6568b1c1c79"
+   },
+   {
+    "season": 69,
+    "battleUuid": "fc7f98ff-a6a2-36c4-9014-f06919d65561"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d750a616-ba0c-38ef-8c46-9b078f244b77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c64e8ddc-143f-3a2e-a824-dca8729f9553"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bab09402-6f66-3b1f-ae8c-99af57b25c7f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ae3815e6-eca3-349b-97fc-c850676af377"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aac29dbf-0c4a-344b-85c1-7fdcd6e0f22a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9fa0d3f0-b969-3f95-88f9-e249edfad5d9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8211638e-1659-3899-897f-4f9efb4ad098"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7174fd1d-7a2b-3234-af7f-db9d4756408f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6f63404c-8dca-36da-9d6a-8baedb2e9782"
+   },
+   {
+    "season": 69,
+    "battleUuid": "68c4325c-2e8c-30ca-bc75-f81aa9b776a2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "590fb617-a3b2-36a5-b063-94b881c1ad21"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4faf6809-22e2-3162-bb49-90211f8f5f94"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4b7f16fd-5e81-3a9a-821b-ee2732f5f8c9"
+   },
+   {
+    "season": 69,
+    "battleUuid": "49d313c8-ecd9-3e57-b0f6-7cea1e6910c1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "35c68165-54dc-3dcd-9a67-d27182bc760a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3160989f-0065-3ace-a7a4-dbc883092858"
+   },
+   {
+    "season": 69,
+    "battleUuid": "26441ab8-c498-37aa-be20-facef3623d74"
+   },
+   {
+    "season": 69,
+    "battleUuid": "18c69dc0-c7b1-30d4-a898-9919a8fcfaf1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "08f54d4b-ec3a-3604-899e-1f38d8470335"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f36ea8c6-0d0a-3c2a-b43f-0ac601e427c4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c3b6a0d8-469d-3f7d-a42c-e4a2c5d118c2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "78051d2f-2876-3dfb-a3f0-1f0874d03fa7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "500e38da-11e9-3e7a-9f67-2ccff1ae2585"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f186dca-b462-37a1-9abe-e402646239e2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "47a641e9-8ba2-3b02-ae12-f4b4981529b5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "317b54fa-cdc6-3487-aff8-342ef6f5905f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "27f90429-1861-31ca-97ca-6e09eec256e3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1ee38a4a-0404-33a6-a02e-bf2ceb2555f6"
+   }
+  ],
+  "Leigh": [
+   {
+    "season": 69,
+    "battleUuid": "563bd0aa-94bb-360f-b263-7f6d6ff0aeb3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "41b2508c-7e96-3cd4-9c5e-c49b22eb5ad7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f50e57ed-9c91-380d-89bb-854d527a84bc"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e3b5dbcb-8141-3477-adaa-d45ef2721eac"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9cc587c1-d906-3dc7-b909-67d2206a1082"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7758d70e-b693-32fd-9f79-17e410841403"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5ef1098b-1c02-3840-8ab8-ecb2976ed4aa"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e7bbcee5-ac46-3f80-a35b-45d092b8b5f1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c88883a1-110f-3dea-8802-aca16e995d43"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6e92e1dc-f448-3c53-bb90-2aa66d0dc6c0"
+   },
+   {
+    "season": 66,
+    "battleUuid": "693b7a22-00ab-3469-b7c9-15b7c1b71e15"
+   },
+   {
+    "season": 66,
+    "battleUuid": "43bb30cb-e0d7-308b-af6c-e9259e707e18"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e79c11c1-91d1-30fc-b6ed-56696342fe5e"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e26e6541-2aea-3c81-bb70-496b67c6d324"
+   },
+   {
+    "season": 65,
+    "battleUuid": "e0507dd6-beff-370e-a604-8795bc367cf0"
+   },
+   {
+    "season": 65,
+    "battleUuid": "acfdee70-799a-3042-b6b8-c0027ea58f9f"
+   },
+   {
+    "season": 65,
+    "battleUuid": "7832d3b6-23cf-3a3c-8343-62b9f0c75d11"
+   },
+   {
+    "season": 65,
+    "battleUuid": "6df9b9e8-0269-31df-9c51-9145091d59a2"
+   },
+   {
+    "season": 65,
+    "battleUuid": "38f70aa7-76b2-3aeb-a8be-ac3b4e97a82a"
+   },
+   {
+    "season": 65,
+    "battleUuid": "3874da58-1ecc-3798-bf61-e5a284f9f0f2"
+   }
+  ],
+  "Lily": [
+   {
+    "season": 69,
+    "battleUuid": "fcf6ce4d-ba8d-33a7-ab43-b6568b1c1c79"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f999a4b4-df6d-3ff4-9a86-3d7e41d4a250"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f21cfd09-3605-3f48-adda-791627984af8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "df0049ac-e50c-33a8-8ead-33d73fae3b01"
+   },
+   {
+    "season": 69,
+    "battleUuid": "dea0b5a8-4931-3642-834f-755947080f64"
+   },
+   {
+    "season": 69,
+    "battleUuid": "db37b177-0d9b-3e07-8ace-985303110007"
+   },
+   {
+    "season": 69,
+    "battleUuid": "da827058-8e7b-3d90-ad2a-48ef451f3b0c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d64a155d-d41c-3951-b1f6-9b15a44507e8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d025d14f-cffe-34e9-9bfa-d2e4f0ce5cdc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "beb1c42f-4c78-3342-907a-a6be69316af5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b7cdd730-c761-33a9-8e83-00291b249ad3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9debbb3a-0d85-39b7-8de2-b9f28ee1cf39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8de05559-5726-3a9b-aaf9-f25faf5bff7b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7b1f6212-c29b-3cbc-84e5-5f93fd920608"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7a7bd190-78b3-3f8e-b61a-30ce3b645f14"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ff85499-5975-30bd-892a-876b57b31fbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ef44c5d-847a-3a0a-bdd2-3f5150175a41"
+   },
+   {
+    "season": 69,
+    "battleUuid": "392eacfb-d361-3f18-9560-fbd315a6e029"
+   },
+   {
+    "season": 69,
+    "battleUuid": "365f9e63-52dc-3fca-ac0b-17bac54f5947"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33128cab-e644-33a5-85cd-cc8f8298ba6d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2e4af8f9-22ac-3d06-9dfe-920cce5d583d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1de36b8d-ceba-3102-ab51-4d428b372b89"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1bb8b504-6dc4-3cd4-8fe2-07037416a360"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1abfd0b0-4337-3db4-bd59-b9757e65a713"
+   },
+   {
+    "season": 69,
+    "battleUuid": "12581f70-243c-3832-a9e5-a55bf1263b05"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b4a93d0d-9026-330b-8df9-3264aeb4aa6d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "aa3c3fb1-3a52-35fd-a66e-77575edb6977"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a4efe933-002a-3530-a090-f11948c45731"
+   },
+   {
+    "season": 67,
+    "battleUuid": "961abd23-4df6-3763-810b-9deafd88c919"
+   },
+   {
+    "season": 67,
+    "battleUuid": "956776ef-2a6f-3fb1-8c75-e1465ad6dba8"
+   }
+  ],
+  "Liz": [
+   {
+    "season": 66,
+    "battleUuid": "bdb01dad-13c1-3aaa-85a4-fd8f625b3805"
+   },
+   {
+    "season": 65,
+    "battleUuid": "087a6d68-bfb1-321b-8632-0466181075c0"
+   }
+  ],
+  "Lotan": [
+   {
+    "season": 69,
+    "battleUuid": "fb14c257-6e34-3e6b-8fe0-6dc1c9ee7063"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f8a8efdd-5630-3f54-978a-4fac4272b426"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f82f3b5a-c3f2-352a-be00-ed0f0bbeb7bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "eeb062b3-bd98-3283-9902-547f076c33f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e7ea5a53-920c-3e2d-a943-c828cd850e6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e3ee5918-3462-3f38-af48-2bc317cbd4db"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e0bed944-1c62-3b99-9e34-42b3c45f8ed5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bdfdd732-00e8-3147-9731-0f37b325a595"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b97f40c8-4edf-3319-ac4a-17d584136a36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9bfb7395-cf74-345f-8015-63dbee614759"
+   },
+   {
+    "season": 69,
+    "battleUuid": "791780f5-c1c0-3684-905a-a7f40f1b99dd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6ca044ed-d7fb-3771-a4fb-4bae4d57b62b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4e36ae53-67aa-3087-8b49-90a431a18aa6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "34b2a86b-a62d-35e4-9c8d-dd61b0e2a0ef"
+   },
+   {
+    "season": 69,
+    "battleUuid": "278886eb-a5aa-3087-b5d0-b804dbe886bb"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bf97124f-bddf-3f7e-8f7c-137c02b854a8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9c284645-89b6-3806-a0ee-08220beb46f8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "961abd23-4df6-3763-810b-9deafd88c919"
+   },
+   {
+    "season": 67,
+    "battleUuid": "72cf5dfe-75e3-3336-965c-cce83bfaeecc"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ee403e9c-fda6-3f03-acfb-7253e336b4e3"
+   },
+   {
+    "season": 66,
+    "battleUuid": "df1f348b-7888-3630-9e90-700234065b3c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d55c9984-af8d-3b8e-bf05-398772a362f1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d3bd1257-9354-38c0-8a2d-d4bfd7c46022"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c311c936-7ee7-3088-980f-fa5bfa359c4b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c0a52e67-1fcd-3e06-aeed-8288e398f32c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b442fc4e-6f27-3207-932e-19753224ed9d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9b9dcc38-99e1-3169-93d0-ef5fff7a7d14"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5ed398ea-8e3a-3fa4-b745-359b94a969c8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4b33627e-ed6b-367d-9051-ba0410c35471"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2f13d31a-c093-3e02-8470-0e65f49f3c86"
+   }
+  ],
+  "Lotan: Cetarchon": [
+   {
+    "season": 69,
+    "battleUuid": "f746a1dc-c2ae-34c3-af08-c00baee5acf0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e325e407-158c-3df3-99ae-1fc6c7a17e3e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "de4b2c8c-d54c-37e6-a968-e0903da2c5eb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d2f80ac2-4111-31de-8790-67907feaaa03"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d0961e1b-9352-364a-91c4-14f8227b87d2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c3833088-e8fe-366b-819c-018e3c10d825"
+   },
+   {
+    "season": 69,
+    "battleUuid": "be83a88e-52af-3b4b-a4c8-b5c2c55d1835"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b461b151-f017-362b-8d3e-6bbc886af14c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a10d10a8-257c-3b15-99a1-269792fff11c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9bfb7395-cf74-345f-8015-63dbee614759"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a3a03d8-d680-3661-b3fb-a36ca6e717cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "89bd6c7d-552f-3edc-b5f8-ab50e8559d11"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7db0fdd4-f46a-3f95-9cbe-0b79e72ccc97"
+   },
+   {
+    "season": 69,
+    "battleUuid": "791780f5-c1c0-3684-905a-a7f40f1b99dd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78f44c10-4cb2-34c7-9d56-d04399a4447f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6ca044ed-d7fb-3771-a4fb-4bae4d57b62b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "639a9647-9c93-3c43-988a-5e46ecd74dee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "55794bf1-7c8d-3ef3-98a6-d029d02a6554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4e36ae53-67aa-3087-8b49-90a431a18aa6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3d7433f9-9cc2-30d4-ada1-b32104a8a065"
+   },
+   {
+    "season": 69,
+    "battleUuid": "240b5683-507d-3ac7-b837-aae5f7a85460"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0cfaa0c8-0466-325d-9c82-e5ecfa5c34fe"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d5243e05-dbbf-3eb3-a3c6-8fc4db8b5e3a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ab5a6007-456d-39aa-ba7b-4177d5028a7c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0e95e58-fe03-36c8-b531-cf5704ddab06"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8979aeda-2864-3d66-a6dd-e6c4f374f31e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "860b8ea6-115e-33f2-917c-80d49d41308e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7bc580cb-5d18-37e8-9419-aa105917741a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "73ea9c1f-ddf6-3f90-af0e-05b1dce41cc8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "72cf5dfe-75e3-3336-965c-cce83bfaeecc"
+   }
+  ],
+  "Miryam": [
+   {
+    "season": 69,
+    "battleUuid": "f5f22e60-6d7b-3708-aa08-199842f6bd6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5c335ea-fbf8-309e-ad1d-66eb796b66d6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7561c09-7d98-36d0-88ef-0721e932f6e1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bc375856-2ee5-3994-b8ef-d4734b8cc26a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b9bf3678-54d3-3fbe-bedf-6030bbc08b36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b51ac994-efab-3ae6-b439-1a64080d37b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7ffab129-cdd1-3cc9-b495-d26ebcacc83b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71efc254-4dba-3773-9c4d-326d3955f8df"
+   },
+   {
+    "season": 69,
+    "battleUuid": "62a6ee4f-4bf6-3f86-a937-594d451536ac"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51b5759d-029a-3fa3-9222-950e9df6e303"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1e8848f0-6e04-3f93-afe0-f1e19961c332"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1a225c50-40b0-36eb-987b-a1b53c07ea86"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1034a3d0-0c14-343b-a7c1-168e11c4eb09"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0ae31ce7-b791-32e3-9c3a-a6db4f626e57"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02508799-e51c-3ebd-b101-e726021daf27"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02209565-6f41-31ff-84af-04a1f0c85d9e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f2f850c4-539b-330b-ab95-d950bd8a02df"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eab5cf7b-dbec-345c-8cd6-55c91e1a188e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bfba79ef-e3d3-3937-92d9-4c1ad2c855ef"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b63cc79f-1ed7-3f5d-94bb-ada8de16d8e2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "852e0ef9-8b4c-366f-b537-6cde42b7b921"
+   },
+   {
+    "season": 67,
+    "battleUuid": "727cf3d0-7971-3d01-ac8b-82dfc265139a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3728c232-4541-3116-b026-2c333f255ff1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2c50eabb-7a95-3d80-b9f3-b6a26cb613f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2a2e9632-3af4-37dd-8b3e-8ee898ac8ebe"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2888b513-81f8-33e5-9bc9-c89a83953b73"
+   },
+   {
+    "season": 67,
+    "battleUuid": "217ba6fe-035a-3ed4-a622-7bf61acbc177"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0f31526a-bb3b-36d1-bf42-5f8c6a9ed07d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0d96a573-09fb-3172-9b71-bd3fb2f6ab3e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0bd92f38-06fc-3a8c-858e-e023c30a637c"
+   }
+  ],
+  "Mouchette": [
+   {
+    "season": 69,
+    "battleUuid": "f8a8efdd-5630-3f54-978a-4fac4272b426"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f82f3b5a-c3f2-352a-be00-ed0f0bbeb7bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "eeb062b3-bd98-3283-9902-547f076c33f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e7ea5a53-920c-3e2d-a943-c828cd850e6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e3ee5918-3462-3f38-af48-2bc317cbd4db"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e325e407-158c-3df3-99ae-1fc6c7a17e3e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2ee196c-bfea-31c2-a078-15c0fbe5e2da"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e0bed944-1c62-3b99-9e34-42b3c45f8ed5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "de4b2c8c-d54c-37e6-a968-e0903da2c5eb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d2f80ac2-4111-31de-8790-67907feaaa03"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c52f758d-31d6-33e8-b531-9deb406df1b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "be83a88e-52af-3b4b-a4c8-b5c2c55d1835"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bdfdd732-00e8-3147-9731-0f37b325a595"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bd2d537e-7c0f-3665-af28-8a54c3415bbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b97f40c8-4edf-3319-ac4a-17d584136a36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b667fedb-e55b-3edf-887b-10657619881a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b461b151-f017-362b-8d3e-6bbc886af14c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a729b22b-f28b-3fe7-b33f-73e4ca8ca6a7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a10d10a8-257c-3b15-99a1-269792fff11c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a3a03d8-d680-3661-b3fb-a36ca6e717cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "87c3cb1e-9687-37be-8008-09d4522df554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7db0fdd4-f46a-3f95-9cbe-0b79e72ccc97"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7b1f6212-c29b-3cbc-84e5-5f93fd920608"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78f44c10-4cb2-34c7-9d56-d04399a4447f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78c35400-e549-3049-accf-97781eb691f4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6ca044ed-d7fb-3771-a4fb-4bae4d57b62b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36f73729-c05a-32d7-b547-7415e47ebe0d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "295a5032-41f3-3d82-ac5c-6c8d4557424e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "278886eb-a5aa-3087-b5d0-b804dbe886bb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0cfaa0c8-0466-325d-9c82-e5ecfa5c34fe"
+   }
+  ],
+  "Murphy": [
+   {
+    "season": 69,
+    "battleUuid": "f84738f4-fd4e-3b0f-b1cd-1a1af9be11d0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2b44fe7-d7b4-3280-88ee-aa8dfbc748de"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d66a3fdd-790f-3b85-a6b1-b700825dfe55"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5bea7ee-8ffa-3940-aa9e-7147c536f709"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d1863f25-f6d9-36d3-bb34-452ed34c225f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c0defec5-925a-3b68-b9fa-370622262878"
+   },
+   {
+    "season": 69,
+    "battleUuid": "af0114f9-237e-3094-93d0-ff8ac95f315e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ab7e6ee7-d03f-379f-b17c-3cd72e3d0793"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aa85fa7c-e6a9-33ef-a57d-ecea65e5b141"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a14af1b2-3d30-36e0-9305-82faf925be39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a12bd775-155b-3e68-b56a-e1cdab1f85ae"
+   },
+   {
+    "season": 69,
+    "battleUuid": "895e5e97-af0c-3ed2-9b2a-e31abb2dedca"
+   },
+   {
+    "season": 69,
+    "battleUuid": "79998b89-2940-3e62-98ed-e6db5e4d839c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "743441c6-6c16-3625-a272-8ac8d249f294"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5c5d17d7-7486-399f-8ca0-d4be234b7e8e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51bf8690-6a19-378d-b792-9dbc17b03863"
+   },
+   {
+    "season": 69,
+    "battleUuid": "510e01b9-2e65-325b-abf6-4097df3edb77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33783347-f9ec-31be-ada3-9d856d333811"
+   },
+   {
+    "season": 69,
+    "battleUuid": "31994044-d79f-3125-8ef7-6518bb2e6dbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1c0db085-145d-3f2e-9465-101d2c7e8fe8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "19966fa8-450c-3ae7-addd-799dd7aae750"
+   },
+   {
+    "season": 69,
+    "battleUuid": "07760d46-4899-3d83-b9c1-e0bf5ec33cb4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f50e57ed-9c91-380d-89bb-854d527a84bc"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eb1dda5a-c578-3bc1-bc66-5d6d08ef34ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0d0dac4-859d-3788-ab94-9c82bf9dfe13"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8d0ede27-20b0-3548-b0b8-353469fca5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "84d7d5a4-9c56-3e9f-ab77-061a9b256019"
+   },
+   {
+    "season": 67,
+    "battleUuid": "84944737-7567-312c-905c-cd57e1b54a35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77056762-af87-3f13-81f0-642577082d2a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "64b8ba82-e460-319f-a491-9a45b48da5a1"
+   }
+  ],
+  "Murphy: Fauxborn": [
+   {
+    "season": 69,
+    "battleUuid": "f5f22e60-6d7b-3708-aa08-199842f6bd6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "db37b177-0d9b-3e07-8ace-985303110007"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d9544048-322e-3782-8ee2-9f435407c7ea"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5c335ea-fbf8-309e-ad1d-66eb796b66d6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7561c09-7d98-36d0-88ef-0721e932f6e1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c34b408a-d7aa-331f-8843-b0ab1b622842"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bc375856-2ee5-3994-b8ef-d4734b8cc26a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b9bf3678-54d3-3fbe-bedf-6030bbc08b36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b51ac994-efab-3ae6-b439-1a64080d37b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7ffab129-cdd1-3cc9-b495-d26ebcacc83b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71efc254-4dba-3773-9c4d-326d3955f8df"
+   },
+   {
+    "season": 69,
+    "battleUuid": "62a6ee4f-4bf6-3f86-a937-594d451536ac"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51b5759d-029a-3fa3-9222-950e9df6e303"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1e8848f0-6e04-3f93-afe0-f1e19961c332"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1a225c50-40b0-36eb-987b-a1b53c07ea86"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1034a3d0-0c14-343b-a7c1-168e11c4eb09"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0ae31ce7-b791-32e3-9c3a-a6db4f626e57"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02508799-e51c-3ebd-b101-e726021daf27"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02209565-6f41-31ff-84af-04a1f0c85d9e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f2f850c4-539b-330b-ab95-d950bd8a02df"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eab5cf7b-dbec-345c-8cd6-55c91e1a188e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bfba79ef-e3d3-3937-92d9-4c1ad2c855ef"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b63cc79f-1ed7-3f5d-94bb-ada8de16d8e2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "852e0ef9-8b4c-366f-b537-6cde42b7b921"
+   },
+   {
+    "season": 67,
+    "battleUuid": "727cf3d0-7971-3d01-ac8b-82dfc265139a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3728c232-4541-3116-b026-2c333f255ff1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2c50eabb-7a95-3d80-b9f3-b6a26cb613f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2a2e9632-3af4-37dd-8b3e-8ee898ac8ebe"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2888b513-81f8-33e5-9bc9-c89a83953b73"
+   },
+   {
+    "season": 67,
+    "battleUuid": "217ba6fe-035a-3ed4-a622-7bf61acbc177"
+   }
+  ],
+  "Nautila": [
+   {
+    "season": 69,
+    "battleUuid": "e080cee6-4742-3911-99f6-bc042aadc836"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ca90c0cf-4504-3d4c-9c3f-26b25d63f547"
+   },
+   {
+    "season": 69,
+    "battleUuid": "320ed058-5a02-35f6-b28d-89b7a6a9e41b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "282d512c-fda2-3bd7-839f-3da451ca5703"
+   },
+   {
+    "season": 69,
+    "battleUuid": "12581f70-243c-3832-a9e5-a55bf1263b05"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e60a13a7-ecdb-3ace-8feb-01b33d224046"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b9817e44-1a96-3f1d-804a-fb3b66a836b9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4fa38d39-7f01-34ef-807a-6d44589fb85c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4e4d8d06-3605-3b87-8e79-c83a80b07bee"
+   },
+   {
+    "season": 67,
+    "battleUuid": "06e82169-be5c-3d45-a384-1b04cb69634e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "036171f1-c4be-3a72-88f5-b685a0c53c47"
+   },
+   {
+    "season": 67,
+    "battleUuid": "031ce52c-08b3-3a85-ab7a-79a1846a632f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f565f1e2-d8eb-3c6e-b760-7f75c7904ed9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ef25f9c8-32fb-3948-84d0-41c5acdaa60a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "edf55cfc-d9c3-3ff1-a33e-fcd3c28e1e20"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d9899fac-6128-3e20-a120-4bd0f5d5a6a6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d24ea159-d31f-3eab-a2e2-bb9011146fd8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c8a11c19-131a-3223-9b9a-066159cc93ea"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c311c936-7ee7-3088-980f-fa5bfa359c4b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c0a52e67-1fcd-3e06-aeed-8288e398f32c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "be98ae70-839c-36a0-a8c0-3851ec499550"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a7c5be76-17f7-3048-80d2-e51e893a7b06"
+   },
+   {
+    "season": 66,
+    "battleUuid": "90fb57d1-30c1-3c7e-bab4-50a3b481c648"
+   },
+   {
+    "season": 66,
+    "battleUuid": "783c161e-e8bb-36af-962c-188db875cc7e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "64d3c7a4-aefb-3a0d-92ea-db0f050dafcb"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5868f9ae-1d81-3402-bf7d-a47dba673912"
+   },
+   {
+    "season": 66,
+    "battleUuid": "44e6f077-8184-3abc-89f4-252b6bc8799f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3cdf6dc5-eab3-39a7-b204-dd3af823e929"
+   },
+   {
+    "season": 66,
+    "battleUuid": "3c5df9e2-df2d-3439-a6f4-b5b73e4251c0"
+   },
+   {
+    "season": 66,
+    "battleUuid": "09696a4f-4e7b-3f3e-98cf-ac412c5f7614"
+   }
+  ],
+  "Nymphaea": [
+   {
+    "season": 69,
+    "battleUuid": "e54a6cf9-0392-34fc-963a-52e59cb7c9c7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d025d14f-cffe-34e9-9bfa-d2e4f0ce5cdc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ff85499-5975-30bd-892a-876b57b31fbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "41b2508c-7e96-3cd4-9c5e-c49b22eb5ad7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1de36b8d-ceba-3102-ab51-4d428b372b89"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e5b02fbf-3a62-3da8-b14b-78e9b5942d35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d28809ea-1fd9-36a3-868b-d7d2bec3d384"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d20d6c05-c637-3047-abc2-e348046093aa"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a4efe933-002a-3530-a090-f11948c45731"
+   },
+   {
+    "season": 67,
+    "battleUuid": "55445432-1d14-3eba-a0c1-f53c66476e62"
+   },
+   {
+    "season": 67,
+    "battleUuid": "463f898c-9ce9-3adc-9322-4a32417692e9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3e41162e-8425-34da-8f7c-156b277638e6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1dfc7df6-58b6-3285-bbe0-194b5f281bb8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "14fd8667-d850-36b7-beb1-67243d443387"
+   },
+   {
+    "season": 67,
+    "battleUuid": "011f63c4-ea21-3b17-aad4-1f98ebaa6688"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f0f33152-c481-316a-92b9-80b1b142611c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b0f73346-04ed-3f70-8a8e-7f95590351b2"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a7c5be76-17f7-3048-80d2-e51e893a7b06"
+   },
+   {
+    "season": 66,
+    "battleUuid": "986f8d47-803d-32af-a5f7-68f57aa1df7a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "96838659-b673-3941-a08f-29fd8e3712fa"
+   },
+   {
+    "season": 66,
+    "battleUuid": "8e22c0b5-e885-3c75-83a1-0b3eaf2614a7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "85fe888f-cc04-39fd-a76d-7c3484c782dd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4cece553-51df-364c-9c48-8b5260deeb8b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4ca3571d-cde0-33d1-8ee9-dff65b0ce1d8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4a2986d3-e5e0-347c-a0eb-4aedc5b50693"
+   },
+   {
+    "season": 66,
+    "battleUuid": "423776c4-4db2-39e0-8bf4-eb833ad298a7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "367cd91b-40e1-33d3-b5ff-5f7a6847b0f7"
+   },
+   {
+    "season": 66,
+    "battleUuid": "31ca5e18-de3a-35c9-9d56-cb43cb97b8fb"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2fa64124-b506-3d49-8efa-cd0d2d817ad4"
+   },
+   {
+    "season": 66,
+    "battleUuid": "27aadf42-764c-337f-865d-3107328a0f6b"
+   }
+  ],
+  "Ogier": [
+   {
+    "season": 69,
+    "battleUuid": "ff029c5a-0a30-37ae-8882-be6d06e21872"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f8a8efdd-5630-3f54-978a-4fac4272b426"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e080cee6-4742-3911-99f6-bc042aadc836"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d750a616-ba0c-38ef-8c46-9b078f244b77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c64e8ddc-143f-3a2e-a824-dca8729f9553"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ae3815e6-eca3-349b-97fc-c850676af377"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aac29dbf-0c4a-344b-85c1-7fdcd6e0f22a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a729b22b-f28b-3fe7-b33f-73e4ca8ca6a7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a1451eff-0990-3719-bb6a-267bfe2797e0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a10d10a8-257c-3b15-99a1-269792fff11c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8ee2ed7e-edd1-3c4d-abdf-6e56e8a10a16"
+   },
+   {
+    "season": 69,
+    "battleUuid": "89bd6c7d-552f-3edc-b5f8-ab50e8559d11"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7a7bd190-78b3-3f8e-b61a-30ce3b645f14"
+   },
+   {
+    "season": 69,
+    "battleUuid": "775b6412-8522-3152-9898-8bed714f4b1e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "760f1bfa-91d3-36f8-9e0a-c2b6782aae30"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7174fd1d-7a2b-3234-af7f-db9d4756408f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "52949b2d-5081-3178-93a1-aba2159d770b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "47b9f0bf-f670-3144-9518-30d9baea3a20"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3f4cdf37-78c9-3f43-867b-ac945ec45895"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0bf7c66b-6dca-3e11-aac3-971066e197ca"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f36ea8c6-0d0a-3c2a-b43f-0ac601e427c4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c648e8fb-9946-3cc0-8696-630bce1b3e2c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ae594b60-a68e-3f5d-978c-867737e33dc9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ab5a6007-456d-39aa-ba7b-4177d5028a7c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0e95e58-fe03-36c8-b531-cf5704ddab06"
+   },
+   {
+    "season": 67,
+    "battleUuid": "860b8ea6-115e-33f2-917c-80d49d41308e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "47a641e9-8ba2-3b02-ae12-f4b4981529b5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "46e6b547-9916-3452-b689-70134565daf7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "317b54fa-cdc6-3487-aff8-342ef6f5905f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1702702a-f5d0-3426-a4ab-5ddc07a59902"
+   }
+  ],
+  "Pandia": [
+   {
+    "season": 69,
+    "battleUuid": "563bd0aa-94bb-360f-b263-7f6d6ff0aeb3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e60a13a7-ecdb-3ace-8feb-01b33d224046"
+   },
+   {
+    "season": 67,
+    "battleUuid": "67399963-89a5-3424-9074-fa5cd97d42ba"
+   },
+   {
+    "season": 67,
+    "battleUuid": "46c0e6b7-5045-3cb5-8aca-11143a385f5e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "06e82169-be5c-3d45-a384-1b04cb69634e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "edf55cfc-d9c3-3ff1-a33e-fcd3c28e1e20"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d9899fac-6128-3e20-a120-4bd0f5d5a6a6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c8a11c19-131a-3223-9b9a-066159cc93ea"
+   },
+   {
+    "season": 66,
+    "battleUuid": "783c161e-e8bb-36af-962c-188db875cc7e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "64d3c7a4-aefb-3a0d-92ea-db0f050dafcb"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5868f9ae-1d81-3402-bf7d-a47dba673912"
+   },
+   {
+    "season": 66,
+    "battleUuid": "27aadf42-764c-337f-865d-3107328a0f6b"
+   },
+   {
+    "season": 65,
+    "battleUuid": "eb17b05f-0a25-303a-bd50-579d5f239372"
+   },
+   {
+    "season": 65,
+    "battleUuid": "da77d76e-273a-3ad1-a976-4bcd2b8f9bde"
+   },
+   {
+    "season": 65,
+    "battleUuid": "d38758a8-182e-370c-b735-56b3af9c2234"
+   },
+   {
+    "season": 65,
+    "battleUuid": "d05225d9-9de8-31ce-adad-9398dc41ea25"
+   },
+   {
+    "season": 65,
+    "battleUuid": "917d9819-3e05-398e-9992-b9d53fb5903b"
+   },
+   {
+    "season": 65,
+    "battleUuid": "7d7a9cc3-5cf2-35f5-bfc4-f6959cb4b6ea"
+   },
+   {
+    "season": 65,
+    "battleUuid": "7ca03348-52f6-39ae-b5ff-f0c6c764ff92"
+   },
+   {
+    "season": 65,
+    "battleUuid": "6cbf3312-2af1-3349-991a-2b4d743f5713"
+   },
+   {
+    "season": 65,
+    "battleUuid": "62577842-2f8d-3977-bb33-e31067a8b775"
+   },
+   {
+    "season": 65,
+    "battleUuid": "5f53bb62-0512-378f-9472-2345c0c371f9"
+   },
+   {
+    "season": 65,
+    "battleUuid": "5e1ceadf-9639-3bfd-ac43-62cacdde2b01"
+   },
+   {
+    "season": 65,
+    "battleUuid": "55cfd9fd-f767-3187-81b5-a961f4bbc08a"
+   }
+  ],
+  "Pickman": [
+   {
+    "season": 69,
+    "battleUuid": "d50ffb97-cb2a-3ca0-ba89-430cf371fb99"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d1863f25-f6d9-36d3-bb34-452ed34c225f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c3833088-e8fe-366b-819c-018e3c10d825"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78c35400-e549-3049-accf-97781eb691f4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "639a9647-9c93-3c43-988a-5e46ecd74dee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5775c197-b99a-36ea-b51c-c930f4674ce1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "54abd1a0-a289-3828-a66a-0e2a53a74497"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3160989f-0065-3ace-a7a4-dbc883092858"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2414b518-4953-334e-a180-28f87b7511f0"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eb1dda5a-c578-3bc1-bc66-5d6d08ef34ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b205a7d7-86ac-34d8-9ca6-e32549e459c0"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0e95e58-fe03-36c8-b531-cf5704ddab06"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9cc587c1-d906-3dc7-b909-67d2206a1082"
+   },
+   {
+    "season": 67,
+    "battleUuid": "884c218c-fcbd-30ac-916b-19727c87289a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "84944737-7567-312c-905c-cd57e1b54a35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "625ec0f2-98d1-3f32-8383-e6fa3671e8ad"
+   },
+   {
+    "season": 67,
+    "battleUuid": "60f13756-f56c-3717-8e5b-21ba514ec25f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5a1a9935-cf47-3485-b899-35d1ef496f8b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "57468f04-46ca-3236-a203-12c0a1a280b6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4398d876-f7dc-3401-91da-acd65aece34e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "27f90429-1861-31ca-97ca-6e09eec256e3"
+   },
+   {
+    "season": 66,
+    "battleUuid": "fa5121a1-d8e3-33ce-9bb9-2615c46fd7b8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e447a035-5ccc-31e5-946f-da6ab05ee925"
+   },
+   {
+    "season": 66,
+    "battleUuid": "beef5d0a-1898-30c8-a789-fe4786dc3be9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "bdb01dad-13c1-3aaa-85a4-fd8f625b3805"
+   },
+   {
+    "season": 66,
+    "battleUuid": "96ddc8a4-c355-34b1-887a-9300f11d5591"
+   },
+   {
+    "season": 66,
+    "battleUuid": "93ee4d81-99e6-3ebc-b628-61ed825d1531"
+   },
+   {
+    "season": 66,
+    "battleUuid": "8f1232fa-1f7d-3d92-9e86-631ac769f41e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "87153934-89f7-3cf4-a6df-282ff30d5b77"
+   },
+   {
+    "season": 66,
+    "battleUuid": "72711372-1710-39b5-9e0f-3f03be890bae"
+   }
+  ],
+  "Pollux": [
+   {
+    "season": 69,
+    "battleUuid": "fc5db626-8b39-366d-b70b-3594c7f9885d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2a38e0a-fc7a-36f7-9f29-51de8089491c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b369070f-2358-3795-95cb-74aa83bd5eb8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "80e8fba4-0462-3a8d-8b51-946b526d2124"
+   },
+   {
+    "season": 69,
+    "battleUuid": "671d2851-e775-3091-82bc-915f6c2a61ee"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e8d74174-2546-3b3a-8b47-fd18d0830592"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d07881c4-c1ff-3dda-a8b4-0225eedc9a92"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ce57e2af-188e-399d-b041-fcdb30f276e7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ccd104ee-4d8f-378c-a5cd-4e2c4511964f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "77a90a48-0aa8-3315-8781-a59ac87d31b1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "62d0e75d-9806-39da-b5fa-a03c4d86d7b3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5b517746-cb7d-3501-8186-2db8a0ca6a50"
+   },
+   {
+    "season": 67,
+    "battleUuid": "409b79c1-1f61-317b-8e19-7cafb054c5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3dd0a114-1967-36d9-a2d7-cc972ff5a948"
+   },
+   {
+    "season": 67,
+    "battleUuid": "188c090d-f787-30fc-bc29-50be78a85357"
+   },
+   {
+    "season": 67,
+    "battleUuid": "071e1cb9-001a-37d2-bdd0-3cc432d6ddb9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f95bf7dd-b702-355e-8dd9-c066f87f26d3"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ddee0cb3-b455-34a5-bea0-c3f84018c012"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d5293c6e-a4ba-36b3-952e-ae42c9475c4e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d276456e-fd89-3922-ad1d-69faa332e744"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d0f4bb34-a019-358a-8103-555d4c4c5838"
+   },
+   {
+    "season": 66,
+    "battleUuid": "bb0e31b7-a952-33eb-b41f-5692c6e21d5f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ade6da33-d684-36dc-a445-ddd28e7b7e62"
+   },
+   {
+    "season": 66,
+    "battleUuid": "8cb38bc1-bd0b-3173-a08b-5e541ac9f257"
+   },
+   {
+    "season": 66,
+    "battleUuid": "801f95d8-02dd-3d4e-94ea-5f0ca155ba00"
+   },
+   {
+    "season": 66,
+    "battleUuid": "77f76a5a-d1d4-308e-a3ce-2cdf22a5c04c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4f0e9da7-8ff5-3984-a021-a18924aac9a4"
+   },
+   {
+    "season": 66,
+    "battleUuid": "46de7204-bd63-388e-ab4b-43479f3381f0"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2b0fe06b-ba74-3c0e-89ac-2546b04f33c1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "28bf1ce4-ed95-3792-9261-e2bc5f9bf674"
+   }
+  ],
+  "Pontos": [
+   {
+    "season": 69,
+    "battleUuid": "d8638615-8552-335b-aafe-bf668fd3006f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c34b408a-d7aa-331f-8843-b0ab1b622842"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c0defec5-925a-3b68-b9fa-370622262878"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8e4b197c-1097-3009-8cf5-8f9f6836786a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8254f1f5-02c5-30b1-a529-4ff52e16b645"
+   },
+   {
+    "season": 69,
+    "battleUuid": "510e01b9-2e65-325b-abf6-4097df3edb77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4f92f5da-474c-3e14-bdcf-b5648c040790"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4d9f77df-47af-341e-99a1-4983010f2afd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e39b742d-81d2-3eaa-9c7e-db9d8fdfd0a2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b2357e61-0fe9-3a15-a0de-864a28abffd3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ac42d59d-698e-3019-b045-41dfbfe74e19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0d0dac4-859d-3788-ab94-9c82bf9dfe13"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8d0ede27-20b0-3548-b0b8-353469fca5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7b5951ec-2bb1-339c-b8ad-e136d1679470"
+   },
+   {
+    "season": 67,
+    "battleUuid": "75a284e5-bcd0-3600-be56-12f140f8d036"
+   },
+   {
+    "season": 67,
+    "battleUuid": "57730227-1214-300d-bc83-9e5972092dbd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3d3cc763-76d1-30b0-ae4f-e25941af3c19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "153206bd-5d6c-32db-8f17-770c1308ea35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "031ce52c-08b3-3a85-ab7a-79a1846a632f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e814154f-f6a8-37bb-bd1c-6b35d26d5693"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ddee0cb3-b455-34a5-bea0-c3f84018c012"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c9aaf90e-a7b3-331f-a165-60ef9c3c843f"
+   },
+   {
+    "season": 66,
+    "battleUuid": "beef5d0a-1898-30c8-a789-fe4786dc3be9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "bac6273b-07e2-3ba6-ab87-65d3cedab2de"
+   },
+   {
+    "season": 66,
+    "battleUuid": "b2ff232f-efce-3f4a-8f64-b33526c8832a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9e001b0f-7bfc-3352-a82e-105f65d2e35c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "96523fad-298f-30b5-b666-2a6d57b4f97a"
+   },
+   {
+    "season": 66,
+    "battleUuid": "48cf136d-2cd2-30d1-bcd3-b0de62c68279"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4592d7a5-1ae3-36ad-a0b9-55df7bab8fdb"
+   },
+   {
+    "season": 66,
+    "battleUuid": "44e6f077-8184-3abc-89f4-252b6bc8799f"
+   }
+  ],
+  "Ramona": [
+   {
+    "season": 69,
+    "battleUuid": "fb14c257-6e34-3e6b-8fe0-6dc1c9ee7063"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f21cfd09-3605-3f48-adda-791627984af8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2b44fe7-d7b4-3280-88ee-aa8dfbc748de"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e0bed944-1c62-3b99-9e34-42b3c45f8ed5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bdfdd732-00e8-3147-9731-0f37b325a595"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aac29dbf-0c4a-344b-85c1-7fdcd6e0f22a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a729b22b-f28b-3fe7-b33f-73e4ca8ca6a7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78f44c10-4cb2-34c7-9d56-d04399a4447f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0bf7c66b-6dca-3e11-aac3-971066e197ca"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d9fec9b0-dc04-3c9e-995a-c27843918ce2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d5243e05-dbbf-3eb3-a3c6-8fc4db8b5e3a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ace7c12f-ad56-372d-b1de-3462ad9b5a29"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a8010bcf-ac0f-3fe1-9266-581cff23c94f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "88411cf9-7736-38dc-87b3-e5957d3b8238"
+   },
+   {
+    "season": 67,
+    "battleUuid": "781471f0-d828-37e4-b5cd-de5f24772f9c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "73ea9c1f-ddf6-3f90-af0e-05b1dce41cc8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "46e6b547-9916-3452-b689-70134565daf7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "46c0e6b7-5045-3cb5-8aca-11143a385f5e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f7acc47f-b5a7-3685-b538-d232f7d296fa"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e814154f-f6a8-37bb-bd1c-6b35d26d5693"
+   },
+   {
+    "season": 66,
+    "battleUuid": "df71585b-368d-379e-96a0-fb877a8bd733"
+   },
+   {
+    "season": 66,
+    "battleUuid": "cc16c562-bdee-3a8d-8a7d-1839c12971d6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6ab809ab-0f72-354f-8d24-1bb1e4df0435"
+   },
+   {
+    "season": 66,
+    "battleUuid": "65f4743b-9b7e-3c94-aac2-831c254ee306"
+   },
+   {
+    "season": 66,
+    "battleUuid": "4b33627e-ed6b-367d-9051-ba0410c35471"
+   },
+   {
+    "season": 66,
+    "battleUuid": "456da8a6-9311-3822-b28f-d7efeb4cb26d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2d0d03d7-f707-3f7a-a861-dc35e7f6e232"
+   },
+   {
+    "season": 66,
+    "battleUuid": "298e7aa2-2c61-35c3-af9a-5efe24315461"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2485f457-27cc-366d-8a5b-390cf7d146fd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "1aba9669-682c-3dd3-92e5-a663f344c122"
+   }
+  ],
+  "Ramona: Timeworn": [
+   {
+    "season": 69,
+    "battleUuid": "f1f970c8-24d0-389f-a732-affd3f2f86f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9debbb3a-0d85-39b7-8de2-b9f28ee1cf39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "775b6412-8522-3152-9898-8bed714f4b1e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "75b0dbde-8a0f-3c48-936a-ae373805553f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6b04d37f-55e6-3512-b902-5bc3c6c83f1a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ef44c5d-847a-3a0a-bdd2-3f5150175a41"
+   },
+   {
+    "season": 69,
+    "battleUuid": "52949b2d-5081-3178-93a1-aba2159d770b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "47b9f0bf-f670-3144-9518-30d9baea3a20"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3f4cdf37-78c9-3f43-867b-ac945ec45895"
+   },
+   {
+    "season": 69,
+    "battleUuid": "365f9e63-52dc-3fca-ac0b-17bac54f5947"
+   },
+   {
+    "season": 69,
+    "battleUuid": "34b2a86b-a62d-35e4-9c8d-dd61b0e2a0ef"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1adc1027-d70c-3b5c-88c0-14641cc84859"
+   },
+   {
+    "season": 67,
+    "battleUuid": "6afc1cbe-ba19-3912-b564-b4c5bbe77323"
+   },
+   {
+    "season": 67,
+    "battleUuid": "66d59d69-cfcf-389f-b3e9-df900d3efe4b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5a1a9935-cf47-3485-b899-35d1ef496f8b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3bca9c07-2b54-3a85-9182-9ce2e24ab66b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f4546f93-7439-3a20-93bd-119f265afee9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ee403e9c-fda6-3f03-acfb-7253e336b4e3"
+   },
+   {
+    "season": 66,
+    "battleUuid": "7b41256b-f1bc-3294-b90a-9340997e356d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5ae9292a-25af-31ac-960f-ba3baa49d51e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5861de7d-cd68-3b6a-8c99-fe7a5fe690f1"
+   },
+   {
+    "season": 66,
+    "battleUuid": "41ef7c19-3d95-377d-bab5-9964a64e93ea"
+   },
+   {
+    "season": 66,
+    "battleUuid": "07a5aa43-280e-3ca7-ab68-94277183340b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "01221b7f-72c5-3d0b-87d6-5894f97318a9"
+   },
+   {
+    "season": 65,
+    "battleUuid": "681a8cb8-cb28-35ef-a82a-e2c06879a906"
+   },
+   {
+    "season": 65,
+    "battleUuid": "6071e2c5-6cd3-36a8-acdf-707bd8826c61"
+   },
+   {
+    "season": 65,
+    "battleUuid": "6010389b-d7c0-39ea-956d-745da8ccc39f"
+   },
+   {
+    "season": 65,
+    "battleUuid": "25339fe2-f7cf-3d15-879c-9cf90b0956ff"
+   },
+   {
+    "season": 65,
+    "battleUuid": "202df7af-8bb0-3ea0-a90b-2d83e2c0e695"
+   },
+   {
+    "season": 65,
+    "battleUuid": "19e1e5a6-4a21-3b4b-9028-59b29617a0b6"
+   }
+  ],
+  "Ryker": [
+   {
+    "season": 69,
+    "battleUuid": "fc7f98ff-a6a2-36c4-9014-f06919d65561"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f84738f4-fd4e-3b0f-b1cd-1a1af9be11d0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f746a1dc-c2ae-34c3-af08-c00baee5acf0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e7ea5a53-920c-3e2d-a943-c828cd850e6c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d2f80ac2-4111-31de-8790-67907feaaa03"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d0961e1b-9352-364a-91c4-14f8227b87d2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c64e8ddc-143f-3a2e-a824-dca8729f9553"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c10e6cf8-3014-33eb-8e01-e692b4714869"
+   },
+   {
+    "season": 69,
+    "battleUuid": "be83a88e-52af-3b4b-a4c8-b5c2c55d1835"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bd2d537e-7c0f-3665-af28-8a54c3415bbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b97f40c8-4edf-3319-ac4a-17d584136a36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "9bfb7395-cf74-345f-8015-63dbee614759"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7db0fdd4-f46a-3f95-9cbe-0b79e72ccc97"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6f63404c-8dca-36da-9d6a-8baedb2e9782"
+   },
+   {
+    "season": 69,
+    "battleUuid": "68c4325c-2e8c-30ca-bc75-f81aa9b776a2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "55794bf1-7c8d-3ef3-98a6-d029d02a6554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4e36ae53-67aa-3087-8b49-90a431a18aa6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "49d313c8-ecd9-3e57-b0f6-7cea1e6910c1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3d7433f9-9cc2-30d4-ada1-b32104a8a065"
+   },
+   {
+    "season": 69,
+    "battleUuid": "08f54d4b-ec3a-3604-899e-1f38d8470335"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f271fd60-e389-3f58-adcc-0fffd6540074"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c3b6a0d8-469d-3f7d-a42c-e4a2c5d118c2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "860b8ea6-115e-33f2-917c-80d49d41308e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "73ea9c1f-ddf6-3f90-af0e-05b1dce41cc8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "6afc1cbe-ba19-3912-b564-b4c5bbe77323"
+   },
+   {
+    "season": 67,
+    "battleUuid": "66d59d69-cfcf-389f-b3e9-df900d3efe4b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "5bec27d1-bc23-32a2-a971-10b60ea64a5d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "500e38da-11e9-3e7a-9f67-2ccff1ae2585"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f68f7db-81ab-3a3f-975f-c9a4d42ee98d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "35a46f14-78af-3941-bb7b-06a6893b9769"
+   }
+  ],
+  "Salvador": [
+   {
+    "season": 69,
+    "battleUuid": "d66a3fdd-790f-3b85-a6b1-b700825dfe55"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5bea7ee-8ffa-3940-aa9e-7147c536f709"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d50ffb97-cb2a-3ca0-ba89-430cf371fb99"
+   },
+   {
+    "season": 69,
+    "battleUuid": "af0114f9-237e-3094-93d0-ff8ac95f315e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ab7e6ee7-d03f-379f-b17c-3cd72e3d0793"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aab9cdfa-0821-30a8-bc3a-d78bf36748c8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aa85fa7c-e6a9-33ef-a57d-ecea65e5b141"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a14af1b2-3d30-36e0-9305-82faf925be39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "895e5e97-af0c-3ed2-9b2a-e31abb2dedca"
+   },
+   {
+    "season": 69,
+    "battleUuid": "79998b89-2940-3e62-98ed-e6db5e4d839c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "743441c6-6c16-3625-a272-8ac8d249f294"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71418998-2a5e-3b08-be3e-bd938dc08b0b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5c5d17d7-7486-399f-8ca0-d4be234b7e8e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51bf8690-6a19-378d-b792-9dbc17b03863"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33783347-f9ec-31be-ada3-9d856d333811"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1c0db085-145d-3f2e-9465-101d2c7e8fe8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "19966fa8-450c-3ae7-addd-799dd7aae750"
+   },
+   {
+    "season": 69,
+    "battleUuid": "07760d46-4899-3d83-b9c1-e0bf5ec33cb4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f50e57ed-9c91-380d-89bb-854d527a84bc"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eb1dda5a-c578-3bc1-bc66-5d6d08ef34ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e8d74174-2546-3b3a-8b47-fd18d0830592"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d28809ea-1fd9-36a3-868b-d7d2bec3d384"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d20d6c05-c637-3047-abc2-e348046093aa"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ccd104ee-4d8f-378c-a5cd-4e2c4511964f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "7758d70e-b693-32fd-9f79-17e410841403"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f68f7db-81ab-3a3f-975f-c9a4d42ee98d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "409b79c1-1f61-317b-8e19-7cafb054c5a5"
+   },
+   {
+    "season": 67,
+    "battleUuid": "27f90429-1861-31ca-97ca-6e09eec256e3"
+   },
+   {
+    "season": 67,
+    "battleUuid": "071e1cb9-001a-37d2-bdd0-3cc432d6ddb9"
+   },
+   {
+    "season": 66,
+    "battleUuid": "f95bf7dd-b702-355e-8dd9-c066f87f26d3"
+   }
+  ],
+  "Sanga": [
+   {
+    "season": 69,
+    "battleUuid": "e2b44fe7-d7b4-3280-88ee-aa8dfbc748de"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b8bff6d8-75ba-3d06-8428-f71b8083cf1b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aab9cdfa-0821-30a8-bc3a-d78bf36748c8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71418998-2a5e-3b08-be3e-bd938dc08b0b"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0d0dac4-859d-3788-ab94-9c82bf9dfe13"
+   },
+   {
+    "season": 67,
+    "battleUuid": "64b8ba82-e460-319f-a491-9a45b48da5a1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4e4d8d06-3605-3b87-8e79-c83a80b07bee"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3845ddab-8415-351f-9eca-1a5e265eda74"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1b51e50b-c93e-3cd5-8694-2ac3f6fde920"
+   },
+   {
+    "season": 66,
+    "battleUuid": "fd6dcd19-591e-3932-8cf8-6a7e80190e78"
+   },
+   {
+    "season": 66,
+    "battleUuid": "be98ae70-839c-36a0-a8c0-3851ec499550"
+   },
+   {
+    "season": 66,
+    "battleUuid": "9b211eb3-662f-3644-bc11-70861e92f8ed"
+   },
+   {
+    "season": 66,
+    "battleUuid": "96838659-b673-3941-a08f-29fd8e3712fa"
+   },
+   {
+    "season": 66,
+    "battleUuid": "90fb57d1-30c1-3c7e-bab4-50a3b481c648"
+   },
+   {
+    "season": 66,
+    "battleUuid": "55a042bd-faee-3f10-b0d2-88c67712d956"
+   },
+   {
+    "season": 66,
+    "battleUuid": "35638dc5-bf7e-3675-b07c-56015dd4c772"
+   },
+   {
+    "season": 66,
+    "battleUuid": "34b01478-8baf-3c0a-bff8-444b3000889c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "226cfc86-1f73-35db-a9d5-af677b2509ea"
+   },
+   {
+    "season": 66,
+    "battleUuid": "028d692f-c300-3e8c-b887-dde09fd3d8ea"
+   },
+   {
+    "season": 65,
+    "battleUuid": "9b5d309b-8b78-3e71-86e4-19e5736210fd"
+   },
+   {
+    "season": 65,
+    "battleUuid": "71265028-40fb-36b8-a65c-6238906ad156"
+   },
+   {
+    "season": 65,
+    "battleUuid": "45f09397-ac97-337d-ab97-31b523a43048"
+   },
+   {
+    "season": 65,
+    "battleUuid": "20be8c7d-fead-3158-b19a-58398aa17302"
+   },
+   {
+    "season": 65,
+    "battleUuid": "0e7da7fb-446b-3106-9a58-c124ee0ee93c"
+   }
+  ],
+  "Saya": [
+   {
+    "season": 69,
+    "battleUuid": "fc5db626-8b39-366d-b70b-3594c7f9885d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "fb14c257-6e34-3e6b-8fe0-6dc1c9ee7063"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f746a1dc-c2ae-34c3-af08-c00baee5acf0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "eeb062b3-bd98-3283-9902-547f076c33f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2ee196c-bfea-31c2-a078-15c0fbe5e2da"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d66a3fdd-790f-3b85-a6b1-b700825dfe55"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5bea7ee-8ffa-3940-aa9e-7147c536f709"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d0961e1b-9352-364a-91c4-14f8227b87d2"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b97f40c8-4edf-3319-ac4a-17d584136a36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b667fedb-e55b-3edf-887b-10657619881a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "af0114f9-237e-3094-93d0-ff8ac95f315e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ab7e6ee7-d03f-379f-b17c-3cd72e3d0793"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aa85fa7c-e6a9-33ef-a57d-ecea65e5b141"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a12bd775-155b-3e68-b56a-e1cdab1f85ae"
+   },
+   {
+    "season": 69,
+    "battleUuid": "895e5e97-af0c-3ed2-9b2a-e31abb2dedca"
+   },
+   {
+    "season": 69,
+    "battleUuid": "79998b89-2940-3e62-98ed-e6db5e4d839c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "791780f5-c1c0-3684-905a-a7f40f1b99dd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78c35400-e549-3049-accf-97781eb691f4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "743441c6-6c16-3625-a272-8ac8d249f294"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71418998-2a5e-3b08-be3e-bd938dc08b0b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "671d2851-e775-3091-82bc-915f6c2a61ee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5c5d17d7-7486-399f-8ca0-d4be234b7e8e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51bf8690-6a19-378d-b792-9dbc17b03863"
+   },
+   {
+    "season": 69,
+    "battleUuid": "510e01b9-2e65-325b-abf6-4097df3edb77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4e36ae53-67aa-3087-8b49-90a431a18aa6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "38d14db9-c5b0-3e70-aea8-2106f7b24c22"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33783347-f9ec-31be-ada3-9d856d333811"
+   },
+   {
+    "season": 69,
+    "battleUuid": "31994044-d79f-3125-8ef7-6518bb2e6dbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "270b35bc-cc24-364b-811e-76b8e33b5217"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2414b518-4953-334e-a180-28f87b7511f0"
+   }
+  ],
+  "Tawil": [
+   {
+    "season": 69,
+    "battleUuid": "ff029c5a-0a30-37ae-8882-be6d06e21872"
+   },
+   {
+    "season": 69,
+    "battleUuid": "f1f970c8-24d0-389f-a732-affd3f2f86f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e080cee6-4742-3911-99f6-bc042aadc836"
+   },
+   {
+    "season": 69,
+    "battleUuid": "da827058-8e7b-3d90-ad2a-48ef451f3b0c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d64a155d-d41c-3951-b1f6-9b15a44507e8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a1451eff-0990-3719-bb6a-267bfe2797e0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "94dc11f6-4361-3921-bd36-3cabd9eab707"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8ee2ed7e-edd1-3c4d-abdf-6e56e8a10a16"
+   },
+   {
+    "season": 69,
+    "battleUuid": "791780f5-c1c0-3684-905a-a7f40f1b99dd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "78c35400-e549-3049-accf-97781eb691f4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "760f1bfa-91d3-36f8-9e0a-c2b6782aae30"
+   },
+   {
+    "season": 69,
+    "battleUuid": "75b0dbde-8a0f-3c48-936a-ae373805553f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "55794bf1-7c8d-3ef3-98a6-d029d02a6554"
+   },
+   {
+    "season": 69,
+    "battleUuid": "52949b2d-5081-3178-93a1-aba2159d770b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3f4cdf37-78c9-3f43-867b-ac945ec45895"
+   },
+   {
+    "season": 69,
+    "battleUuid": "34b2a86b-a62d-35e4-9c8d-dd61b0e2a0ef"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33128cab-e644-33a5-85cd-cc8f8298ba6d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "320ed058-5a02-35f6-b28d-89b7a6a9e41b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2e4af8f9-22ac-3d06-9dfe-920cce5d583d"
+   },
+   {
+    "season": 69,
+    "battleUuid": "223c40ef-bc41-3e6e-af25-448260bd37cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1adc1027-d70c-3b5c-88c0-14641cc84859"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1abfd0b0-4337-3db4-bd59-b9757e65a713"
+   },
+   {
+    "season": 69,
+    "battleUuid": "12581f70-243c-3832-a9e5-a55bf1263b05"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e60a13a7-ecdb-3ace-8feb-01b33d224046"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d9fec9b0-dc04-3c9e-995a-c27843918ce2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c648e8fb-9946-3cc0-8696-630bce1b3e2c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bf97124f-bddf-3f7e-8f7c-137c02b854a8"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b9817e44-1a96-3f1d-804a-fb3b66a836b9"
+   },
+   {
+    "season": 67,
+    "battleUuid": "aa3c3fb1-3a52-35fd-a66e-77575edb6977"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8afb544a-c8c8-3a8c-8e34-97fa6b3fbceb"
+   }
+  ],
+  "Thais": [
+   {
+    "season": 69,
+    "battleUuid": "df0049ac-e50c-33a8-8ead-33d73fae3b01"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d9dcb67d-325c-3e02-bad1-bd8f34962a4f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5ed1a1d-c213-3115-8e6c-f676bd95d521"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d1863f25-f6d9-36d3-bb34-452ed34c225f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b667fedb-e55b-3edf-887b-10657619881a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "89bd6c7d-552f-3edc-b5f8-ab50e8559d11"
+   },
+   {
+    "season": 69,
+    "battleUuid": "639a9647-9c93-3c43-988a-5e46ecd74dee"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5f427b50-364b-37d9-9578-e988024039f5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5775c197-b99a-36ea-b51c-c930f4674ce1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "563bd0aa-94bb-360f-b263-7f6d6ff0aeb3"
+   },
+   {
+    "season": 69,
+    "battleUuid": "54abd1a0-a289-3828-a66a-0e2a53a74497"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4fb4d82c-8cca-3348-8d8a-659b86530ebc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4f92f5da-474c-3e14-bdcf-b5648c040790"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3ffea7b9-bb91-36d2-b2f4-73f9db766076"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36a2fe3e-7ef5-3fbc-a557-34ed05c0ea42"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3160989f-0065-3ace-a7a4-dbc883092858"
+   },
+   {
+    "season": 69,
+    "battleUuid": "295a5032-41f3-3d82-ac5c-6c8d4557424e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "2414b518-4953-334e-a180-28f87b7511f0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "240b5683-507d-3ac7-b837-aae5f7a85460"
+   },
+   {
+    "season": 69,
+    "battleUuid": "16380e40-27c7-3f47-affe-3d4db84c4fe4"
+   },
+   {
+    "season": 69,
+    "battleUuid": "113e1df7-3b09-35a1-bd89-f4e630ca829e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e075a645-c735-3716-9a0e-599e9e259689"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d28809ea-1fd9-36a3-868b-d7d2bec3d384"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c552d260-778f-34c2-ab9b-be45d6a9bf57"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c1472fc2-d23b-31bd-8005-b1bea83551fd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b205a7d7-86ac-34d8-9ca6-e32549e459c0"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ac42d59d-698e-3019-b045-41dfbfe74e19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a5573161-e7f4-3aab-a5d6-a43e4c378b28"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a0e95e58-fe03-36c8-b531-cf5704ddab06"
+   },
+   {
+    "season": 67,
+    "battleUuid": "9cc587c1-d906-3dc7-b909-67d2206a1082"
+   }
+  ],
+  "Tinct": [
+   {
+    "season": 69,
+    "battleUuid": "b2519cc2-b74f-301b-93cf-8a7ecb11d671"
+   },
+   {
+    "season": 69,
+    "battleUuid": "590fb617-a3b2-36a5-b063-94b881c1ad21"
+   },
+   {
+    "season": 69,
+    "battleUuid": "36f73729-c05a-32d7-b547-7415e47ebe0d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f36ea8c6-0d0a-3c2a-b43f-0ac601e427c4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "78051d2f-2876-3dfb-a3f0-1f0874d03fa7"
+   },
+   {
+    "season": 67,
+    "battleUuid": "762588a1-c48e-3c4b-9269-df1f1361c4ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4f186dca-b462-37a1-9abe-e402646239e2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "1ee38a4a-0404-33a6-a02e-bf2ceb2555f6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "e8f27bc7-02fa-30b3-8e2f-f2ef3ac5d9e6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c764de86-9bc5-3e3b-bad6-3c80386c2abe"
+   },
+   {
+    "season": 66,
+    "battleUuid": "8ce3db8a-845b-3df2-b0c8-a4920bac002c"
+   },
+   {
+    "season": 66,
+    "battleUuid": "874e4986-9ef3-37ca-af61-ee5bdce797e6"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6b5da542-ec87-332f-b54b-d7aff1f831af"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6a2b47ca-c84e-37b6-a71b-6c212a2a842d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5a18daf8-5d2a-397a-b449-f59f871cd92d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2b036672-0b9c-3b05-9f34-8403d4e6083b"
+   },
+   {
+    "season": 66,
+    "battleUuid": "20857183-9b49-3da1-b31f-e2b710cb9120"
+   },
+   {
+    "season": 65,
+    "battleUuid": "d94d4dcc-b973-3bad-90b5-1601137d3323"
+   },
+   {
+    "season": 65,
+    "battleUuid": "d20bcc8f-9530-35cb-afa9-6608c29b43cf"
+   },
+   {
+    "season": 65,
+    "battleUuid": "c2a40486-47fe-3cd9-a7d9-114994ce81fc"
+   },
+   {
+    "season": 65,
+    "battleUuid": "902fd072-7d92-3bb3-b7f9-463e21bfc3b2"
+   },
+   {
+    "season": 65,
+    "battleUuid": "8662cd2a-77b8-3e2b-9823-0b03ae73315b"
+   },
+   {
+    "season": 65,
+    "battleUuid": "7dea18c5-4c6a-3c8e-87e9-65ca17911fbb"
+   },
+   {
+    "season": 65,
+    "battleUuid": "652701e5-2c01-3b06-a536-558a78cf42f3"
+   },
+   {
+    "season": 65,
+    "battleUuid": "310e9c4a-5d37-381d-8071-a111ba8c2e0b"
+   },
+   {
+    "season": 65,
+    "battleUuid": "1272fda3-075e-3ecd-b888-ea0c552eaf9d"
+   },
+   {
+    "season": 65,
+    "battleUuid": "0e3794dd-cb21-3fd0-a5e1-def5b2dfce0a"
+   },
+   {
+    "season": 65,
+    "battleUuid": "0978cce1-2695-31d0-9b5e-1a5caf07188d"
+   }
+  ],
+  "Tulu": [
+   {
+    "season": 69,
+    "battleUuid": "d9544048-322e-3782-8ee2-9f435407c7ea"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5c335ea-fbf8-309e-ad1d-66eb796b66d6"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7561c09-7d98-36d0-88ef-0721e932f6e1"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bc375856-2ee5-3994-b8ef-d4734b8cc26a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b9bf3678-54d3-3fbe-bedf-6030bbc08b36"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b51ac994-efab-3ae6-b439-1a64080d37b0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "7ffab129-cdd1-3cc9-b495-d26ebcacc83b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "71efc254-4dba-3773-9c4d-326d3955f8df"
+   },
+   {
+    "season": 69,
+    "battleUuid": "62a6ee4f-4bf6-3f86-a937-594d451536ac"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51b5759d-029a-3fa3-9222-950e9df6e303"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1e8848f0-6e04-3f93-afe0-f1e19961c332"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1a225c50-40b0-36eb-987b-a1b53c07ea86"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1034a3d0-0c14-343b-a7c1-168e11c4eb09"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0ae31ce7-b791-32e3-9c3a-a6db4f626e57"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02508799-e51c-3ebd-b101-e726021daf27"
+   },
+   {
+    "season": 69,
+    "battleUuid": "02209565-6f41-31ff-84af-04a1f0c85d9e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f2f850c4-539b-330b-ab95-d950bd8a02df"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eab5cf7b-dbec-345c-8cd6-55c91e1a188e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "bfba79ef-e3d3-3937-92d9-4c1ad2c855ef"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b63cc79f-1ed7-3f5d-94bb-ada8de16d8e2"
+   },
+   {
+    "season": 67,
+    "battleUuid": "852e0ef9-8b4c-366f-b537-6cde42b7b921"
+   },
+   {
+    "season": 67,
+    "battleUuid": "727cf3d0-7971-3d01-ac8b-82dfc265139a"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3728c232-4541-3116-b026-2c333f255ff1"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2c50eabb-7a95-3d80-b9f3-b6a26cb613f6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2a2e9632-3af4-37dd-8b3e-8ee898ac8ebe"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2888b513-81f8-33e5-9bc9-c89a83953b73"
+   },
+   {
+    "season": 67,
+    "battleUuid": "217ba6fe-035a-3ed4-a622-7bf61acbc177"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0f31526a-bb3b-36d1-bf42-5f8c6a9ed07d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "0bd92f38-06fc-3a8c-858e-e023c30a637c"
+   },
+   {
+    "season": 67,
+    "battleUuid": "023e58b1-93e9-3b29-9c4a-0300c307775e"
+   }
+  ],
+  "Vortice": [
+   {
+    "season": 69,
+    "battleUuid": "f84738f4-fd4e-3b0f-b1cd-1a1af9be11d0"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e2b44fe7-d7b4-3280-88ee-aa8dfbc748de"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d66a3fdd-790f-3b85-a6b1-b700825dfe55"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d5bea7ee-8ffa-3940-aa9e-7147c536f709"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d50ffb97-cb2a-3ca0-ba89-430cf371fb99"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d1863f25-f6d9-36d3-bb34-452ed34c225f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "b8bff6d8-75ba-3d06-8428-f71b8083cf1b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "af0114f9-237e-3094-93d0-ff8ac95f315e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "ab7e6ee7-d03f-379f-b17c-3cd72e3d0793"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aa85fa7c-e6a9-33ef-a57d-ecea65e5b141"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a14af1b2-3d30-36e0-9305-82faf925be39"
+   },
+   {
+    "season": 69,
+    "battleUuid": "a12bd775-155b-3e68-b56a-e1cdab1f85ae"
+   },
+   {
+    "season": 69,
+    "battleUuid": "895e5e97-af0c-3ed2-9b2a-e31abb2dedca"
+   },
+   {
+    "season": 69,
+    "battleUuid": "79998b89-2940-3e62-98ed-e6db5e4d839c"
+   },
+   {
+    "season": 69,
+    "battleUuid": "743441c6-6c16-3625-a272-8ac8d249f294"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5c5d17d7-7486-399f-8ca0-d4be234b7e8e"
+   },
+   {
+    "season": 69,
+    "battleUuid": "51bf8690-6a19-378d-b792-9dbc17b03863"
+   },
+   {
+    "season": 69,
+    "battleUuid": "510e01b9-2e65-325b-abf6-4097df3edb77"
+   },
+   {
+    "season": 69,
+    "battleUuid": "33783347-f9ec-31be-ada3-9d856d333811"
+   },
+   {
+    "season": 69,
+    "battleUuid": "31994044-d79f-3125-8ef7-6518bb2e6dbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1c0db085-145d-3f2e-9465-101d2c7e8fe8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "19966fa8-450c-3ae7-addd-799dd7aae750"
+   },
+   {
+    "season": 69,
+    "battleUuid": "0b7e1508-743b-3f2d-a3d6-fe48f3ba871f"
+   },
+   {
+    "season": 69,
+    "battleUuid": "07760d46-4899-3d83-b9c1-e0bf5ec33cb4"
+   },
+   {
+    "season": 67,
+    "battleUuid": "fcb6979e-8cc1-3f4a-a398-c61f9e9f179d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "f50e57ed-9c91-380d-89bb-854d527a84bc"
+   },
+   {
+    "season": 67,
+    "battleUuid": "eb1dda5a-c578-3bc1-bc66-5d6d08ef34ec"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b205a7d7-86ac-34d8-9ca6-e32549e459c0"
+   },
+   {
+    "season": 67,
+    "battleUuid": "ace7c12f-ad56-372d-b1de-3462ad9b5a29"
+   },
+   {
+    "season": 67,
+    "battleUuid": "8afb544a-c8c8-3a8c-8e34-97fa6b3fbceb"
+   }
+  ],
+  "Wanda": [
+   {
+    "season": 69,
+    "battleUuid": "ca90c0cf-4504-3d4c-9c3f-26b25d63f547"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a93cc58-d41e-3325-9fb2-7fcf5ec8eccb"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e39b742d-81d2-3eaa-9c7e-db9d8fdfd0a2"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d24ea159-d31f-3eab-a2e2-bb9011146fd8"
+   },
+   {
+    "season": 66,
+    "battleUuid": "456da8a6-9311-3822-b28f-d7efeb4cb26d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "407df472-88ec-3138-8ecc-2e9eaf0d6457"
+   },
+   {
+    "season": 66,
+    "battleUuid": "35638dc5-bf7e-3675-b07c-56015dd4c772"
+   },
+   {
+    "season": 66,
+    "battleUuid": "09915f1d-f91b-314b-a58c-32c2dfaf30bd"
+   },
+   {
+    "season": 65,
+    "battleUuid": "61dbf588-109b-3702-8595-595402dd71fa"
+   },
+   {
+    "season": 65,
+    "battleUuid": "26893459-36a7-3436-9a65-31624223469f"
+   }
+  ],
+  "Winkle": [
+   {
+    "season": 69,
+    "battleUuid": "e3ee5918-3462-3f38-af48-2bc317cbd4db"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8e4b197c-1097-3009-8cf5-8f9f6836786a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "80e8fba4-0462-3a8d-8b51-946b526d2124"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4d9f77df-47af-341e-99a1-4983010f2afd"
+   },
+   {
+    "season": 69,
+    "battleUuid": "096e1914-43b7-3d59-ba52-cc807d36a2ab"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a8010bcf-ac0f-3fe1-9266-581cff23c94f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "80b96261-b5de-347e-a6fb-f1a09f4d6caf"
+   },
+   {
+    "season": 67,
+    "battleUuid": "625ec0f2-98d1-3f32-8383-e6fa3671e8ad"
+   },
+   {
+    "season": 67,
+    "battleUuid": "60f13756-f56c-3717-8e5b-21ba514ec25f"
+   },
+   {
+    "season": 67,
+    "battleUuid": "57468f04-46ca-3236-a203-12c0a1a280b6"
+   },
+   {
+    "season": 67,
+    "battleUuid": "4398d876-f7dc-3401-91da-acd65aece34e"
+   },
+   {
+    "season": 67,
+    "battleUuid": "3d3cc763-76d1-30b0-ae4f-e25941af3c19"
+   },
+   {
+    "season": 67,
+    "battleUuid": "2ef8fe89-13f1-3abc-bfb8-7558cc6dd980"
+   },
+   {
+    "season": 66,
+    "battleUuid": "d5293c6e-a4ba-36b3-952e-ae42c9475c4e"
+   },
+   {
+    "season": 66,
+    "battleUuid": "c764de86-9bc5-3e3b-bad6-3c80386c2abe"
+   },
+   {
+    "season": 66,
+    "battleUuid": "ab5597ff-bf1c-370c-8e4b-6076f87237fe"
+   },
+   {
+    "season": 66,
+    "battleUuid": "a05d7a67-360d-3e20-ad87-e3f1f2bbd866"
+   },
+   {
+    "season": 66,
+    "battleUuid": "6ab809ab-0f72-354f-8d24-1bb1e4df0435"
+   },
+   {
+    "season": 66,
+    "battleUuid": "67799c98-782d-365c-9751-245f71d82582"
+   },
+   {
+    "season": 66,
+    "battleUuid": "5f8e18b7-044a-3fbb-802d-5dd477fb6600"
+   },
+   {
+    "season": 66,
+    "battleUuid": "48cf136d-2cd2-30d1-bcd3-b0de62c68279"
+   },
+   {
+    "season": 66,
+    "battleUuid": "407df472-88ec-3138-8ecc-2e9eaf0d6457"
+   },
+   {
+    "season": 66,
+    "battleUuid": "2485f457-27cc-366d-8a5b-390cf7d146fd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "23082f6e-9358-352d-82f2-acf6c439a191"
+   },
+   {
+    "season": 66,
+    "battleUuid": "17ef03db-efeb-372c-995f-1908f1007abd"
+   },
+   {
+    "season": 66,
+    "battleUuid": "10bb0643-5d17-3e40-ae60-4c4f43691a4d"
+   },
+   {
+    "season": 66,
+    "battleUuid": "024770c2-55c7-34be-9e1f-3c94f8c550b3"
+   },
+   {
+    "season": 65,
+    "battleUuid": "d81aaf99-5ca4-361a-ab12-6b48ce26d175"
+   },
+   {
+    "season": 65,
+    "battleUuid": "b977991a-c401-3ee6-b473-87393328f367"
+   },
+   {
+    "season": 65,
+    "battleUuid": "b82effd0-d5ba-31b9-85d1-5f69a2735101"
+   }
+  ],
+  "Xu": [
+   {
+    "season": 69,
+    "battleUuid": "f999a4b4-df6d-3ff4-9a86-3d7e41d4a250"
+   },
+   {
+    "season": 69,
+    "battleUuid": "e54a6cf9-0392-34fc-963a-52e59cb7c9c7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "df0049ac-e50c-33a8-8ead-33d73fae3b01"
+   },
+   {
+    "season": 69,
+    "battleUuid": "dea0b5a8-4931-3642-834f-755947080f64"
+   },
+   {
+    "season": 69,
+    "battleUuid": "d025d14f-cffe-34e9-9bfa-d2e4f0ce5cdc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "c7b99982-e738-32b2-a797-2a0e976779aa"
+   },
+   {
+    "season": 69,
+    "battleUuid": "beb1c42f-4c78-3342-907a-a6be69316af5"
+   },
+   {
+    "season": 69,
+    "battleUuid": "bd2d537e-7c0f-3665-af28-8a54c3415bbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "aab9cdfa-0821-30a8-bc3a-d78bf36748c8"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8de05559-5726-3a9b-aaf9-f25faf5bff7b"
+   },
+   {
+    "season": 69,
+    "battleUuid": "8a93cc58-d41e-3325-9fb2-7fcf5ec8eccb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "6b04d37f-55e6-3512-b902-5bc3c6c83f1a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ff85499-5975-30bd-892a-876b57b31fbc"
+   },
+   {
+    "season": 69,
+    "battleUuid": "5ef44c5d-847a-3a0a-bdd2-3f5150175a41"
+   },
+   {
+    "season": 69,
+    "battleUuid": "4597ac80-a9a2-3902-9fd3-592a0c502511"
+   },
+   {
+    "season": 69,
+    "battleUuid": "421ac7c0-6e9b-3d0a-a760-b26b6c02d424"
+   },
+   {
+    "season": 69,
+    "battleUuid": "41b2508c-7e96-3cd4-9c5e-c49b22eb5ad7"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3fd1717e-f301-3337-abcd-98da11d60f7a"
+   },
+   {
+    "season": 69,
+    "battleUuid": "392eacfb-d361-3f18-9560-fbd315a6e029"
+   },
+   {
+    "season": 69,
+    "battleUuid": "3160989f-0065-3ace-a7a4-dbc883092858"
+   },
+   {
+    "season": 69,
+    "battleUuid": "223c40ef-bc41-3e6e-af25-448260bd37cb"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1de36b8d-ceba-3102-ab51-4d428b372b89"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1bb8b504-6dc4-3cd4-8fe2-07037416a360"
+   },
+   {
+    "season": 69,
+    "battleUuid": "1884c645-2dde-3c3c-9340-1c0df2c00e89"
+   },
+   {
+    "season": 67,
+    "battleUuid": "e5b02fbf-3a62-3da8-b14b-78e9b5942d35"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d28809ea-1fd9-36a3-868b-d7d2bec3d384"
+   },
+   {
+    "season": 67,
+    "battleUuid": "d20d6c05-c637-3047-abc2-e348046093aa"
+   },
+   {
+    "season": 67,
+    "battleUuid": "c1472fc2-d23b-31bd-8005-b1bea83551fd"
+   },
+   {
+    "season": 67,
+    "battleUuid": "b4a93d0d-9026-330b-8df9-3264aeb4aa6d"
+   },
+   {
+    "season": 67,
+    "battleUuid": "a4efe933-002a-3530-a090-f11948c45731"
+   }
+  ]
+ }
+}
