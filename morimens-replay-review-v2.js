@@ -220,7 +220,7 @@
           if(!bout)continue;
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
-            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name});continue;
+            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:res.skill[String(tid)]?.Type||[]});continue;
           }
           if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId)});continue}
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
@@ -263,6 +263,21 @@
     .mr2badge{display:inline-block;padding:2px 6px;border-radius:999px;background:rgba(98,183,255,.12);color:#acd5f6;font-size:9px}.mr2badge.ultimate{background:rgba(213,177,118,.18);color:#f1d69f}.mr2badge.keeper{background:rgba(175,130,220,.16);color:#d8b9f0}.mr2badge.mon{background:rgba(218,132,119,.14);color:#efada5}.mr2cost{font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(98,183,255,.14);color:#9fd0ff;font-weight:800}
     .mr2hid>summary{cursor:pointer;color:#6f7f93;font-size:10px}.mr2raw{margin-top:2px}.mr2raw summary{cursor:pointer;color:#6f7f93;font-size:9px}.mr2raw pre{max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all;background:#08111c;padding:7px;border-radius:7px;color:#8fa0b5;font-size:9px}.mr2empty{padding:8px 10px;color:#6f7f93;font-size:11px}
     .dtideReplayReviewOpen{white-space:nowrap;border:1px solid rgba(98,183,255,.35);border-radius:7px;background:rgba(98,183,255,.09);color:#9fd0ff;padding:5px 8px;font:700 10px/1.2 inherit;cursor:pointer}@media(max-width:760px){.mr2form{grid-template-columns:1fr}.mr2sum{grid-template-columns:repeat(2,minmax(0,1fr))}.mr2time{margin-left:0}}
+
+    .mr2act{--ac:#8aa0bd;--acr:138,160,189;padding:12px 14px 10px;border-top:1px solid rgba(148,163,184,.1);border-left:6px solid var(--ac);background:linear-gradient(90deg,rgba(var(--acr),.17),rgba(var(--acr),.03) 60%,transparent);gap:8px}
+    .mr2act.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2act.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2act.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2act.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2act.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2act.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2act.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2act.a-other{--ac:#4fd0c8;--acr:79,208,200}.mr2act.a-enemy{--ac:#ff5c8a;--acr:255,92,138}
+    .mr2acthead{gap:12px;align-items:center;flex-wrap:nowrap}.mr2acttitle{min-width:0;display:grid;gap:2px}.mr2actline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mr2actname{font-size:18px;line-height:1.25;color:#f4f7fb;letter-spacing:.2px}.mr2who{font-size:12px;color:#aebbd0}
+    .mr2atype{display:inline-block;padding:2px 9px;border-radius:6px;background:var(--ac);color:#10151d;font-size:11px;font-weight:900;letter-spacing:.4px}
+    .mr2cost{margin-left:auto;font-size:14px;padding:3px 10px;border-radius:8px;background:rgba(var(--acr),.18);color:var(--ac);border:1px solid rgba(var(--acr),.45);font-weight:900}.mr2acthead .mr2time{margin-left:auto;white-space:nowrap}.mr2cost+.mr2time{margin-left:12px}
+    .mr2ico.lg{width:48px;height:48px;flex:0 0 48px;font-size:18px;border:2px solid var(--ac);box-shadow:0 0 0 3px rgba(var(--acr),.15)}.mr2ico.kk.lg{border-radius:10px;width:48px;height:48px}.mr2ico.xs{width:20px;height:20px;flex-basis:20px;font-size:10px}.mr2ico.kk.xs{border-radius:5px}
+    .mr2fx{padding-left:60px;border-left:0;gap:4px;font-size:10px;opacity:.95}.mr2fx .mr2chip{font-size:10px;padding:0 6px 0 1px;background:rgba(255,255,255,.035);border-color:rgba(148,163,184,.1);color:#aab6c7}.mr2fx .mr2ico{width:16px;height:16px;flex-basis:16px;font-size:9px}.mr2fx .mr2ico.sm{width:13px;height:13px;flex-basis:13px}.mr2fx .mr2res{font-size:10px;padding:0 6px}.mr2fx .mr2lead{font-size:9px}
+    .mr2row.hit{padding:4px 9px;border-radius:8px;background:rgba(255,120,100,.08);border:1px solid rgba(255,120,100,.18);width:fit-content;max-width:100%}.mr2row.hit .mr2chip{font-size:11px;color:#dbe4f0}.mr2row.hit .mr2ico{width:20px;height:20px;flex-basis:20px}.mr2row.hit .mr2amt{font-size:16px}
+    .mr2minor{margin-top:1px}.mr2minor>summary{cursor:pointer;list-style:none;color:#6f7f93;font-size:10px;padding:1px 0}.mr2minor>summary::-webkit-details-marker{display:none}.mr2minor>summary::before{content:'▸ '}.mr2minor[open]>summary::before{content:'▾ '}.mr2minor[open]{padding:4px 0 2px}
+    .mr2side.quiet{border-left-width:2px;background:rgba(255,255,255,.015)}.mr2side.quiet .mr2settle{border-top:0;padding:6px 10px;gap:3px}.mr2settlehead{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.mr2sttl{font-size:10px;font-weight:800;color:#8392a6;letter-spacing:.3px}.mr2side.quiet .mr2chip{font-size:10px;padding:0 6px 0 1px}.mr2side.quiet .mr2ico{width:16px;height:16px;flex-basis:16px;font-size:9px}
+    .mr2sidehead{padding:8px 12px;font-size:12px;letter-spacing:.3px}.mr2side.c1>.mr2sidehead{background:rgba(74,163,255,.1);color:#9fd0ff}.mr2side.c2>.mr2sidehead{background:rgba(255,92,138,.1);color:#ffadc1}
+    .mr2strip{display:inline-flex;gap:3px;flex-wrap:wrap;align-items:center;margin-left:auto}.mr2mark{--ac:#8aa0bd;display:inline-flex;border-radius:50%;padding:1px;background:var(--ac)}.mr2mark .mr2ico{border:0}.mr2mark.a-ulti{--ac:#ff8a3d}.mr2mark.a-awake{--ac:#ffd24a}.mr2mark.a-keeper{--ac:#b57cff}.mr2mark.a-strike{--ac:#ff6b6b}.mr2mark.a-defend{--ac:#4fd18b}.mr2mark.a-skill{--ac:#4aa3ff}.mr2mark.a-curse{--ac:#8e86a8}.mr2mark.a-other{--ac:#4fd0c8}.mr2mark:has(.kk){border-radius:6px}
+    .mr2legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10px;color:#9aa8bb;align-items:center}.mr2legend span{display:inline-flex;gap:5px;align-items:center}.mr2legend i{width:11px;height:11px;border-radius:3px;background:var(--c)}
+    @media(max-width:760px){.mr2acthead{flex-wrap:wrap}.mr2fx{padding-left:0}.mr2actname{font-size:16px}}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -270,36 +285,62 @@
   const timeText=e=>e.time!=null?`<span class="mr2time">${Number(e.time).toFixed(2)}s · #${e.seq}</span>`:`<span class="mr2time">#${e.seq}</span>`;
   const fxRow=e=>`<div class="mr2row">${e.html}</div>`;
 
-  function renderActionHead(e,tl){
-    const {res,chip}=tl,a=tl.actors.get(String(e.actorUid));
-    if(e.kind==='keeper')return `<div class="mr2acthead"><span class="mr2badge keeper">${ui('钥令','Keyflare')}</span>${ico(e.iconSrc,'钥','kk')}<b>${esc(e.skillName)}</b>${a?chip(e.actorUid):''}${timeText(e)}</div>`;
-    if(e.kind==='trigger')return `<div class="mr2acthead"><span class="mr2badge mon">${ui('敌方行动','Enemy')}</span>${chip(e.actorUid)}<b>${esc(e.skillName)}</b>${timeText(e)}</div>`;
-    const card=tl.ent.cards.get(String(e.cardUid));
-    const owner=a||tl.actors.get(String(card?.ownerUid));
-    const label=e.kind==='ultimate'?ui('爆发/觉醒','Ultimate'):e.kind==='card'?ui('出牌','Card'):ui('技能','Skill');
-    return `<div class="mr2acthead"><span class="mr2badge ${e.kind==='ultimate'?'ultimate':''}">${label}</span>${owner?ico(owner.icon,owner.name,'av big'):''}<span>${owner?esc(owner.name):''}</span><b>${esc(e.skillName)}</b>${e.cost!=null?`<span class="mr2cost" title="${esc(ui('算力消耗','Energy cost'))}">⚡${esc(e.cost)}</span>`:''}${timeText(e)}</div>`;
-  }
+  // Action classes drive colour + size: big coloured cards for what the player *did*, small quiet chips for side effects.
+  const RES_LABEL={};
   // one actor chip followed by all of that actor's resource changes
   function propGroups(list,tl){
     const by=new Map();for(const e of list){const o=by.get(String(e.actorUid))||{uid:e.actorUid,items:[]};o.items.push(e);by.set(String(e.actorUid),o)}
     return [...by.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.map(e=>e.resHtml).join('')}</span>`).join('');
   }
+  function actionInfo(e){
+    if(e.kind==='keeper')return {cls:'keeper',label:ui('钥令','Keyflare')};
+    if(e.kind==='trigger')return {cls:'enemy',label:ui('敌方行动','Enemy')};
+    const t=e.stypes||[];
+    if(e.kind==='ultimate'||t.includes('Ulti_Skill'))return {cls:'ulti',label:ui('狂气爆发','Aliemus Burst')};
+    if(t.includes('Card_Awake'))return {cls:'awake',label:ui('灵知觉醒','Awakening')};
+    if(t.includes('Card_Curse'))return {cls:'curse',label:ui('诅咒/污染','Curse')};
+    if(t.includes('Card_Strike'))return {cls:'strike',label:ui('打击','Strike')};
+    if(t.includes('Card_Defend'))return {cls:'defend',label:ui('防御','Defend')};
+    if(t.includes('Card_Skill')||t.includes('Card_Extend'))return {cls:'skill',label:ui('技能牌','Skill')};
+    return {cls:'other',label:ui('出牌','Card')};
+  }
+  function actionActor(e,tl){
+    const a=tl.actors.get(String(e.actorUid)),card=tl.ent.cards.get(String(e.cardUid));
+    return a||tl.actors.get(String(card?.ownerUid));
+  }
+  function renderActionHead(e,tl){
+    const info=actionInfo(e),owner=actionActor(e,tl);
+    const portrait=e.kind==='keeper'?ico(e.iconSrc,'钥','kk lg'):owner?ico(owner.icon,owner.name,'av lg'):'';
+    const who=e.kind==='keeper'?'':owner?`<span class="mr2who">${esc(owner.name)}</span>`:'';
+    const cost=e.cost!=null?`<span class="mr2cost" title="${esc(ui('算力消耗','Energy cost'))}">⚡${esc(e.cost)}</span>`:'';
+    return `<div class="mr2acthead">${portrait}<div class="mr2acttitle"><div class="mr2actline"><span class="mr2atype">${esc(info.label)}</span>${who}</div><b class="mr2actname">${esc(e.skillName)}</b></div>${cost}${timeText(e)}</div>`;
+  }
+  // overview strip shown on the round header: one coloured mark per action, in order
+  function renderStrip(r,tl){
+    const marks=r.events.filter(e=>e.camp===1&&e.phase===2&&['card','ultimate','keeper','skill'].includes(e.kind)).map(e=>{
+      const info=actionInfo(e),o=actionActor(e,tl);
+      return `<span class="mr2mark a-${info.cls}" title="${esc(info.label+' · '+e.skillName)}">${e.kind==='keeper'?ico(e.iconSrc,'钥','kk xs'):ico(o?.icon,o?.name||'?','av xs')}</span>`;
+    }).join('');
+    return marks?`<span class="mr2strip">${marks}</span>`:'';
+  }
   function renderEffects(fx,tl){
     const rows=[],chips=[],hidden=[],props=[];
     for(const e of fx){
-      if(['damage','heal','trigger','select','swallow','relic'].includes(e.kind))rows.push(e);
+      if(['damage','heal'].includes(e.kind))rows.push(e);
       else if(e.kind==='state'&&e.hidden)hidden.push(e);
       else if(e.kind==='property')props.push(e);
       else chips.push(e);
     }
-    const flow=list=>list.length?`<div class="mr2flow">${list.map(e=>e.html).join('')}</div>`:'';
     const merged=[];for(const e of rows){const last=merged[merged.length-1];if(last&&last.e.html===e.html)last.n++;else merged.push({e,n:1})}
-    const rowHtml=merged.map(({e,n})=>n>1?`<div class="mr2row">${e.html}<span class="mr2tag">×${n}</span></div>`:fxRow(e)).join('');
-    return `${rowHtml}${props.length?`<div class="mr2flow">${propGroups(props,tl)}</div>`:''}${flow(chips)}${hidden.length?`<details class="mr2hid"><summary>${ui(`内部/隐藏状态 ${hidden.length} 条`,`Hidden states ${hidden.length}`)}</summary>${flow(hidden)}</details>`:''}`;
+    const hit=merged.map(({e,n})=>`<div class="mr2row hit">${e.html}${n>1?`<span class="mr2tag">×${n}</span>`:''}</div>`).join('');
+    const flow=list=>list.length?`<div class="mr2flow">${list.map(e=>e.html).join('')}</div>`:'';
+    const small=[...chips.filter(e=>['trigger','select','swallow','relic'].includes(e.kind)).map(e=>`<div class="mr2row">${e.html}</div>`)].join('');
+    const stateChips=chips.filter(e=>!['trigger','select','swallow','relic'].includes(e.kind));
+    const minor=props.length+stateChips.length+hidden.length;
+    return `${hit}${small}${minor?`<details class="mr2minor"><summary>${[props.length?ui(`资源变化 ${props.length}`,`Resources ${props.length}`):'',stateChips.length?ui(`状态变化 ${stateChips.length}`,`States ${stateChips.length}`):'',hidden.length?ui(`内部状态 ${hidden.length}`,`Hidden ${hidden.length}`):''].filter(Boolean).join(' · ')}</summary>${props.length?`<div class="mr2flow">${propGroups(props,tl)}</div>`:''}${flow(stateChips)}${flow(hidden)}</details>`:''}`;
   }
   function renderSettle(events,title,tl){
     if(!events.length)return '';
-    // aggregate pure resource changes per (actor, resource) so recovery reads as one line
     const agg=new Map(),states=[],others=[];
     for(const e of events){
       if(e.kind==='property'){const k=`${e.actorUid}|${e.property}`;const o=agg.get(k)||{e,sum:0};o.sum+=e.changedValue;agg.set(k,o)}
@@ -307,9 +348,12 @@
       else others.push(e);
     }
     const resBy=new Map();for(const {e,sum} of agg.values()){if(!sum)continue;const o=resBy.get(String(e.actorUid))||{uid:e.actorUid,items:[]};o.items.push(`<span class="mr2res ${esc(e.property)} ${sum<0?'neg':'pos'}"><i></i>${esc(RES_LABEL[e.property]||e.property)} ${sum>0?'+':''}${fmt(sum)}</span>`);resBy.set(String(e.actorUid),o)}
-    return `<div class="mr2settle"><h5>${esc(title)}</h5>${resBy.size?`<div class="mr2flow">${[...resBy.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.join('')}</span>`).join('')}</div>`:''}${states.length?`<div class="mr2flow">${states.map(e=>e.html).join('')}</div>`:''}${others.map(fxRow).join('')}</div>`;
+    const resHtml=resBy.size?`<span class="mr2flow">${[...resBy.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.join('')}</span>`).join('')}</span>`:'';
+    const hiddenN=states.filter(e=>e.hidden).length,shown=states.filter(e=>!e.hidden);
+    const detail=`${shown.length?`<div class="mr2flow">${shown.map(e=>e.html).join('')}</div>`:''}${hiddenN?`<div class="mr2flow">${states.filter(e=>e.hidden).map(e=>e.html).join('')}</div>`:''}${others.map(e=>`<div class="mr2row">${e.html}</div>`).join('')}`;
+    const count=states.length+others.length;
+    return `<div class="mr2settle"><div class="mr2settlehead"><span class="mr2sttl">${esc(title)}</span>${resHtml}</div>${count?`<details class="mr2minor"><summary>${ui(`状态变化 ${count}${hiddenN?`（含内部 ${hiddenN}）`:''}`,`State changes ${count}`)}</summary>${detail}</details>`:''}</div>`;
   }
-  const RES_LABEL={};
   function renderRound(r,tl,open){
     const sides=[];let cur=null;
     for(const e of r.events){
@@ -320,11 +364,11 @@
     }
     const dmg=r.events.filter(e=>e.kind==='damage'&&tl.campOf(e.actorUid)===1).reduce((n,e)=>n+e.amount,0);
     const taken=r.events.filter(e=>e.kind==='damage'&&tl.campOf(e.actorUid)===2).reduce((n,e)=>n+e.amount,0);
-    const acts=r.events.filter(e=>['card','ultimate','keeper','skill'].includes(e.kind)).length;
+    const acts=r.events.filter(e=>e.camp===1&&['card','ultimate','keeper','skill'].includes(e.kind)).length;
     const phaseName=p=>p===1?ui('回合开始结算','Start-of-turn'):p===3?ui('回合结束结算','End-of-turn'):ui('行动阶段','Action phase');
     const body=sides.map(s=>{
       const side=s.camp===2?ui('敌方','Enemy'):ui('我方','Ally'),title=`${side} · ${phaseName(s.phase)}`;
-      if(s.phase!==2)return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)}</div>${renderSettle(s.events,ui('资源回复与状态变化','Resource recovery & state changes'),tl)||`<div class="mr2empty">—</div>`}</div>`;
+      if(s.phase!==2)return `<div class="mr2side quiet c${s.camp}">${renderSettle(s.events,title,tl)||`<div class="mr2settle"><span class="mr2sttl">${esc(title)}</span></div>`}</div>`;
       const blocks=[],pre=[];let blk=null;
       for(const e of s.events){
         const starts=['card','ultimate','keeper','skill'].includes(e.kind)||(s.camp===2&&e.kind==='trigger'&&tl.campOf(e.actorUid)===2);
@@ -332,15 +376,15 @@
         else if(blk)blk.fx.push(e);else pre.push(e);
       }
       const preHtml=pre.length?renderSettle(pre,ui('行动前的状态/资源变化','Before first action'),tl):'';
-      return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map(b=>`<div class="mr2act ${b.head.kind==='trigger'?'mon':b.head.kind}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${rawDetails(b.head)}</div>`).join('')}</div>`;
+      return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map(b=>`<div class="mr2act a-${actionInfo(b.head).cls}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${rawDetails(b.head)}</div>`).join('')}</div>`;
     }).join('');
-    return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small></summary><div class="mr2rbody">${body}</div></details>`;
+    return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small>${renderStrip(r,tl)}</summary><div class="mr2rbody">${body}</div></details>`;
   }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
     Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
     const eventHtml=rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
-    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
+    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
   }
   async function loadLegacy(uuid){try{const r=await fetch(`${LOCAL_BASE}/${uuid}.json`,{cache:'no-cache'});return r.ok?await r.json():null}catch{return null}}
   async function analyze(raw){
