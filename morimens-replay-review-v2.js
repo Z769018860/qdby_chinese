@@ -119,59 +119,234 @@
     const nameRelic=id=>{const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`Relic ${id}`};
     const nameAw=id=>{const x=aw[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||String(id)):(pipeName(x.Name)||x.NameEn||String(id))};
     const nameMonster=id=>{const x=monster[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||tailCn(x.CnID)||String(id)):(pipeName(x.Name)||tailCn(x.CnID)||x.NameEn||String(id))};
-    return {rr,skill,aw,state,relic,monster,nameSkill,nameState,nameRelic,nameAw,nameMonster};
+    const clean=f=>id=>String(f(id)).replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'').trim();
+    return {rr,skill,aw,state,relic,monster,nameSkill:clean(nameSkill),nameState:clean(nameState),nameRelic:clean(nameRelic),nameAw:clean(nameAw),nameMonster:clean(nameMonster)};
+  }
+
+  // ---- icons / entity resolution -------------------------------------------------
+  const ART='assets/morimens';
+  let awakenerSlugs=null;
+  async function preloadAssets(){
+    if(awakenerSlugs)return;
+    try{const r=await fetch('data/morimens/skeydb/awakeners.json',{cache:'force-cache'});const j=await r.json();awakenerSlugs=new Map((j.records||[]).map(x=>[String(x.ingameId).toUpperCase(),x.assetSlug]))}
+    catch{awakenerSlugs=new Map()}
+  }
+  const baseName=p=>String(p||'').split('/').pop().replace(/\.[a-z0-9]+$/i,'');
+  const safeGlyph=s=>(Array.from(String(s||'?'))[0]||'?').replace(/["'\\<>&]/g,'?');
+  function ico(src,fallback,cls='',title=''){
+    return `<span class="mr2ico ${cls}" style="--f:'${safeGlyph(fallback)}'"${title?` title="${esc(title)}"`:''}>${src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:''}</span>`;
+  }
+  function awakenerPortrait(res,tid){
+    const code=String(res.aw[String(tid)]?.Item_LittleIcon||'').match(/Awaker_([A-Za-z0-9]+)_/);
+    const slug=code&&awakenerSlugs?.get(code[1].toUpperCase());
+    return slug?`${ART}/portraits/${slug}.webp`:'';
+  }
+  const stateIconSrc=(res,id)=>{const ic=res.state[String(id)]?.Icon;return ic?`${ART}/skeydb-icons/${baseName(ic)}.webp`:''};
+  const relicIconSrc=(res,tid)=>{const r=res.relic[String(tid)]||{};const ic=r.SmallIcon||r.Icon;return ic?`${ART}/relics/${baseName(ic)}.webp`:''};
+  const keeperSkillIconSrc=(res,id)=>{const m=String(res.skill[String(id)]?.Icon||'').match(/Key_(\d+)/);return m?`${ART}/posse/Icon/KeyToken_Skill_${m[1]}.webp`:''};
+
+  function buildEntities(full,res){
+    const bd=full.battleDat||{},actors=new Map(),cards=new Map(),relics=new Map(),stateInst=new Map();
+    const addActor=(uid,o)=>{if(uid!=null&&!actors.has(String(uid)))actors.set(String(uid),{uid,...o})};
+    for(const r of bd.roleData||[])addActor(r.uid,{tid:r.tid,kind:'awakener',name:res.nameAw(r.tid),camp:1,icon:awakenerPortrait(res,r.tid)});
+    const addCard=(uid,tid,ownerUid)=>{if(uid==null||tid==null)return;const o=cards.get(String(uid));cards.set(String(uid),{uid,tid,ownerUid:ownerUid??o?.ownerUid})};
+    for(const seg of full.recordSegments||[])for(const rec of seg||[]){
+      const md=rec?.msgData;
+      if(rec?.msgId===1001&&md){
+        for(const m of md.monsterDataList||[])addActor(m.uid,{tid:m.tid,kind:'monster',name:res.nameMonster(m.tid),camp:2,icon:''});
+        for(const r of md.roleDataList||[]){
+          if(r.roleType===3)addActor(r.uid,{tid:r.tid,kind:'keeper',name:r.playerName||ui('守密人','Keeper'),camp:1,icon:''});
+          else if(r.camp===2)addActor(r.uid,{tid:r.tid,kind:'monster',name:res.nameMonster(r.tid),camp:2,icon:''});
+          else addActor(r.uid,{tid:r.tid,kind:'awakener',name:res.nameAw(r.tid),camp:r.camp||1,icon:awakenerPortrait(res,r.tid)});
+        }
+        for(const c of md.cardDataList||[])addCard(c.uid,c.tid??c.configId,c.ownerUid);
+        for(const r of md.relicDataList||[])if(r.uid!=null)relics.set(String(r.uid),{uid:r.uid,tid:r.tid});
+      }
+      for(const fr of md?.frameList||[]){
+        const d=fr?.data||{},e=fr?.eventId;
+        if(e===1025)for(const c of d.cards||[])addCard(c.uid,c.tid??c.configId,c.ownerUid);
+        else if(e===1067)addCard(d.uid,d.tid??d.configId,d.ownerUid);
+        else if(e===1035)addCard(d.cardUid,d.tid??d.configId,d.ownerUid);
+        else if((e===1004||e===1006)&&d.stateUid!=null)stateInst.set(String(d.stateUid),d.stateId);
+      }
+    }
+    return {actors,cards,relics,stateInst,keeperUid:[...actors.values()].find(a=>a.kind==='keeper')?.uid};
   }
 
   function buildTimeline(full){
-    const res=resources(full),bd=full.battleDat||{},actors=new Map();
-    for(const r of bd.roleData||[])actors.set(String(r.uid),{uid:r.uid,tid:r.tid,name:res.nameAw(r.tid),camp:1});
-    for(const seg of full.recordSegments||[])for(const rec of seg||[]){const md=rec?.msgData;if(rec?.msgId===1001&&md){for(const m of md.monsterDataList||[])actors.set(String(m.uid),{uid:m.uid,tid:m.tid,name:res.nameMonster(m.tid),camp:2});for(const r of md.roleDataList||[])if(!actors.has(String(r.uid))){let name;if(r.roleType===3)name=r.playerName||ui('守密人','Keeper');else if(r.camp===2)name=res.nameMonster(r.tid);else name=res.nameAw(r.tid);actors.set(String(r.uid),{uid:r.uid,tid:r.tid,name,camp:r.camp});}}}
-    const actorName=uid=>actors.get(String(uid))?.name||(String(uid)==String(bd.battleUid)?ui('守密人','Keeper'):`UID ${uid}`);
-    const rounds=new Map();let bout=0,globalSeq=0,frameCount=0;
+    const res=resources(full),bd=full.battleDat||{},ent=buildEntities(full,res),{actors,cards,relics,stateInst}=ent;
+    const actorOf=uid=>actors.get(String(uid));
+    const tipIds=(uid,extra)=>`UID ${uid}${extra?` · ${extra}`:''}`;
+    // Resolve any uid (actor / card / relic / state instance) to a readable chip.
+    function chip(uid,opts={}){
+      if(uid==null)return `<span class="mr2chip unk">—</span>`;
+      const a=actorOf(uid);
+      if(a){
+        const cls=a.kind==='monster'?'mon':a.kind==='keeper'?'keeper':`aw c${a.camp||1}`;
+        const fb=a.kind==='keeper'?'守':a.kind==='monster'?'怪':a.name;
+        return `<span class="mr2chip ${cls}" title="${esc(tipIds(uid,`tid ${a.tid??'?'}`))}">${ico(a.icon,fb,'av')}<span>${esc(a.name)}</span></span>`;
+      }
+      const c=cards.get(String(uid));
+      if(c){
+        const o=actorOf(c.ownerUid);
+        return `<span class="mr2chip card" title="${esc(tipIds(uid,`card tid ${c.tid}`))}">${o?ico(o.icon,o.name,'av sm'):''}<span>「${esc(res.nameSkill(c.tid))}」</span></span>`;
+      }
+      const r=relics.get(String(uid));
+      if(r)return `<span class="mr2chip relic" title="${esc(tipIds(uid,`relic tid ${r.tid}`))}">${ico(relicIconSrc(res,r.tid),'物','rl')}<span>${esc(res.nameRelic(r.tid))}</span></span>`;
+      const sid=stateInst.get(String(uid));
+      if(sid!=null)return `<span class="mr2chip st" title="${esc(tipIds(uid,`state ${sid}`))}">${ico(stateIconSrc(res,sid),res.nameState(sid),'st')}<span>${esc(res.nameState(sid))}</span></span>`;
+      if(String(uid)===String(bd.battleUid)||String(uid)===String(ent.keeperUid))return `<span class="mr2chip keeper" title="${esc(tipIds(uid))}">${ico('','守','av')}<span>${esc(ui('守密人','Keeper'))}</span></span>`;
+      return `<span class="mr2chip unk" title="${esc(tipIds(uid))}">${esc(ui('未知对象','Unknown'))} #${esc(uid)}</span>`;
+    }
+    const plainName=uid=>{const a=actorOf(uid);if(a)return a.name;const c=cards.get(String(uid));if(c)return `「${res.nameSkill(c.tid)}」`;const r=relics.get(String(uid));if(r)return res.nameRelic(r.tid);return `UID ${uid}`};
+    const campOf=uid=>actorOf(uid)?.camp||(cards.get(String(uid))&&actorOf(cards.get(String(uid)).ownerUid)?.camp)||0;
+
+    const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
     const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,events:[]});return rounds.get(n)};
-    const push=(kind,label,data,raw,meta={})=>{if(!bout)return;getRound(bout).events.push({seq:++globalSeq,kind,label,time:raw.time??null,eventId:raw.eventId,data,...meta})};
+    const push=(kind,label,html,data,raw,meta={})=>{if(!bout)return;getRound(bout).events.push({seq:++globalSeq,kind,label,html,time:raw.time??null,eventId:raw.eventId,data,camp,phase,...meta})};
+    const resLabels={energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')};
+    const stateBadge=(id,layerText)=>`<span class="mr2chip st" title="${esc(`state ${id}`)}">${ico(stateIconSrc(res,id),res.nameState(id),'st')}<span>${esc(res.nameState(id))}${layerText?` <em>${esc(layerText)}</em>`:''}</span></span>`;
+
     for(let si=0;si<(full.recordSegments||[]).length;si++){
       const seg=full.recordSegments[si]||[];for(let ri=0;ri<seg.length;ri++){
         const rec=seg[ri]||{},fl=rec?.msgData?.frameList;if(!Array.isArray(fl))continue;
         for(let fi=0;fi<fl.length;fi++){
           const fr=fl[fi]||{};frameCount++;const e=fr.eventId,d=fr.data||{};
-          if(e===1019&&d?.boutNumber){bout=Number(d.boutNumber)||bout;if(d?.config?.camp===1&&d.newPhase===1)push('round',ui(`第 ${bout} 回合开始`,`Round ${bout} start`),d,fr,{phase:d.newPhase});continue}
+          if(e===1019&&d?.boutNumber){
+            bout=Number(d.boutNumber)||bout;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;
+            if(camp===1&&phase===1)push('round',ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
+            continue;
+          }
           if(!bout)continue;
           if(e===1067){
-            const tid=d.configId??d.tid,who=actorName(d.ownerUid??d.roleUid),name=res.nameSkill(tid),kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill');
-            push(kind,`${who} · ${name}`,d,fr,{skillTid:tid,actorUid:d.ownerUid??d.roleUid,cardUid:d.uid,cost:d.cost,deck:d.deck});continue;
+            const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
+            push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name});continue;
           }
-          if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,d,fr,{skillTid:d.skillId,actorUid:d.roleUid});continue}
-          if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${actorName(d.casterUid)} · ${name}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid});continue}
-          if(e===1014&&d.beHitConfig){const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage';push(typ,`${actorName(h.castRoleUid)} → ${actorName(h.targetRoleUid)} · ${res.nameSkill(h.skillConfigId)} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue}
-          if(e===1050){push('relic',`${ui('造物触发','Relic')} · ${res.nameRelic(d.relicTid)}`,d,fr,{relicTid:d.relicTid});continue}
-          if(e===1046){push('select',`${ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${(d.targetUids||[]).map(actorName).join(', ')||'-'}`,d,fr,{skillTid:d.skillConfigId,targetUids:d.targetUids||[]});continue}
-          if(e===1049){push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${(d.cardUidList||[]).join(', ')}`,d,fr,{cardUids:d.cardUidList||[]});continue}
-          if(e===1004){push('state',`${ui('状态添加','State add')} · ${res.nameState(d.stateId)} → ${actorName(d.ownerUid??d.roleUid)}`,d,fr,{stateId:d.stateId,actorUid:d.castRoleUid,targetUid:d.ownerUid??d.roleUid,layer:d.layer});continue}
-          if(e===1007){push('state',`${ui('状态层数','State layer')} · ${res.nameState(d.stateId)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${actorName(d.ownerUid??d.roleUid)}`,d,fr,{stateId:d.stateId,actorUid:d.castRoleUid,targetUid:d.ownerUid??d.roleUid});continue}
-          if(e===1028&&['energy','keeper_energy','ulti_energy','block'].includes(d.propertyType)){
-            const labels={energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keeper energy'),ulti_energy:ui('狂气','Ultimate energy'),block:ui('护盾','Block')};push('property',`${actorName(d.uid)} · ${labels[d.propertyType]} ${Number(d.changedValue)>=0?'+':''}${fmt(d.changedValue)}`,d,fr,{actorUid:d.uid,property:d.propertyType,changedValue:d.changedValue});continue
+          if(e===1064){const name=res.nameSkill(d.skillId);push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId)});continue}
+          if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
+          if(e===1014&&d.beHitConfig){
+            const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
+            const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
+            push(typ,`${plainName(h.castRoleUid)} → ${plainName(h.targetRoleUid)} · ${sname} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,html,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue;
+          }
+          if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic" title="${esc(`relic tid ${d.relicTid}`)}">${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
+          if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
+          if(e===1049){const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
+          if(e===1004||e===1007){
+            const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner);
+            if(e===1004){const layer=d.layer>1?`×${d.layer}`:'';push('state',`${ui('状态添加','State add')} · ${res.nameState(sid)} → ${plainName(owner)}`,`${stateBadge(sid,layer)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});}
+            else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
+            continue;
+          }
+          if(e===1028&&resLabels[d.propertyType]){
+            const v=Number(d.changedValue)||0;
+            push('property',`${plainName(d.uid)} · ${resLabels[d.propertyType]} ${v>=0?'+':''}${fmt(v)}`,`<span class="mr2res ${esc(d.propertyType)} ${v<0?'neg':'pos'}"><i></i>${esc(resLabels[d.propertyType])} ${v>=0?'+':''}${fmt(v)}</span>${chip(d.uid)}`,d,fr,{actorUid:d.uid,property:d.propertyType,changedValue:v,resHtml:`<span class="mr2res ${esc(d.propertyType)} ${v<0?'neg':'pos'}"><i></i>${esc(resLabels[d.propertyType])} ${v>=0?'+':''}${fmt(v)}</span>`});continue
           }
         }
       }
     }
-    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res};
+    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
-    .mr2{display:grid;gap:14px}.mr2intro{padding:17px;border:1px solid rgba(213,177,118,.22);border-radius:15px;background:linear-gradient(135deg,rgba(213,177,118,.07),rgba(98,183,255,.04))}.mr2intro h2{margin:0;color:#f1d69f;font-size:20px}.mr2intro p{margin:8px 0 0;color:#aeb8c7;font-size:12px;line-height:1.75}.mr2form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:14px}.mr2form input{min-height:43px;border:1px solid #334155;border-radius:10px;background:#0d1724;color:#edf2f7;padding:8px 11px;font:inherit}.mr2form button{border:1px solid rgba(213,177,118,.35);border-radius:10px;background:rgba(213,177,118,.12);color:#f1d69f;padding:8px 13px;font-weight:800;cursor:pointer}.mr2status{padding:10px 12px;border-radius:10px;background:rgba(148,163,184,.07);border:1px solid rgba(148,163,184,.15);font-size:11px;color:#9ba8ba;line-height:1.65}.mr2status.ok{color:#9fd5b8;border-color:rgba(86,190,138,.25)}.mr2status.err{color:#e0aaa4;border-color:rgba(218,132,119,.28)}.mr2sum{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.mr2sum span{padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.1)}.mr2sum small{display:block;color:#758398;font-size:9px}.mr2sum strong{display:block;color:#e6edf6;margin-top:3px;font-size:12px;word-break:break-word}.mr2round{border:1px solid rgba(148,163,184,.14);border-radius:12px;background:rgba(4,9,16,.32);overflow:hidden}.mr2round>summary{cursor:pointer;list-style:none;padding:10px 12px;display:flex;gap:10px;align-items:center}.mr2round>summary::-webkit-details-marker{display:none}.mr2round>summary b{color:#f1d69f}.mr2round>summary small{color:#8492a5}.mr2events{padding:0 10px 10px}.mr2ev{display:grid;grid-template-columns:52px 105px 1fr;gap:8px;padding:7px 6px;border-top:1px solid rgba(148,163,184,.08);font-size:11px;align-items:start}.mr2seq{color:#6f7f93;font-variant-numeric:tabular-nums}.mr2badge{display:inline-block;padding:2px 6px;border-radius:999px;background:rgba(98,183,255,.12);color:#acd5f6;font-size:9px}.mr2badge.damage{background:rgba(218,132,119,.13);color:#efada5}.mr2badge.state{background:rgba(175,130,220,.13);color:#d0b0eb}.mr2badge.keeper{background:rgba(213,177,118,.15);color:#e7cb96}.mr2badge.relic{background:rgba(103,190,146,.13);color:#a9d8bd}.mr2label{color:#d8e1ed;line-height:1.5}.mr2label small{display:block;color:#758398}.mr2raw{margin-top:3px}.mr2raw summary{cursor:pointer;color:#6f7f93;font-size:9px}.mr2raw pre{max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all;background:#08111c;padding:7px;border-radius:7px;color:#8fa0b5;font-size:9px}.dtideReplayReviewOpen{white-space:nowrap;border:1px solid rgba(98,183,255,.35);border-radius:7px;background:rgba(98,183,255,.09);color:#9fd0ff;padding:5px 8px;font:700 10px/1.2 inherit;cursor:pointer}@media(max-width:760px){.mr2form{grid-template-columns:1fr}.mr2sum{grid-template-columns:repeat(2,minmax(0,1fr))}.mr2ev{grid-template-columns:42px 86px 1fr}}
+    .mr2{display:grid;gap:14px}.mr2intro{padding:17px;border:1px solid rgba(213,177,118,.22);border-radius:15px;background:linear-gradient(135deg,rgba(213,177,118,.07),rgba(98,183,255,.04))}.mr2intro h2{margin:0;color:#f1d69f;font-size:20px}.mr2intro p{margin:8px 0 0;color:#aeb8c7;font-size:12px;line-height:1.75}.mr2form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:14px}.mr2form input{min-height:43px;border:1px solid #334155;border-radius:10px;background:#0d1724;color:#edf2f7;padding:8px 11px;font:inherit}.mr2form button{border:1px solid rgba(213,177,118,.35);border-radius:10px;background:rgba(213,177,118,.12);color:#f1d69f;padding:8px 13px;font-weight:800;cursor:pointer}.mr2status{padding:10px 12px;border-radius:10px;background:rgba(148,163,184,.07);border:1px solid rgba(148,163,184,.15);font-size:11px;color:#9ba8ba;line-height:1.65}.mr2status.ok{color:#9fd5b8;border-color:rgba(86,190,138,.25)}.mr2status.err{color:#e0aaa4;border-color:rgba(218,132,119,.28)}.mr2sum{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.mr2sum span{padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.1)}.mr2sum small{display:block;color:#758398;font-size:9px}.mr2sum strong{display:block;color:#e6edf6;margin-top:3px;font-size:12px;word-break:break-word}
+    .mr2round{border:1px solid rgba(148,163,184,.14);border-radius:12px;background:rgba(4,9,16,.32);overflow:hidden}.mr2round>summary{cursor:pointer;list-style:none;padding:10px 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.mr2round>summary::-webkit-details-marker{display:none}.mr2round>summary b{color:#f1d69f;font-size:14px}.mr2round>summary small{color:#8492a5}.mr2rbody{padding:0 10px 12px;display:grid;gap:10px}
+    .mr2side{border:1px solid rgba(148,163,184,.1);border-radius:10px;overflow:hidden}.mr2side.c1{border-left:3px solid rgba(98,183,255,.55)}.mr2side.c2{border-left:3px solid rgba(218,132,119,.6)}.mr2sidehead{padding:6px 10px;font-size:11px;font-weight:800;color:#cdd8e6;background:rgba(255,255,255,.03)}
+    .mr2settle{padding:7px 10px;border-top:1px solid rgba(148,163,184,.08);display:grid;gap:5px}.mr2settle h5{margin:0;font-size:10px;color:#7f8ea2;font-weight:700}.mr2flow{display:flex;flex-wrap:wrap;gap:5px 7px;align-items:center}
+    .mr2act{padding:8px 10px;border-top:1px solid rgba(148,163,184,.08);display:grid;gap:6px}.mr2acthead{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:12px;color:#e6edf6}.mr2acthead b{font-size:13px}.mr2time{margin-left:auto;color:#6f7f93;font-size:10px;font-variant-numeric:tabular-nums}.mr2act.card{background:rgba(98,183,255,.03)}.mr2act.ultimate{background:rgba(213,177,118,.06)}.mr2act.keeper{background:rgba(175,130,220,.05)}.mr2act.mon{background:rgba(218,132,119,.04)}
+    .mr2fx{display:grid;gap:5px;padding-left:12px;border-left:2px solid rgba(148,163,184,.12)}.mr2row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11px;color:#c3cedd}.mr2lead{font-size:10px;color:#7f8ea2;padding:1px 6px;border-radius:999px;background:rgba(148,163,184,.1)}.mr2arrow{color:#6f7f93}.mr2from{color:#7f8ea2;font-size:10px}
+    .mr2amt{font-weight:800;font-variant-numeric:tabular-nums}.mr2amt.damage{color:#ff9e93}.mr2amt.heal{color:#8fe0b2}.mr2tag{font-size:9px;padding:1px 5px;border-radius:999px;background:rgba(148,163,184,.14);color:#aebbd0}.mr2tag.crit{background:rgba(255,196,87,.18);color:#ffd27a}
+    .mr2chip{display:inline-flex;align-items:center;gap:4px;padding:1px 7px 1px 2px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(148,163,184,.14);font-size:11px;color:#dbe4f0;line-height:1.5;max-width:100%}.mr2chip em{font-style:normal;color:#ffd27a;margin-left:2px}.mr2chip.aw.c1{border-color:rgba(98,183,255,.3)}.mr2chip.mon{border-color:rgba(218,132,119,.38);background:rgba(218,132,119,.07)}.mr2chip.keeper{border-color:rgba(213,177,118,.38);background:rgba(213,177,118,.07)}.mr2chip.card{border-color:rgba(98,183,255,.2)}.mr2chip.st{border-color:rgba(175,130,220,.28)}.mr2chip.relic{border-color:rgba(103,190,146,.3)}.mr2chip.unk{padding-left:7px;color:#8a97ab;border-style:dashed}
+    .mr2ico{position:relative;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;flex:0 0 22px;border-radius:50%;overflow:hidden;background:#1a2433;color:#aebbd0;font-size:11px;font-weight:800}.mr2ico::before{content:var(--f);position:absolute}.mr2ico img{position:relative;width:100%;height:100%;object-fit:cover}.mr2ico.sm{width:16px;height:16px;flex-basis:16px;font-size:9px}.mr2chip.mon .mr2ico::before{color:#ff9e93}.mr2chip.keeper .mr2ico{background:#3a2f1a;color:#f1d69f}.mr2ico.rl,.mr2ico.st{border-radius:5px;width:20px;height:20px;flex-basis:20px}.mr2ico.rl img,.mr2ico.st img{object-fit:contain}
+    .mr2ico.big{width:30px;height:30px;flex-basis:30px;font-size:13px}.mr2ico.kk{border-radius:6px;width:28px;height:28px;flex-basis:28px}.mr2ico.kk img{object-fit:contain}
+    .mr2res{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14)}.mr2res i{width:8px;height:8px;border-radius:50%;background:#6ab7ff}.mr2res.keeper_energy i{background:#e7cb96}.mr2res.ulti_energy i{background:#d07cff}.mr2res.block i{background:#7fe0c0}.mr2res.pos{color:#9fe3bb}.mr2res.neg{color:#ff9e93}
+    .mr2badge{display:inline-block;padding:2px 6px;border-radius:999px;background:rgba(98,183,255,.12);color:#acd5f6;font-size:9px}.mr2badge.ultimate{background:rgba(213,177,118,.18);color:#f1d69f}.mr2badge.keeper{background:rgba(175,130,220,.16);color:#d8b9f0}.mr2badge.mon{background:rgba(218,132,119,.14);color:#efada5}.mr2cost{font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(98,183,255,.14);color:#9fd0ff;font-weight:800}
+    .mr2hid>summary{cursor:pointer;color:#6f7f93;font-size:10px}.mr2raw{margin-top:2px}.mr2raw summary{cursor:pointer;color:#6f7f93;font-size:9px}.mr2raw pre{max-height:260px;overflow:auto;white-space:pre-wrap;word-break:break-all;background:#08111c;padding:7px;border-radius:7px;color:#8fa0b5;font-size:9px}.mr2empty{padding:8px 10px;color:#6f7f93;font-size:11px}
+    .dtideReplayReviewOpen{white-space:nowrap;border:1px solid rgba(98,183,255,.35);border-radius:7px;background:rgba(98,183,255,.09);color:#9fd0ff;padding:5px 8px;font:700 10px/1.2 inherit;cursor:pointer}@media(max-width:760px){.mr2form{grid-template-columns:1fr}.mr2sum{grid-template-columns:repeat(2,minmax(0,1fr))}.mr2time{margin-left:0}}
   `;document.head.appendChild(s)}
-  function badge(kind){const names={round:ui('回合','Round'),card:ui('出牌','Card'),ultimate:ui('爆发/觉醒','Ultimate'),skill:ui('技能','Skill'),keeper:ui('钥令','Keeper'),trigger:ui('派生触发','Trigger'),damage:ui('伤害','Damage'),heal:ui('治疗','Heal'),relic:ui('造物','Relic'),select:ui('选目标','Target'),swallow:ui('吞噬','Swallow'),state:ui('状态','State'),property:ui('资源','Resource')};return `<span class="mr2badge ${esc(kind)}">${esc(names[kind]||kind)}</span>`}
+
+  // ---- rendering -------------------------------------------------------------------
+  const rawDetails=e=>`<details class="mr2raw"><summary>${ui('原始事件','Raw event')} · eventId ${esc(e.eventId)}${e.skillTid!=null?` · tid ${esc(e.skillTid)}`:''}${e.cardUid!=null?` · cardUid ${esc(e.cardUid)}`:''}</summary><pre>${esc(JSON.stringify(e.data,null,2))}</pre></details>`;
+  const timeText=e=>e.time!=null?`<span class="mr2time">${Number(e.time).toFixed(2)}s · #${e.seq}</span>`:`<span class="mr2time">#${e.seq}</span>`;
+  const fxRow=e=>`<div class="mr2row">${e.html}</div>`;
+
+  function renderActionHead(e,tl){
+    const {res,chip}=tl,a=tl.actors.get(String(e.actorUid));
+    if(e.kind==='keeper')return `<div class="mr2acthead"><span class="mr2badge keeper">${ui('钥令','Keyflare')}</span>${ico(e.iconSrc,'钥','kk')}<b>${esc(e.skillName)}</b>${a?chip(e.actorUid):''}${timeText(e)}</div>`;
+    if(e.kind==='trigger')return `<div class="mr2acthead"><span class="mr2badge mon">${ui('敌方行动','Enemy')}</span>${chip(e.actorUid)}<b>${esc(e.skillName)}</b>${timeText(e)}</div>`;
+    const card=tl.ent.cards.get(String(e.cardUid));
+    const owner=a||tl.actors.get(String(card?.ownerUid));
+    const label=e.kind==='ultimate'?ui('爆发/觉醒','Ultimate'):e.kind==='card'?ui('出牌','Card'):ui('技能','Skill');
+    return `<div class="mr2acthead"><span class="mr2badge ${e.kind==='ultimate'?'ultimate':''}">${label}</span>${owner?ico(owner.icon,owner.name,'av big'):''}<span>${owner?esc(owner.name):''}</span><b>${esc(e.skillName)}</b>${e.cost!=null?`<span class="mr2cost" title="${esc(ui('算力消耗','Energy cost'))}">⚡${esc(e.cost)}</span>`:''}${timeText(e)}</div>`;
+  }
+  // one actor chip followed by all of that actor's resource changes
+  function propGroups(list,tl){
+    const by=new Map();for(const e of list){const o=by.get(String(e.actorUid))||{uid:e.actorUid,items:[]};o.items.push(e);by.set(String(e.actorUid),o)}
+    return [...by.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.map(e=>e.resHtml).join('')}</span>`).join('');
+  }
+  function renderEffects(fx,tl){
+    const rows=[],chips=[],hidden=[],props=[];
+    for(const e of fx){
+      if(['damage','heal','trigger','select','swallow','relic'].includes(e.kind))rows.push(e);
+      else if(e.kind==='state'&&e.hidden)hidden.push(e);
+      else if(e.kind==='property')props.push(e);
+      else chips.push(e);
+    }
+    const flow=list=>list.length?`<div class="mr2flow">${list.map(e=>e.html).join('')}</div>`:'';
+    const merged=[];for(const e of rows){const last=merged[merged.length-1];if(last&&last.e.html===e.html)last.n++;else merged.push({e,n:1})}
+    const rowHtml=merged.map(({e,n})=>n>1?`<div class="mr2row">${e.html}<span class="mr2tag">×${n}</span></div>`:fxRow(e)).join('');
+    return `${rowHtml}${props.length?`<div class="mr2flow">${propGroups(props,tl)}</div>`:''}${flow(chips)}${hidden.length?`<details class="mr2hid"><summary>${ui(`内部/隐藏状态 ${hidden.length} 条`,`Hidden states ${hidden.length}`)}</summary>${flow(hidden)}</details>`:''}`;
+  }
+  function renderSettle(events,title,tl){
+    if(!events.length)return '';
+    // aggregate pure resource changes per (actor, resource) so recovery reads as one line
+    const agg=new Map(),states=[],others=[];
+    for(const e of events){
+      if(e.kind==='property'){const k=`${e.actorUid}|${e.property}`;const o=agg.get(k)||{e,sum:0};o.sum+=e.changedValue;agg.set(k,o)}
+      else if(e.kind==='state')states.push(e);
+      else others.push(e);
+    }
+    const resBy=new Map();for(const {e,sum} of agg.values()){if(!sum)continue;const o=resBy.get(String(e.actorUid))||{uid:e.actorUid,items:[]};o.items.push(`<span class="mr2res ${esc(e.property)} ${sum<0?'neg':'pos'}"><i></i>${esc(RES_LABEL[e.property]||e.property)} ${sum>0?'+':''}${fmt(sum)}</span>`);resBy.set(String(e.actorUid),o)}
+    return `<div class="mr2settle"><h5>${esc(title)}</h5>${resBy.size?`<div class="mr2flow">${[...resBy.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.join('')}</span>`).join('')}</div>`:''}${states.length?`<div class="mr2flow">${states.map(e=>e.html).join('')}</div>`:''}${others.map(fxRow).join('')}</div>`;
+  }
+  const RES_LABEL={};
+  function renderRound(r,tl,open){
+    const sides=[];let cur=null;
+    for(const e of r.events){
+      if(e.kind==='round')continue;
+      const key=`${e.camp}|${e.phase}`;
+      if(!cur||cur.key!==key){cur={key,camp:e.camp,phase:e.phase,events:[]};sides.push(cur)}
+      cur.events.push(e);
+    }
+    const dmg=r.events.filter(e=>e.kind==='damage'&&tl.campOf(e.actorUid)===1).reduce((n,e)=>n+e.amount,0);
+    const taken=r.events.filter(e=>e.kind==='damage'&&tl.campOf(e.actorUid)===2).reduce((n,e)=>n+e.amount,0);
+    const acts=r.events.filter(e=>['card','ultimate','keeper','skill'].includes(e.kind)).length;
+    const phaseName=p=>p===1?ui('回合开始结算','Start-of-turn'):p===3?ui('回合结束结算','End-of-turn'):ui('行动阶段','Action phase');
+    const body=sides.map(s=>{
+      const side=s.camp===2?ui('敌方','Enemy'):ui('我方','Ally'),title=`${side} · ${phaseName(s.phase)}`;
+      if(s.phase!==2)return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)}</div>${renderSettle(s.events,ui('资源回复与状态变化','Resource recovery & state changes'),tl)||`<div class="mr2empty">—</div>`}</div>`;
+      const blocks=[],pre=[];let blk=null;
+      for(const e of s.events){
+        const starts=['card','ultimate','keeper','skill'].includes(e.kind)||(s.camp===2&&e.kind==='trigger'&&tl.campOf(e.actorUid)===2);
+        if(starts){blk={head:e,fx:[]};blocks.push(blk)}
+        else if(blk)blk.fx.push(e);else pre.push(e);
+      }
+      const preHtml=pre.length?renderSettle(pre,ui('行动前的状态/资源变化','Before first action'),tl):'';
+      return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map(b=>`<div class="mr2act ${b.head.kind==='trigger'?'mon':b.head.kind}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${rawDetails(b.head)}</div>`).join('')}</div>`;
+    }).join('');
+    return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small></summary><div class="mr2rbody">${body}</div></details>`;
+  }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
-    const eventHtml=rounds.map((r,ri)=>`<details class="mr2round"${ri<2?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${r.events.length} ${ui('条关键事件','key events')}</small></summary><div class="mr2events">${r.events.map(e=>`<div class="mr2ev"><div class="mr2seq">#${e.seq}${e.time!=null?`<br>${Number(e.time).toFixed(2)}s`:''}</div><div>${badge(e.kind)}</div><div class="mr2label">${esc(e.label)}<small>eventId=${esc(e.eventId)}${e.skillTid!=null?` · tid=${esc(e.skillTid)}`:''}${e.cardUid!=null?` · cardUid=${esc(e.cardUid)}`:''}</small><details class="mr2raw"><summary>${ui('原始事件','Raw event')}</summary><pre>${esc(JSON.stringify(e.data,null,2))}</pre></details></div></div>`).join('')}</div></details>`).join('');
-    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('下面的顺序来自 Replay recordZips 中 frameList 的原始排列；同一时间戳的事件仍按录像帧中的实际先后顺序显示。出牌、钥令、派生技能、伤害、状态和造物触发均保留原始 eventId，可展开查看原始事件。','The order below follows the original frameList order from Replay recordZips. Events sharing the same timestamp still preserve their replay-frame order. Cards, keeper skills, derived skills, damage, states and relic triggers retain their raw eventId and raw payload.')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were parsed.')}</div>`}`;
+    Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
+    const eventHtml=rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
+    host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
   }
   async function loadLegacy(uuid){try{const r=await fetch(`${LOCAL_BASE}/${uuid}.json`,{cache:'no-cache'});return r.ok?await r.json():null}catch{return null}}
   async function analyze(raw){
     const input=document.getElementById('mrReplayCode'),host=document.getElementById('mrReplayResult');if(raw!=null&&input)input.value=raw;const p=parseReplayCode(raw??input?.value);if(!host)return;if(!p){host.innerHTML=`<div class="mr2status err">${ui('请输入有效的 battleUuid 或 UUID#E#a 回放码。','Enter a valid battleUuid or UUID#E#a replay code.')}</div>`;return}
     host.innerHTML=`<div class="mr2status">${ui('正在从公开 BattleReplay 对象获取约 1MB 回放并解码 LZ4 + MessagePack…','Fetching the public BattleReplay object and decoding LZ4 + MessagePack…')}</div>`;
-    try{const full=await fetchReplay(p.uuid);renderFull(full)}catch(err){console.error('Public replay fetch/decode failed',err);const legacy=await loadLegacy(p.uuid);if(legacy&&legacy.timeline){host.innerHTML=`<div class="mr2status err">${ui('公开回放对象获取失败（可能是浏览器 CORS 或对象已过期）。本站只有旧的聚合 timeline；请检查控制台错误。','Public replay fetch failed (browser CORS or expired object). Only the older aggregated local timeline is available; check console errors.')}</div>`}else host.innerHTML=`<div class="mr2status err"><strong>${ui('无法获取完整回放。','Could not fetch the full replay.')}</strong><br>${esc(err?.message||err)}<br>${ui('如果命令行 fetch_public_replay.py 能成功而浏览器失败，则原因基本是对象存储未允许本站域名的 CORS；这时需要在站点侧增加同源代理，而不是解 TLS。','If fetch_public_replay.py works but the browser fails, the likely cause is object-store CORS. The fix is a same-origin site proxy, not TLS decryption.')}</div>`}
+    try{const full=await fetchReplay(p.uuid);await preloadAssets();renderFull(full)}catch(err){console.error('Public replay fetch/decode failed',err);const legacy=await loadLegacy(p.uuid);if(legacy&&legacy.timeline){host.innerHTML=`<div class="mr2status err">${ui('公开回放对象获取失败（可能是浏览器 CORS 或对象已过期）。本站只有旧的聚合 timeline；请检查控制台错误。','Public replay fetch failed (browser CORS or expired object). Only the older aggregated local timeline is available; check console errors.')}</div>`}else host.innerHTML=`<div class="mr2status err"><strong>${ui('无法获取完整回放。','Could not fetch the full replay.')}</strong><br>${esc(err?.message||err)}<br>${ui('如果命令行 fetch_public_replay.py 能成功而浏览器失败，则原因基本是对象存储未允许本站域名的 CORS；这时需要在站点侧增加同源代理，而不是解 TLS。','If fetch_public_replay.py works but the browser fails, the likely cause is object-store CORS. The fix is a same-origin site proxy, not TLS decryption.')}</div>`}
   }
   function activateTab(){document.querySelectorAll('#morimensTabs .morimensTab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});document.querySelectorAll('[role="tabpanel"]').forEach(p=>{if(p.id!=='morimensReplayPanel'&&p.closest('main,body'))p.hidden=true});const t=document.getElementById('morimensReplayTab'),p=document.getElementById('morimensReplayPanel');if(t){t.classList.add('active');t.setAttribute('aria-selected','true')}if(p)p.hidden=false;history.replaceState(null,'','#replay')}
   function enhance(root=document){root.querySelectorAll?.('.dtideReplayCopy').forEach(copy=>{if(copy.dataset.reviewV2Bound)return;copy.dataset.reviewV2Bound='1';const b=document.createElement('button');b.type='button';b.className='dtideReplayReviewOpen';b.textContent=ui('完整复盘','Full replay');b.addEventListener('click',()=>{activateTab();analyze(copy.dataset.replayCode||'')});copy.insertAdjacentElement('afterend',b)})}
