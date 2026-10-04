@@ -466,6 +466,7 @@
     for(const e of gears.values())for(const ch of e.channels){
       if(ch.cmd==null)continue;const params=e.mainStates[0]?.params||[],paras=String(ch.para??'').split(',').map(x=>x.trim());
       for(const dl of res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]){const prop=EV_PROP[dl.Type];if(!prop)continue;
+        if(!evProps.has('gear:'+e.key))evProps.set('gear:'+e.key,new Set());evProps.get('gear:'+e.key).add(prop);   // the item sets this property: it only receives it through an exact amount match
         let t=String(dl.Para??'').replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
         if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))continue;const amt=evalNum(t,{});if(!(Number.isFinite(amt)&&amt!==0))continue;
         evList.push({e,ch,prop,amt:Math.abs(amt)});ch.evTimes=ch.evTimes||new Set();ch.evRounds=ch.evRounds||new Set();ch.evPer=ch.evPer||new Map();if(!evProps.has('gear:'+e.key))evProps.set('gear:'+e.key,new Set());evProps.get('gear:'+e.key).add(prop)}
