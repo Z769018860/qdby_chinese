@@ -168,7 +168,7 @@
     "enlightenLevel": true,
     "wheels": true,
     "covenants": true,
-    "difficulty": false
+    "difficulty": true
   },
   "notes": [
     "当前期榜单索引用于发现玩家与排名；每条挑战的角色等级、启灵节点、命轮、密契、助战状态和逐波队伍来自 Eremora 自身的 SvelteKit __data.json 结构化数据。",
@@ -185,7 +185,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-10-01T00:59:39.585Z",
+    "generatedAt": "2026-10-04T01:24:12.559Z",
     "rankScopes": [
       50,
       200,
@@ -238,6 +238,22 @@
       }
     ],
     "coverage": [
+      {
+        "seasonId": 70,
+        "maxRankAvailable": 2000,
+        "difficulty": {
+          "recognizedTeams": 11012,
+          "totalTeams": 11012,
+          "complete": true
+        },
+        "rankScopes": {
+          "50": true,
+          "200": true,
+          "500": true,
+          "1000": true,
+          "2000": true
+        }
+      },
       {
         "seasonId": 69,
         "maxRankAvailable": 48,
@@ -327,12 +343,12 @@
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-02T23:53:00+08:00",
-    "revision": "5b797e8539d10b085cd3c76a00cc5a1a6edce8d0b2c2fc8fcef668141922ee91",
+    "syncedAt": "2026-10-04T01:24:15.570573Z",
+    "revision": "0fc5b4e6ebda53660aa0227a1ed91ba87c3ab0136d23320b65fb0ded3e2b5bb2",
     "format": "gzip-base64-chunked-v1",
     "chunks": 5,
     "chunkSize": 600000,
-    "chunkBytes": 2838392
+    "chunkBytes": 2876359
   },
   "rawTop1000Import": {
     "seasonId": 69,
