@@ -204,20 +204,47 @@
     const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
     const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,events:[]});return rounds.get(n)};
     const push=(kind,label,html,data,raw,meta={})=>{if(!bout)return;getRound(bout).events.push({seq:++globalSeq,kind,label,html,time:raw.time??null,eventId:raw.eventId,data,camp,phase,...meta})};
+    const pct=(a,b)=>b>0?Math.max(0,Math.min(100,a/b*100)):0;
+    const hpMini=(cur,max,enemy)=>cur!=null&&max>0?`<span class="mr2hpmini${enemy?' enemy':''}" title="${esc(`${fmt(cur)} / ${fmt(max)}`)}"><i style="width:${pct(cur,max).toFixed(1)}%"></i></span><span class="mr2from">${pct(cur,max).toFixed(pct(cur,max)<10?1:0)}%</span>`:'';
     const resLabels={energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')};
     const stateBadge=(id,layerText)=>`<span class="mr2chip st" title="${esc(`state ${id}`)}">${ico(stateIconSrc(res,id),res.nameState(id),'st')}<span>${esc(res.nameState(id))}${layerText?` <em>${esc(layerText)}</em>`:''}</span></span>`;
 
+    // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
+    const board=new Map(),bstates=new Map();
+    const PROP={hp:'hp',max_hp:'max',block:'block',energy:'energy',max_energy:'maxEnergy',ulti_energy:'ulti',ulti_energy_max:'ultiMax',keeper_energy:'kEnergy',max_keeper_energy:'kMax'};
+    const unit=uid=>{const k=String(uid);if(!board.has(k))board.set(k,{});return board.get(k)};
+    const applyRoleSnapshot=r=>{if(r?.uid==null)return;const u=unit(r.uid),p=r.properties;if(p&&typeof p==='object')for(const k in PROP)if(p[k]!=null&&!Array.isArray(p))u[PROP[k]]=p[k]};
+    const stateMap=uid=>{const k=String(uid);if(!bstates.has(k))bstates.set(k,new Map());return bstates.get(k)};
+    const snap=()=>{const units=[];for(const [uid,a] of actors){const u=board.get(uid)||{};units.push({uid:a.uid,...u,states:[...(bstates.get(uid)?.values()||[])].map(x=>({...x}))})}return {units}};
+    const intents=new Map();
+
     for(let si=0;si<(full.recordSegments||[]).length;si++){
       const seg=full.recordSegments[si]||[];for(let ri=0;ri<seg.length;ri++){
-        const rec=seg[ri]||{},fl=rec?.msgData?.frameList;if(!Array.isArray(fl))continue;
+        const rec=seg[ri]||{};
+        if(rec?.msgId===1001&&rec.msgData){for(const m of rec.msgData.monsterDataList||[])applyRoleSnapshot(m);for(const r of rec.msgData.roleDataList||[])applyRoleSnapshot(r)}
+        const fl=rec?.msgData?.frameList;if(!Array.isArray(fl))continue;
         for(let fi=0;fi<fl.length;fi++){
           const fr=fl[fi]||{};frameCount++;const e=fr.eventId,d=fr.data||{};
+          // ---- state tracking (runs for every frame, including pre-battle setup)
+          if(e===1028&&PROP[d.propertyType]&&d.value!=null&&d.uid!=null&&typeof d.value==='number')unit(d.uid)[PROP[d.propertyType]]=d.value;
+          else if(e===1014&&d.beHitConfig?.targetRoleUid!=null){const h=d.beHitConfig,u=unit(h.targetRoleUid);if(h.curHp!=null)u.hp=h.curHp;if(h.curMaxHp!=null)u.max=h.curMaxHp}
+          else if(e===1004&&d.stateUid!=null&&(d.stateType===1||actors.has(String(d.ownerUid??d.roleUid)))){stateMap(d.ownerUid??d.roleUid).set(String(d.stateUid),{stateId:d.stateId,layer:d.layer??1})}
+          else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??1)>0)cur.layer=d.newLayer;else if(cur)m.delete(String(d.stateUid))}
+          else if(e===1005&&d.stateUid!=null){stateMap(d.ownerUid).delete(String(d.stateUid))}
+          else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
           if(e===1019&&d?.boutNumber){
-            bout=Number(d.boutNumber)||bout;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;
+            const nb=Number(d.boutNumber)||bout;
+            if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(bout))getRound(bout).snapEnd=snap();getRound(nb).snapStart=snap()}
+            bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;
             if(camp===1&&phase===1)push('round',ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
             continue;
           }
           if(!bout)continue;
+          // enemy acting: monster fsm switches into the action state with the skill it performs
+          if(e===1013&&camp===2&&phase===2&&d.newState===2&&d.config?.skillConfigId!=null&&actors.get(String(d.uid))?.kind==='monster'){
+            const name=res.nameSkill(d.config.skillConfigId),tgt=d.config.targetRoleUid;
+            push('enemyact',`${plainName(d.uid)} · ${name}`,'',d,fr,{skillTid:d.config.skillConfigId,actorUid:d.uid,targetUid:tgt,skillName:name});continue;
+          }
           if(e===1067){
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
             push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,stypes:res.skill[String(tid)]?.Type||[]});continue;
@@ -226,7 +253,8 @@
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
-            const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
+            const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
+            const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
             push(typ,`${plainName(h.castRoleUid)} → ${plainName(h.targetRoleUid)} · ${sname} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,html,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue;
           }
           if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic" title="${esc(`relic tid ${d.relicTid}`)}">${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
@@ -245,6 +273,7 @@
         }
       }
     }
+    if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
     return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf};
   }
 
@@ -278,6 +307,19 @@
     .mr2strip{display:inline-flex;gap:3px;flex-wrap:wrap;align-items:center;margin-left:auto}.mr2mark{--ac:#8aa0bd;display:inline-flex;border-radius:50%;padding:1px;background:var(--ac)}.mr2mark .mr2ico{border:0}.mr2mark.a-ulti{--ac:#ff8a3d}.mr2mark.a-awake{--ac:#ffd24a}.mr2mark.a-keeper{--ac:#b57cff}.mr2mark.a-strike{--ac:#ff6b6b}.mr2mark.a-defend{--ac:#4fd18b}.mr2mark.a-skill{--ac:#4aa3ff}.mr2mark.a-curse{--ac:#8e86a8}.mr2mark.a-other{--ac:#4fd0c8}.mr2mark:has(.kk){border-radius:6px}
     .mr2legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10px;color:#9aa8bb;align-items:center}.mr2legend span{display:inline-flex;gap:5px;align-items:center}.mr2legend i{width:11px;height:11px;border-radius:3px;background:var(--c)}
     @media(max-width:760px){.mr2acthead{flex-wrap:wrap}.mr2fx{padding-left:0}.mr2actname{font-size:16px}}
+
+    .mr2hpmini{display:inline-block;width:64px;height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden;vertical-align:middle}.mr2hpmini i{display:block;height:100%;background:linear-gradient(90deg,#3fbf7f,#7be0a6)}.mr2hpmini.enemy i{background:linear-gradient(90deg,#d8485f,#ff8a8a)}
+    .mr2boardwrap{border:1px solid rgba(148,163,184,.14);border-radius:12px;background:rgba(6,12,20,.55);padding:8px 10px}.mr2boardtitle{font-size:10px;color:#7f8ea2;font-weight:800;letter-spacing:.3px;margin-bottom:6px}
+    .mr2board{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.mr2bcol{display:grid;gap:8px;align-content:start}.mr2bcol.ally{text-align:left}.mr2bcol.enemy{text-align:right}
+    .mr2unit{display:flex;gap:10px;align-items:flex-start;padding:7px;border-radius:10px;background:rgba(74,163,255,.05);border:1px solid rgba(74,163,255,.14)}.mr2unit.enemy{flex-direction:row-reverse;background:rgba(255,92,138,.06);border-color:rgba(255,92,138,.22)}.mr2unit.down{opacity:.55;filter:grayscale(.6)}
+    .mr2ico.lgx{width:40px;height:40px;flex:0 0 40px;font-size:15px;border:2px solid rgba(74,163,255,.55)}.mr2unit.enemy .mr2ico.lgx{border-color:rgba(255,92,138,.65);width:48px;height:48px;flex-basis:48px}.mr2ico.lgx.keeper{border-color:rgba(213,177,118,.7);background:#3a2f1a;color:#f1d69f}.mr2ico.lgx.mon::before{color:#ff9e93}
+    .mr2ubody{min-width:0;flex:1;display:grid;gap:4px}.mr2uname{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;color:#e6edf6}.mr2unit.enemy .mr2uname{justify-content:flex-end}.mr2uname b{font-size:13px}
+    .mr2hp{position:relative;height:16px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden}.mr2hp i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#2fa56b,#6fdc9f)}.mr2hp.enemy i{inset:0 0 0 auto;background:linear-gradient(270deg,#c93a55,#ff7f8f)}.mr2hp span{position:relative;display:block;padding:0 7px;font-size:10px;line-height:16px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.8);font-variant-numeric:tabular-nums;white-space:nowrap}.mr2hp span b{margin-left:6px;color:#ffe9a8}.mr2hp.enemy span{text-align:right}
+    .mr2mini{position:relative;height:11px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}.mr2mini i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#8a45d6,#d07cff)}.mr2mini.key i{background:linear-gradient(90deg,#b8923f,#f1d69f)}.mr2mini span{position:relative;display:block;padding:0 6px;font-size:9px;line-height:11px;color:#eef;text-shadow:0 1px 2px rgba(0,0,0,.8)}.mr2unit.enemy .mr2mini i{inset:0 0 0 auto}.mr2unit.enemy .mr2mini span{text-align:right}
+    .mr2pips{display:inline-flex;gap:3px;align-items:center}.mr2pips i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(98,183,255,.4)}.mr2pips i.on{background:#6ab7ff;box-shadow:0 0 6px rgba(106,183,255,.7)}.mr2pips small{font-size:9px;color:#9fd0ff;margin-left:4px}
+    .mr2shield{font-size:10px;padding:0 6px;border-radius:999px;background:rgba(127,224,192,.14);color:#8fe8cb;border:1px solid rgba(127,224,192,.3)}.mr2delta{font-size:10px;font-weight:800;font-variant-numeric:tabular-nums}.mr2delta.neg{color:#ff9e93}.mr2delta.pos{color:#8fe0b2}.mr2intent{font-size:10px;padding:0 6px;border-radius:5px;background:rgba(255,196,87,.14);color:#ffd27a;border:1px solid rgba(255,196,87,.3)}
+    .mr2ustates{display:flex;flex-wrap:wrap;gap:3px}.mr2unit.enemy .mr2ustates{justify-content:flex-end}.mr2ust{display:inline-flex;align-items:center;gap:3px;padding:0 5px 0 1px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14);font-size:9px;color:#b8c4d6}.mr2ust em{font-style:normal;color:#ffd27a;margin-left:2px}.mr2ust .mr2ico{width:14px;height:14px;flex-basis:14px;font-size:8px;border-radius:4px}.mr2ust.more{padding:0 6px;color:#8392a6}
+    @media(max-width:760px){.mr2board{grid-template-columns:1fr}.mr2bcol.enemy{text-align:left}}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -294,7 +336,7 @@
   }
   function actionInfo(e){
     if(e.kind==='keeper')return {cls:'keeper',label:ui('钥令','Keyflare')};
-    if(e.kind==='trigger')return {cls:'enemy',label:ui('敌方行动','Enemy')};
+    if(e.kind==='trigger'||e.kind==='enemyact')return {cls:'enemy',label:ui('敌方行动','Enemy')};
     const t=e.stypes||[];
     if(e.kind==='ultimate'||t.includes('Ulti_Skill'))return {cls:'ulti',label:ui('狂气爆发','Aliemus Burst')};
     if(t.includes('Card_Awake'))return {cls:'awake',label:ui('灵知觉醒','Awakening')};
@@ -310,10 +352,11 @@
   }
   function renderActionHead(e,tl){
     const info=actionInfo(e),owner=actionActor(e,tl);
-    const portrait=e.kind==='keeper'?ico(e.iconSrc,'钥','kk lg'):owner?ico(owner.icon,owner.name,'av lg'):'';
+    const portrait=e.kind==='keeper'?ico(e.iconSrc,'钥','kk lg'):owner?ico(owner.icon,owner.kind==='monster'?'怪':owner.name,'av lg'):'';
     const who=e.kind==='keeper'?'':owner?`<span class="mr2who">${esc(owner.name)}</span>`:'';
     const cost=e.cost!=null?`<span class="mr2cost" title="${esc(ui('算力消耗','Energy cost'))}">⚡${esc(e.cost)}</span>`:'';
-    return `<div class="mr2acthead">${portrait}<div class="mr2acttitle"><div class="mr2actline"><span class="mr2atype">${esc(info.label)}</span>${who}</div><b class="mr2actname">${esc(e.skillName)}</b></div>${cost}${timeText(e)}</div>`;
+    const tgt=e.kind==='enemyact'&&e.targetUid!=null?`<div class="mr2actline"><span class="mr2from">${ui('目标','Target')}</span>${tl.chip(e.targetUid)}</div>`:'';
+    return `<div class="mr2acthead">${portrait}<div class="mr2acttitle"><div class="mr2actline"><span class="mr2atype">${esc(info.label)}</span>${who}</div><b class="mr2actname">${esc(e.skillName)}</b>${tgt}</div>${cost}${timeText(e)}</div>`;
   }
   // overview strip shown on the round header: one coloured mark per action, in order
   function renderStrip(r,tl){
@@ -371,14 +414,49 @@
       if(s.phase!==2)return `<div class="mr2side quiet c${s.camp}">${renderSettle(s.events,title,tl)||`<div class="mr2settle"><span class="mr2sttl">${esc(title)}</span></div>`}</div>`;
       const blocks=[],pre=[];let blk=null;
       for(const e of s.events){
-        const starts=['card','ultimate','keeper','skill'].includes(e.kind)||(s.camp===2&&e.kind==='trigger'&&tl.campOf(e.actorUid)===2);
+        const starts=['card','ultimate','keeper','skill'].includes(e.kind)||e.kind==='enemyact'||(s.camp===2&&e.kind==='trigger'&&tl.campOf(e.actorUid)===2);
         if(starts){blk={head:e,fx:[]};blocks.push(blk)}
         else if(blk)blk.fx.push(e);else pre.push(e);
       }
       const preHtml=pre.length?renderSettle(pre,ui('行动前的状态/资源变化','Before first action'),tl):'';
       return `<div class="mr2side c${s.camp}"><div class="mr2sidehead">${esc(title)} · ${blocks.length} ${ui('次行动','actions')}</div>${preHtml}${blocks.map(b=>`<div class="mr2act a-${actionInfo(b.head).cls}">${renderActionHead(b.head,tl)}<div class="mr2fx">${renderEffects(b.fx,tl)}</div>${rawDetails(b.head)}</div>`).join('')}</div>`;
     }).join('');
-    return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small>${renderStrip(r,tl)}</summary><div class="mr2rbody">${body}</div></details>`;
+    const bStart=r.round===(tl.rounds[0]?.round)?renderBoard(r.snapStart,null,tl,ui('战斗开始 · 战场状态','Battle start · battlefield')):'',bEnd=renderBoard(r.snapEnd,r.snapStart,tl,ui('回合结束 · 战场状态（▲▼ 为本回合血量变化）','Round end · battlefield (▲▼ = HP change this round)'));
+    return `<details class="mr2round"${open?' open':''}><summary><b>${ui(`第 ${r.round} 回合`,`Round ${r.round}`)}</b><small>${acts} ${ui('次我方行动','ally actions')} · ${ui('我方输出','Dealt')} ${fmt(dmg)} · ${ui('受到','Taken')} ${fmt(taken)}</small>${renderStrip(r,tl)}</summary><div class="mr2rbody">${bStart}${body}${bEnd}</div></details>`;
+  }
+
+  // ---- battlefield board: allies left-aligned, enemies right-aligned -----------------
+  const kfmt=n=>{n=Number(n)||0;return Math.abs(n)>=1e6?`${(n/1e6).toFixed(n>=1e7?1:2).replace(/\.0+$/,'')}M`:Math.abs(n)>=1e4?`${(n/1e3).toFixed(1).replace(/\.0$/,'')}K`:fmt(n)};
+  function unitStates(u,tl){
+    const vis=(u.states||[]).filter(x=>tl.res.state[String(x.stateId)]?.ShowType!=='Hide');
+    if(!vis.length)return '';
+    const shown=vis.slice(0,14);
+    return `<div class="mr2ustates">${shown.map(x=>`<span class="mr2ust" title="${esc(`${tl.res.nameState(x.stateId)} ×${x.layer} · state ${x.stateId}`)}">${ico(stateIconSrc(tl.res,x.stateId),tl.res.nameState(x.stateId),'st sm2')}<span>${esc(tl.res.nameState(x.stateId))}${x.layer>1?`<em>×${x.layer}</em>`:''}</span></span>`).join('')}${vis.length>shown.length?`<span class="mr2ust more">+${vis.length-shown.length}</span>`:''}</div>`;
+  }
+  function renderUnit(u,tl,prev){
+    const a=tl.actors.get(String(u.uid));if(!a)return '';
+    const enemy=a.camp===2,hasHp=u.hp!=null&&u.max>0,p=hasHp?Math.max(0,Math.min(100,u.hp/u.max*100)):0;
+    const was=prev&&prev.hp!=null?prev.hp:null,delta=was!=null&&hasHp?u.hp-was:0;
+    const portrait=a.kind==='keeper'?ico('','守','av lgx keeper'):ico(a.icon,a.kind==='monster'?'怪':a.name,`av lgx${a.kind==='monster'?' mon':''}`);
+    const hpBar=hasHp?`<div class="mr2hp${enemy?' enemy':''}${p<=0?' dead':''}"><i style="width:${p.toFixed(2)}%"></i><span>${fmt(u.hp)} / ${fmt(u.max)} <b>${p.toFixed(p<10?2:p<100?1:0)}%</b></span></div>`:'';
+    const dTag=delta?`<span class="mr2delta ${delta<0?'neg':'pos'}">${delta<0?'▼':'▲'}${kfmt(Math.abs(delta))}</span>`:'';
+    const shield=u.block>0?`<span class="mr2shield" title="${esc(ui('护盾','Shield'))}">🛡 ${fmt(u.block)}</span>`:'';
+    let extra='';
+    if(a.kind==='awakener'&&u.ulti!=null&&u.ultiMax>0)extra=`<div class="mr2mini ulti" title="${esc(ui('狂气','Aliemus'))} ${fmt(u.ulti)} / ${fmt(u.ultiMax)}"><i style="width:${Math.min(100,u.ulti/u.ultiMax*100).toFixed(1)}%"></i><span>${ui('狂气','Aliemus')} ${fmt(u.ulti)}</span></div>`;
+    if(a.kind==='keeper'){
+      const pips=u.maxEnergy>0?`<span class="mr2pips" title="${esc(ui('算力','Energy'))}">${Array.from({length:u.maxEnergy},(_,i)=>`<i class="${i<(u.energy||0)?'on':''}"></i>`).join('')}<small>${fmt(u.energy||0)}/${u.maxEnergy}</small></span>`:'';
+      const kk=u.kMax>0?`<div class="mr2mini key" title="${esc(ui('钥令能量','Keyflare'))} ${fmt(u.kEnergy||0)} / ${fmt(u.kMax)}"><i style="width:${Math.min(100,(u.kEnergy||0)/u.kMax*100).toFixed(1)}%"></i><span>${ui('钥令能量','Keyflare')} ${fmt(u.kEnergy||0)}</span></div>`:'';
+      extra=`${pips}${kk}`;
+    }
+    const intent=enemy&&u.intent?`<span class="mr2intent">${ui('下一步','Next')}：${esc(tl.res.nameSkill(u.intent))}</span>`:'';
+    return `<div class="mr2unit${enemy?' enemy':''}${hasHp&&p<=0?' down':''}" title="${esc(`UID ${u.uid} · tid ${a.tid??'?'}`)}">${portrait}<div class="mr2ubody"><div class="mr2uname"><b>${esc(a.name)}</b>${shield}${dTag}${intent}</div>${hpBar}${extra}${unitStates(u,tl)}</div></div>`;
+  }
+  function renderBoard(sn,prev,tl,title){
+    if(!sn)return '';
+    const prevBy=new Map((prev?.units||[]).map(u=>[String(u.uid),u]));
+    const ally=sn.units.filter(u=>{const a=tl.actors.get(String(u.uid));return a&&a.camp!==2}).sort((x,y)=>(tl.actors.get(String(x.uid)).kind==='keeper'?-1:0)-(tl.actors.get(String(y.uid)).kind==='keeper'?-1:0));
+    const foe=sn.units.filter(u=>tl.actors.get(String(u.uid))?.camp===2);
+    return `<div class="mr2boardwrap"><div class="mr2boardtitle">${esc(title)}</div><div class="mr2board"><div class="mr2bcol ally">${ally.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div><div class="mr2bcol enemy">${foe.map(u=>renderUnit(u,tl,prevBy.get(String(u.uid)))).join('')}</div></div></div>`;
   }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
