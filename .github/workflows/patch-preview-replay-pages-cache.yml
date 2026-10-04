@@ -4,6 +4,8 @@ on:
   push:
     branches: [preview]
     paths:
+      - morimens-replay-timeline.js
+      - api/morimens/replay/**
       - .github/workflows/patch-preview-replay-pages-cache.yml
 
 permissions:
@@ -17,27 +19,34 @@ jobs:
         with:
           ref: preview
           fetch-depth: 0
-      - name: Bump Morimens tools entry version
+      - name: Bump Morimens replay asset versions
         run: |
           python - <<'PY'
           from pathlib import Path
-          p = Path('morimens-tools.html')
-          text = p.read_text(encoding='utf-8')
-          old = 'morimens-tools.js?v=20261004.1'
-          new = 'morimens-tools.js?v=20261004.7'
-          if old not in text and new not in text:
-              raise SystemExit('Expected morimens-tools.js version marker not found')
-          text = text.replace(old, new)
-          p.write_text(text, encoding='utf-8')
+          import re
+
+          html = Path('morimens-tools.html')
+          text = html.read_text(encoding='utf-8')
+          text, n = re.subn(r'morimens-tools\.js\?v=20261004\.\d+', 'morimens-tools.js?v=20261004.8', text)
+          if not n:
+              raise SystemExit('morimens-tools.js version marker not found in morimens-tools.html')
+          html.write_text(text, encoding='utf-8')
+
+          tools = Path('morimens-tools.js')
+          text = tools.read_text(encoding='utf-8')
+          text, n = re.subn(r'const assetVersion="20261004\.\d+";', 'const assetVersion="20261004.8";', text, count=1)
+          if not n:
+              raise SystemExit('assetVersion marker not found in morimens-tools.js')
+          tools.write_text(text, encoding='utf-8')
           PY
-      - name: Commit patch
+      - name: Commit cache-busting patch
         run: |
-          if git diff --quiet -- morimens-tools.html; then
+          if git diff --quiet -- morimens-tools.html morimens-tools.js; then
             echo 'No patch needed.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add morimens-tools.html
-          git commit -m 'fix(morimens): bust GitHub Pages replay cache'
+          git add morimens-tools.html morimens-tools.js
+          git commit -m 'fix(morimens): bust GitHub Pages replay cache v20261004.8'
           git push origin HEAD:preview
