@@ -316,7 +316,7 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
-    const intents=new Map();
+    const intents=new Map();let lastStats=null;const keeperPicks=[];
 
     for(let si=0;si<(full.recordSegments||[]).length;si++){
       const seg=full.recordSegments[si]||[];for(let ri=0;ri<seg.length;ri++){
@@ -332,6 +332,7 @@
           else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues}else if(cur)m.delete(String(d.stateUid))}
           else if(e===1005&&d.stateUid!=null){stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
+          else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
@@ -360,6 +361,8 @@
             push(typ,`${plainName(h.castRoleUid)} → ${plainName(h.targetRoleUid)} · ${sname} · ${typ==='damage'?ui('伤害','DMG'):ui('治疗','Heal')} ${fmt(amt)}${h.isCrit?` · ${ui('暴击','CRIT')}`:''}`,html,d,fr,{skillTid:h.skillConfigId,actorUid:h.castRoleUid,targetUid:h.targetRoleUid,amount:amt,crit:!!h.isCrit,blocked:h.blockedDamage||0,damageType:h.damageType});continue;
           }
           if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic"${relicTipAttr(res,d.relicTid)}>${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
+          if(e===1046&&Array.isArray(d.targetUids)&&d.targetUids.length>1&&d.targetUids.every(t=>typeof t==='number'&&(res.skill[String(t)]?.Type||[]).includes('Keeper_Skill')))keeperPicks.push({round:bout,time:fr.time,options:d.targetUids.slice(),chosen:null,via:d.skillConfigId});
+          if(e===1064){const pk=[...keeperPicks].reverse().find(x=>x.chosen==null&&x.options.includes(d.skillId));if(pk)pk.chosen=d.skillId}
           if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
           if(e===1049){const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
           if(e===1004||e===1007){
@@ -391,7 +394,7 @@
       }
     }
     if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
-    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf};
+    return {rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -465,6 +468,18 @@
 
     .mr2snap{margin-top:2px}.mr2snap>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:10px;color:#7f8ea2;padding:3px 0}.mr2snap>summary::-webkit-details-marker{display:none}.mr2snap>summary::before{content:'▸';color:#6f7f93}.mr2snap[open]>summary::before{content:'▾'}.mr2snap[open]{padding-bottom:4px}.mr2snap .mr2boardwrap{margin-top:4px}
     .mr2snapchip{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;padding:1px 8px;border-radius:8px;background:rgba(74,163,255,.07);border:1px solid rgba(74,163,255,.18);color:#c3cedd}.mr2snapchip.enemy{background:rgba(255,92,138,.07);border-color:rgba(255,92,138,.22)}.mr2snapchip b{font-size:11px;color:#e6edf6}
+
+    .mr2stats>summary b{color:#f1d69f}.mr2ssum{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}.mr2ssum span{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.1)}.mr2ssum small{display:block;color:#758398;font-size:9px}.mr2ssum strong{display:block;color:#e6edf6;font-size:15px;margin-top:2px}
+    .mr2ssec{display:grid;gap:6px}.mr2ssec h5{margin:6px 0 0;font-size:12px;color:#cdd8e6;font-weight:800;letter-spacing:.3px}.mr2hot{font-style:normal;color:#ff9e93;font-size:11px;margin-left:8px}
+    .mr2scards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}.mr2scard{border:1px solid rgba(148,163,184,.14);border-radius:10px;padding:10px;background:rgba(255,255,255,.02);display:grid;gap:7px;align-content:start}.mr2shead{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:#e6edf6}
+    .mr2smetrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}.mr2smetrics span{display:grid;gap:1px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.04)}.mr2smetrics small{font-size:9px;color:#758398}.mr2smetrics b{font-size:15px;color:#f4f7fb;font-variant-numeric:tabular-nums}.mr2smetrics em{font-style:normal;font-size:10px;color:#8fa0b5}
+    .mr2sbar{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;min-width:60px}.mr2sbar i{display:block;height:100%;background:linear-gradient(90deg,#4aa3ff,#8fd0ff)}.mr2sbar.dmg i{background:linear-gradient(90deg,#d8485f,#ff9a8a)}.mr2sbar.blk i{background:linear-gradient(90deg,#2fb08a,#7fe0c0)}.mr2sbar.heal i{background:linear-gradient(90deg,#3fbf7f,#9be8b8)}.mr2sbar.key i{background:linear-gradient(90deg,#8a45d6,#d07cff)}.mr2sbar.relic i{background:linear-gradient(90deg,#b8923f,#ffd986)}
+    .mr2srcs,.mr2ssec{display:grid;gap:5px}.mr2srow{display:grid;grid-template-columns:minmax(120px,210px) minmax(60px,1fr) auto auto;gap:10px;align-items:center;font-size:11px;color:#c3cedd;padding:3px 6px;border-radius:7px}.mr2srow:hover{background:rgba(255,255,255,.03)}.mr2srow.keeperrow,.mr2srow.relicrow{grid-template-columns:34px minmax(110px,210px) minmax(60px,1fr) auto minmax(0,1.4fr)}.mr2sname{display:grid;line-height:1.3;color:#e6edf6;font-weight:600}.mr2sname small{font-size:9px;color:#7f8ea2;font-weight:400}.mr2srow b{font-variant-numeric:tabular-nums;color:#f4f7fb}.mr2srow small{color:#7f8ea2;font-size:10px}
+    .mr2srow.keeperrow>small{grid-column:5}.mr2sout{display:flex;flex-wrap:wrap;gap:6px}.mr2sout em{font-style:normal;font-size:10px;padding:1px 7px;border-radius:999px;border:1px solid rgba(148,163,184,.2);color:#9aa8bb}.mr2sout em.d{color:#ffb2a8;border-color:rgba(255,120,100,.4);background:rgba(255,120,100,.1);font-weight:800}.mr2sout em.b{color:#8fe8cb;border-color:rgba(127,224,192,.3)}.mr2sout em.h{color:#9be8b8;border-color:rgba(100,220,150,.3)}.mr2sout em.n{color:#6f7f93}
+    .mr2ico.kk.sm3{width:30px;height:30px;flex-basis:30px;border-radius:6px}.mr2tag.awake{background:rgba(255,210,74,.2);color:#ffd86b}.mr2tag.dim{opacity:.6}
+    .mr2sorder h5{margin:4px 0;font-size:10px;color:#7f8ea2}.mr2step{display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 5px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.15);font-size:11px;color:#dbe4f0}.mr2step i{display:inline-flex;width:18px;height:18px;border-radius:50%;background:#2a3a52;color:#ffd86b;font-style:normal;font-weight:900;font-size:10px;align-items:center;justify-content:center}.mr2step span{display:grid;line-height:1.25}.mr2step small{font-size:9px;color:#8fa0b5}
+    .mr2scard{min-width:0}.mr2smetrics{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))}.mr2srcs .mr2srow{grid-template-columns:minmax(90px,1fr) 64px auto auto;gap:8px}.mr2srow small{white-space:nowrap}.mr2srcs .mr2sname{min-width:0}
+    @media(max-width:760px){.mr2srow,.mr2srow.keeperrow,.mr2srow.relicrow{grid-template-columns:1fr;gap:3px}.mr2srow.keeperrow>small{grid-column:1}}
   `;document.head.appendChild(s)}
 
   // ---- rendering -------------------------------------------------------------------
@@ -683,10 +698,104 @@
     }).join('');
     return `<details class="mr2round mr2opening" open><summary><b>${ui('战斗开局','Battle opening')}</b><small>${ui(`造物 ${relics.length} 个 · 牌库 ${cards.length} 张`,`${relics.length} relics · ${cards.length} cards`)}</small></summary><div class="mr2rbody">${relics.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('拥有的造物','Relics')}</div><div class="mr2relics">${relicHtml}</div></div>`:''}${cards.length?`<div class="mr2osec"><div class="mr2boardtitle">${ui('牌库状态（开局）','Starting deck')}</div><div class="mr2decks">${groups}</div></div>`:''}</div></details>`;
   }
+  // ---- statistics ---------------------------------------------------------------------
+  function computeStats(full,tl){
+    const res=tl.res,bd=full.battleDat||{},actors=tl.actors;
+    const events=[];for(const r of tl.rounds)for(const e of r.events)if(e.kind!=='snap')events.push({...e,round:r.round});
+    const actorByTid=new Map();for(const a of actors.values())if(a.kind==='awakener')actorByTid.set(String(a.tid),a);
+    const keeper=[...actors.values()].find(a=>a.kind==='keeper');
+    const per=new Map();
+    const row=a=>{const k=String(a.uid);if(!per.has(k))per.set(k,{a,plays:0,energy:0,ulti:0,types:new Map(),awake:null,dmg:0,block:0,heal:0,src:new Map(),draws:0});return per.get(k)};
+    for(const a of actors.values())if(a.camp!==2)row(a);
+    // plays / energy / awakening / burst order
+    const awakenOrder=[],ultiOrder=[],keeperUses=[];let totalPlays=0,totalEnergy=0,draws=0,discards=0,exhausts=0;
+    for(const e of events){
+      if(e.camp!==1)continue;
+      if(e.kind==='card'||e.kind==='ultimate'||e.kind==='skill'){
+        const a=actors.get(String(e.actorUid)),r=a&&row(a);if(!r)continue;
+        const info=actionInfo(e);
+        if(e.kind==='card'){r.plays++;totalPlays++;r.energy+=Number(e.cost)||0;totalEnergy+=Number(e.cost)||0;r.types.set(info.label,(r.types.get(info.label)||0)+1)}
+        if(info.cls==='awake'){awakenOrder.push({round:e.round,time:e.time,a,name:e.skillName});if(!r.awake)r.awake={round:e.round,order:awakenOrder.length}}
+        if(e.kind==='ultimate'||info.cls==='ulti'){r.ulti++;ultiOrder.push({round:e.round,time:e.time,a,name:e.skillName})}
+      }
+      if(e.kind==='keeper')keeperUses.push(e);
+      if(e.kind==='move'){if(e.mv==='draw')draws+=e.count||1;if(e.mv==='discard')discards+=e.count||1;if(e.mv==='exhaust')exhausts+=e.count||1}
+    }
+    // damage / block / heal by source: the game's own stat packs when present, else rebuilt from hit events
+    const addSrc=(r,typ,id,stat,v)=>{const key=`${typ}|${id}`;const o=r.src.get(key)||{typ,id,dmg:0,block:0,heal:0};if(stat==='AwakerDoDamage'){o.dmg+=v;r.dmg+=v}else if(stat==='AwakerDoBlock'){o.block+=v;r.block+=v}else if(stat==='AwakerDoHeal'){o.heal+=v;r.heal+=v}r.src.set(key,o)};
+    const stateTotals=new Map();let havePacks=false;
+    const packs=tl.lastStats?.battleStatPackMgr?.battleStatPackData||[];
+    for(const pack of packs)for(const [k,v] of Object.entries(pack.battleValue||{})){
+      const a=k==='1'?keeper:actorByTid.get(k);if(!a)continue;const r=row(a);
+      for(const [typ,m] of Object.entries(v||{}))for(const [id,x] of Object.entries(m||{}))for(const [stat,val] of Object.entries(x||{})){
+        if(typeof val!=='number')continue;havePacks=true;addSrc(r,typ,id,stat,val);
+        if(typ==='state'){const t=stateTotals.get(id)||{dmg:0,block:0,heal:0};if(stat==='AwakerDoDamage')t.dmg+=val;else if(stat==='AwakerDoBlock')t.block+=val;else if(stat==='AwakerDoHeal')t.heal+=val;stateTotals.set(id,t)}
+      }
+    }
+    if(!havePacks)for(const e of events){if(e.kind!=='damage'&&e.kind!=='heal')continue;const a=actors.get(String(e.actorUid));if(!a||a.camp===2)continue;addSrc(row(a),'skill',e.skillTid,e.kind==='damage'?'AwakerDoDamage':'AwakerDoHeal',e.amount)}
+    const totalDmg=[...per.values()].reduce((n,r)=>n+r.dmg,0);
+    // relics: trigger counts + output attributed through the states each relic carries
+    const trig=new Map();for(const e of events)if(e.kind==='relic'){const o=trig.get(String(e.relicTid))||{n:0,rounds:new Set()};o.n++;o.rounds.add(e.round);trig.set(String(e.relicTid),o)}
+    const startTids=(bd.relics||[]).map(r=>String(r.tid)),all=[...new Set([...startTids,...trig.keys()])];
+    const relicRows=all.map(tid=>{
+      const rec=res.relic[tid]||{},sids=[];for(const [k,v] of Object.entries(rec))if(/^State\d+$/.test(k)&&Array.isArray(v))sids.push(...v.map(String));
+      const out={dmg:0,block:0,heal:0};for(const sid of sids){const t=stateTotals.get(sid);if(t){out.dmg+=t.dmg;out.block+=t.block;out.heal+=t.heal}}
+      const t=trig.get(tid);return {tid,start:startTids.includes(tid),n:t?.n||0,rounds:[...(t?.rounds||[])].sort((a,b)=>a-b),...out,mapped:sids.length>0};
+    }).sort((a,b)=>b.dmg-a.dmg||b.n-a.n);
+    const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
+    // keyflare usage + offered/chosen preference
+    const kmap=new Map();
+    for(const e of keeperUses){const o=kmap.get(String(e.skillTid))||{tid:e.skillTid,n:0,rounds:new Set(),icon:e.iconSrc,offered:0,chosen:0};o.n++;o.rounds.add(e.round);kmap.set(String(e.skillTid),o)}
+    for(const pk of tl.keeperPicks||[])for(const t of pk.options){const o=kmap.get(String(t))||{tid:t,n:0,rounds:new Set(),icon:keeperSkillIconSrc(res,t),offered:0,chosen:0};o.offered++;if(pk.chosen===t)o.chosen++;kmap.set(String(t),o)}
+    const keeperRows=[...kmap.values()].sort((a,b)=>b.n-a.n||b.offered-a.offered);
+    // damage-over-time / state sources shared by the whole team
+    const stateRows=[...stateTotals.entries()].map(([id,t])=>({id,...t})).filter(x=>x.dmg>0).sort((a,b)=>b.dmg-a.dmg);
+    return {per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
+  }
+  const pctOf=(a,b)=>b>0?Math.round(a/b*1000)/10:0;
+  const bar=(frac,cls='')=>`<span class="mr2sbar ${cls}"><i style="width:${Math.max(0,Math.min(100,frac*100)).toFixed(1)}%"></i></span>`;
+  function renderStats(full,tl){
+    const st=computeStats(full,tl),res=tl.res;if(!st.per.length&&!st.relicRows.length)return '';
+    const srcName=o=>o.typ==='state'?res.nameState(o.id):res.nameSkill(o.id);
+    const maxDmg=Math.max(1,...st.per.map(r=>r.dmg));
+    const people=st.per.sort((x,y)=>(x.a.kind==='keeper'?-1:0)-(y.a.kind==='keeper'?-1:0)).map(r=>{
+      const a=r.a,isK=a.kind==='keeper';
+      const srcs=[...r.src.values()].sort((x,y)=>(y.dmg+y.block+y.heal)-(x.dmg+x.block+x.heal));
+      const top=Math.max(1,...srcs.map(o=>o.dmg||o.block||o.heal));
+      const types=[...r.types.entries()].map(([k,v])=>`<span class="mr2tag">${esc(k)} ×${v}</span>`).join('');
+      return `<div class="mr2scard">
+        <div class="mr2shead">${ico(a.icon,isK?'守':a.name,`av ${isK?'keeper':''}`)}<b>${esc(a.name)}</b>${r.awake?`<span class="mr2tag awake" title="${esc(ui('灵知觉醒顺位','Awakening order'))}">${ui(`第 ${r.awake.order} 个觉醒 · 第 ${r.awake.round} 回合`,`Awakened #${r.awake.order} · R${r.awake.round}`)}</span>`:(!isK?`<span class="mr2tag dim">${ui('未觉醒','Never awakened')}</span>`:'')}</div>
+        <div class="mr2smetrics">
+          ${isK?'':`<span><small>${ui('出牌数（牌权）','Cards (share)')}</small><b>${r.plays}</b><em>${pctOf(r.plays,st.totalPlays)}%</em></span><span><small>${ui('消耗算力','Energy spent')}</small><b>${fmt(r.energy)}</b><em>${pctOf(r.energy,st.totalEnergy)}%</em></span><span><small>${ui('狂气爆发','Bursts')}</small><b>${r.ulti}</b></span>`}
+          <span><small>${ui('总伤害','Damage')}</small><b>${fmt(r.dmg)}</b><em>${pctOf(r.dmg,st.totalDmg)}%</em></span>
+          ${r.block?`<span><small>${ui('护盾','Shield')}</small><b>${fmt(r.block)}</b></span>`:''}${r.heal?`<span><small>${ui('治疗','Heal')}</small><b>${fmt(r.heal)}</b></span>`:''}
+        </div>
+        ${bar(r.dmg/maxDmg,'dmg')}
+        ${types?`<div class="mr2flow">${types}</div>`:''}
+        ${srcs.length?`<details class="mr2minor"><summary>${ui('伤害/护盾来源明细','Output by source')} ${srcs.length}</summary><div class="mr2srcs">${srcs.map(o=>{const v=o.dmg||o.block||o.heal,lab=o.dmg?ui('伤害','DMG'):o.block?ui('护盾','Shield'):ui('治疗','Heal'),sk=o.typ==='state'?'':(res.skill[String(o.id)]?.Type||[]);return `<div class="mr2srow"><span class="mr2sname">${esc(srcName(o))}${o.typ==='utilSkill'?`<small>${ui('爆发','Burst')}</small>`:o.typ==='state'?`<small>${ui('状态','State')}</small>`:''}</span>${bar(v/top,o.dmg?'dmg':o.block?'blk':'heal')}<b>${fmt(v)}</b><small>${lab}${o.dmg&&r.dmg?` ${pctOf(o.dmg,r.dmg)}%`:''}</small></div>`}).join('')}</div></details>`:''}
+      </div>`;
+    }).join('');
+    const orderRow=(list,label)=>list.length?`<div class="mr2sorder"><h5>${label}</h5><div class="mr2flow">${list.map((o,i)=>`<span class="mr2step"><i>${i+1}</i>${ico(o.a.icon,o.a.name,'av sm2')}<span><b>${esc(o.a.name)}</b><small>${ui(`第 ${o.round} 回合`,`R${o.round}`)} · ${esc(o.name)}</small></span></span>`).join('')}</div></div>`:'';
+    const maxK=Math.max(1,...st.keeperRows.map(k=>k.n));
+    const keeperHtml=st.keeperRows.length?st.keeperRows.map(k=>`<div class="mr2srow keeperrow"${skillTipAttr(res,k.tid,{})}>${ico(k.icon,'钥','kk sm3')}<span class="mr2sname">${esc(res.nameSkill(k.tid))}</span>${bar(k.n/maxK,'key')}<b>${ui(`${k.n} 次`,`${k.n}×`)}</b><small>${k.rounds.size?ui(`第 ${[...k.rounds].sort((x,y)=>x-y).join('/')} 回合`,`R${[...k.rounds].sort((x,y)=>x-y).join('/')}`):''}${k.offered?` · ${ui(`银钥微光出现 ${k.offered} 次，选中 ${k.chosen} 次（${pctOf(k.chosen,k.offered)}%）`,`offered ${k.offered}, picked ${k.chosen} (${pctOf(k.chosen,k.offered)}%)`)}`:''}</small></div>`).join(''):`<div class="mr2empty">—</div>`;
+    const maxR=Math.max(1,...st.relicRows.map(r=>r.n));
+    const relicHtml=st.relicRows.map(r=>{const rec=res.relic[r.tid]||{};return `<div class="mr2srow relicrow"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<span class="mr2sname">${esc(res.nameRelic(r.tid))}<small>${r.start?ui('开局携带','Starting'):ui('战斗中获得','Gained in battle')}</small></span>${bar(r.n/maxR,'relic')}<b>${r.n?ui(`${r.n} 次`,`${r.n}×`):ui('未触发','—')}</b><span class="mr2sout">${r.dmg?`<em class="d">${ui('额外伤害','DMG')} ${fmt(r.dmg)}${st.totalDmg?` (${pctOf(r.dmg,st.totalDmg)}%)`:''}</em>`:''}${r.block?`<em class="b">${ui('护盾','Shield')} ${fmt(r.block)}</em>`:''}${r.heal?`<em class="h">${ui('治疗','Heal')} ${fmt(r.heal)}</em>`:''}${!r.dmg&&!r.block&&!r.heal?`<em class="n">${r.mapped?ui('无直接产出（增益类）','No direct output'):ui('产出未知','Output unknown')}</em>`:''}</span></div>`}).join('');
+    const stateHtml=st.stateRows.length?`<div class="mr2ssec"><h5>${ui('状态伤害来源（出血、旧日余烬等）','Damage from states (bleed, ...)')}</h5>${st.stateRows.map(x=>`<div class="mr2srow"${stateTipAttr(res,x.id,{})}><span class="mr2sname">${esc(res.nameState(x.id))}</span>${bar(x.dmg/st.stateRows[0].dmg,'dmg')}<b>${fmt(x.dmg)}</b><small>${pctOf(x.dmg,st.totalDmg)}%</small></div>`).join('')}</div>`:'';
+    const sum=[[ui('总伤害','Total damage'),fmt(st.totalDmg)],[ui('回合数','Rounds'),st.rounds],[ui('出牌数','Cards played'),st.totalPlays],[ui('消耗算力','Energy spent'),fmt(st.totalEnergy)],[ui('抽牌','Draws'),st.draws],[ui('弃牌','Discards'),st.discards],[ui('消耗牌','Exhausted'),st.exhausts],[ui('钥令使用','Keyflare casts'),st.keeperUses],[ui('造物额外伤害','Relic damage'),fmt(st.relicDmg)]].map(([k,v])=>`<span><small>${esc(k)}</small><strong>${esc(v)}</strong></span>`).join('');
+    return `<details class="mr2round mr2stats" open><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('出牌 / 算力 / 觉醒 / 钥令 / 造物','cards / energy / awakening / keyflare / relics')}</small></summary><div class="mr2rbody">
+      <div class="mr2ssum">${sum}</div>
+      <div class="mr2ssec"><h5>${ui('角色数据','Per character')}</h5><div class="mr2scards">${people}</div></div>
+      <div class="mr2ssec"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div>
+      <div class="mr2ssec"><h5>${ui('钥令使用与选择偏好','Keyflare skills & picks')}</h5>${keeperHtml}</div>
+      <div class="mr2ssec"><h5>${ui('造物触发与产出','Relics')}${st.relicDmg?` <em class="mr2hot">${ui('造物额外伤害合计','Relic damage')} ${fmt(st.relicDmg)}</em>`:''}</h5>${relicHtml||`<div class="mr2empty">—</div>`}</div>
+      ${stateHtml}
+      ${st.havePacks?'':`<div class="mr2status">${ui('此回放缺少游戏内统计包，伤害按逐次命中事件重建，造物额外伤害无法归因。','This replay has no in-game stat packs; damage is rebuilt from hit events and relic damage cannot be attributed.')}</div>`}
+    </div></details>`;
+  }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
     Object.assign(RES_LABEL,{energy:ui('算力','Energy'),keeper_energy:ui('钥令能量','Keyflare'),ulti_energy:ui('狂气','Aliemus'),block:ui('护盾','Shield')});
-    const openingHtml=renderOpening(full,tl);
+    const openingHtml=renderOpening(full,tl)+renderStats(full,tl);
     const eventHtml=openingHtml+rounds.map((r,ri)=>renderRound(r,tl,ri<2)).join('');
     setTimeout(()=>wireInteractions(host),0);
     host.innerHTML=`<div class="mr2status ok">${ui('已直接从公开 BattleReplay 对象获取并在浏览器内解码。无需登录、Cookie、游戏会话密钥，也没有访问 Eremora。','Fetched the public BattleReplay object directly and decoded it in-browser. No login, cookies, game session keys, or Eremora are used.')}</div><div class="mr2sum"><span><small>battleUuid</small><strong>${esc(full.replayUuid)}</strong></span><span><small>battleTid</small><strong>${esc(bd.battleTid??'—')}</strong></span><span><small>${ui('回合','Rounds')}</small><strong>${rounds.length}</strong></span><span><small>${ui('录像记录','Records')}</small><strong>${fmt(full.recordCount)}</strong></span><span><small>${ui('原始帧','Frames')}</small><strong>${fmt(tl.frameCount)}</strong></span></div><div class="mr2status">${ui('每个回合按「我方/敌方 × 开始结算/行动/结束结算」拆分：算力与资源回复、状态变化归入结算；出牌、爆发、钥令和敌方行动单独成条，其造成的伤害、状态、资源变化嵌套在对应行动下。所有 UID/TID 已对应为唤醒体头像、卡牌名、造物与状态图标，鼠标悬停可看原始 UID/TID，展开「原始事件」可查看完整数据。','Each round is split into ally/enemy × start / action / end. Resource recovery and state changes are grouped as settlement; cards, ultimates, keeper skills and enemy actions are separate entries with their damage, states and resource changes nested beneath. UIDs/TIDs are resolved to awakener portraits, card names, relic and state icons; hover for raw IDs, expand Raw event for the full payload.')}</div><div class="mr2toolbar"><label class="mr2tog"><input type="checkbox" id="mr2ShowDesc"> ${ui('展开所有效果说明','Expand all effect descriptions')}</label><span class="mr2from">${ui('鼠标悬停在卡牌、钥令、意图、状态、造物上可看详细效果；点击行动卡片标题可单独展开。','Hover cards, keyflare skills, intents, states and relics for details; click an action header to expand it.')}</span></div><div class="mr2legend">${[['#ff8a3d',ui('狂气爆发','Burst')],['#ffd24a',ui('灵知觉醒','Awakening')],['#b57cff',ui('钥令','Keyflare')],['#ff6b6b',ui('打击','Strike')],['#4fd18b',ui('防御','Defend')],['#4aa3ff',ui('技能牌','Skill')],['#8e86a8',ui('诅咒','Curse')],['#4fd0c8',ui('其他出牌','Other')],['#ff5c8a',ui('敌方行动','Enemy')]].map(([c,t])=>`<span><i style="--c:${c}"></i>${t}</span>`).join('')}</div>${eventHtml||`<div class="mr2status err">${ui('已解码回放，但没有解析到回合事件。','Replay decoded, but no round events were recognized.')}</div>`}`;
