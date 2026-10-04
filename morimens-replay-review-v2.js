@@ -287,21 +287,17 @@
       if(typeof t==='string'){
         const parts=[];let d=0,cur='';for(const ch of t){if(ch==='(')d++;if(ch===')')d--;if(ch===','&&d===0){parts.push(cur);cur=''}else cur+=ch}parts.push(cur);
         const e=parts.find(x=>/Battle(Atk|Def|Physique)Force/.test(x));
-        if(e&&!/\bnot\b|HandDeck|GetStateParam|Monster|Enemy|GetCard|Deck/.test(e)&&/GetStateLayer|CmdCaster\.|PlayerRole\./.test(e)){
-          let js=e.replace(/(PlayerRole|CmdCaster|OwnerCard)\.GetStateLayer\((\d+)\)/g,'L("$1",$2)').replace(/(PlayerRole|CmdCaster)\.(\w+)/g,'V("$1","$2")').replace(/math\.(floor|ceil|min|max)/g,'Math.$1').replace(/Battle(Atk|Def|Physique)Force/g,'1').replace(/GrowArgValue\d|GrowValue\d/g,'1').replace(/\band\b/g,'&&').replace(/\bor\b/g,'||').replace(/~=/g,'!=');
-          const rest=js.replace(/L\("\w+",\d+\)|V\("\w+","\w+"\)|Math\.(floor|ceil|min|max)/g,'');
-          if(/^[0-9+\-*/().,\s<>=!&|]*$/.test(rest))fn=new Function('L','V',`return (${js})`);
-        }
+        if(e&&/GetStateLayer|CmdCaster\.|PlayerRole\.|HandDeck/.test(e))fn=compileFormula(e);
       }
     }catch{fn=null}
     paraCache.set(k,fn);return fn;
   }
   function compileFormula(e){
-    if(!e||/\bnot\b|HandDeck|GetStateParam|Monster|Enemy|GetCard|Deck|CurCard/.test(e))return null;
+    if(!e||/\bnot\b|GetStateParam|Monster|Enemy|CurCard/.test(e)||/GetCard|Deck/.test(e.replace(/HandDeck\.(GetCardCountByID\(\d+\)|CardCount)/g,'')))return null;
     let js=e.replace(/(PlayerRole|CmdCaster|OwnerCard)\.GetStateLayer\((\d+)\)/g,'L("$1",$2)').replace(/(PlayerRole|CmdCaster)\.(\w+)/g,'V("$1","$2")').replace(/math\.(floor|ceil|min|max)/g,'Math.$1').replace(/Battle(Atk|Def|Physique)Force/g,'1').replace(/GrowArgValue\d|GrowValue\d/g,'1').replace(/\band\b/g,'&&').replace(/\bor\b/g,'||').replace(/~=/g,'!=');
-    const rest=js.replace(/L\("\w+",\d+\)|V\("\w+","\w+"\)|Math\.(floor|ceil|min|max)/g,'');
+    const rest=js.replace(/[LH]\("\w+",\d+\)|V\("\w+","\w+"\)|Math\.(floor|ceil|min|max)/g,'');
     if(!/^[0-9+\-*/().,\s<>=!&|]*$/.test(rest))return null;
-    try{return new Function('L','V',`return (${js})`)}catch{return null}
+    try{return new Function('L','V','H',`return (${js})`)}catch{return null}
   }
   const plusCache=new Map();
   function paraPlusFn(res,tid){const k=String(tid);if(!plusCache.has(k)){const pp=res.skill[k]?.ParaPlus;plusCache.set(k,typeof pp==='string'?compileFormula(pp):null)}return plusCache.get(k)}
@@ -350,15 +346,16 @@
 
     // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
     const board=new Map(),bstates=new Map();
-    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;const cardSt=new Map(),cardStOf=new Map();
+    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;const cardSt=new Map(),cardStOf=new Map(),handUids=new Set();for(const c of ent.initialCards||[])if(c.deck==='HandDeck')handUids.add(String(c.uid));
     // character-specific formula parts, evaluated against the live state: pf = multiplier inside the damage term of Para,
     // pp = ParaPlus (extra flat damage, e.g. team shield x stacks). Evaluated when the card is played, because that is when the game computes them.
     const evalPara=(tid,caster,cuid)=>{
       const layer=(who,id)=>{let n=0;if(who==='OwnerCard'){for(const v of (cardSt.get(String(cuid))?.values()||[]))if(v.stateId===id)n+=v.layer||0}else if(who==='CmdCaster'){for(const v of (bstates.get(String(caster))?.values()||[]))if(v.stateId===id)n+=v.layer||0}else{for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===id)n+=v.layer||0}return n};
+      const hand=(k,n)=>{if(k==='size')return handUids.size;let c=0;for(const u of handUids)if(Number(cards.get(u)?.tid)===Number(n))c++;return c};
       const val=(who,key)=>{const u=board.get(String(who==='CmdCaster'?caster:ent.keeperUid))||{};const v=u.props?.[key];if(v!=null)return v;return key==='block'?(u.block||0):key==='hp'?(u.hp||0):key==='max_hp'?(u.max||0):0};
       let pf=1,pp=0;
-      try{const f1=paraFactorFn(res,tid);if(f1){const r=Number(f1(layer,val));if(Number.isFinite(r)&&r>0)pf=r}}catch{}
-      try{const f2=paraPlusFn(res,tid);if(f2){const r=Number(f2(layer,val));if(Number.isFinite(r))pp=r}}catch{}
+      try{const f1=paraFactorFn(res,tid);if(f1){const r=Number(f1(layer,val,hand));if(Number.isFinite(r)&&r>0)pf=r}}catch{}
+      try{const f2=paraPlusFn(res,tid);if(f2){const r=Number(f2(layer,val,hand));if(Number.isFinite(r))pp=r}}catch{}
       return {pf,pp}};
     const fiaBonus=()=>{let B=0;for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if(v.stateId===98469||v.stateId===133285)B+=v.layer||0;return B};
     const fiaPct=(role,lvl)=>lvl*(30+fiaBonus());
@@ -377,7 +374,7 @@
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
-    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];const execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
     const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
@@ -565,6 +562,10 @@
           else if(e===1014&&d.beHitConfig?.targetRoleUid!=null){const h=d.beHitConfig,u=unit(h.targetRoleUid);if(h.curHp!=null)u.hp=h.curHp;if(h.curMaxHp!=null)u.max=h.curMaxHp}
           if((e===1004||e===1006||e===1007||e===1005)&&d.stateUid!=null){
             const su0=String(d.stateUid);
+            if((e===1004||e===1006||e===1007)&&(d.stateId===3905||d.stateId===3023)){
+              const dl=e===1007?(d.newLayer||0)-(d.oldLayer||0):(d.layer||1),ou=String(actors.get(String(d.castRoleUid))?.kind==='awakener'?d.castRoleUid:'team'),g=counterGain.get(ou)||{init:0,gain:0,bySrc:new Map()};
+              if(!bout)g.init+=Math.max(0,dl);else if(dl>0){const src=execSrc.cur||{name:ui('回合开始 / 被动','Passive')},o=g.bySrc.get(src.name)||{name:src.name,n:0,gain:0};o.n++;o.gain+=dl;g.bySrc.set(src.name,o);g.gain+=dl}
+              counterGain.set(ou,g)}
             if(e!==1005&&d.stateId!=null&&isExec(d.stateId))execInst.set(su0,{sid:d.stateId,owner:String(d.ownerUid),caster:d.castRoleUid});
             const ei=execInst.get(su0);
             if(ei){
@@ -620,6 +621,16 @@
           if(e===1064){const name=res.nameSkill(d.skillId);execSrc.cur={name:`${ui('钥令','Keeper skill')} · ${name}`,actor:d.roleUid};push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});gearTrigger('keeper',{},fr.time);continue}
           if(e===1093){const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
+            {const bh=d.beHitConfig,tt=actorOf(bh.targetRoleUid),cc=actorOf(bh.castRoleUid);
+              const o=counterLog.get('team')||{taken:0,layerSum:0,perm:0,temp:0,extraTrig:0,maxLayer:0,rounds:new Map(),actualHits:0,actualDmg:0};
+              if(tt?.kind==='keeper'&&cc?.kind==='monster'&&bout>0){
+                const lay=id=>{let n=0;for(const v of (bstates.get(String(bh.targetRoleUid))?.values()||[]))if(v.stateId===id)n+=v.layer||0;return n};
+                const L=lay(3905)+lay(3023);
+                o.taken++;o.layerSum+=L;{const lost=Math.abs((Number(bh.curHp)||0)-(Number(bh.oldHp)||0))||Math.abs(Number(bh.changeVal)||0);if(lost>0){o.takenHp=(o.takenHp||0)+1;o.layerSumHp=(o.layerSumHp||0)+L}if(Number(bh.damageType)===1||Number(bh.damageType)===undefined){o.layerSumT1=(o.layerSumT1||0)+L}}o.perm+=lay(3905);o.temp+=lay(3023);o.extraTrig+=lay(3129);o.maxLayer=Math.max(o.maxLayer,L);
+                const r=o.rounds.get(bout)||{n:0,pred:0,act:0};r.n++;r.pred+=L;o.rounds.set(bout,r);counterLog.set('team',o)}
+              else if(tt?.kind==='monster'&&cc?.kind==='keeper'&&Number(bh.damageType)===3&&bout>0){
+                const a=Math.abs((Number(bh.curHp)||0)-(Number(bh.oldHp)||0))||Math.abs(Number(bh.changeVal)||0);
+                o.actualHits++;o.actualDmg+=a;const r=o.rounds.get(bout)||{n:0,pred:0,act:0};r.act+=a;o.rounds.set(bout,r);counterLog.set('team',o)}}
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
             if(typ==='damage'&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
@@ -644,6 +655,9 @@
             else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
             continue;
           }
+          if(e===1027&&Array.isArray(d.cardUidList)){for(const u of d.cardUidList){const k=String(u);if(d.oldDeck==='HandDeck')handUids.delete(k);if(d.newDeck==='HandDeck')handUids.add(k)}}
+          if((e===1025&&d.deck==='HandDeck'&&d.cards?.length))for(const c of d.cards)handUids.add(String(c.uid));
+          if(e===1035&&d.deck==='HandDeck'&&d.cardUid!=null)handUids.add(String(d.cardUid));
           if(e===1027&&Array.isArray(d.cardUidList)&&d.cardUidList.length){
             const mk=moveKind(d.oldDeck,d.newDeck,d.changeReason);
             if(mk){const list=d.cardUidList;push('move',`${MOVE_LABEL[mk]} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead mv ${mk}">${ui(MOVE_LABEL[mk],mk)}</span>${list.slice(0,10).map(t=>chip(t)).join('')}${list.length>10?`<span class="mr2from">+${list.length-10}</span>`:''}`,d,fr,{mv:mk,count:list.length,cardUids:list})}
@@ -667,7 +681,7 @@
       }
     }
     if(rounds.has(bout)&&!getRound(bout).snapEnd)getRound(bout).snapEnd=snap();
-    return {execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1236,8 +1250,12 @@
       const by=new Map();for(const e of evs){if(!(e.atk>0&&e.tid))continue;const o=by.get(e.tid)||[];o.push(e.delta/(e.atk*(e.pf||1)));by.set(e.tid,o)}
       let n=0,err=0;for(const l of by.values()){const sorted=[...l].sort((a,b)=>a-b),med=sorted[Math.floor(sorted.length/2)];for(const v of l){n++;err+=Math.abs(v/med-1)}}
       return {withArg:withArg.length,match,mult:[...mult.entries()].sort((a,b)=>a[0]-b[0]),predN:n,predErr:n?err/n:null}};
+    const ct=tl.counterLog?.get('team');
+    const ctrRows=ct?{layerSumHp:ct.layerSumHp||0,layerSumT1:ct.layerSumT1||0,takenHp:ct.takenHp||0,taken:ct.taken,layerSum:ct.layerSum,avg:ct.taken?ct.layerSum/ct.taken:0,maxLayer:ct.maxLayer,extraTrig:ct.extraTrig,actualHits:ct.actualHits,actualDmg:ct.actualDmg,rounds:[...ct.rounds.entries()].sort((x,y)=>x[0]-y[0]),
+      owners:[...new Set([...(tl.counterGain?.keys()||[]),...[...per.values()].filter(r=>r.src.get('state|3255')?.dmg>0).map(r=>String(r.a.uid))])].map(uid=>{const g=tl.counterGain?.get(uid)||{gain:0,init:0,bySrc:new Map()},a=actors.get(uid),r=per.get(uid);return {uid,name:a?.name||ui('队伍 / 无来源','Team'),a,gain:g.gain,init:g.init,bySrc:[...g.bySrc.values()].sort((x,y)=>y.gain-x.gain),dmg:r?.src.get('state|3255')?.dmg||0,extra:r?.src.get('state|3129')?.dmg||0}}).filter(x=>x.gain>0||x.dmg>0).sort((x,y)=>y.dmg-x.dmg||y.gain-x.gain),
+      packDmg:[...per.values()].reduce((n,r)=>n+(r.src.get('state|3255')?.dmg||0),0)}:null;
     const execRows=[...(tl.execStates?.values()||[])].filter(r=>r.total>0||r.kills.length).map(r=>({sid:r.sid,total:r.total,caster:actors.get(String(r.caster)),bySrc:[...r.bySrc.values()].sort((a,b)=>b.gain-a.gain),byRound:[...r.byRound.entries()].sort((a,b)=>a[0]-b[0]),kills:r.kills,events:r.events,dmg:stateTotals.get(String(r.sid))?.dmg||0,check:execCheck(r.events)}));
-    return {execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
+    return {ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
   }
   const pctOf=(a,b)=>b>0?Math.round(a/b*1000)/10:0;
   const dotChip=(o,total)=>o.dot>0?`<span class="mr2dotchip" title="${esc(ui('按效果文本匹配的持续伤害（出血/中毒/反击等）：回放不记录该状态由谁施加，多个来源时平均分摊，仅供参考','DoT matched from effect text; the replay does not record who applied the state, shared equally between candidates - indicative only'))}"><small>${ui('持续伤害（文本推测）','DoT (text-matched)')}</small> <b>${fmt(Math.round(o.dot))}</b>${total?` <em>${pctOf(o.dot,total)}%</em>`:''} <small>${esc(o.dotStates.map(x=>x.name+(x.shared>1?`÷${x.shared}`:'')).join(' / '))}</small></span>`:'';
@@ -1350,12 +1368,21 @@
         ${x.kills.length?`<small class="mr2from">${x.kills.map(k=>ui(`第 ${k.round} 回合斩杀：击杀时层数 ${fmt(k.layer)}${k.hp!=null?`（最后一次加层时目标生命 ${fmt(k.hp)}）`:''}`,`R${k.round}: stacks ${fmt(k.layer)}`)).join('；')}</small>`:''}
         ${x.check.withArg?`<small class="mr2from">${ui(`校验：每次加层数 = 出牌卡面「命运裁断」数值的整数倍，${x.check.match}/${x.check.withArg} 次完全吻合（${x.check.mult.map(([k,n])=>`×${k}：${n} 次`).join('，')}${x.check.mult.some(([k])=>k>1)?'；×2 等倍数来自指令里「目标带标记 / 自身有对应状态时加倍」的条件':''}）；按「攻击力 × 技能公式倍率（含基伤池、层数加成）」预测每个技能的加层数，平均偏差 ${x.check.predErr==null?'—':(x.check.predErr*100).toFixed(1)+'%'}`,`Check: gain = card value in ${x.check.match}/${x.check.withArg} plays; formula prediction error ${x.check.predErr==null?'-':(x.check.predErr*100).toFixed(1)+'%'}`)}</small>`:''}
         <small class="mr2from">${ui('规则：状态层数 ≥ 目标生命时移除并直接击杀目标；层数按增加时正在结算的出牌 / 钥令 / 回合效果归因，伤害数值取统计包记录在该状态上的量。','Stacks >= target HP kill it outright; gains are attributed to the action being resolved, damage comes from the stat pack.')}</small></div>`}).join('');
+    const ctrHtml=(()=>{const c=st.ctrRows;if(!c||!(c.actualDmg>0||c.packDmg>0))return '';
+      const mx=Math.max(1,...c.owners.map(o=>o.dmg||o.gain)),mr=Math.max(1,...c.rounds.map(r=>Math.max(r[1].act,r[1].pred)));
+      const ratio=c.packDmg>0?c.layerSumT1/c.packDmg:null;
+      return `<div class="mr2ssec"><h5>${ui('反击统计','Counter-attack statistics')}</h5>
+        <div class="mr2ssum"><span><small>${ui('反击伤害（统计包）','Counter damage (stat pack)')}</small><b>${fmt(c.packDmg)}</b><small>${pctOf(c.packDmg,st.totalDmg)}% ${ui('占队伍总伤害','of team')}</small></span><span><small>${ui('其中逐次可见的反击事件','Visible counter events')}</small><b>${fmt(c.actualDmg)}</b><small>${c.actualHits} ${ui('次触发','triggers')}</small></span><span><small>${ui('我方承受主动伤害','Active hits taken')}</small><b>${c.taken}</b><small>${ui('次','')}</small></span><span><small>${ui('触发时平均 / 最高反击层数','Avg / max stacks at hit')}</small><b>${fmt(Math.round(c.avg))}</b><small>${ui('最高','max')} ${fmt(c.maxLayer)}</small></span></div>
+        <div class="mr2srcs">${c.owners.map(o=>`<div class="mr2srow">${o.a?ico(o.a.icon,o.a.name,'av sm'):''}<span class="mr2sname">${esc(o.name)}<small>${ui('加层','stacks +')} ${fmt(o.gain)}${o.init?` · ${ui('开局','start')} ${fmt(o.init)}`:''}${o.bySrc.length?` · ${esc(o.bySrc.slice(0,2).map(b=>`${b.name} ${fmt(b.gain)}`).join('；'))}`:''}</small></span>${bar((o.dmg||o.gain)/mx,'dmg')}<b>${fmt(o.dmg)}</b><small>${pctOf(o.dmg,st.totalDmg)}%</small></div>`).join('')}</div>
+        <details class="mr2minor"><summary>${ui('每回合：承受主动伤害次数 / 实际反击伤害','Per round')}</summary><div class="mr2srcs">${c.rounds.map(([r,x])=>`<div class="mr2srow"><span class="mr2sname">${ui(`第 ${r} 回合`,`R${r}`)}<small>${x.n} ${ui('次受击','hits')}</small></span>${bar(x.act/mr,'dmg')}<b>${fmt(x.act)}</b></div>`).join('')}</div></details>
+        <small class="mr2from">${ui(`规则：每次承受敌方主动伤害时，按当前「反击」+「临时反击」层数对来源造成等量纯粹伤害；逆鳞之护等会额外触发。核对：我方受敌方主动伤害 ${c.taken} 次，各次触发时层数相加 = ${fmt(c.layerSumT1)}，统计包记录的反击伤害 ${fmt(c.packDmg)}${ratio!=null?`，吻合度 ${(ratio*100).toFixed(1)}%${Math.abs(ratio-1)<.001?'（完全吻合）':c.extraTrig>0?'（有逆鳞之护等额外触发 / 触腕反击，未折算）':''}`:''}。统计包按施加层数的唤醒体归属反击伤害。`,'Each active hit taken deals the current counter stacks back as pure damage.')}</small></div>`})();
     const stateHtml=st.stateRows.length?`<div class="mr2ssec"><h5>${ui('状态伤害来源（出血、旧日余烬等）','Damage from states (bleed, ...)')}</h5>${st.stateRows.map(x=>`<div class="mr2srow"${stateTipAttr(res,x.id,{})}><span class="mr2sname">${esc(res.nameState(x.id))}</span>${bar(x.dmg/st.stateRows[0].dmg,'dmg')}<b>${fmt(x.dmg)}</b><small>${pctOf(x.dmg,st.totalDmg)}%</small></div>`).join('')}</div>`:'';
     const sum=[[ui('总伤害','Total damage'),fmt(st.totalDmg)],[ui('回合数','Rounds'),st.rounds],[ui('出牌数','Cards played'),st.totalPlays],[ui('消耗算力','Energy spent'),fmt(st.totalEnergy)],[ui('抽牌','Draws'),st.draws],[ui('弃牌','Discards'),st.discards],[ui('消耗牌','Exhausted'),st.exhausts],[ui('钥令使用','Keyflare casts'),st.keeperUses],[ui('造物额外伤害','Relic damage'),fmt(st.relicDmg)],[ui('增益造物估算伤害','Buff relic est. dmg'),fmt(Math.round(st.buffExtra))],[ui('命轮/密契估算伤害','Gear est. dmg'),fmt(Math.round(st.gearExtra))],...(st.dotAttr>0?[[ui('持续伤害（已归因到造物/命轮/密契）','DoT attributed to items'),fmt(Math.round(st.dotAttr))]]:[])].map(([k,v])=>`<span><small>${esc(k)}</small><strong>${esc(v)}</strong></span>`).join('');
     return `<details class="mr2round mr2stats" open><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('出牌 / 算力 / 觉醒 / 钥令 / 造物','cards / energy / awakening / keyflare / relics')}</small></summary><div class="mr2rbody">
       <div class="mr2ssum">${sum}</div>
       <div class="mr2ssec"><h5>${ui('角色数据','Per character')}</h5><div class="mr2scards">${people}</div></div>
       ${execHtml}
+      ${ctrHtml}
       <div class="mr2ssec"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div>
       <div class="mr2ssec"><h5>${ui('钥令使用与选择偏好','Keyflare skills & picks')}</h5>${keeperHtml}</div>
       <div class="mr2ssec"><h5>${ui('造物触发与产出','Relics')}${st.relicDmg?` <em class="mr2hot">${ui('造物额外伤害合计','Relic damage')} ${fmt(st.relicDmg)}</em>`:''}</h5>${relicHtml||`<div class="mr2empty">—</div>`}${buffSummary}</div>
