@@ -42,9 +42,22 @@ function setupMorimensMascotToggle(){
 }
 setupMorimensMascotToggle();
 
+function setupMorimensReplayEarlyEntry(){
+  const shell=document.getElementById('morimensBootShell');if(!shell||document.getElementById('morimensReplayEarlyEntry'))return;
+  const row=document.createElement('div');row.id='morimensReplayEarlyEntry';row.style.cssText='margin-top:14px;display:flex;justify-content:center';
+  const button=document.createElement('button');button.id='morimensReplayEarlyTab';button.type='button';button.style.cssText='border:1px solid rgba(213,177,118,.38);border-radius:10px;background:rgba(213,177,118,.10);color:#ead7b5;padding:9px 14px;cursor:pointer;font:800 12px/1.2 system-ui,-apple-system,"Microsoft YaHei",sans-serif';button.innerHTML='战斗回放复盘 <small style="margin-left:5px;color:#8bd4cc;font-size:8px;text-transform:uppercase">demo</small>';row.appendChild(button);shell.firstElementChild?.appendChild(row);
+  const activateReal=()=>{const real=document.getElementById('morimensReplayTab');if(!real)return false;const pending=row.dataset.pending==='1'||location.hash==='#replay';row.remove();if(pending)requestAnimationFrame(()=>real.click());return true};
+  button.addEventListener('click',()=>{history.replaceState(null,'','#replay');if(activateReal())return;row.dataset.pending='1';const strong=shell.querySelector('strong'),small=shell.querySelector('small');if(strong)strong.textContent='正在载入战斗回放复盘';if(small)small.textContent='标签已预置，复盘解析模块正在初始化…'});
+  if(!activateReal()){const mo=new MutationObserver(()=>{if(activateReal())mo.disconnect()});mo.observe(document.documentElement,{subtree:true,childList:true})}
+}
+setupMorimensReplayEarlyEntry();
+
 (async()=>{
   try{
-  const assetVersion="20261004.41";
+  const assetVersion="20261004.42";
+    // Start replay modules immediately instead of waiting for calculator/leaderboard modules.
+    const replayTimelineReady=import(`./morimens-replay-timeline.js?v=${assetVersion}`).catch(error=>{console.error("Replay timeline failed to load",error);return null});
+    const replayScoreEnhancerReady=import(`./morimens-replay-score-enhancer.js?v=${assetVersion}`).catch(error=>{console.error("Replay score enhancer failed to load",error);return null});
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -111,7 +124,8 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-realms.js?v=${assetVersion}`);
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
     try{await import(`./morimens-calculator-export.js?v=${assetVersion}`)}catch(exportError){console.error("Damage report exporter failed to load",exportError)}
-    await import(`./morimens-replay-timeline.js?v=${assetVersion}`);
+    await replayTimelineReady;
+    await replayScoreEnhancerReady;
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
     await import(`./morimens-assist-list.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
