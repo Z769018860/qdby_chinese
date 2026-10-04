@@ -44,7 +44,7 @@ setupMorimensMascotToggle();
 
 (async()=>{
   try{
-  const assetVersion="20261004.44";
+  const assetVersion="20261004.45";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -115,7 +115,9 @@ setupMorimensMascotToggle();
     await import(`./morimens-replay-score-enhancer.js?v=${assetVersion}`);
     await import(`./morimens-replay-export-v2.js?v=${assetVersion}`);
     await import(`./morimens-replay-calibration.js?v=${assetVersion}`);
+    await import(`./morimens-replay-passive-attribution.js?v=${assetVersion}`);
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
+    await import(`./morimens-dtide-progression-fix.js?v=${assetVersion}`);
     await import(`./morimens-assist-list.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
     const switchLeaderboardRenderer=()=>{
