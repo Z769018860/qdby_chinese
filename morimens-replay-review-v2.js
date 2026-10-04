@@ -462,13 +462,13 @@
     // effect evidence: a trigger command that gives a fixed amount (aliemus / keyflare energy / energy / shield / heal) leaves property changes whose nominal
     // cast value equals that amount. Matching them (when exactly one item can explain the change) credits the value to the item and counts the trigger.
     const EV_PROP={BEGainUltiEnergy:'ulti_energy',BEChangeKeeperEnergy:'keeper_energy',BEGainKeeperEnergy:'keeper_energy',BEChangeEnergy:'energy',BEGainBlock:'block',BEHeal:'hp'};
-    const evList=[];
+    const evList=[],evProps=new Map();   // evProps: gear key -> properties its trigger commands set by a fixed amount
     for(const e of gears.values())for(const ch of e.channels){
       if(ch.cmd==null)continue;const params=e.mainStates[0]?.params||[],paras=String(ch.para??'').split(',').map(x=>x.trim());
       for(const dl of res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]){const prop=EV_PROP[dl.Type];if(!prop)continue;
         let t=String(dl.Para??'').replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
         if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))continue;const amt=evalNum(t,{});if(!(Number.isFinite(amt)&&amt!==0))continue;
-        evList.push({e,ch,prop,amt:Math.abs(amt)});ch.evTimes=ch.evTimes||new Set();ch.evRounds=ch.evRounds||new Set()}
+        evList.push({e,ch,prop,amt:Math.abs(amt)});ch.evTimes=ch.evTimes||new Set();ch.evRounds=ch.evRounds||new Set();ch.evPer=ch.evPer||new Map();if(!evProps.has('gear:'+e.key))evProps.set('gear:'+e.key,new Set());evProps.get('gear:'+e.key).add(prop)}
     }
     let pendingConf=[];const tsPower=new Map(),tsPlus=new Map();
     const attributePower=(e,time)=>{const p=tsPower.get(time);if(!p)return;const rel={tid:'gear:'+e.key,kind:'power'},ctx=newInstance({time},rel,p.delta,p.stateId===3130);const pl=tsPlus.get(time);if(pl)for(const [uid,amt] of pl)grant(ctx,uid,amt,rel,p.stateId===3130);tsPower.delete(time)};
@@ -677,8 +677,8 @@
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
-            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0))return null;const hit=evList.filter(x=>x.prop===pt&&Math.abs(x.amt-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),rcv=actors.get(String(d.uid));
-            if(evm)for(const x of evm){x.ch.evTimes.add(Math.round(fr.time*10));x.ch.evRounds.add(bout)}
+            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0))return null;const hit=evList.filter(x=>x.prop===pt&&Math.abs(x.amt-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&evProps.get(k)?.has(pt))),keys=keys1.length?keys1:(()=>{const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]})(),rcv=actors.get(String(d.uid));
+            if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
             for(const k of keys){const sp=supOf(k);
@@ -1439,7 +1439,7 @@
       const out={dmg:0,block:0,heal:0};for(const sid of e.related){const t=stateTotals.get(sid);if(t){out.dmg+=t.dmg;out.block+=t.block;out.heal+=t.heal}}
       const rec=tl.gearRecs?.get(e.key);{const sp=tl.supStore?.get('gear:'+e.key);if(sp){out.block+=sp.blk||0;out.heal+=sp.heal||0}}
       const SUPPORTED=new Set(['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED','CARD']);
-      for(const c of e.channels||[])if(!SUPPORTED.has(c.base)&&!c.once&&c.evTimes?.size){c.count=c.evTimes.size;c.rounds=c.evRounds}   // triggers proven by their own effect
+      for(const c of e.channels||[])if(!SUPPORTED.has(c.base)&&!c.once&&c.evTimes?.size){let n=0;for(const set of c.evPer.values())n+=c.cap?Math.min(set.size,c.cap):set.size;c.count=n;c.rounds=c.evRounds}   // triggers proven by their own effect
       const chs=(e.channels||[]).filter(c=>SUPPORTED.has(c.base)||(!c.once&&c.evTimes?.size)),sup=chs.length>0;
       const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
       const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
