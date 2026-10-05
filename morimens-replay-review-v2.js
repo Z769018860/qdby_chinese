@@ -922,13 +922,26 @@
       if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
     // capability filter: an item can only be credited with kinds of output its own trigger commands (and those of its states) can produce.
     // A wheel whose triggers only add / remove states cannot draw cards, cut costs or grow tentacles, so credit that landed on it by timing alone is dropped.
-    {const CAP=[['draws',/DrawCard/],['cycles',/MoveCard|Discard|Exhaust|Shuffle|Retrieve|Recycle/],['cut',/Cost|ChangeCard|ReduceCard/],['costCut',/Cost|CopyCard/],['copies',/CopyCard/],['tenGain',/Tentacle/],['embryo',/Embryo|CreateCard/],['embCards',/Embryo|CreateCard/],['rm',/Scarlet|Resource|Realm|Proficient|Occupation|ChangeAttr/],['dr',/DeathResist|Revive|ChangeAttr/],['seal',/Seal|BlackCoin/],['inspire',/CreateCard/]];
+    {const CAP=[['draws',/DrawCard/],['cycles',/MoveCard|Discard|Exhaust|Shuffle|Retrieve|Recycle/],['cut',/Cost|ChangeCard|ReduceCard/],['costCut',/Cost|CopyCard/],['copies',/CopyCard/],['tenGain',/Tentacle/],['embryo',/Embryo/],['embCards',/Embryo/],['rm',/Scarlet|Resource|Realm|Proficient|Occupation|ChangeAttr/],['dr',/DeathResist|Revive|ChangeAttr/],['seal',/Seal|BlackCoin/],['inspire',/CreateCard/]];
       for(const e of gears.values()){const sp=supStore.get('gear:'+e.key);if(!sp)continue;const types=new Set(),addCmd=cid=>{for(const dl of res.rr?.Cmd?.[String(cid)]?.data_list||[])types.add(String(dl.Type))};
         for(const c of e.channels||[])if(c.cmd!=null)addCmd(c.cmd);
         for(const sid of e.related||[]){const rec=res.state[String(sid)]||{};for(let n=1;n<=4;n++)if(rec['TriggerCmd'+n]!=null)addCmd(rec['TriggerCmd'+n])}
         if(!types.size||[...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if((e.channels||[]).some(c=>c.base==='BSTRoleAfterDeathResist'))types.add('DeathResist');
-        const all=[...types].join('|');for(const [f,re] of CAP)if(sp[f]&&!re.test(all))sp[f]=0}}
+        let all=[...types].join('|');if(/胚胎|圣洁之子/.test(String(e.desc||'')))all+='|Embryo';for(const [f,re] of CAP)if(sp[f]&&!re.test(all))sp[f]=0}}
+    // same capability filter for relics: round-start draws / energy refills share a frame group with the relic's trigger, so without it they were credited to whatever relic fired there
+    {const bdR=full.battleDat||{},CAPR=[['draws',/DrawCard/],['cycles',/MoveCard|Discard|Exhaust|Shuffle|Retrieve|Recycle/],['cut',/Cost|ChangeCard/],['costCut',/Cost|CopyCard/],['copies',/CopyCard/],['tenGain',/Tentacle/],['embryo',/Embryo/],['embCards',/Embryo/],['inspire',/CreateCard/],['rm',/Scarlet|Resource|Realm|Proficient|Occupation|ChangeAttr/],['dr',/DeathResist|Revive|ChangeAttr/],['seal',/Seal|BlackCoin/],['energy',/BEChangeEnergy|ChangeAttr\.energy/],['key',/KeeperEnergy/],['aliSelf',/UltiEnergy|ulti_energy/],['aliOthers',/UltiEnergy|ulti_energy/]];
+      for(const rl of bdR.relics||[]){const tid=String(rl.tid),sp=supStore.get('rel:'+tid);if(!sp)continue;
+        const types=new Set(),sids=new Set();const rec=res.relic[tid]||{};for(const [k,v] of Object.entries(rec))if(/^State\d+$/.test(k)&&Array.isArray(v))v.forEach(x=>sids.add(String(x)));
+        for(const su of rl.stateUids||[]){const si=(bdR.stateList||[]).find(x=>String(x.uid)===String(su));if(si)sids.add(String(si.stateId))}
+        const addCmd=(cid,depth)=>{for(const dl of res.rr?.Cmd?.[String(cid)]?.data_list||[]){types.add(String(dl.Type));if(depth<1&&dl.Type==='BEAddState'){const t0=String(dl.Para||'').split(',')[0].trim();if(/^\d+$/.test(t0)&&res.state[t0])for(let n=1;n<=4;n++)if(res.state[t0]['TriggerCmd'+n]!=null)addCmd(res.state[t0]['TriggerCmd'+n],1)}}};
+        for(const sid of sids){const st=res.state[sid]||{};for(let n=1;n<=4;n++)if(st['TriggerCmd'+n]!=null)addCmd(st['TriggerCmd'+n],0)}
+        let all=[...types].join('|');
+        if(!types.size){const t=pipeName(rec.BattleDesc||rec.Desc||'');if(!t)continue;   // no state records and no text: nothing to judge by
+          all=[/抽[^。，]{0,6}牌|摸牌/.test(t)?'BEDrawCard':'',/取回|弃|洗入|置顶/.test(t)?'BEMoveCard':'',/算力消耗|费用/.test(t)?'BEChangeCost':'',/触腕/.test(t)?'BEChangeTentacleCount':'',/灵感|胚胎|置入/.test(t)?'BECreateCard':'',/界域精通|黑印|猩红|职业/.test(t)?'BEScarletBloodChange':'',/死亡抵抗|死抗/.test(t)?'DeathResist':'',/最大算力|获得[^。，]{0,4}算力|算力[^。，]{0,4}(?:提高|增加|回复)/.test(t)?'BEChangeEnergy':'',/银钥能量|银钥充能/.test(t)?'BEChangeKeeperEnergy':'',/狂气/.test(t)?'BEGainUltiEnergy':''].join('|')}
+        if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
+        if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
+        for(const [f,re] of CAPR)if(sp[f]&&!re.test(all))sp[f]=0}}
     return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
@@ -1586,6 +1599,8 @@
         if(re.lump)r.eff.push({kind:'engine',text:`${ui('条件触发（含计数 / 冷却 / 状态层数条件）','Conditional triggers')}：${re.lump.chs.map(c=>`${c.label}→${whatOf(c)}`).join(' ； ')} · ${ui(`共 ${re.lump.n} 次触发（按造物触发总数推算，无法逐条区分）`,`${re.lump.n} triggers in total (inferred from the relic trigger count)`)}`});
         r.rounds.sort((a,b)=>a-b);r.engineN=tot=re.chs.filter(c=>!c.lumped).reduce((n,c)=>n+c.n,0)+(re.lump?.n||0)+(re.extra||0);if(tot>0&&re.dim)r.n=Math.max(tot,0);
         r.engTot=eT;{const sm=Object.entries(eT).filter(([,v])=>v>0).map(([k,v])=>`${KL[k]||k} ${fmt(Math.round(v*10)/10)}`);if(sm.length)r.eff.push({kind:'total',text:`${ui('合计','Total')}：${sm.join(' · ')}`})}}}
+    // a relic that says "抽 N 张牌" cannot have drawn more than N × its trigger count: the rest of the draws in its frame group are the round's normal draw
+    for(const r of relicRows){const sp=tl.supStore?.get('rel:'+r.tid);if(!sp||!(sp.draws>0)||r.engine)continue;const rec=res.relic[r.tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/);if(!m)continue;const k=m[1]?Number((rec.StatePara||[])[Number(m[1])-1]):Number(m[2]);if(Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n)sp.draws=k*r.n}
     const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
     const buffRows=relicRows.filter(r=>r.buff&&r.buff.gain>0);
     const buffExtra=buffRows.reduce((n,r)=>n+r.buff.extra,0),powerGain=buffRows.filter(r=>r.buff.kind==='power').reduce((n,r)=>n+r.buff.gain,0),basicGain=buffRows.filter(r=>r.buff.kind==='basic').reduce((n,r)=>n+r.buff.gain,0);
@@ -1705,7 +1720,9 @@
         return {out,outT:out.dir+out.dot+out.oth,sh:block+1.2*heal,block,heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),dr:sp.dr,sup:sub(sp,{buf}),inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,vulnExtra:sp.vulnExtra,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}};
       const gearItems=kind=>gearRows.filter(g=>g.kind===kind).map(g=>({g,val:g.extra+g.out.dmg+(g.dot||0),...itemRaw(supOf('gear:'+g.key),{dir:g.out.dmg,dot:g.dot||0},g.extra||0,g.out.block,g.out.heal)}));
       const wheelItems=gearItems('wheel'),covItems=gearItems('covenant');
-      const relSup=r=>{const sp=supOf('rel:'+r.tid);return r.engTot&&(r.engine||r.staticTot)?{...sp,aliOthers:r.engTot.ali,aliSelf:0,key:r.engTot.keyE,energy:r.engTot.energy,draws:r.engTot.draw}:sp};
+      const relSup0=r=>{const sp=supOf('rel:'+r.tid);const t=pipeName((res.relic[r.tid]||{}).BattleDesc||(res.relic[r.tid]||{}).Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/),k=m?(m[1]?Number((res.relic[r.tid]?.StatePara||[])[Number(m[1])-1]):Number(m[2])):NaN;
+        return Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n?{...sp,draws:k*r.n}:sp};
+      const relSup=r=>{const sp=relSup0(r);return r.engTot&&(r.engine||r.staticTot)?{...sp,aliOthers:r.engTot.ali,aliSelf:0,key:r.engTot.keyE,energy:r.engTot.energy,draws:r.engTot.draw,cycles:0,cut:0,costCut:0,copies:0,tenGain:0,embryo:0,embCards:0,inspire:0,rm:0,dr:0,seal:0}:sp};
       const relicItems=relicRows.map(r=>({r,val:r.dmg+(r.buff?.extra||0)+(r.dot||0),...itemRaw(relSup(r),{dir:r.dmg,dot:r.dot||0},r.buff?.extra||0,r.block,r.heal)}));
       rate(wheelItems);rate(covItems);rate(relicItems);
       const best=(l,n)=>[...l].sort((a,b)=>b.score-a.score||(b.val||0)-(a.val||0)||((b.g||b.r).n-(a.g||a.r).n)).slice(0,n);
