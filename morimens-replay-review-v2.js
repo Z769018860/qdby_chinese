@@ -442,7 +442,7 @@
     }
     for(const e of gears.values())for(const sid of e.related){if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
     // Trigger channels: every TriggerCondN/TriggerCmdN pair on the equipped state is one way the item fires.
-    const COND_LABEL={BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTAfterDimensionBoutBegin:'进入超维回合后',NAMED:'释放指定技能后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
+    const COND_LABEL={BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDoActiveDamage:'造成主动伤害后',BSTAfterTentacleAttack:'触腕攻击后',BSTBeforeUltiSkill:'释放狂气爆发前',BSTAfterBeActiveDamage:'承受主动伤害后',BSTAfterAttackedByTentacle:'被触腕攻击后',BSTAfterUseSpecialDimension:'使用维度技能后',BSTAfterUseDimensionSkill:'使用维度技能后',BSTRoleDrawCard:'抽牌时',BSTRoleDropCard:'弃牌时',BSTHpChanged:'生命变化时',BSTAfterScarlletBloodFull:'猩红之血蓄满后',BSTBeforeDiscardCards:'弃牌前',BSTDrawDeckReset:'抽牌堆重洗时',BSTAfterSwitchOceanModel:'切换深海形态后',BSTAfterUseBloodRecoverSkill:'使用血液回复技能后',BSTStateOnAdd:'获得时',BSTBeforeBattleEnd:'战斗结束前',BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTAfterDimensionBoutBegin:'进入超维回合后',NAMED:'释放指定技能后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
     const TYPE_QUAL={Card_Strike:'打击',Card_Defend:'防御'};
     for(const e of gears.values()){
       e.channels=[];const desc=e.desc||'';
@@ -505,22 +505,23 @@
     const openGearWindow=(e,time,kind,predict)=>{const rel={tid:'gear:'+e.key,kind,predict};if(relWin&&relWin.time===time){relWin.queue.push(rel);relWin.gear=true;relWin.until=Math.max(relWin.until||0,time+6)}else relWin={time,queue:[rel],pi:0,bi:0,pend:new Map(),basicCtx:null,ci:0,gear:true,until:time+6}};
     // ---- 维度影像 relics: their own state's trigger channels, counted from the same game events and valued from the trigger commands
     const relicEngine=new Map();
-    {const bdR=full.battleDat||{},EFK={BEGainUltiEnergy:'ali','BEChangeAttr.ulti_energy':'ali',BEChangeEnergy:'energy',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEDrawCard:'draw',BECreateCard:'create',BEChangeTentacleCount:'tent',BEGainBlock:'block',BEHeal:'heal',BEAddState:'state'};
+    {const bdR=full.battleDat||{},EFK={BEGainUltiEnergy:'ali','BEChangeAttr.ulti_energy':'ali',BEChangeEnergy:'energy',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEDrawCard:'draw',BECreateCard:'create',BEChangeTentacleCount:'tent',BEGainBlock:'block',BEHeal:'heal',BEAddState:'state',BECopyCard:'copy',BEPassiveDamage:'pdmg'};
       for(const rl of bdR.relics||[]){const tid=String(rl.tid);if(!/^维度影像/.test(res.nameRelic(tid)))continue;
-        const chs=[],seen=new Set();
-        for(const su of rl.stateUids||[]){const si=(bdR.stateList||[]).find(x=>String(x.uid)===String(su));if(!si)continue;const rec=res.state[String(si.stateId)]||{},params=(si.stateParams&&si.stateParams.length?si.stateParams:rl.descArgs)||[];
-          for(let n=1;n<=4;n++){const cond=asList(rec['TriggerCond'+n])[0],cmdId=rec['TriggerCmd'+n];if(!cond||cmdId==null)continue;const base=String(cond).split('.')[0],key=base+'|'+cmdId+'|'+n;if(seen.has(key))continue;seen.add(key);
+        const chs=[],seen=new Set();let rdesc='';
+        for(const su of rl.stateUids||[]){const si=(bdR.stateList||[]).find(x=>String(x.uid)===String(su));if(!si)continue;const rec=res.state[String(si.stateId)]||{},params=(si.stateParams&&si.stateParams.length?si.stateParams:rl.descArgs)||[];if(!rdesc)rdesc=pipeName(rec.Desc||'');
+          for(let n=1;n<=4;n++){for(const cond of asList(rec['TriggerCond'+n]).slice(0,1)){const cmdId=rec['TriggerCmd'+n];if(!cond||cmdId==null)continue;const base=String(cond).split('.')[0],qualC=String(cond).split('.')[1]||'',key=base+'|'+cmdId+'|'+n;if(seen.has(key))continue;seen.add(key);
             const pr=rec['TriggerPara'+n],pv=pr==null?null:/^StateArg(\d+)$/.test(String(pr))?params[Number(String(pr).match(/\d+/)[0])-1]:Number(pr),tg=String(rec['TriggerTarget'+n]||''),judge=String(rec['Judgement'+n]||'');
             const cards=[...judge.matchAll(/CurCard\.ID\s*==\s*(\d+)/g)].map(m=>m[1]),ow=tg.match(/GetAwakerByID\((\d+)\)/);
             const owners=ow?new Set([...actors.values()].filter(a=>String(a.tid)===ow[1]).map(a=>String(a.uid))):null;
             const effs=[];for(const dl of res.rr?.Cmd?.[String(cmdId)]?.data_list||[]){const kind=EFK[dl.Type];if(!kind)continue;
               const toks=String(dl.Para??'').split(',').map(x=>x.trim());let t=toks[0].replace(/\bArg(\d*)\b/g,()=>String(pv)).replace(/StateArg(\d+)/g,(m,k)=>String(params[Number(k)-1]));
-              if(kind==='state'){effs.push({kind,sid:t});continue}
+              if(kind==='state'){effs.push({kind,sid:t,layer:Number(toks[1])>0?Number(toks[1]):1});continue}
+              if(kind==='pdmg'){effs.push({kind});continue}
               const amt=kind==='create'?Number(toks[toks.length-1])||1:evalNum(t,{});if(Number.isFinite(amt)&&amt!==0)effs.push({kind,amt:Math.abs(amt)})}
-            chs.push({base,cards:cards.length?new Set(cards):null,cardNames:[...new Set(cards.map(c=>res.nameSkill(c)).filter(Boolean))],owners,effs,label:(COND_LABEL[base]||base),cmd:cmdId,n:0,rounds:new Set()})}}
-        if(chs.length)relicEngine.set(tid,{tid,chs})}}
+            chs.push({base,cards:cards.length?new Set(cards):null,cardNames:[...new Set(cards.map(c=>res.nameSkill(c)).filter(Boolean))],owners,effs,label:(COND_LABEL[base]||base),cmd:cmdId,n:0,rounds:new Set(),hooked:['BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterUseCard','BSTAfterUltiSkill','BSTAfterUseKeeperSkill','BSTAfterLaunchSwallow','BSTAfterDimensionBoutBegin','BSTRoleAfterDeathResist'].includes(base),opening:['BSTBattleBegin','StageState'].includes(base),qual:qualC,cap:(()=>{const sent=String(pipeName(rec.Desc||'')).split(/[。；]/).find(x=>/每回合(?:首次|仅一次|一次|最多\s*\d+\s*次)/.test(x)&&(base==='BSTAfterUseCard'?/打出/.test(x):base==='BSTAfterUltiSkill'?/狂气爆发|释放/.test(x):base==='BSTAfterDoActiveDamage'?/伤害/.test(x):false));if(!sent)return 0;const m=sent.match(/最多\s*(\d+)\s*次/);return m?Number(m[1]):1})()})}}}
+        if(chs.length)relicEngine.set(tid,{tid,chs,desc:rdesc})}}
     const relicTrigger=(type,info)=>{if(!relicEngine.size)return;const BASE={boutBegin:'BSTAfterBoutBegin',boutEnd:'BSTAfterBoutEnd',card:'BSTAfterUseCard',ulti:'BSTAfterUltiSkill',keeper:'BSTAfterUseKeeperSkill',swallow:'BSTAfterLaunchSwallow',dimension:'BSTAfterDimensionBoutBegin',deathResist:'BSTRoleAfterDeathResist'}[type];if(!BASE)return;
-      for(const re of relicEngine.values())for(const ch of re.chs){if(ch.base!==BASE)continue;if(type==='card'&&((ch.cards&&!ch.cards.has(String(info.tid)))||(ch.owners&&!ch.owners.has(String(info.owner)))))continue;if((type==='ulti')&&ch.owners&&!ch.owners.has(String(info.owner)))continue;ch.n++;ch.rounds.add(bout)}};
+      for(const re of relicEngine.values())for(const ch of re.chs){if(ch.base!==BASE&&!(type==='dimension'&&ch.base==='BSTAfterBoutBegin'))continue;if(ch.cap&&((ch.perRound||(ch.perRound=new Map())).get(bout)||0)>=ch.cap)continue;if(ch.cap)ch.perRound.set(bout,(ch.perRound.get(bout)||0)+1);if(type==='card'&&((ch.qual&&!(info.types||[]).includes(ch.qual))||(ch.cards&&!ch.cards.has(String(info.tid)))||(ch.owners&&!ch.owners.has(String(info.owner)))))continue;if((type==='ulti')&&ch.owners&&!ch.owners.has(String(info.owner)))continue;ch.n++;ch.rounds.add(bout)}};
     const gearTrigger=(type,info,time)=>{
       relicTrigger(type,info);
       for(const e of gears.values())for(const ch of e.channels){
@@ -1522,12 +1523,19 @@
     // 维度影像 relics: exact per-channel trigger counts and the values their trigger commands give
     {const KL={ali:ui('狂气','Aliemus'),energy:ui('行动力','Energy'),keyE:ui('银钥能量','Keyflare energy'),draw:ui('抽牌','Draw'),create:ui('置入手牌','Cards created'),tent:ui('临时触腕','Tentacle'),block:ui('护盾','Shield'),heal:ui('治疗','Heal')};
       for(const r of relicRows){const re=tl.relicEngine?.get(r.tid);if(!re)continue;r.engine=true;let tot=0;r.eff=r.eff.filter(x=>x.kind!=='nominal');
-        for(const ch of re.chs){tot+=ch.n;const what=ch.effs.map(x=>x.kind==='state'?`${ui('附加','add')}「${res.nameState(x.sid)||x.sid}」`:`${KL[x.kind]||x.kind} +${fmt(x.amt)}`).join('，')||ui('（效果未解析）','(effect not parsed)');
+        // channels whose game event is not hooked (silver-key awakening, hits, ...) share the relic trigger events the hooked channels could not explain
+        {const evN=r.n,open=tl.openRelic?.get(r.tid)||0,hooked=re.chs.filter(c=>c.hooked).reduce((n,c)=>n+c.n,0),op=re.chs.filter(c=>c.opening);
+          for(const c of op)if(!c.n&&open>0){c.n=Math.min(1,open);c.rounds.add(0)}
+          const rest=re.chs.filter(c=>!c.hooked&&!c.opening),known=hooked+op.reduce((n,c)=>n+c.n,0),resid=Math.max(0,evN-known);
+          if(!rest.length&&resid>0)r.eff.push({kind:'other',text:ui(`另有 ${resid} 次触发的来源未在该造物状态中列出（如描述里的「每回合首次…」类效果），以回放事件计数为准`,`${resid} more triggers come from conditions not listed on the relic state`)});
+          if(rest.length&&resid>0){const each=Math.floor(resid/rest.length);rest.forEach((c,i)=>{c.n=each+(i<resid-each*rest.length?1:0);c.est=true})}}
+        if(re.desc)r.eff.push({kind:'desc',text:`${ui('效果','Effect')}：${re.desc}`});
+        for(const ch of re.chs){tot+=ch.n;const what=ch.effs.map(x=>x.kind==='state'?`${ui('附加','add')}「${res.nameState(x.sid)||x.sid}」${x.layer>1?'×'+x.layer:''}`:x.kind==='pdmg'?ui('追加伤害','extra damage'):x.kind==='copy'?ui('复制卡牌','copy card'):`${KL[x.kind]||x.kind} +${fmt(x.amt)}`).join('，')||ui('（效果未解析）','(effect not parsed)');
           const tail=ch.effs.filter(x=>x.kind!=='state'&&x.amt).map(x=>`${KL[x.kind]||x.kind} ${fmt(Math.round(x.amt*ch.n*10)/10)}`).join('，');
-          r.eff.push({kind:'engine',text:`${ch.label}${ch.cardNames.length?`「${ch.cardNames.join('/')}」`:''}：${what} × ${ch.n} 次${tail&&ch.n?` = ${tail}`:''}`});
+          r.eff.push({kind:'engine',text:`${ch.label}${ch.cardNames.length?`「${ch.cardNames.join('/')}」`:''}：${what} × ${ch.n} 次${ch.est?ui('（按造物触发总数估算）',' (estimated)'):''}${tail&&ch.n?` = ${tail}`:''}`});
           if(ch.effs.some(x=>x.kind==='block'))r.block+=ch.effs.filter(x=>x.kind==='block').reduce((n,x)=>n+x.amt*ch.n,0);if(ch.effs.some(x=>x.kind==='heal'))r.heal+=ch.effs.filter(x=>x.kind==='heal').reduce((n,x)=>n+x.amt*ch.n,0);
           for(const x of ch.rounds)if(!r.rounds.includes(x))r.rounds.push(x)}
-        r.rounds.sort((a,b)=>a-b);r.engineN=tot;if(tot>0)r.n=Math.max(tot,0)}}
+        r.rounds.sort((a,b)=>a-b);r.engineN=tot=re.chs.reduce((n,c)=>n+c.n,0);if(tot>0)r.n=Math.max(tot,0)}}
     const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
     const buffRows=relicRows.filter(r=>r.buff&&r.buff.gain>0);
     const buffExtra=buffRows.reduce((n,r)=>n+r.buff.extra,0),powerGain=buffRows.filter(r=>r.buff.kind==='power').reduce((n,r)=>n+r.buff.gain,0),basicGain=buffRows.filter(r=>r.buff.kind==='basic').reduce((n,r)=>n+r.buff.gain,0);
