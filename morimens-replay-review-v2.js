@@ -535,6 +535,8 @@
     // gear-side effect windows: what lands in the same frame group after a trigger belongs to that item
     const openGearWindow=(e,time,kind,predict)=>{const rel={tid:'gear:'+e.key,kind,predict};if(relWin&&relWin.time===time){relWin.queue.push(rel);relWin.gear=true;relWin.until=Math.max(relWin.until||0,time+6)}else relWin={time,queue:[rel],pi:0,bi:0,pend:new Map(),basicCtx:null,ci:0,gear:true,until:time+6}};
     // ---- 维度影像 relics: their own state's trigger channels, counted from the same game events and valued from the trigger commands
+    const initUids=new Set((ent.initialCards||[]).map(c=>String(c.uid)));
+    const genCards=new Map();   /* generated cards (event 1025): uid -> source, so the plays of those very cards can be traced */
     const relicEngine=new Map();
     {const bdR=full.battleDat||{},EFK={BEGainUltiEnergy:'ali','BEChangeAttr.ulti_energy':'ali',BEChangeEnergy:'energy',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEDrawCard:'draw',BECreateCard:'create',BEChangeTentacleCount:'tent',BEGainBlock:'block',BEHeal:'heal',BEAddState:'state',BECopyCard:'copy',BEPassiveDamage:'pdmg'};
       const nAw=Math.max(1,[...actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).length);
@@ -828,6 +830,7 @@
             push('enemyact',`${plainName(d.uid)} · ${name}`,'',d,fr,{skillTid:d.config.skillConfigId,actorUid:d.uid,targetUid:tgt,skillName:name,tip:skillTip(res,d.config.skillConfigId,{ctx:{BattleAtkForce:unit(d.uid).props?.atk}})});continue;
           }
           if(e===1067){
+            {const g=genCards.get(String(d.uid));if(g){g.played++;g.rounds.push(bout)}}
             const tid=d.configId??d.tid,ownerUid=d.ownerUid??d.roleUid,kind=d.deck==='UsingDeck'?'card':(d.roleUid?'ultimate':'skill'),name=res.nameSkill(tid);
             const fiaLvl=fiaCard.get(String(d.uid))||0,fiaP=fiaLvl?fiaPct(ownerUid,fiaLvl):0;curFia={ev:evalPara(tid,ownerUid,d.uid),uid:String(ownerUid),lvl:fiaLvl,pct:fiaP,args:d.descArgs?.curValues||null,tid,cmul:cardMul.get(String(d.uid))||0,cuid:String(d.uid)};if(fiaLvl){const u=fiaUse.get(String(ownerUid))||{plays:0,byLvl:{1:0,2:0,3:0}};u.plays++;u.byLvl[fiaLvl]++;fiaUse.set(String(ownerUid),u)}
             execSrc.cur={name:`${plainName(ownerUid)} · ${name}`,actor:ownerUid};
@@ -895,6 +898,8 @@
             else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
             continue;
           }
+          if(e===1025&&Array.isArray(d.cards)&&d.cards.length){const ks=srcKeys(fr.time),k0=ks[0]||'',srcLabel=(()=>{if(k0.startsWith('rel:'))return res.nameRelic(k0.slice(4));if(k0.startsWith('gear:'))return gears.get(k0.slice(5))?.name||k0;return execSrc.cur?.name||(k0==='kp'?ui('钥令','Keyflare'):'')||ui('未知来源','Unknown')})();
+            for(const c of d.cards){const u=String(c.uid);if(!genCards.has(u)&&!initUids.has(u))genCards.set(u,{key:k0,label:srcLabel,tid:c.tid??c.configId,round:bout,played:0,rounds:[]})}}
           if(e===1025&&Array.isArray(d.cards)&&bout>0){const ks=srcKeys(fr.time).filter(x=>x.startsWith('act:'));if(ks.length)for(const c of d.cards){const nm=res.nameSkill(c.tid??c.configId);if(nm==='灵感'||nm==='Inspiration')supOf(ks[0]).inspire+=1;else if(/胚胎|圣洁之子/.test(nm))supOf(ks[0]).embCards+=1}}
           if(e===1027&&Array.isArray(d.cardUidList)&&bout>0){const ks=srcKeys(fr.time),n=d.cardUidList.length,od=d.oldDeck,nd=d.newDeck,why=Number(d.changeReason);
             const kind=od==='DrawDeck'&&nd==='HandDeck'?'draw':(od==='GraveyardDeck'&&(nd==='HandDeck'||nd==='DrawDeck'))?'cycle':(od==='HandDeck'&&nd==='GraveyardDeck'&&why!==1)?'cycle':null;
@@ -959,7 +964,7 @@
         if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
         for(const [f,re] of CAPR)if(sp[f]&&!re.test(all))sp[f]=0}}
-    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),genCards,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1618,6 +1623,11 @@
         r.engTot=eT;{const sm=Object.entries(eT).filter(([,v])=>v>0).map(([k,v])=>`${KL[k]||k} ${fmt(Math.round(v*10)/10)}`);if(sm.length)r.eff.push({kind:'total',text:`${ui('合计','Total')}：${sm.join(' · ')}`})}}}
     // a relic that says "抽 N 张牌" cannot have drawn more than N × its trigger count: the rest of the draws in its frame group are the round's normal draw
     for(const r of relicRows){const sp=tl.supStore?.get('rel:'+r.tid);if(!sp||!(sp.draws>0)||r.engine)continue;const rec=res.relic[r.tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/);if(!m)continue;const k=m[1]?Number((rec.StatePara||[])[Number(m[1])-1]):Number(m[2]);if(Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n)sp.draws=k*r.n}
+    // generated cards: how many each source created and how many times those cards were actually played
+    const genBy=new Map();for(const g of tl.genCards?.values()||[]){const k=`${g.key}|${g.label}`,o=genBy.get(k)||{key:g.key,label:g.label,created:0,played:0,byCard:new Map()};o.created++;o.played+=g.played;const nm=res.nameSkill(g.tid)||String(g.tid),c=o.byCard.get(nm)||{created:0,played:0};c.created++;c.played+=g.played;o.byCard.set(nm,c);genBy.set(k,o)}
+    const genRows=[...genBy.values()].filter(o=>o.created>0).sort((a,b)=>b.created-a.created).map(o=>({...o,byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((a,b)=>b.created-a.created)}));
+    const genText=o=>ui(`生成卡牌 ${o.created} 张，其中被打出 ${o.played} 次：${(Array.isArray(o.byCard)?o.byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((x,y)=>y.created-x.created)).slice(0,4).map(c=>`${c.n} ${c.created} 张 / 打出 ${c.played} 次`).join('；')}`,`Created ${o.created} cards, played ${o.played}×`);
+    for(const r of relicRows){const o=genBy.get([...genBy.keys()].find(k=>k.startsWith('rel:'+r.tid+'|'))||'');if(o)r.eff.push({kind:'gen',text:genText(o)})}
     const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
     const buffRows=relicRows.filter(r=>r.buff&&r.buff.gain>0);
     const buffExtra=buffRows.reduce((n,r)=>n+r.buff.extra,0),powerGain=buffRows.filter(r=>r.buff.kind==='power').reduce((n,r)=>n+r.buff.gain,0),basicGain=buffRows.filter(r=>r.buff.kind==='basic').reduce((n,r)=>n+r.buff.gain,0);
@@ -1646,6 +1656,7 @@
           // the command record can be absent from every replay: name the quantity from the item's own effect text ("银钥充能提高 …")
           const KW='(银钥充能|银钥能量|狂气|算力|基础伤害|暴击伤害|暴击率)',m=!t?(String(d.state||'').match(new RegExp(KW))?.slice(0,2).concat(String(e.desc||'').includes(String(d.state||'').match(new RegExp(KW))?.[1]+'提高')?['提高']:[''])||String(e.desc||'').match(new RegExp(KW+'[^，。]{0,4}(提高|增加|获得)'))):null,pct=m&&m[2]==='提高'?'%':'';
           lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层${d.avg!=null?`；回合开始平均 ${fmt(Math.round(d.avgLayer))} 层 ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''}）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak}${d.avg!=null?`; avg ${fmt(Math.round(d.avgLayer))} layers ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''})`))}}}
+      {const gk=[...(genBy?.keys()||[])].find(k=>k.startsWith('gear:'+e.key+'|'));if(gk)lines.push(genText(genBy.get(gk)))}
       return {...e,n,hbN,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
@@ -1792,7 +1803,7 @@
       }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
       return {keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
     })();
-    return {roundDmg,typeDmg,mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
+    return {genRows,genBy,genText,roundDmg,typeDmg,mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
   }
   const fold=(title,html,open=false)=>html?`<details class="mr2fold"${open?' open':''}><summary>${title}</summary>${html}</details>`:'';
   const pctOf=(a,b)=>b>0?Math.round(a/b*1000)/10:0;
@@ -1957,7 +1968,8 @@
     const relicTiles=st.relicRows.map(r=>{const b=r.buff&&r.buff.gain>0?r.buff:null,val=r.dmg+(b?.extra||0)+(r.dot||0);
       return `<div class="mr2tile ${r.n||b||(r.eff||[]).length?'':'idle'}"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<div><b>${esc(res.nameRelic(r.tid))}</b><small>${r.start?ui('开局携带','Start'):ui('战斗中获得','Gained')} · ${r.n?ui(`${r.n} 次`,`${r.n}×`):b||(r.eff||[]).length?ui('开局生效','at start'):ui('未触发','idle')}${r.rounds.length&&r.n<=12?` · R${r.rounds.join('/')}`:''}</small>${val>0?`<em>${ui('估算贡献','Est.')} ${fmt(Math.round(val))} (${pctOf(val,st.totalDmg)}%)</em>`:''}${b?`<small class="p">${b.kind==='power'?ui(`+${fmt(b.gain)} 力量`,`+${fmt(b.gain)} power`):ui(`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[0]} +${fmt(Math.round(b.gain*10)/10)}%`,`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[1]} +${fmt(Math.round(b.gain*10)/10)}%`)}</small>`:''}${r.block?`<small class="b">${ui('护盾','Shield')} ${fmt(Math.round(r.block))}</small>`:''}${r.heal?`<small class="h">${ui('治疗','Heal')} ${fmt(Math.round(r.heal))}</small>`:''}${(r.eff||[]).map(x=>`<small class="p">${esc(x.text)}</small>`).join('')}${r.engine?'':supChips(tl,'rel:'+r.tid)}</div></div>`}).join('');
     const relics=`<div class="mr2tiles">${relicTiles}</div>${buffSummary}${fold(ui('每个造物的详细触发与每次增益','Per-relic details'),`<div class="mr2ssec">${relicHtml}</div>`)}`;
-    const special=[execHtml,ctrHtml,stateHtml].filter(Boolean).join('')||`<div class="mr2empty">${ui('本场没有斩杀 / 反击 / 持续伤害类统计','No execute / counter / DoT statistics')}</div>`;
+    const genHtml=st.genRows?.length?`<div class="mr2ssec"><h5>${ui('生成卡牌追溯','Generated cards')} <small>${ui('谁生成了多少张卡牌，这些卡牌后来被打出了多少次','who created how many cards, and how many times those very cards were played')}</small></h5><div class="mr2srcs">${st.genRows.slice(0,12).map(o=>{const rate=o.created?Math.round(Math.min(1,o.played/o.created)*100):0;return `<details class="mr2minor"><summary><span class="mr2srow"><span class="mr2sname">${esc(o.label)}</span>${bar(o.created?Math.min(1,o.played/o.created):0,'dmg')}<b>${ui(`生成 ${o.created} · 打出 ${o.played}`,`${o.created} created · ${o.played} played`)}</b><small>${rate}%</small></span></summary><div class="mr2srcs">${o.byCard.map(c=>`<div class="mr2srow"><span class="mr2sname">${esc(c.n)}</span><b>${ui(`${c.created} 张 · 打出 ${c.played} 次`,`${c.created} · played ${c.played}`)}</b></div>`).join('')}</div></details>`}).join('')}</div><small class="mr2from">${ui('生成 = 回放里「卡牌加入牌堆」事件，来源按触发当时的出牌 / 造物 / 命轮 / 密契归属；打出次数 = 这些具体卡牌（按卡牌实例）之后被打出的次数，一张牌可被多次打出。','Created = card-added events attributed to the action / relic / gear in effect; played = plays of those exact card instances.')}</small></div>`:'';
+    const special=[execHtml,ctrHtml,stateHtml,genHtml].filter(Boolean).join('')||`<div class="mr2empty">${ui('本场没有斩杀 / 反击 / 持续伤害类统计','No execute / counter / DoT statistics')}</div>`;
     const tabs=[['ov',ui('概览','Overview'),overview],['role',ui('角色','Characters'),roles],['rh',ui('钥令与节奏','Rhythm'),rhythm],['rel',`${ui('造物','Relics')} ${st.relicRows.length}`,relics],['gear',`${ui('命轮 / 密契','Gear')} ${st.gearRows.length}`,renderGear(st,tl)||`<div class="mr2empty">—</div>`],['sp',ui('特殊机制 / 状态伤害','Mechanics'),special],['chk',ui('公式校验','Checks'),renderCalib(tl)||`<div class="mr2empty">—</div>`]];
     return `<details class="mr2round mr2stats"><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('概览 / 角色 / 节奏 / 造物 / 命轮密契 / 特殊机制 / 校验','overview / characters / rhythm / relics / gear / mechanics / checks')}</small></summary><div class="mr2rbody mr2dash"><div class="mr2tabs">${tabs.map(([k,l],i)=>`<button type="button" class="mr2tabbtn${i?'':' on'}" data-tab="${k}">${l}</button>`).join('')}</div>${tabs.map(([k,,h],i)=>`<div class="mr2tabpane" data-pane="${k}"${i?' hidden':''}>${h}</div>`).join('')}${st.havePacks?'':`<div class="mr2status">${ui('此回放缺少游戏内统计包，伤害按逐次命中事件重建，造物额外伤害无法归因。','This replay has no in-game stat packs; damage is rebuilt from hit events and relic damage cannot be attributed.')}</div>`}</div></details>`;
   }
