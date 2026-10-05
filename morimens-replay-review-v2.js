@@ -559,10 +559,23 @@
             chs.push({base,cards:cards.length?new Set(cards):null,types:types.length?types:null,skills:skills.length?new Set(skills):null,complex,cardNames:[...new Set(cards.map(c=>res.nameSkill(c)).filter(Boolean))],owners,effs,label:(COND_LABEL[base]||base),cmd:cmdId,n:0,rounds:new Set(),hooked:!complex&&['BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterUseCard','BSTAfterUltiSkill','BSTBeforeUltiSkill','BSTAfterUseKeeperSkill','BSTAfterLaunchSwallow','BSTAfterDimensionBoutBegin','BSTRoleAfterDeathResist'].includes(base),opening:['BSTBattleBegin','StageState'].includes(base),qual:qualC,cap:(()=>{const sent=String(pipeName(rec.Desc||'')).split(/[。；]/).find(x=>/每回合(?:首次|仅一次|一次|最多\s*\d+\s*次)/.test(x)&&(base==='BSTAfterUseCard'?/打出/.test(x):base==='BSTAfterUltiSkill'?/狂气爆发|释放/.test(x):base==='BSTAfterDoActiveDamage'?/伤害/.test(x):false));if(!sent)return 0;const m=sent.match(/最多\s*(\d+)\s*次/);return m?Number(m[1]):1})()})}}}
         if(!rdesc)rdesc=String(pipeName(String((res.relic[tid]||{}).BattleDesc||(res.relic[tid]||{}).Desc||'')))||'';
         if(chs.length&&(isDim||chs.some(c=>c.effs.some(x=>['ali','energy','keyE','draw','create','block','heal'].includes(x.kind)))))relicEngine.set(tid,{tid,chs,desc:rdesc,dim:isDim})}}
+    /* generated-card ledger: an item is only credited with a card when its own command chain says it creates cards (deck, count, strike/defend slot) and the card shows up right after the trigger */
+    const genExp=[],genVerify=new Map();let gearNow=0,gearWin=1.5;
+    const createPlan=(cmdId,depth=0)=>{const out=[],cmd=res.rr?.Cmd?.[String(cmdId)];if(!cmd||depth>3)return out;const added=new Set();
+      for(const dl of cmd.data_list||[]){
+        if(dl.Type==='BECreateCard'||dl.Type==='BECreateCardWithOwner'){const tk=String(dl.Para||'').split(',').map(x=>x.trim());out.push({deck:tk[0]||'',n:Number(tk[2])>0?Number(tk[2]):1,slot:(String(dl.Target||'').match(/Slot_(Strike|Defend)/)||[])[1]||''})}
+        else if(dl.Type==='BEAddState'){const sid=String(dl.Para||'').split(',')[0].trim(),st=res.state[sid];if(!st||(added.has(sid)&&Number(st.MaxLayer)===1))continue;added.add(sid);
+          for(let n=1;n<=4;n++)if(asList(st['TriggerCond'+n]).some(c=>/StateOnAdd/.test(String(c)))&&st['TriggerCmd'+n]!=null)out.push(...createPlan(st['TriggerCmd'+n],depth+1))}}
+      return out};
+    const expect=(key,label,owners,plan,opening)=>{for(const x of plan){genExp.push({key,label,owners,deck:x.deck,slot:x.slot,n:x.n,left:x.n,bout:opening?0:bout,t:gearNow,win:gearWin,opening:!!opening});const v=genVerify.get(key)||{expected:0,matched:0};v.expected+=x.n;genVerify.set(key,v)}};
+    const matchExp=(c,deck,time)=>{const tid=String(c.tid??c.configId),types=asList(res.skill[tid]?.Type);
+      return genExp.find(x=>x.left>0&&(x.opening?bout===0:(x.bout===bout&&time-x.t>=-0.05&&time-x.t<=x.win))&&(!x.deck||!deck||x.deck===deck)&&(!x.slot||types.includes('Card_'+x.slot)))};
     const relicTrigger=(type,info)=>{if(!relicEngine.size)return;const BASE={boutBegin:'BSTAfterBoutBegin',boutEnd:'BSTAfterBoutEnd',card:'BSTAfterUseCard',ulti:'BSTAfterUltiSkill',keeper:'BSTAfterUseKeeperSkill',swallow:'BSTAfterLaunchSwallow',dimension:'BSTAfterDimensionBoutBegin',deathResist:'BSTRoleAfterDeathResist'}[type];if(!BASE)return;
-      for(const re of relicEngine.values())for(const ch of re.chs){if(!ch.hooked)continue;if(ch.base!==BASE&&!(type==='dimension'&&ch.base==='BSTAfterBoutBegin')&&!(type==='ulti'&&ch.base==='BSTBeforeUltiSkill'))continue;if(ch.cap&&((ch.perRound||(ch.perRound=new Map())).get(bout)||0)>=ch.cap)continue;if(ch.cap)ch.perRound.set(bout,(ch.perRound.get(bout)||0)+1);if(type==='card'&&((ch.qual&&!(info.types||[]).includes(ch.qual))||(ch.types&&!ch.types.some(t=>(info.types||[]).includes(t)))||(ch.cards&&!ch.cards.has(String(info.tid)))||(ch.owners&&!ch.owners.has(String(info.owner)))))continue;if((type==='ulti')&&((ch.owners&&!ch.owners.has(String(info.owner)))||(ch.skills&&!ch.skills.has(String(info.tid))&&!ch.skills.has(String(actors.get(String(info.owner))?.tid)))))continue;ch.n++;ch.rounds.add(bout)}};
+      for(const re of relicEngine.values())for(const ch of re.chs){if(!ch.hooked)continue;if(ch.base!==BASE&&!(type==='dimension'&&ch.base==='BSTAfterBoutBegin')&&!(type==='ulti'&&ch.base==='BSTBeforeUltiSkill'))continue;if(ch.cap&&((ch.perRound||(ch.perRound=new Map())).get(bout)||0)>=ch.cap)continue;if(ch.cap)ch.perRound.set(bout,(ch.perRound.get(bout)||0)+1);if(type==='card'&&((ch.qual&&!(info.types||[]).includes(ch.qual))||(ch.types&&!ch.types.some(t=>(info.types||[]).includes(t)))||(ch.cards&&!ch.cards.has(String(info.tid)))||(ch.owners&&!ch.owners.has(String(info.owner)))))continue;if((type==='ulti')&&((ch.owners&&!ch.owners.has(String(info.owner)))||(ch.skills&&!ch.skills.has(String(info.tid))&&!ch.skills.has(String(actors.get(String(info.owner))?.tid)))))continue;ch.n++;ch.rounds.add(bout);if(ch.effs.some(x=>x.kind==='create')){const cr=ch.effs.find(x=>x.kind==='create');expect('rel:'+re.tid,res.nameRelic(re.tid),null,[{deck:'',n:cr.amt||1,slot:''}],false)}}};
+    for(const e of gears.values())for(const ch of e.channels)if(ch.cmd!=null&&['BSTBattleBegin','StageState'].includes(ch.base)){const pl=createPlan(ch.cmd);if(pl.length)expect('gear:'+e.key,e.name,null,pl,true)}
+    for(const re of relicEngine.values())for(const ch of re.chs)if(ch.opening){const cr=ch.effs.find(x=>x.kind==='create');if(cr)expect('rel:'+re.tid,res.nameRelic(re.tid),null,[{deck:'',n:cr.amt||1,slot:''}],true)}
     const gearTrigger=(type,info,time)=>{
-      relicTrigger(type,info);
+      gearNow=time||0;gearWin=(type==='keeper'||type==='ulti')?6:1.5;relicTrigger(type,info);
       for(const e of gears.values())for(const ch of e.channels){
         let ok=false;
         if(type==='card'){
@@ -578,7 +591,8 @@
         if((type==='card'||type==='ulti')&&ch.base==='NAMED'&&info.tid!=null&&res.nameSkill(info.tid)===ch.named&&e.owners.includes(String(info.owner)))ok=true;
         if(!ok)continue;
         if(['NAMED','BSTAfterDimensionBoutBegin','BSTRoleAfterDeathResist'].includes(ch.base)&&ch.cmd!=null){if(!gearTimes.has(time))gearTimes.set(time,new Set());gearTimes.get(time).add('gear:'+e.key)}if(['NAMED','BSTAfterDimensionBoutBegin','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterUseCard','BSTAfterLaunchSwallow'].includes(ch.base)&&ch.cmd!=null&&(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).some(dl=>/^BE(DrawCard|ChangeEnergy|ChangeKeeperEnergy|GainKeeperEnergy|GainUltiEnergy|GainBlock|Heal|CreateCard|CopyCard|ScarletBloodChange)/.test(dl.Type)))gearWins.push({owners:e.owners,tgt:(()=>{const dl=(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).find(x=>x.Type==='BEGainUltiEnergy');return !dl||dl.Target==='UpperTarget'||dl.Target==null?ch.target:dl.Target})(),t0:time,t1:time+(ch.base==='BSTAfterUseKeeperSkill'||ch.base==='BSTAfterUltiSkill'?4:ch.base==='BSTAfterLaunchSwallow'?2:.6),keys:['gear:'+e.key],ch,src:['NAMED','BSTAfterDimensionBoutBegin','BSTAfterBoutBegin','BSTAfterBoutEnd'].includes(ch.base),ali:(()=>{if(!(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).some(dl=>dl.Type==='BEGainUltiEnergy'))return null;const v=Number(String(ch.para??'').split(',')[0].trim().replace(/StateArg(\d+)/,(m,n)=>e.mainStates[0]?.params?.[n-1]));return Number.isFinite(v)?v:null})()})   // the command's effects land in this frame group
-        if(ch.confirm.size)pendingConf.push({e,ch,time,done:false,win:ch.base==='BSTAfterUltiSkill'?15:6});else if(!channelHit(e,ch))continue;
+        const regGen=()=>{try{if(ch.cmd!=null&&!ch.once){const pl=ch._plan||(ch._plan=createPlan(ch.cmd));if(pl.length)expect('gear:'+e.key,e.name,null,pl,false)}}catch{}};   /* registered when the trigger fires: the card lands before the confirming state does */
+        if(ch.confirm.size){regGen();pendingConf.push({e,ch,time,done:false,win:ch.base==='BSTAfterUltiSkill'?15:6})}else if(!channelHit(e,ch))continue;else regGen();
         const desc=e.desc||'',kinds=new Set();
         if(ch.base==='CARD'&&/暴击伤害/.test(desc))kinds.add('crit');
         let predict=null;if(kinds.has('power')&&ch.para!=null){const own=board.get(String(e.owners[0]))?.props||{},af=Math.ceil((own.atk||0)*(1+(own.atk_per||0)/100)),params=e.mainStates[0]?.params||[];
@@ -823,6 +837,10 @@
             if(camp===1&&phase===1){if(dimOn)gearTrigger('dimension',{},fr.time);else{lastDim=bout;gearTrigger('boutBegin',{},fr.time)}}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
             continue;
           }
+          if(e===1025&&Array.isArray(d.cards)&&d.cards.length&&d.deck!=='NoneDeck'){/* NoneDeck events are the card template; the instance that is really played shows up when it enters a deck */const ks=srcKeys(fr.time),k1=ks.find(k=>k.startsWith('act:')||k==='kp')||'',lab1=execSrc.cur?.name||(k1==='kp'?ui('钥令','Keyflare'):'')||ui('未知来源（未在装备 / 造物指令里找到）','Unknown source');
+            for(const c of d.cards){const u=String(c.uid);if(genCards.has(u)||initUids.has(u))continue;const m=matchExp(c,d.deck,fr.time);
+              if(m){m.left--;genVerify.get(m.key).matched++;genCards.set(u,{key:m.key,label:m.label,tid:c.tid??c.configId,round:bout,played:0,rounds:[],verified:true})}
+              else genCards.set(u,{key:k1,label:lab1,tid:c.tid??c.configId,round:bout,played:0,rounds:[]})}}
           if(!bout)continue;
           // enemy acting: monster fsm switches into the action state with the skill it performs
           if(e===1013&&camp===2&&phase===2&&d.newState===2&&d.config?.skillConfigId!=null&&actors.get(String(d.uid))?.kind==='monster'){
@@ -898,8 +916,6 @@
             else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
             continue;
           }
-          if(e===1025&&Array.isArray(d.cards)&&d.cards.length){const ks=srcKeys(fr.time),k0=ks[0]||'',srcLabel=(()=>{if(k0.startsWith('rel:'))return res.nameRelic(k0.slice(4));if(k0.startsWith('gear:'))return gears.get(k0.slice(5))?.name||k0;return execSrc.cur?.name||(k0==='kp'?ui('钥令','Keyflare'):'')||ui('未知来源','Unknown')})();
-            for(const c of d.cards){const u=String(c.uid);if(!genCards.has(u)&&!initUids.has(u))genCards.set(u,{key:k0,label:srcLabel,tid:c.tid??c.configId,round:bout,played:0,rounds:[]})}}
           if(e===1025&&Array.isArray(d.cards)&&bout>0){const ks=srcKeys(fr.time).filter(x=>x.startsWith('act:'));if(ks.length)for(const c of d.cards){const nm=res.nameSkill(c.tid??c.configId);if(nm==='灵感'||nm==='Inspiration')supOf(ks[0]).inspire+=1;else if(/胚胎|圣洁之子/.test(nm))supOf(ks[0]).embCards+=1}}
           if(e===1027&&Array.isArray(d.cardUidList)&&bout>0){const ks=srcKeys(fr.time),n=d.cardUidList.length,od=d.oldDeck,nd=d.newDeck,why=Number(d.changeReason);
             const kind=od==='DrawDeck'&&nd==='HandDeck'?'draw':(od==='GraveyardDeck'&&(nd==='HandDeck'||nd==='DrawDeck'))?'cycle':(od==='HandDeck'&&nd==='GraveyardDeck'&&why!==1)?'cycle':null;
@@ -964,7 +980,7 @@
         if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
         for(const [f,re] of CAPR)if(sp[f]&&!re.test(all))sp[f]=0}}
-    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),genCards,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1625,9 +1641,10 @@
     for(const r of relicRows){const sp=tl.supStore?.get('rel:'+r.tid);if(!sp||!(sp.draws>0)||r.engine)continue;const rec=res.relic[r.tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/);if(!m)continue;const k=m[1]?Number((rec.StatePara||[])[Number(m[1])-1]):Number(m[2]);if(Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n)sp.draws=k*r.n}
     // generated cards: how many each source created and how many times those cards were actually played
     const genBy=new Map();for(const g of tl.genCards?.values()||[]){const k=`${g.key}|${g.label}`,o=genBy.get(k)||{key:g.key,label:g.label,created:0,played:0,byCard:new Map()};o.created++;o.played+=g.played;const nm=res.nameSkill(g.tid)||String(g.tid),c=o.byCard.get(nm)||{created:0,played:0};c.created++;c.played+=g.played;o.byCard.set(nm,c);genBy.set(k,o)}
-    const genRows=[...genBy.values()].filter(o=>o.created>0).sort((a,b)=>b.created-a.created).map(o=>({...o,byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((a,b)=>b.created-a.created)}));
-    const genText=o=>ui(`生成卡牌 ${o.created} 张，其中被打出 ${o.played} 次：${(Array.isArray(o.byCard)?o.byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((x,y)=>y.created-x.created)).slice(0,4).map(c=>`${c.n} ${c.created} 张 / 打出 ${c.played} 次`).join('；')}`,`Created ${o.created} cards, played ${o.played}×`);
-    for(const r of relicRows){const o=genBy.get([...genBy.keys()].find(k=>k.startsWith('rel:'+r.tid+'|'))||'');if(o)r.eff.push({kind:'gen',text:genText(o)})}
+    const genRows=[...genBy.values()].filter(o=>o.created>0).sort((a,b)=>b.created-a.created).map(o=>({...o,verify:tl.genVerify?.get(o.key)||null,byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((a,b)=>b.created-a.created)}));
+    for(const [key,v] of tl.genVerify||[])if(v.expected>0&&!genRows.some(o=>o.key===key))genRows.push({key,label:key.startsWith('rel:')?res.nameRelic(key.slice(4)):(tl.gears?.get(key.slice(5))?.name||key),created:0,played:0,byCard:[],verify:v});
+    const genText=o=>ui(`生成卡牌 ${o.created} 张，其中被打出 ${o.played} 次：${(Array.isArray(o.byCard)?o.byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((x,y)=>y.created-x.created)).slice(0,4).map(c=>`${c.n} ${c.created} 张 / 打出 ${c.played} 次`).join('；')}`,`Created ${o.created} cards, played ${o.played}×`)+(o.verify&&o.verify.expected>0?ui(`｜校验：按它的指令应生成 ${o.verify.expected} 张，实际匹配到 ${o.verify.matched} 张${o.verify.matched<o.verify.expected?'（差额可能因牌库 / 手牌上限或来源未匹配）':''}`,` | check: expected ${o.verify.expected}, matched ${o.verify.matched}`):'');
+    for(const r of relicRows){const o=genRows.find(x=>x.key==='rel:'+r.tid);if(o)r.eff.push({kind:'gen',text:genText(o)})}
     const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
     const buffRows=relicRows.filter(r=>r.buff&&r.buff.gain>0);
     const buffExtra=buffRows.reduce((n,r)=>n+r.buff.extra,0),powerGain=buffRows.filter(r=>r.buff.kind==='power').reduce((n,r)=>n+r.buff.gain,0),basicGain=buffRows.filter(r=>r.buff.kind==='basic').reduce((n,r)=>n+r.buff.gain,0);
@@ -1656,7 +1673,7 @@
           // the command record can be absent from every replay: name the quantity from the item's own effect text ("银钥充能提高 …")
           const KW='(银钥充能|银钥能量|狂气|算力|基础伤害|暴击伤害|暴击率)',m=!t?(String(d.state||'').match(new RegExp(KW))?.slice(0,2).concat(String(e.desc||'').includes(String(d.state||'').match(new RegExp(KW))?.[1]+'提高')?['提高']:[''])||String(e.desc||'').match(new RegExp(KW+'[^，。]{0,4}(提高|增加|获得)'))):null,pct=m&&m[2]==='提高'?'%':'';
           lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层${d.avg!=null?`；回合开始平均 ${fmt(Math.round(d.avgLayer))} 层 ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''}）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak}${d.avg!=null?`; avg ${fmt(Math.round(d.avgLayer))} layers ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''})`))}}}
-      {const gk=[...(genBy?.keys()||[])].find(k=>k.startsWith('gear:'+e.key+'|'));if(gk)lines.push(genText(genBy.get(gk)))}
+      {const o=genRows.find(x=>x.key==='gear:'+e.key);if(o)lines.push(genText(o))}
       return {...e,n,hbN,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
