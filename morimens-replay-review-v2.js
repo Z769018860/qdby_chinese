@@ -1011,6 +1011,7 @@
     .mr2mvpmain span em{font-size:18px}.mr2mvpkv{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10px;color:#9fb0c6}.mr2mvpkv b{color:#e6edf6;font-variant-numeric:tabular-nums}
     .mr2rating{border-top:1px dashed rgba(213,177,118,.25);padding-top:8px;display:grid;gap:5px}.mr2rating h5{margin:0;font-size:12px;color:#d9c391}.mr2rrow{display:grid;grid-template-columns:minmax(150px,1.2fr) minmax(110px,.9fr) minmax(420px,3.4fr);gap:8px;align-items:center;padding:4px 6px;border-radius:8px}.mr2rrow.top{background:rgba(255,210,74,.07)}.mr2rn{display:flex;align-items:center;gap:7px;font-size:12px;color:#e6edf6}.mr2rscore{position:relative;display:flex;align-items:center;height:20px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;padding:0 8px}.mr2rscore i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(255,138,61,.65),rgba(255,210,74,.65))}.mr2rscore b{position:relative;font-size:12px;color:#fff;font-variant-numeric:tabular-nums}
     .mr2facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:4px 12px;font-size:10.5px;color:#aab6c6}.mr2facts span{display:flex;justify-content:space-between;gap:8px;padding:2px 0;border-bottom:1px dashed rgba(148,163,184,.12)}.mr2facts b{color:#e6edf6}
+    .mr2radar{display:flex;flex-direction:column;align-items:center;padding:6px 0 10px;border-bottom:1px dashed rgba(148,163,184,.14);margin-bottom:6px}.mr2radarnote{margin-top:4px;font-size:10px;color:#8ea0b6}.mr2radarnote b{color:#f1d69f;font-size:13px}
     .mr2rdims.kp6{grid-template-columns:repeat(6,1fr)}.mr2conf{margin-left:6px;font-size:9px;color:#8ea0b6;font-weight:400}
     .mr2rdims{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}.mr2rdets{display:grid;gap:4px}.mr2rdet{display:grid;grid-template-columns:140px 1fr;gap:8px;font-size:11px;color:#b6c2d2}.mr2rdet b{display:flex;align-items:center;gap:5px;color:#e6edf6}.mr2rdims span{display:grid;text-align:center;padding:2px 0;border-radius:6px;background:rgba(255,255,255,.04)}.mr2rdims span.na{opacity:.4}.mr2rdims small{font-size:9px;color:#7f8ea2}.mr2rdims b{font-size:12px;color:#e6edf6;font-variant-numeric:tabular-nums}
     .mr2rmodel{font-size:11px;color:#b6c2d2;line-height:1.6;display:grid;gap:4px}.mr2rmodel p{margin:0}.mr2rmodel ul{margin:0;padding-left:18px}
@@ -1257,7 +1258,7 @@
       for(const x of sts.filter(y=>catOf(y)==='wheel')){
         const tid=x.source?.[0]?.tid,c=gearCatalog?.wheels?.[String(tid)];if(!c)continue;
         const stk=full.__ws?.get(String(ri.uid)+'|'+tid),tw=(m?.wheels||[]).find(w=>String(w.name).toLowerCase()===String(c.en||'').toLowerCase());
-        rows.push(`<span class="mr2chip st" title="${esc(fillArgs(pipeName(res.state[String(x.stateId)]?.WeaponDesc||res.state[String(x.stateId)]?.Desc||''),x.stateParams||[]))}">${c.icon?ico(`${ART}/wheels/${c.icon}.webp`,c.zh,'st'):''}<span>${esc(c.zh||c.en)}</span><em>${tw?.level!=null?`Lv${esc(tw.level)} · `:''}${stk?ui(`叠位 ${stk.n}/${stk.max}`,`Stack ${stk.n}/${stk.max}`):''}</em></span>`)}
+        rows.push(`<span class="mr2chip st" title="${esc(fillArgs(pipeName(res.state[String(x.stateId)]?.WeaponDesc||res.state[String(x.stateId)]?.Desc||''),x.stateParams||[]))}">${c.icon?ico(`${ART}/wheels/${c.icon}.webp`,c.zh,'st'):''}<span>${esc(c.zh||c.en)}</span><em>${tw?.level!=null?esc(wheelStackText(tw.level)):''}</em></span>`)}
       if(m){for(const c of m.covenants||(m.covenant?[m.covenant]:[]))rows.push(`<span class="mr2chip st" title="${esc((c.effects||[]).map(e=>`${e.pieces}${ui('件','pc')}：${String(e.desc||'').replace(/<[^>]+>/g,'')}`).join('\n'))}"><span>${esc(nmz.covenant(c))}</span><em>${esc(c.count??'')}${ui('件','pc')}${m.covenantScore!=null?` · ${ui('评分','score')} ${esc(m.covenantScore)}`:''}</em></span>`)}
       else{const cats=Object.values(gearCatalog?.covenants||{}),stems=[...new Set(sts.filter(y=>catOf(y)==='cov').map(y=>cnOf(y.stateId).replace(/^状态@饰品/,'')))],seen=new Set();
         for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((a,b)=>b.zh.length-a.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);rows.push(`<span class="mr2chip st"><span>${esc(c.zh)}</span></span>`)}}}
@@ -1841,13 +1842,15 @@
     const cards=roles.map(ri=>{
       const a=tl.actors.get(String(ri.uid));if(!a)return '';
       const nm=String(res.aw[String(ri.tid)]?.NameEn||'').toLowerCase(),m=tm.find(x=>[x.name,x.canonicalName].some(y=>String(y||'').toLowerCase()===nm)),mine=list.filter(x=>String(x.ownerData?.uid)===String(ri.uid));
-      const wheels=mine.filter(x=>(x.source||[]).some(q=>q.sourceType==='Weapon')).map(x=>{const q=x.source.find(z=>z.sourceType==='Weapon'),c=gearCatalog?.wheels?.[String(q.tid)];if(!c)return '';const st=full.__ws?.get(String(ri.uid)+'|'+q.tid);return `${esc(c.zh||c.en)}${st?` <small>${ui('叠位','Stack')} ${st.n}/${st.max}</small>`:''}`}).filter(Boolean);
+      const wheels=mine.filter(x=>(x.source||[]).some(q=>q.sourceType==='Weapon')).map(x=>{const q=x.source.find(z=>z.sourceType==='Weapon'),c=gearCatalog?.wheels?.[String(q.tid)];if(!c)return '';const tw=(m?.wheels||[]).find(w=>String(w.name).toLowerCase()===String(c.en||'').toLowerCase());return `${esc(c.zh||c.en)}${tw?.level!=null?` <small>${esc(wheelStackText(tw.level))}</small>`:''}`}).filter(Boolean);
       const stems=[...new Set(mine.filter(x=>/^状态@饰品/.test(cnOf(x.stateId))).map(x=>cnOf(x.stateId).replace(/^状态@饰品/,'')))],seen=new Set(),covs=[];
       for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((x,y)=>y.zh.length-x.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);const tc=(m?.covenants||[]).find(k=>String(k.name).toLowerCase()===String(c.en||'').toLowerCase());covs.push(`${esc(c.zh)}${tc?.count?` <small>${esc(tc.count)}${ui('件','pc')}</small>`:''}`)}}
       const sf=full.__sf?.get(String(ri.uid));
       return `<div class="mr2bm">${ico(a.icon,a.name,'av')}<div><b>${esc(a.name)}</b><small>Lv${esc(ri.level)} · ${esc(enl(ri.potencyLevel))}${sf?` · ${ui('灵塑','Soulforge')} ${sf}`:''}${m?.covenantScore!=null?` · ${ui('密契评分','Cov.')} ${esc(m.covenantScore)}`:''}</small>${wheels.length?`<small class="g">${ui('命轮','Wheel')}：${wheels.join(' / ')}</small>`:''}${covs.length?`<small class="g">${ui('密契','Covenant')}：${covs.join(' / ')}</small>`:''}</div></div>`}).join('');
     return cards?`<div class="mr2bteam">${cards}</div>`:'';
   }
+  // wheel level 0-15 is the stack ladder: 0..3 = N叠, then +1 … +12
+  const wheelStackText=n=>{n=Number(n);return !Number.isFinite(n)?'':n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`};
   const keeperName=()=>String(lastFull?.battleDat?.playerName||'').trim();
   function renderBattleInfo(full,tl){
     const bd=full.battleDat||{},res=tl.res,stage=res.rr?.Stage?.[String(bd.stageId)]||{};
@@ -1871,6 +1874,15 @@
       ${renderTeamBrief(full,tl)}
       <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.filter(r=>!r.dim).length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(cnt.cards)}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(cnt.deathResist)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(cnt.kills)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
   }
+  // hexagonal radar of the keeper's six dimensions (missing dimensions sit at the centre and are marked)
+  function keeperRadar(v2){
+    const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
+    const pt=(i,r)=>{const a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*r,cy+Math.sin(a)*r]},poly=(f)=>D.map((_,i)=>pt(i,R0*f).map(n=>n.toFixed(1)).join(',')).join(' ');
+    const val=D.map(([k])=>v2.dims[k]==null?0:Math.max(0,Math.min(100,v2.dims[k]))/100),vp=val.map((f,i)=>pt(i,R0*f).map(n=>n.toFixed(1)).join(',')).join(' ');
+    const axes=D.map((_,i)=>{const [x,y]=pt(i,R0);return `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#3a4658" stroke-width="1"/>`}).join('');
+    const labs=D.map(([k,l],i)=>{const [x,y]=pt(i,R0+22),v=v2.dims[k],anchor=Math.abs(x-cx)<6?'middle':x>cx?'start':'end';return `<text x="${x.toFixed(1)}" y="${(y-2).toFixed(1)}" text-anchor="${anchor}" font-size="11" fill="#aab6c6">${esc(l)}</text><text x="${x.toFixed(1)}" y="${(y+12).toFixed(1)}" text-anchor="${anchor}" font-size="12" font-weight="800" fill="${v==null?'#657286':'#f1d69f'}">${v==null?'—':Math.round(v)}</text>`}).join('');
+    const dots=val.map((f,i)=>{const [x,y]=pt(i,R0*f);return v2.dims[D[i][0]]==null?'':`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#f1d69f"/>`}).join('');
+    return `<div class="mr2radar"><svg viewBox="0 0 260 236" width="100%" style="max-width:300px;overflow:visible" role="img" aria-label="${esc(ui('守密人六维图','Keeper radar'))}">${[.25,.5,.75,1].map(f=>`<polygon points="${poly(f)}" fill="none" stroke="#3a4658" stroke-width="1"${f===1?'':' stroke-dasharray="2 3"'}/>`).join('')}${axes}<polygon points="${vp}" fill="rgba(213,177,118,.24)" stroke="#d5b176" stroke-width="2" stroke-linejoin="round"/>${dots}${labs}</svg><div class="mr2radarnote"><b>${v2.score==null?'—':v2.score.toFixed(1)}</b> · ${ui('潜力实现','Potential')} ${v2.potential==null?'—':Math.round(v2.potential)}% · ${ui('关键窗口','Windows')} ${v2.windows==null?'—':Math.round(v2.windows)}% · ${ui('可信度','Confidence')} ${Math.round(v2.confidence*100)}%${v2.confidence<.6?` · ${ui('仅供参考','indicative only')}`:''}</div></div>`}
   const KEEPER_DIMS=()=>[['R',ui('资源','Res.')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Key')],['S',ui('风险','Risk')],['C',ui('协同','Team')]];
   const DIMS_UI=()=>[['out',ui('输出','Output')],['def',ui('防御','Defense')],['sup',ui('辅助','Support')]];
   function renderMvp(full,tl,st){
@@ -1978,7 +1990,7 @@
       <p><b>守密人（决策）</b>：钥令选择、战斗效率、出牌是否最优三项均分。钥令选择 = 所选钥令的实际价值 ÷ 同次可选技能里已知价值最高者；战斗效率 = 算力利用率、手牌利用率（回合末未被弃掉）、算力未溢出的平均；出牌最优 = 每回合在同一手牌、同一算力预算下，所打出的牌相对于背包最优组合所能达到的伤害 / 防御比例（每张牌的产出取本场实际平均值估算）。</p><p>归属规则：同一帧触发的造物 > 同一帧触发的命轮 / 密契 > 正在结算的行动（含派生技能的施放者）> 无来源（回合开始等被动，不计）。回放没有记录战斗内黑印的变化，黑印一项保留但通常为 0；减伤只统计敌方的主动攻击。等级：≥80 S，≥65 A，≥50 B，≥35 C，其余 D。</p>
       <p><b>增强模型（已合并）</b>：唤醒体按主定位自适应（主职权重最高，并用贡献 / 牌权修正效率）；命轮 / 密契综合实战贡献与静态机制价值（手牌上限、算力上限、抽牌、减费、易伤、死亡抵抗、取回循环等按语义计分）；守密人按出牌决策、资源管理、钥令选择分层计分，未知信息按置信度收缩。</p>
       <p>全队合计：输出 ${fmt(T.out)}，护盾+治疗 ${fmt(Math.round(T.sh))}，减伤 ${fmt(Math.round(T.mit))}，控制弱化 ${fmt(Math.round(T.ctl))}；实际救场 ${m.model.deathSaves} 次。</p>`,`<p>Three categories (output / defense / support), each a weighted mean of share-based sub-scores; the composite is multiplied by a 0.9-1.1 card-efficiency factor. Click a row for every sub-metric.</p>`);
-    return `<div class="mr2rating"><h5>${ui('唤醒体综合评分','Awakener ratings')} <small class="mr2from">${ui('点击一行展开全部评估项','click a row for every metric')}</small></h5>${awRows}${kpRow}${items}<details class="mr2minor"><summary>${ui('评分模型','Rating model')}</summary><div class="mr2rmodel">${model}</div></details></div>`;
+    return `<div class="mr2rating"><h5>${ui('唤醒体综合评分','Awakener ratings')} <small class="mr2from">${ui('点击一行展开全部评估项','click a row for every metric')}</small></h5>${awRows}${kpRow}${kp?.v2?keeperRadar(kp.v2):''}${items}<details class="mr2minor"><summary>${ui('评分模型','Rating model')}</summary><div class="mr2rmodel">${model}</div></details></div>`;
   }
   function renderFull(full){
     const host=document.getElementById('mrReplayResult');if(!host)return;snapStore=[];lastFull=full;const tl=buildTimeline(full),bd=full.battleDat||{},rounds=tl.rounds;
