@@ -219,7 +219,11 @@ function scoreKeeperV2(m,tl,ref){
   const Econv=spentTotal>0?100*valuedCost/spentTotal:null;
   let leftRounds=0,goodReserve=0;for(let i=0;i<ends.length-1;i++){if((ends[i][1].energy||0)>0){leftRounds++;if((ends[i+1][1].energy||0)<=0)goodReserve++}}
   const Ereserve=leftRounds?100*goodReserve/leftRounds:null;
-  const Rscore=wavg([[Espend,.30],[Eover,.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
+  // shield overflow: shield on the keeper at the end of our phase vs. what the enemy then hits for; the surplus was never needed (the unused part carries over)
+  let shOver=0,shRounds=0,shEndTotal=0;for(const [b,e] of ends){const si=tl.shieldIn?.get(b);if(!si||!(si.raw>0))continue;shRounds++;shEndTotal+=e.block||0;shOver+=Math.max(0,(e.block||0)-si.raw)}
+  const shGen=plays.reduce((n,p)=>n+num(p.block),0),shPct=shGen>0&&shRounds?Math.min(100,100*shOver/shGen):null;
+  const ShieldScore=shPct==null?null:Math.max(0,100-2*shPct);
+  const Rscore=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
   Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
   // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
@@ -237,7 +241,7 @@ function scoreKeeperV2(m,tl,ref){
   // ---- Tempo: percentile against the same stage ------------------------------------------------------
   let Tscore=null,topPct=null;const refs=Array.isArray(ref)?ref.filter(x=>Number.isFinite(x)):[];
   if(refs.length>=8){const slower=refs.filter(x=>x>R).length,same=refs.filter(x=>x===R).length;Tscore=100*(slower+same*.5)/refs.length;topPct=100*(refs.filter(x=>x<R).length+same*.5)/refs.length}
-  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,stageSamples:refs.length,topPct,playsPerRound:Math.round(perRoundPlays*10)/10});
+  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,stageSamples:ref?.total||refs.length,topPct,playsPerRound:Math.round(perRoundPlays*10)/10});
   conf.T=refs.length>=8?.9:.3;
   // ---- Keyflare choice and use -------------------------------------------------------------------------
   const kvv=(k.kv||[]).filter(x=>x.n>0),kuses=kvv.reduce((n,x)=>n+x.n,0),meanVal=kuses?kvv.reduce((n,x)=>n+x.val*x.n,0)/kuses:null;
@@ -249,7 +253,7 @@ function scoreKeeperV2(m,tl,ref){
   const kf=tl.keeperFacts?.()||{},dr=kf.deathResist||0,lethal=ends.filter(([,e])=>e.hpf!=null&&e.hpf<.25).length,overheal=kf.healNom>0?1-kf.healAct/kf.healNom:null;
   let pen=0;if(dr>0)pen+=4+10*(dr-1);pen+=Math.min(40,6*lethal);if(overheal!=null)pen+=20*Math.max(0,overheal);
   const Sscore=Math.max(0,100-pen);
-  Object.assign(facts,{deathResist:dr,lethalRounds:lethal,overhealPct:overheal==null?null:100*Math.max(0,overheal),shieldOverflow:null});
+  Object.assign(facts,{deathResist:dr,lethalRounds:lethal,overhealPct:overheal==null?null:100*Math.max(0,overheal),shieldOverflow:shRounds?Math.round(shOver):null,shieldOverflowPct:shPct,shieldGenerated:Math.round(shGen),shieldHitRounds:shRounds});
   conf.S=ends.some(([,e])=>e.hpf!=null)?.8:.4;
   // ---- Team coordination: how much of the damage landed inside the teammates' vulnerability windows -----------
   const firstV=hits.findIndex(h=>h.vOn);let Cscore=null,cover=null,ultCover=null;

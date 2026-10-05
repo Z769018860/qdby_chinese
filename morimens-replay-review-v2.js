@@ -140,7 +140,7 @@
   let gearCatalog=null,relicCatalog={},relicFallback=null,stageRef=null;
   async function preloadAssets(){
     if(!relicCatalog.loaded){try{const r=await fetch('data/morimens/replay-relics.json',{cache:'force-cache'});relicCatalog={loaded:1,...(r.ok?(await r.json()).relics:{})}}catch{relicCatalog={loaded:1}}}
-    if(!stageRef){try{const r=await fetch('data/morimens/replay/stage-rounds.json',{cache:'force-cache'});stageRef=r.ok?await r.json():{}}catch{stageRef={}}}
+    if(!stageRef){try{const r=await fetch('data/morimens/replay/stage-rounds.json?v=20261005',{cache:'no-cache'});stageRef=r.ok?await r.json():{};for(const k of Object.keys(stageRef))if(k.startsWith('cnt:')&&Array.isArray(stageRef[k.slice(4)]))stageRef[k.slice(4)].total=stageRef[k]}catch{stageRef={}}}
     if(!relicFallback){try{const r=await fetch('data/morimens/replay-relic-config.json',{cache:'force-cache'});relicFallback=r.ok?await r.json():{}}catch{relicFallback={}}}
     if(!gearCatalog){try{const r=await fetch('data/morimens/replay-gear.json',{cache:'force-cache'});gearCatalog=r.ok?await r.json():{wheels:{},covenants:{}}}catch{gearCatalog={wheels:{},covenants:{}}}}
     if(awakenerSlugs)return;
@@ -411,7 +411,7 @@
       m=t.match(new RegExp('(?:打出卡牌后[，,]?\\s*若|当)手牌数(?:小于等于|不超过|小于)\\s*'+T+'\\s*(?:时)?[，,]?[^。]*?抽\\s*'+T+'\\s*张牌[^。]*?每回合最多触发\\s*'+T));return m?{tid:String(r.tid),hand:tok(m[1]),draw:tok(m[2]),cap:tok(m[3]),per:new Map()}:null}).filter(x=>x&&Number.isFinite(x.hand));
     const relicTxt=tid=>{const rec=res.relic[String(tid)]||{};return (pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'')};
     const RELIC_GEN={crit:['critrate',/暴击率/],crit_damage:['crit',/暴击伤害/],i_damage_per:['final',/最终伤害/],o_damage_per:['out',/(?<!基础)伤害(?:提高|增加|提升)/]};
-    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
     const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
@@ -754,8 +754,8 @@
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
-            if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(rk()))getRound(rk()).snapEnd=snap();dimOn=nb===lastDim;getRound(dimOn?nb+.5:nb).snapStart=snap()}
-            if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{hpf:(()=>{let m=1;for(const a of actors.values()){if(a.kind!=='awakener')continue;const p=board.get(String(a.uid))?.props||{};if(p.max_hp>0&&p.hp!=null)m=Math.min(m,Math.max(0,p.hp)/p.max_hp)}return m})(),energy:unit(ent.keeperUid).energy??0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
+            if(d?.config?.camp===1&&Number(d.newPhase)===1){shieldStart.set(nb,Number(unit(ent.keeperUid).block)||0);if(rounds.has(rk()))getRound(rk()).snapEnd=snap();dimOn=nb===lastDim;getRound(dimOn?nb+.5:nb).snapStart=snap()}
+            if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{hpf:(()=>{let m=1;for(const a of actors.values()){if(a.kind!=='awakener')continue;const p=board.get(String(a.uid))?.props||{};if(p.max_hp>0&&p.hp!=null)m=Math.min(m,Math.max(0,p.hp)/p.max_hp)}return m})(),energy:unit(ent.keeperUid).energy??0,block:Number(unit(ent.keeperUid).block)||0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
             if(camp===1&&phase===1)push('round',dimOn?ui(`第 ${bout} 回合后 · 超维回合开始`,`Ultra-Space bout after round ${bout}`):ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
             /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1&&dynIds.size)for(const id of dynIds)for(const [uid,m] of bstates){let ly=0;for(const v of m.values())if(String(v.stateId)===id)ly+=v.layer||0;if(ly>0){const k=uid+'|'+id;if(!layerSeries.has(k))layerSeries.set(k,[]);layerSeries.get(k).push(ly)}}
@@ -786,7 +786,7 @@
           if(e===1014&&d.beHitConfig){
             {const bh=d.beHitConfig,tt=actorOf(bh.targetRoleUid),cc=actorOf(bh.castRoleUid);
               const o=counterLog.get('team')||{taken:0,layerSum:0,perm:0,temp:0,extraTrig:0,maxLayer:0,rounds:new Map(),actualHits:0,actualDmg:0};
-              if(tt?.kind==='keeper'&&cc?.kind==='monster'&&bout>0){
+              if(tt?.kind==='keeper'&&cc?.kind==='monster'&&bout>0){{const si=shieldIn.get(bout)||{raw:0,blocked:0,real:0,n:0};si.raw+=Number(bh.originVal)||0;si.blocked+=Number(bh.blockedDamage)||0;si.real+=Number(bh.realDamage)||0;si.n++;shieldIn.set(bout,si)}
                 const lay=id=>{let n=0;for(const v of (bstates.get(String(bh.targetRoleUid))?.values()||[]))if(v.stateId===id)n+=v.layer||0;return n};
                 const L=lay(3905)+lay(3023);
                 o.taken++;o.layerSum+=L;{const lost=Math.abs((Number(bh.curHp)||0)-(Number(bh.oldHp)||0))||Math.abs(Number(bh.changeVal)||0);if(lost>0){o.takenHp=(o.takenHp||0)+1;o.layerSumHp=(o.layerSumHp||0)+L}if(Number(bh.damageType)===1||Number(bh.damageType)===undefined){o.layerSumT1=(o.layerSumT1||0)+L}}o.perm+=lay(3905);o.temp+=lay(3023);o.extraTrig+=lay(3129);o.maxLayer=Math.max(o.maxLayer,L);
@@ -878,7 +878,7 @@
       const ser=[];for(const o of owners)ser.push(...(layerSeries.get(o+'|'+usedLayer)||[]));const avgL=ser.length?ser.reduce((a,b)=>a+b,0)/ser.length:null;
       const avgT=avgL==null?null:evalNum(String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,avgL).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
       if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
-    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),shieldIn,shieldStart,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1963,9 +1963,10 @@
         <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>
         <span>${ui('死亡抵抗 / 濒危回合','Death resist / critical rounds')} <b>${fx.deathResist} / ${fx.lethalRounds}</b></span>
         <span>${ui('治疗溢出','Overheal')} <b>${pc(fx.overhealPct)}</b></span>
+        <span>${ui('护盾溢出（回合末盾量 − 敌方伤害）','Shield overflow (end shield − enemy dmg)')} <b>${fx.shieldOverflow==null?'—':f(fx.shieldOverflow)+' / '+f(fx.shieldGenerated||0)+' · '+pc(fx.shieldOverflowPct)}</b></span>
         <span>${ui('易伤窗口覆盖','Vulnerability coverage')} <b>${pc(fx.vulnCoveragePct)}</b></span>
         <span>${ui('队友增益借力','Buff leverage')} <b>${pc(fx.buffLeveragePct)}</b></span>
-      </div><small class="mr2from">${ui('护盾溢出目前无法从回放可靠还原，未计入。','Shield overflow cannot be reconstructed reliably and is not included.')}</small></div>`:'';
+      </div><small class="mr2from">${ui('护盾溢出：每个被攻击的回合，敌方出手前钥令身上护盾超出该回合敌方伤害的部分；未用完的护盾会留到下回合，故只作参考。','Shield overflow: for each attacked round, the part of the keeper shield above that round\'s enemy damage; unused shield carries over, so this is indicative.')}</small></div>`:'';
     const E=k.eff;
     return `<div class="mr2mgrid">${v2html}
       <div class="mr2mcol"><h6>${ui('钥令选择','Keyflare choice')} <em>${sc(k.pickScore)}</em></h6><small class="mr2from">${ui('已选技能的实际价值（伤害 / 防御 / 辅助按全队单张出牌均值归一后相加）÷ 同次可选技能中已知价值最高者','Realised value of the chosen skill vs best known alternative')}</small>${picks}</div>
