@@ -219,8 +219,9 @@ function scoreKeeperV2(m,tl,ref){
   const Econv=spentTotal>0?100*valuedCost/spentTotal:null;
   let leftRounds=0,goodReserve=0;for(let i=0;i<ends.length-1;i++){if((ends[i][1].energy||0)>0){leftRounds++;if((ends[i+1][1].energy||0)<=0)goodReserve++}}
   const Ereserve=leftRounds?100*goodReserve/leftRounds:null;
-  // shield overflow: shield on the keeper at the end of our phase vs. what the enemy then hits for; the surplus was never needed (the unused part carries over)
-  let shOver=0,shRounds=0,shEndTotal=0;for(const [b,e] of ends){const si=tl.shieldIn?.get(b);if(!si||!(si.raw>0))continue;shRounds++;shEndTotal+=e.block||0;shOver+=Math.max(0,(e.block||0)-si.raw)}
+  // shield overflow: shield on the keeper when our phase ends minus what the enemy then hits for. Shield normally expires at the next round; only special effects keep it,
+  // and a shield that is kept is not counted as overflow (the next round's opening shield tells which case it is).
+  let shOver=0,shRounds=0,shEndTotal=0;for(let i=0;i<ends.length-1;i++){const [b,e]=ends[i],blk=e.block||0;if(!(blk>0))continue;const si=tl.shieldIn?.get(b)||{raw:0,blocked:0},left=Math.max(0,blk-(si.blocked||0)),kept=Math.min(left,tl.shieldStart?.get(b+1)??0);shRounds++;shEndTotal+=blk;shOver+=left-kept}
   const shGen=plays.reduce((n,p)=>n+num(p.block),0),shPct=shGen>0&&shRounds?Math.min(100,100*shOver/shGen):null;
   const ShieldScore=shPct==null?null:Math.max(0,100-2*shPct);
   const Rscore=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);

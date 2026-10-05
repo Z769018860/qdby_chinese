@@ -26,7 +26,7 @@ async function download(root){
   const stage=clean(root.querySelector('.mr2btitle b')?.textContent),sub=clean(root.querySelector('.mr2btitle small')?.textContent);
   const meta=[...root.querySelectorAll('.mr2bmeta span:not(.id)')].map(e=>[clean(e.querySelector('small')?.textContent),clean(e.querySelector('b')?.textContent)]);
   const uuid=clean(root.querySelector('.mr2bmeta .id b')?.textContent);
-  const team=[...root.querySelectorAll('.mr2bteam .mr2bm')].map(e=>({src:e.querySelector('img')?.src||'',name:clean(e.querySelector('b')?.textContent),lines:[...e.querySelectorAll('small')].map(x=>clean(x.textContent))}));
+  const team=[...root.querySelectorAll('.mr2bteam .mr2bm')].map(e=>({src:e.querySelector('img')?.src||'',name:clean(e.querySelector('b')?.textContent),lines:[...e.querySelectorAll(':scope > div > small')].map(x=>clean(x.textContent))}));
   const norm=u=>u&&!/^(https?:|data:|blob:)/.test(u)?new URL(u,location.href).href:u;
   const urls=[...team.map(t=>t.src),...X.aw.map(a=>a.icon),...X.wheels.map(a=>a.icon),...X.relics.map(a=>a.icon),...X.covs.map(a=>a.icon)];
   const imgs=new Map();await Promise.all([...new Set(urls.filter(Boolean))].map(async u=>imgs.set(u,await imgLoad(norm(u)))));
