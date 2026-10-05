@@ -118,7 +118,8 @@
     if(relicFallback&&!rr.__relicFilled){Object.defineProperty(rr,'__relicFilled',{value:1,enumerable:false});for(const [tbl,src] of [['RelicConfig',relicFallback.relic],['State',relicFallback.state],['Cmd',relicFallback.cmd]]){if(!src)continue;const t=rr[tbl]=rr[tbl]||{};for(const [k,v] of Object.entries(src))if(!t[k])t[k]=v}}
     // relics whose RelicConfig no replay ships: rebuild a minimal record from the relic's own state ("状态@星辰篇<名称>") found in the State table
     if(!rr.__relicSynth&&rr.State){Object.defineProperty(rr,'__relicSynth',{value:1,enumerable:false});
-      const idx=new Map();for(const [sid,r0] of Object.entries(rr.State)){const m=String(r0.CnID||'').match(/^状态@(?:[^@]{0,6}篇)?(.+?)(?:Pro)?$/);if(m){if(!idx.has(m[1]))idx.set(m[1],[]);idx.get(m[1]).push(sid)}}
+      const idx=new Map();for(const [sid,r0] of Object.entries(rr.State)){const m=String(r0.CnID||'').match(/^状态@(?:[^@]{0,6}篇)?(.+?)(?:Pro)?$/);if(m){if(!idx.has(m[1]))idx.set(m[1],[]);idx.get(m[1]).push(sid)}
+        const nk=pipeName(String(r0.Name||'')).replace(/<[^>]+>/g,'').trim();if(nk&&/^维度影像/.test(nk)&&/^状态@星辰篇/.test(String(r0.CnID||''))&&!/效果|计数|标记/.test(String(r0.CnID||''))){if(!idx.has(nk))idx.set(nk,[]);if(!idx.get(nk).includes(sid))idx.get(nk).push(sid)}}
       const rcT=rr.RelicConfig=rr.RelicConfig||{};
       for(const r1 of full.battleDat?.relics||[]){const tid=String(r1.tid);if(rcT[tid])continue;const cat=relicCatalog[tid],zh=String(cat?.zh||'');if(!zh)continue;const plus=/\+$/.test(zh),base=zh.replace(/\+$/,''),sids=idx.get(base);if(!sids||!sids.length)continue;
         const desc=pipeName(rr.State[sids[0]].Desc||'').replace(/(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)/g,(m,x,y)=>plus?y:x);
@@ -407,7 +408,7 @@
     // "打出卡牌后，若手牌数小于等于 N，抽 M 张牌，每回合最多触发 K 次": each qualifying card play is one trigger (estimated from the hand size)
     const condRelics=(bd.relics||[]).map(r=>{const rec=res.relic[String(r.tid)]||{},t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',pa=rec.StatePara||[],tok=x=>{const m=String(x).match(/\[Arg(\d)\]/);return m?Number(pa[m[1]-1]):Number(x)},T='(\\[Arg\\d\\]|\\d+)',
       m=t.match(new RegExp('(?:打出卡牌后[，,]?\\s*若|当)手牌数(?:小于等于|不超过|小于)\\s*'+T+'\\s*(?:时)?[，,]?[^。]*?抽\\s*'+T+'\\s*张牌[^。]*?每回合最多触发\\s*'+T));return m?{tid:String(r.tid),hand:tok(m[1]),draw:tok(m[2]),cap:tok(m[3]),per:new Map()}:null}).filter(x=>x&&Number.isFinite(x.hand));
-    const relicTxt=tid=>{const rec=res.relic[String(tid)]||{};return pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||''};
+    const relicTxt=tid=>{const rec=res.relic[String(tid)]||{};return (pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'')};
     const RELIC_GEN={crit:['critrate',/暴击率/],crit_damage:['crit',/暴击伤害/],i_damage_per:['final',/最终伤害/],o_damage_per:['out',/(?<!基础)伤害(?:提高|增加|提升)/]};
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
@@ -656,7 +657,7 @@
             }
           }
           if(relWin&&!relWin.gear&&e===1028&&d.propertyType==='damage_plus'&&Number(d.changedValue)<0&&actors.get(String(d.uid))?.kind==='monster'){
-            for(const q of relWin.queue){if(!/(?:失去|降低|减少)[^。]{0,8}力量/.test(relicTxt(q.tid)))continue;const o=relicDebuff.get(q.tid)||{times:new Set(),total:0,targets:new Set()};o.times.add(Math.round((fr.time||0)*10));o.total+=-Number(d.changedValue);o.targets.add(String(d.uid));relicDebuff.set(q.tid,o);break}
+            for(const q of relWin.queue){if(!/(?:失去|降低|减少)[^。]{0,16}力量/.test(relicTxt(q.tid)))continue;const o=relicDebuff.get(q.tid)||{times:new Set(),total:0,targets:new Set()};o.times.add(Math.round((fr.time||0)*10));o.total+=-Number(d.changedValue);o.targets.add(String(d.uid));relicDebuff.set(q.tid,o);break}
           }
           if(relWin){
             // generic permanent / stacking buffs a relic lands in its window (crit rate, crit damage, final / outgoing damage): the property that changes names the kind
@@ -721,6 +722,7 @@
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
             const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'&&d.extraData?.cmdServerUid!=null?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01&&(w.tgt!=='StateOwner'||w.owners.includes(String(d.uid)))):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0)||d.extraData?.cmdServerUid==null)return null;/* natural regeneration carries no command id */const SB=['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED'],gk=(x)=>'gear:'+x.e.key,live=x=>gearWins.some(w=>w.ch===x.ch&&fr.time>=w.t0&&fr.time<=w.t1)||(!!x.e.fx&&gearTimes.get(fr.time)?.has(gk(x)));const hit=evList.filter(x=>x.prop===pt&&Math.abs(x.amt-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1)&&(!SB.includes(x.ch.base)||live(x))&&(x.tgt!=='StateOwner'||x.e.owners.includes(String(d.uid))));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&Object.values(EV_PROP).includes(pt))),   // resource changes reach a wheel / covenant only through an exact amount match
           keys=keys1.length?keys1:(()=>{const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]})(),rcv=actors.get(String(d.uid));
+            if(pt==='max_hp'&&rcv?.camp===1){const cu=String(d.extraData?.castRoleUid);if(actors.get(cu)?.kind==='awakener')supOf('act:'+cu).maxHp=(supOf('act:'+cu).maxHp||0)+cv}   // the team HP pool belongs to the keeper: credit the awakener whose state raised it (饱餐)
             if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
@@ -812,6 +814,7 @@
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
               hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
+                amp:(()=>{const out=[];for(const [su,v] of bstates.get(String(h.targetRoleUid))||[]){const ex=res.state[String(v.stateId)]?.ExistProperty;if(!ex)continue;for(const [pr,expr] of Object.entries(ex)){if(!/^be_damage_per/.test(pr))continue;const m=String(expr).match(/^ChangedLayer\s*\*\s*(-?\d+(?:\.\d+)?)$/),pv=m?(v.layer||1)*Number(m[1]):Number.isFinite(Number(expr))?Number(expr):null;if(pv>0)out.push({p:pv,keys:stSrc.get(String(su))||[],nm:res.nameState(v.stateId)})}}return out})(),
                 stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(curFia&&curFia.uid===String(h.castRoleUid)&&String(curFia.tid)===String(h.skillConfigId)&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,curFia&&curFia.uid===String(h.castRoleUid)?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
@@ -1336,7 +1339,7 @@
       const fk=forceKind(h.skill),atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
       return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(h.pf||1)};
     };
-    const Vof=(h,useV=true)=>useV&&h.vOn?1+h.vPct/100:1;
+    const Vof=(h,useV=true)=>(useV&&h.vOn?1+h.vPct/100:1)*(1+(h.amp||[]).reduce((n,x)=>n+x.p,0)/100);   // vulnerability and enemy-state damage-taken amplifiers (共感 ...)
     const dnOf=(h,c,useV=true)=>h.dmg/(h.crit?1+c.cd/100:1)/(1+c.fin/100)/Vof(h,useV);
     const byActor=new Map();const blindBy=new Map();for(const h of log){if(scopeOf(h).ult)continue;if(h.blind){blindBy.set(h.uid,(blindBy.get(h.uid)||0)+1);continue}if(!byActor.has(h.uid))byActor.set(h.uid,[]);byActor.get(h.uid).push(h)}
     const fits=new Map(),report=[];
@@ -1403,6 +1406,7 @@
     const inScope=(sc,scope)=>!scope||scope==='all'||!!sc[scope];
     for(const sp of tl.supStore?.values()||[])sp.vulnExtra=0;
     for(const h of log){
+      if(h.amp?.length){const tot=h.amp.reduce((n,x)=>n+x.p,0),ex=h.dmg*tot/(100+tot);for(const x of h.amp){const sh=ex*x.p/tot,keys=x.keys.length?x.keys:[];for(const k of keys){const sp=tl.supStore?.get(k)||null;if(sp){sp.vulnExtra+=sh/keys.length;sp.ampTypes=sp.ampTypes||new Map();sp.ampTypes.set(x.nm,(sp.ampTypes.get(x.nm)||0)+sh/keys.length)}}}}
       if(h.vOn&&h.vsrc){const sp=tl.supStore?.get(h.vsrc);if(sp)sp.vulnExtra+=h.dmg*((h.vPct||50)/100)/(1+(h.vPct||50)/100)}
       if(!h.buffs.length)continue;
       const c=ctxOf(h),sc=c.sc,fit=fits.get(h.uid),m=sc.ult&&h.P.ulti_strength_multiple?h.P.ulti_strength_multiple/100:(fit?fit.m:fallbackM);
@@ -1480,6 +1484,8 @@
       for(const r of relicRows){const rec=res.relic[r.tid]||{},raw=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',para=rec.StatePara||[],argv=n=>Number(para[Number(n)-1]);
         const dm=raw.match(/回合开始时(?:，)?抽\s*\[Arg(\d)\]\s*张牌/);
         if(dm&&!r.n&&Number.isFinite(argv(dm[1]))){r.n=bouts;r.rounds=Array.from({length:bouts},(_,i)=>i+1);r.eff.push({kind:'nominal',text:ui(`每回合开始抽 ${argv(dm[1])} 张 × ${bouts} 回合 = ${argv(dm[1])*bouts} 张（按回合数估算）`,`Draw ${argv(dm[1])}/round × ${bouts} = ${argv(dm[1])*bouts} (estimated)`)})}
+        const am=raw.match(/回合开始时[^，。]{0,10}获得\s*(?:\[Arg(\d)\]|(\d+))\s*点?狂气/),av=am?(am[1]?argv(am[1]):Number(am[2])):NaN;
+        if(am&&Number.isFinite(av)&&!r.eff.some(x=>x.kind==='nominal')){r.n=r.n||bouts;r.eff.push({kind:'nominal',text:ui(`每回合开始狂气 +${av} × ${bouts} 回合 = ${av*bouts}（按回合数估算）`,`Aliemus +${av}/round × ${bouts} = ${av*bouts} (estimated)`)})}
         const fm=raw.match(/每回合前\s*(\d+|[一二三四五六七八九十]+)\s*次[^。]{0,20}伤害提高\s*\[Arg(\d)\]\s*%/);
         if(fm&&Number.isFinite(argv(fm[2]))){const K=/^\d+$/.test(fm[1])?Number(fm[1]):'一二三四五六七八九十'.indexOf(fm[1])+1,N=argv(fm[2]);let extra=0,hits=0;
           for(const list of hitsBy.values())for(const h of list.slice(0,K)){extra+=h.dmg*N/(100+N);hits++}
@@ -1588,7 +1594,7 @@
         const tg=cand.reduce((n,c)=>n+supOf('act:'+c.a.uid).tenGain,0);out.ten+=tg>0?TD*sp.tenGain/tg:0;   // tentacle damage is dealt by the team: credit by tentacle bonus raised
         const drv=(at.death_resist||0)+sp.dr,drShare=drTotal>0?drv/drTotal:0;
         const rep=r.dmg;
-        return {r,out,outT:Object.values(out).reduce((a,b)=>a+b,0),sh:r.block+1.2*r.heal,block:r.block,heal:r.heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:(sp.dbCls.ctrl||0)*3+(sp.dbCls.weak||0)*2+(sp.dbCls.frail||0)*2,dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),
+        return {r,out,outT:Object.values(out).reduce((a,b)=>a+b,0),sh:r.block+1.2*r.heal+0.5*(sp.maxHp||0),maxHp:sp.maxHp||0,ampTypes:[...(sp.ampTypes||new Map()).entries()].map(([n,v])=>({n,v})),block:r.block,heal:r.heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:(sp.dbCls.ctrl||0)*3+(sp.dbCls.weak||0)*2+(sp.dbCls.frail||0)*2,dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),
           dr:drv+deathSaves*drShare*100,drBase:drv,saves:deathSaves*drShare,
           sup:sub(sp,{buf:(bf?.extra||0),rm:at.occupation_master||0}),bufPower:bf?.instances?.filter(i=>i.kind==='power').reduce((n,i)=>n+i.extra,0)||0,bufCrit:bf?.instances?.filter(i=>i.kind==='crit'||i.kind==='critrate').reduce((n,i)=>n+i.extra,0)||0,vulnExtra:sp.vulnExtra,
           powerGain:sp.powerGain,critGain:sp.critGain,critRateGain:sp.critRateGain,inspire:sp.inspire,costCut:sp.costCut,copies:sp.copies,ultCasts:sp.ultCasts,tenGain:sp.tenGain,embCards:sp.embCards,plays:r.plays,energy:r.energy,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}});
@@ -1880,7 +1886,7 @@
     const dbBy=k=>x.dbTypes.filter(t=>t.k===k);
     const outRows=[[ui('直接伤害（出牌 / 技能 / 爆发）','Direct'),o.dir],[ui('持续伤害（出血 / 中毒 / 献祭 / 侵蚀…）','DoT'),o.dot],[ui('反击','Counter'),o.ctr],[ui('斩杀（命运裁断等）','Execute'),o.exe],[ui('触腕 / 怒涛（折算）','Tentacle'),o.ten],[ui('其他状态伤害','Other states'),o.oth]].filter(r=>r[1]>0).map(r=>row(r[0],f(r[1]),null)).join('')||`<div class="mr2empty">—</div>`;
     const ctlNote=[...dbBy('ctrl'),...dbBy('weak'),...dbBy('frail')].map(t=>({n:t.n,c:t.c}));
-    const defRows=[row(ui('护盾','Shield'),f(x.block||0),x.defS.sh,ui('护盾 + 1.2×治疗 合并计分','shield + 1.2×heal')),row(ui('治疗','Heal'),f(x.heal||0),null),
+    const defRows=[row(ui('护盾','Shield'),f(x.block||0),x.defS.sh,ui('护盾 + 1.2×治疗 合并计分','shield + 1.2×heal')),row(ui('治疗','Heal'),f(x.heal||0),null),...(x.maxHp>0?[row(ui('生命上限提升（饱餐等，按 0.5 折算入护盾项）','Max HP gained'),f(x.maxHp),null)]:[]),
       row(ui('减伤（降低敌方伤害：虚弱 / 降力 / 痴醉 / 恐惧…）','Mitigation'),f(x.mit),x.defS.mit,typeNote(x.prevTypes)),
       row(ui('控制与弱化（眩晕 / 石化 / 冻结 / 虚弱 / 脆弱 上层次数）','Control'),f((x.dbCls.ctrl||0)+(x.dbCls.weak||0)+(x.dbCls.frail||0)),x.defS.ctl,typeNote(ctlNote)),
       row(ui('死亡抵抗（面板 / 额外提供 + 救场归属）','Death resist'),f(x.dr),x.defS.dr,x.saves>0?ui(`救场 ${x.saves.toFixed(1)} 次归属`,`${x.saves.toFixed(1)} saves credited`):'')].join('');
