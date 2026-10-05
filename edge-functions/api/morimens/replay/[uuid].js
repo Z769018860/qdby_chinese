@@ -43,20 +43,24 @@ export default async function onRequest(context) {
   }
 
   const target = `${UPSTREAM_BASE}${uuid}.json`;
+  // Replay objects are several MB. Buffering them in the function (arrayBuffer) can exceed the edge runtime's limits (HTTP 545),
+  // so the body is streamed straight through, and Range requests are forwarded so the page can fall back to small chunks.
+  const range = request.headers.get('range');
+  const upstreamHeaders = { Accept: 'application/json,application/octet-stream;q=0.9,*/*;q=0.8' };
+  if (range && /^bytes=\d*-\d*$/.test(range)) upstreamHeaders.Range = range;
   let upstream;
   try {
-    upstream = await fetch(target, {
-      method,
-      redirect: 'follow',
-      headers: {
-        Accept: 'application/json,application/octet-stream;q=0.9,*/*;q=0.8',
-      },
-    });
+    upstream = await fetch(target, { method, redirect: 'follow', headers: upstreamHeaders });
   } catch (error) {
     return new Response(`Replay upstream fetch failed: ${error?.message || error}`, { status: 502 });
   }
 
   const headers = responseHeaders(upstream);
+  for (const key of ['content-range', 'accept-ranges', 'content-length']) {
+    const value = upstream.headers.get(key);
+    if (value) headers.set(key, value);
+  }
+  headers.set('Access-Control-Expose-Headers', 'Content-Range, Content-Length, Accept-Ranges');
   if (!upstream.ok) {
     return new Response(method === 'HEAD' ? null : `Replay upstream returned ${upstream.status}`, {
       status: upstream.status,
@@ -64,20 +68,12 @@ export default async function onRequest(context) {
     });
   }
 
+  const declaredLength = Number(upstream.headers.get('content-length') || 0);
+  if (!range && declaredLength && declaredLength > MAX_BYTES) {
+    return new Response('Replay object too large', { status: 413 });
+  }
   if (method === 'HEAD') {
     return new Response(null, { status: upstream.status, headers });
   }
-
-  const declaredLength = Number(upstream.headers.get('content-length') || 0);
-  if (declaredLength && declaredLength > MAX_BYTES) {
-    return new Response('Replay object too large', { status: 413 });
-  }
-
-  const body = await upstream.arrayBuffer();
-  if (body.byteLength > MAX_BYTES) {
-    return new Response('Replay object too large', { status: 413 });
-  }
-
-  headers.set('Content-Length', String(body.byteLength));
-  return new Response(body, { status: 200, headers });
+  return new Response(upstream.body, { status: upstream.status === 206 ? 206 : 200, headers });
 }

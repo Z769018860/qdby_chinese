@@ -117,9 +117,27 @@
     setProgress(0,ui('完整回放获取失败','Full replay fetch failed'),hint,true);
     throw new TypeError(`GitHub Pages replay relay failed for ${uuid}: ${errors.join(' | ')}. ${hint}`);
   }
+  // Large replays can make an edge/serverless proxy fail (e.g. EdgeOne HTTP 545, Vercel payload limits): fetch them as small Range chunks instead
+  async function fetchProxyChunks(proxy,safe){
+    const CH=1024*1024,hdr=(a,b)=>({Range:`bytes=${a}-${b}`});
+    const r0=await nativeFetch(proxy,{...safe,mode:'same-origin',headers:hdr(0,CH-1)});
+    if(r0.status!==206)throw new Error(`Range request not supported (HTTP ${r0.status})`);
+    const total=Number(String(r0.headers.get('content-range')||'').match(/\/(\d+)$/)?.[1]||0);
+    if(!total||total>MAX_RELAY_BYTES)throw new Error('bad Range response');
+    const out=new Uint8Array(total);out.set(new Uint8Array(await r0.arrayBuffer()),0);let loaded=Math.min(CH,total);
+    const prog=()=>setProgress(12+Math.min(1,loaded/total)*52,ui('正在分块下载完整回放','Downloading full replay in chunks'),`${formatBytes(loaded)} / ${formatBytes(total)}`);prog();
+    const starts=[];for(let p=CH;p<total;p+=CH)starts.push(p);let next=0;
+    const worker=async()=>{while(next<starts.length){const a=starts[next++],b=Math.min(total-1,a+CH-1);let err=null,ok=false;
+      for(let t=0;t<3&&!ok;t++){try{const r=await nativeFetch(proxy,{...safe,mode:'same-origin',headers:hdr(a,b)});if(r.status!==206)throw new Error(`HTTP ${r.status}`);const buf=new Uint8Array(await r.arrayBuffer());if(buf.length!==b-a+1)throw new Error('short chunk');out.set(buf,a);loaded+=buf.length;prog();ok=true}catch(e){err=e}}
+      if(!ok)throw err}};
+    await Promise.all([worker(),worker(),worker()]);
+    if(!containsAscii(out,'"compStr"'))throw new Error(`response is not a BattleReplay envelope (${out.length} bytes)`);
+    setProgress(74,ui('正在校验并解压回放','Validating and decoding replay'),'');
+    return new Response(out,{status:200,statusText:'OK',headers:{'Content-Type':'application/octet-stream','Content-Length':String(out.length),'X-Morimens-Replay-Relay':'same-origin-chunks'}});
+  }
   async function fetchSameOriginOrStaticFallback(target,uuid,input,init){
     const safe=safeReplayInit(input,init),proxy=`/api/morimens/replay/${uuid}`;setProgress(4,ui('正在连接同源回放代理','Connecting to same-origin replay proxy'),uuid);
-    try{const response=await nativeFetch(proxy,{...safe,mode:'same-origin'}),source=response.headers.get('x-morimens-replay-source'),type=String(response.headers.get('content-type')||'').toLowerCase(),looksLikeStatic404=!source&&(response.status===404||response.status===405)&&type.includes('text/html');if(!looksLikeStatic404){window.MorimensReplayTransport='same-origin-proxy';return validatedRelayResponse(response,{name:'same-origin'},safe)}}catch(error){console.warn('Replay same-origin proxy unavailable; trying static Pages relay.',error)}
+    try{const response=await nativeFetch(proxy,{...safe,mode:'same-origin'}),source=response.headers.get('x-morimens-replay-source'),type=String(response.headers.get('content-type')||'').toLowerCase(),looksLikeStatic404=!source&&(response.status===404||response.status===405)&&type.includes('text/html');if(!looksLikeStatic404){window.MorimensReplayTransport='same-origin-proxy';return await validatedRelayResponse(response,{name:'same-origin'},safe)}}catch(error){console.warn('Replay same-origin proxy failed; trying ranged chunks.',error);try{const resp=await fetchProxyChunks(proxy,safe);window.MorimensReplayTransport='same-origin-proxy-chunks';return resp}catch(error2){console.warn('Replay chunked proxy unavailable; trying static Pages relay.',error2)}}
     return fetchGitHubPagesReplay(target,uuid,input,init);
   }
 
@@ -135,5 +153,5 @@
     done();let q=false;new MutationObserver(()=>{if(q)return;q=true;queueMicrotask(()=>{q=false;done()})}).observe(document.documentElement,{childList:true,subtree:true})};
   const bodyObserver=new MutationObserver(()=>{if(document.getElementById('morimensReplayPanel')){observe();bodyObserver.disconnect()}});bodyObserver.observe(document.documentElement,{childList:true,subtree:true});
 
-  import('./morimens-replay-review-v2.js?v=20261005.6').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
+  import('./morimens-replay-review-v2.js?v=20261005.7').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
 })();

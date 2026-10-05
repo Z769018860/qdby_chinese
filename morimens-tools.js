@@ -71,7 +71,7 @@ function setupMorimensReplayShell(){
 
 (async()=>{
   try{
-  const assetVersion="20261005.6";
+  const assetVersion="20261005.7";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",

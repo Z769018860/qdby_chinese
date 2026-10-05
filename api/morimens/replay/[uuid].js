@@ -6,7 +6,7 @@ module.exports=async function handler(req,res){
   const origin=String(req.headers.origin||'');
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Methods','GET,HEAD,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers','Content-Type');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type, Range');res.setHeader('Access-Control-Expose-Headers','Content-Range, Content-Length, Accept-Ranges');
   res.setHeader('Vary','Origin');
   if(req.method==='OPTIONS'){res.status(204).end();return}
   if(req.method!=='GET'&&req.method!=='HEAD'){res.setHeader('Allow','GET, HEAD, OPTIONS');res.status(405).send('Method Not Allowed');return}
@@ -17,7 +17,7 @@ module.exports=async function handler(req,res){
 
   let upstream;
   try{
-    upstream=await fetch(`${UPSTREAM}${uuid}.json`,{method:req.method,redirect:'follow',headers:{Accept:'application/json,application/octet-stream;q=0.9,*/*;q=0.8'}});
+    upstream=await fetch(`${UPSTREAM}${uuid}.json`,{method:req.method,redirect:'follow',headers:{Accept:'application/json,application/octet-stream;q=0.9,*/*;q=0.8',...(/^bytes=\d*-\d*$/.test(String(req.headers.range||''))?{Range:String(req.headers.range)}:{})}});
   }catch(error){res.status(502).send(`Replay upstream fetch failed: ${error?.message||error}`);return}
 
   res.setHeader('Cache-Control','public, max-age=300, s-maxage=3600');
@@ -30,10 +30,10 @@ module.exports=async function handler(req,res){
   if(!upstream.ok){res.status(upstream.status).send(req.method==='HEAD'?'':`Replay upstream returned ${upstream.status}`);return}
   if(req.method==='HEAD'){res.status(upstream.status).end();return}
 
-  const declared=Number(upstream.headers.get('content-length')||0);
-  if(declared&&declared>MAX_BYTES){res.status(413).send('Replay object too large');return}
+  const cr=upstream.headers.get('content-range');if(cr)res.setHeader('Content-Range',cr);const declared=Number(upstream.headers.get('content-length')||0);
+  if(!cr&&declared&&declared>MAX_BYTES){res.status(413).send('Replay object too large');return}
   const body=Buffer.from(await upstream.arrayBuffer());
   if(body.length>MAX_BYTES){res.status(413).send('Replay object too large');return}
   res.setHeader('Content-Length',String(body.length));
-  res.status(200).send(body);
+  res.status(upstream.status===206?206:200).send(body);
 };
