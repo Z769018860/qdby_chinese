@@ -456,7 +456,7 @@
     }
     for(const e of gears.values())for(const sid of e.related){if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
     // Trigger channels: every TriggerCondN/TriggerCmdN pair on the equipped state is one way the item fires.
-    const COND_LABEL={BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDoActiveDamage:'造成主动伤害后',BSTAfterTentacleAttack:'触腕攻击后',BSTBeforeUltiSkill:'释放狂气爆发前',BSTAfterBeActiveDamage:'承受主动伤害后',BSTAfterAttackedByTentacle:'被触腕攻击后',BSTAfterUseSpecialDimension:'使用维度技能后',BSTAfterUseDimensionSkill:'使用维度技能后',BSTRoleDrawCard:'抽牌时',BSTRoleDropCard:'弃牌时',BSTHpChanged:'生命变化时',BSTAfterScarlletBloodFull:'猩红之血蓄满后',BSTBeforeDiscardCards:'弃牌前',BSTDrawDeckReset:'抽牌堆重洗时',BSTAfterSwitchOceanModel:'切换深海形态后',BSTAfterUseBloodRecoverSkill:'使用血液回复技能后',BSTStateOnAdd:'获得时',BSTBeforeBattleEnd:'战斗结束前',BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTAfterDimensionBoutBegin:'进入超维回合后',NAMED:'释放指定技能后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
+    const COND_LABEL={LisBattleEndAfter:'战斗结束后',LisShopTriggerAfter:'商店触发后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDoActiveDamage:'造成主动伤害后',BSTAfterTentacleAttack:'触腕攻击后',BSTBeforeUltiSkill:'释放狂气爆发前',BSTAfterBeActiveDamage:'承受主动伤害后',BSTAfterAttackedByTentacle:'被触腕攻击后',BSTAfterUseSpecialDimension:'使用维度技能后',BSTAfterUseDimensionSkill:'使用维度技能后',BSTRoleDrawCard:'抽牌时',BSTRoleDropCard:'弃牌时',BSTHpChanged:'生命变化时',BSTAfterScarlletBloodFull:'猩红之血蓄满后',BSTBeforeDiscardCards:'弃牌前',BSTDrawDeckReset:'抽牌堆重洗时',BSTAfterSwitchOceanModel:'切换深海形态后',BSTAfterUseBloodRecoverSkill:'使用血液回复技能后',BSTStateOnAdd:'获得时',BSTBeforeBattleEnd:'战斗结束前',BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTAfterDimensionBoutBegin:'进入超维回合后',NAMED:'释放指定技能后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
     const TYPE_QUAL={Card_Strike:'打击',Card_Defend:'防御'};
     for(const e of gears.values()){
       e.channels=[];const desc=e.desc||'';
@@ -619,11 +619,13 @@
         if(!activeBuff.has(st.owner))activeBuff.set(st.owner,[]);activeBuff.get(st.owner).push({inst,kind:pk[0],scope:pk[1],amt:st.val,temp:false,rel:rec});
       }
     }
+    /* counter / marker / cooldown / carry-flag states only keep score for the item's other states: adding one is not an effect, so it must not open an attribution window for whatever else happens in that frame */
+    const isBookkeepingState=sid=>/计数|标识|标记|冷却|携带/.test(String(res.state[String(sid)]?.CnID||''));
     // pre-pass: timestamps at which a wheel / covenant state fires, temporary power adds, and crit-damage reverts (to tell temporary buffs from permanent ones)
     {const gains=new Map();
       for(const seg of full.recordSegments||[])for(const rec of seg||[]){const fl=rec?.msgData?.frameList;if(!Array.isArray(fl))continue;for(const fr of fl){const e=fr.eventId,d=fr.data||{},t=fr.time;
         if((e===1004||e===1006||e===1007)&&d.stateId!=null){const pos=e===1007?(d.newLayer||0)>(d.oldLayer||0):true;
-          if(pos){const gl=(gearsOfState.get(String(d.stateId))||[]).filter(g=>g.fx?.has(String(d.stateId)));if(gl)for(const g of gl){if(!gearTimes.has(t))gearTimes.set(t,new Set());gearTimes.get(t).add('gear:'+g.key)}
+          if(pos){const gl=(gearsOfState.get(String(d.stateId))||[]).filter(g=>g.fx?.has(String(d.stateId))&&!isBookkeepingState(d.stateId));if(gl)for(const g of gl){if(!gearTimes.has(t))gearTimes.set(t,new Set());gearTimes.get(t).add('gear:'+g.key)}
             if(d.stateId===3130)tempPow.add(`${t}|${d.ownerUid??d.roleUid}`)}}
         if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0)for(const g of gears.values())if(g.channels.some(c=>c.base==='BSTRoleAfterDeathResist')){if(!gearTimes.has(t))gearTimes.set(t,new Set());gearTimes.get(t).add('gear:'+g.key)}
         if(e===1028&&d.propertyType==='crit_damage'&&d.uid!=null){const cv=Number(d.changedValue)||0;const k=String(d.uid);if(cv>0){if(!gains.has(k))gains.set(k,[]);gains.get(k).push({t,cv,bout:0})}else if(cv<0){const l=gains.get(k)||[];for(let i=l.length-1;i>=0;i--)if(!l[i].rev&&Math.abs(l[i].cv+cv)<1e-6){l[i].rev=true;critReverts.set(`${l[i].t}|${k}`,true);break}}}}}
@@ -918,6 +920,15 @@
       const ser=[];for(const o of owners)ser.push(...(layerSeries.get(o+'|'+usedLayer)||[]));const avgL=ser.length?ser.reduce((a,b)=>a+b,0)/ser.length:null;
       const avgT=avgL==null?null:evalNum(String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,avgL).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
       if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
+    // capability filter: an item can only be credited with kinds of output its own trigger commands (and those of its states) can produce.
+    // A wheel whose triggers only add / remove states cannot draw cards, cut costs or grow tentacles, so credit that landed on it by timing alone is dropped.
+    {const CAP=[['draws',/DrawCard/],['cycles',/MoveCard|Discard|Exhaust|Shuffle|Retrieve|Recycle/],['cut',/Cost|ChangeCard|ReduceCard/],['costCut',/Cost|CopyCard/],['copies',/CopyCard/],['tenGain',/Tentacle/],['embryo',/Embryo|CreateCard/],['embCards',/Embryo|CreateCard/],['rm',/Scarlet|Resource|Realm|Proficient|Occupation|ChangeAttr/],['dr',/DeathResist|Revive|ChangeAttr/],['seal',/Seal|BlackCoin/],['inspire',/CreateCard/]];
+      for(const e of gears.values()){const sp=supStore.get('gear:'+e.key);if(!sp)continue;const types=new Set(),addCmd=cid=>{for(const dl of res.rr?.Cmd?.[String(cid)]?.data_list||[])types.add(String(dl.Type))};
+        for(const c of e.channels||[])if(c.cmd!=null)addCmd(c.cmd);
+        for(const sid of e.related||[]){const rec=res.state[String(sid)]||{};for(let n=1;n<=4;n++)if(rec['TriggerCmd'+n]!=null)addCmd(rec['TriggerCmd'+n])}
+        if(!types.size||[...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
+        if((e.channels||[]).some(c=>c.base==='BSTRoleAfterDeathResist'))types.add('DeathResist');
+        const all=[...types].join('|');for(const [f,re] of CAP)if(sp[f]&&!re.test(all))sp[f]=0}}
     return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
@@ -1593,6 +1604,11 @@
       const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
       const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
       const lines=[];for(const c of (e.channels||[])){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;for(const l of gearEffectLines(tl.res,e,c,cnt))lines.push(l)}
+      // post-battle effects ("战斗结束后回复…") never show up inside a fight; a per-round "−30%" on such an effect is a decay counter, not a heal
+      {const dsc=String(e.desc||''),post=/战斗结束后/.test(dsc)||(e.channels||[]).some(c=>/BattleEnd/.test(String(c.base)));
+        const dm=dsc.match(/每回合结束[^。]*?(?:降低|衰减)\s*(\d+)\s*%/),be=(e.channels||[]).find(c=>c.base==='BSTAfterBoutEnd'&&c.count>0);
+        if(dm&&be){const p=Number(dm[1]);lines.unshift(ui(`回合结束：战斗结束后的回复效果 −${p}%（衰减计数 × ${be.count} 回合 → 剩余 ${((1-p/100)**be.count*100).toFixed(1)}%）`,`Round end: post-battle recovery −${p}% (decay × ${be.count} rounds → ${((1-p/100)**be.count*100).toFixed(1)}% left)`))}
+        if(post)lines.push(ui('战斗结束后才生效（首领战中无法体现，不计入战斗内的治疗 / 产出）','Applies only after the battle ends (not visible in a boss fight; not counted as in-battle output)'))}
       {const dyn=tl.gearDyn?.get(e.key);if(dyn?.length){for(let i=lines.length-1;i>=0;i--)if(/随层数|scales with state/.test(lines[i]))lines.splice(i,1);
         for(const d of dyn){const t=d.types.map(x=>CMD_LABEL[x]).find(Boolean);
           // the command record can be absent from every replay: name the quantity from the item's own effect text ("银钥充能提高 …")
