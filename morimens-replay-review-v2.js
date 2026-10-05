@@ -116,6 +116,13 @@
     const rr=full.resourceRecords||{};
     // most replays ship no RelicConfig: fill the gaps from the union of relic / state / command records seen in other replays
     if(relicFallback&&!rr.__relicFilled){Object.defineProperty(rr,'__relicFilled',{value:1,enumerable:false});for(const [tbl,src] of [['RelicConfig',relicFallback.relic],['State',relicFallback.state],['Cmd',relicFallback.cmd]]){if(!src)continue;const t=rr[tbl]=rr[tbl]||{};for(const [k,v] of Object.entries(src))if(!t[k])t[k]=v}}
+    // relics whose RelicConfig no replay ships: rebuild a minimal record from the relic's own state ("状态@星辰篇<名称>") found in the State table
+    if(!rr.__relicSynth&&rr.State){Object.defineProperty(rr,'__relicSynth',{value:1,enumerable:false});
+      const idx=new Map();for(const [sid,r0] of Object.entries(rr.State)){const m=String(r0.CnID||'').match(/^状态@(?:[^@]{0,6}篇)?(.+?)(?:Pro)?$/);if(m){if(!idx.has(m[1]))idx.set(m[1],[]);idx.get(m[1]).push(sid)}}
+      const rcT=rr.RelicConfig=rr.RelicConfig||{};
+      for(const r1 of full.battleDat?.relics||[]){const tid=String(r1.tid);if(rcT[tid])continue;const cat=relicCatalog[tid],zh=String(cat?.zh||'');if(!zh)continue;const plus=/\+$/.test(zh),base=zh.replace(/\+$/,''),sids=idx.get(base);if(!sids||!sids.length)continue;
+        const desc=pipeName(rr.State[sids[0]].Desc||'').replace(/(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)/g,(m,x,y)=>plus?y:x);
+        rcT[tid]={ID:Number(tid),Name:'x|'+zh,Desc:'x|'+desc,BattleDesc:'x|'+desc,State1:sids.map(Number),StatePara:[],synthesized:true}}}
     const skill=rr.Skill||{},aw=rr.AwakerConfig||{},state=rr.State||{},relic=rr.RelicConfig||{},monster=rr.MonsterConfig||{};
     const nameSkill=id=>{const x=skill[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||String(id)};
     const nameState=id=>{const x=state[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`State ${id}`};
@@ -391,11 +398,14 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
-    const intents=new Map();let lastStats=null,lastDim=0;const keeperPicks=[];
+    const intents=new Map();let lastStats=null,lastDim=0,finishStats=null,deathResistN=0;const killed=new Set();const keeperPicks=[];
     // Relic buff accounting. Power / basic-damage relics are matched to the state & property
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
+    const relicDebuff=new Map(),relicCond=new Map();
+    // "打出卡牌后，若手牌数小于等于 N，抽 M 张牌，每回合最多触发 K 次": each qualifying card play is one trigger (estimated from the hand size)
+    const condRelics=(bd.relics||[]).map(r=>{const rec=res.relic[String(r.tid)]||{},t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',m=t.match(/打出卡牌后[，,]?\s*若手牌数(?:小于等于|不超过|小于)\s*\[Arg(\d)\][^。]*?抽\s*\[Arg(\d)\]\s*张牌[^。]*?每回合最多触发\s*\[Arg(\d)\]/),pa=rec.StatePara||[];return m?{tid:String(r.tid),hand:Number(pa[m[1]-1]),draw:Number(pa[m[2]-1]),cap:Number(pa[m[3]-1]),per:new Map()}:null}).filter(x=>x&&Number.isFinite(x.hand));
     const relicTxt=tid=>{const rec=res.relic[String(tid)]||{};return pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||''};
     const RELIC_GEN={crit:['critrate',/暴击率/],crit_damage:['crit',/暴击伤害/],i_damage_per:['final',/最终伤害/],o_damage_per:['out',/(?<!基础)伤害(?:提高|增加|提升)/]};
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
@@ -644,6 +654,9 @@
               grant(relWin.basicCtx,uid,Number(d.changedValue),relWin.basicCtx.rel,false);
             }
           }
+          if(relWin&&!relWin.gear&&e===1028&&d.propertyType==='damage_plus'&&Number(d.changedValue)<0&&actors.get(String(d.uid))?.kind==='monster'){
+            for(const q of relWin.queue){if(!/(?:失去|降低|减少)[^。]{0,8}力量/.test(relicTxt(q.tid)))continue;const o=relicDebuff.get(q.tid)||{times:new Set(),total:0,targets:new Set()};o.times.add(Math.round((fr.time||0)*10));o.total+=-Number(d.changedValue);o.targets.add(String(d.uid));relicDebuff.set(q.tid,o);break}
+          }
           if(relWin){
             // generic permanent / stacking buffs a relic lands in its window (crit rate, crit damage, final / outgoing damage): the property that changes names the kind
             if(e===1028&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'&&RELIC_GEN[d.propertyType]){
@@ -697,7 +710,8 @@
           else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues}else if(cur){if(cur.stateId===3130)expireTemp();m.delete(String(d.stateUid))}}
           else if(e===1005&&d.stateUid!=null){const cur=stateMap(d.ownerUid).get(String(d.stateUid));if(cur?.stateId===3130)expireTemp();stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
-          if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0)gearTrigger('deathResist',{},fr.time);
+          if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0){deathResistN++;gearTrigger('deathResist',{},fr.time)}
+          if(e===1028&&d.propertyType==='hp'&&typeof d.value==='number'&&d.value<=0&&actors.get(String(d.uid))?.kind==='monster')killed.add(String(d.uid));
           if((e===1004||e===1006||(e===1007&&(d.newLayer||0)>(d.oldLayer||0)))&&d.stateId!=null&&relicOfState.has(String(d.stateId))&&bout>0&&!/计数|标记|标识|限额|监听|统计/.test(String(res.state[String(d.stateId)]?.CnID||''))){for(const tid of relicOfState.get(String(d.stateId))){const o=relicStateAdds.get(tid)||{times:new Set(),rounds:new Set()};o.times.add(Math.round((fr.time||0)*10));o.rounds.add(bout);relicStateAdds.set(tid,o)}}
           if((e===1004||e===1006||e===1007)&&d.stateId!=null){const ly=e===1007?Number(d.newLayer):Number(d.layer||1),k=String(d.ownerUid??d.roleUid)+'|'+d.stateId;if(ly>(layerPeak.get(k)||0))layerPeak.set(k,ly)}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)<0&&bout>0&&(d.propertyType==='card_cost'||d.propertyType==='awaker_cmdcard_notextend_cost_fix')){
@@ -731,7 +745,7 @@
           if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
           else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
-          if(e===1020&&d?.battleFinishData){result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType}}
+          if(e===1020&&d?.battleFinishData){result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null}
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
@@ -758,6 +772,7 @@
               if(kind==='ultimate')supOf('act:'+ownerUid).ultCasts+=1;
               if(ci&&ci.cutPos>=0&&Array.isArray(vals)){const cut=Number(vals[ci.cutPos])||0,cp=ci.copyPos>=0?Number(vals[ci.copyPos])||1:1;if(cut>0){const sp=supOf('act:'+ownerUid);sp.copies+=cp;sp.costCut+=cut*cp}}}
             push(kind,`${plainName(ownerUid)} · ${name}`,'',d,fr,{skillTid:tid,actorUid:ownerUid,cardUid:d.uid,cost:d.cost,deck:d.deck,skillName:name,fiaLvl,fiaPct:fiaP,stypes:asList(res.skill[String(tid)]?.Type),tip:skillTip(res,tid,{args:d.descArgs?.curValues,level:d.level})});
+            if(kind==='card')for(const cr of condRelics){if(handUids.size<=cr.hand&&(cr.per.get(bout)||0)<(cr.cap||99)){cr.per.set(bout,(cr.per.get(bout)||0)+1);const o=relicCond.get(cr.tid)||{n:0,draws:0,rounds:new Set()};o.n++;o.draws+=cr.draw;o.rounds.add(bout);relicCond.set(cr.tid,o)}}
             if(kind==='card')gearTrigger('card',{owner:ownerUid,tid,types:asList(res.skill[String(tid)]?.Type)},fr.time);else if(kind==='ultimate')gearTrigger('ulti',{owner:ownerUid,tid},fr.time);
             continue;
           }
@@ -856,7 +871,7 @@
       const ser=[];for(const o of owners)ser.push(...(layerSeries.get(o+'|'+usedLayer)||[]));const avgL=ser.length?ser.reduce((a,b)=>a+b,0)/ser.length:null;
       const avgT=avgL==null?null:evalNum(String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,avgL).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
       if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
-    return {relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -961,6 +976,7 @@
     .mr2introtop{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.mr2io{display:flex;gap:6px;margin-left:auto}.mr2io button{padding:6px 12px;border-radius:9px;border:1px solid rgba(213,177,118,.4);background:rgba(213,177,118,.1);color:#f1d69f;font-size:12px;font-weight:700;cursor:pointer}.mr2io button:hover:not(:disabled){background:rgba(213,177,118,.2)}.mr2io button:disabled{opacity:.4;cursor:not-allowed}
     .mr2binfo{border:1px solid rgba(148,163,184,.2);border-radius:14px;padding:12px 14px;background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.015));display:grid;gap:10px}.mr2binfo.win{border-color:rgba(255,210,74,.4);background:linear-gradient(135deg,rgba(255,210,74,.1),rgba(213,177,118,.03))}.mr2binfo.lose{border-color:rgba(255,107,107,.4);background:linear-gradient(135deg,rgba(255,107,107,.1),rgba(255,255,255,.02))}
     .mr2bhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.mr2verdict{font-size:20px;font-weight:900;letter-spacing:2px;color:#ffd24a;text-shadow:0 0 14px rgba(255,210,74,.35)}.mr2binfo.lose .mr2verdict{color:#ff8a80;text-shadow:0 0 14px rgba(255,107,107,.3)}.mr2binfo:not(.win):not(.lose) .mr2verdict{color:#aab6c7;text-shadow:none}.mr2btitle{display:grid;gap:2px;min-width:0}.mr2btitle b{font-size:15px;color:#f4f7fb}.mr2btitle small{font-size:11px;color:#9fb0c6}.mr2bnote{margin-left:auto;font-size:10px;color:#8ea0b6;max-width:340px;text-align:right}
+    .mr2bteam{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin:8px 0}.mr2bm{display:flex;gap:8px;align-items:flex-start;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.14)}.mr2bm>div{display:grid;gap:2px;min-width:0}.mr2bm b{font-size:12px;color:#e8edf5}.mr2bm small{font-size:10px;color:#8ea0b6;line-height:1.45}.mr2bm small.g{color:#a9b9cf}.mr2bm small small{color:#e9c97a}
     .mr2bmeta{display:flex;flex-wrap:wrap;gap:6px}.mr2bmeta span{display:grid;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.04);min-width:64px}.mr2bmeta small{font-size:9px;color:#7f8ea2}.mr2bmeta b{font-size:13px;color:#e6edf6}.mr2bmeta .id{flex:1 1 260px}.mr2bmeta .id b{font-size:10px;font-weight:600;color:#8ea0b6;word-break:break-all}
     .mr2mvps{border:1px solid rgba(213,177,118,.25);border-radius:14px;padding:12px 14px;background:linear-gradient(160deg,rgba(213,177,118,.07),rgba(98,183,255,.03));display:grid;gap:10px}.mr2mvptitle{font-size:14px;font-weight:900;color:#f1d69f;letter-spacing:1px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.mr2mvptitle small{font-size:10px;font-weight:400;color:#8ea0b6;letter-spacing:0}
     .mr2mvpgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.mr2mvp{--ac:#d5b176;border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--ac);border-radius:11px;padding:10px 12px;background:rgba(0,0,0,.18);display:grid;gap:8px;align-content:start}.mr2mvp.aw{--ac:#ffd24a}.mr2mvp.wh{--ac:#62b7ff}.mr2mvp.rel{--ac:#67be92}.mr2mvp.cov{--ac:#b57cff}.mr2mvp.kp{--ac:#ff8aa8}
@@ -1467,6 +1483,9 @@
         if(fm&&Number.isFinite(argv(fm[2]))){const K=/^\d+$/.test(fm[1])?Number(fm[1]):'一二三四五六七八九十'.indexOf(fm[1])+1,N=argv(fm[2]);let extra=0,hits=0;
           for(const list of hitsBy.values())for(const h of list.slice(0,K)){extra+=h.dmg*N/(100+N);hits++}
           if(hits){r.buff={tid:r.tid,kind:'out',gain:N,extra,instances:[{round:0,time:0,gain:N,awakeners:new Set(),extra,hits,temp:false,kind:'out'}]};r.n=r.n||bouts}}}}
+    for(const r of relicRows){
+      const db=tl.relicDebuff?.get(r.tid);if(db){const n=db.times.size;r.n=Math.max(r.n,n);r.eff.push({kind:'debuff',text:ui(`降低敌方力量 共 ${fmt(Math.round(db.total))} 点（${n} 次触发，${db.targets.size} 个目标）`,`Enemy strength −${fmt(Math.round(db.total))} total (${n} triggers, ${db.targets.size} targets)`)})}
+      const cd=tl.relicCond?.get(r.tid);if(cd){r.n=Math.max(r.n,cd.n);for(const x of cd.rounds)if(!r.rounds.includes(x))r.rounds.push(x);r.eff.push({kind:'draw',text:ui(`满足手牌条件触发 ${cd.n} 次，抽牌 ${cd.draws} 张（按手牌数估算）`,`${cd.n} qualifying plays, ${cd.draws} cards drawn (estimated from hand size)`)})}}
     const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
     const buffRows=relicRows.filter(r=>r.buff&&r.buff.gain>0);
     const buffExtra=buffRows.reduce((n,r)=>n+r.buff.extra,0),powerGain=buffRows.filter(r=>r.buff.kind==='power').reduce((n,r)=>n+r.buff.gain,0),basicGain=buffRows.filter(r=>r.buff.kind==='basic').reduce((n,r)=>n+r.buff.gain,0);
@@ -1797,6 +1816,23 @@
     return `<details class="mr2round mr2stats"><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('概览 / 角色 / 节奏 / 造物 / 命轮密契 / 特殊机制 / 校验','overview / characters / rhythm / relics / gear / mechanics / checks')}</small></summary><div class="mr2rbody mr2dash"><div class="mr2tabs">${tabs.map(([k,l],i)=>`<button type="button" class="mr2tabbtn${i?'':' on'}" data-tab="${k}">${l}</button>`).join('')}</div>${tabs.map(([k,,h],i)=>`<div class="mr2tabpane" data-pane="${k}"${i?' hidden':''}>${h}</div>`).join('')}${st.havePacks?'':`<div class="mr2status">${ui('此回放缺少游戏内统计包，伤害按逐次命中事件重建，造物额外伤害无法归因。','This replay has no in-game stat packs; damage is rebuilt from hit events and relic damage cannot be attributed.')}</div>`}</div></details>`;
   }
   // ---- battle info header + victory-style MVP summary --------------------------------------
+  // compact team card row (same information as a search-result / top-5 team): avatar, level, enlightenment, wheels with stack, covenants
+  function renderTeamBrief(full,tl){
+    const bd=full.battleDat||{},res=tl.res,roles=bd.roleData||[],list=bd.stateList||[];if(!roles.length)return '';
+    const hit=window.MorimensDtideTeamLookup?.(full.replayUuid||bd.battleUuid),tm=hit?.team?.members||[];
+    const cats=Object.values(gearCatalog?.covenants||{}),cnOf=id=>String(res.state[String(id)]?.CnID||'');
+    const enl=p=>{p=Number(p);return !Number.isFinite(p)?'':p<=3?ui(`${p}启`,`E${p}`):`+${p-3}`};
+    const stk=n=>n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`;
+    const cards=roles.map(ri=>{
+      const a=tl.actors.get(String(ri.uid));if(!a)return '';
+      const nm=String(res.aw[String(ri.tid)]?.NameEn||'').toLowerCase(),m=tm.find(x=>[x.name,x.canonicalName].some(y=>String(y||'').toLowerCase()===nm)),mine=list.filter(x=>String(x.ownerData?.uid)===String(ri.uid));
+      const wheels=mine.filter(x=>(x.source||[]).some(q=>q.sourceType==='Weapon')).map(x=>{const q=x.source.find(z=>z.sourceType==='Weapon'),c=gearCatalog?.wheels?.[String(q.tid)];if(!c)return '';const st=full.__ws?.get(String(ri.uid)+'|'+q.tid);return `${esc(c.zh||c.en)}${st?` <small>${ui('叠位','Stack')} ${st.n}/${st.max}</small>`:''}`}).filter(Boolean);
+      const stems=[...new Set(mine.filter(x=>/^状态@饰品/.test(cnOf(x.stateId))).map(x=>cnOf(x.stateId).replace(/^状态@饰品/,'')))],seen=new Set(),covs=[];
+      for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((x,y)=>y.zh.length-x.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);const tc=(m?.covenants||[]).find(k=>String(k.name).toLowerCase()===String(c.en||'').toLowerCase());covs.push(`${esc(c.zh)}${tc?.count?` <small>${esc(tc.count)}${ui('件','pc')}</small>`:''}`)}}
+      const sf=full.__sf?.get(String(ri.uid));
+      return `<div class="mr2bm">${ico(a.icon,a.name,'av')}<div><b>${esc(a.name)}</b><small>Lv${esc(ri.level)} · ${esc(enl(ri.potencyLevel))}${sf?` · ${ui('灵塑','Soulforge')} ${sf}`:''}${m?.covenantScore!=null?` · ${ui('密契评分','Cov.')} ${esc(m.covenantScore)}`:''}</small>${wheels.length?`<small class="g">${ui('命轮','Wheel')}：${wheels.join(' / ')}</small>`:''}${covs.length?`<small class="g">${ui('密契','Covenant')}：${covs.join(' / ')}</small>`:''}</div></div>`}).join('');
+    return cards?`<div class="mr2bteam">${cards}</div>`:'';
+  }
   function renderBattleInfo(full,tl){
     const bd=full.battleDat||{},res=tl.res,stage=res.rr?.Stage?.[String(bd.stageId)]||{};
     const stageName=(pipeName(stage.Name)||tailCn(stage.CnID)||`Stage ${bd.stageId??''}`).replace(/<[^>]+>/g,'');
@@ -1809,9 +1845,14 @@
     const bosses=[...new Set([...tl.actors.values()].filter(a=>a.camp===2&&a.kind==='monster').map(a=>a.name))].slice(0,3);
     const win=tl.result?.winCamp===1,lost=tl.result&&tl.result.winCamp!=null&&tl.result.winCamp!==1;
     const verdict=win?ui('胜利','VICTORY'):lost?ui('战败','DEFEAT'):ui('结果未知','RESULT UNKNOWN');
+    // the structured statistics block is missing from some replays: fall back to the finish packet, then to what the timeline counted
+    const fin=tl.battleCounts?.()||{},pick=(...vals)=>{for(const v of vals)if(Number.isFinite(Number(v))&&v!=null&&Number(v)>0)return Number(v);return 0};
+    const bs=bd.statistics||{},fs0=fin.finish?.BattleStats||fin.finish?.GlobalStats||fin.finish||{};
+    const cnt={cards:pick(bs.UsedCardCount,fs0.UsedCardCount,fin.cards),deathResist:pick(bs.DeathResistCount,fs0.DeathResistCount,fin.deathResist),kills:pick(bs.KillCount,fs0.KillCount,fin.kills)};
     const k0=bd.keeperSkill!=null?res.nameSkill(bd.keeperSkill):'',k=/^\d+$/.test(String(k0))?'':k0;
     return `<div class="mr2binfo ${win?'win':lost?'lose':''}"><div class="mr2bhead"><span class="mr2verdict">${esc(verdict)}</span><div class="mr2btitle"><b>${esc(stageName)}</b><small>${season?`${ui('融灾','Dzone')} ${esc(season)} ${ui('期','')} · `:''}${esc(dateText)} ${when?ui('战斗','battle'):''}${bosses.length?` · ${esc(bosses.join(' / '))}`:''}</small></div><span class="mr2bnote">${esc(keepNote)}</span></div>
-      <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.filter(r=>!r.dim).length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(bd.statistics?.UsedCardCount??'—')}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(bd.statistics?.DeathResistCount??0)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(bd.statistics?.KillCount??0)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
+      ${renderTeamBrief(full,tl)}
+      <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.filter(r=>!r.dim).length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(cnt.cards)}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(cnt.deathResist)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(cnt.kills)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
   }
   const DIMS_UI=()=>[['out',ui('输出','Output')],['def',ui('防御','Defense')],['sup',ui('辅助','Support')]];
   function renderMvp(full,tl,st){
