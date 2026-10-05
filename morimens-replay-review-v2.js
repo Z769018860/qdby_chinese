@@ -1584,6 +1584,8 @@
     const mvp=(()=>{
       // ---- three categories: output / defence / support; every raw metric is listed in the expanded details -----------------
       const CAT_W={out:1,def:1,sup:1};
+      /* control = hard control + 脆弱; 虚弱 is already valued as prevented damage (减伤), so it only counts here when no prevented damage was credited for it */
+      const weakCovered=sp=>[...(sp.prevTypes?.entries?.()||[])].some(([n,v])=>/虚弱/.test(n)&&v>0),ctlOf=sp=>(sp.dbCls.ctrl||0)*3+(weakCovered(sp)?0:(sp.dbCls.weak||0)*2)+(sp.dbCls.frail||0)*2;
       const SUBW={def:{sh:40,mit:30,ctl:20,dr:10},sup:{key:1.5,ali:1.5,seal:.5,eng:1.5,vuln:1.5,buf:1.5,cut:1,draw:1,cyc:.5,realm:.5,emb:.5}};
       const roles=bd.roleData||[],attrOf=uid=>roles.find(x=>String(x.uid)===String(uid))?.attrs||{};
       const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0});
@@ -1599,7 +1601,7 @@
       const deathSaves=Number(bd.statistics?.DeathResistCount)||0;
       const vE=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+v.vulnExtra,0);
       const sub=(sp,extra={})=>({
-        key:sp.key,ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire+sp.costCut,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0),cut:sp.cut+sp.costCut,draw:sp.draws,cyc:sp.cycles,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards});
+        key:sp.key,ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.5*sp.cycles,cyc:0,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards});
       // raw metrics of one entity -> {out:{...},def:{...},sup:{...}}
       const rawOf=(o)=>o; // placeholder to keep structure readable
       const rate=(items,{withEff=false}={})=>{
@@ -1629,15 +1631,15 @@
         const tg=cand.reduce((n,c)=>n+supOf('act:'+c.a.uid).tenGain,0);out.ten+=tg>0?TD*sp.tenGain/tg:0;   // tentacle damage is dealt by the team: credit by tentacle bonus raised
         const drv=(at.death_resist||0)+sp.dr,drShare=drTotal>0?drv/drTotal:0;
         const rep=r.dmg;
-        return {r,out,outT:Object.values(out).reduce((a,b)=>a+b,0),sh:r.block+1.2*r.heal+0.5*(sp.maxHp||0),maxHp:sp.maxHp||0,ampTypes:[...(sp.ampTypes||new Map()).entries()].map(([n,v])=>({n,v})),block:r.block,heal:r.heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:(sp.dbCls.ctrl||0)*3+(sp.dbCls.weak||0)*2+(sp.dbCls.frail||0)*2,dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),
+        return {r,out,outT:Object.values(out).reduce((a,b)=>a+b,0),sh:r.block+1.2*r.heal+0.5*(sp.maxHp||0),maxHp:sp.maxHp||0,ampTypes:[...(sp.ampTypes||new Map()).entries()].map(([n,v])=>({n,v})),block:r.block,heal:r.heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),
           dr:drv+deathSaves*drShare*100,drBase:drv,saves:deathSaves*drShare,
           sup:sub(sp,{buf:(bf?.extra||0),rm:at.occupation_master||0}),bufPower:bf?.instances?.filter(i=>i.kind==='power').reduce((n,i)=>n+i.extra,0)||0,bufCrit:bf?.instances?.filter(i=>i.kind==='crit'||i.kind==='critrate').reduce((n,i)=>n+i.extra,0)||0,vulnExtra:sp.vulnExtra,
-          powerGain:sp.powerGain,critGain:sp.critGain,critRateGain:sp.critRateGain,inspire:sp.inspire,costCut:sp.costCut,copies:sp.copies,ultCasts:sp.ultCasts,tenGain:sp.tenGain,embCards:sp.embCards,plays:r.plays,energy:r.energy,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}});
+          powerGain:sp.powerGain,critGain:sp.critGain,critRateGain:sp.critRateGain,inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,copies:sp.copies,ultCasts:sp.ultCasts,tenGain:sp.tenGain,embCards:sp.embCards,plays:r.plays,energy:r.energy,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}});
       const awMeta=rate(awRaw,{withEff:true});
       const awRows=awRaw.filter(o=>o.outT>0||o.sh>0||o.plays>0||Object.values(o.sup).some(v=>v>0)).sort((a,b)=>b.score-a.score).map(o=>({r:o.r,score:o.score,grade:o.grade,cats:o.cats,x:o,share:totalDmg?o.r.dmg/totalDmg:0}));
       // ---- wheels / covenants / relics (same categories, rated inside their own class)
       const itemRaw=(sp,direct,buf,block,heal)=>{const out={dir:0,dot:0,ctr:0,exe:0,ten:0,oth:direct.oth||0};out.dir=direct.dir||0;out.dot=direct.dot||0;
-        return {out,outT:out.dir+out.dot+out.oth,sh:block+1.2*heal,block,heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:(sp.dbCls.ctrl||0)*3+(sp.dbCls.weak||0)*2+(sp.dbCls.frail||0)*2,dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),dr:sp.dr,sup:sub(sp,{buf}),inspire:sp.inspire,costCut:sp.costCut,vulnExtra:sp.vulnExtra,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}};
+        return {out,outT:out.dir+out.dot+out.oth,sh:block+1.2*heal,block,heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),dr:sp.dr,sup:sub(sp,{buf}),inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,vulnExtra:sp.vulnExtra,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}};
       const gearItems=kind=>gearRows.filter(g=>g.kind===kind).map(g=>({g,val:g.extra+g.out.dmg+(g.dot||0),...itemRaw(supOf('gear:'+g.key),{dir:g.out.dmg,dot:g.dot||0},g.extra||0,g.out.block,g.out.heal)}));
       const wheelItems=gearItems('wheel'),covItems=gearItems('covenant');
       const relicItems=relicRows.map(r=>({r,val:r.dmg+(r.buff?.extra||0)+(r.dot||0),...itemRaw(supOf('rel:'+r.tid),{dir:r.dmg,dot:r.dot||0},r.buff?.extra||0,r.block,r.heal)}));
@@ -1944,21 +1946,21 @@
     const typeNote=l=>l.sort((p,q)=>(q.v??q.c)-(p.v??p.c)).slice(0,4).map(t=>`${t.n} ${f(t.v??t.c)}`).join('、');
     const dbBy=k=>x.dbTypes.filter(t=>t.k===k);
     const outRows=[[ui('直接伤害（出牌 / 技能 / 爆发）','Direct'),o.dir],[ui('持续伤害（出血 / 中毒 / 献祭 / 侵蚀…）','DoT'),o.dot],[ui('反击','Counter'),o.ctr],[ui('斩杀（命运裁断等）','Execute'),o.exe],[ui('触腕 / 怒涛（折算）','Tentacle'),o.ten],[ui('其他状态伤害','Other states'),o.oth]].filter(r=>r[1]>0).map(r=>row(r[0],f(r[1]),null)).join('')||`<div class="mr2empty">—</div>`;
-    const ctlNote=[...dbBy('ctrl'),...dbBy('weak'),...dbBy('frail')].map(t=>({n:t.n,c:t.c}));
+    const ctlNote=[...dbBy('ctrl'),...(x.weakCov?[]:dbBy('weak')),...dbBy('frail')].map(t=>({n:t.n,c:t.c}));
     const defRows=[row(ui('护盾','Shield'),f(x.block||0),x.defS.sh,ui('护盾 + 1.2×治疗 合并计分','shield + 1.2×heal')),row(ui('治疗','Heal'),f(x.heal||0),null),...(x.maxHp>0?[row(ui('生命上限提升（饱餐等，按 0.5 折算入护盾项）','Max HP gained'),f(x.maxHp),null)]:[]),
       row(ui('减伤（降低敌方伤害：虚弱 / 降力 / 痴醉 / 恐惧…）','Mitigation'),f(x.mit),x.defS.mit,typeNote(x.prevTypes)),
-      row(ui('控制与弱化（眩晕 / 石化 / 冻结 / 虚弱 / 脆弱 上层次数）','Control'),f((x.dbCls.ctrl||0)+(x.dbCls.weak||0)+(x.dbCls.frail||0)),x.defS.ctl,typeNote(ctlNote)),
+      row(ui('控制（眩晕 / 石化 / 冻结 / 脆弱 上层次数；虚弱已计入减伤）','Control'),f((x.dbCls.ctrl||0)+(x.weakCov?0:(x.dbCls.weak||0))+(x.dbCls.frail||0)),x.defS.ctl,typeNote(ctlNote)),
       row(ui('死亡抵抗（面板 / 额外提供 + 救场归属）','Death resist'),f(x.dr),x.defS.dr,x.saves>0?ui(`救场 ${x.saves.toFixed(1)} 次归属`,`${x.saves.toFixed(1)} saves credited`):'')].join('');
     const S=x.sup,ss=x.supS;
     const supRows=[
       ['key',ui('银钥能量','Keyflare energy'),f(S.key),''],
       ['ali',ui('充狂（给队友 + 0.5×给自己）','Aliemus'),f(S.ali),ui(`队友 ${f(x.aliOthers||0)} / 自己 ${f(x.aliSelf||0)}`,'')],
       ['seal',ui('黑印','Black seals'),f(S.seal),''],
-      ['eng',ui('算力（产生 + 制造灵感 + 复制减费）','Energy'),f(S.eng),ui(`产生 ${f(x.engBase||0)} · 灵感 ${x.inspire||0} · 复制减费 ${f(x.costCut||0)}`,'')],
+      ['eng',ui('算力（产生 + 制造灵感）','Energy'),f(S.eng),ui(`产生 ${f(x.engBase||0)} · 灵感 ${x.inspire||0}`,'')],
       ['vuln',ui('易伤（带来的增伤 / 上层次数）','Vulnerability'),f(S.vuln),typeNote(dbBy('vuln'))],
       ['buf',ui('其他伤害加成（力量 / 暴击 / 基伤的间接伤害）','Damage buffs'),f(S.buf),ui(`力量 ${f(x.bufPower||0)} · 暴击 ${f(x.bufCrit||0)}`,'')],
       ['cut',ui('减费（点数）','Cost cuts'),f(S.cut),ui(`复制 ${f(x.copies||0)} 张`,'')],
-      ['draw',ui('抽牌','Draws'),f(S.draw),''],['cyc',ui('过牌（取回 / 置顶 / 效果弃牌）','Cycling'),f(S.cyc),''],
+      ['draw',ui('抽牌与过牌（过牌按 0.5 折算）','Draw & cycling'),f(S.draw),ui(`抽牌 ${f(x.draws||0)} · 过牌 ${f(x.cycles||0)}（取回 / 置顶 / 效果弃牌）`,'')],
       ['realm',ui('界域精通','Realm mastery'),f(S.realm),''],['emb',ui('胚胎融合 / 制造胚胎','Embryo fusion'),f(S.emb),'']
     ].filter(r=>(S[r[0]]||0)>0).map(r=>row(r[1],r[2],ss[r[0]],r[3])).join('')||`<div class="mr2empty">—</div>`;
     const eff=x.eff?`<div class="mr2effline">${ui('出牌效率','Card efficiency')}：${ui(`贡献份额 ${(x.eff.cs*100).toFixed(1)}% ÷ 牌权份额 ${(x.eff.pw*100).toFixed(1)}% = ${x.eff.ratio.toFixed(2)}，综合评分 ×${x.eff.mod.toFixed(2)}`,`ratio ${x.eff.ratio.toFixed(2)}, score ×${x.eff.mod.toFixed(2)}`)}</div>`:'';
@@ -2022,8 +2024,8 @@
     const subW=(o)=>Object.entries(o).map(([k,v])=>`${k}×${v}`).join(' ');
     const model=ui(`<p><b>三大类均分</b>：输出、防御、辅助各占 1/3（本场没人产出的大类自动剔除并重新分配）。每个小项的得分 = 占同类总量的份额，达到公平份额（1/${m.model.N}）的 2 倍记 100 分；大类得分是其小项得分的加权平均，<b>综合评分 = 大类加权平均 × 出牌效率修正（×0.90~1.10）</b>。点击每一行可展开全部小项。</p>
       <ul><li><b>输出</b>：造成的全部伤害，细分直接伤害（出牌 / 技能 / 爆发）、持续伤害（出血 / 中毒 / 献祭 / 侵蚀…）、反击、斩杀、触腕 / 怒涛（按各唤醒体提高的触腕伤害加成占比折算）、其他状态伤害；以统计包为准。</li>
-      <li><b>防御</b>（小项权重 护盾+治疗 ${SW.def.sh} · 减伤 ${SW.def.mit} · 控制与弱化 ${SW.def.ctl} · 死亡抵抗 ${SW.def.dr}）：护盾 + 1.2×治疗；<u>减伤</u> = 降低敌方多少伤害（按敌方每次主动攻击的实际伤害反推：虚弱 / 痴醉 / 恐惧固着等百分比减伤 = 伤害×p/(1−p)，降力等固定减伤 = 降低的点数，按状态施加者分摊）；控制与弱化 = 眩晕 / 石化 / 冻结等控制（每次 3 点）与虚弱 / 脆弱上层（每次 2 点）；死亡抵抗 = 面板值 + 战斗中额外提供，并按占比分配「实际救场」次数（每次 100 点）。</li>
-      <li><b>辅助</b>（小项权重 ${subW(SW.sup)}）：银钥能量、充狂（给队友 + 0.5×给自己）、黑印、算力（产生 + 制造灵感 + 复制减费）、易伤（带来的增伤，没有则按上层次数）、其他伤害加成（力量 / 暴击伤害 / 暴击率 / 基础伤害的间接额外伤害，用拟合的力量倍率和逐次命中估算）、减费（卡牌算力消耗降低点数）、抽牌、过牌（取回 / 置顶 / 效果弃牌）、界域精通、胚胎融合。</li></ul>
+      <li><b>防御</b>（小项权重 护盾+治疗 ${SW.def.sh} · 减伤 ${SW.def.mit} · 控制 ${SW.def.ctl} · 死亡抵抗 ${SW.def.dr}）：护盾 + 1.2×治疗；<u>减伤</u> = 降低敌方多少伤害（按敌方每次主动攻击的实际伤害反推：虚弱 / 痴醉 / 恐惧固着等百分比减伤 = 伤害×p/(1−p)，降力等固定减伤 = 降低的点数，按状态施加者分摊）；控制 = 眩晕 / 石化 / 冻结等控制（每次 3 点）与脆弱上层（每次 2 点）；虚弱已按减伤计算，不再重复计入；死亡抵抗 = 面板值 + 战斗中额外提供，并按占比分配「实际救场」次数（每次 100 点）。</li>
+      <li><b>辅助</b>（小项权重 ${subW(SW.sup)}）：银钥能量、充狂（给队友 + 0.5×给自己）、黑印、算力（产生 + 制造灵感）、易伤（带来的增伤，没有则按上层次数）、其他伤害加成（力量 / 暴击伤害 / 暴击率 / 基础伤害的间接额外伤害，用拟合的力量倍率和逐次命中估算）、减费（卡牌算力消耗降低点数，含复制减费）、抽牌与过牌（过牌 = 取回 / 置顶 / 效果弃牌，按 0.5 折算）、界域精通、胚胎融合。</li></ul>
       <p><b>守密人（决策）</b>：钥令选择、战斗效率、出牌是否最优三项均分。钥令选择 = 所选钥令的实际价值 ÷ 同次可选技能里已知价值最高者；战斗效率 = 算力利用率、手牌利用率（回合末未被弃掉）、算力未溢出的平均；出牌最优 = 每回合在同一手牌、同一算力预算下，所打出的牌相对于背包最优组合所能达到的伤害 / 防御比例（每张牌的产出取本场实际平均值估算）。</p><p>归属规则：同一帧触发的造物 > 同一帧触发的命轮 / 密契 > 正在结算的行动（含派生技能的施放者）> 无来源（回合开始等被动，不计）。回放没有记录战斗内黑印的变化，黑印一项保留但通常为 0；减伤只统计敌方的主动攻击。等级：≥80 S，≥65 A，≥50 B，≥35 C，其余 D。</p>
       <p><b>增强模型（已合并）</b>：唤醒体按主定位自适应（主职权重最高，并用贡献 / 牌权修正效率）；命轮 / 密契综合实战贡献与静态机制价值（手牌上限、算力上限、抽牌、减费、易伤、死亡抵抗、取回循环等按语义计分）；守密人按出牌决策、资源管理、钥令选择分层计分，未知信息按置信度收缩。</p>
       <p>全队合计：输出 ${fmt(T.out)}，护盾+治疗 ${fmt(Math.round(T.sh))}，减伤 ${fmt(Math.round(T.mit))}，控制弱化 ${fmt(Math.round(T.ctl))}；实际救场 ${m.model.deathSaves} 次。</p>`,`<p>Three categories (output / defense / support), each a weighted mean of share-based sub-scores; the composite is multiplied by a 0.9-1.1 card-efficiency factor. Click a row for every sub-metric.</p>`);
