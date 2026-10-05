@@ -8,7 +8,7 @@ const ui=(cn,en)=>zh()?cn:en;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clean=s=>String(s??'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const norm=s=>clean(s).normalize('NFKC').toLowerCase();
-let lastCtx=null,scheduled=false;
+let lastCtx=null,scheduled=false,lastPeakKey='';
 
 function installStyle(){
   if(document.getElementById('morimensDtideBattleUiV2Style'))return;
@@ -117,6 +117,9 @@ function enhance(){
   const blocks=h4?.nextElementSibling;if(!blocks?.classList.contains('dtideBattleBlocks'))return;
   decorateExisting(blocks);
   if(!lastCtx)return;
+  const filterKey=JSON.stringify(currentPlayerFilter()),coreKey=[...blocks.querySelectorAll(':scope>.dtideBattleBlock:not([data-extra-peak])')].map(x=>clean(x.textContent)).join('§'),peakKey=`${zh()?'zh':'en'}|${filterKey}|${coreKey}`;
+  if(peakKey===lastPeakKey&&blocks.querySelectorAll(':scope>[data-extra-peak]').length===2)return;
+  lastPeakKey=peakKey;
   const players=scopedPlayers(lastCtx);
   const wanted=[
     ['maxRounds',{zh:'最多回合数',en:'Most Rounds'},b=>b?.stageRoundCount,v=>`${Math.round(v)} ${ui('回合','rounds')}`],
@@ -133,15 +136,15 @@ function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(enh
 
 function wrapApi(){
   const api=window.MorimensDtideBattle;if(!api?.render||api.render.__battleUiWrapped)return false;
-  const original=api.render.bind(api);const wrapped=(el,ctx)=>{lastCtx=ctx;const out=original(el,ctx);schedule();return out};wrapped.__battleUiWrapped=true;api.render=wrapped;return true;
+  const original=api.render.bind(api);const wrapped=(el,ctx)=>{lastCtx=ctx;lastPeakKey='';const out=original(el,ctx);schedule();return out};wrapped.__battleUiWrapped=true;api.render=wrapped;return true;
 }
 function start(){
   installStyle();wrapApi();
   new MutationObserver(schedule).observe(document.documentElement,{subtree:true,childList:true});
-  document.addEventListener('input',e=>{if(e.target.closest?.('[data-bf]'))setTimeout(schedule,380)},true);
-  document.addEventListener('change',e=>{if(e.target.closest?.('[data-bmetric]'))schedule()},true);
-  document.addEventListener('click',e=>{if(e.target.closest?.('[data-bview],[data-breset],[data-bsort],[data-dtide-battle-tab]'))setTimeout(schedule,0)},true);
-  window.addEventListener('morimens-language-change',()=>setTimeout(schedule,0));schedule();
+  document.addEventListener('input',e=>{if(e.target.closest?.('[data-bf]')){lastPeakKey='';setTimeout(schedule,380)}},true);
+  document.addEventListener('change',e=>{if(e.target.closest?.('[data-bmetric]')){lastPeakKey='';schedule()}},true);
+  document.addEventListener('click',e=>{if(e.target.closest?.('[data-bview],[data-breset],[data-bsort],[data-dtide-battle-tab]')){lastPeakKey='';setTimeout(schedule,0)}},true);
+  window.addEventListener('morimens-language-change',()=>{lastPeakKey='';setTimeout(schedule,0)});schedule();
 }
 start();
 })();

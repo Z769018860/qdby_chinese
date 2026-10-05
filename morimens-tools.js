@@ -71,7 +71,7 @@ function setupMorimensReplayShell(){
 
 (async()=>{
   try{
-  const assetVersion="20261005.1";
+  const assetVersion="20261005.2";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -91,6 +91,7 @@ function setupMorimensReplayShell(){
     }));
     await import(`./morimens-dtide-loader.js?v=${assetVersion}`);
     await import(`./morimens-dtide-battle.js?v=${assetVersion}`);
+    await import(`./morimens-dtide-battle-ui.js?v=${assetVersion}`);
     await import(`./morimens-dtide-zones.js?v=${assetVersion}`);
     await import(`./morimens-tierlist.js?v=${assetVersion}`);
     await import(`./morimens-summon-calendar.js?v=${assetVersion}`);
