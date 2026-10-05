@@ -42,9 +42,36 @@ function setupMorimensMascotToggle(){
 }
 setupMorimensMascotToggle();
 
+function setupMorimensReplayShell(){
+  const tabs=document.getElementById('morimensTabs');
+  if(!tabs||document.getElementById('morimensReplayTab'))return;
+  const isEn=()=>localStorage.getItem('morimens.language')==='en';
+  const ui=(zh,en)=>isEn()?en:zh;
+  if(!document.getElementById('morimensReplayShellStyle')){
+    const style=document.createElement('style');style.id='morimensReplayShellStyle';style.textContent=`
+      .mrReplayShellDemo{display:inline-flex;margin-left:5px;padding:1px 5px;border:1px solid rgba(213,177,118,.32);border-radius:999px;color:#e2c797;font-size:8px;line-height:1.2;vertical-align:1px}
+      .mrReplayShell{display:grid;gap:12px}.mrReplayShellIntro{padding:18px;border:1px solid rgba(148,163,184,.14);border-radius:14px;background:linear-gradient(145deg,rgba(20,28,41,.56),rgba(9,15,24,.52))}.mrReplayShellIntro h2{margin:0;color:#ead9b9;font-size:20px}.mrReplayShellIntro p{margin:7px 0 0;color:#8b99ac;font-size:12px;line-height:1.7}
+      .mrReplayShellSkeleton{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.mrReplayShellSkeleton i{display:block;height:92px;border:1px solid rgba(148,163,184,.1);border-radius:12px;background:linear-gradient(100deg,rgba(255,255,255,.025) 20%,rgba(255,255,255,.07) 38%,rgba(255,255,255,.025) 56%);background-size:220% 100%;animation:mrReplayShellPulse 1.35s linear infinite}.mrReplayShellState{display:flex;align-items:center;gap:8px;color:#78879a;font-size:11px}.mrReplayShellState:before{content:'';width:7px;height:7px;border-radius:50%;background:#d2ad6c;box-shadow:0 0 10px rgba(210,173,108,.35)}
+      @keyframes mrReplayShellPulse{to{background-position:-220% 0}}@media(max-width:700px){.mrReplayShellSkeleton{grid-template-columns:1fr}.mrReplayShellSkeleton i{height:64px}}@media(prefers-reduced-motion:reduce){.mrReplayShellSkeleton i{animation:none}}
+    `;document.head.appendChild(style);
+  }
+  const tab=document.createElement('button');tab.className='morimensTab';tab.id='morimensReplayTab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected','false');tab.setAttribute('aria-controls','morimensReplayPanel');tab.innerHTML=`${ui('战斗回放复盘','Replay Review')}<span class="mrReplayShellDemo">demo</span>`;
+  const anchor=document.getElementById('morimensZonesTab')||document.getElementById('morimensDtideTab');anchor?.insertAdjacentElement('afterend',tab)||tabs.appendChild(tab);
+  const panel=document.createElement('div');panel.id='morimensReplayPanel';panel.setAttribute('role','tabpanel');panel.hidden=true;panel.innerHTML=`<section class="panel"><div class="mrReplayShell"><div class="mrReplayShellIntro"><h2>${ui('战斗回放复盘','Battle Replay Review')}</h2><p>${ui('复盘标签已就绪。回放解析模块正在异步加载；加载完成后可直接输入 battleUuid 或完整回放码。','The replay tab is ready. The decoder is loading asynchronously; once ready you can enter a battleUuid or full replay code.')}</p></div><div class="mrReplayShellSkeleton"><i></i><i></i><i></i></div><div class="mrReplayShellState">${ui('正在加载回放解码、评分与导出模块…','Loading replay decoder, scoring and export modules…')}</div></div></section>`;
+  tabs.insertAdjacentElement('afterend',panel);
+  const activate=()=>{
+    tabs.querySelectorAll('.morimensTab').forEach(item=>item.setAttribute('aria-selected',String(item===tab)));
+    document.querySelectorAll('[role="tabpanel"]').forEach(item=>{if(item.closest('main,body'))item.hidden=item!==panel});
+    panel.hidden=false;history.replaceState(null,'','#replay');
+  };
+  tab.addEventListener('click',activate);
+  tabs.addEventListener('click',event=>{const target=event.target.closest('.morimensTab');if(target&&target!==tab){panel.hidden=true;tab.setAttribute('aria-selected','false')}},true);
+  if(location.hash==='#replay')activate();
+}
+
 (async()=>{
   try{
-  const assetVersion="20261004.53";
+  const assetVersion="20261005.1";
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -70,6 +97,9 @@ setupMorimensMascotToggle();
     await import(`./morimens-birthday-calendar.js?v=${assetVersion}`);
     await import(`./morimens-dtide.js?v=${assetVersion}`);
     await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+    setupMorimensReplayShell();
+    await import(`./morimens-replay-scoring.js?v=${assetVersion}`);
+    await import(`./morimens-replay-timeline.js?v=${assetVersion}`);
     const parts=await legacyParts;
     const binary=atob(parts.join(""));
     const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
@@ -111,11 +141,10 @@ setupMorimensMascotToggle();
     await import(`./morimens-calculator-realms.js?v=${assetVersion}`);
     await import(`./morimens-calculator-combat.js?v=${assetVersion}`);
     try{await import(`./morimens-calculator-export.js?v=${assetVersion}`)}catch(exportError){console.error("Damage report exporter failed to load",exportError)}
-    await import(`./morimens-replay-scoring.js?v=${assetVersion}`);
-    await import(`./morimens-replay-timeline.js?v=${assetVersion}`);
     await import(`./morimens-replay-score-enhancer.js?v=${assetVersion}`);
     await import(`./morimens-replay-export-v2.js?v=${assetVersion}`);
     await import(`./morimens-dtide-usage.js?v=${assetVersion}`);
+    await import(`./morimens-dtide-team-ui.js?v=${assetVersion}`);
     await import(`./morimens-dtide-progression-fix.js?v=${assetVersion}`);
     await import(`./morimens-assist-list.js?v=${assetVersion}`);
     const seasonSelect=document.getElementById('dtideSeason');
