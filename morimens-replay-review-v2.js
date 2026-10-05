@@ -348,6 +348,9 @@
 
     const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
     const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,dim:!Number.isInteger(n),events:[]});return rounds.get(n)};
+    // relic state evidence: a relic's own states being added / stacked after the opening prove it fired even when no relic-trigger event exists
+    const relicOfState=new Map(),relicStateAdds=new Map();
+    for(const tid of new Set([...(bd.relics||[]).map(r=>String(r.tid)),...[...res.relic?Object.keys(res.relic):[]]]))for(const [k,v] of Object.entries(res.relic[tid]||{}))if(/^State\d+$/.test(k)&&Array.isArray(v))for(const sid of v){const a=relicOfState.get(String(sid))||[];a.push(tid);relicOfState.set(String(sid),a)}
     const layerSeries=new Map(),dynIds=new Set();
     const layerPeak=new Map();   // owner|stateId -> highest layer seen (to evaluate effects that scale with a state's layer)
     let dimOn=false;const rk=()=>dimOn?bout+.5:bout;   // the Ultra-Space (超维) bout reuses the bout number: it is stored as its own round, bout + .5
@@ -393,6 +396,8 @@
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
     const relicKind=tid=>{const rec=res.relic[String(tid)]||{};const t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0));return /力量/.test(t)?'power':/基础伤害/.test(t)?'basic':null};
+    const relicTxt=tid=>{const rec=res.relic[String(tid)]||{};return pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||''};
+    const RELIC_GEN={crit:['critrate',/暴击率/],crit_damage:['crit',/暴击伤害/],i_damage_per:['final',/最终伤害/],o_damage_per:['out',/(?<!基础)伤害(?:提高|增加|提升)/]};
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
@@ -511,7 +516,8 @@
       }
     };
 
-    const buffOf=tid=>{const k=String(tid);if(!relicBuffs.has(k))relicBuffs.set(k,{tid:k,kind:relicKind(tid),gain:0,extra:0,instances:[]});return relicBuffs.get(k)};
+    const genKind=tid=>{const t=relicTxt(tid);return /暴击率/.test(t)?'critrate':/暴击伤害/.test(t)?'crit':/最终伤害/.test(t)?'final':RELIC_GEN.o_damage_per[1].test(t)?'out':null};
+    const buffOf=tid=>{const k=String(tid);if(!relicBuffs.has(k))relicBuffs.set(k,{tid:k,kind:relicKind(tid)||(String(tid).startsWith('gear:')?null:genKind(tid)),gain:0,extra:0,instances:[]});return relicBuffs.get(k)};
     // one relic trigger -> one instance (gain counted once per trigger, per-awakener amounts used for the damage split)
     const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp,kind:rel.kind};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
     const grant=(ctx,uid,amt,rel,temp)=>{const k=String(uid);ctx.inst.awakeners.add(k);if(!activeBuff.has(k))activeBuff.set(k,[]);activeBuff.get(k).push({inst:ctx.inst,kind:rel.kind,amt,temp,rel:ctx.rec})};
@@ -638,6 +644,16 @@
               grant(relWin.basicCtx,uid,Number(d.changedValue),relWin.basicCtx.rel,false);
             }
           }
+          if(relWin){
+            // generic permanent / stacking buffs a relic lands in its window (crit rate, crit damage, final / outgoing damage): the property that changes names the kind
+            if(e===1028&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'&&RELIC_GEN[d.propertyType]){
+              const [kd,re]=RELIC_GEN[d.propertyType],uid=String(d.uid);
+              const cands=relWin.queue.filter(q=>re.test(relicTxt(q.tid))),exact=cands.filter(q=>(res.relic[String(q.tid)]?.StatePara||[]).some(v=>Math.abs(Number(v)-Number(d.changedValue))<1e-6)||new RegExp('(?:^|[^\\d.])'+Number(d.changedValue)+'(?:[^\\d]|$)').test(relicTxt(q.tid)));
+              for(const q of (exact.length?exact:cands)){const gk=q.tid+'|'+d.propertyType;relWin.gctx=relWin.gctx||new Map();
+                let ctx=relWin.gctx.get(gk);if(!ctx||ctx.inst.awakeners.has(uid)){ctx=newInstance(relWin,{tid:q.tid,kind:kd},Number(d.changedValue),false);relWin.gctx.set(gk,ctx)}
+                grant(ctx,uid,Number(d.changedValue),{tid:q.tid,kind:kd},false);break}
+            }
+          }
           // ---- state tracking (runs for every frame, including pre-battle setup)
           if(e===1028&&d.propertyType==='card_strength_multiple'&&d.uid!=null&&typeof d.value==='number')cardMul.set(String(d.uid),d.value);
           if(e===1028&&d.value!=null&&d.uid!=null&&typeof d.value==='number'&&actors.has(String(d.uid))){const u=unit(d.uid);(u.props=u.props||{})[d.propertyType]=d.value;if(PROP[d.propertyType])u[PROP[d.propertyType]]=d.value}
@@ -682,6 +698,7 @@
           else if(e===1005&&d.stateUid!=null){const cur=stateMap(d.ownerUid).get(String(d.stateUid));if(cur?.stateId===3130)expireTemp();stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
           if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0)gearTrigger('deathResist',{},fr.time);
+          if((e===1004||e===1006||(e===1007&&(d.newLayer||0)>(d.oldLayer||0)))&&d.stateId!=null&&relicOfState.has(String(d.stateId))&&bout>0&&!/计数|标记|标识|限额|监听|统计/.test(String(res.state[String(d.stateId)]?.CnID||''))){for(const tid of relicOfState.get(String(d.stateId))){const o=relicStateAdds.get(tid)||{times:new Set(),rounds:new Set()};o.times.add(Math.round((fr.time||0)*10));o.rounds.add(bout);relicStateAdds.set(tid,o)}}
           if((e===1004||e===1006||e===1007)&&d.stateId!=null){const ly=e===1007?Number(d.newLayer):Number(d.layer||1),k=String(d.ownerUid??d.roleUid)+'|'+d.stateId;if(ly>(layerPeak.get(k)||0))layerPeak.set(k,ly)}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)<0&&bout>0&&(d.propertyType==='card_cost'||d.propertyType==='awaker_cmdcard_notextend_cost_fix')){
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
@@ -839,7 +856,7 @@
       const ser=[];for(const o of owners)ser.push(...(layerSeries.get(o+'|'+usedLayer)||[]));const avgL=ser.length?ser.reduce((a,b)=>a+b,0)/ser.length:null;
       const avgT=avgL==null?null:evalNum(String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,avgL).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
       if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
-    return {gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1429,6 +1446,7 @@
     // relics: trigger counts + output attributed through the states each relic carries
     const trig=new Map();for(const e of events)if(e.kind==='relic'&&!e.gained){const o=trig.get(String(e.relicTid))||{n:0,rounds:new Set()};o.n++;o.rounds.add(e.round);trig.set(String(e.relicTid),o)}
     for(const [tid,c] of tl.openRelic||[]){const o=trig.get(tid)||{n:0,rounds:new Set()};o.n+=c;trig.set(tid,o)}
+    for(const [tid,o] of tl.relicStateAdds||[]){const t=trig.get(tid)||{n:0,rounds:new Set()};if(t.n<o.times.size){t.n=o.times.size;for(const r of o.rounds)t.rounds.add(r)}trig.set(tid,t)}
     for(const [tid,pp] of tl.relicPass||[]){const o=trig.get(tid)||{n:0,rounds:new Set()};o.n=Math.max(o.n,pp.n);trig.set(tid,o)}
     const startTids=(bd.relics||[]).map(r=>String(r.tid)),all=[...new Set([...startTids,...trig.keys()])];
     const relicRows=all.map(tid=>{
@@ -1632,6 +1650,7 @@
   // human-readable effect of a trigger command (looked up in the replay's Cmd table)
   // what a wheel / covenant trigger command does, read from the command's own data list (amount from the trigger parameter when it can be evaluated)
   const CMD_LABEL={BEGainUltiEnergy:['狂气','Aliemus'],BEChangeKeeperEnergy:['银钥能量','Keyflare'],BEGainKeeperEnergy:['银钥能量','Keyflare'],BEChangeEnergy:['算力','Energy'],BEHeal:['治疗','Heal'],BEGainBlock:['护盾','Shield'],BEDrawCard:['抽牌','Draw'],BEScarletBloodChange:['胚胎融合','Embryo fusion'],BEChangeTentacleCount:['触手数量','Tentacles'],BEChangeMaxTentacleCount:['触手上限','Tentacle cap']};
+  const BUFF_NAME={basic:['基础伤害','Base damage'],critrate:['暴击率','Crit rate'],crit:['暴击伤害','Crit damage'],final:['最终伤害','Final damage'],out:['伤害加成','Damage bonus']};
   function gearEffectLines(res,e,ch,cnt){
     const cmd=res.rr?.Cmd?.[String(ch.cmd)];if(!cmd)return [];
     const params=e.mainStates[0]?.params||[],out=[];
@@ -1717,7 +1736,7 @@
     const maxR=Math.max(1,...st.relicRows.map(r=>r.n));
     const relicHtml=st.relicRows.map(r=>{
       const b=r.buff&&r.buff.gain>0?r.buff:null,unitW=b?.kind==='power'?ui('力量','Power'):ui('基础伤害%','Basic dmg %');
-      const buffEm=b?`<em class="p">${b.kind==='power'?ui(`力量类 · 共产生 ${fmt(b.gain)} 点力量（每次作用于全队）`,`Power · +${fmt(b.gain)} power (team-wide)`):ui(`基伤类 · 每名唤醒体 +${fmt(Math.round(b.gain*10)/10)}% 基础伤害`,`Basic dmg · +${fmt(Math.round(b.gain*10)/10)}% each`)}</em><em class="d">${ui('估算额外伤害','Est. extra DMG')} ${fmt(Math.round(b.extra))}${st.totalDmg?` (${pctOf(b.extra,st.totalDmg)}%)`:''}</em>`:'';
+      const buffEm=b?`<em class="p">${b.kind==='power'?ui(`力量类 · 共产生 ${fmt(b.gain)} 点力量（每次作用于全队）`,`Power · +${fmt(b.gain)} power (team-wide)`):ui(`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[0]}类 · 每名唤醒体 +${fmt(Math.round(b.gain*10)/10)}% ${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[0]}`,`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[1]} · +${fmt(Math.round(b.gain*10)/10)}% each`)}</em><em class="d">${ui('估算额外伤害','Est. extra DMG')} ${fmt(Math.round(b.extra))}${st.totalDmg?` (${pctOf(b.extra,st.totalDmg)}%)`:''}</em>`:'';
       const inst=b?`<details class="mr2minor relicinst"><summary>${ui(`每次触发明细 ${b.instances.length}`,`Per trigger ${b.instances.length}`)}</summary><div class="mr2srcs">${b.instances.map(i=>`<div class="mr2srow inst"><span class="mr2sname">${ui(`第 ${i.round||'开局'} 回合`,i.round?`R${i.round}`:'Opening')}${i.temp?`<small>${ui('临时力量（本回合）','Temporary')}</small>`:''}</span><span>${b.kind==='power'?`+${fmt(i.gain)} ${ui('力量','power')}`:`+${fmt(Math.round(i.gain*10)/10)}%`}${i.awakeners.size>1?` <small>${ui(`作用 ${i.awakeners.size} 名唤醒体`,`${i.awakeners.size} awakeners`)}</small>`:''}</span><b>${fmt(Math.round(i.extra))}</b><small>${ui(`${i.hits} 次命中`,`${i.hits} hits`)}</small></div>`).join('')}</div></details>`:'';
       return `<div class="mr2relicwrap"><div class="mr2srow relicrow"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<span class="mr2sname">${esc(res.nameRelic(r.tid))}<small>${r.start?ui('开局携带','Starting'):ui('战斗中获得','Gained in battle')}</small></span>${bar(r.n/maxR,'relic')}<b>${r.n?ui(`${r.n} 次`,`${r.n}×`):b||(r.eff||[]).length?ui('开局生效','At start'):ui('未触发','—')}</b><span class="mr2sout">${dotChip(r,st.totalDmg)}${r.dmg?`<em class="d">${ui('额外伤害','DMG')} ${fmt(r.dmg)}${st.totalDmg?` (${pctOf(r.dmg,st.totalDmg)}%)`:''}</em>`:''}${r.block?`<em class="b">${ui('护盾','Shield')} ${fmt(r.block)}</em>`:''}${r.heal?`<em class="h">${ui('治疗','Heal')} ${fmt(r.heal)}</em>`:''}${buffEm}${(r.eff||[]).map(x=>`<em class="n">${esc(x.text)}</em>`).join('')}${supChips(tl,'rel:'+r.tid)}${!r.dmg&&!r.block&&!r.heal&&!b&&!(r.eff||[]).length&&!supChips(tl,'rel:'+r.tid)?`<em class="n">${r.mapped?ui('无直接产出（增益类）','No direct output'):ui('产出未知','Output unknown')}</em>`:''}</span></div>${inst}</div>`;
     }).join('');
@@ -1762,7 +1781,7 @@
     const roles=`<div class="mr2thead"><span>${ui('角色','Character')}</span><span>${ui('出牌','Cards')}</span><span>${ui('算力','Energy')}</span><span>${ui('爆发','Burst')}</span><span>${ui('伤害','Damage')}</span><span>${ui('护盾','Shield')}</span><span>${ui('治疗','Heal')}</span></div>${roleRows}<small class="mr2from">${ui('点击一行展开该角色的伤害 / 护盾来源。出牌数占比（牌权）：','Click a row for its output sources. Card share: ')}${st.per.filter(r=>r.a.kind!=='keeper'&&r.plays).map(r=>`${esc(r.a.name)} ${pctOf(r.plays,st.totalPlays)}%`).join(' · ')}</small>`;
     const rhythm=`<div class="mr2cols2"><div class="mr2panel"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div><div class="mr2panel"><h5>${ui('钥令使用与选择偏好','Keyflare skills & picks')}</h5>${keeperHtml}</div></div>`;
     const relicTiles=st.relicRows.map(r=>{const b=r.buff&&r.buff.gain>0?r.buff:null,val=r.dmg+(b?.extra||0)+(r.dot||0);
-      return `<div class="mr2tile ${r.n||b||(r.eff||[]).length?'':'idle'}"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<div><b>${esc(res.nameRelic(r.tid))}</b><small>${r.start?ui('开局携带','Start'):ui('战斗中获得','Gained')} · ${r.n?ui(`${r.n} 次`,`${r.n}×`):b||(r.eff||[]).length?ui('开局生效','at start'):ui('未触发','idle')}${r.rounds.length&&r.n<=12?` · R${r.rounds.join('/')}`:''}</small>${val>0?`<em>${ui('估算贡献','Est.')} ${fmt(Math.round(val))} (${pctOf(val,st.totalDmg)}%)</em>`:''}${b?`<small class="p">${b.kind==='power'?ui(`+${fmt(b.gain)} 力量`,`+${fmt(b.gain)} power`):ui(`基伤 +${fmt(Math.round(b.gain*10)/10)}%`,`base dmg +${fmt(Math.round(b.gain*10)/10)}%`)}</small>`:''}${r.block?`<small class="b">${ui('护盾','Shield')} ${fmt(Math.round(r.block))}</small>`:''}${r.heal?`<small class="h">${ui('治疗','Heal')} ${fmt(Math.round(r.heal))}</small>`:''}${(r.eff||[]).map(x=>`<small class="p">${esc(x.text)}</small>`).join('')}${supChips(tl,'rel:'+r.tid)}</div></div>`}).join('');
+      return `<div class="mr2tile ${r.n||b||(r.eff||[]).length?'':'idle'}"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<div><b>${esc(res.nameRelic(r.tid))}</b><small>${r.start?ui('开局携带','Start'):ui('战斗中获得','Gained')} · ${r.n?ui(`${r.n} 次`,`${r.n}×`):b||(r.eff||[]).length?ui('开局生效','at start'):ui('未触发','idle')}${r.rounds.length&&r.n<=12?` · R${r.rounds.join('/')}`:''}</small>${val>0?`<em>${ui('估算贡献','Est.')} ${fmt(Math.round(val))} (${pctOf(val,st.totalDmg)}%)</em>`:''}${b?`<small class="p">${b.kind==='power'?ui(`+${fmt(b.gain)} 力量`,`+${fmt(b.gain)} power`):ui(`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[0]} +${fmt(Math.round(b.gain*10)/10)}%`,`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[1]} +${fmt(Math.round(b.gain*10)/10)}%`)}</small>`:''}${r.block?`<small class="b">${ui('护盾','Shield')} ${fmt(Math.round(r.block))}</small>`:''}${r.heal?`<small class="h">${ui('治疗','Heal')} ${fmt(Math.round(r.heal))}</small>`:''}${(r.eff||[]).map(x=>`<small class="p">${esc(x.text)}</small>`).join('')}${supChips(tl,'rel:'+r.tid)}</div></div>`}).join('');
     const relics=`<div class="mr2tiles">${relicTiles}</div>${buffSummary}${fold(ui('每个造物的详细触发与每次增益','Per-relic details'),`<div class="mr2ssec">${relicHtml}</div>`)}`;
     const special=[execHtml,ctrHtml,stateHtml].filter(Boolean).join('')||`<div class="mr2empty">${ui('本场没有斩杀 / 反击 / 持续伤害类统计','No execute / counter / DoT statistics')}</div>`;
     const tabs=[['ov',ui('概览','Overview'),overview],['role',ui('角色','Characters'),roles],['rh',ui('钥令与节奏','Rhythm'),rhythm],['rel',`${ui('造物','Relics')} ${st.relicRows.length}`,relics],['gear',`${ui('命轮 / 密契','Gear')} ${st.gearRows.length}`,renderGear(st,tl)||`<div class="mr2empty">—</div>`],['sp',ui('特殊机制 / 状态伤害','Mechanics'),special],['chk',ui('公式校验','Checks'),renderCalib(tl)||`<div class="mr2empty">—</div>`]];
