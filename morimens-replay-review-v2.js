@@ -137,9 +137,10 @@
   // ---- icons / entity resolution -------------------------------------------------
   const ART='assets/morimens';
   let awakenerSlugs=null;
-  let gearCatalog=null,relicCatalog={},relicFallback=null;
+  let gearCatalog=null,relicCatalog={},relicFallback=null,stageRef=null;
   async function preloadAssets(){
     if(!relicCatalog.loaded){try{const r=await fetch('data/morimens/replay-relics.json',{cache:'force-cache'});relicCatalog={loaded:1,...(r.ok?(await r.json()).relics:{})}}catch{relicCatalog={loaded:1}}}
+    if(!stageRef){try{const r=await fetch('data/morimens/replay/stage-rounds.json',{cache:'force-cache'});stageRef=r.ok?await r.json():{}}catch{stageRef={}}}
     if(!relicFallback){try{const r=await fetch('data/morimens/replay-relic-config.json',{cache:'force-cache'});relicFallback=r.ok?await r.json():{}}catch{relicFallback={}}}
     if(!gearCatalog){try{const r=await fetch('data/morimens/replay-gear.json',{cache:'force-cache'});gearCatalog=r.ok?await r.json():{wheels:{},covenants:{}}}catch{gearCatalog={wheels:{},covenants:{}}}}
     if(awakenerSlugs)return;
@@ -399,7 +400,7 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
-    const intents=new Map();let lastStats=null,lastDim=0,finishStats=null,deathResistN=0;const killed=new Set();const keeperPicks=[];
+    const intents=new Map();let lastStats=null,lastDim=0,finishStats=null,deathResistN=0,healNom=0,healAct=0;const killed=new Set();const keeperPicks=[];
     // Relic buff accounting. Power / basic-damage relics are matched to the state & property
     // changes that follow their trigger frame, then every later hit is split by the share of
     // that bonus in the caster's total (an estimate: the replay carries no damage formula).
@@ -715,6 +716,7 @@
           if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0){deathResistN++;gearTrigger('deathResist',{},fr.time)}
           if(e===1028&&d.propertyType==='hp'&&typeof d.value==='number'&&d.value<=0&&actors.get(String(d.uid))?.kind==='monster')killed.add(String(d.uid));
           if((e===1004||e===1006||(e===1007&&(d.newLayer||0)>(d.oldLayer||0)))&&d.stateId!=null&&relicOfState.has(String(d.stateId))&&bout>0&&!/计数|标记|标识|限额|监听|统计/.test(String(res.state[String(d.stateId)]?.CnID||''))){for(const tid of relicOfState.get(String(d.stateId))){const o=relicStateAdds.get(tid)||{times:new Set(),rounds:new Set()};o.times.add(Math.round((fr.time||0)*10));o.rounds.add(bout);relicStateAdds.set(tid,o)}}
+          if((e===1004||e===1006)&&d.stateId===2934&&execSrc.cur?.play&&actors.get(String(d.ownerUid??d.roleUid))?.camp===2)execSrc.cur.play.vuln=true;
           if((e===1004||e===1006||e===1007)&&d.stateId!=null){const ly=e===1007?Number(d.newLayer):Number(d.layer||1),k=String(d.ownerUid??d.roleUid)+'|'+d.stateId;if(ly>(layerPeak.get(k)||0))layerPeak.set(k,ly)}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)<0&&bout>0&&(d.propertyType==='card_cost'||d.propertyType==='awaker_cmdcard_notextend_cost_fix')){
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
@@ -753,7 +755,7 @@
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
             if(d?.config?.camp===1&&Number(d.newPhase)===1){if(rounds.has(rk()))getRound(rk()).snapEnd=snap();dimOn=nb===lastDim;getRound(dimOn?nb+.5:nb).snapStart=snap()}
-            if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{energy:unit(ent.keeperUid).energy??0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
+            if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{hpf:(()=>{let m=1;for(const a of actors.values()){if(a.kind!=='awakener')continue;const p=board.get(String(a.uid))?.props||{};if(p.max_hp>0&&p.hp!=null)m=Math.min(m,Math.max(0,p.hp)/p.max_hp)}return m})(),energy:unit(ent.keeperUid).energy??0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
             if(camp===1&&phase===1)push('round',dimOn?ui(`第 ${bout} 回合后 · 超维回合开始`,`Ultra-Space bout after round ${bout}`):ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
             /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1&&dynIds.size)for(const id of dynIds)for(const [uid,m] of bstates){let ly=0;for(const v of m.values())if(String(v.stateId)===id)ly+=v.layer||0;if(ly>0){const k=uid+'|'+id;if(!layerSeries.has(k))layerSeries.set(k,[]);layerSeries.get(k).push(ly)}}
@@ -808,12 +810,13 @@
                 }
               }}
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
+            if(typ==='heal'&&bout>0&&actorOf(h.targetRoleUid)?.camp===1){const nom=Number(h.originVal)||0;if(nom>0){healNom+=nom;healAct+=Math.min(nom,amt)}}
             if(execSrc.cur?.play&&bout>0){const pl=execSrc.cur.play;if(typ==='damage'&&actorOf(h.targetRoleUid)?.kind==='monster'&&actorOf(h.castRoleUid)?.kind==='awakener')pl.dmg+=amt;else if(typ==='heal'&&actorOf(h.targetRoleUid)?.camp===1)pl.heal+=amt}
             if(typ==='damage'&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
-              hitLog.push({uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
+              hitLog.push({t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
                 amp:(()=>{const out=[];for(const [su,v] of bstates.get(String(h.targetRoleUid))||[]){const ex=res.state[String(v.stateId)]?.ExistProperty;if(!ex)continue;for(const [pr,expr] of Object.entries(ex)){if(!/^be_damage_per/.test(pr))continue;const m=String(expr).match(/^ChangedLayer\s*\*\s*(-?\d+(?:\.\d+)?)$/),pv=m?(v.layer||1)*Number(m[1]):Number.isFinite(Number(expr))?Number(expr):null;if(pv>0)out.push({p:pv,keys:stSrc.get(String(su))||[],nm:res.nameState(v.stateId)})}}return out})(),
                 stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(curFia&&curFia.uid===String(h.castRoleUid)&&String(curFia.tid)===String(h.skillConfigId)&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,curFia&&curFia.uid===String(h.castRoleUid)?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
@@ -875,7 +878,7 @@
       const ser=[];for(const o of owners)ser.push(...(layerSeries.get(o+'|'+usedLayer)||[]));const avgL=ser.length?ser.reduce((a,b)=>a+b,0)/ser.length:null;
       const avgT=avgL==null?null:evalNum(String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,avgL).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
       if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
-    return {relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1007,6 +1010,8 @@
     .mr2grade{display:inline-block;min-width:18px;text-align:center;padding:0 5px;border-radius:5px;font-size:10px;font-weight:900;font-style:normal;color:#10151d;vertical-align:middle}.mr2grade.gS{background:#ffd24a}.mr2grade.gA{background:#7ee0a8}.mr2grade.gB{background:#8cc8ff}.mr2grade.gC{background:#c3a6ff}.mr2grade.gD{background:#9aa7b8}
     .mr2mvpmain span em{font-size:18px}.mr2mvpkv{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10px;color:#9fb0c6}.mr2mvpkv b{color:#e6edf6;font-variant-numeric:tabular-nums}
     .mr2rating{border-top:1px dashed rgba(213,177,118,.25);padding-top:8px;display:grid;gap:5px}.mr2rating h5{margin:0;font-size:12px;color:#d9c391}.mr2rrow{display:grid;grid-template-columns:minmax(150px,1.2fr) minmax(110px,.9fr) minmax(420px,3.4fr);gap:8px;align-items:center;padding:4px 6px;border-radius:8px}.mr2rrow.top{background:rgba(255,210,74,.07)}.mr2rn{display:flex;align-items:center;gap:7px;font-size:12px;color:#e6edf6}.mr2rscore{position:relative;display:flex;align-items:center;height:20px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;padding:0 8px}.mr2rscore i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(255,138,61,.65),rgba(255,210,74,.65))}.mr2rscore b{position:relative;font-size:12px;color:#fff;font-variant-numeric:tabular-nums}
+    .mr2facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:4px 12px;font-size:10.5px;color:#aab6c6}.mr2facts span{display:flex;justify-content:space-between;gap:8px;padding:2px 0;border-bottom:1px dashed rgba(148,163,184,.12)}.mr2facts b{color:#e6edf6}
+    .mr2rdims.kp6{grid-template-columns:repeat(6,1fr)}.mr2conf{margin-left:6px;font-size:9px;color:#8ea0b6;font-weight:400}
     .mr2rdims{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}.mr2rdets{display:grid;gap:4px}.mr2rdet{display:grid;grid-template-columns:140px 1fr;gap:8px;font-size:11px;color:#b6c2d2}.mr2rdet b{display:flex;align-items:center;gap:5px;color:#e6edf6}.mr2rdims span{display:grid;text-align:center;padding:2px 0;border-radius:6px;background:rgba(255,255,255,.04)}.mr2rdims span.na{opacity:.4}.mr2rdims small{font-size:9px;color:#7f8ea2}.mr2rdims b{font-size:12px;color:#e6edf6;font-variant-numeric:tabular-nums}
     .mr2rmodel{font-size:11px;color:#b6c2d2;line-height:1.6;display:grid;gap:4px}.mr2rmodel p{margin:0}.mr2rmodel ul{margin:0;padding-left:18px}
     @media(max-width:700px){.mr2rrow{grid-template-columns:1fr}.mr2rdims{grid-template-columns:repeat(5,1fr)}.mr2rdet{grid-template-columns:1fr}}
@@ -1652,7 +1657,9 @@
         for(const list of [wheelItems,covItems])for(const row of SC.scoreGear(list,tl,totalDmg||1)){const it=list.find(x=>x.g===row.g);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}
         for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff}}
         awRows.sort((a,b)=>b.score-a.score);
-        const kr=SC.scoreKeeper({keeper},tl);if(kr&&kr.score!=null){keeper.score=kr.score;keeper.grade=kr.grade;keeper.pickScore=kr.choiceScore;keeper.effScore=kr.resourceScore;keeper.playScore=kr.playScore;keeper.enh=true}
+        const sid=String(bd.stageId??''),st0=res.rr?.Stage?.[sid]||{},refKey=sid,refList=stageRef?.[refKey]||stageRef?.['n:'+pipeName(st0.Name||'')]||null;
+        const v2=SC.scoreKeeperV2({keeper,awakeners:awRows},tl,refList);
+        if(v2&&v2.score!=null){keeper.v2=v2;keeper.score=v2.score;keeper.grade=v2.grade;keeper.enh=true}
       }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
       return {keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
     })();
@@ -1864,6 +1871,7 @@
       ${renderTeamBrief(full,tl)}
       <div class="mr2bmeta"><span><small>${ui('回合数','Rounds')}</small><b>${tl.rounds.filter(r=>!r.dim).length}</b></span><span><small>${ui('出牌','Cards')}</small><b>${fmt(cnt.cards)}</b></span><span><small>${ui('死亡抵抗','Death resist')}</small><b>${fmt(cnt.deathResist)}</b></span><span><small>${ui('击杀','Kills')}</small><b>${fmt(cnt.kills)}</b></span>${k?`<span><small>${ui('钥令','Keyflare')}</small><b>${esc(k)}</b></span>`:''}<span class="id"><small>battleUuid</small><b>${esc(full.replayUuid||bd.battleUuid||'')}</b></span></div></div>`;
   }
+  const KEEPER_DIMS=()=>[['R',ui('资源','Res.')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Key')],['S',ui('风险','Risk')],['C',ui('协同','Team')]];
   const DIMS_UI=()=>[['out',ui('输出','Output')],['def',ui('防御','Defense')],['sup',ui('辅助','Support')]];
   function renderMvp(full,tl,st){
     const res=tl.res,m=st.mvp,total=st.totalDmg;if(!m)return '';
@@ -1879,7 +1887,7 @@
     const gearSubs=l=>l.slice(1,3).map(x=>`<span>${ico(x.g.icon,x.g.name,'gi xs')}${esc(x.g.name)} <b>${x.score.toFixed(1)}</b> <i class="mr2grade g${x.grade}">${x.grade}</i></span>`).join('');
     const relHead=r?`<div class="mr2mvpmain">${ico(relicIconSrc(res,r.r.tid),res.nameRelic(r.r.tid),'rl mvp')}<div><b>${esc(res.nameRelic(r.r.tid))}</b>${itemLine(r,`${r.r.start?ui('开局携带','Starting'):ui('战斗中获得','Gained')} · ${ui('触发','triggers')} ${r.r.n}${r.val>0?` · ${ui('估算贡献','est.')} ${fmt(Math.round(r.val))}`:''}${r.r.buff&&r.r.buff.gain>0?` · ${r.r.buff.kind==='power'?ui(`产生 ${fmt(r.r.buff.gain)} 力量`,`+${fmt(r.r.buff.gain)} power`):ui('基伤加成','base dmg')}`:''}`)}</div></div>`:'';
     const relSubs=m.relics.slice(1,3).map(x=>`<span>${ico(relicIconSrc(res,x.r.tid),res.nameRelic(x.r.tid),'rl xs')}${esc(res.nameRelic(x.r.tid))} <b>${x.score.toFixed(1)}</b> <i class="mr2grade g${x.grade}">${x.grade}</i></span>`).join('');
-    return `<div class="mr2mvps"><div class="mr2mvptitle">${ui('结算 · MVP','Result · MVP')}<small>${ui('唤醒体 / 命轮 / 造物 / 密契按综合评分选出：输出、防御、辅助三大类（再乘出牌效率修正），点击评分行展开全部评估项','All MVPs are picked by a composite rating; see the model below')}</small></div><div class="mr2mvpgrid">${tile(ui('MVP 唤醒体','MVP Awakener'),'aw',awHead,awSubs)}${tile(ui('MVP 命轮','MVP Wheel'),'wh',gearHead(w,ui('命轮','Wheel')),gearSubs(m.wheels))}${tile(ui('MVP 造物','MVP Relic'),'rel',relHead,relSubs)}${m.keeper&&m.keeper.score!=null?tile(ui('守密人评分','Keeper'),'kp',`<div class="mr2mvpmain">${ico('','守','av mvp')}<div><b>${esc(keeperName()||ui('守密人','Keeper'))} <span class="mr2grade g${m.keeper.grade}">${m.keeper.grade}</span></b><span>${ui('综合评分','Score')} <em>${m.keeper.score.toFixed(1)}</em> / 100</span><small>${ui('钥令','Keyflare')} ${m.keeper.pickScore==null?'—':Math.round(m.keeper.pickScore)} · ${ui('效率','Eff.')} ${m.keeper.effScore==null?'—':Math.round(m.keeper.effScore)} · ${ui('出牌','Plays')} ${m.keeper.playScore==null?'—':Math.round(m.keeper.playScore)}</small></div></div>`,''):''}${c&&(c.val>0||c.g.n>0)?tile(ui('MVP 密契','MVP Covenant'),'cov',gearHead(c,ui('密契','Covenant')),gearSubs(m.covenants)):''}</div>${ratingPanel(m,total,DIM,res)}</div>`;
+    return `<div class="mr2mvps"><div class="mr2mvptitle">${ui('结算 · MVP','Result · MVP')}<small>${ui('唤醒体 / 命轮 / 造物 / 密契按综合评分选出：输出、防御、辅助三大类（再乘出牌效率修正），点击评分行展开全部评估项','All MVPs are picked by a composite rating; see the model below')}</small></div><div class="mr2mvpgrid">${tile(ui('MVP 唤醒体','MVP Awakener'),'aw',awHead,awSubs)}${tile(ui('MVP 命轮','MVP Wheel'),'wh',gearHead(w,ui('命轮','Wheel')),gearSubs(m.wheels))}${tile(ui('MVP 造物','MVP Relic'),'rel',relHead,relSubs)}${m.keeper&&m.keeper.score!=null?tile(ui('守密人评分','Keeper'),'kp',`<div class="mr2mvpmain">${ico('','守','av mvp')}<div><b>${esc(keeperName()||ui('守密人','Keeper'))} <span class="mr2grade g${m.keeper.grade}">${m.keeper.grade}</span></b><span>${ui('综合评分','Score')} <em>${m.keeper.score.toFixed(1)}</em> / 100</span><small>${m.keeper.v2?KEEPER_DIMS().map(([k0,l])=>`${l} ${m.keeper.v2.dims[k0]==null?'—':Math.round(m.keeper.v2.dims[k0])}`).join(' · '):''}</small>${m.keeper.v2?`<small>${ui('潜力实现','Potential')} ${m.keeper.v2.potential==null?'—':Math.round(m.keeper.v2.potential)}% · ${ui('关键窗口','Windows')} ${m.keeper.v2.windows==null?'—':Math.round(m.keeper.v2.windows)}% · ${ui('可信度','Confidence')} ${Math.round(m.keeper.v2.confidence*100)}%${m.keeper.v2.confidence<.6?` · ${ui('仅供参考','indicative only')}`:''}</small>`:''}</div></div>`,''):''}${c&&(c.val>0||c.g.n>0)?tile(ui('MVP 密契','MVP Covenant'),'cov',gearHead(c,ui('密契','Covenant')),gearSubs(m.covenants)):''}</div>${ratingPanel(m,total,DIM,res)}</div>`;
   }
   // one expandable table of every metric behind a rating
   function ratingDetail(x,res){
@@ -1915,8 +1923,31 @@
     const picks=k.picks.length?k.picks.map(p=>`<div class="mr2mrow"><span>${ui(`第 ${p.round} 回合`,`R${p.round}`)} <small>${ui('选择','picked')} ${esc(name(p.chosen))}${p.ratio!=null&&p.bestTid!=null&&String(p.bestTid)!==String(p.chosen)?` · ${ui('已知最优','best known')} ${esc(name(p.bestTid))}`:''}</small></span><b>${p.cv==null?'—':p.cv.toFixed(2)}</b><i class="mr2msc"><u style="width:${p.ratio==null?0:(p.ratio*100).toFixed(0)}%"></u></i><em>${p.ratio==null?'—':Math.round(p.ratio*100)}</em></div>`).join(''):`<div class="mr2empty">${ui('本场没有可比较的钥令选择','No comparable keyflare picks')}</div>`;
     const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
     const rr=k.rrows.map(r=>`<div class="mr2mrow"><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}`,`${r.hand}/${r.played}/${r.budget}`)}</small></span><b>${ui(`伤${pct(r.oD>0?r.aD/r.oD:null)} 防${pct(r.oF>0?r.aF/r.oF:null)}`,`d${pct(r.oD>0?r.aD/r.oD:null)} f${pct(r.oF>0?r.aF/r.oF:null)}`)}</b><i class="mr2msc"><u style="width:${(()=>{const a=[r.oD>0?r.aD/r.oD:null,r.oF>0?r.aF/r.oF:null].filter(v=>v!=null);return a.length?(100*a.reduce((x,y)=>x+y,0)/a.length).toFixed(0):0})()}%"></u></i><em></em></div>`).join('')||`<div class="mr2empty">—</div>`;
+    const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
+    const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏效率','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
+    const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
+      <small class="mr2from">${ui('只评价玩家能控制的决策，使用比率型指标，不把队伍强度、命轮密契强度和发牌运气算到守密人头上。总分 = 0.22 资源 + 0.22 出牌 + 0.18 节奏 + 0.14 钥令 + 0.14 风险 + 0.10 协同（缺项时按其余维度重新归一）。','Ratio-type decision metrics; weights 22/22/18/14/14/10, renormalised over measurable dimensions.')}</small>
+      ${Object.keys(v2.weights).map(key=>row(`${LAB[key]} <small>${ui('权重','w')} ${Math.round(v2.weights[key]*100)}%</small>`,v2.dims[key]==null?'—':Math.round(v2.dims[key]),v2.dims[key],ui(`可信度 ${Math.round((v2.conf[key]||0)*100)}%`,`conf ${Math.round((v2.conf[key]||0)*100)}%`))).join('')}
+      ${row(ui('潜力实现率（实际出牌价值 ÷ 同手牌同算力下的估计最优）','Potential realised'),v2.potential==null?'—':Math.round(v2.potential)+'%',v2.potential)}
+      ${row(ui('关键窗口利用（易伤 / 增益窗口内的输出占比）','Window use'),v2.windows==null?'—':Math.round(v2.windows)+'%',v2.windows)}
+      ${row(ui('数据置信度','Data confidence'),Math.round(v2.confidence*100)+'%',v2.confidence*100,v2.confidence<.6?ui('评分仅供参考','indicative only'):'')}
+      <h6 style="margin-top:8px">${ui('事实数据（可追溯）','Facts')}</h6>
+      <div class="mr2facts">
+        <span>${ui('算力消耗 / 回合末剩余 / 溢出','Energy spent / left / overflow')} <b>${f(fx.energySpent||0)} / ${f(fx.energyLeft||0)} / ${f(fx.energyOverflow||0)}</b></span>
+        <span>${ui('回合末弃牌 / 零产出出牌','Discards / zero-value plays')} <b>${f(fx.discards||0)} / ${f(fx.zeroValuePlays||0)}</b></span>
+        <span>${ui('平均决策机会损失','Mean regret')} <b>${pc(fx.regretPct)}</b></span>
+        <span>${ui('出牌顺序损失（易伤晚于伤害）','Ordering loss')} <b>${pc(fx.orderLossPct)}</b></span>
+        <span>${ui('回合数 / 同关卡样本','Rounds / stage samples')} <b>${fx.rounds} / ${fx.stageSamples||0}</b></span>
+        <span>${ui('节奏百分位（越小越快）','Tempo percentile')} <b>${fx.topPct==null?'—':'Top '+pc(fx.topPct)}</b></span>
+        <span>${ui('每回合出牌','Plays per round')} <b>${fx.playsPerRound}</b></span>
+        <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>
+        <span>${ui('死亡抵抗 / 濒危回合','Death resist / critical rounds')} <b>${fx.deathResist} / ${fx.lethalRounds}</b></span>
+        <span>${ui('治疗溢出','Overheal')} <b>${pc(fx.overhealPct)}</b></span>
+        <span>${ui('易伤窗口覆盖','Vulnerability coverage')} <b>${pc(fx.vulnCoveragePct)}</b></span>
+        <span>${ui('队友增益借力','Buff leverage')} <b>${pc(fx.buffLeveragePct)}</b></span>
+      </div><small class="mr2from">${ui('护盾溢出目前无法从回放可靠还原，未计入。','Shield overflow cannot be reconstructed reliably and is not included.')}</small></div>`:'';
     const E=k.eff;
-    return `<div class="mr2mgrid">
+    return `<div class="mr2mgrid">${v2html}
       <div class="mr2mcol"><h6>${ui('钥令选择','Keyflare choice')} <em>${sc(k.pickScore)}</em></h6><small class="mr2from">${ui('已选技能的实际价值（伤害 / 防御 / 辅助按全队单张出牌均值归一后相加）÷ 同次可选技能中已知价值最高者','Realised value of the chosen skill vs best known alternative')}</small>${picks}</div>
       <div class="mr2mcol"><h6>${ui('战斗效率','Battle efficiency')} <em>${sc(k.effScore)}</em></h6>
         ${row(ui('算力利用率','Energy used'),pct(E.e1),E.e1==null?null:E.e1*100,ui(`消耗 ${f(E.spent)} / 回合末剩余 ${f(E.waste)}`,''))}
@@ -1932,7 +1963,7 @@
     const enhLine=o=>{const chips=[];if(o.enh?.roleLabel)chips.push(`<i class="strong">${esc(o.enh.roleLabel)}</i>`);for(const f of o.enh?.features||[])chips.push(`<i${f.strong?' class="strong"':''}>${esc(f.label)}</i>`);for(const f of o._sm?.f||[])chips.push(`<i${f.strong?' class="strong"':''}>${esc(f.label)}</i>`);return chips.length?`<div class="mr2enhscore">${ui('定位 / 机制价值','Role / mechanism value')}<div class="mr2enhchips">${chips.join('')}</div></div>`:''};
     const row=(icon,name,o,top)=>`<details class="mr2rrowd${top?' top':''}"><summary class="mr2rrow"><span class="mr2rn">${icon}<b>${esc(name)}</b><i class="mr2grade g${o.grade}">${o.grade}</i></span><span class="mr2rscore"><i style="width:${o.score.toFixed(1)}%"></i><b>${o.score.toFixed(1)}</b></span><span class="mr2rdims">${cells(o)}</span></summary><div class="mr2rdetail">${enhLine(o)}${ratingDetail(o.x||o,res)}</div></details>`;
     const awRows=m.awakeners.map((o,i)=>row(ico(o.r.a.icon,o.r.a.name,'av'),o.r.a.name,o,!i)).join('');
-    const kp=m.keeper,kpRow=kp&&kp.score!=null?`<details class="mr2rrowd"><summary class="mr2rrow"><span class="mr2rn">${ico('','守','av keeper')}<b>${esc(keeperName()||ui('守密人（决策）','Keeper (decisions)'))}</b><i class="mr2grade g${kp.grade}">${kp.grade}</i></span><span class="mr2rscore"><i style="width:${kp.score.toFixed(1)}%"></i><b>${kp.score.toFixed(1)}</b></span><span class="mr2rdims"><span class="${kp.pickScore==null?'na':''}"><small>${ui('钥令','Keyflare')}</small><b>${kp.pickScore==null?'—':Math.round(kp.pickScore)}</b></span><span class="${kp.effScore==null?'na':''}"><small>${ui('效率','Efficiency')}</small><b>${kp.effScore==null?'—':Math.round(kp.effScore)}</b></span><span class="${kp.playScore==null?'na':''}"><small>${ui('出牌','Plays')}</small><b>${kp.playScore==null?'—':Math.round(kp.playScore)}</b></span></span></summary><div class="mr2rdetail">${keeperDetail(kp,res)}</div></details>`:'';
+    const kp=m.keeper,kpRow=kp&&kp.score!=null?`<details class="mr2rrowd"><summary class="mr2rrow"><span class="mr2rn">${ico('','守','av keeper')}<b>${esc(keeperName()||ui('守密人（决策）','Keeper (decisions)'))}</b><i class="mr2grade g${kp.grade}">${kp.grade}</i>${kp.v2?`<small class="mr2conf">${ui('可信度','Confidence')} ${Math.round(kp.v2.confidence*100)}%</small>`:''}</span><span class="mr2rscore"><i style="width:${kp.score.toFixed(1)}%"></i><b>${kp.score.toFixed(1)}</b></span><span class="mr2rdims kp6">${KEEPER_DIMS().map(([key,l])=>`<span class="${kp.v2?.dims?.[key]==null?'na':''}"><small>${l}</small><b>${kp.v2?.dims?.[key]==null?'—':Math.round(kp.v2.dims[key])}</b></span>`).join('')}</span></summary><div class="mr2rdetail">${keeperDetail(kp,res)}</div></details>`:'';
     const itemList=(list,iconOf,nameOf)=>list.length?list.map((o,i)=>row(iconOf(o),nameOf(o),o,!i)).join(''):`<div class="mr2empty">—</div>`;
     const items=`<details class="mr2minor"><summary>${ui('命轮 / 造物 / 密契评分','Wheel / relic / covenant ratings')}</summary>
       <div class="mr2rating"><h5>${ui('命轮','Wheels')}</h5>${itemList(m.wheels,o=>ico(o.g.icon,o.g.name,'gi'),o=>o.g.name)}</div>

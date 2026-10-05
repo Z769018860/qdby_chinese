@@ -199,5 +199,71 @@ function scoreKeeper(m,tl){
   return {score:score==null?null:clamp(score),grade:score==null?'—':grade(score),playScore,resourceScore:resource.score,choiceScore,playConfidence:play.confidence,choiceConfidence:choice.confidence,play,choice,resource,original:k};
 }
 
-window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,grade};
+
+// ---------- Keeper decision model v2: six dimensions + regret + confidence ----------------------
+// Principle: judge only what the player controls (resource use, card order, tempo, keyflare use, risk, team-window use), with ratio-type metrics so that
+// team strength / wheels / covenants / draw luck are not credited to the keeper. Facts (raw statistics) are returned beside the scores.
+const KW={R:.22,P:.22,T:.18,K:.14,S:.14,C:.10};
+function mean(a){a=a.filter(v=>v!=null&&Number.isFinite(v));return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
+function wavg(entries){let s=0,w=0;for(const [v,wt] of entries){if(v==null||!Number.isFinite(v)||wt<=0)continue;s+=v*wt;w+=wt}return w?s/w:null}
+function scoreKeeperV2(m,tl,ref){
+  const k=m?.keeper;if(!k)return null;
+  const rounds=(tl.rounds||[]).filter(r=>!r.dim),R=Math.max(1,rounds.length),plays=(tl.playLog||[]).filter(p=>p.kind==='card'&&(tl.actors?.get(String(p.owner))?.kind==='awakener'));
+  const cost=p=>{const v=p.cost!=null?Number(p.cost):Number(tl.res?.skill?.[String(p.tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
+  const valued=p=>num(p.dmg)+num(p.block)+num(p.heal)+num(p.eng)+num(p.draw)+num(p.ali)>0||p.vuln;
+  const facts={},conf={};
+  // ---- Resource management --------------------------------------------------------------------
+  const eff=k.eff||{},ends=[...(tl.roundEnd?.entries()||[])].sort((a,b)=>a[0]-b[0]);
+  const Espend=eff.e1!=null?eff.e1*100:null,Eover=eff.e3!=null?eff.e3*100:null,Ecycle=eff.e2!=null?eff.e2*100:null;
+  const spentTotal=plays.reduce((n,p)=>n+cost(p),0),valuedCost=plays.filter(valued).reduce((n,p)=>n+cost(p),0);
+  const Econv=spentTotal>0?100*valuedCost/spentTotal:null;
+  let leftRounds=0,goodReserve=0;for(let i=0;i<ends.length-1;i++){if((ends[i][1].energy||0)>0){leftRounds++;if((ends[i+1][1].energy||0)<=0)goodReserve++}}
+  const Ereserve=leftRounds?100*goodReserve/leftRounds:null;
+  const Rscore=wavg([[Espend,.30],[Eover,.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
+  Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds});
+  conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
+  // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
+  const rr=k.rrows||[],aD=rr.reduce((n,r)=>n+r.aD,0),oD=rr.reduce((n,r)=>n+r.oD,0),aF=rr.reduce((n,r)=>n+r.aF,0),oF=rr.reduce((n,r)=>n+r.oF,0);
+  const ratios=[oD>0?aD/oD:null,oF>0?aF/oF:null].filter(v=>v!=null);
+  const playRatio=ratios.length?ratios.reduce((a,b)=>a+b,0)/ratios.length:null;
+  // ordering: a vulnerability applied after enemy damage was already dealt in the same round wastes that share of the earlier damage
+  let seqLoss=0,seqBase=0;const hits=tl.hitLog||[];
+  const byRound=new Map();for(const p of tl.playLog||[]){if(p.vuln){if(!byRound.has(p.round))byRound.set(p.round,[]);byRound.get(p.round).push(p.time)}}
+  for(const [rd,ts] of byRound){const tv=Math.max(...ts);for(const h of hits){if(h.round!==rd||h.blind)continue;seqBase+=h.dmg;if(h.t!=null&&h.t<tv&&!h.vOn)seqLoss+=h.dmg*(h.vPct||50)/(100+(h.vPct||50))}}
+  const totalHitDmg=hits.reduce((n,h)=>n+(h.blind?0:h.dmg),0)||1,seqRatio=seqLoss/totalHitDmg;
+  const Pscore=playRatio==null?null:Math.max(0,Math.min(100,100*(playRatio-seqRatio)));
+  Object.assign(facts,{regretPct:playRatio==null?null:100*(1-playRatio),orderLossPct:100*seqRatio,vulnRounds:byRound.size});
+  conf.P=Math.min(.95,.45+.5*Math.min(1,rr.length/R))*(.7+.3*(k.playConfidence??.7));
+  // ---- Tempo: percentile against the same stage ------------------------------------------------------
+  let Tscore=null,topPct=null;const refs=Array.isArray(ref)?ref.filter(x=>Number.isFinite(x)):[];
+  if(refs.length>=8){const slower=refs.filter(x=>x>R).length,same=refs.filter(x=>x===R).length;Tscore=100*(slower+same*.5)/refs.length;topPct=100*(refs.filter(x=>x<R).length+same*.5)/refs.length}
+  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,stageSamples:refs.length,topPct,playsPerRound:Math.round(perRoundPlays*10)/10});
+  conf.T=refs.length>=8?.9:.3;
+  // ---- Keyflare choice and use -------------------------------------------------------------------------
+  const kvv=(k.kv||[]).filter(x=>x.n>0),kuses=kvv.reduce((n,x)=>n+x.n,0),meanVal=kuses?kvv.reduce((n,x)=>n+x.val*x.n,0)/kuses:null;
+  const Ksel=k.pickScore,Kexec=meanVal==null?null:Math.min(100,100*meanVal/2);
+  const Kscore=wavg([[Ksel,.35],[Kexec,.65]]);
+  Object.assign(facts,{keeperUses:kuses,keeperValuePerUse:meanVal==null?null:Math.round(meanVal*100)/100});
+  conf.K=kuses?Math.min(.9,.5+.1*Math.min(4,kuses)):.4;
+  // ---- Risk control ----------------------------------------------------------------------------------------
+  const kf=tl.keeperFacts?.()||{},dr=kf.deathResist||0,lethal=ends.filter(([,e])=>e.hpf!=null&&e.hpf<.25).length,overheal=kf.healNom>0?1-kf.healAct/kf.healNom:null;
+  let pen=0;if(dr>0)pen+=4+10*(dr-1);pen+=Math.min(40,6*lethal);if(overheal!=null)pen+=20*Math.max(0,overheal);
+  const Sscore=Math.max(0,100-pen);
+  Object.assign(facts,{deathResist:dr,lethalRounds:lethal,overhealPct:overheal==null?null:100*Math.max(0,overheal),shieldOverflow:null});
+  conf.S=ends.some(([,e])=>e.hpf!=null)?.8:.4;
+  // ---- Team coordination: how much of the damage landed inside the teammates' vulnerability windows -----------
+  const firstV=hits.findIndex(h=>h.vOn);let Cscore=null,cover=null,ultCover=null;
+  if(byRound.size||firstV>=0){const after=firstV>=0?hits.slice(firstV):[],tot=after.reduce((n,h)=>n+(h.blind?0:h.dmg),0),under=after.reduce((n,h)=>n+(h.blind||!h.vOn?0:h.dmg),0);cover=tot>0?under/tot:null}
+  const sup=(m.awakeners||[]).reduce((n,a)=>n+num(a.x?.sup?.buf),0),bufShare=Math.min(1,sup/Math.max(1,.08*totalHitDmg));
+  Cscore=wavg([[cover==null?null:100*cover,.6],[sup>0?100*bufShare:null,.4]]);
+  Object.assign(facts,{vulnCoveragePct:cover==null?null:100*cover,buffLeveragePct:sup>0?100*bufShare:null});
+  conf.C=cover!=null?.8:sup>0?.6:.35;
+  // ---- Total (weights renormalised over the dimensions that could be measured) ------------------------------
+  const dims={R:Rscore,P:Pscore,T:Tscore,K:Kscore,S:Sscore,C:Cscore};
+  let sw=0,sv=0,cw=0,cv=0;for(const key of Object.keys(KW)){if(dims[key]==null)continue;sw+=KW[key];sv+=KW[key]*dims[key];cw+=KW[key];cv+=KW[key]*(conf[key]||0)}
+  const score=sw?sv/sw:null,confidence=cw?cv/cw:0;
+  const potential=mean([playRatio==null?null:100*playRatio,Econv]),windows=mean([cover==null?null:100*cover,sup>0?100*bufShare:null]);
+  return {score:score==null?null:clamp(score),grade:score==null?'—':grade(score),dims,conf,confidence,potential,windows,facts,weights:KW,original:k};
+}
+window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,scoreKeeperV2,grade};
 })();
