@@ -501,20 +501,37 @@
     // cast value equals that amount. Matching them (when exactly one item can explain the change) credits the value to the item and counts the trigger.
     const EV_PROP={BEGainUltiEnergy:'ulti_energy',BEChangeKeeperEnergy:'keeper_energy',BEGainKeeperEnergy:'keeper_energy',BEChangeEnergy:'energy',BEGainBlock:'block',BEHeal:'hp'};
     for(const e0 of gears.values())for(const ch0 of e0.channels)for(const m0 of String(ch0.para??'').matchAll(/GetStateLayer\((\d+)\)/g))dynIds.add(m0[1]);
+    /* amounts that depend on hit points (e.g. "回复 6% 已损失生命"): the command's own formula is evaluated with the board at the moment the property change lands */
+    const dynEval=(expr,ctx)=>{let t=String(expr).replace(/math\./g,'Math.').replace(/(PlayerRole|StateOwner)\.(\w+)/g,(m)=>ctx[m]!=null?String(ctx[m]):'#');if(/#/.test(t))return null;const u=t.replace(/Math\.(?:ceil|floor|max|min|abs|round)/g,'');if(!/^[0-9+\-*/().,\s]+$/.test(u))return null;try{const v=Function(`"use strict";return (${t})`)();return Number.isFinite(v)?v:null}catch{return null}};
+    const dynCtx=(x,d,pt,cv)=>{const kp=unit(ent.keeperUid),ow=board.get(String(x.e.owners[0]))?.props||{},c={};
+      const hp=pt==='hp'&&String(d.uid)===String(ent.keeperUid)&&d.value!=null?Number(d.value)-cv:Number(kp.hp);
+      c['PlayerRole.hp']=hp;c['PlayerRole.max_hp']=Number(kp.max??kp.props?.max_hp);for(const m of String(x.dyn).matchAll(/StateOwner\.(\w+)/g))c['StateOwner.'+m[1]]=ow[m[1]]??0;return c};
+    const amtOf=(x,d,pt,cv)=>x.dyn?dynEval(x.dyn,dynCtx(x,d,pt,cv)):x.amt;
     const evList=[],evProps=new Map();   // evProps: gear key -> properties its trigger commands set by a fixed amount
     for(const e of gears.values())for(const ch of e.channels){
       if(ch.cmd==null)continue;const params=e.mainStates[0]?.params||[],paras=String(ch.para??'').split(',').map(x=>x.trim());
       for(const dl of res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]){const prop=EV_PROP[dl.Type];if(!prop)continue;
         if(!evProps.has('gear:'+e.key))evProps.set('gear:'+e.key,new Set());evProps.get('gear:'+e.key).add(prop);   // the item sets this property: it only receives it through an exact amount match
         let t=String(dl.Para??'').replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
-        if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))continue;const amt=evalNum(t,{});if(!(Number.isFinite(amt)&&amt!==0))continue;
+        if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,''))){
+          if((prop==='hp'||prop==='block')&&/(?:PlayerRole|StateOwner)\./.test(t)&&!/#/.test(t)){evList.push({e,ch,prop,dyn:t,tgt:dl.Target==='UpperTarget'||dl.Target==null?ch.target:dl.Target});ch.evTimes=ch.evTimes||new Set();ch.evRounds=ch.evRounds||new Set();ch.evPer=ch.evPer||new Map()}
+          continue}
+        const amt=evalNum(t,{});if(!(Number.isFinite(amt)&&amt!==0))continue;
         evList.push({e,ch,prop,amt:Math.abs(amt),tgt:dl.Target==='UpperTarget'||dl.Target==null?ch.target:dl.Target});ch.evTimes=ch.evTimes||new Set();ch.evRounds=ch.evRounds||new Set();ch.evPer=ch.evPer||new Map();if(!evProps.has('gear:'+e.key))evProps.set('gear:'+e.key,new Set());evProps.get('gear:'+e.key).add(prop)}
     }
     for(const e of gears.values())for(const sid of e.fx||[]){const rec=res.state[sid]||{};for(let n=1;n<=4;n++){const cid=rec['TriggerCmd'+n];if(cid==null)continue;
       for(const dl of res.rr?.Cmd?.[String(cid)]?.data_list||[]){const prop=EV_PROP[dl.Type];if(!prop)continue;if(!evProps.has('gear:'+e.key))evProps.set('gear:'+e.key,new Set());evProps.get('gear:'+e.key).add(prop)}}}
     let pendingConf=[];const tsPower=new Map(),tsPlus=new Map();
     const attributePower=(e,time)=>{const p=tsPower.get(time);if(!p)return;const rel={tid:'gear:'+e.key,kind:'power'},ctx=newInstance({time},rel,p.delta,p.stateId===3130);const pl=tsPlus.get(time);if(pl)for(const [uid,amt] of pl)grant(ctx,uid,amt,rel,p.stateId===3130);tsPower.delete(time)};
-    const channelHit=(e,ch)=>{const r=bout;const pr=ch.perRound.get(r)||0;if(ch.cap&&pr>=ch.cap)return false;ch.perRound.set(r,pr+1);ch.count++;ch.rounds.add(r);return true};
+    /* value of one trigger: the command's formula evaluated against the board right now (owner stats, team HP...), so hit-point or stat dependent effects get real numbers */
+    const VAL_KIND={BEGainUltiEnergy:'ali','BEChangeAttr.ulti_energy':'ali',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEChangeEnergy:'energy',BEHeal:'heal',BEGainBlock:'block',BEDrawCard:'draw',BEScarletBloodChange:'embryo'};
+    const valueChannel=(e,ch)=>{if(ch.cmd==null)return;const cmd=res.rr?.Cmd?.[String(ch.cmd)];if(!cmd)return;const params=e.mainStates[0]?.params||[],paras=String(ch.para??'').split(',').map(x=>x.trim());
+      const kp=unit(ent.keeperUid),ow=board.get(String(e.owners[0]))?.props||{},ctx={'PlayerRole.hp':Number(kp.hp),'PlayerRole.max_hp':Number(kp.max??kp.props?.max_hp)};
+      for(const dl of cmd.data_list||[]){const kind=VAL_KIND[dl.Type];if(!kind)continue;
+        const t=String(dl.Para??'').replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
+        for(const m of t.matchAll(/StateOwner\.(\w+)/g))ctx['StateOwner.'+m[1]]=ow[m[1]]??0;
+        const v=dynEval(t,ctx);if(v==null||!Number.isFinite(v))continue;const vv=ch.vals||(ch.vals={}),o=vv[kind]||(vv[kind]={sum:0,n:0});o.sum+=Math.abs(v)/(dl.Type==='BEScarletBloodChange'?1:1);o.n++}};
+    const channelHit=(e,ch)=>{const r=bout;const pr=ch.perRound.get(r)||0;if(ch.cap&&pr>=ch.cap)return false;ch.perRound.set(r,pr+1);ch.count++;ch.rounds.add(r);try{valueChannel(e,ch)}catch{}return true};
     // gear-side effect windows: what lands in the same frame group after a trigger belongs to that item
     const openGearWindow=(e,time,kind,predict)=>{const rel={tid:'gear:'+e.key,kind,predict};if(relWin&&relWin.time===time){relWin.queue.push(rel);relWin.gear=true;relWin.until=Math.max(relWin.until||0,time+6)}else relWin={time,queue:[rel],pi:0,bi:0,pend:new Map(),basicCtx:null,ci:0,gear:true,until:time+6}};
     // ---- 维度影像 relics: their own state's trigger channels, counted from the same game events and valued from the trigger commands
@@ -764,7 +781,7 @@
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
-            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'&&d.extraData?.cmdServerUid!=null?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01&&(w.tgt!=='StateOwner'||w.owners.includes(String(d.uid)))):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0)||d.extraData?.cmdServerUid==null)return null;/* natural regeneration carries no command id */const SB=['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED'],gk=(x)=>'gear:'+x.e.key,live=x=>gearWins.some(w=>w.ch===x.ch&&fr.time>=w.t0&&fr.time<=w.t1)||(!!x.e.fx&&gearTimes.get(fr.time)?.has(gk(x)));const hit=evList.filter(x=>x.prop===pt&&Math.abs(x.amt-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1)&&(!SB.includes(x.ch.base)||live(x))&&(x.tgt!=='StateOwner'||x.e.owners.includes(String(d.uid))));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&Object.values(EV_PROP).includes(pt))),   // resource changes reach a wheel / covenant only through an exact amount match
+            const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'&&d.extraData?.cmdServerUid!=null?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01&&(w.tgt!=='StateOwner'||w.owners.includes(String(d.uid)))):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0)||d.extraData?.cmdServerUid==null)return null;/* natural regeneration carries no command id */const SB=['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED'],gk=(x)=>'gear:'+x.e.key,live=x=>gearWins.some(w=>w.ch===x.ch&&fr.time>=w.t0&&fr.time<=w.t1)||(!!x.e.fx&&gearTimes.get(fr.time)?.has(gk(x)));const hit=evList.filter(x=>x.prop===pt&&Math.abs((amtOf(x,d,pt,cv)??-1)-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1)&&(!SB.includes(x.ch.base)||live(x))&&(x.tgt!=='StateOwner'||x.e.owners.includes(String(d.uid))));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&Object.values(EV_PROP).includes(pt))),   // resource changes reach a wheel / covenant only through an exact amount match
           keys=keys1.length?keys1:(()=>{const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]})(),rcv=actors.get(String(d.uid));
             if(pt==='max_hp'&&rcv?.camp===1){const cu=String(d.extraData?.castRoleUid);if(actors.get(cu)?.kind==='awakener')supOf('act:'+cu).maxHp=(supOf('act:'+cu).maxHp||0)+cv}   // the team HP pool belongs to the keeper: credit the awakener whose state raised it (饱餐)
             if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
@@ -1617,7 +1634,7 @@
       for(const c of e.channels||[])if(!SUPPORTED.has(c.base)&&!c.once&&c.evTimes?.size){let n=0;for(const set of c.evPer.values())n+=c.cap?Math.min(set.size,c.cap):set.size;c.count=n;c.rounds=c.evRounds}   // triggers proven by their own effect
       const chs=(e.channels||[]).filter(c=>SUPPORTED.has(c.base)||(!c.once&&c.evTimes?.size)),sup=chs.length>0;
       const roundSet=new Set();for(const c of chs)for(const r of c.rounds)roundSet.add(r);
-      const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
+      const hbN=tl.supStore?.get('gear:'+e.key)?.hbN||0,base=sup?chs.reduce((a,c)=>a+c.count,0):e.triggers.times.size,n=sup&&base>0?base:Math.max(hbN,base,base===0&&(e.channels||[]).some(c=>c.once)?1:0),rounds=sup?[...roundSet].sort((a,b)=>a-b):[...e.triggers.rounds].sort((a,b)=>a-b);
       const lines=[];for(const c of (e.channels||[])){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;for(const l of gearEffectLines(tl.res,e,c,cnt))lines.push(l)}
       // post-battle effects ("战斗结束后回复…") never show up inside a fight; a per-round "−30%" on such an effect is a decay counter, not a heal
       {const dsc=String(e.desc||''),post=/战斗结束后/.test(dsc)||(e.channels||[]).some(c=>/BattleEnd/.test(String(c.base)));
@@ -1629,7 +1646,7 @@
           // the command record can be absent from every replay: name the quantity from the item's own effect text ("银钥充能提高 …")
           const KW='(银钥充能|银钥能量|狂气|算力|基础伤害|暴击伤害|暴击率)',m=!t?(String(d.state||'').match(new RegExp(KW))?.slice(0,2).concat(String(e.desc||'').includes(String(d.state||'').match(new RegExp(KW))?.[1]+'提高')?['提高']:[''])||String(e.desc||'').match(new RegExp(KW+'[^，。]{0,4}(提高|增加|获得)'))):null,pct=m&&m[2]==='提高'?'%':'';
           lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层${d.avg!=null?`；回合开始平均 ${fmt(Math.round(d.avgLayer))} 层 ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''}）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak}${d.avg!=null?`; avg ${fmt(Math.round(d.avgLayer))} layers ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''})`))}}}
-      return {...e,n,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
+      return {...e,n,hbN,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
     const stateRows=[...stateTotals.entries()].map(([id,t])=>({id,...t})).filter(x=>x.dmg>0).sort((a,b)=>b.dmg-a.dmg);
@@ -1813,7 +1830,9 @@
     const evalExpr=expr=>{if(expr==null)return null;let t=String(expr).replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#');t=t.replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');return /#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,''))?null:evalNum(t,{})};
     for(const dl of cmd.data_list||[]){
       const lab=CMD_LABEL[dl.Type];
-      if(lab){const v=evalExpr(dl.Para);const sign=dl.Type==='BEChangeKeeperEnergy'||dl.Type==='BEChangeEnergy'?'':'+';out.push(v!=null?`${ui(lab[0],lab[1])} ${v>=0?sign:''}${fmt(v)}${cnt>1?` × ${cnt} = ${fmt(v*cnt)}`:''}`:ui(`${lab[0]}（随层数 / 状态变化）`,`${lab[1]} (scales with state)`))}
+      if(lab){const v=evalExpr(dl.Para);const sign=dl.Type==='BEChangeKeeperEnergy'||dl.Type==='BEChangeEnergy'?'':'+';const vk={BEGainUltiEnergy:'ali',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEChangeEnergy:'energy',BEHeal:'heal',BEGainBlock:'block',BEDrawCard:'draw',BEScarletBloodChange:'embryo'}[dl.Type],dv=ch.vals&&ch.vals[vk];
+        if(v==null&&dv&&dv.n){out.push(ui(`${lab[0]} 共 ${fmt(Math.round(dv.sum*10)/10)}（${dv.n} 次，每次约 ${fmt(Math.round(dv.sum/dv.n*10)/10)}，按当时的属性 / 生命值实算）`,`${lab[1]} ${fmt(Math.round(dv.sum*10)/10)} total (${dv.n} triggers, ~${fmt(Math.round(dv.sum/dv.n*10)/10)} each, from live stats)`));continue}
+        out.push(v!=null?`${ui(lab[0],lab[1])} ${v>=0?sign:''}${fmt(v)}${cnt>1?` × ${cnt} = ${fmt(v*cnt)}`:''}`:ui(`${lab[0]}（随层数 / 状态变化）`,`${lab[1]} (scales with state)`))}
       else if(dl.Type==='BECreateCard'||dl.Type==='BECreateCardWithOwner')out.push(ui('生成卡牌','Create card'));
       else if(dl.Type==='BECopyCard')out.push(ui('复制卡牌','Copy card'));
       else if(dl.Type==='BEAddState'){const sid=String(dl.Para).split(',')[0].trim();if(/^\d+$/.test(sid)&&res.state[sid]&&!['2900','3130','3902'].includes(sid)&&res.state[sid].ShowType!=='Hide')out.push(ui(`施加「${res.nameState(sid)}」`,`Apply ${res.nameState(sid)}`))}
@@ -1847,7 +1866,7 @@
       const hasBuff=g.extra>0;
       return `<div class="mr2gcard ${isW?'wheel':'cov'}"${g.desc||g.effectsEn.length?tipAttr(`${g.name}${g.en?` · ${g.en}`:''}`,kindTag,isW?g.desc:g.effectsEn.map(e=>`${e.pieces}${ui('件','pc')}：${e.desc}`).join('\n')):''}>
         <div class="mr2ghead">${ico(g.icon,g.name,`gi ${isW?'':'cov'}`)}<div class="mr2gtitle"><b>${esc(g.name)}</b><small>${g.en?esc(g.en):''}${g.rarity?` · ${esc(g.rarity)}`:''}</small></div><span class="mr2tag ${isW?'wheelTag':'covTag'}">${kindTag}</span><span class="mr2gowners">${ownerChips(g)}</span></div>
-        <div class="mr2gmetrics"><span><small>${ui('触发次数','Triggers')}</small><b>${g.n}</b><em>${g.rounds.length?ui(`第 ${g.rounds.join('/')} 回合`,`R${g.rounds.join('/')}`):ui('仅开局生效','Static')}${g.byChannels?'':ui(' · 按相关状态计','')}</em></span>
+        <div class="mr2gmetrics"><span><small>${ui('触发次数','Triggers')}</small><b>${g.n}</b><em>${g.rounds.length?ui(`第 ${g.rounds.join('/')} 回合`,`R${g.rounds.join('/')}`):ui('仅开局生效','Static')}${g.byChannels?'':ui(' · 按相关状态计','')}${g.hbN>g.n?ui(` · 治疗 / 护盾增幅生效 ${g.hbN} 次`,` · heal/shield bonus applied ${g.hbN}×`):''}</em></span>
           ${g.extra||g.out.dmg?`<span class="hot"><small>${ui('估算额外伤害','Est. extra DMG')}</small><b>${fmt(Math.round(g.extra+g.out.dmg))}</b><em>${total?pctOf(g.extra+g.out.dmg,total):0}%</em></span>`:''}
           ${g.dot>0?`<span class="hot">${dotChip(g,total)}</span>`:''}
           ${g.out.block||g.out.heal?`<span><small>${ui('护盾 / 治疗','Shield / Heal')}</small><b>${fmt(g.out.block)}</b><em>${fmt(g.out.heal)}</em></span>`:''}</div>
