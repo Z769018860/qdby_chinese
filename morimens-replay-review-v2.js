@@ -348,6 +348,7 @@
 
     const rounds=new Map();let bout=0,globalSeq=0,frameCount=0,camp=1,phase=0;
     const getRound=n=>{if(!rounds.has(n))rounds.set(n,{round:n,dim:!Number.isInteger(n),events:[]});return rounds.get(n)};
+    const layerSeries=new Map(),dynIds=new Set();
     const layerPeak=new Map();   // owner|stateId -> highest layer seen (to evaluate effects that scale with a state's layer)
     let dimOn=false;const rk=()=>dimOn?bout+.5:bout;   // the Ultra-Space (超维) bout reuses the bout number: it is stored as its own round, bout + .5
     const HEAD_KINDS=['card','ultimate','keeper','skill','enemyact'];
@@ -427,17 +428,21 @@
     const TYPE_QUAL={Card_Strike:'打击',Card_Defend:'防御'};
     for(const e of gears.values()){
       e.channels=[];const desc=e.desc||'';
-      const anyOwner=/任意唤醒体|所有唤醒体/.test(desc),strikeOnly=/打出[^。，]{0,12}「打击」/.test(desc),capM=desc.match(/每回合(?:最多)?(?:触发|生效)?\s*(\d+)\s*次/);
+      const anyOwner=/任意唤醒体|所有唤醒体/.test(desc),strikeOnly=/打出[^。，]{0,12}「打击」/.test(desc),capAll=desc.match(/每回合(?:最多)?(?:触发|生效)?\s*(\d+)\s*次/);
+      // "每回合最多生效 N 次" belongs to one sentence of the text: give the cap only to the channel whose condition that sentence talks about
+      const CAP_KW={BSTAfterDoBlock:/护盾/,BSTAfterTentacleAttack:/触腕/,BSTAfterUseCard:/打出|卡牌/,BSTAfterUltiSkill:/狂气爆发|释放/,BSTAfterUseKeeperSkill:/钥令/,BSTAfterBoutBegin:/回合开始/,BSTAfterBoutEnd:/回合结束/,BSTAfterDoActiveDamage:/伤害|攻击/,BSTAfterBeActiveDamage:/承受|受到/};
+      const nCond=[...new Set(e.mainStates.map(m=>String(m.stateId)))].reduce((t,sid)=>t+[1,2,3,4].filter(i=>asList(res.state[sid]?.['TriggerCond'+i])[0]&&asList(res.state[sid]['TriggerCond'+i])[0]!=='StageState').length,0),sents=desc.split(/[。；;]/);
+      const capOf=base=>{const kw=CAP_KW[base],hit=kw?sents.find(x=>kw.test(x)&&/每回合(?:最多)?(?:触发|生效)?\s*\d+\s*次/.test(x)):null;if(hit)return Number(hit.match(/每回合(?:最多)?(?:触发|生效)?\s*(\d+)\s*次/)[1]);return nCond<=1&&capAll?Number(capAll[1]):0},capM=null;
       for(const sid of new Set(e.mainStates.map(m=>String(m.stateId))))for(let n=1;n<=4;n++){
         const rec=res.state[sid]||{};
         const cond=asList(rec['TriggerCond'+n])[0],cmdId=rec['TriggerCmd'+n];
         if(!cond){ // the condition is missing from the record: recover it from the effect text ("释放「湮灭」后 ...")
           if(cmdId!=null&&!e.channels.some(c=>c.cmd===cmdId)){const names=[...desc.matchAll(/(?:释放|打出|使用)「([^」]+)」(?:后|时)/g)].map(m=>m[1]),used=e.channels.filter(c=>c.base==='NAMED').map(c=>c.named),nm=names.find(x=>!used.includes(x));
-            if(nm)e.channels.push({n,base:'NAMED',named:nm,qual:'',cmd:cmdId,label:`释放「${nm}」后`,once:false,ownerOnly:true,cap:capM?Number(capM[1]):0,count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n],target:rec['TriggerTarget'+n]})}
+            if(nm)e.channels.push({n,base:'NAMED',named:nm,qual:'',cmd:cmdId,label:`释放「${nm}」后`,once:false,ownerOnly:true,cap:capOf('NAMED'),count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n],target:rec['TriggerTarget'+n]})}
           continue}
         const [base,qual]=String(cond).split('.');
         if(e.channels.some(c=>c.base===base&&c.cmd===cmdId))continue;
-        e.channels.push({n,base,qual:qual||(strikeOnly&&base==='BSTAfterUseCard'?'Card_Strike':''),cmd:cmdId,label:(COND_LABEL[base]||base)+(TYPE_QUAL[qual]?`（${TYPE_QUAL[qual]}）`:strikeOnly&&base==='BSTAfterUseCard'?'（打击）':''),once:base==='StageState'||base==='BSTBattleBegin',ownerOnly:!anyOwner,cap:capM?Number(capM[1]):0,count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n],target:rec['TriggerTarget'+n]});
+        e.channels.push({n,base,qual:qual||(strikeOnly&&base==='BSTAfterUseCard'?'Card_Strike':''),cmd:cmdId,label:(COND_LABEL[base]||base)+(TYPE_QUAL[qual]?`（${TYPE_QUAL[qual]}）`:strikeOnly&&base==='BSTAfterUseCard'?'（打击）':''),once:base==='StageState'||base==='BSTBattleBegin',ownerOnly:!anyOwner,cap:capOf(base),count:0,rounds:new Set(),perRound:new Map(),para:rec['TriggerPara'+n],target:rec['TriggerTarget'+n]});
       }
       // wheels that shuffle a card of their own name into the deck ("将 1 张「X」洗入…") fire when that card is played
       const cm=desc.match(/将[^「]{0,12}「([^」]+)」[^。]{0,6}(?:洗入|加入)/);
@@ -463,6 +468,7 @@
     // effect evidence: a trigger command that gives a fixed amount (aliemus / keyflare energy / energy / shield / heal) leaves property changes whose nominal
     // cast value equals that amount. Matching them (when exactly one item can explain the change) credits the value to the item and counts the trigger.
     const EV_PROP={BEGainUltiEnergy:'ulti_energy',BEChangeKeeperEnergy:'keeper_energy',BEGainKeeperEnergy:'keeper_energy',BEChangeEnergy:'energy',BEGainBlock:'block',BEHeal:'hp'};
+    for(const e0 of gears.values())for(const ch0 of e0.channels)for(const m0 of String(ch0.para??'').matchAll(/GetStateLayer\((\d+)\)/g))dynIds.add(m0[1]);
     const evList=[],evProps=new Map();   // evProps: gear key -> properties its trigger commands set by a fixed amount
     for(const e of gears.values())for(const ch of e.channels){
       if(ch.cmd==null)continue;const params=e.mainStates[0]?.params||[],paras=String(ch.para??'').split(',').map(x=>x.trim());
@@ -716,7 +722,8 @@
             if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout))roundEnd.set(bout,{energy:unit(ent.keeperUid).energy??0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost}))});
             bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
             if(camp===1&&phase===1)push('round',dimOn?ui(`第 ${bout} 回合后 · 超维回合开始`,`Ultra-Space bout after round ${bout}`):ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
-            /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1){if(dimOn)gearTrigger('dimension',{},fr.time);else{lastDim=bout;gearTrigger('boutBegin',{},fr.time)}}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
+            /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1&&dynIds.size)for(const id of dynIds)for(const [uid,m] of bstates){let ly=0;for(const v of m.values())if(String(v.stateId)===id)ly+=v.layer||0;if(ly>0){const k=uid+'|'+id;if(!layerSeries.has(k))layerSeries.set(k,[]);layerSeries.get(k).push(ly)}}
+            if(camp===1&&phase===1){if(dimOn)gearTrigger('dimension',{},fr.time);else{lastDim=bout;gearTrigger('boutBegin',{},fr.time)}}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
             continue;
           }
           if(!bout)continue;
@@ -829,7 +836,9 @@
       const t=String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,(m,id)=>{let pk=0;for(const o of owners)pk=Math.max(pk,layerPeak.get(o+'|'+id)||0);peak=Math.max(peak,pk);usedLayer=id;return pk}).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');
       if(/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))continue;const v=evalNum(t,{});if(!Number.isFinite(v))continue;
       const types=(res.rr?.Cmd?.[String(ch.cmd)]?.data_list||[]).map(dl=>dl.Type);
-      if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
+      const ser=[];for(const o of owners)ser.push(...(layerSeries.get(o+'|'+usedLayer)||[]));const avgL=ser.length?ser.reduce((a,b)=>a+b,0)/ser.length:null;
+      const avgT=avgL==null?null:evalNum(String(ch.para).replace(/StateOwner\.GetStateLayer\((\d+)\)/g,avgL).replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#'),{});
+      if(!gearDyn.has(e.key))gearDyn.set(e.key,[]);gearDyn.get(e.key).push({types,value:v,peak,avg:avgT,avgLayer:avgL,state:usedLayer?res.nameState(usedLayer):'',base:ch.base})}
     return {gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
@@ -1453,7 +1462,7 @@
         for(const d of dyn){const t=d.types.map(x=>CMD_LABEL[x]).find(Boolean);
           // the command record can be absent from every replay: name the quantity from the item's own effect text ("银钥充能提高 …")
           const KW='(银钥充能|银钥能量|狂气|算力|基础伤害|暴击伤害|暴击率)',m=!t?(String(d.state||'').match(new RegExp(KW))?.slice(0,2).concat(String(e.desc||'').includes(String(d.state||'').match(new RegExp(KW))?.[1]+'提高')?['提高']:[''])||String(e.desc||'').match(new RegExp(KW+'[^，。]{0,4}(提高|增加|获得)'))):null,pct=m&&m[2]==='提高'?'%':'';
-          lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak})`))}}}
+          lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层${d.avg!=null?`；回合开始平均 ${fmt(Math.round(d.avgLayer))} 层 ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''}）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak}${d.avg!=null?`; avg ${fmt(Math.round(d.avgLayer))} layers ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''})`))}}}
       return {...e,n,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
