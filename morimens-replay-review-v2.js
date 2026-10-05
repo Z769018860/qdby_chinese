@@ -1458,6 +1458,15 @@
         for(const m of txt.matchAll(/对所有敌人施加\s*(\d+)\s*层\s*(?:<[^:>]*:([^>]*)>|([^，。、\s]{1,4}))/g))eff.push({kind:'open',text:ui(`开局对全体敌人施加 ${m[1]} 层${m[2]||m[3]}`,`Opening: ${m[1]} ${m[2]||m[3]} on all enemies`)})}
       const t=trig.get(tid);return {tid,eff,buff:tl.relicBuffs?.get(tid)||null,start:startTids.includes(tid),n:t?.n||0,rounds:[...(t?.rounds||[])].sort((a,b)=>a-b),...out,mapped:sids.length>0};
     }).sort((a,b)=>b.dmg-a.dmg||b.n-a.n);
+    // text-driven passives with no trigger event of their own: "回合开始时抽 N 张牌" (nominal draws per round) and "每回合前 K 次造成的伤害提高 N%" (valued on the hit log)
+    {const bouts=tl.rounds.filter(r=>!r.dim).length,hitsBy=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;const k=h.round;if(!hitsBy.has(k))hitsBy.set(k,[]);hitsBy.get(k).push(h)}
+      for(const r of relicRows){const rec=res.relic[r.tid]||{},raw=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',para=rec.StatePara||[],argv=n=>Number(para[Number(n)-1]);
+        const dm=raw.match(/回合开始时(?:，)?抽\s*\[Arg(\d)\]\s*张牌/);
+        if(dm&&!r.n&&Number.isFinite(argv(dm[1]))){r.n=bouts;r.rounds=Array.from({length:bouts},(_,i)=>i+1);r.eff.push({kind:'nominal',text:ui(`每回合开始抽 ${argv(dm[1])} 张 × ${bouts} 回合 = ${argv(dm[1])*bouts} 张（按回合数估算）`,`Draw ${argv(dm[1])}/round × ${bouts} = ${argv(dm[1])*bouts} (estimated)`)})}
+        const fm=raw.match(/每回合前\s*(\d+|[一二三四五六七八九十]+)\s*次[^。]{0,20}伤害提高\s*\[Arg(\d)\]\s*%/);
+        if(fm&&Number.isFinite(argv(fm[2]))){const K=/^\d+$/.test(fm[1])?Number(fm[1]):'一二三四五六七八九十'.indexOf(fm[1])+1,N=argv(fm[2]);let extra=0,hits=0;
+          for(const list of hitsBy.values())for(const h of list.slice(0,K)){extra+=h.dmg*N/(100+N);hits++}
+          if(hits){r.buff={tid:r.tid,kind:'out',gain:N,extra,instances:[{round:0,time:0,gain:N,awakeners:new Set(),extra,hits,temp:false,kind:'out'}]};r.n=r.n||bouts}}}}
     const relicDmg=relicRows.reduce((n,r)=>n+r.dmg,0);
     const buffRows=relicRows.filter(r=>r.buff&&r.buff.gain>0);
     const buffExtra=buffRows.reduce((n,r)=>n+r.buff.extra,0),powerGain=buffRows.filter(r=>r.buff.kind==='power').reduce((n,r)=>n+r.buff.gain,0),basicGain=buffRows.filter(r=>r.buff.kind==='basic').reduce((n,r)=>n+r.buff.gain,0);
