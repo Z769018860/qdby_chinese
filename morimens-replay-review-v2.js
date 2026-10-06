@@ -415,6 +415,7 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
+    const REALM_FORM={25403:['静海','静'],72079:['怒涛','涛'],89551:['潮涌','潮']};let pendRealm=null,poolAmt=0,poolLast=null,eroLast=null;
     const intents=new Map();let lastStats=null,lastDim=0,finishStats=null,deathResistN=0,healNom=0,healAct=0;const killed=new Set();const keeperPicks=[];
     // Relic buff accounting. Power / basic-damage relics are matched to the state & property
     // changes that follow their trigger frame, then every later hit is split by the share of
@@ -879,6 +880,7 @@
             continue;
           }
           if(e===1064){const name=res.nameSkill(d.skillId);execSrc.cur={name:`${ui('钥令','Keeper skill')} · ${name}`,actor:d.roleUid};{const play={round:bout,time:fr.time,tid:d.skillId,owner:String(d.roleUid),kind:'keeper',dmg:0,block:0,heal:0,eng:0,ali:0,draw:0};playLog.push(play);execSrc.cur.play=play}push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});gearTrigger('keeper',{},fr.time);continue}
+          if(e===1090&&d.schoolSpecialArgs&&pendRealm){const x=Number(d.schoolSpecialArgs.tentacle_dmg_show??d.schoolSpecialArgs.tentacle_dmg);if(Number.isFinite(x)){pendRealm.skillName+=` · ${ui('最终触腕伤害','Final tentacle dmg')} ${Math.round(x).toLocaleString()}`;pendRealm.label=`${ui('界域','Realm')} · ${pendRealm.skillName}`}pendRealm=null}
           if(e===1093){if(actors.get(String(d.casterUid))?.kind==='awakener')execSrc.cur={name:res.nameSkill(d.skillTid),actor:d.casterUid};const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
             {const bh=d.beHitConfig,tt=actorOf(bh.targetRoleUid),cc=actorOf(bh.castRoleUid);
@@ -925,10 +927,20 @@
           if(e===1050){const nm=res.nameRelic(d.relicTid);push('relic',`${ui('造物触发','Relic')} · ${nm}`,`<span class="mr2chip relic"${relicTipAttr(res,d.relicTid)}>${ico(relicIconSrc(res,d.relicTid),'物','rl')}<span>${esc(nm)}</span></span>`,d,fr,{relicTid:d.relicTid});continue}
           if(e===1046&&Array.isArray(d.targetUids)&&d.targetUids.length>1&&d.targetUids.every(t=>typeof t==='number'&&asList(res.skill[String(t)]?.Type).includes('Keeper_Skill')))keeperPicks.push({round:bout,time:fr.time,options:d.targetUids.slice(),chosen:null,via:d.skillConfigId});
           if(e===1064){const pk=[...keeperPicks].reverse().find(x=>x.chosen==null&&x.options.includes(d.skillId));if(pk)pk.chosen=d.skillId}
+          if(e===1046&&d.skillConfigId!=null&&res.nameSkill(d.skillConfigId)==='湮灭')push('skill',`${ui('超维','Ultra')} · ${ui('湮灭','Annihilate')}`,'',d,fr,{actorUid:d.roleUid??ent.keeperUid,skillName:`${ui('湮灭','Annihilate')}${(d.targetUids||[]).length?` → ${(d.targetUids||[]).map(t=>plainName(t&&typeof t==='object'?t.uid:t)).join(', ')}`:''}`,stypes:[],realm:{g:'灭',t:ui('超维','Ultra')}});
           if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${d.targetRelicList?ui('选择造物','Relic choice'):ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${d.targetRelicList?ui('选择造物','Pick relic'):ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
           if(e===1049){gearTrigger('swallow',{},fr.time);const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
           if(e===1004||e===1007){
             const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner),tipS=stateTipAttr(res,sid,{args:d.descArgs?.curValues,layer:d.newLayer??d.layer,props:board.get(String(owner))?.props});
+            if(e===1007&&sid===76334&&(d.newLayer??0)<(d.oldLayer??0))poolLast={time:fr.time,from:d.oldLayer,to:d.newLayer};
+            if(sid===35501)poolAmt=Number(d.newLayer??d.layer)||0;
+            if(e===1004&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster')eroLast={time:fr.time,n:(eroLast&&Math.abs(eroLast.time-fr.time)<.01?eroLast.n:0)+(Number(d.layer)||1)};
+            if(e===1004&&actors.get(String(owner))?.kind==='keeper'){
+              const R=REALM_FORM[sid],mk=(g,t,name,extra={})=>{push('skill',`${t} · ${name}`,'',d,fr,{actorUid:owner,skillName:name,stypes:[],realm:{g,t},...extra});const ev=getRound(rk()).events,last=ev[ev.length-1];return last&&last.kind==='skill'&&last.realm?last:null};
+              if(R)pendRealm=mk(R[1],ui('触腕形态','Tentacle form'),R[0]);
+              else if(sid===80399){const same=(o)=>o&&Math.abs(o.time-fr.time)<.01,heal=same(poolLast)?poolLast.from-poolLast.to:poolAmt,ero=same(eroLast)?eroLast.n:0;
+                mk('血',ui('血池','Blood pool'),`${ui('使用血池','Used blood pool')}${heal>0?` · ${ui('治疗','Heal')} ${Math.round(heal).toLocaleString()}`:''}${ero>0?` · ${ui('施加侵蚀','Erosion')} ${Math.round(ero).toLocaleString()}`:''}`);poolAmt=0}
+            }
             if(e===1004){const layer=d.layer>1?`×${d.layer}`:'';push('state',`${ui('状态添加','State add')} · ${res.nameState(sid)} → ${plainName(owner)}`,`${stateBadge(sid,layer,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});}
             else push('state',`${ui('状态层数','State layer')} · ${res.nameState(sid)} ${d.oldLayer??'?'} → ${d.newLayer??'?'} · ${plainName(owner)}`,`${stateBadge(sid,`${d.oldLayer??'?'}→${d.newLayer??'?'}`,tipS)}<span class="mr2arrow">→</span>${who}`,d,fr,{stateId:sid,actorUid:d.castRoleUid,targetUid:owner,hidden});
             continue;
@@ -1017,7 +1029,7 @@
     .dtideReplayReviewOpen{white-space:nowrap;border:1px solid rgba(98,183,255,.35);border-radius:7px;background:rgba(98,183,255,.09);color:#9fd0ff;padding:5px 8px;font:700 10px/1.2 inherit;cursor:pointer}@media(max-width:760px){.mr2form{grid-template-columns:1fr}.mr2sum{grid-template-columns:repeat(2,minmax(0,1fr))}.mr2time{margin-left:0}}
 
     .mr2act{--ac:#8aa0bd;--acr:138,160,189;padding:12px 14px 10px;border-top:1px solid rgba(148,163,184,.1);border-left:6px solid var(--ac);background:linear-gradient(90deg,rgba(var(--acr),.17),rgba(var(--acr),.03) 60%,transparent);gap:8px}
-    .mr2act.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2act.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2act.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2act.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2act.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2act.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2act.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2act.a-other{--ac:#4fd0c8;--acr:79,208,200}.mr2act.a-enemy{--ac:#ff5c8a;--acr:255,92,138}
+    .mr2act.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2act.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2act.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2act.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2act.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2act.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2act.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2act.a-other{--ac:#4fd0c8;--acr:79,208,200}.mr2act.a-realm{--ac:#3fd0c0;--acr:63,208,192}.mr2act.a-enemy{--ac:#ff5c8a;--acr:255,92,138}
     .mr2acthead{gap:12px;align-items:center;flex-wrap:nowrap}.mr2acttitle{min-width:0;display:grid;gap:2px}.mr2actline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mr2actname{font-size:18px;line-height:1.25;color:#f4f7fb;letter-spacing:.2px}.mr2who{font-size:12px;color:#aebbd0}
     .mr2atype{display:inline-block;padding:2px 9px;border-radius:6px;background:var(--ac);color:#10151d;font-size:11px;font-weight:900;letter-spacing:.4px}
     .mr2cost{margin-left:auto;font-size:14px;padding:3px 10px;border-radius:8px;background:rgba(var(--acr),.18);color:var(--ac);border:1px solid rgba(var(--acr),.45);font-weight:900}.mr2acthead .mr2time{margin-left:auto;white-space:nowrap}.mr2cost+.mr2time{margin-left:12px}
@@ -1027,7 +1039,7 @@
     .mr2minor{margin-top:1px}.mr2minor>summary{cursor:pointer;list-style:none;color:#6f7f93;font-size:10px;padding:1px 0}.mr2minor>summary::-webkit-details-marker{display:none}.mr2minor>summary::before{content:'▸ '}.mr2minor[open]>summary::before{content:'▾ '}.mr2minor[open]{padding:4px 0 2px}
     .mr2side.quiet{border-left-width:2px;background:rgba(255,255,255,.015)}.mr2side.quiet .mr2settle{border-top:0;padding:6px 10px;gap:3px}.mr2settlehead{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.mr2sttl{font-size:10px;font-weight:800;color:#8392a6;letter-spacing:.3px}.mr2side.quiet .mr2chip{font-size:10px;padding:0 6px 0 1px}.mr2side.quiet .mr2ico{width:16px;height:16px;flex-basis:16px;font-size:9px}
     .mr2sidehead{padding:8px 12px;font-size:12px;letter-spacing:.3px}.mr2side.c1>.mr2sidehead{background:rgba(74,163,255,.1);color:#9fd0ff}.mr2side.c2>.mr2sidehead{background:rgba(255,92,138,.1);color:#ffadc1}
-    .mr2strip{display:inline-flex;gap:3px;flex-wrap:wrap;align-items:center;margin-left:auto}.mr2mark{--ac:#8aa0bd;display:inline-flex;border-radius:50%;padding:1px;background:var(--ac)}.mr2mark .mr2ico{border:0}.mr2mark.a-ulti{--ac:#ff8a3d}.mr2mark.a-awake{--ac:#ffd24a}.mr2mark.a-keeper{--ac:#b57cff}.mr2mark.a-strike{--ac:#ff6b6b}.mr2mark.a-defend{--ac:#4fd18b}.mr2mark.a-skill{--ac:#4aa3ff}.mr2mark.a-curse{--ac:#8e86a8}.mr2mark.a-other{--ac:#4fd0c8}.mr2mark:has(.kk){border-radius:6px}
+    .mr2strip{display:inline-flex;gap:3px;flex-wrap:wrap;align-items:center;margin-left:auto}.mr2mark{--ac:#8aa0bd;display:inline-flex;border-radius:50%;padding:1px;background:var(--ac)}.mr2mark .mr2ico{border:0}.mr2mark.a-ulti{--ac:#ff8a3d}.mr2mark.a-awake{--ac:#ffd24a}.mr2mark.a-keeper{--ac:#b57cff}.mr2mark.a-strike{--ac:#ff6b6b}.mr2mark.a-defend{--ac:#4fd18b}.mr2mark.a-skill{--ac:#4aa3ff}.mr2mark.a-curse{--ac:#8e86a8}.mr2mark.a-other{--ac:#4fd0c8}.mr2mark.a-realm{--ac:#3fd0c0}.mr2mark:has(.kk){border-radius:6px}
     .mr2legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10px;color:#9aa8bb;align-items:center}.mr2legend span{display:inline-flex;gap:5px;align-items:center}.mr2legend i{width:11px;height:11px;border-radius:3px;background:var(--c)}
     @media(max-width:760px){.mr2acthead{flex-wrap:wrap}.mr2fx{padding-left:0}.mr2actname{font-size:16px}}
 
@@ -1064,7 +1076,7 @@
     .mr2ico.rl.big{width:34px;height:34px;flex-basis:34px;border-radius:7px}
     .mr2decks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}.mr2dgroup{border:1px solid rgba(148,163,184,.14);border-radius:10px;padding:8px;background:rgba(255,255,255,.02);display:grid;gap:6px;align-content:start}.mr2dhead{display:flex;gap:8px;align-items:center;font-size:12px;color:#e6edf6}.mr2dhead .mr2from:last-child{margin-left:auto}
     .mr2dcards{display:grid;gap:4px}.mr2dcard{--ac:#8aa0bd;--acr:138,160,189;display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border-radius:7px;border-left:4px solid var(--ac);background:linear-gradient(90deg,rgba(var(--acr),.14),rgba(var(--acr),.03));cursor:help}
-    .mr2dcard.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2dcard.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2dcard.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2dcard.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2dcard.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2dcard.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2dcard.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2dcard.a-other{--ac:#4fd0c8;--acr:79,208,200}
+    .mr2dcard.a-ulti{--ac:#ff8a3d;--acr:255,138,61}.mr2dcard.a-awake{--ac:#ffd24a;--acr:255,210,74}.mr2dcard.a-realm{--ac:#3fd0c0;--acr:63,208,192}.mr2dcard.a-keeper{--ac:#b57cff;--acr:181,124,255}.mr2dcard.a-strike{--ac:#ff6b6b;--acr:255,107,107}.mr2dcard.a-defend{--ac:#4fd18b;--acr:79,209,139}.mr2dcard.a-skill{--ac:#4aa3ff;--acr:74,163,255}.mr2dcard.a-curse{--ac:#8e86a8;--acr:142,134,168}.mr2dcard.a-other{--ac:#4fd0c8;--acr:79,208,200}
     .mr2dcost{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:6px;background:rgba(var(--acr),.22);color:var(--ac);font-weight:900;font-size:13px;border:1px solid rgba(var(--acr),.5)}.mr2dname{display:grid;line-height:1.3;min-width:0}.mr2dname b{font-size:12px;color:#eef3fa}.mr2dname small{font-size:9px;color:#8fa0b5}.mr2dn{margin-left:auto;font-style:normal;font-weight:800;color:var(--ac);font-size:12px}
 
     .mr2unit.tile .mr2ustats{flex-direction:column;align-items:stretch;gap:2px;width:100%;margin-top:1px}.mr2unit.tile .mr2uss{display:flex;justify-content:space-between;gap:6px;padding:0 6px;font-size:10px}
@@ -1156,6 +1168,7 @@
     return [...by.values()].map(o=>`<span class="mr2row">${tl.chip(o.uid)}${o.items.map(e=>e.resHtml).join('')}</span>`).join('');
   }
   function actionInfo(e){
+    if(e.realm)return {cls:'realm',label:e.realm.t};
     if(e.kind==='keeper')return {cls:'keeper',label:ui('钥令','Keyflare')};
     if(e.kind==='trigger'||e.kind==='enemyact')return {cls:'enemy',label:ui('敌方行动','Enemy')};
     const t=e.stypes||[];
@@ -1173,7 +1186,7 @@
   }
   function renderActionHead(e,tl){
     const info=actionInfo(e),owner=actionActor(e,tl);
-    const portrait=e.kind==='keeper'?ico(e.iconSrc,'钥','kk lg'):owner?ico(owner.icon,owner.kind==='monster'?'怪':owner.name,'av lg'):'';
+    const portrait=e.realm?ico('',e.realm.g,'kk lg'):e.kind==='keeper'?ico(e.iconSrc,'钥','kk lg'):owner?ico(owner.icon,owner.kind==='monster'?'怪':owner.name,'av lg'):'';
     const who=e.kind==='keeper'?'':owner?`<span class="mr2who">${esc(owner.name)}</span>`:'';
     const cost=(e.fiaLvl?`<span class="mr2cost" style="margin-left:auto;color:#ffb36b;border-color:rgba(255,150,70,.55);background:rgba(255,120,40,.16)" title="${esc(ui('卡牌当前活焰层数：每层 +30% 伤害/护盾/狂气/力量（受灵塑活焰数值加成提升）','Card Fiamma stacks: +30% damage/shield/Aliemus/STR per stack (raised by Fiamma bonus)'))}">🔥${ui('活焰','Fiamma')}${e.fiaLvl} +${fmt(e.fiaPct)}%</span>`:'')+(e.cost!=null?`<span class="mr2cost"${e.fiaLvl?' style="margin-left:6px"':''} title="${esc(ui('算力消耗','Energy cost'))}">⚡${esc(e.cost)}</span>`:'');
     const tgt=e.kind==='enemyact'&&e.targetUid!=null?`<div class="mr2actline"><span class="mr2from">${ui('目标','Target')}</span>${tl.chip(e.targetUid)}</div>`:'';
@@ -1184,7 +1197,7 @@
   function renderStrip(r,tl){
     const marks=r.events.filter(e=>e.camp===1&&e.phase===2&&['card','ultimate','keeper','skill'].includes(e.kind)).map(e=>{
       const info=actionInfo(e),o=actionActor(e,tl);
-      return `<span class="mr2mark a-${info.cls}" title="${esc(info.label+' · '+e.skillName)}">${e.kind==='keeper'?ico(e.iconSrc,'钥','kk xs'):ico(o?.icon,o?.name||'?','av xs')}</span>`;
+      return `<span class="mr2mark a-${info.cls}" title="${esc(info.label+' · '+e.skillName)}">${e.realm?ico('',e.realm.g,'kk xs'):e.kind==='keeper'?ico(e.iconSrc,'钥','kk xs'):ico(o?.icon,o?.name||'?','av xs')}</span>`;
     }).join('');
     return marks?`<span class="mr2strip">${marks}</span>`:'';
   }
@@ -1567,7 +1580,7 @@
     const awakenOrder=[],ultiOrder=[],keeperUses=[];let totalPlays=0,totalEnergy=0,draws=0,discards=0,exhausts=0;
     for(const e of events){
       if(e.camp!==1)continue;
-      if(e.kind==='card'||e.kind==='ultimate'||e.kind==='skill'){
+      if(e.kind==='card'||e.kind==='ultimate'||(e.kind==='skill'&&!e.realm)){
         const a=actors.get(String(e.actorUid)),r=a&&row(a);if(!r)continue;
         const info=actionInfo(e);
         if(e.kind==='card'){if(e.fiaLvl){r.fia=r.fia||[0,0,0,0];r.fia[e.fiaLvl]++}r.plays++;totalPlays++;r.energy+=Number(e.cost)||0;totalEnergy+=Number(e.cost)||0;r.types.set(info.label,(r.types.get(info.label)||0)+1)}

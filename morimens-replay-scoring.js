@@ -284,10 +284,10 @@ function critExcluder(tl){
 }
 function scoreLuck(tl,aux={}){
   const items=[],parts={dr:0,shop:0,crit:0};if(!tl)return null;
-  // 1) death resist: chance of this trigger = panel% x 0.5^(triggers so far), capped at 100%
-  for(const d of tl.drLog||[]){if(d.v==null||!Number.isFinite(d.v))continue;const k=Math.max(0,(d.times||1)-1),p=Math.min(1,d.v/100*Math.pow(.5,k));if(p>=.5)continue;
+  // 1) death resist: the panel value on the keeper IS the chance of the next trigger (it halves after each one), so use it as-is
+  {let n=0;for(const d of tl.drLog||[]){if(d.v==null||!Number.isFinite(d.v))continue;n++;const p=Math.min(1,d.v/100);if(p>=.5)continue;
     const pts=Math.min(40,-Math.log2(Math.max(p,.005))*14);parts.dr+=pts;
-    items.push({k:'dr',pts,text:ui(`第 ${d.bout} 回合触发死亡抵抗（本场第 ${k+1} 次），当时触发概率只有约 ${(p*100).toFixed(p<.1?1:0)}%（面板 ${Math.round(d.v)}%${k?`，已触发 ${k} 次、每次减半`:''}）`,`Death resist fired (#${k+1}) at only ~${(p*100).toFixed(0)}% chance`)})}
+    items.push({k:'dr',pts,text:ui(`第 ${d.bout} 回合触发死亡抵抗（本场第 ${n} 次），当时守密人面板死亡抵抗 ${Math.round(d.v)}%，即触发概率只有约 ${(p*100).toFixed(p<.1?1:0)}%`,`Death resist fired (#${n}) at only ~${(p*100).toFixed(0)}% chance`)})}}
   parts.dr=Math.min(60,parts.dr);
   // 2) dimensional image from outside the ring realm
   {const res=tl.res,names=new Set([...tl.actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.name))),imgs=aux.imageRealms?.images||{},rings=aux.imageRealms?.rings||{};
