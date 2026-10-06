@@ -70,8 +70,10 @@ async function download(root){
   X.aw.slice(0,5).forEach((a,i)=>{const ry=y+40+i*66;if(i){c.fillStyle='rgba(148,163,184,.1)';c.fillRect(ax+14,ry-3,aw-28,1)}icon(gi(a.icon),ax+14,ry+4,50,9);const nf='800 16px '+F,nm=fit(a.name,nf,130);T(nm,ax+74,ry+24,nf,i?'#e8edf5':'#f3e5c8');c.font=nf;T(a.grade,ax+74+c.measureText(nm).width+10,ry+24,'900 15px '+F,gcol(a.grade));
     T(a.score.toFixed(1),ax+236,ry+27,'900 22px '+F,'#8fd8d1','right');bar(ax+74,ry+36,162,a.score,gcol(a.grade));
     T(fit(a.dims.map(d=>`${d[0]} ${Math.round(d[1])}`).join(' · '),'11px '+F,170),ax+74,ry+54,'11px '+F,'#8b9aae');
-    const rx=ax+262;T(ui('伤害','DMG'),rx,ry+18,'11px '+F,'#7f8da1');T(`${fmtN(a.dmg)}  ${a.pct}%`,rx,ry+38,'800 15px '+F,'#f0d29f');bar(rx,ry+46,150,a.pct,'#d5b176');
-    const sx=rx+180;T(ui('护盾 / 治疗','Shield / Heal'),sx,ry+18,'11px '+F,'#7f8da1');T(`${fmtN(a.block)} / ${fmtN(a.heal)}`,sx,ry+38,'800 15px '+F,'#9edbd6');T(`${ui('出牌','Cards')} ${a.plays}`,sx,ry+58,'11px '+F,'#8b9aae')});
+    const rx=ax+256;T(ui('伤害','DMG'),rx,ry+18,'11px '+F,'#7f8da1');T(`${fmtN(a.dmg)}  ${a.pct}%`,rx,ry+38,'800 15px '+F,'#f0d29f');bar(rx,ry+46,130,a.pct,'#d5b176');
+    const sx=rx+150;T(ui('护盾 / 治疗','Shield / Heal'),sx,ry+18,'11px '+F,'#7f8da1');T(`${fmtN(a.block)} / ${fmtN(a.heal)}`,sx,ry+38,'800 15px '+F,'#9edbd6');T(`${ui('出牌','Cards')} ${a.plays}`,sx,ry+58,'11px '+F,'#8b9aae');
+    // the two strongest scoring items of this awakener (highest share score, then largest amount)
+    const tx=sx+150;(a.top||[]).forEach((q,j)=>{const yy=ry+18+j*20;T(fit(`${q.l} ${fmtN(q.v)}`,'700 12px '+F,aw-(tx-ax)-12),tx,yy+(j?4:0),'700 12px '+F,j?'#b9a6e0':'#e0c27a')})});
   y+=hMid;
   // gear
   const tr=ui('触发','triggers'),es=ui('估算','est.');
