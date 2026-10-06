@@ -1770,7 +1770,7 @@
       // classify one stat-pack source entry into an output sub-metric
       const outKind=o=>{if(o.typ==='skill'||o.typ==='utilSkill')return 'dir';const id=String(o.id),nm=stName(id);if(id==='3255')return 'ctr';if(execIds.has(id))return 'exe';if(/触腕|怒涛/.test(nm))return 'ten';if(dotRe.test(nm))return 'dot';return 'oth'};
       const tenIds=[...stateTotals.keys()].filter(id=>/触腕|怒涛/.test(stName(id))),TD=tenIds.reduce((n,id)=>n+(stateTotals.get(id)?.dmg||0),0);
-      const deathSaves=Number(bd.statistics?.DeathResistCount)||0;
+      const deathSaves=tl.drLog?.length>0?tl.drLog.length:(Number(bd.statistics?.DeathResistCount)||0);
       const vE=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+v.vulnExtra,0);
       const kpMax0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;   // one embryo is worth 5% of the HP pool in the 血池
       const sub=(sp,extra={})=>({
@@ -2103,7 +2103,8 @@
     // the structured statistics block is missing from some replays: fall back to the finish packet, then to what the timeline counted
     const fin=tl.battleCounts?.()||{},pick=(...vals)=>{for(const v of vals)if(Number.isFinite(Number(v))&&v!=null&&Number(v)>0)return Number(v);return 0};
     const bs=bd.statistics||{},fs0=fin.finish?.BattleStats||fin.finish?.GlobalStats||fin.finish||{};
-    const cnt={cards:pick(bs.UsedCardCount,fs0.UsedCardCount,fin.cards),deathResist:pick(bs.DeathResistCount,fs0.DeathResistCount,fin.deathResist),kills:pick(bs.KillCount,fs0.KillCount,fin.kills)};
+    // death resist triggers counted from the replay's own death_resist_times events (each is a fatal hit that was survived); the statistics block can disagree with them
+    const cnt={cards:pick(bs.UsedCardCount,fs0.UsedCardCount,fin.cards),deathResist:(tl.drLog?.length>0?tl.drLog.length:pick(bs.DeathResistCount,fs0.DeathResistCount,fin.deathResist)),kills:pick(bs.KillCount,fs0.KillCount,fin.kills)};
     // the game's panel shows the whole run's death-resist count: triggers of the earlier battles (death_resist_times at battle start) + this battle's
     const drTotal=(()=>{const t0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.death_resist_times),inb=Number(cnt.deathResist)||0,fin2=Number(tl.endDR?.()?.t);return Number.isFinite(fin2)&&fin2>=inb?Math.max(fin2,(Number.isFinite(t0)?t0:0)+inb):(Number.isFinite(t0)?t0:0)+inb})();
     const k0=bd.keeperSkill!=null?res.nameSkill(bd.keeperSkill):'',k=/^\d+$/.test(String(k0))?'':k0;
