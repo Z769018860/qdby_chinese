@@ -31,7 +31,7 @@ async function download(root){
   const urls=[...team.map(t=>t.src),...X.aw.map(a=>a.icon),...X.wheels.map(a=>a.icon),...X.relics.map(a=>a.icon),...X.covs.map(a=>a.icon)];
   const imgs=new Map();await Promise.all([...new Set(urls.filter(Boolean))].map(async u=>imgs.set(u,await imgLoad(norm(u)))));
   const gi=u=>imgs.get(u)||imgs.get(norm(u))||null;
-  const hHead=124,hTeam=team.length?118:0,awN=Math.min(X.aw.length,5),hMid=Math.max(330,50+awN*66+10),hGear=170,hFoot=50;
+  const hHead=124,hTeam=team.length?118:0,awN=Math.min(X.aw.length,5),hMid=Math.max(350,50+awN*66+10),hGear=170,hFoot=50;
   const H=hHead+hTeam+hMid+hGear+hFoot;
   const C=document.createElement('canvas');C.width=W*2;C.height=H*2;const c=C.getContext('2d');c.scale(2,2);
   const bg=c.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#0a1019');bg.addColorStop(.6,'#101826');bg.addColorStop(1,'#20181e');c.fillStyle=bg;c.fillRect(0,0,W,H);
@@ -60,11 +60,11 @@ async function download(root){
     const rv=d=>R*Math.max(.04,Math.min(100,Number(d[1])||0)/100);
     c.beginPath();k.dims.forEach((d,i)=>{const[px,py]=pt(i,rv(d));i?c.lineTo(px,py):c.moveTo(px,py)});c.closePath();c.fillStyle='rgba(213,177,118,.25)';c.fill();c.strokeStyle='#d5b176';c.lineWidth=2;c.stroke();c.lineWidth=1;
     k.dims.forEach((d,i)=>{const[px,py]=pt(i,rv(d));c.beginPath();c.arc(px,py,3,0,7);c.fillStyle='#f1d69f';c.fill();const[lx,ly]=pt(i,R+24);T(d[0],lx,ly-2,'12px '+F,'#aab6c6','center');T(sc(d[1]),lx,ly+13,'800 13px '+F,'#f1d69f','center')});
-    const f=k.facts||{};let fy=y+hMid-10-62;
+    const f=k.facts||{};let fy=y+hMid-10-76;
     const bits=[[ui('潜力实现','Potential'),k.potential==null?'—':Math.round(k.potential)+'%'],[ui('关键窗口','Windows'),k.windows==null?'—':Math.round(k.windows)+'%'],[ui('可信度','Confidence'),k.conf==null?'—':Math.round(k.conf*100)+'%']];
     let bx=M+16;bits.forEach(([l,v])=>{bx+=chip(`${l} ${v}`,bx,fy-4,'#9edbd6')});if(k.conf!=null&&k.conf<.6)T(ui('仅供参考','Indicative only'),M+kw-16,fy+30,'12px '+F,'#d98b8b','right');
     const fl=[];if(f.energySpent!=null)fl.push(`${ui('费用使用','Energy used')} ${fmtN(f.energySpent)}${f.energyOverflow?` · ${ui('溢出','overflow')} ${fmtN(f.energyOverflow)}`:''}`);if(f.rounds!=null)fl.push(`${ui('回合','Rounds')} ${f.rounds}${f.topPct!=null?` · ${ui('同关前','top')} ${Math.round(f.topPct)}%`:''}`);if(f.regretPct!=null)fl.push(`${ui('出牌遗憾','Regret')} ${Math.round(f.regretPct)}%`);if(f.deathResist!=null)fl.push(`${ui('死亡抵抗','Death resist')} ${f.deathResist}`);if(f.vulnCoveragePct!=null)fl.push(`${ui('易伤覆盖','Vuln. cover')} ${Math.round(f.vulnCoveragePct)}%`);
-    T(fit(fl.slice(0,3).join('  ·  '),'11px '+F,kw-32),M+16,fy+34,'11px '+F,'#8b9aae');T(fit(fl.slice(3).join('  ·  '),'11px '+F,kw-32),M+16,fy+50,'11px '+F,'#8b9aae')}
+    T(fit(fl.slice(0,3).join('  ·  '),'11px '+F,kw-32),M+16,fy+34,'11px '+F,'#8b9aae');T(fit(fl.slice(3).join('  ·  '),'11px '+F,kw-32),M+16,fy+50,'11px '+F,'#8b9aae');if(k.luck)T(`🍀 ${ui('幸运','Luck')} ${Math.round(k.luck.score)} · ${k.luck.label}（${ui('彩蛋，不计入评分','easter egg, not scored')}）`,M+16,y+hMid-22,'700 12px '+F,'#7ee0a8')}
   // awakeners
   const ax=M+kw+12,aw=W-M-ax;box(ax,y,aw,hMid-10);T(ui('唤醒体评分','Awakener ratings'),ax+16,y+26,'700 13px '+F,'#d9bd89');T(ui(`队伍总伤害 ${fmtN(X.total)}`,`Team damage ${fmtN(X.total)}`),ax+aw-16,y+26,'12px '+F,'#8b9aae','right');
   X.aw.slice(0,5).forEach((a,i)=>{const ry=y+40+i*66;if(i){c.fillStyle='rgba(148,163,184,.1)';c.fillRect(ax+14,ry-3,aw-28,1)}icon(gi(a.icon),ax+14,ry+4,50,9);const nf='800 16px '+F,nm=fit(a.name,nf,130);T(nm,ax+74,ry+24,nf,i?'#e8edf5':'#f3e5c8');c.font=nf;T(a.grade,ax+74+c.measureText(nm).width+10,ry+24,'900 15px '+F,gcol(a.grade));

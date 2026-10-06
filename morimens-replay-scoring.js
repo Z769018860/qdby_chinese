@@ -270,5 +270,31 @@ function scoreKeeperV2(m,tl,ref){
   const potential=mean([playRatio==null?null:100*playRatio,Econv]),windows=mean([cover==null?null:100*cover,sup>0?100*bufShare:null]);
   return {score:score==null?null:clamp(score),grade:score==null?'—':grade(score),dims,conf,confidence,potential,windows,facts,weights:KW,original:k};
 }
-window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,scoreKeeperV2,grade};
+// ---------- Luck (easter egg: shown next to the keeper rating, never part of it) -----------------------------------
+// 1) death resist that fired although the keeper's panel value was tiny, 2) an awakener's Dimensional Image held without any ring relic (so it came from a shop),
+// 3) lots of crits from an awakener with a low crit rate. All three are estimates from what the replay records.
+function binomTail(n,k,p){if(k<=0)return 1;let term=Math.exp(n*Math.log(1-p)),cdf=0;for(let i=0;i<k;i++){cdf+=term;term*=(n-i)/(i+1)*p/(1-p)}return Math.max(1e-12,Math.min(1,1-cdf))}
+function scoreLuck(tl){
+  const items=[],parts={dr:0,shop:0,crit:0};if(!tl)return null;
+  // 1) death resist with a very low panel value
+  for(const d of tl.drLog||[]){if(d.v==null||!Number.isFinite(d.v))continue;const f=clamp((200-d.v)/150,0,1);if(f<=0)continue;
+    const pts=40*f;parts.dr+=pts;items.push({k:'dr',pts,text:ui(`第 ${d.bout} 回合触发死亡抵抗，当时守密人死亡抵抗面板只有 ${Math.round(d.v)}`,`Death resist fired in round ${d.bout} with a panel value of only ${Math.round(d.v)}`)})}
+  parts.dr=Math.min(60,parts.dr);
+  // 2) dimensional image without a ring relic
+  {const res=tl.res,names=new Set([...tl.actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.name))),have=(tl.startRelics||[]).map(t=>String(res.nameRelic(t)||''));
+    const ring=have.some(n=>/指轮|戒指/.test(n));
+    if(!ring)for(const n of have){const m=n.match(/^维度影像·(.+)$/);if(m&&names.has(m[1])){parts.shop+=45;items.push({k:'shop',pts:45,text:ui(`没有任何指轮，却持有队伍里「${m[1]}」的维度影像（只能是商店 / 事件里碰到的）`,`Holds ${m[1]}'s Dimensional Image without any ring relic`)})}}
+    parts.shop=Math.min(70,parts.shop)}
+  // 3) crits from low-crit-rate awakeners: every hit carries the crit rate the awakener really had at that moment; the number of crits is judged against that
+  {const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr:base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(.0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
+    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10)continue;const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;if(mean>.4)continue;
+      // exact tail of a sum of Bernoulli trials with different probabilities
+      let dist=[1];for(const p of o.ps){const nd=new Array(dist.length+1).fill(0);for(let i=0;i<dist.length;i++){nd[i]+=dist[i]*(1-p);nd[i+1]+=dist[i]*p}dist=nd}
+      let tail=0;for(let i=o.k;i<dist.length;i++)tail+=dist[i];tail=Math.max(1e-12,Math.min(1,tail));const sg=-Math.log10(tail);if(sg<1.3)continue;const pts=Math.min(40,sg*15);parts.crit+=pts;
+      items.push({k:'crit',pts,text:ui(`${a.name} 平均暴击率 ${(mean*100).toFixed(0)}%，${n} 次命中暴击了 ${o.k} 次（期望 ${(mean*n).toFixed(1)} 次），概率约 ${tail<.001?'<0.1':(tail*100).toFixed(1)}%`,`${a.name}: ${o.k}/${n} crits at ~${(mean*100).toFixed(0)}% crit rate`)})}
+    parts.crit=Math.min(60,parts.crit)}
+  const score=Math.min(100,parts.dr+parts.shop+parts.crit),label=score>=80?ui('欧皇附体','Blessed'):score>=50?ui('好运连连','Very lucky'):score>=20?ui('略有小运','A bit lucky'):score>0?ui('一点点运气','A touch of luck'):ui('平平无奇','Nothing special');
+  return {score,label,parts,items:items.sort((a,b)=>b.pts-a.pts)};
+}
+window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,scoreKeeperV2,scoreLuck,grade};
 })();
