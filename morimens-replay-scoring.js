@@ -104,11 +104,11 @@ function scoreGear(items,tl,total){
 
 // ---------- Awakener rating ---------------------------------------------------------------
 const DEF_W={sh:45,mit:25,ctl:20,dr:10};
-const SUP_W={key:1,ali:1.1,seal:.45,eng:1.65,vuln:1.6,buf:1.5,cut:1.55,draw:1.75,cyc:1.05,realm:.65,emb:.7};
+const SUP_W={key:1,ali:1.1,seal:.45,eng:1.65,vuln:1.6,buf:1.5,cut:1.55,draw:1.75,cyc:1.05,realm:.65,emb:.7,dis:1.1};
 function awakenerUtilityLabels(x){
   const S=x.sup||{},a=[];
   const push=(v,z,e,strong=false)=>{if(v>0)a.push({v,label:ui(z,e),strong})};
-  push(S.draw,'抽牌','Draw',true);push(S.cut,'减费','Cost cut',true);push(S.eng,'算力','Energy',true);push(S.vuln,'易伤','Vulnerability',true);push(S.buf,'伤害增益','Damage buff',true);push(S.cyc,'过牌','Cycling');push(S.key,'钥令能量','Keyflare');push(S.ali,'充狂','Aliemus');push(S.realm,'界域精通','Realm mastery');push(S.emb,'胚胎','Embryo');
+  push(S.draw,'抽牌','Draw',true);push(S.cut,'减费','Cost cut',true);push(S.eng,'算力','Energy',true);push(S.vuln,'易伤','Vulnerability',true);push(S.buf,'伤害增益','Damage buff',true);push(S.cyc,'过牌','Cycling');push(S.dis,'驱散','Dispel',true);push(S.key,'钥令能量','Keyflare');push(S.ali,'充狂','Aliemus');push(S.realm,'界域精通','Realm mastery');push(S.emb,'胚胎','Embryo');
   push(x.mit,'减伤','Mitigation',true);push(x.ctl,'控制/弱化','Control',true);push(x.saves,'救场','Death save',true);push(x.sh,'护盾/治疗','Shield/Heal',true);
   return a.sort((p,q)=>q.v-p.v).slice(0,6);
 }
