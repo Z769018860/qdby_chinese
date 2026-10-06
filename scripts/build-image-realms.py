@@ -20,5 +20,7 @@ for tid,v in rel.items():
         else:out['unmatched'].append([tid,en,v.get('zh')])
     m=re.match(r'(Aequor|Caro|Chaos|Ultra)\s+Ring',en,re.I)
     if m:out['rings'][tid]={'realm':m.group(1).upper(),'zh':v.get('zh')}
+out['rings'].update({'83509':{'realm':'AEQUOR','zh':'「深海指轮」'},'83510':{'realm':'CARO','zh':'「血肉指轮」'},'83511':{'realm':'ULTRA','zh':'「超维指轮」','guess':True},'83512':{'realm':'CHAOS','zh':'「混沌指轮」'}})
+out['schoolIds']={'1':'CHAOS','2':'CARO','3':'ULTRA','4':'AEQUOR'}   # RelicConfig.SchoolID of an image / ring = realm
 json.dump(out,open(os.path.join(root,'data/morimens/replay/dimension-image-realms.json'),'w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
 print(len(out['images']),'images',len(out['rings']),'rings','unmatched',out['unmatched'])

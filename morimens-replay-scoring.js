@@ -275,7 +275,13 @@ function scoreKeeperV2(m,tl,ref){
 // 2) holding the Dimensional Image of an awakener outside the season's ring realm (the ring gives every awakener of its own realm an image for free),
 // 3) lots of crits from awakeners with a low crit rate (forced-crit effects are left out; only the overall expectation is judged).
 function binomTail(n,k,p){if(k<=0)return 1;let term=Math.exp(n*Math.log(1-p)),cdf=0;for(let i=0;i<k;i++){cdf+=term;term*=(n-i)/(i+1)*p/(1-p)}return Math.max(1e-12,Math.min(1,1-cdf))}
-const RING_ZH={深海:'AEQUOR',混沌:'CHAOS',血肉:'CARO',超越:'ULTRA'},REALM_ZH={AEQUOR:'深海',CHAOS:'混沌',CARO:'血肉',ULTRA:'超越'};
+const RING_ZH={深海:'AEQUOR',混沌:'CHAOS',血肉:'CARO',超维:'ULTRA',超越:'ULTRA'},REALM_ZH={AEQUOR:'深海',CHAOS:'混沌',CARO:'血肉',ULTRA:'超维'},SCHOOL={1:'CHAOS',2:'CARO',3:'ULTRA',4:'AEQUOR'};
+function critExcluder(tl){
+  const forcedStates=new Set(),forcedSkills=new Set(),RE=/必定暴击|必然暴击|一定暴击|必定触发暴击|必定会暴击|必定造成暴击|必爆|暴击率[^，。；]{0,8}(提高|增加|提升)|(提高|增加|提升)[^，。；]{0,12}暴击率|暴击(伤害)?计数|机械降神/,KEY=/^(certain_crit|card_crit$|crit_per_)/,txt=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(txt).join(' '):String(v);
+  for(const [id,r] of Object.entries(tl.res?.state||{})){if(Object.keys(r.ExistProperty||{}).some(k=>KEY.test(k))||RE.test(txt(r.Desc)+txt(r.WeaponDesc)+txt(r.Name)))forcedStates.add(String(id))}
+  for(const [id,r] of Object.entries(tl.res?.skill||{}))if(RE.test(txt(r.BattleDesc)+txt(r.Desc)))forcedSkills.add(String(id));
+  return h=>forcedSkills.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
+}
 function scoreLuck(tl,aux={}){
   const items=[],parts={dr:0,shop:0,crit:0};if(!tl)return null;
   // 1) death resist: chance of this trigger = panel% x 0.5^(triggers so far), capped at 100%
@@ -285,25 +291,28 @@ function scoreLuck(tl,aux={}){
   parts.dr=Math.min(60,parts.dr);
   // 2) dimensional image from outside the ring realm
   {const res=tl.res,names=new Set([...tl.actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.name))),imgs=aux.imageRealms?.images||{},rings=aux.imageRealms?.rings||{};
-    let ringRealm=null,ringName='';for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||'');if(/指轮|戒指/.test(nm)){ringRealm=rings[t]?.realm||RING_ZH[(nm.match(/深海|混沌|血肉|超越/)||[])[0]]||null;ringName=nm;break}}
-    for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||''),m=nm.match(/^维度影像·(.+)$/);if(!m)continue;const realm=imgs[t]?.realm;if(!realm)continue;
+    let ringRealm=null,ringName='';for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||'');if(/指轮|戒指/.test(nm)){const dsc=String(res.relic?.[String(t)]?.BattleDesc||res.relic?.[String(t)]?.Desc||'');
+      ringRealm=RING_ZH[(dsc.match(/「(深海|混沌|血肉|超维|超越)」界域唤醒体获得其/)||[])[1]]||rings[t]?.realm||SCHOOL[res.relic?.[String(t)]?.SchoolID]||RING_ZH[(nm.match(/深海|混沌|血肉|超维|超越/)||[])[0]]||null;ringName=nm;break}}
+    for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||''),m=nm.match(/^维度影像·(.+)$/);if(!m)continue;const realm=imgs[t]?.realm||SCHOOL[res.relic?.[String(t)]?.SchoolID];if(!realm)continue;
       if(ringRealm&&realm===ringRealm)continue;   // the ring itself hands these out
       const inTeam=names.has(m[1]),pts=inTeam?45:15;parts.shop+=pts;
       items.push({k:'shop',pts,text:ui(`${ringRealm?`当期是${ringName}（${REALM_ZH[ringRealm]}界域），却拿到了${REALM_ZH[realm]||realm}界域「${m[1]}」的维度影像`:`没有界域指轮，却持有「${m[1]}」的维度影像`}${inTeam?'，而且这名唤醒体就在队伍里':'（该唤醒体不在队伍里）'}`,`Holds ${m[1]}'s Dimensional Image from outside the ring realm`)})}
     parts.shop=Math.min(70,parts.shop)}
-  // 3) crits: overall expectation only, hits that carry a forced-crit effect are skipped
-  {const forcedStates=new Set(),forcedSkills=new Set(),RE=/必定暴击|必然暴击|一定暴击|必定触发暴击|必定会暴击|必定造成暴击/;
-    for(const [id,r] of Object.entries(tl.res?.state||{}))if(RE.test(String(r.Desc||'')+String(r.WeaponDesc||'')))forcedStates.add(String(id));
-    for(const [id,r] of Object.entries(tl.res?.skill||{}))if(RE.test(String(r.BattleDesc||r.Desc||'')))forcedSkills.add(String(id));
-    const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;if(forcedSkills.has(String(h.skill)))continue;if(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))))continue;
+  // 3) crits: overall expectation only. The panel crit rate does not cover forced crits ("必定暴击" skills, certain_crit states such as 通用临时技能必爆) nor
+  // card-specific crit rates (card_crit, crit_per_from_ulti / _strikecard), so every hit made while one of those is active is left out of both counts.
+  const cs={n:0,k:0,exp:0,aw:0};
+  {const skip=critExcluder(tl);
+    const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;if(skip(h))continue;
       const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr:base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
-    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10)continue;const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;if(mean>.4)continue;
+    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10||/希莱斯特|图鲁|墨菲|旺达|法洛思/.test(a.name))continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
+      const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;if(mean>.4)continue;
+      cs.n+=n;cs.k+=o.k;cs.exp+=mean*n;cs.aw++;
       let dist=[1];for(const p of o.ps){const nd=new Array(dist.length+1).fill(0);for(let i=0;i<dist.length;i++){nd[i]+=dist[i]*(1-p);nd[i+1]+=dist[i]*p}dist=nd}
       let tail=0;for(let i=o.k;i<dist.length;i++)tail+=dist[i];tail=Math.max(1e-12,Math.min(1,tail));const sg=-Math.log10(tail);if(sg<1.3)continue;const pts=Math.min(40,sg*15);parts.crit+=pts;
       items.push({k:'crit',pts,text:ui(`${a.name} 平均暴击率 ${(mean*100).toFixed(0)}%，${n} 次命中（已排除必定暴击）暴击了 ${o.k} 次（期望 ${(mean*n).toFixed(1)} 次），概率约 ${tail<.001?'<0.1':(tail*100).toFixed(1)}%`,`${a.name}: ${o.k}/${n} crits at ~${(mean*100).toFixed(0)}% crit rate`)})}
     parts.crit=Math.min(60,parts.crit)}
   const score=Math.min(100,parts.dr+parts.shop+parts.crit),label=score>=80?ui('欧皇附体','Blessed'):score>=50?ui('好运连连','Very lucky'):score>=20?ui('略有小运','A bit lucky'):score>0?ui('一点点运气','A touch of luck'):ui('平平无奇','Nothing special');
-  return {score,label,parts,items:items.sort((a,b)=>b.pts-a.pts)};
+  return {score,label,parts,critStats:cs,items:items.sort((a,b)=>b.pts-a.pts)};
 }
-window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,scoreKeeperV2,scoreLuck,grade};
+window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,scoreKeeperV2,scoreLuck,critExcluder,grade};
 })();
