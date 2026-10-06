@@ -415,7 +415,7 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
-    const REALM_FORM={25403:['静海','静'],72079:['怒涛','涛'],89551:['潮涌','潮']};let pendRealm=null,poolAmt=0,poolLast=null,eroLast=null;
+    const REALM_FORM={25403:['静海','静'],72079:['怒涛','涛'],89551:['潮涌','潮']};const tenAct=[];let tenT=0,pendRealm=null,poolAmt=0,poolLast=null,eroLast=null;
     const intents=new Map();let lastStats=null,lastDim=0,finishStats=null,deathResistN=0,healNom=0,healAct=0;const killed=new Set();const keeperPicks=[];
     // Relic buff accounting. Power / basic-damage relics are matched to the state & property
     // changes that follow their trigger frame, then every later hit is split by the share of
@@ -621,7 +621,7 @@
     const keyText=k=>{if(k.startsWith('gear:')){const g=gears.get(k.slice(5));return g?[g.desc,...g.mainStates.map(m=>pipeName(res.state[String(m.stateId)]?.WeaponDesc||'')),...(g.effectsEn||[]).map(x=>x.desc)].join(' '):''}
       if(k.startsWith('rel:')){const r=res.relic[k.slice(4)]||{};return pipeName(pickVariant(r.BattleDesc||r.Desc,0))||''}return ''};
     const keyHas=(k,re)=>{if(!keyTextCache.has(k))keyTextCache.set(k,keyText(k));return re.test(keyTextCache.get(k))};
-    const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,blk:0,heal:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});return supStore.get(k)};
+    const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,blk:0,heal:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});return supStore.get(k)};
     // who gets credit for an effect at this timestamp: a relic firing in this frame group, else a wheel / covenant state firing now, else the awakener whose action is being resolved
     const gearWins=[];   // short windows after commands that fire without a state change (超维 bout, named skill, death resist)
     const srcKeys=time=>{if(relWin&&!relWin.gear&&relWin.queue?.length)return relWin.queue.map(r=>'rel:'+r.tid);const g=gearTimes.get(time);if(g&&g.size)return [...g];{const w=gearWins.findLast?gearWins.findLast(x=>x.src&&time>=x.t0&&time<=x.t1):null;if(w)return w.keys}const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]};
@@ -816,7 +816,8 @@
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
             const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'&&d.extraData?.cmdServerUid!=null?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01&&(w.tgt!=='StateOwner'||w.owners.includes(String(d.uid)))):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0)||d.extraData?.cmdServerUid==null)return null;/* natural regeneration carries no command id */const SB=['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED'],gk=(x)=>'gear:'+x.e.key,live=x=>gearWins.some(w=>w.ch===x.ch&&fr.time>=w.t0&&fr.time<=w.t1)||(!!x.e.fx&&gearTimes.get(fr.time)?.has(gk(x)));const hit=evList.filter(x=>x.prop===pt&&Math.abs((amtOf(x,d,pt,cv)??-1)-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1)&&(!SB.includes(x.ch.base)||live(x))&&(x.tgt!=='StateOwner'||x.e.owners.includes(String(d.uid))));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&Object.values(EV_PROP).includes(pt))),   // resource changes reach a wheel / covenant only through an exact amount match
-          keys=keys1.length?keys1:(()=>{const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:(()=>{const c=d.extraData?.castRoleUid;return c!=null&&actors.get(String(c))?.kind==='awakener'?['act:'+c]:[]})()})(),rcv=actors.get(String(d.uid));   // effects fired outside a card play (余波 / turn-edge triggers) still carry their caster
+          keys=keys1.length?keys1:(()=>{const c=d.extraData?.castRoleUid,ca=c!=null?actors.get(String(c)):null;if(ca?.kind==='awakener')return ['act:'+c];   // the awakener whose effect produced it, even when another awakener's card is being resolved
+          const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]})(),rcv=actors.get(String(d.uid));   // effects fired outside a card play (余波 / turn-edge triggers) still carry their caster
             if(pt==='max_hp'&&rcv?.camp===1){const cu=String(d.extraData?.castRoleUid);if(actors.get(cu)?.kind==='awakener')supOf('act:'+cu).maxHp=(supOf('act:'+cu).maxHp||0)+cv}   // the team HP pool belongs to the keeper: credit the awakener whose state raised it (饱餐)
             if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
             const part=keys.length?1/keys.length:1;
@@ -829,7 +830,7 @@
               else if(pt==='occupation_master'||pt==='occupation_master_final')sp.rm+=cv*part
               else if(pt==='scarlet_blood_count')sp.embryo+=cv*part
               else if(/black|money|coin/i.test(String(pt))&&!/per|upgrade/i.test(String(pt)))sp.seal+=cv*part
-              else if(pt==='tentacle_dmg')sp.tenGain+=cv*part
+              else if(pt==='tentacle_dmg'){sp.tenGain+=cv*part;tenAct.push({key:k,amt:cv*part,cast:String(d.extraData?.castRoleUid)})}
               else if(pt==='block'&&rcv?.camp===1&&k!=='kp'&&!k.startsWith('act:')&&keyHas(k,/护盾|shield|block/i))sp.blk+=cv*part
               else if(pt==='hp'&&d.reason!==4&&rcv?.camp===1&&k!=='kp'&&!k.startsWith('act:')&&keyHas(k,/治疗|恢复|heal|restore/i))sp.heal+=cv*part}
             if(!keys.length){if(pt==='ulti_energy')passiveSupport.ali+=cv;else if(pt==='keeper_energy')passiveSupport.key+=cv}
@@ -880,6 +881,8 @@
             continue;
           }
           if(e===1064){const name=res.nameSkill(d.skillId);execSrc.cur={name:`${ui('钥令','Keeper skill')} · ${name}`,actor:d.roleUid};{const play={round:bout,time:fr.time,tid:d.skillId,owner:String(d.roleUid),kind:'keeper',dmg:0,block:0,heal:0,eng:0,ali:0,draw:0};playLog.push(play);execSrc.cur.play=play}push('keeper',`${ui('钥令','Keeper skill')} · ${name}`,'',d,fr,{skillTid:d.skillId,actorUid:d.roleUid,skillName:name,iconSrc:keeperSkillIconSrc(res,d.skillId),tip:skillTip(res,d.skillId,{args:argList(unit(d.roleUid).skillArgs),ctx:{}})});gearTrigger('keeper',{},fr.time);continue}
+          if(e===1090&&d.schoolSpecialArgs&&Number(d.schoolSpecialArgs.tentacle_dmg)>=0)tenT=Number(d.schoolSpecialArgs.tentacle_dmg);
+          if(e===1028&&d.propertyType==='tentacle_dmg'&&Number(d.changedValue)<0&&d.uid!=null){let rest=-Number(d.changedValue);const cast=String(d.extraData?.castRoleUid);for(let i=tenAct.length-1;i>=0&&rest>1e-9;i--){const a=tenAct[i];if(a.cast!==cast||!(a.amt>0))continue;const take=Math.min(a.amt,rest);a.amt-=take;rest-=take}for(let i=tenAct.length-1;i>=0&&rest>1e-9;i--){const a=tenAct[i];if(!(a.amt>0))continue;const take=Math.min(a.amt,rest);a.amt-=take;rest-=take}}
           if(e===1090&&d.schoolSpecialArgs&&pendRealm){const x=Number(d.schoolSpecialArgs.tentacle_dmg_show??d.schoolSpecialArgs.tentacle_dmg);if(Number.isFinite(x)){pendRealm.skillName+=` · ${ui('最终触腕伤害','Final tentacle dmg')} ${Math.round(x).toLocaleString()}`;pendRealm.label=`${ui('界域','Realm')} · ${pendRealm.skillName}`}pendRealm=null}
           if(e===1093){if(actors.get(String(d.casterUid))?.kind==='awakener')execSrc.cur={name:res.nameSkill(d.skillTid),actor:d.casterUid};const name=res.nameSkill(d.skillTid);push('trigger',`${plainName(d.casterUid)} · ${name}`,`<span class="mr2lead">${ui('派生','Triggered')}</span>${chip(d.casterUid)}<b>${esc(name)}</b>${d.producerUid!=null&&d.producerUid!==d.casterUid?`<span class="mr2from">← ${chip(d.producerUid)}</span>`:''}`,d,fr,{skillTid:d.skillTid,actorUid:d.casterUid,producerUid:d.producerUid,skillName:name});continue}
           if(e===1014&&d.beHitConfig){
@@ -912,6 +915,7 @@
             if(typ==='heal'&&bout>0&&actorOf(h.targetRoleUid)?.camp===1){const nom=Number(h.originVal)||0;if(nom>0){healNom+=nom;healAct+=Math.min(nom,amt)}}
             if(execSrc.cur?.play&&bout>0){const pl=execSrc.cur.play;if(typ==='damage'&&actorOf(h.targetRoleUid)?.kind==='monster'&&actorOf(h.castRoleUid)?.kind==='awakener')pl.dmg+=amt;else if(typ==='heal'&&actorOf(h.targetRoleUid)?.camp===1)pl.heal+=amt}
             if(typ==='damage'&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
+              if(!res.skill[String(h.skillConfigId)]&&bout>0&&tenAct.length){const D=Number(h.originVal)||amt,A=tenAct.reduce((n,a)=>n+(a.amt>0?a.amt:0),0),Tn=Math.max(tenT,A);if(Tn>0&&D>0)for(const a of tenAct)if(a.amt>0)supOf(a.key).tenExtra+=D*a.amt/Tn}   // a tentacle attack: damage scales with the tentacle stat, so each active +x is worth x/T of it
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
               const pk={};for(const k of HIT_PROPS)if(pr[k])pk[k]=pr[k];
@@ -1013,6 +1017,9 @@
         if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
         for(const [f,re] of CAPR)if(sp[f]&&!re.test(all))sp[f]=0}}
+    // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
+    {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
+      for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
     return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
@@ -1746,7 +1753,7 @@
       const weakCovered=sp=>[...(sp.prevTypes?.entries?.()||[])].some(([n,v])=>/虚弱/.test(n)&&v>0),ctlOf=sp=>(sp.dbCls.ctrl||0)*3+(weakCovered(sp)?0:(sp.dbCls.weak||0)*2)+(sp.dbCls.frail||0)*2;
       const SUBW={def:{sh:40,mit:30,ctl:20,dr:10},sup:{key:1.5,ali:1.5,seal:.5,eng:1.5,vuln:1.5,buf:1.5,cut:1,draw:1,cyc:.5,realm:.5,emb:.5,dis:1.2}};
       const roles=bd.roleData||[],attrOf=uid=>roles.find(x=>String(x.uid)===String(uid))?.attrs||{};
-      const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
+      const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
       const supOf=k=>tl.supStore?.get(k)||blank();
       const gradeOf=sc=>sc>=80?'S':sc>=65?'A':sc>=50?'B':sc>=35?'C':'D';
       const shareScore=(v,t,N)=>t>0?Math.min(100,100*(v/t)/(2/Math.max(1,N))):null;   // 2x the fair share of the class total = 100
@@ -1798,18 +1805,18 @@
         o.dbTypes=new Map(sp.dbTypes);for(const [k,v] of cc.dbTypes){const x=o.dbTypes.get(k);o.dbTypes.set(k,{k:v.k,n:(x?.n||0)+v.n})}o.prevTypes=new Map(sp.prevTypes);for(const [k,v] of cc.prevTypes)o.prevTypes.set(k,(o.prevTypes.get(k)||0)+v);return o};
       const awRaw=cand.map(r=>{const cc=crCredit.get(String(r.a.uid))||null,sp0=supOf('act:'+r.a.uid),sp=cc?mergeSp(sp0,cc):sp0,at=attrOf(r.a.uid),bf=tl.relicBuffs?.get('act:'+r.a.uid);
         const out={dir:0,dot:0,ctr:0,exe:0,ten:0,oth:0};for(const o of r.src.values())if(o.dmg>0)out[outKind(o)]+=o.dmg;
-        const tg=cand.reduce((n,c)=>n+supOf('act:'+c.a.uid).tenGain,0);out.ten+=tg>0?TD*sp.tenGain/tg:0;   // tentacle damage is dealt by the team: credit by tentacle bonus raised
+        const tg=cand.reduce((n,c)=>n+supOf('act:'+c.a.uid).tenGain,0),tx=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+(v.tenExtra||0),0);out.ten+=tg>0?Math.max(0,TD-tx)*sp.tenGain/tg:0;   // tentacle damage is dealt by the team: credit by tentacle bonus raised
         const drv=(at.death_resist||0)+sp.dr,drShare=drTotal>0?drv/drTotal:0;
         const rep=r.dmg;if(cc)out.oth+=cc.dmg;
         return {r,out,outT:Object.values(out).reduce((a,b)=>a+b,0),sh:r.block+1.2*r.heal+0.5*(sp.maxHp||0)+(cc?cc.block+1.2*cc.heal:0),created:cc,maxHp:sp.maxHp||0,ampTypes:[...(sp.ampTypes||new Map()).entries()].map(([n,v])=>({n,v})),block:r.block,heal:r.heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),
           dr:drv+deathSaves*drShare*100,drBase:drv,saves:deathSaves*drShare,
-          sup:sub(sp,{buf:(bf?.extra||0)+(cc?.buf||0),rm:at.occupation_master||0}),bufPower:bf?.instances?.filter(i=>i.kind==='power').reduce((n,i)=>n+i.extra,0)||0,bufCrit:bf?.instances?.filter(i=>i.kind==='crit'||i.kind==='critrate').reduce((n,i)=>n+i.extra,0)||0,vulnExtra:sp.vulnExtra,
+          sup:sub(sp,{buf:(bf?.extra||0)+(cc?.buf||0)+(sp.tenExtra||0),rm:at.occupation_master||0}),bufPower:bf?.instances?.filter(i=>i.kind==='power').reduce((n,i)=>n+i.extra,0)||0,bufCrit:bf?.instances?.filter(i=>i.kind==='crit'||i.kind==='critrate').reduce((n,i)=>n+i.extra,0)||0,vulnExtra:sp.vulnExtra,
           dispelN:sp.dispelN||0,dispelPts:sp.dispelPts||0,dispelTypes:[...(sp.dispelTypes||new Map()).entries()],dispelMiss:(tl.playLog||[]).filter(p=>String(p.owner)===String(r.a.uid)&&p.dispelPlan).reduce((n,p)=>n+p.dispelPlan.filter(x=>!x.done).length,0),powerGain:sp.powerGain,critGain:sp.critGain,critRateGain:sp.critRateGain,inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,copies:sp.copies,ultCasts:sp.ultCasts,tenGain:sp.tenGain,embCards:sp.embCards,plays:r.plays,energy:r.energy,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}});
       const awMeta=rate(awRaw,{withEff:true});
       const awRows=awRaw.filter(o=>o.outT>0||o.sh>0||o.plays>0||Object.values(o.sup).some(v=>v>0)).sort((a,b)=>b.score-a.score).map(o=>({r:o.r,score:o.score,grade:o.grade,cats:o.cats,x:o,share:totalDmg?o.r.dmg/totalDmg:0}));
       // ---- wheels / covenants / relics (same categories, rated inside their own class)
       const itemRaw=(sp,direct,buf,block,heal)=>{const out={dir:0,dot:0,ctr:0,exe:0,ten:0,oth:direct.oth||0};out.dir=direct.dir||0;out.dot=direct.dot||0;
-        return {out,outT:out.dir+out.dot+out.oth,sh:block+1.2*heal,block,heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),dr:sp.dr,sup:sub(sp,{buf}),inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,vulnExtra:sp.vulnExtra,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}};
+        return {out,outT:out.dir+out.dot+out.oth,sh:block+1.2*heal+0.5*(sp.maxHp||0),block,heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),dr:sp.dr,sup:sub(sp,{buf:(buf||0)+(sp.tenExtra||0)}),inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,vulnExtra:sp.vulnExtra,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}};
       const gearItems=kind=>gearRows.filter(g=>g.kind===kind).map(g=>({g,val:g.extra+g.out.dmg+(g.dot||0),...itemRaw(supOf('gear:'+g.key),{dir:g.out.dmg,dot:g.dot||0},g.extra||0,g.out.block,g.out.heal)}));
       const wheelItems=gearItems('wheel'),covItems=gearItems('covenant');
       const relSup0=r=>{const sp=supOf('rel:'+r.tid);const t=pipeName((res.relic[r.tid]||{}).BattleDesc||(res.relic[r.tid]||{}).Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/),k=m?(m[1]?Number((res.relic[r.tid]?.StatePara||[])[Number(m[1])-1]):Number(m[2])):NaN;
@@ -1921,7 +1928,7 @@
     const sp=tl.supStore?.get(key);if(!sp)return '';const r=x=>Math.round(x*10)/10,o=[];
     const add=(v,l,c)=>{if(v>=0.5)o.push(`<em class="${c||'n'}">${l} +${fmt(r(v))}</em>`)};
     add(sp.aliSelf+sp.aliOthers,ui('狂气','Aliemus'));add(sp.key,ui('银钥能量','Keyflare'));add(sp.energy,ui('行动力','Energy'));add(sp.dr,ui('死亡抵抗','Death resist'));
-    add(sp.powerGain,ui('力量','Power'));add(sp.tenGain,ui('触腕伤害','Tentacle DMG'));add(sp.critRateGain,ui('暴击率','Crit rate'));add(sp.critGain,ui('暴击伤害','Crit DMG'));add(sp.basicGain,ui('增伤 / 强效 %','DMG amp %'));add(sp.draws,ui('抽牌','Draws'));add(sp.cut,ui('费用减免','Cost cut'));add(sp.seal,ui('黑印','Seals'));add(sp.embryo,ui('胚胎','Embryo'));add(sp.rm,ui('职业资源','Resource'));
+    add(sp.powerGain,ui('力量','Power'));add(sp.tenGain,ui('触腕伤害','Tentacle DMG'));add(sp.tenExtra,ui('触腕增伤折算','Tentacle dmg gained'));add(sp.critRateGain,ui('暴击率','Crit rate'));add(sp.critGain,ui('暴击伤害','Crit DMG'));add(sp.basicGain,ui('增伤 / 强效 %','DMG amp %'));add(sp.draws,ui('抽牌','Draws'));add(sp.cut,ui('费用减免','Cost cut'));add(sp.seal,ui('黑印','Seals'));add(sp.embryo,ui('胚胎','Embryo'));add(sp.rm,ui('职业资源','Resource'));
     if(sp.dbN>0)o.push(`<em class="n">${ui('减益','Debuffs')} ${fmt(r(sp.dbN))}</em>`);
     return o.join('')}
   function renderGear(st,tl){
@@ -2143,7 +2150,7 @@
       ['seal',ui('黑印','Black seals'),f(S.seal),''],
       ['eng',ui('算力（产生 + 制造灵感）','Energy'),f(S.eng),ui(`产生 ${f(x.engBase||0)} · 灵感 ${x.inspire||0}`,'')],
       ['vuln',ui('易伤（带来的增伤 / 上层次数）','Vulnerability'),f(S.vuln),typeNote(dbBy('vuln'))],
-      ['buf',ui('其他伤害加成（力量 / 暴击 / 基伤的间接伤害）','Damage buffs'),f(S.buf),ui(`力量 ${f(x.bufPower||0)} · 暴击 ${f(x.bufCrit||0)}${x.created&&x.created.buf>0?` · 创造的造物（${[...x.created.names].join('、')}，仅当回合）${f(x.created.buf)}`:''}`,'')],
+      ['buf',ui('其他伤害加成（力量 / 暴击 / 基伤 / 强效 / 触腕的间接伤害）','Damage buffs'),f(S.buf),ui(`力量 ${f(x.bufPower||0)} · 暴击 ${f(x.bufCrit||0)}${x.created&&x.created.buf>0?` · 创造的造物（${[...x.created.names].join('、')}，仅当回合）${f(x.created.buf)}`:''}`,'')],
       ['cut',ui('减费（点数）','Cost cuts'),f(S.cut),ui(`复制 ${f(x.copies||0)} 张`,'')],
       ['draw',ui('抽牌与过牌（过牌按 0.5 折算）','Draw & cycling'),f(S.draw),ui(`抽牌 ${f(x.draws||0)} · 过牌 ${f(x.cycles||0)}（取回 / 置顶 / 效果弃牌）`,'')],
       ['dis',ui('驱散 / 净化（技能指定的状态真的被清除才计）','Dispel'),f(S.dis),x.dispelN||x.dispelMiss?ui(`实际驱散 ${x.dispelN} 次${x.dispelTypes?.length?'（'+x.dispelTypes.map(([n,c])=>`${n}×${c}`).join('、')+'）':''} · 未命中（当时没有可驱散的状态）${x.dispelMiss||0} 次`,`${x.dispelN} dispelled, ${x.dispelMiss||0} missed`):''],
