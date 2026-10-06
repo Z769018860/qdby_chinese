@@ -277,10 +277,10 @@ function scoreKeeperV2(m,tl,ref){
 function binomTail(n,k,p){if(k<=0)return 1;let term=Math.exp(n*Math.log(1-p)),cdf=0;for(let i=0;i<k;i++){cdf+=term;term*=(n-i)/(i+1)*p/(1-p)}return Math.max(1e-12,Math.min(1,1-cdf))}
 const RING_ZH={深海:'AEQUOR',混沌:'CHAOS',血肉:'CARO',超维:'ULTRA',超越:'ULTRA'},REALM_ZH={AEQUOR:'深海',CHAOS:'混沌',CARO:'血肉',ULTRA:'超维'},SCHOOL={1:'CHAOS',2:'CARO',3:'ULTRA',4:'AEQUOR'};
 function critExcluder(tl){
-  const forcedStates=new Set(),forcedSkills=new Set(),RE=/必定暴击|必然暴击|一定暴击|必定触发暴击|必定会暴击|必定造成暴击|必爆|暴击率[^，。；]{0,8}(提高|增加|提升)|(提高|增加|提升)[^，。；]{0,12}暴击率|暴击(伤害)?计数|机械降神/,KEY=/^(certain_crit|card_crit$|crit_per_)/,txt=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(txt).join(' '):String(v);
+  const forcedStates=new Set(),forcedSkills=new Set(),RE=/必定暴击|必然暴击|一定暴击|必定触发暴击|必定会暴击|必定造成暴击|必爆/,KEY=/^certain_crit/,txt=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(txt).join(' '):String(v);
   for(const [id,r] of Object.entries(tl.res?.state||{})){if(Object.keys(r.ExistProperty||{}).some(k=>KEY.test(k))||RE.test(txt(r.Desc)+txt(r.WeaponDesc)+txt(r.Name)))forcedStates.add(String(id))}
   for(const [id,r] of Object.entries(tl.res?.skill||{}))if(RE.test(txt(r.BattleDesc)+txt(r.Desc)))forcedSkills.add(String(id));
-  return h=>forcedSkills.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
+  return h=>!tl.res?.skill?.[String(h.skill)]||forcedSkills.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
 }
 function scoreLuck(tl,aux={}){
   const items=[],parts={dr:0,shop:0,crit:0};if(!tl)return null;
@@ -303,8 +303,8 @@ function scoreLuck(tl,aux={}){
   const cs={n:0,k:0,exp:0,aw:0};
   {const skip=critExcluder(tl);
     const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;if(skip(h))continue;
-      const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr:base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
-    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10||/希莱斯特|图鲁|墨菲|旺达|法洛思/.test(a.name))continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
+      const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr+(h.cx?(h.cx.ult?h.cx.u:0)+(h.cx.strk?h.cx.s:0)+(h.cx.c||0):0):base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
+    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10||/希莱斯特|旺达/.test(a.name))continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
       const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;if(mean>.4)continue;
       cs.n+=n;cs.k+=o.k;cs.exp+=mean*n;cs.aw++;
       let dist=[1];for(const p of o.ps){const nd=new Array(dist.length+1).fill(0);for(let i=0;i<dist.length;i++){nd[i]+=dist[i]*(1-p);nd[i+1]+=dist[i]*p}dist=nd}
