@@ -153,5 +153,5 @@
     done();let q=false;new MutationObserver(()=>{if(q)return;q=true;queueMicrotask(()=>{q=false;done()})}).observe(document.documentElement,{childList:true,subtree:true})};
   const bodyObserver=new MutationObserver(()=>{if(document.getElementById('morimensReplayPanel')){observe();bodyObserver.disconnect()}});bodyObserver.observe(document.documentElement,{childList:true,subtree:true});
 
-  import('./morimens-replay-review-v2.js?v=20261006.16').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
+  import('./morimens-replay-review-v2.js?v=20261006.17').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
 })();

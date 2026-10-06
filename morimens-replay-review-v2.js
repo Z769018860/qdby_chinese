@@ -611,7 +611,7 @@
     const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp,kind:rel.kind};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
     /* relics an awakener creates mid-battle ("创构的…", e.g. Pickman's) only last the round they were made in */
     const relicCreators=new Map(),isCreatedRelic=tid=>/^创构的/.test(String(res.nameRelic(String(tid))||''));
-    const grant=(ctx,uid,amt,rel,temp)=>{const k=String(uid);ctx.inst.awakeners.add(k);if(!activeBuff.has(k))activeBuff.set(k,[]);activeBuff.get(k).push({inst:ctx.inst,kind:rel.kind,amt,temp,rel:ctx.rec,created:isCreatedRelic(rel.tid)})};
+    const grant=(ctx,uid,amt,rel,temp)=>{const k=String(uid);ctx.inst.awakeners.add(k);if(!activeBuff.has(k))activeBuff.set(k,[]);activeBuff.get(k).push({inst:ctx.inst,kind:rel.kind,scope:rel.scope,amt,temp,rel:ctx.rec,created:isCreatedRelic(rel.tid)})};
     const expireCreated=()=>{for(const [k,v] of activeBuff)activeBuff.set(k,v.filter(x=>!x.created))};
     const expireTemp=()=>{for(const [k,v] of activeBuff)activeBuff.set(k,v.filter(x=>!x.temp))};
     // passive relics that amplify every shield / heal ("…基础效果提高 N%"): each shield or heal an awakener produces counts as one effect
@@ -816,7 +816,7 @@
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
             const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'&&d.extraData?.cmdServerUid!=null?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01&&(w.tgt!=='StateOwner'||w.owners.includes(String(d.uid)))):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0)||d.extraData?.cmdServerUid==null)return null;/* natural regeneration carries no command id */const SB=['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED'],gk=(x)=>'gear:'+x.e.key,live=x=>gearWins.some(w=>w.ch===x.ch&&fr.time>=w.t0&&fr.time<=w.t1)||(!!x.e.fx&&gearTimes.get(fr.time)?.has(gk(x)));const hit=evList.filter(x=>x.prop===pt&&Math.abs((amtOf(x,d,pt,cv)??-1)-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1)&&(!SB.includes(x.ch.base)||live(x))&&(x.tgt!=='StateOwner'||x.e.owners.includes(String(d.uid))));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&Object.values(EV_PROP).includes(pt))),   // resource changes reach a wheel / covenant only through an exact amount match
-          keys=keys1.length?keys1:(()=>{const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]})(),rcv=actors.get(String(d.uid));
+          keys=keys1.length?keys1:(()=>{const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:(()=>{const c=d.extraData?.castRoleUid;return c!=null&&actors.get(String(c))?.kind==='awakener'?['act:'+c]:[]})()})(),rcv=actors.get(String(d.uid));   // effects fired outside a card play (余波 / turn-edge triggers) still carry their caster
             if(pt==='max_hp'&&rcv?.camp===1){const cu=String(d.extraData?.castRoleUid);if(actors.get(cu)?.kind==='awakener')supOf('act:'+cu).maxHp=(supOf('act:'+cu).maxHp||0)+cv}   // the team HP pool belongs to the keeper: credit the awakener whose state raised it (饱餐)
             if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
             const part=keys.length?1/keys.length:1;
@@ -835,8 +835,8 @@
             if(!keys.length){if(pt==='ulti_energy')passiveSupport.ali+=cv;else if(pt==='keeper_energy')passiveSupport.key+=cv}
             // actor-sourced buffs: power / crit damage / crit rate / base damage -> estimated extra damage through the same hit model as relics
             if(rcv?.kind==='awakener'&&keys.length&&!relWin){
-              const kind=pt==='damage_plus'?'power':pt==='crit_damage'?'crit':pt==='crit'?'critrate':(pt==='basic_damage_per'||pt==='i_basic_damage_per')?'basic':null;
-              if(kind)for(const k of keys.filter(x=>x.startsWith('act:'))){const tid=k,rel={tid,kind},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
+              const pk0=PROP_KIND[pt],kind=pt==='damage_plus'?'power':pt==='crit_damage'?'crit':pt==='crit'?'critrate':(pt==='basic_damage_per'||pt==='i_basic_damage_per')?'basic':pk0?pk0[0]:null,kscope=['damage_plus','crit_damage','crit','basic_damage_per','i_basic_damage_per'].includes(pt)?undefined:pk0?.[1];
+              if(kind)for(const k of keys.filter(x=>x.startsWith('act:'))){const tid=k,rel={tid,kind,scope:kscope},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
                 const ctx=newInstance({time:fr.time},rel,cv,temp);grant(ctx,d.uid,cv,rel,temp);supOf(k)[kind==='power'?'powerGain':kind==='crit'?'critGain':kind==='critrate'?'critRateGain':'basicGain']+=cv}
             }
           }
@@ -1921,7 +1921,7 @@
     const sp=tl.supStore?.get(key);if(!sp)return '';const r=x=>Math.round(x*10)/10,o=[];
     const add=(v,l,c)=>{if(v>=0.5)o.push(`<em class="${c||'n'}">${l} +${fmt(r(v))}</em>`)};
     add(sp.aliSelf+sp.aliOthers,ui('狂气','Aliemus'));add(sp.key,ui('银钥能量','Keyflare'));add(sp.energy,ui('行动力','Energy'));add(sp.dr,ui('死亡抵抗','Death resist'));
-    add(sp.powerGain,ui('力量','Power'));add(sp.draws,ui('抽牌','Draws'));add(sp.cut,ui('费用减免','Cost cut'));add(sp.seal,ui('黑印','Seals'));add(sp.embryo,ui('胚胎','Embryo'));add(sp.rm,ui('职业资源','Resource'));
+    add(sp.powerGain,ui('力量','Power'));add(sp.tenGain,ui('触腕伤害','Tentacle DMG'));add(sp.critRateGain,ui('暴击率','Crit rate'));add(sp.critGain,ui('暴击伤害','Crit DMG'));add(sp.basicGain,ui('增伤 / 强效 %','DMG amp %'));add(sp.draws,ui('抽牌','Draws'));add(sp.cut,ui('费用减免','Cost cut'));add(sp.seal,ui('黑印','Seals'));add(sp.embryo,ui('胚胎','Embryo'));add(sp.rm,ui('职业资源','Resource'));
     if(sp.dbN>0)o.push(`<em class="n">${ui('减益','Debuffs')} ${fmt(r(sp.dbN))}</em>`);
     return o.join('')}
   function renderGear(st,tl){
@@ -2059,10 +2059,10 @@
   // wheel level 0-15 is the stack ladder: 0..3 = N叠, then +1 … +12
   const wheelStackText=n=>{n=Number(n);return !Number.isFinite(n)?'':n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`};
   const keeperName=()=>String(lastFull?.battleDat?.playerName||'').trim();
-  // some D-Zone stages lose their danger grade in the name ("第二禁区·@4"); the grade letter in the stage's CnID (…70期F2) still gives it: A=C B=B C=A D=S E=SS F=SSS, G is the top tier whose name is unknown
-  const DANGER={A:'C',B:'B',C:'A',D:'S',E:'SS',F:'SSS'};
+  // some D-Zone stages lose their danger grade in the name ("第二禁区·@4"); the grade letter in the stage's CnID (…70期F2) still gives it: A=C B=B C=A D=S E=SS F=SSS, G is the top tier, shown in-game as 危险等级 ▼
+  const DANGER={A:'C',B:'B',C:'A',D:'S',E:'SS',F:'SSS',G:'▼'};
   function dangerName(name,stage){if(!/禁区$/.test(name)||/融灾|危险|警报|癫狂|噩梦|困难/.test(name))return name;const g=(String(stage?.CnID||'').match(/期([A-G])\d+$/)||[])[1];if(!g)return name;
-    return `${name}·危险等级${DANGER[g]||`${g}档（Lv${stage.StageLevel??'?'}）`}`}
+    return `${name}·危险等级${DANGER[g]||g}`}
   function renderBattleInfo(full,tl){
     const bd=full.battleDat||{},res=tl.res,stage=res.rr?.Stage?.[String(bd.stageId)]||{};
     const stageName0=(pipeName(stage.Name)||tailCn(stage.CnID)||`Stage ${bd.stageId??''}`).replace(/<[^>]+>/g,'').replace(/\s*[·•]?\s*@\d+\s*$/,'').trim();   // a trailing "@4" is a template slot, not part of the name
