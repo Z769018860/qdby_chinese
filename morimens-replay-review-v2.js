@@ -2059,9 +2059,14 @@
   // wheel level 0-15 is the stack ladder: 0..3 = N叠, then +1 … +12
   const wheelStackText=n=>{n=Number(n);return !Number.isFinite(n)?'':n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`};
   const keeperName=()=>String(lastFull?.battleDat?.playerName||'').trim();
+  // some D-Zone stages lose their danger grade in the name ("第二禁区·@4"); the grade letter in the stage's CnID (…70期F2) still gives it: A=C B=B C=A D=S E=SS F=SSS, G is the top tier whose name is unknown
+  const DANGER={A:'C',B:'B',C:'A',D:'S',E:'SS',F:'SSS'};
+  function dangerName(name,stage){if(!/禁区$/.test(name)||/融灾|危险|警报|癫狂|噩梦|困难/.test(name))return name;const g=(String(stage?.CnID||'').match(/期([A-G])\d+$/)||[])[1];if(!g)return name;
+    return `${name}·危险等级${DANGER[g]||`${g}档（Lv${stage.StageLevel??'?'}）`}`}
   function renderBattleInfo(full,tl){
     const bd=full.battleDat||{},res=tl.res,stage=res.rr?.Stage?.[String(bd.stageId)]||{};
-    const stageName=(pipeName(stage.Name)||tailCn(stage.CnID)||`Stage ${bd.stageId??''}`).replace(/<[^>]+>/g,'').replace(/\s*[·•]?\s*@\d+\s*$/,'').trim();   // a trailing "@4" is a template slot, not part of the name
+    const stageName0=(pipeName(stage.Name)||tailCn(stage.CnID)||`Stage ${bd.stageId??''}`).replace(/<[^>]+>/g,'').replace(/\s*[·•]?\s*@\d+\s*$/,'').trim();   // a trailing "@4" is a template slot, not part of the name
+    const stageName=dangerName(stageName0,stage);
     const puid=bd.playerUid!=null?String(bd.playerUid):'',pname=String(bd.playerName||'').trim();
     const season=(String(stage.CnID||'').match(/(\d+)期/)||[])[1];
     const ts=(bd.cards||[]).map(c=>Number(c.ts)).find(t=>t>1e9)||(bd.backupAwakeCards||[]).map(c=>Number(c.ts)).find(t=>t>1e9);
