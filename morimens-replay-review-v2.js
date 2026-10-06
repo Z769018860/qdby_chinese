@@ -621,7 +621,7 @@
     const keyText=k=>{if(k.startsWith('gear:')){const g=gears.get(k.slice(5));return g?[g.desc,...g.mainStates.map(m=>pipeName(res.state[String(m.stateId)]?.WeaponDesc||'')),...(g.effectsEn||[]).map(x=>x.desc)].join(' '):''}
       if(k.startsWith('rel:')){const r=res.relic[k.slice(4)]||{};return pipeName(pickVariant(r.BattleDesc||r.Desc,0))||''}return ''};
     const keyHas=(k,re)=>{if(!keyTextCache.has(k))keyTextCache.set(k,keyText(k));return re.test(keyTextCache.get(k))};
-    const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,blk:0,heal:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});return supStore.get(k)};
+    const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,blk:0,heal:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});return supStore.get(k)};
     // who gets credit for an effect at this timestamp: a relic firing in this frame group, else a wheel / covenant state firing now, else the awakener whose action is being resolved
     const gearWins=[];   // short windows after commands that fire without a state change (超维 bout, named skill, death resist)
     const srcKeys=time=>{if(relWin&&!relWin.gear&&relWin.queue?.length)return relWin.queue.map(r=>'rel:'+r.tid);const g=gearTimes.get(time);if(g&&g.size)return [...g];{const w=gearWins.findLast?gearWins.findLast(x=>x.src&&time>=x.t0&&time<=x.t1):null;if(w)return w.keys}const a=execSrc.cur?.actor,ak=a!=null?actors.get(String(a))?.kind:null;return ak==='awakener'?['act:'+a]:ak==='keeper'?['kp']:[]};
@@ -918,6 +918,7 @@
             if(typ==='heal'&&bout>0&&actorOf(h.targetRoleUid)?.camp===1){const nom=Number(h.originVal)||0;if(nom>0){healNom+=nom;healAct+=Math.min(nom,amt)}}
             if(execSrc.cur?.play&&bout>0){const pl=execSrc.cur.play;if(typ==='damage'&&actorOf(h.targetRoleUid)?.kind==='monster'&&actorOf(h.castRoleUid)?.kind==='awakener')pl.dmg+=amt;else if(typ==='heal'&&actorOf(h.targetRoleUid)?.camp===1)pl.heal+=amt}
             if(typ==='damage'&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
+              {const cu=execSrc.cur?.play?.cardUid,bs=cu!=null?cardSt.get(String(cu)):null;if(bs&&bout>0){let L=0;for(const v of bs.values())if(v.stateId===126895||v.stateId===134389)L+=v.layer||0;if(L>0){const ar=[...actors.values()].find(a=>a.kind==='awakener'&&a.camp===1&&/^阿拉克涅$/.test(a.name)),pct=2*L,D0=Number(h.originVal)||amt;if(ar)supOf('act:'+ar.uid).beaconExtra+=D0*pct/(100+pct)}}}   // 奇点信标 on the card (+2% final damage per stack) belongs to Arachne in 命定·超维
               if(!res.skill[String(h.skillConfigId)]&&bout>0&&tenAct.length){const D=Number(h.originVal)||amt,A=tenAct.reduce((n,a)=>n+(a.amt>0?a.amt:0),0),Tn=Math.max(tenT,A);if(Tn>0&&D>0)for(const a of tenAct)if(a.amt>0)supOf(a.key).tenExtra+=D*a.amt/Tn}   // a tentacle attack: damage scales with the tentacle stat, so each active +x is worth x/T of it
               const pr=board.get(String(h.castRoleUid))?.props||{},tp=board.get(String(h.targetRoleUid))?.props||{};
               const vOn=[...(bstates.get(String(h.targetRoleUid))?.values()||[])].some(x=>x.stateId===2934&&x.layer>0);
@@ -940,12 +941,12 @@
           if(e===1064){const pk=[...keeperPicks].reverse().find(x=>x.chosen==null&&x.options.includes(d.skillId));if(pk)pk.chosen=d.skillId}
           if(e===1046&&d.skillConfigId!=null&&res.nameSkill(d.skillConfigId)==='湮灭')push('skill',`${ui('超维','Ultra')} · ${ui('湮灭','Annihilate')}`,'',d,fr,{actorUid:d.roleUid??ent.keeperUid,skillName:`${ui('湮灭','Annihilate')}${(d.targetUids||[]).length?` → ${(d.targetUids||[]).map(t=>plainName(t&&typeof t==='object'?t.uid:t)).join(', ')}`:''}`,stypes:[],realm:{g:'灭',t:ui('超维','Ultra')}});
           if(e===1046){const targets=(d.targetUids||[]).map(t=>{if(t&&typeof t==='object'){if(t.uid!=null&&!cards.has(String(t.uid)))cards.set(String(t.uid),{uid:t.uid,tid:t.tid,ownerUid:undefined});return t.uid}return t});push('select',`${d.targetRelicList?ui('选择造物','Relic choice'):ui('目标选择','Target selection')} · ${res.nameSkill(d.skillConfigId)} → ${targets.map(plainName).join(', ')||'-'}`,`<span class="mr2lead">${d.targetRelicList?ui('选择造物','Pick relic'):ui('选择目标','Choose')}</span><b>${esc(res.nameSkill(d.skillConfigId))}</b><span class="mr2arrow">→</span>${targets.map(t=>chip(t)).join('')||'—'}`,d,fr,{skillTid:d.skillConfigId,targetUids:targets});continue}
-          if(e===1049){gearTrigger('swallow',{},fr.time);const list=d.cardUidList||[];push('swallow',`${ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list});continue}
+          if(e===1049){gearTrigger('swallow',{},fr.time);const list=d.cardUidList||[];const emb=list.some(u=>/胚胎/.test(String(plainName(u)||'')));push('swallow',`${emb?ui('使用胚胎【胎】','Used embryo [胎]'):ui('吞噬卡牌','Swallow card')} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead">${emb?ui('使用胚胎【胎】','Used embryo [胎]'):ui('吞噬','Swallow')}</span>${list.map(t=>chip(t)).join('')}`,d,fr,{cardUids:list,...(emb?{realm:{g:'胎',t:ui('血肉','Caro')},skillName:ui('使用胚胎','Used embryo'),actorUid:execSrc.cur?.actor}:{})});continue}
           if(e===1004||e===1007){
             const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner),tipS=stateTipAttr(res,sid,{args:d.descArgs?.curValues,layer:d.newLayer??d.layer,props:board.get(String(owner))?.props});
             if(e===1007&&sid===76334&&(d.newLayer??0)<(d.oldLayer??0))poolLast={time:fr.time,from:d.oldLayer,to:d.newLayer};
-            if(sid===35501)poolAmt=Number(d.newLayer??d.layer)||0;
-            if((e===1004||e===1007)&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster'&&bout>0){const dl=e===1004?Number(d.layer)||0:(Number(d.newLayer)||0)-(Number(d.oldLayer)||0);if(dl>0){const c=d.castRoleUid,ck=actors.get(String(c))?.kind,saya=[...actors.values()].find(a=>a.kind==='awakener'&&a.camp===1&&/^沙耶$/.test(a.name)),key=ck==='awakener'?'act:'+c:(saya?'act:'+saya.uid:'kp');eroApplied.set(key,(eroApplied.get(key)||0)+dl)}}   // erosion layers by applier; the keeper's 血池 erosion belongs to 沙耶 when she is in the team
+            if(sid===35501){const nv=Number(d.newLayer??d.layer)||0,gain=nv-poolAmt;poolAmt=nv;if(gain>0&&bout>0){let ks=srcKeys(fr.time);if(!ks.length){const c=d.castRoleUid;if(actors.get(String(c))?.kind==='awakener')ks=['act:'+c]}for(const k of ks)supOf(k).poolGain+=gain/ks.length}}   // 血池 accumulation
+            if((e===1004||e===1007)&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster'&&bout>0){const dl=e===1004?Number(d.layer)||0:(Number(d.newLayer)||0)-(Number(d.oldLayer)||0);if(dl>0){const c=d.castRoleUid,ck=actors.get(String(c))?.kind,saya=[...actors.values()].find(a=>a.kind==='awakener'&&a.camp===1&&/^(沙耶|卡拉布)$/.test(a.name)),key=ck==='awakener'?'act:'+c:(saya?'act:'+saya.uid:'kp');eroApplied.set(key,(eroApplied.get(key)||0)+dl)}}   // erosion layers by applier; the keeper's 血池 erosion belongs to 沙耶 when she is in the team
             if(e===1004&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster')eroLast={time:fr.time,n:(eroLast&&Math.abs(eroLast.time-fr.time)<.01?eroLast.n:0)+(Number(d.layer)||1)};
             if(e===1004&&actors.get(String(owner))?.kind==='keeper'){
               const R=REALM_FORM[sid],mk=(g,t,name,extra={})=>{push('skill',`${t} · ${name}`,'',d,fr,{actorUid:owner,skillName:name,stypes:[],realm:{g,t},...extra});const ev=getRound(rk()).events,last=ev[ev.length-1];return last&&last.kind==='skill'&&last.realm?last:null};
@@ -958,6 +959,8 @@
             continue;
           }
           if(e===1025&&Array.isArray(d.cards)&&bout>0){const ks=srcKeys(fr.time).filter(x=>x.startsWith('act:'));if(ks.length)for(const c of d.cards){const nm=res.nameSkill(c.tid??c.configId);if(nm==='灵感'||nm==='Inspiration')supOf(ks[0]).inspire+=1;else if(/胚胎|圣洁之子/.test(nm))supOf(ks[0]).embCards+=1}}
+          if(e===1025&&d.deck==='DimensionDeck'&&Array.isArray(d.cards)&&bout>0){const ks=srcKeys(fr.time);if(ks.length)for(const k of ks)supOf(k).dimAdd+=d.cards.length/ks.length}   // cards put into 超维空间
+          if(e===1027&&Array.isArray(d.cardUidList)&&bout>0&&(d.newDeck==='DimensionDeck'||d.oldDeck==='DimensionDeck')&&d.newDeck!==d.oldDeck){const ks=srcKeys(fr.time),n=d.cardUidList.length;if(ks.length)for(const k of ks){const sp=supOf(k);if(d.newDeck==='DimensionDeck')sp.dimAdd+=n/ks.length;else if(d.newDeck==='HandDeck')sp.dimPull+=n/ks.length}}   // 超维空间 in / directed pulls out
           if(e===1027&&Array.isArray(d.cardUidList)&&bout>0){const ks=srcKeys(fr.time),n=d.cardUidList.length,od=d.oldDeck,nd=d.newDeck,why=Number(d.changeReason);
             const kind=od==='DrawDeck'&&nd==='HandDeck'?'draw':(od==='GraveyardDeck'&&(nd==='HandDeck'||nd==='DrawDeck'))?'cycle':(od==='HandDeck'&&nd==='GraveyardDeck'&&why!==1)?'cycle':null;
             if(kind==='draw'&&execSrc.cur?.play)execSrc.cur.play.draw+=n;
@@ -1210,7 +1213,7 @@
   }
   // overview strip shown on the round header: one coloured mark per action, in order
   function renderStrip(r,tl){
-    const marks=r.events.filter(e=>e.camp===1&&e.phase===2&&['card','ultimate','keeper','skill'].includes(e.kind)).map(e=>{
+    const marks=r.events.filter(e=>e.camp===1&&e.phase===2&&(['card','ultimate','keeper','skill'].includes(e.kind)||(e.kind==='swallow'&&e.realm))).map(e=>{
       const info=actionInfo(e),o=actionActor(e,tl);
       return `<span class="mr2mark a-${info.cls}" title="${esc(info.label+' · '+e.skillName)}">${e.realm?ico('',e.realm.g,'kk xs'):e.kind==='keeper'?ico(e.iconSrc,'钥','kk xs'):ico(o?.icon,o?.name||'?','av xs')}</span>`;
     }).join('');
@@ -1757,7 +1760,7 @@
       const weakCovered=sp=>[...(sp.prevTypes?.entries?.()||[])].some(([n,v])=>/虚弱/.test(n)&&v>0),ctlOf=sp=>(sp.dbCls.ctrl||0)*3+(weakCovered(sp)?0:(sp.dbCls.weak||0)*2)+(sp.dbCls.frail||0)*2;
       const SUBW={def:{sh:40,mit:30,ctl:20,dr:10},sup:{key:1.5,ali:1.5,seal:.5,eng:1.5,vuln:1.5,buf:1.5,cut:1,draw:1,cyc:.5,realm:.5,emb:.5,dis:1.2}};
       const roles=bd.roleData||[],attrOf=uid=>roles.find(x=>String(x.uid)===String(uid))?.attrs||{};
-      const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
+      const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
       const supOf=k=>tl.supStore?.get(k)||blank();
       const gradeOf=sc=>sc>=80?'S':sc>=65?'A':sc>=50?'B':sc>=35?'C':'D';
       const shareScore=(v,t,N)=>t>0?Math.min(100,100*(v/t)/(2/Math.max(1,N))):null;   // 2x the fair share of the class total = 100
@@ -1769,8 +1772,9 @@
       const tenIds=[...stateTotals.keys()].filter(id=>/触腕|怒涛/.test(stName(id))),TD=tenIds.reduce((n,id)=>n+(stateTotals.get(id)?.dmg||0),0);
       const deathSaves=Number(bd.statistics?.DeathResistCount)||0;
       const vE=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+v.vulnExtra,0);
+      const kpMax0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;   // one embryo is worth 5% of the HP pool in the 血池
       const sub=(sp,extra={})=>({
-        key:sp.key,ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.5*sp.cycles,cyc:0,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards,dis:sp.dispelPts||0});
+        key:sp.key,ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0)+(sp.beaconExtra||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.5*sp.cycles+0.6*(sp.dimAdd||0)+0.9*(sp.dimPull||0),cyc:0,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards+(kpMax0>0?(sp.poolGain||0)/(0.05*kpMax0):0),dis:sp.dispelPts||0});
       // raw metrics of one entity -> {out:{...},def:{...},sup:{...}}
       const rawOf=(o)=>o; // placeholder to keep structure readable
       const rate=(items,{withEff=false}={})=>{
@@ -2136,6 +2140,11 @@
       covs:m.covenants.filter(o=>o.val>0||o.g.n>0).slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
       relics:m.relics.slice(0,3).map(o=>({name:res.nameRelic(o.r.tid),icon:relicIconSrc(res,o.r.tid),score:o.score,grade:o.grade,n:o.r.n,val:o.val,start:!!o.r.start,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
       total}}catch(e){window.__mr2MvpExport=null}
+    // brief timeline image data: opening state + the main actions of every round (same avatars / colours as the round strip)
+    try{const dmgBy=new Map((st.roundDmg||[]).map(([r,v])=>[Math.floor(r),v]));
+      window.__mr2TimelineExport={
+        relics:(full?.battleDat?.relics||[]).map(r=>({name:res.nameRelic(r.tid),icon:relicIconSrc(res,r.tid)})),
+        rounds:tl.rounds.filter(r=>!r.dim).map(r=>({n:Math.floor(r.round),dmg:dmgBy.get(Math.floor(r.round))||0,acts:r.events.filter(e=>e.camp===1&&e.phase===2&&(['card','ultimate','keeper','skill'].includes(e.kind)||(e.kind==='swallow'&&e.realm))).map(e=>{const info=actionInfo(e),o=actionActor(e,tl);return {cls:info.cls,label:info.label,name:e.skillName||'',who:o?.name||'',icon:e.realm||e.kind==='keeper'?'':(o?.icon||''),keeper:e.kind==='keeper',kicon:e.kind==='keeper'?e.iconSrc||'':'',glyph:e.realm?.g||''}})}))}}catch(e){window.__mr2TimelineExport=null;console.warn("timeline export failed",e)}
     return `<div class="mr2mvps"><div class="mr2mvptitle">${ui('结算 · MVP','Result · MVP')}<small>${ui('唤醒体 / 命轮 / 造物 / 密契按综合评分选出：输出、防御、辅助三大类（再乘出牌效率修正），点击评分行展开全部评估项','All MVPs are picked by a composite rating; see the model below')}</small></div><div class="mr2mvpgrid">${tile(ui('MVP 唤醒体','MVP Awakener'),'aw',awHead,awSubs)}${tile(ui('MVP 命轮','MVP Wheel'),'wh',gearHead(w,ui('命轮','Wheel')),gearSubs(m.wheels))}${tile(ui('MVP 造物','MVP Relic'),'rel',relHead,relSubs)}${m.keeper&&m.keeper.score!=null?tile(ui('守密人评分','Keeper'),'kp',`<div class="mr2mvpmain">${ico('','守','av mvp')}<div><b>${esc(keeperName()||ui('守密人','Keeper'))} <span class="mr2grade g${m.keeper.grade}">${m.keeper.grade}</span></b><span>${ui('综合评分','Score')} <em>${m.keeper.score.toFixed(1)}</em> / 100</span><small>${m.keeper.v2?KEEPER_DIMS().map(([k0,l])=>`${l} ${m.keeper.v2.dims[k0]==null?'—':Math.round(m.keeper.v2.dims[k0])}`).join(' · '):''}</small>${m.keeper.v2?`<small>${ui('潜力实现','Potential')} ${m.keeper.v2.potential==null?'—':Math.round(m.keeper.v2.potential)}% · ${ui('关键窗口','Windows')} ${m.keeper.v2.windows==null?'—':Math.round(m.keeper.v2.windows)}% · ${ui('可信度','Confidence')} ${Math.round(m.keeper.v2.confidence*100)}%${m.keeper.v2.confidence<.6?` · ${ui('仅供参考','indicative only')}`:''}</small>`:''}</div></div>`,''):''}${c&&(c.val>0||c.g.n>0)?tile(ui('MVP 密契','MVP Covenant'),'cov',gearHead(c,ui('密契','Covenant')),gearSubs(m.covenants)):''}</div>${ratingPanel(m,total,DIM,res)}</div>`;
   }
   // one expandable table of every metric behind a rating

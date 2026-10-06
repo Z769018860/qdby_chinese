@@ -86,7 +86,51 @@ async function download(root){
   T(uuid.slice(0,36),M,y+34,'10px '+F,'#566377');T('© 青灯不弈 · 忘忘看报',W-M,y+16,'12px '+F,'#657286','right');
   C.toBlob(b=>{if(!b)return;const u=URL.createObjectURL(b),a=document.createElement('a'),id=uuid.slice(0,8)||'replay';a.href=u;a.download=`忘忘看报-战斗复盘-${id}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1200)},'image/png');
 }
+
+async function downloadTimeline(root){
+  const X=window.__mr2TimelineExport;if(!X)return;
+  const F='system-ui,"Microsoft YaHei",sans-serif',W=1200,M=40;
+  const fmtN=v=>{v=Number(v)||0;return Math.abs(v)>=1e8?(v/1e8).toFixed(2)+'亿':Math.abs(v)>=1e4?(v/1e4).toFixed(1)+'万':String(Math.round(v))};
+  const CL={ulti:'#ff8a3d',awake:'#ffd24a',keeper:'#b57cff',strike:'#ff6b6b',defend:'#4fd18b',skill:'#4aa3ff',curse:'#8e86a8',other:'#8aa0bd',realm:'#3fd0c0'};
+  const verdict=clean(root.querySelector('.mr2verdict')?.textContent),win=!!root.querySelector('.mr2binfo.win'),lose=!!root.querySelector('.mr2binfo.lose');
+  const stage=clean(root.querySelector('.mr2btitle b')?.textContent),sub=clean(root.querySelector('.mr2btitle small')?.textContent),uuid=clean(root.querySelector('.mr2bmeta .id b')?.textContent);
+  const team=[...root.querySelectorAll('.mr2bteam .mr2bm')].map(e=>({src:e.querySelector('img')?.src||'',name:clean(e.querySelector('b')?.textContent),lines:[...e.querySelectorAll(':scope > div > small')].map(x=>clean(x.textContent))}));
+  const norm=u=>u&&!/^(https?:|data:|blob:)/.test(u)?new URL(u,location.href).href:u;
+  const urls=[...team.map(t=>t.src),...X.relics.map(r=>r.icon),...X.rounds.flatMap(r=>r.acts.flatMap(a=>[a.icon,a.kicon]))].filter(Boolean);
+  const imgs=new Map();await Promise.all([...new Set(urls)].map(async u=>imgs.set(u,await imgLoad(norm(u)))));
+  const gi=u=>imgs.get(u)||imgs.get(norm(u))||null;
+  const S=30,G=4,perLine=Math.floor((W-2*M-150)/(S+G));
+  const hHead=96,hTeam=team.length?100:0,relN=X.relics.length,hRel=relN?44+Math.ceil(relN/34)*34:0;
+  const rowH=r=>Math.max(44,Math.ceil(Math.max(1,r.acts.length)/perLine)*(S+G)+10);
+  const hRounds=34+X.rounds.reduce((n,r)=>n+rowH(r),0),hLegend=40,hFoot=44;
+  const H=hHead+hTeam+hRel+hRounds+hLegend+hFoot;
+  const C=document.createElement('canvas');C.width=W*2;C.height=H*2;const c=C.getContext('2d');c.scale(2,2);
+  const bg=c.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#0a1019');bg.addColorStop(.6,'#101826');bg.addColorStop(1,'#20181e');c.fillStyle=bg;c.fillRect(0,0,W,H);
+  const fit=(t,font,max)=>{c.font=font;t=String(t);if(c.measureText(t).width<=max)return t;while(t.length>1&&c.measureText(t+'…').width>max)t=t.slice(0,-1);return t+'…'};
+  const T=(t,x,y,font,col,al='left')=>{c.font=font;c.fillStyle=col;c.textAlign=al;c.fillText(String(t),x,y)};
+  const rrect=(x,y,w,h,r)=>{c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()};
+  const icon=(im,x,y,s,r)=>{c.save();rrect(x,y,s,s,r);c.clip();if(im)c.drawImage(im,x,y,s,s);else{c.fillStyle='rgba(255,255,255,.08)';c.fillRect(x,y,s,s)}c.restore()};
+  const box=(x,y,w,h)=>{rrect(x,y,w,h,12);c.fillStyle='rgba(255,255,255,.04)';c.fill();c.strokeStyle='rgba(148,163,184,.16)';c.lineWidth=1;c.stroke()};
+  T(ui('忘忘看报 · 战斗回放简要时间轴','Morimens Weekly · Replay Brief Timeline'),M,40,'800 24px '+F,'#f3e5c8');
+  const vc=win?'#7ee0a8':lose?'#e08a8a':'#c8a86a';rrect(W-M-110,16,110,32,16);c.fillStyle=vc+'22';c.fill();c.strokeStyle=vc;c.stroke();T(verdict,W-M-55,38,'800 16px '+F,vc,'center');
+  T(fit(stage,'700 17px '+F,W-2*M),M,68,'700 17px '+F,'#e8edf5');T(fit(sub,'12px '+F,W-2*M),M,88,'12px '+F,'#91a0b5');
+  let y=hHead;
+  if(team.length){const cw=(W-2*M-(team.length-1)*8)/team.length;team.forEach((t,i)=>{const x=M+i*(cw+8);box(x,y,cw,92);icon(gi(t.src),x+8,y+8,40,8);T(fit(t.name,'800 13px '+F,cw-62),x+56,y+26,'800 13px '+F,'#eef2f7');T(fit(t.lines[0]||'','11px '+F,cw-16),x+8,y+62,'11px '+F,'#9edbd6');T(fit(t.lines[1]||'','11px '+F,cw-16),x+8,y+78,'11px '+F,'#8b9aae')});y+=hTeam}
+  if(relN){T(ui(`开局造物 ${relN}`,`Starting relics ${relN}`),M,y+24,'700 13px '+F,'#d9bd89');X.relics.forEach((r,i)=>{const x=M+(i%34)*(S+G),yy=y+34+Math.floor(i/34)*34;icon(gi(r.icon),x,yy,S,6)});y+=hRel}
+  T(ui('逐回合主要行动（按出手顺序）','Main actions per round (in order)'),M,y+22,'700 13px '+F,'#d9bd89');y+=34;
+  X.rounds.forEach((r,i)=>{const h=rowH(r);if(i%2){c.fillStyle='rgba(255,255,255,.025)';c.fillRect(M-8,y,W-2*M+16,h)}
+    T(`${ui('第','R')}${r.n}${ui('回合','')}`,M,y+26,'800 15px '+F,'#f0d29f');if(r.dmg>0)T(fmtN(r.dmg),M,y+42,'11px '+F,'#8b9aae');
+    r.acts.forEach((a,j)=>{const x=M+150+(j%perLine)*(S+G),yy=y+5+Math.floor(j/perLine)*(S+G),col=CL[a.cls]||'#8aa0bd';
+      c.fillStyle=col;c.beginPath();c.arc(x+S/2,yy+S/2,S/2+2,0,7);c.fill();
+      c.save();c.beginPath();c.arc(x+S/2,yy+S/2,S/2-1,0,7);c.clip();const im=gi(a.keeper?a.kicon:a.icon);if(im)c.drawImage(im,x+1,yy+1,S-2,S-2);else{c.fillStyle='#1b2433';c.fillRect(x,yy,S,S);T(a.glyph||(a.keeper?'钥':'技'),x+S/2,yy+S/2+5,'800 14px '+F,'#e8edf5','center')}c.restore()});
+    y+=h});
+  y+=8;let lx=M;[['ulti','狂气爆发','Burst'],['awake','灵知觉醒','Awaken'],['strike','打击','Strike'],['defend','防御','Defend'],['skill','技能牌','Skill'],['keeper','钥令','Keyflare'],['realm','界域动作','Realm'],['other','其他','Other']].forEach(([k,zh,en])=>{c.fillStyle=CL[k];c.beginPath();c.arc(lx+6,y+10,6,0,7);c.fill();T(ui(zh,en),lx+18,y+14,'12px '+F,'#aab6c8');c.font='12px '+F;lx+=c.measureText(ui(zh,en)).width+44});
+  T(ui('仅供娱乐；头像为出牌 / 技能的角色，界域动作显示【涛 / 静 / 潮 / 血 / 灭 / 胎】','For fun only; avatars are the acting awakener, realm actions show a glyph.'),M,H-hFoot+22,'12px '+F,'#7f8da1');T(uuid,M,H-hFoot+40,'11px '+F,'#5f6d80');T('© 青灯不弈 · 忘忘看报',W-M,H-hFoot+22,'12px '+F,'#5f6d80','right');
+  C.toBlob(b=>{if(!b)return;const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=`忘忘看报-简要时间轴-${uuid.slice(0,8)||'replay'}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)},'image/png');
+}
 function bind(root){const b=root.querySelector('#mr2DownloadMvp');if(!b)return;b.onclick=e=>{e.preventDefault();download(root)};const t=ui('下载完整 MVP 图片','Download full MVP image');if(b.textContent!==t)b.textContent=t;b.dataset.richExportBound='1'}
-async function run(){const root=document.getElementById('mrReplayResult'),api=window.MorimensReplayReview;if(!root||!api||!root.querySelector('.mr2mvps'))return;const uuid=clean(root.querySelector('.mr2bmeta .id b')?.textContent);if(!uuid)return;try{const full=cache.uuid===uuid&&cache.full?cache.full:await api.fetchReplay(uuid),tl=cache.uuid===uuid&&cache.tl?cache.tl:api.buildTimeline(full);cache={uuid,full,tl,player:playerName(full,tl)||cache.player};patchPlayer(root,cache.player);bind(root)}catch(e){console.warn('Replay rich export failed',e)}}
+function bindTimeline(root){const d=root.querySelector('details.mr2detail');if(!d)return;let w=root.querySelector('#mr2TlBar');if(!w){w=document.createElement('div');w.id='mr2TlBar';w.style.cssText='display:flex;justify-content:flex-end;align-items:center;gap:8px;margin:8px 0 4px';const b=document.createElement('button');b.id='mr2DownloadTl';b.type='button';b.style.cssText='border:1px solid rgba(213,177,118,.38);border-radius:8px;background:rgba(213,177,118,.12);color:#f0d5a5;padding:6px 12px;cursor:pointer;font:700 12px/1.2 inherit';const sm=document.createElement('small');sm.style.cssText='color:#7f8da1;font-size:10px';w.append(sm,b);d.parentNode.insertBefore(w,d)}
+  const b=w.querySelector('#mr2DownloadTl'),sm=w.querySelector('small');const t1=ui('下载简要时间轴','Download brief timeline'),t2=ui('开局状态 + 每回合主要行动','Opening + main actions per round');if(b.textContent!==t1)b.textContent=t1;if(sm.textContent!==t2)sm.textContent=t2;b.onclick=e=>{e.preventDefault();downloadTimeline(root)}}
+async function run(){const root=document.getElementById('mrReplayResult'),api=window.MorimensReplayReview;if(!root||!api||!root.querySelector('.mr2mvps'))return;const uuid=clean(root.querySelector('.mr2bmeta .id b')?.textContent);if(!uuid)return;try{const full=cache.uuid===uuid&&cache.full?cache.full:await api.fetchReplay(uuid),tl=cache.uuid===uuid&&cache.tl?cache.tl:api.buildTimeline(full);cache={uuid,full,tl,player:playerName(full,tl)||cache.player};patchPlayer(root,cache.player);bind(root);bindTimeline(root)}catch(e){console.warn('Replay rich export failed',e)}}
 function watch(){let r=null,mo=null;const attach=()=>{const n=document.getElementById('mrReplayResult');if(!n||n===r)return;r=n;mo?.disconnect();mo=new MutationObserver(()=>queueMicrotask(run));mo.observe(r,{subtree:true,childList:true});run()};attach();new MutationObserver(attach).observe(document.documentElement,{subtree:true,childList:true});window.addEventListener('morimens-language-change',()=>setTimeout(run,0))}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',watch,{once:true}):watch();
 })();
