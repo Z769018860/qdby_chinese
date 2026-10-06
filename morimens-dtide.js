@@ -1347,6 +1347,8 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       const chip=e.target.closest('.dtideFilterChip');if(!chip)return;
       chip.classList.toggle('isActive');analysisCache=null;if(filtersReady)scheduleRender();
     });
+    // the roster buttons are built from the loaded season; if the name tables (SKeyDB / identity) arrive afterwards they would keep the English fallback names
+    window.addEventListener('morimens-data-ready',()=>{try{if(!$('dtideCharacters')?.children.length)return;const inc=getSelectedValues('dtideCharacters'),exc=getSelectedValues('dtideExcludeCharacters');populateFilters();for(const [id,keys] of [['dtideCharacters',inc],['dtideExcludeCharacters',exc]])for(const b of $(id).querySelectorAll('.dtideCharacterChoice'))if(keys.includes(b.dataset.characterKey)){b.classList.add('isSelected');b.setAttribute('aria-pressed','true')}}catch(e){console.warn('roster refresh failed',e)}});
     window.addEventListener('morimens-language-change',()=>{
       commentsApp?.update?.({lang:zh()?'zh-CN':'en-US'});
       if($('morimensDtideTab')){

@@ -284,12 +284,12 @@ function critExcluder(tl){
 }
 function scoreLuck(tl,aux={}){
   const items=[],parts={dr:0,shop:0,crit:0},bad={dr:0,crit:0};if(!tl)return null;
-  // 1) death resist: the panel value on the keeper IS the chance of the next trigger (it halves after each one), so use it as-is
-  {let n=0;for(const d of tl.drLog||[]){if(d.v==null||!Number.isFinite(d.v))continue;n++;const p=Math.min(1,d.v/100);if(p>=.5)continue;
+  // 1) death resist: the panel value is the chance of the first trigger; every trigger halves it, so the chance of this trigger is panel% x 0.5^(death_resist_times - 1)
+  {let n=0;for(const d of tl.drLog||[]){if(d.v==null||!Number.isFinite(d.v))continue;n++;const k=Math.max(0,(Number(d.times)||1)-1),p=Math.min(1,d.v/100*Math.pow(.5,k));if(p>=.5)continue;
     const pts=Math.min(40,-Math.log2(Math.max(p,.005))*14);parts.dr+=pts;
-    items.push({k:'dr',pts,text:ui(`第 ${d.bout} 回合触发死亡抵抗（本场第 ${n} 次），当时守密人面板死亡抵抗 ${Math.round(d.v)}%，即触发概率只有约 ${(p*100).toFixed(p<.1?1:0)}%`,`Death resist fired (#${n}) at only ~${(p*100).toFixed(0)}% chance`)})}}
+    items.push({k:'dr',pts,text:ui(`第 ${d.bout} 回合触发死亡抵抗（本场第 ${n} 次），当时触发概率只有约 ${(p*100).toFixed(p<.1?1:0)}%（面板 ${Math.round(d.v)}%${k?`，已按此前触发次数减半 ${k} 次`:''}）`,`Death resist fired (#${n}) at only ~${(p*100).toFixed(0)}% chance`)})}}
   parts.dr=Math.min(60,parts.dr);
-  {const e=tl.endDR&&tl.endDR();if(e&&e.lost&&Number.isFinite(e.v)&&e.v>=50){const p=Math.min(1,e.v/100),pts=Math.min(40,-Math.log2(Math.max(1-p,.05))*14+(p>=1?0:0));if(p<1){bad.dr+=pts;items.push({k:'dr',bad:true,pts,text:ui(`守密人在第 ${e.bout} 回合倒下，当时面板死亡抵抗 ${Math.round(e.v)}%，却没有触发（失败概率约 ${((1-p)*100).toFixed(0)}%）`,`Keeper fell with ${Math.round(e.v)}% death resist untriggered`)})}}}
+  {const e=tl.endDR&&tl.endDR();if(e&&e.lost&&Number.isFinite(e.v)&&e.v>0){const p=Math.min(1,e.v/100*Math.pow(.5,Math.max(0,e.t||0))),pts=Math.min(40,-Math.log2(Math.max(1-p,.05))*14+(p>=1?0:0));if(p>=.5&&p<1){bad.dr+=pts;items.push({k:'dr',bad:true,pts,text:ui(`守密人在第 ${e.bout} 回合倒下，当时面板死亡抵抗 ${Math.round(e.v)}%，却没有触发（失败概率约 ${((1-p)*100).toFixed(0)}%）`,`Keeper fell with ${Math.round(e.v)}% death resist untriggered`)})}}}
   // 2) dimensional image from outside the ring realm
   {const res=tl.res,names=new Set([...tl.actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.name))),imgs=aux.imageRealms?.images||{},rings=aux.imageRealms?.rings||{};
     let ringRealm=null,ringName='';for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||'');if(/指轮|戒指/.test(nm)){const dsc=String(res.relic?.[String(t)]?.BattleDesc||res.relic?.[String(t)]?.Desc||'');

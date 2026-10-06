@@ -843,7 +843,7 @@
           if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
           else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
-          if(e===1020&&d?.battleFinishData){endDR={lost:Number(d.battleFinishData.winCamp)!==1,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})(),bout};result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null}
+          if(e===1020&&d?.battleFinishData){endDR={lost:Number(d.battleFinishData.winCamp)!==1,t:Number(unit(ent.keeperUid).props?.death_resist_times)||0,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})(),bout};result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null}
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
@@ -2083,7 +2083,7 @@
   }
   // luck: an easter egg beside the keeper rating (not part of it)
   function keeperLuck(l){if(!l)return '';const it=l.items.slice(0,6);
-    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b>${l.unlucky>0?`<b style="color:#ff9b9b">💧 ${ui('不幸','Unlucky')} ${Math.round(l.unlucky)}</b>`:''}<i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li${x.bad?' style="color:#ff9b9b"':''}><span>${esc(x.text)}</span><em${x.bad?' style="color:#ff9b9b"':''}>${x.bad?'−':'+'}${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运 / 不幸事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}<small class="mr2from">${ui('三项都是按回放记录估算：死亡抵抗面板是下一次触发的概率（%），每触发一次减半，只统计概率低于 50% 却触发的；维度影像：当期界域指轮会送出本界域所有唤醒体的维度影像，界域以外的才算幸运；暴击只看整体期望，带「必定暴击」效果的命中已排除；不幸：面板死亡抵抗不低却没触发就战败，或暴击率不低却几乎不暴击，用同样的概率算法扣分，不影响幸运分。','Estimates from replay data.')}</small></div>`}
+    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b>${l.unlucky>0?`<b style="color:#ff9b9b">💧 ${ui('不幸','Unlucky')} ${Math.round(l.unlucky)}</b>`:''}<i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li${x.bad?' style="color:#ff9b9b"':''}><span>${esc(x.text)}</span><em${x.bad?' style="color:#ff9b9b"':''}>${x.bad?'−':'+'}${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运 / 不幸事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}</div>`}
   // hexagonal radar of the keeper's six dimensions (missing dimensions sit at the centre and are marked)
   function keeperRadar(v2){
     const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
