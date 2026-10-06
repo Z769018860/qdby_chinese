@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-10-05T07:04:00+08:00",
+    "syncedAt": "2026-10-06T17:31:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 70,
@@ -18,7 +18,7 @@
       "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/70.json",
-      "dataUpdatedAt": "2026-10-05T07:04:00+08:00",
+      "dataUpdatedAt": "2026-10-06T17:31:00+08:00",
       "labelZh": "第70期 新新融灾 · 深海戒指",
       "periodShort": "9.28–10.11",
       "ringRealm": "Aequor",
@@ -185,7 +185,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-10-05T07:04:00+08:00",
+    "generatedAt": "2026-10-06T17:31:00+08:00",
     "rankScopes": [
       50,
       200,
@@ -242,8 +242,8 @@
         "seasonId": 70,
         "maxRankAvailable": 2000,
         "difficulty": {
-          "recognizedTeams": 11092,
-          "totalTeams": 11092,
+          "recognizedTeams": 11208,
+          "totalTeams": 11208,
           "complete": true
         },
         "rankScopes": {
@@ -326,7 +326,7 @@
     "target": 2000,
     "count": 2000,
     "complete": true,
-    "syncedAt": "2026-10-05T07:04:00+08:00",
+    "syncedAt": "2026-10-06T17:31:00+08:00",
     "revision": "s70-top2000-20261002-2353",
     "scorePolicy": "official-rank-score"
   },
@@ -343,12 +343,12 @@
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-05T07:04:00+08:00",
-    "revision": "26407dbb93581e7a3325ea6f3594b97b82989f875b033961ef92cbd49ff43565",
+    "syncedAt": "2026-10-06T17:31:00+08:00",
+    "revision": "17f52619db7f65c52bf22c54073a4cb19687f2270b27597bbc55e9d403aee751",
     "format": "gzip-base64-chunked-v1",
     "chunks": 5,
     "chunkSize": 600000,
-    "chunkBytes": 2896366
+    "chunkBytes": 2754246
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -387,7 +387,7 @@
     "ringRealm": "Aequor",
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-10-05T07:04:00+08:00",
+    "updatedAt": "2026-10-06T17:31:00+08:00",
     "revision": "5b797e8539d10b085cd3c76a00cc5a1a6edce8d0b2c2fc8fcef668141922ee91",
     "battleArchive": "data/morimens/dzone/season70/meta.json",
     "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json",
