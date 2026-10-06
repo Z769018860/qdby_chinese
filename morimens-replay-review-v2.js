@@ -151,10 +151,11 @@
   // ---- icons / entity resolution -------------------------------------------------
   const ART='assets/morimens';
   let awakenerSlugs=null;
-  let gearCatalog=null,relicCatalog={},relicFallback=null,stageRef=null;
+  let gearCatalog=null,relicCatalog={},relicFallback=null,stageRef=null,imageRealms=null;
   async function preloadAssets(){
     if(!relicCatalog.loaded){try{const r=await fetch('data/morimens/replay-relics.json',{cache:'force-cache'});relicCatalog={loaded:1,...(r.ok?(await r.json()).relics:{})}}catch{relicCatalog={loaded:1}}}
     if(!stageRef){try{const r=await fetch('data/morimens/replay/stage-rounds.json?v=20261005',{cache:'no-cache'});stageRef=r.ok?await r.json():{};for(const k of Object.keys(stageRef))if(k.startsWith('cnt:')&&Array.isArray(stageRef[k.slice(4)]))stageRef[k.slice(4)].total=stageRef[k]}catch{stageRef={}}}
+    if(!imageRealms){try{const r=await fetch('data/morimens/replay/dimension-image-realms.json?v=20261006',{cache:'no-cache'});imageRealms=r.ok?await r.json():{}}catch{imageRealms={}}}
     if(!relicFallback){try{const r=await fetch('data/morimens/replay-relic-config.json',{cache:'force-cache'});relicFallback=r.ok?await r.json():{}}catch{relicFallback={}}}
     if(!gearCatalog){try{const r=await fetch('data/morimens/replay-gear.json',{cache:'force-cache'});gearCatalog=r.ok?await r.json():{wheels:{},covenants:{}}}catch{gearCatalog={wheels:{},covenants:{}}}}
     if(awakenerSlugs)return;
@@ -804,7 +805,7 @@
           else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??0)<(d.oldLayer??0))dispelHit(cur.stateId,d.ownerUid??d.roleUid,(d.oldLayer||0)-(d.newLayer||0));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues}else if(cur){if(cur.stateId===3130)expireTemp();m.delete(String(d.stateUid))}}
           else if(e===1005&&d.stateUid!=null){const cur=stateMap(d.ownerUid).get(String(d.stateUid));if(cur)dispelHit(cur.stateId,d.ownerUid,cur.layer||1);if(cur?.stateId===3130)expireTemp();stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
-          if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0){deathResistN++;drLog.push({time:fr.time,bout,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})()});gearTrigger('deathResist',{},fr.time)}
+          if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0){deathResistN++;drLog.push({time:fr.time,bout,times:Number(d.value)||1,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})()});gearTrigger('deathResist',{},fr.time)}
           if(e===1028&&d.propertyType==='hp'&&typeof d.value==='number'&&d.value<=0&&actors.get(String(d.uid))?.kind==='monster')killed.add(String(d.uid));
           if((e===1004||e===1006||(e===1007&&(d.newLayer||0)>(d.oldLayer||0)))&&d.stateId!=null&&relicOfState.has(String(d.stateId))&&bout>0&&!/计数|标记|标识|限额|监听|统计/.test(String(res.state[String(d.stateId)]?.CnID||''))){for(const tid of relicOfState.get(String(d.stateId))){const o=relicStateAdds.get(tid)||{times:new Set(),rounds:new Set()};o.times.add(Math.round((fr.time||0)*10));o.rounds.add(bout);relicStateAdds.set(tid,o)}}
           if((e===1004||e===1006)&&d.stateId===2934&&execSrc.cur?.play&&actors.get(String(d.ownerUid??d.roleUid))?.camp===2)execSrc.cur.play.vuln=true;
@@ -1846,7 +1847,7 @@
         const sid=String(bd.stageId??''),st0=res.rr?.Stage?.[sid]||{},refKey=sid,refList=stageRef?.[refKey]||stageRef?.['n:'+pipeName(st0.Name||'')]||null;
         const v2=SC.scoreKeeperV2({keeper,awakeners:awRows},tl,refList);
         if(v2&&v2.score!=null){keeper.v2=v2;keeper.score=v2.score;keeper.grade=v2.grade;keeper.enh=true}
-        try{keeper.luck=SC.scoreLuck(tl)}catch(e){console.warn('luck score failed',e)}
+        try{keeper.luck=SC.scoreLuck(tl,{imageRealms})}catch(e){console.warn('luck score failed',e)}
       }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
       return {keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
     })();
@@ -2065,7 +2066,7 @@
   }
   // luck: an easter egg beside the keeper rating (not part of it)
   function keeperLuck(l){if(!l)return '';const it=l.items.slice(0,6);
-    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b><i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li><span>${esc(x.text)}</span><em>+${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}<small class="mr2from">${ui('三项都是按回放记录估算：死亡抵抗按守密人面板值（低于 200 起算）；暴击按每次命中当时的真实暴击率做概率估算（「必定暴击」类效果不在暴击率里，可能被算成幸运）；维度影像是否来自商店按"没有指轮"推断。','Estimates from replay data.')}</small></div>`}
+    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b><i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li><span>${esc(x.text)}</span><em>+${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}<small class="mr2from">${ui('三项都是按回放记录估算：死亡抵抗面板是下一次触发的概率（%），每触发一次减半，只统计概率低于 50% 却触发的；维度影像：当期界域指轮会送出本界域所有唤醒体的维度影像，界域以外的才算幸运；暴击只看整体期望，带「必定暴击」效果的命中已排除。','Estimates from replay data.')}</small></div>`}
   // hexagonal radar of the keeper's six dimensions (missing dimensions sit at the centre and are marked)
   function keeperRadar(v2){
     const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
