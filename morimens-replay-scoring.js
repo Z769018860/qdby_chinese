@@ -296,8 +296,8 @@ function scoreLuck(tl,aux={}){
       ringRealm=RING_ZH[(dsc.match(/「(深海|混沌|血肉|超维|超越)」界域唤醒体获得其/)||[])[1]]||rings[t]?.realm||SCHOOL[res.relic?.[String(t)]?.SchoolID]||RING_ZH[(nm.match(/深海|混沌|血肉|超维|超越/)||[])[0]]||null;ringName=nm;break}}
     for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||''),m=nm.match(/^维度影像·(.+)$/);if(!m)continue;const realm=imgs[t]?.realm||SCHOOL[res.relic?.[String(t)]?.SchoolID];if(!realm)continue;
       if(ringRealm&&realm===ringRealm)continue;   // the ring itself hands these out
-      const inTeam=names.has(m[1]),pts=inTeam?45:15;parts.shop+=pts;
-      items.push({k:'shop',pts,text:ui(`${ringRealm?`当期是${ringName}（${REALM_ZH[ringRealm]}界域），却拿到了${REALM_ZH[realm]||realm}界域「${m[1]}」的维度影像`:`没有界域指轮，却持有「${m[1]}」的维度影像`}${inTeam?'，而且这名唤醒体就在队伍里':'（该唤醒体不在队伍里）'}`,`Holds ${m[1]}'s Dimensional Image from outside the ring realm`)})}
+      const pts=45;parts.shop+=pts;
+      items.push({k:'shop',pts,text:ui(`${ringRealm?`当期是${ringName}（${REALM_ZH[ringRealm]}界域），却拿到了${REALM_ZH[realm]||realm}界域「${m[1]}」的维度影像`:`没有界域指轮，却持有「${m[1]}」的维度影像`}`,`Holds ${m[1]}'s Dimensional Image from outside the ring realm`)})}
     parts.shop=Math.min(70,parts.shop)}
   // 3) crits: overall expectation only. The panel crit rate does not cover forced crits ("必定暴击" skills, certain_crit states such as 通用临时技能必爆) nor
   // card-specific crit rates (card_crit, crit_per_from_ulti / _strikecard), so every hit made while one of those is active is left out of both counts.
