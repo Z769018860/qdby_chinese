@@ -260,9 +260,14 @@ function scoreKeeperV2(m,tl,ref){
   const firstV=hits.findIndex(h=>h.vOn);let Cscore=null,cover=null,ultCover=null;
   if(byRound.size||firstV>=0){const after=firstV>=0?hits.slice(firstV):[],tot=after.reduce((n,h)=>n+(h.blind?0:h.dmg),0),under=after.reduce((n,h)=>n+(h.blind||!h.vOn?0:h.dmg),0);cover=tot>0?under/tot:null}
   const sup=(m.awakeners||[]).reduce((n,a)=>n+num(a.x?.sup?.buf),0),bufShare=Math.min(1,sup/Math.max(1,.08*totalHitDmg));
-  Cscore=wavg([[cover==null?null:100*cover,.6],[sup>0?100*bufShare:null,.4]]);
-  Object.assign(facts,{vulnCoveragePct:cover==null?null:100*cover,buffLeveragePct:sup>0?100*bufShare:null});
-  conf.C=cover!=null?.8:sup>0?.6:.35;
+  // crit-rate management: crit rate beyond 100% is wasted. Only hits of crit builds (awakener mean effective rate >= 50%) are counted, forced-crit hits are left out.
+  let critOver=null,critBuild=0;{const skip=critExcluder(tl),by=new Map();for(const h of hits){if(h.blind||skip(h)||!Number.isFinite(h.cr))continue;const pr=h.cr+(h.cx?(h.cx.ult?h.cx.u:0)+(h.cx.strk?h.cx.s:0)+(h.cx.c||0):0),o=by.get(h.uid)||{n:0,s:0,hs:[]};o.n++;o.s+=pr;o.hs.push([pr,num(h.dmg)]);by.set(h.uid,o)}
+    let w=0,ov=0;for(const o of by.values()){if(o.n<5||o.s/o.n<50)continue;critBuild++;for(const [pr,d] of o.hs){w+=d;ov+=d*Math.max(0,pr-100)}}
+    if(w>0)critOver=ov/w}
+  const critScore=critOver==null?null:Math.max(0,100-Math.min(100,critOver*2.5));
+  Cscore=wavg([[cover==null?null:100*cover,.6],[sup>0?100*bufShare:null,.4],[critScore,.25]]);
+  Object.assign(facts,{critOverflowPct:critOver,critBuilds:critBuild,vulnCoveragePct:cover==null?null:100*cover,buffLeveragePct:sup>0?100*bufShare:null});
+  conf.C=cover!=null?.8:sup>0||critOver!=null?.6:.35;
   // ---- Total (weights renormalised over the dimensions that could be measured) ------------------------------
   const dims={R:Rscore,P:Pscore,T:Tscore,K:Kscore,S:Sscore,C:Cscore};
   let sw=0,sv=0,cw=0,cv=0;for(const key of Object.keys(KW)){if(dims[key]==null)continue;sw+=KW[key];sv+=KW[key]*dims[key];cw+=KW[key];cv+=KW[key]*(conf[key]||0)}

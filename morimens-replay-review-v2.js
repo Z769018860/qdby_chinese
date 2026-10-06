@@ -2083,7 +2083,7 @@
   }
   // luck: an easter egg beside the keeper rating (not part of it)
   function keeperLuck(l){if(!l)return '';const it=l.items.slice(0,6);
-    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b>${l.unlucky>0?`<b style="color:#ff9b9b">💧 ${ui('不幸','Unlucky')} ${Math.round(l.unlucky)}</b>`:''}<i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li${x.bad?' style="color:#ff9b9b"':''}><span>${esc(x.text)}</span><em${x.bad?' style="color:#ff9b9b"':''}>${x.bad?'−':'+'}${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运 / 不幸事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}</div>`}
+    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b>${l.unlucky>0?`<b style="color:#ff9b9b">💧 ${ui('不幸','Unlucky')} ${Math.round(l.unlucky)}</b>`:''}<i>${esc(l.label)}</i>${l.score>=80&&l.score>=l.unlucky?`<em style="font-style:normal;color:#ffd24a">${ui('恭喜你找到了正确的时间线~','You found the right timeline~')}</em>`:''}<small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li${x.bad?' style="color:#ff9b9b"':''}><span>${esc(x.text)}</span><em${x.bad?' style="color:#ff9b9b"':''}>${x.bad?'−':'+'}${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运 / 不幸事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}</div>`}
   // hexagonal radar of the keeper's six dimensions (missing dimensions sit at the centre and are marked)
   function keeperRadar(v2){
     const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
@@ -2177,6 +2177,7 @@
         <span>${ui('护盾溢出（回合末盾量 − 敌方伤害）','Shield overflow (end shield − enemy dmg)')} <b>${fx.shieldOverflow==null?'—':f(fx.shieldOverflow)+' / '+f(fx.shieldGenerated||0)+' · '+pc(fx.shieldOverflowPct)}</b></span>
         <span>${ui('易伤窗口覆盖','Vulnerability coverage')} <b>${pc(fx.vulnCoveragePct)}</b></span>
         <span>${ui('队友增益借力','Buff leverage')} <b>${pc(fx.buffLeveragePct)}</b></span>
+        <span>${ui('暴击率溢出（超过 100% 的部分）','Crit rate overflow (above 100%)')} <b>${fx.critOverflowPct==null?'—':pc(fx.critOverflowPct)}</b></span>
       </div><small class="mr2from">${ui('护盾溢出：回合末钥令身上的盾量减去该回合敌方伤害（被盾吸收的部分）后的剩余；护盾通常不会保留到下回合，若被特殊效果保留（下回合开头仍在）则不计溢出。','Shield overflow: shield left on the keeper at round end after the enemy damage it absorbed; shield normally expires, and shield that a special effect keeps into the next round is not counted.')}</small></div>`:'';
     const E=k.eff;
     return `<div class="mr2mgrid">${v2html}
