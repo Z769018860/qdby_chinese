@@ -538,7 +538,7 @@
     const openGearWindow=(e,time,kind,predict)=>{const rel={tid:'gear:'+e.key,kind,predict};if(relWin&&relWin.time===time){relWin.queue.push(rel);relWin.gear=true;relWin.until=Math.max(relWin.until||0,time+6)}else relWin={time,queue:[rel],pi:0,bi:0,pend:new Map(),basicCtx:null,ci:0,gear:true,until:time+6}};
     // ---- 维度影像 relics: their own state's trigger channels, counted from the same game events and valued from the trigger commands
     const initUids=new Set((ent.initialCards||[]).map(c=>String(c.uid)));
-    const drLog=[];   /* death-resist triggers with the keeper's panel value at that moment (for the luck easter egg) */
+    let endDR=null;const drLog=[];   /* death-resist triggers with the keeper's panel value at that moment (for the luck easter egg) */
     const genCards=new Map();   /* generated cards (event 1025): uid -> source, so the plays of those very cards can be traced */
     const relicEngine=new Map();
     {const bdR=full.battleDat||{},EFK={BEGainUltiEnergy:'ali','BEChangeAttr.ulti_energy':'ali',BEChangeEnergy:'energy',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEDrawCard:'draw',BECreateCard:'create',BEChangeTentacleCount:'tent',BEGainBlock:'block',BEHeal:'heal',BEAddState:'state',BECopyCard:'copy',BEPassiveDamage:'pdmg'};
@@ -843,7 +843,7 @@
           if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
           else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
-          if(e===1020&&d?.battleFinishData){result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null}
+          if(e===1020&&d?.battleFinishData){endDR={lost:Number(d.battleFinishData.winCamp)!==1,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})(),bout};result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null}
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
@@ -1013,7 +1013,7 @@
         if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
         for(const [f,re] of CAPR)if(sp[f]&&!re.test(all))sp[f]=0}}
-    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -2083,7 +2083,7 @@
   }
   // luck: an easter egg beside the keeper rating (not part of it)
   function keeperLuck(l){if(!l)return '';const it=l.items.slice(0,6);
-    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b><i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li><span>${esc(x.text)}</span><em>+${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}<small class="mr2from">${ui('三项都是按回放记录估算：死亡抵抗面板是下一次触发的概率（%），每触发一次减半，只统计概率低于 50% 却触发的；维度影像：当期界域指轮会送出本界域所有唤醒体的维度影像，界域以外的才算幸运；暴击只看整体期望，带「必定暴击」效果的命中已排除。','Estimates from replay data.')}</small></div>`}
+    return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b>${l.unlucky>0?`<b style="color:#ff9b9b">💧 ${ui('不幸','Unlucky')} ${Math.round(l.unlucky)}</b>`:''}<i>${esc(l.label)}</i><small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li${x.bad?' style="color:#ff9b9b"':''}><span>${esc(x.text)}</span><em${x.bad?' style="color:#ff9b9b"':''}>${x.bad?'−':'+'}${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运 / 不幸事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}<small class="mr2from">${ui('三项都是按回放记录估算：死亡抵抗面板是下一次触发的概率（%），每触发一次减半，只统计概率低于 50% 却触发的；维度影像：当期界域指轮会送出本界域所有唤醒体的维度影像，界域以外的才算幸运；暴击只看整体期望，带「必定暴击」效果的命中已排除；不幸：面板死亡抵抗不低却没触发就战败，或暴击率不低却几乎不暴击，用同样的概率算法扣分，不影响幸运分。','Estimates from replay data.')}</small></div>`}
   // hexagonal radar of the keeper's six dimensions (missing dimensions sit at the centre and are marked)
   function keeperRadar(v2){
     const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
@@ -2111,7 +2111,7 @@
     const relSubs=m.relics.slice(1,3).map(x=>`<span>${ico(relicIconSrc(res,x.r.tid),res.nameRelic(x.r.tid),'rl xs')}${esc(res.nameRelic(x.r.tid))} <b>${x.score.toFixed(1)}</b> <i class="mr2grade g${x.grade}">${x.grade}</i></span>`).join('');
     /* structured data for the MVP image export */
     try{const kp0=m.keeper,v=kp0?.v2;window.__mr2MvpExport={
-      keeper:kp0&&kp0.score!=null?{name:keeperName()||ui('守密人','Keeper'),score:kp0.score,grade:kp0.grade,luck:kp0.luck?{score:kp0.luck.score,label:kp0.luck.label}:null,dims:v?KEEPER_DIMS().map(([k0,l])=>[l,v.dims[k0]]):[],potential:v?.potential,windows:v?.windows,conf:v?.confidence,facts:v?.facts||null}:null,
+      keeper:kp0&&kp0.score!=null?{name:keeperName()||ui('守密人','Keeper'),score:kp0.score,grade:kp0.grade,luck:kp0.luck?{score:kp0.luck.score,label:kp0.luck.label,unlucky:kp0.luck.unlucky}:null,dims:v?KEEPER_DIMS().map(([k0,l])=>[l,v.dims[k0]]):[],potential:v?.potential,windows:v?.windows,conf:v?.confidence,facts:v?.facts||null}:null,
       aw:m.awakeners.map(o=>({name:o.r.a.name,icon:o.r.a.icon,score:o.score,grade:o.grade,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]]),dmg:o.r.dmg,pct:total?pctOf(o.r.dmg,total):0,block:o.r.block,heal:o.r.heal,plays:o.r.plays})),
       wheels:m.wheels.slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
       covs:m.covenants.filter(o=>o.val>0||o.g.n>0).slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),

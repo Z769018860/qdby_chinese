@@ -283,12 +283,13 @@ function critExcluder(tl){
   return h=>!tl.res?.skill?.[String(h.skill)]||forcedSkills.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
 }
 function scoreLuck(tl,aux={}){
-  const items=[],parts={dr:0,shop:0,crit:0};if(!tl)return null;
+  const items=[],parts={dr:0,shop:0,crit:0},bad={dr:0,crit:0};if(!tl)return null;
   // 1) death resist: the panel value on the keeper IS the chance of the next trigger (it halves after each one), so use it as-is
   {let n=0;for(const d of tl.drLog||[]){if(d.v==null||!Number.isFinite(d.v))continue;n++;const p=Math.min(1,d.v/100);if(p>=.5)continue;
     const pts=Math.min(40,-Math.log2(Math.max(p,.005))*14);parts.dr+=pts;
     items.push({k:'dr',pts,text:ui(`第 ${d.bout} 回合触发死亡抵抗（本场第 ${n} 次），当时守密人面板死亡抵抗 ${Math.round(d.v)}%，即触发概率只有约 ${(p*100).toFixed(p<.1?1:0)}%`,`Death resist fired (#${n}) at only ~${(p*100).toFixed(0)}% chance`)})}}
   parts.dr=Math.min(60,parts.dr);
+  {const e=tl.endDR&&tl.endDR();if(e&&e.lost&&Number.isFinite(e.v)&&e.v>=50){const p=Math.min(1,e.v/100),pts=Math.min(40,-Math.log2(Math.max(1-p,.05))*14+(p>=1?0:0));if(p<1){bad.dr+=pts;items.push({k:'dr',bad:true,pts,text:ui(`守密人在第 ${e.bout} 回合倒下，当时面板死亡抵抗 ${Math.round(e.v)}%，却没有触发（失败概率约 ${((1-p)*100).toFixed(0)}%）`,`Keeper fell with ${Math.round(e.v)}% death resist untriggered`)})}}}
   // 2) dimensional image from outside the ring realm
   {const res=tl.res,names=new Set([...tl.actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.name))),imgs=aux.imageRealms?.images||{},rings=aux.imageRealms?.rings||{};
     let ringRealm=null,ringName='';for(const t of tl.startRelics||[]){const nm=String(res.nameRelic(t)||'');if(/指轮|戒指/.test(nm)){const dsc=String(res.relic?.[String(t)]?.BattleDesc||res.relic?.[String(t)]?.Desc||'');
@@ -305,14 +306,20 @@ function scoreLuck(tl,aux={}){
     const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;if(skip(h))continue;
       const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr+(h.cx?(h.cx.ult?h.cx.u:0)+(h.cx.strk?h.cx.s:0)+(h.cx.c||0):0):base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
     for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10)continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
-      const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;if(mean>.4)continue;
-      cs.n+=n;cs.k+=o.k;cs.exp+=mean*n;cs.aw++;
+      const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;
       let dist=[1];for(const p of o.ps){const nd=new Array(dist.length+1).fill(0);for(let i=0;i<dist.length;i++){nd[i]+=dist[i]*(1-p);nd[i+1]+=dist[i]*p}dist=nd}
-      let tail=0;for(let i=o.k;i<dist.length;i++)tail+=dist[i];tail=Math.max(1e-12,Math.min(1,tail));const sg=-Math.log10(tail);if(sg<1.3)continue;const pts=Math.min(40,sg*15);parts.crit+=pts;
-      items.push({k:'crit',pts,text:ui(`${a.name} 平均暴击率 ${(mean*100).toFixed(0)}%，${n} 次命中（已排除必定暴击）暴击了 ${o.k} 次（期望 ${(mean*n).toFixed(1)} 次），概率约 ${tail<.001?'<0.1':(tail*100).toFixed(1)}%`,`${a.name}: ${o.k}/${n} crits at ~${(mean*100).toFixed(0)}% crit rate`)})}
-    parts.crit=Math.min(60,parts.crit)}
+      const clampT=t=>Math.max(1e-12,Math.min(1,t)),pf=t=>t<.001?'<0.1':(t*100).toFixed(1);
+      if(mean<=.4){cs.n+=n;cs.k+=o.k;cs.exp+=mean*n;cs.aw++;
+        let tail=0;for(let i=o.k;i<dist.length;i++)tail+=dist[i];tail=clampT(tail);const sg=-Math.log10(tail);
+        if(sg>=1.3){const pts=Math.min(40,sg*15);parts.crit+=pts;
+          items.push({k:'crit',pts,text:ui(`${a.name} 平均暴击率 ${(mean*100).toFixed(0)}%，${n} 次命中（已排除必定暴击）暴击了 ${o.k} 次（期望 ${(mean*n).toFixed(1)} 次），概率约 ${pf(tail)}%`,`${a.name}: ${o.k}/${n} crits at ~${(mean*100).toFixed(0)}% crit rate`)})}}
+      if(mean>=.25&&!/^(莫丝|徐|熔毁·朵尔)$/.test(a.name)){let low=0;for(let i=0;i<=o.k;i++)low+=dist[i];low=clampT(low);const sg=-Math.log10(low);
+        if(sg>=1.3){const pts=Math.min(40,sg*15);bad.crit+=pts;
+          items.push({k:'crit',bad:true,pts,text:ui(`${a.name} 平均暴击率 ${(mean*100).toFixed(0)}%，${n} 次命中（已排除必定暴击）只暴击了 ${o.k} 次（期望 ${(mean*n).toFixed(1)} 次），概率约 ${pf(low)}%`,`${a.name}: only ${o.k}/${n} crits at ~${(mean*100).toFixed(0)}% crit rate`)})}}}
+    parts.crit=Math.min(60,parts.crit);bad.crit=Math.min(60,bad.crit)}
   const score=Math.min(100,parts.dr+parts.shop+parts.crit),label=score>=80?ui('欧皇附体','Blessed'):score>=50?ui('好运连连','Very lucky'):score>=20?ui('略有小运','A bit lucky'):score>0?ui('一点点运气','A touch of luck'):ui('平平无奇','Nothing special');
-  return {score,label,parts,critStats:cs,items:items.sort((a,b)=>b.pts-a.pts)};
+  const unlucky=Math.min(100,bad.dr+bad.crit),ulabel=unlucky>=80?ui('非酋附体','Cursed'):unlucky>=50?ui('霉运缠身','Very unlucky'):unlucky>=20?ui('略有不幸','A bit unlucky'):unlucky>0?ui('一点点倒霉','A touch of bad luck'):'';
+  return {score,label:unlucky>score&&unlucky>=20?ulabel:label,unlucky,unluckyLabel:ulabel,parts,bad,critStats:cs,items:items.sort((a,b)=>b.pts-a.pts)};
 }
 window.MorimensReplayScoring={scoreGear,scoreAwakeners,scoreKeeper,scoreKeeperV2,scoreLuck,critExcluder,grade};
 })();
