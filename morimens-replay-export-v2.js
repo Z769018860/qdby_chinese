@@ -99,9 +99,9 @@ async function downloadTimeline(root){
   const urls=[...team.map(t=>t.src),...X.relics.map(r=>r.icon),...X.rounds.flatMap(r=>r.acts.flatMap(a=>[a.icon,a.kicon]))].filter(Boolean);
   const imgs=new Map();await Promise.all([...new Set(urls)].map(async u=>imgs.set(u,await imgLoad(norm(u)))));
   const gi=u=>imgs.get(u)||imgs.get(norm(u))||null;
-  const S=30,G=4,perLine=Math.floor((W-2*M-150)/(S+G));
+  const S=30,G=4,perLine=Math.floor((W-2*M-215)/(S+G));
   const hHead=96,hTeam=team.length?100:0,relN=X.relics.length,hRel=relN?44+Math.ceil(relN/34)*34:0;
-  const rowH=r=>Math.max(44,Math.ceil(Math.max(1,r.acts.length)/perLine)*(S+G)+10);
+  const rowH=r=>Math.max(54,Math.ceil(Math.max(1,r.acts.length)/perLine)*(S+G)+10);
   const hRounds=34+X.rounds.reduce((n,r)=>n+rowH(r),0),hLegend=40,hFoot=44;
   const H=hHead+hTeam+hRel+hRounds+hLegend+hFoot;
   const C=document.createElement('canvas');C.width=W*2;C.height=H*2;const c=C.getContext('2d');c.scale(2,2);
@@ -119,8 +119,8 @@ async function downloadTimeline(root){
   if(relN){T(ui(`开局造物 ${relN}`,`Starting relics ${relN}`),M,y+24,'700 13px '+F,'#d9bd89');X.relics.forEach((r,i)=>{const x=M+(i%34)*(S+G),yy=y+34+Math.floor(i/34)*34;icon(gi(r.icon),x,yy,S,6)});y+=hRel}
   T(ui('逐回合主要行动（按出手顺序）','Main actions per round (in order)'),M,y+22,'700 13px '+F,'#d9bd89');y+=34;
   X.rounds.forEach((r,i)=>{const h=rowH(r);if(i%2){c.fillStyle='rgba(255,255,255,.025)';c.fillRect(M-8,y,W-2*M+16,h)}
-    T(`${ui('第','R')}${r.n}${ui('回合','')}`,M,y+26,'800 15px '+F,'#f0d29f');if(r.dmg>0)T(fmtN(r.dmg),M,y+42,'11px '+F,'#8b9aae');
-    r.acts.forEach((a,j)=>{const x=M+150+(j%perLine)*(S+G),yy=y+5+Math.floor(j/perLine)*(S+G),col=CL[a.cls]||'#8aa0bd';
+    T(`${ui('第','R')}${r.n}${ui('回合','')}`,M,y+26,'800 15px '+F,'#f0d29f');if(r.dmg>0)T(`${ui('伤','DMG')} ${fmtN(r.dmg)}`,M+82,y+14,'11px '+F,'#e0b878');T(`${ui('盾','Shield')} +${fmtN(r.shield||0)}`,M+82,y+30,'11px '+F,'#7fd6cf');T(`${ui('受','Taken')} ${fmtN(r.taken||0)}${r.hpLost>0?` (${ui('掉血','HP')} ${fmtN(r.hpLost)})`:''}`,M+82,y+46,'11px '+F,r.hpLost>0?'#e08a8a':'#9aa7bb');
+    r.acts.forEach((a,j)=>{const x=M+215+(j%perLine)*(S+G),yy=y+5+Math.floor(j/perLine)*(S+G),col=CL[a.cls]||'#8aa0bd';
       c.fillStyle=col;c.beginPath();c.arc(x+S/2,yy+S/2,S/2+2,0,7);c.fill();
       c.save();c.beginPath();c.arc(x+S/2,yy+S/2,S/2-1,0,7);c.clip();const im=gi(a.keeper?a.kicon:a.icon);if(im)c.drawImage(im,x+1,yy+1,S-2,S-2);else{c.fillStyle='#1b2433';c.fillRect(x,yy,S,S);T(a.glyph||(a.keeper?'钥':'技'),x+S/2,yy+S/2+5,'800 14px '+F,'#e8edf5','center')}c.restore()});
     y+=h});
