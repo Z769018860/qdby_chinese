@@ -304,7 +304,7 @@ function scoreLuck(tl,aux={}){
   {const skip=critExcluder(tl);
     const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;if(skip(h))continue;
       const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr+(h.cx?(h.cx.ult?h.cx.u:0)+(h.cx.strk?h.cx.s:0)+(h.cx.c||0):0):base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
-    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10||/希莱斯特|旺达/.test(a.name))continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
+    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10)continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
       const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;if(mean>.4)continue;
       cs.n+=n;cs.k+=o.k;cs.exp+=mean*n;cs.aw++;
       let dist=[1];for(const p of o.ps){const nd=new Array(dist.length+1).fill(0);for(let i=0;i<dist.length;i++){nd[i]+=dist[i]*(1-p);nd[i+1]+=dist[i]*p}dist=nd}
