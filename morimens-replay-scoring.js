@@ -307,7 +307,13 @@ function scoreLuck(tl,aux={}){
   const cs={n:0,k:0,exp:0,aw:0};
   {const skip=critExcluder(tl);
     const by=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;if(skip(h))continue;
-      const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr+(h.cx?(h.cx.ult?h.cx.u:0)+(h.cx.strk?h.cx.s:0)+(h.cx.c||0):0):base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;by.set(h.uid,o)}
+      const o=by.get(h.uid)||{ps:[],k:0};const base=Number(tl.openProps?.get(String(h.uid))?.crit),pr=Number.isFinite(h.cr)?h.cr+(h.cx?(h.cx.ult?h.cx.u:0)+(h.cx.strk?h.cx.s:0)+(h.cx.c||0):0):base;if(!Number.isFinite(pr))continue;o.ps.push(Math.min(.98,Math.max(0,pr/100)));if(h.crit)o.k++;else if(pr>=90)(o.miss=o.miss||[]).push({pr,round:h.round});by.set(h.uid,o)}
+    // single hits: a crit rate of 90% / 95% or more that still did not crit (chance of the miss = 100% - rate)
+    for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||!o.miss?.length)continue;
+      const hi=o.miss.filter(m=>m.pr>=95),mid=o.miss.filter(m=>m.pr<95),pts=Math.min(30,o.miss.reduce((t,m)=>t+Math.min(34,-Math.log2(Math.max(.02,1-Math.min(.98,m.pr/100)))*4),0));bad.crit+=pts;
+      const rs=a=>[...new Set(a.map(m=>m.round))].slice(0,4).join('、');
+      const det=[hi.length?`${hi.length} 次暴击率 ≥95%`:'',mid.length?`${mid.length} 次暴击率 90%～95%`:''].filter(Boolean).join('、');
+      items.push({k:'crit',bad:true,pts,text:ui(`${a.name} 单次暴击率很高却没暴击：${det}（第 ${rs(o.miss)} 回合）`,`${a.name}: ${o.miss.length} hit(s) at >=90% crit rate without a crit`)})}
     for(const [uid,o] of by){const a=tl.actors.get(String(uid));if(!a||a.kind!=='awakener'||o.ps.length<10)continue; // these have crit conversions (狂气/触腕) not visible in the replay, so board crit rate is not comparable
       const n=o.ps.length,mean=o.ps.reduce((x,y)=>x+y,0)/n;
       let dist=[1];for(const p of o.ps){const nd=new Array(dist.length+1).fill(0);for(let i=0;i<dist.length;i++){nd[i]+=dist[i]*(1-p);nd[i+1]+=dist[i]*p}dist=nd}
