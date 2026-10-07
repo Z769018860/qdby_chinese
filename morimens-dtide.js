@@ -106,6 +106,8 @@
       #morimensWaline .wl-card .wl-content .wl-emoji{width:auto!important;height:64px!important;max-width:128px!important;max-height:64px!important;margin:4px 6px!important;vertical-align:middle!important;object-fit:contain}
       .morimensWalineStatus{margin:12px 0 0;color:#8794a7;font-size:11px;line-height:1.6}.morimensWalineStatus.error{color:#e69a9f}.morimensWalineStatus.loading{color:#d8c199}
       @media(max-width:900px){.dtideControls,.dtideFilters{grid-template-columns:repeat(2,minmax(0,1fr))}.dtideUsageCards{grid-template-columns:repeat(2,minmax(0,1fr))}.dtideMembers{grid-template-columns:repeat(2,minmax(0,1fr))}.dtideInsightEnlight{grid-template-columns:repeat(2,minmax(0,1fr))}.dtideSquadMembers{grid-template-columns:repeat(2,minmax(0,1fr))}.dtideCompareGrid{grid-template-columns:1fr}}
+      @media(max-width:820px){.morimensTabs{position:sticky!important;top:56px;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:none;margin-left:-6px;margin-right:-6px;border-radius:12px;background:rgba(10,15,24,.97);backdrop-filter:none;gap:6px}.morimensTabs::-webkit-scrollbar{display:none}.morimensTabs .morimensTab{flex:0 0 auto;white-space:nowrap;scroll-snap-align:center;padding:9px 13px;font-size:13px}}
+      .morimensToTop{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:10010;width:44px;height:44px;border-radius:50%;border:1px solid rgba(213,177,118,.45);background:rgba(12,16,23,.94);color:#f0d5a5;font:700 20px/1 system-ui,sans-serif;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility .2s;box-shadow:0 6px 18px rgba(0,0,0,.4)}.morimensToTop.isShown{opacity:1;visibility:visible;transform:none}
       @media(max-width:580px){.morimensTabs{position:static}.dtideControls,.dtideFilters,.dtideStatGrid,.dtideUsageCards,.dtideGearSummary,.dtideCharacterInsight{grid-template-columns:1fr}.dtideField.span2{grid-column:auto}.dtideMembers{grid-template-columns:1fr}.dtideCharacterPortrait{grid-row:auto}.dtideCharacterPortraitImage{height:360px}.dtideSquadRow{grid-template-columns:22px minmax(0,1fr)}.dtideSquadRate{grid-column:2;text-align:left;display:flex;gap:6px;align-items:baseline}.dtideSquadMembers{grid-template-columns:repeat(2,minmax(0,1fr))}#morimensWaline .wl-emoji-popup .wl-tab-wrapper>button{width:50px;height:50px;line-height:50px}#morimensWaline .wl-emoji-popup .wl-emoji{width:44px!important;height:44px!important;max-width:44px!important;max-height:44px!important}#morimensWaline .wl-emoji-popup .wl-emoji-preview{width:84px!important;height:84px!important;max-width:84px!important;max-height:84px!important}#morimensWaline .wl-card .wl-content .wl-emoji{height:56px!important;max-width:112px!important;max-height:56px!important}}
     `;document.head.appendChild(s);
   }
@@ -173,6 +175,16 @@
     if(sw&&innerWidth>700)bar.style.right=Math.round(innerWidth-sw.getBoundingClientRect().left+10)+'px';else bar.style.right='';
     const close=document.querySelector('#morimensModal .morimensModalClose');if(close)close.setAttribute('aria-label',ui('关闭','Close'));
   }
+  function setupBackToTop(){
+    if($('morimensToTop'))return;
+    const b=document.createElement('button');b.id='morimensToTop';b.type='button';b.className='morimensToTop';b.textContent='↑';
+    const lab=()=>{const t=ui('回到顶部','Back to top');b.setAttribute('aria-label',t);b.title=t};lab();window.addEventListener('morimens-language-change',lab);
+    b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));document.body.appendChild(b);
+    let ticking=false;const upd=()=>{ticking=false;b.classList.toggle('isShown',(window.scrollY||document.documentElement.scrollTop||0)>520)};
+    window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(upd)}},{passive:true});upd();
+    // keep the chosen tab visible in the horizontally scrolling tab strip
+    document.addEventListener('click',e=>{const t=e.target.closest?.('.morimensTab');if(t&&t.scrollIntoView)setTimeout(()=>t.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'}),0)},{passive:true});
+  }
   function setupTopActions(changelog,about){
     if($('morimensTopActions'))return;
     const style=document.createElement('style');
@@ -180,7 +192,7 @@
     document.head.appendChild(style);
     const bar=document.createElement('div');bar.id='morimensTopActions';bar.className='morimensTopActions';
     bar.innerHTML=`<button type="button" class="topToggle" data-top="toggle" aria-expanded="false"></button><a class="topAfdian" data-top="afdian" href="https://afdian.com/a/qingdengbuyi" target="_blank" rel="noopener noreferrer">♥ <span></span></a><a class="topVideo" data-top="video" href="${VIDEO_URL}" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M17.8 4.2l1.9-1.9a.9.9 0 10-1.3-1.3l-2.5 2.5h-3.8L9.6 1A.9.9 0 108.3 2.3l1.9 1.9H6.5A4.5 4.5 0 002 8.7v8.8A4.5 4.5 0 006.5 22h11a4.5 4.5 0 004.5-4.5V8.7a4.5 4.5 0 00-4.2-4.5zM20 17.5c0 1.4-1.1 2.5-2.5 2.5h-11A2.5 2.5 0 014 17.5V8.7c0-1.4 1.1-2.5 2.5-2.5h11c1.4 0 2.5 1.1 2.5 2.5v8.8zM8 11a1 1 0 011 1v1.5a1 1 0 11-2 0V12a1 1 0 011-1zm8 0a1 1 0 011 1v1.5a1 1 0 11-2 0V12a1 1 0 011-1z"/></svg> <span></span></a><button type="button" data-top="notice"></button><button type="button" data-top="birthday"></button><button type="button" data-top="changelog"></button><button type="button" data-top="about"></button>`;
-    document.body.appendChild(bar);
+    document.body.appendChild(bar);setupBackToTop();
     // phones: the bar stays fixed on screen, so it can be folded into one small button
     {const tg=bar.querySelector('.topToggle'),KEY='morimens.topActionsOpen';let open=false;try{open=localStorage.getItem(KEY)==='1'}catch{}
       const sync=()=>{bar.classList.toggle('isCollapsed',!open);tg.setAttribute('aria-expanded',String(open));tg.textContent=open?ui('收起 ▲','Hide ▲'):ui('菜单 ▼','Menu ▼')};

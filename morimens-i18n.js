@@ -284,13 +284,15 @@
     for(const opt of select.options){
       const stableId=opt.dataset?.awakenerId||opt.value||'',rec=byId.get(stableId);
       const hit=rec?{rec,zh:data.zhFor?.(rec)||data.zhDb?.bySkeydbId?.[rec.id]||data.identityDb?.bySkeydbId?.[rec.id]||null}:(map.get(normalize(opt.value))||map.get(normalize(opt.textContent)));
-      if(!hit)continue;opt.dataset.awakenerId=hit.rec.id;opt.textContent=lang===ZH?(hit.zh?.name||hit.rec.name):hit.rec.name;
+      if(!hit)continue;if(opt.dataset.awakenerId!==hit.rec.id)opt.dataset.awakenerId=hit.rec.id;const nt=lang===ZH?(hit.zh?.name||hit.rec.name):hit.rec.name;if(opt.textContent!==nt)opt.textContent=nt;   // write only on change: unconditional writes re-trigger every other DOM observer on the page
     }
   }
   function translateDynamicControls(){
-    const quote=document.getElementById('skeydbQuoteBtn');if(quote)quote.textContent=lang===ZH?'换一句角色台词':'Another Voice Line';
-    const wiki=document.getElementById('wikiBtn');if(wiki)wiki.textContent=lang===ZH?'查看中文维基':'Open Chinese Wiki';
-    document.documentElement.lang=lang;document.title=lang===ZH?'忘忘看报 · Morimens Weekly':'Morimens Weekly';
+    const set=(el,t)=>{if(el&&el.textContent!==t)el.textContent=t};
+    set(document.getElementById('skeydbQuoteBtn'),lang===ZH?'换一句角色台词':'Another Voice Line');
+    set(document.getElementById('wikiBtn'),lang===ZH?'查看中文维基':'Open Chinese Wiki');
+    if(document.documentElement.lang!==lang)document.documentElement.lang=lang;
+    const ti=lang===ZH?'忘忘看报 · Morimens Weekly':'Morimens Weekly';if(document.title!==ti)document.title=ti;
   }
   function updateSwitch(){const zh=document.getElementById('langZh'),en=document.getElementById('langEn');if(!zh||!en)return;zh.setAttribute('aria-pressed',String(lang===ZH));en.setAttribute('aria-pressed',String(lang===EN))}
   function setLanguage(next){if(next!==ZH&&next!==EN)return;lang=next;localStorage.setItem(KEY,lang);updateSwitch();translateTree();window.dispatchEvent(new CustomEvent('morimens-language-change',{detail:{language:lang}}))}

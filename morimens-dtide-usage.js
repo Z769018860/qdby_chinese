@@ -534,7 +534,9 @@
       renderAll();
       const cachedCommunity=window.MorimensDzoneImport?.latestForSeason?.(activeSeason,activeCommunityVariant)||[];
       if(cachedCommunity.length)mergeCommunityUsageRecords(cachedCommunity);
-      if(previousEntry){
+      // the previous season's full usage file is ~16 MB of base64 (hundreds of MB once parsed): phones and small-memory devices skip it, ranks simply show no arrows there
+      const lowEnd=window.matchMedia?.('(max-width: 820px)').matches||(navigator.deviceMemory&&navigator.deviceMemory<=4)||navigator.connection?.saveData;
+      if(previousEntry&&!lowEnd){
         setTimeout(async()=>{
           if(String(activeSeasonKey)!==String(entry.communityTargetKey??entry.snapshotId??entry.seasonId)||previousUsage)return;
           previousUsage=await dataset(previousEntry.path).catch(()=>null);
