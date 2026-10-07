@@ -29,7 +29,7 @@ function setupMorimensMascotToggle(){
     image.alt=isEn()?current.en:current.zh;
     button.setAttribute("aria-label",isEn()?("Switch to "+next.en):("切换为"+next.zh));
   };
-  const preloadMascots=()=>{for(const character of characters){const preload=new Image();preload.src=character.src}};
+  const preloadMascots=()=>{if(window.matchMedia('(max-width: 820px)').matches||navigator.connection?.saveData)return;for(const character of characters){const preload=new Image();preload.src=character.src}};   // phones fetch the second mascot (650 KB) only when it is clicked
   if(document.readyState==='complete')(window.requestIdleCallback||setTimeout)(preloadMascots);else window.addEventListener('load',()=>(window.requestIdleCallback||setTimeout)(preloadMascots),{once:true});
   button.addEventListener("click",()=>{
     index=1-index;const current=characters[index];
@@ -69,9 +69,20 @@ function setupMorimensReplayShell(){
   if(location.hash==='#replay')activate();
 }
 
+// the same data file is requested by several modules while the page boots (rank index, skeydb asset index ...): share one in-flight request and drop the copy a few seconds later
+(()=>{if(window.__morimensFetchShare)return;window.__morimensFetchShare=true;const nativeFetch=window.fetch.bind(window),live=new Map();
+  window.fetch=function(input,init){try{const method=String((init&&init.method)||(input&&input.method)||'GET').toUpperCase(),mode=(init&&init.cache)||(input&&input.cache)||'default';
+    if(method!=='GET'||mode==='no-store'||mode==='reload')return nativeFetch(input,init);const url=new URL(typeof input==='string'?input:input.url,location.href);
+    if(url.origin!==location.origin||!/\/data\/morimens\//.test(url.pathname)||/\.b64$/.test(url.pathname))return nativeFetch(input,init);
+    const key=url.pathname;let p=live.get(key);if(!p){p=nativeFetch(input,init);live.set(key,p);const drop=()=>setTimeout(()=>live.delete(key),4000);p.then(drop,()=>live.delete(key))}
+    return p.then(r=>r.clone())}catch{return nativeFetch(input,init)}};
+})();
+
 (async()=>{
   try{
-  const assetVersion="20261007.1";
+  const assetVersion="20261007.2";
+  // fetch every module in parallel up front; the sequential imports below then only evaluate them
+  for(const m of ["morimens-dtide-loader","morimens-dtide-battle","morimens-dtide-battle-ui","morimens-dtide-zones","morimens-tierlist","morimens-summon-calendar","morimens-birthday-calendar","morimens-dtide","morimens-replay-scoring","morimens-replay-timeline","morimens-data","morimens-skeydb","morimens-love-ranking","morimens-i18n","morimens-calculator-formulas","morimens-calculator-skeydb","morimens-calculator-stats","morimens-calculator-realms","morimens-calculator-combat","morimens-calculator-export","morimens-replay-score-enhancer","morimens-replay-export-v2","morimens-dtide-usage","morimens-dtide-team-ui","morimens-dtide-progression-fix","morimens-assist-list"]){const l=document.createElement("link");l.rel="modulepreload";l.href=`./${m}.js?v=${assetVersion}`;document.head.appendChild(l)}
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",

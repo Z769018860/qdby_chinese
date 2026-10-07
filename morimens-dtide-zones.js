@@ -15,6 +15,7 @@
       .dtideZones{margin-top:18px}.dtideZones h3{font-size:15px;margin:0 0 6px;color:#ead9b9}
       .dzNote{color:#8290a2;font-size:12px;margin:0 0 10px}.dzBar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:10px 0}
       .dzBar label{display:block;font-size:11px;color:#8290a2;margin-bottom:3px}.dzBar select{min-width:260px;max-width:100%;background:#111827;color:#dbe4f0;border:1px solid rgba(148,163,184,.3);border-radius:8px;padding:8px 10px}
+      @media(max-width:600px){.dzBar{max-width:100%}.dzBar select{min-width:0;width:100%;box-sizing:border-box}}
       .dzMeta{font-size:12px;color:#aab6c8;display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
       .dzZone{border:1px solid rgba(148,163,184,.2);border-radius:10px;margin:10px 0;background:rgba(15,25,39,.6)}
       .dzZone>summary{cursor:pointer;padding:10px 14px;font-weight:700;color:#ead9b9;list-style:none;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
