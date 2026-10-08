@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T07:37:37Z",
-  "recordCount": 2,
+  "updatedAt": "2026-10-08T07:57:00Z",
+  "recordCount": 3,
   "records": [
     {
       "key": "100168076:15600",
@@ -647,6 +647,42 @@
         "fetchedAt": "2026-09-28T20:44:19.460Z",
         "importMethod": "paste",
         "updateExisting": true
+      }
+    },
+    {
+      "key": "101972791:130226",
+      "uid": "101972791",
+      "characterId": "130226",
+      "submittedBy": "Eremora Showcase",
+      "submittedAt": "2026-10-06T10:33:50.417Z",
+      "summary": "助战 Showcase · Saya",
+      "summaryZh": "助战 Showcase · Saya",
+      "summaryEn": "Assist Showcase · Saya",
+      "awakerName": "Saya",
+      "commentId": "56",
+      "payload": {
+        "version": 4,
+        "source": "eremora-showcase",
+        "uid": "101972791",
+        "player": "",
+        "characterId": "130226",
+        "canonicalId": "awakener-0057",
+        "awaker": {
+          "id": 130226,
+          "name": "Saya",
+          "image": "portraits/Portrait_Middle_Awaker_B15_AF.webp",
+          "mini": "portraits/Portrait_Minihead_Awaker_B15_AF.webp",
+          "res": "B15_AF"
+        },
+        "level": 70,
+        "potencyLevel": 7,
+        "weapons": [],
+        "suits": [],
+        "trinkets": [],
+        "attrs": [],
+        "fetchedAt": "2026-10-06T10:33:50.417Z",
+        "importMethod": "clipboard-read",
+        "updateExisting": false
       }
     }
   ]
