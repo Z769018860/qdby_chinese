@@ -1,0 +1,28 @@
+name: Export S70 500-525 JSON
+
+on:
+  push:
+    branches:
+      - export-s70-500-525-json-20261009
+    paths:
+      - scripts/export_s70_500_525.py
+      - .github/workflows/export-s70-500-525.yml
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export structured JSON
+        run: python3 scripts/export_s70_500_525.py
+      - name: Show artifact size
+        run: ls -lh exports/morimens-s70-score-500-525-full.zh-CN.json
+      - name: Upload JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: morimens-s70-score-500-525-full-zh-CN
+          path: exports/morimens-s70-score-500-525-full.zh-CN.json
+          if-no-files-found: error
