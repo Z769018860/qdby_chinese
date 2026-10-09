@@ -92,14 +92,17 @@ for(const [title,text] of Object.entries(wikiPages)){
 }
 // forecast table
 const forecast=[];
+const FORECAST_FIX={'2026-10-19':'混沌唤醒体'};  // corrections of the wiki table (next banner is a Chaos awakener)
 for(const text of [wikiPages['唤醒/未来唤醒预测']||'']){
   for(const row of text.split('|-').slice(2)){
     const cells=row.split('||');if(cells.length<2)continue;
     const t=parseTime(cells[0].replace(/^[^\d]*/,''));
     const label=cells[1].replace(/<br>/g,' ').replace(/\{\{唤醒体头像\|([^}]*)\}\}/g,'$1').replace(/\|\}.*$/s,'').trim();
-    if(t||label)forecast.push({start:t?.start||'',end:t?.end||'',text:label});
+    if(t||label)forecast.push({start:t?.start||'',end:t?.end||'',text:FORECAST_FIX[(t?.start||'').slice(0,10)]||label});
   }
 }
+// only future periods stay in the forecast; expired / already running ones are dropped
+for(let i=forecast.length-1;i>=0;i--)if(forecast[i].start&&Date.parse(forecast[i].start)<=Date.now())forecast.splice(i,1);
 let rerunIndex={launchPairs:[]};const history0=[];
 try{
   rerunIndex=JSON.parse(await readFile('data/morimens/huiji/summon-rerun/index.json','utf8'));
