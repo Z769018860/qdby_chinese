@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-10-06T17:31:00+08:00",
+    "syncedAt": "2026-10-09T08:37:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 70,
@@ -185,7 +185,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-10-06T17:31:00+08:00",
+    "generatedAt": "2026-10-09T08:37:00+08:00",
     "rankScopes": [
       50,
       200,
@@ -242,8 +242,8 @@
         "seasonId": 70,
         "maxRankAvailable": 2000,
         "difficulty": {
-          "recognizedTeams": 11208,
-          "totalTeams": 11208,
+          "recognizedTeams": 11319,
+          "totalTeams": 11319,
           "complete": true
         },
         "rankScopes": {
@@ -326,7 +326,7 @@
     "target": 2000,
     "count": 2000,
     "complete": true,
-    "syncedAt": "2026-10-06T17:31:00+08:00",
+    "syncedAt": "2026-10-09T08:37:00+08:00",
     "revision": "s70-top2000-20261002-2353",
     "scorePolicy": "official-rank-score"
   },
@@ -343,12 +343,12 @@
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-06T17:31:00+08:00",
-    "revision": "17f52619db7f65c52bf22c54073a4cb19687f2270b27597bbc55e9d403aee751",
+    "syncedAt": "2026-10-09T08:37:00+08:00",
+    "revision": "b22fd2b4bf3f14dba0723bd447f82513fbe239740bdc2586a5bbcbdbffe7d60b",
     "format": "gzip-base64-chunked-v1",
     "chunks": 5,
     "chunkSize": 600000,
-    "chunkBytes": 2754246
+    "chunkBytes": 2935876
   },
   "rawTop1000Import": {
     "seasonId": 69,

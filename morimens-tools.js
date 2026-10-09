@@ -80,7 +80,7 @@ function setupMorimensReplayShell(){
 
 (async()=>{
   try{
-  const assetVersion="20261007.2";
+  const assetVersion="20261009.1";
   // fetch every module in parallel up front; the sequential imports below then only evaluate them
   for(const m of ["morimens-dtide-loader","morimens-dtide-battle","morimens-dtide-battle-ui","morimens-dtide-zones","morimens-tierlist","morimens-summon-calendar","morimens-birthday-calendar","morimens-dtide","morimens-replay-scoring","morimens-replay-timeline","morimens-data","morimens-skeydb","morimens-love-ranking","morimens-i18n","morimens-calculator-formulas","morimens-calculator-skeydb","morimens-calculator-stats","morimens-calculator-realms","morimens-calculator-combat","morimens-calculator-export","morimens-replay-score-enhancer","morimens-replay-export-v2","morimens-dtide-usage","morimens-dtide-team-ui","morimens-dtide-progression-fix","morimens-assist-list"]){const l=document.createElement("link");l.rel="modulepreload";l.href=`./${m}.js?v=${assetVersion}`;document.head.appendChild(l)}
     window.MorimensDtideRenderer="legacy";

@@ -1,9 +1,9 @@
 # Season 70 (activityTid 83315) Top 2000
 
-Data updated: 2026-10-06 17:31 (UTC+8). Source: official `Rank.QueryRank` / `Facade.QueryFacadeFields`
-responses from the `season_83315` capture; rank snapshot retrieved 2026-10-06T17:31:27+08:00 (`ranking.json.gz`);
-earlier snapshots are kept as `ranking-20261001-0546.json.gz`, `ranking-20261002-0221.json.gz` and `ranking-20261002-0250.json.gz`, `ranking-20261002-2353.json.gz` and `ranking-20261004-0740.json.gz` and `ranking-20261005-0704.json.gz`.
-Team rows = the complete `teams_latest.jsonl` of the 2026-10-06 17:31 capture merged over earlier captures (older rows only fill gaps and keep players that left the Top 2000).
+Data updated: 2026-10-09 08:37 (UTC+8). Source: official `Rank.QueryRank` / `Facade.QueryFacadeFields`
+responses from the `season_83315` capture; rank snapshot retrieved 2026-10-09T08:37:26+08:00 (`ranking.json.gz`);
+earlier snapshots are kept as `ranking-20261001-0546.json.gz`, `ranking-20261002-0221.json.gz` and `ranking-20261002-0250.json.gz`, `ranking-20261002-2353.json.gz`, `ranking-20261004-0740.json.gz`, `ranking-20261005-0704.json.gz` and `ranking-20261006-1731.json.gz`.
+Team rows = the complete `teams_latest.jsonl` of the 2026-10-09 08:37 capture merged over earlier captures (older rows only fill gaps and keep players that left the Top 2000).
 
 | File | Content |
 | --- | --- |
