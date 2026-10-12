@@ -3,11 +3,31 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-10-12T14:08:00+08:00",
+    "syncedAt": "2026-10-13T02:00:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
-  "currentSeason": 70,
+  "currentSeason": 71,
   "availableSeasons": [
+    {
+      "seasonId": 71,
+      "labelEn": "Season 71 · Chaos Ring",
+      "period": "2026-10-12 – 2026-10-26",
+      "recordCount": 1995,
+      "leaderboardEntryCount": 1995,
+      "complete": true,
+      "coverageMode": "official-rank-top2000",
+      "path": "data/morimens/eremora/usage/71-local-gzip/index.json",
+      "statsPath": "data/morimens/eremora/stats/71.json",
+      "dataUpdatedAt": "2026-10-13T02:00:00+08:00",
+      "labelZh": "第71期 融灾 · 混沌戒指",
+      "periodShort": "10.12–10.25",
+      "ringRealm": "Chaos",
+      "ringRealmZh": "混沌",
+      "rankPath": "data/morimens/eremora/rank-index/71.json",
+      "battleArchivePath": "data/morimens/dzone/season71/meta.json",
+      "battleDetailPath": "data/morimens/eremora/usage/71-battle-gzip/index.json",
+      "revision": "1b4254fb9d39242e320ab6e1a6617621270c9fb3a2adb2fb2f1d56a5acac8588"
+    },
     {
       "seasonId": 70,
       "labelEn": "Season 70 · Aequor Ring",
@@ -135,6 +155,7 @@
     }
   ],
   "discoveredSeasonIds": [
+    71,
     70,
     69,
     68,
@@ -145,6 +166,7 @@
     63
   ],
   "pendingBackfillSeasonIds": [
+    71,
     70,
     69,
     68,
@@ -155,8 +177,8 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 2000,
-    "records": 2000,
+    "leaderboardEntries": 1995,
+    "records": 1995,
     "complete": true,
     "failures": 0
   },
@@ -185,7 +207,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-10-12T14:08:00+08:00",
+    "generatedAt": "2026-10-12T18:43:36.254Z",
     "rankScopes": [
       50,
       200,
@@ -239,11 +261,11 @@
     ],
     "coverage": [
       {
-        "seasonId": 70,
+        "seasonId": 71,
         "maxRankAvailable": 2000,
         "difficulty": {
-          "recognizedTeams": 11418,
-          "totalTeams": 11418,
+          "recognizedTeams": 7184,
+          "totalTeams": 7184,
           "complete": true
         },
         "rankScopes": {
@@ -253,102 +275,38 @@
           "1000": true,
           "2000": true
         }
-      },
-      {
-        "seasonId": 69,
-        "maxRankAvailable": 48,
-        "difficulty": {
-          "recognizedTeams": 0,
-          "totalTeams": 211,
-          "complete": false
-        },
-        "rankScopes": {
-          "50": false,
-          "200": false,
-          "500": false,
-          "1000": false,
-          "2000": false
-        }
-      },
-      {
-        "seasonId": 67,
-        "maxRankAvailable": 0,
-        "difficulty": {
-          "recognizedTeams": 0,
-          "totalTeams": 152,
-          "complete": false
-        },
-        "rankScopes": {
-          "50": false,
-          "200": false,
-          "500": false,
-          "1000": false,
-          "2000": false
-        }
-      },
-      {
-        "seasonId": 66,
-        "maxRankAvailable": 0,
-        "difficulty": {
-          "recognizedTeams": 0,
-          "totalTeams": 240,
-          "complete": false
-        },
-        "rankScopes": {
-          "50": false,
-          "200": false,
-          "500": false,
-          "1000": false,
-          "2000": false
-        }
-      },
-      {
-        "seasonId": 65,
-        "maxRankAvailable": 0,
-        "difficulty": {
-          "recognizedTeams": 0,
-          "totalTeams": 205,
-          "complete": false
-        },
-        "rankScopes": {
-          "50": false,
-          "200": false,
-          "500": false,
-          "1000": false,
-          "2000": false
-        }
       }
     ]
   },
   "rankIndex": {
-    "seasonId": 70,
-    "path": "data/morimens/eremora/rank-index/70.json",
-    "target": 2000,
-    "count": 2000,
+    "seasonId": 71,
+    "path": "data/morimens/eremora/rank-index/71.json",
+    "target": 1995,
+    "count": 1995,
     "complete": true,
-    "syncedAt": "2026-10-12T14:08:00+08:00",
-    "revision": "s70-top2000-20261002-2353",
+    "syncedAt": "2026-10-13T02:00:00+08:00",
+    "revision": "s71-top2000-20261013-0200",
     "scorePolicy": "official-rank-score"
   },
   "usageIndex": {
-    "seasonId": 70,
-    "path": "data/morimens/eremora/usage/70-local-gzip/index.json",
-    "statsPath": "data/morimens/eremora/stats/70.json",
-    "target": 2000,
-    "rankIndexCount": 2000,
-    "recordCount": 2000,
+    "seasonId": 71,
+    "path": "data/morimens/eremora/usage/71-local-gzip/index.json",
+    "statsPath": "data/morimens/eremora/stats/71.json",
+    "target": 1995,
+    "rankIndexCount": 1995,
+    "recordCount": 1995,
     "coverage": {
-      "expected": 2000,
-      "covered": 2000,
+      "expected": 1995,
+      "covered": 1995,
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-12T14:08:00+08:00",
-    "revision": "cb89d7baddaa7b40f1a62c57bd6eabffc72462b017c7390a809d20cedd5f9a0b",
+    "syncedAt": "2026-10-13T02:00:00+08:00",
+    "revision": "1b4254fb9d39242e320ab6e1a6617621270c9fb3a2adb2fb2f1d56a5acac8588",
     "format": "gzip-base64-chunked-v1",
-    "chunks": 5,
+    "chunks": 4,
     "chunkSize": 600000,
-    "chunkBytes": 2950867
+    "chunkBytes": 1905801
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -367,31 +325,31 @@
     "updatedAt": "2026-09-22T01:00:00+08:00"
   },
   "seasonRing": {
-    "seasonId": 70,
-    "realm": "Aequor",
-    "nameZh": "深海戒指",
-    "nameEn": "Aequor Ring"
+    "seasonId": 71,
+    "realm": "Chaos",
+    "nameZh": "混沌戒指",
+    "nameEn": "Chaos Ring"
   },
   "latestLocalImport": {
-    "seasonId": 70,
-    "archive": "season_83315.zip",
-    "activityTid": 83315,
+    "seasonId": 71,
+    "archive": "season_83331.zip",
+    "activityTid": 83331,
     "rankRange": [
       1,
       2000
     ],
-    "rankedPlayers": 2000,
-    "parsedRecords": 2000,
-    "teamRows": 9803,
-    "battleRows": 18468,
-    "ringRealm": "Aequor",
-    "ringRealmZh": "深海",
+    "rankedPlayers": 1995,
+    "parsedRecords": 1995,
+    "teamRows": 6883,
+    "battleRows": 0,
+    "ringRealm": "Chaos",
+    "ringRealmZh": "混沌",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-10-12T14:08:00+08:00",
-    "revision": "cb89d7baddaa7b40f1a62c57bd6eabffc72462b017c7390a809d20cedd5f9a0b",
-    "battleArchive": "data/morimens/dzone/season70/meta.json",
-    "battleDetail": "data/morimens/eremora/usage/70-battle-gzip/index.json",
-    "note": "Updated 2026-10-12 14:08 (final, after the season ended): rank snapshot + complete teams_latest.jsonl of that capture (all 2000 players have team details)."
+    "updatedAt": "2026-10-13T02:00:00+08:00",
+    "revision": "1b4254fb9d39242e320ab6e1a6617621270c9fb3a2adb2fb2f1d56a5acac8588",
+    "battleArchive": "data/morimens/dzone/season71/meta.json",
+    "battleDetail": "data/morimens/eremora/usage/71-battle-gzip/index.json",
+    "note": "Season 71 (in progress): rank snapshot 2026-10-13 02:00 + teams_latest.jsonl of the same capture."
   },
   "postbug69Import": {
     "seasonId": 69,
