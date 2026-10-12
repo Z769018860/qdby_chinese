@@ -1,8 +1,1 @@
-{
-  "_note": "Unlock times for content that is already in the game files but not released yet (used with --include-future; the page hides it until the time passes). D-Zone periods unlock at their start time automatically.",
-  "unlock": {
-    "薇薇安": "2026-10-19T09:00:00+08:00"
-  },
-  "hold": ["太岁", "罗马", "本源深海淑女"],
-  "_hold_note": "Content whose release time is unknown: never written to the public data until a time is added under \"unlock\"."
-}
+{"unlock":{"薇薇安":"2026-10-19T09:00:00+08:00"},"hold":[]}
