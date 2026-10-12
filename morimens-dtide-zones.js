@@ -378,7 +378,7 @@
     }).join('');
     const seenK=new Map();for(const n of vis)if(!n.b&&!seenK.has(nodeKey(n)))seenK.set(nodeKey(n),n);
     const kinds=[...seenK.values()].map(n=>{const x=nodeInfo(n);if(!x)return '';const ai=/ai/.test(x.s)?` <small class="aiTag">${ui('推测','inferred')}</small>`:'';return `<div class="dzTileInfo"><span class="dzTileIcon ${n.t?'tex-'+esc(n.t):''}">${n.i?`<img src="assets/morimens/dzone-map/node-${esc(n.i)}.webp" alt="" loading="lazy">`:''}</span><div><b>${esc(ui(x.zh,x.en))}</b>${ai}<br><span>${esc(ui(x.dz,x.de))}</span></div></div>`}).join('');
-    return `<div class="dzMapWrap"><div class="dzMapView"><div class="dzMapBoard" style="width:${w}px;height:${h}px">${nodes}</div></div><div class="dzMapSide"><h4>${ui('战斗与怪物','Battles & monsters')}</h4>${side||`<div class="dzNote">${ui('本区域没有战斗节点。','No battle nodes in this zone.')}</div>`}<div class="dzLegend">${kinds}</div></div></div>`;
+    return `<div class="dzMapWrap"><div class="dzMapView"><div class="dzMapBoard" style="width:${w}px;height:${h}px">${nodes}</div></div><div class="dzMapSide"><h4>${ui('战斗与怪物','Battles & monsters')}</h4>${side||`<div class="dzNote">${order.length?ui('本区域的战斗怪物配置待 Morimens.Info.kr 发布后补充（地图来自游戏本地表）。','Battle line-ups follow once Morimens.Info.kr publishes this season (map read from the game tables).'):ui('本区域没有战斗节点。','No battle nodes in this zone.')}</div>`}<div class="dzLegend">${kinds}</div></div></div>`;
   }
 
   function seasonLabel(s){
