@@ -21,6 +21,13 @@
 - 战斗统计：`battleUuid`、`stageRoundCount`、`bossBattleRoundCount`、`deathResistCount`、`respawnedNum`、`totalUseCard`、`totalEnergyCost`、`maxBoutUseCard`、`maxBoutDamage`、`maxCounterAtt`、`maxTentacleDamage`、`maxStrength`、`maxPosion`、`maxHp`、`leftHp`、各唤醒体 `damage / block / heal`。
 - 支持批量（一次 ≥100 个 UID）。
 
+
+### 3b) `GET /dzone/battles/{battleUuid}/stats` — 战斗明细（P0，伤害 / 格挡 / 治疗拆分）
+目前这部分只能从 `battleStatPackExitList` 里的二进制字段（base64 → LZ4 → MessagePack）解出，希望直接给 JSON。返回：
+- `segments[]`：战斗分段（普通阶段 / 首领阶段，对应 `gearType`），每段含 `rounds[]`；
+- 每回合 `perAwakener{ tid | "1"(守密人) → { skill{技能ID → {damage, block, heal}}, utilSkill{…}, state{状态ID → {damage, block, heal}} } }`；
+- 技能 ID、状态 ID 的名称对照（`/meta/names?type=skill|state`）。
+
 ### 4) `GET /dzone/seasons/{id}/map` — 地图（P1）
 每禁区：`stageId`、`mapId`、`width/height`、网格节点 `{x, y, nodeId, type, name, description, effect}`、起点、首领位置，其中战斗节点带 `battleId`。
 
@@ -172,3 +179,47 @@
     "alerts": [{ "name": "Threat Level C",
       "monsters": [{ "monsterId": "dzone-monster-0224", "level": 41, "hp": 24615, "hpBars": 1 }] }] }] }
 ```
+
+### H. 战斗明细（每唤醒体造成的伤害 / 格挡 / 治疗）— 现有结构
+
+**H1. 每场汇总（`recordStageData`，明文）**：键是唤醒体 `tid`，`"1"` 表示守密人（钥令、状态等不属于任何唤醒体的伤害）。
+```json
+{
+  "stageRoundCount": 24, "bossBattleRoundCount": 11,
+  "AwakerDoDamage": { "1": 178921, "15567": 40369926, "15596": 297064, "15587": 17495, "77918": 554482 },
+  "AwakerDoBlock":  { "1": 538,    "15567": 470,      "15596": 269,    "15587": 244,   "77918": 5901 },
+  "AwakerDoHeal":   { "1": 2421,   "15567": 12406 }
+}
+```
+
+**H2. 分回合明细（`battleStatPackExitList`，二进制）**：`base64 → LZ4 frame → MessagePack`，解出后是一个列表，**每个元素 = 一个回合**。
+```json
+{
+  "battleStatPackExitList": [
+    { "result": 1, "gearType": 2, "battleStatPack": "BCJNGGBAglkB…(base64)" },
+    { "result": 1, "gearType": 2, "battleStatPack": "…" },
+    { "result": 1, "gearType": 3, "battleStatPack": "…" }
+  ]
+}
+```
+解码后的单个分段（4 个回合的示例，已截断）：
+```json
+[
+  { "battleValue": {
+      "15567": { "state": { "2840": { "AwakerDoDamage": 7548 } },
+                 "skill": { "61121": { "AwakerDoDamage": 15094 } } } } },
+  { "battleValue": {
+      "1":     { "state": { "3255": { "AwakerDoDamage": 978 } },
+                 "skill": { "35502": { "AwakerDoHeal": 372 }, "4771": { "AwakerDoHeal": 185, "AwakerDoBlock": 185 } } },
+      "15567": { "utilSkill": { "61124": { "AwakerDoDamage": 52770 } },
+                 "skill": { "61119": { "AwakerDoDamage": 41248 }, "61122": { "AwakerDoDamage": 1068190, "AwakerDoHeal": 1702 } },
+                 "state": { "61145": { "AwakerDoDamage": 18000 } } } } }
+]
+```
+- 3 个分段的元素数为 4 + 9 + 11 = 24，正好等于 `stageRoundCount`；最后一段（`gearType` 3）11 个回合 = `bossBattleRoundCount`，即首领阶段。
+- 所有回合、所有技能 / 状态的 `AwakerDoDamage` 相加 = 41,417,888，与 H1 的各唤醒体伤害之和完全一致。
+- `skill`（技能牌）/ `utilSkill`（钥令或通用技能）/ `state`（持续伤害、增益等状态）下的数字键是技能 ID / 状态 ID，**没有名称对照**。
+
+**H3. 其他战斗字段**（`recordStageData`）：`maxBoutDamage`、`maxBoutUseCard`、`maxBoutEnergyCost`、`maxCounterAtt`、`maxTentacleDamage`、`maxStrength`、`maxPosion`、`maxHp`、`leftHp`、`deathResistCount`、`respawnedNum`、`totalUseCard`、`totalEnergyCost`；以及 `cards[]`（本场出过的牌：`tid`、等级、归属唤醒体 `awaker`、`stateList` 状态）。
+
+**目前站点用到的**：只有 H1 的总量和 H3 的汇总；H2 的分回合、分技能数据已经能解出，但没有技能 / 状态名称，所以无法展示「哪个技能打了多少」。
