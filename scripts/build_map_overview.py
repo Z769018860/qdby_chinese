@@ -6,13 +6,17 @@ Unreleased content (D-Zone periods after the current one, awakener events of not
 import json,re,sys,gzip,collections,argparse
 from pathlib import Path
 ap=argparse.ArgumentParser();ap.add_argument('dump');ap.add_argument('--repo',default='.');ap.add_argument('--max-dzone',type=int,default=0,help='0 = every period that has already started')
-ap.add_argument('--hide',default='薇薇安')
+ap.add_argument('--hide',default='')
 ap.add_argument('--include-future',action='store_true',help='also write unreleased content (hidden by the page until its unlock time `u`); it becomes publicly downloadable!')
 ap.add_argument('--unlock',action='append',default=[],help='TERM=ISO time: unlock time of content matching TERM (needed for --hide terms when --include-future)')
 a=ap.parse_args()
 D=Path(a.dump);R=Path(a.repo)
 import datetime
 UNLOCK={x.split('=',1)[0]:x.split('=',1)[1] for x in a.unlock if '=' in x}
+_uf=R/'scripts/data/map_unlocks.json'
+HOLD=[]
+if _uf.exists():
+    _u=json.load(open(_uf,encoding='utf-8')); UNLOCK={**_u.get('unlock',{}),**UNLOCK}; HOLD=_u.get('hold',[])
 # D-Zone period start times (SKeyDB list; later periods run every 14 days)
 _sk=json.load(open(R/'data/morimens/skeydb/dzone/index.json'))['seasons']
 _start={x['period']:x['start'] for x in _sk}
@@ -25,10 +29,11 @@ NOW=datetime.datetime.now(datetime.timezone.utc)
 def started(p): return datetime.datetime.fromisoformat(period_start(p).replace('Z','+00:00'))<=NOW
 L=lambda f:json.load(open(D/f))
 stages=L('stages.json');maps=L('maps.json');nodes=L('nodes.json');ntypes=L('node-types.json');battles=L('battles.json');mons=L('monsters.json');skills=L('skills.json');smd=L('stage-monster-data.json');sdiff=L('stage-difficulty.json');sdata=L('stage-data.json')
-hide=[x for x in a.hide.split(',') if x]
+hide=sorted({*[x for x in a.hide.split(',') if x],*UNLOCK,*HOLD})
 def cn(s): return s['config'].get('CnID','')
 def category(s):
     c=cn(s); n=s.get('name') or ''
+    if '疾驰的欢愉专列' in c: return ('记忆回廊','疾驰的欢愉专列'+('·V2' if 'V2' in c else ''),0)
     k=c.split('@',1)[-1] if '@' in c else c
     if c.startswith('关卡@融蚀深渊'):
         m=re.search(r'融蚀深渊(\d+)期',c); return ('融灾',f'第{int(m.group(1))}期' if m else '融灾',int(m.group(1)) if m else 0)
@@ -52,11 +57,20 @@ for s in stages:
     text=cn(s)+(s.get('name') or '')+str(s['config'].get('Desc',''))
     hit=[h for h in hide if h in text]
     if hit:
+        if any(h in HOLD and h not in UNLOCK for h in hit): continue            # release time unknown: never published
         if not (a.include_future and any(h in UNLOCK for h in hit)): continue
         u=UNLOCK[next(h for h in hit if h in UNLOCK)]
     if not (s['mapIds'] or s['nodeSequence']): continue
     kept.append((s,cat,sub,per)); unlock_of[s['id']]=u
 print('stages kept',len(kept),'of',len(stages))
+# ---- 记忆回廊 · 疾驰的欢愉专列 (MapType 3): node groups from train-stages.json ----
+train=None
+if (D/'train-stages.json').exists():
+    train=json.load(open(D/'train-stages.json'))['stages']
+    for ts in train:
+        st=next((x for x in stages if x['id']==ts['id']),None)
+        if st: kept.append((st,'记忆回廊','疾驰的欢愉专列'+('·V2' if 'V2' in cn(st) else ''),0)); unlock_of[st['id']]=None
+    trainIds={t['id'] for t in train}
 used_maps={m for s,_,_,_ in kept for m in s['mapIds']}
 nodeById={n['id']:n for n in nodes}
 mapById={m['id']:m for m in maps}
@@ -69,8 +83,27 @@ for mid in used_maps:
         for v in c['variants']: used_nodes.add(v['nodeId'])
 battleById={b['id']:b for b in battles}
 used_battles={nodeById[n]['battleConfigId'] for n in used_nodes if n in nodeById and nodeById[n].get('battleConfigId')}
+# train: dedupe node groups, collect battles
+tgroups={};tstage={};tbattles={}
+def _node(n):
+    bids=[]
+    for v in n.get('variants') or []:
+        b=v.get('battle')
+        if b: bids.append(b['id']); tbattles[b['id']]=b
+    ev=[(e['config'].get('Name','').split('|',1)[-1],e['config'].get('Desc','').split('|',1)[-1]) for e in n.get('events') or []]
+    return [n['typeId'],n['name'],bids]+([ev[0][0],ev[0][1]] if ev else [])
+def _grp(g):
+    if g['id'] not in tgroups: tgroups[g['id']]={'cn':g['cnId'].split('@')[-1],'nodes':[_node(n) for n in g['nodes']]}
+    return g['id']
+for ts in train or []:
+    segs=[]
+    for sg in ts['segments']:
+        G=sg['group']
+        if G['type']=='Direct': segs.append({'t':'D','cn':G['cnId'].split('@')[-1],'g':[_grp(G)]})
+        else: segs.append({'t':'P','cn':G['cnId'].split('@')[-1],'g':[_grp(o['group']) for o in G['options']]})
+    tstage[str(ts['id'])]=segs
 monById={m['id']:m for m in mons}
-used_mons={mo['monsterId'] for b in used_battles if b in battleById for mo in battleById[b]['monsters']}
+used_mons={mo['monsterId'] for b in used_battles if b in battleById for mo in battleById[b]['monsters']}|{mo['monsterId'] for b in tbattles.values() for mo in b['monsters']}
 skillById={s['id']:s for s in skills}
 used_skills={sid for m in used_mons if m in monById for sid in monById[m]['skillIds']}
 smd_ids={s['stageMonsterDataId'] for s,_,_,_ in kept if s.get('stageMonsterDataId')}
@@ -84,6 +117,7 @@ keptids={s['id'] for s,_,_,_ in kept}
 save_gz('stages',[s for s in stages if s['id'] in keptids]);save_gz('maps',[mapById[m] for m in used_maps if m in mapById])
 save_gz('nodes',[nodeById[n] for n in used_nodes if n in nodeById]);save_gz('node-types',ntypes);save_gz('battles',[battleById[b] for b in used_battles if b in battleById])
 save_gz('monsters',[monById[m] for m in used_mons if m in monById]);save_gz('skills',[skillById[x] for x in used_skills if x in skillById])
+if train: save_gz('train-stages',train)
 save_gz('stage-monster-data',[x for x in smd if x['id'] in smd_ids]);save_gz('stage-data',sdata)
 # ---- compact overview data ----
 outdir=R/'data/morimens/maps';outdir.mkdir(parents=True,exist_ok=True)
@@ -105,7 +139,7 @@ idx=[]
 for s,cat,sub,per in kept:
     cfg=s['config']
     idx.append({'id':s['id'],'n':s.get('name') or cn(s),'c':cat,'s':sub,'p':per or None,'lv':cfg.get('StageLevel'),'cn':cn(s),
-                'm':s['mapIds'] or None,'q':s['nodeSequence'] or None,'sm':s.get('stageMonsterDataId'),'ir':list((cfg.get('InitRelic') or {}).values()) or None,**({'u':unlock_of[s['id']]} if unlock_of.get(s['id']) else {})})
+                'm':s['mapIds'] or None,'q':s['nodeSequence'] or None,'sm':s.get('stageMonsterDataId'),'ir':list((cfg.get('InitRelic') or {}).values()) or None,**({'u':unlock_of[s['id']]} if unlock_of.get(s['id']) else {}),**({'t':1} if str(s['id']) in tstage else {})})
 idx.sort(key=lambda x:(x['c'],x['p'] or 0,x['s'],x['id']))
 def dump(name,obj): (outdir/name).write_text(json.dumps(obj,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
 dump('index.json',{'version':1,'generatedFrom':'local game client config dump (2026-10-12/13)','note':('unreleased content is included and hidden until its unlock time u' if a.include_future else 'unreleased content (later D-Zone periods, hidden awakener events) is not included'),
@@ -115,7 +149,9 @@ bt={}
 for b in sorted(used_battles):
     bb=battleById.get(b)
     if bb: bt[str(b)]=[bb['type'],[[m['monsterId'],m['position']] for m in bb['monsters']]]
+for b in tbattles.values(): bt[str(b['id'])]=[b['type'],[[m['monsterId'],m['position']] for m in b['monsters']]]
 dump('battles.json',bt)
+if train: dump('train.json',{'groups':{str(k):v for k,v in tgroups.items()},'stages':tstage})
 TAG=re.compile(r'<[A-Za-z_0-9]+:([^>]*)>')
 def clean(t):
     t=t or ''

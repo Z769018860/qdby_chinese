@@ -1,4 +1,4 @@
-// 全部地图视图（嵌在「融灾怪物图鉴」里）：游戏本地配置表中的全部（已上线）地图、战斗与怪物。数据：data/morimens/maps/*.json（scripts/build_map_overview.py 生成）
+// 全部地图视图（嵌在「地图怪物总览」里）：游戏本地配置表中的全部（已上线）地图、战斗与怪物。数据：data/morimens/maps/*.json（scripts/build_map_overview.py 生成）
 // 关卡带 u（解锁时间）时，到时间前不显示、到时间自动出现。
 (function(){
   const $=id=>document.getElementById(id);
@@ -6,10 +6,10 @@
   const ui=(cn,en)=>zh()?cn:en;
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/maps/';
-  const state={ready:false,loading:null,error:null,index:null,maps:null,battles:null,mons:null,stats:null,
+  const state={ready:false,loading:null,error:null,index:null,maps:null,battles:null,mons:null,stats:null,train:null,tpick:{},
     cat:'融灾',sub:'',q:'',limit:80,sel:null,mapPick:0,monSel:null,filtered:[],root:null,defPeriod:null,init:false};
-  const CATS=['融灾','主线','日常挑战','活动 / 支线','无光之境','尖塔模式','模拟战','其他'];
-  const CATEN={'融灾':'D-Zone','主线':'Main story','日常挑战':'Daily challenge','活动 / 支线':'Events / side stories','无光之境':'Lightless Realm','尖塔模式':'Spire mode','模拟战':'Simulation','其他':'Other'};
+  const CATS=['融灾','记忆回廊','主线','日常挑战','活动 / 支线','无光之境','尖塔模式','模拟战','其他'];
+  const CATEN={'融灾':'D-Zone','记忆回廊':'Memory Corridor','主线':'Main story','日常挑战':'Daily challenge','活动 / 支线':'Events / side stories','无光之境':'Lightless Realm','尖塔模式':'Spire mode','模拟战':'Simulation','其他':'Other'};
   // node type name -> [css kind, icon]
   const KIND={'战斗':['combat','combat'],'精英':['elite','elite'],'最终战':['boss','boss'],'事件':['event','event'],'剧情':['event','event'],
     '灰烬遗迹':['reward','ash-ruins'],'褪色遗骨':['reward','bones'],'黑印':['reward','black-seal'],'锈蚀钥匙':['mechanism','rusted-key'],'锈蚀门扉':['obstacle','locked-door'],
@@ -59,6 +59,10 @@
       .moStats{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0;color:#dbe4f0}.moStats b{color:#f1d69f}
       .moChain{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.moChain .moNode{position:relative;width:100px;height:100px}.moChain .arr{color:#8290a2}
       .moLegend{display:grid;gap:6px;color:#aab6c8;font-size:11.5px;margin-top:10px}.moLegend span{color:#8290a2}
+      .moTseg{margin:0 0 12px;padding:8px 10px;border:1px solid rgba(148,163,184,.16);border-radius:12px}.moTseg h5{margin:0 0 6px;font-size:13px;color:#d5b176}
+      .moTrow{display:flex;flex-wrap:wrap;gap:8px}.moTn{min-width:110px;max-width:170px;padding:6px 8px;border-radius:10px;background:#111827;border:1px solid rgba(148,163,184,.22);font-size:12px;color:#cbd5e1;display:grid;gap:4px;align-content:start}
+      .moTn small{color:#8290a2}.moTn.combat{border-color:rgba(248,113,113,.4)}.moTn.reward{border-color:rgba(213,177,118,.45)}.moTn.event{border-color:rgba(125,211,252,.4)}
+      .moTv{display:flex;align-items:center;gap:6px;padding:3px;border-radius:8px;cursor:pointer}.moTv:hover,.moTv.sel{background:rgba(213,177,118,.15)}.moTv .moNum{position:static}
       .moEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
       @media(max-width:860px){.moWrap{grid-template-columns:1fr}.moList{max-height:40vh}}`;
     document.head.appendChild(s);
@@ -67,8 +71,8 @@
   async function getJson(u){const r=await fetch(u,{cache:'no-cache'});if(!r.ok)throw new Error(u+': HTTP '+r.status);return r.json()}
   function load(){
     if(state.ready)return Promise.resolve();
-    if(!state.loading)state.loading=Promise.all([getJson(BASE+'index.json'),getJson(BASE+'maps.json'),getJson(BASE+'battles.json'),getJson(BASE+'monsters.json'),getJson(BASE+'stage-stats.json')])
-      .then(([i,m,b,mo,st])=>{state.index=i;state.maps=m;state.battles=b;state.mons=mo;state.stats=st;state.ready=true})
+    if(!state.loading)state.loading=Promise.all([getJson(BASE+'index.json'),getJson(BASE+'maps.json'),getJson(BASE+'battles.json'),getJson(BASE+'monsters.json'),getJson(BASE+'stage-stats.json'),getJson(BASE+'train.json').catch(()=>null)])
+      .then(([i,m,b,mo,st,tr])=>{state.index=i;state.maps=m;state.battles=b;state.mons=mo;state.stats=st;state.train=tr;state.ready=true})
       .catch(e=>{state.error=e;state.loading=null;throw e});
     return state.loading;
   }
@@ -131,6 +135,34 @@
     return {html:`<div class="moChain">${html}</div>`,battles:seq.map((nid,i)=>({n:i+1,bid:battleOf(nid),tid:state.maps.nodes[nid]?.[0]})).filter(x=>x.bid)};
   }
 
+  function trainView(st){
+    const segs=state.train?.stages?.[st.id];
+    if(!segs)return {html:`<div class="moEmpty">${ui('没有地图数据','No map data')}</div>`,battles:[]};
+    const battles=[];let n=0;
+    const nodeHtml=nd=>{
+      const [tid,name,bids,evn,evd]=nd,tn=typeName(tid)||name;
+      if(!bids.length){
+        const c=nodeCls(tid);
+        return `<div class="moTn ${esc(c.k)}" title="${esc(evd||typeDesc(tid))}"><b>${esc(evn||name)}</b><small>${esc(evn?tn:(c.n||tn))}</small></div>`;
+      }
+      const rows=bids.map(bid=>{
+        const ml=monsList(bid);n++;battles.push({n,bid,tid});
+        return `<div class="moTv${state.monSel?.bid===String(bid)?' sel':''}" data-bat="${bid}"><span class="moNum">${n}</span><span class="moMons">${ml.slice(0,4).map(([m])=>`<span title="${esc(monName(m))}">${monImg(m)}</span>`).join('')}</span></div>`;
+      }).join('');
+      return `<div class="moTn combat" title="${esc(typeDesc(tid))}"><b>${esc(bids.length>1?ui('随机战斗','Random battle')+' ×'+bids.length:tn)}</b>${rows}</div>`;
+    };
+    const html=segs.map((sg,i)=>{
+      let gid=sg.g[0],tabs='';
+      if(sg.t==='P'){
+        const k=Math.min(state.tpick[i]||0,sg.g.length-1);gid=sg.g[k];
+        tabs=`<div class="moTabs">${sg.g.map((g,j)=>`<button type="button" data-mo-tp="${i}:${j}" class="${j===k?'on':''}">${esc(state.train.groups[g].cn)}</button>`).join('')}</div>`;
+      }
+      const g=state.train.groups[gid];
+      return `<div class="moTseg"><h5>${i+1}. ${esc(sg.cn)}${sg.t==='P'?` <small class="moNote">${ui('从下列章节中随机进入其一','one of these chapters is picked at random')}</small>`:''}</h5>${tabs}<div class="moTrow">${g.nodes.map(nodeHtml).join('')}</div></div>`;
+    }).join('');
+    return {html:`<div class="moTrain">${html}</div>`,battles,items:[]};
+  }
+
   // ---------- monsters ----------
   const SK_PART={Attack:['攻击','Attack'],HeavyAttack:['重击','Heavy attack'],Defence:['防御','Defend'],Buff:['强化','Buff'],Debuff:['削弱','Debuff'],StrongBuff:['大幅强化','Strong buff'],StrongDebuff:['大幅削弱','Strong debuff'],Burst:['爆发','Burst'],Burst2:['爆发Ⅱ','Burst II'],Burst3:['爆发Ⅲ','Burst III'],Unknown:['未知','Unknown']};
   function skType(t){
@@ -163,7 +195,8 @@
     const st=currentStage();
     if(!st)return `<div class="moEmpty">${ui('在左侧选择一个关卡查看地图与怪物。','Pick a stage on the left to see its map and monsters.')}</div>`;
     let view,tabs='';
-    if(st.m&&st.m.length){
+    if(st.t)view=trainView(st);
+    else if(st.m&&st.m.length){
       if(state.mapPick>=st.m.length)state.mapPick=0;
       if(st.m.length>1)tabs=`<div class="moTabs">${st.m.map((id,i)=>`<button type="button" data-mo-map="${i}" class="${i===state.mapPick?'on':''}">${ui('地图','Map')} ${i+1}</button>`).join('')}</div>`;
       view=mapView(String(st.m[state.mapPick]));
@@ -183,7 +216,7 @@
   }
   function listHtml(){
     const shown=state.filtered.slice(0,state.limit);
-    return shown.map(s=>`<button type="button" class="moItem${s.id===state.sel?' on':''}" data-mo-stage="${s.id}">${esc(s.n)}<small>${esc(s.s||catLabel(s.c))} · Lv ${s.lv??'—'} · ${s.m?ui('地图','map')+' '+s.m.length:ui('线性节点','linear')}</small></button>`).join('')
+    return shown.map(s=>`<button type="button" class="moItem${s.id===state.sel?' on':''}" data-mo-stage="${s.id}">${esc(s.n)}<small>${esc(s.s||catLabel(s.c))} · Lv ${s.lv??'—'} · ${s.t?ui('列车路线','train route'):s.m?ui('地图','map')+' '+s.m.length:ui('线性节点','linear')}</small></button>`).join('')
       +(state.filtered.length>shown.length?`<button type="button" class="moMore" data-mo-more>${ui('显示更多','Show more')}（${state.filtered.length-shown.length}）</button>`:'')
       ||`<div class="moEmpty">${ui('没有符合条件的关卡','No stages match')}</div>`;
   }
@@ -211,6 +244,7 @@
     host.addEventListener('click',e=>{
       const st=e.target.closest('[data-mo-stage]');if(st){state.sel=Number(st.dataset.moStage);state.mapPick=0;state.monSel=null;renderList();renderStage();return}
       if(e.target.closest('[data-mo-more]')){state.limit+=120;renderList();return}
+      const tp=e.target.closest('[data-mo-tp]');if(tp){const[a,b]=tp.dataset.moTp.split(':').map(Number);state.tpick[a]=b;state.monSel=null;renderStage();return}
       const mp=e.target.closest('[data-mo-map]');if(mp){state.mapPick=Number(mp.dataset.moMap);state.monSel=null;renderStage();return}
       const mon=e.target.closest('[data-mon]');if(mon){state.monSel={mid:mon.dataset.mon,bid:mon.dataset.bat};renderStage();return}
       const bat=e.target.closest('[data-bat]');if(bat){const bid=bat.dataset.bat,first=state.battles[bid]?.[1]?.[0]?.[0];if(first){state.monSel={mid:String(first),bid};renderStage()}}

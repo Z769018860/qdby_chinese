@@ -114,6 +114,7 @@ Kaiden.gg 英文意图文本的中文译文：`scripts/build_kaiden_zh.py` 按�
 ## 地图总览（游戏客户端配置表）
 
 - 数据：`data/morimens/local-config/`（筛选后的原始配置表，gzip）与 `data/morimens/maps/`（页面用的精简数据），由 `scripts/build_map_overview.py` 从维护者提供的客户端配置导出生成，说明见 `data/morimens/local-config/README.md`。
-- 页面：「融灾怪物图鉴」标签里的「全部地图（可筛选）」视图（`morimens-map-overview.js`）：默认显示融灾当期地图，可按分类 / 子类 / 关键字筛选关卡，查看地图格位、节点说明、每场战斗的怪物与技能。
+- 页面：「地图怪物总览」标签里的「全部地图（可筛选）」视图（`morimens-map-overview.js`）：默认显示融灾当期地图，可按分类 / 子类 / 关键字筛选关卡，查看地图格位、节点说明、每场战斗的怪物与技能。
+- 记忆回廊「疾驰的欢愉专列」（含V2）按路线展示：阶段 → 章节选项 → 随机战斗/事件/奖励节点（`data/morimens/maps/train.json`）。
 - 未上线内容默认不收录。生成时加 `--include-future`（未发布唤醒体的活动另需 `--unlock 关键词=时间`）会把它们写进数据并带上解锁时间 `u`，页面在该时间之前不显示、到点自动出现——注意这些文件在仓库里是公开的。
 - 融灾第 71 期的战斗节点与怪物另见 `scripts/convert_map_local.mjs`、`scripts/import_battle_nodes_local.mjs`。
