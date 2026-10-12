@@ -1189,7 +1189,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords,validateCandidate:validateCommunityCandidate,getRecordState:communityCurrentRecordState};
 
   // report images (newspaper-style special issue) linked under the Season 70 leaderboard
-  const REPORTS={70:{title:['融灾第70期终榜特刊','Season 70 final report'],pages:[['第1版 · 总览','Page 1 · Overview'],['第2版 · 各禁区配队榜','Page 2 · Top teams by zone'],['第3版 · 数据之最与出场榜','Page 3 · Records & usage'],['第4版 · 小众数据','Page 4 · Niche data']],path:n=>`assets/morimens/reports/s70-page${n}.webp?v=20261012`}};
+  const REPORTS={70:{title:['融灾第70期终榜特刊','Season 70 final report'],pages:[['第1版 · 总览','Page 1 · Overview'],['第2版 · 各禁区配队榜','Page 2 · Top teams by zone'],['第3版 · 数据之最与出场榜','Page 3 · Records & usage'],['第4版 · 小众数据','Page 4 · Niche data'],['第5版 · 启灵榜','Page 5 · Enlightenment']],path:n=>`assets/morimens/reports/s70-page${n}.webp?v=20261012b`}};
   function renderReports(){
     const host=$('dtideReports');if(!host)return;
     const id=Number(activeSeasonEntry?.snapshotId?null:activeSeasonEntry?.seasonId),cfg=REPORTS[id];
