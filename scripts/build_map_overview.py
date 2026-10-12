@@ -154,13 +154,12 @@ dump('battles.json',bt)
 if train: dump('train.json',{'groups':{str(k):v for k,v in tgroups.items()},'stages':tstage})
 TAG=re.compile(r'<[A-Za-z_0-9]+:([^>]*)>')
 def clean(t):
+    """description template: every [..:ArgN] / [ArgN] placeholder becomes {N}; the client fills it from the skill's Para formulas"""
     t=t or ''
-    t=re.sub(r'<Damage:\[Damage:Arg\d\]>','X',t)          # damage numbers are template placeholders in the client tables
+    t=re.sub(r'<[A-Za-z_0-9]+:\[[A-Za-z]+:Arg(\d)\]>',r'{\1}',t)           # <Damage:[Damage:Arg1]>
     t=TAG.sub(r'\1',t)
-    t=re.sub(r'\[AttackTimes:Arg\d\]','N',t)
-    t=re.sub(r'\[(?:Damage|Block|Power|TentaclePower|Heal|Layer)[A-Za-z]*:Arg\d\]','X',t)
-    t=re.sub(r'\[[A-Za-z]+:Arg\d\]','X',t)
-    t=re.sub(r'\[Arg\d\]','X',t)
+    t=re.sub(r'\[[A-Za-z]+:Arg(\d)\]',r'{\1}',t)
+    t=re.sub(r'\[Arg(\d)\]',r'{\1}',t)
     return re.sub(r'<[^>]*>','',t)
 mo={}
 for m in sorted(used_mons):
@@ -173,7 +172,7 @@ for m in sorted(used_mons):
 sk={}
 for sid in sorted(used_skills):
     x=skillById.get(sid)
-    if x: sk[str(sid)]=[clean(x['description']),list((x.get('types') or {}).values())]
+    if x: sk[str(sid)]=[clean(x['description']),list((x.get('types') or {}).values()),str(x['config'].get('Para') or '')]
 dump('monsters.json',{'monsters':mo,'skills':sk})
 smdo={}
 for x in smd:

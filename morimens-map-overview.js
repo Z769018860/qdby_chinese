@@ -172,21 +172,71 @@
     const parts=k.match(/(Heavy)?Attack|Defence|Debuff|Buff|Burst\d?|Strong|Unknown/g);
     return parts?parts.map(x=>SK_PART[x]?ui(...SK_PART[x]):x).join('·'):k;
   }
-  function monDetail(mid,stage){
-    const m=state.mons.monsters[mid];if(!m)return '';
-    const cls=CLS[m.c]||[m.c||'',m.c||''];
-    let stats='';
-    const sm=stage?.sm&&state.stats[stage.sm];
-    if(sm){
-      const hit=Object.values(sm).find(x=>x[4]===m.bt)||null;
-      if(hit)stats=`<div class="moStats"><span>Lv <b>${hit[0]}</b></span><span>${ui('生命','HP')} <b>${Math.round((hit[1]||0)*(m.hp||1)).toLocaleString()}</b></span><span>${ui('攻击','ATK')} <b>${Math.round((hit[2]||0)*(m.atk??1))}</b></span><span>${ui('防御','DEF')} <b>${Math.round((hit[3]||0)*(m.df??0))}</b></span><span class="moNote">${ui('按本关数值模板估算','estimated from the stage template')}</span></div>`;
+  // ---- numbers: skill Para formulas (BattleAtkForce*0.8 ...) evaluated with the stage's ATK / DEF / HP template ----
+  const fmtN=n=>Math.round(n).toLocaleString('en-US');
+  function splitTop(str){const out=[];let d=0,cur='';for(const ch of str){if(ch==='('){d++}else if(ch===')'){d--}if(ch===','&&d===0){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out}
+  function evalExpr(e,c){
+    let unk=false,layer=false;
+    let s=String(e).trim();
+    if(!s)return null;
+    s=s.replace(/CmdCaster\.GetStateLayer\([^)]*\)/g,()=>{layer=true;return '0'})
+       .replace(/PlayerRole\.GetStateLayer\([^)]*\)|HandDeck\.[A-Za-z.]*\([^)]*\)(\.CardCount)?|HandDeck\.CardCount|PlayerRole\.[a-z_]+|GetStagePower\(\)|CmdCaster\.hp\b/g,()=>{unk=true;return '0'})
+       .replace(/BattleAtkForce|CmdCaster\.atk/g,'A').replace(/BattleDefForce|CmdCaster\.def/g,'D').replace(/CmdCaster\.max_hp/g,'H').replace(/math\./g,'Math.');
+    if(unk||!/^[\dADH+\-*/().,\sMathfloorceilmaxin]*$/.test(s))return null;
+    try{const v=Function('A','D','H','"use strict";return ('+s+')')(c.atk,c.def,c.hp);if(!Number.isFinite(v))return null;return {v,layer}}catch{return null}
+  }
+  function skillText(id,c){
+    const sk=state.mons.skills[id];if(!sk)return '';
+    const args=c?splitTop(sk[2]||'').map(x=>evalExpr(x,c)):[];
+    return sk[0].replace(/\{(\d)\}/g,(m,k)=>{const r=args[Number(k)-1];return r?fmtN(r.v)+(r.layer?'+':''):'X'});
+  }
+  // stat context of a monster: ATK / DEF / HP from the stage's monster template (matched by battle tag and level)
+  function monCtx(m,o){
+    if(!m||!state.stats)return null;
+    o=o||{};let hit=null;
+    const mk=x=>({lv:x[0],hp:(x[1]||0)*(m.hp||1),atk:(x[2]||0)*(m.atk??1),def:(x[3]||0)*(m.df??0)});
+    if(!o.sm&&o.cn){const st=state.index.stages.find(x=>x.cn===o.cn);if(st)o.sm=st.sm}
+    if(o.sm&&state.stats[o.sm])hit=Object.values(state.stats[o.sm]).find(x=>x[4]===m.bt&&(o.level==null||x[0]===o.level))||Object.values(state.stats[o.sm]).find(x=>x[4]===m.bt);
+    if(hit)return mk(hit);
+    if(o.level==null)return null;
+    if(!state.smPeriod){state.smPeriod=new Map();for(const s of state.index.stages)if(s.sm&&!state.smPeriod.has(s.sm))state.smPeriod.set(s.sm,s.p||0)}
+    let best=null,bd=1e9;
+    for(const [sm,tab] of Object.entries(state.stats))for(const x of Object.values(tab)){
+      if(x[4]!==m.bt||x[0]!==o.level)continue;
+      const d=o.period?Math.abs((state.smPeriod.get(Number(sm))||0)-o.period):0;
+      if(d<bd){bd=d;best=x}
     }
-    const seen=new Set(),skills=(m.sk||[]).filter(id=>state.mons.skills[id]&&!seen.has(id)&&seen.add(id)).map(id=>{
-      const [d,ty]=state.mons.skills[id],t=skType(ty?.[0]);
-      return `<li><span class="ty">${esc(t)}</span> ${esc(d)}</li>`;
-    }).join('');
-    const loop=(m.cy||[]).map(id=>skType(state.mons.skills[id]?.[1]?.[0])||'?').join(' → ');
-    return `<div class="moDetail"><h4>${esc(m.n)} <small class="moNote">${esc(ui(cls[0],cls[1]))}${m.b?' · '+esc(m.b):''} · #${mid}</small></h4><p>${esc(m.d)}</p>${stats}${loop?`<p><b>${ui('行动循环','Action loop')}</b>：${esc(loop)}</p>`:''}<ul>${skills}</ul></div>`;
+    return best?mk(best):null;
+  }
+  function monIntent(mid,o){
+    const m=state.mons.monsters[mid];if(!m)return null;
+    const c=monCtx(m,o),seen=new Set(),all=(m.sk||[]).filter(id=>state.mons.skills[id]&&!seen.has(id)&&seen.add(id));
+    const cyc=(m.cy||[]).filter(id=>state.mons.skills[id]),opening=new Set(m.op||[]);
+    const row=id=>{const sk=state.mons.skills[id];return {id,type:skType(sk[1]?.[0]),text:skillText(id,c),opening:opening.has(id)&&!cyc.includes(id)}};
+    return {mid,m,ctx:c,rotation:cyc.map(row),skills:all.map(row)};
+  }
+  const statsHtml=c=>c?`<div class="moStats"><span>Lv <b>${c.lv}</b></span><span>${ui('生命','HP')} <b>${fmtN(c.hp)}</b></span><span>${ui('攻击','ATK')} <b>${fmtN(c.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmtN(c.def)}</b></span></div>`:'';
+  function monDetail(mid,stage){
+    const it=monIntent(mid,{sm:stage?.sm,period:stage?.p});if(!it)return '';
+    const m=it.m,cls=CLS[m.c]||[m.c||'',m.c||''];
+    const loop=it.rotation.map(r=>r.type||'?').join(' → ');
+    const li=r=>`<li><span class="ty">${esc(r.type)}</span>${r.opening?` <small class="moNote">${ui('开场','Opening')}</small>`:''} ${esc(r.text)}</li>`;
+    return `<div class="moDetail"><h4>${esc(m.n)} <small class="moNote">${esc(ui(cls[0],cls[1]))}${m.b?' · '+esc(m.b):''} · #${mid}</small></h4><p>${esc(m.d)}</p>${statsHtml(it.ctx)}${loop?`<p><b>${ui('行动循环','Action loop')}</b>：${esc(loop)}</p>`:''}${it.rotation.length?`<ol class="moRot">${it.rotation.map(li).join('')}</ol>`:''}<ul>${it.skills.filter(r=>!it.rotation.some(x=>x.id===r.id)).map(li).join('')}</ul></div>`;
+  }
+  // used by the D-Zone guide when a monster has no intent data of its own: find the client monster by Chinese name
+  async function intentByName(names,o){
+    try{await load()}catch{return null}
+    if(!state.nameIdx){state.nameIdx=new Map();for(const [id,m] of Object.entries(state.mons.monsters)){const k=String(m.n||'').replace(/[「」『』\s]/g,'');if(!state.nameIdx.has(k))state.nameIdx.set(k,[]);state.nameIdx.get(k).push(id)}}
+    if(o&&o.period&&o.wi!=null&&o.ai!=null){   // seasons with 7 threat levels (C..▼) have one client stage per zone / level: letters A..G
+      const L='ABCDEFG'[o.ai],cn=`关卡@融蚀深渊${o.period}期${L}${o.wi+1}`;
+      if(L&&state.index.stages.some(x=>x.cn===`关卡@融蚀深渊${o.period}期G1`)&&state.index.stages.some(x=>x.cn===cn))o={...o,cn};
+    }
+    for(const nm of names||[]){
+      const ids=state.nameIdx.get(String(nm||'').replace(/[「」『』\s]/g,''));if(!ids)continue;
+      const its=ids.map(id=>monIntent(id,o)).filter(Boolean);
+      const hit=its.find(x=>x.ctx)||its[0];if(hit)return hit;
+    }
+    return null;
   }
 
   // ---------- main render ----------
@@ -266,6 +316,6 @@
       try{await load()}catch(e){el.innerHTML=`<div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div>`;return}}
     pickDefault();renderShell();bind();refresh();renderStage();
   }
-  window.MorimensMapOverview={mount};
+  window.MorimensMapOverview={mount,intentByName,skType};
   window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();
