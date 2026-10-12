@@ -1,0 +1,399 @@
+{
+  "season": 71,
+  "source": "Morimens Steam local client: Config.MapNode.Effect[1] -> Config.BattleConfig",
+  "battleNodes": [
+    {
+      "zone": 1,
+      "x": 10,
+      "y": 6,
+      "nodeId": 85534,
+      "battleConfigId": 88442,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 72144,
+          "position": 1,
+          "name": "灰烬融蚀体"
+        },
+        {
+          "id": 56172,
+          "position": 5,
+          "name": "追随者"
+        },
+        {
+          "id": 22337,
+          "position": 9,
+          "name": "离弃之人"
+        }
+      ]
+    },
+    {
+      "zone": 1,
+      "x": 8,
+      "y": 5,
+      "nodeId": 85889,
+      "battleConfigId": 87708,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 59749,
+          "position": 1,
+          "name": "异维学子"
+        },
+        {
+          "id": 72142,
+          "position": 5,
+          "name": "灰烬融蚀体"
+        },
+        {
+          "id": 56173,
+          "position": 9,
+          "name": "渴求者"
+        }
+      ]
+    },
+    {
+      "zone": 1,
+      "x": 6,
+      "y": 4,
+      "nodeId": 85205,
+      "battleConfigId": 88100,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14111,
+          "position": 1,
+          "name": "提灯"
+        },
+        {
+          "id": 34679,
+          "position": 5,
+          "name": "「几何体」"
+        },
+        {
+          "id": 14049,
+          "position": 9,
+          "name": "脓疱"
+        }
+      ]
+    },
+    {
+      "zone": 1,
+      "x": 8,
+      "y": 4,
+      "nodeId": 86005,
+      "battleConfigId": 88064,
+      "battleType": "Boss",
+      "monsters": [
+        {
+          "id": 80576,
+          "position": 1,
+          "name": "残酷的「父亲」"
+        },
+        {
+          "id": 80577,
+          "position": 6,
+          "name": "沉默的「母亲」"
+        }
+      ]
+    },
+    {
+      "zone": 2,
+      "x": 5,
+      "y": 7,
+      "nodeId": 85420,
+      "battleConfigId": 87216,
+      "battleType": "Elite",
+      "monsters": [
+        {
+          "id": 94717,
+          "position": 1,
+          "name": "食尸鬼护卫"
+        }
+      ]
+    },
+    {
+      "zone": 2,
+      "x": 8,
+      "y": 7,
+      "nodeId": 86243,
+      "battleConfigId": 88345,
+      "battleType": "Boss",
+      "monsters": [
+        {
+          "id": 94940,
+          "position": -7,
+          "name": "「王邸管家」弗兰"
+        }
+      ]
+    },
+    {
+      "zone": 2,
+      "x": 10,
+      "y": 7,
+      "nodeId": 85032,
+      "battleConfigId": 87847,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 94944,
+          "position": 1,
+          "name": "墓穴督工"
+        },
+        {
+          "id": 94718,
+          "position": 6,
+          "name": "食尸鬼侍从"
+        }
+      ]
+    },
+    {
+      "zone": 2,
+      "x": 4,
+      "y": 5,
+      "nodeId": 85911,
+      "battleConfigId": 87353,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 59750,
+          "position": 1,
+          "name": "「小蜜蜂」"
+        },
+        {
+          "id": 59749,
+          "position": -3,
+          "name": "异维学子"
+        },
+        {
+          "id": 72142,
+          "position": 7,
+          "name": "灰烬融蚀体"
+        },
+        {
+          "id": 94654,
+          "position": 11,
+          "name": "腐尸分殖体"
+        }
+      ]
+    },
+    {
+      "zone": 2,
+      "x": 9,
+      "y": 5,
+      "nodeId": 85916,
+      "battleConfigId": 88397,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14050,
+          "position": 1,
+          "name": "脓疱"
+        },
+        {
+          "id": 94654,
+          "position": 5,
+          "name": "腐尸分殖体"
+        },
+        {
+          "id": 94715,
+          "position": 9,
+          "name": "食尸鬼侍从"
+        }
+      ]
+    },
+    {
+      "zone": 2,
+      "x": 7,
+      "y": 4,
+      "nodeId": 86441,
+      "battleConfigId": 88108,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14081,
+          "position": 4,
+          "name": "吟诵者"
+        },
+        {
+          "id": 36008,
+          "position": -9,
+          "name": "「阿戈纳斯」"
+        }
+      ]
+    },
+    {
+      "zone": 4,
+      "x": 2,
+      "y": 5,
+      "nodeId": 86806,
+      "battleConfigId": 87612,
+      "battleType": "Elite",
+      "monsters": [
+        {
+          "id": 14084,
+          "position": 5,
+          "name": "维度猎手"
+        }
+      ]
+    },
+    {
+      "zone": 4,
+      "x": 4,
+      "y": 5,
+      "nodeId": 85751,
+      "battleConfigId": 87478,
+      "battleType": "Elite",
+      "monsters": [
+        {
+          "id": 14054,
+          "position": 5
+        }
+      ]
+    },
+    {
+      "zone": 4,
+      "x": 7,
+      "y": 5,
+      "nodeId": 86059,
+      "battleConfigId": 88099,
+      "battleType": "Boss",
+      "monsters": [
+        {
+          "id": 14063,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "zone": 5,
+      "x": 7,
+      "y": 6,
+      "nodeId": 85055,
+      "battleConfigId": 88101,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14093,
+          "position": 1,
+          "name": "维度碎片"
+        },
+        {
+          "id": 14111,
+          "position": -3,
+          "name": "提灯"
+        },
+        {
+          "id": 13957,
+          "position": 7,
+          "name": "融蚀人型"
+        },
+        {
+          "id": 14080,
+          "position": 11,
+          "name": "简单习作Ⅱ"
+        }
+      ]
+    },
+    {
+      "zone": 5,
+      "x": 9,
+      "y": 6,
+      "nodeId": 85871,
+      "battleConfigId": 87499,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14079,
+          "position": 3,
+          "name": "实验习作Ⅰ"
+        },
+        {
+          "id": 13992,
+          "position": 7,
+          "name": "碎石工"
+        }
+      ]
+    },
+    {
+      "zone": 5,
+      "x": 3,
+      "y": 5,
+      "nodeId": 86564,
+      "battleConfigId": 87066,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14085,
+          "position": 1,
+          "name": "蜡像护工"
+        },
+        {
+          "id": 14096,
+          "position": -3,
+          "name": "蜡像医生"
+        },
+        {
+          "id": 13992,
+          "position": 7,
+          "name": "碎石工"
+        },
+        {
+          "id": 22336,
+          "position": 11,
+          "name": "谵妄之人"
+        }
+      ]
+    },
+    {
+      "zone": 5,
+      "x": 4,
+      "y": 5,
+      "nodeId": 86461,
+      "battleConfigId": 87788,
+      "battleType": "Boss",
+      "monsters": [
+        {
+          "id": 81279,
+          "position": 8,
+          "name": "「知者」"
+        }
+      ]
+    },
+    {
+      "zone": 5,
+      "x": 3,
+      "y": 4,
+      "nodeId": 86286,
+      "battleConfigId": 87690,
+      "battleType": "Common",
+      "monsters": [
+        {
+          "id": 14098,
+          "position": 2,
+          "name": "执妄者"
+        }
+      ]
+    },
+    {
+      "zone": 5,
+      "x": 10,
+      "y": 2,
+      "nodeId": 85353,
+      "battleConfigId": 87391,
+      "battleType": "Elite",
+      "monsters": [
+        {
+          "id": 13963,
+          "position": 2,
+          "name": "大裙摆"
+        },
+        {
+          "id": 14056,
+          "position": -9,
+          "name": "高礼帽"
+        }
+      ]
+    }
+  ]
+}
