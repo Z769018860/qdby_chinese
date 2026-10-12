@@ -185,10 +185,27 @@
     if(unk||!/^[\dADH+\-*/().,\sMathfloorceilmaxin]*$/.test(s))return null;
     try{const v=Function('A','D','H','"use strict";return ('+s+')')(c.atk,c.def,c.hp);if(!Number.isFinite(v))return null;return {v,layer}}catch{return null}
   }
+  // formula that cannot be evaluated (depends on the player's HP / hand / stacks): shown readably with ATK / DEF / HP filled in
+  function formulaText(e,c){
+    let s=String(e).trim();if(!s)return 'X';
+    const n=v=>c?fmtN(v):null;
+    s=s.replace(/CmdCaster\.GetStateLayer\([^)]*\)/g,'〔层数〕').replace(/PlayerRole\.GetStateLayer\([^)]*\)/g,'〔玩家层数〕')
+       .replace(/HandDeck\.GetCardListByState\([^)]*\)\.CardCount/g,'〔指定卡牌数〕').replace(/HandDeck\.CardCount/g,'〔手牌数〕')
+       .replace(/PlayerRole\.max_hp/g,'〔玩家最大生命〕').replace(/PlayerRole\.hp/g,'〔玩家当前生命〕').replace(/PlayerRole\.block/g,'〔玩家护盾〕')
+       .replace(/GetStagePower\(\)/g,'〔关卡强度〕').replace(/CmdCaster\.max_hp/g,c?fmtN(c.hp):'〔生命〕').replace(/CmdCaster\.hp/g,'〔当前生命〕')
+       .replace(/BattleAtkForce|CmdCaster\.atk/g,c?fmtN(c.atk):'〔攻击〕').replace(/BattleDefForce|CmdCaster\.def/g,c?fmtN(c.def):'〔防御〕')
+       .replace(/math\.(floor|ceil)/g,'').replace(/math\.max/g,'最大').replace(/math\.min/g,'最小').replace(/\*/g,'×');
+    return '〔'+s.replace(/〔|〕/g,'')+'〕';
+  }
   function skillText(id,c){
     const sk=state.mons.skills[id];if(!sk)return '';
-    const args=c?splitTop(sk[2]||'').map(x=>evalExpr(x,c)):[];
-    return sk[0].replace(/\{(\d)\}/g,(m,k)=>{const r=args[Number(k)-1];return r?fmtN(r.v)+(r.layer?'+':''):'X'});
+    const parts=splitTop(sk[2]||'');
+    return sk[0].replace(/\{(\d)\}/g,(m,k,off,str)=>{const nx0=str.slice(off+3).trim()[0],nx='';
+      const e=parts[Number(k)-1],r=c&&e!=null?evalExpr(e,c):null;
+      if(r)return fmtN(r.v)+(r.layer?'+':'')+nx;
+      if(e==null||String(e).trim()==='')return nx0==='次'?'1':'X';   // no parameter: hit count defaults to 1
+      return formulaText(e,c)+nx;
+    });
   }
   // stat context of a monster: ATK / DEF / HP from the stage's monster template (matched by battle tag and level)
   function monCtx(m,o){

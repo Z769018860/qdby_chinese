@@ -105,6 +105,16 @@ for ts in train or []:
 monById={m['id']:m for m in mons}
 used_mons={mo['monsterId'] for b in used_battles if b in battleById for mo in battleById[b]['monsters']}|{mo['monsterId'] for b in tbattles.values() for mo in b['monsters']}
 skillById={s['id']:s for s in skills}
+# monsters that no stage refers to (old / story / spare ones) are added too, so the guide can look any monster up by name;
+# monsters used only by stages that are held back stay out
+_all_nodes=set(); 
+for _s in stages: _all_nodes.update(_s['nodeSequence'])
+for _m in maps:
+    for _c in _m['cells']:
+        for _v in _c['variants']: _all_nodes.add(_v['nodeId'])
+_ref_b={nodeById[n]['battleConfigId'] for n in _all_nodes if n in nodeById and nodeById[n].get('battleConfigId')}
+_ref_m={mo['monsterId'] for b in _ref_b if b in battleById for mo in battleById[b]['monsters']}|{mo['monsterId'] for b in tbattles.values() for mo in b['monsters']}
+used_mons|={m['id'] for m in mons if m['id'] not in _ref_m}
 used_skills={sid for m in used_mons if m in monById for sid in monById[m]['skillIds']}
 smd_ids={s['stageMonsterDataId'] for s,_,_,_ in kept if s.get('stageMonsterDataId')}
 print('maps',len(used_maps),'nodes',len(used_nodes),'battles',len(used_battles),'monsters',len(used_mons),'skills',len(used_skills))
