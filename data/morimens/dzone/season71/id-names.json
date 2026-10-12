@@ -382,7 +382,8 @@
   "98378": "Safe Passage+",
   "98397": "Chronometric Device+",
   "83512": "Chaos Ring",
-  "71258": "Dimensional Image: Uvhash"
+  "71258": "Dimensional Image: Uvhash",
+  "13886": "☆Lady's Purse☆"
  },
  "token": {
   "10065": "Tiny Wish",
@@ -1035,7 +1036,7 @@
    "madness": 96
   }
  },
- "_note": "id->name dictionaries carried over from the Season 70 import; Season 71 additions: Chaos Ring (83512) and Dimensional Image: Uvhash (71258) named from the game config; token 45298 = Pages Ever New (Ogier: Oathbound posse, SKeyDB posse-0063); creation 13886 has no known name and renders as #id. Stage ids/madness follow the stage-name pattern (A=C ... F=SSS, G=▼); 153398 (Zone 1 ▼) is not in the client stage dump.",
+ "_note": "id->name dictionaries carried over from the Season 70 import; Season 71 additions: Chaos Ring (83512) and Dimensional Image: Uvhash (71258) named from the game config; token 45298 = Pages Ever New (Ogier: Oathbound posse, SKeyDB posse-0063); creation 13886 = ☆Lady's Purse☆ (identified by the maintainer from the game; appears only in Zone 2). Stage ids/madness follow the stage-name pattern (A=C ... F=SSS, G=▼); 153398 (Zone 1 ▼) is not in the client stage dump.",
  "_inferred": {
   "wheel": {
    "9550": "Aged — by elimination: main stat Crit DMG (attrId 18105, R rarity) and the only other R Crit DMG wheel, Suction, is tid 9531"
