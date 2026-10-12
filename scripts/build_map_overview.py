@@ -5,9 +5,24 @@ Writes data/morimens/local-config/*.json.gz (filtered raw tables) and data/morim
 Unreleased content (D-Zone periods after the current one, awakener events of not yet released awakeners) is left out on purpose."""
 import json,re,sys,gzip,collections,argparse
 from pathlib import Path
-ap=argparse.ArgumentParser();ap.add_argument('dump');ap.add_argument('--repo',default='.');ap.add_argument('--max-dzone',type=int,default=71)
-ap.add_argument('--hide',default='薇薇安');a=ap.parse_args()
+ap=argparse.ArgumentParser();ap.add_argument('dump');ap.add_argument('--repo',default='.');ap.add_argument('--max-dzone',type=int,default=0,help='0 = every period that has already started')
+ap.add_argument('--hide',default='薇薇安')
+ap.add_argument('--include-future',action='store_true',help='also write unreleased content (hidden by the page until its unlock time `u`); it becomes publicly downloadable!')
+ap.add_argument('--unlock',action='append',default=[],help='TERM=ISO time: unlock time of content matching TERM (needed for --hide terms when --include-future)')
+a=ap.parse_args()
 D=Path(a.dump);R=Path(a.repo)
+import datetime
+UNLOCK={x.split('=',1)[0]:x.split('=',1)[1] for x in a.unlock if '=' in x}
+# D-Zone period start times (SKeyDB list; later periods run every 14 days)
+_sk=json.load(open(R/'data/morimens/skeydb/dzone/index.json'))['seasons']
+_start={x['period']:x['start'] for x in _sk}
+_last=max(_start)
+def period_start(p):
+    if p in _start: return _start[p]
+    t=datetime.datetime.fromisoformat(_start[_last].replace('Z','+00:00'))+datetime.timedelta(days=14*(p-_last))
+    return t.strftime('%Y-%m-%dT%H:%M:%SZ')
+NOW=datetime.datetime.now(datetime.timezone.utc)
+def started(p): return datetime.datetime.fromisoformat(period_start(p).replace('Z','+00:00'))<=NOW
 L=lambda f:json.load(open(D/f))
 stages=L('stages.json');maps=L('maps.json');nodes=L('nodes.json');ntypes=L('node-types.json');battles=L('battles.json');mons=L('monsters.json');skills=L('skills.json');smd=L('stage-monster-data.json');sdiff=L('stage-difficulty.json');sdata=L('stage-data.json')
 hide=[x for x in a.hide.split(',') if x]
@@ -25,14 +40,22 @@ def category(s):
     if '支线' in k or '活动' in k or '复刻' in k:
         m=re.match(r'^(.+?)(?:活动|复刻|支线)',k); return ('活动 / 支线',(m.group(1) if m else '').replace('关卡组@',''),0)
     return ('其他','',0)
-kept=[]
+kept=[]; unlock_of={}
 for s in stages:
     cat,sub,per=category(s)
-    if cat=='融灾' and per>a.max_dzone: continue
+    u=None
+    if cat=='融灾' and per:
+        future=(per>a.max_dzone) if a.max_dzone else (not started(per))
+        if future:
+            if not a.include_future: continue
+            u=period_start(per)
     text=cn(s)+(s.get('name') or '')+str(s['config'].get('Desc',''))
-    if any(h in text for h in hide): continue
+    hit=[h for h in hide if h in text]
+    if hit:
+        if not (a.include_future and any(h in UNLOCK for h in hit)): continue
+        u=UNLOCK[next(h for h in hit if h in UNLOCK)]
     if not (s['mapIds'] or s['nodeSequence']): continue
-    kept.append((s,cat,sub,per))
+    kept.append((s,cat,sub,per)); unlock_of[s['id']]=u
 print('stages kept',len(kept),'of',len(stages))
 used_maps={m for s,_,_,_ in kept for m in s['mapIds']}
 nodeById={n['id']:n for n in nodes}
@@ -55,7 +78,8 @@ print('maps',len(used_maps),'nodes',len(used_nodes),'battles',len(used_battles),
 # ---- filtered raw tables (gzip) ----
 rawdir=R/'data/morimens/local-config';rawdir.mkdir(parents=True,exist_ok=True)
 def save_gz(name,obj):
-    with gzip.open(rawdir/(name+'.json.gz'),'wt',encoding='utf-8',compresslevel=9) as f: json.dump(obj,f,ensure_ascii=False,separators=(',',':'))
+    data=json.dumps(obj,ensure_ascii=False,separators=(',',':')).encode('utf-8')
+    with open(rawdir/(name+'.json.gz'),'wb') as raw, gzip.GzipFile(fileobj=raw,mode='wb',compresslevel=9,mtime=0) as f: f.write(data)
 keptids={s['id'] for s,_,_,_ in kept}
 save_gz('stages',[s for s in stages if s['id'] in keptids]);save_gz('maps',[mapById[m] for m in used_maps if m in mapById])
 save_gz('nodes',[nodeById[n] for n in used_nodes if n in nodeById]);save_gz('node-types',ntypes);save_gz('battles',[battleById[b] for b in used_battles if b in battleById])
@@ -81,10 +105,10 @@ idx=[]
 for s,cat,sub,per in kept:
     cfg=s['config']
     idx.append({'id':s['id'],'n':s.get('name') or cn(s),'c':cat,'s':sub,'p':per or None,'lv':cfg.get('StageLevel'),'cn':cn(s),
-                'm':s['mapIds'] or None,'q':s['nodeSequence'] or None,'sm':s.get('stageMonsterDataId'),'ir':list((cfg.get('InitRelic') or {}).values()) or None})
+                'm':s['mapIds'] or None,'q':s['nodeSequence'] or None,'sm':s.get('stageMonsterDataId'),'ir':list((cfg.get('InitRelic') or {}).values()) or None,**({'u':unlock_of[s['id']]} if unlock_of.get(s['id']) else {})})
 idx.sort(key=lambda x:(x['c'],x['p'] or 0,x['s'],x['id']))
 def dump(name,obj): (outdir/name).write_text(json.dumps(obj,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
-dump('index.json',{'version':1,'generatedFrom':'local game client config dump (2026-10-12/13)','note':'unreleased content (D-Zone periods after %d, hidden awakener events) is not included'%a.max_dzone,
+dump('index.json',{'version':1,'generatedFrom':'local game client config dump (2026-10-12/13)','note':('unreleased content is included and hidden until its unlock time u' if a.include_future else 'unreleased content (later D-Zone periods, hidden awakener events) is not included'),
     'nodeTypes':{str(k):[tstr[k],tdesc.get(k,'')] for k in tstr},'stages':idx})
 dump('maps.json',{'maps':{str(k):v for k,v in cmaps.items()},'nodes':{str(k):v for k,v in ntab.items()}})
 bt={}

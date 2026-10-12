@@ -13,7 +13,7 @@
     const s=document.createElement('style');s.id='dtideZonesStyle';
     s.textContent=`
       .dtideZones{margin-top:18px}.dtideZones h3{font-size:15px;margin:0 0 6px;color:#ead9b9}
-      .dzNote{color:#8290a2;font-size:12px;margin:0 0 10px}.dzBar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:10px 0}
+      .dzNote{color:#8290a2;font-size:12px;margin:0 0 10px}.dzBar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:10px 0}.dzView{display:inline-flex;gap:6px}.dzView button{border:1px solid rgba(148,163,184,.3);background:#111827;color:#aeb8c7;border-radius:999px;padding:6px 14px;font-size:12.5px;cursor:pointer}.dzView button.on{background:#d5b176;border-color:#d5b176;color:#1a1305;font-weight:700}
       .dzBar label{display:block;font-size:11px;color:#8290a2;margin-bottom:3px}.dzBar select{min-width:260px;max-width:100%;background:#111827;color:#dbe4f0;border:1px solid rgba(148,163,184,.3);border-radius:8px;padding:8px 10px}
       @media(max-width:600px){.dzBar{max-width:100%}.dzBar select{min-width:0;width:100%;box-sizing:border-box}}
       .dzMeta{font-size:12px;color:#aab6c8;display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
@@ -387,16 +387,25 @@
   }
   // zones / threat levels stay open across language switches and re-renders
   const zoneOpen=wi=>{const k=state.season+':'+wi;if(!state.zoneInit.has(state.season)){return wi===0}return state.openZone.has(k)};
+  // view switch: the D-Zone seasons (default, current season) or every map of the game (filterable)
+  const viewBar=()=>`<div class="dzBar"><div class="dzView" role="tablist"><button type="button" data-dzview="season" class="${state.view!=='all'?'on':''}">${ui('融灾期次地图','D-Zone seasons')}</button><button type="button" data-dzview="all" class="${state.view==='all'?'on':''}">${ui('全部地图（可筛选）','All maps (filter)')}</button></div></div>`;
+  function drawAll(){
+    host.innerHTML=viewBar()+'<div id="dzAllMaps"></div>';
+    const el=document.getElementById('dzAllMaps');
+    if(window.MorimensMapOverview?.mount)window.MorimensMapOverview.mount(el,{period:state.season||Number(ctx?.season)||null});
+    else el.innerHTML=`<div class="dzEmpty">${ui('地图模块尚未加载','Map module not loaded yet')}</div>`;
+  }
   function draw(){
     if(!host)return;
     if(state.error){host.innerHTML=`<div class="dzEmpty">${ui('禁区地图数据加载失败：','Failed to load D-Zone map data: ')}${esc(state.error.message)}</div>`;return}
     if(!state.index){host.innerHTML=`<div class="dzEmpty">${ui('正在加载禁区地图数据…','Loading D-Zone map data…')}</div>`;return}
+    if(state.view==='all'){drawAll();return}
     const seasons=[...state.index.seasons].sort((a,b)=>b.period-a.period);
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
     const links=state.season===70?`<div class="dtideSeasonResources"><a class="dtideSeasonResourceLink" href="data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.webp" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a></div>`:'';
-    const head=`${links}<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。每个区域内的地图由 Morimens.Info.kr 的节点数据生成（第 68 期起），战斗节点旁标注怪物；点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期前沿用最近出现期次的数据）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，翻译表缺失的条目为 AI 辅助翻译），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Each zone shows a map generated from Morimens.Info.kr node data (Season 68+) with the monsters of every battle marked; expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (before Season 67 the latest appearance is reused). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; entries missing there are AI-assisted translations); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
+    const head=`${viewBar()}${links}<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。每个区域内的地图由 Morimens.Info.kr 的节点数据生成（第 68 期起），战斗节点旁标注怪物；点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期前沿用最近出现期次的数据）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，翻译表缺失的条目为 AI 辅助翻译），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Each zone shows a map generated from Morimens.Info.kr node data (Season 68+) with the monsters of every battle marked; expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (before Season 67 the latest appearance is reused). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; entries missing there are AI-assisted translations); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
     if(!doc||!state.info.has(meta.period)||!state.maps.has(meta.period)||!state.wiki||!state.tr||!state.byMon||!state.kd){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadMap(meta.period),loadWiki(),loadTr(),loadByMon()]).then(loadKd).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
@@ -437,6 +446,9 @@
     load().then(draw,draw);draw();
   }
 
+  document.addEventListener('click',e=>{
+    const vb=e.target.closest?.('[data-dzview]');if(vb&&host?.contains(vb)){const v=vb.dataset.dzview;if(state.view!==v){state.view=v;draw()}return}
+  });
   document.addEventListener('click',e=>{
     const row=e.target.closest?.('[data-dzmon]');if(!row||!host?.contains(row))return;
     const key=row.dataset.dzmon;if(state.openMon.has(key))state.openMon.delete(key);else state.openMon.add(key);

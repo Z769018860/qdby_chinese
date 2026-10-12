@@ -14,7 +14,7 @@
 
 关联路径：`stages.mapIds[] → maps.id → maps.cells[].variants[].nodeId → nodes.id → nodes.battleConfigId → battles.id → battles.monsters[].monsterId → monsters.id → monsters.skillIds[] → skills.id`；`MapType=2` 的关卡直接通过 `stages.nodeSequence[] → nodes.id` 关联。
 
-**未收录**：第 71 期之后的融灾关卡、未发布唤醒体（如薇薇安）的活动关卡、没有地图的关卡，以及 `MapType=3` 的「疾驰的欢愉专列」（专用表尚未解析）。需要重新生成时运行
-`python3 scripts/build_map_overview.py <解压后的目录> --repo .`（`--max-dzone`、`--hide` 可调整收录范围）。
+**未收录**：尚未开始的融灾关卡、未发布唤醒体（如薇薇安）的活动关卡、没有地图的关卡，以及 `MapType=3` 的「疾驰的欢愉专列」（专用表尚未解析）。需要重新生成时运行
+`python3 scripts/build_map_overview.py <解压后的目录> --repo .`（`--max-dzone`、`--hide` 可调整收录范围；`--include-future` + `--unlock` 会写入未上线内容并按时间解锁，注意仓库是公开的）。
 
 页面使用的精简数据在 `data/morimens/maps/`（`index.json` 关卡索引与节点类型、`maps.json` 地图格位与节点、`battles.json`、`monsters.json`、`stage-stats.json`）。

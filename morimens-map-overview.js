@@ -1,4 +1,5 @@
-// 地图总览：游戏本地配置表中的全部（已上线）地图、战斗与怪物。数据：data/morimens/maps/*.json（scripts/build_map_overview.py 生成）
+// 全部地图视图（嵌在「融灾怪物图鉴」里）：游戏本地配置表中的全部（已上线）地图、战斗与怪物。数据：data/morimens/maps/*.json（scripts/build_map_overview.py 生成）
+// 关卡带 u（解锁时间）时，到时间前不显示、到时间自动出现。
 (function(){
   const $=id=>document.getElementById(id);
   const zh=()=>{try{return localStorage.getItem('morimens.language')!=='en'}catch{return true}};
@@ -6,7 +7,7 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const BASE='data/morimens/maps/';
   const state={ready:false,loading:null,error:null,index:null,maps:null,battles:null,mons:null,stats:null,
-    cat:'融灾',sub:'',q:'',limit:80,sel:null,mapPick:0,monSel:null,filtered:[]};
+    cat:'融灾',sub:'',q:'',limit:80,sel:null,mapPick:0,monSel:null,filtered:[],root:null,defPeriod:null,init:false};
   const CATS=['融灾','主线','日常挑战','活动 / 支线','无光之境','尖塔模式','模拟战','其他'];
   const CATEN={'融灾':'D-Zone','主线':'Main story','日常挑战':'Daily challenge','活动 / 支线':'Events / side stories','无光之境':'Lightless Realm','尖塔模式':'Spire mode','模拟战':'Simulation','其他':'Other'};
   // node type name -> [css kind, icon]
@@ -76,13 +77,15 @@
   const kindOf=name=>KIND[name]||['other',null];
   const catLabel=c=>zh()?c:(CATEN[c]||c);
 
+  const unlocked=s=>!s.u||Date.parse(s.u)<=Date.now();
+  const visible=()=>state.index.stages.filter(unlocked);
   function filterStages(){
     const q=state.q.trim().toLowerCase();
-    state.filtered=state.index.stages.filter(s=>s.c===state.cat&&(!state.sub||s.s===state.sub)&&(!q||s.n.toLowerCase().includes(q)||s.cn.toLowerCase().includes(q)||String(s.id)===q));
+    state.filtered=visible().filter(s=>s.c===state.cat&&(!state.sub||s.s===state.sub)&&(!q||s.n.toLowerCase().includes(q)||s.cn.toLowerCase().includes(q)||String(s.id)===q));
   }
   function subs(){
     const seen=new Map();
-    for(const s of state.index.stages)if(s.c===state.cat&&s.s&&!seen.has(s.s))seen.set(s.s,s.p||0);
+    for(const s of visible())if(s.c===state.cat&&s.s&&!seen.has(s.s))seen.set(s.s,s.p||0);
     return [...seen.entries()].sort((a,b)=>(b[1]-a[1])||a[0].localeCompare(b[0],'zh-CN')).map(x=>x[0]);
   }
 
@@ -155,7 +158,7 @@
   }
 
   // ---------- main render ----------
-  function currentStage(){return state.index.stages.find(s=>s.id===state.sel)||null}
+  function currentStage(){return visible().find(s=>s.id===state.sel)||null}
   function stageHtml(){
     const st=currentStage();
     if(!st)return `<div class="moEmpty">${ui('在左侧选择一个关卡查看地图与怪物。','Pick a stage on the left to see its map and monsters.')}</div>`;
@@ -185,11 +188,11 @@
       ||`<div class="moEmpty">${ui('没有符合条件的关卡','No stages match')}</div>`;
   }
   function renderShell(){
-    const host=$('morimensMapsPanel');if(!host)return;
+    const host=state.root;if(!host)return;
     const sub=subs();
-    host.innerHTML=`<section class="panel"><h2>${ui('地图总览','Map Overview')}</h2>
-      <p class="moNote">${ui('数据读取自游戏客户端配置表（2026-10-12/13）：关卡 → 地图格位 → 节点 → 战斗 → 怪物 → 技能。未上线内容（第 71 期之后的融灾、未发布唤醒体的活动等）未收录。','Read from the game client config tables (2026-10-12/13): stage → map cells → nodes → battles → monsters → skills. Unreleased content is not included.')} ${ui('共','Total')} ${state.index.stages.length} ${ui('个关卡','stages')}。</p>
-      <div class="moBar"><select id="moCat">${CATS.map(c=>`<option value="${esc(c)}"${c===state.cat?' selected':''}>${esc(catLabel(c))}（${state.index.stages.filter(s=>s.c===c).length}）</option>`).join('')}</select>
+    host.innerHTML=`<section class="moSection">
+      <p class="moNote">${ui('数据读取自游戏客户端配置表（2026-10-12/13）：关卡 → 地图格位 → 节点 → 战斗 → 怪物 → 技能。未上线的内容不会显示，到上线时间会自动解锁。','Read from the game client config tables (2026-10-12/13): stage → map cells → nodes → battles → monsters → skills. Unreleased content stays hidden and unlocks automatically at its release time.')} ${ui('共','Total')} ${visible().length} ${ui('个关卡','stages')}。</p>
+      <div class="moBar"><select id="moCat">${CATS.map(c=>`<option value="${esc(c)}"${c===state.cat?' selected':''}>${esc(catLabel(c))}（${visible().filter(s=>s.c===c).length}）</option>`).join('')}</select>
         <select id="moSub"><option value="">${ui('全部子类','All sub-groups')}</option>${sub.map(x=>`<option value="${esc(x)}"${x===state.sub?' selected':''}>${esc(x)}</option>`).join('')}</select>
         <input id="moQ" type="search" value="${esc(state.q)}" placeholder="${esc(ui('搜索关卡名 / ID','Search stage name / ID'))}"><span class="moNote" id="moCount"></span></div>
       <div class="moWrap"><div class="moList" id="moList"></div><div id="moStage"></div></div></section>`;
@@ -199,7 +202,7 @@
   function refresh(){filterStages();renderList()}
 
   function bind(){
-    const host=$('morimensMapsPanel');if(!host||host.dataset.bound)return;host.dataset.bound='1';
+    const host=state.root;if(!host)return;if(host._moBound)return;host._moBound=true;
     host.addEventListener('change',e=>{
       if(e.target.id==='moCat'){state.cat=e.target.value;state.sub='';state.limit=80;renderShell();refresh();renderStage()}
       else if(e.target.id==='moSub'){state.sub=e.target.value;state.limit=80;refresh()}
@@ -213,12 +216,22 @@
       const bat=e.target.closest('[data-bat]');if(bat){const bid=bat.dataset.bat,first=state.battles[bid]?.[1]?.[0]?.[0];if(first){state.monSel={mid:String(first),bid};renderStage()}}
     });
   }
-  async function open(){
-    css();const host=$('morimensMapsPanel');if(!host)return;
-    if(!state.ready){host.innerHTML=`<section class="panel"><p class="moNote">${ui('正在加载地图数据…','Loading map data…')}</p></section>`;
-      try{await load()}catch(e){host.innerHTML=`<section class="panel"><div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div></section>`;return}}
-    renderShell();bind();refresh();renderStage();
+  function pickDefault(){
+    // default: the current D-Zone season (first stage of the highest unlocked period)
+    const dz=visible().filter(x=>x.c==='融灾');
+    const per=state.defPeriod&&dz.some(x=>x.p===state.defPeriod)?state.defPeriod:Math.max(0,...dz.map(x=>x.p||0));
+    if(!state.init){
+      state.init=true;state.cat='融灾';
+      const lab=dz.find(x=>x.p===per)?.s||'';state.sub=lab;
+      const first=dz.filter(x=>x.p===per)[0];if(first)state.sel=first.id;
+    }
   }
-  window.MorimensMapOverview={open};
-  window.addEventListener('morimens-language-change',()=>{if(state.ready&&$('morimensMapsPanel')&&!$('morimensMapsPanel').hidden){renderShell();refresh();renderStage()}});
+  async function mount(el,opts){
+    css();state.root=el;if(opts?.period)state.defPeriod=Number(opts.period);
+    if(!state.ready){el.innerHTML=`<p class="moNote">${ui('正在加载地图数据…','Loading map data…')}</p>`;
+      try{await load()}catch(e){el.innerHTML=`<div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div>`;return}}
+    pickDefault();renderShell();bind();refresh();renderStage();
+  }
+  window.MorimensMapOverview={mount};
+  window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();
