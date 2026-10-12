@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>融灾第 71 期地图 · 忘忘看报</title>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,"Microsoft YaHei",sans-serif;background:#101727;color:#e9eef9}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#263456,#101727 55%);min-height:100vh}
+    a{color:#a8d7ff}main{max-width:1220px;margin:auto;padding:30px 22px 70px}
+    .eyebrow{color:#9abce5;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase}
+    h1{font-size:clamp(1.7rem,4vw,2.7rem);margin:.25em 0}.lead{color:#c1cde0;line-height:1.7;max-width:850px}
+    .zones{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 18px}.zones button{border:1px solid #53627e;border-radius:999px;background:#1a2741;color:#e9eef9;padding:10px 18px;cursor:pointer;font:inherit}.zones button[aria-pressed="true"]{background:#c6dfac;color:#132119;border-color:#c6dfac;font-weight:700}
+    .summary{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}.summary span{background:#1d2b45;border:1px solid #344461;border-radius:10px;padding:10px 14px;color:#d4e1f1}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start}
+    .map-wrap,.detail{background:#172238;border:1px solid #344461;border-radius:16px;box-shadow:0 16px 45px #050b1d66}
+    .map-wrap{overflow:auto;padding:18px}.map-title{font-weight:700;margin-bottom:14px;color:#f3f6fd}.map{min-width:910px}
+    .map-row{display:flex;align-items:center;gap:5px;margin:5px 0}.map-row.offset{padding-left:29px}.row-label{width:28px;flex:0 0 28px;color:#8598b4;font-size:.8rem;text-align:right}
+    .tile{width:61px;height:58px;flex:0 0 61px;border:1px solid #33405a;border-radius:10px;background:#1a2436;color:#e8edf7;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:3px;line-height:1.15;text-align:center;font:inherit;font-size:.68rem;overflow:hidden}
+    .tile small{font-size:.6rem;color:#9dacbe}.tile.void{background:#101827;color:#4b5b72;opacity:.7}.tile.missing{background:transparent;border-color:transparent}.tile.node{cursor:pointer;border-color:#6882a5;background:#284264}.tile.node:hover,.tile.node:focus-visible{outline:2px solid #f4da97;outline-offset:1px}.tile.start{background:#27635b;border-color:#65d1b7}.tile.boss{background:#7c354a;border-color:#efa0ae}.tile.elite,.tile.battle{background:#564168;border-color:#a78cc8}.tile.selected{box-shadow:0 0 0 3px #f4da97 inset}
+    .detail{padding:20px;position:sticky;top:18px}.detail h2{margin:0 0 10px;font-size:1.3rem}.detail p{line-height:1.6;color:#cad7e9}.detail dl{display:grid;grid-template-columns:75px 1fr;gap:7px;font-size:.9rem}.detail dt{color:#8ea3c0}.detail dd{margin:0;word-break:break-word}
+    .legend{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;color:#b9c8dc;font-size:.88rem}.swatch{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:middle}.note{color:#9cb0cd;font-size:.87rem;line-height:1.65;margin-top:22px}
+    .changes{margin-top:22px;background:#172238;border:1px solid #344461;border-radius:16px;padding:18px}.changes h2{font-size:1.05rem;margin:0 0 10px}.changes ul{padding-left:1.3em;line-height:1.7;color:#cbd9ea}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.detail{position:static}.map-wrap{padding:12px}}
+  </style>
+</head>
+<body>
+<main>
+  <a href="morimens-daily.html">← 返回忘忘看报</a>
+  <div class="eyebrow" style="margin-top:22px">Morimens · Dissoluted Abyss</div>
+  <h1>融灾第 71 期地图</h1>
+  <p class="lead">从本机游戏的地图配置读取五个禁区的原始格位与节点。点击有颜色的节点可查看类型、说明和配置 ID。灰色“虚无”不可穿越；门扉、密道等节点另有游戏内通行条件。</p>
+  <div class="zones" id="zones" role="group" aria-label="选择禁区"></div>
+  <div class="summary" id="summary"></div>
+  <div class="layout">
+    <section class="map-wrap" aria-label="地图格位"><div class="map-title" id="mapTitle"></div><div class="map" id="map"></div></section>
+    <aside class="detail" id="detail" aria-live="polite"></aside>
+  </div>
+  <div class="legend"><span><i class="swatch" style="background:#27635b"></i>开始</span><span><i class="swatch" style="background:#7c354a"></i>最终战</span><span><i class="swatch" style="background:#564168"></i>战斗 / 精英</span><span><i class="swatch" style="background:#284264"></i>其他节点</span><span><i class="swatch" style="background:#101827;border:1px solid #4b5b72"></i>虚无</span></div>
+  <section class="changes" id="changes"></section>
+  <p class="note">来源：本机《忘却前夜》运行时已加载的 <code>Config.Stage</code>、<code>Config.Map</code>、<code>Config.MapNode</code> 与 <code>Config.MapNodeType</code> 配置。第一禁区的地图 ID、起点与首领坐标已与当前游戏状态核对。第 61 期的五张地图格位布局相同，本期只替换了部分战斗、精英与首领节点配置。第三禁区模板仅列出开始和锈蚀门扉，没有标为“最终战”的格位。</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let data,current=0,selected=null;
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function kind(node){if(node.typeId===18402)return 'start';if(node.typeId===18396)return 'boss';if(node.typeId===18411)return 'elite';if(node.typeId===18431)return 'battle';return 'node'}
+function showDetail(node){selected=node;const name=node?.name||'选择一个节点';$('detail').innerHTML=node?`<h2>${safe(name)}</h2><p>${safe(node.description||'该节点暂无文字说明。')}</p><dl><dt>坐标</dt><dd>(${node.x}, ${node.y})</dd><dt>节点 ID</dt><dd>${node.nodeId}</dd><dt>类型 ID</dt><dd>${node.typeId}</dd>${node.effect?`<dt>效果配置</dt><dd>${safe(JSON.stringify(node.effect))}</dd>`:''}</dl>`:`<h2>${name}</h2><p>点击地图中有颜色的格位查看详细资料。</p>`;document.querySelectorAll('.tile.selected').forEach(el=>el.classList.remove('selected'));if(node)document.querySelector(`[data-pos="${node.x},${node.y}"]`)?.classList.add('selected')}
+function render(index){current=index;const z=data.zones[index],nodes=new Map(z.nodes.map(n=>[`${n.x},${n.y}`,n]));$('zones').innerHTML=data.zones.map((v,i)=>`<button type="button" data-zone="${i}" aria-pressed="${i===index}">第 ${v.zone} 禁区</button>`).join('');$('zones').querySelectorAll('button').forEach(b=>b.onclick=()=>render(Number(b.dataset.zone)));
+ $('summary').innerHTML=`<span>地图 ID：${z.mapId}</span><span>起点：${z.startNodes.map(p=>`(${p.x}, ${p.y})`).join('、')||'未标出'}</span><span>最终战：${z.bossNodes.map(p=>`(${p.x}, ${p.y})`).join('、')||'模板未标出'}</span><span>有效节点：${z.nodes.length}</span>`;
+ $('mapTitle').textContent=`第 ${z.zone} 禁区 · 13 × 8 格位`;const rows=z.rows.map((row,ri)=>`<div class="map-row ${ri%2?'offset':''}"><span class="row-label">${row.y}</span>${row.nodeIds.map((id,xi)=>{const n=nodes.get(`${xi+1},${row.y}`);if(id==null)return '<span class="tile missing" aria-hidden="true"></span>';if(!n)return `<span class="tile void" title="(${xi+1}, ${row.y}) 虚无"><small>${xi+1},${row.y}</small>·</span>`;return `<button type="button" class="tile ${kind(n)}" data-pos="${n.x},${n.y}" title="(${n.x}, ${n.y}) ${safe(n.name)}"><small>${n.x},${n.y}</small>${safe(n.name)}</button>`}).join('')}</div>`).join('');$('map').innerHTML=rows;$('map').querySelectorAll('button[data-pos]').forEach(b=>b.onclick=()=>showDetail(nodes.get(b.dataset.pos)));
+ const c=z.changedCombatNodesFromSeason61;$('changes').innerHTML=`<h2>与第 61 期比较</h2><p>可通行格位位置相同；${c.length?`本区替换 ${c.length} 个战斗相关节点配置。`:'本区所有节点配置也相同。'}</p>${c.length?`<ul>${c.map(v=>`<li>(${v.x}, ${v.y}) ${safe(v.type)}：${v.season61NodeId} → ${v.season71NodeId}</li>`).join('')}</ul>`:''}`;
+ showDetail(z.nodes.find(n=>n.typeId===18402)||null)}
+fetch('data/morimens/dzone/season71/maps.local.json').then(r=>{if(!r.ok)throw Error('地图文件未找到');return r.json()}).then(result=>{data=result;render(0)}).catch(e=>{$('map').textContent=`地图加载失败：${e.message}`});
+</script>
+</body>
+</html>

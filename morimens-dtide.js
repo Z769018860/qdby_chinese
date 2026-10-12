@@ -913,9 +913,13 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   function renderSeasonResources(){
     const host=$('dtideSeasonResources');if(!host)return;
     const seasonId=Number(season?.seasonId??activeSeasonEntry?.sourceSeasonId??activeSeasonEntry?.seasonId??0);
-    const show=seasonId===70&&!season?.legacy;
+    const show=(seasonId===70||seasonId===71)&&!season?.legacy;
     host.hidden=!show;
     if(!show){host.innerHTML='';return}
+    if(seasonId===71){
+      host.innerHTML=`<a class="dtideSeasonResourceLink" href="morimens-dzone-map71.html" target="_blank" rel="noopener noreferrer">【${ui('当期融灾地图（本地配置）','Current D-Zone Map (local game data)')}】↗</a>`;
+      return;
+    }
     const mapUrl='data/morimens/dzone/5%24KD_J_PB6%7BD%5D%7D%7D9FTLN0VA_tmb.webp';
     const overviewUrl='data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.webp';
     host.innerHTML=`
