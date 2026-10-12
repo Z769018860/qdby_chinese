@@ -26,7 +26,7 @@
       "rankPath": "data/morimens/eremora/rank-index/71.json",
       "battleArchivePath": "data/morimens/dzone/season71/meta.json",
       "battleDetailPath": "data/morimens/eremora/usage/71-battle-gzip/index.json",
-      "revision": "1b4254fb9d39242e320ab6e1a6617621270c9fb3a2adb2fb2f1d56a5acac8588"
+      "revision": "f2909bb9157cb02a0369289f60d07f16e625034020146dab44d0b64432b2e337"
     },
     {
       "seasonId": 70,
@@ -302,11 +302,11 @@
       "complete": true
     },
     "syncedAt": "2026-10-13T02:00:00+08:00",
-    "revision": "1b4254fb9d39242e320ab6e1a6617621270c9fb3a2adb2fb2f1d56a5acac8588",
+    "revision": "f2909bb9157cb02a0369289f60d07f16e625034020146dab44d0b64432b2e337",
     "format": "gzip-base64-chunked-v1",
     "chunks": 4,
     "chunkSize": 600000,
-    "chunkBytes": 1905801
+    "chunkBytes": 1905855
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -346,7 +346,7 @@
     "ringRealmZh": "混沌",
     "stageNaming": "Zone 1-5",
     "updatedAt": "2026-10-13T02:00:00+08:00",
-    "revision": "1b4254fb9d39242e320ab6e1a6617621270c9fb3a2adb2fb2f1d56a5acac8588",
+    "revision": "f2909bb9157cb02a0369289f60d07f16e625034020146dab44d0b64432b2e337",
     "battleArchive": "data/morimens/dzone/season71/meta.json",
     "battleDetail": "data/morimens/eremora/usage/71-battle-gzip/index.json",
     "note": "Season 71 (in progress): rank snapshot 2026-10-13 02:00 + teams_latest.jsonl of the same capture."
