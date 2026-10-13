@@ -66,6 +66,7 @@
       .moIcon{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:5px;flex:none}.moRot li,.moDetail li{display:flex;align-items:center;gap:4px}.moRot li .ty,.moDetail li .ty{flex:none}
       .moLoop{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.moStep{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:2px 9px 2px 5px;background:#111827}.moLoop .arr{color:#8290a2}
       .moScroll{overflow:auto;margin-top:8px}.moTable{width:100%;border-collapse:collapse;font-size:12px}.moTable th,.moTable td{padding:6px 8px;border-bottom:1px solid rgba(148,163,184,.1);text-align:left;vertical-align:top}.moTable th{color:#8290a2;white-space:nowrap}.moTable td.dzKo{min-width:240px;color:#aab6c8;white-space:normal}.moTable .dzTypeCell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.moTable .dzIconSm{width:20px;height:20px}.moTable b{color:#ead9b9}
+.moNode.void{pointer-events:none}.moNode.void .moHex{background:rgba(148,163,184,.07)}
       .moEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
       @media(max-width:860px){.moWrap{grid-template-columns:1fr}.moList{max-height:40vh}}`;
     document.head.appendChild(s);
@@ -99,7 +100,7 @@
   // ---------- map rendering ----------
   function bounds(cells){
     let minX=1e9,maxX=-1e9,minR=1e9,maxR=-1e9;
-    for(const [x,y] of cells){const r=9-y,X=x+(r%2===0?.5:0);minX=Math.min(minX,X);maxX=Math.max(maxX,X);minR=Math.min(minR,r);maxR=Math.max(maxR,r)}
+    for(const [x,y] of cells){const r=9-y,X=x+(r%2===1?.5:0);minX=Math.min(minX,X);maxX=Math.max(maxX,X);minR=Math.min(minR,r);maxR=Math.max(maxR,r)}
     return {minX,maxX,minR,maxR};
   }
   function nodeCls(tid){const n=typeName(tid),[k,icon,tex]=kindOf(n);return {n,k,icon,tex}}
@@ -111,12 +112,17 @@
   function mapView(mapId){
     const cells=state.maps.maps[mapId];
     if(!cells||!cells.length)return {html:`<div class="moEmpty">${ui('没有地图数据','No map data')}</div>`,battles:[]};
-    const b=bounds(cells),SX=104,SY=94,W=Math.ceil((b.maxX-b.minX)*SX+100),H=Math.ceil((b.maxR-b.minR)*SY+112);
     const items=cells.map(c=>({x:c[0],y:c[1],r:9-c[1],nodes:c.slice(2)}));
+    // the client grid has 13 cells in odd y rows and 12 in even y rows; unused cells are drawn as a faint grid so neighbours / paths stay readable
+    const have=new Set(items.map(i=>i.x+':'+i.y)),voids=[];
+    {const y0=Math.min(...items.map(i=>i.y)),y1=Math.max(...items.map(i=>i.y)),x0=Math.min(...items.map(i=>i.x)),x1=Math.max(...items.map(i=>i.x));
+     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(y%2===0&&x>12)continue;if(!have.has(x+':'+y))voids.push({x,y,r:9-y})}}
+    const b=bounds([...cells,...voids.map(v=>[v.x,v.y])]),SX=104,SY=94,W=Math.ceil((b.maxX-b.minX)*SX+100),H=Math.ceil((b.maxR-b.minR)*SY+112);
     const order=[];
     for(const it of [...items].sort((a,b)=>a.r-b.r||a.x-b.x)){const bid=battleOf(it.nodes[0]);if(bid)order.push({it,bid})}
     const num=new Map(order.map((o,i)=>[o.it,i+1]));
-    const html=items.map(it=>{
+    const voidHtml=voids.map(v=>{const X=v.x+(v.r%2===1?.5:0);return `<div class="moNode void" style="left:${(X-b.minX)*SX}px;top:${(v.r-b.minR)*SY}px"><div class="moHex"></div></div>`}).join('');
+    const html=voidHtml+items.map(it=>{
       const nid=it.nodes[0],tid=state.maps.nodes[nid]?.[0],c=nodeCls(tid),X=it.x+(it.r%2===0?.5:0);
       const left=(X-b.minX)*SX,top=(it.r-b.minR)*SY,bid=battleOf(nid),ml=bid?monsList(bid):[];
       const var_=it.nodes.length>1?`<span class="moVar" title="${esc(it.nodes.map(n=>typeName(state.maps.nodes[n]?.[0])).join(' / '))}">×${it.nodes.length}</span>`:'';
@@ -370,6 +376,16 @@
       try{await load()}catch(e){el.innerHTML=`<div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div>`;return}}
     pickDefault();renderShell();bind();refresh();renderStage();
   }
+  // shrink wide hex boards to the available width (zones page and overview), re-checked whenever the DOM changes or the window is resized
+  (function fitBoards(){
+    let queued=false;
+    const run=()=>{queued=false;for(const b of document.querySelectorAll('.dzMapBoard,.moBoard')){
+      const v=b.parentElement,w=parseFloat(b.style.width)||b.offsetWidth;if(!v||!w)continue;
+      const k=Math.min(1,Math.max(0.35,(v.clientWidth-22)/w));const z=k<0.999?String(k):'';if(b.style.zoom!==z)b.style.zoom=z}};
+    const q=()=>{if(!queued){queued=true;requestAnimationFrame(run)}};
+    new MutationObserver(q).observe(document.documentElement,{childList:true,subtree:true});
+    window.addEventListener('resize',q);q();
+  })();
   window.MorimensMapOverview={mount,intentByName,skType,intentIcon,intentTable};
   window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();
