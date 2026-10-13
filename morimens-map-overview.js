@@ -231,7 +231,7 @@
     const re3=/\{(\d)\}\s*回合(?:的)?([^，。,.\s{「」]+)/g;while((m=re3.exec(t)))add(m[1],m[2],' 回合');
     return out.join(' · ');
   }
-  const TARGET={FrontEnemy:['前排觉醒者','Front Awakener'],PlayerRole:['我方','Player side'],CmdCaster:['自身','Self'],AllAlly:['全体友方','All allies'],RandomAwaker:['随机觉醒者','Random Awakener'],OtherAlly:['其他友方','Other allies'],FrontAlly:['最前方友方','Front ally'],MaxHpAlly:['生命最高的友方','Highest-HP ally'],'':['视条件而定','Conditional']};
+  const TARGET={FrontEnemy:['前排唤醒体','Front Awakener'],PlayerRole:['我方','Player side'],CmdCaster:['自身','Self'],AllAlly:['全体友方','All allies'],RandomAwaker:['随机唤醒体','Random Awakener'],OtherAlly:['其他友方','Other allies'],FrontAlly:['最前方友方','Front ally'],MaxHpAlly:['生命最高的友方','Highest-HP ally'],'':['视条件而定','Conditional']};
   const targetOf=g=>{const l=TARGET[g];return l?ui(l[0],l[1]):(g&&g.length<24?g:ui('视条件而定','Conditional'))};
   // 技能 / 类型 / 目标 / 数值 / 官方描述 table (same layout as the Info.kr based intent tables)
   function intentTable(it,labelOf){
