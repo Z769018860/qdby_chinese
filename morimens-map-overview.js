@@ -63,6 +63,8 @@
       .moTrow{display:flex;flex-wrap:wrap;gap:8px}.moTn{min-width:110px;max-width:170px;padding:6px 8px;border-radius:10px;background:#111827;border:1px solid rgba(148,163,184,.22);font-size:12px;color:#cbd5e1;display:grid;gap:4px;align-content:start}
       .moTn small{color:#8290a2}.moTn.combat{border-color:rgba(248,113,113,.4)}.moTn.reward{border-color:rgba(213,177,118,.45)}.moTn.event{border-color:rgba(125,211,252,.4)}
       .moTv{display:flex;align-items:center;gap:6px;padding:3px;border-radius:8px;cursor:pointer}.moTv:hover,.moTv.sel{background:rgba(213,177,118,.15)}.moTv .moNum{position:static}
+      .moIcon{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:5px;flex:none}.moRot li,.moDetail li{display:flex;align-items:center;gap:4px}.moRot li .ty,.moDetail li .ty{flex:none}
+      .moLoop{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.moStep{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:2px 9px 2px 5px;background:#111827}.moLoop .arr{color:#8290a2}
       .moEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
       @media(max-width:860px){.moWrap{grid-template-columns:1fr}.moList{max-height:40vh}}`;
     document.head.appendChild(s);
@@ -229,16 +231,22 @@
     const m=state.mons.monsters[mid];if(!m)return null;
     const c=monCtx(m,o),seen=new Set(),all=(m.sk||[]).filter(id=>state.mons.skills[id]&&!seen.has(id)&&seen.add(id));
     const cyc=(m.cy||[]).filter(id=>state.mons.skills[id]),opening=new Set(m.op||[]);
-    const row=id=>{const sk=state.mons.skills[id];return {id,type:skType(sk[1]?.[0]),text:skillText(id,c),opening:opening.has(id)&&!cyc.includes(id)}};
+    const row=id=>{const sk=state.mons.skills[id];return {id,raw:sk[1]?.[0]||'',type:skType(sk[1]?.[0]),text:skillText(id,c),opening:opening.has(id)&&!cyc.includes(id)}};
     return {mid,m,ctx:c,rotation:cyc.map(row),skills:all.map(row)};
   }
   const statsHtml=c=>c?`<div class="moStats"><span>Lv <b>${c.lv}</b></span><span>${ui('生命','HP')} <b>${fmtN(c.hp)}</b></span><span>${ui('攻击','ATK')} <b>${fmtN(c.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmtN(c.def)}</b></span></div>`:'';
+  const ICON={Attack:'001',HeavyAttack:'002',Debuff:'003',StrongDebuff:'004',Buff:'005',StrongBuff:'006',Defence:'007',AttackDefence:'008',AttackDebuff:'009',AttackBuff:'010',DefenceBuff:'011',DefenceDebuff:'012',Dizzy:'013',Unknown:'014',Burst:'015',Burst2:'015',Burst3:'015'};
+  function intentIcon(raw,cls){
+    const k=String(raw||'').replace(/^Intent_/,'');
+    const key=ICON[k]?k:Object.keys(ICON).sort((a,b)=>b.length-a.length).find(x=>k.startsWith(x))||'Unknown';
+    return `<img class="${cls||'moIcon'}" src="assets/morimens/dzone-intent/intent_${ICON[key]}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
+  }
   function monDetail(mid,stage){
     const it=monIntent(mid,{sm:stage?.sm,period:stage?.p});if(!it)return '';
     const m=it.m,cls=CLS[m.c]||[m.c||'',m.c||''];
-    const loop=it.rotation.map(r=>r.type||'?').join(' → ');
-    const li=r=>`<li><span class="ty">${esc(r.type)}</span>${r.opening?` <small class="moNote">${ui('开场','Opening')}</small>`:''} ${esc(r.text)}</li>`;
-    return `<div class="moDetail"><h4>${esc(m.n)} <small class="moNote">${esc(ui(cls[0],cls[1]))}${m.b?' · '+esc(m.b):''} · #${mid}</small></h4><p>${esc(m.d)}</p>${statsHtml(it.ctx)}${loop?`<p><b>${ui('行动循环','Action loop')}</b>：${esc(loop)}</p>`:''}${it.rotation.length?`<ol class="moRot">${it.rotation.map(li).join('')}</ol>`:''}<ul>${it.skills.filter(r=>!it.rotation.some(x=>x.id===r.id)).map(li).join('')}</ul></div>`;
+    const loop=it.rotation.map(r=>`<span class="moStep">${intentIcon(r.raw,'moIcon')}${esc(r.type||'?')}</span>`).join('<span class="arr">→</span>');
+    const li=r=>`<li>${intentIcon(r.raw)}<span class="ty">${esc(r.type)}</span>${r.opening?` <small class="moNote">${ui('开场','Opening')}</small>`:''} ${esc(r.text)}</li>`;
+    return `<div class="moDetail"><h4>${esc(m.n)} <small class="moNote">${esc(ui(cls[0],cls[1]))}${m.b?' · '+esc(m.b):''} · #${mid}</small></h4><p>${esc(m.d)}</p>${statsHtml(it.ctx)}${loop?`<p class="moLoop"><b>${ui('行动循环','Action loop')}</b>${loop}</p>`:''}${it.rotation.length?`<ol class="moRot">${it.rotation.map(li).join('')}</ol>`:''}<ul>${it.skills.filter(r=>!it.rotation.some(x=>x.id===r.id)).map(li).join('')}</ul></div>`;
   }
   // used by the D-Zone guide when a monster has no intent data of its own: find the client monster by Chinese name
   async function intentByName(names,o){
@@ -333,6 +341,6 @@
       try{await load()}catch(e){el.innerHTML=`<div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div>`;return}}
     pickDefault();renderShell();bind();refresh();renderStage();
   }
-  window.MorimensMapOverview={mount,intentByName,skType};
+  window.MorimensMapOverview={mount,intentByName,skType,intentIcon};
   window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();
