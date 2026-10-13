@@ -297,12 +297,10 @@
     const stats=c?`<div class="dzStats"><span>${ui('攻击','ATK')} <b>${f(c.atk)}</b></span><span>${ui('防御','DEF')} <b>${f(c.def)}</b></span></div>`:'';
     const ic=r=>window.MorimensMapOverview.intentIcon(r.raw,'dzIcon');
     const lab=r=>TYPE_LABEL[r.raw]?typeLabel(r.raw):(r.type||'?');
-    const rot=it.rotation.map((r,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(r.text)}">${ic(r)}<span class="dzIntentText">${esc(lab(r))}<small>${i+1}</small></span></span>`).join('');
-    const row=r=>`<tr><td><span class="dzTypeCell">${ic(r)}${esc(lab(r))}</span>${r.opening?` <small>${ui('开场','Opening')}</small>`:''}</td><td class="dzKo">${esc(r.text)}</td></tr>`;
-    const rest=it.skills.filter(r=>!it.rotation.some(x=>x.id===r.id));
+    const rot=it.rotation.map((r,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(r.text)}">${ic(r)}<span class="dzIntentText">${esc(r.name||lab(r))}<small>${esc((r.name?lab(r)+' · ':'')+(i+1))}</small></span></span>`).join('');
     return `<div class="dzSec">${ui('行动意图','Intent rotation')}</div>${stats}
       ${rot?`<div class="dzPat"><span class="dzPatName">${ui('循环顺序','Rotation')}</span>${rot}</div>`:''}
-      <div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('类型','Type')}</th><th>${ui('效果','Effect')}</th></tr></thead><tbody>${it.rotation.map(row).join('')}${rest.map(row).join('')}</tbody></table></div>`;
+      ${api.intentTable(it,lab)}`;
   }
   function kdBlock(kd){
     const iconId=i=>`<img class="dzIcon" src="assets/morimens/dzone-intent/intent_${esc(i)}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;

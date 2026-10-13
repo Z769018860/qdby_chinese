@@ -65,6 +65,7 @@
       .moTv{display:flex;align-items:center;gap:6px;padding:3px;border-radius:8px;cursor:pointer}.moTv:hover,.moTv.sel{background:rgba(213,177,118,.15)}.moTv .moNum{position:static}
       .moIcon{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:5px;flex:none}.moRot li,.moDetail li{display:flex;align-items:center;gap:4px}.moRot li .ty,.moDetail li .ty{flex:none}
       .moLoop{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.moStep{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:2px 9px 2px 5px;background:#111827}.moLoop .arr{color:#8290a2}
+      .moScroll{overflow:auto;margin-top:8px}.moTable{width:100%;border-collapse:collapse;font-size:12px}.moTable th,.moTable td{padding:6px 8px;border-bottom:1px solid rgba(148,163,184,.1);text-align:left;vertical-align:top}.moTable th{color:#8290a2;white-space:nowrap}.moTable td.dzKo{min-width:240px;color:#aab6c8;white-space:normal}.moTable .dzTypeCell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.moTable .dzIconSm{width:20px;height:20px}.moTable b{color:#ead9b9}
       .moEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
       @media(max-width:860px){.moWrap{grid-template-columns:1fr}.moList{max-height:40vh}}`;
     document.head.appendChild(s);
@@ -209,6 +210,35 @@
       return formulaText(e,c)+nx;
     });
   }
+  // 数值 column: damage / shield / strength ... with the evaluated numbers (formula text when it depends on the player)
+  const NUM_KIND={Damage:['伤害','Damage'],Block:['护盾','Shield'],Power:['力量','Strength'],TentaclePower:['触腕伤害','Tentacle'],Energy:['狂气','Madness']};
+  function skillNums(id,c){
+    const sk=state.mons.skills[id];if(!sk)return '';
+    const parts=splitTop(sk[2]||''),kinds=sk[5]||{},byKind={};
+    for(const [a,k] of Object.entries(kinds))byKind[k]=a;
+    const val=k=>{const e=parts[Number(k)-1];if(e==null||String(e).trim()==='')return null;const r=c?evalExpr(e,c):null;return r?fmtN(r.v)+(r.layer?'+':''):formulaText(e,c)};
+    const out=[],seen=new Set();
+    const add=(arg,label,suffix)=>{if(seen.has(arg+label))return;const v=val(arg);if(v==null)return;seen.add(arg+label);out.push(`${esc(label)} <b>${esc(v)}</b>${suffix||''}`)};
+    for(const k of Object.keys(NUM_KIND)){
+      if(!byKind[k])continue;
+      let suffix='';if(k==='Damage'&&byKind.AttackTimes){const n=val(byKind.AttackTimes);if(n&&n!=='1')suffix=` × ${esc(n)}`}
+      add(byKind[k],ui(NUM_KIND[k][0],NUM_KIND[k][1]),suffix);
+    }
+    // plain [ArgN] placeholders: read the meaning from the description ("N 点力量", "N 层祈祷", "N 回合虚弱" ...)
+    const t=sk[0];let m;
+    const re1=/\{(\d)\}\s*点(伤害|护盾|力量|触腕伤害|狂气)/g;while((m=re1.exec(t)))add(m[1],m[2]);
+    const re2=/\{(\d)\}\s*层([^，。,.\s{「」]+|「[^」]+」)/g;while((m=re2.exec(t)))add(m[1],m[2].replace(/[「」]/g,''),' 层');
+    const re3=/\{(\d)\}\s*回合(?:的)?([^，。,.\s{「」]+)/g;while((m=re3.exec(t)))add(m[1],m[2],' 回合');
+    return out.join(' · ');
+  }
+  const TARGET={FrontEnemy:['前排觉醒者','Front Awakener'],PlayerRole:['我方','Player side'],CmdCaster:['自身','Self'],AllAlly:['全体友方','All allies'],RandomAwaker:['随机觉醒者','Random Awakener'],OtherAlly:['其他友方','Other allies'],FrontAlly:['最前方友方','Front ally'],MaxHpAlly:['生命最高的友方','Highest-HP ally'],'':['视条件而定','Conditional']};
+  const targetOf=g=>{const l=TARGET[g];return l?ui(l[0],l[1]):(g&&g.length<24?g:ui('视条件而定','Conditional'))};
+  // 技能 / 类型 / 目标 / 数值 / 官方描述 table (same layout as the Info.kr based intent tables)
+  function intentTable(it,labelOf){
+    const lab=labelOf||(r=>r.type||'?');
+    const rows=[...it.rotation,...it.skills.filter(r=>!it.rotation.some(x=>x.id===r.id))].map(r=>`<tr><td>${r.name?esc(r.name):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}${r.opening?` <small>${ui('开场','Opening')}</small>`:''}</td><td><span class="dzTypeCell">${intentIcon(r.raw,'dzIcon dzIconSm')}${esc(lab(r))}</span></td><td>${esc(targetOf(r.target))}</td><td>${r.nums||'—'}</td><td class="dzKo">${esc(r.text)}</td></tr>`).join('');
+    return `<div class="dzScroll moScroll"><table class="dzTable dzSkill moTable"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('目标','Target')}</th><th>${ui('数值','Values')}</th><th>${ui('官方描述','Description')}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
   // stat context of a monster: ATK / DEF / HP from the stage's monster template (matched by battle tag and level)
   function monCtx(m,o){
     if(!m||!state.stats)return null;
@@ -231,7 +261,7 @@
     const m=state.mons.monsters[mid];if(!m)return null;
     const c=monCtx(m,o),seen=new Set(),all=(m.sk||[]).filter(id=>state.mons.skills[id]&&!seen.has(id)&&seen.add(id));
     const cyc=(m.cy||[]).filter(id=>state.mons.skills[id]),opening=new Set(m.op||[]);
-    const row=id=>{const sk=state.mons.skills[id];return {id,raw:sk[1]?.[0]||'',type:skType(sk[1]?.[0]),text:skillText(id,c),opening:opening.has(id)&&!cyc.includes(id)}};
+    const row=id=>{const sk=state.mons.skills[id];return {id,raw:sk[1]?.[0]||'',type:skType(sk[1]?.[0]),text:skillText(id,c),name:sk[3]||'',target:sk[4]||'',nums:skillNums(id,c),opening:opening.has(id)&&!cyc.includes(id)}};
     return {mid,m,ctx:c,rotation:cyc.map(row),skills:all.map(row)};
   }
   const statsHtml=c=>c?`<div class="moStats"><span>Lv <b>${c.lv}</b></span><span>${ui('生命','HP')} <b>${fmtN(c.hp)}</b></span><span>${ui('攻击','ATK')} <b>${fmtN(c.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmtN(c.def)}</b></span></div>`:'';
@@ -245,8 +275,7 @@
     const it=monIntent(mid,{sm:stage?.sm,period:stage?.p});if(!it)return '';
     const m=it.m,cls=CLS[m.c]||[m.c||'',m.c||''];
     const loop=it.rotation.map(r=>`<span class="moStep">${intentIcon(r.raw,'moIcon')}${esc(r.type||'?')}</span>`).join('<span class="arr">→</span>');
-    const li=r=>`<li>${intentIcon(r.raw)}<span class="ty">${esc(r.type)}</span>${r.opening?` <small class="moNote">${ui('开场','Opening')}</small>`:''} ${esc(r.text)}</li>`;
-    return `<div class="moDetail"><h4>${esc(m.n)} <small class="moNote">${esc(ui(cls[0],cls[1]))}${m.b?' · '+esc(m.b):''} · #${mid}</small></h4><p>${esc(m.d)}</p>${statsHtml(it.ctx)}${loop?`<p class="moLoop"><b>${ui('行动循环','Action loop')}</b>${loop}</p>`:''}${it.rotation.length?`<ol class="moRot">${it.rotation.map(li).join('')}</ol>`:''}<ul>${it.skills.filter(r=>!it.rotation.some(x=>x.id===r.id)).map(li).join('')}</ul></div>`;
+    return `<div class="moDetail"><h4>${esc(m.n)} <small class="moNote">${esc(ui(cls[0],cls[1]))}${m.b?' · '+esc(m.b):''} · #${mid}</small></h4><p>${esc(m.d)}</p>${statsHtml(it.ctx)}${loop?`<p class="moLoop"><b>${ui('行动循环','Action loop')}</b>${loop}</p>`:''}${intentTable(it)}</div>`;
   }
   // used by the D-Zone guide when a monster has no intent data of its own: find the client monster by Chinese name
   async function intentByName(names,o){
@@ -341,6 +370,6 @@
       try{await load()}catch(e){el.innerHTML=`<div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div>`;return}}
     pickDefault();renderShell();bind();refresh();renderStage();
   }
-  window.MorimensMapOverview={mount,intentByName,skType,intentIcon};
+  window.MorimensMapOverview={mount,intentByName,skType,intentIcon,intentTable};
   window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();

@@ -182,7 +182,10 @@ for m in sorted(used_mons):
 sk={}
 for sid in sorted(used_skills):
     x=skillById.get(sid)
-    if x: sk[str(sid)]=[clean(x['description']),list((x.get('types') or {}).values()),str(x['config'].get('Para') or '')]
+    if x:
+        cfgs=x['config'];nm=(cfgs.get('Name') or '').split('|',1)[-1] if cfgs.get('Name') else ''
+        kinds={a:k for k,a in re.findall(r'\[([A-Za-z]+):Arg(\d)\]',x['description'] or '')}
+        sk[str(sid)]=[clean(x['description']),list((x.get('types') or {}).values()),str(cfgs.get('Para') or ''),nm,cfgs.get('CmdTarget') or '',kinds]
 dump('monsters.json',{'monsters':mo,'skills':sk})
 smdo={}
 for x in smd:
