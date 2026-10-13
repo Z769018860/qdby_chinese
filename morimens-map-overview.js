@@ -66,7 +66,7 @@
       .moIcon{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:5px;flex:none}.moRot li,.moDetail li{display:flex;align-items:center;gap:4px}.moRot li .ty,.moDetail li .ty{flex:none}
       .moLoop{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.moStep{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:2px 9px 2px 5px;background:#111827}.moLoop .arr{color:#8290a2}
       .moScroll{overflow:auto;margin-top:8px}.moTable{width:100%;border-collapse:collapse;font-size:12px}.moTable th,.moTable td{padding:6px 8px;border-bottom:1px solid rgba(148,163,184,.1);text-align:left;vertical-align:top}.moTable th{color:#8290a2;white-space:nowrap}.moTable td.dzKo{min-width:240px;color:#aab6c8;white-space:normal}.moTable .dzTypeCell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.moTable .dzIconSm{width:20px;height:20px}.moTable b{color:#ead9b9}
-.moNode.void{pointer-events:none}.moNode.void .moHex{background:rgba(148,163,184,.16)}
+.moNode.void{pointer-events:none}.moNode.void .moHex{background:rgba(148,163,184,.2)}.moNode.void.wall .moHex{background:#06090f}
       .moEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
       @media(max-width:860px){.moWrap{grid-template-columns:1fr}.moList{max-height:40vh}}`;
     document.head.appendChild(s);
@@ -116,12 +116,13 @@
     // the client grid has 13 cells in odd y rows and 12 in even y rows; unused cells are drawn as a faint grid so neighbours / paths stay readable
     const have=new Set(items.map(i=>i.x+':'+i.y)),voids=[];
     {const y0=1,y1=8,x0=1,x1=13;   // the whole 8-row board
-     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(y%2===0&&x>12)continue;if(!have.has(x+':'+y))voids.push({x,y,r:9-y})}}
+     const wallSet=new Set((state.maps.walls?.[mapId]||[]).map(w=>w[0]+':'+w[1]));
+     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(y%2===0&&x>12)continue;if(!have.has(x+':'+y))voids.push({x,y,r:9-y,wall:wallSet.has(x+':'+y)})}}
     const b=bounds([...cells,...voids.map(v=>[v.x,v.y])]),SX=104,SY=94,W=Math.ceil((b.maxX-b.minX)*SX+100),H=Math.ceil((b.maxR-b.minR)*SY+112);
     const order=[];
     for(const it of [...items].sort((a,b)=>a.r-b.r||a.x-b.x)){const bid=battleOf(it.nodes[0]);if(bid)order.push({it,bid})}
     const num=new Map(order.map((o,i)=>[o.it,i+1]));
-    const voidHtml=voids.map(v=>{const X=v.x+(v.r%2===0?.5:0);return `<div class="moNode void" style="left:${(X-b.minX)*SX}px;top:${(v.r-b.minR)*SY}px"><div class="moHex"></div></div>`}).join('');
+    const voidHtml=voids.map(v=>{const X=v.x+(v.r%2===0?.5:0);return `<div class="moNode void ${v.wall?'wall':'floor'}" style="left:${(X-b.minX)*SX}px;top:${(v.r-b.minR)*SY}px"><div class="moHex"></div></div>`}).join('');
     const html=voidHtml+items.map(it=>{
       const nid=it.nodes[0],tid=state.maps.nodes[nid]?.[0],c=nodeCls(tid),X=it.x+(it.r%2===0?.5:0);
       const left=(X-b.minX)*SX,top=(it.r-b.minR)*SY,bid=battleOf(nid),ml=bid?monsList(bid):[];
@@ -386,6 +387,12 @@
     new MutationObserver(q).observe(document.documentElement,{childList:true,subtree:true});
     window.addEventListener('resize',q);q();
   })();
-  window.MorimensMapOverview={mount,intentByName,skType,intentIcon,intentTable};
+  // wall cells (虚无) of a D-Zone zone map, for the D-Zone guide; null until the data is loaded. Cells that are neither walls nor nodes are plain floor.
+  function wallsFor(period,zone){
+    if(!state.ready)return null;
+    const st=state.index.stages.find(x=>{const m=/融蚀深渊(\d+)期[A-G](\d)$/.exec(x.cn||'');return m&&Number(m[1])===Number(period)&&Number(m[2])===Number(zone)&&x.m});
+    return st?(state.maps.walls?.[String(st.m[0])]||[]):[];
+  }
+  window.MorimensMapOverview={wallsFor,preload:()=>load().catch(()=>{}),mount,intentByName,skType,intentIcon,intentTable};
   window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();

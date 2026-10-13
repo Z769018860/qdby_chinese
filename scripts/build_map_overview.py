@@ -135,15 +135,17 @@ VOID=11666
 tstr={t['id']:t['name'] for t in ntypes};tdesc={t['id']:t['description'] for t in ntypes}
 # node table: id -> [typeId, battleId|0]
 ntab={n:[nodeById[n]['typeId'],nodeById[n].get('battleConfigId') or 0] for n in sorted(used_nodes) if n in nodeById and n!=VOID}
-cmaps={}
+cmaps={};cwalls={}
 for mid in sorted(used_maps):
     m=mapById.get(mid)
     if not m: continue
-    cells=[]
+    cells=[];wl=[]
     for c in m['cells']:
         vs=[v['nodeId'] for v in sorted(c['variants'],key=lambda v:v['variant']) if v['nodeId']!=VOID]
         if vs: cells.append([c['x'],c['y']]+vs)
+        else: wl.append([c['x'],c['y']])          # 虚无 (wall): impassable; cells missing from the table are plain floor
     cmaps[mid]=cells
+    if wl: cwalls[str(mid)]=wl
 sorder={}
 idx=[]
 for s,cat,sub,per in kept:
@@ -154,7 +156,7 @@ idx.sort(key=lambda x:(x['c'],x['p'] or 0,x['s'],x['id']))
 def dump(name,obj): (outdir/name).write_text(json.dumps(obj,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
 dump('index.json',{'version':1,'generatedFrom':'local game client config dump (2026-10-12/13)','note':('unreleased content is included and hidden until its unlock time u' if a.include_future else 'unreleased content (later D-Zone periods, hidden awakener events) is not included'),
     'nodeTypes':{str(k):[tstr[k],tdesc.get(k,'')] for k in tstr},'stages':idx})
-dump('maps.json',{'maps':{str(k):v for k,v in cmaps.items()},'nodes':{str(k):v for k,v in ntab.items()}})
+dump('maps.json',{'maps':{str(k):v for k,v in cmaps.items()},'walls':cwalls,'nodes':{str(k):v for k,v in ntab.items()}})
 bt={}
 for b in sorted(used_battles):
     bb=battleById.get(b)
