@@ -113,11 +113,11 @@
     const cells=state.maps.maps[mapId];
     if(!cells||!cells.length)return {html:`<div class="moEmpty">${ui('没有地图数据','No map data')}</div>`,battles:[]};
     const items=cells.map(c=>({x:c[0],y:c[1],r:9-c[1],nodes:c.slice(2)}));
-    // the client grid has 13 cells in odd y rows and 12 in even y rows; unused cells are drawn as a faint grid so neighbours / paths stay readable
+    // the client grid has 13 cells per row (8 rows), even y rows shifted by half a cell; unused cells are drawn as a faint grid so neighbours / paths stay readable
     const have=new Set(items.map(i=>i.x+':'+i.y)),voids=[];
     {const y0=1,y1=8,x0=1,x1=13;   // the whole 8-row board
      const wallSet=new Set((state.maps.walls?.[mapId]||[]).map(w=>w[0]+':'+w[1]));
-     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(y%2===0&&x>12)continue;if(!have.has(x+':'+y))voids.push({x,y,r:9-y,wall:wallSet.has(x+':'+y)})}}
+     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(!have.has(x+':'+y))voids.push({x,y,r:9-y,wall:wallSet.has(x+':'+y)})}}
     const b=bounds([...cells,...voids.map(v=>[v.x,v.y])]),SX=104,SY=94,W=Math.ceil((b.maxX-b.minX)*SX+100),H=Math.ceil((b.maxR-b.minR)*SY+112);
     const order=[];
     for(const it of [...items].sort((a,b)=>a.r-b.r||a.x-b.x)){const bid=battleOf(it.nodes[0]);if(bid)order.push({it,bid})}
@@ -377,15 +377,51 @@
       try{await load()}catch(e){el.innerHTML=`<div class="moEmpty">${ui('地图数据加载失败：','Failed to load map data: ')}${esc(e.message)}</div>`;return}}
     pickDefault();renderShell();bind();refresh();renderStage();
   }
-  // shrink wide hex boards to the available width (zones page and overview), re-checked whenever the DOM changes or the window is resized
-  (function fitBoards(){
+  // zoom / pan for the hex boards (zones page and overview): wheel (ctrl / pinch) or +/- buttons to zoom, drag to pan, ⟲ to fit again
+  (function boardViewer(){
+    const st=new WeakMap();
+    function apply(b,t){b.style.transform=`translate(${t.x}px,${t.y}px) scale(${t.k})`}
+    function fit(b,v,t){
+      const w=parseFloat(b.style.width)||b.offsetWidth,h=parseFloat(b.style.height)||b.offsetHeight;
+      const k=Math.min(1.2,Math.max(0.3,(v.clientWidth-4)/w));
+      t.fit=k;t.k=k;t.x=Math.max(0,(v.clientWidth-w*k)/2);t.y=2;
+      v.style.height=Math.min(Math.round(h*k+6),Math.round(window.innerHeight*0.8))+'px';apply(b,t);
+    }
+    function setup(b){
+      const v=b.parentElement;if(!v||st.has(b))return;
+      v.classList.add('bvView');b.classList.add('bvBoard');
+      const t={k:1,x:0,y:0,fit:1};st.set(b,t);
+      requestAnimationFrame(()=>fit(b,v,t));
+      const zoomAt=(f,cx,cy)=>{const nk=Math.min(2.5,Math.max(t.fit*0.5,t.k*f));if(nk===t.k)return;const r=nk/t.k;t.x=cx-(cx-t.x)*r;t.y=cy-(cy-t.y)*r;t.k=nk;apply(b,t)};
+      const bar=document.createElement('div');bar.className='bvBar';
+      bar.innerHTML='<button type="button" data-bv="in" title="放大 / Zoom in">+</button><button type="button" data-bv="out" title="缩小 / Zoom out">−</button><button type="button" data-bv="fit" title="适应宽度 / Fit">⟲</button>';
+      v.appendChild(bar);
+      const hint=document.createElement('div');hint.className='bvHint';hint.textContent=ui('拖动平移 · Ctrl+滚轮 / 双指缩放','Drag to pan · Ctrl+wheel / pinch to zoom');v.appendChild(hint);
+      bar.addEventListener('click',e=>{const k=e.target.closest('[data-bv]')?.dataset.bv;if(!k)return;e.stopPropagation();
+        if(k==='fit')fit(b,v,t);else zoomAt(k==='in'?1.25:0.8,v.clientWidth/2,v.clientHeight/2)});
+      v.addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey||e.shiftKey))return;e.preventDefault();const r=v.getBoundingClientRect();zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX-r.left,e.clientY-r.top)},{passive:false});
+      const ptr=new Map();let drag=null,moved=false,pinch=0;
+      v.addEventListener('pointerdown',e=>{if(e.target.closest('.bvBar'))return;ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;
+        if(ptr.size===1)drag={x:e.clientX,y:e.clientY,tx:t.x,ty:t.y};else{drag=null;const [p1,p2]=[...ptr.values()];pinch=Math.hypot(p1.x-p2.x,p1.y-p2.y)}});
+      v.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});
+        if(ptr.size>=2){const [p1,p2]=[...ptr.values()],d=Math.hypot(p1.x-p2.x,p1.y-p2.y),r=v.getBoundingClientRect();if(pinch){zoomAt(d/pinch,(p1.x+p2.x)/2-r.left,(p1.y+p2.y)/2-r.top)}pinch=d;moved=true;return}
+        if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+        if(!moved&&Math.hypot(dx,dy)<5)return;
+        if(!moved){moved=true;try{v.setPointerCapture(e.pointerId)}catch{}v.classList.add('bvDrag')}
+        t.x=drag.tx+dx;t.y=drag.ty+dy;apply(b,t)});
+      const end=e=>{ptr.delete(e.pointerId);if(ptr.size<2)pinch=0;if(!ptr.size){drag=null;v.classList.remove('bvDrag');if(moved)setTimeout(()=>{moved=false},0)}};
+      v.addEventListener('pointerup',end);v.addEventListener('pointercancel',end);
+      v.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault()}},true);
+    }
     let queued=false;
-    const run=()=>{queued=false;for(const b of document.querySelectorAll('.dzMapBoard,.moBoard')){
-      const v=b.parentElement,w=parseFloat(b.style.width)||b.offsetWidth;if(!v||!w)continue;
-      const k=Math.min(1,Math.max(0.35,(v.clientWidth-22)/w));const z=k<0.999?String(k):'';if(b.style.zoom!==z)b.style.zoom=z}};
+    const run=()=>{queued=false;for(const b of document.querySelectorAll('.dzMapBoard,.moBoard'))setup(b)};
     const q=()=>{if(!queued){queued=true;requestAnimationFrame(run)}};
     new MutationObserver(q).observe(document.documentElement,{childList:true,subtree:true});
-    window.addEventListener('resize',q);q();
+    let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{for(const b of document.querySelectorAll('.bvBoard')){const t=st.get(b);if(t&&t.k===t.fit)fit(b,b.parentElement,t)}},150)});
+    q();
+    const css=document.createElement('style');
+    css.textContent='.bvView{position:relative;overflow:hidden!important;padding:0!important;touch-action:none;cursor:grab;user-select:none}.bvView.bvDrag{cursor:grabbing}.bvBoard{transform-origin:0 0;margin:0!important;will-change:transform}.bvBar{position:absolute;right:8px;top:8px;display:flex;gap:4px;z-index:5}.bvBar button{width:28px;height:28px;border-radius:8px;border:1px solid rgba(148,163,184,.35);background:rgba(15,23,42,.88);color:#e2e8f0;font-size:16px;line-height:1;cursor:pointer}.bvBar button:hover{background:#1e293b}.bvHint{position:absolute;left:8px;bottom:6px;font-size:11px;color:#6b7a90;pointer-events:none;z-index:5}';
+    document.head.appendChild(css);
   })();
   // wall cells (虚无) of a D-Zone zone map, for the D-Zone guide; null until the data is loaded. Cells that are neither walls nor nodes are plain floor.
   function wallsFor(period,zone){
@@ -393,6 +429,19 @@
     const st=state.index.stages.find(x=>{const m=/融蚀深渊(\d+)期[A-G](\d)$/.exec(x.cn||'');return m&&Number(m[1])===Number(period)&&Number(m[2])===Number(zone)&&x.m});
     return st?(state.maps.walls?.[String(st.m[0])]||[]):[];
   }
-  window.MorimensMapOverview={wallsFor,preload:()=>load().catch(()=>{}),mount,intentByName,skType,intentIcon,intentTable};
+  // consistency audit over every map in the data (used by the maintainers: window.MorimensMapOverview.audit())
+  async function audit(){
+    await load();const out={maps:0,bad:[],cells:{}};
+    for(const id of Object.keys(state.maps.maps)){
+      const v=mapView(id);if(!v.html||v.html.includes('moEmpty'))continue;out.maps++;
+      const tot=(v.html.match(/class="moNode/g)||[]).length,void_=(v.html.match(/moNode void/g)||[]).length,wall=(v.html.match(/void wall/g)||[]).length;
+      const real=tot-void_,exp=state.maps.maps[id].length;
+      if(tot!==104||real!==exp)out.bad.push({id,tot,real,exp});
+      out.cells[tot]=(out.cells[tot]||0)+1;
+      const seen=new Set();for(const m of v.html.matchAll(/style="left:([\d.]+)px;top:([\d.]+)px/g)){const k=m[1]+','+m[2];if(seen.has(k))out.bad.push({id,dup:k});seen.add(k)}
+    }
+    return out;
+  }
+  window.MorimensMapOverview={audit,wallsFor,preload:()=>load().catch(()=>{}),mount,intentByName,skType,intentIcon,intentTable};
   window.addEventListener('morimens-language-change',()=>{if(state.ready&&state.root&&state.root.isConnected){renderShell();refresh();renderStage()}});
 })();

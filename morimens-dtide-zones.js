@@ -382,13 +382,13 @@
     if(!m?.nodes?.length)return '';
     const hasStart=m.nodes.some(n=>n.k==='start'),combat=m.nodes.filter(n=>n.k==='combat');
     let vis=!hasStart&&combat.length===1?combat:m.nodes;
-    // the client grid has 13 cells in odd y rows and 12 in even y rows (r = 9 - y: r odd = 12 cells, shifted half a cell); unused cells are drawn as a faint grid so neighbours / paths stay readable
+    // the client grid has 8 rows of 13 cells; unused cells are drawn as a faint grid so neighbours / paths stay readable
     if(vis===m.nodes){
       const have=new Set(vis.map(n=>n.r+':'+n.c)),r0=1,r1=8,c0=1,c1=13;   // the whole 8-row board
       const api=window.MorimensMapOverview,walls=api?.wallsFor?.(period,wi+1);
       if(api&&!walls&&!state.wallsTried){state.wallsTried=true;api.preload().then(()=>draw())}
       const wallSet=new Set((walls||[]).map(w=>(9-w[1])+':'+w[0]));
-      const grid=[];for(let r=r0;r<=r1;r++)for(let c=c0;c<=c1;c++){if(r%2===1&&c>12)continue;if(!have.has(r+':'+c))grid.push({r,c,k:'void',v:wallSet.has(r+':'+c)?2:1})}
+      const grid=[];for(let r=r0;r<=r1;r++)for(let c=c0;c<=c1;c++){if(!have.has(r+':'+c))grid.push({r,c,k:'void',v:wallSet.has(r+':'+c)?2:1})}
       vis=[...vis,...grid];
     }
     const X=(n)=>n.c+(n.r%2===0?.5:0);
