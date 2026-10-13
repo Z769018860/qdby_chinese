@@ -388,7 +388,7 @@
       const grid=[];for(let r=r0;r<=r1;r++)for(let c=c0;c<=c1;c++){if(r%2===1&&c>12)continue;if(!have.has(r+':'+c))grid.push({r,c,k:'void',v:1})}
       vis=[...vis,...grid];
     }
-    const X=(n)=>n.c+(n.r%2===1?.5:0);
+    const X=(n)=>n.c+(n.r%2===0?.5:0);
     const minX=Math.min(...vis.map(X)),minY=Math.min(...vis.map(n=>n.r));
     const SX=104,SY=94;
     const order=[...vis.filter(n=>n.b)].sort((a,b)=>a.r-b.r||a.c-b.c);

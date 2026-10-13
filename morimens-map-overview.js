@@ -100,7 +100,7 @@
   // ---------- map rendering ----------
   function bounds(cells){
     let minX=1e9,maxX=-1e9,minR=1e9,maxR=-1e9;
-    for(const [x,y] of cells){const r=9-y,X=x+(r%2===1?.5:0);minX=Math.min(minX,X);maxX=Math.max(maxX,X);minR=Math.min(minR,r);maxR=Math.max(maxR,r)}
+    for(const [x,y] of cells){const r=9-y,X=x+(r%2===0?.5:0);minX=Math.min(minX,X);maxX=Math.max(maxX,X);minR=Math.min(minR,r);maxR=Math.max(maxR,r)}
     return {minX,maxX,minR,maxR};
   }
   function nodeCls(tid){const n=typeName(tid),[k,icon,tex]=kindOf(n);return {n,k,icon,tex}}
@@ -121,7 +121,7 @@
     const order=[];
     for(const it of [...items].sort((a,b)=>a.r-b.r||a.x-b.x)){const bid=battleOf(it.nodes[0]);if(bid)order.push({it,bid})}
     const num=new Map(order.map((o,i)=>[o.it,i+1]));
-    const voidHtml=voids.map(v=>{const X=v.x+(v.r%2===1?.5:0);return `<div class="moNode void" style="left:${(X-b.minX)*SX}px;top:${(v.r-b.minR)*SY}px"><div class="moHex"></div></div>`}).join('');
+    const voidHtml=voids.map(v=>{const X=v.x+(v.r%2===0?.5:0);return `<div class="moNode void" style="left:${(X-b.minX)*SX}px;top:${(v.r-b.minR)*SY}px"><div class="moHex"></div></div>`}).join('');
     const html=voidHtml+items.map(it=>{
       const nid=it.nodes[0],tid=state.maps.nodes[nid]?.[0],c=nodeCls(tid),X=it.x+(it.r%2===0?.5:0);
       const left=(X-b.minX)*SX,top=(it.r-b.minR)*SY,bid=battleOf(nid),ml=bid?monsList(bid):[];
