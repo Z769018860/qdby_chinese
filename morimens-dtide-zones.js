@@ -55,7 +55,7 @@
       .dzHex{position:absolute;left:0;top:0;width:100px;height:88px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:#1b2536;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:10px;line-height:1.15;color:#dbe4f0;border:0}
       .dzHex img{width:40px;height:40px;object-fit:contain}.dzHex span{max-width:78px}
       .dzNode.combat .dzHex{background:#4a2020}.dzNode.elite .dzHex{background:#5a3b14}.dzNode.boss .dzHex{background:#6b1d1d}
-      .dzNode.void{pointer-events:none}.dzNode.void .dzHex{background:rgba(148,163,184,.07)}
+      .dzNode.void{pointer-events:none}.dzNode.void .dzHex{background:rgba(148,163,184,.16)}
       .dzNode.reward .dzHex{background:#41381a}.dzNode.event .dzHex{background:#33244d}.dzNode.start .dzHex{background:#17402b}
       .dzNode.obstacle .dzHex{background:#2c3038}.dzNode.passage .dzHex{background:#1d3550}.dzNode.mechanism .dzHex{background:#19403f}.dzNode.utility .dzHex{background:#40401f}
       .dzNode.terrain .dzHex{background-size:cover}.dzNode.tex-poison-floor .dzHex{background:#1d3a1d url(assets/morimens/dzone-map/tile-poison-floor.webp) center/cover}
@@ -384,7 +384,7 @@
     let vis=!hasStart&&combat.length===1?combat:m.nodes;
     // the client grid has 13 cells in odd y rows and 12 in even y rows (r = 9 - y: r odd = 12 cells, shifted half a cell); unused cells are drawn as a faint grid so neighbours / paths stay readable
     if(vis===m.nodes){
-      const have=new Set(vis.map(n=>n.r+':'+n.c)),r0=Math.min(...vis.map(n=>n.r)),r1=Math.max(...vis.map(n=>n.r)),c0=Math.min(...vis.map(n=>n.c)),c1=Math.max(...vis.map(n=>n.c));
+      const have=new Set(vis.map(n=>n.r+':'+n.c)),r0=1,r1=8,c0=1,c1=13;   // the whole 8-row board
       const grid=[];for(let r=r0;r<=r1;r++)for(let c=c0;c<=c1;c++){if(r%2===1&&c>12)continue;if(!have.has(r+':'+c))grid.push({r,c,k:'void',v:1})}
       vis=[...vis,...grid];
     }

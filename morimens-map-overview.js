@@ -66,7 +66,7 @@
       .moIcon{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:5px;flex:none}.moRot li,.moDetail li{display:flex;align-items:center;gap:4px}.moRot li .ty,.moDetail li .ty{flex:none}
       .moLoop{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.moStep{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:2px 9px 2px 5px;background:#111827}.moLoop .arr{color:#8290a2}
       .moScroll{overflow:auto;margin-top:8px}.moTable{width:100%;border-collapse:collapse;font-size:12px}.moTable th,.moTable td{padding:6px 8px;border-bottom:1px solid rgba(148,163,184,.1);text-align:left;vertical-align:top}.moTable th{color:#8290a2;white-space:nowrap}.moTable td.dzKo{min-width:240px;color:#aab6c8;white-space:normal}.moTable .dzTypeCell{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.moTable .dzIconSm{width:20px;height:20px}.moTable b{color:#ead9b9}
-.moNode.void{pointer-events:none}.moNode.void .moHex{background:rgba(148,163,184,.07)}
+.moNode.void{pointer-events:none}.moNode.void .moHex{background:rgba(148,163,184,.16)}
       .moEmpty{padding:30px;text-align:center;color:#8997a9;border:1px dashed rgba(148,163,184,.2);border-radius:12px}
       @media(max-width:860px){.moWrap{grid-template-columns:1fr}.moList{max-height:40vh}}`;
     document.head.appendChild(s);
@@ -115,7 +115,7 @@
     const items=cells.map(c=>({x:c[0],y:c[1],r:9-c[1],nodes:c.slice(2)}));
     // the client grid has 13 cells in odd y rows and 12 in even y rows; unused cells are drawn as a faint grid so neighbours / paths stay readable
     const have=new Set(items.map(i=>i.x+':'+i.y)),voids=[];
-    {const y0=Math.min(...items.map(i=>i.y)),y1=Math.max(...items.map(i=>i.y)),x0=Math.min(...items.map(i=>i.x)),x1=Math.max(...items.map(i=>i.x));
+    {const y0=1,y1=8,x0=1,x1=13;   // the whole 8-row board
      for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(y%2===0&&x>12)continue;if(!have.has(x+':'+y))voids.push({x,y,r:9-y})}}
     const b=bounds([...cells,...voids.map(v=>[v.x,v.y])]),SX=104,SY=94,W=Math.ceil((b.maxX-b.minX)*SX+100),H=Math.ceil((b.maxR-b.minR)*SY+112);
     const order=[];
