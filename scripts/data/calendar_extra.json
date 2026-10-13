@@ -1,0 +1,46 @@
+{
+ "_note": "Hand-maintained supplements for what the automatic sources do not carry yet (Steam V2.6.2 announcements of 2026-10-09 / 10-12). Merged by scripts/sync_summon_calendar.mjs.",
+ "banners": [
+  {
+   "id": "steam-2026-10-19-vivian",
+   "type": "awaken",
+   "cat": "limited",
+   "title": {
+    "en": "V2.6.2 New Awakener: Vivian",
+    "zh": "V2.6.2 新唤醒体 · 薇薇安",
+    "zs": "steam"
+   },
+   "start": "2026-10-19T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [
+    {
+     "k": "awakener",
+     "id": "",
+     "en": "Vivian",
+     "zh": "薇薇安"
+    }
+   ],
+   "desc": "Announced in the V2.6.2 new-awakener post (Steam, 2026-10-12); the banner period is inferred from the pre-order early-bird deadline (Oct 19, 09:00 UTC+8) and the V2.6.2 schedule.",
+   "src": "steam",
+   "forecast": true
+  }
+ ],
+ "events": [
+  {
+   "id": "steam-2026-10-12-sneaky-witch-oclock",
+   "kind": "special",
+   "title": {
+    "en": "V2.6.2 Preorder Archives: Sneaky Witch O’Clock",
+    "zh": "预购档案：女巫潜行时刻",
+    "zs": "ai"
+   },
+   "start": "2026-10-12T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [],
+   "src": "steam"
+  }
+ ],
+ "forecastFix": {
+  "2026-10-19": "混沌唤醒体 · 薇薇安（V2.6.2 新唤醒体）"
+ }
+}
