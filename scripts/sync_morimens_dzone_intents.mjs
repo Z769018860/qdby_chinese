@@ -80,6 +80,20 @@ for(const [periodStr,file] of Object.entries(FILES)){
   seasons.push({period,generatedAt:src.generatedAt,waves:waves.length,monsters:Object.keys(monsters).length});
   console.log(`season ${period}: ${Object.keys(monsters).length} monsters, ${joined}/${total} joined to SKeyDB`);
 }
+// hand-maintained seasons (converted from uploads before Morimens.Info.kr publishes them): scripts/data/dzone-info-manual/<period>.json
+// must not be wiped by this sync - they are copied back and take part in index.json / by-monster.json unless a generated season of the same period exists
+try{
+  const MAN='scripts/data/dzone-info-manual';
+  for(const f of await readdir(MAN)){
+    if(!/^\d+\.json$/.test(f))continue;
+    const doc=JSON.parse(await readFile(path.join(MAN,f),'utf8'));
+    if(docs.some(d=>d.period===doc.period))continue;
+    docs.push({period:doc.period,monsters:doc.monsters,waves:doc.waves});
+    await writeFile(path.join(OUT,f),JSON.stringify(doc)+'\n');
+    seasons.push({period:doc.period,generatedAt:doc.generatedAt,waves:doc.waves.length,monsters:Object.keys(doc.monsters).length});
+    console.log(`season ${doc.period}: kept hand-maintained file (${Object.keys(doc.monsters).length} monsters)`);
+  }
+}catch(e){if(e.code!=='ENOENT')throw e}
 // Static intent data per SKeyDB monster id, taken from the latest season in which the monster was seen, so seasons
 // without their own intent data can still show a monster's skills / action pattern (numbers come from the closest level).
 const byMonster={};
