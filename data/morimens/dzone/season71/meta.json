@@ -3,47 +3,32 @@
   "activityTid": 83331,
   "name": "第71期 融灾 · 混沌戒指",
   "date": "10.12-10.25",
-  "updatedAt": "2026-10-13 02:00",
+  "updatedAt": "2026-10-14 12:14",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-13T02:00:17.365649+08:00",
+  "sourceRetrievedAt": "2026-10-14T12:14:08.863591+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 6883
+    "teams_latest.jsonl": 8839
   },
   "skippedTailLines": 0,
   "duplicateRankRowsDropped": [
     {
-      "uid": 100976218,
-      "rank": 1081,
-      "score": 265
+      "uid": 100781620,
+      "rank": 1231,
+      "score": 340
     },
     {
-      "uid": 100025249,
-      "rank": 1191,
-      "score": 245
-    },
-    {
-      "uid": 100016159,
-      "rank": 1511,
-      "score": 185
-    },
-    {
-      "uid": 100795490,
-      "rank": 1841,
-      "score": 155
-    },
-    {
-      "uid": 101760189,
-      "rank": 1941,
-      "score": 140
+      "uid": 100638128,
+      "rank": 1801,
+      "score": 290
     }
   ],
-  "recordCount": 1995,
-  "playersWithTeamDetail": 1995,
-  "teamRows": 6883,
+  "recordCount": 1998,
+  "playersWithTeamDetail": 1998,
+  "teamRows": 8839,
   "stageGroupIds": [
     83434,
     83435,
@@ -78,7 +63,15 @@
       },
       {
         "file": "raw-teams/teams-005.jsonl.gz",
-        "lines": 883
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-006.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-007.jsonl.gz",
+        "lines": 439
       }
     ],
     "uids": "uids.csv",

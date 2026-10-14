@@ -1,16 +1,16 @@
 {
   "season": 71,
-  "updatedAt": "2026-10-13 02:00",
-  "rankCount": 1995,
-  "playersWithTeamDetail": 1995,
-  "teamRows": 6883,
-  "battleRows": 12046,
+  "updatedAt": "2026-10-14 12:14",
+  "rankCount": 1998,
+  "playersWithTeamDetail": 1998,
+  "teamRows": 8839,
+  "battleRows": 15775,
   "clearBattleTotals": {
-    "deathResistCount": 4091,
-    "stageRoundCount": 112491,
-    "bossBattleRoundCount": 57036,
-    "totalUseCard": 732903,
-    "totalEnergyCost": 745921
+    "deathResistCount": 5293,
+    "stageRoundCount": 149894,
+    "bossBattleRoundCount": 74834,
+    "totalUseCard": 987496,
+    "totalEnergyCost": 996442
   },
   "note": "死扛触发次数(deathResistCount)、回合数(stageRoundCount/bossBattleRoundCount)等字段尚未计入榜单统计，已逐场保存在 battle-summary.jsonl.gz 与 raw-teams 中。"
 }
