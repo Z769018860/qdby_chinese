@@ -11,7 +11,7 @@
   };
   const TIERS=[[1,50],[51,200],[201,500],[501,1000],[1001,2000]];
   const BINS=10;
-  const state={active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0,open:new Set()}};
+  const state={active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},open:new Set(),cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0,open:new Set()}};
   let ctx=null,rows=[],host=null;
 
   function dmg(n){
@@ -47,7 +47,7 @@
       .dtideHeatGrid{display:grid;gap:2px;font-size:11px;min-width:520px}.dtideHeatGrid>div{padding:6px 4px;text-align:center;border-radius:4px;background:rgba(255,255,255,.03)}
       .dtideHeatGrid .hd{background:none;color:#8290a2}.dtideHeatGrid .rowhd{text-align:left;background:none;color:#ead9b9;font-weight:700}
       .dtideHeatGrid .cell{cursor:pointer;color:#f4f7fb}.dtideHeatGrid .cell:hover{outline:1px solid #f1d69f}.dtideHeatGrid .cell.empty{cursor:default;color:#5b6676}
-      .dtideBattleCharRow{cursor:pointer}.dtideBattleCharRow:hover td:first-child,.dtideBattleCharRow[aria-expanded=true] td:first-child{box-shadow:inset 3px 0 0 #f1d69f}.dtideBattleDetail td{padding:10px;text-align:left!important;white-space:normal!important;background:rgba(255,255,255,.02)}.dtideBattleBlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.dtideBattleBlock{min-width:0}.dtideBattleBlock h5{margin:0 0 6px;font-size:12px;color:#f1d69f}.dtideBattleTeam{padding:8px;margin-bottom:6px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(255,255,255,.025)}.dtideBattleTeam .hd{display:flex;justify-content:space-between;gap:8px;font-size:12px}.dtideBattleTeam .hd span{color:#f1d69f;font-weight:700;white-space:nowrap}.dtideBattleTeam .mem{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.dtideBattleTeam .mem i{font-style:normal;font-size:11px;padding:2px 6px;border-radius:6px;background:rgba(148,163,184,.12)}.dtideBattleTeam .mem i.me{background:rgba(241,214,159,.22);color:#f1d69f}.dtideBattleTeam .ft{display:flex;justify-content:space-between;align-items:center;gap:8px}.dtideBattleTeam .ft small{color:#8290a2}.dtideBattleTeam .ft .btns{display:flex;gap:6px;flex:0 0 auto}.dtideBattleTeam .ft button,.dtideBattleLink{white-space:nowrap;flex:0 0 auto}.dtideBattleLink{border:1px solid rgba(213,177,118,.34);border-radius:7px;background:rgba(213,177,118,.09);color:#e5c894;padding:5px 8px;font:700 10px/1.2 inherit;text-decoration:none}.dtideBattleLink:hover{background:rgba(213,177,118,.18);border-color:rgba(213,177,118,.62)}.dtideBattleTeam .gears{display:grid;gap:3px;margin:6px 0}.dtideBattleTeam .gear{font-size:12px;line-height:1.4}.dtideBattleTeam .gear b{color:#f4f7fb}.dtideBattleTeam .gear em{font-style:normal;font-size:10px;margin-left:5px;padding:1px 5px;border-radius:5px;background:rgba(98,183,255,.18);color:#9fd0ff}.dtideBattleTeam .gear small,.dtideBattleTeam .extra small{display:block;color:#8d9aac;font-size:11px}.dtideBattleTeam .extra{margin-bottom:6px}.dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
+      .dtidePlayerBtn{background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:0;text-align:left;text-decoration:underline dotted}.dtidePlayerBtn:hover{color:#f1d69f}.dtidePlayerTeams .dtideBattleBlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.dtideBattleCharRow{cursor:pointer}.dtideBattleCharRow:hover td:first-child,.dtideBattleCharRow[aria-expanded=true] td:first-child{box-shadow:inset 3px 0 0 #f1d69f}.dtideBattleDetail td{padding:10px;text-align:left!important;white-space:normal!important;background:rgba(255,255,255,.02)}.dtideBattleBlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.dtideBattleBlock{min-width:0}.dtideBattleBlock h5{margin:0 0 6px;font-size:12px;color:#f1d69f}.dtideBattleTeam{padding:8px;margin-bottom:6px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(255,255,255,.025)}.dtideBattleTeam .hd{display:flex;justify-content:space-between;gap:8px;font-size:12px}.dtideBattleTeam .hd span{color:#f1d69f;font-weight:700;white-space:nowrap}.dtideBattleTeam .mem{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.dtideBattleTeam .mem i{font-style:normal;font-size:11px;padding:2px 6px;border-radius:6px;background:rgba(148,163,184,.12)}.dtideBattleTeam .mem i.me{background:rgba(241,214,159,.22);color:#f1d69f}.dtideBattleTeam .ft{display:flex;justify-content:space-between;align-items:center;gap:8px}.dtideBattleTeam .ft small{color:#8290a2}.dtideBattleTeam .ft .btns{display:flex;gap:6px;flex:0 0 auto}.dtideBattleTeam .ft button,.dtideBattleLink{white-space:nowrap;flex:0 0 auto}.dtideBattleLink{border:1px solid rgba(213,177,118,.34);border-radius:7px;background:rgba(213,177,118,.09);color:#e5c894;padding:5px 8px;font:700 10px/1.2 inherit;text-decoration:none}.dtideBattleLink:hover{background:rgba(213,177,118,.18);border-color:rgba(213,177,118,.62)}.dtideBattleTeam .gears{display:grid;gap:3px;margin:6px 0}.dtideBattleTeam .gear{font-size:12px;line-height:1.4}.dtideBattleTeam .gear b{color:#f4f7fb}.dtideBattleTeam .gear em{font-style:normal;font-size:10px;margin-left:5px;padding:1px 5px;border-radius:5px;background:rgba(98,183,255,.18);color:#9fd0ff}.dtideBattleTeam .gear small,.dtideBattleTeam .extra small{display:block;color:#8d9aac;font-size:11px}.dtideBattleTeam .extra{margin-bottom:6px}.dtideHeatLegend{display:flex;align-items:center;gap:6px;font-size:11px;color:#8290a2;margin-top:6px}.dtideHeatLegend i{display:block;width:120px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsla(215,78%,46%,.08),hsla(108,78%,46%,.25),hsla(0,78%,46%,.42))}`;
     document.head.appendChild(st);
   }
 
@@ -344,6 +344,23 @@
     }).join('');
     return `<h4>${ui('极值队伍 Top 5（含具体配置）','Peak-stat teams, Top 5 (with builds)')}</h4><div class="dtideBattleBlocks">${blocks}</div>`;
   }
+  function playerTeams(r){
+    const nm=(f,x)=>{try{return (f?f(x):x.name)||x.name}catch{return x?.name}};
+    const ts=(r.teams||[]).slice().sort((a,b)=>(Number(a.w.wave)||0)-(Number(b.w.wave)||0));
+    if(!ts.length)return `<div class="dtideEmpty">${ui('暂无配队','No teams')}</div>`;
+    return ts.map(({w,t},i)=>{
+      const code=String(t.battleUuid||'');
+      const members=(t.members||[]).map(m=>{
+        const name=ctx.characterInfo?ctx.characterInfo(m).name:(m.canonicalName||m.name);
+        const wheels=(m.wheels||[]).map(x=>nm(ctx.wheelName,x)).filter(Boolean).join(' / ');
+        const cov=(m.covenants||[]).map(x=>nm(ctx.covenantName,x)).filter(Boolean).join(' / ');
+        return `<div class="gear"><b>${esc(name)}</b>${m.borrowed?`<em>${ui('助战','assist')}</em>`:''}<small>${wheels?esc(wheels):'—'}${cov?` · ${esc(cov)}`:''}</small></div>`;
+      }).join('');
+      const extra=[t.token?nm(ctx.tokenName,t.token):'',...(t.creations||[]).map(x=>nm(ctx.creationName,x))].filter(Boolean);
+      const b=t.battle||{};
+      return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. Wave ${esc(w.wave)}${t.stageName?` · ${esc(t.stageName)}`:''}</b><span>${ui('死扛','DR')} ${esc(b.deathResistCount??b.deathCount??'—')} · ${ui('回合','Rd')} ${esc(b.stageRoundCount??b.rounds??'—')}</span></div><div class="gears">${members}</div>${extra.length?`<div class="extra"><small>${ui('守密人技能 / 造物：','Keeper skill / creations: ')}${esc(extra.join(' · '))}</small></div>`:''}<div class="ft"><small>${t.clearType==='extra'?'Extra':''}</small><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}">${ui('复制录像回放','Copy Replay')}</button>`:''}</span></div></div>`;
+    }).join('');
+  }
   function drawPlayers(){
     const f=state.f,base=rows,list=sortRows(base.filter(passes)),stats=colStats(base);
     const slice=list;
@@ -361,7 +378,7 @@
       <h4>${ui('热力图 · 各 Wave 平均值','Heatmap · Mean by Wave')}</h4>${waveHeat(base)}
       <h4>${ui('榜单','Leaderboard')} <small style="color:#8290a2">${ui(`匹配 ${list.length} / ${base.length} 名玩家`,`${list.length} / ${base.length} players`)}</small></h4>
       <div class="dtideBattleScroll"><table class="dtideBattleTable"><thead><tr>${th('rank',ui('排名','Rank'))}<th>${ui('玩家','Player')}</th>${th('score',ui('总分','Score'))}${th('death',ui('队伍平均死扛','Team Avg Death Resist'))}${th('rounds',ui('队伍平均回合数','Team Avg Rounds'))}${th('bout',ui('队伍单回合最高伤害','Team Max Round Damage'))}${th('n',ui('战斗数','Battles'))}</tr></thead><tbody>${
-        slice.map(r=>`<tr><td>#${esc(r.rank??'—')}</td><td>${r.rec.url?`<a href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer">${esc(clean(r.name))}</a>`:esc(clean(r.name))}</td><td>${esc(r.score??'—')}</td><td class="heat" style="${heat(pctile(stats.death,r.avgDeath))}">${r.avgDeath.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.rounds,r.avgRounds))}">${r.avgRounds.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.bout,r.maxBout))}">${dmg(r.maxBout)}</td><td>${r.n}</td></tr>`).join('')||`<tr><td colspan="7" style="text-align:center">${ui('没有符合条件的玩家','No players match')}</td></tr>`
+        slice.map(r=>{const k=String(r.uid),op=state.open.has(k);return `<tr class="dtideBattlePlayerRow" aria-expanded="${op}"><td>#${esc(r.rank??'—')}</td><td><button type="button" class="dtidePlayerBtn" data-bplayer="${esc(k)}" title="${ui('点击展开 / 收起该玩家全部配队','Click to show / hide all teams of this player')}">${op?'▾':'▸'} ${esc(clean(r.name))}</button>${r.rec.url?` <a class="dtideBattleLink" href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer" title="Eremora">↗</a>`:''}</td><td>${esc(r.score??'—')}</td><td class="heat" style="${heat(pctile(stats.death,r.avgDeath))}">${r.avgDeath.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.rounds,r.avgRounds))}">${r.avgRounds.toFixed(2)}</td><td class="heat" style="${heat(pctile(stats.bout,r.maxBout))}">${dmg(r.maxBout)}</td><td>${r.n}</td></tr>${op?`<tr class="dtideBattleDetail dtidePlayerTeams"><td colspan="7"><div class="dtideBattleBlocks">${playerTeams(r)}</div></td></tr>`:''}`}).join('')||`<tr><td colspan="7" style="text-align:center">${ui('没有符合条件的玩家','No players match')}</td></tr>`
       }</tbody></table></div>`;
   }
 
@@ -389,6 +406,8 @@
     if(dl){downloadImage(dl);return}
     const view=e.target.closest('[data-bview]');
     if(view){state.view=view.dataset.bview;draw();return}
+    const pl=e.target.closest('[data-bplayer]');
+    if(pl){const k=pl.dataset.bplayer;if(state.open.has(k))state.open.delete(k);else state.open.add(k);draw();return}
     const crow=e.target.closest('[data-cchar]');
     if(crow&&!e.target.closest('.dtideBattleDetail')){const k=crow.dataset.cchar;if(state.cs.open.has(k))state.cs.open.delete(k);else state.cs.open.add(k);draw();return}
     const cs=e.target.closest('[data-csort]');
