@@ -1639,19 +1639,35 @@
     // text-driven passives with no trigger event of their own: "回合开始时抽 N 张牌" (nominal draws per round) and "每回合前 K 次造成的伤害提高 N%" (valued on the hit log)
     {const bouts=tl.rounds.filter(r=>!r.dim).length,hitsBy=new Map();for(const h of tl.hitLog||[]){if(h.blind)continue;const k=h.round;if(!hitsBy.has(k))hitsBy.set(k,[]);hitsBy.get(k).push(h)}
       for(const r of relicRows){const rec=res.relic[r.tid]||{},raw=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',para=rec.StatePara||[],argv=n=>Number(para[Number(n)-1]);
+        const addTot=(k,v)=>{r.engTot=r.engTot||{ali:0,energy:0,keyE:0,draw:0,create:0};r.engTot[k]+=v;r.staticTot=true};
         const dm=raw.match(/回合开始时(?:，)?抽\s*\[Arg(\d)\]\s*张牌/);
-        if(dm&&!r.n&&Number.isFinite(argv(dm[1]))){r.n=bouts;r.rounds=Array.from({length:bouts},(_,i)=>i+1);r.eff.push({kind:'nominal',text:ui(`每回合开始抽 ${argv(dm[1])} 张 × ${bouts} 回合 = ${argv(dm[1])*bouts} 张（按回合数估算）`,`Draw ${argv(dm[1])}/round × ${bouts} = ${argv(dm[1])*bouts} (estimated)`)})}
+        if(dm&&!r.n&&Number.isFinite(argv(dm[1]))){r.n=bouts;r.rounds=Array.from({length:bouts},(_,i)=>i+1);addTot('draw',argv(dm[1])*bouts);r.eff.push({kind:'nominal',text:ui(`每回合开始抽 ${argv(dm[1])} 张 × ${bouts} 回合 = ${argv(dm[1])*bouts} 张（按回合数估算）`,`Draw ${argv(dm[1])}/round × ${bouts} = ${argv(dm[1])*bouts} (estimated)`)})}
         const em=raw.match(/最大算力(?:提高|增加|提升)\s*(?:\[Arg(\d)\]|(\d+))/),ev0=em?(em[1]?argv(em[1]):Number(em[2])):NaN;
-        if(em&&Number.isFinite(ev0)&&bouts>0){r.eff=r.eff.filter(x=>x.kind!=='static');r.n=r.n||bouts;r.rounds=Array.from({length:bouts},(_,i)=>i+1);r.engTot={ali:0,energy:ev0*bouts,keyE:0,draw:0,create:0};r.staticTot=true;r.eff.push({kind:'nominal',text:ui(`最大算力 +${ev0}：每回合多 ${ev0} 点可用算力 × ${bouts} 回合 = ${ev0*bouts} 算力（按回合数估算）`,`Max energy +${ev0} × ${bouts} rounds = ${ev0*bouts} energy (estimated)`)})}
+        if(em&&Number.isFinite(ev0)&&bouts>0){r.eff=r.eff.filter(x=>x.kind!=='static');r.n=r.n||bouts;r.rounds=Array.from({length:bouts},(_,i)=>i+1);addTot('energy',ev0*bouts);r.eff.push({kind:'nominal',text:ui(`最大算力 +${ev0}：每回合多 ${ev0} 点可用算力 × ${bouts} 回合 = ${ev0*bouts} 算力（按回合数估算）`,`Max energy +${ev0} × ${bouts} rounds = ${ev0*bouts} energy (estimated)`)})}
         const cm=raw.match(/所有唤醒体的暴击率(?:提高|增加|提升)\s*(?:\[Arg(\d)\]|(\d+))\s*%/),cr=cm?(cm[1]?argv(cm[1]):Number(cm[2])):NaN;
         if(cm&&Number.isFinite(cr)&&!r.buff){const CD=1.5;let base=0,n=0;for(const list of hitsBy.values())for(const h of list){base+=h.crit?h.dmg/CD:h.dmg;n++}
           if(n){const extra=base*cr/100*(CD-1);r.eff=r.eff.filter(x=>x.kind!=='static');r.n=r.n||bouts;r.buff={tid:r.tid,kind:'critrate',gain:cr,extra,instances:[{round:0,time:0,gain:cr,awakeners:new Set(),extra,hits:n,temp:false,kind:'critrate'}]};r.eff.push({kind:'nominal',text:ui(`暴击率 +${cr}% × ${n} 次命中 ≈ 多 ${(n*cr/100).toFixed(1)} 次暴击（按基础暴伤 150% 估算额外伤害）`,`Crit rate +${cr}% over ${n} hits ≈ ${(n*cr/100).toFixed(1)} extra crits (150% base crit damage assumed)`)})}}
         const am=raw.match(/回合开始时[^，。]{0,10}获得\s*(?:\[Arg(\d)\]|(\d+))\s*点?狂气/),av=am?(am[1]?argv(am[1]):Number(am[2])):NaN;
-        if(am&&Number.isFinite(av)&&!r.eff.some(x=>x.kind==='nominal')){r.n=r.n||bouts;r.eff.push({kind:'nominal',text:ui(`每回合开始狂气 +${av} × ${bouts} 回合 = ${av*bouts}（按回合数估算）`,`Aliemus +${av}/round × ${bouts} = ${av*bouts} (estimated)`)})}
+        if(am&&Number.isFinite(av)&&!r.eff.some(x=>x.kind==='nominal')){r.n=r.n||bouts;addTot('ali',av*bouts);r.eff.push({kind:'nominal',text:ui(`每回合开始狂气 +${av} × ${bouts} 回合 = ${av*bouts}（按回合数估算）`,`Aliemus +${av}/round × ${bouts} = ${av*bouts} (estimated)`)})}
         const fm=raw.match(/每回合前\s*(\d+|[一二三四五六七八九十]+)\s*次[^。]{0,20}伤害提高\s*\[Arg(\d)\]\s*%/);
         if(fm&&Number.isFinite(argv(fm[2]))){const K=/^\d+$/.test(fm[1])?Number(fm[1]):'一二三四五六七八九十'.indexOf(fm[1])+1,N=argv(fm[2]);let extra=0,hits=0;
           for(const list of hitsBy.values())for(const h of list.slice(0,K)){extra+=h.dmg*N/(100+N);hits++}
-          if(hits){r.buff={tid:r.tid,kind:'out',gain:N,extra,instances:[{round:0,time:0,gain:N,awakeners:new Set(),extra,hits,temp:false,kind:'out'}]};r.n=r.n||bouts}}}}
+          if(hits){r.buff={tid:r.tid,kind:'out',gain:N,extra,instances:[{round:0,time:0,gain:N,awakeners:new Set(),extra,hits,temp:false,kind:'out'}]};r.n=r.n||bouts}}
+        // "战斗开始后，获得 N 界域精通": a flat realm-mastery bonus
+        const rmm=raw.match(/获得\s*\[Arg(\d)\]\s*<[^>]*界域精通>/);
+        if(rmm&&Number.isFinite(argv(rmm[1]))){r.rmGain=argv(rmm[1]);r.n=r.n||1;r.eff.push({kind:'nominal',text:ui(`界域精通 +${argv(rmm[1])}（常驻）`,`Realm mastery +${argv(rmm[1])} (permanent)`)})}
+        // "战斗开始时获得 N% 伤害强效": valued on every hit like the other flat damage bonuses
+        const pm=raw.match(/战斗开始(?:时|后)[，,]?获得\s*\[Arg(\d)\]\s*%\s*伤害强效/);
+        if(pm&&Number.isFinite(argv(pm[1]))&&!r.buff){const N=argv(pm[1]);let extra=0,hits=0;for(const list of hitsBy.values())for(const h of list){extra+=h.dmg*N/(100+N);hits++}
+          if(hits){r.buff={tid:r.tid,kind:'out',gain:N,extra,instances:[{round:0,time:0,gain:N,awakeners:new Set(),extra,hits,temp:false,kind:'out'}]};r.n=r.n||bouts;r.eff.push({kind:'nominal',text:ui(`伤害强效 +${N}%（常驻，按全部命中折算）`,`Damage bonus +${N}% on every hit`)})}}
+        // "每释放 K 次狂气爆发，下 N 张指令卡额外生效 1 次": N extra card effects per K ultimates (each is a free card play)
+        const km=raw.match(/每释放\s*(\d+)\s*次「?狂气爆发」?[^。]{0,6}下\s*\[Arg(\d)\]\s*张/);
+        if(km&&Number.isFinite(argv(km[2]))){const nU=(tl.playLog||[]).filter(p=>p.kind==='ultimate').length,fires=Math.floor(nU/Number(km[1])),cards=fires*argv(km[2]);if(cards>0){r.n=Math.max(r.n,fires);addTot('draw',cards);r.eff.push({kind:'nominal',text:ui(`狂气爆发 ${nU} 次 → 触发 ${fires} 次，额外生效 ${cards} 张卡（按免费出牌折算）`,`${nU} ultimates → ${fires} triggers, ${cards} extra card effects`)})}}
+        // "在一回合释放 K 次狂气爆发后，获得 N 算力，M 回合冷却": replay it from the ultimate log
+        const um=raw.match(/(?:一|1)\s*回合(?:内)?释放\s*(\d+)\s*次「?狂气爆发」?后[，,]?获得\s*\[Arg(\d)\]\s*算力/),ucd=raw.match(/(\d+)\s*回合冷却/);
+        if(um&&Number.isFinite(argv(um[2]))){const need=Number(um[1]),cd=ucd?Number(ucd[1]):0,byR=new Map();for(const p of tl.playLog||[])if(p.kind==='ultimate')byR.set(p.round,(byR.get(p.round)||0)+1);
+          let fires=0,next=-1;for(const rd of [...byR.keys()].sort((a,b)=>a-b)){if(rd<next)continue;if(byR.get(rd)>=need){fires++;next=rd+cd+1}}
+          if(fires>0){r.n=Math.max(r.n,fires);addTot('energy',fires*argv(um[2]));r.eff.push({kind:'nominal',text:ui(`一回合释放 ${need} 次狂气爆发：达成 ${fires} 次 × ${argv(um[2])} 算力（按爆发记录模拟）`,`Threshold met ${fires}× → ${fires*argv(um[2])} energy`)})}}}}
     for(const r of relicRows){
       const db=tl.relicDebuff?.get(r.tid);if(db){const n=db.times.size;r.n=Math.max(r.n,n);r.eff.push({kind:'debuff',text:ui(`降低敌方力量 共 ${fmt(Math.round(db.total))} 点（${n} 次触发，${db.targets.size} 个目标）`,`Enemy strength −${fmt(Math.round(db.total))} total (${n} triggers, ${db.targets.size} targets)`)})}
       const cd=tl.relicCond?.get(r.tid);if(cd){r.n=Math.max(r.n,cd.n);for(const x of cd.rounds)if(!r.rounds.includes(x))r.rounds.push(x);r.eff.push({kind:'draw',text:ui(`满足手牌条件触发 ${cd.n} 次，抽牌 ${cd.draws} 张（按手牌数估算）`,`${cd.n} qualifying plays, ${cd.draws} cards drawn (estimated from hand size)`)})}}
@@ -1684,6 +1700,9 @@
             if(valEff.length)r.engine=true}}
         if(re.lump)r.eff.push({kind:'engine',text:`${ui('条件触发（含计数 / 冷却 / 状态层数条件）','Conditional triggers')}：${re.lump.chs.map(c=>`${c.label}→${whatOf(c)}`).join(' ； ')} · ${ui(`共 ${re.lump.n} 次触发（按造物触发总数推算，无法逐条区分）`,`${re.lump.n} triggers in total (inferred from the relic trigger count)`)}`});
         r.rounds.sort((a,b)=>a-b);r.engineN=tot=re.chs.filter(c=>!c.lumped).reduce((n,c)=>n+c.n,0)+(re.lump?.n||0)+(re.extra||0);if(tot>0&&re.dim)r.n=Math.max(tot,0);
+        // channels that share the leftover triggers: same trigger → every simple channel fires each time, conditional ones (odd / even round, counters) split the share
+        if(re.lump){const gs=[...new Set(re.lump.chs.map(c=>c.base))],per=re.lump.n/Math.max(1,gs.length);
+          for(const g of gs){const grp=re.lump.chs.filter(c=>c.base===g),cplx=grp.filter(c=>c.complex).length;for(const c of grp){const nn=c.complex?per/Math.max(1,cplx):per;for(const x of c.effs)if(eT[x.kind]!=null&&!x.cond)eT[x.kind]+=x.amt*(x.mult||1)*nn}}}
         r.engTot=eT;{const sm=Object.entries(eT).filter(([,v])=>v>0).map(([k,v])=>`${KL[k]||k} ${fmt(Math.round(v*10)/10)}`);if(sm.length)r.eff.push({kind:'total',text:`${ui('合计','Total')}：${sm.join(' · ')}`})}}}
     // a relic that says "抽 N 张牌" cannot have drawn more than N × its trigger count: the rest of the draws in its frame group are the round's normal draw
     for(const r of relicRows){const sp=tl.supStore?.get('rel:'+r.tid);if(!sp||!(sp.draws>0)||r.engine)continue;const rec=res.relic[r.tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/);if(!m)continue;const k=m[1]?Number((rec.StatePara||[])[Number(m[1])-1]):Number(m[2]);if(Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n)sp.draws=k*r.n}
@@ -1723,7 +1742,7 @@
           const KW='(银钥充能|银钥能量|狂气|算力|基础伤害|暴击伤害|暴击率)',m=!t?(String(d.state||'').match(new RegExp(KW))?.slice(0,2).concat(String(e.desc||'').includes(String(d.state||'').match(new RegExp(KW))?.[1]+'提高')?['提高']:[''])||String(e.desc||'').match(new RegExp(KW+'[^，。]{0,4}(提高|增加|获得)'))):null,pct=m&&m[2]==='提高'?'%':'';
           lines.push(ui(`${t?t[0]:m?m[1]:'数值'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct}（「${d.state}」峰值 ${d.peak} 层${d.avg!=null?`；回合开始平均 ${fmt(Math.round(d.avgLayer))} 层 ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''}）`,`${t?t[1]:m?m[1]:'Value'} ${d.value>=0?'+':''}${fmt(Math.round(d.value*100)/100)}${pct} (${d.state} peak ${d.peak}${d.avg!=null?`; avg ${fmt(Math.round(d.avgLayer))} layers ≈ +${fmt(Math.round(d.avg*10)/10)}${pct}`:''})`))}}}
       {const o=genRows.find(x=>x.key==='gear:'+e.key);if(o)lines.push(genText(o))}
-      return {...e,n,hbN,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
+      return {...e,n,passive:n===0&&((rec?.extra||0)>0||(e.statics||[]).length>0),hbN,rounds,out,extra:rec?.extra||0,buffs:rec?.instances||[],byChannels:sup,channelRows:(e.channels||[]).filter(c=>!c.once||c.count),effectLines:[...new Set(lines)]};
     }).sort((a,b)=>(a.kind===b.kind?0:a.kind==='wheel'?-1:1)||(b.extra+b.out.dmg)-(a.extra+a.out.dmg));
     const gearExtra=gearRows.reduce((n,g)=>n+g.extra+g.out.dmg,0);
     const stateRows=[...stateTotals.entries()].map(([id,t])=>({id,...t})).filter(x=>x.dmg>0).sort((a,b)=>b.dmg-a.dmg);
@@ -1825,6 +1844,22 @@
         {const own=cand.filter(r=>['诞妄·墨菲','莫丝','庞托斯'].includes(r.a.name));if(own.length){const M=cand.reduce((n,r)=>n+(attrOf(r.a.uid).occupation_master_final||attrOf(r.a.uid).occupation_master||0),0)/Math.max(1,cand.length),mult=aeqChaos?2:1,f=M*0.00025*mult;
           const nTranq=tl.rounds.reduce((n,r)=>n+r.events.filter(e=>e.realm&&/^静海/.test(String(e.skillName||''))).length,0),hp0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;
           const ex=(TD||0)*f/(1+f)+nTranq*hp0*f;for(const r of own){realmBuf.set('act:'+r.a.uid,(realmBuf.get('act:'+r.a.uid)||0)+ex/own.length)}}}}   // 晦暝深海: team damage amp +50% (x2 with only Aequor / Chaos awakeners)
+      // ---- wheels / covenants: effects their own trigger commands produced, credited to the item instead of the awakener whose name the property event carries ----
+      {const FM={keyE:['key'],ali:['aliOthers'],energy:['energy'],draw:['draws'],heal:['heal'],block:['blk'],embryo:['embryo']},VK={BEGainUltiEnergy:'ali',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEChangeEnergy:'energy',BEHeal:'heal',BEGainBlock:'block',BEDrawCard:'draw',BEScarletBloodChange:'embryo'};
+        const embryoSeen=[...(tl.supStore?.values()||[])].some(v=>v.embryo>0);
+        for(const g of gearRows){const key='gear:'+g.key;if(!tl.supStore)break;let sp=tl.supStore.get(key);if(!sp){sp=supOf(key);tl.supStore.set(key,sp)}
+          const tot={};
+          for(const c of g.channels||[]){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;const cmd=res.rr?.Cmd?.[String(c.cmd)];if(!cmd)continue;const params=g.mainStates?.[0]?.params||[],paras=String(c.para??'').split(',').map(x=>x.trim());
+            for(const dl of cmd.data_list||[]){const vk=VK[dl.Type];if(!vk)continue;if(vk==='embryo'&&!embryoSeen)continue;
+              let v=null;const dv=c.vals?.[vk];if(dv&&dv.n)v=dv.sum;else{let t=String(dl.Para??'').split(',')[0].trim().replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');if(!/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))v=(evalNum(t,{})||0)*cnt}
+              if(v!=null&&Number.isFinite(v)&&v!==0)tot[vk]=(tot[vk]||0)+Math.abs(v)}}
+          for(const [vk,sum] of Object.entries(tot)){if(vk==='heal'||vk==='block'){const ok=vk==='heal'?'heal':'block';if(!(g.out[ok]>0))g.out[ok]=sum;continue}const f=FM[vk][0],have=Number(sp[f])||0;if(sum>have){const delta=sum-have;sp[f]=sum;const ow=(g.owners||[]).map(String).filter(u=>tl.supStore.has('act:'+u));
+              if(ow.length)for(const u of ow){const o=tl.supStore.get('act:'+u);if(f==='aliOthers'){const take=Math.min(o.aliOthers||0,delta/ow.length);o.aliOthers-=take}else o[f]=Math.max(0,(Number(o[f])||0)-delta/ow.length)}}}
+          if(g.kind==='covenant'){const fx=(g.effectsEn||[]).map(x=>String(x.desc||x)).join(' ');let m;
+            if((m=fx.match(/Realm Mastery\s*\+\s*(\d+(?:\.\d+)?)/))&&!sp.rm)sp.rm=Number(m[1]);
+            if((m=[...fx.matchAll(/Death Resistance\s*\+\s*(\d+(?:\.\d+)?)%/g)]).length&&!sp.dr)sp.dr=m.reduce((n,x)=>n+Number(x[1]),0)}}}
+      // cards a wheel / covenant / relic put into the deck are free extra cards for the team
+      for(const o of genRows){if(!/^(gear|rel):/.test(o.key||'')||!tl.supStore)continue;const sp=tl.supStore.get(o.key)||(()=>{const n=supOf(o.key);tl.supStore.set(o.key,n);return n})();if(!(sp.draws>0||sp.cycles>0||sp.copies>0))sp.draws=0.8*o.created}
       const awRaw=cand.map(r=>{const cc=crCredit.get(String(r.a.uid))||null,sp0=supOf('act:'+r.a.uid),sp=cc?mergeSp(sp0,cc):sp0,at=attrOf(r.a.uid),bf=tl.relicBuffs?.get('act:'+r.a.uid);
         const out={dir:0,dot:0,ctr:0,exe:0,ten:0,oth:0};for(const o of r.src.values())if(o.dmg>0)out[outKind(o)]+=o.dmg;
         const tg=cand.reduce((n,c)=>n+supOf('act:'+c.a.uid).tenGain,0),tx=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+(v.tenExtra||0),0);out.ten+=tg>0?Math.max(0,TD-tx)*sp.tenGain/tg:0;   // tentacle damage is dealt by the team: credit by tentacle bonus raised
@@ -1843,7 +1878,7 @@
       const wheelItems=gearItems('wheel'),covItems=gearItems('covenant');
       const relSup0=r=>{const sp=supOf('rel:'+r.tid);const t=pipeName((res.relic[r.tid]||{}).BattleDesc||(res.relic[r.tid]||{}).Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/),k=m?(m[1]?Number((res.relic[r.tid]?.StatePara||[])[Number(m[1])-1]):Number(m[2])):NaN;
         return Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n?{...sp,draws:k*r.n}:sp};
-      const relSup=r=>{const sp=relSup0(r);return r.engTot&&(r.engine||r.staticTot)?{...sp,aliOthers:r.engTot.ali,aliSelf:0,key:r.engTot.keyE,energy:r.engTot.energy,draws:r.engTot.draw,cycles:0,cut:0,costCut:0,copies:0,tenGain:0,embryo:0,embCards:0,inspire:0,rm:0,dr:0,seal:0}:sp};
+      const relSup=r=>{const sp=relSup0(r),rmg=r.rmGain||0;return r.engTot&&(r.engine||r.staticTot)?{...sp,aliOthers:r.engTot.ali,aliSelf:0,key:r.engTot.keyE,energy:r.engTot.energy,draws:r.engTot.draw,cycles:0,cut:0,costCut:0,copies:0,tenGain:0,embryo:0,embCards:0,inspire:0,rm:rmg,dr:0,seal:0}:(rmg?{...sp,rm:(sp.rm||0)+rmg}:sp)};
       const relicItems=relicRows.map(r=>({r,val:r.dmg+(r.buff?.extra||0)+(r.dot||0),...itemRaw(relSup(r),{dir:r.dmg,dot:r.dot||0},r.buff?.extra||0,r.block,r.heal)}));
       rate(wheelItems);rate(covItems);rate(relicItems);
       const best=(l,n)=>[...l].sort((a,b)=>b.score-a.score||(b.val||0)-(a.val||0)||((b.g||b.r).n-(a.g||a.r).n)).slice(0,n);
@@ -2142,7 +2177,7 @@
     const awHead=a?`<div class="mr2mvpmain">${ico(a.r.a.icon,a.r.a.name,'av mvp')}<div><b>${esc(a.r.a.name)} <span class="mr2grade g${a.grade}">${a.grade}</span></b><span>${ui('综合评分','Score')} <em>${a.score.toFixed(1)}</em> / 100</span><small>${esc(topDims(a))}</small></div></div><div class="mr2mvpkv"><span>${ui('伤害','DMG')} <b>${fmt(a.r.dmg)}</b> ${total?pctOf(a.r.dmg,total):0}%</span><span>${ui('护盾 / 治疗','Shield / Heal')} <b>${fmt(a.r.block)}</b> / <b>${fmt(a.r.heal)}</b></span><span>${ui('出牌','Cards')} <b>${a.r.plays}</b></span></div>`:'';
     const awSubs=m.awakeners.slice(1,3).map(x=>`<span>${ico(x.r.a.icon,x.r.a.name,'av xs')}${esc(x.r.a.name)} <b>${x.score.toFixed(1)}</b> <i class="mr2grade g${x.grade}">${x.grade}</i></span>`).join('');
     const itemLine=(x,tail)=>`<span>${ui('综合评分','Score')} <em>${x.score.toFixed(1)}</em> <i class="mr2grade g${x.grade}">${x.grade}</i></span><small>${esc(topDimsOf(x))}${tail?` · ${esc(tail)}`:''}</small>`;
-    const gearHead=(x,kindLabel)=>x?`<div class="mr2mvpmain">${ico(x.g.icon,x.g.name,`gi ${x.g.kind==='wheel'?'':'cov'} mvp`)}<div><b>${esc(x.g.name)}</b>${itemLine(x,`${kindLabel} · ${ui('触发','triggers')} ${x.g.n}${x.val>0?` · ${ui('估算贡献','est.')} ${fmt(Math.round(x.val))}`:''}`)}</div></div>`:'';
+    const gearHead=(x,kindLabel)=>x?`<div class="mr2mvpmain">${ico(x.g.icon,x.g.name,`gi ${x.g.kind==='wheel'?'':'cov'} mvp`)}<div><b>${esc(x.g.name)}</b>${itemLine(x,`${kindLabel} · ${x.g.passive?ui('常驻','Passive'):`${ui('触发','triggers')} ${x.g.n}`}${x.val>0?` · ${ui('估算贡献','est.')} ${fmt(Math.round(x.val))}`:''}`)}</div></div>`:'';
     const gearSubs=l=>l.slice(1,3).map(x=>`<span>${ico(x.g.icon,x.g.name,'gi xs')}${esc(x.g.name)} <b>${x.score.toFixed(1)}</b> <i class="mr2grade g${x.grade}">${x.grade}</i></span>`).join('');
     const relHead=r?`<div class="mr2mvpmain">${ico(relicIconSrc(res,r.r.tid),res.nameRelic(r.r.tid),'rl mvp')}<div><b>${esc(res.nameRelic(r.r.tid))}</b>${itemLine(r,`${r.r.start?ui('开局携带','Starting'):ui('战斗中获得','Gained')} · ${ui('触发','triggers')} ${r.r.n}${r.val>0?` · ${ui('估算贡献','est.')} ${fmt(Math.round(r.val))}`:''}${r.r.buff&&r.r.buff.gain>0?` · ${r.r.buff.kind==='power'?ui(`产生 ${fmt(r.r.buff.gain)} 力量`,`+${fmt(r.r.buff.gain)} power`):ui('基伤加成','base dmg')}`:''}`)}</div></div>`:'';
     const relSubs=m.relics.slice(1,3).map(x=>`<span>${ico(relicIconSrc(res,x.r.tid),res.nameRelic(x.r.tid),'rl xs')}${esc(res.nameRelic(x.r.tid))} <b>${x.score.toFixed(1)}</b> <i class="mr2grade g${x.grade}">${x.grade}</i></span>`).join('');
@@ -2152,8 +2187,8 @@
       aw:m.awakeners.map(o=>({top:(()=>{const x=o.x||{},L={out:ui('输出','Output'),sh:ui('护盾/治疗量','Shield+heal'),mit:ui('减伤','Mitigation'),ctl:ui('控制','Control'),dr:ui('死亡抵抗','Death resist'),key:ui('银钥能量','Keyflare'),ali:ui('狂气','Aliemus'),seal:ui('黑印','Seals'),eng:ui('行动力','Energy'),vuln:ui('易伤增伤','Vuln. dmg'),buf:ui('伤害加成','Dmg buffs'),cut:ui('减费','Cost cut'),draw:ui('过牌','Draws'),realm:ui('界域精通','Realm mastery'),emb:ui('胚胎','Embryo'),dis:ui('驱散','Dispel')};
           const c=[];if(o.cats?.out!=null&&x.outT>0)c.push({l:L.out,s:o.cats.out,v:x.outT});for(const k of ['sh','mit','ctl','dr']){const sc=x.defS?.[k],v=k==='sh'?x.sh:x[k];if(sc!=null&&v>0)c.push({l:L[k],s:sc,v})}for(const k of Object.keys(x.supS||{})){const sc=x.supS[k],v=x.sup?.[k];if(sc!=null&&v>0)c.push({l:L[k]||k,s:sc,v})}
           return c.sort((a,b)=>b.s-a.s||b.v-a.v).slice(0,2).map(q=>({l:q.l,v:q.v,s:Math.round(q.s)}))})(),name:o.r.a.name,icon:o.r.a.icon,score:o.score,grade:o.grade,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]]),dmg:o.r.dmg,pct:total?pctOf(o.r.dmg,total):0,block:o.r.block,heal:o.r.heal,plays:o.r.plays})),
-      wheels:m.wheels.slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
-      covs:m.covenants.filter(o=>o.val>0||o.g.n>0).slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
+      wheels:m.wheels.slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,passive:!!o.g.passive,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
+      covs:m.covenants.filter(o=>o.val>0||o.g.n>0).slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,passive:!!o.g.passive,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
       relics:m.relics.slice(0,3).map(o=>({name:res.nameRelic(o.r.tid),icon:relicIconSrc(res,o.r.tid),score:o.score,grade:o.grade,n:o.r.n,val:o.val,start:!!o.r.start,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
       total}}catch(e){window.__mr2MvpExport=null}
     // brief timeline image data: opening state + the main actions of every round (same avatars / colours as the round strip)
