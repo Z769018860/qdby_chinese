@@ -77,7 +77,7 @@ async function download(root){
   y+=hMid;
   // gear
   const tr=ui('触发','triggers'),es=ui('估算','est.');
-  const cols=[[ui('命轮 MVP','Wheels'),X.wheels,w=>`${tr} ${w.n}${w.val>0?` · ${es} ${fmtN(w.val)}`:''}`],[ui('造物 MVP','Relics'),X.relics,w=>`${w.start?ui('开局','Start'):ui('获得','Gained')} · ${tr} ${w.n}${w.val>0?` · ${es} ${fmtN(w.val)}`:''}`],[ui('密契 MVP','Covenants'),X.covs,w=>`${tr} ${w.n}${w.val>0?` · ${es} ${fmtN(w.val)}`:''}`]];
+  const cols=[[ui('命轮 MVP','Wheels'),X.wheels,w=>`${w.passive?ui('常驻','Passive'):`${tr} ${w.n}`}${w.val>0?` · ${es} ${fmtN(w.val)}`:''}`],[ui('造物 MVP','Relics'),X.relics,w=>`${w.start?ui('开局','Start'):ui('获得','Gained')} · ${tr} ${w.n}${w.val>0?` · ${es} ${fmtN(w.val)}`:''}`],[ui('密契 MVP','Covenants'),X.covs,w=>`${w.passive?ui('常驻','Passive'):`${tr} ${w.n}`}${w.val>0?` · ${es} ${fmtN(w.val)}`:''}`]];
   const cw3=(W-2*M-24)/3;
   cols.forEach(([title,list,line],ci)=>{const x=M+ci*(cw3+12);box(x,y,cw3,hGear-10);T(title,x+14,y+24,'700 13px '+F,'#d9bd89');if(!list.length)T('—',x+14,y+60,'14px '+F,'#657286');
     list.slice(0,3).forEach((g,i)=>{const ry=y+34+i*42;icon(gi(g.icon),x+14,ry,34,7);T(fit(g.name,'700 13px '+F,cw3-130),x+56,ry+14,'700 13px '+F,'#e8edf5');T(fit(line(g)+(g.dims.length?' · '+g.dims.map(d=>`${d[0]}${Math.round(d[1])}`).join(' '):''),'10px '+F,cw3-150),x+56,ry+29,'10px '+F,'#8b9aae');T(g.score.toFixed(1),x+cw3-48,ry+22,'900 17px '+F,'#8fd8d1','right');T(g.grade,x+cw3-16,ry+22,'900 15px '+F,gcol(g.grade),'right')})});
