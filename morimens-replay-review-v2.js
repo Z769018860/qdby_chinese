@@ -1010,7 +1010,7 @@
         for(const sid of e.related||[]){const rec=res.state[String(sid)]||{};for(let n=1;n<=4;n++)if(rec['TriggerCmd'+n]!=null)addCmd(rec['TriggerCmd'+n])}
         if(!types.size||[...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if((e.channels||[]).some(c=>c.base==='BSTRoleAfterDeathResist'))types.add('DeathResist');
-        let all=[...types].join('|');if(/胚胎|圣洁之子/.test(String(e.desc||'')))all+='|Embryo';for(const [f,re] of CAP)if(sp[f]&&!re.test(all))sp[f]=0}}
+        let all=[...types].join('|');if(/胚胎|圣洁之子/.test(String(e.desc||'')))all+='|Embryo';for(const [f,re] of CAP)if(sp[f]&&!re.test(all)){if(f==='key')passiveSupport.key+=sp[f];else if(f==='aliOthers'||f==='aliSelf')passiveSupport.ali+=sp[f];sp[f]=0}}}
     // same capability filter for relics: round-start draws / energy refills share a frame group with the relic's trigger, so without it they were credited to whatever relic fired there
     {const bdR=full.battleDat||{},CAPR=[['draws',/DrawCard/],['cycles',/MoveCard|Discard|Exhaust|Shuffle|Retrieve|Recycle/],['cut',/Cost|ChangeCard/],['costCut',/Cost|CopyCard/],['copies',/CopyCard/],['tenGain',/Tentacle/],['embryo',/Embryo/],['embCards',/Embryo/],['inspire',/CreateCard/],['rm',/Scarlet|Resource|Realm|Proficient|Occupation|ChangeAttr/],['dr',/DeathResist|Revive|ChangeAttr/],['seal',/Seal|BlackCoin/],['energy',/BEChangeEnergy|ChangeAttr\.energy/],['key',/KeeperEnergy/],['aliSelf',/UltiEnergy|ulti_energy/],['aliOthers',/UltiEnergy|ulti_energy/]];
       for(const rl of bdR.relics||[]){const tid=String(rl.tid),sp=supStore.get('rel:'+tid);if(!sp)continue;
@@ -1023,7 +1023,7 @@
           all=[/抽[^。，]{0,6}牌|摸牌/.test(t)?'BEDrawCard':'',/取回|弃|洗入|置顶/.test(t)?'BEMoveCard':'',/算力消耗|费用/.test(t)?'BEChangeCost':'',/触腕/.test(t)?'BEChangeTentacleCount':'',/灵感|胚胎|置入/.test(t)?'BECreateCard':'',/界域精通|黑印|猩红|职业/.test(t)?'BEScarletBloodChange':'',/死亡抵抗|死抗/.test(t)?'DeathResist':'',/最大算力|获得[^。，]{0,4}算力|算力[^。，]{0,4}(?:提高|增加|回复)/.test(t)?'BEChangeEnergy':'',/银钥能量|银钥充能/.test(t)?'BEChangeKeeperEnergy':'',/狂气/.test(t)?'BEGainUltiEnergy':''].join('|')}
         if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
-        for(const [f,re] of CAPR)if(sp[f]&&!re.test(all))sp[f]=0}}
+        for(const [f,re] of CAPR)if(sp[f]&&!re.test(all)){if(f==='key')passiveSupport.key+=sp[f];else if(f==='aliOthers'||f==='aliSelf')passiveSupport.ali+=sp[f];sp[f]=0}}}
     // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
@@ -1850,8 +1850,8 @@
         for(const g of gearRows){const key='gear:'+g.key;if(!tl.supStore)break;let sp=tl.supStore.get(key);if(!sp){sp=supOf(key);tl.supStore.set(key,sp)}
           const tot={};
           for(const c of g.channels||[]){const cnt=c.once?1:c.count;if(c.cmd==null||!cnt)continue;const cmd=res.rr?.Cmd?.[String(c.cmd)];if(!cmd)continue;const params=g.mainStates?.[0]?.params||[],paras=String(c.para??'').split(',').map(x=>x.trim());
-            for(const dl of cmd.data_list||[]){const vk=VK[dl.Type];if(!vk)continue;if(vk==='embryo'&&!embryoSeen)continue;
-              let v=null;const dv=c.vals?.[vk];if(dv&&dv.n)v=dv.sum;else{let t=String(dl.Para??'').split(',')[0].trim().replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');if(!/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))v=(evalNum(t,{})||0)*cnt}
+            const usedV=new Set();for(const dl of cmd.data_list||[]){const vk=VK[dl.Type];if(!vk)continue;if(vk==='embryo'&&!embryoSeen)continue;
+              let v=null;const dv=c.vals?.[vk];if(dv&&dv.n){if(usedV.has(vk))continue;usedV.add(vk);v=dv.sum}else{let t=String(dl.Para??'').split(',')[0].trim().replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');if(!/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))v=(evalNum(t,{})||0)*cnt}
               if(v!=null&&Number.isFinite(v)&&v!==0)tot[vk]=(tot[vk]||0)+Math.abs(v)}}
           for(const [vk,sum] of Object.entries(tot)){if(vk==='heal'||vk==='block'){const ok=vk==='heal'?'heal':'block';if(!(g.out[ok]>0))g.out[ok]=sum;continue}const f=FM[vk][0],have=Number(sp[f])||0;if(sum>have){const delta=sum-have;sp[f]=sum;const ow=(g.owners||[]).map(String).filter(u=>tl.supStore.has('act:'+u));
               if(ow.length)for(const u of ow){const o=tl.supStore.get('act:'+u);if(f==='aliOthers'){const take=Math.min(o.aliOthers||0,delta/ow.length);o.aliOthers-=take}else o[f]=Math.max(0,(Number(o[f])||0)-delta/ow.length)}}}
