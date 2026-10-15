@@ -540,6 +540,12 @@
     const initUids=new Set((ent.initialCards||[]).map(c=>String(c.uid)));
     let endDR=null;const drLog=[];   /* death-resist triggers with the keeper's panel value at that moment (for the luck easter egg) */
     const genCards=new Map();   /* generated cards (event 1025): uid -> source, so the plays of those very cards can be traced */
+    // 维度影像 relics whose text gives Keyflare: a fixed amount per proc (拉蒙娜 / 环行·拉蒙娜: "获得 [ArgN] 点银钥能量") or one more run of the awakener's own Keyflare effects (克莱门汀)
+    const dimKeyAmt=new Map(),dimKeyHalf=new Map();   // amount -> tid ; awakener name -> tid
+    for(const rl of (full.battleDat||{}).relics||[]){const tid=String(rl.tid),nmR=res.nameRelic(tid);if(!/^维度影像/.test(nmR))continue;
+      const rec=res.relic[tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||'');
+      const m=t.match(/\[Arg(\d)\]\s*点银钥能量/);if(m){const v=Number((rec.StatePara||[])[Number(m[1])-1]);if(v>0&&!dimKeyAmt.has(v))dimKeyAmt.set(v,tid)}
+      else if(/效果次数提高 1/.test(t)&&/银钥能量/.test(t)){const who=nmR.replace(/^维度影像·(环行·)?/,'');dimKeyHalf.set(who,tid)}}
     const relicEngine=new Map();
     {const bdR=full.battleDat||{},EFK={BEGainUltiEnergy:'ali','BEChangeAttr.ulti_energy':'ali',BEChangeEnergy:'energy',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEDrawCard:'draw',BECreateCard:'create',BEChangeTentacleCount:'tent',BEGainBlock:'block',BEHeal:'heal',BEAddState:'state',BECopyCard:'copy',BEPassiveDamage:'pdmg'};
       const nAw=Math.max(1,[...actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).length);
@@ -822,7 +828,9 @@
             if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
-            for(const k of keys){const sp=supOf(k);
+            const dimTid=pt==='keeper_energy'&&dimKeyAmt.size&&!evm&&!wm&&d.extraData?.cmdServerUid!=null?dimKeyAmt.get(cv):null;
+            if(dimTid)supOf('rel:'+dimTid).key+=cv;
+            for(const k of dimTid?[]:keys){const sp=supOf(k);
               if(pt==='ulti_energy'&&rcv?.kind==='awakener'){if(k==='act:'+d.uid)sp.aliSelf+=cv*part;else sp.aliOthers+=cv*part}
               else if(pt==='keeper_energy')sp.key+=cv*part;
               else if(pt==='energy')sp.energy+=cv*part;
@@ -833,6 +841,7 @@
               else if(pt==='tentacle_dmg'){sp.tenGain+=cv*part;tenAct.push({key:k,amt:cv*part,cast:String(d.extraData?.castRoleUid)})}
               else if(pt==='block'&&rcv?.camp===1&&k!=='kp'&&!k.startsWith('act:')&&keyHas(k,/护盾|shield|block/i))sp.blk+=cv*part
               else if(pt==='hp'&&d.reason!==4&&rcv?.camp===1&&k!=='kp'&&!k.startsWith('act:')&&keyHas(k,/治疗|恢复|heal|restore/i))sp.heal+=cv*part}
+            if(pt==='keeper_energy'&&dimKeyHalf.size&&execSrc.cur?.play&&!dimTid){const hw=actors.get(String(d.extraData?.castRoleUid))?.name,ht=hw!=null?dimKeyHalf.get(hw):null;if(ht){const half=cv/2;supOf('rel:'+ht).key+=half;for(const k of keys)supOf(k).key-=half*part}}
             if(!keys.length){if(pt==='ulti_energy')passiveSupport.ali+=cv;else if(pt==='keeper_energy')passiveSupport.key+=cv}
             // actor-sourced buffs: power / crit damage / crit rate / base damage -> estimated extra damage through the same hit model as relics
             if(rcv?.kind==='awakener'&&keys.length&&!relWin){
@@ -1023,7 +1032,7 @@
           all=[/抽[^。，]{0,6}牌|摸牌/.test(t)?'BEDrawCard':'',/取回|弃|洗入|置顶/.test(t)?'BEMoveCard':'',/算力消耗|费用/.test(t)?'BEChangeCost':'',/触腕/.test(t)?'BEChangeTentacleCount':'',/灵感|胚胎|置入/.test(t)?'BECreateCard':'',/界域精通|黑印|猩红|职业/.test(t)?'BEScarletBloodChange':'',/死亡抵抗|死抗/.test(t)?'DeathResist':'',/最大算力|获得[^。，]{0,4}算力|算力[^。，]{0,4}(?:提高|增加|回复)/.test(t)?'BEChangeEnergy':'',/银钥能量|银钥充能/.test(t)?'BEChangeKeeperEnergy':'',/狂气/.test(t)?'BEGainUltiEnergy':''].join('|')}
         if([...types].some(t=>/^BE(Customized|ExecuteCmd)/.test(t)))continue;
         if(/胚胎|圣洁之子/.test(pipeName(rec.BattleDesc||rec.Desc||'')))all+='|Embryo';
-        for(const [f,re] of CAPR)if(sp[f]&&!re.test(all)){if(f==='key')passiveSupport.key+=sp[f];else if(f==='aliOthers'||f==='aliSelf')passiveSupport.ali+=sp[f];sp[f]=0}}}
+        for(const [f,re] of CAPR)if(sp[f]&&!re.test(all)&&!(f==='key'&&(dimKeyHalf.size||dimKeyAmt.size)&&[...dimKeyAmt.values(),...dimKeyHalf.values()].includes(tid))){if(f==='key')passiveSupport.key+=sp[f];else if(f==='aliOthers'||f==='aliSelf')passiveSupport.ali+=sp[f];sp[f]=0}}}
     // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
@@ -1673,7 +1682,7 @@
       const cd=tl.relicCond?.get(r.tid);if(cd){r.n=Math.max(r.n,cd.n);for(const x of cd.rounds)if(!r.rounds.includes(x))r.rounds.push(x);r.eff.push({kind:'draw',text:ui(`满足手牌条件触发 ${cd.n} 次，抽牌 ${cd.draws} 张（按手牌数估算）`,`${cd.n} qualifying plays, ${cd.draws} cards drawn (estimated from hand size)`)})}}
     // 维度影像 relics: exact per-channel trigger counts and the values their trigger commands give
     {const KL={ali:ui('狂气','Aliemus'),energy:ui('行动力','Energy'),keyE:ui('银钥能量','Keyflare energy'),draw:ui('抽牌','Draw'),create:ui('置入手牌','Cards created'),tent:ui('临时触腕','Tentacle'),block:ui('护盾','Shield'),heal:ui('治疗','Heal')};
-      for(const r of relicRows){const re=tl.relicEngine?.get(r.tid);if(!re)continue;if(!re.dim&&(r.buff||r.eff.some(x=>['debuff','draw','open','cond'].includes(x.kind))))continue;r.engine=true;let tot=0;const eT={ali:0,energy:0,keyE:0,draw:0,create:0};r.engine=!re.chs.some(c=>c.effs.some(x=>x.cond));r.eff=r.eff.filter(x=>x.kind!=='nominal');
+      for(const r of relicRows){const re=tl.relicEngine?.get(r.tid);if(!re)continue;if(!re.dim&&(r.buff||r.eff.some(x=>['debuff','draw','open','cond'].includes(x.kind))))continue;r.engine=true;let tot=0;const eT={ali:0,energy:0,keyE:0,draw:0,create:0};{const dk=tl.supStore?.get('rel:'+r.tid)?.key||0;if(dk>0&&/^维度影像/.test(res.nameRelic(r.tid)))eT.keyE+=dk}r.engine=!re.chs.some(c=>c.effs.some(x=>x.cond));r.eff=r.eff.filter(x=>x.kind!=='nominal');
         // channels whose game event is not hooked (silver-key awakening, hits, ...) share the relic trigger events the hooked channels could not explain
         {const evN=r.n,open=tl.openRelic?.get(r.tid)||0,hooked=re.chs.filter(c=>c.hooked).reduce((n,c)=>n+c.n,0),op=re.chs.filter(c=>c.opening);
           for(const c of op)if(!c.n&&open>0){c.n=Math.min(1,open);c.rounds.add(0)}
