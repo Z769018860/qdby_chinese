@@ -1,7 +1,32 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-10-05T10:39:23.819Z",
+ "fetchedAt": "2026-10-15T08:27:17.939Z",
  "posts": [
+  {
+   "title": "💛 V2.6.2 Vivian✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-10-14",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846651706674009"
+  },
+  {
+   "title": "💬 V2.6.2 When Rumor Becomes Prophecy",
+   "date": "2026-10-13",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846018067943117"
+  },
+  {
+   "title": "🔮 V2.6.2 Preorder Archives: Sneaky Witch O’Clock",
+   "date": "2026-10-12",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846018067939684"
+  },
+  {
+   "title": "💛 V2.6.2 New Awakener✦Vivian",
+   "date": "2026-10-12",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846018067939683"
+  },
+  {
+   "title": "🌕 V2.6.2 The Witch is Sleepless Tonight",
+   "date": "2026-10-09",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846018067932351"
+  },
   {
    "title": "An Apology and Further Adjustments to the D-Effect Zone",
    "date": "2026-09-21",

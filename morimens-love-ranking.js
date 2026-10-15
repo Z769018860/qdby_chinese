@@ -111,6 +111,10 @@
   }
 
   const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'Misag School Cat',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
+  // announced but not yet released awakener (not in the SKeyDB records yet); replace by the real record once it ships
+  const vivian={id:'special-upcoming-vivian',name:'薇薇安',englishName:'Vivian',image:'assets/morimens/love-rank/upcoming.svg'};
+  const specials=[schoolCat,vivian];
+  const specialOf=id=>specials.find(x=>x.id===id);
 
   function ensureControls(){
     const host=$('morimensLoveRankingList');if(!host)return;
@@ -154,8 +158,9 @@
     const maxAbs=Math.max(1,...rows.map(r=>Math.abs(r.score))),sorted=sortRows(rows);
     host.innerHTML=sorted.map((r,index)=>{
       const intensity=Math.min(.58,Math.abs(r.score)/maxAbs*.58).toFixed(3),positive=r.score>0?intensity:'0',negative=r.score<0?intensity:'0',selected=votes[r.id]||'';
-      const displayName=r.id===schoolCat.id?(isEnglish()?schoolCat.englishName:schoolCat.name):r.name;
-      const subName=r.id===schoolCat.id?(isEnglish()?schoolCat.name:schoolCat.englishName):(isEnglish()?'':r.englishName);
+      const sp=specialOf(r.id);
+      const displayName=sp?(isEnglish()?sp.englishName:sp.name):r.name;
+      const subName=sp?(isEnglish()?sp.name:sp.englishName):(isEnglish()?'':r.englishName);
       return `<div class="loveRankRow" data-love-id="${esc(r.id)}" style="--love-positive:${positive};--love-negative:${negative}">
         <div class="loveRankPlace">#${index+1}</div>
         <div class="loveRankChar">${r.image?`<img class="loveRankAvatar" src="${esc(r.image)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:''}<div class="loveRankName"><strong>${esc(displayName)}</strong>${subName?`<small>${esc(subName)}</small>`:''}</div></div>
@@ -177,13 +182,15 @@
       if(!characters.length)throw new Error(ui('角色资料尚未加载','Character data has not loaded yet'));
       const counters=await getCounters(characters.map(x=>x.id));
       rows=characters.map(x=>{const c=counters.get(x.id)||{likes:0,dislikes:0};return {...x,...c,score:c.likes-c.dislikes}});
-      try{
-        const specialCounters=await getCounters([schoolCat.id]);
-        const c=specialCounters.get(schoolCat.id)||{likes:0,dislikes:0};
-        rows.push({...schoolCat,...c,score:c.likes-c.dislikes});
-      }catch(error){
-        console.warn('弥萨格校猫投票计数加载失败，使用 0 票占位，不影响原榜单',error);
-        rows.push({...schoolCat,likes:0,dislikes:0,score:0});
+      for(const sp of specials){
+        try{
+          const specialCounters=await getCounters([sp.id]);
+          const c=specialCounters.get(sp.id)||{likes:0,dislikes:0};
+          rows.push({...sp,...c,score:c.likes-c.dislikes});
+        }catch(error){
+          console.warn(sp.name+' 投票计数加载失败，使用 0 票占位，不影响原榜单',error);
+          rows.push({...sp,likes:0,dislikes:0,score:0});
+        }
       }
       render();
       initialized=true;
@@ -252,7 +259,7 @@
   window.addEventListener('morimens-language-change',()=>{
     if(initialized){
       const names=new Map(resolveCharacters().map(x=>[x.id,x]));
-      rows=rows.map(row=>row.id===schoolCat.id?{...row,name:isEnglish()?schoolCat.englishName:schoolCat.name,englishName:schoolCat.englishName}:{...row,...(names.get(row.id)||{})});
+      rows=rows.map(row=>{const sp=specialOf(row.id);return sp?{...row,name:isEnglish()?sp.englishName:sp.name,englishName:sp.englishName}:{...row,...(names.get(row.id)||{})}});
       render();
     }else ensureControls();
   });

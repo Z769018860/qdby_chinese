@@ -13,7 +13,7 @@
     const s=document.createElement('style');s.id='dtideZonesStyle';
     s.textContent=`
       .dtideZones{margin-top:18px}.dtideZones h3{font-size:15px;margin:0 0 6px;color:#ead9b9}
-      .dzNote{color:#8290a2;font-size:12px;margin:0 0 10px}.dzBar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:10px 0}
+      .dzNote{color:#8290a2;font-size:12px;margin:0 0 10px}.dzBar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin:10px 0}.dzView{display:inline-flex;gap:6px}.dzView button{border:1px solid rgba(148,163,184,.3);background:#111827;color:#aeb8c7;border-radius:999px;padding:6px 14px;font-size:12.5px;cursor:pointer}.dzView button.on{background:#d5b176;border-color:#d5b176;color:#1a1305;font-weight:700}
       .dzBar label{display:block;font-size:11px;color:#8290a2;margin-bottom:3px}.dzBar select{min-width:260px;max-width:100%;background:#111827;color:#dbe4f0;border:1px solid rgba(148,163,184,.3);border-radius:8px;padding:8px 10px}
       @media(max-width:600px){.dzBar{max-width:100%}.dzBar select{min-width:0;width:100%;box-sizing:border-box}}
       .dzMeta{font-size:12px;color:#aab6c8;display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
@@ -55,6 +55,7 @@
       .dzHex{position:absolute;left:0;top:0;width:100px;height:88px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:#1b2536;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:10px;line-height:1.15;color:#dbe4f0;border:0}
       .dzHex img{width:40px;height:40px;object-fit:contain}.dzHex span{max-width:78px}
       .dzNode.combat .dzHex{background:#4a2020}.dzNode.elite .dzHex{background:#5a3b14}.dzNode.boss .dzHex{background:#6b1d1d}
+      .dzNode.void{pointer-events:none}.dzNode.void .dzHex{background:rgba(148,163,184,.2)}.dzNode.void.wall .dzHex{background:#06090f}
       .dzNode.reward .dzHex{background:#41381a}.dzNode.event .dzHex{background:#33244d}.dzNode.start .dzHex{background:#17402b}
       .dzNode.obstacle .dzHex{background:#2c3038}.dzNode.passage .dzHex{background:#1d3550}.dzNode.mechanism .dzHex{background:#19403f}.dzNode.utility .dzHex{background:#40401f}
       .dzNode.terrain .dzHex{background-size:cover}.dzNode.tex-poison-floor .dzHex{background:#1d3a1d url(assets/morimens/dzone-map/tile-poison-floor.webp) center/cover}
@@ -185,7 +186,7 @@
   }
 
   const TYPE_LABEL={Intent_Attack:['攻击','Attack'],Intent_HeavyAttack:['强力攻击','Heavy Attack'],Intent_AttackDebuff:['攻击·削弱','Attack · Debuff'],Intent_AttackBuff:['攻击·强化','Attack · Buff'],Intent_AttackDefence:['攻击·防御','Attack · Defense'],Intent_Debuff:['削弱','Debuff'],Intent_Buff:['强化','Buff'],Intent_DefenceBuff:['防御·强化','Defense · Buff'],Intent_DefenceDebuff:['防御·削弱','Defense · Debuff'],Intent_StrongBuff:['强力强化','Strong Buff'],Intent_StrongDebuff:['强力削弱','Strong Debuff'],Intent_Defence:['防御','Defense'],Intent_Burst:['特殊行动','Special'],Intent_Burst2:['特殊行动','Special'],Intent_Burst3:['行动','Action'],Intent_Unknown:['特殊行动','Special']};
-  const TARGET_LABEL={FrontEnemy:['前排觉醒者','Front Awakener'],PlayerRole:['我方','Player side'],CmdCaster:['自身','Self'],AllAlly:['全体友方','All allies'],'DrawDeckAndGraveyardDeck.GetCard(RANDOMENCHANT,3)':['牌堆中的卡牌','Cards in the deck'],RandomAwaker:['随机觉醒者','Random Awakener'],'':['视条件而定','Conditional']};
+  const TARGET_LABEL={FrontEnemy:['前排唤醒体','Front Awakener'],PlayerRole:['我方','Player side'],CmdCaster:['自身','Self'],AllAlly:['全体友方','All allies'],'DrawDeckAndGraveyardDeck.GetCard(RANDOMENCHANT,3)':['牌堆中的卡牌','Cards in the deck'],RandomAwaker:['随机唤醒体','Random Awakener'],'':['视条件而定','Conditional']};
   const ICON_ID={Intent_Attack:'001',Intent_HeavyAttack:'002',Intent_Debuff:'003',Intent_StrongDebuff:'004',Intent_Buff:'005',Intent_StrongBuff:'006',Intent_Defence:'007',Intent_AttackDefence:'008',Intent_AttackDebuff:'009',Intent_AttackBuff:'010',Intent_DefenceBuff:'011',Intent_DefenceDebuff:'012',Intent_Dizzy:'013',Intent_Unknown:'014',Intent_Burst:'015',Intent_Burst2:'015',Intent_Burst3:'015'};
   const intentIcon=(t,cls='dzIcon')=>`<img class="${cls}" src="assets/morimens/dzone-intent/intent_${ICON_ID[t]||'014'}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
   const typeLabel=t=>{const l=TYPE_LABEL[t];return l?ui(l[0],l[1]):String(t||'').replace(/^Intent_/,'')};
@@ -263,7 +264,7 @@
       const nameHtml=zh()?`${esc(zhName||enName)}${zhName?`<small class="dzSub">${esc(enName)}</small>`:''}`:`${esc(enName)}${zhName?`<small class="dzSub">${esc(zhName)}</small>`:''}`;
       const fallback=!intel;const caret=intel||fallback?`<span class="dzCaret">${open?'▾':'▸'}</span>`:'<span class="dzCaret"></span>';
       const main=`<tr class="dzMonRow${intel||fallback?' dzHasIntel':''}"${intel||fallback?` data-dzmon="${esc(key)}" aria-expanded="${open}"`:''}><td><div class="dzMon">${caret}${img}<span>${nameHtml}${badges}</span></div></td><td class="n">${x.level??''}</td><td class="n">${x.hp!=null?fmt(x.hp):''}${x.hpBars>1?` ×${x.hpBars}`:''}</td><td>${cs}</td><td class="dzDesc">${esc(zh()?(tr?.zd||smz.zd||wiki?.desc||cw.description||m.d):(m.d||tr?.ed))}</td>${appearCell(x.monsterId)}</tr>`;
-      return main+(open&&intel?`<tr class="dzIntel"><td colspan="6">${intelBody(row,intel,wiki,note)}</td></tr>`:open&&fallback?`<tr class="dzIntel"><td colspan="6">${basicBody(x,m,{wiki,cw,tr,smz,zhName})}</td></tr>`:'');
+      return main+(open&&intel?`<tr class="dzIntel"><td colspan="6">${intelBody(row,intel,wiki,note)}</td></tr>`:open&&fallback?`<tr class="dzIntel"><td colspan="6">${basicBody(x,m,{wi,ai,wiki,cw,tr,smz,zhName})}</td></tr>`:'');
     }).join('');
   }
   // monsters without any intent data: still expandable, showing everything else we know about them
@@ -275,9 +276,32 @@
     const wiki=zh()&&o.wiki?wikiBlock(o.wiki):'';
     const cw=zh()&&(o.cw?.intents?.length||o.cw?.trait)?cwBlock(o.cw,true):'';
     const kd=state.kd?.[normEn(m.n)];
-    const kdHtml=kd?kdBlock(kd):'';
-    const marked=/@\d/.test(m.n||'')&&kd?`<div class="dzNote">${ui(`名称中的 @1 / @2 是游戏内的乱码标记。该怪物的行动意图取自去掉标记后的对应怪物「${kdName(kd.n).replace(/"/g,"")}」（Kaiden.gg 数据），本期数值可能不同。`,`The @1 / @2 markers in the name are in-game glitch placeholders. Intents come from the matching monster without the markers ("${kd.n}", Kaiden.gg), numbers may differ.`)}</div>`:'';
-    return `<div class="dzIntelBody">${marked}${kd?'':`<div class="dzNote">${ui('暂无该怪物的行动意图数据。','No intent data for this monster yet.')}</div>`}${stats}${wiki&&o.wiki?.desc?'':`<div>${esc(desc)}</div>`}${traits?`<div class="dzSec">${ui('特性','Traits')}</div><ul class="dzList">${traits}</ul>`:''}${wiki}${cw}${kdHtml}</div>`;
+    const si=structIntent(x,m,o);
+    const kdHtml=si===undefined?`<div class="dzNote">${ui('正在读取行动意图…','Loading intents…')}</div>`:si?structBlock(si):(kd?kdBlock(kd):'');
+    const marked=/@\d/.test(m.n||'')&&kd?`<div class="dzNote">${ui(`名称中的 @1 / @2 是游戏内的乱码标记。该怪物的行动意图取自去掉标记后的对应怪物「${kdName(kd.n).replace(/"/g,"")}」，本期数值可能不同。`,`The @1 / @2 markers in the name are in-game glitch placeholders. Intents come from the matching monster without the markers ("${kd.n}"), numbers may differ.`)}</div>`:'';
+    return `<div class="dzIntelBody">${si?'':marked}${kd||si?'':`<div class="dzNote">${ui('暂无该怪物的行动意图数据。','No intent data for this monster yet.')}</div>`}${stats}${wiki&&o.wiki?.desc?'':`<div>${esc(desc)}</div>`}${traits?`<div class="dzSec">${ui('特性','Traits')}</div><ul class="dzList">${traits}</ul>`:''}${wiki}${cw}${kdHtml}</div>`;
+  }
+  // action intents from the game client tables (map overview data): skills with their numbers filled in from the monster's ATK / DEF / HP
+  function structIntent(x,m,o){
+    const key=`${state.season}|${o.wi}:${o.ai}|${x.level}|${o.zhName}|${m.n}`;
+    state.sInt=state.sInt||new Map();
+    if(state.sInt.has(key))return state.sInt.get(key);
+    const api=window.MorimensMapOverview;
+    if(!api?.intentByName){return null}
+    state.sInt.set(key,undefined);
+    const names=[o.zhName,o.cw?.name,o.smz?.zh,String(o.zhName||'').replace(/@\d+/g,'')].filter(Boolean);
+    api.intentByName(names,{level:x.level,wi:o.wi,ai:o.ai,period:Number(state.season)||null}).then(r=>{state.sInt.set(key,r&&r.rotation.length?r:null);draw()}).catch(()=>{state.sInt.set(key,null);draw()});
+    return undefined;
+  }
+  function structBlock(it){
+    const api=window.MorimensMapOverview,c=it.ctx,f=n=>Math.round(n).toLocaleString('en-US');
+    const stats=c?`<div class="dzStats"><span>${ui('攻击','ATK')} <b>${f(c.atk)}</b></span><span>${ui('防御','DEF')} <b>${f(c.def)}</b></span></div>`:'';
+    const ic=r=>window.MorimensMapOverview.intentIcon(r.raw,'dzIcon');
+    const lab=r=>TYPE_LABEL[r.raw]?typeLabel(r.raw):(r.type||'?');
+    const rot=it.rotation.map((r,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(r.text)}">${ic(r)}<span class="dzIntentText">${esc(r.name||lab(r))}<small>${esc((r.name?lab(r)+' · ':'')+(i+1))}</small></span></span>`).join('');
+    return `<div class="dzSec">${ui('行动意图','Intent rotation')}</div>${stats}
+      ${rot?`<div class="dzPat"><span class="dzPatName">${ui('循环顺序','Rotation')}</span>${rot}</div>`:''}
+      ${api.intentTable(it,lab)}`;
   }
   function kdBlock(kd){
     const iconId=i=>`<img class="dzIcon" src="assets/morimens/dzone-intent/intent_${esc(i)}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
@@ -285,11 +309,10 @@
     const pas=(kd.p||[]).map(x=>`<li><b>${esc(kdName(x.n))}</b> ${span(x.d)}</li>`).join('');
     const rot=(kd.r||[]).map((x,i)=>`${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(kdText(x.d).text)}">${iconId(x.i)}<span class="dzIntentText">${esc(kdName(x.n))}<small>${esc(kdType(x.t))}</small></span></span>`).join('');
     const rows=(kd.r||[]).map(x=>`<tr><td>${esc(kdName(x.n))}</td><td><span class="dzTypeCell">${iconId(x.i)}${esc(kdType(x.t))}</span></td><td class="dzKo">${span(x.d)}</td></tr>`).join('');
-    return `<div class="dzSec">${ui('行动意图（来源 Kaiden.gg；数值为攻击力 / 防御的百分比，中文为 AI 辅助翻译）','Intent rotation (source: Kaiden.gg; values are % of ATK / DEF)')}</div>
+    return `<div class="dzSec">${ui('行动意图','Intent rotation')}</div>
       ${rot?`<div class="dzPat"><span class="dzPatName">${ui('循环顺序','Rotation')}</span>${rot}</div>`:''}
       ${rows?`<div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('描述','Description')}</th></tr></thead><tbody>${rows}</tbody></table></div>`:''}
-      ${pas?`<div class="dzSec">${ui('被动 / 开场状态','Passives')}</div><ul class="dzList">${pas}</ul>`:''}
-      <div class="dzNote"><a href="https://www.kaiden.gg/morimens/monsters/" target="_blank" rel="noopener noreferrer">Kaiden.gg ↗</a></div>`;
+      ${pas?`<div class="dzSec">${ui('被动 / 开场状态','Passives')}</div><ul class="dzList">${pas}</ul>`:''}`;
   }
   function cwBlock(w,inner){
     const li=a=>(a||[]).map(t=>`<li>${esc(t)}</li>`).join('');
@@ -358,7 +381,16 @@
     const m=state.maps.get(period)?.waves?.find(w=>w.wave===wi+1);
     if(!m?.nodes?.length)return '';
     const hasStart=m.nodes.some(n=>n.k==='start'),combat=m.nodes.filter(n=>n.k==='combat');
-    const vis=!hasStart&&combat.length===1?combat:m.nodes;
+    let vis=!hasStart&&combat.length===1?combat:m.nodes;
+    // the client grid has 8 rows of 13 cells; unused cells are drawn as a faint grid so neighbours / paths stay readable
+    if(vis===m.nodes){
+      const have=new Set(vis.map(n=>n.r+':'+n.c)),r0=1,r1=8,c0=1,c1=13;   // the whole 8-row board
+      const api=window.MorimensMapOverview,walls=api?.wallsFor?.(period,wi+1);
+      if(api&&!walls&&!state.wallsTried){state.wallsTried=true;api.preload().then(()=>draw())}
+      const wallSet=new Set((walls||[]).map(w=>(9-w[1])+':'+w[0]));
+      const grid=[];for(let r=r0;r<=r1;r++)for(let c=c0;c<=c1;c++){if(!have.has(r+':'+c))grid.push({r,c,k:'void',v:wallSet.has(r+':'+c)?2:1})}
+      vis=[...vis,...grid];
+    }
     const X=(n)=>n.c+(n.r%2===0?.5:0);
     const minX=Math.min(...vis.map(X)),minY=Math.min(...vis.map(n=>n.r));
     const SX=104,SY=94;
@@ -367,6 +399,7 @@
     const w=Math.ceil((Math.max(...vis.map(X))-minX)*SX+100),h=Math.ceil((Math.max(...vis.map(n=>n.r))-minY)*SY+112);
     const nodes=vis.map(n=>{
       const x=(X(n)-minX)*SX,y=(n.r-minY)*SY,e=n.b?m.enc[n.b]:null,icon=n.i?`<img src="assets/morimens/dzone-map/node-${esc(n.i)}.webp" alt="" loading="lazy" onerror="this.style.display='none'">`:'';
+      if(n.v)return `<div class="dzNode void ${n.v===2?'wall':'floor'}" style="left:${x}px;top:${y}px"><div class="dzHex"></div></div>`;
       const cls=`dzNode ${esc(n.k)}${n.t?' tex-'+esc(n.t):''}${n.b&&state.mapSel===n.b?' sel':''}`;
       const mons=e?`<span class="dzMapMons">${e.m.map(x=>`<span title="${esc(monName(period,x.tid))}">${monImg(period,x.tid)}</span>`).join('')}</span>`:'';
       const lab=n.t?'':`<span>${esc(nodeLabel(n))}</span>`;
@@ -376,9 +409,9 @@
       const e=m.enc[n.b];if(!e)return '';
       return `<div class="dzBat${state.mapSel===n.b?' sel':''}" data-dzbat="${n.b}"><b class="n">${num.get(n.b)}</b><div class="ms"><small>${esc(nodeLabel(n))} · ${esc(typeof e.t==='string'&&e.t==='Boss'?ui('首领','Boss'):e.t==='Elite'?ui('精英','Elite'):ui('普通','Common'))}</small>${e.m.map(x=>`<span class="m">${monImg(period,x.tid)}<span>${esc(monName(period,x.tid))}${(r=>r?` <small class="rot" title="${esc(r)}">${esc(r)}</small>`:'')(rotationOf(period,x.tid))}</span></span>`).join('')}</div></div>`;
     }).join('');
-    const seenK=new Map();for(const n of vis)if(!n.b&&!seenK.has(nodeKey(n)))seenK.set(nodeKey(n),n);
+    const seenK=new Map();for(const n of vis)if(!n.v&&!n.b&&!seenK.has(nodeKey(n)))seenK.set(nodeKey(n),n);
     const kinds=[...seenK.values()].map(n=>{const x=nodeInfo(n);if(!x)return '';const ai=/ai/.test(x.s)?` <small class="aiTag">${ui('推测','inferred')}</small>`:'';return `<div class="dzTileInfo"><span class="dzTileIcon ${n.t?'tex-'+esc(n.t):''}">${n.i?`<img src="assets/morimens/dzone-map/node-${esc(n.i)}.webp" alt="" loading="lazy">`:''}</span><div><b>${esc(ui(x.zh,x.en))}</b>${ai}<br><span>${esc(ui(x.dz,x.de))}</span></div></div>`}).join('');
-    return `<div class="dzMapWrap"><div class="dzMapView"><div class="dzMapBoard" style="width:${w}px;height:${h}px">${nodes}</div></div><div class="dzMapSide"><h4>${ui('战斗与怪物','Battles & monsters')}</h4>${side||`<div class="dzNote">${ui('本区域没有战斗节点。','No battle nodes in this zone.')}</div>`}<div class="dzLegend">${kinds}</div></div></div>`;
+    return `<div class="dzMapWrap"><div class="dzMapView"><div class="dzMapBoard" style="width:${w}px;height:${h}px">${nodes}</div></div><div class="dzMapSide"><h4>${ui('战斗与怪物','Battles & monsters')}</h4>${side||`<div class="dzNote">${order.length?ui('本区域的战斗怪物配置待 Morimens.Info.kr 发布后补充（地图来自游戏本地表）。','Battle line-ups follow once Morimens.Info.kr publishes this season (map read from the game tables).'):ui('本区域没有战斗节点。','No battle nodes in this zone.')}</div>`}<div class="dzLegend">${kinds}</div></div></div>`;
   }
 
   function seasonLabel(s){
@@ -387,16 +420,25 @@
   }
   // zones / threat levels stay open across language switches and re-renders
   const zoneOpen=wi=>{const k=state.season+':'+wi;if(!state.zoneInit.has(state.season)){return wi===0}return state.openZone.has(k)};
+  // view switch: the D-Zone seasons (default, current season) or every map of the game (filterable)
+  const viewBar=()=>`<div class="dzBar"><div class="dzView" role="tablist"><button type="button" data-dzview="season" class="${state.view!=='all'?'on':''}">${ui('融灾期次地图','D-Zone seasons')}</button><button type="button" data-dzview="all" class="${state.view==='all'?'on':''}">${ui('全部地图（可筛选）','All maps (filter)')}</button></div></div>`;
+  function drawAll(){
+    host.innerHTML=viewBar()+'<div id="dzAllMaps"></div>';
+    const el=document.getElementById('dzAllMaps');
+    if(window.MorimensMapOverview?.mount)window.MorimensMapOverview.mount(el,{period:state.season||Number(ctx?.season)||null});
+    else el.innerHTML=`<div class="dzEmpty">${ui('地图模块尚未加载','Map module not loaded yet')}</div>`;
+  }
   function draw(){
     if(!host)return;
     if(state.error){host.innerHTML=`<div class="dzEmpty">${ui('禁区地图数据加载失败：','Failed to load D-Zone map data: ')}${esc(state.error.message)}</div>`;return}
     if(!state.index){host.innerHTML=`<div class="dzEmpty">${ui('正在加载禁区地图数据…','Loading D-Zone map data…')}</div>`;return}
+    if(state.view==='all'){drawAll();return}
     const seasons=[...state.index.seasons].sort((a,b)=>b.period-a.period);
     if(state.season==null)state.season=Number(ctx?.season)&&seasons.some(s=>s.period===Number(ctx.season))?Number(ctx.season):seasons[0].period;
     const meta=seasons.find(s=>s.period===state.season)||seasons[0];
     const doc=state.seasons.get(meta.period);
     const links=state.season===70?`<div class="dtideSeasonResources"><a class="dtideSeasonResourceLink" href="data/morimens/dzone/DT%5B%5D9VVKLSTNED%297FOPZAZR_tmb.webp" target="_blank" rel="noopener noreferrer">【${ui('当期融灾总览','Current D-Zone Overview')}】↗</a></div>`:'';
-    const head=`${links}<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。每个区域内的地图由 Morimens.Info.kr 的节点数据生成（第 68 期起），战斗节点旁标注怪物；点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期前沿用最近出现期次的数据）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，翻译表缺失的条目为 AI 辅助翻译），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Each zone shows a map generated from Morimens.Info.kr node data (Season 68+) with the monsters of every battle marked; expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (before Season 67 the latest appearance is reused). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; entries missing there are AI-assisted translations); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
+    const head=`${viewBar()}${links}<p class="dzNote">${ui('数据同步自 SKeyDB（dansa/SKeyDB）与 Morimens.Info.kr，均为 CC BY-NC-SA 4.0。每个区域内的地图由 Morimens.Info.kr 的节点数据生成（第 68 期起），战斗节点旁标注怪物；点击区域 → 威胁等级逐级展开怪物。点击怪物可展开行动意图（第 67 期前沿用最近出现期次的数据）。怪物英文名 / 介绍来自 SKeyDB，中文名、技能与意图数据来自 Morimens.Info.kr（译文来自游戏翻译表，翻译表缺失的条目为 AI 辅助翻译），部分怪物的中文介绍 / 特性来自灰机维基。','Synced from SKeyDB (dansa/SKeyDB) and Morimens.Info.kr, both CC BY-NC-SA 4.0. Each zone shows a map generated from Morimens.Info.kr node data (Season 68+) with the monsters of every battle marked; expand a zone, then a threat level, to see its monsters; click a monster for its intent pattern (before Season 67 the latest appearance is reused). English names/descriptions come from SKeyDB; Chinese names, skills and intent data come from Morimens.Info.kr (translations from the game localization table; entries missing there are AI-assisted translations); some Chinese descriptions/traits come from Huiji Wiki.')}</p>
       <div class="dzBar"><div><label>${ui('期次','Season')}</label><select data-dzseason>${seasons.map(s=>`<option value="${s.period}"${s.period===meta.period?' selected':''}>${esc(seasonLabel(s))}</option>`).join('')}</select></div></div>`;
     if(!doc||!state.info.has(meta.period)||!state.maps.has(meta.period)||!state.wiki||!state.tr||!state.byMon||!state.kd){host.innerHTML=head+`<div class="dzEmpty">${ui('正在加载…','Loading…')}</div>`;Promise.all([loadSeason(meta.period),loadInfo(meta.period),loadMap(meta.period),loadWiki(),loadTr(),loadByMon()]).then(loadKd).then(draw).catch(e=>{state.error=e;draw()});return}
     const stats=stageStats(meta.period);
@@ -437,6 +479,9 @@
     load().then(draw,draw);draw();
   }
 
+  document.addEventListener('click',e=>{
+    const vb=e.target.closest?.('[data-dzview]');if(vb&&host?.contains(vb)){const v=vb.dataset.dzview;if(state.view!==v){state.view=v;draw()}return}
+  });
   document.addEventListener('click',e=>{
     const row=e.target.closest?.('[data-dzmon]');if(!row||!host?.contains(row))return;
     const key=row.dataset.dzmon;if(state.openMon.has(key))state.openMon.delete(key);else state.openMon.add(key);

@@ -122,6 +122,11 @@ kinds.monster=mons;
 const gl=await readJsonOr(`${D}/game/glossary.json`,{entries:[]});
 const glMap=new Map(gl.entries.filter(e=>e.zh).map(e=>[`${e.k}|${e.en.toLowerCase().replace(/[^a-z0-9]/g,'')}`,e.zh]));
 for(const [kind,list] of Object.entries(kinds))for(const it of list)if(!it.zh){const z=glMap.get(`${kind}|${it.en.toLowerCase().replace(/[^a-z0-9]/g,'')}`);if(z)it.zh=z}
+// key token names from the wiki list (scripts/data/posse_zh_wiki.json)
+const posseWiki=await readJsonOr('scripts/data/posse_zh_wiki.json',{});
+const posseKey=v=>String(v||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const posseMap=new Map(Object.entries(posseWiki).filter(([k])=>!k.startsWith('_')).map(([k,v])=>[posseKey(k),v]));
+for(const it of kinds.posse)if(!it.zh&&posseMap.has(posseKey(it.en)))it.zh=posseMap.get(posseKey(it.en));
 await mkdir(`${D}/game`,{recursive:true});
 await writeFile(`${D}/game/tier-pool.json`,JSON.stringify({version:1,generatedAt:new Date().toISOString(),kinds})+'\n');
 console.log(Object.entries(kinds).map(([k,v])=>`${k}:${v.length}`).join(' '));

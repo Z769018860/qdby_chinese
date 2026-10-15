@@ -110,3 +110,11 @@ assets/morimens/
 T 表悬浮提示 / 标签说明：详情数据 `data/morimens/game/tier-details.json` 由 `python scripts/build_tier_details.py <Morimens-Localizations 路径>` 生成（唤醒体界域 / 定位、命轮主属性与效果、造物特性、钥令效果、密契套装效果；英文来自 SKeyDB 记录，中文优先取游戏翻译表，且只有英文对照与 SKeyDB 一致时才采用；其余使用 `scripts/data/tier_details_zh.json` 的 AI 辅助译文，键为数字替换为 `{n}` 的英文，值中 `{k}` 还原第 k 个数字，未收录的新文本会回退显示英文）。怪物详情（特性、行动意图）在页面中由 `MorimensDtideZones.brief()` 现场生成。
 
 Kaiden.gg 英文意图文本的中文译文：`scripts/build_kaiden_zh.py` 按“句子 → 译文”生成 `data/morimens/kaiden/zh.json`（数字抽出后查表再还原）。译文来自游戏翻译表（技能 / 状态名）与 AI 辅助翻译（`scripts/data/kaiden_zh_*.txt`、`kaiden_names_manual.py`），Kaiden 新增的句子在翻译前会显示英文原文。
+
+## 地图总览（游戏客户端配置表）
+
+- 数据：`data/morimens/local-config/`（筛选后的原始配置表，gzip）与 `data/morimens/maps/`（页面用的精简数据），由 `scripts/build_map_overview.py` 从维护者提供的客户端配置导出生成，说明见 `data/morimens/local-config/README.md`。
+- 页面：「地图怪物总览」标签里的「全部地图（可筛选）」视图（`morimens-map-overview.js`）：默认显示融灾当期地图，可按分类 / 子类 / 关键字筛选关卡，查看地图格位、节点说明、每场战斗的怪物与技能。
+- 记忆回廊「疾驰的欢愉专列」（含V2）按路线展示：阶段 → 章节选项 → 随机战斗/事件/奖励节点（`data/morimens/maps/train.json`）。
+- 未上线内容默认不收录。生成时加 `--include-future`（未发布唤醒体的活动另需 `--unlock 关键词=时间`）会把它们写进数据并带上解锁时间 `u`，页面在该时间之前不显示、到点自动出现——注意这些文件在仓库里是公开的。
+- 融灾第 71 期的战斗节点与怪物另见 `scripts/convert_map_local.mjs`、`scripts/import_battle_nodes_local.mjs`。

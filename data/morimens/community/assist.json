@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T07:37:37Z",
-  "recordCount": 2,
+  "updatedAt": "2026-10-12T07:55:14Z",
+  "recordCount": 4,
   "records": [
     {
       "key": "100168076:15600",
@@ -647,6 +647,366 @@
         "fetchedAt": "2026-09-28T20:44:19.460Z",
         "importMethod": "paste",
         "updateExisting": true
+      }
+    },
+    {
+      "key": "101856359:94450",
+      "uid": "101856359",
+      "characterId": "94450",
+      "submittedBy": "Eremora Showcase",
+      "submittedAt": "2026-10-11T20:05:36.278Z",
+      "summary": "助战 Showcase · Mouchette",
+      "summaryZh": "助战 Showcase · Mouchette",
+      "summaryEn": "Assist Showcase · Mouchette",
+      "awakerName": "Mouchette",
+      "commentId": "61",
+      "payload": {
+        "version": 4,
+        "source": "eremora-showcase",
+        "uid": "101856359",
+        "player": "",
+        "characterId": "94450",
+        "canonicalId": "awakener-0033",
+        "awaker": {
+          "id": 94450,
+          "name": "Mouchette",
+          "image": "portraits/Portrait_Middle_Awaker_C17_AF.webp",
+          "mini": "portraits/Portrait_Minihead_Awaker_C17_AF.webp",
+          "res": "C17_AF"
+        },
+        "level": 90,
+        "potencyLevel": 15,
+        "weapons": [
+          {
+            "id": 94448,
+            "name": "Doomsday Rampage",
+            "image": "icon/Weapon_Full_C17.webp",
+            "level": 3,
+            "enhanceLevel": 1
+          },
+          {
+            "id": 9827,
+            "name": "Blade of the Titan",
+            "image": "icon/Weapon_Full_O06.webp",
+            "level": 15,
+            "enhanceLevel": 1
+          }
+        ],
+        "suits": [
+          {
+            "id": 18335,
+            "name": "April Tribute",
+            "image": "icon/Icon_Trinket_016_Box.webp",
+            "count": 6
+          }
+        ],
+        "trinkets": [
+          {
+            "id": 9836,
+            "name": "April Tribute I",
+            "image": "icon/Icon_Trinket_016_Orange_1.webp",
+            "slot": 0,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18335,
+            "attrs": [
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 6,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.4000000000000001,
+                "percentage": true,
+                "rollQuality": 7
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              }
+            ]
+          },
+          {
+            "id": 9723,
+            "name": "April Tribute II",
+            "image": "icon/Icon_Trinket_016_Orange_2.webp",
+            "slot": 1,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18335,
+            "attrs": [
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 6,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 2.4,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 1.5,
+                "percentage": true,
+                "rollQuality": 5
+              }
+            ]
+          },
+          {
+            "id": 9520,
+            "name": "April Tribute III",
+            "image": "icon/Icon_Trinket_016_Orange_3.webp",
+            "slot": 2,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18335,
+            "attrs": [
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 14,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18159,
+                "name": "Crit. Rate",
+                "value": 1,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 22207,
+                "name": "Aliemus Regen Lv.",
+                "value": 0.8,
+                "percentage": false,
+                "rollQuality": 8
+              }
+            ]
+          },
+          {
+            "id": 9652,
+            "name": "April Tribute IV",
+            "image": "icon/Icon_Trinket_016_Orange_4.webp",
+            "slot": 3,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18335,
+            "attrs": [
+              {
+                "id": 18139,
+                "name": "Keyflare Regen Lv.",
+                "value": 6,
+                "percentage": false,
+                "rollQuality": null
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 4.8999999999999995,
+                "percentage": true,
+                "rollQuality": 7
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              }
+            ]
+          },
+          {
+            "id": 9645,
+            "name": "April Tribute V",
+            "image": "icon/Icon_Trinket_016_Orange_5.webp",
+            "slot": 4,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18335,
+            "attrs": [
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 14,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 1.7999999999999998,
+                "percentage": true,
+                "rollQuality": 6
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              }
+            ]
+          },
+          {
+            "id": 9868,
+            "name": "April Tribute VI",
+            "image": "icon/Icon_Trinket_016_Orange_6.webp",
+            "slot": 5,
+            "level": 12,
+            "enhanceLevel": 0,
+            "breakLevel": 0,
+            "suitId": 18335,
+            "attrs": [
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 14,
+                "percentage": true,
+                "rollQuality": null
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 5.6,
+                "percentage": true,
+                "rollQuality": 8
+              },
+              {
+                "id": 18151,
+                "name": "Death Resistance",
+                "value": 3.5,
+                "percentage": true,
+                "rollQuality": 5
+              },
+              {
+                "id": 18105,
+                "name": "Crit. DMG",
+                "value": 2.4,
+                "percentage": true,
+                "rollQuality": 8
+              }
+            ]
+          }
+        ],
+        "attrs": [
+          {
+            "id": "18159",
+            "name": "Crit. Rate",
+            "value": 4,
+            "percentage": true
+          },
+          {
+            "id": "18105",
+            "name": "Crit. DMG",
+            "value": 8.1,
+            "percentage": true
+          },
+          {
+            "id": "18151",
+            "name": "Death Resistance",
+            "value": 53.2,
+            "percentage": true
+          },
+          {
+            "id": "22207",
+            "name": "Aliemus Regen Lv.",
+            "value": 0.8,
+            "percentage": false
+          }
+        ],
+        "fetchedAt": "2026-10-11T20:05:36.278Z",
+        "importMethod": "clipboard-read",
+        "updateExisting": false
+      }
+    },
+    {
+      "key": "101972791:130226",
+      "uid": "101972791",
+      "characterId": "130226",
+      "submittedBy": "Eremora Showcase",
+      "submittedAt": "2026-10-06T10:33:50.417Z",
+      "summary": "助战 Showcase · Saya",
+      "summaryZh": "助战 Showcase · Saya",
+      "summaryEn": "Assist Showcase · Saya",
+      "awakerName": "Saya",
+      "commentId": "56",
+      "payload": {
+        "version": 4,
+        "source": "eremora-showcase",
+        "uid": "101972791",
+        "player": "",
+        "characterId": "130226",
+        "canonicalId": "awakener-0057",
+        "awaker": {
+          "id": 130226,
+          "name": "Saya",
+          "image": "portraits/Portrait_Middle_Awaker_B15_AF.webp",
+          "mini": "portraits/Portrait_Minihead_Awaker_B15_AF.webp",
+          "res": "B15_AF"
+        },
+        "level": 70,
+        "potencyLevel": 7,
+        "weapons": [],
+        "suits": [],
+        "trinkets": [],
+        "attrs": [],
+        "fetchedAt": "2026-10-06T10:33:50.417Z",
+        "importMethod": "clipboard-read",
+        "updateExisting": false
       }
     }
   ]

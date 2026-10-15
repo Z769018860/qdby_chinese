@@ -92,14 +92,18 @@ for(const [title,text] of Object.entries(wikiPages)){
 }
 // forecast table
 const forecast=[];
+const EXTRA=JSON.parse(await readFile('scripts/data/calendar_extra.json','utf8'));   // hand-maintained supplements (newest Steam posts)
+const FORECAST_FIX={'2026-10-19':'混沌唤醒体',...(EXTRA.forecastFix||{})};  // corrections of the wiki table (next banner is a Chaos awakener)
 for(const text of [wikiPages['唤醒/未来唤醒预测']||'']){
   for(const row of text.split('|-').slice(2)){
     const cells=row.split('||');if(cells.length<2)continue;
     const t=parseTime(cells[0].replace(/^[^\d]*/,''));
     const label=cells[1].replace(/<br>/g,' ').replace(/\{\{唤醒体头像\|([^}]*)\}\}/g,'$1').replace(/\|\}.*$/s,'').trim();
-    if(t||label)forecast.push({start:t?.start||'',end:t?.end||'',text:label});
+    if(t||label)forecast.push({start:t?.start||'',end:t?.end||'',text:FORECAST_FIX[(t?.start||'').slice(0,10)]||label});
   }
 }
+// only future periods stay in the forecast; expired / already running ones are dropped
+for(let i=forecast.length-1;i>=0;i--)if(forecast[i].start&&Date.parse(forecast[i].start)<=Date.now())forecast.splice(i,1);
 let rerunIndex={launchPairs:[]};const history0=[];
 try{
   rerunIndex=JSON.parse(await readFile('data/morimens/huiji/summon-rerun/index.json','utf8'));
@@ -133,7 +137,7 @@ for(const b of wikiBanners)if(['awaken','rerun'].includes(b.type))b.end=fixEnd(b
 const skMin=outBanners.reduce((m,b)=>b.start<m?b.start:m,'9999');
 const skDays=new Set(outBanners.filter(b=>['premium','combo','selector','daily'].includes(b.type)).map(b=>b.start.slice(0,10)));
 const wikiKeep=wikiBanners.filter(b=>['awaken','rerun'].includes(b.type)?b.start<skMin:(b.start<skMin||!(b.type==='walks'&&skDays.has(b.start.slice(0,10)))));
-const mergedBanners=[...outBanners,...wikiKeep].sort((a,b)=>b.start.localeCompare(a.start));
+const mergedBanners=[...outBanners,...wikiKeep,...(EXTRA.banners||[]).filter(b=>!outBanners.some(x=>x.id===b.id))].sort((a,b)=>b.start.localeCompare(a.start));
 // character / wheel / skin events (story events of each character, wheel archives, skins)
 const outEvents=events.filter(e=>/^event-(story|skin|wheel|preorder)/.test(e.id)&&!/^event-preorder/.test(e.id)).map(e=>({
   id:e.id,kind:e.id.startsWith('event-story-rerun')?'story-rerun':e.id.startsWith('event-story')?'story':e.id.startsWith('event-skin')?'skin':'wheel',
@@ -221,7 +225,7 @@ for(const b of mergedBanners){
   b.title={zh:name,en:poolNames[name]||'',zs:confirmed?'weibo':'game'};
 }
 // ---------- character events: reclassify reruns by name, attach the Awakener of every event ----------
-const finalEvents=[...allEvents,...addedEvents].sort((a,b)=>a.start.localeCompare(b.start));
+const finalEvents=[...allEvents,...addedEvents,...(EXTRA.events||[]).filter(e=>!allEvents.some(x=>x.id===e.id))].sort((a,b)=>a.start.localeCompare(b.start));
 const seenBase=new Map(),nameChar=new Map();
 // base name -> Awakener: from events that already name one, then from the launch banner that starts the same day
 for(const e of finalEvents)if(['story','story-rerun'].includes(e.kind)){
