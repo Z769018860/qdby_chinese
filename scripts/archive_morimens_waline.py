@@ -23,13 +23,16 @@ DATA_DIR = ROOT / "data" / "morimens" / "community"
 DZONE_FILE = DATA_DIR / "dzone.json"
 ASSIST_FILE = DATA_DIR / "assist.json"
 HISTORY_FILE = DATA_DIR / "history.json"
+REPLAY_FB_FILE = DATA_DIR / "replay-feedback.json"
 STATE_FILE = DATA_DIR / "archive-state.json"
 CLEANUP_FILE = ROOT / ".tmp" / "morimens-waline-cleanup.json"
 
 DZONE_PATH = "/__morimens_dzone_submissions__/"
 ASSIST_PATH = "/__morimens_assist_submissions__/"
+REPLAY_FB_PATH = "/__morimens_replay_feedback__/"
 DZONE_MARKER = "MORIMENS_DZONE_V1:"
 ASSIST_MARKER = "MORIMENS_ASSIST_V1:"
+REPLAY_FB_MARKER = "MORIMENS_REPLAY_FB_V1:"
 MIN_INTERVAL_SECONDS = 72 * 60 * 60
 
 
@@ -167,6 +170,22 @@ def assist_meta(payload: dict, inserted_at: str, nick: str):
     }
 
 
+def decode_replay_fb(token: str):
+    payload = json.loads(b64url_decode(token).decode("utf-8"))
+    rid = str(payload.get("replayId") or "").strip().lower()
+    kind = str(payload.get("kind") or "")
+    if not re.fullmatch(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", rid) or kind not in ("good", "bad", "note"):
+        raise ValueError("replay feedback payload invalid")
+    return {
+        "replayId": rid, "kind": kind,
+        "note": str(payload.get("note") or "")[:400],
+        "battleTid": payload.get("battleTid"), "stageId": payload.get("stageId"),
+        "player": str(payload.get("player") or "")[:40],
+        "lang": str(payload.get("lang") or "")[:4],
+        "time": str(payload.get("t") or "")[:32],
+    }
+
+
 def newer(a: dict, b: dict) -> dict:
     return a if str(a.get("submittedAt") or "") >= str(b.get("submittedAt") or "") else b
 
@@ -204,6 +223,9 @@ def archive(force: bool) -> int:
     dzone_doc = load_json(DZONE_FILE, {"version": 1, "updatedAt": None, "records": []})
     assist_doc = load_json(ASSIST_FILE, {"version": 1, "updatedAt": None, "records": []})
     history_doc = load_json(HISTORY_FILE, {"version": 1, "updatedAt": None, "records": []})
+    fb_doc = load_json(REPLAY_FB_FILE, {"version": 1, "updatedAt": None, "records": []})
+    fb_by_id = {str(x.get("commentId")): x for x in fb_doc.get("records", []) if x.get("commentId")}
+    decoded_fb = 0
 
     dzone_by_key = {str(x.get("key")): x for x in dzone_doc.get("records", []) if x.get("key")}
     assist_by_key = {str(x.get("key")): x for x in assist_doc.get("records", []) if x.get("key")}
@@ -217,7 +239,7 @@ def archive(force: bool) -> int:
             cur.execute(
                 'SELECT id, nick, comment, ua, url, status, insertedat '
                 'FROM wl_comment WHERE url = ANY(%s) AND status = %s ORDER BY insertedat ASC',
-                ([DZONE_PATH, ASSIST_PATH], "approved"),
+                ([DZONE_PATH, ASSIST_PATH, REPLAY_FB_PATH], "approved"),
             )
             rows = cur.fetchall()
 
@@ -261,6 +283,15 @@ def archive(force: bool) -> int:
                 }
                 decoded_assist += 1
                 cleanup_ids.append(int(comment_id))
+            elif url == REPLAY_FB_PATH:
+                token = extract_token(comment, REPLAY_FB_MARKER) or extract_token(ua, REPLAY_FB_MARKER)
+                if not token:
+                    skipped += 1
+                    continue
+                fb = decode_replay_fb(token)
+                fb_by_id[str(comment_id)] = {"commentId": str(comment_id), "submittedAt": inserted, **fb}
+                decoded_fb += 1
+                cleanup_ids.append(int(comment_id))
         except Exception as exc:
             skipped += 1
             print(f"Skip Waline comment {comment_id}: {exc}", file=sys.stderr)
@@ -273,17 +304,33 @@ def archive(force: bool) -> int:
     write_json(DZONE_FILE, {"version": 1, "updatedAt": stamp, "recordCount": len(dzone_records), "records": dzone_records})
     write_json(ASSIST_FILE, {"version": 1, "updatedAt": stamp, "recordCount": len(assist_records), "records": assist_records})
     write_json(HISTORY_FILE, {"version": 1, "updatedAt": stamp, "recordCount": len(history_records), "records": history_records})
+    fb_records = sorted(fb_by_id.values(), key=lambda x: str(x.get("submittedAt") or ""), reverse=True)
+    by_replay = {}
+    for r in fb_records:
+        o = by_replay.setdefault(r["replayId"], {"replayId": r["replayId"], "good": 0, "bad": 0, "notes": [], "lastAt": ""})
+        if r["kind"] in ("good", "bad"):
+            o[r["kind"]] += 1
+        if r.get("note"):
+            o["notes"].append(r["note"])
+        o["lastAt"] = max(o["lastAt"], str(r.get("submittedAt") or ""))
+    problems = sorted((o for o in by_replay.values() if o["bad"] > 0), key=lambda o: (-o["bad"], o["lastAt"]), reverse=False)
+    write_json(REPLAY_FB_FILE, {
+        "version": 1, "updatedAt": stamp, "recordCount": len(fb_records),
+        "summary": {"replays": len(by_replay), "good": sum(o["good"] for o in by_replay.values()), "bad": sum(o["bad"] for o in by_replay.values())},
+        "problemReplays": [{"replayId": o["replayId"], "bad": o["bad"], "good": o["good"], "notes": o["notes"][:10], "lastAt": o["lastAt"]} for o in problems],
+        "records": fb_records,
+    })
     write_json(STATE_FILE, {
         "version": 1, "lastArchiveAt": stamp,
         "dzoneLatestCount": len(dzone_records), "assistLatestCount": len(assist_records),
         "historyCount": len(history_records),
-        "lastBatch": {"dzone": decoded_dzone, "assist": decoded_assist, "skipped": skipped, "cleanupCount": len(set(cleanup_ids))},
+        "lastBatch": {"dzone": decoded_dzone, "assist": decoded_assist, "replayFeedback": decoded_fb, "skipped": skipped, "cleanupCount": len(set(cleanup_ids))},
     })
     CLEANUP_FILE.parent.mkdir(parents=True, exist_ok=True)
     write_json(CLEANUP_FILE, {"ids": sorted(set(cleanup_ids)), "archivedAt": stamp})
 
     print(json.dumps({
-        "dzone": decoded_dzone, "assist": decoded_assist, "skipped": skipped,
+        "dzone": decoded_dzone, "assist": decoded_assist, "replayFeedback": decoded_fb, "skipped": skipped,
         "cleanup": len(set(cleanup_ids)), "history": len(history_records)
     }, ensure_ascii=False))
     return 0
@@ -306,7 +353,7 @@ def cleanup() -> int:
         with conn.cursor() as cur:
             cur.execute(
                 "DELETE FROM wl_comment WHERE id = ANY(%s) AND url = ANY(%s)",
-                (ids, [DZONE_PATH, ASSIST_PATH]),
+                (ids, [DZONE_PATH, ASSIST_PATH, REPLAY_FB_PATH]),
             )
             deleted = cur.rowcount
         conn.commit()
