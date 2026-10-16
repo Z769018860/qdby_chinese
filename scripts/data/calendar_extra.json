@@ -1,5 +1,5 @@
 {
- "_note": "Hand-maintained supplements for what the automatic sources do not carry yet (Steam V2.6.2 announcements of 2026-10-09 / 10-12). Merged by scripts/sync_summon_calendar.mjs.",
+ "_note": "Hand-maintained supplements for what the automatic sources do not carry yet (V2.6.2 official notice image 「今夜无人生还」 of 2026-10-15, Steam V2.6.2 posts of 10-09 / 10-12). Merged by scripts/sync_summon_calendar.mjs.",
  "banners": [
   {
    "id": "steam-2026-10-19-vivian",
@@ -20,9 +20,41 @@
      "zh": "薇薇安"
     }
    ],
-   "desc": "Announced in the V2.6.2 new-awakener post (Steam, 2026-10-12); the banner period is inferred from the pre-order early-bird deadline (Oct 19, 09:00 UTC+8) and the V2.6.2 schedule.",
-   "src": "steam",
-   "forecast": true
+   "desc": "Announced in the V2.6.2 notice (2026-10-15): character event period 2026/10/19 09:00 – 2026/11/16 09:00 (UTC+8).",
+   "src": "steam"
+  },
+  {
+   "id": "notice-2026-11-02-triune-pickman",
+   "type": "rerun",
+   "title": {
+    "en": "Triune Verdant · Pickman rerun",
+    "zh": "三相衡生 · 皮克曼复刻",
+    "zs": "notice"
+   },
+   "start": "2026-11-02T09:00+08:00",
+   "end": "2026-11-30T09:00+08:00",
+   "featured": [
+    {
+     "k": "awakener",
+     "id": "awakener-0040",
+     "en": "Pickman",
+     "zh": "皮克曼"
+    },
+    {
+     "k": "awakener",
+     "id": "awakener-0050",
+     "en": "Tulu",
+     "zh": "图鲁"
+    },
+    {
+     "k": "awakener",
+     "id": "awakener-0029",
+     "en": "Lily",
+     "zh": "莉莉"
+    }
+   ],
+   "desc": "「三相衡生」character-event awakening of the Pickman rerun event (V2.6.2 notice, 2026-10-15): Pickman 「绘魇狂心」, Tulu 「正位之刻」, Lily 「花不染尘」.",
+   "src": "notice"
   }
  ],
  "events": [
@@ -38,6 +70,85 @@
    "end": "2026-11-16T09:00+08:00",
    "featured": [],
    "src": "steam"
+  },
+  {
+   "id": "notice-2026-10-19-vivian-event",
+   "kind": "story",
+   "title": {
+    "en": "Character Event: Vivian",
+    "zh": "角色活动「薇薇安」",
+    "zs": "notice"
+   },
+   "start": "2026-10-19T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [
+    {
+     "k": "awakener",
+     "id": "",
+     "en": "Vivian",
+     "zh": "薇薇安"
+    }
+   ],
+   "src": "notice"
+  },
+  {
+   "id": "notice-2026-10-19-princess-diary",
+   "kind": "special",
+   "title": {
+    "en": "Consciousness Walk: Princess's Diary",
+    "zh": "意识漫游「公主日记」",
+    "zs": "notice"
+   },
+   "start": "2026-10-19T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [],
+   "src": "notice"
+  },
+  {
+   "id": "notice-2026-10-19-insight-mind",
+   "kind": "chronicle",
+   "title": {
+    "en": "Special Chronicle: Insight into the Mind (Imago's Clinic)",
+    "zh": "特别纪行「洞察心灵」·伊玛戈的诊室",
+    "zs": "notice"
+   },
+   "start": "2026-10-19T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [],
+   "src": "notice"
+  },
+  {
+   "id": "notice-2026-10-19-academy-39",
+   "kind": "chronicle",
+   "title": {
+    "en": "Academy Event: Vol. 39",
+    "zh": "学园活动：第39期",
+    "zs": "notice"
+   },
+   "start": "2026-10-19T09:00+08:00",
+   "end": "2026-11-16T09:00+08:00",
+   "featured": [],
+   "src": "notice"
+  },
+  {
+   "id": "notice-2026-11-02-pickman-rerun",
+   "kind": "story-rerun",
+   "title": {
+    "en": "Character Rerun Event: Pickman",
+    "zh": "角色复刻活动「皮克曼」",
+    "zs": "notice"
+   },
+   "start": "2026-11-02T09:00+08:00",
+   "end": "2026-11-30T09:00+08:00",
+   "featured": [
+    {
+     "k": "awakener",
+     "id": "awakener-0040",
+     "en": "Pickman",
+     "zh": "皮克曼"
+    }
+   ],
+   "src": "notice"
   }
  ],
  "forecastFix": {
