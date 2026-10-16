@@ -113,6 +113,7 @@ function extraPeakBlock(ctx,players,key,label,get,fmt){
 
 function enhance(){
   scheduled=false;installStyle();
+  document.querySelectorAll('.dtidePlayerTeams .dtideBattleBlocks').forEach(decorateExisting);   // expanded player rows share the peak-team card style
   const h4=[...document.querySelectorAll('.dtideBattle h4, #dtideBattle h4, h4')].find(x=>/极值队伍\s*Top\s*5|Peak-stat teams/i.test(clean(x.textContent)));
   const blocks=h4?.nextElementSibling;if(!blocks?.classList.contains('dtideBattleBlocks'))return;
   decorateExisting(blocks);
