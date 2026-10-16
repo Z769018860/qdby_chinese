@@ -21,12 +21,14 @@ function installStyle(){
     .dtideBattlePeakGrid .dtideBattleTeam .hd{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px!important;min-width:0;font-size:11px!important}
     .dtideBattlePeakGrid .dtideBattleTeam .hd b{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#edf2f7}
     .dtideBattlePeakGrid .dtideBattleTeam .hd span{font-size:12px;color:#f1d69f!important;font-variant-numeric:tabular-nums}
-    .dtideBattlePeakGrid .dtideBattleTeam .gears{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px!important;margin:0!important}
-    .dtideBattlePeakGrid .dtideBattleTeam .gear{display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto;column-gap:6px;align-items:center;min-width:0;padding:5px;border:1px solid rgba(148,163,184,.09);border-radius:8px;background:rgba(255,255,255,.025);font-size:10px!important;line-height:1.25!important}
+    .dtideBattlePeakGrid .dtideBattleTeam .gears{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px!important;margin:0!important}
+    .dtideBattlePeakGrid .dtideBattleTeam .gear{display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto;column-gap:6px;row-gap:1px;align-items:center;min-width:0;padding:5px;border:1px solid rgba(148,163,184,.09);border-radius:8px;background:rgba(255,255,255,.025);font-size:10px!important;line-height:1.25!important}
     .dtideBattlePeakGrid .dtideBattleTeam .gear>.dtideBattleAwAvatar{grid-row:1/3;width:30px;height:30px;border-radius:7px;object-fit:cover;background:#0b1220}
     .dtideBattlePeakGrid .dtideBattleTeam .gear>b{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px;color:#e7edf5!important}
     .dtideBattlePeakGrid .dtideBattleTeam .gear>em{position:absolute;display:none}
-    .dtideBattlePeakGrid .dtideBattleTeam .gear>small{grid-column:2;display:-webkit-box!important;min-width:0;margin-top:2px;color:#738398!important;font-size:8px!important;line-height:1.25!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all}
+.dtideBattlePeakGrid .dtideBattleTeam .gear>small{grid-column:2;display:block!important;min-width:0;color:#8ea0b6!important;font-size:9px!important;line-height:1.35!important;overflow-wrap:anywhere}
+    .dtideBattlePeakGrid .dtideBattleTeam .gear>small.g{grid-column:1/-1;margin-top:2px;color:#a9b9cf!important}
+    .dtideBattlePeakGrid .dtideBattleTeam .gear small i{font-style:normal;color:#e9c97a}
     .dtideBattlePeakGrid .dtideBattleTeam .gear.isAssist{border-color:rgba(215,168,91,.22);background:rgba(215,168,91,.045)}
     .dtideBattlePeakGrid .dtideBattleTeam .gear.isAssist>b:after{content:'助';display:inline-grid;place-items:center;width:14px;height:14px;margin-left:3px;border-radius:4px;background:rgba(215,168,91,.16);color:#e4bf7b;font-size:7px;vertical-align:1px}
     html[lang="en"] .dtideBattlePeakGrid .dtideBattleTeam .gear.isAssist>b:after{content:'A'}
@@ -37,7 +39,7 @@ function installStyle(){
     .dtideBattlePeakGrid .dtideBattleTeam .ft .btns{gap:4px!important}.dtideBattlePeakGrid .dtideBattleTeam .ft button,.dtideBattlePeakGrid .dtideBattleLink{padding:4px 6px!important;border-radius:6px!important;font-size:8px!important;line-height:1.15!important}
     .dtideBattlePeakGrid .dtideReplayReviewOpen{padding:4px 6px!important;border-radius:6px!important;font-size:8px!important;line-height:1.15!important}
     @media(max-width:1050px){.dtideBattlePeakGrid{grid-template-columns:1fr!important}.dtideBattlePeakGrid .dtideBattleTeam .gear>small{-webkit-line-clamp:1}}
-    @media(max-width:680px){.dtideBattlePeakGrid .dtideBattleTeam .gears{grid-template-columns:repeat(2,minmax(0,1fr))}.dtideBattlePeakGrid .dtideBattleTeam .ft{grid-template-columns:1fr}.dtideBattlePeakGrid .dtideBattleTeam .ft .btns{flex-wrap:wrap}.dtideBattlePeakGrid .dtideBattleTeam .gear>small{-webkit-line-clamp:2}}
+    @media(max-width:680px){.dtideBattlePeakGrid .dtideBattleTeam .gears{grid-template-columns:minmax(0,1fr)}.dtideBattlePeakGrid .dtideBattleTeam .ft{grid-template-columns:1fr}.dtideBattlePeakGrid .dtideBattleTeam .ft .btns{flex-wrap:wrap}.dtideBattlePeakGrid .dtideBattleTeam .gear>small{-webkit-line-clamp:2}}
   `;document.head.appendChild(s);
 }
 
@@ -98,8 +100,10 @@ function itemName(fn,x){try{return clean((fn?fn(x):x?.name)||x?.name||'')}catch{
 function formatBig(v){v=Number(v)||0;if(zh())return v>=1e8?`${(v/1e8).toFixed(2)}亿`:v>=1e4?`${(v/1e4).toFixed(1)}万`:v.toLocaleString('zh-CN');return v>=1e6?`${(v/1e6).toFixed(2)}M`:v>=1e3?`${(v/1e3).toFixed(1)}K`:v.toLocaleString('en-US')}
 function memberCard(ctx,m){
   const info=ctx.characterInfo?ctx.characterInfo(m):null,name=clean(info?.name||m.canonicalName||m.name||'—'),image=info?.image||characterAsset(name);
-  const wheels=(m.wheels||[]).map(x=>itemName(ctx.wheelName,x)).filter(Boolean).join(' / '),cov=(m.covenants||[]).map(x=>itemName(ctx.covenantName,x)).filter(Boolean).join(' / '),build=[wheels,cov].filter(Boolean).join(' · ')||'—';
-  return `<div class="gear${m.borrowed?' isAssist':''}">${image?`<img class="dtideBattleAwAvatar" src="${esc(image)}" alt="" loading="lazy">`:''}<b title="${esc(name)}">${esc(name)}</b><small title="${esc(build)}">${esc(build)}</small></div>`;
+  const stack=n=>{n=Number(n);return !Number.isFinite(n)?'':n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`},enl=p=>{p=Number(p);return !Number.isFinite(p)?'':p<=3?ui(`${p}启`,`E${p}`):`+${p-3}`};
+  const wheels=(m.wheels||[]).map(x=>{const n=itemName(ctx.wheelName,x);return n?`${esc(n)}${x.level!=null?` <i>${esc(stack(x.level))}</i>`:''}`:''}).filter(Boolean).join(' / '),cov=(m.covenants||[]).map(x=>{const n=itemName(ctx.covenantName,x);return n?`${esc(n)}${x.count?` <i>${esc(x.count)}${ui('件','pc')}</i>`:''}`:''}).filter(Boolean).join(' / ');
+  const lv=[m.level!=null?`Lv${esc(m.level)}`:'',enl(m.potencyLevel)].filter(Boolean).join(' · ');
+  return `<div class="gear${m.borrowed?' isAssist':''}">${image?`<img class="dtideBattleAwAvatar" src="${esc(image)}" alt="" loading="lazy">`:''}<b title="${esc(name)}">${esc(name)}</b><small class="lv">${lv||'—'}</small><small class="g">${ui('命轮','Wheel')}：${wheels||'—'}</small><small class="g">${ui('密契','Covenant')}：${cov||'—'}</small></div>`;
 }
 function teamCard(ctx,e,i,fmt){
   const code=String(e.t.battleUuid||''),extra=[e.t.token?itemName(ctx.tokenName,e.t.token):'',...(e.t.creations||[]).map(x=>itemName(ctx.creationName,x))].filter(Boolean),player=clean(e.p.name),url=e.p.rec.url||'';

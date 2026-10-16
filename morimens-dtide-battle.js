@@ -318,6 +318,16 @@
   }
 
   // Top-5 teams for the "peak" battle statistics that are shown as concrete teams instead of table columns
+  const enlTxt=p=>{p=Number(p);return !Number.isFinite(p)?'':p<=3?ui(`${p}启`,`E${p}`):`+${p-3}`};
+  const stackTxt=n=>{n=Number(n);return !Number.isFinite(n)?'':n<=3?ui(`${n}叠`,`S${n}`):`+${n-3}`};
+  // member block in the same layout as the replay-review team header: Lv · enlightenment, wheels with stack, covenants with piece count
+  function memberHtml(m,nm){
+    const name=ctx.characterInfo?ctx.characterInfo(m).name:(m.canonicalName||m.name);
+    const wheels=(m.wheels||[]).map(x=>{const n=nm(ctx.wheelName,x);return n?`${esc(n)}${x.level!=null?` <i>${esc(stackTxt(x.level))}</i>`:''}`:''}).filter(Boolean).join(' / ');
+    const cov=(m.covenants||[]).map(x=>{const n=nm(ctx.covenantName,x);return n?`${esc(n)}${x.count?` <i>${esc(x.count)}${ui('件','pc')}</i>`:''}`:''}).filter(Boolean).join(' / ');
+    const lv=[m.level!=null?`Lv${esc(m.level)}`:'',enlTxt(m.potencyLevel)].filter(Boolean).join(' · ');
+    return `<div class="gear"><b>${esc(name)}</b>${m.borrowed?`<em>${ui('助战','assist')}</em>`:''}<small class="lv">${lv||'—'}</small><small class="g">${ui('命轮','Wheel')}：${wheels||'—'}</small><small class="g">${ui('密契','Covenant')}：${cov||'—'}</small></div>`;
+  }
   const PEAKS=[
     ['maxStrength',{zh:'最高力量',en:'Highest Strength'},b=>Number(b.maxStrength)||0,v=>String(v)],
     ['maxPosion',{zh:'最高中毒',en:'Highest Poison'},b=>Number(b.maxPosion)||0,v=>dmg(v)],
@@ -332,12 +342,7 @@
       const seen=new Set(),top=[];for(const e of all){if(seen.has(e.r.uid))continue;seen.add(e.r.uid);top.push(e);if(top.length>=5)break}
       return `<div class="dtideBattleBlock"><h5>${ui(l.zh,l.en)} · Top 5</h5>${top.map((e,i)=>{
         const code=String(e.t.battleUuid||'');
-        const members=(e.t.members||[]).map(m=>{
-          const name=ctx.characterInfo?ctx.characterInfo(m).name:(m.canonicalName||m.name);
-          const wheels=(m.wheels||[]).map(x=>nm(ctx.wheelName,x)).filter(Boolean).join(' / ');
-          const cov=(m.covenants||[]).map(x=>nm(ctx.covenantName,x)).filter(Boolean).join(' / ');
-          return `<div class="gear"><b>${esc(name)}</b>${m.borrowed?`<em>${ui('助战','assist')}</em>`:''}<small>${wheels?esc(wheels):'—'}${cov?` · ${esc(cov)}`:''}</small></div>`;
-        }).join('');
+        const members=(e.t.members||[]).map(m=>memberHtml(m,nm)).join('');
         const extra=[e.t.token?nm(ctx.tokenName,e.t.token):'',...(e.t.creations||[]).map(x=>nm(ctx.creationName,x))].filter(Boolean);
         return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. #${esc(e.r.rank??'—')} ${esc(clean(e.r.name))}</b><span>${fmt(e.v)}</span></div><div class="gears">${members}</div>${extra.length?`<div class="extra"><small>${ui('守密人技能 / 造物：','Keeper skill / creations: ')}${esc(extra.join(' · '))}</small></div>`:''}<div class="ft"><small>Wave ${esc(e.w.wave)} · ${esc(e.t.stageName||'')} · ${esc(e.r.score??'')}${ui('分','pts')}${e.t.clearType==='extra'?' · Extra':''}</small><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}${e.r.rec.url?`<a class="dtideBattleLink" href="${esc(e.r.rec.url)}" target="_blank" rel="noopener noreferrer">${ui('Eremora 队伍','Eremora Teams')} ↗</a>`:''}</span></div></div>`;
       }).join('')||`<div class="dtideEmpty">${ui('暂无','None')}</div>`}</div>`;
@@ -354,12 +359,7 @@
       const zone=g.list.map(e=>e.t.stageName).find(Boolean)||'';
       const cards=g.list.map(({w,t},i)=>{
         const code=String(t.battleUuid||''),b=t.battle||{};
-        const members=(t.members||[]).map(m=>{
-          const name=ctx.characterInfo?ctx.characterInfo(m).name:(m.canonicalName||m.name);
-          const wheels=(m.wheels||[]).map(x=>nm(ctx.wheelName,x)).filter(Boolean).join(' / ');
-          const cov=(m.covenants||[]).map(x=>nm(ctx.covenantName,x)).filter(Boolean).join(' / ');
-          return `<div class="gear"><b>${esc(name)}</b>${m.borrowed?`<em>${ui('助战','assist')}</em>`:''}<small>${wheels?esc(wheels):'—'}${cov?` · ${esc(cov)}`:''}</small></div>`;
-        }).join('');
+        const members=(t.members||[]).map(m=>memberHtml(m,nm)).join('');
         const extra=[t.token?nm(ctx.tokenName,t.token):'',...(t.creations||[]).map(x=>nm(ctx.creationName,x))].filter(Boolean);
         return `<div class="dtideBattleTeam"><div class="hd"><b>${i+1}. #${esc(r.rank??'—')} ${esc(clean(r.name))}</b><span>${ui('死扛','DR')} ${esc(b.deathResistCount??0)} · ${ui('回合','Rd')} ${esc(b.stageRoundCount??'—')} · ${dmg(Number(b.maxBoutDamage)||0)}</span></div><div class="gears">${members}</div>${extra.length?`<div class="extra"><small>${ui('守密人技能 / 造物：','Keeper skill / creations: ')}${esc(extra.join(' · '))}</small></div>`:''}<div class="ft"><small>Wave ${esc(w.wave)} · ${esc(t.stageName||'')} · ${esc(r.score??'')}${ui('分','pts')}${t.clearType==='extra'?' · Extra':''}</small><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay')}">${ui('复制录像回放','Copy Replay')}</button>`:''}${r.rec.url?`<a class="dtideBattleLink" href="${esc(r.rec.url)}" target="_blank" rel="noopener noreferrer">${ui('Eremora 队伍','Eremora Teams')} ↗</a>`:''}</span></div></div>`;
       }).join('');
