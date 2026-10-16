@@ -302,7 +302,7 @@ function critExcluder(tl){
   for(const [id,r] of Object.entries(tl.res?.state||{})){if(Object.keys(r.ExistProperty||{}).some(k=>KEY.test(k))||RE.test(txt(r.Desc)+txt(r.WeaponDesc)+txt(r.Name)))forcedStates.add(String(id))}
   for(const [id,r] of Object.entries(tl.res?.skill||{}))if(RE.test(txt(r.BattleDesc)+txt(r.Desc)))forcedSkills.add(String(id));
   const noCrit=noCritSkills(tl.res);
-  return h=>!tl.res?.skill?.[String(h.skill)]||forcedSkills.has(String(h.skill))||noCrit.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
+  return h=>!tl.res?.skill?.[String(h.skill)]||forcedSkills.has(String(h.skill))||noCrit.has(String(h.skill))||h.dt===2||h.dt===6||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
 }
 function scoreLuck(tl,aux={}){
   const items=[],parts={dr:0,shop:0,crit:0},bad={dr:0,crit:0};if(!tl)return null;
