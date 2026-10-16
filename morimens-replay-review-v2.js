@@ -631,7 +631,7 @@
     // who gets credit for an effect at this timestamp: a relic firing in this frame group, else a wheel / covenant state firing now, else the awakener whose action is being resolved
     const gearWins=[];   // short windows after commands that fire without a state change (超维 bout, named skill, death resist)
     // cards a wheel / relic / covenant puts into the deck ("将 1 张「春之信」加入牌库"): everything such a card does when played (keyflare, energy, draws, buffs) belongs to that item, not to the awakener who plays it
-    let cardOwnerMap=null;const cardOwned=new Set();   // items whose own generated cards were played: their measured effects are exact, never capped by the static command types
+    let keTotal=0;let cardOwnerMap=null;const cardOwned=new Set();   // items whose own generated cards were played: their measured effects are exact, never capped by the static command types
     const cardOwnerKey=name=>{
       if(!cardOwnerMap){cardOwnerMap=new Map();const dup=new Set(),keys=[...[...gears.keys()].map(k=>'gear:'+k),...(bd.relics||[]).map(r=>'rel:'+r.tid)];
         for(const key of keys){let t='';try{t=String(keyText(key)||'')}catch{}for(const m of t.matchAll(/(?:将|生成|加入|置入|洗入|获得)[^「。]{0,8}「([^」]{1,20})」/g)){const nm=m[1].split(/[：:]/)[0].trim();if(!nm||/^(狂气爆发|打击|防御|猩红熔炉|吞噬|追击|维度穿梭|钥令|共振|湮灭|胚胎|灵感)$/.test(nm))continue;if(cardOwnerMap.has(nm)&&cardOwnerMap.get(nm)!==key)dup.add(nm);else cardOwnerMap.set(nm,key)}}
@@ -835,6 +835,7 @@
             if(evm)for(const x of evm){{const tk=Math.round(fr.time*10);x.ch.evTimes.add(tk);x.ch.evRounds.add(bout);if(!x.ch.evPer.has(bout))x.ch.evPer.set(bout,new Set());x.ch.evPer.get(bout).add(tk)}}
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
+            if(pt==='keeper_energy')keTotal+=cv;
             const dimTid=pt==='keeper_energy'&&dimKeyAmt.size&&!evm&&!wm&&d.extraData?.cmdServerUid!=null?dimKeyAmt.get(cv):null;
             // covenants / wheels whose text names a fixed Keyflare amount ("gains 35 Keyflare … 70 for Crit"): the event carries that exact amount and the wielder as caster
             const gKey=pt==='keeper_energy'&&!dimTid&&!evm&&!wm&&d.extraData?.cmdServerUid!=null?(()=>{const c=String(d.extraData?.castRoleUid),hit=[];for(const e of gears.values()){if(!(e.owners||[]).map(String).includes(c))continue;const txt=(e.effectsEn||[]).map(x=>String(x.desc||x)).join(' ')+' '+(e.desc||'');for(const m of txt.matchAll(/(\d+(?:\.\d+)?)\s*Keyflare(?!\s*Regen)/gi))if(Math.abs(Number(m[1])-cv)<.01){hit.push(e.key);break}}return hit.length===1?'gear:'+hit[0]:null})():null;
@@ -1045,7 +1046,7 @@
     // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
-    return {eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1875,6 +1876,7 @@
           const nTranq=tl.rounds.reduce((n,r)=>n+r.events.filter(e=>e.realm&&/^静海/.test(String(e.skillName||''))).length,0),hp0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;
           const ex=(TD||0)*f/(1+f)+nTranq*hp0*f;for(const r of own){realmBuf.set('act:'+r.a.uid,(realmBuf.get('act:'+r.a.uid)||0)+ex/own.length)}}}}   // 晦暝深海: team damage amp +50% (x2 with only Aequor / Chaos awakeners)
       // ---- wheels / covenants: effects their own trigger commands produced, credited to the item instead of the awakener whose name the property event carries ----
+      const keyXfer=[];   // gear Keyflare lifted from the channel totals: never let the sources add up to more than the replay really granted
       {const FM={keyE:['key'],ali:['aliOthers'],energy:['energy'],draw:['draws'],heal:['heal'],block:['blk'],embryo:['embryo']},VK={BEGainUltiEnergy:'ali',BEChangeKeeperEnergy:'keyE',BEGainKeeperEnergy:'keyE',BEChangeEnergy:'energy',BEHeal:'heal',BEGainBlock:'block',BEDrawCard:'draw',BEScarletBloodChange:'embryo'};
         const embryoSeen=[...(tl.supStore?.values()||[])].some(v=>v.embryo>0);
         for(const g of gearRows){const key='gear:'+g.key;if(!tl.supStore)break;let sp=tl.supStore.get(key);if(!sp){sp=supOf(key);tl.supStore.set(key,sp)}
@@ -1883,11 +1885,20 @@
             const usedV=new Set();for(const dl of cmd.data_list||[]){const vk=VK[dl.Type];if(!vk)continue;if(vk==='embryo'&&!embryoSeen)continue;
               let v=null;const dv=c.vals?.[vk];if(dv&&dv.n){if(usedV.has(vk))continue;usedV.add(vk);v=dv.sum}else{let t=String(dl.Para??'').split(',')[0].trim().replace(/\bArg(\d+)\b/g,(m,n)=>paras[Number(n)-1]??'#').replace(/StateArg(\d+)/g,(m,n)=>params[Number(n)-1]??'#');if(!/#|[A-Za-z_]/.test(t.replace(/Math\.\w+/g,'')))v=(evalNum(t,{})||0)*cnt}
               if(v!=null&&Number.isFinite(v)&&v!==0)tot[vk]=(tot[vk]||0)+Math.abs(v)}}
-          for(const [vk,sum] of Object.entries(tot)){if(vk==='heal'||vk==='block'){const ok=vk==='heal'?'heal':'block';if(!(g.out[ok]>0))g.out[ok]=sum;continue}const f=FM[vk][0],have=Number(sp[f])||0;if(sum>have){const delta=sum-have;sp[f]=sum;const ow=(g.owners||[]).map(String).filter(u=>tl.supStore.has('act:'+u));
+          for(const [vk,sum] of Object.entries(tot)){if(vk==='heal'||vk==='block'){const ok=vk==='heal'?'heal':'block';if(!(g.out[ok]>0))g.out[ok]=sum;continue}const f=FM[vk][0],have=Number(sp[f])||0;if(sum>have){const delta=sum-have;sp[f]=sum;if(f==='key')keyXfer.push({sp,delta});const ow=(g.owners||[]).map(String).filter(u=>tl.supStore.has('act:'+u));
               if(ow.length)for(const u of ow){const o=tl.supStore.get('act:'+u);if(f==='aliOthers'){const take=Math.min(o.aliOthers||0,delta/ow.length);o.aliOthers-=take}else o[f]=Math.max(0,(Number(o[f])||0)-delta/ow.length)}}}
+          if(g.kind==='wheel'){   // card-operation effects with no event of their own (the cost cut is a card state): value them from the wheel text and what actually happened
+            const tx=String(g.desc||'').replace(/<[^>]+>/g,''),own=(g.owners||[]).map(String),drN=(tl.drLog||[]).length;
+            const dmgRounds=new Set((tl.hitLog||[]).filter(h=>own.includes(String(h.uid))&&!h.blind).map(h=>h.round)).size,ults=own.reduce((n,u)=>n+(tl.supStore.get('act:'+u)?.ultCasts||0),0);
+            let m;
+            if((m=tx.match(/战斗开始时抽\s*(\d+)\s*张[^。]*?(\d+)\s*%[^。]*?算力消耗降低\s*(\d+)/))){const mult=/重复触发/.test(tx)?1+drN:1;if(!(sp.draws>0))sp.draws=Number(m[1])*mult;if(!(sp.cut>0))sp.cut=Number(m[3])*Number(m[2])/100*mult}
+            else if((m=tx.match(/造成主动伤害后[^。]*?(\d+)\s*%\s*的?(?:概率|几率)抽\s*(\d+)\s*张[^。]*?算力消耗降低\s*(\d+)/))){const p=Number(m[1])/100,cap=/只生效\s*1\s*次|每回合[^。]{0,4}1\s*次/.test(tx)?dmgRounds:dmgRounds*2;if(!(sp.draws>0))sp.draws=p*Number(m[2])*cap;if(!(sp.cut>0))sp.cut=p*Number(m[3])*cap}
+            else if((m=tx.match(/释放狂气爆发后[^。]*?手中[^。]*?(\d+)\s*%\s*概率[^。]*?算力消耗降低\s*(\d+)/))){if(!(sp.cut>0))sp.cut=ults*Number(m[1])/100*Number(m[2])*2}   // ~2 of the wielder's cards in hand
+          }
           if(g.kind==='covenant'){const fx=(g.effectsEn||[]).map(x=>String(x.desc||x)).join(' ');let m;
             if((m=fx.match(/Realm Mastery\s*\+\s*(\d+(?:\.\d+)?)/))&&!sp.rm)sp.rm=Number(m[1]);
             if((m=[...fx.matchAll(/Death Resistance\s*\+\s*(\d+(?:\.\d+)?)%/g)]).length&&!sp.dr)sp.dr=m.reduce((n,x)=>n+Number(x[1]),0)}}}
+        {const total=tl.keTotal||0;if(total>0&&keyXfer.length){let S=0;for(const v of tl.supStore.values())S+=v.key||0;const ex=S-total,D=keyXfer.reduce((n,x)=>n+x.delta,0);if(ex>total*0.02&&D>0)for(const x of keyXfer)x.sp.key=Math.max(0,x.sp.key-Math.min(x.delta,ex*x.delta/D))}}
       // cards a wheel / covenant / relic put into the deck are free extra cards for the team
       for(const o of genRows){if(!/^(gear|rel):/.test(o.key||'')||!tl.supStore)continue;const sp=tl.supStore.get(o.key)||(()=>{const n=supOf(o.key);tl.supStore.set(o.key,n);return n})();if(!(sp.draws>0||sp.cycles>0||sp.copies>0))sp.draws=0.8*o.created}
       const awRaw=cand.map(r=>{const cc=crCredit.get(String(r.a.uid))||null,sp0=supOf('act:'+r.a.uid),sp=cc?mergeSp(sp0,cc):sp0,at=attrOf(r.a.uid),bf=tl.relicBuffs?.get('act:'+r.a.uid);
