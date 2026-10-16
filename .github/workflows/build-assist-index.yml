@@ -1,0 +1,53 @@
+name: Build Assist List Index
+
+# The Assist List tab loads a slim per-season file (borrowed Assist members only) instead of the whole D-Zone usage data.
+# Rebuild it whenever the season data / manifest changes so the page never has to fall back to the slow full load.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "data/morimens/eremora/manifest.json"
+      - "data/morimens/eremora/usage/**"
+      - "scripts/build_assist_index.mjs"
+      - ".github/workflows/build-assist-index.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-assist-index
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build slim assist data
+        run: node scripts/build_assist_index.mjs
+
+      - name: Commit when changed
+        run: |
+          git add data/morimens/eremora/assist
+          if git diff --cached --quiet; then
+            echo "assist index already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: rebuild assist list index"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 8))
+          done
+          exit 1

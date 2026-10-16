@@ -538,7 +538,8 @@
       const lowEnd=window.matchMedia?.('(max-width: 820px)').matches||(navigator.deviceMemory&&navigator.deviceMemory<=4)||navigator.connection?.saveData;
       if(previousEntry&&!lowEnd){
         // only feeds the rank-change arrows: start it once the page is idle so it never competes with the data the visitor is waiting for
-        const defer=fn=>setTimeout(()=>(window.requestIdleCallback?requestIdleCallback(fn,{timeout:8000}):fn()),4000);
+        // (≈4 MB of base64) and only after the visitor has actually interacted with the page, then in an idle slot; a visit that just glances at the board never pays for it
+        const defer=fn=>{const go=()=>{['pointerdown','keydown','wheel','touchstart'].forEach(t=>window.removeEventListener(t,go,true));setTimeout(()=>(window.requestIdleCallback?requestIdleCallback(fn,{timeout:8000}):fn()),2500)};['pointerdown','keydown','wheel','touchstart'].forEach(t=>window.addEventListener(t,go,{capture:true,once:false,passive:true}))};
         defer(async()=>{
           if(String(activeSeasonKey)!==String(entry.communityTargetKey??entry.snapshotId??entry.seasonId)||previousUsage)return;
           previousUsage=await dataset(previousEntry.path).catch(()=>null);

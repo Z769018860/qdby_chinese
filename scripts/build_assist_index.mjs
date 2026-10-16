@@ -42,4 +42,4 @@ for(const x of man.availableSeasons||[]){
   items[key]={path:file,seasonId:id,match:out.match,providers:records.length};
   console.log(key,'records',ds.records.length,'->',records.length);
 }
-await writeFile('data/morimens/eremora/assist/index.json',JSON.stringify({generatedAt:new Date().toISOString(),items}));
+await writeFile('data/morimens/eremora/assist/index.json',JSON.stringify({items}));
