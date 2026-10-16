@@ -1063,12 +1063,12 @@
     const n=Number(level);
     if(!Number.isFinite(n))return '';
     const lv=Math.trunc(n);
-    if(lv<1)return '';
-    const extraRaw=Number(enhanceLevel);
-    const extra=Number.isFinite(extraRaw)?Math.max(0,Math.trunc(extraRaw)):0;
-    // Wheel progression: Lv.1..4 => 0..3 stacks; Lv.5 => +1.
-    // enhance_level advances the same progression. Example: Lv.15 (+11) + enhance 1 => +12.
-    const progress=Math.min(15,Math.max(0,(lv-1)+extra));
+    const extraRaw=Number(enhanceLevel),hasEnhance=enhanceLevel!=null&&Number.isFinite(extraRaw);
+    // Raw game data (Season 69 post-bug onwards, no enhance field): level 0..15 is the stack ladder itself, 0..3 = N stacks, 15 = +12.
+    // Older Eremora data carries an enhance_level: Lv.1..4 => 0..3 stacks, Lv.15 (+11) + enhance 1 => +12.
+    if(!hasEnhance&&lv<0)return '';
+    if(hasEnhance&&lv<1)return '';
+    const progress=hasEnhance?Math.min(15,Math.max(0,(lv-1)+Math.max(0,Math.trunc(extraRaw)))):Math.min(15,lv);
     if(progress<=3)return zh()?(progress+'叠'):(progress+' Stack'+(progress===1?'':'s'));
     return '+'+Math.min(12,progress-3);
   }
