@@ -285,11 +285,24 @@ function scoreKeeperV2(m,tl,ref){
 // 3) lots of crits from awakeners with a low crit rate (forced-crit effects are left out; only the overall expectation is judged).
 function binomTail(n,k,p){if(k<=0)return 1;let term=Math.exp(n*Math.log(1-p)),cdf=0;for(let i=0;i<k;i++){cdf+=term;term*=(n-i)/(i+1)*p/(1-p)}return Math.max(1e-12,Math.min(1,1-cdf))}
 const RING_ZH={深海:'AEQUOR',混沌:'CHAOS',血肉:'CARO',超维:'ULTRA',超越:'ULTRA'},REALM_ZH={AEQUOR:'深海',CHAOS:'混沌',CARO:'血肉',ULTRA:'超维'},SCHOOL={1:'CHAOS',2:'CARO',3:'ULTRA',4:'AEQUOR'};
+function noCritSkills(res){
+  const txt=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(txt).join(' '):String(v),out=new Set();
+  const types=cid=>(res?.rr?.Cmd?.[String(cid)]?.data_list||[]).map(d=>String(d.Type));
+  for(const [id,sk] of Object.entries(res?.skill||{})){
+    const t=[...types(sk.CmdList),...types(sk.PreCmd)];
+    const dmg=t.filter(x=>/^BE(ActiveDamage|FixedDamage|TrueDamage|RealDamage)/.test(x));
+    // damage that only comes from fixed / true damage commands (e.g. 卡拉布「粉雪魔咒」: 固定伤害) never rolls a crit
+    if(dmg.length&&dmg.every(x=>/Fixed|True|Real/.test(x)))out.add(String(id));
+    else if(!dmg.length&&/RealDamage|固定伤害/.test(txt(sk.BattleDesc)+txt(sk.Desc))&&!/造成[^。]{0,12}点伤害/.test(txt(sk.BattleDesc)+txt(sk.Desc)))out.add(String(id));
+  }
+  return out;
+}
 function critExcluder(tl){
   const forcedStates=new Set(),forcedSkills=new Set(),RE=/必定暴击|必然暴击|一定暴击|必定触发暴击|必定会暴击|必定造成暴击|必爆/,KEY=/^certain_crit/,txt=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(txt).join(' '):String(v);
   for(const [id,r] of Object.entries(tl.res?.state||{})){if(Object.keys(r.ExistProperty||{}).some(k=>KEY.test(k))||RE.test(txt(r.Desc)+txt(r.WeaponDesc)+txt(r.Name)))forcedStates.add(String(id))}
   for(const [id,r] of Object.entries(tl.res?.skill||{}))if(RE.test(txt(r.BattleDesc)+txt(r.Desc)))forcedSkills.add(String(id));
-  return h=>!tl.res?.skill?.[String(h.skill)]||forcedSkills.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
+  const noCrit=noCritSkills(tl.res);
+  return h=>!tl.res?.skill?.[String(h.skill)]||forcedSkills.has(String(h.skill))||noCrit.has(String(h.skill))||!!(h.stl&&Object.keys(h.stl).some(k=>forcedStates.has(String(k))));
 }
 function scoreLuck(tl,aux={}){
   const items=[],parts={dr:0,shop:0,crit:0},bad={dr:0,crit:0};if(!tl)return null;

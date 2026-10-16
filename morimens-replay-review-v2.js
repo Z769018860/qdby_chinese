@@ -1481,6 +1481,16 @@
   function calibrateHits(tl){
     if(tl.calib)return tl.calib;
     const res=tl.res,log=tl.hitLog||[];
+    const noCritSk=(()=>{const txt=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(txt).join(' '):String(v),out=new Set();
+    const types=cid=>(res?.rr?.Cmd?.[String(cid)]?.data_list||[]).map(d=>String(d.Type));
+    for(const [id,sk] of Object.entries(res?.skill||{})){
+      const t=[...types(sk.CmdList),...types(sk.PreCmd)];
+      const dmg=t.filter(x=>/^BE(ActiveDamage|FixedDamage|TrueDamage|RealDamage)/.test(x));
+      // damage that only comes from fixed / true damage commands (e.g. 卡拉布「粉雪魔咒」: 固定伤害) never rolls a crit
+      if(dmg.length&&dmg.every(x=>/Fixed|True|Real/.test(x)))out.add(String(id));
+      else if(!dmg.length&&/RealDamage|固定伤害/.test(txt(sk.BattleDesc)+txt(sk.Desc))&&!/造成[^。]{0,12}点伤害/.test(txt(sk.BattleDesc)+txt(sk.Desc)))out.add(String(id));
+    }
+    return out;})();   // fixed / true damage skills cannot crit: crit-rate buffs are worth nothing on them
     // skill text -> where each number sits in the card's displayed values (display order = order of first appearance in the text),
     // which one is the damage, and the per-skill strength / tentacle share ("享受 [Arg2]% 力量加成")
     const descMemo=new Map(),descInfo=tid=>{const k=String(tid);if(descMemo.has(k))return descMemo.get(k);
@@ -1588,7 +1598,7 @@
         else if(b.kind==='out')frac=baseShare*(b.amt/100)/(1+c.out/100);
         else if(b.kind==='final')frac=(b.amt/100)/(1+c.fin/100);
         else if(b.kind==='crit')frac=h.crit?(b.amt/100)/(1+c.cd/100):0;
-        else if(b.kind==='critrate')frac=(b.amt/100)*(c.cd/100)/(h.crit?1+c.cd/100:1);
+        else if(b.kind==='critrate')frac=noCritSk.has(String(h.skill))?0:(b.amt/100)*(c.cd/100)/(h.crit?1+c.cd/100:1);
         fracs.push([b,Math.max(0,Math.min(1,frac))]);
       }
       {const F=fracs.reduce((n,f)=>n+f[1],0),k=F>0.95?0.95/F:1;for(const [b,f] of fracs){const x=h.dmg*f*k;b.inst.extra+=x;b.inst.hits++;b.rel.extra+=x}}

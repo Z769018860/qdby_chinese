@@ -11,7 +11,7 @@
   };
   const TIERS=[[1,50],[51,200],[201,500],[501,1000],[1001,2000]];
   const BINS=10;
-  const state={limit:100,active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},open:new Set(),cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0,open:new Set()}};
+  const state={limit:200,active:false,view:'chars',sort:'rank',dir:1,page:0,metric:'death',f:{rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']},open:new Set(),cs:{sort:'avgShare',dir:-1,q:'',min:10,page:0,open:new Set()}};
   let ctx=null,rows=[],host=null;
 
   function dmg(n){
@@ -368,7 +368,7 @@
   }
   function drawPlayers(){
     const f=state.f,base=rows,list=sortRows(base.filter(passes)),stats=colStats(base);
-    const slice=list.slice(0,state.limit);   // 2000 players x team rows is heavy to build: start with the first 100
+    const slice=list.slice(0,state.limit);   // 2000 players x team rows is heavy to build: start with the first 200
     const pair=(k,label,unit)=>`<div class="dtideField"><label>${label}${unit?` (${unit})`:''}</label><div class="pair"><input type="number" min="0" step="any" data-bf="${k}:0" value="${esc(f[k][0])}" placeholder="${ui('最低','min')}"><input type="number" min="0" step="any" data-bf="${k}:1" value="${esc(f[k][1])}" placeholder="${ui('最高','max')}"></div></div>`;
     const th=(k,label)=>`<th><button type="button" data-bsort="${k}">${label}${state.sort===k?(state.dir>0?' ▲':' ▼'):''}</button></th>`;
     return `      <p class="dtideBattleNote">${ui('统计口径：队伍平均死扛 = 每场战斗死扛触发次数的平均值；队伍平均回合数 = 每场战斗回合数（stageRoundCount）的平均值；队伍单回合最高伤害 = 该玩家所有战斗中的最大单回合伤害。受上方期次、榜单范围、难度、总得分与队伍类型筛选影响。','Avg Death Resist = mean Death Resist triggers per battle; Avg Rounds = mean stageRoundCount per battle; Max Single-Round Damage = highest single-round damage across the player’s battles. Follows the season, rank scope, difficulty, total score and team-type filters above.')}</p>
@@ -397,7 +397,7 @@
     const el=e.target.closest?.('[data-bf]');if(!el||!host?.contains(el))return;
     const [k,i]=el.dataset.bf.split(':');
     if(i==null)state.f[k]=el.value;else state.f[k][Number(i)]=el.value;
-    state.page=0;state.limit=100;clearTimeout(draw.t);draw.t=setTimeout(()=>{const pos=el.selectionStart;draw();const again=host.querySelector(`[data-bf="${el.dataset.bf}"]`);again?.focus();try{again?.setSelectionRange(pos,pos)}catch{}},350);
+    state.page=0;state.limit=200;clearTimeout(draw.t);draw.t=setTimeout(()=>{const pos=el.selectionStart;draw();const again=host.querySelector(`[data-bf="${el.dataset.bf}"]`);again?.focus();try{again?.setSelectionRange(pos,pos)}catch{}},350);
   });
   document.addEventListener('change',e=>{
     const el=e.target.closest?.('[data-bmetric]');if(!el||!host?.contains(el))return;
@@ -419,14 +419,14 @@
     const cs=e.target.closest('[data-csort]');
     if(cs){const k=cs.dataset.csort;if(state.cs.sort===k)state.cs.dir*=-1;else{state.cs.sort=k;state.cs.dir=k==='name'?1:-1}state.cs.page=0;draw();return}
     const sort=e.target.closest('[data-bsort]');
-    if(sort){const k=sort.dataset.bsort;if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=k==='rank'?1:-1}state.page=0;state.limit=100;draw();return}
-    if(e.target.closest('[data-breset]')){state.f={rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']};state.page=0;state.limit=100;draw();return}
+    if(sort){const k=sort.dataset.bsort;if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=k==='rank'?1:-1}state.page=0;state.limit=200;draw();return}
+    if(e.target.closest('[data-breset]')){state.f={rankFrom:'',rankTo:'',death:['',''],rounds:['',''],bout:['','']};state.page=0;state.limit=200;draw();return}
     const cell=e.target.closest('[data-heat-tier]');
     if(cell){
       const [a,b]=cell.dataset.heatTier.split(':'),k=state.metric,scale=k==='bout'?1e4:1,lo=Number(cell.dataset.heatLo),hi=cell.dataset.heatHi===''?'':Number(cell.dataset.heatHi);
       const r=v=>v===''?'':String(Math.round(v/scale*100)/100);
       state.f.rankFrom=a;state.f.rankTo=b;state.f[k]=[Number(cell.dataset.heatBin)===0?'':r(lo),r(hi)];
-      state.page=0;state.limit=100;draw();host.querySelector('.dtideBattleTable')?.scrollIntoView({block:'nearest'});
+      state.page=0;state.limit=200;draw();host.querySelector('.dtideBattleTable')?.scrollIntoView({block:'nearest'});
     }
   });
 
