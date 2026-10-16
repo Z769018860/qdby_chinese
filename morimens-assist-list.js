@@ -23,7 +23,7 @@
     const want=['all',...seasonIds()],have=[...sel.options].map(o=>o.value);
     if(want.join()===have.join())return;
     const cur=sel.value;sel.innerHTML=want.map(v=>`<option value="${v}">${v}</option>`).join('');
-    sel.value=want.includes(cur)?cur:'all';
+    sel.value=initialized&&want.includes(cur)?cur:want[1]||'all';   // first open: newest season only (one small file); “all seasons” stays one click away
   }
   const cache=new Map(),playerNames=new Map();
   const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map(),showcaseTidByCanonical:new Map(),showcaseCanonicalByTid:new Map()};
@@ -284,12 +284,33 @@
     for(const r of overlay.records||[]){const uid=String(r?.uid??'');if(uid)map.set(uid,r)}
     const records=[...map.values()];return {...base,records,recordCount:records.length};
   }
+  // slim per-season data (borrowed Assist members only, built by scripts/build_assist_index.mjs): ~0.4 MB instead of several MB of usage chunks.
+  // Used only while it was built from the manifest entry's current data; otherwise the full dataset below is loaded.
+  let slimIndexPromise=null;
+  const slimMatch=(x,isCur)=>JSON.stringify({recordCount:x.recordCount??null,dataUpdatedAt:x.dataUpdatedAt??null,revision:(isCur&&manifest.usageIndex?.revision)||x.revision||null});
+  async function slimDataset(key,entry,isCur){
+    try{
+      slimIndexPromise=slimIndexPromise||fetch('data/morimens/eremora/assist/index.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
+      const item=(await slimIndexPromise)?.items?.[key];
+      if(!item||JSON.stringify(item.match)!==slimMatch(entry,isCur))return null;
+      const r=await fetch(item.path+'?v='+encodeURIComponent(String(item.match?.revision||item.match?.dataUpdatedAt||item.match?.recordCount||'')),{cache:'default'});
+      if(!r.ok)return null;
+      const d=await r.json();
+      for(const rec of d.records||[])for(const w of rec.waves||[])for(const t of w.teams||[])if(t.mi){t.members=t.mi.map(i=>d.pool[i]);delete t.mi}
+      for(const [uid,name] of Object.entries(d.names||{}))if(!playerNames.has(uid))playerNames.set(uid,cleanPlayerName(name));
+      for(const [tid,can] of Object.entries(d.tids||{})){if(!gear.showcaseTidByCanonical.has(can))gear.showcaseTidByCanonical.set(can,tid);if(!gear.showcaseCanonicalByTid.has(tid))gear.showcaseCanonicalByTid.set(tid,can)}
+      return d;
+    }catch{return null}
+  }
   async function datasetFor(id){
     const key=String(id);if(cache.has(key))return cache.get(key);
     const loader=window.MorimensDtideDataLoader;if(!loader?.loadDataset)throw new Error('D-Zone loader unavailable');
     // '69-postbug' is a snapshot entry (final Top 2000 after the fix); plain ids match the main entry of the season
     const entry=manifest.availableSeasons?.find(x=>key.includes('-')?String(x.snapshotId)===key:(String(x.seasonId)===key&&!x.snapshotId));
     if(!entry)throw new Error('Season '+key+' unavailable');
+    const isCur=Number(id)===Number(manifest.currentSeason)&&!entry.snapshotId;
+    const slim=await slimDataset(key,entry,isCur);
+    if(slim){cache.set(key,slim);return slim}
     const source=Number(id)===Number(manifest.currentSeason)&&manifest.usageIndex?.path?manifest.usageIndex.path:entry.path;
     const base=await loader.loadDataset(source);
     let merged=base;

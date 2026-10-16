@@ -537,13 +537,15 @@
       // the previous season's full usage file is ~16 MB of base64 (hundreds of MB once parsed): phones and small-memory devices skip it, ranks simply show no arrows there
       const lowEnd=window.matchMedia?.('(max-width: 820px)').matches||(navigator.deviceMemory&&navigator.deviceMemory<=4)||navigator.connection?.saveData;
       if(previousEntry&&!lowEnd){
-        setTimeout(async()=>{
+        // only feeds the rank-change arrows: start it once the page is idle so it never competes with the data the visitor is waiting for
+        const defer=fn=>setTimeout(()=>(window.requestIdleCallback?requestIdleCallback(fn,{timeout:8000}):fn()),4000);
+        defer(async()=>{
           if(String(activeSeasonKey)!==String(entry.communityTargetKey??entry.snapshotId??entry.seasonId)||previousUsage)return;
           previousUsage=await dataset(previousEntry.path).catch(()=>null);
           previousDetailUsage=previousUsage;
           renderComparisons();
           renderMatrix();
-        },0);
+        });
       }
       return true
     }catch(e){usage=null;usageStats=null;console.warn('season data unavailable',id,e);return false}
