@@ -122,7 +122,11 @@ function scoreAwakeners(m){
     const def=wmean([
       [rel(num(x.sh),T.sh,N),DEF_W.sh],[rel(num(x.mit),T.mit,N),DEF_W.mit],[rel(num(x.ctl),T.ctl,N),DEF_W.ctl],[rel(num(x.dr),T.dr,N),DEF_W.dr]
     ]);
-    const sup=wmean(Object.entries(SUP_W).map(([k,w])=>[rel(num(x.sup?.[k]),TS[k]||0,N),w]));
+    // support is many unrelated sub-metrics: a pure buffer / drawer / energy source is strong in one of them and empty in the rest, so a plain weighted mean buried specialists.
+    // Blend the weighted mean with the unit's best sub-metrics (same top-heavy shape the three role scores use).
+    const supDims=Object.entries(SUP_W).map(([k,w])=>[rel(num(x.sup?.[k]),TS[k]||0,N),w]);
+    const supMean=wmean(supDims),supSorted=supDims.map(d=>d[0]).filter(v=>v!=null).sort((p,q)=>q-p);
+    const sup=supMean==null?null:.7*supMean+.3*((supSorted[0]||0)*.7+(supSorted[1]||0)*.2+(supSorted[2]||0)*.1);
     const cats={out,def,sup},available=Object.entries(cats).filter(([,v])=>v!=null).sort((a,b)=>b[1]-a[1]);
     const top=available[0]?.[1]||0,second=available[1]?.[1]||0,third=available[2]?.[1]||0;
     let base=top*.72+second*.20+third*.08;

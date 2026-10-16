@@ -1579,6 +1579,7 @@
       if(!h.buffs.length)continue;
       const c=ctxOf(h),sc=c.sc,fit=fits.get(h.uid),m=sc.ult&&h.P.ulti_strength_multiple?h.P.ulti_strength_multiple/100:(fit?fit.m:fallbackM);
       const dn=dnOf(h,c),strPart=Math.min(dn,m*c.S),basePart=Math.max(0,dn-strPart),baseShare=dn>0?basePart/dn:0;
+      const fracs=[];   // every buff's share of this hit; together they can never exceed the hit itself (stacked buffs overshoot when the hit's own panel total is smaller than their sum)
       for(const b of h.buffs){
         if(!inScope(sc,b.scope))continue;
         let frac=0;
@@ -1588,8 +1589,9 @@
         else if(b.kind==='final')frac=(b.amt/100)/(1+c.fin/100);
         else if(b.kind==='crit')frac=h.crit?(b.amt/100)/(1+c.cd/100):0;
         else if(b.kind==='critrate')frac=(b.amt/100)*(c.cd/100)/(h.crit?1+c.cd/100:1);
-        const x=h.dmg*Math.max(0,Math.min(1,frac));b.inst.extra+=x;b.inst.hits++;b.rel.extra+=x;
+        fracs.push([b,Math.max(0,Math.min(1,frac))]);
       }
+      {const F=fracs.reduce((n,f)=>n+f[1],0),k=F>0.95?0.95/F:1;for(const [b,f] of fracs){const x=h.dmg*f*k;b.inst.extra+=x;b.inst.hits++;b.rel.extra+=x}}
     }
     tl.calib={report,fallbackM,fits};
     return tl.calib;
