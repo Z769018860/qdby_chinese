@@ -136,7 +136,7 @@
         const nk=pipeName(String(r0.Name||'')).replace(/<[^>]+>/g,'').trim();if(nk&&/^维度影像/.test(nk)&&/^状态@星辰篇/.test(String(r0.CnID||''))&&!/效果|计数|标记/.test(String(r0.CnID||''))){if(!idx.has(nk))idx.set(nk,[]);if(!idx.get(nk).includes(sid))idx.get(nk).push(sid)}}
       const rcT=rr.RelicConfig=rr.RelicConfig||{};
       for(const r1 of full.battleDat?.relics||[]){const tid=String(r1.tid);if(rcT[tid])continue;const cat=relicCatalog[tid],zh=String(cat?.zh||'');if(!zh)continue;const plus=/\+$/.test(zh),base=zh.replace(/\+$/,''),sids=idx.get(base);if(!sids||!sids.length)continue;
-        const desc=pipeName(rr.State[sids[0]].Desc||'').replace(/(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)/g,(m,x,y)=>plus?y:x);
+        const desc=pipeName(rr.State[sids.find(x=>rr.State[x].Desc)||sids[0]].Desc||'').replace(/(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)/g,(m,x,y)=>plus?y:x);
         rcT[tid]={ID:Number(tid),Name:'x|'+zh,Desc:'x|'+desc,BattleDesc:'x|'+desc,State1:sids.map(Number),StatePara:[],synthesized:true}}}
     const skill=rr.Skill||{},aw=rr.AwakerConfig||{},state=rr.State||{},relic=rr.RelicConfig||{},monster=rr.MonsterConfig||{};
     const nameSkill=id=>{const x=skill[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||String(id)};
@@ -829,8 +829,10 @@
             const part=keys.length?1/keys.length:1;
             if(execSrc.cur?.play){const pl=execSrc.cur.play;if(pt==='block'&&actors.get(String(d.uid))?.camp===1)pl.block+=cv;else if(pt==='energy')pl.eng+=cv;else if(pt==='ulti_energy')pl.ali+=cv}
             const dimTid=pt==='keeper_energy'&&dimKeyAmt.size&&!evm&&!wm&&d.extraData?.cmdServerUid!=null?dimKeyAmt.get(cv):null;
-            if(dimTid)supOf('rel:'+dimTid).key+=cv;
-            for(const k of dimTid?[]:keys){const sp=supOf(k);
+            // covenants / wheels whose text names a fixed Keyflare amount ("gains 35 Keyflare … 70 for Crit"): the event carries that exact amount and the wielder as caster
+            const gKey=pt==='keeper_energy'&&!dimTid&&!evm&&!wm&&d.extraData?.cmdServerUid!=null?(()=>{const c=String(d.extraData?.castRoleUid),hit=[];for(const e of gears.values()){if(!(e.owners||[]).map(String).includes(c))continue;const txt=(e.effectsEn||[]).map(x=>String(x.desc||x)).join(' ')+' '+(e.desc||'');for(const m of txt.matchAll(/(\d+(?:\.\d+)?)\s*Keyflare(?!\s*Regen)/gi))if(Math.abs(Number(m[1])-cv)<.01){hit.push(e.key);break}}return hit.length===1?'gear:'+hit[0]:null})():null;
+            if(dimTid)supOf('rel:'+dimTid).key+=cv;else if(gKey)supOf(gKey).key+=cv;
+            for(const k of dimTid||gKey?[]:keys){const sp=supOf(k);
               if(pt==='ulti_energy'&&rcv?.kind==='awakener'){if(k==='act:'+d.uid)sp.aliSelf+=cv*part;else sp.aliOthers+=cv*part}
               else if(pt==='keeper_energy')sp.key+=cv*part;
               else if(pt==='energy')sp.energy+=cv*part;
@@ -841,7 +843,7 @@
               else if(pt==='tentacle_dmg'){sp.tenGain+=cv*part;tenAct.push({key:k,amt:cv*part,cast:String(d.extraData?.castRoleUid)})}
               else if(pt==='block'&&rcv?.camp===1&&k!=='kp'&&!k.startsWith('act:')&&keyHas(k,/护盾|shield|block/i))sp.blk+=cv*part
               else if(pt==='hp'&&d.reason!==4&&rcv?.camp===1&&k!=='kp'&&!k.startsWith('act:')&&keyHas(k,/治疗|恢复|heal|restore/i))sp.heal+=cv*part}
-            if(pt==='keeper_energy'&&dimKeyHalf.size&&execSrc.cur?.play&&!dimTid){const hw=actors.get(String(d.extraData?.castRoleUid))?.name,ht=hw!=null?dimKeyHalf.get(hw):null;if(ht){const half=cv/2;supOf('rel:'+ht).key+=half;for(const k of keys)supOf(k).key-=half*part}}
+            if(pt==='keeper_energy'&&dimKeyHalf.size&&execSrc.cur?.play&&!dimTid&&!gKey){const hw=actors.get(String(d.extraData?.castRoleUid))?.name,ht=hw!=null?dimKeyHalf.get(hw):null;if(ht){const half=cv/2;supOf('rel:'+ht).key+=half;for(const k of keys)supOf(k).key-=half*part}}
             if(!keys.length){if(pt==='ulti_energy')passiveSupport.ali+=cv;else if(pt==='keeper_energy')passiveSupport.key+=cv}
             // actor-sourced buffs: power / crit damage / crit rate / base damage -> estimated extra damage through the same hit model as relics
             if(rcv?.kind==='awakener'&&keys.length&&!relWin){
