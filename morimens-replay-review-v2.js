@@ -855,7 +855,7 @@
             // actor-sourced buffs: power / crit damage / crit rate / base damage -> estimated extra damage through the same hit model as relics
             if(rcv?.kind==='awakener'&&keys.length&&!relWin){
               const pk0=PROP_KIND[pt],kind=pt==='damage_plus'?'power':pt==='crit_damage'?'crit':pt==='crit'?'critrate':(pt==='basic_damage_per'||pt==='i_basic_damage_per')?'basic':pk0?pk0[0]:null,kscope=['damage_plus','crit_damage','crit','basic_damage_per','i_basic_damage_per'].includes(pt)?undefined:pk0?.[1];
-              if(kind)for(const k of keys.filter(x=>x.startsWith('act:'))){const tid=k,rel={tid,kind,scope:kscope},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
+              if(kind)for(const k of keys.filter(x=>x.startsWith('act:')||x.startsWith('gear:'))){const tid=k,rel={tid,kind,scope:kscope},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
                 const ctx=newInstance({time:fr.time},rel,cv,temp);grant(ctx,d.uid,cv,rel,temp);supOf(k)[kind==='power'?'powerGain':kind==='crit'?'critGain':kind==='critrate'?'critRateGain':'basicGain']+=cv}
             }
           }
