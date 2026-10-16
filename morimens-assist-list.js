@@ -11,6 +11,20 @@
   const SUBMISSION_PATH='/__morimens_assist_submissions__/';
   const SUBMISSION_MARKER='MORIMENS_ASSIST_V1';
   let manifest=null,initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[],importDelegatesBound=false;
+  // seasons come from the same manifest as the D-Zone leaderboard: every season with a complete Top list (plus the Season 69 post-bug snapshot), newest first
+  const seasonIds=()=>{
+    const ids=new Set();
+    for(const x of manifest?.availableSeasons||[]){const id=Number(x.seasonId);if(Number.isFinite(id)&&id>=68&&(x.complete||x.snapshotId||id===Number(manifest.currentSeason)))ids.add(id)}
+    const list=[...ids].sort((a,b)=>b-a).map(String);return list.length?list:['70','69','68'];
+  };
+  const seasonRange=()=>{const l=seasonIds().slice().reverse();return {cn:l.join('、'),en:l.join(', '),plus:l.join(' + ')}};
+  function syncSeasonOptions(){
+    const sel=document.getElementById('assistSeason');if(!sel||!manifest)return;
+    const want=['all',...seasonIds()],have=[...sel.options].map(o=>o.value);
+    if(want.join()===have.join())return;
+    const cur=sel.value;sel.innerHTML=want.map(v=>`<option value="${v}">${v}</option>`).join('');
+    sel.value=want.includes(cur)?cur:'all';
+  }
   const cache=new Map(),playerNames=new Map();
   const gear={assets:{},awakeners:[],wheels:[],covenants:[],assetById:new Map(),assetByBase:new Map(),awakenerById:new Map(),wheelById:new Map(),covenantById:new Map(),showcaseTidByCanonical:new Map(),showcaseCanonicalByTid:new Map()};
   const zhCovenants={
@@ -289,7 +303,7 @@
     const one=async sid=>sid==='69'
       ?[{seasonId:'69',data:await datasetFor('69')},{seasonId:'69',data:await datasetFor('69-postbug').catch(()=>null)}].filter(x=>x.data)
       :[{seasonId:sid,data:await datasetFor(sid)}];
-    if(String(id)==='all')return (await Promise.all(['68','69','70'].map(one))).flat();
+    if(String(id)==='all')return (await Promise.all(seasonIds().map(one))).flat();
     return one(String(id));
   }
 
@@ -873,8 +887,8 @@
     const bySel=sel=>root.querySelector(sel);
     setText($('morimensAssistTitle'),'互助助战列表','Assist List');
     setText($('morimensAssistLead'),
-      '整理第68、69、70期融灾记录中实际被借用的助战配置。按助战提供者 UID 与角色配装聚合，统计被使用次数。',
-      'Aggregates Assist builds actually borrowed in D-Zone Seasons 68, 69 and 70, grouped by provider UID and Awakener build with observed use counts.'
+      '整理第'+seasonRange().cn+'期融灾记录中实际被借用的助战配置（随融灾榜单自动同步）。按助战提供者 UID 与角色配装聚合，统计被使用次数。',
+      'Aggregates Assist builds actually borrowed in D-Zone Seasons '+seasonRange().en+' (synced automatically with the D-Zone leaderboard), grouped by provider UID and Awakener build with observed use counts.'
     );
     if($('morimensAssistStatus')&&!initialized)setText($('morimensAssistStatus'),'等待载入','Waiting to load');
 
@@ -990,20 +1004,16 @@
 
     const season=$('assistSeason');
     if(season){
-      const texts={
-        all:ui('全部期次（68 + 69 + 70）','All Seasons (68 + 69 + 70)'),
-        '70':ui('第 70 期','Season 70'),
-        '69':ui('第 69 期','Season 69'),
-        '68':ui('第 68 期','Season 68')
-      };
+      const texts={all:ui('全部期次（'+seasonRange().plus+'）','All Seasons ('+seasonRange().plus+')')};
+      for(const id of seasonIds())texts[id]=ui('第 '+id+' 期','Season '+id);
       for(const option of season.options)if(texts[option.value])option.textContent=texts[option.value];
     }
     setText($('assistReset'),'清空筛选','Clear filters');
 
     const coverage=$('assistCoverageNote');
     if(coverage)coverage.innerHTML=zh()
-      ?'数据只统计仓库现有第68、69、70期记录中明确标记为 <code>borrowed</code> 且带 <code>assistUid</code> 的助战角色。当前手动/自动导入仅使用 Eremora Showcase，不包含技能、灵塑；需要完整养成信息请点击 UID 查看 Eremora 玩家详情。密契“最终词条”只汇总带 <code>rollQuality</code> 的洗练词条。'
-      :'Only Assist Awakeners explicitly marked <code>borrowed</code> with an <code>assistUid</code> in the stored Season 68/69/70 records are counted. Manual/automatic imports use Eremora Showcase only and do not include Skills or Soulforge; click a UID for full progression details on Eremora. “Final substats” include only rolled Covenant substats carrying <code>rollQuality</code>.';
+      ?'数据只统计仓库现有第'+seasonRange().cn+'期记录中明确标记为 <code>borrowed</code> 且带 <code>assistUid</code> 的助战角色。当前手动/自动导入仅使用 Eremora Showcase，不包含技能、灵塑；需要完整养成信息请点击 UID 查看 Eremora 玩家详情。密契“最终词条”只汇总带 <code>rollQuality</code> 的洗练词条。'
+      :'Only Assist Awakeners explicitly marked <code>borrowed</code> with an <code>assistUid</code> in the stored Season '+seasonRange().en+' records are counted. Manual/automatic imports use Eremora Showcase only and do not include Skills or Soulforge; click a UID for full progression details on Eremora. “Final substats” include only rolled Covenant substats carrying <code>rollQuality</code>.';
 
     const table=$('assistTable');
     if(table&&!initialized&&table.querySelector('.dtideEmpty')){
@@ -1140,7 +1150,7 @@
       const counts=bundle.map(({seasonId,data})=>'第 '+seasonId+' 期 '+Number(data?.recordCount||data?.records?.length||0)+' 条').join(' + ');
       note.innerHTML=zh()
         ?(activeSeason==='all'?'当前为 <b>全部期次</b>，合并统计 '+counts+'。':'当前统计 <b>第 '+activeSeason+' 期</b>。')+' 实战部分仅统计 <code>borrowed=true</code> 且带 <code>assistUid</code> 的实际借用并去重；<b>Eremora Showcase 导入</b>只覆盖当前助战配置，来源会明确标记，但同一 UID + 角色的历史融灾借用次数、借用人数与期次会继续合并累计。'
-        :(activeSeason==='all'?'All stored Season 68, 69 and 70 records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora Showcase imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
+        :(activeSeason==='all'?'All stored Season '+seasonRange().en+' records are combined.':'Only Season '+activeSeason+' is included.')+' Observed usage counts only deduplicated borrowed records with an assistUid. Eremora Showcase imports replace the current build fields while preserving and aggregating the historical observed usage count for the same UID + Awakener.';
     }
   }
   function bindImportDelegates(){
@@ -1186,7 +1196,7 @@
       if(!$('morimensAssistPanel'))return;
       localizeAssistStaticUi();
       const response=await fetch('data/morimens/eremora/manifest.json',{cache:'no-store'});if(!response.ok)throw new Error('manifest HTTP '+response.status);
-      manifest=await response.json();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();bind();initialized=true;await load($('assistSeason')?.value||'all');
+      manifest=await response.json();syncSeasonOptions();localizeAssistStaticUi();await Promise.all([loadTop1000Names(),loadGearMetadata()]);await loadManualRows();bind();initialized=true;await load($('assistSeason')?.value||'all');
     }catch(e){error(e)}finally{loading=false}
   }
   function relocalize(){
