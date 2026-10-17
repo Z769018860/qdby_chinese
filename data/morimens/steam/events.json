@@ -1,7 +1,22 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-10-16T08:19:46.247Z",
+ "fetchedAt": "2026-10-17T07:55:32.261Z",
  "posts": [
+  {
+   "title": "V2.6.2.0 서비스 중단 유지 보수 공지",
+   "date": "2026-10-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846651706683910"
+  },
+  {
+   "title": "🐱 Light's 30-Day Challenge Log: Days 1–8",
+   "date": "2026-10-17",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846651706683908"
+  },
+  {
+   "title": "🎧 V2.6.2 Radio Drama - Essex Correspondence",
+   "date": "2026-10-16",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846651706681309"
+  },
   {
    "title": "🎃 Murphy's 4☆ Skin \"Candy Snatcher\" Returns for a Limited Time!",
    "date": "2026-10-16",
