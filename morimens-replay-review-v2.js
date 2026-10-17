@@ -1965,6 +1965,9 @@
       const SC=window.MorimensReplayScoring;
       if(SC){try{
         for(const list of [wheelItems,covItems])for(const row of SC.scoreGear(list,tl,totalDmg||1)){const it=list.find(x=>x.g===row.g);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}
+        // relics / creations go through the same semantic + measured model (they used to keep the plain relative rating, which buried e.g. a +30% damage relic worth 21% of the team's damage at 12 points)
+        {const wrapped=relicItems.map(it=>{const rec=res.relic[it.r.tid]||{};return {...it,g:{name:res.nameRelic(it.r.tid),en:'',desc:pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',effectsEn:[],statics:[],related:new Set(),n:it.r.n||0}}});
+          for(const row of SC.scoreGear(wrapped,tl,totalDmg||1)){const it=relicItems.find(x=>x.r===row.r);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}}
         for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff}}
         awRows.sort((a,b)=>b.score-a.score);
         const sid=String(bd.stageId??''),st0=res.rr?.Stage?.[sid]||{},refKey=sid,refList=stageRef?.[refKey]||stageRef?.['n:'+pipeName(st0.Name||'')]||null;
