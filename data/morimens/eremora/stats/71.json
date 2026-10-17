@@ -1,83 +1,83 @@
 {
   "seasonId": 71,
-  "generatedAt": "2026-10-15T17:07:30.071Z",
-  "recordCount": 2000,
+  "generatedAt": "2026-10-17T03:36:00.029Z",
+  "recordCount": 1996,
   "maxRankAvailable": 2000,
   "all": {
-    "teamCount": 10141,
-    "memberSlots": 40564,
+    "teamCount": 10397,
+    "memberSlots": 41588,
     "characters": [
       {
-        "key": "C17",
-        "count": 1614,
-        "id": null,
-        "ingameId": "C17",
-        "name": "Mouchette",
-        "image": null,
-        "teamRatePct": 15.92
-      },
-      {
         "key": "B15",
-        "count": 1596,
+        "count": 1635,
         "id": null,
         "ingameId": "B15",
         "name": "Saya",
         "image": null,
-        "teamRatePct": 15.74
+        "teamRatePct": 15.73
+      },
+      {
+        "key": "C17",
+        "count": 1591,
+        "id": null,
+        "ingameId": "C17",
+        "name": "Mouchette",
+        "image": null,
+        "teamRatePct": 15.3
       },
       {
         "key": "O02EX",
-        "count": 1524,
+        "count": 1560,
         "id": null,
         "ingameId": "O02EX",
         "name": "Murphy: Fauxborn",
         "image": null,
-        "teamRatePct": 15.03
+        "teamRatePct": 15
       },
       {
         "key": "O07",
-        "count": 1345,
+        "count": 1384,
         "id": null,
         "ingameId": "O07",
         "name": "Miryam",
         "image": null,
-        "teamRatePct": 13.26
+        "teamRatePct": 13.31
       },
       {
         "key": "D10",
-        "count": 1326,
+        "count": 1354,
         "id": null,
         "ingameId": "D10",
         "name": "Arachne",
         "image": null,
-        "teamRatePct": 13.08
+        "teamRatePct": 13.02
       },
       {
         "key": "C02EX",
-        "count": 1325,
+        "count": 1327,
         "id": null,
         "ingameId": "C02EX",
         "name": "Doll: Inferno",
         "image": null,
-        "teamRatePct": 13.07
-      },
-      {
-        "key": "B01",
-        "count": 1302,
-        "id": null,
-        "ingameId": "B01",
-        "name": "Thais",
-        "image": null,
-        "teamRatePct": 12.84
+        "teamRatePct": 12.76
       },
       {
         "key": "O01",
-        "count": 1277,
+        "count": 1304,
         "id": null,
         "ingameId": "O01",
         "name": "Tulu",
         "image": null,
-        "teamRatePct": 12.59
+        "teamRatePct": 12.54
+      },
+      {
+        "key": "B01",
+        "count": 1297,
+        "id": null,
+        "ingameId": "B01",
+        "name": "Thais",
+        "image": null,
+        "teamRatePct": 12.47
       },
       {
         "key": "C04EX",
@@ -86,92 +86,92 @@
         "ingameId": "C04EX",
         "name": "Lotan: Cetarchon",
         "image": null,
-        "teamRatePct": 12.21
+        "teamRatePct": 11.91
       },
       {
         "key": "O06",
-        "count": 1188,
+        "count": 1215,
         "id": null,
         "ingameId": "O06",
         "name": "Goliath",
         "image": null,
-        "teamRatePct": 11.71
+        "teamRatePct": 11.69
       },
       {
         "key": "D06",
-        "count": 1173,
+        "count": 1189,
         "id": null,
         "ingameId": "D06",
         "name": "Horla",
         "image": null,
-        "teamRatePct": 11.57
+        "teamRatePct": 11.44
       },
       {
         "key": "B14",
-        "count": 1125,
+        "count": 1129,
         "id": null,
         "ingameId": "B14",
         "name": "Xu",
         "image": null,
-        "teamRatePct": 11.09
+        "teamRatePct": 10.86
       },
       {
         "key": "O02",
-        "count": 1088,
+        "count": 1128,
         "id": null,
         "ingameId": "O02",
         "name": "Murphy",
         "image": null,
-        "teamRatePct": 10.73
+        "teamRatePct": 10.85
       },
       {
         "key": "D11",
-        "count": 1001,
+        "count": 1025,
         "id": null,
         "ingameId": "D11",
         "name": "Castor",
         "image": null,
-        "teamRatePct": 9.87
-      },
-      {
-        "key": "B03",
-        "count": 924,
-        "id": null,
-        "ingameId": "B03",
-        "name": "Aigis",
-        "image": null,
-        "teamRatePct": 9.11
+        "teamRatePct": 9.86
       },
       {
         "key": "O11",
-        "count": 916,
+        "count": 951,
         "id": null,
         "ingameId": "O11",
         "name": "Vortice",
         "image": null,
-        "teamRatePct": 9.03
+        "teamRatePct": 9.15
+      },
+      {
+        "key": "B03",
+        "count": 931,
+        "id": null,
+        "ingameId": "B03",
+        "name": "Aigis",
+        "image": null,
+        "teamRatePct": 8.95
       },
       {
         "key": "C15",
-        "count": 893,
+        "count": 909,
         "id": null,
         "ingameId": "C15",
         "name": "Tawil",
         "image": null,
-        "teamRatePct": 8.81
+        "teamRatePct": 8.74
       },
       {
         "key": "D14",
-        "count": 883,
+        "count": 908,
         "id": null,
         "ingameId": "D14",
         "name": "Pollux",
         "image": null,
-        "teamRatePct": 8.71
+        "teamRatePct": 8.73
       },
       {
         "key": "B09",
-        "count": 851,
+        "count": 872,
         "id": null,
         "ingameId": "B09",
         "name": "Faint",
@@ -180,250 +180,250 @@
       },
       {
         "key": "D13",
-        "count": 830,
+        "count": 846,
         "id": null,
         "ingameId": "D13",
         "name": "Clementine",
         "image": null,
-        "teamRatePct": 8.18
+        "teamRatePct": 8.14
       },
       {
         "key": "B11",
-        "count": 776,
+        "count": 813,
         "id": null,
         "ingameId": "B11",
         "name": "Caraboo",
         "image": null,
-        "teamRatePct": 7.65
+        "teamRatePct": 7.82
       },
       {
         "key": "D12",
-        "count": 769,
+        "count": 786,
         "id": null,
         "ingameId": "D12",
         "name": "Hameln",
         "image": null,
-        "teamRatePct": 7.58
-      },
-      {
-        "key": "C03",
-        "count": 764,
-        "id": null,
-        "ingameId": "C03",
-        "name": "Ogier",
-        "image": null,
-        "teamRatePct": 7.53
-      },
-      {
-        "key": "C06",
-        "count": 736,
-        "id": null,
-        "ingameId": "C06",
-        "name": "\"24\"",
-        "image": null,
-        "teamRatePct": 7.26
+        "teamRatePct": 7.56
       },
       {
         "key": "C03EX",
-        "count": 730,
+        "count": 767,
         "id": null,
         "ingameId": "C03EX",
         "name": "Ogier: Oathbound",
         "image": null,
-        "teamRatePct": 7.2
+        "teamRatePct": 7.38
       },
       {
-        "key": "B05",
-        "count": 688,
+        "key": "C03",
+        "count": 765,
         "id": null,
-        "ingameId": "B05",
-        "name": "Helot",
+        "ingameId": "C03",
+        "name": "Ogier",
         "image": null,
-        "teamRatePct": 6.78
+        "teamRatePct": 7.36
+      },
+      {
+        "key": "C06",
+        "count": 757,
+        "id": null,
+        "ingameId": "C06",
+        "name": "\"24\"",
+        "image": null,
+        "teamRatePct": 7.28
       },
       {
         "key": "B02",
-        "count": 686,
+        "count": 701,
         "id": null,
         "ingameId": "B02",
         "name": "Salvador",
         "image": null,
-        "teamRatePct": 6.76
+        "teamRatePct": 6.74
       },
       {
-        "key": "C01",
-        "count": 653,
+        "key": "B05",
+        "count": 677,
         "id": null,
-        "ingameId": "C01",
-        "name": "Ramona",
+        "ingameId": "B05",
+        "name": "Helot",
         "image": null,
-        "teamRatePct": 6.44
-      },
-      {
-        "key": "C05",
-        "count": 653,
-        "id": null,
-        "ingameId": "C05",
-        "name": "Ryker",
-        "image": null,
-        "teamRatePct": 6.44
-      },
-      {
-        "key": "C12",
-        "count": 638,
-        "id": null,
-        "ingameId": "C12",
-        "name": "Karen",
-        "image": null,
-        "teamRatePct": 6.29
+        "teamRatePct": 6.51
       },
       {
         "key": "O09",
-        "count": 628,
+        "count": 667,
         "id": null,
         "ingameId": "O09",
         "name": "Celeste",
         "image": null,
-        "teamRatePct": 6.19
+        "teamRatePct": 6.42
       },
       {
-        "key": "C10",
-        "count": 621,
+        "key": "C05",
+        "count": 666,
         "id": null,
-        "ingameId": "C10",
-        "name": "Lily",
+        "ingameId": "C05",
+        "name": "Ryker",
         "image": null,
-        "teamRatePct": 6.12
+        "teamRatePct": 6.41
       },
       {
-        "key": "C08",
-        "count": 591,
+        "key": "C12",
+        "count": 653,
         "id": null,
-        "ingameId": "C08",
-        "name": "Nymphaea",
+        "ingameId": "C12",
+        "name": "Karen",
         "image": null,
-        "teamRatePct": 5.83
+        "teamRatePct": 6.28
+      },
+      {
+        "key": "C01",
+        "count": 645,
+        "id": null,
+        "ingameId": "C01",
+        "name": "Ramona",
+        "image": null,
+        "teamRatePct": 6.2
       },
       {
         "key": "O10",
-        "count": 584,
+        "count": 613,
         "id": null,
         "ingameId": "O10",
         "name": "Corposant",
         "image": null,
-        "teamRatePct": 5.76
+        "teamRatePct": 5.9
+      },
+      {
+        "key": "C10",
+        "count": 613,
+        "id": null,
+        "ingameId": "C10",
+        "name": "Lily",
+        "image": null,
+        "teamRatePct": 5.9
+      },
+      {
+        "key": "C08",
+        "count": 598,
+        "id": null,
+        "ingameId": "C08",
+        "name": "Nymphaea",
+        "image": null,
+        "teamRatePct": 5.75
       },
       {
         "key": "C16",
-        "count": 514,
+        "count": 533,
         "id": null,
         "ingameId": "C16",
         "name": "Kathigu-Ra",
         "image": null,
-        "teamRatePct": 5.07
+        "teamRatePct": 5.13
+      },
+      {
+        "key": "O04",
+        "count": 512,
+        "id": null,
+        "ingameId": "O04",
+        "name": "Caecus",
+        "image": null,
+        "teamRatePct": 4.92
       },
       {
         "key": "C02",
-        "count": 497,
+        "count": 506,
         "id": null,
         "ingameId": "C02",
         "name": "Doll",
         "image": null,
-        "teamRatePct": 4.9
+        "teamRatePct": 4.87
       },
       {
-        "key": "O04",
-        "count": 491,
+        "key": "B05EX",
+        "count": 503,
         "id": null,
-        "ingameId": "O04",
-        "name": "Caecus",
+        "ingameId": "B05EX",
+        "name": "Helot: Catena",
         "image": null,
         "teamRatePct": 4.84
       },
       {
         "key": "C01EX",
-        "count": 473,
+        "count": 480,
         "id": null,
         "ingameId": "C01EX",
         "name": "Ramona: Timeworn",
         "image": null,
-        "teamRatePct": 4.66
-      },
-      {
-        "key": "B05EX",
-        "count": 471,
-        "id": null,
-        "ingameId": "B05EX",
-        "name": "Helot: Catena",
-        "image": null,
-        "teamRatePct": 4.64
+        "teamRatePct": 4.62
       },
       {
         "key": "O13",
-        "count": 462,
+        "count": 479,
         "id": null,
         "ingameId": "O13",
         "name": "Pontos",
         "image": null,
-        "teamRatePct": 4.56
+        "teamRatePct": 4.61
       },
       {
         "key": "C07",
-        "count": 438,
+        "count": 469,
         "id": null,
         "ingameId": "C07",
         "name": "Nautila",
         "image": null,
-        "teamRatePct": 4.32
+        "teamRatePct": 4.51
       },
       {
         "key": "C04",
-        "count": 413,
+        "count": 441,
         "id": null,
         "ingameId": "C04",
         "name": "Lotan",
         "image": null,
-        "teamRatePct": 4.07
+        "teamRatePct": 4.24
       },
       {
         "key": "O05",
-        "count": 397,
+        "count": 427,
         "id": null,
         "ingameId": "O05",
         "name": "Aurita",
         "image": null,
-        "teamRatePct": 3.91
+        "teamRatePct": 4.11
       },
       {
         "key": "O08",
-        "count": 320,
+        "count": 348,
         "id": null,
         "ingameId": "O08",
         "name": "Sanga",
         "image": null,
-        "teamRatePct": 3.16
+        "teamRatePct": 3.35
       },
       {
         "key": "D09",
-        "count": 316,
+        "count": 327,
         "id": null,
         "ingameId": "D09",
         "name": "Casiah",
         "image": null,
-        "teamRatePct": 3.12
+        "teamRatePct": 3.15
       },
       {
         "key": "D05",
-        "count": 315,
+        "count": 326,
         "id": null,
         "ingameId": "D05",
         "name": "Winkle",
         "image": null,
-        "teamRatePct": 3.11
+        "teamRatePct": 3.14
       },
       {
         "key": "B12",
-        "count": 294,
+        "count": 301,
         "id": null,
         "ingameId": "B12",
         "name": "Pickman",
@@ -432,129 +432,129 @@
       },
       {
         "key": "B10",
-        "count": 258,
+        "count": 282,
         "id": null,
         "ingameId": "B10",
         "name": "Doresain",
         "image": null,
-        "teamRatePct": 2.54
+        "teamRatePct": 2.71
       },
       {
         "key": "C11",
-        "count": 250,
+        "count": 258,
         "id": null,
         "ingameId": "C11",
         "name": "Alva",
         "image": null,
-        "teamRatePct": 2.47
+        "teamRatePct": 2.48
       },
       {
         "key": "B06",
-        "count": 234,
+        "count": 246,
         "id": null,
         "ingameId": "B06",
         "name": "Agrippa",
         "image": null,
-        "teamRatePct": 2.31
+        "teamRatePct": 2.37
       },
       {
         "key": "O03",
-        "count": 230,
+        "count": 246,
         "id": null,
         "ingameId": "O03",
         "name": "Faros",
         "image": null,
-        "teamRatePct": 2.27
+        "teamRatePct": 2.37
       },
       {
         "key": "B08",
-        "count": 203,
+        "count": 210,
         "id": null,
         "ingameId": "B08",
         "name": "Leigh",
         "image": null,
-        "teamRatePct": 2
-      },
-      {
-        "key": "D08",
-        "count": 175,
-        "id": null,
-        "ingameId": "D08",
-        "name": "Erica",
-        "image": null,
-        "teamRatePct": 1.73
-      },
-      {
-        "key": "C09",
-        "count": 161,
-        "id": null,
-        "ingameId": "C09",
-        "name": "Pandia",
-        "image": null,
-        "teamRatePct": 1.59
+        "teamRatePct": 2.02
       },
       {
         "key": "D03",
-        "count": 161,
+        "count": 186,
         "id": null,
         "ingameId": "D03",
         "name": "Tinct",
         "image": null,
-        "teamRatePct": 1.59
+        "teamRatePct": 1.79
+      },
+      {
+        "key": "D08",
+        "count": 183,
+        "id": null,
+        "ingameId": "D08",
+        "name": "Erica",
+        "image": null,
+        "teamRatePct": 1.76
+      },
+      {
+        "key": "C09",
+        "count": 177,
+        "id": null,
+        "ingameId": "C09",
+        "name": "Pandia",
+        "image": null,
+        "teamRatePct": 1.7
       },
       {
         "key": "D04",
-        "count": 144,
+        "count": 153,
         "id": null,
         "ingameId": "D04",
         "name": "Wanda",
         "image": null,
-        "teamRatePct": 1.42
+        "teamRatePct": 1.47
       },
       {
         "key": "D07",
-        "count": 119,
+        "count": 129,
         "id": null,
         "ingameId": "D07",
         "name": "Jenkin",
         "image": null,
-        "teamRatePct": 1.17
+        "teamRatePct": 1.24
       },
       {
         "key": "D02",
-        "count": 95,
+        "count": 112,
         "id": null,
         "ingameId": "D02",
         "name": "Daffodil",
         "image": null,
-        "teamRatePct": 0.94
+        "teamRatePct": 1.08
       },
       {
         "key": "B04",
-        "count": 92,
+        "count": 111,
         "id": null,
         "ingameId": "B04",
         "name": "Sorel",
         "image": null,
-        "teamRatePct": 0.91
+        "teamRatePct": 1.07
       },
       {
         "key": "D01",
-        "count": 60,
+        "count": 73,
         "id": null,
         "ingameId": "D01",
         "name": "Liz",
         "image": null,
-        "teamRatePct": 0.59
+        "teamRatePct": 0.7
       },
       {
         "key": "B07",
-        "count": 45,
+        "count": 56,
         "id": null,
         "ingameId": "B07",
         "name": "Uvhash",
         "image": null,
-        "teamRatePct": 0.44
+        "teamRatePct": 0.54
       }
     ]
   },
@@ -586,15 +586,15 @@
     "2000": {
       "cap": 2000,
       "complete": true,
-      "recordCount": 2000,
+      "recordCount": 1996,
       "maxRankAvailable": 2000
     }
   },
   "slim": true,
   "coverage": {
     "difficulty": {
-      "recognizedTeams": 10141,
-      "totalTeams": 10141,
+      "recognizedTeams": 10397,
+      "totalTeams": 10397,
       "complete": true
     },
     "rankScopes": {
