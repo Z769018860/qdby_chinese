@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的汉化小结</title>
-  <link rel="stylesheet" href="styles.css?v=20260920.3" />
+  <link rel="stylesheet" href="styles.css?v=20261018.1" />
   <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 </head>
 <body>
@@ -42,9 +42,9 @@
           <img alt="爱发电" src="https://afdian.com/static/img/logo.png" />
           <span>爱发电</span>
         </a>
-        <a class="chip" href="#toolboxTitle">
+        <button class="chip" id="toolboxOpen" type="button" aria-haspopup="dialog">
           <span>🧰 个人工具箱</span>
-        </a>
+        </button>
         <a class="chip" href="#messageTitle">
           <span>💬 留言板</span>
         </a>
@@ -164,8 +164,31 @@
         <div id="waline" aria-live="polite"></div>
         <p id="walineFallback" class="messageStatus muted" role="status" aria-live="polite"></p>
       </section>
+    </section>
 
-      <section class="panel toolboxCard" aria-labelledby="toolboxTitle">
+
+    <section class="panel updateLog" aria-labelledby="updateLogTitle">
+      <h2 id="updateLogTitle">网站更新记录</h2>
+      <ul class="updateList">
+        <li><time datetime="2026-10-18">2026-10-18</time>：个人工具箱新增《囚笼之诗》全部 CG、成就与结局攻略。</li>
+        <li><time datetime="2026-02-25">2026-02-25</time>：新增点赞与匿名留言功能。</li>
+        <li><time datetime="2026-02-25">2026-02-25</time>：优化个人声明、占坑、留言板样式，完善宽屏与手机端背景适配。</li>
+        <li><time datetime="2026-02-26">2026-02-26</time>：新增筛选项（原版语言、游戏时长、是否有授权、汉化成员、游戏价格）。</li>
+        <li><time datetime="2026-02-26">2026-02-26</time>：补充网站说明视频链接与本区更新记录展示。</li>
+        <li><time datetime="2026-03-11">2026-02-26</time>：增加网站个人工具箱模块</li>
+        <li><time datetime="2026-09-05">2026-09-05</time>：新增剑三 JJC 3v3 配置抽签工具。</li>
+        <li><time datetime="2026-09-05">2026-09-05</time>：工具箱新增剑网3莫问平沙招式表共享入口。</li>
+        <li><time datetime="2026-09-16">2026-09-16</time>：新增忘却前夜伤害乘区计算与每日签工具。</li>
+        <li><time datetime="2026-09-19">2026-09-19</time>：忘忘看报新增角色、命轮、造物及旧版融灾榜单实时下载图片功能，并加入网址与 copyright@青灯不弈 水印。</li>
+        <li><time datetime="2026-09-20">2026-09-20</time>：主页留言板改用 Waline 在线留言服务。</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <dialog id="toolboxDialog" class="toolboxDialog" aria-labelledby="toolboxTitle">
+    <button class="viewerClose" id="toolboxClose" type="button" aria-label="关闭">×</button>
+      <div class="toolboxCard">
         <h2 id="toolboxTitle">个人工具箱</h2>
         <p class="panelLead">收录猫狗主题整活页面与实用工具。</p>
 
@@ -263,28 +286,8 @@
           </div>
         </aside>
         </div>
-      </section>
-    </section>
-
-
-    <section class="panel updateLog" aria-labelledby="updateLogTitle">
-      <h2 id="updateLogTitle">网站更新记录</h2>
-      <ul class="updateList">
-        <li><time datetime="2026-10-18">2026-10-18</time>：个人工具箱新增《囚笼之诗》全部 CG、成就与结局攻略。</li>
-        <li><time datetime="2026-02-25">2026-02-25</time>：新增点赞与匿名留言功能。</li>
-        <li><time datetime="2026-02-25">2026-02-25</time>：优化个人声明、占坑、留言板样式，完善宽屏与手机端背景适配。</li>
-        <li><time datetime="2026-02-26">2026-02-26</time>：新增筛选项（原版语言、游戏时长、是否有授权、汉化成员、游戏价格）。</li>
-        <li><time datetime="2026-02-26">2026-02-26</time>：补充网站说明视频链接与本区更新记录展示。</li>
-        <li><time datetime="2026-03-11">2026-02-26</time>：增加网站个人工具箱模块</li>
-        <li><time datetime="2026-09-05">2026-09-05</time>：新增剑三 JJC 3v3 配置抽签工具。</li>
-        <li><time datetime="2026-09-05">2026-09-05</time>：工具箱新增剑网3莫问平沙招式表共享入口。</li>
-        <li><time datetime="2026-09-16">2026-09-16</time>：新增忘却前夜伤害乘区计算与每日签工具。</li>
-        <li><time datetime="2026-09-19">2026-09-19</time>：忘忘看报新增角色、命轮、造物及旧版融灾榜单实时下载图片功能，并加入网址与 copyright@青灯不弈 水印。</li>
-        <li><time datetime="2026-09-20">2026-09-20</time>：主页留言板改用 Waline 在线留言服务。</li>
-      </ul>
-    </section>
-
-  </main>
+      </div>
+  </dialog>
 
   <dialog id="viewer" class="viewer">
     <button class="viewerClose" id="viewerClose" aria-label="关闭">×</button>
@@ -296,7 +299,7 @@
     <div class="muted">重要提示：本站为个人汉化汇总展示；请以原作者发布说明与授权范围为准。若链接失效或需要补档/更正信息，可通过友情链接联系我。</div>
   </footer>
 
-  <script type="module" src="app.js?v=20260920.3"></script>
+  <script type="module" src="app.js?v=20261018.1"></script>
   <script type="module">
     const walineRoot = document.querySelector('#waline');
     const walineFallback = document.querySelector('#walineFallback');
