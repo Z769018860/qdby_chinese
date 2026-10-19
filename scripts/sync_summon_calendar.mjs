@@ -24,7 +24,7 @@ const nk=s=>String(s||'').toLowerCase().replace(/^"|"$/g,'').replace(/[^a-z0-9]/
 const byEn={awakener:new Map(),wheel:new Map()};
 for(const k of ['awakener','wheel'])for(const it of pool[k])byEn[k].set(nk(it.en),it);
 const ref=(en,hint)=>{
-  for(const k of hint?[hint]:['awakener','wheel']){const it=byEn[k].get(nk(en));if(it)return {k,id:it.id,en:it.en.replace(/^"|"$/g,''),zh:it.zh||''}}
+  for(const k of hint?[hint]:['awakener','wheel']){const it=byEn[k]?.get(nk(en));if(it)return {k,id:it.id,en:it.en.replace(/^"|"$/g,''),zh:it.zh||''}}
   return {k:hint||'other',id:'',en:String(en).replace(/^"|"$/g,''),zh:''};
 };
 // Info.kr character id -> SKeyDB awakener
@@ -137,7 +137,8 @@ for(const b of wikiBanners)if(['awaken','rerun'].includes(b.type))b.end=fixEnd(b
 const skMin=outBanners.reduce((m,b)=>b.start<m?b.start:m,'9999');
 const skDays=new Set(outBanners.filter(b=>['premium','combo','selector','daily'].includes(b.type)).map(b=>b.start.slice(0,10)));
 const wikiKeep=wikiBanners.filter(b=>['awaken','rerun'].includes(b.type)?b.start<skMin:(b.start<skMin||!(b.type==='walks'&&skDays.has(b.start.slice(0,10)))));
-const mergedBanners=[...outBanners,...wikiKeep,...(EXTRA.banners||[]).filter(b=>!outBanners.some(x=>x.id===b.id))].sort((a,b)=>b.start.localeCompare(a.start));
+const SUPPRESS=new Set(EXTRA.suppress||[]);
+const mergedBanners=[...outBanners,...wikiKeep,...(EXTRA.banners||[]).filter(b=>!outBanners.some(x=>x.id===b.id))].filter(b=>!SUPPRESS.has(b.id)).sort((a,b)=>b.start.localeCompare(a.start));
 // character / wheel / skin events (story events of each character, wheel archives, skins)
 const outEvents=events.filter(e=>/^event-(story|skin|wheel|preorder)/.test(e.id)&&!/^event-preorder/.test(e.id)).map(e=>({
   id:e.id,kind:e.id.startsWith('event-story-rerun')?'story-rerun':e.id.startsWith('event-story')?'story':e.id.startsWith('event-skin')?'skin':'wheel',
@@ -252,6 +253,6 @@ for(const e of finalEvents)if(['story','story-rerun'].includes(e.kind)){
   if(!e.featured.some(x=>x.id)&&nameChar.has(b))e.featured=[nameChar.get(b)];
   if(!e.featured.some(x=>x.id)&&e.src==='weibo')e.kind='special';   // gameplay events without a featured Awakener are special events
 }
-const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',weibo:'Weibo 忘却前夜记录局 announcement posts (official Chinese event / banner names, 2025-12 onwards)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,appearances,launchPairs,forecast,events:finalEvents.slice().sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
+const out={version:1,generatedAt:new Date().toISOString(),sources:{skeydb:'dansa/SKeyDB timeline (banners.json, events.json); dates are game server time UTC+8',morimenz:'Morimenz-kr/Morimens.Info.kr rerun_schedule.json (monthly history, verified periods; Korean server schedule)',summon:'Z769018860/morimens-summon web/catalog.json (zh featured names)',steam:'Steam community announcements (ISteamNews, app 3052450): event schedule 2025-09 onwards',weibo:'Weibo 忘却前夜记录局 announcement posts (official Chinese event / banner names, 2025-12 onwards)',huiji:'morimens.huijiwiki.com 唤醒 (Module:SummonAwkTable data modules; dates before the SKeyDB timeline, other pool types, forecast)'},updatedAtInfoKr:rerun.updated_at,banners:mergedBanners,appearances,launchPairs,forecast,events:finalEvents.filter(e=>!SUPPRESS.has(e.id)).sort((a,b)=>b.start.localeCompare(a.start)),history,periods};
 await writeFile('data/morimens/game/summon-calendar.json',JSON.stringify(out)+'\n');
 console.log('banners',outBanners.length,'+wiki',wikiKeep.length,'forecast',forecast.length,'wiki events',wikiEvents.length,'steam events',steamEvents.length,'weibo added',addedEvents.length,'events',outEvents.length,'history months',history.length,'unresolved:',[...new Set([...outBanners,...outEvents].flatMap(x=>x.featured).filter(f=>!f.id).map(f=>f.en))].join(', ')||'-');

@@ -7203,6 +7203,25 @@
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94"
       },
       "syncStatus": "no-voice"
+    },
+    "awakener-0062": {
+      "skeydbId": "awakener-0062",
+      "ingameId": "C20",
+      "slug": "vivian",
+      "name": "薇薇安",
+      "englishName": "Vivian",
+      "profile": {
+        "name": "薇薇安",
+        "englishName": "Vivian"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%96%87%E8%96%87%E5%AE%89",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%96%87%E8%96%87%E5%AE%89"
+      },
+      "syncStatus": "no-voice"
     }
   }
 }

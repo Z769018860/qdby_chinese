@@ -103,7 +103,7 @@
 
   function resolveCharacters(){
     const data=window.MorimensData,records=Array.isArray(data?.db?.records)?data.db.records:[];
-    return records.map(rec=>{
+    return records.filter(rec=>rec.id!=='awakener-0062').map(rec=>{   // Vivian keeps her pre-release vote id (special-upcoming-vivian)
       const loc=data.localizedProfile?.(rec)||{},image=data.assetFor?.(rec,'portrait')||data.assetFor?.(rec,'card')||'';
       const displayName=isEnglish()?String(rec.name||rec.id):String(loc.name||rec.name||rec.id);
       return {id:String(rec.id),name:displayName,englishName:String(rec.name||''),image};
@@ -111,8 +111,8 @@
   }
 
   const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'Misag School Cat',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
-  // announced but not yet released awakener (not in the SKeyDB records yet); replace by the real record once it ships
-  const vivian={id:'special-upcoming-vivian',name:'薇薇安',englishName:'Vivian',image:'assets/morimens/love-rank/upcoming.svg'};
+  // Vivian was added before her release; the vote id stays so that the votes already cast keep counting (the real SKeyDB record awakener-0062 is filtered out above)
+  const vivian={id:'special-upcoming-vivian',name:'薇薇安',englishName:'Vivian',image:'assets/morimens/portraits/vivian.webp'};
   const specials=[schoolCat,vivian];
   const specialOf=id=>specials.find(x=>x.id===id);
 

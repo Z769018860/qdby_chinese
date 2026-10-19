@@ -2,11 +2,11 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "0d3b16102e7669af7f41c85093c56d57dacf634f",
-    "syncedAt": "2026-10-17T07:55:23.813Z",
+    "commit": "798bf5e3e870949d832da14d9861f188d9a29d7e",
+    "syncedAt": "2026-10-19T06:38:42.122Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
-  "count": 61,
+  "count": 62,
   "records": [
     {
       "id": "awakener-0001",
@@ -89,7 +89,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Awakener ID: MA-C06\nDanger Level: A\nSpecial Containment Procedures: MA-C06 is currently housed in Awakener Observation Room 7 with dim lighting. Fearing mind control by @3, MA-C06 refuses to sleep, only provided with a chair.\n\nDue to good behavior and friendly attitude, MA-C06 is allowed to use the greenhouse and explore parts of the campus with an Investigator escort.\n\n—\"Awakener Containment FileMA-C06\""
           },
           {
@@ -164,7 +164,7 @@
           },
           {
             "id": "voice-4925",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "We're...ready. Please give the order, Keeper."
           },
@@ -211,13 +211,13 @@
           {
             "id": "voice-6290",
             "title": "Chat: About Jenkin",
-            "unlockCondition": "Unlocks after clearing Main Story Chapter 2",
+            "unlockCondition": "Clear Main Story Chapter 2",
             "content": "Excuse me... Have you seen my sister, Jenkin? She's a girl who carries a mouse and can be quite fierce... I couldn't possibly mistake her."
           },
           {
             "id": "voice-6695",
             "title": "Chat: About Herbert",
-            "unlockCondition": "Unlocks after clearing Main Story Chapter 2",
+            "unlockCondition": "Clear Main Story Chapter 2",
             "content": "Although Herbert is a terrifying person, his cats are very gentle... No, to be precise, there are two cats, right?"
           },
           {
@@ -634,7 +634,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "@3Built in the Second Samnite period, decorated in the exquisite Third Pompeian and Lemovician styles, this is a typical residence of the wealthy merchant class during the Roman era. Featuring two courtyards and four triclinia, @1@1\n.....all reduced to ashes in the famous slave uprising... According to contemporaneous anecdotes, a massive pale spider was sealed beneath the ruins, referred to by locals as the \"God of the Maze,\" and they firmly believe that those who tread upon the spider's territory will become disoriented among countless passages and entrances, ultimately becoming hosts for its offspring.\n\nAn interesting horror story, but it will not deter us @2@1\n—Excerpt from \"@2Archaeological Notes on the Ruins\"\n\n.....The situation is dire, Sir Goodman. Moretti and his party have been missing for several days now. We all understand this has nothing to do with the legend of the \"God of the Maze,\" yet it is indeed unsettling. We have decided to end the investigation early and return to Durham.\n\nAdditionally, the archaeological team discovered a cluster of Silver-like objects in the ruins, which may be related to the @1 you mentioned earlier...\n\n—Excerpt from Clarkson Johnson's \"A Letter to Goodman\""
           },
           {
@@ -709,7 +709,7 @@
           },
           {
             "id": "voice-6220",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I saw... It climbing up from the darkness of the well; countless eyes appearing on its flesh egg. They stared at me, calling me... Maze God!"
           },
@@ -1179,7 +1179,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "According to the \"Cataclysm Event Record III,\" the Keeper brought back this piece of Silver Core from the Londinium Orphanage. Accompanying the Silver Core was a tiny, patch-covered teddy bear.\n\nThis Silver weighs about 2.1 grams, is slender and smooth, resembling a teardrop. Those who come into direct contact with the Silver will fall into a Stasis State, maintaining the posture of touching the Silver until Awakened by someone else. To prevent accidental contact, Researcher Doll kept this Silver in a closed glass orb and replaced the teddy bear's eyes.\n\n\"It looks as if it has been crying every day.\""
           },
           {
@@ -1254,7 +1254,7 @@
           },
           {
             "id": "voice-6062",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I... I understand your intention. Though I'm still clumsy, I will fight for you with all I have!"
           },
@@ -1717,7 +1717,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "A.F.18@1/@1/@2 Infantry Regiment, the Kingdom of Remouahe, Port Alexandria\nThe situation in Port Alexandria is stabilizing. The 3rd and 4th battalions, along with three companies of musketeers, have crossed the canal to proceed to @4 for the next stage of operations. Now only the 1st battalion and a company of musketeers remain in Port Alexandria.\n\nA squad encountered rebels during a patrol and quickly dealt with them. They brought back an interesting trinket that looks like silver but is heavier. I've stored it in the safe; the commander will like this gift.\n\n.....\n\nDay 13 of the garrison, soldiers from various companies are showing abnormal behavior, including but not limited to attacking comrades, officers, destroying inventory, and military equipment. These soldiers, along with the earlier madmen, are now under my direct supervision in confinement.\n\nTheir eyes are bloodshot, and they drool, looking more like pitiful animals than soldiers. Madness is spreading here; I'm worried it will become a plague.\n\n.....\n\nDay 30 of the garrison.\n\nTo date, 370 soldiers have shown mad behavior. After 20 days of severe hysteria, 331 of them developed limb numbness and paralysis. Their aggression remains strong; two military doctors were bitten while trying to treat them.\n\nThe madness continues to spread. I've reported the situation, hoping for swift action.\n\n.....\n\nThe Committee took over the Alexandria garrison for 10 days; people still fall into madness, my brothers one after another. Why are only we suffering this damned plague? Why are the locals fine? Why do the rebels who hassle us remain unaffected?\n\nMy head hurts more and more, and the doctors are helpless—they fell into madness before me and became those biting monsters.\n\nI fear I will also go mad.\n\nThey say we have to wait for the Mythag University people. Damn them, we fought for our country, we shouldn't be treated this way.\n\n.....\n\nI know now, I finally know. It's a vengeful spirit within that piece of silver, seeking revenge on all who invaded this land. That one-legged woman wants us to leave, wants us all gone, to return everything here to its original owners. Yes, yes, it should be this way, we never should've come, never started this war, I @1@3@4@2@1@2@3\n— Excerpt from the \"@2 Infantry Regiment 1st Battalion Acting Commander's Log\""
           },
           {
@@ -1792,7 +1792,7 @@
           },
           {
             "id": "voice-6211",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Thank you sincerely for your trust in training me to this level. You must also be someone who pursues justice; thus, I will continue to bring glory to our cause here."
           },
@@ -2323,7 +2323,7 @@
           },
           {
             "id": "voice-6025",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Haha! Now Aurita's Friends won't disappear again!"
           },
@@ -2802,7 +2802,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "A.F. 3@1, January.\n\nOn the Devil's Reef off the eastern coast of the Agló Republic, local fishermen reported they had salvaged \"a strangely shaped corpse\"—short and hunched, with protruding eyeballs, partially hardened skin, webbed fingers, and the most bizarre feature being symmetrical red marks on either side of the neck. If it weren't for the student uniform it wore, it would be hard to consider it a \"human corpse.\" \n\nWhen the investigators arrived, the strange corpse had already been burned by frightened fishermen as an omen, leaving only a suitcase that was quite popular among students at the time. The suitcase contained no change of clothes, only some illegible manuscripts, a compass, and a photograph of a middle-aged woman."
           },
           {
@@ -2877,7 +2877,7 @@
           },
           {
             "id": "voice-5227",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I still haven't grown my gills, but I no longer feel anxious about it. Keeper, I'll be your shield, and protect you with my fins."
           },
@@ -3332,7 +3332,7 @@
             "kind": "introduction",
             "title": "Basic Information",
             "unlockCondition": "Awakener Level 1",
-            "content": "Let’s dance! Dance a merry dance, dance a wild dance! Laugh along with her, and stoke the atmosphere to fever pitch.\n\nAnd then—it's time for the star to take the stage.\n\nThere, where the spotlights converge, the mad magician has already slipped her hand into her top hat. As for what she will pull from that endless void—be it a cascade of colorful ribbons, a flock of white doves taking flight, or the razor-sharp claws of some dreadful monster... I'm afraid only she can tell."
+            "content": "Let's dance! Dance a merry dance, dance a wild dance! Laugh along with her, and stoke the atmosphere to fever pitch.\n\nAnd then—it's time for the star to take the stage.\n\nThere, where the spotlights converge, the mad magician has already slipped her hand into her top hat. As for what she will pull from that endless void—be it a cascade of colorful ribbons, a flock of white doves taking flight, or the razor-sharp claws of some dreadful monster... I'm afraid only she can tell."
           },
           {
             "kind": "story",
@@ -3344,7 +3344,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "\"Tired of the mundane parks? Bored with dull animal exhibitions? Then come to Casiah's Magical Carnival! For kids who love animals, there are tenor-singing lions, ballet-dancing flamingos, acrobatic elephants, and the world's one and only donkey tamer! For couples looking to rekindle the spark, try our unique Live-Horse Carousel for a rare romantic experience! And for the brave souls who crave genuine thrills in their lives, we dare you to challenge the Mirror Maze, hand-designed by the carnival's very own mistress! If you manage to take away those 41 mischievous visitors who never came out, you can win great prizes!\n\nBesides these exclusive entertainment facilities, Magician Casiah will usher you into a spectacular world of revelry, featuring sawing-in-half illusions, human vanishings, extreme escapes, and more magic! Lucky audience members may even be invited on stage to experience Master Casiah's exquisitely refined cutting techniques up close and personal. Guaranteed to shatter your perception of reality and render your ordinary daily life utterly flavorless! And best of all? Every last bit of it is absolutely free—FREE! Your joy is all the reward Master Casiah could ever ask for!\n\nTo all at the Mythag—Master Casiah will be waiting for you this weekend on the open ground behind the cafeteria. Don't you dare miss it!\n\nNote: Once entering the carnival, attendees must fully experience it; mid-way exits are not allowed. Those with low stress tolerance or fragile mental and cardiac conditions should enter with extreme caution.\n\nThe carnival is not responsible for any symptoms such as loss of appetite, missing limbs, lost eyes, or abdominal ruptures that occur afterward.\"\n\n—<Italic:Grand Opening: Master Casiah’s Magical Carnival!>"
+            "content": "\"Tired of the mundane parks? Bored with dull animal exhibitions? Then come to Casiah's Magical Carnival! For kids who love animals, there are tenor-singing lions, ballet-dancing flamingos, acrobatic elephants, and the world's one and only donkey tamer! For couples looking to rekindle the spark, try our unique Live-Horse Carousel for a rare romantic experience! And for the brave souls who crave genuine thrills in their lives, we dare you to challenge the Mirror Maze, hand-designed by the carnival's very own mistress! If you manage to take away those 41 mischievous visitors who never came out, you can win great prizes!\n\nBesides these exclusive entertainment facilities, Magician Casiah will usher you into a spectacular world of revelry, featuring sawing-in-half illusions, human vanishings, extreme escapes, and more magic! Lucky audience members may even be invited on stage to experience Master Casiah's exquisitely refined cutting techniques up close and personal. Guaranteed to shatter your perception of reality and render your ordinary daily life utterly flavorless! And best of all? Every last bit of it is absolutely free—FREE! Your joy is all the reward Master Casiah could ever ask for!\n\nTo all at the Mythag—Master Casiah will be waiting for you this weekend on the open ground behind the cafeteria. Don't you dare miss it!\n\nNote: Once entering the carnival, attendees must fully experience it; mid-way exits are not allowed. Those with low stress tolerance or fragile mental and cardiac conditions should enter with extreme caution.\n\nThe carnival is not responsible for any symptoms such as loss of appetite, missing limbs, lost eyes, or abdominal ruptures that occur afterward.\"\n\n—<Italic:Grand Opening: Master Casiah's Magical Carnival!>"
           },
           {
             "kind": "story",
@@ -3412,7 +3412,7 @@
           },
           {
             "id": "voice-5583",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Hehe, do you want to see a universe being destroyed? Oh, it's too late to back out now!"
           },
@@ -3934,7 +3934,7 @@
           },
           {
             "id": "voice-90369",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "These wings are fully grown now. So sturdy, so powerful. Now I can carry both Pollux and you. Call for me when you wish to fly."
           },
@@ -4457,7 +4457,7 @@
           },
           {
             "id": "voice-5033",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I often gaze at the horizon, imagining the scenes on that distant land—the one I draw closer to but can never reach. If that day ever comes, please come with me to see it."
           },
@@ -4923,7 +4923,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "I don't believe Robert put a gun in his mouth. No. I don't believe it.\nHe was decorated for valor. He closed murder cases nobody else could crack. He was a veteran agent with an iron will. And he was getting married soon—the two of them loved each other. So there has to be something behind this. Someone killed him and dressed it up as a suicide.\nWhoever did it, I will find them, and I will make them pay. I owe him that as his brother, and as an agent.\n...\nThe scene gave me nothing, so I came back to our hometown—the last place Robert went before he died. After asking around, I learned he had gone up into the mountains.\nAs for why, I suspect it has to do with the local custom: every family's firstborn is taken into the mountains by their parents for the coming-of-age rite.\nOur parents moved away when we were still children, so Robert never went through it. I think the weight of starting a family of his own woke some old sense of obligation in him.\nEither way, I'm going up there. I set out the moment I finish writing this.\n...\nThere is a vast structure cut into the mountain. I can't tell what age it belongs to. I can't tell anything about it. All I know is that the rituals here have never once stopped. The severed limbs, the pupae—ugh. I can't write any more.\n...\nThese pupae... no. No. That isn't my grandmother, my grandfather, the people my family came from... I can't have a monster's blood in me. Aaah—\n...\n...The monsters at the ritual have found me. They mean to make me one of them!\n...\nIf anyone finds this, kill me. Now, right now...@2\n...\nPraise be to great @2, hssss @2... praise the blind and idiot @4... hss hss hss... @1 hssss...\n—Excerpted, with omissions, from the diary of the late Agent @3"
           },
           {
@@ -4998,7 +4998,7 @@
           },
           {
             "id": "voice-81150",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Congratulations, you have been healed. Yes, those hallucinations and illusions are normal; they are proof of your recovery."
           },
@@ -5447,7 +5447,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "No one knows where that ghost ship lies, nor can anyone confirm whether \"it\" truly exists. The only clue I have is that ivory head sculpture, which seems to possess some sort of strange magic.\n\nEver since I came into possession of it, I have had the same dream every night—yes, the dream of that ghost ship, drifting somewhere unknown. Its hull burns with a glimmer that writhes like a living thing, as though opening a gateway to dimensions beyond mortal reach. Upon waking, I can still recall those blasphemous, pathological whispers.\n\nHow I wish I were mad, or that I could forget those bizarre sounds—sounds that no human throat could ever produce. But I cannot.\n\nThat cursed dream, that cursed flicker of intellect, torment me without rest. And so I must find \"it,\" led by the ivory sculpture. Frtunately, the professors from Miskatonic will walk this road with me, and together we shall seek out the ghost ship and the St. Elmo's Fire—that is what they call the writhing glimmer.\n\nWish me luck. May the Lord watch over us.\n\n—Excerpt from <Italic:Miskatonic Supernatural Phenomena Investigation Archives>"
           },
           {
@@ -5522,7 +5522,7 @@
           },
           {
             "id": "voice-84187",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "The ritual is complete. Thank you for your cooperation. Next time, I'll prepare special flags to guide us more safely through it."
           },
@@ -6056,7 +6056,7 @@
           },
           {
             "id": "voice-5086",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "What do you expect in return from me? Anything beside lending you power in battles?"
           },
@@ -6527,7 +6527,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Doll is indispensable to Mythag University, and to the field at large.\nOf all the Awakeners in the school's care, she has neither the steadiest Gnosis Index nor the greatest strength in a fight, but she is without question the calmest and most rational of them.\nFor Awakeners who were once human, the first stretch after \"coming back\" usually brings confusion, panic, and mania. Doll seems to have skipped that adjustment entirely.\nOn her second day awake she was back in the laboratory, and within a year she had compiled a technical manual that brought together outer-realm knowledge and human learning.\nThese days Doll spends half her time advancing Silvercore Technology and the other half \"cleaning up after idiot students.\"\n—Incidentally, under the influence of a higher-dimensional presence, Doll wrote that Technical Manual in some unknown language. The translation is proceeding in an orderly fashion, in whatever spare time she has."
           },
           {
@@ -6602,7 +6602,7 @@
           },
           {
             "id": "voice-5354",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "This body can barely contain this Power, but it's not yet time to switch puppets. Why are you merely standing there? Assist me with this leg; adjustments are required."
           },
@@ -6980,7 +6980,7 @@
       "faction": "Out of the Aeons",
       "releaseDate": "2025-07-21",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xg",
+      "lineupToken": "xf",
       "searchTags": [
         "Vulnerable",
         "STR Up",
@@ -7036,7 +7036,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "The abandoned cemetery in the northwest of London County has been listed as an absolute forbidden zone by local residents since AF 3@2.\n\nAccording to archived reports from The Times and Scotland Yard's missing persons files, 37 people have gone missing in the thick night fog of the cemetery in recent years, including: Cyril, a habitual grave robber with a taste for noble tombs; Cook, a shivering vagrant seeking shelter; Officer Grayson, who stumbled in during patrol; and White, the Oxford scholar who studied how medieval bones were laid to rest.\n\nAll vanished when the fog grew thick, leaving not even a scrap of fabric for search teams to find.\n\nPrior to AF 3@2, the MTC had always treated the area as barely worth noting in their ledgers.\n\nThat changed when the Duke of Derbyshire—Samuel Curzon, that notorious patron of unnatural studies—failed to return from his midnight visit.\n\nRoyal inquiries have a way of focusing attention, and soon a special operation was mounted.\n\nIn July of AF 3@2, Elias ThOrnn led twelve armed agents and three silver-equipped mediums into the cemetery's hungry mists.\n\nTheir anti-hypothermia medication hissed in its cases; their directional locators spun like dowsing rods in a haunted well.\n\nAfter advancing precisely 1.2 kilometers in tight formation, they found it—a hexagonal entrance hidden beneath the shattered statue of the Ghoul King, its stone face worn smooth by centuries of bad weather and worse company.\n\nFive thousand steps down (each counted twice by nervous lips) brought them to the temple.\n\nWhere they expected charnel houses and stacked bones, they found instead 800 square meters of impossible precision: floors flatter than mathematics, air cleaner than a surgical theater.\n\nOnly the altar broke the perfection—2.3 meters of granite carved with endless thorns, wreathed in black mist that clung like cobwebs to something moving inside.\n\nThere knelt the Duke, dressed for dinner but quite dead, showing no marks save those left by perfect preservation.\n\nWhen the mist was disturbed, he came apart like sugar in tea—dissolving until even the mass spectrometers wept empty data.\n\nThen the mist turned its attention to the living.\n\nEvery investigator heard the same voice—cultured, gentle, the sort that might recite poetry before the cutting begins:\n\"Please do not seek out Necrovia. Please do not disturb the King of the Ghouls during his meal.\"\n\n\"Consider this your final warning.\"\n\nThey awoke outside the rusted gates, equipment intact but all recordings curiously blank.\n\nLater, the MTC chairman and Miskatonic's occult dean would visit, then quietly declare the matter closed.\n\nThe cemetery now only punishes those who come seeking secrets; mere wanderers get off with nothing worse than lost hours and strange dreams.\n\nBut sometimes, when the fog rolls in particularly thick, the locals swear they can hear something chewing below their feet.\n\n——Investigation Report on the Abandoned Cemetery of Etherington"
           },
           {
@@ -7111,7 +7111,7 @@
           },
           {
             "id": "voice-96364",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Have I finally piqued your interest? Do come, my dear guest, join me at my table and partake in this grand banquet. Allow me to guide you as we savour the delicate afterglow of every spirit together."
           },
@@ -7573,7 +7573,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "On A.F. 297, @1, @1 03:47, an unexplained explosion occurred southeast of @3 Republic @1@2@1 town. The shockwave triggered a 3.8 magnitude earthquake in the area, noticeable shaking reached villages 5 kilometers away from @1@2@1 town.\n\nAfter the incident, @1@2@1 town lost contact with other regions, and surrounding residents could not recall the town's location. Based on this, the Committee dispatched members for investigation, and dissolution material was detected at the edge of @1@2@1 town.\n\nAfter sealing off the small town, Mythag University investigators performed dissolution body clearing operations and recovered the E-1929 Silver from a strongly dissolved area suspected to be the explosion's center.\n\nE-1929 is particularly unique; its Gnostic index has been in an irregular fluctuation state for an extended period and emits a ticking sound like gears, only maintaining brief stability when linked with mechanical fragments recovered from the strong dissolution area. Based on this characteristic, the Mythag University Awakening Department wrapped E-1929 in mechanical fragments and quickly awakened it once the Gnostic Index tended to stabilize.\n\n—<Italic:\"E-1929 Silver Acquisition and Awakening Report Summary\">"
           },
           {
@@ -7648,7 +7648,7 @@
           },
           {
             "id": "voice-6562",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I saw it. Everything should <Del:perish in the eternal current>. S-s-sorry, the module seems—Warning, warning. Non-Erica consciousness activity increasing. Destroy, destroydestroyDESTROY... Hello, how may I assist you?"
           },
@@ -8181,7 +8181,7 @@
           },
           {
             "id": "voice-5857",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Although I still look like a child... Now I have the power to protect you."
           },
@@ -8721,7 +8721,7 @@
           },
           {
             "id": "voice-5082",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I have been searching for tens of thousands of years; a fleeting century is nothing in comparison. Until you reach the end of your life, I will continue to assist you."
           },
@@ -9180,7 +9180,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Until the whole truth came out, no one had ever suspected that Doll was the one behind that string of appalling disasters.\nInside Mythag and out on the Dissolution front, she had always been the mainstay, the lamp at the top of the tower—the one thing everyone believed would never move.\nAs one star after another in humanity's night sky was broken and scattered by Dissolution, that unwavering lamp was cruelly snuffed out as well, and became a hand in the shadows, working with the same darkness it had once held back.\nTornadoes, floods, great earthquakes... crude murder was far too inefficient for a genius's plans. With her intellect not diminished by a single degree, she remade the Silver Technology she had once been so proud of into lethal instruments for \"moving the world,\" and sent one gift of ruin after another into places Mythag's eyes could not reach.\nBy the time she was captured, her corroded brain could no longer control the doll's body with any precision. The face that had once been calm as still water was full of twisted, uncanny expression, as though meeting her eyes would be enough to drop a person into madness.\nWithout ever agreeing on it, everyone chose to ignore her occasional blurred muttering, even though it may truly have given away the truth of the world.\nBecause what happened to her had proven once again that human beings, in the end, cannot live without meaning."
           },
           {
@@ -9255,7 +9255,7 @@
           },
           {
             "id": "voice-6163",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Curious what I saw at the universe's beginning? Sure, I can tell you. I saw nothing."
           },
@@ -9708,7 +9708,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "I seem to have fallen into something supernatural. I will set down everything I find here...\nWe were wrapping up the last of the excavation at Evrotas. I woke to find every other member of the team gone, and the town itself thrown back a thousand years overnight.\nBuildings that collapsed ages ago stand whole again, the place restored exactly as it once was—down to the countless residents, all of them bones now.\nExcitement, shock, and terror seized me at once. I have seen more bones than I can count, and still I cannot stop shaking at the sight. Anyone else in my place would be far more frightened than I am.\nEvery soul in this town appears to have been butchered by a single killer. Bones sprawl across the streets and lie heaped inside the houses. The town gate is shut fast, for reasons I cannot explain, and the ground before it is choked with those who tried to flee and were cut down anyway—a small hill built of bone.\nThere are no exceptions. Men, women, the old, children... all of them broken, bodies or skulls smashed in by some enormous blunt weapon. Standing over these dried bones, for a moment I could see the blood running through the whole town.\nWhat happened here?\n...\nI searched everywhere, dazed, and found nothing—until I entered the town prison.\nThe carnage here is worse than anywhere else. Whoever did this tore the place apart in a towering rage. There is writing on one wall, dry and brown and twisted, as though someone dying had scrawled an accusation in blood. I studied it carefully. I believe it reads: evil spirit.\nAn evil spirit? Does that name the killer, or did this town truly suffer something supernatural?\nOne person slaughtering an entire town is beyond belief. Perhaps only a real demon could reap so many lives so cruelly.\nAfter I left the prison, something about the town had subtly changed. I keep catching the smell of blood, faint, then gone, then faint again.\nAs I searched for a way out, chains rang through the town without warning, as if something heavy were being dragged along behind them.\nThe evil spirit! It's the evil spirit... it has found me! I ran until my lungs burned, but wherever I went, that awful dragging of chains followed.\nI cannot run anymore. I am under a table in someone's house with the door locked, and still the chains come after me. I can hear it. It is getting closer...\nI want so badly for this to be a dream, for all of it to be gone the moment I wake. Wait... the sound has stopped. Perhaps it has left?\n...\nResearcher's note: The legible handwriting ends here. All that remains are three final words, badly distorted. Our best reading of them is:\nThe door opened\n—Excerpt from the diary of a deceased member of the Evrotas archaeological team"
           },
           {
@@ -9783,7 +9783,7 @@
           },
           {
             "id": "voice-6396",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "The humiliation I've endured, everything I've lost... I will make them pay. I will make them all pay."
           },
@@ -10229,7 +10229,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "■ File Number: AF315-C01\n■ Awakener Codename: @2 Walker\nThis Awakener was first observed in A.F. 315, @1.\n\nDuring the initial \"Artificial Domain\" experiment, influenced by the psychic resonance of the homogenous object, the \"Artificial Domain\" based on the Spirit Realm of our university's @2-level student Ramona Dexter unexpectedly broke through dimensional boundaries.\n\nAt that time, the Keeper confirmed the existence of the world outside dimensions for the first time in that \"Artificial Domain\" and also confirmed how @2's power would affect Ramona Dexter.\n\nThereafter, researches on the \"Genesis Awakeners\" was officially launched by the Awakener Sciences Research Institute.\n\nMeanwhile, the planning of the teaching plan for new Power Control course for Ramona Dexter is also on the agenda."
           },
           {
@@ -10304,7 +10304,7 @@
           },
           {
             "id": "voice-6288",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "When the final bell tolls... will I still be here?"
           },
@@ -10696,7 +10696,6 @@
       "searchTags": [
         "STR Up",
         "Tentacle DMG",
-        "Dispel",
         "Lemurian",
         "Tentacle Generation"
       ],
@@ -10824,7 +10823,7 @@
           },
           {
             "id": "voice-6680",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "This moment has finally arrived, after thousands of years of waiting... I am the Philistines' one and only ruler!"
           },
@@ -11252,6 +11251,7 @@
         "Bleed",
         "STR Up",
         "STR Down",
+        "Steal STR",
         "Pierce DMG",
         "Arithmetica"
       ],
@@ -11379,7 +11379,7 @@
           },
           {
             "id": "voice-61010",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Yes, yes, that's it—the final mass, a requiem for the music itself!"
           },
@@ -11914,7 +11914,7 @@
           },
           {
             "id": "voice-5937",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "A companion? ... I'll consider it. Don't die on me before I make my decision."
           },
@@ -12379,7 +12379,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "At the beginning of A.F. 3@2, during the renovation of the city named Cité, an anomaly was discovered in a fire-damaged garden: ashes climbed the burnt walls of the greenhouse like vines, and the ash roses blooming on the vines shimmered with a metallic hue.\n\nFollowing the trail of the vines, an investigator from Mythag University retrieved this Silver. The moment she touched the silver powder, her fingertips were scorched black without any pain, but tears inexplicably rolled down her cheeks.\n\nThe weeping came without reason and dissipated into the ashes in an instant."
           },
           {
@@ -12454,7 +12454,7 @@
           },
           {
             "id": "voice-5578",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I often feel as though I exist in the space between life and death. Wherever I am, melancholy spreads like a tide, and tragedies unfold, one after another. Even so, would you still wish for me to write a poem for you? Hmm... perhaps you deserve the sweetest one..."
           },
@@ -13033,7 +13033,7 @@
           },
           {
             "id": "voice-5445",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Look at the way you watch Brown.\n...Heh heh, the great Brown wants to chew on some coward's toes tonight. Who's the lucky sod?"
           },
@@ -13511,7 +13511,7 @@
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "Soft black hair, full cheeks, eyes as bright as gemstones, and rosy lips—from childhood, Karen had always enjoyed special favor due to her natural beauty. By the time she reached adulthood, the gifts and flowers bestowed upon her by men daily could pile into a small mountain at her doorstep. Thus, she was not at all surprised when the palace steward announced she would be brought to the royal court to be trained as a noble handmaiden to the King. Was this not only right? She was born to be envied, born to be extraordinary, and born to be the center of attention.\n\nYet, beauty was the most common currency within the palace walls. No matter how breathtaking a flower from a small town might be, it appeared ordinary and rustic in such a place. Her appearance could no longer buy her special treatment; even the opportunity she craved most—to serve in the Great Hall during the Centennial Feast—was snatched away by another girl.\n\nWhy? Whatever that girl possessed, Karen possessed as well. Why was it not her?\n\nThen, her eyes fell upon the silver ornaments hanging from the other girl’s ears, and she understood.\n\nOn the day of the banquet, she drowned the girl in the lake and donned the silver-white earrings herself. Just as she had envisioned, she became the most radiant among the handmaidens, even earning the privilege of serving at the King’s side. The gazes of envy and jealousy from those around her filled her with an exquisite thrill—yes, yes, this was how it was meant to be. This was the happiest day of her life.\n\nShortly thereafter, she met her end within the emerald mist that swallowed the entire royal city."
+            "content": "Soft black hair, full cheeks, eyes as bright as gemstones, and rosy lips—from childhood, Karen had always enjoyed special favor due to her natural beauty. By the time she reached adulthood, the gifts and flowers bestowed upon her by men daily could pile into a small mountain at her doorstep. Thus, she was not at all surprised when the palace steward announced she would be brought to the royal court to be trained as a noble handmaiden to the King. Was this not only right? She was born to be envied, born to be extraordinary, and born to be the center of attention.\n\nYet, beauty was the most common currency within the palace walls. No matter how breathtaking a flower from a small town might be, it appeared ordinary and rustic in such a place. Her appearance could no longer buy her special treatment; even the opportunity she craved most—to serve in the Great Hall during the Centennial Feast—was snatched away by another girl.\n\nWhy? Whatever that girl possessed, Karen possessed as well. Why was it not her?\n\nThen, her eyes fell upon the silver ornaments hanging from the other girl's ears, and she understood.\n\nOn the day of the banquet, she drowned the girl in the lake and donned the silver-white earrings herself. Just as she had envisioned, she became the most radiant among the handmaidens, even earning the privilege of serving at the King's side. The gazes of envy and jealousy from those around her filled her with an exquisite thrill—yes, yes, this was how it was meant to be. This was the happiest day of her life.\n\nShortly thereafter, she met her end within the emerald mist that swallowed the entire royal city."
           },
           {
             "kind": "story",
@@ -13573,7 +13573,7 @@
           },
           {
             "id": "voice-5284",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Master! My voice... it's fading... Help..."
           },
@@ -14019,7 +14019,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "■File Number: DIOL-A3-1\n■Awakener Code Name: ■■■■\nA.F.3@2, this Awakener initiated contact with Mythag.\n\n\"Sun! Sun! I saw the Sun! No! No!! Destroy it! Or we will all die!\"\n\nAccording to eyewitness accounts, the involved personnel shouted the above statement upon discovering this Awakener, and then ordered relevant units to attack it.\n\nDue to the incorrect judgment of the involved personnel, this Awakener displayed extreme aggression, directly resulting in the destruction of 31 anti-Awakener units, 76 standard equipment sets, and 2 academic buildings, with total property damage estimated at @2@4. The case has now been transferred to the relevant department for accountability procedures.\n\nPost-incident investigation revealed that this individual had been brainwashed by the Church of the Lightbearers. For subsequent details, please refer to related documents, as it will not be elaborated in this file.\n\nAfter a period of communication, negotiation personnel successfully convinced the Awakener to abandon its aggressive stance. Subsequently, the Awakener handed a letter signed by Lord Dexter to the school administration, claiming it was the last possession of a missing Investigator. Later confirmation by Lord Dexter verified the authenticity of the letter.\n\nIt is currently known that, through the mediation of Professor Doll, this Awakener has reached a certain agreement with the school administration. In exchange for some unspecified compensation, the Awakener has agreed to undertake certain commissions that the school finds difficult or inconvenient to handle directly.\n\nGiven the destructive capability demonstrated by this Awakener, despite displaying the highest level of stability and communicability in subsequent conversations, the Committee has decided to include it in the DIOL and will continue updating its file under the highest protocol.\n\nMay the Silver Key guide us.\n\nRecorder: L. Nadia"
           },
           {
@@ -14094,7 +14094,7 @@
           },
           {
             "id": "voice-95435",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "We are the Fire. The Eternal Flame. The Undying Chaos. And We will bring you all... home..."
           },
@@ -14570,7 +14570,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Affinity Level 4",
+            "unlockCondition": "Affinity Level 3",
             "content": "...\n\nExperiment Date: @2, A.F.@1\nExperiment Objective: Observe and record mutational responses of a Dissolution patient following tissue and organ grafting.\n\nExperiment Steps: @3 @4\nThe experiment was conducted on the subject using tissues and organs sourced from her deceased brother, in order to observe the rejection response between first-degree relatives. The poor wretch was shot dead while evading police capture. @3 experiment was highly successful; the wound turned red and sprouted tentacles... with blood spurting out like liquid rubies.\n\n@3 @3\nThe subject demonstrated remarkable endurance, refusing morphine injections.\n\nPost-experiment, her bloodlust intensified, and her temperament became... indescribable, not a type I am adept at handling.\n\n—Excerpt from Herbert's <Italic:Dissolution Experiment Records, Group4, No. @1>"
           },
           {
@@ -14583,7 +14583,7 @@
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "@1, A.F.@2\nDear Lord Cavendish,\n\nPlease forgive me. I took the liberty of asking Butler Frey to bring me ink and paper. I am struggling to maintain my last shred of sanity and dignity as I write this letter. Since I fell ill with this horrible disease, I haven’t been able to see Mother, Bobby, or you. Missing you all is enough to drive me crazy.\n\nI have been locked in this basement for... 353 days? I don't know. Maybe 326 days.\n\nIt's freezing here, and everything smells like it's rotting. My wounds are oozing black slime, and the rats have gnawed them beyond recognition. But it's okay. Pain is a good thing; it keeps my mind clear.\n\n\"An evil vampire,\" \"a disgrace to the family\"... locking me away was undoubtedly a wise decision. My soul has long been controlled by the devil. As I write this letter, I have just drained the blood of a deceased homeless man. Butler Frey said you had people find him on the street. Although the blood tasted a bit spoiled, I'm still glad to know that you care about me.\n\nAlso... could you give me a blanket? I have no clothes to cover myself now, and winter in Londinium is just too cold.\n\nEven now, I still really miss the time when we were kids, spending our holidays together at Whelton House.\n\nYour sincere sister,\nLeigh\n—Excerpt from <Italic: The Cansington Vampire Incident—Case Summary: Evidence C-601>"
+            "content": "@1, A.F.@2\nDear Lord Cavendish,\n\nPlease forgive me. I took the liberty of asking Butler Frey to bring me ink and paper. I am struggling to maintain my last shred of sanity and dignity as I write this letter. Since I fell ill with this horrible disease, I haven't been able to see Mother, Bobby, or you. Missing you all is enough to drive me crazy.\n\nI have been locked in this basement for... 353 days? I don't know. Maybe 326 days.\n\nIt's freezing here, and everything smells like it's rotting. My wounds are oozing black slime, and the rats have gnawed them beyond recognition. But it's okay. Pain is a good thing; it keeps my mind clear.\n\n\"An evil vampire,\" \"a disgrace to the family\"... locking me away was undoubtedly a wise decision. My soul has long been controlled by the devil. As I write this letter, I have just drained the blood of a deceased homeless man. Butler Frey said you had people find him on the street. Although the blood tasted a bit spoiled, I'm still glad to know that you care about me.\n\nAlso... could you give me a blanket? I have no clothes to cover myself now, and winter in Londinium is just too cold.\n\nEven now, I still really miss the time when we were kids, spending our holidays together at Whelton House.\n\nYour sincere sister,\nLeigh\n—Excerpt from <Italic: The Cansington Vampire Incident—Case Summary: Evidence C-601>"
           },
           {
             "kind": "story",
@@ -14645,7 +14645,7 @@
           },
           {
             "id": "voice-5245",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "To express my gratitude... I will construct a hidden altar for you in the depths of my anguish."
           },
@@ -15109,7 +15109,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "When Erica tried to pull the records on Lily Oswood, she returned eighty-one error alerts. Lily was forgotten by the world once; her birth certificate and her medical files have all rotted into a handful of black silt.\nWe can still observe the shape of her Silvercore with specialized instruments: fine and curling, like several strands of hair twisted together—more precisely, like an infant's downy hair.\nOne point deserves particular attention. Lily always shows an unusual attachment to her Linker. Presenting yourself as her \"mother,\" rather than as a \"companion\" or a \"master,\" will likely bring you close to her much faster."
           },
           {
@@ -15190,7 +15190,7 @@
           },
           {
             "id": "voice-5682",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "A warm and fuzzy feeling in my chest... Lily, Lily is so happy, the tears are...\nMommy, let's celebrate together."
           },
@@ -15412,6 +15412,12 @@
             ]
           },
           {
+            "id": "traphase-127017",
+            "title": "Chat: About Xu",
+            "unlockCondition": "Unlock after triggering this dialogue in Traphase",
+            "content": "Lily. Likes mother."
+          },
+          {
             "id": "traphase-100182",
             "title": "Thinking",
             "unlockCondition": "Unlock after triggering this dialogue in Traphase",
@@ -15440,12 +15446,6 @@
             "title": "Death",
             "unlockCondition": "Unlock after triggering this dialogue in Traphase",
             "content": "Lily... can't stand up again..."
-          },
-          {
-            "id": "traphase-127017",
-            "title": "Chat: About Xu",
-            "unlockCondition": "Unlock after triggering this dialogue in Traphase",
-            "content": "Lily. Likes mother."
           }
         ]
       },
@@ -15644,7 +15644,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "A.F. 31@1, December, the police received a report from the manager of the second theater in @2 Garden. The reporter claimed that there had been four small-scale fires in the theater within a week, and rumors of the \"Ballet Ghost\" were rampant among the members of the dance troupe renting the theater.\n\nTo ensure the smooth premiere of the ballet \"Swan's Lament,\" the police launched a joint investigation with the West District Fire Department.\n\nThe day before the performance, Mythag University finally took over the investigation. The investigators noted traces of Gnosis residue behind several fire points. Eventually, Investigator @3 discovered an Awakener in the underground ruins of the second theater.\n\nThis Awakener was not a mindless individual; she identified herself as \"Liz.\" After communication, the Awakener Liz eventually admitted to her arson crime. After the premiere of \"Swan's Lament,\" Investigator @3 took Liz back to Mythag University for formal incorporation.\n\nAccording to historical records, when the fire broke out at the second theater in @2 Garden on A.F. 29@1, a ballet was being performed. Among those who perished in the flames were a number of nobles in the audience, as well as a young prima ballerina named \"Elizabeth Sur.\""
           },
           {
@@ -15719,7 +15719,7 @@
           },
           {
             "id": "voice-5047",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I will include your name in my acknowledgments. It is you who allowed these feet, tainted by dark blood, to step into the wonderful world of ballet once more. From now on, please watch me dance, Keeper."
           },
@@ -16247,7 +16247,7 @@
           },
           {
             "id": "voice-5198",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Fine. You've put in enough effort. I suppose I'll tolerate you as a companion."
           },
@@ -16726,7 +16726,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "The rumors of humans landing in the polar regions have intensified this century. In response, Mythag University and the Mystia Treaty Committee have collaborated to form a joint investigation team.\n\nIn December of A.F. 3@1, the joint investigation team ventured deep into the Elworth ice fields with the aim of recovering potential mystical artifacts before the arrival of secular expedition teams.\n\n......\n\nOn December 10, A.F. 3@1, Investigator Johansson accidentally fell into an ice cave, discovering a hollow space beneath the ice field. The altitude is too low; the melting ice will submerge the hollow within three days. We must complete our exploration before temperatures continue to rise.\n\nOn December 12, A.F. 3@1, there are reasons to believe that a cult has long used the hollow as a sacrificial pit. At the bottom of the cave, we discovered countless humanoid skeletons. Yes, humanoid—with cartilaginous fins connected to their skulls.\n\n......\n\nOn December 13, A.F. 3@1, damn, damn, damn, damn! At the peak of the bone mountain, the investigator discovered the recent remains of a human!!!\n\nThe cult may not have yet withdrawn from the polar region. Due to the Committee's foolish \"persistence,\" no Awakener investigators were permitted to accompany us. We must leave immediately!\n\n——\"Motion on Blockading the Wild Sea Route: Part One\""
           },
           {
@@ -16801,7 +16801,7 @@
           },
           {
             "id": "voice-5360",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I have been wholly restored as an Awakener... Now the Divine Realm's chorus resonates within me..."
           },
@@ -17216,7 +17216,7 @@
       "faction": "Outlanders",
       "releaseDate": "2025-12-29",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xf",
+      "lineupToken": "xe",
       "searchTags": [
         "Stun",
         "Pursuit",
@@ -17347,7 +17347,7 @@
           },
           {
             "id": "voice-123802",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "You know, it doesn't seem so bad to stay here for a while. I'll remember everything that happens here, write it down, and share it with them back home. How about the title <Italic:Mouchette's Otherworld Adventure>? It has a nice ring to it, right?"
           },
@@ -17414,19 +17414,19 @@
           {
             "id": "voice-123805",
             "title": "Chat: About Karen",
-            "unlockCondition": "Unlock after acquiring Awakener \"Karen\"",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Karen\"",
             "content": "A maid? I've been one too. I should find time to show her my vacuum cleaner moves in battle!"
           },
           {
             "id": "voice-123803",
             "title": "Chat: About Murphy",
-            "unlockCondition": "Unlock after acquiring Awakener \"Murphy\"",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Murphy\"",
             "content": "I admit she's quite cute... Yeah, she's adorable when chasing and fighting those campus strays."
           },
           {
             "id": "voice-123797",
             "title": "Chat: About Salvador",
-            "unlockCondition": "Unlock after acquiring Awakener \"Salvador\"",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Salvador\"",
             "content": "Sacrificing yourself for other people? What a stupid idea. It's infuriating. No one has the right to ask that of anyone, not even a god."
           },
           {
@@ -17819,7 +17819,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "In the summer of 3@2 A.F., stories of a sea monster began going around Niugini Island.\nFishermen claimed they had sighted a cephalopod some five stories tall in the coastal waters. Deep red all over, with black concentric rings along its tentacles.\nWhen the rumor reached me, Johansen and I were verifying a suspected Dissolution Phenomenon in the Medan region. The next day he had a ship ready for Niugini Island. I am writing this report in the middle of the Amirante Ocean.\nDay three of the voyage: dead fish across the surface in great drifts—mackerel, flounder, dolphins. I swear there was a pregnant sperm whale among them. The old hands all say overbreeding starves the water of oxygen and that is what kills them, but I can't shake the feeling that we are missing something...\nDay eight: my seasickness is far worse, and the nausea is bad enough that I can hardly eat. We were close to Niugini Island, but Johansen insisted we turn back @3... I don't understand it, but I have chosen to trust him.\n—Bell Columbus, \"Internship Report, Summer of 3@2 A.F.\""
           },
           {
@@ -17944,13 +17944,13 @@
           },
           {
             "id": "voice-5320",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Welcome to my final Enlightenment Ceremony! All of this was meticulously designed by me. Of course, you contributed... a tiny bit."
           },
           {
             "id": "voice-117792",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Hahaha! Mine, all mine! All of Mythag's candies belong to me! What are you waiting for? Follow me, the great Candy Witch! We're going to conquer every candy shop in Londinium right now!"
           },
@@ -18085,7 +18085,7 @@
           {
             "id": "voice-36683",
             "title": "Chat: About Mythag II",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "Everyone at this school seems so busy, but...\nThere's a quiet peace here I've never known.\nWorking together toward the same goal... Hmph, I suppose it's not entirely awful."
           },
           {
@@ -18106,13 +18106,13 @@
           {
             "id": "voice-36685",
             "title": "Chat: About the Keeper II",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "Thank you... H-Huh? Why am I saying that? Well, obviously! It's for everything you did for me at sea...\nWait, why are you laughing?! You just want to see me flustered!"
           },
           {
             "id": "voice-36684",
             "title": "Chat: About the Keeper III",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "The bed is too hard, the weather too cold, the tea tastes like dirty rinse water... I have a thousand reasons to despise this place. \nHowever, since you're here, I suppose I can tolerate it. Reluctantly."
           },
           {
@@ -18124,7 +18124,7 @@
           {
             "id": "voice-36686",
             "title": "Chat: About Miryam II",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "I once believed there was some sort of familial bond between us...\nBut now, after everything, I realize those fleeting warm moments were just my wishful thinking.\nWhat you do with her is your business, just keep her away from me."
           },
           {
@@ -18136,13 +18136,13 @@
           {
             "id": "voice-36679",
             "title": "Chat: About Caecus",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "He joined the cult while I was asleep, so I have no connection to him.\nI heard he came willingly, wanting to abandon his human form to become a full Seafarer... Hmph, another fool blinded by power."
           },
           {
             "id": "voice-36680",
             "title": "Chat: About Goliath",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "Goliath was never a loyal pet. I cannot understand why Miryam values him so much... If he wasn't chained, he would have run off and betrayed her immediately."
           },
           {
@@ -18153,19 +18153,19 @@
           {
             "id": "voice-36682",
             "title": "Chat: About the \"Ghost Ship\"",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "Celeste's off-key sea shanty, the captain's signature smoked fish stew, blankets stiff and fishy from the sea breeze... Though tense and dangerous, I will never forget those months in exile at sea."
           },
           {
             "id": "voice-36681",
             "title": "Chat: About Seafarers",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "Seafarers are not born this way. To blend in, they live their first half just like humans...\nYou'd better watch out—your favorite cake shop owner might be one of them!"
           },
           {
             "id": "voice-36687",
             "title": "Chat: About \"Awakeners\"",
-            "unlockCondition": "Unlocked after completing Main Story Chapter 6",
+            "unlockCondition": "Clear Main Story Chapter 6",
             "content": "How peculiar... This feeling is so strange.\nMy heart has stopped, yet my body is still warm... Hey, come here and touch my hand. Tell me this isn't some trick."
           },
           {
@@ -18709,7 +18709,7 @@
           },
           {
             "id": "voice-5480",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Finally. Welcome to the ritual where we shall witness His divine birth... What? You say His demise is also destined? ...No! That can't be... I have already made such great sacrifices..."
           },
@@ -19177,7 +19177,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "A.F. 3@2, a D-phenomenon occurred in coastal towns of the Agló Republic, spreading outward in a spiral from the port, affecting an area hundreds of meters wide and causing @1 deaths.\n\nInvestigations traced the phenomenon back to a fishing boat that set out on A.F. 3@2 @1 @1@1, catching a silver-patterned cod-like creature.\n\nThe creature's soft body ruptured when cut by a sharp tool, releasing fluid laden with shell fragments and other residues. Upon reaching the port, shell-like growths had appeared among the catch but were ignored until a fisherman perceived himself as a shell, twisting his body and ending up hospitalized. Only then was the event reported.\n\nMythag personnel later located the source of the phenomenon at @4 cannery, removed it, and secured Silver O-36.\n\n—<Italic:\"Awakening System Silver Acquisition Report: O-36\">"
           },
           {
@@ -19252,7 +19252,7 @@
           },
           {
             "id": "voice-6387",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Reparation complete! An unknown adventure, a mysterious world, here I come!"
           },
@@ -19504,7 +19504,7 @@
             "id": "traphase-100140",
             "title": "Fatal Blow",
             "unlockCondition": "Unlock after triggering this dialogue in Traphase",
-            "content": "The Nautilus, full speed ahead!"
+            "content": "Phantom, full speed ahead!"
           },
           {
             "id": "traphase-99821",
@@ -19711,7 +19711,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "It is a souvenir Professor Dexter brought back from a trip to the Febvre coast.\nFebvre has a mild, humid sea climate, and the century-old Sevada Sanatorium sits right on the shore; every year, countless travelers choose to spend their holidays there.\nInside this glass bottle, water-stained and tangled with seaweed, lies a little clear powder. It is not a message in a bottle from some shipwreck, nor one of the local sand trinkets. Professor Dexter noticed it at once: the bottle holds Silvercore powder—in other words, a will lodged inside it.\nHe says he bought it from a local fisherman, who told him, evasively, about the strange things that had been happening lately. A few days earlier, heading out at dawn, the fisherman ran into an odd swarm of fish. It was neither spawning season nor wintering season, and still the shoal gathered in one place and would not leave. When he hauled the heavy net up, he found a strange bottle in it. He thought it a curiosity, and at the same time felt faintly uneasy, as if the thing might curse him with bad luck. For days afterward, not a single fish could be caught in those waters."
           },
           {
@@ -19786,7 +19786,7 @@
           },
           {
             "id": "voice-6364",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Next time, let us go see the sea together. Febvre is fine; I can be your guide. Or anywhere else, even to the ends of the earth—I want to go with you."
           },
@@ -20310,7 +20310,7 @@
           },
           {
             "id": "voice-5356",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Your trust is why I exist as a knight."
           },
@@ -20724,7 +20724,8 @@
       "searchTags": [
         "Vulnerable",
         "Counter",
-        "STR Up"
+        "STR Up",
+        "Steal STR"
       ],
       "primaryScalingBase": 20,
       "baseStatsLv1": {
@@ -20775,7 +20776,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Awakening Material: Silver Core #G752a, unearthed from a festering mud heap at the ruins of Londinium's Newgate Prison. Investigator @2 accidentally slipped on a shattered skull while walking through the dim, grimy prison corridor and stumbled upon it by chance.\n\nThe awakening result deviated from expectations—what emerged from the black D-Slime was not some vicious death-row convict or a hulking executioner, but a petite young maiden with a sly smile."
           },
           {
@@ -20850,7 +20851,7 @@
           },
           {
             "id": "voice-6061",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "You've worked so hard; it's time to enjoy the fruits of your labor, right? Come closer, I won't disappoint you~"
           },
@@ -20892,7 +20893,7 @@
           {
             "id": "voice-6155",
             "title": "Chat: About \"N\"",
-            "unlockCondition": "Unlocks after completing Main Story Chapter 7",
+            "unlockCondition": "Clear Main Story Chapter 7",
             "content": "Ah, was that Mr. N who just walked us by? No, never mind. The last time I greeted him, he didn't recognize me... I waited for him in prison, hoping he would take me away, but he never came, not even during the riot."
           },
           {
@@ -21399,7 +21400,7 @@
           },
           {
             "id": "voice-100373",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Look, Keeper! The eternal, mad scene on the canvas! So beautiful, so devastating! What grows from this madness and pain is art..."
           },
@@ -21472,7 +21473,7 @@
           {
             "id": "voice-100372",
             "title": "Chat: About Hameln",
-            "unlockCondition": "Unlock after acquiring Awakener \"Hameln\"",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Hameln\"",
             "content": "My art is about madness and unrest, but that Hameln's music is tight, like tombstones in a graveyard. Yet for some reason, I always see the universe's worst chaos in those orderly notes..."
           },
           {
@@ -21868,7 +21869,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Considering the potential relationship between Pollux's \"Sacred Heart\" and the Church of the Lightbearers' divine ritual, Mythag formed a research team to conduct a series of inspections and experiments on the heart.\nTo Pollux's dismay, the \"Sacred Heart\" had entirely replaced his original heart's function, becoming integrated into his body, making direct removal or replacement impossible.\nDuring observational experiments, researchers discovered that the \"Sacred Heart,\" which resembles a pupil, often exhibited subtle tremors and rotations independent of Pollux's will, much like a real eye.\nHowever, light source testing proved the \"Sacred Heart\" did not possess visual functions. Instead, the activity appeared to be sensitivity to other living beings or objects. In comparative trials with various items, proximity to items related to Dissolution and the Silver Core triggered the heart's activity more easily.\nIts activity was particularly pronounced near Dissoluted creatures and Awakeners. When Pollux actively used the \"Sacred Heart's\" power, the physical and chemical properties of ordinary items remained unchanged. However, when directed at Dissoluted items and creatures, a remarkable expansion of Dissolution occurred. Living organisms visibly in the early stages of Dissolution rapidly accelerated towards the late stages. The more severe the Dissolution originally suffered by the organisms, the faster this spread occurred.\nIn experiments with strict protective measures on Awakeners, the subjects reported a sense of approaching darkness and danger when faced with the \"Sacred Heart's\" power, prompting the experiment to be quickly halted.\nAfter a stern explanation from the school, Pollux promised not to use the power against Awakeners. Due to Pollux's cooperation and excellent self-control, Mythag did not impose mandatory controlling items on him, but instead arranged regular health checks and power training.\nApparently, after hearing of the experimental results, Awakener Winkle almost fainted from screaming before posted notices prohibiting Pollux from approaching on the doors of her laboratory and dormitory. The school repeatedly tried to persuade her to no avail, and Pollux graciously stated that he would respect Winkle's wishes."
           },
           {
@@ -21943,7 +21944,7 @@
           },
           {
             "id": "voice-95092",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Please illuminate me, my guiding light! By your light, I have now seen all that must be seen... I shall use this cursed form to purify all that has passed, and let all that is to come bask in your radiance!"
           },
@@ -22404,7 +22405,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Ramona's first appearance on campus caused an uproar.\nAt Mythag University, where Awakeners wander the halls and oddities are everywhere, silver hair and mismatched eyes were hardly worth a second look. What made Ramona the talk of the school was that she was the professor's daughter.\nEveryone crowded outside the mathematics department office, hoping for a glimpse of the young Miss Dexter. There were so many of them that the professor finally had to call on Miss Lotan before the crowd grudgingly broke up.\nOnce Ramona was a little older and the professor was finally willing to let her roam the campus on her own, the students Lotan had chased off got their chance to talk to her after all.\n\"What is Lady Dexter like? I'm afraid no such person exists yet. I'm an orphan. My father was kind enough to take me in.\"\nTo be rid of them, the little girl stated the facts without flinching, then strolled off while they stood there feeling guilty."
           },
           {
@@ -22479,7 +22480,7 @@
           },
           {
             "id": "voice-6391",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Let's go. We have a world to save."
           },
@@ -22936,12 +22937,12 @@
             "kind": "introduction",
             "title": "Basic Information",
             "unlockCondition": "Awakener Level 1",
-            "content": "Ryker is known as the \"Lucky Detective\" by his detective friends.\n\nAs the name suggests, he is a lucky person: whenever he places a bet, he wins ten times the stake; whenever he guesses, he chooses the right answer.\n\nThe \"Lucky Detective\" doesn't have to be an actual detective; he‘s solved many cases by chance alone, so he was embraced on this path.\n\nHe doesn't solve cases by deduction, relying on luck instead. Just a tour around the crime scene and he stumbles upon the culprit; just walking along the road, he picks up key evidence.\n\nWith such good fortune, he's lived out a smooth twenty-five years.\n\nHe never worries about yesterday, nor frets about tomorrow."
+            "content": "Ryker is known as the \"Lucky Detective\" by his detective friends.\n\nAs the name suggests, he is a lucky person: whenever he places a bet, he wins ten times the stake; whenever he guesses, he chooses the right answer.\n\nThe \"Lucky Detective\" doesn't have to be an actual detective; he's solved many cases by chance alone, so he was embraced on this path.\n\nHe doesn't solve cases by deduction, relying on luck instead. Just a tour around the crime scene and he stumbles upon the culprit; just walking along the road, he picks up key evidence.\n\nWith such good fortune, he's lived out a smooth twenty-five years.\n\nHe never worries about yesterday, nor frets about tomorrow."
           },
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "The Silver from Ryker's awakening was excavated from the interior of the renowned Remouahe monument, the Triangular Giant Tower. It is streamlined and perfectly bullet-shaped, matching the size and form of bullets used in the SAA revolver, embedded within the skull of a young male corpse.\n\nTouching this Silver evokes magnificent and grand visions of the Triangular Giant Tower, causing the body to instinctively curl up and crawl. If the toucher resists desperately and looks ahead, they will see the blurred figure of a crowned man backlit, followed by an instant interruption of consciousness, causing the Silver to naturally slip from their fingers.\n\n\"The tip of the Triangular Tower has not yet been eroded; it should be a scene soon after its completion.\"—Researcher B.R. Longman\n\"I can hear horrifying whispers from dark souls.\"—Researcher K. Waters\n\"I must denounce the inhumane experiments arranged for us by Mythag. The side effects of repeatedly touching this Silver are enough to cause complete loss of bodily control. In short, I refuse to touch it again.\"—Researcher L. Lopez"
           },
           {
@@ -23016,7 +23017,7 @@
           },
           {
             "id": "voice-6463",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Well, looks like we gotta bring out the big guns, right? Where's the crime scene? I'll burn every last bit of my luck to bring the suspect in before the deadline!"
           },
@@ -23532,7 +23533,7 @@
           },
           {
             "id": "voice-4976",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Thus, I shall bear all suffering, to pave the way for all beings to a land free from pain."
           },
@@ -24120,7 +24121,7 @@
           },
           {
             "id": "voice-5098",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "The sleeping sovereign murmurs in my ear, the ruins of the deep sea constantly reconstruct before my eyes... Have the countless dream scenes finally come true?"
           },
@@ -24589,7 +24590,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Affinity Level 6",
+            "unlockCondition": "Affinity Level 3",
             "content": "No one could point to the exact moment the \"salon\" wove itself into the upper crust of Londinium.\n\nIn this mysterious salon, one won the chance to have a master paint their portrait; another was granted a private supper with the Prime Minister; and yet another even received a promise from the Queen herself.\n\nThe host, the venue, the time—all remain a mystery. People only know that everyone can obtain what they desire most in the salon.\n\nYet none can say what it takes to please the hostess and earn an invitation.\n\nEven Lord Dexter, famous for his social charm, was flatly turned away.\n\n\"Our apologies, sir. The hostess currently prefers the company of artists.\"\n\n\"The nobility? Please await a future invitation.\""
           },
           {
@@ -24664,7 +24665,7 @@
           },
           {
             "id": "voice-5513",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "My salon is the soil, the garden, where intoxicating beauty and power will flourish..."
           },
@@ -25203,7 +25204,7 @@
           },
           {
             "id": "voice-67294",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "The Ultimate Gate. The final void linking countless universes. Pass through it, and the mysteries of the world will be revealed to you."
           },
@@ -25699,7 +25700,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Affinity Level 5",
+            "unlockCondition": "Affinity Level 3",
             "content": "The flood that swept across the world washed away the treasures of civilization, but it also cleared the dust from history's pages.\n\nWhen the waters finally receded, fragments of a forgotten past surfaced among the ruins of ancient Morsul.\n\nThe \"Tree\" stood at the Karage River's source, weeping crimson sap that flowed downstream to nurture civilizations.\n\nThe \"Tree\" was undying, ever-verdant through the ages.\n\nUltimately, modern historians concluded that the \"Tree\" had no physical form; rather, It was a metaphor for ancient civilization, a sacred, incorporeal symbol.\n\nIn every unseen corner of the world, its seeds have quietly taken root."
           },
           {
@@ -25774,7 +25775,7 @@
           },
           {
             "id": "voice-6058",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "For all that you have given me, your love has already become one with mine..."
           },
@@ -25899,19 +25900,19 @@
           {
             "id": "voice-50902",
             "title": "Chat: About the Keeper - 3",
-            "unlockCondition": "Unlocks after completing Main Story Chapter 7",
+            "unlockCondition": "Clear Main Story Chapter 7",
             "content": "Come closer. Embrace me. Taste me... Never forget me."
           },
           {
             "id": "voice-50907",
             "title": "Chat: About Aram",
-            "unlockCondition": "Unlocks after completing Main Story Chapter 7",
+            "unlockCondition": "Clear Main Story Chapter 7",
             "content": "They carried my blood, my lineage, becoming the flourishing waters of Remouahe... Now, my dear, you must see my legacy endure."
           },
           {
             "id": "voice-50899",
             "title": "Chat: About The Mother Tree",
-            "unlockCondition": "Unlocks after completing Main Story Chapter 7",
+            "unlockCondition": "Clear Main Story Chapter 7",
             "content": "I am the Mother Tree. The Mother Tree is me. Her sap flows in my veins, her will whispers in my mind..."
           },
           {
@@ -25927,13 +25928,13 @@
           {
             "id": "voice-50900",
             "title": "Chat: About Keygrave",
-            "unlockCondition": "Unlocks after completing Main Story Chapter 7",
+            "unlockCondition": "Clear Main Story Chapter 7",
             "content": "I glimpsed your tombstone in Keygrave's shadows... Will my mummified flesh rest here too, one day? No? What a pity."
           },
           {
             "id": "voice-50909",
             "title": "Chat: About Offsprings",
-            "unlockCondition": "Unlocks after completing Main Story Chapter 7",
+            "unlockCondition": "Clear Main Story Chapter 7",
             "content": "Those with the flowing tree's blood are my children—you, who've swallowed its seeds are of course included."
           },
           {
@@ -26363,7 +26364,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "In the \"P-063 Opera House @2 Event,\" a metal box was discovered in a corner of the burnt backstage, and the Silver inside was recovered.\n\nThe current instruments at Mythag University are unable to identify the material of the box. After consulting @2 documents and analyzing its decorative engravings, Professor Doll concluded that the box might originate from an extinct civilization that perished in an explosion centuries ago.\n\nThe Silver remains quiet and unremarkable while inside the box but emits a continuous humming sound when removed. Professor Doll suspects that the metal box functions as a signal blocker, preventing special frequency signals from resonating with the Silver.\n\nThe model of the resonating Silver has also been identified."
           },
           {
@@ -26438,7 +26439,7 @@
           },
           {
             "id": "voice-6477",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "It has been a long time since I felt this way. I will take the stage in perfect form and deliver a song that embraces the whole cosmos just for you."
           },
@@ -26896,7 +26897,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Some Awakeners struggle to adapt to their new vessels and lives, while others embrace the change, pivoting eagerly into their second life.\n\nTulu belongs to neither category. Never has any Awakener displayed such blatant, naked indifference toward the modern world.\n\nHis aptitude is peerless; perhaps he has already peered through the veil of current crises and global shifts. Yet, he prefers to lose himself in the depths of sleep.\n\nDespite having no desire for fame, he has become a figure of renown among both humans and Awakeners at the university. Researchers scrutinize his every move, churning out paper after paper on his behavior. The Departments of Archaeology and Astronomy frequently send invitations to academic symposia, almost always requesting him by name.\n\nTulu's influence among his fellow Awakeners is equally profound: Murphy grows sullen at the mere sight of him; Goliath seems perpetually locked in a silent, private rivalry with him; and Miriam treats his every word as divine law.\n\nTo all of this, he maintains a singular lack of affect—harboring no expectations, making no demands. He grants the occasional request only as the whim strikes him; otherwise, he remains unreachable."
+            "content": "Some Awakeners struggle to adapt to their new vessels and lives, while others embrace the change, pivoting eagerly into their second life.\n\nTulu belongs to neither category. Never has any Awakener displayed such blatant, naked indifference toward the modern world.\n\nHis aptitude is peerless; perhaps he has already peered through the veil of current crises and global shifts. Yet, he prefers to lose himself in the depths of sleep.\n\nDespite having no desire for fame, he has become a figure of renown among both humans and Awakeners at the university. Researchers scrutinize his every move, churning out paper after paper on his behavior. The Departments of Archaeology and Astronomy frequently send invitations to academic symposia, almost always requesting him by name.\n\nTulu's influence among his fellow Awakeners is equally profound: Murphy grows sullen at the mere sight of him; Goliath seems perpetually locked in a silent, private rivalry with him; and Miryam treats his every word as divine law.\n\nTo all of this, he maintains a singular lack of affect—harboring no expectations, making no demands. He grants the occasional request only as the whim strikes him; otherwise, he remains unreachable."
           },
           {
             "kind": "story",
@@ -26964,7 +26965,7 @@
           },
           {
             "id": "voice-5211",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I see your resolve. Before returning to the void, This One shall bear witness to mankind's heir defying fate. But now... rest is required."
           },
@@ -27513,7 +27514,7 @@
           },
           {
             "id": "voice-5173",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Worms. Stars. I am... Uvhash! Kill... let me kill!"
           },
@@ -27976,7 +27977,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Travel info: Curious History Exploration - Luxurious 7-Day Tour to Cambrian Castle\nDate: A.F.3@2 June 18th-25th\nGuide: Thomas @2@1\nBrief itinerary:\nCome on, uncover the mystery of the most infamous haunted castle from 300 years ago—Cambrian Castle!\n\nWe're tired of reading about the seductive lady and her twenty-five attendants in old books and silent films; it's all the same—so boring!\n\nAccording to a Mythag expert who wishes to remain anonymous, there's been a new discovery in the area! @2@1 covered in thorns...\n\nCall quickly @2@1@1. This trip will be unforgettable, chills guaranteed!\n\n—Excerpt from \"Worster Tour Group Disappearance CaseFile Summary: Evidence S-145\""
           },
           {
@@ -28051,7 +28052,7 @@
           },
           {
             "id": "voice-6337",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "This is the power to counter \"Green Corruption\"... You've touched something forbidden. As for me, I will never relinquish you again."
           },
@@ -28502,7 +28503,7 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "Time: @1@2, A.F. 299\nLocation: Lab UG-C03, @2@1, @4, Londinium.\n\nParticipants: @1, @2, @4, @3\nTest Subject: W\nSubject Profile:\nThe subject's biological form is that of an adult human female, born on June 18, A.F. 280; origin unknown. While en route to her studies at @2 University, the original host succumbed to an illness and passed away. Subsequently, the extraterrestrial spiritual entity known as @1 occupied and reanimated the vessel, resuming the host's former life.\n\n@1 possesses the abilities of spiritual migration and replacement and can visually perceive Dissolution. Although human bodies cannot perceive Dissolution, the inherent abilities of @1’s species allowed the subject to perceive its presence on a spiritual level. Therefore, when the subject first observed Dissolution 2 years and 8 months ago, she attempted spiritual migration to avoid further degradation.\n\nWhile @1 retains the capacity to perceive Dissolution, the subject remains unable to sever its influence, and all attempts at spiritual migration have failed. After multiple futile attempts, the subject proactively contacted @3 University, requesting to be converted into an Awakener, which directly led to this experiment.\n\n—Excerpt from <Italic:Experiment Record: The Feasibility of In-Vivo Silver Core Extraction>"
+            "content": "Time: @1@2, A.F. 299\nLocation: Lab UG-C03, @2@1, @4, Londinium.\n\nParticipants: @1, @2, @4, @3\nTest Subject: W\nSubject Profile:\nThe subject's biological form is that of an adult human female, born on June 18, A.F. 280; origin unknown. While en route to her studies at @2 University, the original host succumbed to an illness and passed away. Subsequently, the extraterrestrial spiritual entity known as @1 occupied and reanimated the vessel, resuming the host's former life.\n\n@1 possesses the abilities of spiritual migration and replacement and can visually perceive Dissolution. Although human bodies cannot perceive Dissolution, the inherent abilities of @1's species allowed the subject to perceive its presence on a spiritual level. Therefore, when the subject first observed Dissolution 2 years and 8 months ago, she attempted spiritual migration to avoid further degradation.\n\nWhile @1 retains the capacity to perceive Dissolution, the subject remains unable to sever its influence, and all attempts at spiritual migration have failed. After multiple futile attempts, the subject proactively contacted @3 University, requesting to be converted into an Awakener, which directly led to this experiment.\n\n—Excerpt from <Italic:Experiment Record: The Feasibility of In-Vivo Silver Core Extraction>"
           },
           {
             "kind": "story",
@@ -28576,7 +28577,7 @@
           },
           {
             "id": "voice-5821",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "I... I can't bear heavy responsibilities. I can only chase the light. So, please, don't stop shining..."
           },
@@ -28969,7 +28970,7 @@
       "faction": "The Unknowable",
       "releaseDate": "2026-01-26",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xh",
+      "lineupToken": "xg",
       "searchTags": [
         "Poison",
         "STR Down",
@@ -29100,7 +29101,7 @@
           },
           {
             "id": "voice-126972",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Do not trouble yourself; you are not like those common multitude. \nHush. Do not look behind me. Pay no mind to the unseen caress. Look into my eyes, and my eyes alone."
           },
@@ -29484,7 +29485,7 @@
       "faction": "The Fools",
       "releaseDate": "2026-03-09",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xj",
+      "lineupToken": "xi",
       "searchTags": [
         "Tentacle DMG",
         "Pursuit",
@@ -29542,7 +29543,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "The North Atlantic whirlpool Moskstraumen was first observed in AF 1■■. Over the following centuries, it steadily grew in size. By AF 29■, Moskstraumen had evolved into a massive whirlpool roughly 260–300 feet (80–90 meters) in diameter, with currents stretching about 5 miles (8 kilometers) wide.\n\nBeyond the powerful suction of the currents and devastating effects (claiming both marine life and fishing vessels in the vicinity), a greater threat lurked beneath Moskstraumen—a D-Rift. After prolonged observation and research conducted by Academy members, it was confirmed that the formation of Moskstraumen was directly linked to the D-Rift beneath it. In 1898, a formal operation was launched to purge it.\n\nWithin the D-Rift, the Academy recovered vast quantities of biological remains and shipwreck debris, along with a Silver Core later designated O-1841.\n\n—Excerpt from <Italic:The Moskstraumen Incident Records>"
           },
           {
@@ -29617,7 +29618,7 @@
           },
           {
             "id": "voice-129672",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Whirlpool! Strong! Good!"
           },
@@ -30096,13 +30097,13 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "In the late autumn of A.F. 3@7, I traveled to the \"Theater of Fate\" in the old district to audition for a mezzo-soprano position.\t\n\nI arrived at 4:17 PM. The sky was gloomy, yet no rain fell. The main entrance was unlocked, and the auditorium stood empty; there was no sign of any interviewers.\t\n\nYet at the center of the stage, a puppet show was unfolding—there was no puppeteer, no music, only several pale humanoid marionettes dancing in silence. Their movements were unnervingly precise, and the faint clicking of their joints as they turned was spine-chilling. As for the strings... those threads descending from the dome seemed alive; they trembled slightly, tightening and slackening as if keeping time with an invisible rhythm.\t\n\nJust as I turned to leave, a woman’s voice drifted down from Box Five.\t\n\n<Italic:\"Welcome, Christine.\">\n\nThe voice was neither young nor old; it sounded like an echo seeping through dust-laden silk curtains sealed for centuries—eerie and terrifying.\t\n\nA cold shiver ran through me. I hadn't even introduced myself; how did she know my name? And these puppets...\t\n\nI bolted for the exit, but just as my hand reached for the handle, countless spiders swarmed from the darkness. Their eyes glimmered with ghostly light as they spewed out silvery threads, attempting to block my escape. More horrifying still, the spiders began to speak in human voices, chanting over and over: <Italic:\"Sing, my angel... sing for me...\">\n\nI screamed. I tore at the webs. I ran with all my might. Somehow, I managed to escape.\n\n...\n\nSince then, I could not bear the thought of any gaze cast down from VIP Box Five, and so I requested that the opera house have the box sealed.\t\n\nAnd yet... now, whenever I stand beneath the spotlight and sing, I feel the faint tug of strings at the tips of my brow.\t\n\nHave I, too, become a puppet manipulated by invisible strings? I dare not think on it further.\n\n—Excerpt from <Italic:The Memoirs of Christine, the Singer>"
+            "content": "In the late autumn of A.F. 3@7, I traveled to the \"Theater of Fate\" in the old district to audition for a mezzo-soprano position.\t\n\nI arrived at 4:17 PM. The sky was gloomy, yet no rain fell. The main entrance was unlocked, and the auditorium stood empty; there was no sign of any interviewers.\t\n\nYet at the center of the stage, a puppet show was unfolding—there was no puppeteer, no music, only several pale humanoid marionettes dancing in silence. Their movements were unnervingly precise, and the faint clicking of their joints as they turned was spine-chilling. As for the strings... those threads descending from the dome seemed alive; they trembled slightly, tightening and slackening as if keeping time with an invisible rhythm.\t\n\nJust as I turned to leave, a woman's voice drifted down from Box Five.\t\n\n<Italic:\"Welcome, Christine.\">\n\nThe voice was neither young nor old; it sounded like an echo seeping through dust-laden silk curtains sealed for centuries—eerie and terrifying.\t\n\nA cold shiver ran through me. I hadn't even introduced myself; how did she know my name? And these puppets...\t\n\nI bolted for the exit, but just as my hand reached for the handle, countless spiders swarmed from the darkness. Their eyes glimmered with ghostly light as they spewed out silvery threads, attempting to block my escape. More horrifying still, the spiders began to speak in human voices, chanting over and over: <Italic:\"Sing, my angel... sing for me...\">\n\nI screamed. I tore at the webs. I ran with all my might. Somehow, I managed to escape.\n\n...\n\nSince then, I could not bear the thought of any gaze cast down from VIP Box Five, and so I requested that the opera house have the box sealed.\t\n\nAnd yet... now, whenever I stand beneath the spotlight and sing, I feel the faint tug of strings at the tips of my brow.\t\n\nHave I, too, become a puppet manipulated by invisible strings? I dare not think on it further.\n\n—Excerpt from <Italic:The Memoirs of Christine, the Singer>"
           },
           {
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "The curtain had not yet fully risen when the stage lights cascaded down like a relentless tide.\n\nThe audience of Mythag held their breath, waiting for the hero of fate to take the stage.\n\nThe stage was small—so small it could barely accommodate the heavy tread of Oedipus. Yet, as the boy in the school uniform raised his hand, his voice pierced the silence of that modest stage, his opening line falling like a divine oracle: <Italic:\"It is I, the wretched man, doomed to slay my father and wed my mother.\">\n...\n\n<Italic:\"What law of the mighty gods have I transgressed?\n\n Why look to the heavens any more, tormented as I am?\n\n Whom to call, what comrades now? Just think, my reverence only brands me for irreverence!\" >\n\nSo questioned the young Antigone, challenging the injustice of divine law.\n\n...\n\nIn the castle of Denmark, Hamlet paced in contemplation. <Italic:\"To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer the slings and arrows of outrageous fortune, or to take arms against a sea of troubles, and by opposing end them?\">\n...\n\nBefore the high bench, John Proctor slowly lifted his head and declared his answer: <Italic:\"Because I am not worth the dust on the feet of them that hang! How may I live without my name?\">\n...\n\nThose words concerning fate had coalesced into today’s performance.\n\nArachne stood in the wings, her fingers digging unconsciously into her palms.\n\nThe tears shed in empathy for the characters, the thunderous applause at the final curtain call...\n\nAs she took in the myriad of faces in the audience, she suddenly felt that her heart—whose beating she had long ceased to regard—had finally found its rhythm.\n\nAt this very moment, her voice, her very existence, was etched into the vast current of fate. She was no longer a mere witness to destinies; she was now the unfolding lines of a brand-new script. Audience, performer, playwright—their fates had become inextricably bound through this living drama...\n\nThe triumph of the heart, it turned out, was this quiet—and this deafening."
+            "content": "The curtain had not yet fully risen when the stage lights cascaded down like a relentless tide.\n\nThe audience of Mythag held their breath, waiting for the hero of fate to take the stage.\n\nThe stage was small—so small it could barely accommodate the heavy tread of Oedipus. Yet, as the boy in the school uniform raised his hand, his voice pierced the silence of that modest stage, his opening line falling like a divine oracle: <Italic:\"It is I, the wretched man, doomed to slay my father and wed my mother.\">\n...\n\n<Italic:\"What law of the mighty gods have I transgressed?\n\n Why look to the heavens any more, tormented as I am?\n\n Whom to call, what comrades now? Just think, my reverence only brands me for irreverence!\" >\n\nSo questioned the young Antigone, challenging the injustice of divine law.\n\n...\n\nIn the castle of Denmark, Hamlet paced in contemplation. <Italic:\"To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer the slings and arrows of outrageous fortune, or to take arms against a sea of troubles, and by opposing end them?\">\n...\n\nBefore the high bench, John Proctor slowly lifted his head and declared his answer: <Italic:\"Because I am not worth the dust on the feet of them that hang! How may I live without my name?\">\n...\n\nThose words concerning fate had coalesced into today's performance.\n\nArachne stood in the wings, her fingers digging unconsciously into her palms.\n\nThe tears shed in empathy for the characters, the thunderous applause at the final curtain call...\n\nAs she took in the myriad of faces in the audience, she suddenly felt that her heart—whose beating she had long ceased to regard—had finally found its rhythm.\n\nAt this very moment, her voice, her very existence, was etched into the vast current of fate. She was no longer a mere witness to destinies; she was now the unfolding lines of a brand-new script. Audience, performer, playwright—their fates had become inextricably bound through this living drama...\n\nThe triumph of the heart, it turned out, was this quiet—and this deafening."
           },
           {
             "kind": "story",
@@ -30114,7 +30115,7 @@
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "As the Weaver of the Web of Fate, Arachne governed the threads of countless lives, with past and future flowing through her hands. Yet, she harbored a hobby that bordered on the frivolous. \n\nShe loved the theater. Not for the twisting plot or the well-turned phrase: those were already etched into her mind. As the creator of the script, she knew every turn of the story and every line of the actors by heart. \n\nYet, time and again, she stepped into the theater. \n\nWhat she truly craved was the immersive sense of \"presence\"—the feeling of truly being there. \n\nWhen the curtain rises and the audience sinks into darkness, the stage becomes the only true world. In that moment, time is no longer a river running in a single direction, but an enactment within a confined space—past, present, and future overlap here. Everything ceases to be a script upon a page and becomes a tremor of life unfolding in the living present. \n\nAnd she, at last, is no longer the exile gazing at the threads she can never touch. \n\nInside the theater, she can briefly seal away her memories. She can step onto the stage as the girl gasping out her final words, or sit among the crowd, granting the actors their freedom. Casting off the prophet’s burden, she allows herself to simply tremble, weep, and hold her breath at every stirring pulse of the performance. Not as a seer, but as a living soul—adopting the posture of the ignorant, breathing in sync with the characters, shattered by a single line. Even knowing the end is written, even knowing the tragedy is foreordained. This illusion allows her a fleeting escape from her sentence as an eternal spectator. \n\nNo longer exiled from fate, but welcomed into it—even for a single instant, even as a phantom. \n\nThis small indulgence was already the most luxurious grace fate could bestow upon Arachne."
+            "content": "As the Weaver of the Web of Fate, Arachne governed the threads of countless lives, with past and future flowing through her hands. Yet, she harbored a hobby that bordered on the frivolous. \n\nShe loved the theater. Not for the twisting plot or the well-turned phrase: those were already etched into her mind. As the creator of the script, she knew every turn of the story and every line of the actors by heart. \n\nYet, time and again, she stepped into the theater. \n\nWhat she truly craved was the immersive sense of \"presence\"—the feeling of truly being there. \n\nWhen the curtain rises and the audience sinks into darkness, the stage becomes the only true world. In that moment, time is no longer a river running in a single direction, but an enactment within a confined space—past, present, and future overlap here. Everything ceases to be a script upon a page and becomes a tremor of life unfolding in the living present. \n\nAnd she, at last, is no longer the exile gazing at the threads she can never touch. \n\nInside the theater, she can briefly seal away her memories. She can step onto the stage as the girl gasping out her final words, or sit among the crowd, granting the actors their freedom. Casting off the prophet's burden, she allows herself to simply tremble, weep, and hold her breath at every stirring pulse of the performance. Not as a seer, but as a living soul—adopting the posture of the ignorant, breathing in sync with the characters, shattered by a single line. Even knowing the end is written, even knowing the tragedy is foreordained. This illusion allows her a fleeting escape from her sentence as an eternal spectator. \n\nNo longer exiled from fate, but welcomed into it—even for a single instant, even as a phantom. \n\nThis small indulgence was already the most luxurious grace fate could bestow upon Arachne."
           }
         ],
         "voiceLines": [
@@ -30170,7 +30171,7 @@
           },
           {
             "id": "voice-133725",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Everything is a past epilogue. Everything is a new prologue. The new chapter between us waits for you to write it, Keeper."
           },
@@ -30249,7 +30250,7 @@
           {
             "id": "voice-133737",
             "title": "Chat: About Hameln",
-            "unlockCondition": "Unlock after acquiring Awakener \"Hameln\"",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Hameln\"",
             "content": "I once heard him play. That music made the soul tremble... Perhaps I should invite him to compose a symphony of fate for my next production."
           },
           {
@@ -30571,7 +30572,7 @@
       "faction": "TBD",
       "releaseDate": "2026-05-30",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xi",
+      "lineupToken": "xh",
       "searchTags": [
         "Discard",
         "Corrosion",
@@ -30627,7 +30628,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "Like what is yet to come but has not yet come to pass. Like what is held in the heart and will never be forgotten.\n\nNo matter what form they take, no matter what shape the world assumes, the two beings—utterly different, yet utterly alike—will always arrive at the same answer.\n\n<Italic:\"There is someone we want to see again.\"\n\n\"We will stop at nothing to find them... and the world where we can stay by their side.\"\n\n\"If the path there has no end, then we will spend our whole lives walking it. A lifetime measured in searching.\"\n\n>\nPerhaps this is why, amid the screeching, ugly blobs of flesh, a brilliant Silver Core fell into the Keeper's palm."
           },
           {
@@ -30702,7 +30703,7 @@
           },
           {
             "id": "voice-139884",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "After all my tests, I understand a lot more now. The \"spirituality\" each Awakener carries—they're all completely different. And, it seems like my Silver Core's spirituality is... \"love.\""
           },
@@ -30716,7 +30717,7 @@
             "id": "voice-139887",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "\"<Italic:On one of these stars, my flower is blooming...>\"\nI feel like you’ve said something like that before."
+            "content": "\"<Italic:On one of these stars, my flower is blooming...>\"\nI feel like you've said something like that before."
           },
           {
             "id": "voice-139892",
@@ -31106,7 +31107,7 @@
       "faction": "TBD",
       "releaseDate": "2026-06-29",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xo",
+      "lineupToken": "xn",
       "searchTags": [
         "STR Down",
         "Tentacle DMG",
@@ -31163,20 +31164,20 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "In August of A.F. 2@17, a series of anomalous spiritual events manifested within a three-mile radius of Nara@1Bay.\n@1 recorded emergency calls reported sightings of several individuals, previously registered as deceased, lingering near the ruins of @3. These individuals were later verified to have all perished in the explosion that struck @2 Port Town in 1@19. The cause of that explosion remains unconfirmed to this day, and all individuals involved exhibited varying degrees of amnesia.\n<Italic:\"I saw her, I swear... she was as young as the day we parted. But that's impossible.\">\n<Italic:\"It's been @2 years since she bade me farewell, yet she remained as beautiful as ever. She just stood there on the cliffside with the others, smiling at me from afar.\">\n<Italic:\"...When we are cherished, we will always be granted a second chance. EBWYN@2OS... Ebwy@1noss...\">\nThe recording concluded with an unidentified static resembling the churning of seawater. Twenty hours later, the witness died at home of organ failure at the age of 76.\nThe day after this material reached Mythag University, Irene Caldwell—a retired researcher from the Awakening Studies Department and distant relative of the witness, Chambers Caldwell—received an O-@1 Silver Core that Chambers had delivered to her.\nAccording to Irene, Chambers looked no different from his younger self.\nHe left only one sentence before vanishing:\n\"Please take Him to Mythag. He shall wait there for the last wanderer of Ebwynnos to return.\"\n—Excerpt from <Italic:Mythag University Silver Core Storage Records>"
           },
           {
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Most faculty and students at Mythag are more than happy to seek Pontos’s aid during field missions, and he never hesitates to lend a helping hand.\nGenerous, genial, and dependable—even though he is clearly at serious odds with certain members of Mythag, this Awakener leaves a staggeringly positive first impression.\nHowever, while Pontos has agreed with Mythag to stop expanding the \"population\" of Ebwynnos, a flood of migration applications have poured into the Administration Office following several field operations that ended in \"unconventional ways.\"\nWhile Sylvia conducts group counseling for the applicants, the administration has hastily added two new field regulations:\n1. Except in extreme emergencies, seeking aid from Pontos is strictly prohibited.\n2. Except in extreme circumstances, entry into Ebwynnos is strictly prohibited."
+            "content": "Most faculty and students at Mythag are more than happy to seek Pontos's aid during field missions, and he never hesitates to lend a helping hand.\nGenerous, genial, and dependable—even though he is clearly at serious odds with certain members of Mythag, this Awakener leaves a staggeringly positive first impression.\nHowever, while Pontos has agreed with Mythag to stop expanding the \"population\" of Ebwynnos, a flood of migration applications have poured into the Administration Office following several field operations that ended in \"unconventional ways.\"\nWhile Sylvia conducts group counseling for the applicants, the administration has hastily added two new field regulations:\n1. Except in extreme emergencies, seeking aid from Pontos is strictly prohibited.\n2. Except in extreme circumstances, entry into Ebwynnos is strictly prohibited."
           },
           {
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "Pontos spent a long time tracing the cause of Leisha’s death. She had endured far too many grueling battles and claimed far too many glorious victories—perhaps by poison, perhaps by some obscure sorcery; surely there had to be a reason, a reason for her to fall before such a feeble sea monster.\nIt was only much, much later, when a single strand of silver appeared in the hair of a human companion who had never joined Ebwynnos, that the truth finally dawned on him.\nThe waning stamina, the slowing responses, the unspoken but palpable longing for a peaceful, settled life... it was all so familiar.\nAnd all at once, Pontos understood the name of the enemy that had eluded him all this time: \"Aging.\"\nIt's the reason for Leisha's seclusion, her defeat, and the ruin of everything he might have lived for—it was something so commonplace, yet utterly inexorable.\nBut it mattered no longer. His own destruction had come early, and the power he gained in exchange was more than satisfactory.\nNo matter what unfathomable entity he must serve, whatever the price he must pay, the ravages of time shall never befall Ebwynnos again."
+            "content": "Pontos spent a long time tracing the cause of Leisha's death. She had endured far too many grueling battles and claimed far too many glorious victories—perhaps by poison, perhaps by some obscure sorcery; surely there had to be a reason, a reason for her to fall before such a feeble sea monster.\nIt was only much, much later, when a single strand of silver appeared in the hair of a human companion who had never joined Ebwynnos, that the truth finally dawned on him.\nThe waning stamina, the slowing responses, the unspoken but palpable longing for a peaceful, settled life... it was all so familiar.\nAnd all at once, Pontos understood the name of the enemy that had eluded him all this time: \"Aging.\"\nIt's the reason for Leisha's seclusion, her defeat, and the ruin of everything he might have lived for—it was something so commonplace, yet utterly inexorable.\nBut it mattered no longer. His own destruction had come early, and the power he gained in exchange was more than satisfactory.\nNo matter what unfathomable entity he must serve, whatever the price he must pay, the ravages of time shall never befall Ebwynnos again."
           },
           {
             "kind": "story",
@@ -31238,7 +31239,7 @@
           },
           {
             "id": "voice-143501",
-            "title": "Enlighten: Florish",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Such a pity. When you change your mind, you know where to find me."
           },
@@ -31655,7 +31656,7 @@
       "faction": "TBD",
       "releaseDate": "2026-07-27",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xq",
+      "lineupToken": "xp",
       "searchTags": [
         "STR Up",
         "Divine Realm"
@@ -31784,7 +31785,7 @@
           },
           {
             "id": "voice-146193",
-            "title": "Enlighten: Bloom",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Ah, I see... there never was an end to power. The true challenge has only just begun! It was you who brought me here and showed me the reality. Soon, I shall present a more perfect warrior before you. Ensure that you return even stronger, my \"opponent.\""
           },
@@ -32264,7 +32265,7 @@
           {
             "kind": "story",
             "title": "Story: I",
-            "unlockCondition": "Awakener Level 3",
+            "unlockCondition": "Affinity Level 3",
             "content": "This Silver Core was recovered by Mythag's Keeper %player% in the aftermath of the Mount Ever@2t collapse incident. As the dimension in which it originally resided is no longer observable, the consequences of Silver Core extraction—as well as the proper awakening method—remain undetermined.\n\nThe following observations are transcribed from the paper handbook carried by Keeper %player%:\n\nUpon visual inspection, the Silver Core presents as exceptionally pure, showing no discernible impurities. In the absence of external interference, its overall structure trends toward regularity—as though some underlying will were straining to keep it appearing whole and composed, radiating a bright luster not unlike firelight.\n\nIts Gnosis Index, however, sits near the absolute lower bound. The actual internal structure is extraordinarily fragile and loosely bound. When the observation distance falls below 1/@1 inch, the Silver Core's self-protection response is triggered: the observer is abruptly confronted with a dense flow of particles resembling drifting ice crystals. It is presumed these particles were previously refracting incident light in a highly unusual manner, shielding the interior from direct observation.\nTo put it less professionally... I'd call this a Silver Core steeped in \"deception.\"\n\nOnce the self-protection mechanism is triggered, the observer's body enters a brief paralytic state, the pupils gradually fading until fully blanched. Throughout this window, the Silver Core continues to adjust itself, returning to the stable configuration it maintained prior to observation.\nRepeated trials indicate that the mechanism inflicts no lasting harm; however, the accompanying hypothermic symptoms pose a non-negligible risk. Note: prompt consumption of sweets—apple-based desserts in particular—provides a distinctly soothing effect. The reason for this... remains unclear... <Italic:Right?\n>\n\n\nLuckily, after everything, it's plain enough that this selfish, tightly-guarded little trickster bears no genuine ill will toward us.\n\n—Excerpt from <Italic:Mythag University Silver Core Storage Records>"
           },
           {
@@ -32339,7 +32340,7 @@
           },
           {
             "id": "voice-149671",
-            "title": "Enlighten: Bloom",
+            "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
             "content": "Come, stand here beside your Fairy. What? Everyone shares the offerings and eats together? ...Well. If that's Mythag's custom... then I... I certainly have no objection at all. Come now, everyone, let's make it a party!"
           },
@@ -32730,7 +32731,7 @@
       "faction": "The Fools",
       "releaseDate": "2026-09-21",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xs",
+      "lineupToken": "xr",
       "searchTags": [
         "STR Up",
         "STR Down",
@@ -32934,7 +32935,7 @@
           {
             "id": "voice-152465",
             "title": "Chat: About Helot: Catena",
-            "unlockCondition": "Unlock after acquiring Awakener \"Helot: Catena\"",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Helot: Catena\"",
             "content": "Miss Helot: Catena's power seems to stem from a profound hatred. But hatred, once kindled, keeps spreading until it swallows everything. I fear that one day it will cost her far more than she can bear."
           },
           {
@@ -33141,6 +33142,429 @@
       "assets": {
         "portrait": "assets/morimens/portraits/ogier-oathbound.webp",
         "card": "assets/morimens/cards/ogier-oathbound.webp"
+      }
+    },
+    {
+      "id": "awakener-0062",
+      "numericId": 62,
+      "ingameId": "C20",
+      "name": "Vivian",
+      "slug": "vivian",
+      "assetSlug": "vivian",
+      "aliases": [
+        "vivian"
+      ],
+      "realm": "CHAOS",
+      "rarity": "SSR",
+      "type": "CHORUS",
+      "faction": "TBD",
+      "releaseDate": "2026-10-19",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "lineupToken": "xs",
+      "searchTags": [
+        "STR Up",
+        "Corrosion",
+        "Divine Realm"
+      ],
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 35,
+        "ATK": 23,
+        "DEF": 25
+      },
+      "substatsLv1": {
+        "CritRate": 6.6,
+        "CritDamage": 50,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.65,
+        "ATK": 1.05,
+        "DEF": 1.15
+      },
+      "substatScaling": {
+        "CritRate": 1.6,
+        "CritDamage": 0,
+        "AliemusRegen": 0,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "profile": {
+        "title": "Vivian",
+        "birthday": "22-Feb",
+        "voiceActor": "Yuduki Kazuka",
+        "gender": "Female",
+        "height": "6'7''",
+        "weight": "<Italic:Shh...>",
+        "gnosticIndex": "28.3",
+        "storySections": [
+          {
+            "kind": "introduction",
+            "title": "Basic Information",
+            "unlockCondition": "Awakener Level 1",
+            "content": "If we had to describe Vivian with a single sound, it would be <Italic:gubble>.\n\nThe potion boiling in the cauldron goes <Italic:gubble-gubble>. The steam rising off the bath goes <Italic:gubble-gubble>. The toad's belly swells and goes <Italic:gubble-gubble> as it breathes out.\n\nAnd there she sits in the middle of all that lazy <Italic:gubble-gubble>, gubbling away and blowing bubbles of her own.\n\nAs if tomorrow will never come."
+          },
+          {
+            "kind": "story",
+            "title": "Story: I",
+            "unlockCondition": "Affinity Level 3",
+            "content": "Mythag University, Institute of Metallurgy and Materials Science, @2 Branch\n\nReport No.: AWU-M-1923-014\n\nClassification: Internal Use Only; For Circulation Among Research Committee Members\n\nSubject: Preliminary Study of the Anomalous Chemical Inertness of an Excavated Silver Core\n\nDate of Report: November 4, @1\n\nSample Origin: Submitted for analysis by an excavation team working at a site in @2. Sample No. EX-B-7.\n\nAbstract: This interim briefing is submitted to the Research Committee. It concerns inertness tests carried out by the Institute's Department of Chemical Analysis and Department of Metallurgy on a silver core recovered from the ruins of a burned palace, together with preliminary conclusions. It is offered for internal discussion and as a reference for the direction of further experiments.\n\n...The sample was immersed in concentrated sulfuric acid (specific gravity 1.84) for forty-eight hours. It was then treated with a strong alkaline solution and fired in the Institute's newly installed electric furnace at temperatures exceeding one thousand degrees. The loss of mass, as measured by precision balance, came to less than one part in ten thousand... Spectroscopic examination produced spectral lines that matched none of the reference plates held by the Institute. The sample's vibrational frequency fell far below the range the instruments are calibrated to detect...\n\nMost disquieting of all, the excavation team reports that every timber beam and pillar at the site burned to ash and charcoal, and much of the pottery shattered and vitrified in the heat. The silver core alone was recovered intact, its surface showing no trace whatsoever of corrosion or oxide scale... Dr. Kingston admitted during the meeting that the phenomenon lies beyond anything his twenty years of scholarship can explain. Microscopic examination by the Institute likewise found no damage to the crystal grains...\n\nThe Committee members received these results with mixed reactions. Dean Weize Bai ordered the sample sealed at once and additional staff assigned to verify the findings, so as to rule out instrument error or experimental oversight... However, three independent retests produced closely matching results. Colleagues throughout the Institute are astonished, and fear that current metallurgical theory may indeed have gaps...\n\nFurther experimental plans and detailed data are provided in Appendices II through V and are not reproduced in this briefing."
+          },
+          {
+            "kind": "story",
+            "title": "Story: II",
+            "unlockCondition": "Affinity Level 5",
+            "content": "Vivian's laboratory in Mythag has moved several times.\n\nAt first, Mythag built it \"to the standards of a princess's palace,\" as an exact life-size replica of the home she had lived in during her former life.\n\nHowever, that enormously expensive laboratory was flattened by a single potion explosion. The cause was that Vivian had been feeling lazy while mixing her ingredients and had asked the Seer to prepare the raw materials.\n\nClearly, it was too much to ask of a Seer who was, give or take, an amphibian, to tell apart \"blood-red wood with a regular spiral grain\" and \"orange-red wood with a fine, hair-like grain,\" or \"cyan potion with a flowing shimmer\" and \"jade potion with a scaly sheen,\" or \"white combustible metal\" and \"silver mutable metal,“ especially when none of them were moving.\n\nIn any case, Vivian's laboratories got smaller, and smaller, and smaller, until they were so small that if she fell asleep slumped over the workbench, she might kick over a cauldron by accident.\n\nYes, that is exactly how the last lab accident happened.\n\nBut Vivian always quietly tidied up the disaster, then started on the day's potions as if nothing had happened.\n\nAfter all, if you never cause other people any trouble, it's much easier to refuse the trouble they try to cause you. This is one of Vivian's guiding principles in life."
+          },
+          {
+            "kind": "story",
+            "title": "Story: III",
+            "unlockCondition": "Affinity Level 7",
+            "content": "February 22, A.D. @2. Vivian's tenth birthday. She had been born late in the Grand Duke's life, and the whole duchy had blessed her arrival. Every year on this day, the entire nation celebrated her birthday. She had long since grown used to the ritual.\n\nThis year's celebration was grander than ever. She stood at the top of the bell tower, showering joy and hope on all her subjects. The cannons fired, bursting into thousands of colorful streamers that drifted down with the winter snow.\n\nThat was how it should have gone.\n\nBut that day, amid the roaring crowds, Vivian saw an omen. The falling snow blanketed every street, and then the snow and the streamers melted into a sludge of black and red that oozed slowly through the castle, the manors, and every lane and alley.\n\nShe knew the red was the blood of knights. And the black...?\n\nThe black was plague.\n\nPlague came to the remote duchy, and people said the cursed witch princess had brought the black misfortune with her.\n\nSo they would offer the wicked witch princess to the temple. Rumors said it was home to terrible beasts, man-eating monsters, and an evil Seer.\n\nYet Vivian went into the temple and failed to be eaten. Instead, the Seer gave her a potion, one that could be brewed only once in a lifetime.\n\nThe world feared her more than ever, and hated her more than ever.\n\nUntil enemy soldiers broke through the castle's defenses. Until the family and knights she had once loved and trusted fell before her in pools of their own blood.\n\nOnly then did that mysterious potion, coveted and feared by all the world, reveal its true power for the first time.\n\nShe was the last princess of the duchy, the Grand Duke's most beloved daughter, and a cursed orphan.\n\nShe was the Witch Princess. She was Vivian."
+          },
+          {
+            "kind": "story",
+            "title": "Story: IV",
+            "unlockCondition": "Affinity Level 9",
+            "content": "Princess. Noble. Witch. Apothecary. Weirdo.\n\nNone of the roles she had been given or the labels stuck on her meant much to Vivian. If she had her way, everything would simply 'take its natural course.'\n\nIn other words: whatever.\n\nBut stories always take sudden turns, and somehow she had ended up at the center of the conflict.\n\nWhen your opponent has backed you into a corner in a game, what do you do?\n\nSome people fight to the bitter end. Some wave the white flag. Some scramble for every last point.\n\nShe chose to flip the board"
+          }
+        ],
+        "voiceLines": [
+          {
+            "id": "voice-154160",
+            "title": "Awaken",
+            "content": "Mm...? Is it out-of-bed o'clock already? Nnh—haaa—aaah... Barbaric. So sleepy..."
+          },
+          {
+            "id": "voice-154142",
+            "title": "Upgrade: I",
+            "content": "I could teach you a great many things... You wouldn't want to end up knowing less than a hat, would you?"
+          },
+          {
+            "id": "voice-154140",
+            "title": "Upgrade: II",
+            "content": "All right, all right. Put it away. I'd have helped when it mattered anyway."
+          },
+          {
+            "id": "voice-154135",
+            "title": "Upgrade: III",
+            "content": "What would you like in exchange? I can teach you how to bottle f@2e, brew gl@3, and even st... Oh. You caught me. I picked that line up from a recent novel. It's fun to say a line like that out loud, isn't it?"
+          },
+          {
+            "id": "voice-154157",
+            "title": "Enlighten: Observe",
+            "unlockCondition": "Unlocks at Enlighten Level 1",
+            "content": "The stars are packed full of secrets. They are so vast, so appaling. In front of the stars, any one person's busy little efforts, and their attempts to understand the world, amounts to almost nothing."
+          },
+          {
+            "id": "voice-154129",
+            "title": "Enlighten: Ponder",
+            "unlockCondition": "Unlocks at Enlighten Level 2",
+            "content": "Sleep... only sleep matters. Go to sleep. A dreamless sleep is unbearably sweet. Dreams have their dangers too, naturally, but set beside the unmeasurable things waiting between the stars, the dangers of a dream is hardly worth mentioning. So long as They don't notice you in there."
+          },
+          {
+            "id": "voice-154126",
+            "title": "Enlighten: Reflect",
+            "unlockCondition": "Unlocks at Enlighten Level 3",
+            "content": "A pessimist? Certainly not. I'm fascinated by knowledge, and by the unknown. Any fool reckless enough—arrogant enough to have never once looked up at the sky—I am perfectly willing to hand them the most horrifying knowledge this world contains."
+          },
+          {
+            "id": "voice-154152",
+            "title": "Enlighten: Insight",
+            "unlockCondition": "Unlocks at Enlighten Level 7",
+            "content": "Have you ever wondered... if ignorance is a lovely, necessary veil between humanity and the Great Horror? But only those who choose to lift it can buy a little precious time—a chance at survival—for those cute, foolish creatures when cruelty finally arrives."
+          },
+          {
+            "id": "voice-154132",
+            "title": "Enlighten: Elevate",
+            "unlockCondition": "Unlocks at Enlighten Level 11",
+            "content": "You understand, don't you? Thanks to the power you've given me, I see what you truly are now. I understand the position you stand in, so utterly at odds with the identity you were born to carry. We're the same kind."
+          },
+          {
+            "id": "voice-154158",
+            "title": "Enlighten: Flourish",
+            "unlockCondition": "Unlocks at Enlighten Level 15",
+            "content": "Don't worry. From now on, when you're standing between the unknown and the reality you're so fond of, setting yourself against powers beyond comprehension, you won't be there alone. \nYou have... one very powerful witch. One very small witch. One princess who learned what love is by watching mortals do it. She'll be with you, always."
+          },
+          {
+            "id": "voice-154161",
+            "title": "Affinity: I",
+            "unlockCondition": "Unlocks at Affinity Level 2",
+            "content": "Would you like to know something? In my earliest memories, I couldn't feel fear. Or sorrow. Or joy, or anger. Nothing at all.\nDeep down, there was simply nothing there. Everything felt like a nuisance. All I wanted was to be left alone, collect more knowledge, and think for as long as I pleased.\n\nIt's entirely possible I'm some Other thing wearing a girl's skin. But as Other things go, I was incredibly lucky. My father, my mother, my brothers and sisters... They never cared what kind of bottomless well they were pouring their love into. And somehow, that well really was filled."
+          },
+          {
+            "id": "voice-154144",
+            "title": "Affinity: II",
+            "unlockCondition": "Unlocks at Affinity Level 4",
+            "content": "Yes. I really was lucky. Father and Mother got precisely what they'd always wanted: to spend themselves on our country and its honour, holding it together down to the final moment. Their people lived, especially the children. So no, I've never regretted it. Given the chance to do it over, I would make the same choice. Next time before the water came to a boil, I'd remember to chew a few more belladonna leaves for the pain, though."
+          },
+          {
+            "id": "voice-154130",
+            "title": "Affinity: III",
+            "unlockCondition": "Unlocks at Affinity Level 6",
+            "content": "Why, exactly? What on earth do mortals keep inside their little heads, Keeper? They're exhausting, aren't they? Always acting on their own. Always doing entirely unnecessary things, and then filing them under love. I can't make sense of them at all. Can't they simply show up when they need someone to play board game with, then leave neatly once it's over?"
+          },
+          {
+            "id": "voice-154149",
+            "title": "Affinity: IV",
+            "unlockCondition": "Unlocks at Affinity Level 8",
+            "content": "Alright, alright. Stop looking at me like that. Yeah, I'm talking out of both sides of my mouth. But you understand me, right? We're rather alike, after all. Things like us—beings that aren't truly human—get played like pieces by these dumb, adorable humans, and still we bend over backwards to keep them alive."
+          },
+          {
+            "id": "voice-154153",
+            "title": "Affinity: V",
+            "unlockCondition": "Unlocks at Affinity Level 10",
+            "content": "<Italic:*a very loud swear*>\nThis is... unspeakably awful.\nThis is... absolutely wonderful.\nSo be it then, Keeper. Let's think ourselves to shreds. Let's worry our hearts down to nothing. Use my power however you like. Put everything I know to work. In the middle of all this meaninglessness, let us spend everything we have on the few that aren't."
+          },
+          {
+            "id": "voice-154159",
+            "title": "Chat: Touch",
+            "content": "Wake me one more time when I'm right on the edge of sleep, and I will have my hat bite you. That is not a joke."
+          },
+          {
+            "id": "voice-154151",
+            "title": "Chat: About the Disaster",
+            "content": "Dissolution... I used it to protect the last of my subjects, but it was also what brought my countrty down. A pity. Of all the knowledge They poured into me, not one page contained a way to prevent something like that."
+          },
+          {
+            "id": "voice-154154",
+            "title": "Chat: About Mythag",
+            "content": "No royals here. No subjects. No princess. Hooray! And that's before we discuss the glory of Silver comms, and food that arrives at the door, and... and the fact that I never again have to keep a perfect eight-tooth smile bolted onto my face in public, simply to avoid an hour of sighing, tutting, circular lecturing from elderly ministers!"
+          },
+          {
+            "id": "voice-154127",
+            "title": "Chat: What I Like",
+            "content": "Games I can play from my room without moving, books, snacks... and, naturally, my absolute favorite. Surely you can guess what that is. If Miryam had any real respect for her god, she'd enshrine sleep as the first article of faith, and I would give joining Lemuria serious consideration. I'm not joking!"
+          },
+          {
+            "id": "voice-154163",
+            "title": "Chat: What I Hate",
+            "content": "No. I am not attending a salon, and I am not attending a tea party. This place hosts a frankly horrifying number of them. And I have a strong suspicion that the only reason they insist on seating me in the guest of honour's chair is the word princess. I'm a collectible doll, and they like the way I look on the shelf."
+          },
+          {
+            "id": "voice-154125",
+            "title": "Chat: About the Keeper",
+            "content": "In theory, no one person can be my best friend, my ancestor, my master, and my hat all at once. And yet somehow, you've managed it.\n\nAh, is the word \"master\" too much? It seems to be very popular in the picture books lately. You're the master of a witch-princess now. Go and tell everyone. No need to thank me."
+          },
+          {
+            "id": "voice-154176",
+            "title": "Chat: About Ogier: Oathbound",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Ogier: Oathbound\"",
+            "content": "I really ought to find a chance to apologize to him. I didn't realize the potion would take so long to work. I thought he might at least survive, perhaps even save a few more... He had such a fierce, kind, burning little heart."
+          },
+          {
+            "id": "voice-154175",
+            "title": "Chat: About Tulu",
+            "unlockCondition": "Unlocks after acquiring Awakener \"Tulu\"",
+            "content": "Do you understand how fortunate it is to have another Awakener who loves sleep as much as I do—one who was Awakened earlier than me, and has therefore had far more time to experiment? You have no idea how many excellent sleeping tips he gave me."
+          },
+          {
+            "id": "voice-154146",
+            "title": "Chat: About Gubble",
+            "content": "Have you heard the theory? Everything in this world came from a egg. An egg that stands outside time, outside space, outside every physical concept. It cycles endlessly, beginning and ending in a circle. Everything can exist at once, and yet there is always only one of it. \nI am you. Gubble is you. You are me. We can all be a hat called Gubble."
+          },
+          {
+            "id": "voice-154147",
+            "title": "Investigation Begins",
+            "content": "Didn't your mother ever teach you? Never provoke a witch."
+          },
+          {
+            "id": "voice-154138",
+            "title": "Investigation Success",
+            "content": "Haaa—aaah. If there's nothing else, I'm going back to sleep."
+          },
+          {
+            "id": "voice-154143",
+            "title": "Investigation Halted",
+            "content": "Insufferable. I'm turning every last one of you into toads!"
+          },
+          {
+            "id": "voice-154133",
+            "title": "Strike: I",
+            "content": "Begone."
+          },
+          {
+            "id": "voice-154155",
+            "title": "Strike: II",
+            "content": "Perish."
+          },
+          {
+            "id": "voice-154136",
+            "title": "Defense: I",
+            "content": "Disappointing."
+          },
+          {
+            "id": "voice-154141",
+            "title": "Defense: II",
+            "content": "Rubbish."
+          },
+          {
+            "id": "voice-154128",
+            "title": "Hit: I",
+            "content": "Ugh!"
+          },
+          {
+            "id": "voice-154148",
+            "title": "Hit: II",
+            "content": "Argh!"
+          },
+          {
+            "id": "voice-154145",
+            "title": "Skill: I",
+            "content": "Gubble, poison them!"
+          },
+          {
+            "id": "voice-154156",
+            "title": "Skill: II",
+            "content": "Struggling is a waste of what little time you have."
+          },
+          {
+            "id": "voice-154134",
+            "title": "Special Skill: I",
+            "content": "Now you've woken a witch!"
+          },
+          {
+            "id": "voice-154162",
+            "title": "Rouse",
+            "content": "The vermins have overstayed their welcome."
+          },
+          {
+            "id": "voice-154139",
+            "title": "Exalt",
+            "content": "My people are not yours to touch!"
+          },
+          {
+            "id": "voice-154150",
+            "title": "Over-Exalt",
+            "content": "Down into the stars with you!"
+          }
+        ]
+      },
+      "skills": [
+        {
+          "kind": "skill",
+          "id": "skill.vivian.defense",
+          "name": "Defense",
+          "route": {
+            "slug": "defense",
+            "canonicalPath": "/database/awakeners/vivian/skills/defense"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "defense"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "Defense"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.vivian.parchment-scroll",
+          "name": "Parchment Scroll",
+          "route": {
+            "slug": "parchment-scroll",
+            "canonicalPath": "/database/awakeners/vivian/skills/parchment-scroll"
+          },
+          "cardFamily": "rouse",
+          "cardTypes": [
+            "rouse"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "Rouse"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.vivian.soup-rains-from-above",
+          "name": "Soup Rains from Above",
+          "route": {
+            "slug": "soup-rains-from-above",
+            "canonicalPath": "/database/awakeners/vivian/skills/soup-rains-from-above"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "skill"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "Skill1"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.vivian.strike",
+          "name": "Strike",
+          "route": {
+            "slug": "strike",
+            "canonicalPath": "/database/awakeners/vivian/skills/strike"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "strike"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "Strike"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.vivian.the-satiated-darkness",
+          "name": "The Satiated Darkness",
+          "route": {
+            "slug": "the-satiated-darkness",
+            "canonicalPath": "/database/awakeners/vivian/skills/the-satiated-darkness"
+          },
+          "cardFamily": "exalt",
+          "cardTypes": [
+            "over_exalt"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "OverExalt"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.vivian.the-sleeper-of-heaths",
+          "name": "The Sleeper of Heaths",
+          "route": {
+            "slug": "the-sleeper-of-heaths",
+            "canonicalPath": "/database/awakeners/vivian/skills/the-sleeper-of-heaths"
+          },
+          "cardFamily": "exalt",
+          "cardTypes": [
+            "exalt"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "Exalt"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.vivian.whatevers-at-hand",
+          "name": "Whatever's at Hand",
+          "route": {
+            "slug": "whatevers-at-hand",
+            "canonicalPath": "/database/awakeners/vivian/skills/whatevers-at-hand"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "skill"
+          ],
+          "ownerAwakenerId": "awakener-0062",
+          "ownerAwakenerName": "Vivian",
+          "slot": "Skill2"
+        }
+      ],
+      "assets": {
+        "portrait": "assets/morimens/portraits/vivian.webp",
+        "card": "assets/morimens/cards/vivian.webp"
       }
     }
   ]

@@ -122,6 +122,9 @@ kinds.monster=mons;
 const gl=await readJsonOr(`${D}/game/glossary.json`,{entries:[]});
 const glMap=new Map(gl.entries.filter(e=>e.zh).map(e=>[`${e.k}|${e.en.toLowerCase().replace(/[^a-z0-9]/g,'')}`,e.zh]));
 for(const [kind,list] of Object.entries(kinds))for(const it of list)if(!it.zh){const z=glMap.get(`${kind}|${it.en.toLowerCase().replace(/[^a-z0-9]/g,'')}`);if(z)it.zh=z}
+// hand-maintained zh names for the newest entries (scripts/data/zh_manual.json)
+const zhManual=await readJsonOr('scripts/data/zh_manual.json',{});
+for(const [kind,list] of Object.entries(kinds))for(const it of list)if(!it.zh&&zhManual[kind]?.[it.id])it.zh=zhManual[kind][it.id];
 // key token names from the wiki list (scripts/data/posse_zh_wiki.json)
 const posseWiki=await readJsonOr('scripts/data/posse_zh_wiki.json',{});
 const posseKey=v=>String(v||'').toLowerCase().replace(/[^a-z0-9]/g,'');
