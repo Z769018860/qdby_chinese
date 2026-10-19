@@ -1,8 +1,76 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "recordCount": 0,
-  "summary": {"replays": 0, "good": 0, "bad": 0},
-  "problemReplays": [],
-  "records": []
+  "updatedAt": "2026-10-19T06:43:11Z",
+  "recordCount": 4,
+  "summary": {
+    "replays": 4,
+    "good": 2,
+    "bad": 2
+  },
+  "problemReplays": [
+    {
+      "replayId": "b76f871c-b803-3a93-9a3c-3488b5deda27",
+      "bad": 1,
+      "good": 0,
+      "notes": [],
+      "lastAt": "2026-10-16T08:14:10Z"
+    },
+    {
+      "replayId": "06928b48-73a5-36f3-98ba-12af76943c71",
+      "bad": 1,
+      "good": 0,
+      "notes": [],
+      "lastAt": "2026-10-16T14:16:20Z"
+    }
+  ],
+  "records": [
+    {
+      "commentId": "73",
+      "submittedAt": "2026-10-18T09:43:44Z",
+      "replayId": "3690c34c-4494-3bdb-b84c-648ea205c451",
+      "kind": "good",
+      "note": "",
+      "battleTid": 87679,
+      "stageId": 83139,
+      "player": "400的MAN",
+      "lang": "en",
+      "time": "2026-10-18T09:43:41.934Z"
+    },
+    {
+      "commentId": "72",
+      "submittedAt": "2026-10-17T08:44:37Z",
+      "replayId": "0e23937e-e3ef-341f-af94-fd71ac2d99dd",
+      "kind": "good",
+      "note": "",
+      "battleTid": 87788,
+      "stageId": 83142,
+      "player": "Mys.Gin",
+      "lang": "zh",
+      "time": "2026-10-17T08:44:35.043Z"
+    },
+    {
+      "commentId": "71",
+      "submittedAt": "2026-10-16T14:16:20Z",
+      "replayId": "06928b48-73a5-36f3-98ba-12af76943c71",
+      "kind": "bad",
+      "note": "",
+      "battleTid": 88064,
+      "stageId": 83240,
+      "player": "yw22",
+      "lang": "zh",
+      "time": "2026-10-16T14:16:18.592Z"
+    },
+    {
+      "commentId": "70",
+      "submittedAt": "2026-10-16T08:14:10Z",
+      "replayId": "b76f871c-b803-3a93-9a3c-3488b5deda27",
+      "kind": "bad",
+      "note": "",
+      "battleTid": 87788,
+      "stageId": 153657,
+      "player": "夢遊",
+      "lang": "zh",
+      "time": "2026-10-16T08:14:09.044Z"
+    }
+  ]
 }
