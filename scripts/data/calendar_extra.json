@@ -7,7 +7,7 @@
    "title": {
     "en": "Triune Verdant · Pickman rerun",
     "zh": "三相衡生 · 皮克曼复刻",
-    "zs": "notice"
+    "zs": "game"
    },
    "start": "2026-11-02T09:00+08:00",
    "end": "2026-11-30T09:00+08:00",
@@ -73,9 +73,9 @@
    "id": "notice-2026-10-19-princess-diary",
    "kind": "special",
    "title": {
-    "en": "Consciousness Walk: Princess's Diary",
-    "zh": "意识漫游「公主日记」",
-    "zs": "notice"
+    "en": "Psyche Deepdive: Princess Diary",
+    "zh": "意识潜游「公主日记」",
+    "zs": "game"
    },
    "start": "2026-10-19T09:00+08:00",
    "end": "2026-11-16T09:00+08:00",
@@ -101,7 +101,7 @@
    "title": {
     "en": "Academy Event: Vol. 39",
     "zh": "学园活动：第39期",
-    "zs": "notice"
+    "zs": "game"
    },
    "start": "2026-10-19T09:00+08:00",
    "end": "2026-11-16T09:00+08:00",
@@ -113,8 +113,8 @@
    "kind": "story-rerun",
    "title": {
     "en": "Character Rerun Event: Pickman",
-    "zh": "角色复刻活动「皮克曼」",
-    "zs": "notice"
+    "zh": "角色复刻活动：皮克曼",
+    "zs": "game"
    },
    "start": "2026-11-02T09:00+08:00",
    "end": "2026-11-30T09:00+08:00",
@@ -133,9 +133,10 @@
   "2026-10-19": "混沌唤醒体 · 薇薇安（V2.6.2 新唤醒体）"
  },
  "suppress": [
-  "event-story-vivian",
   "event-story-rerun-dark-side-of-the-canvas",
-  "banner-triune-verdant-nov"
+  "banner-triune-verdant-nov",
+  "notice-2026-10-19-vivian-event",
+  "notice-2026-10-19-insight-mind"
  ],
  "_suppress_note": "ids of automatically generated entries that duplicate a hand-written notice entry above (the notice carries the official Chinese name)"
 }

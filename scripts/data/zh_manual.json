@@ -1,3 +1,11 @@
-{"_note":"Chinese names that no automatic source has yet (id -> zh). Applied by scripts/build_morimens_tier_pool.mjs only when a kind has no zh name.",
- "wheel":{"wheel-0183":"伊玛戈的诊室"},
- "relic":{"relic-0327":"维度影像·薇薇安"}}
+{
+ "_note": "Official Chinese names taken from the V2.6.2.0 Chinese maintenance announcement (pasted by the maintainer, 2026-10-19) that no automatic source carries yet (id -> zh). Applied by scripts/build_morimens_tier_pool.mjs only when a kind has no zh name.",
+ "wheel": {
+  "wheel-0183": "伊玛戈的诊室",
+  "wheel-0181": "先知的难题",
+  "wheel-0182": "她和她的树洞"
+ },
+ "relic": {
+  "relic-0327": "维度影像·薇薇安"
+ }
+}
