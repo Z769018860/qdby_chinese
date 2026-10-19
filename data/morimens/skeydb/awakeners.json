@@ -2,11 +2,11 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "495de2ad7b6b99b208404b84ca8f7ebf62f90527",
-    "syncedAt": "2026-10-18T08:10:51.741Z",
+    "commit": "0d3b16102e7669af7f41c85093c56d57dacf634f",
+    "syncedAt": "2026-10-17T07:55:23.813Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
-  "count": 62,
+  "count": 61,
   "records": [
     {
       "id": "awakener-0001",
@@ -6980,7 +6980,7 @@
       "faction": "Out of the Aeons",
       "releaseDate": "2025-07-21",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xf",
+      "lineupToken": "xg",
       "searchTags": [
         "Vulnerable",
         "STR Up",
@@ -10696,6 +10696,7 @@
       "searchTags": [
         "STR Up",
         "Tentacle DMG",
+        "Dispel",
         "Lemurian",
         "Tentacle Generation"
       ],
@@ -11251,7 +11252,6 @@
         "Bleed",
         "STR Up",
         "STR Down",
-        "Steal STR",
         "Pierce DMG",
         "Arithmetica"
       ],
@@ -17216,7 +17216,7 @@
       "faction": "Outlanders",
       "releaseDate": "2025-12-29",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xe",
+      "lineupToken": "xf",
       "searchTags": [
         "Stun",
         "Pursuit",
@@ -20724,8 +20724,7 @@
       "searchTags": [
         "Vulnerable",
         "Counter",
-        "STR Up",
-        "Steal STR"
+        "STR Up"
       ],
       "primaryScalingBase": 20,
       "baseStatsLv1": {
@@ -28970,7 +28969,7 @@
       "faction": "The Unknowable",
       "releaseDate": "2026-01-26",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xg",
+      "lineupToken": "xh",
       "searchTags": [
         "Poison",
         "STR Down",
@@ -29485,7 +29484,7 @@
       "faction": "The Fools",
       "releaseDate": "2026-03-09",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xi",
+      "lineupToken": "xj",
       "searchTags": [
         "Tentacle DMG",
         "Pursuit",
@@ -30572,7 +30571,7 @@
       "faction": "TBD",
       "releaseDate": "2026-05-30",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xh",
+      "lineupToken": "xi",
       "searchTags": [
         "Discard",
         "Corrosion",
@@ -31107,7 +31106,7 @@
       "faction": "TBD",
       "releaseDate": "2026-06-29",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xn",
+      "lineupToken": "xo",
       "searchTags": [
         "STR Down",
         "Tentacle DMG",
@@ -31656,7 +31655,7 @@
       "faction": "TBD",
       "releaseDate": "2026-07-27",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xp",
+      "lineupToken": "xq",
       "searchTags": [
         "STR Up",
         "Divine Realm"
@@ -32731,7 +32730,7 @@
       "faction": "The Fools",
       "releaseDate": "2026-09-21",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xr",
+      "lineupToken": "xs",
       "searchTags": [
         "STR Up",
         "STR Down",
@@ -33142,189 +33141,6 @@
       "assets": {
         "portrait": "assets/morimens/portraits/ogier-oathbound.webp",
         "card": "assets/morimens/cards/ogier-oathbound.webp"
-      }
-    },
-    {
-      "id": "awakener-0062",
-      "numericId": 62,
-      "ingameId": "C20",
-      "name": "Vivian",
-      "slug": "vivian",
-      "assetSlug": "vivian",
-      "aliases": [
-        "vivian"
-      ],
-      "realm": "CHAOS",
-      "rarity": "SSR",
-      "type": "CHORUS",
-      "faction": "TBD",
-      "releaseDate": "2026-10-19",
-      "availabilityType": "LIMITED_ASTRAL_REIGN",
-      "lineupToken": "xs",
-      "searchTags": [
-        "STR Up",
-        "Corrosion",
-        "Divine Realm"
-      ],
-      "primaryScalingBase": 20,
-      "baseStatsLv1": {
-        "CON": 35,
-        "ATK": 23,
-        "DEF": 25
-      },
-      "substatsLv1": {
-        "CritRate": 6.6,
-        "CritDamage": 50,
-        "AliemusRegen": 0,
-        "KeyflareRegen": 15,
-        "RealmMastery": 0,
-        "SigilYield": 0.6,
-        "DamageAmplification": 0,
-        "DeathResistance": 0
-      },
-      "statScaling": {
-        "CON": 1.65,
-        "ATK": 1.05,
-        "DEF": 1.15
-      },
-      "substatScaling": {
-        "CritRate": 1.6,
-        "CritDamage": 0,
-        "AliemusRegen": 0,
-        "KeyflareRegen": 0,
-        "RealmMastery": 0,
-        "SigilYield": 0.6,
-        "DamageAmplification": 0,
-        "DeathResistance": 0
-      },
-      "profile": {
-        "title": "Vivian",
-        "birthday": "",
-        "voiceActor": "Yuduki Kazuka",
-        "gender": "",
-        "height": "",
-        "weight": "",
-        "gnosticIndex": "",
-        "storySections": [],
-        "voiceLines": []
-      },
-      "skills": [
-        {
-          "kind": "skill",
-          "id": "skill.vivian.defense",
-          "name": "Defense",
-          "route": {
-            "slug": "defense",
-            "canonicalPath": "/database/awakeners/vivian/skills/defense"
-          },
-          "cardFamily": "command",
-          "cardTypes": [
-            "defense"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "Defense"
-        },
-        {
-          "kind": "skill",
-          "id": "skill.vivian.parchment-scroll",
-          "name": "Parchment Scroll",
-          "route": {
-            "slug": "parchment-scroll",
-            "canonicalPath": "/database/awakeners/vivian/skills/parchment-scroll"
-          },
-          "cardFamily": "rouse",
-          "cardTypes": [
-            "rouse"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "Rouse"
-        },
-        {
-          "kind": "skill",
-          "id": "skill.vivian.soup-rains-from-above",
-          "name": "Soup Rains from Above",
-          "route": {
-            "slug": "soup-rains-from-above",
-            "canonicalPath": "/database/awakeners/vivian/skills/soup-rains-from-above"
-          },
-          "cardFamily": "command",
-          "cardTypes": [
-            "skill"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "Skill1"
-        },
-        {
-          "kind": "skill",
-          "id": "skill.vivian.strike",
-          "name": "Strike",
-          "route": {
-            "slug": "strike",
-            "canonicalPath": "/database/awakeners/vivian/skills/strike"
-          },
-          "cardFamily": "command",
-          "cardTypes": [
-            "strike"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "Strike"
-        },
-        {
-          "kind": "skill",
-          "id": "skill.vivian.the-satiated-darkness",
-          "name": "The Satiated Darkness",
-          "route": {
-            "slug": "the-satiated-darkness",
-            "canonicalPath": "/database/awakeners/vivian/skills/the-satiated-darkness"
-          },
-          "cardFamily": "exalt",
-          "cardTypes": [
-            "over_exalt"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "OverExalt"
-        },
-        {
-          "kind": "skill",
-          "id": "skill.vivian.the-sleeper-of-heaths",
-          "name": "The Sleeper of Heaths",
-          "route": {
-            "slug": "the-sleeper-of-heaths",
-            "canonicalPath": "/database/awakeners/vivian/skills/the-sleeper-of-heaths"
-          },
-          "cardFamily": "exalt",
-          "cardTypes": [
-            "exalt"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "Exalt"
-        },
-        {
-          "kind": "skill",
-          "id": "skill.vivian.whatevers-at-hand",
-          "name": "Whatever's at Hand",
-          "route": {
-            "slug": "whatevers-at-hand",
-            "canonicalPath": "/database/awakeners/vivian/skills/whatevers-at-hand"
-          },
-          "cardFamily": "command",
-          "cardTypes": [
-            "skill"
-          ],
-          "ownerAwakenerId": "awakener-0062",
-          "ownerAwakenerName": "Vivian",
-          "slot": "Skill2"
-        }
-      ],
-      "assets": {
-        "portrait": "assets/morimens/portraits/vivian.webp",
-        "card": "assets/morimens/cards/vivian.webp"
       }
     }
   ]

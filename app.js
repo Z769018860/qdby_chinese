@@ -597,6 +597,24 @@ function wireControls(){
 }
 
 
+function initToolboxDialog(){
+  const dialog = document.getElementById("toolboxDialog");
+  const openBtn = document.getElementById("toolboxOpen");
+  const closeBtn = document.getElementById("toolboxClose");
+  if(!dialog || !openBtn) return;
+  const open = ()=>{ if(!dialog.open) dialog.showModal(); };
+  openBtn.addEventListener("click", open);
+  // 工具页的“返回个人工具箱”链接带 #toolboxTitle，直接弹出工具箱
+  if(location.hash === "#toolboxTitle") open();
+  window.addEventListener("hashchange", ()=>{ if(location.hash === "#toolboxTitle") open(); });
+  closeBtn && closeBtn.addEventListener("click", ()=>dialog.close());
+  dialog.addEventListener("click", (e)=>{
+    const rect = dialog.getBoundingClientRect();
+    const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+    if(!inside) dialog.close();
+  });
+}
+
 function initCoinLab(){
   const stage = document.getElementById("coinStage");
   const frontInput = document.getElementById("coinUploadFront");
@@ -670,6 +688,7 @@ async function main(){
   await tryLoadRemoteState();
   wireControls();
   initCoinLab();
+  initToolboxDialog();
   await loadData();
   fillFilters();
   render();
