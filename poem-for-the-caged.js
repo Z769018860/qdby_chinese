@@ -18,6 +18,43 @@ function render(){
 }
 search.addEventListener('input',render);group.addEventListener('change',render);status.addEventListener('change',render);
 const tabs=[...document.querySelectorAll('[role=tab]')];
-function activateTab(tab,focus=false){for(const other of tabs){const active=other===tab;other.setAttribute('aria-selected',String(active));other.tabIndex=active?0:-1;document.getElementById(other.getAttribute('aria-controls')).hidden=!active;}if(focus)tab.focus();}
-tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>activateTab(tab));tab.addEventListener('keydown',event=>{let next=index;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();activateTab(tabs[next],true);});});
+const panels=tabs.map(t=>document.getElementById(t.getAttribute('aria-controls')));
+let spy=null;
+function slug(el,panel,n){if(!el.id)el.id=panel.id+'-h'+n;return el.id;}
+function buildToc(panel){
+  const list=panel.querySelector('.poemTocList');if(!list||list.dataset.built)return;list.dataset.built='1';
+  let n=0;const heads=[...panel.querySelectorAll('.poemMain h2, .poemMain h3')];
+  for(const h of heads){const li=document.createElement('li');li.className=h.tagName==='H3'?'lv3':'lv2';const a=document.createElement('a');a.href='#'+slug(h,panel,n++);a.textContent=h.textContent.trim();li.append(a);list.append(li);}
+  const toc=panel.querySelector('.poemToc');if(!heads.length&&toc)toc.hidden=true;
+}
+function watch(panel){
+  if(spy)spy.disconnect();
+  const links=new Map([...panel.querySelectorAll('.poemTocList a')].map(a=>[a.getAttribute('href').slice(1),a]));
+  if(!('IntersectionObserver' in window)||!links.size)return;
+  spy=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){links.forEach(a=>a.classList.remove('isActive'));const a=links.get(e.target.id);if(a)a.classList.add('isActive');}}},{rootMargin:'-70px 0px -70% 0px'});
+  links.forEach((a,id)=>{const t=document.getElementById(id);if(t)spy.observe(t);});
+}
+function activateTab(tab,focus=false,scroll=true){
+  for(const other of tabs){const active=other===tab;other.setAttribute('aria-selected',String(active));other.tabIndex=active?0:-1;document.getElementById(other.getAttribute('aria-controls')).hidden=!active;}
+  const panel=document.getElementById(tab.getAttribute('aria-controls'));buildToc(panel);watch(panel);
+  if(focus)tab.focus();
+  if(scroll){const top=document.querySelector('.poemTabs');if(top&&window.scrollY>top.offsetTop)window.scrollTo({top:Math.max(0,top.offsetTop-4)});}
+}
+function go(hash,smooth=true){
+  const id=decodeURIComponent((hash||'').replace(/^#/,''));if(!id)return false;
+  const target=document.getElementById(id);if(!target)return false;
+  const panel=target.closest('[role=tabpanel]')||(target.getAttribute('role')==='tabpanel'?target:null);
+  if(panel&&panel.hidden){const tab=tabs.find(t=>t.getAttribute('aria-controls')===panel.id);if(tab)activateTab(tab,false,false);}
+  if(target.getAttribute('role')==='tabpanel'){window.scrollTo({top:document.querySelector('.poemTabs').offsetTop-4});}
+  else target.scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});
+  return true;
+}
+tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>{activateTab(tab);history.replaceState(null,'','#'+tab.getAttribute('aria-controls'));});tab.addEventListener('keydown',event=>{let next=index;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();activateTab(tabs[next],true);});});
+document.addEventListener('click',event=>{const a=event.target.closest('a[href^="#"]');if(!a)return;const h=a.getAttribute('href');if(h.length>1&&go(h)){event.preventDefault();history.replaceState(null,'',h);}});
+window.addEventListener('hashchange',()=>go(location.hash,false));
+const toTopBtn=document.createElement('button');toTopBtn.type='button';toTopBtn.className='poemToTop';toTopBtn.textContent='↑ 回到顶部';toTopBtn.hidden=true;toTopBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));document.body.append(toTopBtn);
+window.addEventListener('scroll',()=>{toTopBtn.hidden=window.scrollY<600;},{passive:true});
+panels.forEach(p=>buildToc(p));
+const first=tabs.find(t=>t.getAttribute('aria-selected')==='true')||tabs[0];activateTab(first,false,false);
+if(location.hash)go(location.hash,false);
 render();
