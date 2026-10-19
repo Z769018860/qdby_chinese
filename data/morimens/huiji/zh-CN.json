@@ -3,16 +3,22 @@
     "site": "忘却前夜中文维基",
     "url": "https://morimens.huijiwiki.com/",
     "transport": "MediaWiki API / Jina Reader + Voice-section parser + persistent verified cache + stable local identity map",
-    "syncedAt": "2026-10-03T09:19:48.287Z",
+    "syncedAt": "2026-10-19T06:49:55.141Z",
     "license": "CC-BY-NC-SA-4.0 unless otherwise noted; game-owned assets/text remain with their rights holders"
   },
-  "count": 61,
-  "mapped": 61,
-  "enriched": 9,
-  "jinaRecords": 60,
-  "cachedRecords": 9,
-  "voiceRecords": 34,
+  "count": 62,
+  "mapped": 62,
+  "enriched": 4,
+  "jinaRecords": 62,
+  "cachedRecords": 1,
+  "voiceRecords": 36,
   "failed": [
+    {
+      "title": "「24」",
+      "skeydbId": "awakener-0001",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
     {
       "title": "阿格里帕",
       "skeydbId": "awakener-0002",
@@ -140,12 +146,6 @@
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "奥尔拉",
-      "skeydbId": "awakener-0024",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
       "title": "詹金",
       "skeydbId": "awakener-0025",
       "status": "no-voice",
@@ -160,12 +160,6 @@
     {
       "title": "凯蒂古拉",
       "skeydbId": "awakener-0027",
-      "status": "no-voice",
-      "error": "No valid rows found in the Voice section"
-    },
-    {
-      "title": "雷娅",
-      "skeydbId": "awakener-0028",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -206,8 +200,20 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "诞妄·墨菲",
+      "skeydbId": "awakener-0035",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "诺缔拉",
       "skeydbId": "awakener-0036",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "宁菲亚",
+      "skeydbId": "awakener-0037",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -220,6 +226,12 @@
     {
       "title": "潘狄娅",
       "skeydbId": "awakener-0039",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "皮克曼",
+      "skeydbId": "awakener-0040",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -254,6 +266,12 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "索蕾尔",
+      "skeydbId": "awakener-0046",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "塔薇",
       "skeydbId": "awakener-0047",
       "status": "no-voice",
@@ -272,14 +290,26 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "图鲁",
+      "skeydbId": "awakener-0050",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "尤乌哈希",
       "skeydbId": "awakener-0051",
-      "status": "fallback",
-      "error": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C: unusable reader response"
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
     },
     {
       "title": "旺达",
       "skeydbId": "awakener-0052",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
+      "title": "温柯尔",
+      "skeydbId": "awakener-0053",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
@@ -314,14 +344,20 @@
       "error": "No valid rows found in the Voice section"
     },
     {
+      "title": "蚀灭·萝坦",
+      "skeydbId": "awakener-0059",
+      "status": "no-voice",
+      "error": "No valid rows found in the Voice section"
+    },
+    {
       "title": "卡拉布",
       "skeydbId": "awakener-0060",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     },
     {
-      "title": "负誓·奥吉尔",
-      "skeydbId": "awakener-0061",
+      "title": "薇薇安",
+      "skeydbId": "awakener-0062",
       "status": "no-voice",
       "error": "No valid rows found in the Voice section"
     }
@@ -398,7 +434,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0002",
@@ -1473,7 +1509,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "cached"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0024",
@@ -1585,7 +1621,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     {
       "skeydbId": "awakener-0025",
@@ -1817,14 +1853,67 @@
         "name": "雷娅",
         "englishName": "Leigh"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "我循着血的香气找到这处所在。请问……这里提供新鲜的血包吗？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "您不必如此……"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "心是无底的深渊，永远无法被填满。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "不痛不痒，但……依然十分感谢。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "嗯……用力，用力点。对，就像这样……"
+        },
+        {
+          "title": "闲话·关于血液",
+          "content": "将死之人的鲜血是一种滑腻的液体。只需在脖颈上轻轻一划，鲜血便顺着牙齿之间，变成几道温热的细线，慢慢灌进我的肚子里……呵呵，美味。"
+        },
+        {
+          "title": "闲话·关于下水道",
+          "content": "您可以在伦蒂尼恩的下水道里找到需要的一切：鲑鱼、肥皂、喝了一半的威士忌…… 什么，您问我为什么这么了解？我曾经拖着哥哥的尸体，在里面爬了五里哦……"
+        },
+        {
+          "title": "闲话·关于尤乌哈希",
+          "content": "尤乌哈希……他有点像我的哥哥，总让我想起那些阴暗、冷淡而失眠的日子。 （获得唤醒体「尤乌哈希」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "我觉得我又患上了融蚀……我的心被融蚀了！只需要几片阿司匹林，配合皮鞭和一点疼痛，应该就能痊愈……"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "今天我又打破校规，上课迟到了五分钟……所以，我恳请接受最严厉的惩罚，若是守密人来执行，就更好了。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "别看我这副模样，我也曾是个淑女……我会刺绣，会读丁尼生……对了，我还会唱歌：她像不息的河水，在我的血液中流淌"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "我讨厌明亮、柔软的东西。温柔像一面镜子，所有的丑陋、贪婪和脆弱都在它面前无所遁形。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "我必须控诉您，守密人。您对我实在太温柔了，这让我很不安——对我而言，唯有肉体的疼痛才是真实永恒的。"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     {
       "skeydbId": "awakener-0029",
@@ -2165,7 +2254,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0036",
@@ -2303,247 +2392,13 @@
           "content": "感谢您的仁慈之心，为我提供了栖身之所。希望我不会为您招来悲剧的命运……"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "海之躯体",
-              "「丧钟遥鸣」施加的 中毒 提高 100%，获得等同于防御力 22.5% 的护盾（效果随「丧钟遥鸣」的等级提高，满级时为 45%）。"
-            ],
-            [
-              "",
-              "无声浸润",
-              "「夜潮汹涌」造成的伤害提高 50%，每回合打出的前 3 张症状卡，使「夜潮汹涌」在本场战斗中的伤害提高等同于攻击力 20%。"
-            ]
-          ]
-        },
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "雪浪浮花",
-              "释放「自我的葬仪」后，在本场战斗中使「自我的葬仪」施加的 中毒 层数提高等同于攻击力 90%（效果随「自我的葬仪」的等级提高，满级时为 180%）。"
-            ],
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "伤害强效+1.6% 银钥充能等级+1.2",
-              "",
-              "",
-              "伤害强效+3.2% 银钥充能等级+2.4",
-              "",
-              "",
-              "伤害强效+4.8% 银钥充能等级+3.6",
-              "",
-              "",
-              "伤害强效+6.4% 银钥充能等级+4.8 「永沦深海的葬仪」已解锁 超限爆发：使宁菲亚造成的 中毒 提高 50%，持续 3 回合。",
-              "",
-              "",
-              "伤害强效+8.0% 银钥充能等级+6.0",
-              "",
-              "",
-              "伤害强效+9.6% 银钥充能等级+7.2",
-              "",
-              "",
-              "伤害强效+11.2% 银钥充能等级+8.4",
-              "",
-              "",
-              "伤害强效+12.8% 银钥充能等级+9.6 等级上限提升 +5",
-              "",
-              "",
-              "伤害强效+14.4% 银钥充能等级+10.8",
-              "",
-              "",
-              "伤害强效+16.0% 银钥充能等级+12.0",
-              "",
-              "",
-              "伤害强效+17.6% 银钥充能等级+13.2",
-              "",
-              "",
-              "伤害强效+19.2% 银钥充能等级+14.4 等级上限提升 +10 「神思归流」已解锁 最终法则： 灵知觉醒「沉逝苦海」获得强化，回合结束时宁菲亚造成的 中毒 额外提高 20%。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0038",
@@ -2653,7 +2508,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0041",
@@ -2820,7 +2675,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0047",
@@ -3125,45 +2980,9 @@
             ],
             [
               "",
-              "人格深化",
+              "展开人格深化",
               "",
               "---",
-              "",
-              "",
-              "狂气回充等级+0.4 银钥充能等级+2.4",
-              "",
-              "",
-              "狂气回充等级+0.8 银钥充能等级+4.8",
-              "",
-              "",
-              "狂气回充等级+1.2 银钥充能等级+7.2",
-              "",
-              "",
-              "狂气回充等级+1.6 银钥充能等级+9.6 「应许之日」已解锁 超限爆发：回合结束时，号令所有触腕攻击 2 次。",
-              "",
-              "",
-              "狂气回充等级+2.0 银钥充能等级+12.0",
-              "",
-              "",
-              "狂气回充等级+2.4 银钥充能等级+14.4",
-              "",
-              "",
-              "狂气回充等级+2.8 银钥充能等级+16.8",
-              "",
-              "",
-              "狂气回充等级+3.2 银钥充能等级+19.2 等级上限提升 +5",
-              "",
-              "",
-              "狂气回充等级+3.6 银钥充能等级+21.6",
-              "",
-              "",
-              "狂气回充等级+4.0 银钥充能等级+24.0",
-              "",
-              "",
-              "狂气回充等级+4.4 银钥充能等级+26.4",
-              "",
-              "",
-              "狂气回充等级+4.8 银钥充能等级+28.8 等级上限提升 +10 「孤王」已解锁 最终法则： 灵知觉醒「不朽威仪」获得强化，图鲁释放狂气爆发后，所有敌人受到的触腕伤害提高 10%，最多叠加 5 次。",
               ""
             ],
             [
@@ -3333,7 +3152,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0051",
@@ -3349,10 +3168,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C: unusable reader response"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0052",
@@ -3448,7 +3267,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0054",
@@ -3725,7 +3544,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     {
       "skeydbId": "awakener-0060",
@@ -3756,12 +3575,303 @@
         "name": "负誓·奥吉尔",
         "englishName": "Ogier: Oathbound"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "荣誉、正义、忠诚……一切足以称之为美德之物，皆死于我自己手中。您所召唤而来的，并非心怀光明的骑士，不过是一介无能的罪人。即便如此，我仍会以此残躯竭力护卫您。请下令吧——倘若您尚且信任我的话。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "真的要擢升我吗？……好吧，感谢您。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "给我安静点！……抱歉，随着力量的提升，那恶魔也愈加活跃了。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "有这份力量的话，就能保护更多人……"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "别碰我！……不，抱歉，我只是担心会伤到您。"
+        },
+        {
+          "title": "闲话·关于珍视之物",
+          "content": "哪怕我曾珍视的事物都将归于湮灭，我也会保护他人，直到最后。至少，我不想再怀揣着后悔死去了。"
+        },
+        {
+          "title": "闲话·关于奥吉尔",
+          "content": "尽管能力微弱，却一直怀抱着天真的希望，但他是干净洁白的。我想，这才是成为「骑士」应有的模样，而我已经没有机会再成为那样的人了。 （获得唤醒体「奥吉尔」后解锁）"
+        },
+        {
+          "title": "闲话·关于关于血链·希洛",
+          "content": "血链·希洛小姐的力量，似乎来自于她那强烈的恨意。可在我看来，仇恨之情一旦燃起，便会不断蔓延，吞没一切，最终只会令人失去更多。 （获得唤醒体「血链·希洛」后解锁）"
+        },
+        {
+          "title": "闲话·关于危机",
+          "content": "与缠绕在我身上的力量如此相似，甚至要更加邪恶，这便是您与之对抗的存在吗？"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "弥萨格……就像一个美丽且和平的国度，我曾经也拥有过这样的家园，如今已经连记载都不剩下了。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "黄昏时分的炊烟，下过雨的草地，人们幸福的笑脸……它们都指向和平，这就是我所喜爱的。我会为守护它献上我的全部。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "我讨厌弱小无能，意志不坚，残害无辜的人……是的，这都是曾经的我，我无比厌恶犯下如此之多罪行的自己。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "我不曾奢望还能守护谁，更不敢妄想有朝一日得以偿还罪责，而您给了我这样的可能性。可以说，对于「奥吉尔」而言，您便是现在的我，存在的意义。"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "人格深化",
+              "",
+              "---",
+              "",
+              "",
+              "暴击率+1.6% 暴击伤害+1.2%",
+              "",
+              "",
+              "暴击率+3.2% 暴击伤害+2.4%",
+              "",
+              "",
+              "暴击率+4.8% 暴击伤害+3.6%",
+              "",
+              "",
+              "暴击率+6.4% 暴击伤害+4.8% 「致明日的誓约」已解锁 超限爆发：获得的 力量 变为 3 倍。",
+              "",
+              "",
+              "暴击率+8.0% 暴击伤害+6.0%",
+              "",
+              "",
+              "暴击率+9.6% 暴击伤害+7.2%",
+              "",
+              "",
+              "暴击率+11.2% 暴击伤害+8.4%",
+              "",
+              "",
+              "暴击率+12.8% 暴击伤害+9.6% 等级上限提升 +5",
+              "",
+              "",
+              "暴击率+14.4% 暴击伤害+10.8%",
+              "",
+              "",
+              "暴击率+16.0% 暴击伤害+12.0%",
+              "",
+              "",
+              "暴击率+17.6% 暴击伤害+13.2%",
+              "",
+              "",
+              "暴击率+19.2% 暴击伤害+14.4% 等级上限提升 +10 「誓约，一如往初」已解锁 最终法则： 灵知觉醒「以身为壁」获得强化，「染罪枪锋」基础伤害提高 200%，额外享受 400% 力量 加成，负誓·奥吉尔的「防御」基础护盾提高效果变为 100%。",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ],
+            [
+              "1→2",
+              "1 18 6300",
+              "2→3",
+              "2 18 24300",
+              "3→4",
+              "1 3 30 49500"
+            ],
+            [
+              "4→5",
+              "1 4 18 89100",
+              "5→6",
+              "1 5 36 178200"
+            ],
+            [
+              "激活",
+              "激活条件",
+              "调查等级达到 30 级"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94"
+      },
+      "syncStatus": "ok"
+    },
+    {
+      "skeydbId": "awakener-0062",
+      "ingameId": "C20",
+      "slug": "vivian",
+      "name": "薇薇安",
+      "englishName": "Vivian",
+      "profile": {
+        "name": "薇薇安",
+        "englishName": "Vivian"
+      },
+      "voiceLines": [],
+      "skillTables": [],
+      "source": {
+        "url": "https://morimens.huijiwiki.com/wiki/%E8%96%87%E8%96%87%E5%AE%89",
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%96%87%E8%96%87%E5%AE%89"
       },
       "syncStatus": "no-voice"
     }
@@ -3837,7 +3947,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E3%80%8C24%E3%80%8D"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0002": {
       "skeydbId": "awakener-0002",
@@ -4912,7 +5022,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B8%8C%E6%B4%9B"
       },
-      "syncStatus": "cached"
+      "syncStatus": "ok"
     },
     "awakener-0024": {
       "skeydbId": "awakener-0024",
@@ -5024,7 +5134,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%A5%A5%E5%B0%94%E6%8B%89"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "cached"
     },
     "awakener-0025": {
       "skeydbId": "awakener-0025",
@@ -5256,14 +5366,67 @@
         "name": "雷娅",
         "englishName": "Leigh"
       },
-      "voiceLines": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "我循着血的香气找到这处所在。请问……这里提供新鲜的血包吗？"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "您不必如此……"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "心是无底的深渊，永远无法被填满。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "不痛不痒，但……依然十分感谢。"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "嗯……用力，用力点。对，就像这样……"
+        },
+        {
+          "title": "闲话·关于血液",
+          "content": "将死之人的鲜血是一种滑腻的液体。只需在脖颈上轻轻一划，鲜血便顺着牙齿之间，变成几道温热的细线，慢慢灌进我的肚子里……呵呵，美味。"
+        },
+        {
+          "title": "闲话·关于下水道",
+          "content": "您可以在伦蒂尼恩的下水道里找到需要的一切：鲑鱼、肥皂、喝了一半的威士忌…… 什么，您问我为什么这么了解？我曾经拖着哥哥的尸体，在里面爬了五里哦……"
+        },
+        {
+          "title": "闲话·关于尤乌哈希",
+          "content": "尤乌哈希……他有点像我的哥哥，总让我想起那些阴暗、冷淡而失眠的日子。 （获得唤醒体「尤乌哈希」后解锁）"
+        },
+        {
+          "title": "闲话·关于融蚀",
+          "content": "我觉得我又患上了融蚀……我的心被融蚀了！只需要几片阿司匹林，配合皮鞭和一点疼痛，应该就能痊愈……"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "今天我又打破校规，上课迟到了五分钟……所以，我恳请接受最严厉的惩罚，若是守密人来执行，就更好了。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "别看我这副模样，我也曾是个淑女……我会刺绣，会读丁尼生……对了，我还会唱歌：她像不息的河水，在我的血液中流淌"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "我讨厌明亮、柔软的东西。温柔像一面镜子，所有的丑陋、贪婪和脆弱都在它面前无所遁形。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "我必须控诉您，守密人。您对我实在太温柔了，这让我很不安——对我而言，唯有肉体的疼痛才是真实永恒的。"
+        }
+      ],
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E9%9B%B7%E5%A8%85"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     "awakener-0029": {
       "skeydbId": "awakener-0029",
@@ -5604,7 +5767,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%AF%9E%E5%A6%84%C2%B7%E5%A2%A8%E8%8F%B2"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0036": {
       "skeydbId": "awakener-0036",
@@ -5742,247 +5905,13 @@
           "content": "感谢您的仁慈之心，为我提供了栖身之所。希望我不会为您招来悲剧的命运……"
         }
       ],
-      "skillTables": [
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "海之躯体",
-              "「丧钟遥鸣」施加的 中毒 提高 100%，获得等同于防御力 22.5% 的护盾（效果随「丧钟遥鸣」的等级提高，满级时为 45%）。"
-            ],
-            [
-              "",
-              "无声浸润",
-              "「夜潮汹涌」造成的伤害提高 50%，每回合打出的前 3 张症状卡，使「夜潮汹涌」在本场战斗中的伤害提高等同于攻击力 20%。"
-            ]
-          ]
-        },
-        {
-          "section": "技能",
-          "rows": [
-            [
-              "",
-              "雪浪浮花",
-              "释放「自我的葬仪」后，在本场战斗中使「自我的葬仪」施加的 中毒 层数提高等同于攻击力 90%（效果随「自我的葬仪」的等级提高，满级时为 180%）。"
-            ],
-            [
-              "",
-              "人格深化",
-              "",
-              "---",
-              "",
-              "",
-              "伤害强效+1.6% 银钥充能等级+1.2",
-              "",
-              "",
-              "伤害强效+3.2% 银钥充能等级+2.4",
-              "",
-              "",
-              "伤害强效+4.8% 银钥充能等级+3.6",
-              "",
-              "",
-              "伤害强效+6.4% 银钥充能等级+4.8 「永沦深海的葬仪」已解锁 超限爆发：使宁菲亚造成的 中毒 提高 50%，持续 3 回合。",
-              "",
-              "",
-              "伤害强效+8.0% 银钥充能等级+6.0",
-              "",
-              "",
-              "伤害强效+9.6% 银钥充能等级+7.2",
-              "",
-              "",
-              "伤害强效+11.2% 银钥充能等级+8.4",
-              "",
-              "",
-              "伤害强效+12.8% 银钥充能等级+9.6 等级上限提升 +5",
-              "",
-              "",
-              "伤害强效+14.4% 银钥充能等级+10.8",
-              "",
-              "",
-              "伤害强效+16.0% 银钥充能等级+12.0",
-              "",
-              "",
-              "伤害强效+17.6% 银钥充能等级+13.2",
-              "",
-              "",
-              "伤害强效+19.2% 银钥充能等级+14.4 等级上限提升 +10 「神思归流」已解锁 最终法则： 灵知觉醒「沉逝苦海」获得强化，回合结束时宁菲亚造成的 中毒 额外提高 20%。",
-              ""
-            ],
-            [
-              "Lv.1→10",
-              "19 1900"
-            ],
-            [
-              "Lv.10→20",
-              "102 10200"
-            ],
-            [
-              "Lv.20→30",
-              "260 26000"
-            ],
-            [
-              "Lv.30→40",
-              "390 39000"
-            ],
-            [
-              "Lv.40→50",
-              "520 52000"
-            ],
-            [
-              "Lv.50→60",
-              "652 65200"
-            ],
-            [
-              "Lv.60→62",
-              "351 35100"
-            ],
-            [
-              "Lv.62→64",
-              "371 37100"
-            ],
-            [
-              "Lv.64→66",
-              "390 39000"
-            ],
-            [
-              "Lv.66→68",
-              "410 41000"
-            ],
-            [
-              "Lv.68→70",
-              "429 42900"
-            ],
-            [
-              "Lv.70→72",
-              "703 70300"
-            ],
-            [
-              "Lv.72→74",
-              "741 74100"
-            ],
-            [
-              "Lv.74→76",
-              "781 78100"
-            ],
-            [
-              "Lv.76→78",
-              "819 81900"
-            ],
-            [
-              "Lv.78→80",
-              "859 85900"
-            ],
-            [
-              "Lv.80→90",
-              "15617 1561700"
-            ],
-            [
-              "Lv.10→20",
-              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
-            ],
-            [
-              "Lv.20→30",
-              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
-            ],
-            [
-              "Lv.30→40",
-              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
-            ],
-            [
-              "Lv.40→50",
-              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
-            ],
-            [
-              "Lv.50→60",
-              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
-            ],
-            [
-              "Lv.60→62",
-              "1 36 194400"
-            ],
-            [
-              "Lv.62→64",
-              "1 42 226800"
-            ],
-            [
-              "Lv.64→66",
-              "1 48 259200"
-            ],
-            [
-              "Lv.66→68",
-              "1 54 291600"
-            ],
-            [
-              "Lv.68→70",
-              "1 60 324000"
-            ],
-            [
-              "Lv.70→72",
-              "1 1 108 583200"
-            ],
-            [
-              "Lv.72→74",
-              "1 1 126 680400"
-            ],
-            [
-              "Lv.74→76",
-              "1 1 144 777600"
-            ],
-            [
-              "Lv.76→78",
-              "1 1 162 874800"
-            ],
-            [
-              "Lv.78→80",
-              "1 1 180 972000"
-            ],
-            [
-              "Lv.80→90",
-              "15"
-            ],
-            [
-              "调查等级达到25解锁",
-              "调查等级达到35解锁",
-              "调查等级达到45解锁"
-            ],
-            [
-              "1→2",
-              "9 3150",
-              "2→3",
-              "9 12150",
-              "3→4",
-              "1 15 24750"
-            ],
-            [
-              "4→5",
-              "2 9 44550",
-              "5→6",
-              "1 3 18 89100"
-            ],
-            [
-              "1→2",
-              "1 18 6300",
-              "2→3",
-              "2 18 24300",
-              "3→4",
-              "1 3 30 49500"
-            ],
-            [
-              "4→5",
-              "1 4 18 89100",
-              "5→6",
-              "1 5 36 178200"
-            ]
-          ]
-        }
-      ],
+      "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%AE%81%E8%8F%B2%E4%BA%9A"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0038": {
       "skeydbId": "awakener-0038",
@@ -6092,7 +6021,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%9A%AE%E5%85%8B%E6%9B%BC"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0041": {
       "skeydbId": "awakener-0041",
@@ -6259,7 +6188,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E7%B4%A2%E8%95%BE%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0047": {
       "skeydbId": "awakener-0047",
@@ -6564,45 +6493,9 @@
             ],
             [
               "",
-              "人格深化",
+              "展开人格深化",
               "",
               "---",
-              "",
-              "",
-              "狂气回充等级+0.4 银钥充能等级+2.4",
-              "",
-              "",
-              "狂气回充等级+0.8 银钥充能等级+4.8",
-              "",
-              "",
-              "狂气回充等级+1.2 银钥充能等级+7.2",
-              "",
-              "",
-              "狂气回充等级+1.6 银钥充能等级+9.6 「应许之日」已解锁 超限爆发：回合结束时，号令所有触腕攻击 2 次。",
-              "",
-              "",
-              "狂气回充等级+2.0 银钥充能等级+12.0",
-              "",
-              "",
-              "狂气回充等级+2.4 银钥充能等级+14.4",
-              "",
-              "",
-              "狂气回充等级+2.8 银钥充能等级+16.8",
-              "",
-              "",
-              "狂气回充等级+3.2 银钥充能等级+19.2 等级上限提升 +5",
-              "",
-              "",
-              "狂气回充等级+3.6 银钥充能等级+21.6",
-              "",
-              "",
-              "狂气回充等级+4.0 银钥充能等级+24.0",
-              "",
-              "",
-              "狂气回充等级+4.4 银钥充能等级+26.4",
-              "",
-              "",
-              "狂气回充等级+4.8 银钥充能等级+28.8 等级上限提升 +10 「孤王」已解锁 最终法则： 灵知觉醒「不朽威仪」获得强化，图鲁释放狂气爆发后，所有敌人受到的触腕伤害提高 10%，最多叠加 5 次。",
               ""
             ],
             [
@@ -6772,7 +6665,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%9B%BE%E9%B2%81"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0051": {
       "skeydbId": "awakener-0051",
@@ -6788,10 +6681,10 @@
       "skillTables": [],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C",
-        "mode": "static-identity"
+        "mode": "jina-reader",
+        "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C"
       },
-      "syncStatus": "fallback",
-      "syncError": "Error: API: Error: https://morimens.huijiwiki.com/api.php?action=parse&format=json&formatversion=2&page=%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C&prop=text%7Cwikitext&disablelimitreport=1: HTTP 403; Jina: Error: https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E5%B0%A4%E4%B9%8C%E5%93%88%E5%B8%8C: unusable reader response"
+      "syncStatus": "no-voice"
     },
     "awakener-0052": {
       "skeydbId": "awakener-0052",
@@ -6887,7 +6780,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E6%B8%A9%E6%9F%AF%E5%B0%94"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0054": {
       "skeydbId": "awakener-0054",
@@ -7164,7 +7057,7 @@
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%9A%80%E7%81%AD%C2%B7%E8%90%9D%E5%9D%A6"
       },
-      "syncStatus": "cached"
+      "syncStatus": "no-voice"
     },
     "awakener-0060": {
       "skeydbId": "awakener-0060",
@@ -7195,14 +7088,286 @@
         "name": "负誓·奥吉尔",
         "englishName": "Ogier: Oathbound"
       },
-      "voiceLines": [],
-      "skillTables": [],
+      "voiceLines": [
+        {
+          "title": "唤醒",
+          "content": "荣誉、正义、忠诚……一切足以称之为美德之物，皆死于我自己手中。您所召唤而来的，并非心怀光明的骑士，不过是一介无能的罪人。即便如此，我仍会以此残躯竭力护卫您。请下令吧——倘若您尚且信任我的话。"
+        },
+        {
+          "title": "获得提升·一",
+          "content": "真的要擢升我吗？……好吧，感谢您。"
+        },
+        {
+          "title": "获得提升·二",
+          "content": "给我安静点！……抱歉，随着力量的提升，那恶魔也愈加活跃了。"
+        },
+        {
+          "title": "获得提升·三",
+          "content": "有这份力量的话，就能保护更多人……"
+        },
+        {
+          "title": "闲话·触摸",
+          "content": "别碰我！……不，抱歉，我只是担心会伤到您。"
+        },
+        {
+          "title": "闲话·关于珍视之物",
+          "content": "哪怕我曾珍视的事物都将归于湮灭，我也会保护他人，直到最后。至少，我不想再怀揣着后悔死去了。"
+        },
+        {
+          "title": "闲话·关于奥吉尔",
+          "content": "尽管能力微弱，却一直怀抱着天真的希望，但他是干净洁白的。我想，这才是成为「骑士」应有的模样，而我已经没有机会再成为那样的人了。 （获得唤醒体「奥吉尔」后解锁）"
+        },
+        {
+          "title": "闲话·关于关于血链·希洛",
+          "content": "血链·希洛小姐的力量，似乎来自于她那强烈的恨意。可在我看来，仇恨之情一旦燃起，便会不断蔓延，吞没一切，最终只会令人失去更多。 （获得唤醒体「血链·希洛」后解锁）"
+        },
+        {
+          "title": "闲话·关于危机",
+          "content": "与缠绕在我身上的力量如此相似，甚至要更加邪恶，这便是您与之对抗的存在吗？"
+        },
+        {
+          "title": "闲话·关于弥萨格大学",
+          "content": "弥萨格……就像一个美丽且和平的国度，我曾经也拥有过这样的家园，如今已经连记载都不剩下了。"
+        },
+        {
+          "title": "闲话·喜欢的东西",
+          "content": "黄昏时分的炊烟，下过雨的草地，人们幸福的笑脸……它们都指向和平，这就是我所喜爱的。我会为守护它献上我的全部。"
+        },
+        {
+          "title": "闲话·讨厌的东西",
+          "content": "我讨厌弱小无能，意志不坚，残害无辜的人……是的，这都是曾经的我，我无比厌恶犯下如此之多罪行的自己。"
+        },
+        {
+          "title": "闲话·关于守密人",
+          "content": "我不曾奢望还能守护谁，更不敢妄想有朝一日得以偿还罪责，而您给了我这样的可能性。可以说，对于「奥吉尔」而言，您便是现在的我，存在的意义。"
+        }
+      ],
+      "skillTables": [
+        {
+          "section": "技能",
+          "rows": [
+            [
+              "",
+              "人格深化",
+              "",
+              "---",
+              "",
+              "",
+              "暴击率+1.6% 暴击伤害+1.2%",
+              "",
+              "",
+              "暴击率+3.2% 暴击伤害+2.4%",
+              "",
+              "",
+              "暴击率+4.8% 暴击伤害+3.6%",
+              "",
+              "",
+              "暴击率+6.4% 暴击伤害+4.8% 「致明日的誓约」已解锁 超限爆发：获得的 力量 变为 3 倍。",
+              "",
+              "",
+              "暴击率+8.0% 暴击伤害+6.0%",
+              "",
+              "",
+              "暴击率+9.6% 暴击伤害+7.2%",
+              "",
+              "",
+              "暴击率+11.2% 暴击伤害+8.4%",
+              "",
+              "",
+              "暴击率+12.8% 暴击伤害+9.6% 等级上限提升 +5",
+              "",
+              "",
+              "暴击率+14.4% 暴击伤害+10.8%",
+              "",
+              "",
+              "暴击率+16.0% 暴击伤害+12.0%",
+              "",
+              "",
+              "暴击率+17.6% 暴击伤害+13.2%",
+              "",
+              "",
+              "暴击率+19.2% 暴击伤害+14.4% 等级上限提升 +10 「誓约，一如往初」已解锁 最终法则： 灵知觉醒「以身为壁」获得强化，「染罪枪锋」基础伤害提高 200%，额外享受 400% 力量 加成，负誓·奥吉尔的「防御」基础护盾提高效果变为 100%。",
+              ""
+            ],
+            [
+              "Lv.1→10",
+              "19 1900"
+            ],
+            [
+              "Lv.10→20",
+              "102 10200"
+            ],
+            [
+              "Lv.20→30",
+              "260 26000"
+            ],
+            [
+              "Lv.30→40",
+              "390 39000"
+            ],
+            [
+              "Lv.40→50",
+              "520 52000"
+            ],
+            [
+              "Lv.50→60",
+              "652 65200"
+            ],
+            [
+              "Lv.60→62",
+              "351 35100"
+            ],
+            [
+              "Lv.62→64",
+              "371 37100"
+            ],
+            [
+              "Lv.64→66",
+              "390 39000"
+            ],
+            [
+              "Lv.66→68",
+              "410 41000"
+            ],
+            [
+              "Lv.68→70",
+              "429 42900"
+            ],
+            [
+              "Lv.70→72",
+              "703 70300"
+            ],
+            [
+              "Lv.72→74",
+              "741 74100"
+            ],
+            [
+              "Lv.74→76",
+              "781 78100"
+            ],
+            [
+              "Lv.76→78",
+              "819 81900"
+            ],
+            [
+              "Lv.78→80",
+              "859 85900"
+            ],
+            [
+              "Lv.80→90",
+              "15617 1561700"
+            ],
+            [
+              "Lv.10→20",
+              "升格条件（任选其一）： • 完成「调查行动」第 1 章"
+            ],
+            [
+              "Lv.20→30",
+              "升格条件（任选其一）： • 完成「调查行动」第 2 章 • 调查等级达到 20 级 • 通关无光之境所有界域间隙Ⅰ"
+            ],
+            [
+              "Lv.30→40",
+              "升格条件（任选其一）： • 完成「调查行动」第 3 章 • 调查等级达到 30 级 • 通关无光之境所有界域间隙Ⅲ"
+            ],
+            [
+              "Lv.40→50",
+              "升格条件（任选其一）： • 完成「调查行动」第 5 章 • 调查等级达到 40 级 • 通关无光之境所有界域间隙Ⅴ"
+            ],
+            [
+              "Lv.50→60",
+              "升格条件（任选其一）： • 完成「调查行动」第 7 章 • 调查等级达到 50 级 • 通关无光之境所有界域间隙Ⅶ"
+            ],
+            [
+              "Lv.60→62",
+              "1 36 194400"
+            ],
+            [
+              "Lv.62→64",
+              "1 42 226800"
+            ],
+            [
+              "Lv.64→66",
+              "1 48 259200"
+            ],
+            [
+              "Lv.66→68",
+              "1 54 291600"
+            ],
+            [
+              "Lv.68→70",
+              "1 60 324000"
+            ],
+            [
+              "Lv.70→72",
+              "1 1 108 583200"
+            ],
+            [
+              "Lv.72→74",
+              "1 1 126 680400"
+            ],
+            [
+              "Lv.74→76",
+              "1 1 144 777600"
+            ],
+            [
+              "Lv.76→78",
+              "1 1 162 874800"
+            ],
+            [
+              "Lv.78→80",
+              "1 1 180 972000"
+            ],
+            [
+              "Lv.80→90",
+              "15"
+            ],
+            [
+              "调查等级达到25解锁",
+              "调查等级达到35解锁",
+              "调查等级达到45解锁"
+            ],
+            [
+              "1→2",
+              "9 3150",
+              "2→3",
+              "9 12150",
+              "3→4",
+              "1 15 24750"
+            ],
+            [
+              "4→5",
+              "2 9 44550",
+              "5→6",
+              "1 3 18 89100"
+            ],
+            [
+              "1→2",
+              "1 18 6300",
+              "2→3",
+              "2 18 24300",
+              "3→4",
+              "1 3 30 49500"
+            ],
+            [
+              "4→5",
+              "1 4 18 89100",
+              "5→6",
+              "1 5 36 178200"
+            ],
+            [
+              "激活",
+              "激活条件",
+              "调查等级达到 30 级"
+            ]
+          ]
+        }
+      ],
       "source": {
         "url": "https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94",
         "mode": "jina-reader",
         "endpoint": "https://r.jina.ai/https://morimens.huijiwiki.com/wiki/%E8%B4%9F%E8%AA%93%C2%B7%E5%A5%A5%E5%90%89%E5%B0%94"
       },
-      "syncStatus": "no-voice"
+      "syncStatus": "ok"
     },
     "awakener-0062": {
       "skeydbId": "awakener-0062",
