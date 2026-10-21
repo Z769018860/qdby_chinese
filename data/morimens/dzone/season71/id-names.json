@@ -147,7 +147,8 @@
   "10004": "Hope",
   "9550": "Aged",
   "151737": "The Seer's Riddle",
-  "151763": "Imago's Clinic"
+  "151763": "She and Her Tree Hole",
+  "152952": "Imago's Clinic"
  },
  "creation": {
   "98412": "Stellar Brew+",
@@ -1046,7 +1047,7 @@
    "madness": 96
   }
  },
- "_note": "id->name dictionaries carried over from the Season 70 import; Season 71 additions: Chaos Ring (83512) and Dimensional Image: Uvhash (71258) named from the game config; token 45298 = Pages Ever New (Ogier: Oathbound posse, SKeyDB posse-0063); creation 13886 = ☆Lady's Purse☆ (identified by the maintainer from the game; appears only in Zone 2). Stage ids/madness follow the stage-name pattern (A=C ... F=SSS, G=▼); 153398 (Zone 1 ▼) is not in the client stage dump. Added 2026-10-19 (Vivian released): awakener 151844 = Vivian (SKeyDB awakener-0062); creation 152481 = Dimensional Image: Vivian (only ever seen with Vivian); wheels 151737 / 151763 are both equipped on Vivian and were assigned to The Seer's Riddle (wheel-0181) / Imago's Clinic (wheel-0183) by id order (inferred, not verified).",
+ "_note": "id->name dictionaries carried over from the Season 70 import; Season 71 additions: Chaos Ring (83512) and Dimensional Image: Uvhash (71258) named from the game config; token 45298 = Pages Ever New (Ogier: Oathbound posse, SKeyDB posse-0063); creation 13886 = ☆Lady's Purse☆ (identified by the maintainer from the game; appears only in Zone 2). Stage ids/madness follow the stage-name pattern (A=C ... F=SSS, G=▼); 153398 (Zone 1 ▼) is not in the client stage dump. Added 2026-10-19 (Vivian released): awakener 151844 = Vivian (SKeyDB awakener-0062); creation 152481 = Dimensional Image: Vivian (only ever seen with Vivian); wheels 151737 / 151763 / 152952 = The Seer's Riddle (wheel-0181) / She and Her Tree Hole (wheel-0182) / Imago's Clinic (wheel-0183), assigned by id order and usage (151737 and 151763 are almost only equipped on Vivian, 152952 on many awakeners); inferred, not verified.",
  "_inferred": {
   "wheel": {
    "9550": "Aged — by elimination: main stat Crit DMG (attrId 18105, R rarity) and the only other R Crit DMG wheel, Suction, is tid 9531"

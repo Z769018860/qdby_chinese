@@ -3,32 +3,21 @@
   "activityTid": 83331,
   "name": "第71期 融灾 · 混沌戒指",
   "date": "10.12-10.25",
-  "updatedAt": "2026-10-19 14:56",
+  "updatedAt": "2026-10-21 14:24",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-19T14:56:29.574415+08:00",
+  "sourceRetrievedAt": "2026-10-21T14:24:41.827663+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 9670
+    "teams_latest.jsonl": 9790
   },
   "skippedTailLines": 0,
-  "duplicateRankRowsDropped": [
-    {
-      "uid": 100997334,
-      "rank": 1001,
-      "score": 395
-    },
-    {
-      "uid": 101327895,
-      "rank": 1002,
-      "score": 395
-    }
-  ],
-  "recordCount": 1998,
-  "playersWithTeamDetail": 1998,
-  "teamRows": 9670,
+  "duplicateRankRowsDropped": [],
+  "recordCount": 2000,
+  "playersWithTeamDetail": 2000,
+  "teamRows": 9790,
   "stageGroupIds": [
     83434,
     83435,
@@ -75,7 +64,7 @@
       },
       {
         "file": "raw-teams/teams-008.jsonl.gz",
-        "lines": 70
+        "lines": 190
       }
     ],
     "uids": "uids.csv",

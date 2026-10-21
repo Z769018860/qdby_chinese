@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-10-19T14:56:00+08:00",
+    "syncedAt": "2026-10-21T14:24:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 71,
@@ -12,13 +12,13 @@
       "seasonId": 71,
       "labelEn": "Season 71 · Chaos Ring",
       "period": "2026-10-12 – 2026-10-26",
-      "recordCount": 1998,
-      "leaderboardEntryCount": 1998,
+      "recordCount": 2000,
+      "leaderboardEntryCount": 2000,
       "complete": true,
       "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/71-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/71.json",
-      "dataUpdatedAt": "2026-10-19T14:56:00+08:00",
+      "dataUpdatedAt": "2026-10-21T14:24:00+08:00",
       "labelZh": "第71期 融灾 · 混沌戒指",
       "periodShort": "10.12–10.25",
       "ringRealm": "Chaos",
@@ -26,7 +26,7 @@
       "rankPath": "data/morimens/eremora/rank-index/71.json",
       "battleArchivePath": "data/morimens/dzone/season71/meta.json",
       "battleDetailPath": "data/morimens/eremora/usage/71-battle-gzip/index.json",
-      "revision": "6f33454e94fedb2a2a528cc9786d9a5d3c9f1bdc4bab30a0e6565cd266ceee01"
+      "revision": "0b45ae9ab3dd59292f6e1abf74ea2c43058f92c074bca3ea050a8e4d84cb83cf"
     },
     {
       "seasonId": 70,
@@ -177,8 +177,8 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 1998,
-    "records": 1998,
+    "leaderboardEntries": 2000,
+    "records": 2000,
     "complete": true,
     "failures": 0
   },
@@ -207,7 +207,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-10-19T07:16:32.871Z",
+    "generatedAt": "2026-10-21T06:46:21.193Z",
     "rankScopes": [
       50,
       200,
@@ -264,8 +264,8 @@
         "seasonId": 71,
         "maxRankAvailable": 2000,
         "difficulty": {
-          "recognizedTeams": 10639,
-          "totalTeams": 10639,
+          "recognizedTeams": 10857,
+          "totalTeams": 10857,
           "complete": true
         },
         "rankScopes": {
@@ -281,32 +281,32 @@
   "rankIndex": {
     "seasonId": 71,
     "path": "data/morimens/eremora/rank-index/71.json",
-    "target": 1998,
-    "count": 1998,
+    "target": 2000,
+    "count": 2000,
     "complete": true,
-    "syncedAt": "2026-10-19T14:56:00+08:00",
-    "revision": "s71-top2000-20261019-1456",
+    "syncedAt": "2026-10-21T14:24:00+08:00",
+    "revision": "s71-top2000-20261021-1424",
     "scorePolicy": "official-rank-score"
   },
   "usageIndex": {
     "seasonId": 71,
     "path": "data/morimens/eremora/usage/71-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/71.json",
-    "target": 1998,
-    "rankIndexCount": 1998,
-    "recordCount": 1998,
+    "target": 2000,
+    "rankIndexCount": 2000,
+    "recordCount": 2000,
     "coverage": {
-      "expected": 1998,
-      "covered": 1998,
+      "expected": 2000,
+      "covered": 2000,
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-19T14:56:00+08:00",
-    "revision": "6f33454e94fedb2a2a528cc9786d9a5d3c9f1bdc4bab30a0e6565cd266ceee01",
+    "syncedAt": "2026-10-21T14:24:00+08:00",
+    "revision": "0b45ae9ab3dd59292f6e1abf74ea2c43058f92c074bca3ea050a8e4d84cb83cf",
     "format": "gzip-base64-chunked-v1",
     "chunks": 5,
     "chunkSize": 600000,
-    "chunkBytes": 2812107
+    "chunkBytes": 2852914
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -338,18 +338,18 @@
       1,
       2000
     ],
-    "rankedPlayers": 1998,
-    "parsedRecords": 1998,
-    "teamRows": 9670,
+    "rankedPlayers": 2000,
+    "parsedRecords": 2000,
+    "teamRows": 9790,
     "battleRows": 0,
     "ringRealm": "Chaos",
     "ringRealmZh": "混沌",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-10-19T14:56:00+08:00",
-    "revision": "6f33454e94fedb2a2a528cc9786d9a5d3c9f1bdc4bab30a0e6565cd266ceee01",
+    "updatedAt": "2026-10-21T14:24:00+08:00",
+    "revision": "0b45ae9ab3dd59292f6e1abf74ea2c43058f92c074bca3ea050a8e4d84cb83cf",
     "battleArchive": "data/morimens/dzone/season71/meta.json",
     "battleDetail": "data/morimens/eremora/usage/71-battle-gzip/index.json",
-    "note": "Season 71 (in progress): Top 2000 rank snapshot 2026-10-19 14:56 + teams_latest.jsonl of the same capture."
+    "note": "Season 71 (in progress): Top 2000 rank snapshot 2026-10-21 14:24 + teams_latest.jsonl of the same capture."
   },
   "postbug69Import": {
     "seasonId": 69,
