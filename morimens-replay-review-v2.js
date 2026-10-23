@@ -151,6 +151,7 @@
   // ---- icons / entity resolution -------------------------------------------------
   const ART='assets/morimens';
   let awakenerSlugs=null;
+  let awakenerRealm=null;   // ingameId (C20) -> realm, so a brand-new awakener needs no dimension-image entry to be recognised
   let gearCatalog=null,relicCatalog={},relicFallback=null,stageRef=null,imageRealms=null;
   async function preloadAssets(){
     if(!relicCatalog.loaded){try{const r=await fetch('data/morimens/replay-relics.json',{cache:'force-cache'});relicCatalog={loaded:1,...(r.ok?(await r.json()).relics:{})}}catch{relicCatalog={loaded:1}}}
@@ -159,8 +160,8 @@
     if(!relicFallback){try{const r=await fetch('data/morimens/replay-relic-config.json',{cache:'force-cache'});relicFallback=r.ok?await r.json():{}}catch{relicFallback={}}}
     if(!gearCatalog){try{const r=await fetch('data/morimens/replay-gear.json',{cache:'force-cache'});gearCatalog=r.ok?await r.json():{wheels:{},covenants:{}}}catch{gearCatalog={wheels:{},covenants:{}}}}
     if(awakenerSlugs)return;
-    try{const r=await fetch('data/morimens/skeydb/awakeners.json',{cache:'force-cache'});const j=await r.json();awakenerSlugs=new Map((j.records||[]).map(x=>[String(x.ingameId).toUpperCase(),x.assetSlug]))}
-    catch{awakenerSlugs=new Map()}
+    try{const r=await fetch('data/morimens/skeydb/awakeners.json',{cache:'force-cache'});const j=await r.json(),recs=j.records||[];awakenerSlugs=new Map(recs.map(x=>[String(x.ingameId).toUpperCase(),x.assetSlug]));awakenerRealm=new Map(recs.map(x=>[String(x.ingameId).toUpperCase(),String(x.realm||'')]))}
+    catch{awakenerSlugs=new Map();awakenerRealm=new Map()}
   }
   const baseName=p=>String(p||'').split('/').pop().replace(/\.[a-z0-9]+$/i,'');
   const safeGlyph=s=>(Array.from(String(s||'?'))[0]||'?').replace(/["'\\<>&]/g,'?');
@@ -415,7 +416,9 @@
       const intentTip=a.kind==='monster'&&u.intent?skillTipAttr(res,u.intent,{ctx:{BattleAtkForce:pr.atk}}):'';
       units.push({uid:a.uid,hp:u.hp,max:u.max,block:u.block,energy:u.energy,maxEnergy:u.maxEnergy,ulti:u.ulti,ultiMax:u.ultiMax,kEnergy:u.kEnergy,kMax:u.kMax,intent:u.intent,intentTip,stats,
         states:[...(bstates.get(uid)?.values()||[])].map(x=>({stateId:x.stateId,layer:x.layer,tip:stateTipAttr(res,x.stateId,{args:x.args,layer:x.layer,props:pr})}))})}return {units}};
-    const REALM_FORM={25403:['静海','静'],72079:['怒涛','涛'],89551:['潮涌','潮']};const tenAct=[],eroApplied=new Map();let tenT=0,pendRealm=null,poolAmt=0,poolLast=null,eroLast=null;
+    const REALM_FORM={25403:['静海','静'],72079:['怒涛','涛'],89551:['潮涌','潮']};const tenAct=[],eroApplied=new Map();let tenT=0,pendRealm=null,poolAmt=0,poolLast=null,eroLast=null,eroEnablers=null;
+    // 侵蚀 / Corrosion is shared by 沙耶 (血池) and 薇薇安 (汤雨 + 坩埚): when an event carries no awakener caster the layers go to the enabler(s) in the team
+    const eroTeam=()=>eroEnablers||(eroEnablers=[...actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1&&/^(沙耶|卡拉布|薇薇安)$/.test(a.name)));
     const intents=new Map();let lastStats=null,lastDim=0,finishStats=null,deathResistN=0,healNom=0,healAct=0;const killed=new Set();const keeperPicks=[];
     // Relic buff accounting. Power / basic-damage relics are matched to the state & property
     // changes that follow their trigger frame, then every later hit is split by the share of
@@ -965,7 +968,7 @@
             const sid=d.stateId,owner=d.ownerUid??d.roleUid,hidden=res.state[String(sid)]?.ShowType==='Hide',who=chip(owner),tipS=stateTipAttr(res,sid,{args:d.descArgs?.curValues,layer:d.newLayer??d.layer,props:board.get(String(owner))?.props});
             if(e===1007&&sid===76334&&(d.newLayer??0)<(d.oldLayer??0))poolLast={time:fr.time,from:d.oldLayer,to:d.newLayer};
             if(sid===35501){const nv=Number(d.newLayer??d.layer)||0,gain=nv-poolAmt;poolAmt=nv;if(gain>0&&bout>0){let ks=srcKeys(fr.time);if(!ks.length){const c=d.castRoleUid;if(actors.get(String(c))?.kind==='awakener')ks=['act:'+c]}for(const k of ks)supOf(k).poolGain+=gain/ks.length}}   // 血池 accumulation
-            if((e===1004||e===1007)&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster'&&bout>0){const dl=e===1004?Number(d.layer)||0:(Number(d.newLayer)||0)-(Number(d.oldLayer)||0);if(dl>0){const c=d.castRoleUid,ck=actors.get(String(c))?.kind,saya=[...actors.values()].find(a=>a.kind==='awakener'&&a.camp===1&&/^(沙耶|卡拉布)$/.test(a.name)),key=ck==='awakener'?'act:'+c:(saya?'act:'+saya.uid:'kp');eroApplied.set(key,(eroApplied.get(key)||0)+dl)}}   // erosion layers by applier; the keeper's 血池 erosion belongs to 沙耶 when she is in the team
+            if((e===1004||e===1007)&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster'&&bout>0){const dl=e===1004?Number(d.layer)||0:(Number(d.newLayer)||0)-(Number(d.oldLayer)||0);if(dl>0){const c=d.castRoleUid,ck=actors.get(String(c))?.kind,team=eroTeam();if(ck==='awakener')eroApplied.set('act:'+c,(eroApplied.get('act:'+c)||0)+dl);else if(team.length)for(const a of team)eroApplied.set('act:'+a.uid,(eroApplied.get('act:'+a.uid)||0)+dl/team.length);else eroApplied.set('kp',(eroApplied.get('kp')||0)+dl)}}   // erosion layers by applier; a keeper-side 血池 / 坩埚 application belongs to the 侵蚀 enabler(s) in the team (沙耶 / 薇薇安), split when both are present
             if(e===1004&&res.nameState(sid)==='侵蚀'&&actors.get(String(owner))?.kind==='monster')eroLast={time:fr.time,n:(eroLast&&Math.abs(eroLast.time-fr.time)<.01?eroLast.n:0)+(Number(d.layer)||1)};
             if(e===1004&&actors.get(String(owner))?.kind==='keeper'){
               const R=REALM_FORM[sid],mk=(g,t,name,extra={})=>{push('skill',`${t} · ${name}`,'',d,fr,{actorUid:owner,skillName:name,stypes:[],realm:{g,t},...extra});const ev=getRound(rk()).events,last=ev[ev.length-1];return last&&last.kind==='skill'&&last.realm?last:null};
@@ -1865,13 +1868,19 @@
       const eroTE=[...stateTotals.entries()].filter(([id])=>res.nameState(id)==='侵蚀').reduce((n,[,t])=>n+(t.dmg||0),0),eroSum=[...(tl.eroApplied?.values()||[])].reduce((n,v)=>n+v,0),eroShare=k=>eroSum>0?eroTE*(tl.eroApplied.get(k)||0)/eroSum:0;
       // special realms: the extra team multipliers belong to the awakener(s) that turn the realm into them
       const zhRealm=(()=>{const m=new Map();for(const v of Object.values(imageRealms?.images||{}))m.set(String(v.zh||'').replace(/^维度影像·/,''),v.realm);return m})();
-      const trs=cand.map(r=>zhRealm.get(r.a.name)),allChaos=trs.length>0&&trs.every(x=>x==='CHAOS'),aeqChaos=trs.length>0&&trs.every(x=>x==='AEQUOR'||x==='CHAOS');
+      // the dimension-image table lags a new release, so fall back to the realm the awakener data declares (薇薇安 C20 = CHAOS);
+      // without it a pure-Chaos team reads as mixed and the doubled 原初混沌 bonus is lost
+      const realmOf=r=>zhRealm.get(r.a.name)||awakenerRealm?.get(String(r.a.tid).toUpperCase())||'';
+      const trs=cand.map(realmOf),allChaos=trs.length>0&&trs.every(x=>x==='CHAOS'),aeqChaos=trs.length>0&&trs.every(x=>x==='AEQUOR'||x==='CHAOS');
       const realmKey=new Map(),realmSh=new Map(),realmBuf=new Map(),addRealm=(names,extra)=>{const ow=cand.filter(r=>names.includes(r.a.name));if(!ow.length||!(extra>0))return;for(const r of ow)realmBuf.set('act:'+r.a.uid,(realmBuf.get('act:'+r.a.uid)||0)+extra/ow.length)};
       {const T0=totalDmg||0,aP=allChaos?100:50,aB=aeqChaos?100:50;
-        addRealm(['蚀灭·萝坦'],T0*(aP/(100+aP)+0.05/1.05));   // 原初混沌: team damage amp +50% (x2 in a pure Chaos team) and ATK +10%
+        // 原初混沌 / Primordia: Chaos — two awakeners can brew the Chaos realm into it (蚀灭·萝坦 and, since 2.6.2, 薇薇安's 原初之息),
+        // team damage amp +50% (x2 in a pure Chaos team) and ATK +10%; the credit is split between whoever is in the team
+        const primordia=['蚀灭·萝坦','薇薇安'];
+        addRealm(primordia,T0*(aP/(100+aP)+0.05/1.05));
         addRealm(['诞妄·墨菲','莫丝','庞托斯'],T0*(aB/(100+aB)));
         // 原初混沌: 2000 Keyflare at battle start, DEF +10% (shield), Posse-effect mastery scaling is not modelled
-        {const ow=cand.filter(r=>r.a.name==='蚀灭·萝坦');if(ow.length){const sh0=cand.reduce((n,r)=>n+(r.block||0),0);for(const r of ow){realmKey.set('act:'+r.a.uid,(realmKey.get('act:'+r.a.uid)||0)+2000/ow.length);realmSh.set('act:'+r.a.uid,(realmSh.get('act:'+r.a.uid)||0)+sh0*0.1/1.1*0.5/ow.length)}}}
+        {const ow=cand.filter(r=>primordia.includes(r.a.name));if(ow.length){const sh0=cand.reduce((n,r)=>n+(r.block||0),0);for(const r of ow){realmKey.set('act:'+r.a.uid,(realmKey.get('act:'+r.a.uid)||0)+2000/ow.length);realmSh.set('act:'+r.a.uid,(realmSh.get('act:'+r.a.uid)||0)+sh0*0.1/1.1*0.5/ow.length)}}}
         // 晦暝深海 mastery: each point = +0.025% tentacle damage on 怒涛 and +0.025% max HP shield on 静海 (x2 in a pure Aequor / Chaos team)
         {const own=cand.filter(r=>['诞妄·墨菲','莫丝','庞托斯'].includes(r.a.name));if(own.length){const M=cand.reduce((n,r)=>n+(attrOf(r.a.uid).occupation_master_final||attrOf(r.a.uid).occupation_master||0),0)/Math.max(1,cand.length),mult=aeqChaos?2:1,f=M*0.00025*mult;
           const nTranq=tl.rounds.reduce((n,r)=>n+r.events.filter(e=>e.realm&&/^静海/.test(String(e.skillName||''))).length,0),hp0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;
@@ -2143,7 +2152,33 @@
       return `<div class="mr2tile ${r.n||b||(r.eff||[]).length?'':'idle'}"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<div><b>${esc(res.nameRelic(r.tid))}</b><small>${r.start?ui('开局携带','Start'):ui('战斗中获得','Gained')} · ${r.n?ui(`${r.n} 次`,`${r.n}×`):b||(r.eff||[]).length?ui('开局生效','at start'):ui('未触发','idle')}${r.rounds.length&&r.n<=12?` · R${r.rounds.join('/')}`:''}</small>${val>0?`<em>${ui('估算贡献','Est.')} ${fmt(Math.round(val))} (${pctOf(val,st.totalDmg)}%)</em>`:''}${b?`<small class="p">${b.kind==='power'?ui(`+${fmt(b.gain)} 力量`,`+${fmt(b.gain)} power`):ui(`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[0]} +${fmt(Math.round(b.gain*10)/10)}%`,`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[1]} +${fmt(Math.round(b.gain*10)/10)}%`)}</small>`:''}${r.block?`<small class="b">${ui('护盾','Shield')} ${fmt(Math.round(r.block))}</small>`:''}${r.heal?`<small class="h">${ui('治疗','Heal')} ${fmt(Math.round(r.heal))}</small>`:''}${(r.eff||[]).map(x=>`<small class="p">${esc(x.text)}</small>`).join('')}${r.engine?'':supChips(tl,'rel:'+r.tid)}</div></div>`}).join('');
     const relics=`<div class="mr2tiles">${relicTiles}</div>${buffSummary}${fold(ui('每个造物的详细触发与每次增益','Per-relic details'),`<div class="mr2ssec">${relicHtml}</div>`)}`;
     const genHtml=st.genRows?.length?`<div class="mr2ssec"><h5>${ui('生成卡牌追溯','Generated cards')} <small>${ui('谁生成了多少张卡牌，这些卡牌后来被打出了多少次','who created how many cards, and how many times those very cards were played')}</small></h5><div class="mr2srcs">${st.genRows.slice(0,12).map(o=>{const rate=o.created?Math.round(Math.min(1,o.played/o.created)*100):0;return `<details class="mr2minor"><summary><span class="mr2srow"><span class="mr2sname">${esc(o.label)}</span>${bar(o.created?Math.min(1,o.played/o.created):0,'dmg')}<b>${ui(`生成 ${o.created} · 打出 ${o.played}`,`${o.created} created · ${o.played} played`)}</b><small>${rate}%</small></span></summary><div class="mr2srcs">${o.byCard.map(c=>`<div class="mr2srow"><span class="mr2sname">${esc(c.n)}</span><b>${ui(`${c.created} 张 · 打出 ${c.played} 次`,`${c.created} · played ${c.played}`)}</b></div>`).join('')}</div></details>`}).join('')}</div><small class="mr2from">${ui('生成 = 回放里「卡牌加入牌堆」事件，来源按触发当时的出牌 / 造物 / 命轮 / 密契归属；打出次数 = 这些具体卡牌（按卡牌实例）之后被打出的次数，一张牌可被多次打出。','Created = card-added events attributed to the action / relic / gear in effect; played = plays of those exact card instances.')}</small></div>`:'';
-    const special=[execHtml,ctrHtml,stateHtml,genHtml].filter(Boolean).join('')||`<div class="mr2empty">${ui('本场没有斩杀 / 反击 / 持续伤害类统计','No execute / counter / DoT statistics')}</div>`;
+    // ---- 薇薇安 (Vivian, C20): 侵蚀 / 坩埚 / 力量 — what the generic pass cannot credit on its own --------------
+    const vivHtml=(()=>{
+      const row=(st.per||[]).find(r=>r.a.kind==='awakener'&&/薇薇安/.test(String(r.a.name)));
+      if(!row)return '';
+      const uid=String(row.a.uid),sp=tl.supStore?.get('act:'+uid)||{};
+      const eroTotal=[...(tl.eroApplied?.values()||[])].reduce((n,v)=>n+v,0),eroLayers=Number(tl.eroApplied?.get('act:'+uid))||0;
+      const eroDmg=(st.stateRows||[]).filter(x=>res.nameState(x.id)==='侵蚀').reduce((n,x)=>n+(Number(x.dmg)||0),0);
+      const eroShare=eroTotal>0?eroDmg*eroLayers/eroTotal:0;
+      const plays=(tl.playLog||[]).filter(p=>String(p.owner)===uid);
+      const count=re=>plays.filter(p=>re.test(String(res.nameSkill(p.tid)||''))).length;
+      const cauldron=count(/坩埚|Cauldron/i),potions=count(/药剂|Potion/i);
+      const cell=(label,value,note='')=>`<span><small>${label}</small><b>${value}</b>${note?`<small>${note}</small>`:''}</span>`;
+      const cells=[
+        eroLayers>0?cell(ui('侵蚀 · 施加层数','Corrosion layers'),fmt(Math.round(eroLayers)),ui(`占全队侵蚀 ${pctOf(eroLayers,eroTotal)}%`,`${pctOf(eroLayers,eroTotal)}% of team`)):'',
+        eroShare>0?cell(ui('侵蚀 · 归因伤害','Corrosion damage'),fmt(Math.round(eroShare)),st.totalDmg?ui(`占队伍总伤害 ${pctOf(eroShare,st.totalDmg)}%`,`${pctOf(eroShare,st.totalDmg)}% of team`):''):'',
+        Number(sp.powerGain)>0?cell(ui('力量获取','STR gained'),`+${fmt(Math.round(sp.powerGain*10)/10)}`,ui('含爆发与「质眠」弃牌转化','burst + sleep conversion')):'',
+        Number(sp.aliOthers)>0?cell(ui('给队友算力','Aliemus to allies'),fmt(Math.round(sp.aliOthers)),ui('「顺手拿点什么」等','from her Skill')):'',
+        Number(sp.draws)>0?cell(ui('抽牌','Draws'),fmt(Math.round(sp.draws)),ui('药剂 / 无垢蟾神','potions / Toad God')):'',
+        Number(row.heal)>0?cell(ui('治疗','Heal'),fmt(Math.round(row.heal)),ui('「荒原的沉睡者」','The Sleeper of Heaths')):'',
+        cauldron>0?cell(ui('坩埚出牌','Cauldron plays'),cauldron,ui(`${potions} 次药剂结算`,`${potions} potion resolves`)):''
+      ].filter(Boolean);
+      return `<div class="mr2ssec"><h5>${ui('薇薇安 · 觉醒体建模','Vivian · awakener model')} <small>${ui('侵蚀归因、坩埚与力量来源','corrosion attribution, Cauldron and STR')}</small></h5>
+        <div class="mr2ssum">${cells.join('')||`<span><small>${ui('本场没有记录到她的机制事件','no modelled events this battle')}</small><b>—</b></span>`}</div>
+        <small class="mr2from">${ui('侵蚀按施加层数在她与沙耶之间分摊；「质眠」导致的行动空转、沸腾之怒 +50% 已体现在回放记录的实际层数与数值里，不再重复计算。她与「蚀灭·萝坦」同为原初混沌的开启者，界域收益计入辅助评分。','Corrosion is split by layers between her and Saya. Sleep turns and the +50% from Boiling Anger are already baked into the recorded layers/damage. She enables 原初混沌 like 蚀灭·萝坦, so that realm credit is shared and counted in the support score.')}</small>
+      </div>`;
+    })();
+    const special=[execHtml,ctrHtml,stateHtml,genHtml,vivHtml].filter(Boolean).join('')||`<div class="mr2empty">${ui('本场没有斩杀 / 反击 / 持续伤害类统计','No execute / counter / DoT statistics')}</div>`;
     const tabs=[['ov',ui('概览','Overview'),overview],['role',ui('角色','Characters'),roles],['rh',ui('钥令与节奏','Rhythm'),rhythm],['rel',`${ui('造物','Relics')} ${st.relicRows.length}`,relics],['gear',`${ui('命轮 / 密契','Gear')} ${st.gearRows.length}`,renderGear(st,tl)||`<div class="mr2empty">—</div>`],['sp',ui('特殊机制 / 状态伤害','Mechanics'),special],['chk',ui('公式校验','Checks'),renderCalib(tl)||`<div class="mr2empty">—</div>`]];
     return `<details class="mr2round mr2stats"><summary><b>${ui('数据统计','Statistics')}</b><small>${ui('概览 / 角色 / 节奏 / 造物 / 命轮密契 / 特殊机制 / 校验','overview / characters / rhythm / relics / gear / mechanics / checks')}</small></summary><div class="mr2rbody mr2dash"><div class="mr2tabs">${tabs.map(([k,l],i)=>`<button type="button" class="mr2tabbtn${i?'':' on'}" data-tab="${k}">${l}</button>`).join('')}</div>${tabs.map(([k,,h],i)=>`<div class="mr2tabpane" data-pane="${k}"${i?' hidden':''}>${h}</div>`).join('')}${st.havePacks?'':`<div class="mr2status">${ui('此回放缺少游戏内统计包，伤害按逐次命中事件重建，造物额外伤害无法归因。','This replay has no in-game stat packs; damage is rebuilt from hit events and relic damage cannot be attributed.')}</div>`}</div></details>`;
   }
