@@ -1,8 +1,22 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-19T06:43:11Z",
-  "recordCount": 38,
+  "updatedAt": "2026-10-23T06:26:12Z",
+  "recordCount": 39,
   "records": [
+    {
+      "commentId": "74",
+      "type": "dzone",
+      "uid": "101079783",
+      "submittedBy": "匿名",
+      "submittedAt": "2026-10-22T03:03:07.500Z",
+      "summary": "第 71 期 · 475 分 · 6 支队伍",
+      "summaryZh": "第 71 期 · 475 分 · 6 支队伍",
+      "summaryEn": "Season 71 · 475 pts · 6 teams",
+      "score": 475,
+      "teams": 6,
+      "seasonId": 71,
+      "communityVariant": "default"
+    },
     {
       "commentId": "69",
       "type": "dzone",
