@@ -303,14 +303,14 @@ python scripts/netdisk/daily_check.py --test-mail # 只验证发信配置
   （全 `unknown` 的盘不算，免得 Google Drive 这种本机打不开的天天报）。
   邮件正文按作品列出失效盘与原始链接，收件人默认 `769018860@qq.com`
 
-发信配置放 `work/mail.json`（在仓库外，不会提交）：
+发信配置放 `work/mail.json`（在仓库外，不会被提交；本机已配好 `smtp.qq.com:465` 与收件人）：
 
 ```json
 {"smtp_host":"smtp.qq.com","smtp_port":465,"user":"769018860@qq.com","password":"QQ邮箱授权码","to":"769018860@qq.com"}
 ```
 
 QQ 邮箱要用「设置 → 账户 → 开启 IMAP/SMTP」后生成的**授权码**当 password，
-不是登录密码。也可以用环境变量 `QD_SMTP_HOST / QD_SMTP_PORT / QD_SMTP_USER /
+不是登录密码。填好后 `--test-mail` 应立刻收到一封测试信，收不到就是授权码或端口的问题。也可以用环境变量 `QD_SMTP_HOST / QD_SMTP_PORT / QD_SMTP_USER /
 QD_SMTP_PASS / QD_MAIL_TO` 覆盖。没配 SMTP 时脚本把告警写成
 `work/netdisk-alert.json` 并以退出码 3 结束，站点更新照常完成，不会因为发不出信而中断。
 
