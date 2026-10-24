@@ -4,9 +4,9 @@
 
 > 仅供维护使用，**不在汉化主页上展示**。
 
-- 生成时间：2026-10-25 00:40
+- 生成时间：2026-10-25 00:58
 - 收录游戏 64 个，网盘链接 179 条（去重 174 条）
-- 状态：有效 113 ／ 失效 66 ／ 待确认 0
+- 状态：有效 112 ／ 失效 66 ／ 待确认 1
 
 ## 平台分布
 
@@ -14,7 +14,7 @@
 | --- | ---: | ---: | ---: | ---: |
 | 百度网盘 | 53 | 18 | 0 | 71 |
 | 夸克网盘 | 5 | 39 | 0 | 44 |
-| 迅雷云盘 | 21 | 0 | 0 | 21 |
+| 迅雷云盘 | 20 | 0 | 1 | 21 |
 | 城通网盘 | 8 | 4 | 0 | 12 |
 | 123云盘 | 11 | 0 | 0 | 11 |
 | UC网盘 | 4 | 5 | 0 | 9 |
@@ -210,7 +210,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 城通网盘 | https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09 |
 | 2 | 百度网盘 | https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b | iu8b | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans# | 6ans | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans# | 6ans | 视频简介 | ⚠️ 待确认 | 页面状态无法判定 |
 | 4 | 夸克网盘 | https://pan.quark.cn/s/fb7d7e01f866 | U44Z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 5 | 夸克网盘 | https://pan.quark.cn/s/8364570fa481 | Uurz | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 6 | 腾讯微云 | https://share.weiyun.com/05WlFxr6 | 8x8jzi | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB  |
@@ -396,7 +396,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1f2dNCgw9PrqzUdPqJsxndA?pwd=m29s | m29s | 置顶评论 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/531bc6015b3f | uZEx | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOnyNubGFfhY9O_bSCZxGpbiA1# | e2aw | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜灰姑娘现象FD机翻润色补丁.zip 704MB 2026-03-18 07:04  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOnyNubGFfhY9O_bSCZxGpbiA1# | e2aw | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码） |
 
 ### 人类保管库
 
@@ -524,7 +524,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo | l5zo | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消 |
-| 2 | 迅雷云盘 | https://pan.xunlei.com/s/VOmFlnMQuNyWGoD8c6c6jjzxA1# | cgpw | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜爱情寄生虫 汉化完整版.zip 304.2MB 2026-02-25 18:04  |
+| 2 | 迅雷云盘 | https://pan.xunlei.com/s/VOmFlnMQuNyWGoD8c6c6jjzxA1# | cgpw | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码） |
 
 ### 对，现在骂人是犯规……惩罚之吻……要来咯（笑）
 
@@ -699,7 +699,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1mlcD0J_uExvR0ZjtVvq9xw?pwd=3ww8 | 3ww8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/ebf194eb099f | 4jJg | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1# | ypz5 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜梦之门 汉化补丁v1.1by青灯不弈.zip 43.9MB 2026-07-06 15:50  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1# | ypz5 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 4 | 百度网盘 | https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q | vu7q | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消 |
 | 5 | 夸克网盘 | https://pan.quark.cn/s/d727e34ead20?pwd=RSW6 | RSW6 | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 6 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1# | pdu5 | 置顶评论 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜梦之门（冬弥雪） 汉化补丁by青灯不弈.zip 43.9MB 2026-05-10 16:50  |
@@ -749,6 +749,6 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1SS04HchS9uVIc5t-cqCDuA?pwd=n2b8 | n2b8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/499e10eefe3d | K3rm | 视频简介 | ✅ 有效 | 分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1# | estz | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1# | estz | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 4 | UC网盘 | https://drive.uc.cn/s/6a8f0cac8f604 | s6Uh | 视频简介 | ✅ 有效 | 分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip |
 | 5 | 蓝奏云 | https://wwanu.lanzoue.com/iFdGG4cg9hnc | 4s6x | 视频简介 | ✅ 有效 | 分享有效｜81.7 M |

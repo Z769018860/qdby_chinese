@@ -170,6 +170,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dry', action='store_true')
     ap.add_argument('--only', default='')
+    ap.add_argument('--exact', action='store_true', help='--only 按全名精确匹配（避免子串误伤）')
     ap.add_argument('--cleanup', action='store_true', help='删掉之前发成顶层评论的补档评论')
     ap.add_argument('--force', action='store_true', help='已有 comment 记录也重发（先删旧的）')
     ap.add_argument('--reformat', action='store_true',
@@ -184,7 +185,7 @@ def main():
     if args.reformat:
         n = 0
         for name, g in data['games'].items():
-            if args.only and args.only not in name:
+            if args.only and ((args.only != name) if args.exact else (args.only not in name)):
                 continue
             n += reformat(s, data, name, g, args)
             if not args.dry:
@@ -194,7 +195,7 @@ def main():
 
     n_ok = n_skip = n_fail = n_del = 0
     for name, g in data['games'].items():
-        if args.only and args.only not in name:
+        if args.only and ((args.only != name) if args.exact else (args.only not in name)):
             continue
         links = g.get('links') or {}
         bvid = next((v.get('bvid') for v in links.values() if v.get('bvid')), '')

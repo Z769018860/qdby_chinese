@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
-"""每日 0 点巡检：网盘链接有效性 → 更新站点数据 → 全灭告警邮件
+"""每日 0 点巡检：内容增量 → 网盘核验 → 自动补档 → 更新站点数据 → 全灭告警邮件
 
-一次跑完三件事：
-  1. 核验 data/netdisk-links.json 里每一条网盘链接（百度/夸克/UC/123/蓝奏走接口，
+一次跑完五件事：
+  1. 内容增量（scripts/daily_content.py）：新微博、新投稿。
+  2. 核验 data/netdisk-links.json 里每一条网盘链接（百度/夸克/UC/123/蓝奏走接口，
      迅雷/城通/微云走无头浏览器——脚本会自己把浏览器拉起来，跑完再关掉）；
      顺带把「重新分享」出来的补档链接（data/netdisk-reshare.json）也验一遍，
      否则一个作品的原链全死了、补档却活着，会误报成「全灭」。
-  2. 把结果写回台账，并重新生成站点用的 netdisk-status.json /
+  3. 自动补档（scripts/netdisk/auto_reshare.py）：有失效链接的作品，
+     去云端找同名资源重新建分享 → 核验 → 把新链接发到视频置顶评论下。
+     云端真没有的（全灭且补不回来）才留到最后告警。
+  4. 把结果写回台账，并重新生成站点用的 netdisk-status.json /
      netdisk-links.html / netdisk-autofill.json —— 也就是「更新到网站上」。
-  3. 挑出「所有链接都失效」的作品，发一封邮件到收件人（默认 769018860@qq.com）。
+  5. 挑出「所有链接都失效、且自动补档也没救回来」的作品，发邮件告警
+     （默认 769018860@qq.com）。
 
 邮件怎么发（两种，优先 SMTP）：
   · SMTP：在 work/mail.json 里填 smtp_host / smtp_port / user / password / to
@@ -22,6 +27,8 @@
   python scripts/netdisk/daily_check.py --fast         # 跳过浏览器通道（快，迅雷等标待确认）
   python scripts/netdisk/daily_check.py --no-mail      # 只巡检，不发信
   python scripts/netdisk/daily_check.py --push         # 巡检完顺手 commit & push
+  python scripts/netdisk/daily_check.py --push --sync-main  # 再顺手把 main 快进到同一提交
+  python scripts/netdisk/daily_check.py --no-reshare  # 只巡检，不做自动补档
   python scripts/netdisk/daily_check.py --test-mail    # 只测发信配置
 """
 from __future__ import annotations
@@ -233,11 +240,16 @@ def compose(dead, now):
         lines.append('   失效盘：%s' % '、'.join(d['dead_platforms']))
         for x in d['detail'][:6]:
             lines.append('     - %s %s  %s' % (x['platform'], x['url'], x['why']))
+        if d.get('auto'):
+            lines.append('   自动补档：%s' % d['auto'])
         lines.append('')
     lines += ['——',
               '本信件由 scripts/netdisk/daily_check.py 每日 0 点自动发送。',
-              '补档流程：把文件放进网盘 → python scripts/netdisk/reshare.py index && plan && run',
-              '→ python scripts/netdisk/post_comments.py']
+              '巡检时已经自动试过一轮：云端有同名资源就直接重建分享并发到视频置顶评论下，',
+              '只有云端确实没有（文件没上传过 / 名字对不上）才会出现在这封信里。',
+              '手动补档：把文件放进网盘 → python scripts/netdisk/reshare.py index && plan && run',
+              '→ python scripts/netdisk/post_comments.py',
+              '本地有补丁文件时，在 work/local-files.json 里登记路径，下次巡检会自己上传补档。']
     return subj, '\n'.join(lines)
 
 
@@ -301,18 +313,54 @@ def refresh_site(games, now):
             print('  ! autofill 失败：', e)
 
 
-def git_push(now):
+def auto_reshare(now, report_path=None):
+    """对「有问题的资源」自动补档：云端找同名资源重新建分享 → 核验 → 发评论
+
+    单独的脚本，和 content_sync 一样：失败只影响自己，后面的站点更新照常走。
+    返回报告 dict（可能为空）。"""
+    script = os.path.join(REPO, 'scripts', 'netdisk', 'auto_reshare.py')
+    if not os.path.exists(script):
+        print('  ! 没找到 scripts/netdisk/auto_reshare.py，跳过自动补档')
+        return {}
+    try:
+        r = subprocess.run([sys.executable, script], cwd=REPO, timeout=3600,
+                           capture_output=True, text=True, encoding='utf-8', errors='replace')
+        for line in (r.stdout or '').strip().splitlines():
+            print('  ' + line)
+        if r.returncode != 0 and r.stderr:
+            print('  ! ' + r.stderr.strip().splitlines()[-1][:160])
+    except subprocess.TimeoutExpired:
+        print('  ! 自动补档超时（60 分钟），跳过')
+        return {}
+    p = report_path or os.path.join(WORK, 'auto-reshare-report.json')
+    if os.path.exists(p):
+        try:
+            return json.load(open(p, encoding='utf-8'))
+        except Exception:
+            pass
+    return {}
+
+
+def git_push(now, sync_main=False):
     def run(*a):
         return subprocess.run(['git', *a], cwd=REPO, capture_output=True, text=True)
     run('add', 'data')
     d = run('diff', '--cached', '--quiet')
     if d.returncode == 0:
         print('  = 数据无变化，不提交')
-        return
-    c = run('commit', '-m', 'chore: 网盘有效性巡检 %s（自动）' % now[:16])
-    print('  ', (c.stdout or c.stderr).strip().splitlines()[0] if (c.stdout or c.stderr) else '')
+    else:
+        c = run('commit', '-m', 'chore: 网盘有效性巡检 %s（自动）' % now[:16])
+        print('  ', (c.stdout or c.stderr).strip().splitlines()[0] if (c.stdout or c.stderr) else '')
     p = run('push')
     print('  push:', (p.stdout or p.stderr).strip()[-160:] or 'ok')
+    if sync_main:
+        # main 是线上分支；能快进就直接快进，不能就说明两边分叉了，别硬推
+        ff = run('merge-base', '--is-ancestor', 'origin/main', 'HEAD')
+        if ff.returncode == 0:
+            m = run('push', 'origin', 'HEAD:main')
+            print('  main:', (m.stdout or m.stderr).strip()[-160:] or 'ok')
+        else:
+            print('  ! main 与当前分支已分叉，没推（先人工确认要不要合）')
 
 
 # ---------------------------------------------------------------- main
@@ -328,6 +376,9 @@ def main():
                     help='跳过微博 repo / B 站投稿的增量同步')
     ap.add_argument('--full-content', action='store_true',
                     help='内容同步走全量（微博 400 页、投稿 80 页），首次或补历史时用')
+    ap.add_argument('--no-reshare', action='store_true', help='跳过失效资源的自动补档')
+    ap.add_argument('--sync-main', action='store_true',
+                    help='push 完顺手把 main 快进到同一提交（main 是线上分支）')
     args = ap.parse_args()
 
     now = time.strftime('%Y-%m-%d %H:%M')
@@ -378,6 +429,36 @@ def main():
           % (cnt['ok'], cnt['dead'], cnt['unknown'], time.time() - t0))
     print('全灭作品：%d 个%s' % (len(dead), ('：' + '、'.join(d['name'] for d in dead)) if dead else ''))
 
+    # 先自己试着补：云端有同名资源就重新建分享，建好再发评论。
+    # 补完重算一次全灭——能救回来的就不发信了。
+    report = {}
+    if not args.no_reshare:
+        print('-- 自动补档 --')
+        report = auto_reshare(now)
+        if report.get('reshared'):
+            rs = json.load(open(RESHARE, encoding='utf-8')) if os.path.exists(RESHARE) else rs
+            extras = reshare_links(rs)
+            by_name_rs = {}
+            for x in extras:
+                by_name_rs.setdefault(x['name'], []).append(x)
+            # 新链接再验一遍，别把刚建出来就死的算成「救回来了」
+            check_all([x for x in extras if x.get('status') != 'ok'],
+                      fast=args.fast, node=args.node)
+            stamp(extras, now)
+            for x in extras:
+                ref = x.get('ref') or {}
+                ref['checked'] = x.get('status')
+                ref['checked_at'] = now
+                ref['checked_detail'] = x.get('detail') or ''
+            json.dump(rs, open(RESHARE, 'w', encoding='utf-8', newline='\n'),
+                      ensure_ascii=False, indent=1)
+            dead = all_dead_list(games, extras, by_name_rs)
+            print('补档后仍全灭：%d 个%s' % (len(dead),
+                  ('：' + '、'.join(d['name'] for d in dead)) if dead else ''))
+    failed = report.get('failed') or {}
+    for d in dead:
+        d['auto'] = failed.get(d['name']) or ('自动补档没救回来' if report else '')
+
     if not args.no_site:
         print('-- 更新站点数据 --')
         refresh_site(games, now)
@@ -398,7 +479,7 @@ def main():
         print('告警文件：%s' % ALERT)
 
     if args.push:
-        git_push(now)
+        git_push(now, sync_main=args.sync_main)
 
     if dead and not alert['mailed'] and not args.no_mail:
         print('ALERT_UNMAILED %d %s' % (len(dead), ALERT))

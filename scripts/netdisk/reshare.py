@@ -398,7 +398,7 @@ def verify(plat, url, pwd, sess=None):
     return None, '未支持'
 
 
-def cmd_run(only='', dry=False):
+def cmd_run(only='', dry=False, exact=False):
     plan = json.load(open(PLAN, encoding='utf-8'))
     qs, bs = quark_session(), baidu_session()
     result = {'meta': {'generated_at': time.strftime('%Y-%m-%d %H:%M'),
@@ -411,11 +411,18 @@ def cmd_run(only='', dry=False):
         except Exception:
             pass
 
-    have = {(n, p) for n, g in result['games'].items()
-            for p, v in (g.get('links') or {}).items() if v.get('url')}
+    # 「已经补过档」的跳过——但补档链接自己被复查判死的要重来（分享被取消、链接过期）
+    have = set()
+    for n, g in result['games'].items():
+        for p, v in (g.get('links') or {}).items():
+            if not v.get('url'):
+                continue
+            if v.get('checked') == 'dead':
+                continue
+            have.add((n, p))
 
     for name, row in plan.items():
-        if only and only not in name:
+        if only and ((only != name) if exact else (only not in name)):
             continue
         for plat, v in row['plats'].items():
             if (name, plat) in have:
@@ -455,6 +462,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('cmd', choices=['index', 'plan', 'run'])
     ap.add_argument('--only', default='', help='只处理名字里含这个串的游戏')
+    ap.add_argument('--exact', action='store_true', help='--only 按全名精确匹配（避免子串误伤）')
     ap.add_argument('--dry', action='store_true', help='只打印计划，不真的建分享')
     args = ap.parse_args()
     if args.cmd == 'index':
@@ -462,7 +470,7 @@ def main():
     elif args.cmd == 'plan':
         cmd_plan()
     else:
-        cmd_run(args.only, args.dry)
+        cmd_run(args.only, args.dry, args.exact)
 
 
 if __name__ == '__main__':

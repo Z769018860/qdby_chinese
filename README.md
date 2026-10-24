@@ -127,6 +127,7 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 - `scripts/netdisk/`：网盘链接抓取、核验与补档
   - `daily_check.py`：**每天 0 点巡检**——内容增量 + 核验全部网盘链接 + 更新站点数据 + 全灭时发告警邮件（见下节）
   - `daily_content.py`：微博 repo / B 站投稿的增量同步与重建（被 `daily_check.py` 调用，也可单独跑）
+  - `auto_reshare.py`：失效资源的**自动补档**（亦被 `daily_check.py` 调用，`--dry` 可演练）
   - `refresh.py`：抓发布页 + 评论 + 专栏，抽链接并核验（`check_spa.mjs` 负责需渲染的盘）
   - `hunt_comments.mjs`：按视频重扫评论区（最热 + 最新各 3 页，含楼中楼），把带网盘域名的评论整条存进 `raw/hunt_comments.json`
   - `autofill.py`：算「当前可用链接」、自动切换、补抓候补、生成求档清单
@@ -321,7 +322,8 @@ python scripts/netdisk/autofill.py       # 产出 data/netdisk-autofill.json / .
 
 ### 每天 0 点自动巡检（`daily_check.py`）
 
-一条命令干完五件事：内容增量 → 网盘核验 → 回写台账 → 重建站点数据 → 全灭告警。
+一条命令干完六件事：内容增量 → 网盘核验 → **自动补档** → 回写台账 →
+重建站点数据 → 补不回来的才发告警邮件。
 
 ```bash
 python scripts/netdisk/daily_check.py            # 全量巡检 + 更新站点 + 发信
@@ -331,6 +333,8 @@ python scripts/netdisk/daily_check.py --push     # 顺便 git commit & push
 python scripts/netdisk/daily_check.py --test-mail # 只验证发信配置
 python scripts/netdisk/daily_check.py --no-content  # 只巡检网盘，不动微博/投稿
 python scripts/netdisk/daily_check.py --full-content # 内容走全量（微博 400 页、投稿 80 页）
+python scripts/netdisk/daily_check.py --no-reshare   # 只巡检，不做自动补档
+python scripts/netdisk/daily_check.py --push --sync-main  # push 完把 main 快进到同一提交
 ```
 
 - **内容增量**（`scripts/daily_content.py`）：微博翻最新 3 页 → 重建 `weibo.json`；
@@ -345,9 +349,20 @@ python scripts/netdisk/daily_check.py --full-content # 内容走全量（微博 
   写回条目，站点弹层里那条补档若也失效了会标「复查：这条也已失效」
 - **更新站点**：`netdisk-links.json / .md / .html` → `netdisk-status.json` →
   `netdisk-autofill.json / .md`，前端是 `cache:"no-cache"` 拉取，不用改版本号
-- **告警**：某个作品「一条可用链接都没有、且至少有一条明确失效」才发信
+- **自动补档**（`scripts/netdisk/auto_reshare.py`）：只要有链接被判失效就动手——
+  重建云端索引 → `reshare.py plan` 找同名资源 → 重新建分享 → 当场核验 →
+  把新链接发到该投稿置顶评论下（`--reformat` 先发新再删旧，不会重复刷屏）。
+  之前补档出来的链接如果自己也失效了（`checked=dead`），会自动重建。
+  云端确实没有、或分享建不出来（百度 `errno=109` 这类）的才算「补不回来」
+- **告警**：某个作品「一条可用链接都没有、且自动补档也没救回来」才发信
   （全 `unknown` 的盘不算，免得 Google Drive 这种本机打不开的天天报）。
-  邮件正文按作品列出失效盘与原始链接，收件人默认 `769018860@qq.com`
+  邮件正文按作品列出失效盘、原始链接，以及自动补档失败的原因，
+  收件人默认 `769018860@qq.com`
+
+  云端没有同名资源时还会再看一眼 `work/local-files.json`：登记了本地补丁文件
+  就自动走 `web_upload.mjs`（无头浏览器 + 夸克网页版上传器）传上去再建分享。
+  格式是 `"作品名": {"path": "C:/.../xxx.zip", "rename": "作品名 汉化补丁.zip"}`，
+  也可以直接写路径字符串。
 
 发信配置放 `work/mail.json`（在仓库外，不会被提交；本机已配好 `smtp.qq.com:465` 与收件人）：
 
@@ -366,6 +381,10 @@ QD_SMTP_PASS / QD_MAIL_TO` 覆盖。没配 SMTP 时脚本把告警写成
 schtasks /create /tn "QD网盘巡检" /sc daily /st 00:00 /f /tr ^
  "cmd /c cd /d C:\path\to\clone && C:\Python310\python.exe scripts\netdisk\daily_check.py --push"
 ```
+
+- 分支：`preview` 是日常提交分支，`main` 是线上分支。
+  自动巡检推 `preview`；要连 `main` 一起更新就加 `--sync-main`
+  （只在能快进时才推，两边分叉了会跳过并打印出来）
 
 ## 文件结构
 - index.html / videos.html
