@@ -54,8 +54,13 @@ def main():
         body = response.read(20_000_001)
         if len(body) > 20_000_000:
             raise ValueError("Replay object exceeds 20 MB limit")
-    envelope = json.loads(body.decode("latin1"))
-    packed = envelope["compStr"].encode("latin1")
+    if body.startswith(b"\x04\x22\x4d\x18"):
+        packed = body
+        wire_format = "LZ4 frame -> MessagePack"
+    else:
+        envelope = json.loads(body.decode("latin1"))
+        packed = envelope["compStr"].encode("latin1")
+        wire_format = "JSON-like compStr -> LZ4 frame -> MessagePack"
     root = unpack_lz4_msgpack(packed)
     if not isinstance(root, dict) or b"recordZips" not in root:
         raise ValueError("Unexpected replay structure")
@@ -64,7 +69,7 @@ def main():
         "replayUuid": uuid,
         "sourceUrl": url,
         "access": "anonymous HTTPS GET",
-        "format": "JSON-like compStr -> LZ4 frame -> MessagePack; recordZips -> LZ4 frame -> MessagePack",
+        "format": wire_format + "; recordZips -> LZ4 frame -> MessagePack",
         "battleDat": jsonable(root.get(b"battleDat")),
         "resourceRecords": jsonable(root.get(b"resourceRecords")),
         "recordSegments": jsonable(segments),

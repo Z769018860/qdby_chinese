@@ -1,6 +1,6 @@
 // Morimens full replay review v2
 // Fetches the public BattleReplay object by battleUuid and decodes it entirely in-browser.
-// Format verified from game traffic: JSON-ish compStr -> LZ4 frame -> MessagePack;
+// Both the legacy compStr wrapper and the newer direct LZ4 frame contain MessagePack;
 // each recordZip -> LZ4 frame -> MessagePack. No login/session/TLS keys are required.
 (()=>{
   'use strict';
@@ -112,15 +112,17 @@
     if(!uuidRe.test(uuid))throw new Error('Invalid battleUuid');if(cache.has(uuid))return cache.get(uuid);
     const task=(async()=>{
       const url=`${PUBLIC_BASE}${uuid}.json`;
-      const decode=body=>{const env=JSON.parse(latin1(body));if(typeof env.compStr!=='string')throw new Error('Replay compStr missing');
-        const root=unpackLz4Msgpack(stringToBytes8(env.compStr));if(!root||!Array.isArray(root.recordZips))throw new Error('Unexpected replay structure');return root};
+      const decode=body=>{let packed;
+        if(body[0]===0x04&&body[1]===0x22&&body[2]===0x4d&&body[3]===0x18)packed=body;
+        else{const env=JSON.parse(latin1(body));if(typeof env.compStr!=='string')throw new Error('Replay compStr missing');packed=stringToBytes8(env.compStr)}
+        const root=unpackLz4Msgpack(packed);if(!root||!Array.isArray(root.recordZips))throw new Error('Unexpected replay structure');return root};
       let body=await RC.get(uuid),root=null,fromCache=false;
       if(body){try{root=decode(body);fromCache=true}catch{root=null;body=null;RC.del(uuid)}}
       if(!root){const r=await fetch(url,{method:'GET',mode:'cors',credentials:'omit',cache:'no-store'});
         if(!r.ok)throw new Error(`BattleReplay HTTP ${r.status}`);body=new Uint8Array(await r.arrayBuffer());if(body.length>MAX_BYTES)throw new Error('Replay object exceeds 20 MB');
         root=decode(body);RC.put(uuid,body)}
       const segments=root.recordZips.map(blob=>unpackLz4Msgpack(blob));
-      return {replayUuid:uuid,sourceUrl:url,access:fromCache?'browser cache':'anonymous HTTPS GET',format:'compStr -> LZ4 -> MessagePack; recordZips -> LZ4 -> MessagePack',battleDat:root.battleDat||{},resourceRecords:root.resourceRecords||{},recordSegments:segments,recordCount:segments.reduce((n,s)=>n+(Array.isArray(s)?s.length:0),0)};
+      return {replayUuid:uuid,sourceUrl:url,access:fromCache?'browser cache':'anonymous HTTPS GET',format:(body[0]===0x04?'LZ4 -> MessagePack':'compStr -> LZ4 -> MessagePack')+'; recordZips -> LZ4 -> MessagePack',battleDat:root.battleDat||{},resourceRecords:root.resourceRecords||{},recordSegments:segments,recordCount:segments.reduce((n,s)=>n+(Array.isArray(s)?s.length:0),0)};
     })();cache.set(uuid,task);try{const x=await task;cache.set(uuid,x);return x}catch(e){cache.delete(uuid);throw e}
   }
 
