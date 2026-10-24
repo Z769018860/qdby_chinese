@@ -183,6 +183,7 @@ def decode_replay_fb(token: str):
         "player": str(payload.get("player") or "")[:40],
         "lang": str(payload.get("lang") or "")[:4],
         "time": str(payload.get("t") or "")[:32],
+        "page": str(payload.get("page") or "")[:60],   # 反馈来源页面：之前被丢弃，无法追溯提交入口
     }
 
 
@@ -313,7 +314,9 @@ def archive(force: bool) -> int:
         if r.get("note"):
             o["notes"].append(r["note"])
         o["lastAt"] = max(o["lastAt"], str(r.get("submittedAt") or ""))
-    problems = sorted((o for o in by_replay.values() if o["bad"] > 0), key=lambda o: (-o["bad"], o["lastAt"]), reverse=False)
+    # 被举报最多的排在最前；同一举报数时按最近反馈时间倒序（先按时间排、再按举报数稳定排序）
+    problems = sorted((o for o in by_replay.values() if o["bad"] > 0), key=lambda o: str(o["lastAt"]), reverse=True)
+    problems.sort(key=lambda o: o["bad"], reverse=True)
     write_json(REPLAY_FB_FILE, {
         "version": 1, "updatedAt": stamp, "recordCount": len(fb_records),
         "summary": {"replays": len(by_replay), "good": sum(o["good"] for o in by_replay.values()), "bad": sum(o["bad"] for o in by_replay.values())},

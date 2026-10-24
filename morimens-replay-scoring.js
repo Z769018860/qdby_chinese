@@ -10,15 +10,20 @@ const sat=(v,s)=>100*(1-Math.exp(-Math.max(0,Number(v)||0)/Math.max(.0001,s)));
 const clean=v=>String(v??'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
 const grade=s=>s>=80?'S':s>=65?'A':s>=50?'B':s>=35?'C':'D';
 const num=v=>Number(v)||0;
+const pnum=v=>Math.max(0,Number(v)||0);   // 团队合计只累加正贡献：单个负值不应让整个维度作废（dr=-5 曾使全队该维度为 null）
 function wmean(entries){
   let s=0,w=0;
   for(const [v,wt] of entries){if(v==null||!Number.isFinite(v)||wt<=0)continue;s+=v*wt;w+=wt}
   return w?s/w:null;
 }
-function rel(v,total,n){
+// 相对份额：以"标称 4 人队"的公平份额（团队总量的 1/4）为基准，而不是实际人数 N。
+// 原实现用 total/N 做基准时，同一绝对表现在不同队伍人数下会跨等级（N=3 → B、N=4 → A）。
+// 第三个参数保留仅为兼容调用点，不再参与计算。
+const REF_N=4;
+function rel(v,total,_n){
   if(!(total>0))return null;
   if(!(v>0))return 0;
-  const fair=total/Math.max(1,n);
+  const fair=total/REF_N;
   return clamp(100*v/(v+fair*.65));
 }
 function share(v,total){return total>0?Math.max(0,v/total):null}
@@ -27,27 +32,40 @@ function typeList(v){return Array.isArray(v)?v:(v==null?[]:[v])}
 
 // ---------- Wheel / Covenant semantic value -----------------------------------------------
 function textOf(x,tl){
-  const g=x?.g||{},parts=[g.name,g.en,g.desc,...(g.effectsEn||[])];
+  // effectsEn 的元素是 {pieces,desc}：直接 join 会得到 "[object Object]"，分档效果（Realm Mastery +12 / Death Resistance +x% / Crit DMG …）会整段丢失
+  const g=x?.g||{},parts=[g.name,g.en,g.desc,...(g.effectsEn||[]).map(v=>String(v?.desc??v))];
   for(const q of g.statics||[])parts.push(`${q.prop||''} ${q.val??''}`);
   if(g.related&&tl?.res?.state)for(const id of g.related){const r=tl.res.state[String(id)]||{};parts.push(r.CnID,r.Name,r.Desc,r.BattleDesc,JSON.stringify(r.ExistProperty||{}))}
   return clean(parts.filter(Boolean).join(' | ')).replace(/％/g,'%').replace(/[＋]/g,'+').replace(/[－–—]/g,'-');
 }
-function near(t,re,d=1){const m=t.match(re),n=m?Number(m.slice(1).find(Boolean)):d;return Number.isFinite(n)&&n>0?n:d}
+// 只在文本真的写出数量时返回数值。匹配不到返回 null，绝不臆造 "+1"（「算力上限」曾因此显示成「算力上限 +1」）。
+function near(t,re){const m=t.match(re),n=m?Number(m.slice(1).find(Boolean)):NaN;return Number.isFinite(n)&&n>0?n:null}
+// 数量是否出现在负向语境里（"-1" / "降低 2" / "减少"）：这类写法是代价，不能当增益。
+// 句子/分句边界（。；;，,|）之外的内容属于另一分句，不算；负向词也可能写在关键词之前（"降低手牌上限 1"）。
+const NEG_SEG='[^。；;，,|]';
+function isNeg(t,keyRe){const src='(?:'+keyRe.source+')';
+  return new RegExp(src+NEG_SEG+'{0,20}?(?:[-－]|降低|减少|下降)','i').test(t)
+    || new RegExp('(?:降低|减少|下降|失去)'+NEG_SEG+'{0,8}?'+src,'i').test(t);
+}
 function semantic(x,tl){
   const t=textOf(x,tl),g=x.g||{},f=[];
   const conditional=/(?:每当|当.+时|若|如果|触发后|本回合|首次|每回合|when |if |after |once per)/i.test(t);
   const passive=/(?:战斗开始|永久|常驻|开局|上限|max(?:imum)? |at battle start|permanent)/i.test(t)||(g.statics?.length||0)>0;
   const observed=(+g.n||0)>0,confidence=observed?1:(passive?.95:(conditional?.72:.82));
   const add=(k,z,e,v,strong=false,n='')=>{if(!f.some(q=>q.k===k))f.push({k,label:ui(z,e),v:clamp(v*confidence),strong,n})};
-  if(/手牌(?:数量|张数)?上限|手牌容量|max(?:imum)?\s*hand|hand\s*(?:size|limit|capacity)|max_hand|hand_limit/i.test(t)){
+  const HAND_RE=/手牌(?:数量|张数)?上限|手牌容量|max(?:imum)?\s*hand|hand\s*(?:size|limit|capacity)|max_hand|hand_limit/i;
+  if(HAND_RE.test(t)&&!isNeg(t,HAND_RE)){
     const n=near(t,/(?:手牌(?:数量|张数)?上限|手牌容量|max(?:imum)?\s*hand|hand\s*(?:size|limit|capacity)|max_hand|hand_limit)[^。;|]{0,28}?(?:\+|增加|提高|提升|by\s*)\s*(\d+(?:\.\d+)?)/i);
-    add('hand',`手牌上限 +${n}`,`Hand limit +${n}`,Math.min(95,76+(n-1)*9),true,n);
+    if(n==null)add('hand',`手牌上限`,`Hand limit`,72,true,'');          // 写了手牌上限但没写数字：不给凭空的 "+N"，也不进 +N 档位
+    else add('hand',`手牌上限 +${n}`,`Hand limit +${n}`,Math.min(95,76+(n-1)*9),true,n);
   }
   if(/回合结束[^。;]{0,24}(?:不弃|保留)|保留手牌|retain[^.;]{0,18}hand|keep[^.;]{0,18}hand/i.test(t))add('retain','回合末保留手牌','Hand retention',78,true);
   if(/初始手牌[^。;|]{0,16}(?:增加|提高|\+)|starting hand[^.;|]{0,18}(?:increase|bonus|\+)/i.test(t))add('opening','初始手牌增加','Larger starting hand',66,true);
-  if(/算力(?:数量)?上限|max(?:imum)?\s*energy|max_energy/i.test(t)){
+  const ECAP_RE=/算力(?:数量)?上限|max(?:imum)?\s*energy|max_energy/i;
+  if(ECAP_RE.test(t)&&!isNeg(t,ECAP_RE)){
     const n=near(t,/(?:算力(?:数量)?上限|max(?:imum)?\s*energy|max_energy)[^。;|]{0,24}?(?:\+|增加|提高|by\s*)\s*(\d+(?:\.\d+)?)/i);
-    add('ecap',`算力上限 +${n}`,`Energy cap +${n}`,Math.min(90,68+(n-1)*8),true,n);
+    if(n==null)add('ecap',`算力上限`,`Energy cap`,68,true,'');
+    else add('ecap',`算力上限 +${n}`,`Energy cap +${n}`,Math.min(90,68+(n-1)*8),true,n);
   }
   if(/(?:抽取?|额外抽)\s*\d*\s*张?牌|抽牌|draw\s+(?:an?\s+|\d+\s*)?cards?/i.test(t))add('draw','抽牌 / 手牌补充','Card draw',62,true);
   if(/算力消耗[^。;]{0,20}(?:降低|减少|-)|减费|cost[^.;]{0,22}(?:reduce|reduction|less|-)/i.test(t))add('cut','卡牌减费','Cost reduction',68,true);
@@ -66,11 +84,13 @@ function semantic(x,tl){
   // 侵蚀是持续伤害，命中会走 outKind 的 dot 分支；这里让命轮文本里的"侵蚀增幅"也能被算作机制价值
   if(/侵蚀|腐蚀|corrosion/i.test(t)){
     const n=near(t,/(?:侵蚀|腐蚀|corrosion)[^。;|]{0,22}?(?:\+|增加|提高|提升|by\s*)\s*(\d+(?:\.\d+)?)\s*%/i);
-    add('erosion',`侵蚀效果 +${n}%`,`Corrosion +${n}%`,Math.min(88,52+(n-1)*0.62),true,n);
+    if(n==null)add('erosion',`侵蚀效果增幅`,`Corrosion boost`,52,true,'');
+    else add('erosion',`侵蚀效果 +${n}%`,`Corrosion +${n}%`,Math.min(88,52+(n-1)*0.62),true,n);
   }
   if(/狂气爆发[^。;|]{0,26}(?:生命回复|治疗|回复)|(?:生命回复|治疗|回复)[^。;|]{0,22}狂气爆发|exalt[^.;|]{0,30}(?:heal(?:ing)?|hp\s*recover)/i.test(t)){
     const n=near(t,/(?:生命回复|治疗|回复|heal(?:ing)?)[^。;|]{0,22}?(?:\+|增加|提高|提升|by\s*)\s*(\d+(?:\.\d+)?)\s*%/i);
-    add('exaltHeal',`狂气爆发治疗 +${n}%`,`Exalt healing +${n}%`,Math.min(72,40+(n-1)*0.7));
+    if(n==null)add('exaltHeal',`狂气爆发治疗增幅`,`Exalt healing boost`,40);
+    else add('exaltHeal',`狂气爆发治疗 +${n}%`,`Exalt healing +${n}%`,Math.min(72,40+(n-1)*0.7));
   }
   if(/(?:获得|增加|提高|提升)[^。;|]{0,40}?临时力量|临时力量[^。;|]{0,16}(?:\+|增加|提高)|(?:gain|increase)[^.;|]{0,26}temporary\s*(?:STR|strength)/i.test(t))add('tempStr','临时力量增益','Temporary strength',58,true);
   // 探索开始时把一张自己的卡塞进牌库（伊玛戈的诊室一类）：开局多一张可用牌
@@ -78,6 +98,9 @@ function semantic(x,tl){
   if(!f.some(q=>q.k==='erosion')&&/(?:持续伤害|中毒|出血|灼烧|侵蚀|腐蚀|燃烧|献祭)[^。;|]{0,20}(?:提高|增加|提升|\+)|(?:bleed|poison|burn|corrosion)[^.;|]{0,24}(?:increase|boost|amp)/i.test(t))add('dotAmp','持续伤害增幅','DoT amplification',60,true);
   if(/眩晕|冻结|冰冻|石化|沉默|定身|恐惧|魅惑|麻痹|禁锢|stun|freeze|petrif|silence|fear/i.test(t))add('ctl','控制效果','Control',56);
   if(/额外行动|再次行动|立即行动|extra\s*(?:turn|action)|act again/i.test(t))add('action','额外行动','Extra action',86,true);
+  // 代价：负面效果不能再被忽略 —— 「手牌上限 +5，但受到伤害提高 50%」不该只按收益拿 S
+  // （不入 f：0 分标签没有展示价值，却会让下面的结构证据回退多算一条特征）
+  const RISK=/(?:受到|承受)[^。;|]{0,16}伤害[^。;|]{0,20}(?:提高|增加|\+\s*\d)|damage\s*taken[^.;|]{0,24}(?:increase|up|amp)/i.test(t);
   const team=/(?:全体|所有友方|所有唤醒体|队友|我方全体|all allies|team)/i.test(t);
   const buff=/(?:力量|攻击力|基础伤害|伤害强效|最终伤害|暴击(?:率|伤害)?)[^。;|]{0,22}(?:增加|提高|提升|\+|获得)|(?:增加|提高|提升)[^。;|]{0,22}(?:力量|攻击力|基础伤害|伤害强效|最终伤害|暴击(?:率|伤害)?)|(?:increase|gain|bonus|boost)[^.;|]{0,24}(?:damage|crit|attack|power)|(?:damage|crit|attack|power)[^.;|]{0,24}(?:increase|bonus|boost)/i.test(t);
   if(buff)add(team?'teamBuff':'buff',team?'团队伤害增益':'伤害增益',team?'Team damage buff':'Damage buff',team?64:52,team);
@@ -87,7 +110,8 @@ function semantic(x,tl){
   if(S.eng>0&&!f.some(q=>q.k==='energy'))add('energy','实战算力收益','Observed energy',62);
   if(S.cyc>0&&!f.some(q=>q.k==='cycle'))add('cycle','实战过牌','Observed cycling',58);
   const a=f.map(q=>q.v).sort((x,y)=>y-x);let support=a[0]||0;if(a[1])support+=a[1]*.2;if(a[2])support+=a[2]*.08;
-  const hand=f.find(q=>q.k==='hand'),floor=hand?Math.min(92,72+(Number(hand.n||1)-1)*9):0;
+  if(RISK)support-=16;   // 高收益 + 高代价：扣回代价，且不再享受手牌上限的保底
+  const hand=f.find(q=>q.k==='hand'),floor=hand&&!RISK?Math.min(92,72+(Number(hand.n||1)-1)*9):0;
   return {f,support:clamp(support),floor};
 }
 function supportRaw(x,total){
@@ -102,15 +126,19 @@ function evaluateGear(x,tl,total){
   const def=Math.max(sat(x.sh||0,Math.max(1,total*.06)),sat(x.mit||0,Math.max(1,total*.04)),sat(x.ctl||0,6)*.82,sat(x.dr||0,1.2)*.75);
   const sup=Math.max(supportRaw(x,total),sm.support),r=[out,def,sup].sort((a,b)=>b-a);
   let abs=r[0]*.78+(r[1]||0)*.17+(r[2]||0)*.05;
-  if(abs<18&&((+x.g?.n||0)>0||(x.g?.statics?.length||0)>0||sm.f.length))abs=Math.min(35,10+Math.log2(1+(+x.g?.n||0))*6+sm.f.length*4+((x.g?.statics?.length||0)>0?5:0));
+  // 结构证据只能抬高分数、不能压低：必须写成"取大"且不设触发阈值，否则实测值落在 (18,35) 时被结构值压低
+  // （旧写法在 abs<18 时才替换，实测 dmg=2400 的命轮 abs=21.4 < 结构值 35，反而低于 dmg=0 的同一命轮）
+  if((+x.g?.n||0)>0||(x.g?.statics?.length||0)>0||sm.f.length)abs=Math.max(abs,Math.min(35,10+Math.log2(1+(+x.g?.n||0))*6+sm.f.length*4+((x.g?.statics?.length||0)>0?5:0)));
   return {...x,_sm:sm,_abs:clamp(abs),enhancedCats:{out,def,sup}};
 }
 function scoreGear(items,tl,total){
   const rows=items.map(x=>evaluateGear(x,tl,total)),mx=Math.max(1,...rows.map(x=>x._abs)),ord=[...rows].sort((a,b)=>b._abs-a._abs);
   for(const x of rows){
-    const rank=ord.indexOf(x),pct=rows.length<=1?.72:1-rank/(rows.length-1),relScore=100*(.68*Math.sqrt(x._abs/mx)+.32*pct);
+    // 只有一个成员时没有排名信息，用中性先验 0.5，而不是 0.72（旧写法让"该类唯一装备"白拿 +7 分）
+    const rank=ord.indexOf(x),pct=rows.length<=1?.5:1-rank/(rows.length-1),relScore=100*(.68*Math.sqrt(x._abs/mx)+.32*pct);
     let v=.72*x._abs+.10*clamp(x.score)+.18*relScore;
-    if(x._sm.floor)v=Math.max(v,x._sm.floor);if(x._sm.f.some(q=>q.k==='action'))v=Math.max(v,76);if(v<12&&((+x.g?.n||0)>0||(x.g?.statics?.length||0)>0))v=12;
+    // 「额外行动」的 76 分保底必须有实测触发证据，否则整场没触发的装备只凭文本就拿到 A
+    if(x._sm.floor)v=Math.max(v,x._sm.floor);if(x._sm.f.some(q=>q.k==='action')&&(+x.g?.n||0)>0)v=Math.max(v,76);if(v<12&&((+x.g?.n||0)>0||(x.g?.statics?.length||0)>0))v=12;
     x.enhancedScore=clamp(v);x.enhancedGrade=grade(x.enhancedScore);
   }
   return rows.sort((a,b)=>b.enhancedScore-a.enhancedScore||(b.val||0)-(a.val||0));
@@ -129,7 +157,7 @@ function awakenerUtilityLabels(x){
 function scoreAwakeners(m){
   const refs=m?.awakeners||[],src=refs.map(ref=>({ref,x:ref.x||ref}));if(!src.length)return [];
   const N=src.length,T={out:0,sh:0,mit:0,ctl:0,dr:0,plays:0,energy:0},TS={};
-  for(const {x} of src){T.out+=num(x.outT);T.sh+=num(x.sh);T.mit+=num(x.mit);T.ctl+=num(x.ctl);T.dr+=num(x.dr);T.plays+=num(x.plays);T.energy+=num(x.energy);for(const k of Object.keys(SUP_W))TS[k]=(TS[k]||0)+num(x.sup?.[k])}
+  for(const {x} of src){T.out+=pnum(x.outT);T.sh+=pnum(x.sh);T.mit+=pnum(x.mit);T.ctl+=pnum(x.ctl);T.dr+=pnum(x.dr);T.plays+=pnum(x.plays);T.energy+=pnum(x.energy);for(const k of Object.keys(SUP_W))TS[k]=(TS[k]||0)+pnum(x.sup?.[k])}
   const roleName=k=>k==='out'?ui('输出核心','Damage'):k==='def'?ui('防御核心','Defense'):ui('辅助核心','Support');
   return src.map(({ref,x})=>{
     const out=rel(num(x.outT),T.out,N);
@@ -151,11 +179,17 @@ function scoreAwakeners(m){
     const roleShares={out:outShare,def:defShare,sup:supShare};
     const impact=weightedShare(available.map(([k,v])=>[roleShares[k],Math.max(1,v)]));
     const burden=wmean([[share(num(x.plays),T.plays),1],[share(num(x.energy),T.energy),1]]);
+    // presence（存在性闸门）：只按 impact/burden 计分会让"几乎不出力"的角色拿满效率分
+    // ——burden→0 时 ratio→∞（实测：整场只抽 1 张牌的角色 eff 封顶 92，与打满全场的主力同分）。
+    // 因此用"实际消耗的资源份额 / 其公平份额"判断这个角色是否真的参与了战斗，作为 [0.55,1] 的系数。
+    // 尺度 0.35：消耗到"公平份额"时 gate≈0.97（不再通缩），只有 burden < 0.4·fairS 才明显扣分
+    const fairS=1/N,gate=burden==null?1:.55+.45*(sat(burden/Math.max(1e-9,fairS),.35)/100);
     let eff=60,ratio=null,mod=1;
-    if(impact!=null&&burden!=null&&burden>0){ratio=impact/burden;eff=clamp(50+20*Math.log2(Math.max(.25,ratio)),20,92);mod=.94+.12*(eff/100)}
-    let score=(base+specialist+breadth+rescue)*mod;
+    if(impact!=null&&burden!=null&&burden>0){ratio=impact/Math.max(burden,fairS*.4);eff=clamp(50+20*Math.log2(Math.max(.25,Math.min(8,ratio))),20,92);mod=.94+.12*(eff/100)}
+    let score=(base+specialist+breadth)*mod*gate+rescue*mod;
     score=.95*score+.05*clamp(ref.score);
-    if(top>=85)score=Math.max(score,68);else if(top>=75)score=Math.max(score,58);
+    // 保底同样受存在性闸门约束：几乎没出力的角色不该靠"某一维度份额很高"拿到 58 / 68 的保底
+    if(top>=85)score=Math.max(score,68*gate);else if(top>=75)score=Math.max(score,58*gate);
     score=clamp(score);
     return {ref,x,score,grade:grade(score),cats,role:available[0]?.[0]||'out',roleLabel:roleName(available[0]?.[0]||'out'),eff,ratio,features:awakenerUtilityLabels(x)};
   }).sort((a,b)=>b.score-a.score);
@@ -241,7 +275,8 @@ function scoreKeeperV2(m,tl,ref){
   // and a shield that is kept is not counted as overflow (the next round's opening shield tells which case it is).
   let shOver=0,shRounds=0,shEndTotal=0;for(let i=0;i<ends.length-1;i++){const [b,e]=ends[i],blk=e.block||0;if(!(blk>0))continue;const si=tl.shieldIn?.get(b)||{raw:0,blocked:0},left=Math.max(0,blk-(si.blocked||0)),kept=Math.min(left,tl.shieldStart?.get(b+1)??0);shRounds++;shEndTotal+=blk;shOver+=left-kept}
   const shGen=plays.reduce((n,p)=>n+num(p.block),0),shPct=shGen>0&&shRounds?Math.min(100,100*shOver/shGen):null;
-  const ShieldScore=shPct==null?null:Math.max(0,100-2*shPct);
+  // 旧写法 100-2·shPct 在溢出 50% 时就归零，罚项提前饱和；改为到 70% 才归零的线性罚
+  const ShieldScore=shPct==null?null:Math.max(0,100-100*shPct/70);
   const Rscore=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
   Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
