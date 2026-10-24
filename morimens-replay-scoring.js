@@ -56,12 +56,26 @@ function semantic(x,tl){
   if(/(?:生成|创造)[^。;|]{0,14}(?:指令卡|卡牌|手牌)|(?:create|generate)[^.;|]{0,14}cards?/i.test(t))add('make','生成卡牌','Card generation',56);
   if(/取回|返回手牌|回到手牌|置于牌库顶|洗牌|从弃牌|从消耗|retrieve|return[^.;]{0,20}hand|shuffle|discard pile|exhaust pile/i.test(t))add('cycle','回收 / 过牌循环','Card cycling',54);
   if(/银钥|钥令能量|keeper\s*energy|keyflare\s*energy/i.test(t))add('key','银钥 / 钥令能量','Keyflare energy',52);
-  if(/狂气|充狂|aliemus|ultimate\s*energy/i.test(t))add('ali','狂气获取','Aliemus gain',48);
+  if(/狂气(?!爆发)|充狂|aliemus|ultimate\s*energy/i.test(t))add('ali','狂气获取','Aliemus gain',48);   // "狂气爆发"= 释放终极技，不是攒狂气
   if(/易伤|vulnerab/i.test(t))add('vuln','易伤 / 承伤放大','Vulnerability',62,true);
   if(/界域精通|realm\s*mastery/i.test(t))add('realm','界域精通','Realm mastery',50);
   if(/死亡抵抗|death\s*resist/i.test(t))add('dr','死亡抵抗','Death resistance',62,true);
   if(/(?:受到|承受)[^。;]{0,16}伤害[^。;]{0,16}(?:降低|减少)|减伤|damage\s*taken[^.;]{0,20}(?:reduce|less)/i.test(t))add('mit','减伤','Damage mitigation',60,true);
   if(/护盾|治疗|回复生命|shield|heal/i.test(t))add('sustain','护盾 / 治疗','Shield / healing',48);
+  // --- 薇薇安（C20）机制：固定侵蚀 / 狂气爆发的固定生命回复 / 释放狂气爆发后的临时力量 -------
+  // 侵蚀是持续伤害，命中会走 outKind 的 dot 分支；这里让命轮文本里的"侵蚀增幅"也能被算作机制价值
+  if(/侵蚀|腐蚀|corrosion/i.test(t)){
+    const n=near(t,/(?:侵蚀|腐蚀|corrosion)[^。;|]{0,22}?(?:\+|增加|提高|提升|by\s*)\s*(\d+(?:\.\d+)?)\s*%/i);
+    add('erosion',`侵蚀效果 +${n}%`,`Corrosion +${n}%`,Math.min(88,52+(n-1)*0.62),true,n);
+  }
+  if(/狂气爆发[^。;|]{0,26}(?:生命回复|治疗|回复)|(?:生命回复|治疗|回复)[^。;|]{0,22}狂气爆发|exalt[^.;|]{0,30}(?:heal(?:ing)?|hp\s*recover)/i.test(t)){
+    const n=near(t,/(?:生命回复|治疗|回复|heal(?:ing)?)[^。;|]{0,22}?(?:\+|增加|提高|提升|by\s*)\s*(\d+(?:\.\d+)?)\s*%/i);
+    add('exaltHeal',`狂气爆发治疗 +${n}%`,`Exalt healing +${n}%`,Math.min(72,40+(n-1)*0.7));
+  }
+  if(/(?:获得|增加|提高|提升)[^。;|]{0,40}?临时力量|临时力量[^。;|]{0,16}(?:\+|增加|提高)|(?:gain|increase)[^.;|]{0,26}temporary\s*(?:STR|strength)/i.test(t))add('tempStr','临时力量增益','Temporary strength',58,true);
+  // 探索开始时把一张自己的卡塞进牌库（伊玛戈的诊室一类）：开局多一张可用牌
+  if(/(?:加入|置入|洗入)[^。;|]{0,12}牌库|add[^.;|]{0,22}to the deck/i.test(t))add('deckAdd','开局加入牌库','Adds a card to the deck',54,true);
+  if(!f.some(q=>q.k==='erosion')&&/(?:持续伤害|中毒|出血|灼烧|侵蚀|腐蚀|燃烧|献祭)[^。;|]{0,20}(?:提高|增加|提升|\+)|(?:bleed|poison|burn|corrosion)[^.;|]{0,24}(?:increase|boost|amp)/i.test(t))add('dotAmp','持续伤害增幅','DoT amplification',60,true);
   if(/眩晕|冻结|冰冻|石化|沉默|定身|恐惧|魅惑|麻痹|禁锢|stun|freeze|petrif|silence|fear/i.test(t))add('ctl','控制效果','Control',56);
   if(/额外行动|再次行动|立即行动|extra\s*(?:turn|action)|act again/i.test(t))add('action','额外行动','Extra action',86,true);
   const team=/(?:全体|所有友方|所有唤醒体|队友|我方全体|all allies|team)/i.test(t);
@@ -104,11 +118,11 @@ function scoreGear(items,tl,total){
 
 // ---------- Awakener rating ---------------------------------------------------------------
 const DEF_W={sh:45,mit:25,ctl:20,dr:10};
-const SUP_W={key:1,ali:1.1,seal:.45,eng:1.65,vuln:1.6,buf:1.5,cut:1.55,draw:1.75,cyc:1.05,realm:.65,emb:.7,dis:1.1};
+const SUP_W={key:1,ali:1.1,seal:.45,eng:1.65,vuln:1.6,buf:1.5,ero:1.4,cut:1.55,draw:1.75,cyc:1.05,realm:.65,emb:.7,dis:1.1};   // ero = 侵蚀伤害占比（薇薇安 / 沙耶一类）
 function awakenerUtilityLabels(x){
   const S=x.sup||{},a=[];
   const push=(v,z,e,strong=false)=>{if(v>0)a.push({v,label:ui(z,e),strong})};
-  push(S.draw,'抽牌','Draw',true);push(S.cut,'减费','Cost cut',true);push(S.eng,'算力','Energy',true);push(S.vuln,'易伤','Vulnerability',true);push(S.buf,'伤害增益','Damage buff',true);push(S.cyc,'过牌','Cycling');push(S.dis,'驱散','Dispel',true);push(S.key,'钥令能量','Keyflare');push(S.ali,'充狂','Aliemus');push(S.realm,'界域精通','Realm mastery');push(S.emb,'胚胎','Embryo');
+  push(S.draw,'抽牌','Draw',true);push(S.cut,'减费','Cost cut',true);push(S.eng,'算力','Energy',true);push(S.vuln,'易伤','Vulnerability',true);push(S.buf,'伤害增益','Damage buff',true);push(S.ero,'侵蚀','Corrosion',true);push(S.cyc,'过牌','Cycling');push(S.dis,'驱散','Dispel',true);push(S.key,'钥令能量','Keyflare');push(S.ali,'充狂','Aliemus');push(S.realm,'界域精通','Realm mastery');push(S.emb,'胚胎','Embryo');
   push(x.mit,'减伤','Mitigation',true);push(x.ctl,'控制/弱化','Control',true);push(x.saves,'救场','Death save',true);push(x.sh,'护盾/治疗','Shield/Heal',true);
   return a.sort((p,q)=>q.v-p.v).slice(0,6);
 }
