@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_at": "2026-10-24 23:34:21",
-  "checked_at": "2026-10-24 23:34",
+  "generated_at": "2026-10-25 00:03:19",
+  "checked_at": "2026-10-25 00:03",
   "source_repo": "Z769018860/qdby_chinese",
   "source_site": "https://qdby-chinese.vercel.app",
   "note": "来源：B 站发布视频的简介 / UP主置顶评论 / 评论区补充 / 专栏正文",
@@ -10,9 +10,9 @@
   "unique_links": 174,
   "checked": true,
   "summary": {
-   "ok": 109,
-   "dead": 66,
-   "unknown": 4
+   "ok": 103,
+   "dead": 65,
+   "unknown": 11
   },
   "platform_summary": {
    "百度网盘": {
@@ -24,12 +24,13 @@
     "dead": 39
    },
    "城通网盘": {
-    "ok": 8,
-    "dead": 4
+    "ok": 7,
+    "dead": 3,
+    "unknown": 2
    },
    "迅雷云盘": {
-    "unknown": 4,
-    "ok": 17
+    "ok": 12,
+    "unknown": 9
    },
    "腾讯微云": {
     "ok": 7
@@ -70,7 +71,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1rNwBx54-gIK5R0qt3yaJ4Q?pwd=i6r4",
@@ -82,7 +83,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/370da4bf04b4",
@@ -94,7 +95,7 @@
      "status": "ok",
      "detail": "分享有效｜温柔狗男人mac版.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -124,7 +125,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -157,7 +158,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/302f48898702",
@@ -169,7 +170,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -202,7 +203,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -234,7 +235,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -263,7 +264,7 @@
      "share_id": null,
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip 192.84 MB2025-09-09"
     },
     {
@@ -276,7 +277,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/5cfc2ad79a6d",
@@ -288,7 +289,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -320,7 +321,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -350,7 +351,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -382,7 +383,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -414,7 +415,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -446,7 +447,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1qn-CH9xUsu7-cbzl61Bebg?pwd=dqhy",
@@ -459,7 +460,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -488,7 +489,7 @@
      "share_id": null,
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09"
     },
     {
@@ -501,7 +502,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans#",
@@ -510,10 +511,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOfYSx",
-     "status": "unknown",
-     "status_text": "待确认",
-     "checked_at": "2026-10-24 23:31",
-     "detail": "页面状态无法判定"
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-25 00:00",
+     "detail": "分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07 "
     },
     {
      "url": "https://pan.quark.cn/s/fb7d7e01f866",
@@ -525,7 +526,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/8364570fa481",
@@ -537,7 +538,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://share.weiyun.com/05WlFxr6",
@@ -548,7 +549,7 @@
      "share_id": "05WlFxr6",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB "
     },
     {
@@ -561,13 +562,13 @@
      "status": "ok",
      "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
     "发布地址已按 B 站最新投稿更正（原登记链接失效/缺失）"
    ],
-   "links_ok": 4,
+   "links_ok": 5,
    "links_dead": 2
   },
   {
@@ -593,7 +594,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOfYDWOOMzhvlP6cMegiBr0JA1?pwd=3ssm#",
@@ -605,7 +606,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜kimiwaaoiro_chs.zip 160.8MB 2026-06-12 05:04 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://www.123865.com/s/ootDVv-8Vjov?pwd=ulAI#",
@@ -617,7 +618,7 @@
      "status": "ok",
      "detail": "分享有效｜kimikaaoiro_chs.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/f849c4061ca14",
@@ -629,7 +630,7 @@
      "status": "ok",
      "detail": "分享有效｜kimiwaaoiro_chs.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8471392676-333c65?p=1528",
@@ -641,7 +642,7 @@
      "status": "ok",
      "detail": "分享有效｜kimikaaoiro_chs.zip 115.35 MB2025-11-13",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ef0f6ffdb1e1",
@@ -653,7 +654,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ff13dece379d",
@@ -665,7 +666,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -695,7 +696,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://www.123865.com/s/ootDVv-EATmv?pwd=0Dgd#",
@@ -707,7 +708,7 @@
      "status": "ok",
      "detail": "分享有效｜COLOR_COLLAR汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://share.weiyun.com/P5w3qWaW",
@@ -719,7 +720,7 @@
      "status": "ok",
      "detail": "分享有效｜COLOR_COLLAR汉化补丁.zip 2025年11月24日 52.83 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://www.123865.com/s/ootDVv-rQTmv?pwd=5qAd#",
@@ -732,7 +733,7 @@
      "status": "ok",
      "detail": "分享有效｜CC 补丁备份.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1tWtzsbCMzyOTK6tRR5-z2g?pwd=v9bv",
@@ -745,7 +746,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -775,7 +776,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/a227dde020c2?pwd=bwyd",
@@ -787,7 +788,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOk8azICB36-iaIVxsQ9CsshA1#",
@@ -799,7 +800,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜不要抛下我 汉化补丁.zip 16MB 2026-02-01 20:13 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/7a1ca4a8e4804",
@@ -811,7 +812,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V",
@@ -823,7 +824,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOkO99MFKyO9IeyiAjA0x1RjA1#",
@@ -835,7 +836,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜不要抛下我 汉化备份.zip 187.5MB 2026-02-20 16:00 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -865,7 +866,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1398Th72qKWRtKV3w_sk3fQ?pwd=anxt",
@@ -877,7 +878,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm",
@@ -889,7 +890,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOlu3IiBSu2p7ajUopKT6tRWA1#",
@@ -901,7 +902,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜花嫁隐 汉化补丁备份（密码见视频简介）.zip 265.6MB 2026-02-20 16:01 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/19A5I7Dk-hzY8xZD-Js-41Q?pwd=458t",
@@ -913,7 +914,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c",
@@ -925,7 +926,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -955,7 +956,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VtjaKZ2RVHvxSRV7H7pr7Q?pwd=qfbm",
@@ -967,7 +968,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -997,7 +998,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1027,7 +1028,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1059,7 +1060,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1091,7 +1092,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1121,7 +1122,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VO9pWQjGe0jn3dDBnT-SLw?pwd=23rs",
@@ -1134,7 +1135,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1164,7 +1165,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1196,7 +1197,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1228,7 +1229,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1260,7 +1261,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1292,7 +1293,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/4d8a94a454f3",
@@ -1304,7 +1305,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1334,7 +1335,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1364,7 +1365,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/9b7b131baf30",
@@ -1376,7 +1377,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1406,7 +1407,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/531bc6015b3f",
@@ -1418,7 +1419,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOnyNubGFfhY9O_bSCZxGpbiA1#",
@@ -1431,7 +1432,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜灰姑娘现象FD机翻润色补丁.zip 704MB 2026-03-18 07:04 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1460,7 +1461,7 @@
      "share_id": null,
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "分享有效｜人类保管库 汉化版.zip 137.26 MB2025-10-14"
     },
     {
@@ -1473,7 +1474,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://share.weiyun.com/3sblmV9F",
@@ -1484,7 +1485,7 @@
      "share_id": "3sblmV9F",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "分享有效｜人类保管库 汉化版.zip 2025年10月14日 137.26 MB "
     },
     {
@@ -1497,7 +1498,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1529,7 +1530,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://share.weiyun.com/wgc5yqS9",
@@ -1541,7 +1542,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip 2025年10月14日 84.8 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8452136792-41c934?p=1528",
@@ -1553,7 +1554,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip 84.80 MB2025-10-14",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/d707fbc6e074",
@@ -1565,7 +1566,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1595,7 +1596,7 @@
      "status": "ok",
      "detail": "分享有效｜并非兄妹 汉化完整版.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8452133618-d25165?p=1528",
@@ -1607,7 +1608,7 @@
      "status": "ok",
      "detail": "分享有效｜并非兄妹的热病 汉化补丁.zip 141.62 MB2025-10-14",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/aacaa363282f",
@@ -1619,7 +1620,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://share.weiyun.com/qlGJBhrY",
@@ -1631,7 +1632,7 @@
      "status": "ok",
      "detail": "分享有效｜并非兄妹的热病 汉化补丁.zip 2025年10月14日 141.62 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1661,7 +1662,7 @@
      "status": "ok",
      "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
@@ -1672,7 +1673,7 @@
      "share_id": null,
      "status": "dead",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "文件不存在或已被删除"
     },
     {
@@ -1684,7 +1685,7 @@
      "share_id": "SOCeG7UU",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31",
+     "checked_at": "2026-10-25 00:00",
      "detail": "分享有效｜关于梦 汉化补丁.zip 2025年11月28日 47.8 MB "
     },
     {
@@ -1697,7 +1698,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/0a1e3c67c472",
@@ -1709,7 +1710,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -1741,7 +1742,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/246f4d295926?pwd=XiEz",
@@ -1753,7 +1754,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOiITcGJud8b9aFLSLFdI1nRA1#",
@@ -1765,7 +1766,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/d05786e3dbc84",
@@ -1777,7 +1778,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx",
@@ -1789,7 +1790,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf",
@@ -1802,7 +1803,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1832,7 +1833,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/b1670df90436?pwd=aeTt",
@@ -1844,7 +1845,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOiDvXodPCJ-e23xvHJQ2cWkA1#",
@@ -1856,7 +1857,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈(1).zip 19.6MB 2026-01-06 00:11 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1IXFJlXpg3oOmU7bWRM-6wA?pwd=88ac",
@@ -1869,7 +1870,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1_Kt7VHEgLnhVWzfIs8fHHw?pwd=gxn6",
@@ -1882,7 +1883,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/980575fd2e8e",
@@ -1895,7 +1896,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOiDrNAPa1_8MkwA3Y1WFrBjA1#",
@@ -1908,7 +1909,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈.zip 19.6MB 2026-01-05 23:42 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1938,7 +1939,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -1968,7 +1969,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/0cc65915c309",
@@ -1980,7 +1981,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2010,7 +2011,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -2042,7 +2043,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ea843c28afe4",
@@ -2054,7 +2055,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2084,7 +2085,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/93069786f079",
@@ -2096,7 +2097,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2126,7 +2127,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOmFlnMQuNyWGoD8c6c6jjzxA1#",
@@ -2139,7 +2140,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜爱情寄生虫 汉化完整版.zip 304.2MB 2026-02-25 18:04 ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2169,7 +2170,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/4045e8716360",
@@ -2181,7 +2182,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://www.123865.com/s/ootDVv-ioTmv?pwd=gqAu#",
@@ -2193,7 +2194,7 @@
      "status": "ok",
      "detail": "分享有效｜惩罚之吻 汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528",
@@ -2205,7 +2206,7 @@
      "status": "dead",
      "detail": "文件不存在或已被删除",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
@@ -2217,7 +2218,7 @@
      "status": "dead",
      "detail": "文件不存在或已被删除",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://share.weiyun.com/RvqDhtES",
@@ -2229,7 +2230,7 @@
      "status": "ok",
      "detail": "分享有效｜惩罚之吻 汉化补丁.zip 2025年12月03日 15.76 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2259,7 +2260,7 @@
      "status": "ok",
      "detail": "分享有效｜HIKEBACK汉化完整版.zip 72.33 MB2025-09-13",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw",
@@ -2271,7 +2272,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/c3635ad46422",
@@ -2283,7 +2284,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2313,7 +2314,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2343,7 +2344,7 @@
      "status": "ok",
      "detail": "分享有效｜demonheart 机翻润色补丁.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn",
@@ -2355,7 +2356,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2385,7 +2386,7 @@
      "status": "ok",
      "detail": "分享有效｜恶魔之心：猎人 机翻汉化补丁.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln",
@@ -2397,7 +2398,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2427,7 +2428,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2457,7 +2458,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VfM569bIXc88XNqNWkPOPw?pwd=wd47",
@@ -2469,7 +2470,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/03c50cd0bb46",
@@ -2481,7 +2482,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2511,7 +2512,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2542,7 +2543,7 @@
      "detail": "分享有效（需提取码）｜永久有效｜与死神的约会 本体完整汉化版.zip 929.3MB 2026-02-25 18:19 ",
      "note": "来自 UP 主 2026-04-06 的补档博文（视频被举报下架后的补档）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOmJJ6JS9lZjFpoV7D3wTk0PA1",
@@ -2555,7 +2556,7 @@
      "detail": "分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19 ",
      "note": "同上",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/7592f83e7545",
@@ -2568,7 +2569,7 @@
      "detail": "分享已被封禁（文件涉及违规内容）",
      "note": "同上",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/c7a6308b4f59",
@@ -2581,7 +2582,7 @@
      "detail": "分享已被封禁（文件涉及违规内容）",
      "note": "同上",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -2613,7 +2614,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/625a66c341d1",
@@ -2625,7 +2626,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/8e9e4cff4611",
@@ -2638,7 +2639,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2668,7 +2669,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2698,7 +2699,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2728,7 +2729,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1s3e_j513Xw7TzBIldQAUdw?pwd=pi79",
@@ -2740,7 +2741,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -2770,7 +2771,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528",
@@ -2779,10 +2780,10 @@
      "source": "desc",
      "platform_name": "城通网盘",
      "share_id": null,
-     "status": "ok",
-     "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip 209.17 MB2025-10-12",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/fb2fd1917f21",
@@ -2794,7 +2795,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528",
@@ -2803,10 +2804,10 @@
      "source": "pinned",
      "platform_name": "城通网盘",
      "share_id": null,
-     "status": "dead",
-     "detail": "文件不存在或已被删除",
-     "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://www.123684.com/s/ootDVv-cDjov?pwd=7mRc",
@@ -2818,7 +2819,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/e84b113d573c",
@@ -2830,12 +2831,12 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 4,
-   "links_dead": 2
+   "links_ok": 3,
+   "links_dead": 1
   },
   {
    "name": "BUSTAFELLOWS",
@@ -2860,7 +2861,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [
@@ -2892,7 +2893,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/9780b9de1b7c",
@@ -2904,7 +2905,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOmoYvBo974B8b5YVyYDQQegA1#",
@@ -2913,14 +2914,14 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOmoYvBo974B8b5YVyYDQQegA1",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 1,
+   "links_ok": 0,
    "links_dead": 2
   },
   {
@@ -2946,7 +2947,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/d891ae5de524",
@@ -2958,7 +2959,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOnS5Nm02L74hPotSQhGoJwoA1#",
@@ -2967,10 +2968,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOnS5Nm02L74hPotSQhGoJwoA1",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/e2f43ca43b8b4",
@@ -2982,11 +2983,11 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 1,
+   "links_ok": 0,
    "links_dead": 3
   },
   {
@@ -3012,7 +3013,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ebf194eb099f",
@@ -3024,7 +3025,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1#",
@@ -3034,9 +3035,9 @@
      "platform_name": "迅雷云盘",
      "share_id": "VOwqPQU1hyfxAii1mCw0LVNTA1",
      "status": "unknown",
-     "detail": "页面状态无法判定",
+     "detail": "未取得核验结果",
      "status_text": "待确认",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q",
@@ -3048,7 +3049,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/d727e34ead20?pwd=RSW6",
@@ -3060,7 +3061,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1#",
@@ -3070,9 +3071,9 @@
      "platform_name": "迅雷云盘",
      "share_id": "VOsG4aIEXvegNNo9MQgXuNthA1",
      "status": "unknown",
-     "detail": "页面状态无法判定",
+     "detail": "未取得核验结果",
      "status_text": "待确认",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/874242a1ffa44",
@@ -3084,7 +3085,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1Sk67xbjZbziK63wRPFIMCQ?pwd=ry7r",
@@ -3096,7 +3097,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1#",
@@ -3106,9 +3107,9 @@
      "platform_name": "迅雷云盘",
      "share_id": "VOsG37JWLGwjOcLEBy26L1yHA1",
      "status": "unknown",
-     "detail": "页面状态无法判定",
+     "detail": "未取得核验结果",
      "status_text": "待确认",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
@@ -3138,7 +3139,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/47eec60af621",
@@ -3150,7 +3151,7 @@
      "status": "ok",
      "detail": "分享有效｜冬弥雪短篇",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1#",
@@ -3159,10 +3160,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOusVbmPXRqKqPVGD4QF6Jw",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/a15712f77ccf4",
@@ -3174,11 +3175,11 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 3,
+   "links_ok": 2,
    "links_dead": 1
   },
   {
@@ -3204,7 +3205,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/782fc8938454",
@@ -3216,7 +3217,7 @@
      "status": "ok",
      "detail": "分享有效｜替身谎言",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1#",
@@ -3225,10 +3226,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOyriyR9yyRk8XQqXaSHwtK1A1",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/e818987ce1474",
@@ -3240,11 +3241,11 @@
      "status": "ok",
      "detail": "分享有效｜替身谎言",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 3,
+   "links_ok": 2,
    "links_dead": 1
   },
   {
@@ -3270,7 +3271,7 @@
      "status": "dead",
      "detail": "来晚啦，该分享已被取消",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/14e3bebe2f45",
@@ -3282,7 +3283,7 @@
      "status": "dead",
      "detail": "分享已被封禁（文件涉及违规内容）",
      "status_text": "失效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VP43aDVHIUFIXuga6fe-IRJoA1#",
@@ -3291,10 +3292,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VP43aDVHIUFIXuga6fe",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip 10MB 2026-10-16 20:03 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/d890c62374494",
@@ -3306,7 +3307,7 @@
      "status": "ok",
      "detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://wwanu.lanzoue.com/iJbaA4c89rde",
@@ -3318,11 +3319,11 @@
      "status": "ok",
      "detail": "分享有效｜10.0 M",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 3,
+   "links_ok": 2,
    "links_dead": 2
   },
   {
@@ -3348,7 +3349,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/499e10eefe3d",
@@ -3360,7 +3361,7 @@
      "status": "ok",
      "detail": "分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1#",
@@ -3369,10 +3370,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VP4Ds50puFl",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "status": "unknown",
+     "detail": "未取得核验结果",
+     "status_text": "待确认",
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/6a8f0cac8f604",
@@ -3384,7 +3385,7 @@
      "status": "ok",
      "detail": "分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     },
     {
      "url": "https://wwanu.lanzoue.com/iFdGG4cg9hnc",
@@ -3396,11 +3397,11 @@
      "status": "ok",
      "detail": "分享有效｜81.7 M",
      "status_text": "有效",
-     "checked_at": "2026-10-24 23:31"
+     "checked_at": "2026-10-25 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 5,
+   "links_ok": 4,
    "links_dead": 0
   }
  ]

@@ -4,9 +4,9 @@
 
 > 仅供维护使用，**不在汉化主页上展示**。
 
-- 生成时间：2026-10-24 23:34
+- 生成时间：2026-10-25 00:03
 - 收录游戏 64 个，网盘链接 179 条（去重 174 条）
-- 状态：有效 109 ／ 失效 66 ／ 待确认 4
+- 状态：有效 103 ／ 失效 65 ／ 待确认 11
 
 ## 平台分布
 
@@ -14,8 +14,8 @@
 | --- | ---: | ---: | ---: | ---: |
 | 百度网盘 | 53 | 18 | 0 | 71 |
 | 夸克网盘 | 5 | 39 | 0 | 44 |
-| 迅雷云盘 | 17 | 0 | 4 | 21 |
-| 城通网盘 | 8 | 4 | 0 | 12 |
+| 迅雷云盘 | 12 | 0 | 9 | 21 |
+| 城通网盘 | 7 | 3 | 2 | 12 |
 | 123云盘 | 11 | 0 | 0 | 11 |
 | UC网盘 | 4 | 5 | 0 | 9 |
 | 腾讯微云 | 7 | 0 | 0 | 7 |
@@ -76,7 +76,6 @@
 | 冬鸦何处去 | 夸克网盘 | https://pan.quark.cn/s/8e9e4cff4611 | 分享已被封禁（文件涉及违规内容） |
 | 销魂罪人 | 百度网盘 | https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi | 来晚啦，该分享已被取消 |
 | MAMIYA | 夸克网盘 | https://pan.quark.cn/s/d2a976a8cf14 | 分享已被封禁（文件涉及违规内容） |
-| 别吃收银员！ | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 文件不存在或已被删除 |
 | 别吃收银员！ | 夸克网盘 | https://pan.quark.cn/s/e84b113d573c | 分享已被封禁（文件涉及违规内容） |
 | 汝，当爱休息区的他 | 百度网盘 | https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3 | 来晚啦，该分享已被取消 |
 | 汝，当爱休息区的他 | 夸克网盘 | https://pan.quark.cn/s/9780b9de1b7c | 分享已被封禁（文件涉及违规内容） |
@@ -210,7 +209,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 城通网盘 | https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09 |
 | 2 | 百度网盘 | https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b | iu8b | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans# | 6ans | 视频简介 | ⚠️ 待确认 | 页面状态无法判定 |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans# | 6ans | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07  |
 | 4 | 夸克网盘 | https://pan.quark.cn/s/fb7d7e01f866 | U44Z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 5 | 夸克网盘 | https://pan.quark.cn/s/8364570fa481 | Uurz | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 6 | 腾讯微云 | https://share.weiyun.com/05WlFxr6 | 8x8jzi | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB  |
@@ -654,9 +653,9 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 123云盘 | https://www.123865.com/s/ootDVv-Frjov?pwd=2zNr# | 2zNr | 视频简介 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁v1.1.zip｜到期 2099-12-12 |
-| 2 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁v1.1.zip 209.17 MB2025-10-12 |
+| 2 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528 | 1528 | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 3 | 夸克网盘 | https://pan.quark.cn/s/fb2fd1917f21 | 1u5z | 视频简介 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁v1.1.zip |
-| 4 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 1528 | 置顶评论 | ❌ 失效 | 文件不存在或已被删除 |
+| 4 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 1528 | 置顶评论 | ⚠️ 待确认 | 未取得核验结果 |
 | 5 | 123云盘 | https://www.123684.com/s/ootDVv-cDjov?pwd=7mRc | 7mRc | 置顶评论 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁.zip｜到期 2099-12-12 |
 | 6 | 夸克网盘 | https://pan.quark.cn/s/e84b113d573c | KdJV | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 
@@ -678,7 +677,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3 | a1s3 | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消 |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/9780b9de1b7c | h79D | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOmoYvBo974B8b5YVyYDQQegA1# | 3am3 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOmoYvBo974B8b5YVyYDQQegA1# | 3am3 | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 
 ### 恶魔之心：被诅咒的试炼
 
@@ -688,7 +687,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq | 72mq | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消 |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/d891ae5de524 | tm89 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOnS5Nm02L74hPotSQhGoJwoA1# | tm89 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOnS5Nm02L74hPotSQhGoJwoA1# | tm89 | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 4 | UC网盘 | https://drive.uc.cn/s/e2f43ca43b8b4 | Xx9z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 
 ### 粉碎梦之门与病娇的按钮
@@ -699,13 +698,13 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1mlcD0J_uExvR0ZjtVvq9xw?pwd=3ww8 | 3ww8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/ebf194eb099f | 4jJg | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1# | ypz5 | 视频简介 | ⚠️ 待确认 | 页面状态无法判定 |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1# | ypz5 | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 4 | 百度网盘 | https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q | vu7q | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消 |
 | 5 | 夸克网盘 | https://pan.quark.cn/s/d727e34ead20?pwd=RSW6 | RSW6 | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 6 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1# | pdu5 | 置顶评论 | ⚠️ 待确认 | 页面状态无法判定 |
+| 6 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1# | pdu5 | 置顶评论 | ⚠️ 待确认 | 未取得核验结果 |
 | 7 | UC网盘 | https://drive.uc.cn/s/874242a1ffa44 | CC5B | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 8 | 百度网盘 | https://pan.baidu.com/s/1Sk67xbjZbziK63wRPFIMCQ?pwd=ry7r | ry7r | 置顶评论 | ✅ 有效 | 分享有效（需提取码） |
-| 9 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1# | upat | 置顶评论 | ⚠️ 待确认 | 页面状态无法判定 |
+| 9 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1# | upat | 置顶评论 | ⚠️ 待确认 | 未取得核验结果 |
 
 ### ~把最棒的巧克力送给你 这份心意就是全部哦~
 
@@ -715,7 +714,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1g8qMG1nAzMjVSfUMMMqaqQ?pwd=4stn | 4stn | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/47eec60af621 | 43u2 | 视频简介 | ✅ 有效 | 分享有效｜冬弥雪短篇 |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1# | 43u2 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1# | 43u2 | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 4 | UC网盘 | https://drive.uc.cn/s/a15712f77ccf4 | GpRv | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 
 ### 替身谎言~one night liar
@@ -726,7 +725,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix | mwix | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消 |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/782fc8938454 | r83W | 视频简介 | ✅ 有效 | 分享有效｜替身谎言 |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1# | kpvq | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1# | kpvq | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 4 | UC网盘 | https://drive.uc.cn/s/e818987ce1474 | bFaJ | 视频简介 | ✅ 有效 | 分享有效｜替身谎言 |
 
 ### 拍卖开始的五分钟后
@@ -737,7 +736,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j | ur5j | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消 |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/14e3bebe2f45 | jiyj | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP43aDVHIUFIXuga6fe-IRJoA1# | skdr | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip 10MB 2026-10-16 20:03  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP43aDVHIUFIXuga6fe-IRJoA1# | skdr | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 4 | UC网盘 | https://drive.uc.cn/s/d890c62374494 | aePj | 视频简介 | ✅ 有效 | 分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip |
 | 5 | 蓝奏云 | https://wwanu.lanzoue.com/iJbaA4c89rde | ei6b | 视频简介 | ✅ 有效 | 分享有效｜10.0 M |
 
@@ -749,6 +748,6 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1SS04HchS9uVIc5t-cqCDuA?pwd=n2b8 | n2b8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/499e10eefe3d | K3rm | 视频简介 | ✅ 有效 | 分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1# | estz | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58  |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1# | estz | 视频简介 | ⚠️ 待确认 | 未取得核验结果 |
 | 4 | UC网盘 | https://drive.uc.cn/s/6a8f0cac8f604 | s6Uh | 视频简介 | ✅ 有效 | 分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip |
 | 5 | 蓝奏云 | https://wwanu.lanzoue.com/iFdGG4cg9hnc | 4s6x | 视频简介 | ✅ 有效 | 分享有效｜81.7 M |
