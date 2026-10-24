@@ -964,13 +964,13 @@ html.bgReady .bgLayer{ opacity:.5; }
 /* 中缝线性渐隐，让两图衔接自然 */
 .bgLeft{
   left:0;
-  background-image:url("assets/bg-left.webp");
+  background-image:url("assets/bg-right.webp");
   -webkit-mask-image:linear-gradient(90deg, #000 62%, transparent 98%);
           mask-image:linear-gradient(90deg, #000 62%, transparent 98%);
 }
 .bgRight{
   right:0;
-  background-image:url("assets/bg-right.webp");
+  background-image:url("assets/bg-left.webp");
   -webkit-mask-image:linear-gradient(270deg, #000 62%, transparent 98%);
           mask-image:linear-gradient(270deg, #000 62%, transparent 98%);
 }
