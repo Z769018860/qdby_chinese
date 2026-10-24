@@ -14,8 +14,8 @@
       "period": "2026-10-12 – 2026-10-26",
       "recordCount": 2000,
       "leaderboardEntryCount": 2000,
-      "complete": false,
-      "coverageMode": "official-rank-top2000-with-partial-team-details",
+      "complete": true,
+      "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/71-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/71.json",
       "dataUpdatedAt": "2026-10-25T04:19:24.625773+08:00",
@@ -28,13 +28,16 @@
       "battleDetailPath": "data/morimens/eremora/usage/71-battle-gzip/index.json",
       "revision": "s71-top2000-20261025-0419",
       "rankUpdatedAt": "2026-10-25T04:19:24.625773+08:00",
-      "teamDetailsUpdatedAt": "2026-10-21T14:24:00+08:00",
+      "teamDetailsUpdatedAt": "2026-10-25T06:23:30+08:00",
       "detailCoverage": {
         "expected": 2000,
-        "available": 1630,
-        "missing": 370,
-        "complete": false
-      }
+        "available": 2000,
+        "missing": 0,
+        "complete": true
+      },
+      "teamDetailRevision": "beb50032fa368d7ebfe3353b0bfcdafabd2066c2ac54d3cf14331258d5195036",
+      "battleDetailRevision": "b2b0da9a135f999fb967c91136df24080a2ee5a7c3d7b0dcddf39cad25f149ce",
+      "payloadEncoding": "table-pool-v2"
     },
     {
       "seasonId": 70,
@@ -215,7 +218,7 @@
     "出场率分层：第70期新制难度为危险等级 C / B / A / S / SS / SSS / ▼；只有 maxRankAvailable 达到对应榜单范围时才标记该 Top 口径完整。"
   ],
   "analytics": {
-    "generatedAt": "2026-10-21T06:46:21.193Z",
+    "generatedAt": "2026-10-24T22:22:22.089Z",
     "rankScopes": [
       50,
       200,
@@ -272,8 +275,8 @@
         "seasonId": 71,
         "maxRankAvailable": 2000,
         "difficulty": {
-          "recognizedTeams": 10857,
-          "totalTeams": 10857,
+          "recognizedTeams": 11051,
+          "totalTeams": 11051,
           "complete": true
         },
         "rankScopes": {
@@ -308,15 +311,17 @@
     "coverage": {
       "expected": 2000,
       "covered": 2000,
-      "coveragePct": 100,
+      "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-10-21T14:24:00+08:00",
-    "revision": "0b45ae9ab3dd59292f6e1abf74ea2c43058f92c074bca3ea050a8e4d84cb83cf",
-    "format": "gzip-base64-chunked-v1",
-    "chunks": 5,
+    "syncedAt": "2026-10-24T22:52:24.103497Z",
+    "revision": "beb50032fa368d7ebfe3353b0bfcdafabd2066c2ac54d3cf14331258d5195036",
+    "format": "gzip-base64-chunked-v2",
+    "chunks": 2,
     "chunkSize": 600000,
-    "chunkBytes": 2852914
+    "chunkBytes": 935888,
+    "rawBytes": 4206818,
+    "encoding": "table-pool-v2"
   },
   "rawTop1000Import": {
     "seasonId": 69,
@@ -350,16 +355,21 @@
     ],
     "rankedPlayers": 2000,
     "parsedRecords": 2000,
-    "teamRows": 9790,
-    "battleRows": 0,
+    "teamRows": 11634,
+    "battleRows": 21373,
     "ringRealm": "Chaos",
     "ringRealmZh": "混沌",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-10-21T14:24:00+08:00",
-    "revision": "0b45ae9ab3dd59292f6e1abf74ea2c43058f92c074bca3ea050a8e4d84cb83cf",
+    "updatedAt": "2026-10-25T06:23:30+08:00",
+    "revision": "4d3f0d4be18727e0e541e569a6704dac1b357b0f07a5a4d4927e88222cec53d4",
     "battleArchive": "data/morimens/dzone/season71/meta.json",
     "battleDetail": "data/morimens/eremora/usage/71-battle-gzip/index.json",
-    "note": "Season 71 (in progress): Top 2000 rank snapshot 2026-10-21 14:24 + teams_latest.jsonl of the same capture."
+    "note": "Season 71 final snapshot: Top 2000 rank snapshot 2026-10-25 04:19 + teams_latest.jsonl of the same capture, merged with the 2026-10-21 14:24 raw shards (rows the new capture no longer carries stay from the older capture). 2000/2000 ranked players now have team details.",
+    "teamRowsBySource": {
+      "teams_latest.jsonl": 9816,
+      "previous-capture": 1818
+    },
+    "payloadEncoding": "table-pool-v2"
   },
   "postbug69Import": {
     "seasonId": 69,

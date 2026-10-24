@@ -3,21 +3,22 @@
   "activityTid": 83331,
   "name": "第71期 融灾 · 混沌戒指",
   "date": "10.12-10.25",
-  "updatedAt": "2026-10-21 14:24",
+  "updatedAt": "2026-10-25 04:19",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-21T14:24:41.827663+08:00",
+  "sourceRetrievedAt": "2026-10-25T04:19:24.625773+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 9790
+    "teams_latest.jsonl": 9816,
+    "previous-capture": 1818
   },
   "skippedTailLines": 0,
   "duplicateRankRowsDropped": [],
   "recordCount": 2000,
   "playersWithTeamDetail": 2000,
-  "teamRows": 9790,
+  "teamRows": 11634,
   "stageGroupIds": [
     83434,
     83435,
@@ -64,7 +65,11 @@
       },
       {
         "file": "raw-teams/teams-008.jsonl.gz",
-        "lines": 190
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-009.jsonl.gz",
+        "lines": 834
       }
     ],
     "uids": "uids.csv",
@@ -92,60 +97,5 @@
     "leftHp",
     "playerLevel",
     "recordTime"
-  ],
-  "latestRankingSnapshot": {
-    "source": "uploaded season_83331.zip / ranking.json",
-    "activityTid": 83331,
-    "retrievedAt": "2026-10-25T04:19:24.625773+08:00",
-    "rankRange": [
-      1,
-      2000
-    ],
-    "recordCount": 2000,
-    "scoreDistribution": {
-      "375": 34,
-      "380": 202,
-      "385": 133,
-      "390": 124,
-      "395": 79,
-      "400": 274,
-      "405": 146,
-      "410": 115,
-      "415": 68,
-      "420": 41,
-      "425": 127,
-      "430": 45,
-      "435": 32,
-      "440": 21,
-      "445": 31,
-      "450": 307,
-      "455": 43,
-      "460": 36,
-      "465": 19,
-      "470": 17,
-      "475": 27,
-      "480": 15,
-      "485": 8,
-      "490": 10,
-      "500": 27,
-      "505": 4,
-      "510": 5,
-      "515": 2,
-      "525": 8
-    },
-    "rankIndexPath": "data/morimens/eremora/rank-index/71.json",
-    "siteDetailCoverage": {
-      "expected": 2000,
-      "available": 1630,
-      "missing": 370
-    },
-    "latestTeamCapture": {
-      "sourceFile": "season_83331.zip / teams_latest.jsonl",
-      "rows": 9816,
-      "uniqueUids": 2000,
-      "retrievedAtMin": "2026-10-13T02:00:20.093078+08:00",
-      "retrievedAtMax": "2026-10-25T04:39:45.442985+08:00",
-      "status": "not yet merged into packed site team details; rank-only placeholders are shown for newly ranked UIDs"
-    }
-  }
+  ]
 }
