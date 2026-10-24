@@ -1,14 +1,15 @@
 {
  "meta": {
-  "generated_at": "2026-10-24 21:07",
+  "generated_at": "2026-10-24 22:46",
   "source_checked_at": "2026-10-24 18:44",
   "games": 64,
   "summary": {
-   "ok": 28,
+   "ok": 29,
    "failover": 33,
    "recovered": 0,
-   "pending": 2,
-   "none": 1
+   "reshared": 1,
+   "pending": 1,
+   "none": 0
   },
   "recovered_links": 0,
   "note": "active 是当前可用的首选链接（按平台优先级与来源可信度排序），但只给平台/提取码/写在哪，不给地址——页面统一引导回视频发布处；failover 表示原链接有失效但已自动切到其他可用盘；recovered 表示从评论区/微博里补回了新链接并通过核验；pending 表示全部失效且暂无可信候补，reupload 写清本机补档卡在哪一步。"
@@ -110,8 +111,8 @@
    "state": "ok",
    "video": {
     "bvid": "",
-    "url": "",
-    "title": "",
+    "url": "https://weibo.com/5082872852/4960705235126295",
+    "title": "微博发布页",
     "pubdate": ""
    },
    "active": {
@@ -186,7 +187,21 @@
      "share_id": "5cfc2ad79a6d"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/戏剧之爱 机翻汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "十二条船全抛": {
    "state": "ok",
@@ -378,7 +393,21 @@
      "share_id": "8364570fa481"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/自恋囚笼 汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:09",
+     "check": "status=1"
+    }
+   ]
   },
   "君かアオイロ。（or君青）": {
    "state": "failover",
@@ -514,7 +543,21 @@
      "share_id": "e6baf1abb1d3"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/COLOR_COLLAR汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "不要抛下我!!": {
    "state": "failover",
@@ -582,7 +625,33 @@
      "share_id": "7a1ca4a8e4804"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/不要抛下我",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "errno=-9"
+    },
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/不要抛下我 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "神隐新娘（花嫁隐）": {
    "state": "failover",
@@ -650,7 +719,21 @@
      "share_id": "e477f65feaa8"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/花嫁隐 全部一起解压（分卷版",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "errno=-9"
+    }
+   ]
   },
   "trapped with jester": {
    "state": "ok",
@@ -911,7 +994,21 @@
      "share_id": "4d8a94a454f3"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/meetherthere汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "Line 88": {
    "state": "ok",
@@ -963,7 +1060,21 @@
      "share_id": "9b7b131baf30"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/灰姑娘现象 机翻汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "灰姑娘现象FD永远": {
    "state": "failover",
@@ -1004,7 +1115,21 @@
      "share_id": "531bc6015b3f"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/灰姑娘现象FD机翻润色补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:11",
+     "check": "status=1 audit=0 viol=0"
+    }
+   ]
   },
   "人类保管库": {
    "state": "failover",
@@ -1054,7 +1179,21 @@
      "share_id": "00dffb67943b"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/人类保管库 汉化版.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=0 viol=0"
+    }
+   ]
   },
   "细思极恐的恐怖游戏": {
    "state": "failover",
@@ -1104,7 +1243,21 @@
      "share_id": "d707fbc6e074"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/细思极恐的恐怖游戏 汉化版.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=0 viol=0"
+    }
+   ]
   },
   "并非兄妹的热病": {
    "state": "failover",
@@ -1154,7 +1307,21 @@
      "share_id": "aacaa363282f"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/并非兄妹的热病 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=0 viol=0"
+    }
+   ]
   },
   "关于埋葬某人的梦": {
    "state": "failover",
@@ -1280,7 +1447,21 @@
      "share_id": "d05786e3dbc84"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/舌头上的动物园 汉化补丁1.0.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "暴走族怪谈大会 再归": {
    "state": "failover",
@@ -1414,11 +1595,11 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "",
-     "detail": "分享不存在（已被取消或删除）",
+     "detail": "待核验",
      "source": "desc",
      "where": "视频简介",
      "share_id": "0cc65915",
-     "status": "dead",
+     "status": "unknown",
      "author": "",
      "is_up": false
     }
@@ -1474,7 +1655,21 @@
      "share_id": "ea843c28afe4"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/深海的勿忘草 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "水手服与命中注定之人": {
    "state": "failover",
@@ -1505,7 +1700,21 @@
      "share_id": "93069786f079"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/水手服与命中注定之人 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "爱情寄生虫": {
    "state": "failover",
@@ -1604,7 +1813,21 @@
      "share_id": ""
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/惩罚之吻 汉化补丁（文件夹）",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:41",
+     "check": "status=1"
+    }
+   ]
   },
   "HIKEBACK": {
    "state": "failover",
@@ -1644,7 +1867,21 @@
      "share_id": "c3635ad46422"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/HIKEBACK汉化完整版.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "seekL": {
    "state": "ok",
@@ -1789,7 +2026,21 @@
      "share_id": "03c50cd0bb46"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/ciel机翻补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "Birla_NNN": {
    "state": "ok",
@@ -1813,33 +2064,56 @@
    "candidates": []
   },
   "与死神的约会": {
-   "state": "none",
+   "state": "ok",
    "video": {
     "bvid": "",
-    "url": "",
-    "title": "",
+    "url": "https://m.weibo.cn/detail/5284672345213169",
+    "title": "微博发布页",
     "pubdate": ""
    },
-   "active": null,
-   "alt": [],
-   "dead": [],
-   "candidates": [],
-   "request": {
-    "bili_url": null,
-    "weibo_url": "",
-    "dead_platforms": [],
-    "message": "《与死神的约会》的网盘链接失效了，求补档 🙏"
+   "active": {
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "Tfnr",
+    "detail": "本体完整汉化版.zip",
+    "source": "weibo",
+    "where": "微博原文",
+    "share_id": "7592f83e7545"
    },
-   "reupload": {
-    "state": "need_login",
-    "client_name": "",
-    "file": "",
-    "file_size": 0,
-    "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享"
-   }
+   "alt": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "thfd",
+     "detail": "含 DLC 版汉化补丁.zip",
+     "source": "weibo",
+     "where": "微博原文",
+     "share_id": "c7a6308b4f59"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "5h7k",
+     "detail": "本体完整汉化版.zip",
+     "source": "weibo",
+     "where": "微博原文",
+     "share_id": "VOmJJ6JT-I48EuFreIkmxQKqA1"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "3hxn",
+     "detail": "含 DLC 版汉化补丁.zip",
+     "source": "weibo",
+     "where": "微博原文",
+     "share_id": "VOmJJ6JS9lZjFpoV7D3wTk0PA1"
+    }
+   ],
+   "dead": [],
+   "candidates": []
   },
   "冬鸦何处去": {
-   "state": "pending",
+   "state": "reshared",
    "video": {
     "bvid": "BV16C4y1271r",
     "url": "https://www.bilibili.com/video/BV16C4y1271r",
@@ -1878,22 +2152,20 @@
     }
    ],
    "candidates": [],
-   "request": {
-    "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
-    "weibo_url": "",
-    "dead_platforms": [
-     "夸克网盘",
-     "百度网盘"
-    ],
-    "message": "《冬鸦何处去》的夸克网盘、百度网盘链接失效了，求补档 🙏"
-   },
-   "reupload": {
-    "state": "need_login",
-    "client_name": "",
-    "file": "",
-    "file_size": 0,
-    "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享"
-   }
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/冬鸦何处去 机翻补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "杀死公主": {
    "state": "ok",
@@ -1983,7 +2255,21 @@
      "share_id": "d2a976a8cf14"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/MAMIYA 机翻润色补丁1.0.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "别吃收银员！": {
    "state": "failover",
@@ -2051,14 +2337,28 @@
      "share_id": ""
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=0 viol=0"
+    }
+   ]
   },
   "BUSTAFELLOWS": {
    "state": "ok",
    "video": {
     "bvid": "",
-    "url": "",
-    "title": "",
+    "url": "https://www.bilibili.com/read/cv22831035/?spm_id_from=333.1387.0.0&opus_fallback=1",
+    "title": "发布页",
     "pubdate": ""
    },
    "active": {
@@ -2161,7 +2461,21 @@
      "share_id": "e2f43ca43b8b4"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=4 viol=0"
+    }
+   ]
   },
   "粉碎梦之门与病娇的按钮": {
    "state": "failover",
@@ -2356,7 +2670,21 @@
      "share_id": "1DYCaJZQl-aUs2063qBxm4w"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/替身谎言",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "errno=-9"
+    }
+   ]
   },
   "拍卖开始的五分钟后": {
    "state": "failover",
@@ -2415,7 +2743,21 @@
      "share_id": "14e3bebe2f45"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-24 22:12",
+     "check": "status=1 audit=0 viol=0"
+    }
+   ]
   },
   "死刑前的心理咨询": {
    "state": "ok",

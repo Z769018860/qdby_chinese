@@ -1,0 +1,85 @@
+{
+ "files": {
+  "舌头上的动物园": {
+   "platform": "baidu",
+   "from_path": "/动物园/舌头上的动物园 汉化备份.zip",
+   "out": "reup\\舌头上的动物园 汉化备份（补档版）.zip",
+   "size": 300743744,
+   "md5_before": "68d7eb929ef975216298787941ab0944",
+   "md5_after": "cf51e6c501c54d23aacf8a1fe93c5752",
+   "token": "e295c311b43144911abde8d6945089fe",
+   "mode": "wrap",
+   "uploaded": false,
+   "error": "errno=109 文件违规，无法分享",
+   "at": "2026-10-24 22:30"
+  },
+  "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
+   "platform": "baidu",
+   "from_path": "/惩罚之吻 汉化补丁.zip",
+   "out": "reup\\惩罚之吻 汉化补丁（补档版）.zip",
+   "size": 16530965,
+   "md5_before": "3bba0bb85b29bdf4c598e64a6947feea",
+   "md5_after": "e0921e5733d809eaee4d47cef95fab8e",
+   "token": "d5f41958bb083be80099b38a17c5470c",
+   "mode": "wrap",
+   "uploaded": false,
+   "error": "errno=109 文件违规，无法分享",
+   "at": "2026-10-24 22:30"
+  },
+  "HIKEBACK": {
+   "platform": "baidu",
+   "from_path": "/HIKEBACK汉化完整版.zip",
+   "out": "reup\\HIKEBACK汉化完整版（补档版）.zip",
+   "size": 75840859,
+   "md5_before": "27e44a61836991aa4a7ee42d9cf4bad5",
+   "md5_after": "ce64f9092396856514bdffe640f827e5",
+   "token": "bf31be34311241eb3b22782cabfd0156",
+   "mode": "wrap",
+   "uploaded": false,
+   "error": "errno=109 文件违规，无法分享",
+   "at": "2026-10-24 22:30"
+  },
+  "恶魔之心：被诅咒的试炼": {
+   "platform": "baidu",
+   "from_path": "/恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+   "out": "reup\\恶魔之心 被诅咒的试炼 汉化魔改补丁（补档版）.zip",
+   "size": 32006416,
+   "md5_before": "0ae2562007b09045c751320350fa2d63",
+   "md5_after": "6b337273b6ba1eb62efc819f486375e7",
+   "token": "5964c3b2c1728323022cdaae09e686b1",
+   "mode": "wrap",
+   "uploaded": false,
+   "error": "errno=109 文件违规，无法分享",
+   "at": "2026-10-24 22:30"
+  },
+  "拍卖开始的五分钟后": {
+   "platform": "baidu",
+   "from_path": "/拍卖会/拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+   "out": "reup\\拍卖开始的五分钟后 汉化补丁by青灯不弈（补档版）.zip",
+   "size": 10460652,
+   "md5_before": "ae7250a321466a08a036e73c0cc55f04",
+   "md5_after": "c4bbca2c92dbf4af764c49d0bc7540fc",
+   "token": "292179d1d6681663429be5fc67575a9a",
+   "mode": "wrap",
+   "uploaded": false,
+   "error": "errno=109 文件违规，无法分享",
+   "at": "2026-10-24 22:30"
+  }
+ },
+ "checked_at": "2026-10-24 22:29",
+ "upload_probe": {
+  "baidu": {
+   "precreate_errno": 9019,
+   "msg": "need verify"
+  },
+  "quark": {
+   "code": 0,
+   "upload_url": "http://pds.quark.cn",
+   "bucket": "ul-zb",
+   "has_auth_info": true,
+   "dns": "unresolved"
+  }
+ },
+ "upload_blocked": true,
+ "upload_note": "两个云盘都不开放程序化上传：百度 xpan precreate 被风控要验证码，夸克直传域名在本机不可解析。改装后的文件需手动拖进客户端上传，之后 reshare.py 会自动建分享。"
+}

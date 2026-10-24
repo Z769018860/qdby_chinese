@@ -142,8 +142,30 @@ def pub(L):
 def video_of(g):
     bv = g.get('bvid') or ''
     url = g.get('bili_url') or ('https://www.bilibili.com/video/' + bv if bv else '')
+    # 「发布页」这一栏有些作品填的就是网盘地址，那不是发布处、更不能直出
+    if url and PAN_RE.search(url):
+        url = ''
+    # 没有投稿的作品（例如视频被下架）入口退回微博原文，页面统一引导到这里
+    if not url:
+        rel = g.get('release_url') or ''
+        if rel and not PAN_RE.search(rel):
+            return {'bvid': '', 'url': rel,
+                    'title': '微博发布页' if 'weibo' in rel else '发布页',
+                    'pubdate': g.get('pubdate') or ''}
+        return {'bvid': bv, 'url': '', 'title': '', 'pubdate': g.get('pubdate') or ''}
     return {'bvid': bv, 'url': url, 'title': g.get('video_title') or '',
             'pubdate': g.get('pubdate') or ''}
+
+
+PAN_RE = re.compile(r'(?:pan\.baidu\.com|pan\.quark\.cn|drive\.uc\.cn|pan\.xunlei\.com|'
+                    r'aliyundrive\.com|alipan\.com|cloud\.189\.cn|123pan\.com|'
+                    r'lanzou[a-z]?\.com|caiyun\.139\.com|share\.weiyun\.com|'
+                    r'ctfile\.com|mega\.nz|drive\.google\.com)', re.I)
+
+
+PLAT_NAME = {'baidu': '百度网盘', 'quark': '夸克网盘', 'xunlei': '迅雷云盘',
+             'uc': 'UC网盘', 'ctfile': '城通网盘', 'aliyun': '阿里云盘',
+             '123': '123云盘', 'lanzou': '蓝奏云', 'weiyun': '腾讯微云'}
 
 
 def request_block(g, name):
@@ -175,6 +197,7 @@ def main():
     articles = load(os.path.join(RAW, 'up_articles.json'), [])
     hunt = load(os.path.join(RAW, 'hunt_comments.json'), {})
     reup = load(os.path.join(REPO, 'data', 'netdisk-reupload.json'), {})
+    reshare = load(os.path.join(REPO, 'data', 'netdisk-reshare.json'), {})
     print('评论区补档语料：%d 个视频，%d 条含链接的评论'
           % (len(hunt), sum(len(v.get('comments') or []) for v in hunt.values())))
 
@@ -182,7 +205,7 @@ def main():
     print('作品 %d 个，链接 %d 条' % (len(games), sum(len(g.get('links') or []) for g in games)))
 
     out = {'meta': {}, 'games': {}}
-    states = {'ok': 0, 'failover': 0, 'recovered': 0, 'pending': 0, 'none': 0}
+    states = {'ok': 0, 'failover': 0, 'recovered': 0, 'reshared': 0, 'pending': 0, 'none': 0}
     new_links = []
 
     for g in games:
@@ -234,6 +257,25 @@ def main():
                 state = 'recovered'
                 rec['state'] = state
                 new_links.append((name, best))
+
+        # 本机已经重新建过分享的（scripts/netdisk/reshare.py 的产物）：
+        # 新链接写进对应视频的评论区，页面只标注「已补档」，仍然不直出地址
+        rs = ((reshare.get('games') or {}).get(name) or {}).get('links') or {}
+        done = []
+        for k, v in rs.items():
+            if not v.get('url'):
+                continue
+            row = pub({'platform': k, 'platform_name': PLAT_NAME.get(k, k),
+                       'pwd': v.get('pwd') or '', 'source': 'comment',
+                       'detail': v.get('path') or ''})
+            row.update({'verified': v.get('verified'), 'at': v.get('created_at') or '',
+                        'check': v.get('check') or ''})
+            done.append(row)
+        if done:
+            rec['reshare'] = done
+            if state in ('pending', 'none'):
+                state = 'reshared'
+                rec['state'] = state
 
         if state in ('pending', 'none'):
             rec['request'] = request_block(g, name)

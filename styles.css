@@ -318,6 +318,8 @@ tbody tr:hover{ background:#fcfcff; }
   background:#f8fbff;
 }
 .ndNow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.ndNowList{ display:flex; flex-direction:column; gap:6px; }
+.ndNowList .ndTo{ align-self:flex-start; }
 .ndNowPlat{ font-size:12.5px; font-weight:600; color:var(--text); }
 .ndReup{
   display:inline-block;

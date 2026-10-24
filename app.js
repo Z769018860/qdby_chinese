@@ -521,6 +521,7 @@ const ND_STATE_TEXT = {
   ok: ["ndState--ok", "全部有效"],
   failover: ["ndState--move", "已自动切换"],
   recovered: ["ndState--new", "已补档"],
+  reshared: ["ndState--new", "已重新分享"],
   pending: ["ndState--bad", "需要补档"],
   none: ["ndState--none", "未收录"],
 };
@@ -639,6 +640,21 @@ function ndDialogHtml(name, au){
       (a.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(a.pwd)}</span>` : "") +
       (a.detail ? `<span class="ndRowNote">${escapeHtml(a.detail)}</span>` : "") +
       `</div><span class="ndRowNote">${escapeHtml(from)}</span></div></div>`);
+  }
+
+  // 本机重新建过分享的：新地址写在视频「置顶评论」的回复里，页面仍不直出
+  const resh = au.reshare || [];
+  if(resh.length){
+    parts.push(`<div class="ndRow"><span class="ndRowK">刚补的档</span><div class="ndNowList">` +
+      resh.map(r => `<div class="ndNow">
+        <span class="ndNowPlat">${escapeHtml(r.platform_name || r.platform)}</span>` +
+        (r.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(r.pwd)}</span>` : "") +
+        `<span class="ndRowNote">写在视频置顶评论的回复里${r.at ? ` · ${escapeHtml(r.at)}` : ""}</span>` +
+      `</div>`).join("") +
+      `<span class="ndRowNote">这批链接是重新建过分享的（原来的失效了），站内同样不直出地址：` +
+      `点「去视频发布处」，在置顶评论下方找「【补档】」那条回复。</span>` +
+      (v.url ? `<a class="ndTo" href="${escapeHtml(v.url)}" target="_blank" rel="noopener">去置顶评论 ↗</a>` : "") +
+      `</div></div>`);
   }
 
   const alt = au.alt || [];

@@ -47,6 +47,11 @@ NAME_PATTERNS = [
 ]
 
 
+# 站点只收「汉化相关」的三类：repo（含感想/通关/评测）、release（发布/补档）、promo（安利）。
+# 其余 3600+ 条是转发与闲聊，留在 raw 里备查，不进站点数据（否则 JSON 6MB、页面全是噪音）。
+KEEP_KINDS = {k.strip() for k in
+              (os.environ.get('QD_WEIBO_KINDS') or 'repo,release,promo').split(',') if k.strip()}
+
 PIC_DIR = os.path.join(REPO_DIR, 'assets', 'weibo')
 
 
@@ -150,6 +155,8 @@ def main():
         text = p.get('fullText') or p.get('text') or ''
         text = re.sub(r'\s*(?:\.{2,}|…+)\s*全文\s*$', '', text).strip()
         kind = classify(text)
+        if KEEP_KINDS and kind not in KEEP_KINDS:
+            continue
         gids = set()
         miss = []
         for nm in candidates(text):

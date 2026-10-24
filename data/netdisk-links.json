@@ -2527,13 +2527,58 @@
    "desc": null,
    "pinned_comment": null,
    "pinned_author": null,
-   "release_url": "被举报下架",
-   "release_type": "other",
-   "links": [],
+   "release_url": "https://m.weibo.cn/detail/5284672345213169",
+   "release_type": "weibo",
+   "links": [
+    {
+     "url": "https://pan.xunlei.com/s/VOmJJ6JT-I48EuFreIkmxQKqA1",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "5h7k",
+     "share_id": "VOmJJ6JT-I48EuFreIkmxQKqA1",
+     "status": "ok",
+     "source": "weibo",
+     "detail": "本体完整汉化版.zip",
+     "note": "来自 UP 主 2026-04-06 的补档博文（视频被举报下架后的补档）"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOmJJ6JS9lZjFpoV7D3wTk0PA1",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "3hxn",
+     "share_id": "VOmJJ6JS9lZjFpoV7D3wTk0PA1",
+     "status": "ok",
+     "source": "weibo",
+     "detail": "含 DLC 版汉化补丁.zip",
+     "note": "同上"
+    },
+    {
+     "url": "https://pan.quark.cn/s/7592f83e7545",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "Tfnr",
+     "share_id": "7592f83e7545",
+     "status": "ok",
+     "source": "weibo",
+     "detail": "本体完整汉化版.zip",
+     "note": "同上"
+    },
+    {
+     "url": "https://pan.quark.cn/s/c7a6308b4f59",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "thfd",
+     "share_id": "c7a6308b4f59",
+     "status": "ok",
+     "source": "weibo",
+     "detail": "含 DLC 版汉化补丁.zip",
+     "note": "同上"
+    }
+   ],
    "notes": [
     "原 B 站视频被举报下架；已核查 B 站专栏（73 篇）与微博，未找到公开补档链接"
    ],
-   "links_ok": 0,
+   "links_ok": 4,
    "links_dead": 0
   },
   {

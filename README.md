@@ -71,9 +71,24 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 
 采集完统一补全两件事（都要在 `m.weibo.cn` 页面上下文里同源请求）：
 `/statuses/show?id=` 拿**完整配图列表**（搜索卡片常只给一张缩略图），
-`/statuses/extend` 拿**长微博全文**（卡片上的正文是截断版）。
+`/statuses/extend` 拿**长微博全文**（卡片上的正文是截断版）。补完 4000 条、3113 张图。
 
-配图直接落到 `assets/weibo/`（`download_pics.py`，150 张 / 24 MB）。
+> 登录态也可以从浏览器里「借」：`scripts/netdisk/browser_cookies.py` 能解 Chromium 系
+> （含 360 极速）的 cookie 库，注意新版会在明文前塞 32 字节 `sha256(host)`，不剥掉
+> `SUB`/`SESSDATA` 会变成二进制脏数据。
+
+**站点只收汉化相关的三类**（`QD_WEIBO_KINDS` 可改，默认 `repo,release,promo`）：
+4000 条里有 3634 条是转发与闲聊，全塞进 `weibo.json` 会让页面变成 6 MB 的噪音场。
+筛完是 366 条（repo 253 / release 60 / promo 53），关联到 150 部作品，另有 42 个
+「只在微博里出现过」的作品被补建成实体。
+
+配图全部自托管 + 压缩（`download_pics.py`，814 张 / 40 MB，平均 50 KB）：
+
+1. 取图床的 `mw690` 段（原图 mw2000 单张 0.5~1 MB，三千多张就是 2 GB+）；
+2. 本地再用 Pillow 压一遍：长边 ≤ 700、JPEG 质量 74、progressive + optimize、
+   丢掉 EXIF；实测比源图小约 1/3，肉眼看不出差别；
+3. 存成 `assets/weibo/<hash>.jpg`，`prune_pics.py` 负责清掉重建数据后没人引用的孤儿图。
+
 必须自托管：微博图床对第三方站点防盗链，本机无头浏览器整条链路拿不到图，
 页面会变成一排灰格子；`curl` 却是 200，所以下载走 curl。原图 URL 另存在 `picsOrig`，
 「查看原图」仍然跳微博图床。
@@ -87,19 +102,25 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 
 - `data/games.json`：游戏维度库（658 个实体）。每条含 `plat / price / pz / topics / els / hours / size / store.steam / url / vcount / videos`，以及 `vidmap`（bvid → gid）
 - `data/videos.json`：视频站数据（视频 + 专栏）。每条投稿已把游戏维度打平到记录上（`gid / gn / plat / genre / el / pz / gs`），顶层 `facets` 定义 8 组维度
-- `data/weibo.json`：微博动态（分类、正文、配图、关联游戏），`by_game` 供卡片反查
-- `assets/weibo/`：微博配图本地副本（原图 URL 仍留在 `picsOrig`）
+- `data/weibo.json`：微博动态（366 条汉化相关：分类、正文、配图、关联游戏），`by_game` 供卡片反查
+- `assets/weibo/`：微博配图本地副本（814 张 / 40 MB，长边 ≤700、q74；原图 URL 仍留在 `picsOrig`）
 - `data/netdisk-links.json` / `.md` / `.html`：网盘链接台账（不在汉化站导航中引用）
 - `data/netdisk-status.json`：按作品聚合的网盘状态，供汉化站表格列使用
-  - 覆盖 63 个作品 / 175 条链接：有效 111、失效 64。失效集中在夸克网盘（37 条，多为「文件涉及违规内容 41010」）与 UC 网盘（5 条）
+  - 覆盖 64 个作品 / 179 条链接：有效 111、失效 64。失效集中在夸克网盘（37 条，多为「文件涉及违规内容 41010」）与 UC 网盘（5 条）
   - 每条记录含 `total / ok / dead / unknown`、按平台拆分的明细与 `checked_at` 检查时间
 - `data/netdisk-autofill.json` / `.md`：自动补档结果，见下节
+- `data/netdisk-reshare.json`：重新建出来的分享（含平台、提取码、核验状态、评论 rpid）
+- `data/netdisk-violation.json`：违规文件改装记录（改装前后 md5、输出路径）
 - `data/netdisk-reupload.json`：本机补档能力（客户端 / 登录态 / 补丁文件）探测结果
 - `scripts/netdisk/`：网盘链接抓取、核验与补档
   - `refresh.py`：抓发布页 + 评论 + 专栏，抽链接并核验（`check_spa.mjs` 负责需渲染的盘）
   - `hunt_comments.mjs`：按视频重扫评论区（最热 + 最新各 3 页，含楼中楼），把带网盘域名的评论整条存进 `raw/hunt_comments.json`
   - `autofill.py`：算「当前可用链接」、自动切换、补抓候补、生成求档清单
+  - `reshare.py`：`index / plan / run` 三步——递归索引自己两个云盘 → 与失效清单模糊匹配 → 建新分享并核验
+  - `post_comments.py`：把新链接发到对应投稿的**置顶评论下方回复**里（`--dry` 演练、`--cleanup` 清理旧顶层评论）
   - `reupload.py`：探测百度/夸克/迅雷客户端与登录态、匹配本地补丁文件，判断能否自动重传
+  - `reup_violation.py`：违规文件 `probe` / `fetch`（下载 → 换哈希改装），见下节
+  - `browser_cookies.py`：解 Chromium 系 cookie 库（AES-GCM + 剥 32 字节 host 哈希前缀）
 - `scripts/bili/`：B 站抓取与构建
   - `up_app.py` / `up_articles.py`：投稿列表与专栏列表
   - `fetch_descs.mjs`：逐条抓投稿简介（浏览器内同源 fetch，1085 条 0 失败）
@@ -110,15 +131,18 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 - `scripts/weibo/`：微博同步
   - `fetch_weibo.mjs`：主页首屏
   - `collect_weibo.mjs`：采集 + 补全（`--login` 存登录态走全量；未登录只走搜索）
-  - `download_pics.py`：配图下载到 `assets/weibo/`（走 curl，绕开浏览器链路的防盗链）
+  - `download_pics.py`：配图下载 + 压缩到 `assets/weibo/`（走 curl，绕开浏览器链路的防盗链）
+  - `prune_pics.py`：清掉重建数据后没人引用的孤儿图
+  - `collect_full.py`：Python 版全量采集（断点续跑，逐条补图 / 补全文）
   - `fetch_full.mjs`：早期单独补全文的脚本（已并入 `collect_weibo.mjs`）
-  - `build_weibo.py`：分类、关联游戏、补建「只有微博」的游戏实体
+  - `build_weibo.py`：分类、按 `QD_WEIBO_KINDS` 筛选、关联游戏、补建「只有微博」的游戏实体
 
 ## 网盘与自动补档（汉化站）
 
 **页面上不出现任何网盘地址。** 每个作品的「网盘 / 补档」列只说明三件事：
 用哪个盘、提取码是多少、这条链接写在（简介 / 置顶评论 / 评论区 / 微博）哪里；
 点「去发布处」跳回 B 站视频，由用户自己在原发布页取链接。
+「发布页」栏位如果本身填的就是网盘地址，也会被拦掉（`PAN_RE`），不渲染成链接。
 
 这么做的原因有两个：链接失效时页面不会留一个点了没反应的死链；
 补档地址也不至于直接摊在明面上被批量扫走。
@@ -128,16 +152,76 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 已自动切换 · 去发布处 ↗ · 补档详情 · 检查于 10-24
 ```
 
-### 补档的三层处理
+### 补档的四层处理
 
 | 层 | 做法 | 现在的结果 |
 | --- | --- | --- |
 | 自动切换 | 一个作品常同时挂百度 / 夸克 / 迅雷多条链接，挂的往往只是一条，按平台优先级切到还活着的那条 | 64 个作品里 33 个走这条路，用户全程无感 |
-| 自动重找 | 全部失效时回到简介 / 评论区 / 微博全文 / 专栏重抽链接，再走与巡检相同的接口核验 | 35 个失效作品扫出 37 条带网盘链接的评论，但核验后可用 0 条 |
-| 本地重传 | 上面两条都走不通，才需要把文件重新传回自己的网盘 | 见下，卡在「客户端未登录」 |
+| 自动重找 | 全部失效时回到简介 / 评论区 / 微博全文 / 专栏重抽链接，再走与巡检相同的接口核验 | 35 个失效作品扫出 37 条带网盘链接的评论，核验后可用 0 条（别人的转存都过期了） |
+| 重新分享 | 文件还在自己云盘里：递归索引 → 名称模糊匹配 → 建新分享 → 立刻核验 → 写进对应视频的置顶评论 | **23 个作品 / 29 条新分享**（夸克 25 / 百度 4），全部 `verified` |
+| 本地重传 | 上面三条都走不通（多见于百度判定违规），才需要把文件重新打包再传 | 见下两节 |
 
-`data/netdisk-autofill.json` 里 `state` 分 ok / failover / recovered / pending / none。
-「补档详情」弹层里的「自动补档」一行会直接写明本机卡在哪一步。
+`data/netdisk-autofill.json` 里 `state` 分 ok / failover / recovered / reshared / pending / none。
+弹层里「刚补的档」列出这次重新分享的平台与提取码，仍然不直出地址，
+只告诉你去视频「置顶评论的回复」里找「【补档】」那条。
+「自动补档」一行会直接写明本机卡在哪一步。
+
+### 新链接写在置顶评论的回复里（`post_comments.py`）
+
+不新开顶层评论——顶层会刷屏、也容易被折叠。做法是找到该投稿的**置顶评论**
+（`x/v2/reply?sort=2` 的 `data.upper.top`，其次是 `data.top`），
+把补档内容以 `root=parent=<置顶rpid>` 发成楼中楼：
+
+```
+置顶评论（游戏说明…）
+└── 【补档】《冬鸦何处去》之前分享的链接失效了，重新分享一份（长期有效）：
+    夸克网盘：https://pan.quark.cn/s/xxxx　提取码：qdby
+```
+
+- 20 个作品命中 UP 主置顶；「拍卖开始的五分钟后」那条视频没有置顶评论，退回发顶层
+- 接口有个坑：`ps` 上限是 20，写 30 直接 `code:-400 ps out of bounds`
+- 发完立刻用 `x/v2/reply/reply?root=` 复查，确认挂在置顶下面
+
+```bash
+python scripts/netdisk/reshare.py index      # 索引自己云盘（夸克走 drive-pc，百度走 api/list 递归）
+python scripts/netdisk/reshare.py plan       # 模糊匹配失效清单，低于阈值宁可不补
+python scripts/netdisk/reshare.py run        # 建分享 + 核验，写 data/netdisk-reshare.json
+python scripts/netdisk/post_comments.py      # 发到置顶评论的回复里
+```
+
+匹配上宁可少不能错：「恶魔之心」曾经被匹到「恶魔之心：被诅咒的试炼」的补丁，
+现在加了别名展开（去掉书名号 / 版本号 / 汉化尾缀）、短名占比惩罚和冲突排他，
+23/35 命中全部人工复核过。夸克分享文件夹走异步任务，建完只回 `task_id`，
+要再查一次 `/1/clouddrive/task` 才拿得到 `share_id`。
+
+### 违规文件：下载 → 改装 → （客户端上传）
+
+百度建分享时对 5 个文件直接返回 `errno=109 文件违规`，这判定是按**内容哈希**走的，
+改文件名、换目录、改分享标题一概没用。`reup_violation.py` 把能自动化的部分做完：
+
+```bash
+python scripts/netdisk/reup_violation.py probe   # 实测两个云盘的上传能力，写进 data/netdisk-violation.json
+python scripts/netdisk/reup_violation.py fetch   # 下载 + 换哈希改装到 work/reup/
+```
+
+改装两种打法，都不改内容、不破坏原密码：
+
+- 明文 zip：逐条重建条目（名字 / 时间戳原样），再追加一个 `补档说明.txt`；
+- 加密 zip / rar / 7z：原文件整包塞进新 zip（STORED，不二次压缩），外层解出来还是原来那个文件。
+
+实测 5 个文件全部是加密 zip，走第二条：md5 全部改变（如 `68d7eb92…` → `cf51e6c5…`），
+体积基本不变（286 MB → 286.8 MB）。产物在 `work/reup/`，`state.uploaded` 仍是 false。
+
+**上传这一段在本机确实走不通**，`probe` 出来的证据：
+
+| 平台 | 结果 |
+| --- | --- |
+| 百度 | `xpan/file?method=precreate` → `errno=9019 need verify`（风控要验证码）；`pcs/superfile2` → 403，因为要 `access_token`，而客户端会话只给 `BDUSS/STOKEN/PANPSC`，`gettemplatevariable` 取 access_token 返回空；网页端 cookie 的 `bdstoken` 也是空串（`errno:-6`） |
+| 夸克 | `file/upload/pre` 能拿到 `upload_id` / `auth_info`，但直传域名 `pds.quark.cn` 本机 DNS 解析不到，OSS bucket `ul-zb` 也不对外（PUT 全 404） |
+
+所以最后一步是人工接力：把 `work/reup/*（补档版）.zip` 拖进客户端上传，
+再跑 `reshare.py index && reshare.py run`，就会自动把它们纳入索引、建分享、发评论。
+在这之前，这 5 部作品在站上走的是「重新分享」那一层的夸克镜像（已核验可用）。
 
 ### 本地重传（`reupload.py`）
 
@@ -155,9 +239,9 @@ python scripts/netdisk/reupload.py --dir D://补档        # 指定补丁目录�
 每部待补档作品的 `state` 是 `done / ready / need_file / need_login / no_client` 之一。
 看一眼就知道是没装客户端、没登录，还是找不到文件。
 
-> 现阶段本机实测：夸克网盘客户端在、**未登录**；百度网盘只剩配置残留（主程序已卸载）；
-> 迅雷未安装；补档目录里也没有对应文件 —— 所以 `state` 停在 `need_login`。
-> 登录一次、把补丁放进 `--dir` 指定的目录，再跑一次就会变 `ready`。
+> 现阶段本机实测：百度网盘客户端在且已登录（`BDUSS/STOKEN/PANPSC` 完整，能读能建分享）、
+> 夸克网盘客户端在（`__puus` 已拿到，能读能建分享）、迅雷云盘没有 `pan.xunlei.com` 会话；
+> 补档目录里没有原始补丁文件 —— 所以「读 / 分享」这一半全通，「写」这一半被风控挡住。
 
 ### 重新生成
 
