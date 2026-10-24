@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的个人站 · 视频站</title>
-  <link rel="stylesheet" href="styles.css?v=20261025.2" />
+  <link rel="stylesheet" href="styles.css?v=20261025.4" />
 </head>
 <body>
   <div class="bgLayer bgLeft" aria-hidden="true"></div>
@@ -20,7 +20,7 @@
           </div>
           <h1>青灯不弈的个人站</h1>
         </div>
-        <p class="subtitle">视频站 · 全站投稿与专栏归档 · 按分类筛选</p>
+        <p class="subtitle">视频站 · 全站投稿与专栏归档 · 分类 + 多维细分</p>
       </div>
 
       <nav class="links" aria-label="外部主页">
@@ -89,6 +89,19 @@
     </section>
 
     <div class="vChips" id="vChips" role="group" aria-label="分类筛选"></div>
+
+    <div class="facetBar">
+      <button class="facetToggle" id="facetToggle" type="button" aria-expanded="true" aria-controls="vFacets">
+        <span class="facetToggleIcon" aria-hidden="true">⚙</span>细分筛选
+        <span class="facetToggleHint">题材 / 平台 / 体量 / 价格 / 时长…</span>
+        <span class="facetArrow" aria-hidden="true">▾</span>
+      </button>
+      <button class="facetClear" id="facetClear" type="button" hidden>清除全部细分条件</button>
+    </div>
+
+    <section class="vFacets" id="vFacets" aria-label="细分筛选"></section>
+    <div class="vSelected" id="vSelected" hidden></div>
+
     <p class="vResult" id="vResult" role="status" aria-live="polite"></p>
 
     <section class="vGrid" id="vGrid" aria-label="视频列表"></section>
@@ -105,6 +118,6 @@
     <div class="muted">本站为个人作品归档展示，视频与专栏版权归原作者及平台所有。数据来源：B 站空间公开投稿与专栏列表。</div>
   </footer>
 
-  <script src="videos.js?v=20261025.2"></script>
+  <script src="videos.js?v=20261025.4"></script>
 </body>
 </html>

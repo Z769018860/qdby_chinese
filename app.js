@@ -19,6 +19,8 @@ const el = {
   license: document.getElementById("license"),
   member: document.getElementById("member"),
   price: document.getElementById("price"),
+  plat: document.getElementById("plat"),
+  topic: document.getElementById("topic"),
   sort: document.getElementById("sort"),
   status: document.getElementById("status"),
   viewer: document.getElementById("viewer"),
@@ -376,6 +378,82 @@ function matches(r, q){
   return blob.includes(q.toLowerCase());
 }
 
+/* ---------- 派生维度：平台 / 题材 / 时长档 / 价格档 ---------- */
+const TOPIC_RULES = [
+  ["mystery", "悬疑推理", /悬疑|推理|探案|侦探|诡计|凶案|谋杀|破案|刑侦|逆转/],
+  ["horror", "恐怖惊悚", /恐怖|微恐|惊悚|灵异|诅咒|怪谈|鬼/],
+  ["gore", "猎奇血腥", /猎奇|血腥|分尸|藏尸|肢解|重口/],
+  ["yandere", "病娇偏执", /病娇|偏执|强制|监禁|占有欲|病态|黑化/],
+  ["otome", "乙女恋爱", /乙女|女性向|恋爱|攻略对象|多结局|男主/],
+  ["puzzle", "解谜逃脱", /解谜|解密|谜题|逃脱|密室/],
+  ["comedy", "搞笑沙雕", /搞笑|沙雕|轻喜剧|吐槽|喜剧/],
+  ["healing", "治愈温情", /治愈|温馨|温情|暖心/],
+  ["meta", "meta元叙事", /meta|电波|第四面墙|轮回|loop/i],
+  ["fantasy", "奇幻异世界", /异世界|魔法|人外|恶魔|神明|妖怪|奇幻|吸血鬼|童话/],
+  ["campus", "校园青春", /校园|学园|学生|社团|同级生|青春|学級/],
+  ["action", "动作战斗", /动作|战斗|格斗|无双/],
+  ["roguelike", "卡牌肉鸽", /肉鸽|roguelike|卡牌|构筑/i],
+  ["scifi", "科幻末世", /科幻|末世|赛博|废土|反乌托邦|太空/],
+];
+
+const PLAT_NAMES = {
+  steam: "Steam", itch: "itch.io", booth: "BOOTH", dlsite: "DLsite",
+  novelgame: "novelgame", freem: "freem!", other: "其他"
+};
+
+function topicsOf(r){
+  const blob = [r["游戏类型"], r["要素"], r["备注"], r["汉化名"], r["游戏原名"]]
+    .map(safeText).join(" ");
+  const out = [];
+  for(const [k, , re] of TOPIC_RULES){
+    if(re.test(blob)){ out.push(k); }
+  }
+  return Array.from(new Set(out));
+}
+
+function platOf(r){
+  const u = safeText(r["原版游戏地址"]);
+  if(/steampowered|steam/i.test(u)){ return "steam"; }
+  if(/itch\.io/i.test(u)){ return "itch"; }
+  if(/booth/i.test(u)){ return "booth"; }
+  if(/dlsite/i.test(u)){ return "dlsite"; }
+  if(/novelgame/i.test(u)){ return "novelgame"; }
+  if(/freem/i.test(u)){ return "freem"; }
+  return "other";
+}
+
+// 「约4-6h」「30min」「约0.5–1h」→ xs / s / m / l
+function durOf(r){
+  let t = safeText(r["游戏时长"]).toLowerCase()
+    .replace(/–|~|—/g, "-");
+  if(!t){ return ""; }
+  const nums = (t.match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n=>n < 500);
+  if(!nums.length){ return ""; }
+  let h;
+  if(/min/.test(t) && !/h/.test(t)){ h = Math.max(...nums) / 60; }
+  else if(/h|小时/.test(t)){ h = Math.max(...nums); }
+  else { return ""; }
+  if(h <= 0.5){ return "xs"; }
+  if(h <= 2){ return "s"; }
+  if(h <= 8){ return "m"; }
+  return "l";
+}
+
+// 「免费」「付费（约¥70）」「付费（$4.99）」「付费（500日元）」→ free / freedlc / paid_low / paid_high
+function priceOf(r){
+  const t = safeText(r["游戏价格"]).trim();
+  if(!t){ return ""; }
+  if(/免费/.test(t)){
+    return /DLC.{0,6}付费|DLC付费/.test(t) ? "freedlc" : "free";
+  }
+  const m = t.match(/(\d+(?:\.\d+)?)/);
+  if(!m){ return "paid_low"; }
+  let v = Number(m[1]);
+  if(/\$/.test(t)){ v *= 7.2; }
+  else if(/日元|円/.test(t)){ v *= 0.048; }
+  return v <= 50 ? "paid_low" : "paid_high";
+}
+
 function filtered(){
   const q = safeText(el.q.value).trim();
   const t = safeText(el.type.value).trim();
@@ -383,6 +461,8 @@ function filtered(){
   const a = safeText(el.age.value).trim();
   const l = safeText(el.lang.value).trim();
   const du = safeText(el.duration.value).trim();
+  const pl = safeText(el.plat.value).trim();
+  const tp = safeText(el.topic.value).trim();
   const li = safeText(el.license.value).trim();
   const me = safeText(el.member.value).trim();
   const pr = safeText(el.price.value).trim();
@@ -393,10 +473,12 @@ function filtered(){
     if(d && safeText(r["汉化程度"]).trim() !== d){ return false; }
     if(a && safeText(r["年龄分级"]).trim() !== a){ return false; }
     if(l && safeText(r["原版语言"]).trim() !== l){ return false; }
-    if(du && safeText(r["游戏时长"]).trim() !== du){ return false; }
+    if(du && durOf(r) !== du){ return false; }
+    if(pl && platOf(r) !== pl){ return false; }
+    if(tp && !topicsOf(r).includes(tp)){ return false; }
     if(li && safeText(r["是否有授权/许可"]).trim() !== li){ return false; }
     if(me && safeText(r["汉化成员"]).trim() !== me){ return false; }
-    if(pr && safeText(r["游戏价格"]).trim() !== pr){ return false; }
+    if(pr && priceOf(r) !== pr){ return false; }
     return true;
   });
 
@@ -504,10 +586,10 @@ function fillFilters(){
   const degrees = uniq(data.map(x=>x["汉化程度"]));
   const ages = uniq(data.map(x=>x["年龄分级"]));
   const langs = uniq(data.map(x=>x["原版语言"]));
-  const durations = uniq(data.map(x=>x["游戏时长"]));
+
   const licenses = uniq(data.map(x=>x["是否有授权/许可"]));
   const members = uniq(data.map(x=>x["汉化成员"]));
-  const prices = uniq(data.map(x=>x["游戏价格"]));
+
 
   for(const v of types){
     const opt = document.createElement("option");
@@ -533,12 +615,7 @@ function fillFilters(){
     opt.textContent = v;
     el.lang.appendChild(opt);
   }
-  for(const v of durations){
-    const opt = document.createElement("option");
-    opt.value = v;
-    opt.textContent = v;
-    el.duration.appendChild(opt);
-  }
+
   for(const v of licenses){
     const opt = document.createElement("option");
     opt.value = v;
@@ -551,12 +628,7 @@ function fillFilters(){
     opt.textContent = v;
     el.member.appendChild(opt);
   }
-  for(const v of prices){
-    const opt = document.createElement("option");
-    opt.value = v;
-    opt.textContent = v;
-    el.price.appendChild(opt);
-  }
+
 }
 
 function wireControls(){
@@ -570,6 +642,8 @@ function wireControls(){
   el.license.addEventListener("change", rerender);
   el.member.addEventListener("change", rerender);
   el.price.addEventListener("change", rerender);
+  if(el.plat){ el.plat.addEventListener("change", rerender); }
+  if(el.topic){ el.topic.addEventListener("change", rerender); }
   el.sort.addEventListener("change", rerender);
 
   el.tbody.addEventListener("click", async (e)=>{
