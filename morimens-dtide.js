@@ -1321,7 +1321,7 @@ if(isCurrent&&loadedRankDoc?.rows?.length){
     const ub=String(b?.uid??b?.playerUid??b?.userId??"");
     return (rankByUid.get(ua)||Number(a?.rank)||999999)-(rankByUid.get(ub)||Number(b?.rank)||999999);
   });
-  season={...season,records:mergedCurrent,recordCount:mergedCurrent.length,rankOnlyRecordCount,detailCoverage:currentRankRows.length-rankOnlyRecordCount,expectedRankCount:currentRankRows.length,rankDetailsComplete:rankOnlyRecordCount===0};
+  season={...season,records:mergedCurrent,recordCount:mergedCurrent.length,complete:rankOnlyRecordCount===0,rankOnlyRecordCount,detailCoverage:currentRankRows.length-rankOnlyRecordCount,expectedRankCount:currentRankRows.length,rankDetailsComplete:rankOnlyRecordCount===0};
   const noteId="morimensSeason71DetailCoverageNotice";
   let note=document.getElementById(noteId);
   const host=document.getElementById("dtide");
