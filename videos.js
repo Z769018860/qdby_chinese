@@ -57,6 +57,52 @@ function catName(key){
   return c ? c.name : "其他";
 }
 function yearOf(date){ return (date || "").slice(0, 4); }
+
+/* ---------- 一键三连 ----------
+   三连必须带 B 站登录态，第三方域名拿不到 cookie，所以真正执行的是
+   assets/qdby-triple.user.js 在 bilibili.com 里跑的那段；本站只负责
+   把「:BV」带过去，并识别脚本装没装（脚本会在本页写一个 localStorage 标记）。 */
+const TRIPLE_FLAG = "qdby_triple_installed";
+const TRIPLE_DONE = "qdby_tripled";
+
+function tripleInstalled(){
+  if(typeof window.__QDBY_TRIPLE__ === "string") return true;
+  try { return localStorage.getItem(TRIPLE_FLAG) === "1"; } catch (e) { return false; }
+}
+function tripleDone(bv){
+  try {
+    const m = JSON.parse(localStorage.getItem(TRIPLE_DONE) || "{}");
+    return !!m[bv];
+  } catch (e) { return false; }
+}
+function markTriple(bv){
+  try {
+    const m = JSON.parse(localStorage.getItem(TRIPLE_DONE) || "{}");
+    m[bv] = Date.now();
+    localStorage.setItem(TRIPLE_DONE, JSON.stringify(m));
+  } catch (e) {}
+}
+function tripleUrl(bv){
+  return `https://www.bilibili.com/video/${bv}?qdby_triple=1`;
+}
+function refreshTripleUI(){
+  const on = tripleInstalled();
+  document.querySelectorAll(".vTriple").forEach(b => {
+    b.classList.toggle("isReady", on);
+    if(!b.classList.contains("isDone")){
+      b.title = on ? "点赞 + 投币 + 收藏（脚本已就绪）" : "点赞 + 投币 + 收藏（首次需装一个小脚本）";
+    }
+  });
+}
+function openTripleDialog(bv, title){
+  const dlg = $("tripleDialog");
+  const manual = $("tripleManual");
+  if(manual) manual.href = bv ? `https://www.bilibili.com/video/${bv}` : "https://www.bilibili.com/";
+  const st = $("tripleState");
+  if(st) st.textContent = title ? `准备三连：${title.length > 26 ? title.slice(0, 26) + "…" : title}` : "";
+  if(dlg && !dlg.open) dlg.showModal();
+}
+
 function priceText(g){
   if(!g || !g.pz || g.pz === "unknown") return "";
   if(g.pz === "free") return "免费";
@@ -330,6 +376,7 @@ function videoCard(v){
   const store = g && g.store && g.store.steam ? g.store.steam.url : (g && g.url ? g.url : "");
   const plat = (v.plat || []).slice(0, 2).map(k => PLAT_SHORT[k] || k).join(" · ");
   const price = priceText(g);
+  const tripled = tripleDone(v.id);
   const gameLine = g
     ? `<div class="vGameRow">
          ${store ? `<a class="vGame" href="${esc(store)}" target="_blank" rel="noopener" title="打开游戏页面">《${esc(g.name)}》<span class="vGameOut" aria-hidden="true">↗</span></a>`
@@ -352,6 +399,11 @@ function videoCard(v){
           <span class="vTag vTag--${esc(v.cat)}">${esc(catName(v.cat))}</span>
           ${genreTags(v)}
           <span class="vDate">${esc(v.date)}</span>
+          <button class="vTriple${tripled ? " isDone" : ""}" data-bv="${esc(v.id)}"
+                  data-title="${esc(v.title)}" type="button"
+                  title="${tripled ? "这台设备上已经点过三连" : "点赞 + 投币 + 收藏"}">
+            <span class="vTripleIcon" aria-hidden="true">${tripled ? "✓" : "♥"}</span>${tripled ? "已三连" : "三连"}
+          </button>
         </div>
         ${gameLine}
       </div>
@@ -508,6 +560,47 @@ function wire(){
       render();
     });
   }
+
+  // 视频卡片：三连
+  if(el.grid){
+    el.grid.addEventListener("click", e => {
+      const b = e.target.closest(".vTriple");
+      if(!b) return;
+      e.preventDefault();
+      const bv = b.dataset.bv;
+      const title = b.dataset.title || "";
+      if(!tripleInstalled()){
+        openTripleDialog(bv, title);
+        return;
+      }
+      window.open(tripleUrl(bv), "_blank", "noopener");
+      markTriple(bv);
+      b.classList.add("isDone");
+      b.dataset.tripled = "1";
+      b.innerHTML = `<span class="vTripleIcon" aria-hidden="true">✓</span>已发送`;
+      b.title = "已在 B 站页面执行三连，结果看那边的面板";
+    });
+  }
+
+  // 三连引导弹层
+  const tdlg = $("tripleDialog");
+  if(tdlg){
+    $("tripleClose")?.addEventListener("click", () => tdlg.close());
+    tdlg.addEventListener("click", e => {
+      if(e.target === tdlg) tdlg.close();
+    });
+    $("tripleCheck")?.addEventListener("click", () => {
+      const st = $("tripleState");
+      if(tripleInstalled()){
+        if(st) st.textContent = "✓ 已识别到脚本，现在可以一键三连了。";
+        refreshTripleUI();
+        setTimeout(() => tdlg.close(), 700);
+      } else if(st){
+        st.textContent = "还没检测到。确认脚本已启用后，刷新本页再点这里。";
+      }
+    });
+  }
+  refreshTripleUI();
 
   // 微博正文展开 / 收起
   if(el.wlist){

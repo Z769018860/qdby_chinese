@@ -211,6 +211,147 @@ tbody tr:hover{ background:#fcfcff; }
 .ndGood{ color:#137a3c; font-weight:600; }
 .ndTime{ color:#9ca3af; }
 
+/* ---- 自动补档：可用链接 + 状态 ---- */
+.ndGo{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 9px;
+  border-radius:999px;
+  border:1px solid #bfe6cd;
+  background:#eaf8f0;
+  color:#136b3a;
+  font-size:11.5px;
+  font-weight:600;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.ndGo:hover{ background:#dcf3e5; border-color:#9fd8b7; }
+.ndGoIcon{ font-size:10px; opacity:.8; }
+.ndGoPwd{ font-weight:400; color:#4b7d61; font-size:10.5px; }
+.ndGo--big{ padding:4px 12px; font-size:12.5px; }
+
+.ndState{
+  font-size:10.5px;
+  padding:1px 7px;
+  border-radius:999px;
+  border:1px solid transparent;
+  white-space:nowrap;
+}
+.ndState--ok{ background:#eaf8f0; border-color:#bfe6cd; color:#136b3a; }
+.ndState--move{ background:#fff6e5; border-color:#f2d9a8; color:#8a5a00; }
+.ndState--new{ background:#e8f0fe; border-color:#c2d6fb; color:#1a4fa0; }
+.ndState--bad{ background:#fdecec; border-color:#f6c6c6; color:#b42318; }
+.ndState--none{ background:#f4f4f5; border-color:#e4e4e7; color:#6b7280; }
+
+.ndFix{
+  padding:1px 7px;
+  border-radius:6px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:#4b5563;
+  font-size:10.5px;
+  cursor:pointer;
+}
+.ndFix:hover{ border-color:#cfe0f5; background:#f6faff; color:#1f5fa8; }
+
+/* ---- 补档详情弹层 ---- */
+.ndDialog{
+  width:min(620px, calc(100vw - 32px));
+  max-height:calc(100vh - 64px);
+  padding:22px 24px;
+  border:1px solid var(--line);
+  border-top:4px solid #10b981;
+  border-radius:16px;
+  background:var(--card);
+  color:var(--text);
+  overflow:auto;
+  line-height:1.7;
+}
+.ndDialog::backdrop{ background:rgba(15,23,42,.55); }
+.ndDialogClose{
+  position:absolute;
+  top:10px; right:12px;
+  width:30px; height:30px;
+  border:0; border-radius:8px;
+  background:transparent;
+  color:var(--muted);
+  font-size:20px; line-height:1;
+  cursor:pointer;
+}
+.ndDialogClose:hover{ background:#f1f5f9; color:var(--text); }
+.ndT{ margin:0 0 6px; font-size:16px; }
+.ndSub{ margin:0 0 14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.ndRow{ margin:0 0 14px; }
+.ndRowK{
+  display:block;
+  font-size:11.5px;
+  color:#8b93a1;
+  margin-bottom:5px;
+  letter-spacing:.02em;
+}
+.ndRowNote{ margin-left:8px; font-size:11.5px; color:#8b93a1; }
+.ndAlt{ display:flex; flex-wrap:wrap; gap:6px; }
+.ndAltLink{
+  font-size:11.5px;
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--chip);
+  color:#374151;
+  text-decoration:none;
+}
+.ndAltLink:hover{ border-color:#cfe0f5; background:#f6faff; color:#1f5fa8; }
+.ndDeadList, .ndCandList{ display:flex; flex-direction:column; gap:5px; }
+.ndDead{
+  display:flex; gap:8px; align-items:baseline;
+  font-size:11.5px;
+  color:#6b7280;
+}
+.ndDeadPlat{ color:#b42318; font-weight:600; }
+.ndDeadWhy{ color:#9ca3af; }
+.ndCand{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:baseline;
+  padding:5px 8px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  font-size:11.5px;
+}
+.ndCand.isOk{ border-color:#bfe6cd; background:#f6fdf9; }
+.ndCand.isUnk{ background:#fafafa; }
+.ndCand a{ color:#1f5fa8; text-decoration:none; font-weight:600; }
+.ndCandWhy{ color:#6b7280; }
+.ndCandSrc{ margin-left:auto; color:#9ca3af; }
+.ndCopy{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#fafbfc;
+  color:#374151;
+  font-size:12px;
+  line-height:1.6;
+  resize:vertical;
+  font-family:inherit;
+}
+.ndActions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.ndBtn{
+  padding:5px 12px;
+  border-radius:9px;
+  border:1px solid #bfe6cd;
+  background:#eaf8f0;
+  color:#136b3a;
+  font-size:12px;
+  cursor:pointer;
+  text-decoration:none;
+}
+.ndBtn:hover{ background:#dcf3e5; }
+.ndBtn--ghost{ border-color:var(--line); background:transparent; color:#374151; }
+.ndBtn--ghost:hover{ background:#f6faff; border-color:#cfe0f5; color:#1f5fa8; }
+.ndHint{ margin:8px 0 0; font-size:11.5px; color:#9ca3af; }
+.ndFoot{ margin:4px 0 0; font-size:11px; color:#9ca3af; border-top:1px dashed var(--line); padding-top:10px; }
+
+
 .badges{ display:flex; flex-wrap:wrap; gap:6px; }
 .badge{
   font-size:12px;
@@ -1400,6 +1541,92 @@ a.vGame:hover{ color:#1f5fa8; }
   cursor:pointer;
 }
 .vWbBtn:hover{ background:#ffece6; }
+
+/* 一键三连按钮 */
+.vTriple{
+  margin-left:auto;
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:1px 8px;
+  border-radius:6px;
+  border:1px solid #ffd0dd;
+  background:#fff5f8;
+  color:#b3386a;
+  font-size:10.5px;
+  line-height:1.7;
+  cursor:pointer;
+  transition:background .15s, border-color .15s, color .15s;
+}
+.vTriple:hover{ background:#ffe6ef; border-color:#ffb8cd; }
+.vTripleIcon{ font-size:10px; }
+.vTriple.isReady{ border-color:#f5b8cd; box-shadow:0 0 0 2px rgba(255,120,170,.12); }
+.vTriple.isDone{
+  border-color:#bfe6cf;
+  background:#f2fbf5;
+  color:#2f7d52;
+  cursor:default;
+}
+.vTriple.isDone:hover{ background:#f2fbf5; }
+
+/* 三连引导弹层 */
+.tripleDialog{
+  width:min(560px, calc(100vw - 32px));
+  padding:22px 24px 18px;
+  border:1px solid var(--line);
+  border-top:4px solid #e35d8d;
+  border-radius:16px;
+  background:var(--card);
+  color:var(--text);
+  line-height:1.75;
+}
+.tripleDialog::backdrop{ background:rgba(15,23,42,.55); }
+.tripleClose{
+  position:absolute;
+  top:10px; right:12px;
+  width:30px; height:30px;
+  border:0; border-radius:8px;
+  background:transparent;
+  color:var(--muted);
+  font-size:20px; line-height:1;
+  cursor:pointer;
+}
+.tripleClose:hover{ background:#f1f5f9; color:var(--text); }
+.tripleTitle{ margin:0 0 8px; font-size:17px; }
+.tripleLead{ margin:0 0 14px; font-size:13px; color:#4b5563; }
+.tripleSteps{
+  margin:0 0 14px;
+  padding-left:20px;
+  font-size:13px;
+  color:#374151;
+}
+.tripleSteps li{ margin:9px 0; }
+.tripleSteps strong{ display:block; font-size:13px; color:var(--text); }
+.tripleSteps span{ color:#5b6472; }
+.tripleSteps a{ color:#1f5fa8; }
+.tripleState{ min-height:18px; margin:0 0 4px; font-size:12.5px; color:#b3386a; line-height:1.5; }
+.tripleActions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:8px 0 6px; }
+.tripleCheck{
+  padding:6px 14px;
+  border-radius:9px;
+  border:1px solid #f0c3d5;
+  background:#fff5f8;
+  color:#b3386a;
+  font-size:12.5px;
+  cursor:pointer;
+}
+.tripleCheck:hover{ background:#ffe6ef; }
+.tripleManual{ font-size:12.5px; color:#1f5fa8; }
+.tripleNote{ margin:6px 0 0; font-size:11.5px; color:#8b93a1; }
+.tripleNote kbd{
+  padding:0 4px;
+  border:1px solid var(--line);
+  border-bottom-width:2px;
+  border-radius:4px;
+  background:#f8fafc;
+  font-size:11px;
+}
+
 
 .wText.isOpen{ -webkit-line-clamp:unset; display:block; }
 .wToggle{

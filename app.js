@@ -6,7 +6,7 @@ const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
 const API_BASE = "/api";
 const WALINE_SERVER = "https://textbox.qingdengbuyi.top";
 const WALINE_LIKE_PREFIX = "/__qdby_home_likes__/";
-const state = { data: [], netdisk: { games: {} }, likes: {}, liked: new Set(), messages: [], storageOK: true, onlineOK: false };
+const state = { data: [], netdisk: { games: {} }, autofill: { games: {} }, likes: {}, liked: new Set(), messages: [], storageOK: true, onlineOK: false };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -503,22 +503,65 @@ function shortPlatform(name){
     .replace("Google Drive", "GD");
 }
 
+const ND_STATE_TEXT = {
+  ok: ["ndState--ok", "全部有效"],
+  failover: ["ndState--move", "已自动切换"],
+  recovered: ["ndState--new", "已补档"],
+  pending: ["ndState--bad", "需要补档"],
+  none: ["ndState--none", "未收录"],
+};
+
+function ndLinkLabel(a){
+  const pwd = a.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(a.pwd)}</span>` : "";
+  return `<span class="ndGoIcon" aria-hidden="true">↓</span>` +
+    `<span class="ndGoPlat">${escapeHtml(shortPlatform(a.platform_name || a.platform || "网盘"))}</span>${pwd}`;
+}
+
 function netdiskCell(r){
   const name = safeText(r["汉化名"]).trim();
+  const au = (state.autofill && state.autofill.games) ? state.autofill.games[name] : null;
   const st = (state.netdisk && state.netdisk.games) ? state.netdisk.games[name] : null;
-  if(!st){
+
+  if(!au && !st){
     return `<div class="ndBox"><span class="ndChip ndChip--none" title="该作品暂未收录到网盘链接">未收录</span></div>`;
   }
+
+  // 有补档数据：优先给「现在能打开」的那一条
+  if(au){
+    const active = au.active;
+    const dead = au.dead || [];
+    const [cls, text] = ND_STATE_TEXT[au.state] || ND_STATE_TEXT.ok;
+    const deadChips = dead.slice(0, 3).map(d => {
+      const tip = `${d.platform_name || d.platform}：${d.detail || "已失效"}`;
+      return `<span class="ndChip ndChip--dead" title="${escapeHtml(tip)}">` +
+        `${escapeHtml(shortPlatform(d.platform_name || d.platform))} ✕</span>`;
+    }).join("");
+    const moreDead = dead.length > 3 ? `<span class="ndChip ndChip--dead">+${dead.length - 3}</span>` : "";
+    const go = active
+      ? `<a class="ndGo" href="${escapeHtml(active.url)}" target="_blank" rel="noopener"
+             title="打开${escapeHtml(active.platform_name || "网盘")}（${escapeHtml(active.detail || "可用")}）">${ndLinkLabel(active)}</a>`
+      : "";
+    const checked = safeText((state.netdisk.meta || {}).checked_at).trim();
+    return `<div class="ndBox">${go}${deadChips}${moreDead}</div>` +
+      `<div class="ndMeta">` +
+        `<span class="ndState ${cls}" data-nd="${escapeHtml(au.state)}">${text}</span>` +
+        `<button class="ndFix" data-ndname="${escapeHtml(name)}" type="button">` +
+          `${au.state === "pending" ? "求补档" : "补档详情"}</button>` +
+        (checked ? `<span class="ndTime">检查于 ${escapeHtml(checked.replace(/^\d{4}-/, ""))}</span>` : "") +
+      `</div>`;
+  }
+
+  // 没有补档数据时退回旧渲染
   const chips = (st.platforms || []).map(p=>{
     const bad = (p.dead || 0) > 0;
     const good = (p.ok || 0) > 0;
-    let cls = "ndChip ndChip--unk";
-    if(bad && good){ cls = "ndChip ndChip--mix"; }
-    else if(bad){ cls = "ndChip ndChip--dead"; }
-    else if(good){ cls = "ndChip ndChip--ok"; }
+    let cls2 = "ndChip ndChip--unk";
+    if(bad && good){ cls2 = "ndChip ndChip--mix"; }
+    else if(bad){ cls2 = "ndChip ndChip--dead"; }
+    else if(good){ cls2 = "ndChip ndChip--ok"; }
     const tip = `${p.name}：有效 ${p.ok || 0} 条／失效 ${p.dead || 0} 条` +
       ((p.unknown || 0) ? `／待确认 ${p.unknown} 条` : "");
-    return `<span class="${cls}" title="${escapeHtml(tip)}">${escapeHtml(shortPlatform(p.name))} ` +
+    return `<span class="${cls2}" title="${escapeHtml(tip)}">${escapeHtml(shortPlatform(p.name))} ` +
       `✓${p.ok || 0}${bad ? ` ✕${p.dead}` : ""}</span>`;
   }).join("");
   const checked = safeText(st.checked_at).trim();
@@ -529,6 +572,100 @@ function netdiskCell(r){
     : `<span class="ndGood">全部有效</span>`;
   return `<div class="ndBox">${chips}</div>` +
     `<div class="ndMeta">${warn}<span class="ndTime" title="网盘链接检查时间">检查于 ${escapeHtml(shortTime)}</span></div>`;
+}
+
+/* ---------- 补档详情弹层 ---------- */
+function ndDialogHtml(name, au){
+  const [cls, text] = ND_STATE_TEXT[au.state] || ND_STATE_TEXT.ok;
+  const parts = [];
+  parts.push(`<h3 class="ndT">《${escapeHtml(name)}》网盘状态</h3>`);
+  parts.push(`<p class="ndSub"><span class="ndState ${cls}">${text}</span>` +
+    `<span class="ndTime">数据更新于 ${escapeHtml(safeText((state.autofill.meta || {}).generated_at) || "—")}</span></p>`);
+
+  if(au.active){
+    const a = au.active;
+    const from = au.recovered_from
+      ? `来自${a.source === "weibo" ? "微博" : a.source === "comment" ? "评论区" : "原文"}` +
+        (au.recovered_from.author ? `（${au.recovered_from.is_up ? "UP 主 " : ""}${au.recovered_from.author}）` : "")
+      : `来源：${a.source === "desc" ? "视频简介" : a.source === "pinned" ? "置顶评论" : a.source === "up_comment" ? "UP 主评论" : a.source === "weibo" ? "微博" : a.source === "site" ? "站点登记" : "原记录"}`;
+    parts.push(`<div class="ndRow"><span class="ndRowK">现在可用</span>
+      <a class="ndGo ndGo--big" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">${ndLinkLabel(a)}</a>
+      <span class="ndRowNote">${escapeHtml(from)}${a.detail ? " · " + escapeHtml(a.detail) : ""}</span></div>`);
+  }
+
+  const alt = au.alt || [];
+  if(alt.length){
+    parts.push(`<div class="ndRow"><span class="ndRowK">其他可用</span><div class="ndAlt">` +
+      alt.slice(0, 6).map(L =>
+        `<a class="ndAltLink" href="${escapeHtml(L.url)}" target="_blank" rel="noopener">` +
+        `${escapeHtml(shortPlatform(L.platform_name || L.platform))}${L.pwd ? " · " + escapeHtml(L.pwd) : ""}</a>`
+      ).join("") + `</div></div>`);
+  }
+
+  const dead = au.dead || [];
+  if(dead.length){
+    parts.push(`<div class="ndRow"><span class="ndRowK">已失效</span><div class="ndDeadList">` +
+      dead.map(d => `<div class="ndDead"><span class="ndDeadPlat">${escapeHtml(d.platform_name || d.platform)}</span>
+        <span class="ndDeadWhy">${escapeHtml(d.detail || "已失效")}</span></div>`).join("") + `</div></div>`);
+  }
+
+  const cands = au.candidates || [];
+  if(cands.length){
+    parts.push(`<div class="ndRow"><span class="ndRowK">自动挖到的候补</span><div class="ndCandList">` +
+      cands.map(c => {
+        const okCls = c.status === "ok" ? "isOk" : "isUnk";
+        const who = c.is_up ? "UP 主" : (c.author ? "网友 " + c.author : "");
+        return `<div class="ndCand ${okCls}">
+          <a href="${escapeHtml(c.url)}" target="_blank" rel="noopener">${escapeHtml(shortPlatform(c.platform_name || c.platform))}${c.pwd ? " · " + escapeHtml(c.pwd) : ""}</a>
+          <span class="ndCandWhy">${escapeHtml(c.detail || "待核验")}</span>
+          <span class="ndCandSrc">${escapeHtml(c.source === "comment" ? "评论区" : c.source === "weibo" ? "微博" : "原文")}${who ? " · " + escapeHtml(who) : ""}</span>
+        </div>`;
+      }).join("") + `</div></div>`);
+  }
+
+  if(au.state === "pending" || au.state === "none"){
+    const req = au.request || {};
+    const msg = req.message || `《${name}》的网盘链接失效了，求补档 🙏`;
+    parts.push(`<div class="ndRow"><span class="ndRowK">求补档</span><div>
+      <textarea class="ndCopy" id="ndCopyText" readonly rows="2">${escapeHtml(msg)}</textarea>
+      <div class="ndActions">
+        <button class="ndBtn" id="ndCopyBtn" type="button">复制这段话</button>
+        ${req.bili_url ? `<a class="ndBtn ndBtn--ghost" href="${escapeHtml(req.bili_url)}" target="_blank" rel="noopener">去视频评论区 ↗</a>` : ""}
+        ${req.weibo_url ? `<a class="ndBtn ndBtn--ghost" href="${escapeHtml(req.weibo_url)}" target="_blank" rel="noopener">去微博 ↗</a>` : ""}
+      </div>
+      <p class="ndHint">贴到视频评论或微博下即可。下次巡检若发现新链接，会自动出现在这里并标为可用。</p>
+    </div></div>`);
+  }
+
+  parts.push(`<p class="ndFoot">自动处理规则：同一作品有多条链接时，失效的自动跳过、切到还能打开的那条；
+    全部失效时回到简介 / 评论区 / 微博里重新找，找到并通过核验的会标为「已补档」。</p>`);
+  return parts.join("");
+}
+
+function openNdDialog(name){
+  const dlg = document.getElementById("ndDialog");
+  const body = document.getElementById("ndDialogBody");
+  if(!dlg || !body) return;
+  const au = state.autofill && state.autofill.games ? state.autofill.games[name] : null;
+  if(!au) return;
+  body.innerHTML = ndDialogHtml(name, au);
+  if(!dlg.open) dlg.showModal();
+  const btn = document.getElementById("ndCopyBtn");
+  if(btn){
+    btn.addEventListener("click", async ()=>{
+      const t = document.getElementById("ndCopyText");
+      if(!t) return;
+      try{
+        await navigator.clipboard.writeText(t.value);
+        btn.textContent = "已复制 ✓";
+      }catch(error){
+        t.select();
+        document.execCommand && document.execCommand("copy");
+        btn.textContent = "已复制 ✓";
+      }
+      setTimeout(()=>{ btn.textContent = "复制这段话"; }, 1800);
+    });
+  }
 }
 
 function rowHtml(r){
@@ -647,6 +784,12 @@ function wireControls(){
   el.sort.addEventListener("change", rerender);
 
   el.tbody.addEventListener("click", async (e)=>{
+    const ndBtn = e.target.closest("button[data-ndname]");
+    if(ndBtn){
+      openNdDialog(ndBtn.getAttribute("data-ndname"));
+      return;
+    }
+
     const shotBtn = e.target.closest("button[data-img]");
     if(shotBtn){
       const img = shotBtn.getAttribute("data-img");
@@ -706,6 +849,16 @@ function wireControls(){
   });
 }
 
+
+function initNdDialog(){
+  const dialog = document.getElementById("ndDialog");
+  const closeBtn = document.getElementById("ndDialogClose");
+  if(!dialog) return;
+  closeBtn && closeBtn.addEventListener("click", ()=>dialog.close());
+  dialog.addEventListener("click", (e)=>{
+    if(e.target === dialog) dialog.close();
+  });
+}
 
 function initToolboxDialog(){
   const dialog = document.getElementById("toolboxDialog");
@@ -801,6 +954,17 @@ async function loadNetdiskStatus(){
   }
 }
 
+async function loadNetdiskAutofill(){
+  try{
+    const res = await fetch("./data/netdisk-autofill.json", { cache: "no-cache" });
+    if(!res.ok){ return; }
+    const json = await res.json();
+    if(json && json.games){ state.autofill = json; }
+  }catch(error){
+    console.warn("netdisk autofill load failed:", error);
+  }
+}
+
 async function main(){
   state.storageOK = canUseLocalStorage();
   state.likes = {};
@@ -810,8 +974,10 @@ async function main(){
   wireControls();
   initCoinLab();
   initToolboxDialog();
+  initNdDialog();
   await loadData();
   await loadNetdiskStatus();
+  await loadNetdiskAutofill();
   fillFilters();
   render();
 

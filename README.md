@@ -72,7 +72,11 @@
 - `data/netdisk-status.json`：按作品聚合的网盘状态，供汉化站表格列使用
   - 覆盖 63 个作品 / 175 条链接：有效 111、失效 64。失效集中在夸克网盘（37 条，多为「文件涉及违规内容 41010」）与 UC 网盘（5 条）
   - 每条记录含 `total / ok / dead / unknown`、按平台拆分的明细与 `checked_at` 检查时间
-- `scripts/netdisk/`：网盘链接抓取与有效性核验（`refresh.py` + `check_spa.mjs`）
+- `data/netdisk-autofill.json` / `.md`：自动补档结果，见下节
+- `scripts/netdisk/`：网盘链接抓取、核验与补档
+  - `refresh.py`：抓发布页 + 评论 + 专栏，抽链接并核验（`check_spa.mjs` 负责需渲染的盘）
+  - `hunt_comments.mjs`：按视频重扫评论区（最热 + 最新各 3 页，含楼中楼），把带网盘域名的评论整条存进 `raw/hunt_comments.json`
+  - `autofill.py`：算「当前可用链接」、自动切换、补抓候补、生成求档清单
 - `scripts/bili/`：B 站抓取与构建
   - `up_app.py` / `up_articles.py`：投稿列表与专栏列表
   - `fetch_descs.mjs`：逐条抓投稿简介（浏览器内同源 fetch，1085 条 0 失败）
@@ -85,6 +89,56 @@
   - `collect_weibo.mjs`：搜索式采集（`QD_WB_EXTRA=<N>` 追加游戏名查询）
   - `fetch_full.mjs`：长微博补全文（搜索卡片只给截断版，走 `/statuses/extend`）
   - `build_weibo.py`：分类、关联游戏、补建「只有微博」的游戏实体
+
+## 一键三连（视频站）
+
+浏览器不允许第三方站点代用户操作 B 站账号，所以卡片上的「三连」不是直接发请求，而是：
+
+1. 点卡片上的「三连」→ 新标签打开 `bilibili.com/video/<BV>?qdby_triple=1`
+2. `assets/qdby-triple.user.js` 在 B 站页面里读到这个参数，依次调
+   点赞 `/x/web-interface/archive/like`、投币 `/x/web-interface/coin/add`、
+   收藏 `/x/v3/fav/resource/deal`，结果显示在右下角面板里
+3. 脚本同时 `@match` 本站域名，只做一件事：写 `localStorage.qdby_triple_installed`
+   —— 本站据此判断脚本装没装，装了按钮就是「已就绪」，点了直接跳转即完成
+
+没装脚本时点「三连」会弹出安装引导（Tampermonkey → 脚本 → 回本站刷新）。
+脚本约 5KB，只在 bilibili.com 与本页运行，不采集也不上传任何数据。
+装了之后在任何 B 站视频页按 `Alt`+`3` 也能直接三连。
+
+> 三连成败取决于 B 站登录态与风控：未登录时面板会直接提示；投币重复（34005）、
+> 已点赞（65006）等会被识别为「之前就做过了」，不算失败。
+
+## 自动补档（汉化站）
+
+一个作品常同时挂着百度 / 夸克 / 迅雷多条链接，而挂的往往是其中一条
+（夸克近一年大面积「文件涉及违规内容」）。所以补档不是「重新上传」，而是三层自动处理：
+
+| 状态 | 含义 | 数量 |
+| --- | --- | --- |
+| `ok` | 全部链接有效 | 28 |
+| `failover` | 原有链接有失效，已自动切到还能打开的那条 | 33 |
+| `recovered` | 从评论区 / 微博里补回新链接，且通过在线核验 | 0 |
+| `pending` | 全部失效且暂无可信候补，页面给「求补档」 | 2 |
+| `none` | 从未收录过网盘链接 | 1 |
+
+- **自动切换**：`autofill.py` 按平台优先级（百度 > 夸克 > 阿里 > 迅雷 > 123 …）与来源可信度
+  排出 `active`，表格里直接给一个「↓ 平台 提取码」的按钮，点开就是能用的那条；
+  失效的只剩灰色 ✕ 标记，点了也不跳空页。
+- **自动补抓**：`hunt_comments.mjs` 重扫评论区（`refresh.py` 只留 UP 主留言、且仅 3 页，
+  补档留言常常正好漏在外面），`autofill.py` 再连同简介 / 微博全文 / 专栏摘要一起重新抽链接，
+  新链接走与巡检相同的接口核验。UP 主本人补的链接会直接顶到 `active`；
+  路人转存的只列出来，不替用户做主。
+- **自动催档**：实在找不到的，弹层里给一段可一键复制的求档文案，加上视频 / 微博入口。
+
+重新生成：
+
+```bash
+node scripts/netdisk/hunt_comments.mjs      # 需要浏览器调试端口 9227
+python scripts/netdisk/autofill.py          # 产出 data/netdisk-autofill.json / .md
+```
+
+`hunt_comments.mjs` 默认只扫台账里有失效链接的视频，结果按 bvid 缓存在
+`raw/hunt_comments.json`，`QD_FORCE=1` 可强制重扫。
 
 ## 文件结构
 - index.html / videos.html

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的个人站 · 汉化站</title>
-  <link rel="stylesheet" href="styles.css?v=20261025.4" />
+  <link rel="stylesheet" href="styles.css?v=20261026.1" />
   <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 </head>
 <body>
@@ -196,7 +196,7 @@
             <th class="col-meta">类型 / 分级 / 程度</th>
             <th class="col-date">发布时间</th>
             <th class="col-links">链接</th>
-            <th class="col-netdisk">网盘状态</th>
+            <th class="col-netdisk" title="优先给当前可用的那条链接；失效的自动切到备用盘，全失效的可以一键求补档">网盘 / 补档</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -353,12 +353,17 @@
     <img id="viewerImg" alt="截图预览" />
   </dialog>
 
+  <dialog id="ndDialog" class="ndDialog" aria-label="网盘补档详情">
+    <button class="ndDialogClose" id="ndDialogClose" aria-label="关闭">×</button>
+    <div id="ndDialogBody"></div>
+  </dialog>
+
   <footer class="wrap footer">
     <div>© <span id="year"></span> 青灯不弈</div>
     <div class="muted">重要提示：本站为个人汉化汇总展示；请以原作者发布说明与授权范围为准。若链接失效或需要补档/更正信息，可通过友情链接联系我。</div>
   </footer>
 
-  <script type="module" src="app.js?v=20261025.4"></script>
+  <script type="module" src="app.js?v=20261026.1"></script>
   <script type="module">
     const walineRoot = document.querySelector('#waline');
     const walineFallback = document.querySelector('#walineFallback');

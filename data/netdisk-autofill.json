@@ -1,0 +1,1671 @@
+{
+ "meta": {
+  "generated_at": "2026-10-24 20:24",
+  "source_checked_at": "2026-10-24 18:44",
+  "games": 64,
+  "summary": {
+   "ok": 28,
+   "failover": 33,
+   "recovered": 0,
+   "pending": 2,
+   "none": 1
+  },
+  "recovered_links": 0,
+  "note": "active 是当前可用的首选链接（按平台优先级与来源可信度排序）；failover 表示原链接有失效但已自动切到其他可用盘；recovered 表示从评论区/微博里补回了新链接并通过核验；pending 表示全部失效且暂无可信候补。"
+ },
+ "games": {
+  "純正優男Sweet&Bitter": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1EA28Mr_fmBIivqWoJM7Aww?pwd=v8n7",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "v8n7",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1rNwBx54-gIK5R0qt3yaJ4Q?pwd=i6r4",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "i6r4"
+    },
+    {
+     "url": "https://pan.quark.cn/s/370da4bf04b4",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "RcLL"
+    }
+   ],
+   "dead": [],
+   "candidates": []
+  },
+  "可怕的怪物": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/18_vZS2bHoN0O826qfGC9QQ?pwd=p8t5",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "p8t5",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "缝缝补补的幸福": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/16hLO_2-CAY1TxffTHKCTFA?pwd=zc13",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "zc13",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/302f48898702",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "Dear Virgin": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1dHBk-i3-2BHtzXoW3OzSPA?pwd=rb79",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "rb79",
+    "detail": "分享有效（需提取码）",
+    "source": "weibo"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "強伽羅学園": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1-zAzOqqi0LivWXifOSfgTg?pwd=74yn",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "74yn",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "戏剧之爱·安乐死": {
+   "state": "failover",
+   "active": {
+    "url": "https://url08.ctfile.com/f/65517308-8425987321-60a99b?p=1528",
+    "platform": "ctfile",
+    "platform_name": "城通网盘",
+    "pwd": "1528",
+    "detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip 192.84 MB2025-09-09",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/b7b1e6055406",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/5cfc2ad79a6d",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "十二条船全抛": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1fQZ2kDw5u9Zr-yAYeK2r8A?pwd=uxyr",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "uxyr",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "对鲸号的记录": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1uZmUHqGLzb-JVv55dTQPQw?pwd=43ql",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "43ql",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "人格修理师": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1uZmUHqGLzb-JVv55dTQPQw?pwd=43ql",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "43ql",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "对AI的审问": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1uZmUHqGLzb-JVv55dTQPQw?pwd=43ql",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "43ql",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "NENE": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1XzRFQu1K1LVxGCaoAjWHNA?pwd=s0h1",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "s0h1",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1qn-CH9xUsu7-cbzl61Bebg?pwd=dqhy",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "dqhy"
+    }
+   ],
+   "dead": [],
+   "candidates": []
+  },
+  "自恋囚笼": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "iu8b",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "6ans"
+    },
+    {
+     "url": "https://www.123684.com/s/ootDVv-sDjov?pwd=eZEe",
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "eZEe"
+    },
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528"
+    },
+    {
+     "url": "https://share.weiyun.com/05WlFxr6",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "8x8jzi"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/fb7d7e01f866",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/8364570fa481",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "君かアオイロ。（or君青）": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VOfYDWOOMzhvlP6cMegiBr0JA1?pwd=3ssm#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "3ssm",
+    "detail": "分享有效（需提取码）｜永久有效｜kimiwaaoiro_chs.zip 160.8MB 2026-06-12 05:04 ",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://www.123865.com/s/ootDVv-8Vjov?pwd=ulAI#",
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "ulAI"
+    },
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8471392676-333c65?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528"
+    },
+    {
+     "url": "https://drive.uc.cn/s/f849c4061ca14",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "pwd": "veg1"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1DAqNIhnDWAcQNWf00j1H_w",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/ef0f6ffdb1e1",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/ff13dece379d",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "COLOR☆COLLAR": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1tWtzsbCMzyOTK6tRR5-z2g?pwd=v9bv",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "v9bv",
+    "detail": "分享有效（需提取码）",
+    "source": "up_comment"
+   },
+   "alt": [
+    {
+     "url": "https://www.123865.com/s/ootDVv-EATmv?pwd=0Dgd#",
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "0Dgd"
+    },
+    {
+     "url": "https://www.123865.com/s/ootDVv-rQTmv?pwd=5qAd#",
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "5qAd"
+    },
+    {
+     "url": "https://share.weiyun.com/P5w3qWaW",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "qacqpv"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/e6baf1abb1d3",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "不要抛下我!!": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VOk8azICB36-iaIVxsQ9CsshA1#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "t4kv",
+    "detail": "分享有效（需提取码）｜永久有效｜不要抛下我 汉化补丁.zip 16MB 2026-02-01 20:13 ",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.xunlei.com/s/VOkO99MFKyO9IeyiAjA0x1RjA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "hbs4"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1OF25L4HEX00_JHZaXZdq_A?pwd=2gcy",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/a227dde020c2?pwd=bwyd",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://drive.uc.cn/s/7a1ca4a8e4804",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "神隐新娘（花嫁隐）": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1MvF9BvKN0J9Q0BsosmdXXA?pwd=ycd4",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "ycd4",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1398Th72qKWRtKV3w_sk3fQ?pwd=anxt",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "anxt"
+    },
+    {
+     "url": "https://pan.baidu.com/s/19A5I7Dk-hzY8xZD-Js-41Q?pwd=458t",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "458t"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOlu3IiBSu2p7ajUopKT6tRWA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "bw9a"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "trapped with jester": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/19FD-cPbWPnP2F2rmRmXE3A?pwd=8q4g",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "8q4g",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1VtjaKZ2RVHvxSRV7H7pr7Q?pwd=qfbm",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qfbm"
+    }
+   ],
+   "dead": [],
+   "candidates": []
+  },
+  "sweetest Valentine": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/18bBSp5Fqbtwmw0rnhyOJ6A?pwd=3k5c",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "3k5c",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "魔王是我的": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1r9NmWjUbmNpOPx4hxSItmA?pwd=b8py",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "b8py",
+    "detail": "分享有效（需提取码）",
+    "source": "pinned"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "我此生已逝": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1r9NmWjUbmNpOPx4hxSItmA?pwd=b8py",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "b8py",
+    "detail": "分享有效（需提取码）",
+    "source": "pinned"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "CLASSMATES": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1sAr8GBa52408_B-Nam11Kg?pwd=u27l",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "u27l",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "Dark Nights": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/10xiK7-eFbOKTi28mzV6oEA?pwd=ha53",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "ha53",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1VO9pWQjGe0jn3dDBnT-SLw?pwd=23rs",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "23rs"
+    }
+   ],
+   "dead": [],
+   "candidates": []
+  },
+  "dead plate": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1g0OcC9z5V6wYpO4qTjdXxw?pwd=13ia",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "13ia",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "Elevator Hitch": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1gCA439uRQxD9DJHiSa1LaA?pwd=9qlg",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "9qlg",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "Cold Front": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1g0OcC9z5V6wYpO4qTjdXxw?pwd=13ia",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "13ia",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "Eloquent Countenance": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1gCA439uRQxD9DJHiSa1LaA?pwd=9qlg",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "9qlg",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "meet her there": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1rpXbddHBDgcVd1FDJfol9Q?pwd=saz2",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "saz2",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/4d8a94a454f3",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "Line 88": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/15FKjLbpsV5OYvw8XxRw-4g?pwd=aubg",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "aubg",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "灰姑娘现象": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1iLYNAz-Kazw3nZvczUBuNw?pwd=i9ei",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "i9ei",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/9b7b131baf30",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "灰姑娘现象FD永远": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1f2dNCgw9PrqzUdPqJsxndA?pwd=m29s",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "m29s",
+    "detail": "分享有效（需提取码）",
+    "source": "pinned"
+   },
+   "alt": [
+    {
+     "url": "https://pan.xunlei.com/s/VOnyNubGFfhY9O_bSCZxGpbiA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "e2aw"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/531bc6015b3f",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "人类保管库": {
+   "state": "failover",
+   "active": {
+    "url": "https://www.123865.com/s/ootDVv-t8jov?pwd=nJnu#",
+    "platform": "123pan",
+    "platform_name": "123云盘",
+    "pwd": "nJnu",
+    "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8452140339-7cfe4e?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528"
+    },
+    {
+     "url": "https://share.weiyun.com/3sblmV9F",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "NjAj"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/00dffb67943b",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "细思极恐的恐怖游戏": {
+   "state": "failover",
+   "active": {
+    "url": "https://www.123865.com/s/ootDVv-e8jov?pwd=0W0H#",
+    "platform": "123pan",
+    "platform_name": "123云盘",
+    "pwd": "0W0H",
+    "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8452136792-41c934?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528"
+    },
+    {
+     "url": "https://share.weiyun.com/wgc5yqS9",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "i7nvek"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/d707fbc6e074",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "并非兄妹的热病": {
+   "state": "failover",
+   "active": {
+    "url": "https://www.123865.com/s/ootDVv-Z8jov?pwd=X3mv#",
+    "platform": "123pan",
+    "platform_name": "123云盘",
+    "pwd": "X3mv",
+    "detail": "分享有效｜并非兄妹 汉化完整版.zip｜到期 2099-12-12",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8452133618-d25165?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528"
+    },
+    {
+     "url": "https://share.weiyun.com/qlGJBhrY",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "99ctdh"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/aacaa363282f",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "关于埋葬某人的梦": {
+   "state": "failover",
+   "active": {
+    "url": "https://www.123865.com/s/ootDVv-hQTmv?pwd=bae5#",
+    "platform": "123pan",
+    "platform_name": "123云盘",
+    "pwd": "bae5",
+    "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://share.weiyun.com/SOCeG7UU",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "gk4sj4"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/849df8014b17",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/0a1e3c67c472",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "detail": "文件不存在或已被删除"
+    }
+   ],
+   "candidates": []
+  },
+  "舌头上的动物园": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VOiITcGJud8b9aFLSLFdI1nRA1#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "cejm",
+    "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/19hK8KkVXFLy3IfY70pw_eg?pwd=tjck",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/246f4d295926?pwd=XiEz",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://drive.uc.cn/s/d05786e3dbc84",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "暴走族怪谈大会 再归": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1JS9og_ufq2ij3MweaONMaA?pwd=igqz",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "igqz",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1IXFJlXpg3oOmU7bWRM-6wA?pwd=88ac",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "88ac"
+    },
+    {
+     "url": "https://pan.baidu.com/s/1_Kt7VHEgLnhVWzfIs8fHHw?pwd=gxn6",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "gxn6"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOiDvXodPCJ-e23xvHJQ2cWkA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "xtgi"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOiDrNAPa1_8MkwA3Y1WFrBjA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "7fyk"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/b1670df90436?pwd=aeTt",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/980575fd2e8e",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "Lost Friends1-DisappeardName-": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1Ir-6HhhRwC2d3D7ixAzJkg?pwd=kigm",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "kigm",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "Lost Friends 2": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1GoE1Tph2N41YvO6-jkMEww?pwd=5nfh",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "5nfh",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/0cc65915c309",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": [
+    {
+     "url": "https://pan.quark.cn/s/0cc65915",
+     "platform": "quark",
+     "pwd": null,
+     "source": "desc",
+     "author": "",
+     "is_up": false,
+     "platform_name": "夸克网盘",
+     "share_id": "0cc65915",
+     "status": "dead",
+     "detail": "分享不存在（已被取消或删除）"
+    }
+   ]
+  },
+  "相反的理想主义": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1Uu5W_AXNMs4-NkH_dcqoRw",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": null,
+    "detail": "分享有效（需提取码）",
+    "source": "site"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "深海的勿忘草": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1HnPY270U8_ZEegiTRs81vg?pwd=hjvv",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "hjvv",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/ea843c28afe4",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "水手服与命中注定之人": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1PiwRqSKWBEBbL5OgVEsLbA?pwd=d7fw",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "d7fw",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/93069786f079",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "爱情寄生虫": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VOmFlnMQuNyWGoD8c6c6jjzxA1#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "cgpw",
+    "detail": "分享有效（需提取码）",
+    "source": "up_comment"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    }
+   ],
+   "candidates": []
+  },
+  "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
+   "state": "failover",
+   "active": {
+    "url": "https://www.123865.com/s/ootDVv-ioTmv?pwd=gqAu#",
+    "platform": "123pan",
+    "platform_name": "123云盘",
+    "pwd": "gqAu",
+    "detail": "分享有效｜惩罚之吻 汉化补丁.zip｜到期 2099-12-12",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://share.weiyun.com/RvqDhtES",
+     "platform": "weiyun",
+     "platform_name": "腾讯微云",
+     "pwd": "gibybv"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1_Tnf_8MG-0_1yZL0Zpy3kw?pwd=p0ag",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/4045e8716360",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "detail": "文件不存在或已被删除"
+    },
+    {
+     "url": "https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "detail": "文件不存在或已被删除"
+    }
+   ],
+   "candidates": []
+  },
+  "HIKEBACK": {
+   "state": "failover",
+   "active": {
+    "url": "https://url08.ctfile.com/f/65517308-8432179003-769a05?p=1528",
+    "platform": "ctfile",
+    "platform_name": "城通网盘",
+    "pwd": "1528",
+    "detail": "分享有效｜HIKEBACK汉化完整版.zip 72.33 MB2025-09-13",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/c3635ad46422",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "seekL": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/152oM9nCQYXStjTPmBQRY9Q?pwd=6ykb",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "6ykb",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "恶魔之心": {
+   "state": "failover",
+   "active": {
+    "url": "https://wwk.lanzoue.com/iW0Ug1q78fcf",
+    "platform": "lanzou",
+    "platform_name": "蓝奏云",
+    "pwd": "0nnn",
+    "detail": "分享有效｜demonheart 机翻润色补丁.zip",
+    "source": "pinned"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    }
+   ],
+   "candidates": []
+  },
+  "恶魔之心：猎人": {
+   "state": "failover",
+   "active": {
+    "url": "https://wwk.lanzoue.com/idF3k1ru6cif",
+    "platform": "lanzou",
+    "platform_name": "蓝奏云",
+    "pwd": "gkln",
+    "detail": "分享有效｜恶魔之心：猎人 机翻汉化补丁.zip",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    }
+   ],
+   "candidates": []
+  },
+  "不速之死": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/15Ue7BwgYQIPQofbJvdxk-w?pwd=jheq",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "jheq",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "Magical Otoge Ciel": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1MQGB57xKOuJFI0mf-Q8sUw?pwd=5br8",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "5br8",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1VfM569bIXc88XNqNWkPOPw?pwd=wd47",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "wd47"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/03c50cd0bb46",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "Birla_NNN": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1UMJcgPvGPQDY495uszRV4w?pwd=ggkq",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "ggkq",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "与死神的约会": {
+   "state": "none",
+   "active": null,
+   "alt": [],
+   "dead": [],
+   "candidates": [],
+   "request": {
+    "bili_url": null,
+    "weibo_url": "",
+    "dead_platforms": [],
+    "message": "《与死神的约会》的网盘链接失效了，求补档 🙏"
+   }
+  },
+  "冬鸦何处去": {
+   "state": "pending",
+   "active": null,
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1Gfv3o5OrV-Y_cjm217TyUQ?pwd=rajl",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/625a66c341d1",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/8e9e4cff4611",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": [],
+   "request": {
+    "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
+    "weibo_url": "",
+    "dead_platforms": [
+     "夸克网盘",
+     "百度网盘"
+    ],
+    "message": "《冬鸦何处去》的夸克网盘、百度网盘链接失效了，求补档 🙏"
+   }
+  },
+  "杀死公主": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/19OOSaHaJkL5M90wfn3_olA?pwd=yant",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "yant",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "销魂罪人": {
+   "state": "pending",
+   "active": null,
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    }
+   ],
+   "candidates": [],
+   "request": {
+    "bili_url": "https://www.bilibili.com/video/BV1yz421m7Dp",
+    "weibo_url": "",
+    "dead_platforms": [
+     "百度网盘"
+    ],
+    "message": "《销魂罪人》的百度网盘链接失效了，求补档 🙏"
+   }
+  },
+  "MAMIYA": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1s3e_j513Xw7TzBIldQAUdw?pwd=pi79",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "pi79",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/d2a976a8cf14",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "别吃收银员！": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.quark.cn/s/fb2fd1917f21",
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "1u5z",
+    "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://www.123865.com/s/ootDVv-Frjov?pwd=2zNr#",
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "2zNr"
+    },
+    {
+     "url": "https://www.123684.com/s/ootDVv-cDjov?pwd=7mRc",
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "7mRc"
+    },
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.quark.cn/s/e84b113d573c",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528",
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "detail": "文件不存在或已被删除"
+    }
+   ],
+   "candidates": []
+  },
+  "BUSTAFELLOWS": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1yoCMe5l7VKUgLIRZHZezRQ?pwd=vhih",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "vhih",
+    "detail": "分享有效（需提取码）",
+    "source": "article"
+   },
+   "alt": [],
+   "dead": [],
+   "candidates": []
+  },
+  "汝，当爱休息区的他": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VOmoYvBo974B8b5YVyYDQQegA1#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "3am3",
+    "detail": "分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37 ",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/9780b9de1b7c",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "恶魔之心：被诅咒的试炼": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VOnS5Nm02L74hPotSQhGoJwoA1#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "tm89",
+    "detail": "分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26 ",
+    "source": "desc"
+   },
+   "alt": [],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/d891ae5de524",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://drive.uc.cn/s/e2f43ca43b8b4",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "粉碎梦之门与病娇的按钮": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1mlcD0J_uExvR0ZjtVvq9xw?pwd=3ww8",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "3ww8",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.baidu.com/s/1Sk67xbjZbziK63wRPFIMCQ?pwd=ry7r",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "ry7r"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ypz5"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "pdu5"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "upat"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/ebf194eb099f",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://pan.quark.cn/s/d727e34ead20?pwd=RSW6",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    },
+    {
+     "url": "https://drive.uc.cn/s/874242a1ffa44",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "~把最棒的巧克力送给你 这份心意就是全部哦~": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.baidu.com/s/1g8qMG1nAzMjVSfUMMMqaqQ?pwd=4stn",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "4stn",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.quark.cn/s/47eec60af621",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "43u2"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "43u2"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://drive.uc.cn/s/a15712f77ccf4",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "替身谎言~one night liar": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.quark.cn/s/782fc8938454",
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "r83W",
+    "detail": "分享有效｜替身谎言",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "kpvq"
+    },
+    {
+     "url": "https://drive.uc.cn/s/e818987ce1474",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "pwd": "bFaJ"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    }
+   ],
+   "candidates": []
+  },
+  "拍卖开始的五分钟后": {
+   "state": "failover",
+   "active": {
+    "url": "https://pan.xunlei.com/s/VP43aDVHIUFIXuga6fe-IRJoA1#",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "skdr",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://wwanu.lanzoue.com/iJbaA4c89rde",
+     "platform": "lanzou",
+     "platform_name": "蓝奏云",
+     "pwd": "ei6b"
+    },
+    {
+     "url": "https://drive.uc.cn/s/d890c62374494",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "pwd": "aePj"
+    }
+   ],
+   "dead": [
+    {
+     "url": "https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j",
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "detail": "来晚啦，该分享已被取消"
+    },
+    {
+     "url": "https://pan.quark.cn/s/14e3bebe2f45",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "detail": "分享已被封禁（文件涉及违规内容）"
+    }
+   ],
+   "candidates": []
+  },
+  "死刑前的心理咨询": {
+   "state": "ok",
+   "active": {
+    "url": "https://pan.baidu.com/s/1SS04HchS9uVIc5t-cqCDuA?pwd=n2b8",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "n2b8",
+    "detail": "分享有效（需提取码）",
+    "source": "desc"
+   },
+   "alt": [
+    {
+     "url": "https://pan.quark.cn/s/499e10eefe3d",
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "K3rm"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1#",
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "estz"
+    },
+    {
+     "url": "https://wwanu.lanzoue.com/iFdGG4cg9hnc",
+     "platform": "lanzou",
+     "platform_name": "蓝奏云",
+     "pwd": "4s6x"
+    },
+    {
+     "url": "https://drive.uc.cn/s/6a8f0cac8f604",
+     "platform": "uc",
+     "platform_name": "UC网盘",
+     "pwd": "s6Uh"
+    }
+   ],
+   "dead": [],
+   "candidates": []
+  }
+ }
+}
