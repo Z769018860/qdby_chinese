@@ -1,3 +1,5 @@
+import { mountToolbox } from "./toolbox.js";
+import { mountGuestbookWhenIdle } from "./guestbook.js";
 // app.js (ESM)
 // Data source: ./data.json
 
@@ -947,84 +949,6 @@ function initNdDialog(){
   });
 }
 
-function initToolboxDialog(){
-  const dialog = document.getElementById("toolboxDialog");
-  const openBtn = document.getElementById("toolboxOpen");
-  const closeBtn = document.getElementById("toolboxClose");
-  if(!dialog || !openBtn) return;
-  const open = ()=>{ if(!dialog.open) dialog.showModal(); };
-  openBtn.addEventListener("click", open);
-  // 工具页的“返回个人工具箱”链接带 #toolboxTitle，直接弹出工具箱
-  if(location.hash === "#toolboxTitle") open();
-  window.addEventListener("hashchange", ()=>{ if(location.hash === "#toolboxTitle") open(); });
-  closeBtn && closeBtn.addEventListener("click", ()=>dialog.close());
-  dialog.addEventListener("click", (e)=>{
-    const rect = dialog.getBoundingClientRect();
-    const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
-    if(!inside) dialog.close();
-  });
-}
-
-function initCoinLab(){
-  const stage = document.getElementById("coinStage");
-  const frontInput = document.getElementById("coinUploadFront");
-  const backInput = document.getElementById("coinUploadBack");
-  const startBtn = document.getElementById("coinStartBtn");
-  const stopBtn = document.getElementById("coinStopBtn");
-  const result = document.getElementById("coinResult");
-
-  if(!stage || !frontInput || !backInput || !startBtn || !stopBtn || !result){ return; }
-
-  let spinning = false;
-  let angle = 0;
-  let timer = null;
-
-  const frontFace = stage.querySelector('.front');
-  const backFace = stage.querySelector('.back');
-
-  const setResult = (text)=>{ result.textContent = `当前结果：${text}`; };
-
-  startBtn.addEventListener('click', ()=>{
-    if(spinning){ return; }
-    spinning = true;
-    setResult('旋转中…');
-    timer = window.setInterval(()=>{
-      angle += 18;
-      stage.style.transform = `rotateY(${angle}deg)`;
-    }, 16);
-  });
-
-  stopBtn.addEventListener('click', ()=>{
-    if(!spinning){
-      setResult('请先开始旋转');
-      return;
-    }
-    spinning = false;
-    if(timer){ window.clearInterval(timer); timer = null; }
-
-    const normalized = ((angle % 360) + 360) % 360;
-    const isFront = normalized < 90 || normalized > 270;
-    const finalAngle = isFront ? 0 : 180;
-    angle = angle + (finalAngle - normalized);
-    stage.style.transform = `rotateY(${angle}deg)`;
-    setResult(isFront ? '🐶 正面（狗）' : '🐱 反面（猫）');
-  });
-
-  const bindUploader = (input, face)=>{
-    input.addEventListener('change', (event)=>{
-      const file = event.target.files && event.target.files[0];
-      if(!file){ return; }
-      const reader = new FileReader();
-      reader.onload = (e)=>{
-        face.style.backgroundImage = `url('${e.target?.result || ''}')`;
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  bindUploader(frontInput, frontFace);
-  bindUploader(backInput, backFace);
-}
 async function loadData(){
   const res = await fetch("./data.json", { cache: "no-cache" });
   state.data = await res.json();
@@ -1058,8 +982,8 @@ async function main(){
   state.liked = loadLikedIds();
   state.messages = loadMessages();
   wireControls();
-  initCoinLab();
-  initToolboxDialog();
+  mountToolbox();
+  mountGuestbookWhenIdle({ el: "#waline", fallbackEl: document.querySelector("#walineFallback") });
   initNdDialog();
   // 首屏优先：本地渲染表格不等任何远程接口
   await loadData();

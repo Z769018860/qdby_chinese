@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的个人站 · 视频站</title>
-  <link rel="stylesheet" href="styles.css?v=20261027.3" />
+  <link rel="stylesheet" href="styles.css?v=20261027.4" />
 </head>
 <body>
   <div class="bgLayer bgLeft" aria-hidden="true"></div>
@@ -39,9 +39,12 @@
           <img alt="爱发电" src="https://afdian.net/static/img/logo.png" />
           <span>爱发电</span>
         </a>
-        <a class="chip" href="./index.html#messageTitle">
+        <button class="chip" id="toolboxOpen" type="button" aria-haspopup="dialog">
+          <span>🧰 个人工具箱</span>
+        </button>
+        <button class="chip" id="guestbookOpen" type="button" aria-haspopup="dialog">
           <span>💬 留言板</span>
-        </a>
+        </button>
       </nav>
     </div>
 
@@ -140,7 +143,19 @@
     <div class="wViewerBar" id="wViewerBar"></div>
   </dialog>
 
+  <dialog id="guestbookDialog" class="guestbookDialog" aria-labelledby="guestbookTitle">
+    <div class="guestbookHead">
+      <h2 id="guestbookTitle">留言板</h2>
+      <button class="viewerClose" id="guestbookClose" type="button" aria-label="关闭">×</button>
+    </div>
+    <p id="guestbookLoading" class="guestbookTip" hidden>正在连接留言板…</p>
+    <div id="walineVideo" aria-live="polite"></div>
+    <p id="guestbookFallback" class="messageStatus muted" role="status" aria-live="polite" hidden></p>
+  </dialog>
+
   <script src="site-analytics.js" defer></script>
-  <script src="videos.js?v=20261027.2"></script>
+  <script src="waline-anonymous-avatars.js?v=20260921.1" defer></script>
+  <script src="waline-pagination.js?v=20260921.1" defer></script>
+  <script src="videos.js?v=20261027.4"></script>
 </body>
 </html>

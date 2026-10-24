@@ -728,6 +728,56 @@ function showBgArt(){
   }
 }
 
+/* ---------- 个人工具箱（与首页共用 toolbox.js） ---------- */
+function mountToolbox(){
+  import("./toolbox.js")
+    .then(m => m.mountToolbox())
+    .catch(err => console.error("toolbox load failed:", err));
+}
+
+/* ---------- 留言板：点按钮在弹窗里挂载 Waline ---------- */
+function mountGuestbookDialog(){
+  const dialog = document.getElementById("guestbookDialog");
+  const openBtn = document.getElementById("guestbookOpen");
+  const closeBtn = document.getElementById("guestbookClose");
+  const loading = document.getElementById("guestbookLoading");
+  const box = document.getElementById("walineVideo");
+  const fallback = document.getElementById("guestbookFallback");
+  if(!dialog || !openBtn || !box) return;
+
+  let mounted = false;
+  const open = () => {
+    if(!dialog.open) dialog.showModal();
+    if(mounted) return;
+    mounted = true;
+    loading.hidden = false;
+    import("./guestbook.js")
+      .then(({ mountGuestbook }) => mountGuestbook({ el: box, fallbackEl: fallback }))
+      .then(ok => { loading.hidden = true; if(!ok && fallback) fallback.hidden = false; })
+      .catch(err => {
+        console.error("guestbook load failed:", err);
+        loading.hidden = true;
+        if(fallback){
+          fallback.innerHTML = '留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';
+          fallback.classList.add("warn");
+          fallback.hidden = false;
+        }
+      });
+  };
+
+  openBtn.addEventListener("click", open);
+  closeBtn && closeBtn.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => {
+    const rect = dialog.getBoundingClientRect();
+    const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+    if(!inside) dialog.close();
+  });
+  if(location.hash === "#guestbook") open();
+}
+
+mountToolbox();
+mountGuestbookDialog();
+
 load().then(wire).then(showBgArt).catch(err => {
   console.error(err);
   el.result.textContent = "数据加载失败，请稍后重试。";

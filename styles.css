@@ -557,6 +557,33 @@ button.chip{
 }
 .toolboxDialog::backdrop{ background:rgba(15,23,42,.55); }
 .toolboxDialog .viewerClose{ position:sticky; top:0; float:right; z-index:1; }
+/* 视频站 / 通用留言板弹窗 */
+.guestbookDialog{
+  width:min(880px, calc(100vw - 24px));
+  max-height:calc(100vh - 48px);
+  padding:18px 20px 22px;
+  border:1px solid var(--line);
+  border-top:4px solid #6366f1;
+  border-radius:18px;
+  background:var(--card);
+  color:var(--text);
+  overflow:auto;
+}
+.guestbookDialog::backdrop{ background:rgba(15,23,42,.55); }
+.guestbookHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+.guestbookHead h2{ margin:0; font-size:20px; }
+.guestbookDialog .viewerClose{ position:static; }
+.guestbookTip{ margin:0 0 10px; color:var(--muted); font-size:13px; }
+.guestbookDialog #walineVideo .wl-panel{ margin:0; }
+@media (max-width: 640px){
+  .guestbookDialog{ padding:14px 12px 18px; border-radius:14px; }
+}
 .statement{
   margin:0 0 16px;
 }
