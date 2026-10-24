@@ -17,3 +17,8 @@ Not every player has details for every zone yet (zone 1-5 rows: 1475 / 1021 / 15
 No duplicate rank rows (one uid on two adjacent ranks), (2,000 players).
 The leaderboard reads `data/morimens/eremora/usage/71-local-gzip`, `stats/71.json` and `rank-index/71.json`.
 Rebuild with `scripts/import_morimens_season71_top2000.py`, `scripts/postprocess_morimens_eremora.mjs` and `scripts/pack_morimens_local_usage.py`.
+
+
+## Latest ranking refresh — 2026-10-25 04:19 (UTC+8)
+
+The official Top 2000 ranking and score distribution for activity 83331 have been refreshed from the uploaded `season_83331.zip` snapshot. The website rank index and `scores.json` now reflect this snapshot. The accompanying `teams_latest.jsonl` contains 9,816 rows for 2,000 UIDs, captured between 2026-10-13 and 2026-10-25; it has **not** yet been repacked into the 71st-season team-detail chunks. The existing detailed usage snapshot remains synced at 2026-10-21. 1630/2,000 current ranked UIDs have matching detailed profiles; 370 newly ranked UIDs are represented as rank-only entries until their team details are merged. The season is marked partial to avoid presenting those missing team details as complete.

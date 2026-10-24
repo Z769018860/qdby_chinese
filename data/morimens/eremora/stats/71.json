@@ -614,5 +614,13 @@
       "2000": true
     },
     "enlightenment": true
+  },
+  "rankUpdatedAt": "2026-10-25T04:19:24.625773+08:00",
+  "teamDetailsUpdatedAt": "2026-10-21T14:24:00+08:00",
+  "detailCoverage": {
+    "expectedRankedUids": 2000,
+    "availableDetailedProfiles": 1630,
+    "missingDetailedProfiles": 370,
+    "complete": false
   }
 }
