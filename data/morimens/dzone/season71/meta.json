@@ -143,7 +143,7 @@
       "sourceFile": "season_83331.zip / teams_latest.jsonl",
       "rows": 9816,
       "uniqueUids": 2000,
-      "retrievedAtMin": "2026-10-13T02:12:16.591244+08:00",
+      "retrievedAtMin": "2026-10-13T02:00:20.093078+08:00",
       "retrievedAtMax": "2026-10-25T04:39:45.442985+08:00",
       "status": "not yet merged into packed site team details; rank-only placeholders are shown for newly ranked UIDs"
     }
