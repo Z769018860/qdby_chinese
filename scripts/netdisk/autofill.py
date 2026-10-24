@@ -277,7 +277,20 @@ def main():
             done.append(row)
         if done:
             rec['reshare'] = done
-            if state in ('pending', 'none'):
+            # 补档过的作品：补档链接顶到首选位（原链接退到备选），
+            # 页面卡片第一个看到的就是补档那条，不再让旧链接排在前面。
+            first = dict(done[0])
+            first['where'] = '视频置顶评论（补档）'
+            first['from_reshare'] = True
+            alts = []
+            if rec.get('active'):
+                alts.append(rec['active'])
+            alts += rec.get('alt') or []
+            alts += [dict(x, where='视频置顶评论（补档）', from_reshare=True)
+                     for x in done[1:]]
+            rec['active'] = first
+            rec['alt'] = alts
+            if state != 'reshared':
                 state = 'reshared'
                 rec['state'] = state
 
@@ -297,10 +310,12 @@ def main():
         'games': len(games),
         'summary': states,
         'recovered_links': len(new_links),
-        'note': 'active 是当前可用的首选链接（按平台优先级与来源可信度排序），'
+        'note': 'active 是当前首选链接：按平台优先级与来源可信度排序，'
+                '补过档的作品补档链接恒排第一；'
                 '但只给平台/提取码/写在哪，不给地址——页面统一引导回视频发布处；'
                 'failover 表示原链接有失效但已自动切到其他可用盘；'
                 'recovered 表示从评论区/微博里补回了新链接并通过核验；'
+                'reshared 表示本机重新建过分享、写在视频置顶评论里的补档链接；'
                 'pending 表示全部失效且暂无可信候补，reupload 写清本机补档卡在哪一步。',
     }
 

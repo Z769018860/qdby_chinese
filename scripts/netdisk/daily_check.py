@@ -130,7 +130,9 @@ def stamp(links, now):
     for L in links:
         st = L.get('status') or 'unknown'
         L['status_text'] = R.STATUS_LABEL.get(st, '待确认')
-        L['checked_at'] = now
+        # 沿用旧判定的链接不刷新 checked_at：反映的是真正判定那一次的时间
+        if not L.get('skip_recheck'):
+            L['checked_at'] = now
 
 
 def reshare_links(rs):
@@ -379,6 +381,8 @@ def main():
     ap.add_argument('--full-content', action='store_true',
                     help='内容同步走全量（微博 400 页、投稿 80 页），首次或补历史时用')
     ap.add_argument('--no-reshare', action='store_true', help='跳过失效资源的自动补档')
+    ap.add_argument('--recheck-dead', action='store_true',
+                    help='已判失效的链接也重新核验（默认沿用旧判定，不反复请求）')
     ap.add_argument('--sync-main', action='store_true',
                     help='push 完顺手把 main 快进到同一提交（main 是线上分支）')
     args = ap.parse_args()
@@ -409,8 +413,28 @@ def main():
     if extras:
         print('补档链接：%d 条（一起验，避免误报全灭）' % len(extras))
 
+    # 上一轮已判死的不再反复核验：沿用旧判定，只验剩下还活着的/新的
+    prev = R.load_prev_status(LEDGER)
+    if args.recheck_dead:
+        to_check = links + extras
+    else:
+        todo_links = R.apply_dead_skip(links, prev)
+        todo_extras = []
+        for x in extras:
+            if (x.get('ref') or {}).get('checked') == 'dead':
+                x['status'] = 'dead'
+                x['detail'] = '已失效，不再重复核验'
+                x['status_text'] = R.STATUS_LABEL['dead']
+                x['skip_recheck'] = True
+            else:
+                todo_extras.append(x)
+        to_check = todo_links + todo_extras
+        skipped = len(links) + len(extras) - len(to_check)
+        if skipped:
+            print('已失效 %d 条沿用旧判定，本轮不重复核验（--recheck-dead 可强制复检）' % skipped)
+
     t0 = time.time()
-    check_all(links + extras, fast=args.fast, node=args.node)
+    check_all(to_check, fast=args.fast, node=args.node)
     stamp(links, now)
     stamp(extras, now)
     # 补档链接的状态回写进 reshare.json，站点弹层里那几条也就能显示是否还活着
@@ -444,7 +468,7 @@ def main():
             for x in extras:
                 by_name_rs.setdefault(x['name'], []).append(x)
             # 新链接再验一遍，别把刚建出来就死的算成「救回来了」
-            check_all([x for x in extras if x.get('status') != 'ok'],
+            check_all([x for x in extras if x.get('status') == 'unknown'],
                       fast=args.fast, node=args.node)
             stamp(extras, now)
             for x in extras:

@@ -4,8 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的个人站 · 汉化站</title>
-  <link rel="stylesheet" href="styles.css?v=20261026.5" />
-  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+  <link rel="stylesheet" href="styles.css?v=20261027.1" />
+  <!-- Waline 样式不阻塞首屏：先打印态加载， onload 再切回 all -->
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" /></noscript>
+  <link rel="preload" as="fetch" href="./data.json" crossorigin />
 </head>
 <body>
   <div class="bgLayer bgLeft" aria-hidden="true"></div>
@@ -21,8 +24,8 @@
         </div>
         <div class="titleRow">
         <div class="stickers" aria-hidden="true">
-          <img class="sticker" src="assets/sticker-1.gif" alt="" />
-          <img class="sticker" src="assets/sticker-2.gif" alt="" />
+          <img class="sticker" src="assets/sticker-1.gif" alt="" width="44" height="44" decoding="async" />
+          <img class="sticker" src="assets/sticker-2.gif" alt="" width="44" height="44" decoding="async" />
         </div>
         <h1>青灯不弈的个人站</h1>
       </div>
@@ -364,7 +367,7 @@
     <div class="muted">重要提示：本站为个人汉化汇总展示；请以原作者发布说明与授权范围为准。若链接失效或需要补档/更正信息，可通过友情链接联系我。</div>
   </footer>
 
-  <script type="module" src="app.js?v=20261026.5"></script>
+  <script type="module" src="app.js?v=20261027.1"></script>
   <script type="module">
     const walineRoot = document.querySelector('#waline');
     const walineFallback = document.querySelector('#walineFallback');
@@ -399,34 +402,43 @@
       }
     }
 
-    Promise.all([
-      import('https://unpkg.com/@waline/client@v3/dist/waline.js'),
-      import('./waline-morimens-emoji.js?v=20260920.2'),
-      resolveGuestbookPath(),
-    ])
-      .then(([{ init }, { MORIMENS_EMOJI_PRESET }, guestbookPath]) => {
-        init({
-          el: '#waline',
-          serverURL: WALINE_SERVER,
-          path: guestbookPath,
-          lang: 'zh-CN',
-          emoji: [MORIMENS_EMOJI_PRESET],
-          meta: ['nick', 'mail', 'link'],
-          requiredMeta: [],
-          login: 'disable',
-          wordLimit: 300,
-          pageSize: 10,
-          commentSorting: 'latest',
+    function startWaline(){
+      Promise.all([
+        import('https://unpkg.com/@waline/client@v3/dist/waline.js'),
+        import('./waline-morimens-emoji.js?v=20260920.2'),
+        resolveGuestbookPath(),
+      ])
+        .then(([{ init }, { MORIMENS_EMOJI_PRESET }, guestbookPath]) => {
+          init({
+            el: '#waline',
+            serverURL: WALINE_SERVER,
+            path: guestbookPath,
+            lang: 'zh-CN',
+            emoji: [MORIMENS_EMOJI_PRESET],
+            meta: ['nick', 'mail', 'link'],
+            requiredMeta: [],
+            login: 'disable',
+            wordLimit: 300,
+            pageSize: 10,
+            commentSorting: 'latest',
+          });
+        })
+        .catch((error) => {
+          console.error('Waline load failed:', error);
+          if (walineRoot) walineRoot.hidden = true;
+          if (walineFallback) {
+            walineFallback.innerHTML = '留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';
+            walineFallback.classList.add('warn');
+          }
         });
-      })
-      .catch((error) => {
-        console.error('Waline load failed:', error);
-        if (walineRoot) walineRoot.hidden = true;
-        if (walineFallback) {
-          walineFallback.innerHTML = '留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';
-          walineFallback.classList.add('warn');
-        }
-      });
+    }
+
+    // 留言板延后到浏览器空闲再拉，给表格首屏让路
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => startWaline(), { timeout: 3000 });
+    } else {
+      setTimeout(startWaline, 1500);
+    }
   </script>
   <script src="waline-anonymous-avatars.js?v=20260921.1" defer></script>\n  <script src="waline-pagination.js?v=20260921.1" defer></script>
   <script src="site-analytics.js" defer></script>

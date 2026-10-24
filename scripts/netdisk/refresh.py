@@ -543,6 +543,46 @@ SPA_PLATFORMS = ('xunlei', 'ctfile', 'weiyun')
 STATUS_LABEL = {'ok': '有效', 'dead': '失效', 'unknown': '待确认'}
 
 
+# ------------------------------------------------- 已失效链接：沿用旧判定，不反复核验
+
+def load_prev_status(path=None):
+    """读上一轮台账，拿到 (platform, url) -> 上次判定结果"""
+    path = path or os.path.join(DATA_DIR, 'netdisk-links.json')
+    try:
+        data = json.load(open(path, encoding='utf-8'))
+    except Exception:
+        return {}
+    out = {}
+    for g in data.get('games') or []:
+        for L in g.get('links') or []:
+            key = (L.get('platform'), L.get('url'))
+            if key and L.get('status'):
+                out[key] = {'status': L['status'], 'detail': L.get('detail') or '',
+                            'checked_at': L.get('checked_at') or ''}
+    return out
+
+
+def apply_dead_skip(links, prev):
+    """上一轮已判死的链接本轮不再发请求，直接沿用旧判定。
+
+    返回仍需核验的链接列表；被跳过的链接会带上 skip_recheck 标记，
+    写台账时保留原来的 checked_at（反映的是真正判死那次的时间）。
+    """
+    keep = []
+    for L in links:
+        p = prev.get((L.get('platform'), L.get('url')))
+        if p and p.get('status') == 'dead':
+            L['status'] = 'dead'
+            L['detail'] = ((p.get('detail') or '此前已判定失效')
+                           + '｜已失效，不再重复核验（--recheck-dead 可强制复检）')
+            L['status_text'] = STATUS_LABEL['dead']
+            L['checked_at'] = p.get('checked_at') or ''
+            L['skip_recheck'] = True
+        else:
+            keep.append(L)
+    return keep
+
+
 def run_api_checks(links):
     items = [L for L in links if L['platform'] in API_CHECKERS]
     print('[3/4] API 通道核验 %d 条（百度/夸克/UC/123/蓝奏）…' % len(items))
@@ -751,6 +791,8 @@ def write_outputs(games, checked=True):
 def main():
     ap = argparse.ArgumentParser(description='刷新汉化资源网盘链接台账')
     ap.add_argument('--no-check', action='store_true', help='只抓取解析，不核验有效性')
+    ap.add_argument('--recheck-dead', action='store_true',
+                    help='已判失效的链接也重新核验（默认跳过，避免天天反复请求）')
     ap.add_argument('--node', default='node', help='node 可执行文件路径')
     ap.add_argument('--reuse-cache', action='store_true',
                     help='复用上次抓取的 B 站原始数据（避免频繁请求触发限流）')
@@ -769,12 +811,17 @@ def main():
                 seen.add(k)
                 all_links.append(L)
 
+    prev = load_prev_status()
     if args.no_check:
         for L in all_links:
             L['status'], L['detail'] = 'unknown', '本轮未核验'
     else:
-        run_api_checks(all_links)
-        run_spa_checks(all_links, node_bin=args.node)
+        to_check = all_links if args.recheck_dead else apply_dead_skip(all_links, prev)
+        skipped = len(all_links) - len(to_check)
+        if skipped:
+            print('      已失效 %d 条沿用旧判定，本轮不重复核验' % skipped)
+        run_api_checks(to_check)
+        run_spa_checks(to_check, node_bin=args.node)
 
     checked_at = time.strftime('%Y-%m-%d %H:%M')
     all_map = {(L['platform'], L['url']): L for L in all_links}

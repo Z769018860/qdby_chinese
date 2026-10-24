@@ -527,9 +527,10 @@ const ND_STATE_TEXT = {
   none: ["ndState--none", "未收录"],
 };
 
-function ndChipOf(L, kind){
+function ndChipOf(L, kind, badge){
   const nm = shortPlatform(L.platform_name || L.platform || "网盘");
   const bits = [];
+  if(badge) bits.push(badge);
   if(L.where) bits.push(`写在${L.where}`);
   if(L.pwd) bits.push(`提取码 ${L.pwd}`);
   if(L.detail) bits.push(L.detail);
@@ -537,7 +538,8 @@ function ndChipOf(L, kind){
   const cls = kind === "dead" ? "ndChip ndChip--dead"
             : kind === "ok" ? "ndChip ndChip--ok" : "ndChip ndChip--unk";
   const mark = kind === "dead" ? " ✕" : kind === "ok" ? " ✓" : "";
-  return `<span class="${cls}" title="${escapeHtml(tip)}">${escapeHtml(nm)}${mark}</span>`;
+  const tag = badge ? `<i class="ndBadge">${escapeHtml(badge)}</i>` : "";
+  return `<span class="${cls}" title="${escapeHtml(tip)}">${escapeHtml(nm)}${mark}${tag}</span>`;
 }
 
 function ndVideoLink(au){
@@ -566,8 +568,8 @@ function netdiskCell(r){
     const dead = au.dead || [];
     const [cls, text] = ND_STATE_TEXT[au.state] || ND_STATE_TEXT.ok;
     const chips = [];
-    if(active) chips.push(ndChipOf(active, "ok"));
-    alt.slice(0, 2).forEach(L => chips.push(ndChipOf(L, "alt")));
+    if(active) chips.push(ndChipOf(active, "ok", active.from_reshare ? "补档" : ""));
+    alt.slice(0, 2).forEach(L => chips.push(ndChipOf(L, "alt", L.from_reshare ? "补档" : "")));
     const room = Math.max(0, 4 - chips.length);
     dead.slice(0, room).forEach(d => chips.push(ndChipOf(d, "dead")));
     if(dead.length > room) chips.push(`<span class="ndChip ndChip--dead">+${dead.length - room}</span>`);
@@ -635,9 +637,12 @@ function ndDialogHtml(name, au){
     const a = au.active;
     const from = au.recovered_from
       ? `来源：${a.where || "评论区"}${au.recovered_from.author ? "（" + (au.recovered_from.is_up ? "UP 主 " : "") + escapeHtml(au.recovered_from.author) + "）" : ""}`
-      : `写在：${escapeHtml(a.where || "原记录")}`;
-    parts.push(`<div class="ndRow"><span class="ndRowK">现在可用</span><div>
+      : a.from_reshare
+        ? `补档链接：本机重新建过分享，写在视频置顶评论里${a.at ? `（${escapeHtml(a.at)}）` : ""}`
+        : `写在：${escapeHtml(a.where || "原记录")}`;
+    parts.push(`<div class="ndRow"><span class="ndRowK">${a.from_reshare ? "补档首选" : "现在可用"}</span><div>
       <div class="ndNow"><span class="ndNowPlat">${escapeHtml(a.platform_name || "网盘")}</span>` +
+      (a.from_reshare ? `<span class="ndGoPwd">补档</span>` : "") +
       (a.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(a.pwd)}</span>` : "") +
       (a.detail ? `<span class="ndRowNote">${escapeHtml(a.detail)}</span>` : "") +
       `</div><span class="ndRowNote">${escapeHtml(from)}</span></div></div>`);
@@ -758,9 +763,13 @@ function rowHtml(r){
 
   let shot = `<div class="shotEmpty" title="无截图"></div>`;
   if(img){
+    // 表格用小图（images/thumbs/*.webp），加载失败退回原图；点击放大仍取原图
+    const thumb = img.replace(/^images\/(.+?)\.(\w+)$/, "images/thumbs/$1.webp");
     shot = `
-      <button class="shotBtn" data-img="${img}" title="点击放大">
-        <img class="shot" src="${img}" alt="截图" loading="lazy">
+      <button class="shotBtn" data-img="${escapeHtml(img)}" title="点击放大">
+        <img class="shot" src="${escapeHtml(thumb)}" alt="截图" width="92" height="58"
+             loading="lazy" decoding="async"
+             onerror="this.onerror=null;this.src='${escapeHtml(img)}'">
       </button>`;
   }
 
@@ -1048,17 +1057,19 @@ async function main(){
   state.likes = {};
   state.liked = loadLikedIds();
   state.messages = loadMessages();
-  await tryLoadRemoteState();
   wireControls();
   initCoinLab();
   initToolboxDialog();
   initNdDialog();
+  // 首屏优先：本地渲染表格不等任何远程接口
   await loadData();
-  await loadNetdiskStatus();
-  await loadNetdiskAutofill();
+  await Promise.all([loadNetdiskStatus(), loadNetdiskAutofill()]);
   fillFilters();
   render();
+  showBgArt();
 
+  // 远程留言状态与点赞数：后台补，回来再刷一遍
+  tryLoadRemoteState().then(renderMessages).catch(()=>{});
   try{
     await fetchWalineLikeCounts(state.data.map((item)=>item.__id));
     render();
@@ -1073,6 +1084,17 @@ async function main(){
   } else if(el.messageStatus && !state.storageOK){
     el.messageStatus.textContent = "当前浏览器限制本地存储，但在线模式可正常同步。";
     el.messageStatus.classList.add("warn");
+  }
+}
+
+/* 装饰背景：首屏渲染完再淡入，避免和表格/截图抢带宽 */
+function showBgArt(){
+  const doc = document.documentElement;
+  if(doc.classList.contains("bgReady")) return;
+  if("requestIdleCallback" in window){
+    requestIdleCallback(()=>doc.classList.add("bgReady"), { timeout: 1800 });
+  }else{
+    setTimeout(()=>doc.classList.add("bgReady"), 900);
   }
 }
 

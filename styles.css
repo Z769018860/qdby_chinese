@@ -15,7 +15,13 @@ body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Microsoft YaHei", "PingFang TC", "Noto Sans CJK TC", sans-serif;
   color:var(--text);
-  background:var(--bg);
+  /* 主背景：淡渐变打底，装饰画加载前后页面都不显空 */
+  background:
+    radial-gradient(1100px 460px at 88% -8%, rgba(99,102,241,.055), transparent 62%),
+    radial-gradient(900px 420px at 4% 10%, rgba(14,165,233,.05), transparent 60%),
+    radial-gradient(760px 520px at 50% 118%, rgba(16,185,129,.04), transparent 65%),
+    var(--bg);
+  background-attachment: fixed;
 }
 
 .wrap{
@@ -194,6 +200,18 @@ tbody tr:hover{ background:#fcfcff; }
   cursor:help;
 }
 .ndChip--ok{ background:#e8f7ee; border-color:#bfe6cd; color:#137a3c; }
+.ndBadge{
+  font-style:normal;
+  font-size:9.5px;
+  line-height:1;
+  padding:1.5px 5px;
+  margin-left:3px;
+  border-radius:999px;
+  background:#e8f0fe;
+  border:1px solid #c2d6fb;
+  color:#1a4fa0;
+  vertical-align:1px;
+}
 .ndChip--dead{ background:#fdecec; border-color:#f6c6c6; color:#b42318; }
 .ndChip--mix{ background:#fff5e6; border-color:#f5dcaa; color:#8a5a00; }
 .ndChip--unk{ background:#f4f4f5; border-color:#e0e0e3; color:#6b7280; }
@@ -923,43 +941,50 @@ code{ background:#f3f4f6; border:1px solid var(--line); padding:2px 6px; border-
 }
 
 
-/* --- background illustration --- */
+/* --- background illustration：底部两侧装饰画 --- *//* 排版原则：锚在视口下缘、贴近两侧留白，用径向遮罩向内渐隐，
+   不再从页首竖贯到底；加载完成后才淡入（html.bgReady），不与首屏抢带宽。 */
 .bgLayer{
   position:fixed;
-  top:0;
-  bottom:0;
-  width:min(36vw, 560px);
+  bottom:max(-5vh, -56px);
+  width:min(34vw, 520px);
+  aspect-ratio:1000/714;
   pointer-events:none;
   z-index:0;
-  opacity:.32;
+  opacity:0;
   background-repeat:no-repeat;
   background-size:contain;
-  filter:saturate(1.02) contrast(1.06);
+  filter:saturate(1.03) contrast(1.05);
+  -webkit-mask-image:radial-gradient(120% 118% at 42% 58%, #000 52%, transparent 90%);
+          mask-image:radial-gradient(120% 118% at 42% 58%, #000 52%, transparent 90%);
+  transition:opacity 1s ease;
 }
+html.bgReady .bgLayer{ opacity:.4; }
 .bgLeft{
-  left:max(-3vw, -46px);
-  background-position:left 56%;
+  left:max(-4vw, -60px);
+  background-position:left bottom;
   background-image:url("assets/bg-left.webp");
 }
 .bgRight{
-  right:max(-3vw, -46px);
-  background-position:right 56%;
+  right:max(-4vw, -60px);
+  background-position:right bottom;
   background-image:url("assets/bg-right.webp");
+  -webkit-mask-image:radial-gradient(120% 118% at 58% 58%, #000 52%, transparent 90%);
+          mask-image:radial-gradient(120% 118% at 58% 58%, #000 52%, transparent 90%);
 }
 @media (min-width: 1600px){
-  .bgLayer{ width:min(31vw, 620px); opacity:.34; }
+  .bgLayer{ width:min(30vw, 600px); }
   .bgLeft{ left:0; }
   .bgRight{ right:0; }
 }
 @media (max-width: 980px){
-  .bgLayer{ width:min(48vw, 340px); opacity:.2; }
-  .bgLeft{ left:-12vw; background-position:left 62%; }
-  .bgRight{ right:-12vw; background-position:right 62%; }
+  .bgLayer{ width:min(52vw, 380px); }
+  .bgLeft{ left:-14vw; }
+  .bgRight{ right:-14vw; }
+  html.bgReady .bgLayer{ opacity:.28; }
 }
 @media (max-width: 640px){
-  .bgLayer{ width:min(58vw, 300px); opacity:.16; }
-  .bgLeft{ left:-24vw; }
-  .bgRight{ right:-24vw; }
+  /* 小屏直接不渲染也不下载（background-image 只在命中选择器时拉取） */
+  .bgLayer{ display:none; }
 }
 
 /* keep content above background */
@@ -1506,6 +1531,12 @@ a.vGame:hover{ color:#1f5fa8; }
 
 /* 微博列表 */
 .wList{ gap:12px; }
+.wLoading{
+  padding:48px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
 .wCard{
   background:var(--card);
   border:1px solid var(--line);

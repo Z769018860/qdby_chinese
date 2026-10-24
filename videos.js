@@ -92,13 +92,11 @@ function facetPass(x){
   return true;
 }
 
-/* ---------- 数据加载 ---------- */
+/* ---------- 数据加载 ----------
+   分两段：videos.json 到了就先出首屏；
+   games.json / weibo.json 体积大，后台补齐后再刷一遍。 */
 async function load(){
-  const [rv, rg, rw] = await Promise.all([
-    fetch(URL_VIDEOS, { cache: "no-cache" }),
-    fetch(URL_GAMES, { cache: "no-cache" }).catch(() => null),
-    fetch(URL_WEIBO, { cache: "no-cache" }).catch(() => null)
-  ]);
+  const rv = await fetch(URL_VIDEOS, { cache: "no-cache" });
   const d = await rv.json();
   state.meta = d.meta || {};
   state.categories = d.categories || [];
@@ -113,41 +111,10 @@ async function load(){
     });
   });
 
-  if(rg && rg.ok){
-    try{
-      const g = await rg.json();
-      (g.games || []).forEach(x => { state.games[x.id] = x; });
-    }catch{}
-  }
-  if(rw && rw.ok){
-    try{
-      const w = await rw.json();
-      state.weibo = { posts: w.posts || [], kinds: w.kinds || {}, byGame: w.by_game || {}, meta: w };
-    }catch{}
-  }
-
-  // 分类名补齐（用于微博关联游戏时的展示）
-  el.statVideos.textContent = fmtNum(state.videos.length);
-  el.statArticles.textContent = fmtNum(state.articles.length);
-  el.statGames.textContent = fmtNum(state.meta.game_count || Object.keys(state.games).length);
-  el.statWeibo.textContent = fmtNum(state.weibo.posts.length);
+  updateStats();
   const years = [...new Set(state.videos.concat(state.articles).map(x => yearOf(x.date)).filter(Boolean))].sort();
   el.statYears.textContent = years.length ? `${years[0]}–${years[years.length - 1]}` : "—";
-  el.statPlays.textContent = fmtNum(state.videos.reduce((s, v) => s + (v.play || 0), 0));
-  el.statUpdated.textContent = (state.meta.generated_at || "—").replace(/^(\d{4})-/, "");
-
-  const noteEl = $("vNote");
-  if(noteEl){
-    const total = state.meta.space_total;
-    const head = total && total > state.videos.length
-      ? `已归档 ${state.videos.length} 条公开投稿与 ${state.articles.length} 篇专栏；空间投稿总计 ${total} 条，其余为受限或不公开条目。`
-      : `已归档 ${state.videos.length} 条公开投稿与 ${state.articles.length} 篇专栏。`;
-    const g = state.meta.game_linked || 0;
-    const wb = state.weibo.posts.length;
-    noteEl.textContent = `${head}其中 ${g} 条投稿可从简介识别出具体游戏（平台 / 价格 / 题材 / 要素均来自 UP 主自写的游戏说明）；` +
-      (wb ? `已同步微博动态 ${wb} 条并关联到对应游戏。` : `微博动态尚未同步。`);
-  }
-
+  updateNote();
   years.slice().reverse().forEach(y => {
     const o = document.createElement("option");
     o.value = y; o.textContent = y;
@@ -158,6 +125,59 @@ async function load(){
   renderFacets();
   renderGameFilter();
   render();
+
+  loadGames();
+  loadWeibo();
+}
+
+async function loadGames(){
+  try{
+    const rg = await fetch(URL_GAMES, { cache: "no-cache" });
+    if(!rg.ok) return;
+    const g = await rg.json();
+    (g.games || []).forEach(x => { state.games[x.id] = x; });
+    state.gamesLoaded = true;
+    renderGameFilter();
+    if(state.tab !== "weibo") render();
+  }catch{}
+}
+
+async function loadWeibo(){
+  try{
+    const rw = await fetch(URL_WEIBO, { cache: "no-cache" });
+    if(!rw.ok) return;
+    const w = await rw.json();
+    state.weibo = { posts: w.posts || [], kinds: w.kinds || {}, byGame: w.by_game || {}, meta: w };
+    state.weiboLoaded = true;
+    updateStats();
+    updateNote();
+    renderChips();
+    renderFacets();
+    renderGameFilter();
+    render();
+  }catch{}
+}
+
+function updateStats(){
+  el.statVideos.textContent = fmtNum(state.videos.length);
+  el.statArticles.textContent = fmtNum(state.articles.length);
+  el.statGames.textContent = fmtNum(state.meta.game_count || Object.keys(state.games).length);
+  el.statWeibo.textContent = fmtNum(state.weibo.posts.length);
+  el.statPlays.textContent = fmtNum(state.videos.reduce((s, v) => s + (v.play || 0), 0));
+  el.statUpdated.textContent = (state.meta.generated_at || "—").replace(/^(\d{4})-/, "");
+}
+
+function updateNote(){
+  const noteEl = $("vNote");
+  if(!noteEl) return;
+  const total = state.meta.space_total;
+  const head = total && total > state.videos.length
+    ? `已归档 ${state.videos.length} 条公开投稿与 ${state.articles.length} 篇专栏；空间投稿总计 ${total} 条，其余为受限或不公开条目。`
+    : `已归档 ${state.videos.length} 条公开投稿与 ${state.articles.length} 篇专栏。`;
+  const g = state.meta.game_linked || 0;
+  const wb = state.weibo.posts.length;
+  noteEl.textContent = `${head}其中 ${g} 条投稿可从简介识别出具体游戏（平台 / 价格 / 题材 / 要素均来自 UP 主自写的游戏说明）；` +
+    (wb ? `已同步微博动态 ${wb} 条并关联到对应游戏。` : `微博动态尚未同步。`);
 }
 
 /* ---------- 顶部 chips：分类 / 微博类型 ---------- */
@@ -465,6 +485,14 @@ function render(){
   el.list.hidden = state.tab !== "article";
   el.wlist.hidden = state.tab !== "weibo";
 
+  if(state.tab === "weibo" && !state.weiboLoaded && !state.weibo.posts.length){
+    // 微博数据还在后台加载，先给个占位，别闪「没有内容」
+    el.wlist.innerHTML = `<div class="wLoading">微博动态加载中…</div>`;
+    el.result.textContent = "微博动态加载中…";
+    el.more.hidden = true;
+    el.empty.hidden = true;
+    return;
+  }
   if(state.tab === "video") el.grid.innerHTML = shown.map(videoCard).join("");
   else if(state.tab === "article") el.list.innerHTML = shown.map(articleCard).join("");
   else el.wlist.innerHTML = shown.map(weiboCard).join("");
