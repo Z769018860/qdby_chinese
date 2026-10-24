@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated_at": "2026-10-24 20:24",
+  "generated_at": "2026-10-24 21:07",
   "source_checked_at": "2026-10-24 18:44",
   "games": 64,
   "summary": {
@@ -11,31 +11,44 @@
    "none": 1
   },
   "recovered_links": 0,
-  "note": "active 是当前可用的首选链接（按平台优先级与来源可信度排序）；failover 表示原链接有失效但已自动切到其他可用盘；recovered 表示从评论区/微博里补回了新链接并通过核验；pending 表示全部失效且暂无可信候补。"
+  "note": "active 是当前可用的首选链接（按平台优先级与来源可信度排序），但只给平台/提取码/写在哪，不给地址——页面统一引导回视频发布处；failover 表示原链接有失效但已自动切到其他可用盘；recovered 表示从评论区/微博里补回了新链接并通过核验；pending 表示全部失效且暂无可信候补，reupload 写清本机补档卡在哪一步。"
  },
  "games": {
   "純正優男Sweet&Bitter": {
    "state": "ok",
+   "video": {
+    "bvid": "BV15Y411z7MY",
+    "url": "https://www.bilibili.com/video/BV15Y411z7MY",
+    "title": "【自汉化短篇日乙】校园轻喜剧x女强x恶女x病娇x近亲爱——《純正優男Sweet&Bitter》汉化发布+个人实况",
+    "pubdate": "2023-03-12"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1EA28Mr_fmBIivqWoJM7Aww?pwd=v8n7",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "v8n7",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1EA28Mr_fmBIivqWoJM7Aww"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1rNwBx54-gIK5R0qt3yaJ4Q?pwd=i6r4",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "i6r4"
+     "pwd": "i6r4",
+     "detail": "分享有效（需提取码）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1rNwBx54-gIK5R0qt3yaJ4Q"
     },
     {
-     "url": "https://pan.quark.cn/s/370da4bf04b4",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "pwd": "RcLL"
+     "pwd": "RcLL",
+     "detail": "分享有效｜温柔狗男人mac版.zip",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "370da4bf04b4"
     }
    ],
    "dead": [],
@@ -43,13 +56,20 @@
   },
   "可怕的怪物": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1Eh41177ud",
+    "url": "https://www.bilibili.com/video/BV1Eh41177ud",
+    "title": "【自汉化短篇日乙】偏执病娇强制爱，全是BE！——《缝缝补补的幸福》汉化发布+实况",
+    "pubdate": "2023-04-25"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/18_vZS2bHoN0O826qfGC9QQ?pwd=p8t5",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "p8t5",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "18_vZS2bHoN0O826qfGC9QQ"
    },
    "alt": [],
    "dead": [],
@@ -57,34 +77,51 @@
   },
   "缝缝补补的幸福": {
    "state": "failover",
+   "video": {
+    "bvid": "BV11V4y1U7a5",
+    "url": "https://www.bilibili.com/video/BV11V4y1U7a5",
+    "title": "【自汉化短篇日乙】男主们是可怕怪物？温柔但带感！——《可怕的怪物》 汉化发布+实况",
+    "pubdate": "2023-06-04"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/16hLO_2-CAY1TxffTHKCTFA?pwd=zc13",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "zc13",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "16hLO_2-CAY1TxffTHKCTFA"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/302f48898702",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "AmMd",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "302f48898702"
     }
    ],
    "candidates": []
   },
   "Dear Virgin": {
    "state": "ok",
+   "video": {
+    "bvid": "",
+    "url": "",
+    "title": "",
+    "pubdate": ""
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1dHBk-i3-2BHtzXoW3OzSPA?pwd=rb79",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "rb79",
     "detail": "分享有效（需提取码）",
-    "source": "weibo"
+    "source": "weibo",
+    "where": "微博原文",
+    "share_id": "1dHBk-i3-2BHtzXoW3OzSPA"
    },
    "alt": [],
    "dead": [],
@@ -92,13 +129,20 @@
   },
   "強伽羅学園": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1em421j7t9",
+    "url": "https://www.bilibili.com/video/BV1em421j7t9",
+    "title": "【自汉化另类日乙】反浪漫无厘头x超展开x丧病多要素——《强伽罗学园》全结局实况+汉化补丁发布",
+    "pubdate": "2024-04-13"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1-zAzOqqi0LivWXifOSfgTg?pwd=74yn",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "74yn",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1-zAzOqqi0LivWXifOSfgTg"
    },
    "alt": [],
    "dead": [],
@@ -106,40 +150,60 @@
   },
   "戏剧之爱·安乐死": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1UrYAzoEJc",
+    "url": "https://www.bilibili.com/video/BV1UrYAzoEJc",
+    "title": "【自汉化短篇日乙】又能兄妹又能姐弟的禁忌之爱——《戏剧之爱·安乐死》（劇愛ユーサネイジア）机翻汉化补丁+实况",
+    "pubdate": "2025-09-09"
+   },
    "active": {
-    "url": "https://url08.ctfile.com/f/65517308-8425987321-60a99b?p=1528",
     "platform": "ctfile",
     "platform_name": "城通网盘",
     "pwd": "1528",
     "detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip 192.84 MB2025-09-09",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": ""
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/b7b1e6055406",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "wMiR",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "b7b1e6055406"
     },
     {
-     "url": "https://pan.quark.cn/s/5cfc2ad79a6d",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "wMiR",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "5cfc2ad79a6d"
     }
    ],
    "candidates": []
   },
   "十二条船全抛": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1Ci421f7WD",
+    "url": "https://www.bilibili.com/video/BV1Ci421f7WD",
+    "title": "【自汉化病娇短篇】脚踩十二条船面临分手修罗场？—— 《十二条船全抛》全结局实况+汉化补丁发布",
+    "pubdate": "2024-04-15"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1fQZ2kDw5u9Zr-yAYeK2r8A?pwd=uxyr",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "uxyr",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1fQZ2kDw5u9Zr-yAYeK2r8A"
    },
    "alt": [],
    "dead": [],
@@ -147,13 +211,20 @@
   },
   "对鲸号的记录": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1hp421D7ht",
+    "url": "https://www.bilibili.com/video/BV1hp421D7ht",
+    "title": "【自汉化另类短篇】AI三部曲，质疑AI，调教AI，成为AI——《十二条船全抛》系列前作汉化发布+实况",
+    "pubdate": "2024-04-19"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1uZmUHqGLzb-JVv55dTQPQw?pwd=43ql",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "43ql",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
    },
    "alt": [],
    "dead": [],
@@ -161,13 +232,20 @@
   },
   "人格修理师": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1hp421D7ht",
+    "url": "https://www.bilibili.com/video/BV1hp421D7ht",
+    "title": "【自汉化另类短篇】AI三部曲，质疑AI，调教AI，成为AI——《十二条船全抛》系列前作汉化发布+实况",
+    "pubdate": "2024-04-19"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1uZmUHqGLzb-JVv55dTQPQw?pwd=43ql",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "43ql",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
    },
    "alt": [],
    "dead": [],
@@ -175,13 +253,20 @@
   },
   "对AI的审问": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1hp421D7ht",
+    "url": "https://www.bilibili.com/video/BV1hp421D7ht",
+    "title": "【自汉化另类短篇】AI三部曲，质疑AI，调教AI，成为AI——《十二条船全抛》系列前作汉化发布+实况",
+    "pubdate": "2024-04-19"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1uZmUHqGLzb-JVv55dTQPQw?pwd=43ql",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "43ql",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
    },
    "alt": [],
    "dead": [],
@@ -189,20 +274,30 @@
   },
   "NENE": {
    "state": "ok",
+   "video": {
+    "bvid": "BV17F4m1577Z",
+    "url": "https://www.bilibili.com/video/BV17F4m1577Z",
+    "title": "【自汉化丧病日乙】我杀了我男友后男闺蜜帮忙藏尸——《NENE》汉化发布+全结局实况",
+    "pubdate": "2024-02-26"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1XzRFQu1K1LVxGCaoAjWHNA?pwd=s0h1",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "s0h1",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1XzRFQu1K1LVxGCaoAjWHNA"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1qn-CH9xUsu7-cbzl61Bebg?pwd=dqhy",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "dqhy"
+     "pwd": "dqhy",
+     "detail": "分享有效（需提取码）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "1qn-CH9xUsu7-cbzl61Bebg"
     }
    ],
    "dead": [],
@@ -210,256 +305,379 @@
   },
   "自恋囚笼": {
    "state": "failover",
+   "video": {
+    "bvid": "BV12uxqzwEY9",
+    "url": "https://www.bilibili.com/video/BV12uxqzwEY9",
+    "title": "【自汉化日乙】全员自恋却讨厌不起来？另类反差还有心理恐怖——《自恋囚笼》（narcist complex）汉化发布+测试实况",
+    "pubdate": "2025-10-09"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "iu8b",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1BZ7NmTX-N-qAtTWo9meH4w"
    },
    "alt": [
     {
-     "url": "https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "6ans"
+     "pwd": "6ans",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜227MB｜永久有效",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOfYSx"
     },
     {
-     "url": "https://www.123684.com/s/ootDVv-sDjov?pwd=eZEe",
      "platform": "123pan",
      "platform_name": "123云盘",
-     "pwd": "eZEe"
+     "pwd": "eZEe",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜到期 2099-12-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ootDVv-sDjov"
     },
     {
-     "url": "https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "pwd": "1528"
+     "pwd": "1528",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     },
     {
-     "url": "https://share.weiyun.com/05WlFxr6",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "8x8jzi"
+     "pwd": "8x8jzi",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "05WlFxr6"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/fb7d7e01f866",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "U44Z",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "fb7d7e01f866"
     },
     {
-     "url": "https://pan.quark.cn/s/8364570fa481",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "Uurz",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "8364570fa481"
     }
    ],
    "candidates": []
   },
   "君かアオイロ。（or君青）": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1jyCsBrEuR",
+    "url": "https://www.bilibili.com/video/BV1jyCsBrEuR",
+    "title": "【自汉化】恐怖猎奇免费日乙？你纯爱来我惊悚，三角恋非全龄无畏竞癫疯——《君かアオイロ。》机翻粗润补丁+测试实况",
+    "pubdate": "2025-11-13"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VOfYDWOOMzhvlP6cMegiBr0JA1?pwd=3ssm#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "3ssm",
     "detail": "分享有效（需提取码）｜永久有效｜kimiwaaoiro_chs.zip 160.8MB 2026-06-12 05:04 ",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOfYDWOOMzhvlP6cMegiBr0JA1"
    },
    "alt": [
     {
-     "url": "https://www.123865.com/s/ootDVv-8Vjov?pwd=ulAI#",
      "platform": "123pan",
      "platform_name": "123云盘",
-     "pwd": "ulAI"
+     "pwd": "ulAI",
+     "detail": "分享有效｜kimikaaoiro_chs.zip｜到期 2099-12-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ootDVv-8Vjov"
     },
     {
-     "url": "https://url08.ctfile.com/f/65517308-8471392676-333c65?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "pwd": "1528"
+     "pwd": "1528",
+     "detail": "分享有效｜kimikaaoiro_chs.zip 115.35 MB2025-11-13",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     },
     {
-     "url": "https://drive.uc.cn/s/f849c4061ca14",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "pwd": "veg1"
+     "pwd": "veg1",
+     "detail": "分享有效｜kimiwaaoiro_chs.zip",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "f849c4061ca14"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1DAqNIhnDWAcQNWf00j1H_w",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "ejm6",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1DAqNIhnDWAcQNWf00j1H_w"
     },
     {
-     "url": "https://pan.quark.cn/s/ef0f6ffdb1e1",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "FLd5",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ef0f6ffdb1e1"
     },
     {
-     "url": "https://pan.quark.cn/s/ff13dece379d",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "Vp15",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "ff13dece379d"
     }
    ],
    "candidates": []
   },
   "COLOR☆COLLAR": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1bZUgBPEGz",
+    "url": "https://www.bilibili.com/video/BV1bZUgBPEGz",
+    "title": "【乙女短篇自汉化】GB向可爱免费短篇？可喂食可摸摸可调教的逆转体验——《COLOR☆COLLAR》汉化发布+测试实况",
+    "pubdate": "2025-11-24"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1tWtzsbCMzyOTK6tRR5-z2g?pwd=v9bv",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "v9bv",
     "detail": "分享有效（需提取码）",
-    "source": "up_comment"
+    "source": "up_comment",
+    "where": "UP 主评论",
+    "share_id": "1tWtzsbCMzyOTK6tRR5-z2g"
    },
    "alt": [
     {
-     "url": "https://www.123865.com/s/ootDVv-EATmv?pwd=0Dgd#",
      "platform": "123pan",
      "platform_name": "123云盘",
-     "pwd": "0Dgd"
+     "pwd": "0Dgd",
+     "detail": "分享有效｜COLOR_COLLAR汉化补丁.zip｜到期 2099-12-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ootDVv-EATmv"
     },
     {
-     "url": "https://www.123865.com/s/ootDVv-rQTmv?pwd=5qAd#",
      "platform": "123pan",
      "platform_name": "123云盘",
-     "pwd": "5qAd"
+     "pwd": "5qAd",
+     "detail": "分享有效｜CC 补丁备份.zip｜到期 2099-12-12",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "ootDVv-rQTmv"
     },
     {
-     "url": "https://share.weiyun.com/P5w3qWaW",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "qacqpv"
+     "pwd": "qacqpv",
+     "detail": "分享有效｜COLOR_COLLAR汉化补丁.zip 2025年11月24日 52.83 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "P5w3qWaW"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/e6baf1abb1d3",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "eX6G",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "e6baf1abb1d3"
     }
    ],
    "candidates": []
   },
   "不要抛下我!!": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1u96wBxEak",
+    "url": "https://www.bilibili.com/video/BV1u96wBxEak",
+    "title": "【自汉化日乙】魂穿异世界被恶魔豢养？脸红哭哭是黑皮最好的嫁衣——《不要抛下我！！》汉化发布+测试实况",
+    "pubdate": "2026-01-29"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VOk8azICB36-iaIVxsQ9CsshA1#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "t4kv",
     "detail": "分享有效（需提取码）｜永久有效｜不要抛下我 汉化补丁.zip 16MB 2026-02-01 20:13 ",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOk8azICB36"
    },
    "alt": [
     {
-     "url": "https://pan.xunlei.com/s/VOkO99MFKyO9IeyiAjA0x1RjA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "hbs4"
+     "pwd": "hbs4",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOkO99MFKyO9IeyiAjA0x1RjA1"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1OF25L4HEX00_JHZaXZdq_A?pwd=2gcy",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "2gcy",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1OF25L4HEX00_JHZaXZdq_A"
     },
     {
-     "url": "https://pan.quark.cn/s/a227dde020c2?pwd=bwyd",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "bwyd",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "a227dde020c2"
     },
     {
-     "url": "https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "6u1V",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "e445d3ad3c0f"
     },
     {
-     "url": "https://drive.uc.cn/s/7a1ca4a8e4804",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "bXRu",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "7a1ca4a8e4804"
     }
    ],
    "candidates": []
   },
   "神隐新娘（花嫁隐）": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1ZcfgBBEVw",
+    "url": "https://www.bilibili.com/video/BV1ZcfgBBEVw",
+    "title": "【自汉化短篇日乙】被选为山神新娘却每日吸血，选爱得深沉的山神还是与我私奔的老师？——《神隐新娘》（花嫁隐）汉化发布+测试实况",
+    "pubdate": "2026-02-20"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1MvF9BvKN0J9Q0BsosmdXXA?pwd=ycd4",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "ycd4",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1MvF9BvKN0J9Q0BsosmdXXA"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1398Th72qKWRtKV3w_sk3fQ?pwd=anxt",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "anxt"
+     "pwd": "anxt",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1398Th72qKWRtKV3w_sk3fQ"
     },
     {
-     "url": "https://pan.baidu.com/s/19A5I7Dk-hzY8xZD-Js-41Q?pwd=458t",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "458t"
+     "pwd": "458t",
+     "detail": "分享有效（需提取码）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "19A5I7Dk-hzY8xZD-Js-41Q"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOlu3IiBSu2p7ajUopKT6tRWA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "bw9a"
+     "pwd": "bw9a",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOlu3IiBSu2p7ajUopKT6tRWA1"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "3w4c",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "10aV7oN1zITo4Q5g4LJP9GA"
     },
     {
-     "url": "https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "RGSm",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "e477f65feaa8"
     }
    ],
    "candidates": []
   },
   "trapped with jester": {
    "state": "ok",
+   "video": {
+    "bvid": "BV15v4y1a7og",
+    "url": "https://www.bilibili.com/video/BV15v4y1a7og",
+    "title": "【自汉化短篇英乙】和疯批小丑同困马车，叫我主人？——《Trapped with Jester》中文版全结局实况",
+    "pubdate": "2023-03-05"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/19FD-cPbWPnP2F2rmRmXE3A?pwd=8q4g",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "8q4g",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "19FD-cPbWPnP2F2rmRmXE3A"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1VtjaKZ2RVHvxSRV7H7pr7Q?pwd=qfbm",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "qfbm"
+     "pwd": "qfbm",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1VtjaKZ2RVHvxSRV7H7pr7Q"
     }
    ],
    "dead": [],
@@ -467,13 +685,20 @@
   },
   "sweetest Valentine": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1nb411Z7Tr",
+    "url": "https://www.bilibili.com/video/BV1nb411Z7Tr",
+    "title": "【自汉化短篇英乙】竹马vs天降？画面清新但内容阴间！——《sweetest valentine》中文实况",
+    "pubdate": "2023-03-15"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/18bBSp5Fqbtwmw0rnhyOJ6A?pwd=3k5c",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "3k5c",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "18bBSp5Fqbtwmw0rnhyOJ6A"
    },
    "alt": [],
    "dead": [],
@@ -481,13 +706,20 @@
   },
   "魔王是我的": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1Co4y1n7gb",
+    "url": "https://www.bilibili.com/video/BV1Co4y1n7gb",
+    "title": "【自汉化短篇英乙】勇者征服魔王？爱人借尸还魂？——《魔王是我的！》+《我此生已逝》汉化发布+实况",
+    "pubdate": "2023-04-11"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1r9NmWjUbmNpOPx4hxSItmA?pwd=b8py",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "b8py",
     "detail": "分享有效（需提取码）",
-    "source": "pinned"
+    "source": "pinned",
+    "where": "置顶评论",
+    "share_id": "1r9NmWjUbmNpOPx4hxSItmA"
    },
    "alt": [],
    "dead": [],
@@ -495,13 +727,20 @@
   },
   "我此生已逝": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1Co4y1n7gb",
+    "url": "https://www.bilibili.com/video/BV1Co4y1n7gb",
+    "title": "【自汉化短篇英乙】勇者征服魔王？爱人借尸还魂？——《魔王是我的！》+《我此生已逝》汉化发布+实况",
+    "pubdate": "2023-04-11"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1r9NmWjUbmNpOPx4hxSItmA?pwd=b8py",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "b8py",
     "detail": "分享有效（需提取码）",
-    "source": "pinned"
+    "source": "pinned",
+    "where": "置顶评论",
+    "share_id": "1r9NmWjUbmNpOPx4hxSItmA"
    },
    "alt": [],
    "dead": [],
@@ -509,13 +748,20 @@
   },
   "CLASSMATES": {
    "state": "ok",
+   "video": {
+    "bvid": "BV17z4y1h7yR",
+    "url": "https://www.bilibili.com/video/BV17z4y1h7yR",
+    "title": "【自汉化短篇恐解】伪乙女，逃脱变态跟踪狂魔爪！——《CLASSMATES》汉化发布+实况",
+    "pubdate": "2023-05-17"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1sAr8GBa52408_B-Nam11Kg?pwd=u27l",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "u27l",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1sAr8GBa52408_B-Nam11Kg"
    },
    "alt": [],
    "dead": [],
@@ -523,20 +769,30 @@
   },
   "Dark Nights": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1F24y1E7DM",
+    "url": "https://www.bilibili.com/video/BV1F24y1E7DM",
+    "title": "【自汉化长篇英乙】恐怖x灵异x悬疑x绝美CG还免费！——《Dark Nights》汉化发布+测试实况",
+    "pubdate": "2023-03-27"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/10xiK7-eFbOKTi28mzV6oEA?pwd=ha53",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "ha53",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "10xiK7-eFbOKTi28mzV6oEA"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1VO9pWQjGe0jn3dDBnT-SLw?pwd=23rs",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "23rs"
+     "pwd": "23rs",
+     "detail": "分享有效（需提取码）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "1VO9pWQjGe0jn3dDBnT-SLw"
     }
    ],
    "dead": [],
@@ -544,13 +800,20 @@
   },
   "dead plate": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1iK411Y7Mn",
+    "url": "https://www.bilibili.com/video/BV1iK411Y7Mn",
+    "title": "【自汉化微恐解谜】谁知盘中餐，粒粒皆亲属——《死盘子》（dead plate）汉化发布+全结局实况",
+    "pubdate": "2024-01-15"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1g0OcC9z5V6wYpO4qTjdXxw?pwd=13ia",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "13ia",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
    },
    "alt": [],
    "dead": [],
@@ -558,13 +821,20 @@
   },
   "Elevator Hitch": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1tk4y1Q7eC",
+    "url": "https://www.bilibili.com/video/BV1tk4y1Q7eC",
+    "title": "【自汉化恐怖解密】准社畜被困电梯体验各种死法？——《电梯怪谈》（Elevator Hitch）汉化发布+全结局实况",
+    "pubdate": "2024-01-13"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1gCA439uRQxD9DJHiSa1LaA?pwd=9qlg",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "9qlg",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1gCA439uRQxD9DJHiSa1LaA"
    },
    "alt": [],
    "dead": [],
@@ -572,13 +842,20 @@
   },
   "Cold Front": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1iK411Y7Mn",
+    "url": "https://www.bilibili.com/video/BV1iK411Y7Mn",
+    "title": "【自汉化微恐解谜】谁知盘中餐，粒粒皆亲属——《死盘子》（dead plate）汉化发布+全结局实况",
+    "pubdate": "2024-01-15"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1g0OcC9z5V6wYpO4qTjdXxw?pwd=13ia",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "13ia",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
    },
    "alt": [],
    "dead": [],
@@ -586,13 +863,20 @@
   },
   "Eloquent Countenance": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1tk4y1Q7eC",
+    "url": "https://www.bilibili.com/video/BV1tk4y1Q7eC",
+    "title": "【自汉化恐怖解密】准社畜被困电梯体验各种死法？——《电梯怪谈》（Elevator Hitch）汉化发布+全结局实况",
+    "pubdate": "2024-01-13"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1gCA439uRQxD9DJHiSa1LaA?pwd=9qlg",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "9qlg",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1gCA439uRQxD9DJHiSa1LaA"
    },
    "alt": [],
    "dead": [],
@@ -600,34 +884,51 @@
   },
   "meet her there": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1z94y1x7c7",
+    "url": "https://www.bilibili.com/video/BV1z94y1x7c7",
+    "title": "【自汉化另类短篇】不断失败轮回只为找到你的女同致郁小品——《meet her there》 汉化发布+实况",
+    "pubdate": "2023-09-09"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1rpXbddHBDgcVd1FDJfol9Q?pwd=saz2",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "saz2",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1rpXbddHBDgcVd1FDJfol9Q"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/4d8a94a454f3",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "AkUR",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "4d8a94a454f3"
     }
    ],
    "candidates": []
   },
   "Line 88": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1X84y1c7ZE",
+    "url": "https://www.bilibili.com/video/BV1X84y1c7ZE",
+    "title": "【自汉化短篇惊悚】社牛与社恐同困无限长公交车？——《Line 88》汉化发布+实况",
+    "pubdate": "2023-03-19"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/15FKjLbpsV5OYvw8XxRw-4g?pwd=aubg",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "aubg",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "15FKjLbpsV5OYvw8XxRw-4g"
    },
    "alt": [],
    "dead": [],
@@ -635,301 +936,445 @@
   },
   "灰姑娘现象": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1fz4y1K7zW",
+    "url": "https://www.bilibili.com/video/BV1fz4y1K7zW",
+    "title": "【自汉化长篇英乙】变身灰姑娘解除男主们的童话诅咒？——《Cinderella Phenomenon》（灰姑娘现象） 机翻汉化补丁发布+全结局实况",
+    "pubdate": "2023-09-04"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1iLYNAz-Kazw3nZvczUBuNw?pwd=i9ei",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "i9ei",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1iLYNAz-Kazw3nZvczUBuNw"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/9b7b131baf30",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "9zQg",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "9b7b131baf30"
     }
    ],
    "candidates": []
   },
   "灰姑娘现象FD永远": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1WH4y1D7U7",
+    "url": "https://www.bilibili.com/video/BV1WH4y1D7U7",
+    "title": "【自汉化长篇英乙】童话故事里的“永远”还有后续？——《灰姑娘现象FD永远》机翻润色汉化补丁发布+实况",
+    "pubdate": "2023-09-11"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1f2dNCgw9PrqzUdPqJsxndA?pwd=m29s",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "m29s",
     "detail": "分享有效（需提取码）",
-    "source": "pinned"
+    "source": "pinned",
+    "where": "置顶评论",
+    "share_id": "1f2dNCgw9PrqzUdPqJsxndA"
    },
    "alt": [
     {
-     "url": "https://pan.xunlei.com/s/VOnyNubGFfhY9O_bSCZxGpbiA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "e2aw"
+     "pwd": "e2aw",
+     "detail": "分享有效（需提取码）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "VOnyNubGFfhY9O"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/531bc6015b3f",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "uZEx",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "531bc6015b3f"
     }
    ],
    "candidates": []
   },
   "人类保管库": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1eB41zMEqG",
+    "url": "https://www.bilibili.com/video/BV1eB41zMEqG",
+    "title": "【自汉化短篇】用旧人类发电，新人类当牛马？初始化警告！——《人类保管库》汉化发布+测试实况",
+    "pubdate": "2025-10-14"
+   },
    "active": {
-    "url": "https://www.123865.com/s/ootDVv-t8jov?pwd=nJnu#",
     "platform": "123pan",
     "platform_name": "123云盘",
     "pwd": "nJnu",
     "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "ootDVv-t8jov"
    },
    "alt": [
     {
-     "url": "https://url08.ctfile.com/f/65517308-8452140339-7cfe4e?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "pwd": "1528"
+     "pwd": "1528",
+     "detail": "分享有效｜人类保管库 汉化版.zip 137.26 MB2025-10-14",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     },
     {
-     "url": "https://share.weiyun.com/3sblmV9F",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "NjAj"
+     "pwd": "NjAj",
+     "detail": "分享有效｜人类保管库 汉化版.zip 2025年10月14日 137.26 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "3sblmV9F"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/00dffb67943b",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "NjAj",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "00dffb67943b"
     }
    ],
    "candidates": []
   },
   "细思极恐的恐怖游戏": {
    "state": "failover",
+   "video": {
+    "bvid": "BV13A41zAE7f",
+    "url": "https://www.bilibili.com/video/BV13A41zAE7f",
+    "title": "【自汉化短篇】在手机上给朋友测试游戏却有惊喜？玩完心里毛毛的——《细思极恐的恐怖游戏》汉化发布+测试实况",
+    "pubdate": "2025-10-14"
+   },
    "active": {
-    "url": "https://www.123865.com/s/ootDVv-e8jov?pwd=0W0H#",
     "platform": "123pan",
     "platform_name": "123云盘",
     "pwd": "0W0H",
     "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "ootDVv-e8jov"
    },
    "alt": [
     {
-     "url": "https://url08.ctfile.com/f/65517308-8452136792-41c934?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "pwd": "1528"
+     "pwd": "1528",
+     "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip 84.80 MB2025-10-14",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     },
     {
-     "url": "https://share.weiyun.com/wgc5yqS9",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "i7nvek"
+     "pwd": "i7nvek",
+     "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip 2025年10月14日 84.8 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "wgc5yqS9"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/d707fbc6e074",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "38iF",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "d707fbc6e074"
     }
    ],
    "candidates": []
   },
   "并非兄妹的热病": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1m14uzoEgp",
+    "url": "https://www.bilibili.com/video/BV1m14uzoEgp",
+    "title": "【自汉化悬疑短篇】凶案x相依为命的兄妹？这美术是我免费能玩的？——《并非兄妹的热病》汉化发布+全结局实况",
+    "pubdate": "2025-10-14"
+   },
    "active": {
-    "url": "https://www.123865.com/s/ootDVv-Z8jov?pwd=X3mv#",
     "platform": "123pan",
     "platform_name": "123云盘",
     "pwd": "X3mv",
     "detail": "分享有效｜并非兄妹 汉化完整版.zip｜到期 2099-12-12",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "ootDVv-Z8jov"
    },
    "alt": [
     {
-     "url": "https://url08.ctfile.com/f/65517308-8452133618-d25165?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "pwd": "1528"
+     "pwd": "1528",
+     "detail": "分享有效｜并非兄妹的热病 汉化补丁.zip 141.62 MB2025-10-14",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     },
     {
-     "url": "https://share.weiyun.com/qlGJBhrY",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "99ctdh"
+     "pwd": "99ctdh",
+     "detail": "分享有效｜并非兄妹的热病 汉化补丁.zip 2025年10月14日 141.62 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "qlGJBhrY"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/aacaa363282f",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "1WkS",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "aacaa363282f"
     }
    ],
    "candidates": []
   },
   "关于埋葬某人的梦": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1SuS5BjEJN",
+    "url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
+    "title": "【自汉化怪诞短篇】分不清梦和现实的我，到底杀了谁？——《关于埋葬某人的梦》汉化发布+测试实况",
+    "pubdate": "2025-11-28"
+   },
    "active": {
-    "url": "https://www.123865.com/s/ootDVv-hQTmv?pwd=bae5#",
     "platform": "123pan",
     "platform_name": "123云盘",
     "pwd": "bae5",
     "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "ootDVv-hQTmv"
    },
    "alt": [
     {
-     "url": "https://share.weiyun.com/SOCeG7UU",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "gk4sj4"
+     "pwd": "gk4sj4",
+     "detail": "分享有效｜关于梦 汉化补丁.zip 2025年11月28日 47.8 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "SOCeG7UU"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/849df8014b17",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "qKNp",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "849df8014b17"
     },
     {
-     "url": "https://pan.quark.cn/s/0a1e3c67c472",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "d8vs",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "0a1e3c67c472"
     },
     {
-     "url": "https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "detail": "文件不存在或已被删除"
+     "pwd": "gk4sj4",
+     "detail": "文件不存在或已被删除",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     }
    ],
    "candidates": []
   },
   "舌头上的动物园": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1scqNBmEJt",
+    "url": "https://www.bilibili.com/video/BV1scqNBmEJt",
+    "title": "【自汉化悬疑推理】既是受害者也是加害者？基于对话的直觉系推理，但不推也行？——《舌头上的动物园》汉化发布+测试实况",
+    "pubdate": "2026-01-06"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VOiITcGJud8b9aFLSLFdI1nRA1#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "cejm",
     "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOiITcGJud8b9aFLSLFdI1nRA1"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/19hK8KkVXFLy3IfY70pw_eg?pwd=tjck",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "tjck",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "19hK8KkVXFLy3IfY70pw_eg"
     },
     {
-     "url": "https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "5mkx",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1oDNRBPmxr_KjnppmdGX4Og"
     },
     {
-     "url": "https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "3umf",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "1VHUrWgoOHfDzyMnP9uTlFw"
     },
     {
-     "url": "https://pan.quark.cn/s/246f4d295926?pwd=XiEz",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "XiEz",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "246f4d295926"
     },
     {
-     "url": "https://drive.uc.cn/s/d05786e3dbc84",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "4xEq",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "d05786e3dbc84"
     }
    ],
    "candidates": []
   },
   "暴走族怪谈大会 再归": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1LLibBaESe",
+    "url": "https://www.bilibili.com/video/BV1LLibBaESe",
+    "title": "【自汉化微恐】暴走族怪谈大会，明明是不良却惊悚又温情，意想不到的结尾——《暴走族夜怪 再归》机翻汉化补丁+测试实况",
+    "pubdate": "2026-01-05"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1JS9og_ufq2ij3MweaONMaA?pwd=igqz",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "igqz",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1JS9og_ufq2ij3MweaONMaA"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1IXFJlXpg3oOmU7bWRM-6wA?pwd=88ac",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "88ac"
+     "pwd": "88ac",
+     "detail": "分享有效（需提取码）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "1IXFJlXpg3oOmU7bWRM-6wA"
     },
     {
-     "url": "https://pan.baidu.com/s/1_Kt7VHEgLnhVWzfIs8fHHw?pwd=gxn6",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "gxn6"
+     "pwd": "gxn6",
+     "detail": "分享有效（需提取码）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "1_Kt7VHEgLnhVWzfIs8fHHw"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOiDvXodPCJ-e23xvHJQ2cWkA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "xtgi"
+     "pwd": "xtgi",
+     "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈(1).zip 19.6MB 2026-01-06 00:11 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOiDvXodPCJ"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOiDrNAPa1_8MkwA3Y1WFrBjA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "7fyk"
+     "pwd": "7fyk",
+     "detail": "分享有效（需提取码）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "VOiDrNAPa1"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/b1670df90436?pwd=aeTt",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "aeTt",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "b1670df90436"
     },
     {
-     "url": "https://pan.quark.cn/s/980575fd2e8e",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "d6pz",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "980575fd2e8e"
     }
    ],
    "candidates": []
   },
   "Lost Friends1-DisappeardName-": {
    "state": "ok",
+   "video": {
+    "bvid": "BV11o4y147bM",
+    "url": "https://www.bilibili.com/video/BV11o4y147bM",
+    "title": "【自汉化短篇女性向】比起宽泛肤浅，更爱狭隘深刻的友情——《Lost Friends1》汉化发布+实况",
+    "pubdate": "2023-04-25"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1Ir-6HhhRwC2d3D7ixAzJkg?pwd=kigm",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "kigm",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1Ir-6HhhRwC2d3D7ixAzJkg"
    },
    "alt": [],
    "dead": [],
@@ -937,47 +1382,64 @@
   },
   "Lost Friends 2": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1vh4y1T7NB",
+    "url": "https://www.bilibili.com/video/BV1vh4y1T7NB",
+    "title": "【自汉化短篇女性向】赌上灵魂的友情是奇迹还是束缚？——《Lost Friends2》汉化发布+实况",
+    "pubdate": "2023-08-26"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1GoE1Tph2N41YvO6-jkMEww?pwd=5nfh",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "5nfh",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1GoE1Tph2N41YvO6-jkMEww"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/0cc65915c309",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "Xr9D",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "0cc65915c309"
     }
    ],
    "candidates": [
     {
-     "url": "https://pan.quark.cn/s/0cc65915",
      "platform": "quark",
-     "pwd": null,
-     "source": "desc",
-     "author": "",
-     "is_up": false,
      "platform_name": "夸克网盘",
+     "pwd": "",
+     "detail": "分享不存在（已被取消或删除）",
+     "source": "desc",
+     "where": "视频简介",
      "share_id": "0cc65915",
      "status": "dead",
-     "detail": "分享不存在（已被取消或删除）"
+     "author": "",
+     "is_up": false
     }
    ]
   },
   "相反的理想主义": {
    "state": "ok",
+   "video": {
+    "bvid": "",
+    "url": "",
+    "title": "",
+    "pubdate": ""
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1Uu5W_AXNMs4-NkH_dcqoRw",
     "platform": "baidu",
     "platform_name": "百度网盘",
-    "pwd": null,
+    "pwd": "",
     "detail": "分享有效（需提取码）",
-    "source": "site"
+    "source": "site",
+    "where": "发布页",
+    "share_id": "1Uu5W_AXNMs4-NkH_dcqoRw"
    },
    "alt": [],
    "dead": [],
@@ -985,149 +1447,221 @@
   },
   "深海的勿忘草": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1sN411y7jE",
+    "url": "https://www.bilibili.com/video/BV1sN411y7jE",
+    "title": "【自汉化短篇日乙】雨夜失踪怪谈是真爱还是恐怖故事？——《深海的勿忘草》汉化发布+实况",
+    "pubdate": "2023-06-10"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1HnPY270U8_ZEegiTRs81vg?pwd=hjvv",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "hjvv",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1HnPY270U8_ZEegiTRs81vg"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/ea843c28afe4",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "VPSs",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "ea843c28afe4"
     }
    ],
    "candidates": []
   },
   "水手服与命中注定之人": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1Gh4y1K75f",
+    "url": "https://www.bilibili.com/video/BV1Gh4y1K75f",
+    "title": "【自汉化短篇日乙】S大爆发！下克上拿捏废物键盘侠表哥！——《水手服与命中注定之人》汉化发布+实况",
+    "pubdate": "2023-09-04"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1PiwRqSKWBEBbL5OgVEsLbA?pwd=d7fw",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "d7fw",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1PiwRqSKWBEBbL5OgVEsLbA"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/93069786f079",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "HgjG",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "93069786f079"
     }
    ],
    "candidates": []
   },
   "爱情寄生虫": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1S5411v7Hm",
+    "url": "https://www.bilibili.com/video/BV1S5411v7Hm",
+    "title": "【自汉化猎奇乙女】和寄生虫谈恋爱不是你死就是我死？——《爱情寄生虫》 汉化发布+全结局实况",
+    "pubdate": "2024-01-09"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VOmFlnMQuNyWGoD8c6c6jjzxA1#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "cgpw",
     "detail": "分享有效（需提取码）",
-    "source": "up_comment"
+    "source": "up_comment",
+    "where": "UP 主评论",
+    "share_id": "VOmFlnMQuNyWGoD8c6c6jjzxA1"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "l5zo",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1jAimzdUD4aCQIRvsZZnXeQ"
     }
    ],
    "candidates": []
   },
   "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1PgShBDEsc",
+    "url": "https://www.bilibili.com/video/BV1PgShBDEsc",
+    "title": "【自汉化GB短篇】毒舌学弟喋喋不休？那就用吻堵上他的嘴！——《对，现在骂人是犯规，惩罚之吻要来咯（笑）》汉化发布+测试实况》",
+    "pubdate": "2025-12-03"
+   },
    "active": {
-    "url": "https://www.123865.com/s/ootDVv-ioTmv?pwd=gqAu#",
     "platform": "123pan",
     "platform_name": "123云盘",
     "pwd": "gqAu",
     "detail": "分享有效｜惩罚之吻 汉化补丁.zip｜到期 2099-12-12",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "ootDVv-ioTmv"
    },
    "alt": [
     {
-     "url": "https://share.weiyun.com/RvqDhtES",
      "platform": "weiyun",
      "platform_name": "腾讯微云",
-     "pwd": "gibybv"
+     "pwd": "gibybv",
+     "detail": "分享有效｜惩罚之吻 汉化补丁.zip 2025年12月03日 15.76 MB ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "RvqDhtES"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1_Tnf_8MG-0_1yZL0Zpy3kw?pwd=p0ag",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "p0ag",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1_Tnf_8MG-0_1yZL0Zpy3kw"
     },
     {
-     "url": "https://pan.quark.cn/s/4045e8716360",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "hEf2",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "4045e8716360"
     },
     {
-     "url": "https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "detail": "文件不存在或已被删除"
+     "pwd": "1528",
+     "detail": "文件不存在或已被删除",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     },
     {
-     "url": "https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "detail": "文件不存在或已被删除"
+     "pwd": "gibybv",
+     "detail": "文件不存在或已被删除",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     }
    ],
    "candidates": []
   },
   "HIKEBACK": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1nqpLzXEe9",
+    "url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
+    "title": "【自汉化微恐短篇】无法存档和快进的死亡循环——《HIKEBACK》汉化发布+全结局实况",
+    "pubdate": "2025-09-13"
+   },
    "active": {
-    "url": "https://url08.ctfile.com/f/65517308-8432179003-769a05?p=1528",
     "platform": "ctfile",
     "platform_name": "城通网盘",
     "pwd": "1528",
     "detail": "分享有效｜HIKEBACK汉化完整版.zip 72.33 MB2025-09-13",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": ""
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "6ydw",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1HYbELL2mt7A9AbfY8BYKtg"
     },
     {
-     "url": "https://pan.quark.cn/s/c3635ad46422",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "2nY6",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "c3635ad46422"
     }
    ],
    "candidates": []
   },
   "seekL": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1JZ421x711",
+    "url": "https://www.bilibili.com/video/BV1JZ421x711",
+    "title": "【自汉化短篇英乙】匿名黑客聊天室学习编程攻略覆面系管理员？——《seekL》 全结局通关实况+汉化补丁发布",
+    "pubdate": "2024-05-22"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/152oM9nCQYXStjTPmBQRY9Q?pwd=6ykb",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "6ykb",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "152oM9nCQYXStjTPmBQRY9Q"
    },
    "alt": [],
    "dead": [],
@@ -1135,55 +1669,82 @@
   },
   "恶魔之心": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1Pz421971k",
+    "url": "https://www.bilibili.com/video/BV1Pz421971k",
+    "title": "【机翻英乙安利向】开局被砍头？复活后攻击性拉满——《恶魔之心》（demonheart） 机翻汉化补丁+通关实况",
+    "pubdate": "2024-03-03"
+   },
    "active": {
-    "url": "https://wwk.lanzoue.com/iW0Ug1q78fcf",
     "platform": "lanzou",
     "platform_name": "蓝奏云",
     "pwd": "0nnn",
     "detail": "分享有效｜demonheart 机翻润色补丁.zip",
-    "source": "pinned"
+    "source": "pinned",
+    "where": "置顶评论",
+    "share_id": "iW0Ug1q78fcf"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "0nnn",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1Bu3lcAQK7pdPbSMvhIWoqg"
     }
    ],
    "candidates": []
   },
   "恶魔之心：猎人": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1Sx4y1m7tp",
+    "url": "https://www.bilibili.com/video/BV1Sx4y1m7tp",
+    "title": "【机翻rpg乙女】盗贼女主傲娇骑士，低配版博德之门？勇闯地牢还能sex——《恶魔之心：猎人》 通关实况+机翻补丁",
+    "pubdate": "2024-03-18"
+   },
    "active": {
-    "url": "https://wwk.lanzoue.com/idF3k1ru6cif",
     "platform": "lanzou",
     "platform_name": "蓝奏云",
     "pwd": "gkln",
     "detail": "分享有效｜恶魔之心：猎人 机翻汉化补丁.zip",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "idF3k1ru6cif"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "gkln",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1A_tJhr1VxYqKGUdREKgr5g"
     }
    ],
    "candidates": []
   },
   "不速之死": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1o2421T7uk",
+    "url": "https://www.bilibili.com/video/BV1o2421T7uk",
+    "title": "【自汉化悬疑英乙】联谊派对变杀人别墅，病娇闺蜜大战前男友——《不速之死》（death is guest）汉化补丁发布+全结局实况",
+    "pubdate": "2024-02-24"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/15Ue7BwgYQIPQofbJvdxk-w?pwd=jheq",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "jheq",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "15Ue7BwgYQIPQofbJvdxk-w"
    },
    "alt": [],
    "dead": [],
@@ -1191,41 +1752,61 @@
   },
   "Magical Otoge Ciel": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1pN411k7sR",
+    "url": "https://www.bilibili.com/video/BV1pN411k7sR",
+    "title": "【轻喜剧乙女安利向】剑与魔法的世界和两个青梅竹马骑士私奔？——《Magical Otoge Ciel》机翻中文实况",
+    "pubdate": "2023-06-11"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1MQGB57xKOuJFI0mf-Q8sUw?pwd=5br8",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "5br8",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1MQGB57xKOuJFI0mf-Q8sUw"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1VfM569bIXc88XNqNWkPOPw?pwd=wd47",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "wd47"
+     "pwd": "wd47",
+     "detail": "分享有效（需提取码）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1VfM569bIXc88XNqNWkPOPw"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/03c50cd0bb46",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "PTRp",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "03c50cd0bb46"
     }
    ],
    "candidates": []
   },
   "Birla_NNN": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1Ts4y1i7vh",
+    "url": "https://www.bilibili.com/video/BV1Ts4y1i7vh",
+    "title": "【另类乙女安利向】非全0⚠您点的付费DLC已送达——《Birla_NNN》机翻中文补丁发布",
+    "pubdate": "2023-05-28"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1UMJcgPvGPQDY495uszRV4w?pwd=ggkq",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "ggkq",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1UMJcgPvGPQDY495uszRV4w"
    },
    "alt": [],
    "dead": [],
@@ -1233,6 +1814,12 @@
   },
   "与死神的约会": {
    "state": "none",
+   "video": {
+    "bvid": "",
+    "url": "",
+    "title": "",
+    "pubdate": ""
+   },
    "active": null,
    "alt": [],
    "dead": [],
@@ -1242,30 +1829,52 @@
     "weibo_url": "",
     "dead_platforms": [],
     "message": "《与死神的约会》的网盘链接失效了，求补档 🙏"
+   },
+   "reupload": {
+    "state": "need_login",
+    "client_name": "",
+    "file": "",
+    "file_size": 0,
+    "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享"
    }
   },
   "冬鸦何处去": {
    "state": "pending",
+   "video": {
+    "bvid": "BV16C4y1271r",
+    "url": "https://www.bilibili.com/video/BV16C4y1271r",
+    "title": "【病娇英乙安利向】绿毛男妈妈给你一周囚禁play套餐？——《Where Winter Crows Go》（冬鸦何处去）重制版机翻中文实况",
+    "pubdate": "2023-11-15"
+   },
    "active": null,
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1Gfv3o5OrV-Y_cjm217TyUQ?pwd=rajl",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "rajl",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1Gfv3o5OrV-Y_cjm217TyUQ"
     },
     {
-     "url": "https://pan.quark.cn/s/625a66c341d1",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "BgmE",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "625a66c341d1"
     },
     {
-     "url": "https://pan.quark.cn/s/8e9e4cff4611",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "1ukP",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "8e9e4cff4611"
     }
    ],
    "candidates": [],
@@ -1277,17 +1886,31 @@
      "百度网盘"
     ],
     "message": "《冬鸦何处去》的夸克网盘、百度网盘链接失效了，求补档 🙏"
+   },
+   "reupload": {
+    "state": "need_login",
+    "client_name": "",
+    "file": "",
+    "file_size": 0,
+    "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享"
    }
   },
   "杀死公主": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1Gv411c7Js",
+    "url": "https://www.bilibili.com/video/BV1Gv411c7Js",
+    "title": "【心理恐怖安利向】不看解析玩不明白的另类恐怖神作？——《slay the princess》（杀死公主）机翻中文通关实况",
+    "pubdate": "2023-11-16"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/19OOSaHaJkL5M90wfn3_olA?pwd=yant",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "yant",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "19OOSaHaJkL5M90wfn3_olA"
    },
    "alt": [],
    "dead": [],
@@ -1295,14 +1918,23 @@
   },
   "销魂罪人": {
    "state": "pending",
+   "video": {
+    "bvid": "BV1yz421m7Dp",
+    "url": "https://www.bilibili.com/video/BV1yz421m7Dp",
+    "title": "【自汉化长篇英乙】性别可选CG风骚|韩漫风双开门翘臀F4——《销魂罪人》机翻润色补丁发布+全结局实况",
+    "pubdate": "2024-05-10"
+   },
    "active": null,
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "c3xi",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "15udWdc7EQcXUfmkO6QekJA"
     }
    ],
    "candidates": [],
@@ -1313,84 +1945,130 @@
      "百度网盘"
     ],
     "message": "《销魂罪人》的百度网盘链接失效了，求补档 🙏"
+   },
+   "reupload": {
+    "state": "need_login",
+    "client_name": "",
+    "file": "",
+    "file_size": 0,
+    "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享"
    }
   },
   "MAMIYA": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1MH4y117qX",
+    "url": "https://www.bilibili.com/video/BV1MH4y117qX",
+    "title": "【日式AVG安利向】开局暴毙？共有幻想？少年暗黑救赎物语——《MAMIYA》 机翻汉化补丁发布+实况",
+    "pubdate": "2023-12-01"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1s3e_j513Xw7TzBIldQAUdw?pwd=pi79",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "pi79",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1s3e_j513Xw7TzBIldQAUdw"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/d2a976a8cf14",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "gZP3",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "d2a976a8cf14"
     }
    ],
    "candidates": []
   },
   "别吃收银员！": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1j94czJEkt",
+    "url": "https://www.bilibili.com/video/BV1j94czJEkt",
+    "title": "【自汉化短篇英乙】克苏鲁x人外x乙女？成为被剥削的怪物加油站收银员，骗财又骗色——《别吃收银员！》（Don't eat cashier!）汉化发布+测试实况",
+    "pubdate": "2025-10-11"
+   },
    "active": {
-    "url": "https://pan.quark.cn/s/fb2fd1917f21",
     "platform": "quark",
     "platform_name": "夸克网盘",
     "pwd": "1u5z",
     "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "fb2fd1917f21"
    },
    "alt": [
     {
-     "url": "https://www.123865.com/s/ootDVv-Frjov?pwd=2zNr#",
      "platform": "123pan",
      "platform_name": "123云盘",
-     "pwd": "2zNr"
+     "pwd": "2zNr",
+     "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip｜到期 2099-12-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ootDVv-Frjov"
     },
     {
-     "url": "https://www.123684.com/s/ootDVv-cDjov?pwd=7mRc",
      "platform": "123pan",
      "platform_name": "123云盘",
-     "pwd": "7mRc"
+     "pwd": "7mRc",
+     "detail": "分享有效｜别吃收银员！ 汉化补丁.zip｜到期 2099-12-12",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "ootDVv-cDjov"
     },
     {
-     "url": "https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "pwd": "1528"
+     "pwd": "1528",
+     "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip 209.17 MB2025-10-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     }
    ],
    "dead": [
     {
-     "url": "https://pan.quark.cn/s/e84b113d573c",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "KdJV",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "e84b113d573c"
     },
     {
-     "url": "https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528",
      "platform": "ctfile",
      "platform_name": "城通网盘",
-     "detail": "文件不存在或已被删除"
+     "pwd": "1528",
+     "detail": "文件不存在或已被删除",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": ""
     }
    ],
    "candidates": []
   },
   "BUSTAFELLOWS": {
    "state": "ok",
+   "video": {
+    "bvid": "",
+    "url": "",
+    "title": "",
+    "pubdate": ""
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1yoCMe5l7VKUgLIRZHZezRQ?pwd=vhih",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "vhih",
     "detail": "分享有效（需提取码）",
-    "source": "article"
+    "source": "article",
+    "where": "专栏",
+    "share_id": "1yoCMe5l7VKUgLIRZHZezRQ"
    },
    "alt": [],
    "dead": [],
@@ -1398,270 +2076,400 @@
   },
   "汝，当爱休息区的他": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1BsPczfENe",
+    "url": "https://www.bilibili.com/video/BV1BsPczfENe",
+    "title": "【电波浪漫短篇】深夜的休息区偶遇一个在洗手池里钓鱼的神秘男主——《汝，当爱休息区的他》（汝、フードコートの隣人を愛せ）汉化发布+测试实况",
+    "pubdate": "2026-03-04"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VOmoYvBo974B8b5YVyYDQQegA1#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "3am3",
     "detail": "分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37 ",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOmoYvBo974B8b5YVyYDQQegA1"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "a1s3",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1V3DaknVe_YzqV3zY4HsQWg"
     },
     {
-     "url": "https://pan.quark.cn/s/9780b9de1b7c",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "h79D",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "9780b9de1b7c"
     }
    ],
    "candidates": []
   },
   "恶魔之心：被诅咒的试炼": {
    "state": "failover",
+   "video": {
+    "bvid": "BV174wFzQEQy",
+    "url": "https://www.bilibili.com/video/BV174wFzQEQy",
+    "title": "【自汉化另类英乙】暴风雪山庄x狼人杀？绿茶恶人男主别样风味——《恶魔之心：被诅咒的试炼》汉化发布+全结局实况",
+    "pubdate": "2026-03-11"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VOnS5Nm02L74hPotSQhGoJwoA1#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "tm89",
     "detail": "分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26 ",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOnS5Nm02L74hPotSQhGoJwoA1"
    },
    "alt": [],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "72mq",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1q21Upm-P4cM_y8xWEnsNHA"
     },
     {
-     "url": "https://pan.quark.cn/s/d891ae5de524",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "tm89",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "d891ae5de524"
     },
     {
-     "url": "https://drive.uc.cn/s/e2f43ca43b8b4",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "Xx9z",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "e2f43ca43b8b4"
     }
    ],
    "candidates": []
   },
   "粉碎梦之门与病娇的按钮": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1UW5E6zEfy",
+    "url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
+    "title": "【自汉化病娇日乙】身边有六个病娇都在做囚禁play的春梦？一键入梦帮帮他们——《粉碎梦之门与病娇的按钮》汉化发布+测试实况",
+    "pubdate": "2026-05-10"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1mlcD0J_uExvR0ZjtVvq9xw?pwd=3ww8",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "3ww8",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1mlcD0J_uExvR0ZjtVvq9xw"
    },
    "alt": [
     {
-     "url": "https://pan.baidu.com/s/1Sk67xbjZbziK63wRPFIMCQ?pwd=ry7r",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "ry7r"
+     "pwd": "ry7r",
+     "detail": "分享有效（需提取码）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1Sk67xbjZbziK63wRPFIMCQ"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "ypz5"
+     "pwd": "ypz5",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOwqPQU1hyfxAii1mCw0LVNTA1"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "pdu5"
+     "pwd": "pdu5",
+     "detail": "分享有效（需提取码）｜永久有效｜梦之门（冬弥雪） 汉化补丁by青灯不弈.zip 43.9MB 2026-05-10 16:50 ",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "VOsG4aIEXvegNNo9MQgXuNthA1"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "upat"
+     "pwd": "upat",
+     "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化备份.zip 340.9MB 2026-05-10 16:45 ",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "VOsG37JWLGwjOcLEBy26L1yHA1"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "vu7q",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1viVsipJI6GcrsUR_kb6jvQ"
     },
     {
-     "url": "https://pan.quark.cn/s/ebf194eb099f",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "4jJg",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ebf194eb099f"
     },
     {
-     "url": "https://pan.quark.cn/s/d727e34ead20?pwd=RSW6",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "RSW6",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "d727e34ead20"
     },
     {
-     "url": "https://drive.uc.cn/s/874242a1ffa44",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "CC5B",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "874242a1ffa44"
     }
    ],
    "candidates": []
   },
   "~把最棒的巧克力送给你 这份心意就是全部哦~": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1pTE66vEQ8",
+    "url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
+    "title": "【自汉化短篇日乙】谁将获得情人节唯一的巧克力？让他脸红心跳吧~❤——《~把最棒的巧克力送给你 这份心意就是全部哦~》汉化补丁发布+测试实况",
+    "pubdate": "2026-06-12"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1g8qMG1nAzMjVSfUMMMqaqQ?pwd=4stn",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "4stn",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1g8qMG1nAzMjVSfUMMMqaqQ"
    },
    "alt": [
     {
-     "url": "https://pan.quark.cn/s/47eec60af621",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "pwd": "43u2"
+     "pwd": "43u2",
+     "detail": "分享有效｜冬弥雪短篇",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "47eec60af621"
     },
     {
-     "url": "https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "43u2"
+     "pwd": "43u2",
+     "detail": "分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOusVbmPXRqKqPVGD4QF6Jw"
     }
    ],
    "dead": [
     {
-     "url": "https://drive.uc.cn/s/a15712f77ccf4",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "GpRv",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "a15712f77ccf4"
     }
    ],
    "candidates": []
   },
   "替身谎言~one night liar": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1ziGw6zEsC",
+    "url": "https://www.bilibili.com/video/BV1ziGw6zEsC",
+    "title": "【自汉化悬疑乙女】七年后作为替身参加同学会调查正主死亡真相？但大家太爱我了怎么办？——《替身谎言~one night liar》汉化补丁发布+测试实况解说",
+    "pubdate": "2026-07-31"
+   },
    "active": {
-    "url": "https://pan.quark.cn/s/782fc8938454",
     "platform": "quark",
     "platform_name": "夸克网盘",
     "pwd": "r83W",
     "detail": "分享有效｜替身谎言",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "782fc8938454"
    },
    "alt": [
     {
-     "url": "https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "kpvq"
+     "pwd": "kpvq",
+     "detail": "分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOyriyR9yyRk8XQqXaSHwtK1A1"
     },
     {
-     "url": "https://drive.uc.cn/s/e818987ce1474",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "pwd": "bFaJ"
+     "pwd": "bFaJ",
+     "detail": "分享有效｜替身谎言",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "e818987ce1474"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "mwix",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1DYCaJZQl-aUs2063qBxm4w"
     }
    ],
    "candidates": []
   },
   "拍卖开始的五分钟后": {
    "state": "failover",
+   "video": {
+    "bvid": "BV1bEp16TErC",
+    "url": "https://www.bilibili.com/video/BV1bEp16TErC",
+    "title": "【自汉化短篇日乙】超展开之我被绑架到黑市拍卖，男主们各显神通救援？——《拍卖开始的五分钟后》汉化补丁发布+测试实况",
+    "pubdate": "2026-10-16"
+   },
    "active": {
-    "url": "https://pan.xunlei.com/s/VP43aDVHIUFIXuga6fe-IRJoA1#",
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
     "pwd": "skdr",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VP43aDVHIUFIXuga6fe"
    },
    "alt": [
     {
-     "url": "https://wwanu.lanzoue.com/iJbaA4c89rde",
      "platform": "lanzou",
      "platform_name": "蓝奏云",
-     "pwd": "ei6b"
+     "pwd": "ei6b",
+     "detail": "分享有效｜10.0 M",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "wwanu"
     },
     {
-     "url": "https://drive.uc.cn/s/d890c62374494",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "pwd": "aePj"
+     "pwd": "aePj",
+     "detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "d890c62374494"
     }
    ],
    "dead": [
     {
-     "url": "https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j",
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "detail": "来晚啦，该分享已被取消"
+     "pwd": "ur5j",
+     "detail": "来晚啦，该分享已被取消",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1KBjc7WT1ya1ptOmWS0l2SA"
     },
     {
-     "url": "https://pan.quark.cn/s/14e3bebe2f45",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "detail": "分享已被封禁（文件涉及违规内容）"
+     "pwd": "jiyj",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "14e3bebe2f45"
     }
    ],
    "candidates": []
   },
   "死刑前的心理咨询": {
    "state": "ok",
+   "video": {
+    "bvid": "BV1LyJi6mEsh",
+    "url": "https://www.bilibili.com/video/BV1LyJi6mEsh",
+    "title": "【自汉化另类AVG】给死刑犯做心理咨询让他们悔过？月亮没能看到我，而你就是我的月亮——《死刑前的心理咨询》（刑死のためのカウンセル）汉化发布+测试实况解说",
+    "pubdate": "2026-10-17"
+   },
    "active": {
-    "url": "https://pan.baidu.com/s/1SS04HchS9uVIc5t-cqCDuA?pwd=n2b8",
     "platform": "baidu",
     "platform_name": "百度网盘",
     "pwd": "n2b8",
     "detail": "分享有效（需提取码）",
-    "source": "desc"
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "1SS04HchS9uVIc5t-cqCDuA"
    },
    "alt": [
     {
-     "url": "https://pan.quark.cn/s/499e10eefe3d",
      "platform": "quark",
      "platform_name": "夸克网盘",
-     "pwd": "K3rm"
+     "pwd": "K3rm",
+     "detail": "分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "499e10eefe3d"
     },
     {
-     "url": "https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1#",
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
-     "pwd": "estz"
+     "pwd": "estz",
+     "detail": "分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VP4Ds50puFl"
     },
     {
-     "url": "https://wwanu.lanzoue.com/iFdGG4cg9hnc",
      "platform": "lanzou",
      "platform_name": "蓝奏云",
-     "pwd": "4s6x"
+     "pwd": "4s6x",
+     "detail": "分享有效｜81.7 M",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "wwanu"
     },
     {
-     "url": "https://drive.uc.cn/s/6a8f0cac8f604",
      "platform": "uc",
      "platform_name": "UC网盘",
-     "pwd": "s6Uh"
+     "pwd": "s6Uh",
+     "detail": "分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "6a8f0cac8f604"
     }
    ],
    "dead": [],

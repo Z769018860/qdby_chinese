@@ -205,6 +205,7 @@ tbody tr:hover{ background:#fcfcff; }
   display:flex;
   flex-wrap:wrap;
   gap:8px;
+  row-gap:4px;
   align-items:center;
 }
 .ndWarn{ color:#b42318; font-weight:600; }
@@ -218,17 +219,17 @@ tbody tr:hover{ background:#fcfcff; }
   gap:4px;
   padding:2px 9px;
   border-radius:999px;
-  border:1px solid #bfe6cd;
-  background:#eaf8f0;
-  color:#136b3a;
+  border:1px solid #cfdffa;
+  background:#eef4fd;
+  color:#1f5fa8;
   font-size:11.5px;
   font-weight:600;
   text-decoration:none;
   white-space:nowrap;
 }
-.ndGo:hover{ background:#dcf3e5; border-color:#9fd8b7; }
-.ndGoIcon{ font-size:10px; opacity:.8; }
-.ndGoPwd{ font-weight:400; color:#4b7d61; font-size:10.5px; }
+.ndGo:hover{ background:#e2edfc; border-color:#b9d2f7; }
+.ndGoIcon{ font-size:11px; opacity:.75; }
+.ndGoPwd{ font-weight:600; color:#1f5fa8; font-size:10.5px; }
 .ndGo--big{ padding:4px 12px; font-size:12.5px; }
 
 .ndState{
@@ -244,6 +245,14 @@ tbody tr:hover{ background:#fcfcff; }
 .ndState--bad{ background:#fdecec; border-color:#f6c6c6; color:#b42318; }
 .ndState--none{ background:#f4f4f5; border-color:#e4e4e7; color:#6b7280; }
 
+.linkMuted{ color:#9ca3af; cursor:help; }
+.ndTo{
+  color:#1f5fa8;
+  font-size:10.5px;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.ndTo:hover{ text-decoration:underline; }
 .ndFix{
   padding:1px 7px;
   border-radius:6px;
@@ -301,7 +310,29 @@ tbody tr:hover{ background:#fcfcff; }
   color:#374151;
   text-decoration:none;
 }
-.ndAltLink:hover{ border-color:#cfe0f5; background:#f6faff; color:#1f5fa8; }
+.ndAltLink{ cursor:default; }
+.ndRow--go{
+  padding:10px 12px;
+  border:1px solid #e6eef9;
+  border-radius:10px;
+  background:#f8fbff;
+}
+.ndNow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.ndNowPlat{ font-size:12.5px; font-weight:600; color:var(--text); }
+.ndReup{
+  display:inline-block;
+  margin-right:6px;
+  padding:1px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  border:1px solid transparent;
+}
+.ndReup--done{ background:#eaf8f0; border-color:#bfe6cd; color:#136b3a; }
+.ndReup--ready{ background:#eef4fd; border-color:#cfdffa; color:#1f5fa8; }
+.ndReup--need_login, .ndReup--need_file{ background:#fff6e5; border-color:#f2d9a8; color:#8a5a00; }
+.ndReup--no_client{ background:#fdecec; border-color:#f6c6c6; color:#b42318; }
+.ndCandName{ font-weight:600; color:#4b5563; }
 .ndDeadList, .ndCandList{ display:flex; flex-direction:column; gap:5px; }
 .ndDead{
   display:flex; gap:8px; align-items:baseline;
@@ -1502,8 +1533,93 @@ a.vGame:hover{ color:#1f5fa8; }
   overflow:hidden;
 }
 .wPics{ display:flex; gap:7px; flex-wrap:wrap; }
-.wPic{ width:104px; aspect-ratio:1/1; border-radius:9px; overflow:hidden; background:#eceef3; }
+.wPic{
+  width:104px;
+  aspect-ratio:1/1;
+  padding:0;
+  border:0;
+  border-radius:9px;
+  overflow:hidden;
+  background:#eceef3;
+  cursor:zoom-in;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
 .wPic img{ width:100%; height:100%; object-fit:cover; display:block; }
+.wPic:hover{ transform:translateY(-1px); box-shadow:0 3px 10px rgba(15,23,42,.14); }
+.wPicMore{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:104px;
+  aspect-ratio:1/1;
+  border-radius:9px;
+  background:#f2f3f6;
+  color:#6b7280;
+  font-size:12.5px;
+  font-weight:600;
+}
+.wViewer{
+  position:fixed;
+  inset:0;
+  margin:auto;
+  width:fit-content;
+  height:fit-content;
+  padding:0;
+  border:0;
+  background:transparent;
+  overflow:visible;
+  max-width:min(92vw, 1100px);
+}
+.wViewer::backdrop{ background:rgba(8,12,20,.82); }
+.wViewer img{
+  display:block;
+  max-width:min(92vw, 1100px);
+  max-height:78vh;
+  margin:0 auto;
+  border-radius:10px;
+  background:#111;
+}
+.wViewerClose{
+  position:absolute;
+  top:-34px;
+  right:0;
+  width:28px;
+  height:28px;
+  border:0;
+  border-radius:8px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-size:18px;
+  line-height:1;
+  cursor:pointer;
+}
+.wViewerClose:hover{ background:rgba(255,255,255,.26); }
+.wViewerNav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:34px;
+  height:56px;
+  border:0;
+  border-radius:10px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+}
+.wViewerNav--prev{ left:-44px; }
+.wViewerNav--next{ right:-44px; }
+.wViewerNav:hover:enabled{ background:rgba(255,255,255,.28); }
+.wViewerNav:disabled{ opacity:.25; cursor:default; }
+.wViewerBar{
+  margin-top:10px;
+  text-align:center;
+  font-size:12px;
+  color:rgba(255,255,255,.82);
+}
+.wViewerBar a{ color:#9cc4f5; text-decoration:none; }
+.wViewerBar a:hover{ text-decoration:underline; }
 .wFoot{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; font-size:11.5px; color:var(--muted); }
 .wGamesLabel{ color:#9ca3af; }
 .wGame{
@@ -1543,90 +1659,6 @@ a.vGame:hover{ color:#1f5fa8; }
 .vWbBtn:hover{ background:#ffece6; }
 
 /* 一键三连按钮 */
-.vTriple{
-  margin-left:auto;
-  display:inline-flex;
-  align-items:center;
-  gap:3px;
-  padding:1px 8px;
-  border-radius:6px;
-  border:1px solid #ffd0dd;
-  background:#fff5f8;
-  color:#b3386a;
-  font-size:10.5px;
-  line-height:1.7;
-  cursor:pointer;
-  transition:background .15s, border-color .15s, color .15s;
-}
-.vTriple:hover{ background:#ffe6ef; border-color:#ffb8cd; }
-.vTripleIcon{ font-size:10px; }
-.vTriple.isReady{ border-color:#f5b8cd; box-shadow:0 0 0 2px rgba(255,120,170,.12); }
-.vTriple.isDone{
-  border-color:#bfe6cf;
-  background:#f2fbf5;
-  color:#2f7d52;
-  cursor:default;
-}
-.vTriple.isDone:hover{ background:#f2fbf5; }
-
-/* 三连引导弹层 */
-.tripleDialog{
-  width:min(560px, calc(100vw - 32px));
-  padding:22px 24px 18px;
-  border:1px solid var(--line);
-  border-top:4px solid #e35d8d;
-  border-radius:16px;
-  background:var(--card);
-  color:var(--text);
-  line-height:1.75;
-}
-.tripleDialog::backdrop{ background:rgba(15,23,42,.55); }
-.tripleClose{
-  position:absolute;
-  top:10px; right:12px;
-  width:30px; height:30px;
-  border:0; border-radius:8px;
-  background:transparent;
-  color:var(--muted);
-  font-size:20px; line-height:1;
-  cursor:pointer;
-}
-.tripleClose:hover{ background:#f1f5f9; color:var(--text); }
-.tripleTitle{ margin:0 0 8px; font-size:17px; }
-.tripleLead{ margin:0 0 14px; font-size:13px; color:#4b5563; }
-.tripleSteps{
-  margin:0 0 14px;
-  padding-left:20px;
-  font-size:13px;
-  color:#374151;
-}
-.tripleSteps li{ margin:9px 0; }
-.tripleSteps strong{ display:block; font-size:13px; color:var(--text); }
-.tripleSteps span{ color:#5b6472; }
-.tripleSteps a{ color:#1f5fa8; }
-.tripleState{ min-height:18px; margin:0 0 4px; font-size:12.5px; color:#b3386a; line-height:1.5; }
-.tripleActions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:8px 0 6px; }
-.tripleCheck{
-  padding:6px 14px;
-  border-radius:9px;
-  border:1px solid #f0c3d5;
-  background:#fff5f8;
-  color:#b3386a;
-  font-size:12.5px;
-  cursor:pointer;
-}
-.tripleCheck:hover{ background:#ffe6ef; }
-.tripleManual{ font-size:12.5px; color:#1f5fa8; }
-.tripleTry{ font-size:11.5px; color:#9ca3af; }
-.tripleNote{ margin:6px 0 0; font-size:11.5px; color:#8b93a1; }
-.tripleNote kbd{
-  padding:0 4px;
-  border:1px solid var(--line);
-  border-bottom-width:2px;
-  border-radius:4px;
-  background:#f8fafc;
-  font-size:11px;
-}
 
 
 .wText.isOpen{ -webkit-line-clamp:unset; display:block; }

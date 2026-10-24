@@ -55,12 +55,32 @@
 
 ## 微博同步（repo / 安利）
 
-微博主页翻页需要登录（`m.weibo.cn` 对 `page=` / `since_id=` 一律 302 到 passport），
-因此改用**站内搜索 + 作者过滤**：用 64 部作品的汉化名与原名、游戏库里高频游戏名、
-以及 `青灯不弈 repo` / `安利` / `通关repo` 等关键词逐个检索，只保留作者是「青灯不弈」的博文。
+微博的翻页是硬门槛：`m.weibo.cn` 未登录时 `page>=2`、`since_id`、`max_id` 全部返回
+`ok:-100`（跳 passport），`s.weibo.com` 直接跳登录页，主页首屏只有最新 12 条。
+所以分两种情况：
+
+| 是否登录 | 能拿到的量 | 做法 |
+| --- | --- | --- |
+| 未登录 | **约 50 条**（搜索第一页拼接） | 用 64 部作品的汉化名/原名、游戏库高频游戏名、`repo/通关/感想` 等关键词逐个检索，按 `user.screen_name` 过滤 |
+| 已登录 | **4018 条全量** | 存一份登录态后 `getIndex&page=N` 逐页走完整条时间线 |
+
+```bash
+node scripts/weibo/collect_weibo.mjs --login   # 弹一次可见窗口扫码，登录态落在 edgeprofWB
+node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
+```
+
+采集完统一补全两件事（都要在 `m.weibo.cn` 页面上下文里同源请求）：
+`/statuses/show?id=` 拿**完整配图列表**（搜索卡片常只给一张缩略图），
+`/statuses/extend` 拿**长微博全文**（卡片上的正文是截断版）。
+
+配图直接落到 `assets/weibo/`（`download_pics.py`，150 张 / 24 MB）。
+必须自托管：微博图床对第三方站点防盗链，本机无头浏览器整条链路拿不到图，
+页面会变成一排灰格子；`curl` 却是 200，所以下载走 curl。原图 URL 另存在 `picsOrig`，
+「查看原图」仍然跳微博图床。
 
 - 分类：`release` 汉化发布 / `repo` 游玩repo / `promo` 安利推荐 / `other` 其他
 - 每条微博会解析出提到的游戏，能对上的直接挂到游戏实体；对不上但内容确实是 repo/汉化发布的，补建成新实体
+- 配图最多显示 9 张，点开是大图查看器（左右键翻页、可跳原图）
 - 交互：卡片上的「微博 N」跳到微博页并按该游戏过滤；微博卡片上点游戏名则跳到投稿页过滤
 
 ## 相关数据与脚本
@@ -68,15 +88,18 @@
 - `data/games.json`：游戏维度库（658 个实体）。每条含 `plat / price / pz / topics / els / hours / size / store.steam / url / vcount / videos`，以及 `vidmap`（bvid → gid）
 - `data/videos.json`：视频站数据（视频 + 专栏）。每条投稿已把游戏维度打平到记录上（`gid / gn / plat / genre / el / pz / gs`），顶层 `facets` 定义 8 组维度
 - `data/weibo.json`：微博动态（分类、正文、配图、关联游戏），`by_game` 供卡片反查
+- `assets/weibo/`：微博配图本地副本（原图 URL 仍留在 `picsOrig`）
 - `data/netdisk-links.json` / `.md` / `.html`：网盘链接台账（不在汉化站导航中引用）
 - `data/netdisk-status.json`：按作品聚合的网盘状态，供汉化站表格列使用
   - 覆盖 63 个作品 / 175 条链接：有效 111、失效 64。失效集中在夸克网盘（37 条，多为「文件涉及违规内容 41010」）与 UC 网盘（5 条）
   - 每条记录含 `total / ok / dead / unknown`、按平台拆分的明细与 `checked_at` 检查时间
 - `data/netdisk-autofill.json` / `.md`：自动补档结果，见下节
+- `data/netdisk-reupload.json`：本机补档能力（客户端 / 登录态 / 补丁文件）探测结果
 - `scripts/netdisk/`：网盘链接抓取、核验与补档
   - `refresh.py`：抓发布页 + 评论 + 专栏，抽链接并核验（`check_spa.mjs` 负责需渲染的盘）
   - `hunt_comments.mjs`：按视频重扫评论区（最热 + 最新各 3 页，含楼中楼），把带网盘域名的评论整条存进 `raw/hunt_comments.json`
   - `autofill.py`：算「当前可用链接」、自动切换、补抓候补、生成求档清单
+  - `reupload.py`：探测百度/夸克/迅雷客户端与登录态、匹配本地补丁文件，判断能否自动重传
 - `scripts/bili/`：B 站抓取与构建
   - `up_app.py` / `up_articles.py`：投稿列表与专栏列表
   - `fetch_descs.mjs`：逐条抓投稿简介（浏览器内同源 fetch，1085 条 0 失败）
@@ -86,55 +109,62 @@
   - `build_videos.py`：组装 `data/videos.json`
 - `scripts/weibo/`：微博同步
   - `fetch_weibo.mjs`：主页首屏
-  - `collect_weibo.mjs`：搜索式采集（`QD_WB_EXTRA=<N>` 追加游戏名查询）
-  - `fetch_full.mjs`：长微博补全文（搜索卡片只给截断版，走 `/statuses/extend`）
+  - `collect_weibo.mjs`：采集 + 补全（`--login` 存登录态走全量；未登录只走搜索）
+  - `download_pics.py`：配图下载到 `assets/weibo/`（走 curl，绕开浏览器链路的防盗链）
+  - `fetch_full.mjs`：早期单独补全文的脚本（已并入 `collect_weibo.mjs`）
   - `build_weibo.py`：分类、关联游戏、补建「只有微博」的游戏实体
 
-## 一键三连（视频站）
+## 网盘与自动补档（汉化站）
 
-浏览器不允许第三方站点代用户操作 B 站账号，所以卡片上的「三连」不是直接发请求，而是：
+**页面上不出现任何网盘地址。** 每个作品的「网盘 / 补档」列只说明三件事：
+用哪个盘、提取码是多少、这条链接写在（简介 / 置顶评论 / 评论区 / 微博）哪里；
+点「去发布处」跳回 B 站视频，由用户自己在原发布页取链接。
 
-1. 点卡片上的「三连」→ 新标签打开 `bilibili.com/video/<BV>?qdby_triple=1`
-2. `assets/qdby-triple.user.js` 在 B 站页面里读到这个参数，依次调
-   点赞 `/x/web-interface/archive/like`、投币 `/x/web-interface/coin/add`、
-   收藏 `/x/v3/fav/resource/deal`，结果显示在右下角面板里
-3. 脚本同时 `@match` 本站域名，只做一件事：写 `localStorage.qdby_triple_installed`
-   —— 本站据此判断脚本装没装，装了按钮就是「已就绪」，点了直接跳转即完成
+这么做的原因有两个：链接失效时页面不会留一个点了没反应的死链；
+补档地址也不至于直接摊在明面上被批量扫走。
 
-没装脚本时点「三连」会弹出安装引导（Tampermonkey → 脚本 → 回本站刷新）。
-脚本约 5KB，只在 bilibili.com 与本页运行，不采集也不上传任何数据。
-装了之后在任何 B 站视频页按 `Alt`+`3` 也能直接三连。
+```
+《死刑前的心理咨询》  [百度网盘 ✓] [夸克 ✕] [迅雷 ✕]
+已自动切换 · 去发布处 ↗ · 补档详情 · 检查于 10-24
+```
 
-> 三连成败取决于 B 站登录态与风控：未登录时面板会直接提示；投币重复（34005）、
-> 已点赞（65006）等会被识别为「之前就做过了」，不算失败。
+### 补档的三层处理
 
-## 自动补档（汉化站）
-
-一个作品常同时挂着百度 / 夸克 / 迅雷多条链接，而挂的往往是其中一条
-（夸克近一年大面积「文件涉及违规内容」）。所以补档不是「重新上传」，而是三层自动处理：
-
-| 状态 | 含义 | 数量 |
+| 层 | 做法 | 现在的结果 |
 | --- | --- | --- |
-| `ok` | 全部链接有效 | 28 |
-| `failover` | 原有链接有失效，已自动切到还能打开的那条 | 33 |
-| `recovered` | 从评论区 / 微博里补回新链接，且通过在线核验 | 0 |
-| `pending` | 全部失效且暂无可信候补，页面给「求补档」 | 2 |
-| `none` | 从未收录过网盘链接 | 1 |
+| 自动切换 | 一个作品常同时挂百度 / 夸克 / 迅雷多条链接，挂的往往只是一条，按平台优先级切到还活着的那条 | 64 个作品里 33 个走这条路，用户全程无感 |
+| 自动重找 | 全部失效时回到简介 / 评论区 / 微博全文 / 专栏重抽链接，再走与巡检相同的接口核验 | 35 个失效作品扫出 37 条带网盘链接的评论，但核验后可用 0 条 |
+| 本地重传 | 上面两条都走不通，才需要把文件重新传回自己的网盘 | 见下，卡在「客户端未登录」 |
 
-- **自动切换**：`autofill.py` 按平台优先级（百度 > 夸克 > 阿里 > 迅雷 > 123 …）与来源可信度
-  排出 `active`，表格里直接给一个「↓ 平台 提取码」的按钮，点开就是能用的那条；
-  失效的只剩灰色 ✕ 标记，点了也不跳空页。
-- **自动补抓**：`hunt_comments.mjs` 重扫评论区（`refresh.py` 只留 UP 主留言、且仅 3 页，
-  补档留言常常正好漏在外面），`autofill.py` 再连同简介 / 微博全文 / 专栏摘要一起重新抽链接，
-  新链接走与巡检相同的接口核验。UP 主本人补的链接会直接顶到 `active`；
-  路人转存的只列出来，不替用户做主。
-- **自动催档**：实在找不到的，弹层里给一段可一键复制的求档文案，加上视频 / 微博入口。
+`data/netdisk-autofill.json` 里 `state` 分 ok / failover / recovered / pending / none。
+「补档详情」弹层里的「自动补档」一行会直接写明本机卡在哪一步。
 
-重新生成：
+### 本地重传（`reupload.py`）
+
+自动补档要同时成立三件事，缺一件就补不成，所以脚本不假装能补，而是把缺的那件说出来：
+
+1. **客户端在** —— 百度网盘 / 夸克网盘 / 迅雷 至少装一个
+2. **客户端已登录** —— 只有登录态才能往自己网盘写文件、建分享
+3. **本地有补丁文件** —— 没文件就无从上传
 
 ```bash
-node scripts/netdisk/hunt_comments.mjs      # 需要浏览器调试端口 9227
-python scripts/netdisk/autofill.py          # 产出 data/netdisk-autofill.json / .md
+python scripts/netdisk/reupload.py                      # 探测 + 匹配，产出 data/netdisk-reupload.json
+python scripts/netdisk/reupload.py --dir D://补档        # 指定补丁目录（可多次给）
+```
+
+每部待补档作品的 `state` 是 `done / ready / need_file / need_login / no_client` 之一。
+看一眼就知道是没装客户端、没登录，还是找不到文件。
+
+> 现阶段本机实测：夸克网盘客户端在、**未登录**；百度网盘只剩配置残留（主程序已卸载）；
+> 迅雷未安装；补档目录里也没有对应文件 —— 所以 `state` 停在 `need_login`。
+> 登录一次、把补丁放进 `--dir` 指定的目录，再跑一次就会变 `ready`。
+
+### 重新生成
+
+```bash
+node scripts/netdisk/hunt_comments.mjs   # 需要浏览器调试端口 9227
+python scripts/netdisk/reupload.py       # 探测客户端 / 登录态 / 补丁文件
+python scripts/netdisk/autofill.py       # 产出 data/netdisk-autofill.json / .md
 ```
 
 `hunt_comments.mjs` 默认只扫台账里有失效链接的视频，结果按 bvid 缓存在

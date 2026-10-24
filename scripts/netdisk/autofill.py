@@ -9,8 +9,12 @@
      新链接走与巡检相同的接口核验，有用的才算候补。
   3. 自动催档 request   —— 找不出候补的，生成可一键复制的求档文案与相关入口。
 
+前端不再直接暴露网盘地址：每个入口只给「哪个盘 + 提取码 + 它写在哪」，
+点击统一引导回视频发布处（简介 / 置顶评论 / 评论区）或微博原文，由用户自己在
+原发布页拿链接。这样链接失效时页面不会留着死链，也不会把补档地址摊在明面上。
+
 输出：
-  data/netdisk-autofill.json   给前端用（active / dead / candidates / request）
+  data/netdisk-autofill.json   给前端用（active / dead / candidates / request / reupload）
   data/netdisk-autofill.md     给人看的待补档清单
 
 用法：
@@ -112,6 +116,36 @@ def harvest(g, known_urls, descs, weibo, articles, hunt):
     return found
 
 
+WHERE_LABEL = {
+    'desc': '视频简介', 'pinned': '置顶评论', 'up_comment': 'UP 主评论',
+    'comment': '评论区', 'weibo': '微博原文', 'site': '发布页', 'article': '专栏',
+}
+
+
+def where_of(src):
+    return WHERE_LABEL.get(src or '', '原记录')
+
+
+def pub(L):
+    """对外输出的链接字段：只留「哪个盘 / 提取码 / 写在哪」，不带 url"""
+    return {
+        'platform': L.get('platform'),
+        'platform_name': L.get('platform_name') or '网盘',
+        'pwd': L.get('pwd') or '',
+        'detail': L.get('detail') or '',
+        'source': L.get('source') or '',
+        'where': where_of(L.get('source')),
+        'share_id': L.get('share_id') or '',
+    }
+
+
+def video_of(g):
+    bv = g.get('bvid') or ''
+    url = g.get('bili_url') or ('https://www.bilibili.com/video/' + bv if bv else '')
+    return {'bvid': bv, 'url': url, 'title': g.get('video_title') or '',
+            'pubdate': g.get('pubdate') or ''}
+
+
 def request_block(g, name):
     """全灭时给用户/UP 主一个可操作的出口"""
     bili = g.get('bili_url')
@@ -140,6 +174,7 @@ def main():
     weibo = load(os.path.join(RAW, 'weibo_posts.json'), [])
     articles = load(os.path.join(RAW, 'up_articles.json'), [])
     hunt = load(os.path.join(RAW, 'hunt_comments.json'), {})
+    reup = load(os.path.join(REPO, 'data', 'netdisk-reupload.json'), {})
     print('评论区补档语料：%d 个视频，%d 条含链接的评论'
           % (len(hunt), sum(len(v.get('comments') or []) for v in hunt.values())))
 
@@ -167,10 +202,10 @@ def main():
 
         rec = {
             'state': state,
-            'active': ({k: ok[0].get(k) for k in
-                        ('url', 'platform', 'platform_name', 'pwd', 'detail', 'source')} if ok else None),
-            'alt': [{k: L.get(k) for k in ('url', 'platform', 'platform_name', 'pwd')} for L in ok[1:]],
-            'dead': [{k: L.get(k) for k in ('url', 'platform', 'platform_name', 'detail')} for L in dead],
+            'video': video_of(g),
+            'active': (pub(ok[0]) if ok else None),
+            'alt': [pub(L) for L in ok[1:]],
+            'dead': [pub(L) for L in dead],
             'candidates': [],
         }
 
@@ -185,28 +220,27 @@ def main():
                 if any(c['platform'] in R.SPA_PLATFORMS for c in cands):
                     R.run_spa_checks(cands, node_bin=args.node)
             cands.sort(key=lambda c: (c.get('status') != 'ok', not c.get('is_up'), rank(c)))
-            rec['candidates'] = cands[:6]
+            rec['candidates'] = [dict(pub(c), status=c.get('status'), author=c.get('author') or '',
+                                      is_up=bool(c.get('is_up'))) for c in cands[:6]]
 
             good = [c for c in cands if c.get('status') == 'ok']
             best = good[0] if good else None
             # UP 主自己补的链接可以直接顶上去；路人转存只列出来，不替用户做主
             if best and (best.get('is_up') or state in ('pending', 'none')):
-                rec['active'] = {k: best.get(k) for k in
-                                 ('url', 'platform', 'platform_name', 'pwd', 'detail')}
-                rec['active']['source'] = best.get('source')
+                rec['active'] = pub(best)
                 rec['recovered_from'] = {'source': best.get('source'), 'author': best.get('author') or '',
                                          'is_up': bool(best.get('is_up'))}
-                rec['alt'] = ([{'url': L.get('url'), 'platform': L.get('platform'),
-                                'platform_name': L.get('platform_name'), 'pwd': L.get('pwd')} for L in ok]
-                              + [{'url': c['url'], 'platform': c['platform'],
-                                  'platform_name': c['platform_name'], 'pwd': c['pwd']}
-                                 for c in good if c is not best])
+                rec['alt'] = ([pub(L) for L in ok] + [pub(c) for c in good if c is not best])
                 state = 'recovered'
                 rec['state'] = state
                 new_links.append((name, best))
 
         if state in ('pending', 'none'):
             rec['request'] = request_block(g, name)
+            rb = (reup.get('games') or {}).get(name)
+            if rb:
+                rec['reupload'] = {k: rb.get(k) for k in
+                                   ('state', 'client_name', 'file', 'file_size', 'why')}
 
         states[state] += 1
         out['games'][name] = rec
@@ -217,10 +251,11 @@ def main():
         'games': len(games),
         'summary': states,
         'recovered_links': len(new_links),
-        'note': 'active 是当前可用的首选链接（按平台优先级与来源可信度排序）；'
+        'note': 'active 是当前可用的首选链接（按平台优先级与来源可信度排序），'
+                '但只给平台/提取码/写在哪，不给地址——页面统一引导回视频发布处；'
                 'failover 表示原链接有失效但已自动切到其他可用盘；'
                 'recovered 表示从评论区/微博里补回了新链接并通过核验；'
-                'pending 表示全部失效且暂无可信候补。',
+                'pending 表示全部失效且暂无可信候补，reupload 写清本机补档卡在哪一步。',
     }
 
     dst = os.path.join(REPO, 'data', 'netdisk-autofill.json')

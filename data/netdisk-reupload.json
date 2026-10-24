@@ -1,0 +1,93 @@
+{
+ "meta": {
+  "generated_at": "2026-10-24 21:06",
+  "clients": {
+   "baidu": {
+    "name": "百度网盘",
+    "installed": false,
+    "exe": "",
+    "logged_in": true,
+    "cookie_db": "C:\\Users\\Administrator\\AppData\\Roaming\\baidunetdisk\\Network\\Cookies",
+    "auth_seen": [
+     "BDUSS_BFESS",
+     "STOKEN"
+    ],
+    "usable": false
+   },
+   "quark": {
+    "name": "夸克网盘",
+    "installed": true,
+    "exe": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\quark-cloud-drive\\QuarkCloudDrive.exe",
+    "logged_in": false,
+    "cookie_db": "C:\\Users\\Administrator\\AppData\\Local\\Quark\\User Data\\Default\\Network\\Cookies",
+    "auth_seen": [],
+    "usable": false
+   },
+   "xunlei": {
+    "name": "迅雷",
+    "installed": false,
+    "exe": "",
+    "logged_in": false,
+    "cookie_db": "",
+    "auth_seen": [],
+    "usable": false
+   }
+  },
+  "patch_dirs": [
+   "C:\\Users\\Administrator\\WorkBuddy\\2026-10-24-17-17-43\\work\\补档",
+   "C:\\Users\\Administrator\\Downloads",
+   "C:\\Users\\Administrator\\Desktop"
+  ],
+  "patch_files": 36,
+  "best_client": "",
+  "summary": {
+   "done": 0,
+   "ready": 0,
+   "need_file": 0,
+   "need_login": 3,
+   "no_client": 0
+  },
+  "note": "自动补档需要「客户端已安装 + 已登录 + 本地有补丁文件」三件事同时成立；state 会明确停在哪一步，缺什么写什么。"
+ },
+ "games": {
+  "与死神的约会": {
+   "state": "need_login",
+   "client": "",
+   "client_name": "",
+   "file": "",
+   "file_size": 0,
+   "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享",
+   "dead_platforms": [],
+   "done_at": "",
+   "new_share": ""
+  },
+  "冬鸦何处去": {
+   "state": "need_login",
+   "client": "",
+   "client_name": "",
+   "file": "",
+   "file_size": 0,
+   "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享",
+   "dead_platforms": [
+    "百度网盘",
+    "夸克网盘",
+    "夸克网盘"
+   ],
+   "done_at": "",
+   "new_share": ""
+  },
+  "销魂罪人": {
+   "state": "need_login",
+   "client": "",
+   "client_name": "",
+   "file": "",
+   "file_size": 0,
+   "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享",
+   "dead_platforms": [
+    "百度网盘"
+   ],
+   "done_at": "",
+   "new_share": ""
+  }
+ }
+}

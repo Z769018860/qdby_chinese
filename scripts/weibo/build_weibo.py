@@ -33,7 +33,9 @@ RAW = os.environ.get('QD_CACHE') or os.path.normpath(os.path.join(BASE, '..', '.
 
 KIND_RULES = [
     ('release', r'自汉化|汉化补丁|汉化发布|机翻补丁|翻译补丁|汉化版|补丁地址|自译|汉化名'),
-    ('repo', r'repo|通关|打完|通了|全结局|感想|评测|测评|玩后感|吐槽|简评|记录一下'),
+    # repo 的说法很杂：除了 repo/通关，还有「推完/全线/剧透/评分/体验」
+    ('repo', r'repo|通关|打完|通了|推完|玩完|通完|全结局|全线|结局|感想|评测|测评'
+             r'|玩后感|吐槽|简评|记录一下|剧透|评分|打分|体验|进度'),
     ('promo', r'安利|推荐|入坑|推游|强烈建议|不容错过|值得一玩'),
 ]
 
@@ -43,6 +45,20 @@ NAME_PATTERNS = [
     r'原名\s*[：:]\s*([^\n]{2,80})',
     r'游戏名(?:称)?\s*[：:]\s*([^\n]{2,60})',
 ]
+
+
+PIC_DIR = os.path.join(REPO_DIR, 'assets', 'weibo')
+
+
+def pic_local(url):
+    """已下载到 assets/weibo 的图换成站内路径；没下到就退回原地址"""
+    if not url:
+        return url
+    stem = url.split('/')[-1].rsplit('.', 1)[0]
+    name = hashlib.md5(stem.encode('utf-8')).hexdigest()[:16] + '.jpg'
+    if os.path.exists(os.path.join(PIC_DIR, name)):
+        return 'assets/weibo/' + name
+    return url
 
 
 def classify(text):
@@ -162,7 +178,9 @@ def main():
             'kind': kind,
             'text': re.sub(r'\n{3,}', '\n\n', text).strip()[:1400],
             'len': len(text),
-            'pics': (p.get('pics') or [])[:3],
+            'pics': [pic_local(u) for u in (p.get('pics') or [])[:9]],
+            'picsOrig': (p.get('pics') or [])[:9],
+            'video': p.get('videoUrl') or '',
             'likes': p.get('likes') or 0,
             'comments': p.get('comments') or 0,
             'reposts': p.get('reposts') or 0,

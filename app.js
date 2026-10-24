@@ -311,10 +311,17 @@ function parseDate(s){
   return 0;
 }
 
+// 页面不出现网盘地址：数据里偶有作品把「汉化发布地址」直接填成网盘链接，
+// 这类值统一降级成文字，指向视频发布处，而不是留一个能点的死链。
+const PAN_URL_RE = /(pan\.baidu\.com|pan\.quark\.cn|drive\.uc\.cn|pan\.xunlei\.com|123[0-9]*\.com|lanzou[a-z]*\.com|aliyundrive\.com|alipan\.com|cloud\.189\.cn|caiyun\.139\.com|share\.weiyun\.com|ctfile\.com|mega\.nz|drive\.google\.com)/i;
+
 function linkOrDash(url, label){
   const u = safeText(url).trim();
   if(!u){ return "<span class=\"muted\">—</span>"; }
   const l = label || "打开";
+  if(PAN_URL_RE.test(u)){
+    return `<span class="linkMuted" title="网盘地址不在本站展示，请到视频发布处获取">${l}（见视频）</span>`;
+  }
   return `<a href="${u}" target="_blank" rel="noopener">${l}</a>`;
 }
 
@@ -333,7 +340,14 @@ function buildDetails(r){
   const linkify = (text)=>{
     const s = safeText(text).trim();
     if(!s){ return ""; }
-    return s.replace(urlRe, (u)=>`<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+    return s.replace(urlRe, (u)=>{
+      // 详情区里出现的网盘地址一律不转成可点链接
+      if(PAN_URL_RE.test(u)){
+        // 连地址本身也不显示，只留一句指向
+        return `<span class="linkMuted">网盘地址见视频发布处</span>`;
+      }
+      return `<a href="${u}" target="_blank" rel="noopener">${u}</a>`;
+    });
   };
 
   const add = (k, v) => {
@@ -511,12 +525,30 @@ const ND_STATE_TEXT = {
   none: ["ndState--none", "未收录"],
 };
 
-function ndLinkLabel(a){
-  const pwd = a.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(a.pwd)}</span>` : "";
-  return `<span class="ndGoIcon" aria-hidden="true">↓</span>` +
-    `<span class="ndGoPlat">${escapeHtml(shortPlatform(a.platform_name || a.platform || "网盘"))}</span>${pwd}`;
+function ndChipOf(L, kind){
+  const nm = shortPlatform(L.platform_name || L.platform || "网盘");
+  const bits = [];
+  if(L.where) bits.push(`写在${L.where}`);
+  if(L.pwd) bits.push(`提取码 ${L.pwd}`);
+  if(L.detail) bits.push(L.detail);
+  const tip = `${nm}：${bits.join(" · ") || "—"}`;
+  const cls = kind === "dead" ? "ndChip ndChip--dead"
+            : kind === "ok" ? "ndChip ndChip--ok" : "ndChip ndChip--unk";
+  const mark = kind === "dead" ? " ✕" : kind === "ok" ? " ✓" : "";
+  return `<span class="${cls}" title="${escapeHtml(tip)}">${escapeHtml(nm)}${mark}</span>`;
 }
 
+function ndVideoLink(au){
+  const v = au.video || {};
+  if(!v.url) return "";
+  const t = v.title ? ` title="${escapeHtml(v.title)}"` : "";
+  return `<a class="ndGo" href="${escapeHtml(v.url)}" target="_blank" rel="noopener"${t}>` +
+    `<span class="ndGoIcon" aria-hidden="true">↗</span>` +
+    `<span class="ndGoPlat">去发布处取链接</span></a>`;
+}
+
+/* 页面不再直出网盘地址：这里只说明「哪个盘、提取码、写在哪」，
+   真正的入口统一是视频发布处（简介 / 置顶评论 / 评论区）或微博原文。 */
 function netdiskCell(r){
   const name = safeText(r["汉化名"]).trim();
   const au = (state.autofill && state.autofill.games) ? state.autofill.games[name] : null;
@@ -526,32 +558,35 @@ function netdiskCell(r){
     return `<div class="ndBox"><span class="ndChip ndChip--none" title="该作品暂未收录到网盘链接">未收录</span></div>`;
   }
 
-  // 有补档数据：优先给「现在能打开」的那一条
   if(au){
     const active = au.active;
+    const alt = au.alt || [];
     const dead = au.dead || [];
     const [cls, text] = ND_STATE_TEXT[au.state] || ND_STATE_TEXT.ok;
-    const deadChips = dead.slice(0, 3).map(d => {
-      const tip = `${d.platform_name || d.platform}：${d.detail || "已失效"}`;
-      return `<span class="ndChip ndChip--dead" title="${escapeHtml(tip)}">` +
-        `${escapeHtml(shortPlatform(d.platform_name || d.platform))} ✕</span>`;
-    }).join("");
-    const moreDead = dead.length > 3 ? `<span class="ndChip ndChip--dead">+${dead.length - 3}</span>` : "";
-    const go = active
-      ? `<a class="ndGo" href="${escapeHtml(active.url)}" target="_blank" rel="noopener"
-             title="打开${escapeHtml(active.platform_name || "网盘")}（${escapeHtml(active.detail || "可用")}）">${ndLinkLabel(active)}</a>`
-      : "";
+    const chips = [];
+    if(active) chips.push(ndChipOf(active, "ok"));
+    alt.slice(0, 2).forEach(L => chips.push(ndChipOf(L, "alt")));
+    const room = Math.max(0, 4 - chips.length);
+    dead.slice(0, room).forEach(d => chips.push(ndChipOf(d, "dead")));
+    if(dead.length > room) chips.push(`<span class="ndChip ndChip--dead">+${dead.length - room}</span>`);
+    if(!chips.length) chips.push(`<span class="ndChip ndChip--none">未收录</span>`);
+
     const checked = safeText((state.netdisk.meta || {}).checked_at).trim();
-    return `<div class="ndBox">${go}${deadChips}${moreDead}</div>` +
+    // 检查时间不占版面，挂在状态标签的 title 上（列宽只有一百多像素）
+    return `<div class="ndBox">${chips.join("")}</div>` +
       `<div class="ndMeta">` +
-        `<span class="ndState ${cls}" data-nd="${escapeHtml(au.state)}">${text}</span>` +
+        `<span class="ndState ${cls}" data-nd="${escapeHtml(au.state)}"` +
+          (checked ? ` title="网盘链接检查于 ${escapeHtml(checked)}"` : "") + `>${text}</span>` +
+        (au.video && au.video.url
+          ? `<a class="ndTo" href="${escapeHtml(au.video.url)}" target="_blank" rel="noopener"
+                 title="链接写在视频简介或评论区，去发布处自己拿">去发布处 ↗</a>`
+          : "") +
         `<button class="ndFix" data-ndname="${escapeHtml(name)}" type="button">` +
           `${au.state === "pending" ? "求补档" : "补档详情"}</button>` +
-        (checked ? `<span class="ndTime">检查于 ${escapeHtml(checked.replace(/^\d{4}-/, ""))}</span>` : "") +
       `</div>`;
   }
 
-  // 没有补档数据时退回旧渲染
+  // 没有补档数据时退回旧渲染（同样不给直链）
   const chips = (st.platforms || []).map(p=>{
     const bad = (p.dead || 0) > 0;
     const good = (p.ok || 0) > 0;
@@ -577,28 +612,41 @@ function netdiskCell(r){
 /* ---------- 补档详情弹层 ---------- */
 function ndDialogHtml(name, au){
   const [cls, text] = ND_STATE_TEXT[au.state] || ND_STATE_TEXT.ok;
+  const v = au.video || {};
   const parts = [];
   parts.push(`<h3 class="ndT">《${escapeHtml(name)}》网盘状态</h3>`);
   parts.push(`<p class="ndSub"><span class="ndState ${cls}">${text}</span>` +
     `<span class="ndTime">数据更新于 ${escapeHtml(safeText((state.autofill.meta || {}).generated_at) || "—")}</span></p>`);
 
+  // 唯一的对外入口：回到发布处
+  if(v.url){
+    parts.push(`<div class="ndRow ndRow--go"><span class="ndRowK">取链接</span><div>
+      <a class="ndGo ndGo--big" href="${escapeHtml(v.url)}" target="_blank" rel="noopener">` +
+      `<span class="ndGoIcon" aria-hidden="true">↗</span><span class="ndGoPlat">去视频发布处</span></a>
+      <span class="ndRowNote">链接与提取码由 UP 主写在${escapeHtml(
+        (au.active && au.active.where) || "视频简介 / 置顶评论")}里，本页不转存、不外链网盘地址${
+        v.pubdate ? `；视频发布于 ${escapeHtml(v.pubdate)}` : ""}。</span>
+    </div></div>`);
+  }
+
   if(au.active){
     const a = au.active;
     const from = au.recovered_from
-      ? `来自${a.source === "weibo" ? "微博" : a.source === "comment" ? "评论区" : "原文"}` +
-        (au.recovered_from.author ? `（${au.recovered_from.is_up ? "UP 主 " : ""}${au.recovered_from.author}）` : "")
-      : `来源：${a.source === "desc" ? "视频简介" : a.source === "pinned" ? "置顶评论" : a.source === "up_comment" ? "UP 主评论" : a.source === "weibo" ? "微博" : a.source === "site" ? "站点登记" : "原记录"}`;
-    parts.push(`<div class="ndRow"><span class="ndRowK">现在可用</span>
-      <a class="ndGo ndGo--big" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">${ndLinkLabel(a)}</a>
-      <span class="ndRowNote">${escapeHtml(from)}${a.detail ? " · " + escapeHtml(a.detail) : ""}</span></div>`);
+      ? `来源：${a.where || "评论区"}${au.recovered_from.author ? "（" + (au.recovered_from.is_up ? "UP 主 " : "") + escapeHtml(au.recovered_from.author) + "）" : ""}`
+      : `写在：${escapeHtml(a.where || "原记录")}`;
+    parts.push(`<div class="ndRow"><span class="ndRowK">现在可用</span><div>
+      <div class="ndNow"><span class="ndNowPlat">${escapeHtml(a.platform_name || "网盘")}</span>` +
+      (a.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(a.pwd)}</span>` : "") +
+      (a.detail ? `<span class="ndRowNote">${escapeHtml(a.detail)}</span>` : "") +
+      `</div><span class="ndRowNote">${escapeHtml(from)}</span></div></div>`);
   }
 
   const alt = au.alt || [];
   if(alt.length){
     parts.push(`<div class="ndRow"><span class="ndRowK">其他可用</span><div class="ndAlt">` +
       alt.slice(0, 6).map(L =>
-        `<a class="ndAltLink" href="${escapeHtml(L.url)}" target="_blank" rel="noopener">` +
-        `${escapeHtml(shortPlatform(L.platform_name || L.platform))}${L.pwd ? " · " + escapeHtml(L.pwd) : ""}</a>`
+        `<span class="ndAltLink" title="${escapeHtml((L.where || "") + (L.detail ? " · " + L.detail : ""))}">` +
+        `${escapeHtml(shortPlatform(L.platform_name || L.platform))}${L.pwd ? " · " + escapeHtml(L.pwd) : ""}</span>`
       ).join("") + `</div></div>`);
   }
 
@@ -614,13 +662,25 @@ function ndDialogHtml(name, au){
     parts.push(`<div class="ndRow"><span class="ndRowK">自动挖到的候补</span><div class="ndCandList">` +
       cands.map(c => {
         const okCls = c.status === "ok" ? "isOk" : "isUnk";
-        const who = c.is_up ? "UP 主" : (c.author ? "网友 " + c.author : "");
+        const who = c.is_up ? "UP 主" : (c.author ? "网友 " + escapeHtml(c.author) : "");
         return `<div class="ndCand ${okCls}">
-          <a href="${escapeHtml(c.url)}" target="_blank" rel="noopener">${escapeHtml(shortPlatform(c.platform_name || c.platform))}${c.pwd ? " · " + escapeHtml(c.pwd) : ""}</a>
+          <span class="ndCandName">${escapeHtml(shortPlatform(c.platform_name || c.platform))}${c.pwd ? " · " + escapeHtml(c.pwd) : ""}</span>
           <span class="ndCandWhy">${escapeHtml(c.detail || "待核验")}</span>
-          <span class="ndCandSrc">${escapeHtml(c.source === "comment" ? "评论区" : c.source === "weibo" ? "微博" : "原文")}${who ? " · " + escapeHtml(who) : ""}</span>
+          <span class="ndCandSrc">${escapeHtml(c.where || "原文")}${who ? " · " + who : ""}</span>
         </div>`;
       }).join("") + `</div></div>`);
+  }
+
+  // 本机自动补档卡在哪一步
+  if(au.reupload){
+    const rb = au.reupload;
+    const label = { done: "已补档", ready: "条件齐备，待执行", need_file: "缺补丁文件",
+                    need_login: "网盘未登录", no_client: "没有可用的网盘客户端" }[rb.state] || rb.state;
+    parts.push(`<div class="ndRow"><span class="ndRowK">自动补档</span><div>
+      <span class="ndReup ndReup--${escapeHtml(rb.state)}">${escapeHtml(label)}</span>
+      <span class="ndRowNote">${escapeHtml(rb.why || "")}` +
+      (rb.file ? `（文件：<code>${escapeHtml(rb.file)}</code>）` : "") + `</span>
+    </div></div>`);
   }
 
   if(au.state === "pending" || au.state === "none"){
@@ -633,12 +693,12 @@ function ndDialogHtml(name, au){
         ${req.bili_url ? `<a class="ndBtn ndBtn--ghost" href="${escapeHtml(req.bili_url)}" target="_blank" rel="noopener">去视频评论区 ↗</a>` : ""}
         ${req.weibo_url ? `<a class="ndBtn ndBtn--ghost" href="${escapeHtml(req.weibo_url)}" target="_blank" rel="noopener">去微博 ↗</a>` : ""}
       </div>
-      <p class="ndHint">贴到视频评论或微博下即可。下次巡检若发现新链接，会自动出现在这里并标为可用。</p>
+      <p class="ndHint">贴到视频评论或微博下即可。下次巡检若发现新链接，会自动跳到「已补档」。</p>
     </div></div>`);
   }
 
   parts.push(`<p class="ndFoot">自动处理规则：同一作品有多条链接时，失效的自动跳过、切到还能打开的那条；
-    全部失效时回到简介 / 评论区 / 微博里重新找，找到并通过核验的会标为「已补档」。</p>`);
+    全部失效时回到简介 / 评论区 / 微博里重新找；本页只告诉你「用哪个盘、提取码、写在哪」，地址请回发布处取。</p>`);
   return parts.join("");
 }
 

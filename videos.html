@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>青灯不弈的个人站 · 视频站</title>
-  <link rel="stylesheet" href="styles.css?v=20261026.1" />
+  <link rel="stylesheet" href="styles.css?v=20261026.2" />
 </head>
 <body>
   <div class="bgLayer bgLeft" aria-hidden="true"></div>
@@ -125,41 +125,15 @@
     <div class="muted">本站为个人作品归档展示，视频与专栏版权归原作者及平台所有。数据来源：B 站空间公开投稿与专栏列表。</div>
   </footer>
 
-  <dialog id="tripleDialog" class="tripleDialog" aria-labelledby="tripleTitle">
-    <button class="tripleClose" id="tripleClose" type="button" aria-label="关闭">×</button>
-    <h2 class="tripleTitle" id="tripleTitle">开启一键三连</h2>
-    <p class="tripleLead">
-      三连要调用 B 站的登录接口，浏览器不允许第三方网站代你操作，所以需要一个约 5KB 的小脚本，
-      在 B 站页面里替你点。装一次，之后在本站点「三连」就会自动完成。
-    </p>
-    <ol class="tripleSteps">
-      <li>
-        <strong>装脚本管理器</strong>
-        <span>Chrome / Edge 装 <a href="https://www.tampermonkey.net/" target="_blank" rel="noopener">Tampermonkey</a>；
-        Safari 用 Userscripts；Firefox 用 Violentmonkey。</span>
-      </li>
-      <li>
-        <strong>安装三连脚本</strong>
-        <span>点 <a href="assets/qdby-triple.user.js" target="_blank" rel="noopener">qdby-triple.user.js</a>，
-        脚本管理器会弹出安装页，选「安装」。</span>
-      </li>
-      <li>
-        <strong>回来刷新本页</strong>
-        <span>装好后本页会识别到，按钮变成「三连 · 已就绪」；之后每次点都是真的一键完成。</span>
-      </li>
-    </ol>
-    <div class="tripleState" id="tripleState"></div>
-    <div class="tripleActions">
-      <button class="tripleCheck" id="tripleCheck" type="button">已装好，检查一下</button>
-      <a class="tripleManual" id="tripleManual" href="#" target="_blank" rel="noopener">这次先手动三连 ↗</a>
-      <a class="tripleTry" id="tripleTry" href="#" target="_blank" rel="noopener">已装但没识别到？直接试跑一次</a>
-    </div>
-    <p class="tripleNote">
-      脚本只在 bilibili.com 与本页运行，不上传任何数据；三连结果由 B 站页面右下角的面板告诉你。
-      装好后，在任何 B 站视频页按 <kbd>Alt</kbd>+<kbd>3</kbd> 也能直接三连。
-    </p>
+
+  <dialog id="wViewer" class="wViewer" aria-label="微博配图">
+    <button class="wViewerClose" id="wViewerClose" type="button" aria-label="关闭">×</button>
+    <button class="wViewerNav wViewerNav--prev" id="wViewerPrev" type="button" aria-label="上一张">‹</button>
+    <img id="wViewerImg" alt="" />
+    <button class="wViewerNav wViewerNav--next" id="wViewerNext" type="button" aria-label="下一张">›</button>
+    <div class="wViewerBar" id="wViewerBar"></div>
   </dialog>
 
-  <script src="videos.js?v=20261026.1"></script>
+  <script src="videos.js?v=20261026.2"></script>
 </body>
 </html>

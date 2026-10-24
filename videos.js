@@ -50,60 +50,21 @@ function fmtDur(sec){
 }
 function thumb(url, w){
   if(!url) return "";
-  return url.includes("hdslb.com") ? `${url}@${w}w_${Math.round(w * 9 / 16)}h_1c.webp` : url;
+  // 已经落到站内的图（assets/weibo/xxx.jpg）直接用，不要再拼尺寸
+  if(!/^https?:/i.test(url)) return url;
+  if(url.includes("hdslb.com")) return `${url}@${w}w_${Math.round(w * 9 / 16)}h_1c.webp`;
+  // 微博图床：wx3.sinaimg.cn/mw2000/<id>.jpg，换尺寸段就是缩略图
+  if(url.includes("sinaimg.cn")){
+    const px = Math.min(720, Math.max(360, Math.round(w * 2)));
+    return url.replace(/\/(mw|orj|thumbnail|small|bmiddle|large|original)\d*\//, `/mw${px}/`);
+  }
+  return url;
 }
 function catName(key){
   const c = state.categories.find(x => x.key === key);
   return c ? c.name : "其他";
 }
 function yearOf(date){ return (date || "").slice(0, 4); }
-
-/* ---------- 一键三连 ----------
-   三连必须带 B 站登录态，第三方域名拿不到 cookie，所以真正执行的是
-   assets/qdby-triple.user.js 在 bilibili.com 里跑的那段；本站只负责
-   把「:BV」带过去，并识别脚本装没装（脚本会在本页写一个 localStorage 标记）。 */
-const TRIPLE_FLAG = "qdby_triple_installed";
-const TRIPLE_DONE = "qdby_tripled";
-
-function tripleInstalled(){
-  if(typeof window.__QDBY_TRIPLE__ === "string") return true;
-  try { return localStorage.getItem(TRIPLE_FLAG) === "1"; } catch (e) { return false; }
-}
-function tripleDone(bv){
-  try {
-    const m = JSON.parse(localStorage.getItem(TRIPLE_DONE) || "{}");
-    return !!m[bv];
-  } catch (e) { return false; }
-}
-function markTriple(bv){
-  try {
-    const m = JSON.parse(localStorage.getItem(TRIPLE_DONE) || "{}");
-    m[bv] = Date.now();
-    localStorage.setItem(TRIPLE_DONE, JSON.stringify(m));
-  } catch (e) {}
-}
-function tripleUrl(bv){
-  return `https://www.bilibili.com/video/${bv}?qdby_triple=1`;
-}
-function refreshTripleUI(){
-  const on = tripleInstalled();
-  document.querySelectorAll(".vTriple").forEach(b => {
-    b.classList.toggle("isReady", on);
-    if(!b.classList.contains("isDone")){
-      b.title = on ? "点赞 + 投币 + 收藏（脚本已就绪）" : "点赞 + 投币 + 收藏（首次需装一个小脚本）";
-    }
-  });
-}
-function openTripleDialog(bv, title){
-  const dlg = $("tripleDialog");
-  const manual = $("tripleManual");
-  if(manual) manual.href = bv ? `https://www.bilibili.com/video/${bv}` : "https://www.bilibili.com/";
-  const tryit = $("tripleTry");
-  if(tryit) tryit.href = bv ? tripleUrl(bv) : "https://www.bilibili.com/";
-  const st = $("tripleState");
-  if(st) st.textContent = title ? `准备三连：${title.length > 26 ? title.slice(0, 26) + "…" : title}` : "";
-  if(dlg && !dlg.open) dlg.showModal();
-}
 
 function priceText(g){
   if(!g || !g.pz || g.pz === "unknown") return "";
@@ -378,7 +339,6 @@ function videoCard(v){
   const store = g && g.store && g.store.steam ? g.store.steam.url : (g && g.url ? g.url : "");
   const plat = (v.plat || []).slice(0, 2).map(k => PLAT_SHORT[k] || k).join(" · ");
   const price = priceText(g);
-  const tripled = tripleDone(v.id);
   const gameLine = g
     ? `<div class="vGameRow">
          ${store ? `<a class="vGame" href="${esc(store)}" target="_blank" rel="noopener" title="打开游戏页面">《${esc(g.name)}》<span class="vGameOut" aria-hidden="true">↗</span></a>`
@@ -401,11 +361,6 @@ function videoCard(v){
           <span class="vTag vTag--${esc(v.cat)}">${esc(catName(v.cat))}</span>
           ${genreTags(v)}
           <span class="vDate">${esc(v.date)}</span>
-          <button class="vTriple${tripled ? " isDone" : ""}" data-bv="${esc(v.id)}"
-                  data-title="${esc(v.title)}" type="button"
-                  title="${tripled ? "这台设备上已经点过三连" : "点赞 + 投币 + 收藏"}">
-            <span class="vTripleIcon" aria-hidden="true">${tripled ? "✓" : "♥"}</span>${tripled ? "已三连" : "三连"}
-          </button>
         </div>
         ${gameLine}
       </div>
@@ -431,8 +386,13 @@ function articleCard(a){
 }
 
 function weiboCard(p){
-  const pics = (p.pics || []).slice(0, 3).map(u =>
-    `<span class="wPic"><img src="${esc(thumb(u, 240))}" alt="" loading="lazy" referrerpolicy="no-referrer"></span>`).join("");
+  const all = p.pics || [];
+  const shown = all.slice(0, 9);
+  const pics = shown.map((u, i) =>
+    `<button class="wPic" type="button" data-wid="${esc(p.id)}" data-idx="${i}"
+             title="第 ${i + 1} 张，点开看大图">
+       <img src="${esc(thumb(u, 240))}" alt="" loading="lazy" referrerpolicy="no-referrer"></button>`).join("")
+    + (all.length > 9 ? `<span class="wPicMore">+${all.length - 9}</span>` : "");
   const games = (p.games || []).map(gid => {
     const g = state.games[gid];
     if(!g) return "";
@@ -447,12 +407,46 @@ function weiboCard(p){
       </div>
       <p class="wText" id="wt-${esc(p.id)}">${esc(p.text || "")}</p>
       <button class="wToggle" data-wid="${esc(p.id)}" type="button" hidden>展开全文</button>
-      ${pics ? `<div class="wPics">${pics}</div>` : ""}
+      ${pics ? `<div class="wPics wPics--n${Math.min(9, all.length)}">${pics}</div>` : ""}
       <div class="wFoot">
         ${games ? `<span class="wGamesLabel">关联</span>${games}` : `<span class="wNoGame">未关联到站内游戏</span>`}
         <span class="wStat">♡ ${p.likes}　💬 ${p.comments}　↻ ${p.reposts}</span>
       </div>
     </article>`;
+}
+
+/* ---------- 微博配图大图 ---------- */
+let wView = { wid: "", idx: 0 };
+function openWViewer(wid, idx){
+  const p = state.weibo.posts.find(x => x.id === wid);
+  const dlg = $("wViewer");
+  if(!p || !dlg) return;
+  const pics = p.pics || [];
+  if(!pics.length) return;
+  wView = { wid, idx: Math.max(0, Math.min(idx, pics.length - 1)) };
+  syncWViewer();
+  if(!dlg.open) dlg.showModal();
+}
+function syncWViewer(){
+  const p = state.weibo.posts.find(x => x.id === wView.wid);
+  if(!p) return;
+  const pics = p.pics || [];
+  const img = $("wViewerImg");
+  const bar = $("wViewerBar");
+  const prev = $("wViewerPrev");
+  const next = $("wViewerNext");
+  if(img){
+    img.src = thumb(pics[wView.idx], 1000);
+    img.alt = `第 ${wView.idx + 1} 张`;
+  }
+  if(bar){
+    const orig = (p.picsOrig && p.picsOrig[wView.idx]) || pics[wView.idx];
+    bar.innerHTML = `第 ${wView.idx + 1} / ${pics.length} 张 · ` +
+      `<a href="${esc(orig)}" target="_blank" rel="noopener">查看原图 ↗</a> · ` +
+      `<a href="${esc(p.url)}" target="_blank" rel="noopener">微博原文 ↗</a>`;
+  }
+  if(prev) prev.disabled = wView.idx <= 0;
+  if(next) next.disabled = wView.idx >= pics.length - 1;
 }
 
 function render(){
@@ -563,46 +557,14 @@ function wire(){
     });
   }
 
-  // 视频卡片：三连
-  if(el.grid){
-    el.grid.addEventListener("click", e => {
-      const b = e.target.closest(".vTriple");
-      if(!b) return;
-      e.preventDefault();
-      const bv = b.dataset.bv;
-      const title = b.dataset.title || "";
-      if(!tripleInstalled()){
-        openTripleDialog(bv, title);
-        return;
-      }
-      window.open(tripleUrl(bv), "_blank", "noopener");
-      markTriple(bv);
-      b.classList.add("isDone");
-      b.dataset.tripled = "1";
-      b.innerHTML = `<span class="vTripleIcon" aria-hidden="true">✓</span>已发送`;
-      b.title = "已在 B 站页面执行三连，结果看那边的面板";
+  // 微博配图：点开看大图，可左右翻
+  if(el.wlist){
+    el.wlist.addEventListener("click", e => {
+      const pic = e.target.closest(".wPic");
+      if(!pic) return;
+      openWViewer(pic.dataset.wid, Number(pic.dataset.idx) || 0);
     });
   }
-
-  // 三连引导弹层
-  const tdlg = $("tripleDialog");
-  if(tdlg){
-    $("tripleClose")?.addEventListener("click", () => tdlg.close());
-    tdlg.addEventListener("click", e => {
-      if(e.target === tdlg) tdlg.close();
-    });
-    $("tripleCheck")?.addEventListener("click", () => {
-      const st = $("tripleState");
-      if(tripleInstalled()){
-        if(st) st.textContent = "✓ 已识别到脚本，现在可以一键三连了。";
-        refreshTripleUI();
-        setTimeout(() => tdlg.close(), 700);
-      } else if(st){
-        st.textContent = "还没检测到。确认脚本已启用后，刷新本页再点这里。";
-      }
-    });
-  }
-  refreshTripleUI();
 
   // 微博正文展开 / 收起
   if(el.wlist){
@@ -687,6 +649,28 @@ function wire(){
   });
   el.sort.addEventListener("change", () => { state.sort = el.sort.value; render(); });
   el.more.addEventListener("click", () => { state.shown += PAGE_SIZE; render(); });
+
+  // 大图查看器
+  const wv = $("wViewer");
+  if(wv){
+    $("wViewerClose")?.addEventListener("click", () => wv.close());
+    wv.addEventListener("click", e => { if(e.target === wv) wv.close(); });
+    $("wViewerPrev")?.addEventListener("click", () => { wView.idx = Math.max(0, wView.idx - 1); syncWViewer(); });
+    $("wViewerNext")?.addEventListener("click", () => {
+      const p = state.weibo.posts.find(x => x.id === wView.wid);
+      const n = p ? (p.pics || []).length : 0;
+      wView.idx = Math.min(n - 1, wView.idx + 1); syncWViewer();
+    });
+    document.addEventListener("keydown", e => {
+      if(!wv.open) return;
+      if(e.key === "ArrowLeft"){ wView.idx = Math.max(0, wView.idx - 1); syncWViewer(); }
+      if(e.key === "ArrowRight"){
+        const p = state.weibo.posts.find(x => x.id === wView.wid);
+        const n = p ? (p.pics || []).length : 0;
+        wView.idx = Math.min(n - 1, wView.idx + 1); syncWViewer();
+      }
+    });
+  }
 
   document.addEventListener("error", e => {
     const t = e.target;
