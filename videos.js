@@ -717,7 +717,18 @@ function wire(){
   }, true);
 }
 
-load().then(wire).catch(err => {
+/* 装饰背景：首屏渲染完再淡入（与首页 app.js 同一套 bgReady 约定） */
+function showBgArt(){
+  const doc = document.documentElement;
+  if(doc.classList.contains("bgReady")) return;
+  if("requestIdleCallback" in window){
+    requestIdleCallback(() => doc.classList.add("bgReady"), { timeout: 1800 });
+  }else{
+    setTimeout(() => doc.classList.add("bgReady"), 900);
+  }
+}
+
+load().then(wire).then(showBgArt).catch(err => {
   console.error(err);
   el.result.textContent = "数据加载失败，请稍后重试。";
 });

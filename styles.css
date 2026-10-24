@@ -43,11 +43,14 @@ header{ padding:28px 0 18px; }
   margin:0;
   font-size:28px;
   letter-spacing:.4px;
+  /* 背景画满铺后，标题叠在图上仍要清晰 */
+  text-shadow:0 1px 0 rgba(255,255,255,.7), 0 0 16px rgba(255,255,255,.75);
 }
 .subtitle{
   margin:8px 0 0;
   color:var(--muted);
   font-size:14px;
+  text-shadow:0 0 12px rgba(255,255,255,.85);
 }
 
 .links{
@@ -945,46 +948,44 @@ code{ background:#f3f4f6; border:1px solid var(--line); padding:2px 6px; border-
    不再从页首竖贯到底；加载完成后才淡入（html.bgReady），不与首屏抢带宽。 */
 .bgLayer{
   position:fixed;
-  bottom:max(-5vh, -56px);
-  width:min(34vw, 520px);
-  aspect-ratio:1000/714;
+  top:0;
+  bottom:0;
+  width:52vw;
   pointer-events:none;
   z-index:0;
   opacity:0;
   background-repeat:no-repeat;
-  background-size:contain;
+  background-size:cover;
+  background-position:center;
   filter:saturate(1.03) contrast(1.05);
-  -webkit-mask-image:radial-gradient(120% 118% at 42% 58%, #000 52%, transparent 90%);
-          mask-image:radial-gradient(120% 118% at 42% 58%, #000 52%, transparent 90%);
   transition:opacity 1s ease;
 }
-html.bgReady .bgLayer{ opacity:.4; }
+html.bgReady .bgLayer{ opacity:.5; }
+/* 中缝线性渐隐，让两图衔接自然 */
 .bgLeft{
-  left:max(-4vw, -60px);
-  background-position:left bottom;
+  left:0;
   background-image:url("assets/bg-left.webp");
+  -webkit-mask-image:linear-gradient(90deg, #000 62%, transparent 98%);
+          mask-image:linear-gradient(90deg, #000 62%, transparent 98%);
 }
 .bgRight{
-  right:max(-4vw, -60px);
-  background-position:right bottom;
+  right:0;
   background-image:url("assets/bg-right.webp");
-  -webkit-mask-image:radial-gradient(120% 118% at 58% 58%, #000 52%, transparent 90%);
-          mask-image:radial-gradient(120% 118% at 58% 58%, #000 52%, transparent 90%);
+  -webkit-mask-image:linear-gradient(270deg, #000 62%, transparent 98%);
+          mask-image:linear-gradient(270deg, #000 62%, transparent 98%);
 }
 @media (min-width: 1600px){
-  .bgLayer{ width:min(30vw, 600px); }
-  .bgLeft{ left:0; }
-  .bgRight{ right:0; }
+  .bgLayer{ width:56vw; }
+  html.bgReady .bgLayer{ opacity:.55; }
 }
 @media (max-width: 980px){
-  .bgLayer{ width:min(52vw, 380px); }
-  .bgLeft{ left:-14vw; }
-  .bgRight{ right:-14vw; }
-  html.bgReady .bgLayer{ opacity:.28; }
+  .bgLayer{ width:64vw; }
+  html.bgReady .bgLayer{ opacity:.3; }
 }
 @media (max-width: 640px){
-  /* 小屏直接不渲染也不下载（background-image 只在命中选择器时拉取） */
-  .bgLayer{ display:none; }
+  .bgLayer{ width:100vw; }
+  .bgRight{ display:none; }
+  html.bgReady .bgLayer{ opacity:.18; }
 }
 
 /* keep content above background */
@@ -996,11 +997,6 @@ header, main, footer{ position:relative; z-index:1; }
   align-items:flex-end;
   gap:12px;
   flex-wrap:wrap;
-}
-.stickers{
-  display:flex;
-  gap:8px;
-  align-items:center;
 }
 .sticker{
   width:44px;
