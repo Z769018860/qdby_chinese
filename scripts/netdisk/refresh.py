@@ -674,7 +674,7 @@ def write_outputs(games, checked=True):
             'games': games}
 
     jf = os.path.join(DATA_DIR, 'netdisk-links.json')
-    json.dump(data, open(jf, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(data, open(jf, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 
     # ---- Markdown ----
     md = ['# 汉化资源 · 网盘链接汇总\n',
@@ -726,7 +726,7 @@ def write_outputs(games, checked=True):
         else:
             md.append('\n_未提取到网盘链接。_')
         md.append('')
-    open(os.path.join(DATA_DIR, 'netdisk-links.md'), 'w', encoding='utf-8').write('\n'.join(md))
+    open(os.path.join(DATA_DIR, 'netdisk-links.md'), 'w', encoding='utf-8', newline='\n').write('\n'.join(md))
 
     # ---- HTML ----
     tpl = os.path.join(HERE, 'template.html')
@@ -738,7 +738,7 @@ def write_outputs(games, checked=True):
                 .replace('__OK__', str(summary.get('ok', 0)))
                 .replace('__DEAD__', str(summary.get('dead', 0)))
                 .replace('__UNK__', str(summary.get('unknown', 0))))
-    open(os.path.join(DATA_DIR, 'netdisk-links.html'), 'w', encoding='utf-8').write(html)
+    open(os.path.join(DATA_DIR, 'netdisk-links.html'), 'w', encoding='utf-8', newline='\n').write(html)
 
     print('\n完成：%s' % DATA_DIR)
     print('  游戏 %d｜链接 %d（去重 %d）｜有效 %d｜失效 %d｜待确认 %d'

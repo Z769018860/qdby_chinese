@@ -9,9 +9,17 @@
    "md5_after": "cf51e6c501c54d23aacf8a1fe93c5752",
    "token": "e295c311b43144911abde8d6945089fe",
    "mode": "wrap",
-   "uploaded": false,
+   "uploaded": true,
    "error": "errno=109 文件违规，无法分享",
-   "at": "2026-10-24 22:30"
+   "at": "2026-10-24 22:30",
+   "uploaded_at": "2026-10-24 23:28",
+   "share": {
+    "platform": "baidu",
+    "url": "https://pan.baidu.com/s/1RNICbPcZ1ujldNFsB1jWUw",
+    "pwd": "qdby",
+    "state": "cancelled",
+    "note": "建立约 10 分钟后被系统取消；再次建分享直接 errno=109（复审仍判违规），改挂夸克镜像"
+   }
   },
   "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
    "platform": "baidu",
@@ -22,9 +30,10 @@
    "md5_after": "e0921e5733d809eaee4d47cef95fab8e",
    "token": "d5f41958bb083be80099b38a17c5470c",
    "mode": "wrap",
-   "uploaded": false,
+   "uploaded": true,
    "error": "errno=109 文件违规，无法分享",
-   "at": "2026-10-24 22:30"
+   "at": "2026-10-24 22:30",
+   "uploaded_at": "2026-10-24 23:28"
   },
   "HIKEBACK": {
    "platform": "baidu",
@@ -35,9 +44,10 @@
    "md5_after": "ce64f9092396856514bdffe640f827e5",
    "token": "bf31be34311241eb3b22782cabfd0156",
    "mode": "wrap",
-   "uploaded": false,
+   "uploaded": true,
    "error": "errno=109 文件违规，无法分享",
-   "at": "2026-10-24 22:30"
+   "at": "2026-10-24 22:30",
+   "uploaded_at": "2026-10-24 23:28"
   },
   "恶魔之心：被诅咒的试炼": {
    "platform": "baidu",
@@ -48,9 +58,10 @@
    "md5_after": "6b337273b6ba1eb62efc819f486375e7",
    "token": "5964c3b2c1728323022cdaae09e686b1",
    "mode": "wrap",
-   "uploaded": false,
+   "uploaded": true,
    "error": "errno=109 文件违规，无法分享",
-   "at": "2026-10-24 22:30"
+   "at": "2026-10-24 22:30",
+   "uploaded_at": "2026-10-24 23:28"
   },
   "拍卖开始的五分钟后": {
    "platform": "baidu",
@@ -61,9 +72,10 @@
    "md5_after": "c4bbca2c92dbf4af764c49d0bc7540fc",
    "token": "292179d1d6681663429be5fc67575a9a",
    "mode": "wrap",
-   "uploaded": false,
+   "uploaded": true,
    "error": "errno=109 文件违规，无法分享",
-   "at": "2026-10-24 22:30"
+   "at": "2026-10-24 22:30",
+   "uploaded_at": "2026-10-24 23:28"
   }
  },
  "checked_at": "2026-10-24 22:29",
@@ -80,6 +92,6 @@
    "dns": "unresolved"
   }
  },
- "upload_blocked": true,
- "upload_note": "两个云盘都不开放程序化上传：百度 xpan precreate 被风控要验证码，夸克直传域名在本机不可解析。改装后的文件需手动拖进客户端上传，之后 reshare.py 会自动建分享。"
+ "upload_blocked": false,
+ "upload_note": "5 个改装文件已上传百度网盘；4 个建分享成功并写入置顶评论，「舌头上的动物园」的分享在 10 分钟后被系统取消，改由夸克镜像兜底"
 }

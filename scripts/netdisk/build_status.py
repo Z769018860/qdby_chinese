@@ -46,7 +46,7 @@ def main():
         'summary': (d.get('meta') or {}).get('summary') or {},
         'games': games,
     }
-    json.dump(out, open(DST, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(out, open(DST, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     print('games', len(games), '->', DST)
     print('sample:', json.dumps(dict(list(games.items())[:1]), ensure_ascii=False)[:300])
 

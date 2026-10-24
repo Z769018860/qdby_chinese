@@ -265,11 +265,15 @@ def main():
         for k, v in rs.items():
             if not v.get('url'):
                 continue
+            # 每日巡检会把复查结果写回 checked；已判死的补档不再当作可用入口
+            if v.get('checked') == 'dead':
+                continue
             row = pub({'platform': k, 'platform_name': PLAT_NAME.get(k, k),
                        'pwd': v.get('pwd') or '', 'source': 'comment',
                        'detail': v.get('path') or ''})
             row.update({'verified': v.get('verified'), 'at': v.get('created_at') or '',
-                        'check': v.get('check') or ''})
+                        'check': v.get('check') or '',
+                        'checked': v.get('checked') or '', 'checked_at': v.get('checked_at') or ''})
             done.append(row)
         if done:
             rec['reshare'] = done

@@ -649,6 +649,7 @@ function ndDialogHtml(name, au){
       resh.map(r => `<div class="ndNow">
         <span class="ndNowPlat">${escapeHtml(r.platform_name || r.platform)}</span>` +
         (r.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(r.pwd)}</span>` : "") +
+        (r.checked === "dead" ? `<span class="ndDeadWhy">复查：这条也已失效，等下次补档</span>` : "") +
         `<span class="ndRowNote">写在视频置顶评论的回复里${r.at ? ` · ${escapeHtml(r.at)}` : ""}</span>` +
       `</div>`).join("") +
       `<span class="ndRowNote">这批链接是重新建过分享的（原来的失效了），站内同样不直出地址：` +

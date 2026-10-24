@@ -194,7 +194,7 @@ CLOUD_NOISE = re.compile(
     r'(\.zip|\.rar|\.7z|\.tar|\.exe|\.apk|\.txt|'
     r'by青灯不弈|by青灯|青灯不弈|汉化魔改补丁|机翻润色补丁|汉化完整版|汉化版|完整版|'
     r'汉化备份|汉化补丁|机翻补丁|翻译补丁|润色补丁|补丁|汉化|机翻|润色|'
-    r'分卷版|全部一起解压|v?\d+\.\d+)', re.I)
+    r'补档版|补档|分卷版|全部一起解压|v?\d+\.\d+)', re.I)
 
 
 def clean_cloud(name):
@@ -233,6 +233,10 @@ def pick(game, items, plat):
             sc = score(game, it['name']) * 0.85
         else:
             sc = score(game, it['name'])
+        # 违规文件是「下载→改装→重传」来的，云端会同时留着原件和（补档版）；
+        # 原件建分享仍然是 errno=109，必须让补档版优先。
+        if '补档' in it['name']:
+            sc = min(1.0, sc + 0.3)
         if sc > bs:
             best, bs = it, sc
     return best, bs

@@ -110,14 +110,15 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
   - 每条记录含 `total / ok / dead / unknown`、按平台拆分的明细与 `checked_at` 检查时间
 - `data/netdisk-autofill.json` / `.md`：自动补档结果，见下节
 - `data/netdisk-reshare.json`：重新建出来的分享（含平台、提取码、核验状态、评论 rpid）
-- `data/netdisk-violation.json`：违规文件改装记录（改装前后 md5、输出路径）
+- `data/netdisk-violation.json`：违规文件改装记录（改装前后 md5、输出路径、是否已上传）
 - `data/netdisk-reupload.json`：本机补档能力（客户端 / 登录态 / 补丁文件）探测结果
 - `scripts/netdisk/`：网盘链接抓取、核验与补档
+  - `daily_check.py`：**每天 0 点巡检**——核验全部网盘链接、更新站点数据、全灭时发告警邮件（见下节）
   - `refresh.py`：抓发布页 + 评论 + 专栏，抽链接并核验（`check_spa.mjs` 负责需渲染的盘）
   - `hunt_comments.mjs`：按视频重扫评论区（最热 + 最新各 3 页，含楼中楼），把带网盘域名的评论整条存进 `raw/hunt_comments.json`
   - `autofill.py`：算「当前可用链接」、自动切换、补抓候补、生成求档清单
   - `reshare.py`：`index / plan / run` 三步——递归索引自己两个云盘 → 与失效清单模糊匹配 → 建新分享并核验
-  - `post_comments.py`：把新链接发到对应投稿的**置顶评论下方回复**里（`--dry` 演练、`--cleanup` 清理旧顶层评论）
+  - `post_comments.py`：把新链接发到对应投稿的**置顶评论下方回复**里（`--dry` 演练、`--cleanup` 清理旧顶层评论、`--reformat` 把已发的改写成长短版）
   - `reupload.py`：探测百度/夸克/迅雷客户端与登录态、匹配本地补丁文件，判断能否自动重传
   - `reup_violation.py`：违规文件 `probe` / `fetch`（下载 → 换哈希改装），见下节
   - `browser_cookies.py`：解 Chromium 系 cookie 库（AES-GCM + 剥 32 字节 host 哈希前缀）
@@ -174,11 +175,15 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 
 ```
 置顶评论（游戏说明…）
-└── 【补档】《冬鸦何处去》之前分享的链接失效了，重新分享一份（长期有效）：
-    夸克网盘：https://pan.quark.cn/s/xxxx　提取码：qdby
+└── 【补档】《冬鸦何处去》
+    百度网盘：https://pan.baidu.com/s/xxxx 提取码：qdby
+    夸克网盘：https://pan.quark.cn/s/xxxx 提取码：qdby
 ```
 
+- 评论只放**两样东西**：补档标记 + 网盘链接。不写免责声明、不写站内引导语——
+  评论越干净越不像广告，读者也只用看地址
 - 20 个作品命中 UP 主置顶；「拍卖开始的五分钟后」那条视频没有置顶评论，退回发顶层
+- `--reformat` 是配套的改写工具：先发新的短版，成功了再删旧的（顺序反了会丢链接）
 - 接口有个坑：`ps` 上限是 20，写 30 直接 `code:-400 ps out of bounds`
 - 发完立刻用 `x/v2/reply/reply?root=` 复查，确认挂在置顶下面
 
@@ -210,7 +215,7 @@ python scripts/netdisk/reup_violation.py fetch   # 下载 + 换哈希改装到 w
 - 加密 zip / rar / 7z：原文件整包塞进新 zip（STORED，不二次压缩），外层解出来还是原来那个文件。
 
 实测 5 个文件全部是加密 zip，走第二条：md5 全部改变（如 `68d7eb92…` → `cf51e6c5…`），
-体积基本不变（286 MB → 286.8 MB）。产物在 `work/reup/`，`state.uploaded` 仍是 false。
+体积基本不变（286 MB → 286.8 MB）。产物在 `work/reup/`。
 
 **上传这一段在本机确实走不通**，`probe` 出来的证据：
 
@@ -221,7 +226,27 @@ python scripts/netdisk/reup_violation.py fetch   # 下载 + 换哈希改装到 w
 
 所以最后一步是人工接力：把 `work/reup/*（补档版）.zip` 拖进客户端上传，
 再跑 `reshare.py index && reshare.py run`，就会自动把它们纳入索引、建分享、发评论。
-在这之前，这 5 部作品在站上走的是「重新分享」那一层的夸克镜像（已核验可用）。
+
+**这一步已经走完。** 5 个改装包全部上传到百度网盘根目录，
+`reshare.py` 的匹配为此加了一条规则：云端同时存在原件和「（补档版）」时，
+**含「补档」二字的那个优先**（原件建分享照样 `errno=109`，见 `plan` 的分数加成）。
+结果（均 `verified`）：
+
+| 作品 | 百度网盘补档 | 提取码 |
+| --- | --- | --- |
+| 舌头上的动物园 | `pan.baidu.com/s/1RNICbPcZ1ujldNFsB1jWUw` | qdby |
+| HIKEBACK | `pan.baidu.com/s/1gn3U07hd5yLbuzf3RSkGgw` | qdby |
+| 拍卖开始的五分钟后 | `pan.baidu.com/s/1DXZw23vf3N-IG5iniB6AcQ` | qdby |
+| 恶魔之心：被诅咒的试炼 | `pan.baidu.com/s/1HbTmVAIZFMuPpZc7cno2Aw` | qdby |
+| 惩罚之吻 | `pan.baidu.com/s/1NZjlDgVvDmb1y-8XRohRig` | qdby |
+
+这 5 条连同原有的夸克镜像一起写进了对应视频的置顶评论回复。
+
+> **一个例外**：「舌头上的动物园」的百度分享建好约 10 分钟后被系统取消
+> （再建一次直接 `errno=109`，说明复审按解密后的内容判的违规，外面套一层 zip 已经不够）。
+> 这条的补档入口只剩夸克镜像，`post_comments.py --reformat` 把它那条评论
+> 重写成了只含夸克一条——被判死的链接不会再出现在评论区。
+> 其余 4 个百度分享在次日巡检时仍为 `ok`。
 
 ### 本地重传（`reupload.py`）
 
@@ -253,6 +278,48 @@ python scripts/netdisk/autofill.py       # 产出 data/netdisk-autofill.json / .
 
 `hunt_comments.mjs` 默认只扫台账里有失效链接的视频，结果按 bvid 缓存在
 `raw/hunt_comments.json`，`QD_FORCE=1` 可强制重扫。
+
+### 每天 0 点自动巡检（`daily_check.py`）
+
+一条命令干完四件事：核验 → 回写台账 → 重建站点数据 → 全灭告警。
+
+```bash
+python scripts/netdisk/daily_check.py            # 全量巡检 + 更新站点 + 发信
+python scripts/netdisk/daily_check.py --fast     # 跳过迅雷/城通/微云的浏览器通道
+python scripts/netdisk/daily_check.py --no-mail  # 只巡检不发信
+python scripts/netdisk/daily_check.py --push     # 顺便 git commit & push
+python scripts/netdisk/daily_check.py --test-mail # 只验证发信配置
+```
+
+- **核验**：百度/夸克/UC/123/蓝奏走接口（`refresh.py` 的 `API_CHECKERS`），
+  迅雷/城通/微云是 SPA，脚本自己 `--headless=new` 拉起 Edge/Chrome（`--remote-debugging-port=9223`），
+  跑完关掉、临时 profile 一并删除，**不需要事先开着浏览器**
+- **补档链接一起验**：`netdisk-reshare.json` 里那 29 条也算进来。
+  否则「原链全死、补档还活着」会被误报成全灭。验完把 `checked / checked_at`
+  写回条目，站点弹层里那条补档若也失效了会标「复查：这条也已失效」
+- **更新站点**：`netdisk-links.json / .md / .html` → `netdisk-status.json` →
+  `netdisk-autofill.json / .md`，前端是 `cache:"no-cache"` 拉取，不用改版本号
+- **告警**：某个作品「一条可用链接都没有、且至少有一条明确失效」才发信
+  （全 `unknown` 的盘不算，免得 Google Drive 这种本机打不开的天天报）。
+  邮件正文按作品列出失效盘与原始链接，收件人默认 `769018860@qq.com`
+
+发信配置放 `work/mail.json`（在仓库外，不会提交）：
+
+```json
+{"smtp_host":"smtp.qq.com","smtp_port":465,"user":"769018860@qq.com","password":"QQ邮箱授权码","to":"769018860@qq.com"}
+```
+
+QQ 邮箱要用「设置 → 账户 → 开启 IMAP/SMTP」后生成的**授权码**当 password，
+不是登录密码。也可以用环境变量 `QD_SMTP_HOST / QD_SMTP_PORT / QD_SMTP_USER /
+QD_SMTP_PASS / QD_MAIL_TO` 覆盖。没配 SMTP 时脚本把告警写成
+`work/netdisk-alert.json` 并以退出码 3 结束，站点更新照常完成，不会因为发不出信而中断。
+
+定在每天 0 点跑（Windows 计划任务，登录用户下运行，脚本会自己起浏览器）：
+
+```powershell
+schtasks /create /tn "QD网盘巡检" /sc daily /st 00:00 /f /tr ^
+ "cmd /c cd /d C:\path\to\clone && C:\Python310\python.exe scripts\netdisk\daily_check.py --push"
+```
 
 ## 文件结构
 - index.html / videos.html
