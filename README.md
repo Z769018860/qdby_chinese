@@ -1,11 +1,28 @@
-# 青灯不弈的汉化小结（前端 + 轻量 API）
+# 青灯不弈的个人站（汉化站 + 视频站）
 
 这是一个前端页面 + 轻量 Node API 的网站（HTML/CSS/JS + data.json + images + `server.mjs`），支持搜索/筛选/排序，并提供**联网共享**的点赞与留言。
 
+## 站点分区
+
+| 页面 | 说明 |
+| --- | --- |
+| `index.html` | **汉化站**：汉化作品索引。表格在「链接」后新增「网盘状态」列，显示各网盘有效/失效率与检查时间（数据来自 `data/netdisk-status.json`） |
+| `videos.html` | **视频站**：B 站全站投稿与专栏归档，按分类（汉化发布 / 实况解说 / 攻略repo / 忘却前夜 / 明日方舟 / 剑网3 / 杂谈）筛选，支持搜索、年份、排序与分页加载 |
+| `videos.js` | 视频站逻辑，数据来自 `data/videos.json` |
+
+两个页面顶部都有分区导航，可互相跳转。
+
+## 相关数据与脚本
+
+- `data/videos.json`：视频站数据（视频 + 专栏，含分类、封面、时长、播放量），由 `scripts/bili/build_videos.py` 生成
+- `data/netdisk-links.json` / `.md` / `.html`：网盘链接台账（不在汉化站导航中引用）
+- `data/netdisk-status.json`：按作品聚合的网盘状态，供汉化站表格列使用
+- `scripts/netdisk/`：网盘链接抓取与有效性核验（`refresh.py` + `check_spa.mjs`）
+- `scripts/bili/`：B 站投稿与专栏抓取（`up_app.py`、`up_articles.py`、`build_videos.py`）
+
 ## 文件结构
-- index.html
-- styles.css
-- app.js
+- index.html / videos.html
+- styles.css / app.js / videos.js
 - data.json（由 汉化汇总.xlsx 导出）
 - images/（从 Excel 内嵌图片导出）
 - server.mjs（提供 /api 接口，保存共享点赞/留言）

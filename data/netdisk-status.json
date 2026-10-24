@@ -1,0 +1,1730 @@
+{
+ "checked_at": "2026-10-24 18:44",
+ "note": "网盘链接有效性检查结果，详情见 data/netdisk-links.md",
+ "summary": {
+  "ok": 111,
+  "dead": 64,
+  "unknown": 0
+ },
+ "games": {
+  "純正優男Sweet&Bitter": {
+   "total": 3,
+   "ok": 3,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "可怕的怪物": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "缝缝补补的幸福": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Dear Virgin": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "強伽羅学園": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "戏剧之爱·安乐死": {
+   "total": 3,
+   "ok": 1,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "十二条船全抛": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "对鲸号的记录": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "人格修理师": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "对AI的审问": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "NENE": {
+   "total": 2,
+   "ok": 2,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "自恋囚笼": {
+   "total": 7,
+   "ok": 5,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "君かアオイロ。（or君青）": {
+   "total": 7,
+   "ok": 4,
+   "dead": 3,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "COLOR☆COLLAR": {
+   "total": 5,
+   "ok": 4,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "不要抛下我!!": {
+   "total": 6,
+   "ok": 2,
+   "dead": 4,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "神隐新娘（花嫁隐）": {
+   "total": 6,
+   "ok": 4,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 3,
+     "dead": 1,
+     "unknown": 0,
+     "total": 4
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "trapped with jester": {
+   "total": 2,
+   "ok": 2,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "sweetest Valentine": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "魔王是我的": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "我此生已逝": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "CLASSMATES": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Dark Nights": {
+   "total": 2,
+   "ok": 2,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "dead plate": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Elevator Hitch": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Cold Front": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Eloquent Countenance": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "meet her there": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Line 88": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "灰姑娘现象": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "灰姑娘现象FD永远": {
+   "total": 3,
+   "ok": 2,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "人类保管库": {
+   "total": 4,
+   "ok": 3,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "细思极恐的恐怖游戏": {
+   "total": 4,
+   "ok": 3,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "并非兄妹的热病": {
+   "total": 4,
+   "ok": 3,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "关于埋葬某人的梦": {
+   "total": 5,
+   "ok": 2,
+   "dead": 3,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "舌头上的动物园": {
+   "total": 6,
+   "ok": 1,
+   "dead": 5,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 3,
+     "unknown": 0,
+     "total": 3
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "暴走族怪谈大会 再归": {
+   "total": 7,
+   "ok": 5,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 3,
+     "dead": 0,
+     "unknown": 0,
+     "total": 3
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Lost Friends1-DisappeardName-": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Lost Friends 2": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "相反的理想主义": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "深海的勿忘草": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "水手服与命中注定之人": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "爱情寄生虫": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
+   "total": 6,
+   "ok": 2,
+   "dead": 4,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "weiyun",
+     "name": "腾讯微云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "HIKEBACK": {
+   "total": 3,
+   "ok": 1,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "seekL": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "恶魔之心": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "lanzou",
+     "name": "蓝奏云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "恶魔之心：猎人": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "lanzou",
+     "name": "蓝奏云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "不速之死": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Magical Otoge Ciel": {
+   "total": 3,
+   "ok": 2,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "Birla_NNN": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "冬鸦何处去": {
+   "total": 3,
+   "ok": 0,
+   "dead": 3,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "杀死公主": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "销魂罪人": {
+   "total": 1,
+   "ok": 0,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "MAMIYA": {
+   "total": 2,
+   "ok": 1,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "别吃收银员！": {
+   "total": 6,
+   "ok": 4,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 1,
+     "dead": 1,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "ctfile",
+     "name": "城通网盘",
+     "ok": 1,
+     "dead": 1,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "123pan",
+     "name": "123云盘",
+     "ok": 2,
+     "dead": 0,
+     "unknown": 0,
+     "total": 2
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "BUSTAFELLOWS": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "汝，当爱休息区的他": {
+   "total": 3,
+   "ok": 1,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "恶魔之心：被诅咒的试炼": {
+   "total": 4,
+   "ok": 1,
+   "dead": 3,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "粉碎梦之门与病娇的按钮": {
+   "total": 9,
+   "ok": 5,
+   "dead": 4,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 2,
+     "dead": 1,
+     "unknown": 0,
+     "total": 3
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 2,
+     "unknown": 0,
+     "total": 2
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 3,
+     "dead": 0,
+     "unknown": 0,
+     "total": 3
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "~把最棒的巧克力送给你 这份心意就是全部哦~": {
+   "total": 4,
+   "ok": 3,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "替身谎言~one night liar": {
+   "total": 4,
+   "ok": 3,
+   "dead": 1,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "拍卖开始的五分钟后": {
+   "total": 5,
+   "ok": 3,
+   "dead": 2,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 0,
+     "dead": 1,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "lanzou",
+     "name": "蓝奏云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  },
+  "死刑前的心理咨询": {
+   "total": 5,
+   "ok": 5,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "quark",
+     "name": "夸克网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "xunlei",
+     "name": "迅雷云盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "uc",
+     "name": "UC网盘",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    },
+    {
+     "key": "lanzou",
+     "name": "蓝奏云",
+     "ok": 1,
+     "dead": 0,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-10-24 18:44"
+  }
+ }
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>青灯不弈的个人站 · 视频站</title>
+  <link rel="stylesheet" href="styles.css?v=20261025.2" />
+</head>
+<body>
+  <div class="bgLayer bgLeft" aria-hidden="true"></div>
+  <div class="bgLayer bgRight" aria-hidden="true"></div>
+
+  <header class="wrap">
+    <div class="hero">
+      <div class="title">
+        <div class="titleRow">
+          <div class="stickers" aria-hidden="true">
+            <img class="sticker" src="assets/sticker-1.gif" alt="" />
+            <img class="sticker" src="assets/sticker-2.gif" alt="" />
+          </div>
+          <h1>青灯不弈的个人站</h1>
+        </div>
+        <p class="subtitle">视频站 · 全站投稿与专栏归档 · 按分类筛选</p>
+      </div>
+
+      <nav class="links" aria-label="外部主页">
+        <a class="chip" href="https://space.bilibili.com/95687310" target="_blank" rel="noopener">
+          <img alt="B站" src="https://www.bilibili.com/favicon.ico" />
+          <span>B站主页</span>
+        </a>
+        <a class="chip" href="https://weibo.com/5082872852" target="_blank" rel="noopener">
+          <img alt="微博" src="https://weibo.com/favicon.ico" />
+          <span>微博主页</span>
+        </a>
+        <a class="chip" href="https://afdian.com/a/qingdengbuyi" target="_blank" rel="noopener">
+          <img alt="爱发电" src="https://afdian.net/static/img/logo.png" />
+          <span>爱发电</span>
+        </a>
+      </nav>
+    </div>
+
+    <nav class="siteNav" aria-label="站点分区">
+      <a class="siteNavItem" href="./index.html">
+        <span class="siteNavIcon" aria-hidden="true">🧩</span>
+        <span class="siteNavText"><strong>汉化站</strong><em>汉化作品索引 · 网盘状态</em></span>
+      </a>
+      <a class="siteNavItem isActive" href="./videos.html" aria-current="page">
+        <span class="siteNavIcon" aria-hidden="true">🎬</span>
+        <span class="siteNavText"><strong>视频站</strong><em>全站投稿 · 专栏归档</em></span>
+      </a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+
+    <section class="vStats" aria-label="数据概览">
+      <div class="vStat"><span class="vStatNum" id="statVideos">—</span><span class="vStatLabel">投稿视频</span></div>
+      <div class="vStat"><span class="vStatNum" id="statArticles">—</span><span class="vStatLabel">专栏文章</span></div>
+      <div class="vStat"><span class="vStatNum" id="statYears">—</span><span class="vStatLabel">创作年数</span></div>
+      <div class="vStat"><span class="vStatNum" id="statPlays">—</span><span class="vStatLabel">累计播放</span></div>
+      <div class="vStat vStatWide"><span class="vStatLabel">数据更新于</span><span class="vStatNum" id="statUpdated">—</span></div>
+    </section>
+
+    <p class="vNote" id="vNote"></p>
+
+    <div class="vTabs" role="tablist" aria-label="内容类型">
+      <button class="vTab isActive" data-tab="video" role="tab" aria-selected="true">投稿视频</button>
+      <button class="vTab" data-tab="article" role="tab" aria-selected="false">专栏文章</button>
+    </div>
+
+    <section class="controls vControls" aria-label="搜索与筛选">
+      <div class="control span2">
+        <label for="vq">搜索</label>
+        <input id="vq" type="search" placeholder="按标题 / 游戏名 / 分类搜索…" />
+      </div>
+      <div class="control">
+        <label for="vyear">年份</label>
+        <select id="vyear"><option value="">全部</option></select>
+      </div>
+      <div class="control">
+        <label for="vsort">排序</label>
+        <select id="vsort">
+          <option value="new">最新发布</option>
+          <option value="old">最早发布</option>
+          <option value="play">播放最多</option>
+          <option value="long">时长最长</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="vChips" id="vChips" role="group" aria-label="分类筛选"></div>
+    <p class="vResult" id="vResult" role="status" aria-live="polite"></p>
+
+    <section class="vGrid" id="vGrid" aria-label="视频列表"></section>
+    <section class="vList" id="aList" aria-label="专栏列表" hidden></section>
+
+    <div class="vMoreWrap">
+      <button class="vMore" id="vMore" type="button">加载更多</button>
+    </div>
+
+    <p class="vEmpty" id="vEmpty" hidden>没有匹配的内容，换个关键词或分类试试。</p>
+  </main>
+
+  <footer class="wrap">
+    <div class="muted">本站为个人作品归档展示，视频与专栏版权归原作者及平台所有。数据来源：B 站空间公开投稿与专栏列表。</div>
+  </footer>
+
+  <script src="videos.js?v=20261025.2"></script>
+</body>
+</html>

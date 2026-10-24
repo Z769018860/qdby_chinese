@@ -6,7 +6,7 @@ const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
 const API_BASE = "/api";
 const WALINE_SERVER = "https://textbox.qingdengbuyi.top";
 const WALINE_LIKE_PREFIX = "/__qdby_home_likes__/";
-const state = { data: [], likes: {}, liked: new Set(), messages: [], storageOK: true, onlineOK: false };
+const state = { data: [], netdisk: { games: {} }, likes: {}, liked: new Set(), messages: [], storageOK: true, onlineOK: false };
 
 const el = {
   tbody: document.getElementById("tbody"),
@@ -414,6 +414,41 @@ function filtered(){
   return arr;
 }
 
+function shortPlatform(name){
+  return safeText(name)
+    .replace("网盘", "").replace("云盘", "")
+    .replace("腾讯微云", "微云")
+    .replace("Google Drive", "GD");
+}
+
+function netdiskCell(r){
+  const name = safeText(r["汉化名"]).trim();
+  const st = (state.netdisk && state.netdisk.games) ? state.netdisk.games[name] : null;
+  if(!st){
+    return `<div class="ndBox"><span class="ndChip ndChip--none" title="该作品暂未收录到网盘链接">未收录</span></div>`;
+  }
+  const chips = (st.platforms || []).map(p=>{
+    const bad = (p.dead || 0) > 0;
+    const good = (p.ok || 0) > 0;
+    let cls = "ndChip ndChip--unk";
+    if(bad && good){ cls = "ndChip ndChip--mix"; }
+    else if(bad){ cls = "ndChip ndChip--dead"; }
+    else if(good){ cls = "ndChip ndChip--ok"; }
+    const tip = `${p.name}：有效 ${p.ok || 0} 条／失效 ${p.dead || 0} 条` +
+      ((p.unknown || 0) ? `／待确认 ${p.unknown} 条` : "");
+    return `<span class="${cls}" title="${escapeHtml(tip)}">${escapeHtml(shortPlatform(p.name))} ` +
+      `✓${p.ok || 0}${bad ? ` ✕${p.dead}` : ""}</span>`;
+  }).join("");
+  const checked = safeText(st.checked_at).trim();
+  const shortTime = checked ? checked.replace(/^\d{4}-/, "") : "—";
+  const dead = st.dead || 0;
+  const warn = dead
+    ? `<span class="ndWarn" title="有 ${dead} 条网盘链接已失效">${dead} 条失效</span>`
+    : `<span class="ndGood">全部有效</span>`;
+  return `<div class="ndBox">${chips}</div>` +
+    `<div class="ndMeta">${warn}<span class="ndTime" title="网盘链接检查时间">检查于 ${escapeHtml(shortTime)}</span></div>`;
+}
+
 function rowHtml(r){
   const links = [
     linkOrDash(r["原版游戏地址"], "原版"),
@@ -451,6 +486,7 @@ function rowHtml(r){
       <td>${meta}</td>
       <td class="col-date">${date}</td>
       <td class="col-links">${links}</td>
+      <td class="col-netdisk">${netdiskCell(r)}</td>
     </tr>
   `;
 }
@@ -680,6 +716,17 @@ async function loadData(){
   state.data = await res.json();
 }
 
+async function loadNetdiskStatus(){
+  try{
+    const res = await fetch("./data/netdisk-status.json", { cache: "no-cache" });
+    if(!res.ok){ return; }
+    const json = await res.json();
+    if(json && typeof json === "object" && json.games){ state.netdisk = json; }
+  }catch(error){
+    console.warn("netdisk status load failed:", error);
+  }
+}
+
 async function main(){
   state.storageOK = canUseLocalStorage();
   state.likes = {};
@@ -690,6 +737,7 @@ async function main(){
   initCoinLab();
   initToolboxDialog();
   await loadData();
+  await loadNetdiskStatus();
   fillFilters();
   render();
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>青灯不弈的汉化小结</title>
-  <link rel="stylesheet" href="styles.css?v=20261018.1" />
+  <title>青灯不弈的个人站 · 汉化站</title>
+  <link rel="stylesheet" href="styles.css?v=20261025.2" />
   <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 </head>
 <body>
@@ -24,9 +24,9 @@
           <img class="sticker" src="assets/sticker-1.gif" alt="" />
           <img class="sticker" src="assets/sticker-2.gif" alt="" />
         </div>
-        <h1>青灯不弈的汉化小结</h1>
+        <h1>青灯不弈的个人站</h1>
       </div>
-        <p class="subtitle">个人汉化工作汇总 · 可搜索筛选 · 持续更新</p>
+        <p class="subtitle">汉化站 · 个人汉化工作汇总 · 可搜索筛选 · 持续更新</p>
       </div>
 
       <nav class="links" aria-label="外部主页">
@@ -50,6 +50,17 @@
         </a>
       </nav>
     </div>
+
+    <nav class="siteNav" aria-label="站点分区">
+      <a class="siteNavItem isActive" href="./index.html" aria-current="page">
+        <span class="siteNavIcon" aria-hidden="true">🧩</span>
+        <span class="siteNavText"><strong>汉化站</strong><em>汉化作品索引 · 网盘状态</em></span>
+      </a>
+      <a class="siteNavItem" href="./videos.html">
+        <span class="siteNavIcon" aria-hidden="true">🎬</span>
+        <span class="siteNavText"><strong>视频站</strong><em>全站投稿 · 专栏归档</em></span>
+      </a>
+    </nav>
 
     <section class="controls" aria-label="搜索与筛选">
       <div class="control span2">
@@ -138,6 +149,7 @@
             <th class="col-meta">类型 / 分级 / 程度</th>
             <th class="col-date">发布时间</th>
             <th class="col-links">链接</th>
+            <th class="col-netdisk">网盘状态</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -299,7 +311,7 @@
     <div class="muted">重要提示：本站为个人汉化汇总展示；请以原作者发布说明与授权范围为准。若链接失效或需要补档/更正信息，可通过友情链接联系我。</div>
   </footer>
 
-  <script type="module" src="app.js?v=20261018.1"></script>
+  <script type="module" src="app.js?v=20261025.2"></script>
   <script type="module">
     const walineRoot = document.querySelector('#waline');
     const walineFallback = document.querySelector('#walineFallback');

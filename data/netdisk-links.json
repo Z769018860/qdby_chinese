@@ -1,44 +1,44 @@
 {
  "meta": {
-  "generated_at": "2026-10-24 17:59:01",
-  "checked_at": "2026-10-24 17:59",
+  "generated_at": "2026-10-24 18:44:38",
+  "checked_at": "2026-10-24 18:44",
   "source_repo": "Z769018860/qdby_chinese",
   "source_site": "https://qdby-chinese.vercel.app",
   "note": "来源：B 站发布视频的简介 / UP主置顶评论 / 评论区补充 / 专栏正文",
   "games": 64,
-  "total_links": 155,
-  "unique_links": 150,
+  "total_links": 175,
+  "unique_links": 170,
   "checked": true,
   "summary": {
-   "ok": 99,
-   "dead": 56,
+   "ok": 111,
+   "dead": 64,
    "unknown": 0
   },
   "platform_summary": {
    "百度网盘": {
-    "ok": 51,
+    "ok": 53,
     "dead": 18
    },
    "夸克网盘": {
     "ok": 5,
-    "dead": 30
+    "dead": 37
+   },
+   "城通网盘": {
+    "ok": 8,
+    "dead": 4
    },
    "迅雷云盘": {
-    "ok": 18
+    "ok": 19
+   },
+   "腾讯微云": {
+    "ok": 7
    },
    "123云盘": {
-    "ok": 8
+    "ok": 11
    },
    "UC网盘": {
     "ok": 4,
     "dead": 5
-   },
-   "城通网盘": {
-    "ok": 5,
-    "dead": 3
-   },
-   "腾讯微云": {
-    "ok": 4
    },
    "蓝奏云": {
     "ok": 4
@@ -190,11 +190,24 @@
    "pinned_author": null,
    "release_url": "https://weibo.com/5082872852/4960705235126295",
    "release_type": "other",
-   "links": [],
-   "notes": [
-    "站点登记仅微博发布地址，无 B 站视频"
+   "links": [
+    {
+     "url": "https://pan.baidu.com/s/1dHBk-i3-2BHtzXoW3OzSPA?pwd=rb79",
+     "platform": "baidu",
+     "pwd": "rb79",
+     "source": "weibo",
+     "platform_name": "百度网盘",
+     "share_id": "1dHBk-i3-2BHtzXoW3OzSPA",
+     "status": "ok",
+     "detail": "分享有效（需提取码）",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:39"
+    }
    ],
-   "links_ok": 0,
+   "notes": [
+    "B 站未发布视频，链接取自微博发布页；解压密码 qingdengbuyi"
+   ],
+   "links_ok": 1,
    "links_dead": 0
   },
   {
@@ -229,22 +242,59 @@
   },
   {
    "name": "戏剧之爱·安乐死",
-   "bvid": null,
-   "bili_url": null,
-   "video_title": null,
+   "bvid": "BV1UrYAzoEJc",
+   "bili_url": "https://www.bilibili.com/video/BV1UrYAzoEJc",
+   "video_title": "【自汉化短篇日乙】又能兄妹又能姐弟的禁忌之爱——《戏剧之爱·安乐死》（劇愛ユーサネイジア）机翻汉化补丁+实况",
    "up": null,
-   "pubdate": null,
-   "desc": null,
+   "pubdate": "2025-09-09",
+   "desc": "游戏名称：劇愛ユーサネイジア\n游戏平台：PC\n游戏价格：免费\n原版地址：https://novelgame.jp/games/show/12053\n补丁地址：https://url08.ctfile.com/f/65517308-8425987321-60a99b?p=1528 (访问密码: 1528)\n备份：https://pan.quark.cn/s/b7b1e6055406\n备份2：https://pan.quark.cn/s/5cfc2ad79a6d\n提取码：wMiR\n解压密码：qingdengbuyi@2025\n度盘因为之前被举报封了所以暂时不传了，姑且用这两个\n【重要】机翻润色，虽然尽量让它讲人话了，但是本身题材和文本原因会很“古风小生”\n免费游戏免费汉化，本来想着随便整一下自己打了玩的，结果还是花了不少功夫，请不要bb汉化质量",
    "pinned_comment": null,
    "pinned_author": null,
-   "release_url": "https://b23.tv/h3wRnHy",
-   "release_type": "other",
-   "links": [],
-   "notes": [
-    "站点登记的 b23.tv 短链已失效（404），原视频疑已被删除"
+   "release_url": "https://www.bilibili.com/video/BV1UrYAzoEJc",
+   "release_type": "bilibili_video",
+   "links": [
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8425987321-60a99b?p=1528",
+     "platform": "ctfile",
+     "pwd": "1528",
+     "source": "desc",
+     "platform_name": "城通网盘",
+     "share_id": null,
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip 192.84 MB2025-09-09"
+    },
+    {
+     "url": "https://pan.quark.cn/s/b7b1e6055406",
+     "platform": "quark",
+     "pwd": "wMiR",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "b7b1e6055406",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://pan.quark.cn/s/5cfc2ad79a6d",
+     "platform": "quark",
+     "pwd": "wMiR",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "5cfc2ad79a6d",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    }
    ],
-   "links_ok": 0,
-   "links_dead": 0
+   "notes": [
+    "发布地址已按 B 站最新投稿更正（原登记链接失效/缺失）"
+   ],
+   "links_ok": 1,
+   "links_dead": 2
   },
   {
    "name": "十二条船全抛",
@@ -417,22 +467,107 @@
   },
   {
    "name": "自恋囚笼",
-   "bvid": null,
-   "bili_url": null,
-   "video_title": null,
+   "bvid": "BV12uxqzwEY9",
+   "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
+   "video_title": "【自汉化日乙】全员自恋却讨厌不起来？另类反差还有心理恐怖——《自恋囚笼》（narcist complex）汉化发布+测试实况",
    "up": null,
-   "pubdate": null,
-   "desc": null,
+   "pubdate": "2025-10-09",
+   "desc": "游戏名称：自恋囚笼（narcist complex）\n游戏平台：PC\n游戏价格：免费\n原版地址：https://novelgame.jp/games/show/8347\nbooth：https://grace-you.booth.pm/items/5754472\n汉化补丁地址：https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528 (访问密码: 1528)\n补档度盘：https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b 提取码: iu8b\n迅雷云：https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans#\n夸克：https://pan.quark.cn/s/fb7d7e01f866\n提取码：U44Z\n备份：https://pan.quark.cn/s/8364570fa481\n提取码：Uurz\n备份：https://share.weiyun.com/05WlFxr6 密码：8x8jzi\n链   接：https://www.123684.com/s/ootDVv-sDjov?pwd=eZEe\n提取码：eZEe\n解压密码：qingdengbuyi@pokari\n汉化成员——翻译、润色、校对：pokari@Sherry丶Chee  \n程序、测试、修图：青灯不弈（我本人）\n由于以前发布带度盘导致我度盘被举报永封所以用不了度盘分流，以及不再分享完整游戏，请尽可能去支持原作者下载原版游戏打补丁，以及不要在外流传分享打好补丁的完整版游戏，有的话请帮我举报，如果私下朋友间传递就不设限了。\n被盗和举报怕了，请放过我\n另：游戏已经联系作者获得许可，不算官方委托只是粉丝行为",
    "pinned_comment": null,
    "pinned_author": null,
-   "release_url": "https://b23.tv/NcAi6L3",
-   "release_type": "other",
-   "links": [],
-   "notes": [
-    "站点登记的 b23.tv 短链已失效（404），原视频疑已被删除"
+   "release_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
+   "release_type": "bilibili_video",
+   "links": [
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528",
+     "platform": "ctfile",
+     "pwd": "1528",
+     "source": "desc",
+     "platform_name": "城通网盘",
+     "share_id": null,
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09"
+    },
+    {
+     "url": "https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b",
+     "platform": "baidu",
+     "pwd": "iu8b",
+     "source": "desc",
+     "platform_name": "百度网盘",
+     "share_id": "1BZ7NmTX-N-qAtTWo9meH4w",
+     "status": "ok",
+     "detail": "分享有效（需提取码）",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans#",
+     "platform": "xunlei",
+     "pwd": "6ans",
+     "source": "desc",
+     "platform_name": "迅雷云盘",
+     "share_id": "VOfYSx",
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:44",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜227MB｜永久有效"
+    },
+    {
+     "url": "https://pan.quark.cn/s/fb7d7e01f866",
+     "platform": "quark",
+     "pwd": "U44Z",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "fb7d7e01f866",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://pan.quark.cn/s/8364570fa481",
+     "platform": "quark",
+     "pwd": "Uurz",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "8364570fa481",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://share.weiyun.com/05WlFxr6",
+     "platform": "weiyun",
+     "pwd": "8x8jzi",
+     "source": "desc",
+     "platform_name": "腾讯微云",
+     "share_id": "05WlFxr6",
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB "
+    },
+    {
+     "url": "https://www.123684.com/s/ootDVv-sDjov?pwd=eZEe",
+     "platform": "123pan",
+     "pwd": "eZEe",
+     "source": "desc",
+     "platform_name": "123云盘",
+     "share_id": "ootDVv-sDjov",
+     "status": "ok",
+     "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜到期 2099-12-12",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:39"
+    }
    ],
-   "links_ok": 0,
-   "links_dead": 0
+   "notes": [
+    "发布地址已按 B 站最新投稿更正（原登记链接失效/缺失）"
+   ],
+   "links_ok": 5,
+   "links_dead": 2
   },
   {
    "name": "君かアオイロ。（or君青）",
@@ -1304,22 +1439,71 @@
   },
   {
    "name": "人类保管库",
-   "bvid": null,
-   "bili_url": null,
-   "video_title": null,
+   "bvid": "BV1eB41zMEqG",
+   "bili_url": "https://www.bilibili.com/video/BV1eB41zMEqG",
+   "video_title": "【自汉化短篇】用旧人类发电，新人类当牛马？初始化警告！——《人类保管库》汉化发布+测试实况",
    "up": null,
-   "pubdate": null,
-   "desc": null,
+   "pubdate": "2025-10-14",
+   "desc": "游戏名称：人类保管库\n游戏平台：PC\n游戏价格：免费\n原版地址：https://novelgame.jp/games/show/5805\n由于原版的打包方式不太好做不补丁所以直接打包完整版了，喜欢的建议去给作者留言\n汉化版：https://url08.ctfile.com/f/65517308-8452140339-7cfe4e?p=1528 (访问密码: 1528)\n备份：https://www.123865.com/s/ootDVv-t8jov?pwd=nJnu#\n提取码：nJnu\n备份：https://share.weiyun.com/3sblmV9F\n备份：https://pan.quark.cn/s/00dffb67943b\n提取码：NjAj\n解压密码：qingdengbuyi@ame\n以及推荐一下作者的另外两部短篇，第二部：BV13A41zAE7f   第三部：BV1m14uzoEgp",
    "pinned_comment": null,
    "pinned_author": null,
-   "release_url": "https://weibo.cn（汉化合集发布页）",
-   "release_type": "other",
-   "links": [],
-   "notes": [
-    "站点登记为微博汉化合集发布页，无 B 站视频"
+   "release_url": "https://www.bilibili.com/video/BV1eB41zMEqG",
+   "release_type": "bilibili_video",
+   "links": [
+    {
+     "url": "https://url08.ctfile.com/f/65517308-8452140339-7cfe4e?p=1528",
+     "platform": "ctfile",
+     "pwd": "1528",
+     "source": "desc",
+     "platform_name": "城通网盘",
+     "share_id": null,
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "分享有效｜人类保管库 汉化版.zip 137.26 MB2025-10-14"
+    },
+    {
+     "url": "https://www.123865.com/s/ootDVv-t8jov?pwd=nJnu#",
+     "platform": "123pan",
+     "pwd": "nJnu",
+     "source": "desc",
+     "platform_name": "123云盘",
+     "share_id": "ootDVv-t8jov",
+     "status": "ok",
+     "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://share.weiyun.com/3sblmV9F",
+     "platform": "weiyun",
+     "pwd": "NjAj",
+     "source": "desc",
+     "platform_name": "腾讯微云",
+     "share_id": "3sblmV9F",
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "分享有效｜人类保管库 汉化版.zip 2025年10月14日 137.26 MB "
+    },
+    {
+     "url": "https://pan.quark.cn/s/00dffb67943b",
+     "platform": "quark",
+     "pwd": "NjAj",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "00dffb67943b",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    }
    ],
-   "links_ok": 0,
-   "links_dead": 0
+   "notes": [
+    "发布地址已按 B 站最新投稿更正（原登记链接失效/缺失）"
+   ],
+   "links_ok": 3,
+   "links_dead": 1
   },
   {
    "name": "细思极恐的恐怖游戏",
@@ -1455,22 +1639,83 @@
   },
   {
    "name": "关于埋葬某人的梦",
-   "bvid": null,
-   "bili_url": null,
-   "video_title": null,
+   "bvid": "BV1SuS5BjEJN",
+   "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
+   "video_title": "【自汉化怪诞短篇】分不清梦和现实的我，到底杀了谁？——《关于埋葬某人的梦》汉化发布+测试实况",
    "up": null,
-   "pubdate": null,
-   "desc": null,
-   "pinned_comment": null,
+   "pubdate": "2025-11-28",
+   "desc": "游戏名称：お前が誰かを埋める夢を見る\n游戏平台：PC\n游戏价格：免费\n原版地址：https://novelgame.jp/games/show/12736\n汉化补丁地址：https://www.123865.com/s/ootDVv-hQTmv?pwd=bae5#\n提取码：bae5\n备份：ctfile://xtc65517308-f8515303151-aa9789-1528\n备份：https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip\n备份：https://share.weiyun.com/SOCeG7UU 密码：gk4sj4\n备份：https://pan.quark.cn/s/849df8014b17\n提取码：qKNp\n备份：https://pan.quark.cn/s/0a1e3c67c472\n提取码：d8vs\n请不要传播和分享完整版，都去下载原版，和打汉化补丁游玩，多多贡献下载量和评价\n是海兔作品工房的第四部！前三部可见右侧：BV1m14uzoEgp\n解压密码：qingdengbuyi&ume",
+   "pinned_comment": "【汉化人员】\n一体机：青灯不弈\n\n【汉化说明】\n只发布“汉化补丁”，不发布完整汉化游戏，希望更多人去原作者那里下载互动\n免费游戏免费汉化，请勿倒卖商用等等，不要无授权再其他地方传播这个游戏的完整汉化版\n\n【游戏说明】\n带点怪诞微恐的氛围感短篇，是海兔作品工房的第四部\n没有分线，是没有选项的视觉小说\n以及和第三部《并非兄妹的热病》有关联\n可以独立游玩，不过还是很推荐体验下前作\n前三部可见右侧合集或者：BV1m14uzoEgp\n\n【游戏下载】\n原版地址：https://novelgame.jp/games/show/12736\n汉化补丁地址：https://www.123865.com/s/ootDVv-hQTmv?pwd=bae5#\n提取码：bae5\n备份：ctfile://xtc65517308-f8515303151-aa9789-1528\n备份：https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip\n备份：https://share.weiyun.com/SOCeG7UU 密码：gk4sj4\n备份：https://pan.quark.cn/s/849df8014b17\n提取码：qKNp\n解压密码：qingdengbuyi&amp;ume\n\n【其他】\n老师非常高产，还特别会画，请去X上吃粮@weather_works",
    "pinned_author": null,
-   "release_url": "https://weibo.cn（汉化合集发布页）",
-   "release_type": "other",
-   "links": [],
-   "notes": [
-    "站点登记为微博汉化合集发布页，无 B 站视频"
+   "release_url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
+   "release_type": "bilibili_video",
+   "links": [
+    {
+     "url": "https://www.123865.com/s/ootDVv-hQTmv?pwd=bae5#",
+     "platform": "123pan",
+     "pwd": "bae5",
+     "source": "desc",
+     "platform_name": "123云盘",
+     "share_id": "ootDVv-hQTmv",
+     "status": "ok",
+     "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
+     "platform": "ctfile",
+     "pwd": "gk4sj4",
+     "source": "desc",
+     "platform_name": "城通网盘",
+     "share_id": null,
+     "status": "dead",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "文件不存在或已被删除"
+    },
+    {
+     "url": "https://share.weiyun.com/SOCeG7UU",
+     "platform": "weiyun",
+     "pwd": "gk4sj4",
+     "source": "desc",
+     "platform_name": "腾讯微云",
+     "share_id": "SOCeG7UU",
+     "status": "ok",
+     "status_text": "有效",
+     "checked_at": "2026-10-24 18:43",
+     "detail": "分享有效｜关于梦 汉化补丁.zip 2025年11月28日 47.8 MB "
+    },
+    {
+     "url": "https://pan.quark.cn/s/849df8014b17",
+     "platform": "quark",
+     "pwd": "qKNp",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "849df8014b17",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    },
+    {
+     "url": "https://pan.quark.cn/s/0a1e3c67c472",
+     "platform": "quark",
+     "pwd": "d8vs",
+     "source": "desc",
+     "platform_name": "夸克网盘",
+     "share_id": "0a1e3c67c472",
+     "status": "dead",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "status_text": "失效",
+     "checked_at": "2026-10-24 18:39"
+    }
    ],
-   "links_ok": 0,
-   "links_dead": 0
+   "notes": [
+    "发布地址已按 B 站最新投稿更正（原登记链接失效/缺失）"
+   ],
+   "links_ok": 2,
+   "links_dead": 3
   },
   {
    "name": "舌头上的动物园",
@@ -2286,7 +2531,7 @@
    "release_type": "other",
    "links": [],
    "notes": [
-    "站点登记「被举报下架」，原视频已不存在"
+    "原 B 站视频被举报下架；已核查 B 站专栏（73 篇）与微博，未找到公开补档链接"
    ],
    "links_ok": 0,
    "links_dead": 0
