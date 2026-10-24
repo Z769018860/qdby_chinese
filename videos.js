@@ -98,6 +98,8 @@ function openTripleDialog(bv, title){
   const dlg = $("tripleDialog");
   const manual = $("tripleManual");
   if(manual) manual.href = bv ? `https://www.bilibili.com/video/${bv}` : "https://www.bilibili.com/";
+  const tryit = $("tripleTry");
+  if(tryit) tryit.href = bv ? tripleUrl(bv) : "https://www.bilibili.com/";
   const st = $("tripleState");
   if(st) st.textContent = title ? `准备三连：${title.length > 26 ? title.slice(0, 26) + "…" : title}` : "";
   if(dlg && !dlg.open) dlg.showModal();

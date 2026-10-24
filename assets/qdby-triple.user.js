@@ -7,6 +7,8 @@
 // @match        https://www.bilibili.com/video/*
 // @match        https://qdby-chinese.vercel.app/*
 // @match        https://*.vercel.app/*
+// @match        https://qingdengbuyi.top/*
+// @match        https://*.qingdengbuyi.top/*
 // @match        http://localhost/*
 // @match        http://127.0.0.1/*
 // @grant        none
