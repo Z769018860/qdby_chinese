@@ -7,16 +7,20 @@
 | 页面 | 说明 |
 | --- | --- |
 | `index.html` | **汉化站**：汉化作品索引。表格在「链接」后新增「网盘状态」列，显示各网盘有效/失效率与检查时间（数据来自 `data/netdisk-status.json`） |
-| `videos.html` | **视频站**：B 站全站投稿与专栏归档，按分类（汉化发布 / 实况解说 / 攻略repo / 忘却前夜 / 明日方舟 / 剑网3 / 杂谈）筛选，支持搜索、年份、排序与分页加载 |
+| `videos.html` | **视频站**：B 站全站投稿与专栏归档，按分类（汉化发布 / 实况解说 / 攻略repo / 忘却前夜 / 明日方舟 / 剑网3 / 光芒妖恋奇谭 / 食物语 / 杂谈其他）筛选，支持搜索、年份、排序与分页加载 |
 | `videos.js` | 视频站逻辑，数据来自 `data/videos.json` |
 
 两个页面顶部都有分区导航，可互相跳转。
+
+> 视频站数据口径：已归档空间公开接口可见的 **1085 条投稿 + 73 篇专栏**；空间页显示投稿总数 1102，其余为受限或不公开条目，公开接口无法获取（接口对该 IP 存在 412 风控）。重新生成：`QD_REPO=<仓库目录> QD_CACHE=<缓存目录> python scripts/bili/build_videos.py`。
 
 ## 相关数据与脚本
 
 - `data/videos.json`：视频站数据（视频 + 专栏，含分类、封面、时长、播放量），由 `scripts/bili/build_videos.py` 生成
 - `data/netdisk-links.json` / `.md` / `.html`：网盘链接台账（不在汉化站导航中引用）
 - `data/netdisk-status.json`：按作品聚合的网盘状态，供汉化站表格列使用
+  - 覆盖 63 个作品 / 175 条链接：有效 111、失效 64。失效集中在夸克网盘（37 条，多为「文件涉及违规内容 41010」）与 UC 网盘（5 条）
+  - 每条记录含 `total / ok / dead / unknown`、按平台拆分的明细与 `checked_at` 检查时间
 - `scripts/netdisk/`：网盘链接抓取与有效性核验（`refresh.py` + `check_spa.mjs`）
 - `scripts/bili/`：B 站投稿与专栏抓取（`up_app.py`、`up_articles.py`、`build_videos.py`）
 
