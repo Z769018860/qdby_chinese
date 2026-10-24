@@ -1325,8 +1325,10 @@ if(isCurrent&&loadedRankDoc?.rows?.length){
   season={...season,records:mergedCurrent,recordCount:mergedCurrent.length,complete:rankOnlyRecordCount===0,rankOnlyRecordCount,detailCoverage:currentRankRows.length-rankOnlyRecordCount,expectedRankCount:currentRankRows.length,rankDetailsComplete:rankOnlyRecordCount===0};
   const noteId="morimensSeason71DetailCoverageNotice";
   let note=document.getElementById(noteId);
-  const host=document.getElementById("dtide");
-  if(!note&&host){note=document.createElement("div");note.id=noteId;note.className="calcBetaNotice";host.prepend(note)}
+  // the panel is #morimensDtidePanel (there is no #dtide element); create the
+  // banner lazily so the coverage note never silently disappears again
+  const host=document.getElementById("morimensDtidePanel")||document.getElementById("dtide");
+  if(!note&&host){note=document.createElement("div");note.id=noteId;note.className="calcBetaNotice";host.insertBefore(note,host.firstChild)}
   if(note){
     const en=localStorage.getItem("morimens.language")==="en";
     note.textContent=rankOnlyRecordCount>0?(en?`Season 71 ranking refreshed to Oct 25; detailed teams are available for ${season.detailCoverage}/2000 ranked players. ${rankOnlyRecordCount} players are awaiting team-detail import.`:`第71期排名已更新至10月25日；当前有 ${season.detailCoverage}/2000 名上榜玩家具备队伍详情，另有 ${rankOnlyRecordCount} 名玩家的队伍数据待导入。`):(en?"Season 71 ranking and team details are complete.":"第71期排名与队伍详情已完整同步。");
@@ -1374,7 +1376,8 @@ if(isCurrent&&loadedRankDoc?.rows?.length){
       if(!sel.options.length)throw new Error(ui('暂无融灾快照','No D-Zone snapshot is available'));
       sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>!x.snapshotId&&x.seasonId===manifest.currentSeason)?manifest.currentSeason:(manifest.availableSeasons[0].snapshotId??manifest.availableSeasons[0].seasonId));
       await loadSeason(sel.value);
-      const pending=manifest.pendingBackfillSeasonIds||[],note=$('dtideCoverageNote');
+      const pending=manifest.pendingBackfillSeasonIds||[];let note=$('dtideCoverageNote');
+      if(!note){const noteHost=document.getElementById("morimensDtidePanel")||document.getElementById("dtide");if(noteHost){note=document.createElement("div");note.id="dtideCoverageNote";note.className="calcBetaNotice";noteHost.appendChild(note)}}
       if(note){
         const rawNotes=(manifest.notes||[]).join(' ');
         const translatedNotes=zh()?rawNotes:(/[㐀-鿿]/.test(rawNotes)?'Statistics use the synchronized snapshot and only fields present in its structured data.':rawNotes);
