@@ -78,7 +78,7 @@
    "uploaded_at": "2026-10-24 23:28"
   }
  },
- "checked_at": "2026-10-24 22:29",
+ "checked_at": "2026-10-25 00:28",
  "upload_probe": {
   "baidu": {
    "precreate_errno": 9019,
@@ -92,6 +92,6 @@
    "dns": "unresolved"
   }
  },
- "upload_blocked": false,
- "upload_note": "5 个改装文件已上传百度网盘；4 个建分享成功并写入置顶评论，「舌头上的动物园」的分享在 10 分钟后被系统取消，改由夸克镜像兜底"
+ "upload_blocked": true,
+ "upload_note": "客户端上传 API 仍然封着（百度 xpan 9019 / 夸克 pds.quark.cn NXDOMAIN），但可以用 scripts/netdisk/web_upload.mjs 借无头浏览器走夸克网页版上传器——《销魂罪人》就是这样补上的；此前的 5 个改装文件已由人工拖进客户端上传完毕。"
 }

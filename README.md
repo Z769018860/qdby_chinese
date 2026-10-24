@@ -133,6 +133,7 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
   - `reshare.py`：`index / plan / run` 三步——递归索引自己两个云盘 → 与失效清单模糊匹配 → 建新分享并核验
   - `post_comments.py`：把新链接发到对应投稿的**置顶评论下方回复**里（`--dry` 演练、`--cleanup` 清理旧顶层评论、`--reformat` 把已发的改写成长短版）
   - `reupload.py`：探测百度/夸克/迅雷客户端与登录态、匹配本地补丁文件，判断能否自动重传
+  - `web_upload.mjs`：客户端上传 API 被封时的退路 —— 借无头浏览器走夸克网页版上传器
   - `reup_violation.py`：违规文件 `probe` / `fetch`（下载 → 换哈希改装），见下节
   - `browser_cookies.py`：解 Chromium 系 cookie 库（AES-GCM + 剥 32 字节 host 哈希前缀）
 - `scripts/bili/`：B 站抓取与构建
@@ -280,6 +281,32 @@ python scripts/netdisk/reupload.py --dir D://补档        # 指定补丁目录�
 > 现阶段本机实测：百度网盘客户端在且已登录（`BDUSS/STOKEN/PANPSC` 完整，能读能建分享）、
 > 夸克网盘客户端在（`__puus` 已拿到，能读能建分享）、迅雷云盘没有 `pan.xunlei.com` 会话；
 > 补档目录里没有原始补丁文件 —— 所以「读 / 分享」这一半全通，「写」这一半被风控挡住。
+
+### 网页版上传（`web_upload.mjs`）
+
+「写」那一半并不是彻底没路 —— **被封的是客户端 API，不是网页版上传器**：
+
+- 百度 `xpan precreate` → `errno 9019 need verify`（要验证码）
+- 夸克 `file/upload/pre` 倒是给 `upload_id`，但直传域名 `pds.quark.cn` 在本机 **NXDOMAIN**
+  （不是网络波动，公共 DNS 上就没有这个 A 记录）
+
+所以换个思路：把客户端 cookie 注入无头浏览器，让 `pan.quark.cn` 自己的上传器去传。
+
+```bash
+# 先开一个带调试端口的浏览器（端口用 QD_PORT 指定，默认 9228）
+node scripts/netdisk/web_upload.mjs "D:/Downloads/xxx 汉化补丁.zip"
+python scripts/netdisk/reshare.py index && python scripts/netdisk/reshare.py plan
+```
+
+文件会落在夸克的 `/夸克上传文件/`，建分享前建议先 `file/rename` 成中文名，
+`reshare.py` 的匹配才好认（它是按文件名打分的）。
+
+《销魂罪人》就是这样补上的：云端、评论区、微博三处都没有可用链接，
+最后在 `~/Downloads` 找到 `New Chinese Translation of Bewitching Sinners (Fan-Made).zip`，
+网页版上传 → 改名「销魂罪人 机翻润色补丁.zip」→ 建分享 `pan.quark.cn/s/891a96ff4450`（qdby）。
+
+配套改动：`reshare.py plan` 现在会**跨平台兜底** —— 死掉的那个盘里没同名资源时，
+别的盘有也认（`same_platform: false` 标记）。对读者来说「夸克能下」远好过「百度已取消、没有替代」。
 
 ### 重新生成
 

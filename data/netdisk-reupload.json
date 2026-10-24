@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated_at": "2026-10-24 21:06",
+  "generated_at": "2026-10-25 00:37",
   "clients": {
    "baidu": {
     "name": "百度网盘",
@@ -41,53 +41,56 @@
   "patch_files": 36,
   "best_client": "",
   "summary": {
-   "done": 0,
+   "done": 2,
    "ready": 0,
    "need_file": 0,
-   "need_login": 3,
-   "no_client": 0
+   "need_login": 0,
+   "no_client": 0,
+   "ok": 1
   },
-  "note": "自动补档需要「客户端已安装 + 已登录 + 本地有补丁文件」三件事同时成立；state 会明确停在哪一步，缺什么写什么。"
+  "note": "自动补档需要「客户端已安装 + 已登录 + 本地有补丁文件」三件事同时成立。上传口（百度 xpan / 夸克 pds）都被封，但 web_upload.mjs 可以借无头浏览器走网页版上传器传文件，实测可用"
  },
  "games": {
   "与死神的约会": {
-   "state": "need_login",
+   "state": "ok",
    "client": "",
    "client_name": "",
    "file": "",
    "file_size": 0,
-   "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享",
+   "why": "台账里的链接仍在有效期内，无需补档",
    "dead_platforms": [],
-   "done_at": "",
+   "done_at": "2026-10-25 00:37",
    "new_share": ""
   },
   "冬鸦何处去": {
-   "state": "need_login",
-   "client": "",
-   "client_name": "",
-   "file": "",
-   "file_size": 0,
-   "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享",
+   "state": "done",
+   "client": "quark",
+   "client_name": "夸克网盘",
+   "file": "/汉化补丁补档/冬鸦何处去 机翻补丁.zip",
+   "file_size": 412744261,
+   "why": "云端原本就有同名补丁，直接重新分享（reshare.py）即可，无需重传",
    "dead_platforms": [
     "百度网盘",
     "夸克网盘",
     "夸克网盘"
    ],
-   "done_at": "",
-   "new_share": ""
+   "done_at": "2026-10-25 00:37",
+   "new_share": "https://pan.quark.cn/s/a38e116a5cce",
+   "pwd": "qdby"
   },
   "销魂罪人": {
-   "state": "need_login",
-   "client": "",
-   "client_name": "",
-   "file": "",
-   "file_size": 0,
-   "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享",
+   "state": "done",
+   "client": "quark",
+   "client_name": "夸克网盘",
+   "file": "~/Downloads/New Chinese Translation of Bewitching Sinners (Fan-Made).zip",
+   "file_size": 6262154,
+   "why": "本地有补丁文件，用 web_upload.mjs 走夸克网页版上传，改名「销魂罪人 机翻润色补丁.zip」后建分享",
    "dead_platforms": [
     "百度网盘"
    ],
-   "done_at": "",
-   "new_share": ""
+   "done_at": "2026-10-25 00:37",
+   "new_share": "https://pan.quark.cn/s/891a96ff4450",
+   "pwd": "qdby"
   }
  }
 }

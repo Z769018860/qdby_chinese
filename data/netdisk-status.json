@@ -1,10 +1,10 @@
 {
- "checked_at": "2026-10-25 00:10",
+ "checked_at": "2026-10-25 00:40",
  "note": "网盘链接有效性检查结果，详情见 data/netdisk-links.md",
  "summary": {
-  "ok": 106,
+  "ok": 113,
   "dead": 66,
-  "unknown": 7
+  "unknown": 0
  },
  "games": {
   "純正優男Sweet&Bitter": {
@@ -30,7 +30,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "可怕的怪物": {
    "total": 1,
@@ -47,7 +47,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "缝缝补补的幸福": {
    "total": 2,
@@ -72,7 +72,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Dear Virgin": {
    "total": 1,
@@ -89,7 +89,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "強伽羅学園": {
    "total": 1,
@@ -106,7 +106,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "戏剧之爱·安乐死": {
    "total": 3,
@@ -131,7 +131,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "十二条船全抛": {
    "total": 1,
@@ -148,7 +148,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "对鲸号的记录": {
    "total": 1,
@@ -165,7 +165,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "人格修理师": {
    "total": 1,
@@ -182,7 +182,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "对AI的审问": {
    "total": 1,
@@ -199,7 +199,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "NENE": {
    "total": 2,
@@ -216,13 +216,13 @@
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "自恋囚笼": {
    "total": 7,
-   "ok": 4,
+   "ok": 5,
    "dead": 2,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "baidu",
@@ -243,9 +243,9 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 0,
+     "ok": 1,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 1
     },
     {
@@ -273,7 +273,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "君かアオイロ。（or君青）": {
    "total": 7,
@@ -330,7 +330,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "COLOR☆COLLAR": {
    "total": 5,
@@ -371,7 +371,7 @@
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "不要抛下我!!": {
    "total": 6,
@@ -412,7 +412,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "神隐新娘（花嫁隐）": {
    "total": 6,
@@ -445,7 +445,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "trapped with jester": {
    "total": 2,
@@ -462,7 +462,7 @@
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "sweetest Valentine": {
    "total": 1,
@@ -479,7 +479,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "魔王是我的": {
    "total": 1,
@@ -496,7 +496,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "我此生已逝": {
    "total": 1,
@@ -513,7 +513,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "CLASSMATES": {
    "total": 1,
@@ -530,7 +530,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Dark Nights": {
    "total": 2,
@@ -547,7 +547,7 @@
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "dead plate": {
    "total": 1,
@@ -564,7 +564,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Elevator Hitch": {
    "total": 1,
@@ -581,7 +581,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Cold Front": {
    "total": 1,
@@ -598,7 +598,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Eloquent Countenance": {
    "total": 1,
@@ -615,7 +615,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "meet her there": {
    "total": 2,
@@ -640,7 +640,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Line 88": {
    "total": 1,
@@ -657,7 +657,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "灰姑娘现象": {
    "total": 2,
@@ -682,7 +682,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "灰姑娘现象FD永远": {
    "total": 3,
@@ -715,7 +715,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "人类保管库": {
    "total": 4,
@@ -756,7 +756,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "细思极恐的恐怖游戏": {
    "total": 4,
@@ -797,7 +797,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "并非兄妹的热病": {
    "total": 4,
@@ -838,7 +838,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "关于埋葬某人的梦": {
    "total": 5,
@@ -879,13 +879,13 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "舌头上的动物园": {
    "total": 6,
-   "ok": 0,
+   "ok": 1,
    "dead": 5,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "baidu",
@@ -906,9 +906,9 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 0,
+     "ok": 1,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 1
     },
     {
@@ -920,13 +920,13 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "暴走族怪谈大会 再归": {
    "total": 7,
-   "ok": 4,
+   "ok": 5,
    "dead": 2,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "baidu",
@@ -947,13 +947,13 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 1,
+     "ok": 2,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Lost Friends1-DisappeardName-": {
    "total": 1,
@@ -970,7 +970,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Lost Friends 2": {
    "total": 2,
@@ -995,7 +995,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "相反的理想主义": {
    "total": 1,
@@ -1012,7 +1012,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "深海的勿忘草": {
    "total": 2,
@@ -1037,7 +1037,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "水手服与命中注定之人": {
    "total": 2,
@@ -1062,7 +1062,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "爱情寄生虫": {
    "total": 2,
@@ -1087,7 +1087,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
    "total": 6,
@@ -1136,7 +1136,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "HIKEBACK": {
    "total": 3,
@@ -1169,7 +1169,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "seekL": {
    "total": 1,
@@ -1186,7 +1186,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "恶魔之心": {
    "total": 2,
@@ -1211,7 +1211,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "恶魔之心：猎人": {
    "total": 2,
@@ -1236,7 +1236,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "不速之死": {
    "total": 1,
@@ -1253,7 +1253,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Magical Otoge Ciel": {
    "total": 3,
@@ -1278,7 +1278,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "Birla_NNN": {
    "total": 1,
@@ -1295,13 +1295,13 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "与死神的约会": {
    "total": 4,
-   "ok": 1,
+   "ok": 2,
    "dead": 2,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "quark",
@@ -1314,13 +1314,13 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 1,
+     "ok": 2,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "冬鸦何处去": {
    "total": 3,
@@ -1345,7 +1345,7 @@
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "杀死公主": {
    "total": 1,
@@ -1362,7 +1362,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "销魂罪人": {
    "total": 1,
@@ -1379,7 +1379,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "MAMIYA": {
    "total": 2,
@@ -1404,7 +1404,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "别吃收银员！": {
    "total": 6,
@@ -1437,7 +1437,7 @@
      "total": 2
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "BUSTAFELLOWS": {
    "total": 1,
@@ -1454,7 +1454,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "汝，当爱休息区的他": {
    "total": 3,
@@ -1487,13 +1487,13 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "恶魔之心：被诅咒的试炼": {
    "total": 4,
-   "ok": 0,
+   "ok": 1,
    "dead": 3,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "baidu",
@@ -1514,9 +1514,9 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 0,
+     "ok": 1,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 1
     },
     {
@@ -1528,7 +1528,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "粉碎梦之门与病娇的按钮": {
    "total": 9,
@@ -1569,13 +1569,13 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "~把最棒的巧克力送给你 这份心意就是全部哦~": {
    "total": 4,
-   "ok": 2,
+   "ok": 3,
    "dead": 1,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "baidu",
@@ -1596,9 +1596,9 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 0,
+     "ok": 1,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 1
     },
     {
@@ -1610,13 +1610,13 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "替身谎言~one night liar": {
    "total": 4,
-   "ok": 2,
+   "ok": 3,
    "dead": 1,
-   "unknown": 1,
+   "unknown": 0,
    "platforms": [
     {
      "key": "baidu",
@@ -1637,9 +1637,9 @@
     {
      "key": "xunlei",
      "name": "迅雷云盘",
-     "ok": 0,
+     "ok": 1,
      "dead": 0,
-     "unknown": 1,
+     "unknown": 0,
      "total": 1
     },
     {
@@ -1651,7 +1651,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "拍卖开始的五分钟后": {
    "total": 5,
@@ -1700,7 +1700,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   },
   "死刑前的心理咨询": {
    "total": 5,
@@ -1749,7 +1749,7 @@
      "total": 1
     }
    ],
-   "checked_at": "2026-10-25 00:10"
+   "checked_at": "2026-10-25 00:40"
   }
  }
 }

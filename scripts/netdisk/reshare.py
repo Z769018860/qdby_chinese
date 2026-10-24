@@ -294,7 +294,22 @@ def cmd_plan():
                 continue
             claims[key] = (name, sc)
             row['plats'][plat] = {'path': it['path'], 'name': it['name'],
-                                  'id': key[1], 'score': round(sc, 3), 'old_url': ln['url']}
+                                  'id': key[1], 'score': round(sc, 3), 'old_url': ln['url'],
+                                  'same_platform': True}
+        # 死掉的那个盘里没货时，退而求其次：别的盘有同名资源也认。
+        # 对读者来说「夸克能下」远好过「百度已取消、没有替代」。
+        if not row['plats']:
+            for plat2 in idx:
+                it, sc = pick(name, idx[plat2], plat2)
+                if not it or sc < 0.72:
+                    continue
+                key = (plat2, it.get('fid') or it.get('fs_id'))
+                if key in claims and claims[key][1] >= sc:
+                    continue
+                claims[key] = (name, sc)
+                row['plats'][plat2] = {'path': it['path'], 'name': it['name'],
+                                       'id': key[1], 'score': round(sc, 3), 'old_url': '',
+                                       'same_platform': False}
         if row['plats']:
             plan[name] = row
         else:

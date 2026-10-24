@@ -1,14 +1,14 @@
 {
  "meta": {
-  "generated_at": "2026-10-25 00:10",
-  "source_checked_at": "2026-10-25 00:10",
+  "generated_at": "2026-10-25 00:40",
+  "source_checked_at": "2026-10-25 00:40",
   "games": 64,
   "summary": {
    "ok": 28,
-   "failover": 32,
+   "failover": 34,
    "recovered": 0,
-   "reshared": 3,
-   "pending": 1,
+   "reshared": 2,
+   "pending": 0,
    "none": 0
   },
   "recovered_links": 0,
@@ -201,7 +201,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -339,6 +339,15 @@
    },
    "alt": [
     {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "6ans",
+     "detail": "分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOfYSx"
+    },
+    {
      "platform": "123pan",
      "platform_name": "123云盘",
      "pwd": "eZEe",
@@ -400,7 +409,7 @@
      "at": "2026-10-24 22:09",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -552,7 +561,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -636,7 +645,7 @@
      "at": "2026-10-24 22:11",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     },
     {
      "platform": "quark",
@@ -650,7 +659,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -734,7 +743,7 @@
      "at": "2026-10-24 22:11",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1011,7 +1020,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1079,7 +1088,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1136,7 +1145,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1202,7 +1211,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1268,7 +1277,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1334,7 +1343,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1398,14 +1407,22 @@
    "candidates": []
   },
   "舌头上的动物园": {
-   "state": "reshared",
+   "state": "failover",
    "video": {
     "bvid": "BV1scqNBmEJt",
     "url": "https://www.bilibili.com/video/BV1scqNBmEJt",
     "title": "【自汉化悬疑推理】既是受害者也是加害者？基于对话的直觉系推理，但不推也行？——《舌头上的动物园》汉化发布+测试实况",
     "pubdate": "2026-01-06"
    },
-   "active": null,
+   "active": {
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "cejm",
+    "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOiITcGJud8b9aFLSLFdI1nRA1"
+   },
    "alt": [],
    "dead": [
     {
@@ -1468,7 +1485,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1516,6 +1533,15 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "VOiDvXodPCJ"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "7fyk",
+     "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈.zip 19.6MB 2026-01-05 23:42 ",
+     "source": "up_comment",
+     "where": "UP 主评论",
+     "share_id": "VOiDrNAPa1"
     }
    ],
    "dead": [
@@ -1669,7 +1695,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1716,7 +1742,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1831,7 +1857,7 @@
      "at": "2026-10-24 23:21",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     },
     {
      "platform": "quark",
@@ -1845,7 +1871,7 @@
      "at": "2026-10-24 22:41",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -1901,7 +1927,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     },
     {
      "platform": "quark",
@@ -1915,7 +1941,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2076,7 +2102,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2112,13 +2138,23 @@
    "active": {
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
-    "pwd": "3hxn",
-    "detail": "分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19 ",
+    "pwd": "5h7k",
+    "detail": "分享有效（需提取码）｜永久有效｜与死神的约会 本体完整汉化版.zip 929.3MB 2026-02-25 18:19 ",
     "source": "weibo",
     "where": "微博原文",
-    "share_id": "VOmJJ6JS9lZjFpoV7D3wTk0PA1"
+    "share_id": "VOmJJ6JT-I48EuFreIkmxQKqA1"
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "3hxn",
+     "detail": "分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19 ",
+     "source": "weibo",
+     "where": "微博原文",
+     "share_id": "VOmJJ6JS9lZjFpoV7D3wTk0PA1"
+    }
+   ],
    "dead": [
     {
      "platform": "quark",
@@ -2194,7 +2230,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2220,7 +2256,7 @@
    "candidates": []
   },
   "销魂罪人": {
-   "state": "pending",
+   "state": "reshared",
    "video": {
     "bvid": "BV1yz421m7Dp",
     "url": "https://www.bilibili.com/video/BV1yz421m7Dp",
@@ -2241,21 +2277,22 @@
     }
    ],
    "candidates": [],
-   "request": {
-    "bili_url": "https://www.bilibili.com/video/BV1yz421m7Dp",
-    "weibo_url": "",
-    "dead_platforms": [
-     "百度网盘"
-    ],
-    "message": "《销魂罪人》的百度网盘链接失效了，求补档 🙏"
-   },
-   "reupload": {
-    "state": "need_login",
-    "client_name": "",
-    "file": "",
-    "file_size": 0,
-    "why": "客户端已安装但未登录，登录后即可自动上传并生成新分享"
-   }
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/夸克上传文件/销魂罪人 机翻润色补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-25 00:35",
+     "check": "status=1 audit=0 viol=0",
+     "checked": "ok",
+     "checked_at": "2026-10-25 00:37"
+    }
+   ]
   },
   "MAMIYA": {
    "state": "failover",
@@ -2300,7 +2337,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2384,7 +2421,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2450,14 +2487,22 @@
    "candidates": []
   },
   "恶魔之心：被诅咒的试炼": {
-   "state": "reshared",
+   "state": "failover",
    "video": {
     "bvid": "BV174wFzQEQy",
     "url": "https://www.bilibili.com/video/BV174wFzQEQy",
     "title": "【自汉化另类英乙】暴风雪山庄x狼人杀？绿茶恶人男主别样风味——《恶魔之心：被诅咒的试炼》汉化发布+全结局实况",
     "pubdate": "2026-03-11"
    },
-   "active": null,
+   "active": {
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "tm89",
+    "detail": "分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26 ",
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOnS5Nm02L74hPotSQhGoJwoA1"
+   },
    "alt": [],
    "dead": [
     {
@@ -2502,7 +2547,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     },
     {
      "platform": "quark",
@@ -2516,7 +2561,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2641,6 +2686,15 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "47eec60af621"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "43u2",
+     "detail": "分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOusVbmPXRqKqPVGD4QF6Jw"
     }
    ],
    "dead": [
@@ -2674,6 +2728,15 @@
     "share_id": "782fc8938454"
    },
    "alt": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "kpvq",
+     "detail": "分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOyriyR9yyRk8XQqXaSHwtK1A1"
+    },
     {
      "platform": "uc",
      "platform_name": "UC网盘",
@@ -2709,7 +2772,7 @@
      "at": "2026-10-24 22:12",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
@@ -2784,7 +2847,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     },
     {
      "platform": "quark",
@@ -2798,7 +2861,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:06"
+     "checked_at": "2026-10-25 00:37"
     }
    ]
   },
