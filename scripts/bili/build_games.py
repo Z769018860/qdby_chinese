@@ -22,7 +22,7 @@ from taxonomy import (
     GENRES, ELEMENTS, PLAT_NAMES, PLAT_ORDER,
     cn_norm, norm_key, split_names, match_platforms,
     parse_price, price_bucket, scan, primary_genre,
-    game_len_bucket, strip_quotes,
+    game_len_bucket, strip_quotes, is_mobile_title,
 )
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -185,7 +185,7 @@ def main():
         val, cur, free, note = parse_price(price_text)
 
         parsed.append({
-            'bvid': bvid, 'title': title, 'desc': desc, 'prose': prose,
+            'bvid': bvid, 'title': title, 'desc': desc, 'prose': prose, 'mobile': is_mobile_title(title),
             'names': names, 'primary': primary, 'key': cn_norm(primary),
             'platText': plats_text, 'plats': plats,
             'priceText': price_text, 'price': val, 'cur': cur, 'free': free, 'priceNote': note,
@@ -209,7 +209,7 @@ def main():
             g = groups[gid] = {
                 'id': gid, 'key': p['key'], 'names': [], 'videos': [],
                 'plats': set(), 'priceVals': [], 'priceTexts': [], 'prose': [],
-                'titles': [], 'urls': [], 'dur': 0, 'play': 0, 'dates': [],
+                'titles': [], 'urls': [], 'dur': 0, 'durMax': 0, 'play': 0, 'dates': [],
             }
         for n in p['names']:
             if n and n not in g['names']:
@@ -225,6 +225,9 @@ def main():
         if p['origUrl']:
             g['urls'].append(p['origUrl'])
         g['dur'] += p['dur']
+        # 体量只认「单条投稿全部分 P 的时长」，手游/抽卡/网游类不参与
+        if not p['mobile'] and p['dur'] > g['durMax']:
+            g['durMax'] = p['dur']
         g['play'] += p['play']
         if p['date']:
             g['dates'].append(p['date'])
@@ -267,7 +270,7 @@ def main():
             groups.setdefault(gid, {
                 'id': gid, 'key': key, 'names': [strip_quotes(w.get('汉化名') or '')],
                 'videos': [], 'plats': set(), 'priceVals': [], 'priceTexts': [],
-                'prose': [], 'titles': [], 'urls': [], 'dur': 0, 'play': 0, 'dates': [],
+                'prose': [], 'titles': [], 'urls': [], 'dur': 0, 'durMax': 0, 'play': 0, 'dates': [],
             })
         g = groups[gid]
         g['work'] = w
@@ -308,7 +311,8 @@ def main():
         topics = scan(blob, GENRES)
         els = scan(blob, ELEMENTS)
 
-        hours = round(g['dur'] / 3600.0, 1)
+        # 体量取最长的一条单机实况投稿（含全部分 P），不再把整个系列加起来
+        hours = round(g['durMax'] / 3600.0, 1)
         url = g['urls'][0] if g['urls'] else ''
         if not url and g.get('work'):
             wu = (g['work'].get('原版游戏地址') or '').strip()
@@ -331,7 +335,7 @@ def main():
             'els': els,
             'vcount': len(g['videos']),
             'hours': hours,
-            'size': game_len_bucket(hours) if g['videos'] else '',
+            'size': game_len_bucket(hours) if g['durMax'] else '',
             'play': g['play'],
             'videos': g['videos'][:200],
             'url': url,

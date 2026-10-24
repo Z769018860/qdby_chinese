@@ -12,7 +12,7 @@
 import json, os, re, tempfile, time
 from urllib.parse import urlparse
 
-from taxonomy import GENRES, ELEMENTS, PLAT_ORDER, PLAT_NAMES
+from taxonomy import GENRES, ELEMENTS, PLAT_ORDER, PLAT_NAMES, is_mobile_title
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.environ.get('QD_REPO') or os.path.normpath(os.path.join(BASE, '..', '..'))
@@ -53,18 +53,22 @@ REGIONS = [
 FACET_DEFS = [
     ('genre', '题材', 'multi', '来自简介里的作品介绍与标签，可多选'),
     ('plat', '游戏平台', 'multi', 'PC / Steam / 主机掌机 / 手机端 / 网页 等'),
-    ('el', '要素', 'multi', '语音、结局数、内购、画风等内容要素'),
+    ('el', '要素', 'multi', '语音、结局数、画风、感情向等内容要素'),
     ('pz', '游戏价格', 'single', '按人民币折算后的价格分档'),
-    ('gs', '游戏体量', 'single', '按该游戏全部投稿的累计时长估算'),
-    ('vl', '视频时长', 'single', '单条视频本身的长度'),
+    ('len', '时长 / 体量', 'multi',
+     '单条投稿全部分 P 的时长；游戏体量取该游戏最长一条单机实况（不含手游 / 抽卡）'),
     ('form', '视频形式', 'multi', ''),
     ('region', '地区/语种', 'single', '游戏原产地或本地化来源'),
 ]
 
 PRICE_NAMES = [('free', '完全免费'), ('low', '≤¥30'), ('mid', '¥30–70'),
                ('high', '>¥70'), ('unknown', '未知/未标注')]
-SIZE_NAMES = [('g_xs', '试玩 ≤2h'), ('g_s', '短篇 2–8h'), ('g_m', '中篇 8–20h'), ('g_l', '长篇 20h+')]
-VL_NAMES = [('vx', '≤5 分钟'), ('vs', '5–20 分钟'), ('vm', '20–60 分钟'), ('vl', '1 小时以上')]
+# 体量档与时长档合并进同一个 facet：前者是「这个游戏打完一遍多长」，
+# 后者是「这条视频多长」。两者都只认单机实况，手游 / 抽卡 / 网游不参与。
+SIZE_NAMES = [('g_xs', '实况 ≤2h'), ('g_s', '实况 2–8h'), ('g_m', '实况 8–20h'),
+              ('g_l', '实况 20h+')]
+VL_NAMES = [('vx', '单条 ≤5 分钟'), ('vs', '单条 5–20 分钟'), ('vm', '单条 20–60 分钟'),
+            ('vl', '单条 1 小时以上')]
 
 
 def classify(title, kind='video'):
@@ -83,7 +87,10 @@ def classify(title, kind='video'):
         return 'morimens'
     if '明日方舟' in t:
         return 'arknights'
-    if re.search(r'剑网\s*3|剑网三|剑三|jjc', t, re.I):
+    # 剑三的 JJC 与公主连结的 JJC 是两回事，别混进同一个分区
+    if re.search(r'剑网\s*3|剑网三|剑三', t):
+        return 'jx3'
+    if re.search(r'\bjjc\b', t, re.I) and not re.search(r'公主连结|公主链接|\bpcr\b', t, re.I):
         return 'jx3'
     if re.search(r'妖恋|光芒：', t):
         return 'guangmang'
@@ -131,10 +138,15 @@ def vl_bucket(dur):
 
 
 def annotate(title, cat, dur):
-    """标题层面的维度：形式 / 地区 / 视频时长；其余维度来自游戏库"""
+    """标题层面的维度：形式 / 地区 / 视频时长；其余维度来自游戏库
+
+    时长只给单机实况：手游抽卡（明日方舟 / 忘却前夜 / 剑三 JJC …）不是「打完一遍」，
+    混进时长与体量里只会把分档撑坏，所以连时长档都不写。"""
     t = title or ''
     pre = re.search(r'^【([^】]{1,24})】', t)
     scope = (pre.group(1) if pre else '') + ' ' + t
+    # 分类进手游分区的也一并算手游：有的标题里没有关键词（例如公主连结的 jjc）
+    mobile = is_mobile_title(t) or cat in MOBILE_CATS
 
     out = {}
     fm = tags_of(scope, FORMS)
@@ -151,7 +163,7 @@ def annotate(title, cat, dur):
         out['region'] = 'other'
 
     v = vl_bucket(dur)
-    if v:
+    if v and not mobile:
         out['vl'] = v
     return out
 
@@ -211,6 +223,14 @@ def main():
         g = game_of(vidmap.get(v['bvid']))
         if g:
             item.update(g)
+        if is_mobile_title(title):
+            # 手游 / 抽卡 / 网游：既不给时长档也不给体量档
+            item.pop('vl', None)
+            item.pop('gs', None)
+        # 前端的「时长 / 体量」是一组多选筛：把两条口径合成一个 len 字段
+        lens = [x for x in (item.get('vl'), item.get('gs')) if x]
+        if lens:
+            item['len'] = lens
         videos.append(item)
 
     articles = []
@@ -267,16 +287,25 @@ def main():
         'plat': [(k, PLAT_NAMES[k]) for k in PLAT_ORDER],
         'el': [(k, n) for k, n, _ in ELEMENTS],
         'pz': PRICE_NAMES,
-        'gs': SIZE_NAMES,
-        'vl': VL_NAMES,
+        'len': VL_NAMES + SIZE_NAMES,
         'form': [('release', '汉化发布'), ('promo', '安利推荐'), ('guide', '攻略成就'),
                  ('demo', '试玩demo'), ('recap', '总结盘点'), ('log', '记录碎碎念')],
         'region': [('jp', '日本 / 日乙'), ('en', '欧美 / 英乙'), ('cn', '国产 / 国乙'),
                    ('other', '未标注')],
     }
+
+    def len_items(table):
+        """时长 / 体量是一个 facet 里两组口径：vl 看这条投稿，gs 看这个游戏"""
+        out = []
+        for ik, iname in table:
+            n = sum(1 for x in videos if x.get('vl') == ik or x.get('gs') == ik)
+            if n:
+                out.append({'key': ik, 'name': iname, 'videos': n})
+        return out
+
     facets = []
     for key, name, kind, hint in FACET_DEFS:
-        items = facet_items(key, tables[key])
+        items = len_items(tables[key]) if key == 'len' else facet_items(key, tables[key])
         if items:
             facets.append({'key': key, 'name': name, 'type': kind, 'hint': hint, 'items': items})
 
