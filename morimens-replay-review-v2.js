@@ -1811,7 +1811,7 @@
       const CAT_W={out:1,def:1,sup:1};
       /* control = hard control + 脆弱; 虚弱 is already valued as prevented damage (减伤), so it only counts here when no prevented damage was credited for it */
       const weakCovered=sp=>[...(sp.prevTypes?.entries?.()||[])].some(([n,v])=>/虚弱/.test(n)&&v>0),ctlOf=sp=>(sp.dbCls.ctrl||0)*3+(weakCovered(sp)?0:(sp.dbCls.weak||0)*2)+(sp.dbCls.frail||0)*2;
-      const SUBW={def:{sh:40,mit:30,ctl:20,dr:10},sup:{key:1.5,ali:1.5,seal:.5,eng:1.5,vuln:1.5,buf:1.5,cut:1,draw:1,cyc:.5,realm:.5,emb:.5,dis:1.2}};
+      const SUBW={def:{sh:40,mit:30,ctl:20,dr:10},sup:{key:1.5,ali:1.5,seal:.5,eng:1.5,vuln:1.5,buf:1.5,ero:1.4,cut:1,draw:1,cyc:.5,realm:.5,emb:.5,dis:1.2}};   // ero = 侵蚀（薇薇安 / 沙耶一类靠侵蚀出伤的角色单独成维度，不混在伤害增益里）
       const roles=bd.roleData||[],attrOf=uid=>roles.find(x=>String(x.uid)===String(uid))?.attrs||{};
       const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
       const supOf=k=>tl.supStore?.get(k)||blank();
@@ -1827,7 +1827,7 @@
       const vE=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+v.vulnExtra,0);
       const kpMax0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;   // one embryo is worth 5% of the HP pool in the 血池
       const sub=(sp,extra={})=>({
-        key:sp.key+(extra.key||0),ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0)+(sp.beaconExtra||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.5*sp.cycles+0.6*(sp.dimAdd||0)+0.9*(sp.dimPull||0),cyc:0,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards+(kpMax0>0?(sp.poolGain||0)/(0.05*kpMax0):0),dis:sp.dispelPts||0});
+        key:sp.key+(extra.key||0),ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0)+(sp.beaconExtra||0),ero:(extra.ero||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.5*sp.cycles+0.6*(sp.dimAdd||0)+0.9*(sp.dimPull||0),cyc:0,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards+(kpMax0>0?(sp.poolGain||0)/(0.05*kpMax0):0),dis:sp.dispelPts||0});
       // raw metrics of one entity -> {out:{...},def:{...},sup:{...}}
       const rawOf=(o)=>o; // placeholder to keep structure readable
       const rate=(items,{withEff=false}={})=>{
@@ -1911,7 +1911,7 @@
         const rep=r.dmg;if(cc)out.oth+=cc.dmg;
         return {r,out,outT:Object.values(out).reduce((a,b)=>a+b,0),sh:r.block+1.2*r.heal+0.5*(sp.maxHp||0)+(cc?cc.block+1.2*cc.heal:0)+(realmSh.get('act:'+r.a.uid)||0),created:cc,maxHp:sp.maxHp||0,ampTypes:[...(sp.ampTypes||new Map()).entries()].map(([n,v])=>({n,v})),block:r.block,heal:r.heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),
           dr:drv+deathSaves*drShare*100,drBase:drv,saves:deathSaves*drShare,
-          sup:sub(sp,{buf:(bf?.extra||0)+(cc?.buf||0)+(sp.tenExtra||0)+eroShare('act:'+r.a.uid)+(realmBuf.get('act:'+r.a.uid)||0),key:realmKey.get('act:'+r.a.uid)||0,rm:at.occupation_master||0}),bufPower:bf?.instances?.filter(i=>i.kind==='power').reduce((n,i)=>n+i.extra,0)||0,bufCrit:bf?.instances?.filter(i=>i.kind==='crit'||i.kind==='critrate').reduce((n,i)=>n+i.extra,0)||0,vulnExtra:sp.vulnExtra,
+          sup:sub(sp,{buf:(bf?.extra||0)+(cc?.buf||0)+(sp.tenExtra||0)+(realmBuf.get('act:'+r.a.uid)||0),ero:eroShare('act:'+r.a.uid),key:realmKey.get('act:'+r.a.uid)||0,rm:at.occupation_master||0}),bufPower:bf?.instances?.filter(i=>i.kind==='power').reduce((n,i)=>n+i.extra,0)||0,bufCrit:bf?.instances?.filter(i=>i.kind==='crit'||i.kind==='critrate').reduce((n,i)=>n+i.extra,0)||0,vulnExtra:sp.vulnExtra,
           dispelN:sp.dispelN||0,dispelPts:sp.dispelPts||0,dispelTypes:[...(sp.dispelTypes||new Map()).entries()],dispelMiss:(tl.playLog||[]).filter(p=>String(p.owner)===String(r.a.uid)&&p.dispelPlan).reduce((n,p)=>n+p.dispelPlan.filter(x=>!x.done).length,0),powerGain:sp.powerGain,critGain:sp.critGain,critRateGain:sp.critRateGain,inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,copies:sp.copies,ultCasts:sp.ultCasts,tenGain:sp.tenGain,embCards:sp.embCards,plays:r.plays,energy:r.energy,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}});
       const awMeta=rate(awRaw,{withEff:true});
       const awRows=awRaw.filter(o=>o.outT>0||o.sh>0||o.plays>0||Object.values(o.sup).some(v=>v>0)).sort((a,b)=>b.score-a.score).map(o=>({r:o.r,score:o.score,grade:o.grade,cats:o.cats,x:o,share:totalDmg?o.r.dmg/totalDmg:0}));
