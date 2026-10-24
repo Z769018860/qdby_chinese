@@ -354,8 +354,10 @@ def git_push(now, sync_main=False):
     p = run('push')
     print('  push:', (p.stdout or p.stderr).strip()[-160:] or 'ok')
     if sync_main:
-        # main 是线上分支；能快进就直接快进，不能就说明两边分叉了，别硬推
-        ff = run('merge-base', '--is-ancestor', 'origin/main', 'HEAD')
+        # main 是线上分支；能快进就直接快进，不能就说明两边分叉了，别硬推。
+        # 本地的 origin/main 可能很久没更新（fetch refspec 只跟 preview），先取一次
+        run('fetch', 'origin', 'main', '--quiet')
+        ff = run('merge-base', '--is-ancestor', 'FETCH_HEAD', 'HEAD')
         if ff.returncode == 0:
             m = run('push', 'origin', 'HEAD:main')
             print('  main:', (m.stdout or m.stderr).strip()[-160:] or 'ok')
