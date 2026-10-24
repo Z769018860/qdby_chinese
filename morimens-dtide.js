@@ -1300,6 +1300,37 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
       const records=[...mergedRecords.values()].sort((a,b)=>effectiveRank(a)-effectiveRank(b));
       season={...loadedSeason,records,recordCount:records.length,deltaRecordCount:loadedOverlay.records.length,dataUpdatedAt:overlay?.updatedAt||loadedOverlay.updatedAt||null};
     }else season=loadedSeason;
+if(isCurrent&&loadedRankDoc?.rows?.length){
+  const currentRankRows=loadedRankDoc.rows;
+  const currentRankUids=new Set(currentRankRows.map(row=>String(row?.uid??"")).filter(Boolean));
+  const currentRecords=new Map();
+  for(const record of season?.records||[]){
+    const uid=String(record?.uid??record?.playerUid??record?.userId??"");
+    if(uid&&currentRankUids.has(uid))currentRecords.set(uid,record);
+  }
+  let rankOnlyRecordCount=0;
+  for(const row of currentRankRows){
+    const uid=String(row?.uid??"");
+    if(!uid||currentRecords.has(uid))continue;
+    rankOnlyRecordCount++;
+    const score=Number(row?.score)||0;
+    currentRecords.set(uid,{rank:Number(row?.rank)||999999,player:String(row?.name||uid),uid,score,currentScore:score,url:String(row?.url||`https://eremora.com/u/${uid}/challenges/dzone/${sourceSeasonId}`),seasonId:Number(sourceSeasonId),waves:[],rankOnly:true,sourceTransport:"official rank index; team detail pending"});
+  }
+  const mergedCurrent=[...currentRecords.values()].sort((a,b)=>{
+    const ua=String(a?.uid??a?.playerUid??a?.userId??"");
+    const ub=String(b?.uid??b?.playerUid??b?.userId??"");
+    return (rankByUid.get(ua)||Number(a?.rank)||999999)-(rankByUid.get(ub)||Number(b?.rank)||999999);
+  });
+  season={...season,records:mergedCurrent,recordCount:mergedCurrent.length,rankOnlyRecordCount,detailCoverage:currentRankRows.length-rankOnlyRecordCount,expectedRankCount:currentRankRows.length,rankDetailsComplete:rankOnlyRecordCount===0};
+  const noteId="morimensSeason71DetailCoverageNotice";
+  let note=document.getElementById(noteId);
+  const host=document.getElementById("dtide");
+  if(!note&&host){note=document.createElement("div");note.id=noteId;note.className="calcBetaNotice";host.prepend(note)}
+  if(note){
+    const en=localStorage.getItem("morimens.language")==="en";
+    note.textContent=rankOnlyRecordCount>0?(en?`Season 71 ranking refreshed to Oct 25; detailed teams are available for ${season.detailCoverage}/2000 ranked players. ${rankOnlyRecordCount} players are awaiting team-detail import.`:`第71期排名已更新至10月25日；当前有 ${season.detailCoverage}/2000 名上榜玩家具备队伍详情，另有 ${rankOnlyRecordCount} 名玩家的队伍数据待导入。`):(en?"Season 71 ranking and team details are complete.":"第71期排名与队伍详情已完整同步。");
+  }
+}
     const seasonOption=[...($('dtideSeason')?.options||[])].find(option=>String(option.value)===String(id));
     if(seasonOption&&Number.isFinite(Number(season?.recordCount))&&!(entry.legacy||entry.coverageMode==='legacy-spreadsheet'||String(entry.seasonId)==='legacy-high-difficulty')){
       const loadedRecordCount=Number(season.recordCount);

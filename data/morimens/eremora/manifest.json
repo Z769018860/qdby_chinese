@@ -14,11 +14,11 @@
       "period": "2026-10-12 – 2026-10-26",
       "recordCount": 2000,
       "leaderboardEntryCount": 2000,
-      "complete": true,
-      "coverageMode": "official-rank-top2000",
+      "complete": false,
+      "coverageMode": "official-rank-top2000-with-partial-team-details",
       "path": "data/morimens/eremora/usage/71-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/71.json",
-      "dataUpdatedAt": "2026-10-21T14:24:00+08:00",
+      "dataUpdatedAt": "2026-10-25T04:19:24.625773+08:00",
       "labelZh": "第71期 融灾 · 混沌戒指",
       "periodShort": "10.12–10.25",
       "ringRealm": "Chaos",
@@ -26,7 +26,15 @@
       "rankPath": "data/morimens/eremora/rank-index/71.json",
       "battleArchivePath": "data/morimens/dzone/season71/meta.json",
       "battleDetailPath": "data/morimens/eremora/usage/71-battle-gzip/index.json",
-      "revision": "0b45ae9ab3dd59292f6e1abf74ea2c43058f92c074bca3ea050a8e4d84cb83cf"
+      "revision": "s71-top2000-20261025-0419",
+      "rankUpdatedAt": "2026-10-25T04:19:24.625773+08:00",
+      "teamDetailsUpdatedAt": "2026-10-21T14:24:00+08:00",
+      "detailCoverage": {
+        "expected": 2000,
+        "available": 1630,
+        "missing": 370,
+        "complete": false
+      }
     },
     {
       "seasonId": 70,
@@ -284,9 +292,11 @@
     "target": 2000,
     "count": 2000,
     "complete": true,
-    "syncedAt": "2026-10-21T14:24:00+08:00",
-    "revision": "s71-top2000-20261021-1424",
-    "scorePolicy": "official-rank-score"
+    "syncedAt": "2026-10-25T04:57:00+08:00",
+    "revision": "s71-top2000-20261025-0419",
+    "scorePolicy": "official-rank-score",
+    "source": "official live Rank.QueryRank response",
+    "activityTid": 83331
   },
   "usageIndex": {
     "seasonId": 71,
@@ -298,7 +308,7 @@
     "coverage": {
       "expected": 2000,
       "covered": 2000,
-      "coveragePct": 100.0,
+      "coveragePct": 100,
       "complete": true
     },
     "syncedAt": "2026-10-21T14:24:00+08:00",
