@@ -41,9 +41,11 @@ def main():
             videos[v['bvid']] = v
         print('已有缓存', len(videos))
 
+    # 每日增量：接口按 pubdate 倒序，翻到「整页都是旧的」就可以停
+    max_pages = int(os.environ.get('QD_MAX_PAGES') or 80)
     cursor = ''
     total = 0
-    for page in range(1, 80):
+    for page in range(1, max_pages + 1):
         p = {'appkey': APPKEY, 'vmid': VMID, 'ps': 20, 'mobi_app': 'android',
              'platform': 'android', 'ts': int(time.time()), 'order': 'pubdate'}
         if cursor:
@@ -56,7 +58,10 @@ def main():
         data = d.get('data') or {}
         items = data.get('item') or []
         total = data.get('count') or total
+        new_in_page = 0
         for v in items:
+            if v['bvid'] not in videos:
+                new_in_page += 1
             videos[v['bvid']] = {
                 'bvid': v['bvid'],
                 'aid': v.get('param') or v.get('aid'),
@@ -69,10 +74,14 @@ def main():
                 'pic': v.get('cover') or v.get('pic'),
                 'typeid': v.get('tid') or v.get('typeid'),
             }
-        print('page %d: %d items, 累计 %d / %s' % (page, len(items), len(videos), total))
+        print('page %d: %d items（新 %d），累计 %d / %s' % (page, len(items), new_in_page,
+                                                        len(videos), total))
         arr = sorted(videos.values(), key=lambda x: x['created'] or 0, reverse=True)
         json.dump(arr, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         if not data.get('has_next') or not items:
+            break
+        if page > 1 and new_in_page == 0:   # 增量模式下没有再新的东西了
+            print('整页无新增，停止翻页')
             break
         cursor = data.get('next_cursor')
         if not cursor:

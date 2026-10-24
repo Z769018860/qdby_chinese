@@ -77,9 +77,20 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 > （含 360 极速）的 cookie 库，注意新版会在明文前塞 32 字节 `sha256(host)`，不剥掉
 > `SUB`/`SESSDATA` 会变成二进制脏数据。
 
-**站点只收汉化相关的三类**（`QD_WEIBO_KINDS` 可改，默认 `repo,release,promo`）：
-4000 条里有 3634 条是转发与闲聊，全塞进 `weibo.json` 会让页面变成 6 MB 的噪音场。
-筛完是 366 条（repo 253 / release 60 / promo 53），关联到 150 部作品，另有 42 个
+**站点只收汉化相关的两类**（`QD_WEIBO_KINDS` 可改，默认 `repo,release`）：
+4000 条里绝大多数是转发与闲聊，全塞进 `weibo.json` 会让页面变成 6 MB 的噪音场。
+
+两个已经踩过并修掉的坑：
+
+- **转发必须按 `retweeted` 判断，不能只看正文。** 转发时接口把被转的原文放在
+  `retweeted`，自己写的话（常常只有 `//@某某:`）在 `text`。早先只按 `text` 里的
+  关键词分类，别人写的「repo / 推荐」就被算成作者的 repo——`repo` 板块里混进成批转发，
+  根源就在这。现在 `is_retweet()` 命中就整条丢掉（本次剔掉 2225 条）。
+- **「安利」不再单独成类。** 一条微博常常前脚写感想后脚安利，边界太虚，
+  而且以 `promo` 命中的多是纯推荐、无关内容多，所以整块删掉，
+  关键词并进 `repo`——观后感、感想、安利统一挂在 repo 下。
+
+筛完是 **318 条（repo 263 / release 55）**，关联到 147 部作品，另有 40 个
 「只在微博里出现过」的作品被补建成实体。
 
 配图全部自托管 + 压缩（`download_pics.py`，814 张 / 40 MB，平均 50 KB）：
@@ -93,16 +104,17 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 页面会变成一排灰格子；`curl` 却是 200，所以下载走 curl。原图 URL 另存在 `picsOrig`，
 「查看原图」仍然跳微博图床。
 
-- 分类：`release` 汉化发布 / `repo` 游玩repo / `promo` 安利推荐 / `other` 其他
+- 分类：`release` 汉化发布 / `repo` 游玩repo（含观后感、感想、安利）
 - 每条微博会解析出提到的游戏，能对上的直接挂到游戏实体；对不上但内容确实是 repo/汉化发布的，补建成新实体
 - 配图最多显示 9 张，点开是大图查看器（左右键翻页、可跳原图）
-- 交互：卡片上的「微博 N」跳到微博页并按该游戏过滤；微博卡片上点游戏名则跳到投稿页过滤
+- 交互：卡片上的「微博 N」跳到微博页并按该游戏过滤；**「微博原文 ↗」直接跳到那条微博的地址**（取该游戏最新一条，103 条投稿有对应微博）
+- 微博卡片上点游戏名则跳到投稿页过滤
 
 ## 相关数据与脚本
 
-- `data/games.json`：游戏维度库（658 个实体）。每条含 `plat / price / pz / topics / els / hours / size / store.steam / url / vcount / videos`，以及 `vidmap`（bvid → gid）
+- `data/games.json`：游戏维度库（694 个实体）。每条含 `plat / price / pz / topics / els / hours / size / store.steam / url / vcount / videos`，以及 `vidmap`（bvid → gid）
 - `data/videos.json`：视频站数据（视频 + 专栏）。每条投稿已把游戏维度打平到记录上（`gid / gn / plat / genre / el / pz / gs`），顶层 `facets` 定义 8 组维度
-- `data/weibo.json`：微博动态（366 条汉化相关：分类、正文、配图、关联游戏），`by_game` 供卡片反查
+- `data/weibo.json`：微博动态（318 条汉化相关：分类、正文、配图、关联游戏），`by_game` 供卡片反查
 - `assets/weibo/`：微博配图本地副本（814 张 / 40 MB，长边 ≤700、q74；原图 URL 仍留在 `picsOrig`）
 - `data/netdisk-links.json` / `.md` / `.html`：网盘链接台账（不在汉化站导航中引用）
 - `data/netdisk-status.json`：按作品聚合的网盘状态，供汉化站表格列使用
@@ -113,7 +125,8 @@ node scripts/weibo/collect_weibo.mjs           # 之后自动走全量 + 补全
 - `data/netdisk-violation.json`：违规文件改装记录（改装前后 md5、输出路径、是否已上传）
 - `data/netdisk-reupload.json`：本机补档能力（客户端 / 登录态 / 补丁文件）探测结果
 - `scripts/netdisk/`：网盘链接抓取、核验与补档
-  - `daily_check.py`：**每天 0 点巡检**——核验全部网盘链接、更新站点数据、全灭时发告警邮件（见下节）
+  - `daily_check.py`：**每天 0 点巡检**——内容增量 + 核验全部网盘链接 + 更新站点数据 + 全灭时发告警邮件（见下节）
+  - `daily_content.py`：微博 repo / B 站投稿的增量同步与重建（被 `daily_check.py` 调用，也可单独跑）
   - `refresh.py`：抓发布页 + 评论 + 专栏，抽链接并核验（`check_spa.mjs` 负责需渲染的盘）
   - `hunt_comments.mjs`：按视频重扫评论区（最热 + 最新各 3 页，含楼中楼），把带网盘域名的评论整条存进 `raw/hunt_comments.json`
   - `autofill.py`：算「当前可用链接」、自动切换、补抓候补、生成求档清单
@@ -281,7 +294,7 @@ python scripts/netdisk/autofill.py       # 产出 data/netdisk-autofill.json / .
 
 ### 每天 0 点自动巡检（`daily_check.py`）
 
-一条命令干完四件事：核验 → 回写台账 → 重建站点数据 → 全灭告警。
+一条命令干完五件事：内容增量 → 网盘核验 → 回写台账 → 重建站点数据 → 全灭告警。
 
 ```bash
 python scripts/netdisk/daily_check.py            # 全量巡检 + 更新站点 + 发信
@@ -289,7 +302,13 @@ python scripts/netdisk/daily_check.py --fast     # 跳过迅雷/城通/微云的
 python scripts/netdisk/daily_check.py --no-mail  # 只巡检不发信
 python scripts/netdisk/daily_check.py --push     # 顺便 git commit & push
 python scripts/netdisk/daily_check.py --test-mail # 只验证发信配置
+python scripts/netdisk/daily_check.py --no-content  # 只巡检网盘，不动微博/投稿
+python scripts/netdisk/daily_check.py --full-content # 内容走全量（微博 400 页、投稿 80 页）
 ```
+
+- **内容增量**（`scripts/daily_content.py`）：微博翻最新 3 页 → 重建 `weibo.json`；
+  投稿走 App 签名接口，翻到「整页无新增」就停 → 补新投稿简介 → `games.json` / `videos.json`。
+  实测增量一次约 10 秒；任何一步失败只影响自己，网盘巡检与站点其余部分照常
 
 - **核验**：百度/夸克/UC/123/蓝奏走接口（`refresh.py` 的 `API_CHECKERS`），
   迅雷/城通/微云是 SPA，脚本自己 `--headless=new` 拉起 Edge/Chrome（`--remote-debugging-port=9223`），

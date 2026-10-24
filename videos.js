@@ -8,7 +8,7 @@ const PLAT_SHORT = {
   steam: "Steam", pc: "PC", switch: "NS", mobile: "手机端", web: "网页",
   console: "主机", itch: "itch", booth: "BOOTH", dlsite: "DLsite", freem: "freem!"
 };
-const KIND_NAMES = { release: "汉化发布", repo: "游玩repo", promo: "安利推荐", other: "其他" };
+const KIND_NAMES = { release: "汉化发布", repo: "游玩repo", other: "其他" };
 const GENRE_NAMES = {};
 const EL_NAMES = {};
 
@@ -171,7 +171,9 @@ function renderChips(){
   if(state.tab === "weibo"){
     const pool = state.weibo.posts;
     const items = [{ key: "all", name: "全部" }].concat(
-      ["release", "repo", "promo", "other"].map(k => ({ key: k, name: KIND_NAMES[k] }))
+      ["release", "repo", "other"]
+        .map(k => ({ key: k, name: KIND_NAMES[k] }))
+        .filter(c => pool.some(x => x.kind === c.key))   // 数量为 0 的分类不占位置
     );
     el.chips.innerHTML = items.map(c => {
       const n = c.key === "all" ? pool.length : pool.filter(x => x.kind === c.key).length;
@@ -314,7 +316,7 @@ function filtered(){
     if(q && !searchHay(x).includes(q)) return false;
     return facetPass(x);
   });
-  const KIND_ORDER = { release: 0, repo: 1, promo: 2, other: 3 };
+  const KIND_ORDER = { release: 0, repo: 1, other: 2 };
   const cmp = {
     new: (a, b) => (b.ts || 0) - (a.ts || 0),
     old: (a, b) => (a.ts || 0) - (b.ts || 0),
@@ -335,7 +337,12 @@ function genreTags(x){
 
 function videoCard(v){
   const g = state.games[v.gid];
-  const wbCount = v.gid && state.weibo.byGame ? (state.weibo.byGame[v.gid] || []).length : 0;
+  const wbIds = (v.gid && state.weibo.byGame && state.weibo.byGame[v.gid]) || [];
+  const wbCount = wbIds.length;
+  // 对应微博的直链：取该游戏最新一条（byGame 里按时间倒序）
+  const wbUrl = wbCount
+    ? ((state.weibo.posts.find(p => p.id === wbIds[0]) || {}).url || "")
+    : "";
   const store = g && g.store && g.store.steam ? g.store.steam.url : (g && g.url ? g.url : "");
   const plat = (v.plat || []).slice(0, 2).map(k => PLAT_SHORT[k] || k).join(" · ");
   const price = priceText(g);
@@ -345,6 +352,7 @@ function videoCard(v){
                  : `<span class="vGame">《${esc(g.name)}》</span>`}
          ${price ? `<span class="vPrice${v.pz === "free" ? " isFree" : ""}">${esc(price)}</span>` : ""}
          ${plat ? `<span class="vPlat">${esc(plat)}</span>` : ""}
+         ${wbUrl ? `<a class="vWbOut" href="${esc(wbUrl)}" target="_blank" rel="noopener" title="打开这条视频对应的微博原文">微博原文 ↗</a>` : ""}
          ${wbCount ? `<button class="vWbBtn" data-wgid="${esc(v.gid)}" type="button">微博 ${wbCount}</button>` : ""}
        </div>`
     : "";
@@ -515,7 +523,7 @@ function wire(){
       state.cat = "all";
       state.kind = "all";
       state.shown = PAGE_SIZE;
-      // 微博里个人碎碎念多，默认按类型分组，repo / 安利 / 汉化发布排前面
+      // 微博里个人碎碎念多，默认按类型分组，汉化发布 / 游玩repo 排前面
       if(state.tab === "weibo"){ state.sort = "kind"; if(el.sort) el.sort.value = "kind"; }
       else if(state.sort === "kind"){ state.sort = "new"; if(el.sort) el.sort.value = "new"; }
       Object.keys(state.f).forEach(k => state.f[k].clear());

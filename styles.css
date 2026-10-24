@@ -1660,6 +1660,18 @@ a.vGame:hover{ color:#1f5fa8; }
 }
 .vWbBtn:hover{ background:#ffece6; }
 
+/* 视频卡片上的「微博原文 ↗」：直接跳到那条对应微博，不再只是筛到微博页 */
+.vWbOut{
+  padding:1px 6px;
+  border-radius:6px;
+  color:#b4471f;
+  font-size:10.5px;
+  text-decoration:none;
+  white-space:nowrap;
+  opacity:.85;
+}
+.vWbOut:hover{ background:#fff5f1; opacity:1; }
+
 /* 一键三连按钮 */
 
 

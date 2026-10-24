@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """把抓到的微博整理成 data/weibo.json，并把微博里的游戏对齐到游戏库
 
-分类：
+分类（只有两类进站点）：
   release 汉化发布 —— 自汉化 / 汉化补丁 / 机翻补丁
-  repo    游玩报告 —— 打完/通关/repo/感想/评测
-  promo   推荐安利 —— 安利/推荐/入坑/推游
-  other   其他
+  repo    游玩与感想 —— 打完/通关/repo/感想/评测/安利/推荐/入坑
+
+「安利」原本单独一类，实测和 repo 的边界很虚（一条微博常常前脚写感想后脚安利），
+现在并进 repo；转发（retweeted 非空）一律丢弃——那是别人的内容，
+按正文关键词分类会把别人写的「repo/推荐」也算进来，这是之前提取错误的根源。
 
 对每条微博：
   1. 从《书名号》、「汉化名：」「原名：」里抽游戏名
@@ -33,10 +35,11 @@ RAW = os.environ.get('QD_CACHE') or os.path.normpath(os.path.join(BASE, '..', '.
 
 KIND_RULES = [
     ('release', r'自汉化|汉化补丁|汉化发布|机翻补丁|翻译补丁|汉化版|补丁地址|自译|汉化名'),
-    # repo 的说法很杂：除了 repo/通关，还有「推完/全线/剧透/评分/体验」
+    # repo 的说法很杂：除了 repo/通关，还有「推完/全线/剧透/评分/体验」，
+    # 以及原来单独成类的安利 / 推荐 / 入坑——统一归到 repo
     ('repo', r'repo|通关|打完|通了|推完|玩完|通完|全结局|全线|结局|感想|评测|测评'
-             r'|玩后感|吐槽|简评|记录一下|剧透|评分|打分|体验|进度'),
-    ('promo', r'安利|推荐|入坑|推游|强烈建议|不容错过|值得一玩'),
+             r'|玩后感|吐槽|简评|记录一下|剧透|评分|打分|体验|进度'
+             r'|安利|推荐|入坑|推游|强烈建议|不容错过|值得一玩'),
 ]
 
 NAME_PATTERNS = [
@@ -47,10 +50,12 @@ NAME_PATTERNS = [
 ]
 
 
-# 站点只收「汉化相关」的三类：repo（含感想/通关/评测）、release（发布/补档）、promo（安利）。
+# 站点只收「汉化相关」的两类：repo（含感想/通关/评测/安利）、release（发布/补档）。
 # 其余 3600+ 条是转发与闲聊，留在 raw 里备查，不进站点数据（否则 JSON 6MB、页面全是噪音）。
 KEEP_KINDS = {k.strip() for k in
-              (os.environ.get('QD_WEIBO_KINDS') or 'repo,release,promo').split(',') if k.strip()}
+              (os.environ.get('QD_WEIBO_KINDS') or 'repo,release').split(',') if k.strip()}
+
+RETWEET_ONLY = {'转发微博', '轉發微博', 'Repost', 'repost'}
 
 PIC_DIR = os.path.join(REPO_DIR, 'assets', 'weibo')
 
@@ -66,14 +71,21 @@ def pic_local(url):
     return url
 
 
+def is_retweet(p):
+    """转发：接口把被转的原文放在 retweeted 里，自己写的话（常常只有「//@某某:」）在 text。
+    这类条目的正文关键词出自别人，不能算作者的内容，一律不进站点。"""
+    if (p.get('retweeted') or '').strip():
+        return True
+    t = (p.get('fullText') or p.get('text') or '').strip()
+    return t in RETWEET_ONLY
+
+
 def classify(text):
     hits = [k for k, p in KIND_RULES if re.search(p, text or '', re.I)]
     if 'release' in hits:
         return 'release'
     if 'repo' in hits:
         return 'repo'
-    if 'promo' in hits:
-        return 'promo'
     return 'other'
 
 
@@ -150,7 +162,11 @@ def main():
     new_games = {}
     alias_map = {}
     out = []
+    n_rt = 0
     for p in posts:
+        if is_retweet(p):
+            n_rt += 1
+            continue
         # 搜索卡片给的 text 是截断版，末尾带「…全文」；长微博用 extend 接口补的全文
         text = p.get('fullText') or p.get('text') or ''
         text = re.sub(r'\s*(?:\.{2,}|…+)\s*全文\s*$', '', text).strip()
@@ -166,7 +182,7 @@ def main():
             else:
                 miss.append(nm)
         # 一条微博通常只讲一个游戏：书名号/汉化名作主名，其余写法（多是原名）当别名
-        if miss and not gids and kind in ('repo', 'release', 'promo'):
+        if miss and not gids and kind in ('repo', 'release'):
             key = cn_norm(miss[0])
             gid = new_games.get(key)
             if not gid:
@@ -192,7 +208,7 @@ def main():
             'comments': p.get('comments') or 0,
             'reposts': p.get('reposts') or 0,
             'url': 'https://m.weibo.cn/detail/%s' % p['id'],
-            're': (p.get('retweeted') or '')[:120],
+            're': '',   # 转发已在上面剔除，这个字段留给前端兼容
             'games': sorted(gids),
             'names': candidates(text)[:4],
         }
@@ -281,6 +297,7 @@ def main():
     with open(dst, 'w', encoding='utf-8', newline='\n') as f:
         json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
     print('微博', len(out), kinds, '关联到游戏', data['matched'], '新建游戏', len(wg))
+    print('剔除转发', n_rt, '条（retweeted 非空 / 只有「转发微博」）')
     print('覆盖游戏', len(wb_by_game))
     print('->', dst, os.path.getsize(dst) // 1024, 'KB')
 

@@ -1,14 +1,14 @@
 {
  "meta": {
-  "generated_at": "2026-10-25 00:03",
-  "source_checked_at": "2026-10-25 00:03",
+  "generated_at": "2026-10-25 00:10",
+  "source_checked_at": "2026-10-25 00:10",
   "games": 64,
   "summary": {
    "ok": 28,
    "failover": 32,
    "recovered": 0,
-   "reshared": 2,
-   "pending": 2,
+   "reshared": 3,
+   "pending": 1,
    "none": 0
   },
   "recovered_links": 0,
@@ -201,7 +201,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -339,15 +339,6 @@
    },
    "alt": [
     {
-     "platform": "xunlei",
-     "platform_name": "迅雷云盘",
-     "pwd": "6ans",
-     "detail": "分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07 ",
-     "source": "desc",
-     "where": "视频简介",
-     "share_id": "VOfYSx"
-    },
-    {
      "platform": "123pan",
      "platform_name": "123云盘",
      "pwd": "eZEe",
@@ -409,7 +400,7 @@
      "at": "2026-10-24 22:09",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -561,7 +552,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -645,7 +636,7 @@
      "at": "2026-10-24 22:11",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     },
     {
      "platform": "quark",
@@ -659,7 +650,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -743,7 +734,7 @@
      "at": "2026-10-24 22:11",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1020,7 +1011,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1088,7 +1079,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1145,7 +1136,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1211,7 +1202,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1277,7 +1268,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1343,7 +1334,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1407,22 +1398,14 @@
    "candidates": []
   },
   "舌头上的动物园": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1scqNBmEJt",
     "url": "https://www.bilibili.com/video/BV1scqNBmEJt",
     "title": "【自汉化悬疑推理】既是受害者也是加害者？基于对话的直觉系推理，但不推也行？——《舌头上的动物园》汉化发布+测试实况",
     "pubdate": "2026-01-06"
    },
-   "active": {
-    "platform": "xunlei",
-    "platform_name": "迅雷云盘",
-    "pwd": "cejm",
-    "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "VOiITcGJud8b9aFLSLFdI1nRA1"
-   },
+   "active": null,
    "alt": [],
    "dead": [
     {
@@ -1485,7 +1468,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1533,15 +1516,6 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "VOiDvXodPCJ"
-    },
-    {
-     "platform": "xunlei",
-     "platform_name": "迅雷云盘",
-     "pwd": "7fyk",
-     "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈.zip 19.6MB 2026-01-05 23:42 ",
-     "source": "up_comment",
-     "where": "UP 主评论",
-     "share_id": "VOiDrNAPa1"
     }
    ],
    "dead": [
@@ -1695,7 +1669,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1742,7 +1716,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1857,7 +1831,7 @@
      "at": "2026-10-24 23:21",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     },
     {
      "platform": "quark",
@@ -1871,7 +1845,7 @@
      "at": "2026-10-24 22:41",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -1927,7 +1901,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     },
     {
      "platform": "quark",
@@ -1941,7 +1915,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2102,7 +2076,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2138,23 +2112,13 @@
    "active": {
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
-    "pwd": "5h7k",
-    "detail": "分享有效（需提取码）｜永久有效｜与死神的约会 本体完整汉化版.zip 929.3MB 2026-02-25 18:19 ",
+    "pwd": "3hxn",
+    "detail": "分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19 ",
     "source": "weibo",
     "where": "微博原文",
-    "share_id": "VOmJJ6JT-I48EuFreIkmxQKqA1"
+    "share_id": "VOmJJ6JS9lZjFpoV7D3wTk0PA1"
    },
-   "alt": [
-    {
-     "platform": "xunlei",
-     "platform_name": "迅雷云盘",
-     "pwd": "3hxn",
-     "detail": "分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19 ",
-     "source": "weibo",
-     "where": "微博原文",
-     "share_id": "VOmJJ6JS9lZjFpoV7D3wTk0PA1"
-    }
-   ],
+   "alt": [],
    "dead": [
     {
      "platform": "quark",
@@ -2230,7 +2194,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2336,7 +2300,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2375,6 +2339,15 @@
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "ootDVv-cDjov"
+    },
+    {
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528",
+     "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip 209.17 MB2025-10-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": ""
     }
    ],
    "dead": [
@@ -2386,6 +2359,15 @@
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "e84b113d573c"
+    },
+    {
+     "platform": "ctfile",
+     "platform_name": "城通网盘",
+     "pwd": "1528",
+     "detail": "文件不存在或已被删除",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": ""
     }
    ],
    "candidates": [],
@@ -2402,7 +2384,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2428,14 +2410,22 @@
    "candidates": []
   },
   "汝，当爱休息区的他": {
-   "state": "pending",
+   "state": "failover",
    "video": {
     "bvid": "BV1BsPczfENe",
     "url": "https://www.bilibili.com/video/BV1BsPczfENe",
     "title": "【电波浪漫短篇】深夜的休息区偶遇一个在洗手池里钓鱼的神秘男主——《汝，当爱休息区的他》（汝、フードコートの隣人を愛せ）汉化发布+测试实况",
     "pubdate": "2026-03-04"
    },
-   "active": null,
+   "active": {
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "3am3",
+    "detail": "分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37 ",
+    "source": "desc",
+    "where": "视频简介",
+    "share_id": "VOmoYvBo974B8b5YVyYDQQegA1"
+   },
    "alt": [],
    "dead": [
     {
@@ -2457,16 +2447,7 @@
      "share_id": "9780b9de1b7c"
     }
    ],
-   "candidates": [],
-   "request": {
-    "bili_url": "https://www.bilibili.com/video/BV1BsPczfENe",
-    "weibo_url": "",
-    "dead_platforms": [
-     "夸克网盘",
-     "百度网盘"
-    ],
-    "message": "《汝，当爱休息区的他》的夸克网盘、百度网盘链接失效了，求补档 🙏"
-   }
+   "candidates": []
   },
   "恶魔之心：被诅咒的试炼": {
    "state": "reshared",
@@ -2521,7 +2502,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     },
     {
      "platform": "quark",
@@ -2535,7 +2516,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2565,6 +2546,33 @@
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "1Sk67xbjZbziK63wRPFIMCQ"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ypz5",
+     "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化补丁v1.1by青灯不弈.zip 43.9MB 2026-07-06 15:50 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VOwqPQU1hyfxAii1mCw0LVNTA1"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "pdu5",
+     "detail": "分享有效（需提取码）｜永久有效｜梦之门（冬弥雪） 汉化补丁by青灯不弈.zip 43.9MB 2026-05-10 16:50 ",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "VOsG4aIEXvegNNo9MQgXuNthA1"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "upat",
+     "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化备份.zip 340.9MB 2026-05-10 16:45 ",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "VOsG37JWLGwjOcLEBy26L1yHA1"
     }
    ],
    "dead": [
@@ -2701,7 +2709,7 @@
      "at": "2026-10-24 22:12",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2714,15 +2722,24 @@
     "pubdate": "2026-10-16"
    },
    "active": {
-    "platform": "lanzou",
-    "platform_name": "蓝奏云",
-    "pwd": "ei6b",
-    "detail": "分享有效｜10.0 M",
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "skdr",
+    "detail": "分享有效（需提取码）｜永久有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip 10MB 2026-10-16 20:03 ",
     "source": "desc",
     "where": "视频简介",
-    "share_id": "wwanu"
+    "share_id": "VP43aDVHIUFIXuga6fe"
    },
    "alt": [
+    {
+     "platform": "lanzou",
+     "platform_name": "蓝奏云",
+     "pwd": "ei6b",
+     "detail": "分享有效｜10.0 M",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "wwanu"
+    },
     {
      "platform": "uc",
      "platform_name": "UC网盘",
@@ -2767,7 +2784,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     },
     {
      "platform": "quark",
@@ -2781,7 +2798,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-25 00:00"
+     "checked_at": "2026-10-25 00:06"
     }
    ]
   },
@@ -2811,6 +2828,15 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "499e10eefe3d"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "estz",
+     "detail": "分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58 ",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "VP4Ds50puFl"
     },
     {
      "platform": "lanzou",

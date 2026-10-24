@@ -160,6 +160,12 @@ def check_all(links, fast=False, node='node'):
                     print('      没有找到 Edge/Chrome，浏览器通道跳过')
                 else:
                     n_spa = R.run_spa_checks(spa, node_bin=node)
+                    # 迅雷/城通偶尔一直停在「正在加载」，26 秒不够就判成待确认。
+                    # 这类只重试一次，比把 9 条链接写成「待确认」干净得多。
+                    retry = [L for L in spa if L.get('status') == 'unknown']
+                    if retry:
+                        print('      待确认 %d 条，重试一轮…' % len(retry))
+                        R.run_spa_checks(retry, node_bin=node)
     return n_api, n_spa
 
 
@@ -260,6 +266,29 @@ def send_mail(subj, body, cfg):
 
 
 # ---------------------------------------------------------------- 站点
+def content_sync(full=False):
+    """微博（repo）与投稿（视频）的每日增量：交给 scripts/daily_content.py
+
+    内容侧与网盘侧的数据源完全不同，但都挂在这一次 0 点任务里——
+    新微博、新投稿第二天就能在站上看到，不用等人工跑全量。
+    失败不影响网盘部分的巡检与站点更新。"""
+    script = os.path.join(REPO, 'scripts', 'daily_content.py')
+    if not os.path.exists(script):
+        print('  ! 没找到 scripts/daily_content.py，跳过内容同步')
+        return
+    cmd = [sys.executable, script] + (['--full'] if full else [])
+    try:
+        r = subprocess.run(cmd, cwd=REPO, timeout=1200, capture_output=True, text=True,
+                           encoding='utf-8', errors='replace')
+        tail = (r.stdout or '').strip().splitlines()[-8:]
+        for line in tail:
+            print('  ' + line)
+        if r.returncode != 0:
+            print('  ! 内容同步有步骤失败（见上），站点其余部分照常更新')
+    except subprocess.TimeoutExpired:
+        print('  ! 内容同步超时（20 分钟），跳过')
+
+
 def refresh_site(games, now):
     """台账 → 站点数据：links.json / links.md / links.html / status.json / autofill.json"""
     R.write_outputs(games, checked=True)
@@ -295,6 +324,10 @@ def main():
     ap.add_argument('--push', action='store_true', help='巡检完 git commit & push')
     ap.add_argument('--test-mail', action='store_true', help='只验证发信配置')
     ap.add_argument('--node', default=os.environ.get('NODE_BIN') or 'node')
+    ap.add_argument('--no-content', action='store_true',
+                    help='跳过微博 repo / B 站投稿的增量同步')
+    ap.add_argument('--full-content', action='store_true',
+                    help='内容同步走全量（微博 400 页、投稿 80 页），首次或补历史时用')
     args = ap.parse_args()
 
     now = time.strftime('%Y-%m-%d %H:%M')
@@ -305,6 +338,9 @@ def main():
         return 0 if ok else 1
 
     print('== %s 网盘巡检 ==' % now)
+    if not args.no_content:
+        print('-- 微博 / 投稿增量 --')
+        content_sync(full=args.full_content)
     led = json.load(open(LEDGER, encoding='utf-8'))
     games = led['games']
     links = [L for g in games for L in (g.get('links') or [])]
