@@ -516,6 +516,13 @@
       ulti_strength_multiple:['ultim',/爆发倍率|倍率/,'ult'],
     };
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),roundPool=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    // 没有「当前出牌」的伤害 = 回合末延迟结算（状态跳伤 / 引爆 / 触腕收尾）。
+    // 它不属于任何一张牌，但确实是本回合打出来的伤害，必须单独入账，
+    // 否则「各手伤害之和 = 命中合计」这条闭合关系永远差一个 5%~40% 的口子（实测 57749fa5 差 39.9%）。
+    const ambientByRound=new Map();
+    // 乘区归因按「被折进哪一回合的伤害」记账（不是按牌打出的回合）：
+    // 只有这样，「每回合归因 ≤ 该回合伤害」才是恒等式，而不是靠额外钳制维持。
+    const zoneRound=new Map();
     // ---- 乘区账本：增益牌不打伤害，它的伤害当量 = 它抬起来的那部分乘区在后续命中里贡献的伤害 ----
     // 坑：回放里每次出牌都会把整套属性重算一遍（`-40` 紧跟 `+40`），1028 的增量整场累加**正好为 0**，
     // 拿它建账会被重复的 `+45` 刷到爆表（实测把 98 万伤害记到一张 0 费牌头上）。
@@ -531,11 +538,19 @@
       if(prop==='o_damage_per_card')return T.some(x=>String(x).startsWith('Card_'));
       if(prop==='o_damage_per_attachpost')return T.includes('Card_AttachPost');
       return true};
-    // 这一击里某乘区贡献的伤害 × 「牌给的份额 / 乘区总量」，按各张牌的额度分账
+    // 这一击里某乘区贡献的伤害 × 「牌给的份额 / 乘区总量」，按各张牌的额度分账。
+    // 关键口径：乘区的贡献是**同一份伤害的份额**，不是额外再加一份 ——
+    // 所以这里算出「这一击有多少被解释为乘区贡献」（h.zoneSum），
+    // 由调用方从「打出这一击的那张牌」的直接伤害里扣掉，两者之和恒等于这一击的伤害。
+    // 否则一张既打伤害又上 buff 的牌会被记两遍，实测 13 场样本里乘区占比一度到 96%（aV ≈ 2 倍实际伤害）。
     const zoneHit=h=>{
+      h.zoneSum=0;
       if(!(h.dmg>0)||!(h.round>0))return h;
       const uid=String(h.uid),P=h.P||{},t0=zoneLastT.get(uid);
       let list=zoneStk.get(uid);if(!list)zoneStk.set(uid,list=[]);
+      // 没有「当前出牌」的命中（回合末延迟结算）没有可以分账的对象：
+      // 真值轨道照常推进，但这一击不记乘区份额，免得凭空多出来一份无从扣减的归因。
+      const credit=h.ownable!==false;
       const give=[];   // 先算「每个乘区这一击贡献多少」，最后按总伤害封顶再分账
       for(const prop of ZONE_ALL){
         const x=Number(P[prop])||0,lk=uid+'|'+prop,prev=zoneLast.get(lk);
@@ -543,7 +558,7 @@
         // ① 真值涨了：把涨出来的这点记给「这段间隔里打出的牌」，权重优先用牌自己声明的乘区额度
         if(prev!=null&&x>prev+1e-9){
           const d=x-prev;
-          const win=playLog.filter(p=>p.kind==='card'&&(t0==null||p.time>t0)&&p.time<=h.t);
+          const win=credit?playLog.filter(p=>p.kind==='card'&&(t0==null||p.time>t0)&&p.time<=h.t):[];
           if(win.length){const wsum=win.reduce((n,p)=>n+Math.max(0,(p.zones&&p.zones[prop])||0),0);
             for(const p of win){const w=wsum>0?Math.max(0,(p.zones&&p.zones[prop])||0)/wsum:1/win.length;
               if(w>0)list.push({prop,amt:d*w,tid:p.tid,play:p,round:h.round,dmg:0})}}
@@ -551,9 +566,13 @@
         // ② 真值回落（增益到期 / 被驱散）：账本按比例缩回，过期的增益不能再领钱
         let tracked=0;for(const b of list)if(b.prop===prop&&b.amt>1e-9)tracked+=b.amt;
         if(tracked>x+1e-9&&tracked>0){const f=(x>0?x:0)/tracked;for(const b of list)if(b.prop===prop)b.amt*=f;tracked=x}
-        // ③ 只在本回合内计息：跨回合的持续增益不重复领钱（宁可低估），否则一张 0 费牌能吃掉整场 90%
+        // ③ 持续增益要算持续收益：不再限定「只在本回合内计息」。
+        // 原来的限制是为了保住「每回合归因 ≤ 该回合伤害」，但代价是 2 回合的力量增益第二回合白干 ——
+        // 实测 411b586f 的跨回合额度 2412 点（比同回合的 2298 还多）折出来的伤害全是 0。
+        // 正确做法不是丢弃跨回合收益，而是把收益记到**它兑现的那一回合**（zoneByRound），
+        // 这样守恒自动成立；同时 valueUpTo(rd) 只取 r < rd 的部分，价格仍然不偷看未来。
         const live=[];let mine=0;
-        for(const b of list)if(b.prop===prop&&b.amt>1e-9&&b.round===h.round){live.push(b);mine+=b.amt}
+        for(const b of list)if(b.prop===prop&&b.amt>1e-9){live.push(b);mine+=b.amt}
         if(!live.length||!(x>0)||!propFits(prop,h))continue;
         const dz=zoneDmgOf(prop,x,mine,h.dmg,{strMul:zStrMul(h),cmul:h.cmul,crit:h.crit,critDmg:Number(P.crit_damage)||0});
         if(dz>0)give.push({prop,live,mine,dz});
@@ -562,11 +581,15 @@
       const sum=give.reduce((n,g)=>n+g.dz,0);
       const k=sum>h.dmg?h.dmg/sum:1;
       for(const g of give){const dz=g.dz*k;
-        for(const b of g.live){// 只在本牌打出的那一回合内计息：跨回合领钱会让 R3 的牌吃 R5 的爆发，
-          // 既破坏「每回合归因 ≤ 该回合伤害」，也让价格偷看未来（price 只取 round < 当前回合）
-          if(b.play&&b.play.round!==h.round)continue;
-          const c=dz*b.amt/g.mine;b.dmg+=c;
-          if(b.play){b.play.zoneDmg=(b.play.zoneDmg||0)+c;const m=b.play.zoneDmgBy||(b.play.zoneDmgBy={});m[g.prop]=(m[g.prop]||0)+c}}
+        for(const b of g.live){const c=dz*b.amt/g.mine;b.dmg+=c;
+          if(b.play){const pl=b.play;
+            pl.zoneDmg=(pl.zoneDmg||0)+c;
+            // 兑现回合：持续增益在后续回合命中里领到的钱记在命中回合，不记在打出回合
+            const zr=pl.zoneByRound||(pl.zoneByRound={});
+            zr[h.round]=(zr[h.round]||0)+c;
+            const m=pl.zoneDmgBy||(pl.zoneDmgBy={});m[g.prop]=(m[g.prop]||0)+c}}
+        zoneRound.set(h.round,(zoneRound.get(h.round)||0)+dz);
+        h.zoneSum+=dz;
       }
       zoneLastT.set(uid,h.t);
       return h;
@@ -1157,7 +1180,13 @@
               }}
             const h=d.beHitConfig,delta=(Number(h.curHp)||0)-(Number(h.oldHp)||0),amt=Math.abs(delta||Number(h.changeVal)||0),typ=delta>0?'heal':'damage',sname=res.nameSkill(h.skillConfigId);
             if(typ==='heal'&&bout>0&&actorOf(h.targetRoleUid)?.camp===1){const nom=Number(h.originVal)||0;if(nom>0){healNom+=nom;healAct+=Math.min(nom,amt)}}
-            if(execSrc.cur?.play&&bout>0){const pl=execSrc.cur.play;if(typ==='damage'&&actorOf(h.targetRoleUid)?.kind==='monster'&&actorOf(h.castRoleUid)?.kind==='awakener')pl.dmg+=Number(h.originVal)||amt;else if(typ==='heal'&&actorOf(h.targetRoleUid)?.camp===1)pl.heal+=amt}
+            // 伤害入账：命中落在某张牌的出牌窗口里才算这张牌的产出。
+            // 窗户外的（回合末状态跳伤 / 引爆 / 触腕收尾）不属于任何一张牌 —— 记进 ambientByRound，
+            // 否则「各手之和」永远比命中合计少一截，看起来像丢伤害，其实是无主伤害。
+            if(typ==='damage'&&bout>0&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
+              const dv=Number(h.originVal)||amt,pl=execSrc.cur?.play;
+              if(pl)pl.dmg+=dv;else if(dv>0)ambientByRound.set(bout,(ambientByRound.get(bout)||0)+dv);
+            }else if(typ==='heal'&&execSrc.cur?.play&&bout>0&&actorOf(h.targetRoleUid)?.camp===1){execSrc.cur.play.heal+=amt}
             if(typ==='damage'&&actorOf(h.castRoleUid)?.kind==='awakener'&&actorOf(h.targetRoleUid)?.kind==='monster'){
               {const cu=execSrc.cur?.play?.cardUid,bs=cu!=null?cardSt.get(String(cu)):null;if(bs&&bout>0){let L=0;for(const v of bs.values())if(v.stateId===126895||v.stateId===134389)L+=v.layer||0;if(L>0){const ar=[...actors.values()].find(a=>a.kind==='awakener'&&a.camp===1&&/^阿拉克涅$/.test(a.name)),pct=2*L,D0=Number(h.originVal)||amt;if(ar)supOf('act:'+ar.uid).beaconExtra+=D0*pct/(100+pct)}}}   // 奇点信标 on the card (+2% final damage per stack) belongs to Arachne in 命定·超维
               if(!res.skill[String(h.skillConfigId)]&&bout>0&&tenAct.length){const D=Number(h.originVal)||amt,A=tenAct.reduce((n,a)=>n+(a.amt>0?a.amt:0),0),Tn=Math.max(tenT,A);if(Tn>0&&D>0)for(const a of tenAct)if(a.amt>0)supOf(a.key).tenExtra+=D*a.amt/Tn}   // a tentacle attack: damage scales with the tentacle stat, so each active +x is worth x/T of it
@@ -1169,9 +1198,12 @@
                 {const sk=res.skill[String(h.skillConfigId)],tx=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(tx).join(' '):String(v),m=tx(sk?.BattleDesc||sk?.Desc).match(/此卡[^。，；]{0,8}暴击率[^。，；\d]{0,6}(\d+(?:\.\d+)?)\s*[%％]/);if(m)o.c+=Number(m[1])}
                 return o})();
               const fiaM=!!curFia&&curFia.uid===String(h.castRoleUid)&&(h.skillConfigId==null||String(curFia.tid)===String(h.skillConfigId));   // 活焰 / 卡牌力量倍率属于那张打出的牌，不能泄漏到之后的 DoT / 反击 / 触腕命中
-              hitLog.push(zoneHit({dt:h.damageType,cx,cr:(()=>{const x=board.get(String(h.castRoleUid))?.props?.crit;return x==null?null:Number(x)})(),t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:fiaM?curFia.args:null,ptid:fiaM?curFia.tid:null,cmul:fiaM?curFia.cmul:0,fia:fiaM?curFia.pct:0,fiaLvl:fiaM?curFia.lvl:0,
+              hitLog.push(zoneHit({ownable:!!execSrc.cur?.play,dt:h.damageType,cx,cr:(()=>{const x=board.get(String(h.castRoleUid))?.props?.crit;return x==null?null:Number(x)})(),t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:fiaM?curFia.args:null,ptid:fiaM?curFia.tid:null,cmul:fiaM?curFia.cmul:0,fia:fiaM?curFia.pct:0,fiaLvl:fiaM?curFia.lvl:0,
                 amp:(()=>{const out=[];for(const [su,v] of bstates.get(String(h.targetRoleUid))||[]){const ex=res.state[String(v.stateId)]?.ExistProperty;if(!ex)continue;for(const [pr,expr] of Object.entries(ex)){if(!/^be_damage_per/.test(pr))continue;const m=String(expr).match(/^ChangedLayer\s*\*\s*(-?\d+(?:\.\d+)?)$/),pv=m?(v.layer||1)*Number(m[1]):Number.isFinite(Number(expr))?Number(expr):null;if(pv>0)out.push({p:pv,keys:stSrc.get(String(su))||[],nm:res.nameState(v.stateId)})}}return out})(),
                 stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(fiaM&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,fiaM?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))}));
+              // 注：h.zoneSum 只是「这一击有多少被解释为乘区贡献」，用于面板上的占比展示，
+              // **不**从这张牌的直接伤害里扣减 —— 那是把两种不同用途的口径混在一起：
+              // 定价要的是「这张牌自己能产出多少」（含它带来的乘区），回合守恒要的是「这一击的伤害算谁的」。
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -1286,7 +1318,7 @@
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
     zoneFlush();   // 最后一个时间戳的乘区缓冲也要落地
-    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs,zoneStk};
+    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs,zoneStk,zoneRound,ambientByRound};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -2247,31 +2279,68 @@
         // 151789 的 R1 里一张 1 费「打击」也被估成 5.9 万。前后回合的力量/增益本来就不是一个量级。
         // 无历史的牌按「同类型每点算力产出 × 本牌费用」回落：同类型**绝对**均值会让
         // 1 费小牌直接继承 3 费大招的伤害，把「本可以打别的」凭空放大（宁可低估，不臆造）。
+        // 持续增益的收益按「兑现回合」取：rd 这一回合能算进来的，只有 r < rd 的兑现部分。
+        // 这既让 2 回合的力量增益在第二回合继续领钱，又保证价格不偷看未来。
+        const zoneUpTo=(p,upto)=>{
+          const z=p&&p.zoneByRound;if(!z)return 0;
+          if(upto==null){let n=0;for(const v of Object.values(z))n+=v;return n}
+          let n=0;for(const r in z)if(Number(r)<upto)n+=z[r];return n};
         const valueUpTo=upto=>{
           const byTid=new Map(),byType=new Map();
           for(const p of cardPlays){
             if(upto!=null&&p.round>=upto)continue;
             // 增益牌自己没有直接伤害，它的产出 = 它抬起来的乘区在命中里折出来的那份伤害（zoneDmg）：
-            // 力量区按技能系数放大，增伤 / 暴伤 / 暴击率区按 dmg×x/(100+x) 折算，且只在本回合内计息。
-            const dmg=(Number(p.dmg)||0)+(Number(p.zoneDmg)||0),def=(Number(p.block)||0)+1.2*(Number(p.heal)||0),c=costOf(p.tid,p.cost);
-            const k=String(p.tid),v=byTid.get(k)||{n:0,dmg:0,def:0};v.n++;v.dmg+=dmg;v.def+=def;byTid.set(k,v);
-            const t=typeOf(p.tid),w=byType.get(t)||{n:0,dmg:0,def:0,cost:0};w.n++;w.dmg+=dmg;w.def+=def;w.cost+=c;byType.set(t,w);
+            // 力量区按技能系数放大，增伤 / 暴伤 / 暴击率区按 dmg×x/(100+x) 折算。
+            // 持续增益只取「到 upto 之前已经兑现」的那部分（zoneUpTo），不是它最终兑现了多少。
+            const dmg=(Number(p.dmg)||0)+zoneUpTo(p,upto),def=(Number(p.block)||0)+1.2*(Number(p.heal)||0),c=costOf(p.tid,p.cost);
+            const k=String(p.tid),v=byTid.get(k)||{n:0,dmg:0,def:0,eng:0,ali:0,draw:0};
+            v.n++;v.dmg+=dmg;v.def+=def;v.eng+=Number(p.eng)||0;v.ali+=Number(p.ali)||0;v.draw+=Number(p.draw)||0;byTid.set(k,v);
+            const t=typeOf(p.tid),w=byType.get(t)||{n:0,dmg:0,def:0,cost:0,eng:0,ali:0,draw:0};
+            w.n++;w.dmg+=dmg;w.def+=def;w.cost+=c;w.eng+=Number(p.eng)||0;w.ali+=Number(p.ali)||0;w.draw+=Number(p.draw)||0;byType.set(t,w);
           }
           return (tid,cost)=>{
             const v=byTid.get(String(tid));
-            if(v&&v.n)return {d:v.dmg/v.n,f:v.def/v.n,src:'self'};
+            if(v&&v.n)return {d:v.dmg/v.n,f:v.def/v.n,eng:v.eng/v.n,ali:v.ali/v.n,draw:v.draw/v.n,src:'self'};
             const w=byType.get(typeOf(tid));
-            if(!w||!w.n||!(w.cost>0))return {d:0,f:0,src:'none'};
+            if(!w||!w.n||!(w.cost>0))return {d:0,f:0,eng:0,ali:0,draw:0,src:'none'};
             const c=cost>0?cost:w.cost/w.n;
-            return {d:w.dmg/w.cost*c,f:w.def/w.cost*c,src:'type'};
+            return {d:w.dmg/w.cost*c,f:w.def/w.cost*c,eng:w.eng/w.cost*c,ali:w.ali/w.cost*c,draw:w.draw/w.cost*c,src:'type'};
           };
         };
         // knapsack per round: with the same hand and energy budget, what was the best achievable damage / defence versus what was played
         const rounds=new Map();for(const p of cardPlays){const r=rounds.get(p.round)||{played:[],spent:0};r.played.push(p);r.spent+=costOf(p.tid,p.cost);rounds.set(p.round,r)}
         // 单轴背包：给定这点算力，某条轴最多能换到多少
-        const knapX=(its,B,key)=>{const N=Math.max(0,Math.round(B)||0),dp=new Array(N+1).fill(0);
+        const knapDP=(its,B,key)=>{const N=Math.max(0,Math.round(B)||0),dp=new Array(N+1).fill(0);
           for(const it of its){const c=Math.max(0,Math.round(it.c)||0);if(c>N)continue;for(let b=N;b>=c;b--)dp[b]=Math.max(dp[b],dp[b-c]+it[key])}
-          return dp[N]};
+          return dp};
+        const knapX=(its,B,key)=>knapDP(its,B,key)[Math.max(0,Math.round(B)||0)];
+        // ---- 资源区：非伤害乘区的增益（算力 / 狂气 / 抽牌）单独定价 ----
+        // 这三样都不直接产生伤害，但都是「让别的牌能打出去」的东西，一律记 0 等于承认「算不出价值」
+        // —— 实测 13 场样本里 33.8% 的出牌是这种零产出牌。
+        // 换算率一律取「此前回合的平均兑现率」，不用背包的边际价格：
+        // 边际价格会在一张便宜大牌摆进池子时飙升（实测把一张 1 费的抽牌牌算出 16.3 万），
+        // 而且它默认「抽到的牌都能打出去」。平均值稳定，并且天然满足
+        // 「Σ资源获得 × 费率 ≈ 实际兑现」，不会凭空放大。
+        //   算力：此前累计伤害 ÷ 累计算力消耗（每点算力平均换来多少伤害）
+        //   狂气：此前累计终结技伤害 ÷ 累计狂气获得（每点狂气最终兑现多少伤害）
+        //   抽牌：ρ算力 × 平均牌费 × 手牌使用率（进手的牌里最终真被打出去的比例）
+        const roundDmg=new Map();for(const h of tl.hitLog||[])roundDmg.set(h.round,(roundDmg.get(h.round)||0)+h.dmg);
+        const resRates=rd=>{
+          let dmg=0,eng=0,ultiDmg=0,aliGain=0,costSum=0,n=0,drawn=0;
+          for(const p of tl.playLog||[]){
+            if(!(p.round<rd))continue;
+            if(p.kind==='ultimate'){ultiDmg+=Number(p.dmg)||0;continue}
+            if(p.kind!=='card')continue;
+            const c=costOf(p.tid,p.cost);
+            dmg+=Number(p.dmg)||0;eng+=c;aliGain+=Number(p.ali)||0;costSum+=c;n++;
+            drawn+=Number(p.draw)||0;
+          }
+          return {e:eng>0?dmg/eng:0,u:aliGain>0?ultiDmg/aliGain:0,cost:n>0?costSum/n:0,
+            use:n>0?n/(n+drawn):0};   // 手牌使用率：打出去的比例，抽得多、打得少就低
+        };
+        // 本回合的终结技伤害：P 原来完全看不见它（cardPlays 只收 kind==='card'），
+        // 于是一场靠爆发收割的记录，产出只剩小牌的零头。现在它与牌面产出一起计入。
+        const ultiDmgOf=rd=>(tl.playLog||[]).filter(p=>p.kind==='ultimate'&&p.round===rd).reduce((n,p)=>n+(Number(p.dmg)||0),0);
         let infoN=0,judgeN=0;const rrows=[],rratios=[];
         for(const [rd,r] of [...rounds.entries()].sort((a,b)=>a[0]-b[0])){
           const end=tl.roundEnd?.get(rd);if(!end)continue;
@@ -2291,19 +2360,47 @@
             if(actors.get(String(cd.ownerUid))?.kind!=='awakener')continue;
             items.push({uid:u,tid:cd.tid,c:costOf(cd.tid,cd.cost),played:false});
           }
-          for(const it of items){const a=avg(it.tid,it.c);it.d=a.d;it.f=a.f;it.src=a.src}
+          // 牌价（伤害 / 护盾）+ 资源费率
+          for(const it of items){const a=avg(it.tid,it.c);it.d=a.d;it.f=a.f;it.src=a.src;it.avgEng=a.eng||0;it.avgAli=a.ali||0;it.avgDraw=a.draw||0;it.gross=it.c}
+          const RT=resRates(rd),ultra=ultiDmgOf(rd);
+          // ---- 资源区：非伤害乘区的增益，按「它改变约束的方式」进模型，而不是另加一份价格 ----
+          // 为什么不能直接给它们标价：资源换来的产出最终都记在受益的牌上（算力换来的牌、狂气换来的爆发），
+          // 再给资源单独标一次价就是同一笔钱收两遍。所以三项各走各的通道：
+          //   算力：不标价，改成「净费用」= 费用 − 获得算力。它让同样的预算能多买一张牌，价值在这里体现；
+          //   狂气：兑现方式是终结技，而终结技伤害原来**完全不进 P**（cardPlays 只收 kind==='card'）。
+          //         改成把终结技伤害计入本回合产出，狂气本身不再单独标价；
+          //   抽牌：抽到的牌已经在本回合牌池里，最优解本来就能选它们 —— 价值体现为「池子更大」，
+          //         面板上单列「牌池扩容」让你看得见。
+          // rE/rU/rD 只作折算展示（回答「这张牌的资源大概值多少」），不参与打分。
+          const byUid=new Map(r.played.map(p=>[String(p.cardUid),p]));
+          for(const it of items){
+            const p=it.played?byUid.get(it.uid):null;
+            const eng=p?(Number(p.eng)||0):it.avgEng;
+            it.eng=eng;
+            it.c=Math.max(0,it.gross-eng);   // 净费用：算力返还算作这张牌占用的减少
+            it.rE=eng*RT.e;it.rU=(p?(Number(p.ali)||0):it.avgAli)*RT.u;it.rD=(p?(Number(p.draw)||0):it.avgDraw)*RT.cost*RT.use;
+            it.r=it.rE+it.rU+it.rD;
+          }
+          // 折算只作展示，但仍要封顶：资源的价值最终只能体现在它开启的产出上，
+          // 一张牌（或一个回合）的折算不可能超过本回合实际打出来的伤害。
+          {const dmgRd=roundDmg.get(rd)||0;
+            for(const it of items){if(it.r>dmgRd&&it.r>0){const k2=dmgRd/it.r;it.rE*=k2;it.rU*=k2;it.rD*=k2;it.r=dmgRd}}
+            const rs=items.filter(i=>i.played).reduce((n,i)=>n+i.r,0);
+            if(rs>dmgRd&&rs>0){const k2=dmgRd/rs;for(const it of items){it.rE*=k2;it.rU*=k2;it.rD*=k2;it.r*=k2}}}
           const aD=items.filter(i=>i.played).reduce((n,i)=>n+i.d,0),aF=items.filter(i=>i.played).reduce((n,i)=>n+i.f,0);
-          // 铺垫（打出但既没伤害也没防御：觉醒 / 抽牌 / 加狂气）不该在伤害轴上被罚两次：
+          // 只有狂气进 aV：它换来的终结技伤害不在 v 里（P 只评牌面），所以不存在重复计价。
+          // 算力走净费用、抽牌走牌池，两者都已在模型里各出现一次，不再加价。
+          for(const it of items)it.v=it.d+it.f+it.rU;
+          // 铺垫（打出但既没伤害、也没防御、也没带回算力）不该在伤害轴上被罚两次：
           // 它花掉的算力本来就不可能再用于打伤害。把这部分从伤害轴预算里去掉，
           // 等价于「按你选定的方案评」，而不是拿一份没花在铺垫上的假预算算最优解。
-          const setup=items.filter(i=>i.played&&i.d<=0&&i.f<=0).reduce((n,i)=>n+i.c,0);
+          // 带回算力的牌净费用已经为 0，费用留在预算里跟别的牌竞争。
+          const setup=items.filter(i=>i.played&&i.v<=0&&!(i.eng>0)).reduce((n,i)=>n+i.gross,0);
           const Bd=Math.max(0,B-setup);
-          // 两条轴各拿满预算求最优再平均，等于要求「同时」打出最高伤害和最高护盾 ——
-          // 一回合只有一份算力，物理上做不到：151789 R8 花 3 点算力，既打了 0 费的
-          // 涡！流！弹！（31057 伤害）又留了张 3 费防御牌，旧口径按「31057 + 22808 伤害」判成 57%。
-          // 合成成单一目标再比：1 点护盾按吸收 1 点伤害计（游戏语义，与 def=block+1.2·heal 同一口径），
-          // 不引入人为的交换率常数 —— 防御牌贵不贵由它的费用体现，不由「轴权重」体现。
-          for(const it of items)it.v=it.d+it.f;
+          // 单一目标：伤害 + 护盾 + 狂气当量。1 点护盾按吸收 1 点伤害计（游戏语义，与 def=block+1.2·heal 同一口径），
+          // 两条轴各拿满预算求最优再平均等于要求「同时」打出最高伤害和最高护盾，物理上做不到。
+          // 终结技伤害不进 aV/oV：两端口径同额相加只会把比例稀释到 100%（实测短场速通直接变满分），
+          // 而牌面决策该评的是「牌选得对不对」；爆发的产出由产生狂气的那些牌按兑现率计。
           const aV=items.filter(i=>i.played).reduce((n,i)=>n+i.v,0);
           const oV=Math.max(aV,knapX(items,Bd,'v'));
           const better=(oV-aV)>oV*.01;
@@ -2319,12 +2416,18 @@
           if(ratio!=null){rratios.push(ratio);judgeN++;if(better)infoN++}
           // 展示用：两条轴各自在全预算下的上限（不参与打分，只用来解释「当时还有多少空间」）
           const oD=Math.max(aD,knapX(items,Bd,'d')),oF=Math.max(aF,knapX(items,Bd,'f'));
-          // 本回合增益牌靠乘区折出来的伤害当量（展示用：让人看得见这部分产出不是凭空给的）
-          // r.played 本身就是 playLog 里的出牌对象，直接取 zoneDmg —— 按 cardUid 去 playLog 里反查会
-          // 把「没有 cardUid 的出牌」（守密人技能）全匹配到一起，把别的回合的归因加进来。
-          const zoneV=r.played.reduce((n,p)=>n+(Number(p.zoneDmg)||0),0);
+          // 本回合的乘区折算：按「兑现回合」取（持续增益在后续回合领到的钱记在兑现的那一轮），
+          // 这样这一列加起来必然 ≤ 本回合伤害，不会出现「归因超过实际」。
+          const zoneV=Number(tl.zoneRound?.get(rd))||0;
+          const rE=items.filter(i=>i.played).reduce((n,i)=>n+(i.rE||0),0);
+          const rU=items.filter(i=>i.played).reduce((n,i)=>n+(i.rU||0),0);
+          const rD=items.filter(i=>i.played).reduce((n,i)=>n+(i.rD||0),0);
+          const ambient=Number(tl.ambientByRound?.get(rd))||0;
+          // 牌池扩容：本回合牌池里没打出去的牌有几张上过价（= 抽牌带来的额外选择权有多大）
+          const poolGain=items.filter(i=>!i.played&&(i.d>0||i.f>0)).length;
           rrows.push({round:rd,budget:B,budgetD:Bd,hand:items.length,played:r.played.length,aD,oD,aF,oF,aV,oV,judge,better,ratio,zoneV,
-            items:items.map(i=>({tid:i.tid,c:i.c,d:Math.round(i.d),f:Math.round(i.f),src:i.src,played:i.played}))});
+            rE,rU,rD,resU:ultra,poolGain,ambient,rhoE:RT.e,rhoU:RT.u,rhoD:RT.cost*RT.use,
+            items:items.map(i=>({tid:i.tid,c:i.c,gross:i.gross,eng:i.eng,d:Math.round(i.d),f:Math.round(i.f),r:Math.round(i.r),src:i.src,played:i.played}))});
         }
         // 回合等权：一次回合是一次决策。按伤害加权求和会让后期的大数字把早期的失误稀释掉
         // （151789 R4 打出 212 而手上有张值 847 的牌，4 倍失误，却被 R7 的 3.1 万摊平）。
@@ -2729,7 +2832,10 @@
     const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
     const rr=k.rrows.map(r=>{const avg=r.ratio!=null?r.ratio:null,judge=(r.judge!=null?r.judge:r.inf!==false)&&avg!=null;
       const aV=Math.round(r.aV||0),oV=Math.round(r.oV||0);
-      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('没有可比的价格，不计','no priceable alternative')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}${r.zoneV>0?` · ${ui(`乘区折 ${f(r.zoneV)}`,`zones ${f(r.zoneV)}`)}`:''}</small></span><b>${ui(`产出 ${f(aV)} / 上限 ${f(oV)}`,`${f(aV)} / ${f(oV)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
+      // 分区折算：乘区（增益抬起来的份额）/ 算力 / 狂气 / 抽牌 / 延迟结算，都只在有值时才占位
+      const zs=[[r.zoneV,ui('乘区折','zones')],[r.rE,ui('算力折','energy')],[r.rU,ui('狂气折','gauge')],[r.rD,ui('抽牌折','draw')],[r.ambient,ui('延迟结算','deferred')]]
+        .filter(([v])=>v>0).map(([v,n])=>` · ${n} ${f(v)}`).join('');
+      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('没有可比的价格，不计','no priceable alternative')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}${zs}</small></span><b>${ui(`产出 ${f(aV)} / 上限 ${f(oV)}`,`${f(aV)} / ${f(oV)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
     const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
     const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
     const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
@@ -2768,7 +2874,7 @@
         ${row(ui('手牌利用率（未被回合末弃掉）','Hand used'),pct(E.e2),E.e2==null?null:E.e2*100,ui(`打出 ${f(E.used)} / 回合末弃牌 ${f(E.disc)}`,''))}
         ${row(ui('算力未溢出','No overflow'),pct(E.e3),E.e3==null?null:E.e3*100,ui(`溢出 ${f(E.over)}`,''))}
         ${row(ui('手牌未溢出（未因手牌已满丢牌）','No hand overflow'),fx.handOverflowPct==null?'—':pc(fx.handOverflowPct),fx.handOverflowPct==null?null:Math.max(0,100-Math.min(100,fx.handOverflowPct/25*100)),ui(`丢牌 ${f(fx.handOverflow||0)} / 进手 ${f(fx.handCardsSeen||0)}`,''))}</div>
-      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。产出一律折成「伤害当量」：1 点护盾按吸收 1 点伤害计，所以选攻还是选守不会被重复扣分；增益牌本身不打伤害，它的当量按它抬起来的「伤害乘区」折算 —— 力量区按「力量 × 该技能的力量系数」算每次命中多打的部分，增伤 / 暴伤区按「伤害 × x/(100+x)」算，暴击率区按「暴击率% × 该次暴伤」算，且只在本牌打出的那一回合内计息，几个乘区之间再按总伤害等比压回来（各自独立算边际会重复计算）。按回合等权，不看数字大小；纯铺垫（觉醒 / 抽牌 / 加狂气）花掉的算力不参与最优解。共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得比`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight). Damage and shield are added 1:1, so picking defence over offence is not punished twice. A buff card deals no damage itself: its equivalent is priced through the damage zones it raised (strength x the skill's strength scale per hit; damage-amp and crit-damage zones as damage x x/(100+x); crit-rate as rate% x crit damage), counted only within the round the card was played, then scaled down so the zones together never claim more than the hit's damage. Rounds are weighted equally; pure setup energy is excluded from the optimum. ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds were comparable`)}</small>${rr}</div>
+      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。产出一律折成「伤害当量」：1 点护盾按吸收 1 点伤害计，所以选攻还是选守不会被重复扣分；增益牌本身不打伤害，它的当量按它抬起来的「伤害乘区」折算 —— 力量区按「力量 × 该技能的力量系数」算每次命中多打的部分，增伤 / 暴伤区按「伤害 × x/(100+x)」算，暴击率区按「暴击率% × 该次暴伤」算，增益的收益记在「兑现的那一回合」（2 回合的力量增益，第二回合照样领钱），几个乘区之间再按总伤害等比压回来（各自独立算边际会重复计算）。非伤害乘区的增益各走一条通道，不另加一份价格：算力按「净费用 = 费用 − 获得算力」进背包、抽牌让牌池变大、狂气按「每点狂气最终兑现多少爆发伤害」折算进产出（爆发本身不进 P —— 那是牌面之外的行动）。按回合等权，不看数字大小；纯铺垫（觉醒 / 抽牌）花掉的算力不参与最优解。共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得比`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight). Damage and shield are added 1:1, so picking defence over offence is not punished twice. A buff card deals no damage itself: its equivalent is priced through the damage zones it raised (strength x the skill's strength scale per hit; damage-amp and crit-damage zones as damage x x/(100+x); crit-rate as rate% x crit damage), credited in the round the value is realised (a 2-round strength buff still earns in its second round), then scaled down so the zones together never claim more than the hit's damage. Non-damage buffs each take their own channel instead of a second price: energy lowers the card's net cost, card draw enlarges the pool, and ulti gauge is converted at the rate it actually pays out as burst damage (the burst itself is not scored in P). Rounds are weighted equally; pure setup energy is excluded from the optimum. ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds were comparable`)}</small>${rr}</div>
       <div class="mr2mcol"><h6>${ui('各钥令实际价值','Keyflare values')}</h6>${kv||`<div class="mr2empty">—</div>`}</div></div>`;
   }
   function ratingPanel(m,total,DIM,res){
