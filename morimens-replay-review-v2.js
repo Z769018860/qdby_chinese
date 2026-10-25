@@ -2096,33 +2096,71 @@
         const pl=tl.playLog||[],kinds=new Map();
         const cardPlays=pl.filter(p=>p.kind==='card'&&actors.get(String(p.owner))?.kind==='awakener');
         const typeOf=tid=>asList(res.skill[String(tid)]?.Type)[0]||'';
-        const byTid=new Map(),byType=new Map();
-        for(const p of cardPlays){const k=String(p.tid),v=byTid.get(k)||{n:0,dmg:0,def:0};v.n++;v.dmg+=p.dmg;v.def+=p.block+1.2*p.heal;byTid.set(k,v);
-          const t=typeOf(p.tid),w=byType.get(t)||{n:0,dmg:0,def:0};w.n++;w.dmg+=p.dmg;w.def+=p.block+1.2*p.heal;byType.set(t,w)}
-        const avg=(tid)=>{const v=byTid.get(String(tid));if(v&&v.n)return {d:v.dmg/v.n,f:v.def/v.n,known:true};const w=byType.get(typeOf(tid));return w&&w.n?{d:w.dmg/w.n,f:w.def/w.n,known:false}:{d:0,f:0,known:false}};
         // 费用可能是公式字符串（如 144492 的 `3-PlayerRole.GetStateLayer(148517)`），
         // 直接 Number() 会得到 NaN 再被当成 0 —— 背包会把这类牌当免费牌，算出假的「最优」。
         // 取字符串开头的数字作为基准费用（公式里的减项最多把费用降到 0，不会让它更贵）。
         const costOf=(tid,c)=>{const raw=c!=null?c:res.skill[String(tid)]?.Cost;let v=Number(raw);if(!Number.isFinite(v)){const m=String(raw??'').match(/^\s*(\d+(?:\.\d+)?)/);v=m?Number(m[1]):NaN}return Number.isFinite(v)&&v>0?Math.round(v):0};
+        // 一张牌值多少，只能用**这一回合之前**的出牌来估。
+        // 用全场均值是未来函数：153180 的 R3 因此被判「本可以打 29.9 万」，而那个数字来自 R6 的爆发；
+        // 151789 的 R1 里一张 1 费「打击」也被估成 5.9 万。前后回合的力量/增益本来就不是一个量级。
+        // 无历史的牌按「同类型每点算力产出 × 本牌费用」回落：同类型**绝对**均值会让
+        // 1 费小牌直接继承 3 费大招的伤害，把「本可以打别的」凭空放大（宁可低估，不臆造）。
+        const valueUpTo=upto=>{
+          const byTid=new Map(),byType=new Map();
+          for(const p of cardPlays){
+            if(upto!=null&&p.round>=upto)continue;
+            const dmg=Number(p.dmg)||0,def=(Number(p.block)||0)+1.2*(Number(p.heal)||0),c=costOf(p.tid,p.cost);
+            const k=String(p.tid),v=byTid.get(k)||{n:0,dmg:0,def:0};v.n++;v.dmg+=dmg;v.def+=def;byTid.set(k,v);
+            const t=typeOf(p.tid),w=byType.get(t)||{n:0,dmg:0,def:0,cost:0};w.n++;w.dmg+=dmg;w.def+=def;w.cost+=c;byType.set(t,w);
+          }
+          return (tid,cost)=>{
+            const v=byTid.get(String(tid));
+            if(v&&v.n)return {d:v.dmg/v.n,f:v.def/v.n,src:'self'};
+            const w=byType.get(typeOf(tid));
+            if(!w||!w.n||!(w.cost>0))return {d:0,f:0,src:'none'};
+            const c=cost>0?cost:w.cost/w.n;
+            return {d:w.dmg/w.cost*c,f:w.def/w.cost*c,src:'type'};
+          };
+        };
         // knapsack per round: with the same hand and energy budget, what was the best achievable damage / defence versus what was played
         const rounds=new Map();for(const p of cardPlays){const r=rounds.get(p.round)||{played:[],spent:0};r.played.push(p);r.spent+=costOf(p.tid,p.cost);rounds.set(p.round,r)}
         const knap=(items,B,key)=>{const dp=new Array(B+1).fill(0);for(const it of items){const c=it.c;if(c>B)continue;for(let b=B;b>=c;b--)dp[b]=Math.max(dp[b],dp[b-c]+it[key])}return dp[B]};
-        let sumAD=0,sumOD=0,sumAF=0,sumOF=0,infoN=0;const rrows=[];
+        let infoN=0,judgeN=0;const rrows=[],rratios=[];
         for(const [rd,r] of [...rounds.entries()].sort((a,b)=>a[0]-b[0])){
           const end=tl.roundEnd?.get(rd);if(!end)continue;
           const B=Math.min(30,r.spent+Math.max(0,Math.round(end.energy||0)));
-          const items=[...r.played.map(p=>({tid:p.tid,c:costOf(p.tid,p.cost),played:true})),...(end.hand||[]).filter(h=>actors.get(String(tl.ent.cards.get(String(h.uid))?.ownerUid))?.kind==='awakener'&&!r.played.some(p=>String(p.cardUid)===String(h.uid))).map(h=>({tid:h.tid,c:costOf(h.tid,h.cost),played:false}))].map(it=>{const a=avg(it.tid);return {...it,d:a.d,f:a.f}});
-          const aD=items.filter(i=>i.played).reduce((n,i)=>n+i.d,0),aF=items.filter(i=>i.played).reduce((n,i)=>n+i.f,0),oD=Math.max(aD,knap(items,B,'d')),oF=Math.max(aF,knap(items,B,'f'));
-          // 这一回合「有没有可能出现更好的选择」：背包最优与实际打出完全一致时，这一回合不提供信息
-          // （打出 A 本身就证明 A 是这一步的最优），把比率算进去只会把它推向 1。
-          // 旧口径把这些回合当满分：151789 的 7 个回合里有 5 个 aD≡oD、6 个 aF≡oF，P 因此虚高到 95.1。
-          const inf=(oD-aD)>oD*.01||(oF-aF)>oF*.01;
-          if(inf){sumAD+=aD;sumOD+=oD;sumAF+=aF;sumOF+=oF;infoN++}
-          rrows.push({round:rd,budget:B,hand:items.length,played:r.played.length,aD,oD,aF,oF,inf});
+          const avg=valueUpTo(rd);
+          const items=[...r.played.map(p=>({tid:p.tid,c:costOf(p.tid,p.cost),played:true})),...(end.hand||[]).filter(h=>actors.get(String(tl.ent.cards.get(String(h.uid))?.ownerUid))?.kind==='awakener'&&!r.played.some(p=>String(p.cardUid)===String(h.uid))).map(h=>({tid:h.tid,c:costOf(h.tid,h.cost),played:false}))].map(it=>{const a=avg(it.tid,it.c);return {...it,d:a.d,f:a.f,src:a.src}});
+          const aD=items.filter(i=>i.played).reduce((n,i)=>n+i.d,0),aF=items.filter(i=>i.played).reduce((n,i)=>n+i.f,0);
+          // 铺垫（打出但既没伤害也没防御：觉醒 / 抽牌 / 加狂气）不该在伤害轴上被罚两次：
+          // 它花掉的算力本来就不可能再用于打伤害。把这部分从伤害轴预算里去掉，
+          // 等价于「按你选定的方案评」，而不是拿一份没花在铺垫上的假预算算最优解。
+          const setup=items.filter(i=>i.played&&i.d<=0&&i.f<=0).reduce((n,i)=>n+i.c,0);
+          const Bd=Math.max(0,B-setup);
+          const oD=Math.max(aD,knap(items,Bd,'d')),oF=Math.max(aF,knap(items,B,'f'));
+          // 轴归属：本回合在某个轴上没有投入（aD/aF 为 0）就不评那条轴 ——
+          // 一回合只有一份算力，全攻回合不该被防守轴判 0（151789 R7 的 aF=0 / oF=161 就是这么来的）。
+          const useD=aD>0,useF=aF>0;
+          const better=(useD&&(oD-aD)>oD*.01)||(useF&&(oF-aF)>oF*.01);
+          // 这一回合「有没有得选」：池子里必须留着一张没打的牌，否则谈不上选择。
+          // 注意不能只认「有伤害的替代」——防御牌、纯功能牌同样是可以打出去的另一个选择，
+          // 只比伤害会让「你手上还有 3 张牌没打，且打出的就是最优」这种好决策无法被承认。
+          // 区别很重要：「手上能打的都打了」不是打得完美、也不是打得差，是没有决策可评。
+          const alt=items.some(i=>!i.played);
+          const axes=[];if(useD&&oD>0)axes.push(aD/oD);if(useF&&oF>0)axes.push(aF/oF);
+          // 有得选就打一个分：打平记 1.0（这是证据，不是白送 —— 价格取自**之前的**回合，
+          // 不是你这一手自己定义的）。只数失误的话 P 会退化成「失败率」。
+          const judge=alt&&axes.length>0;
+          const ratio=judge?axes.reduce((x,y)=>x+y,0)/axes.length:null;
+          if(ratio!=null){rratios.push(ratio);judgeN++;if(better)infoN++}
+          rrows.push({round:rd,budget:B,budgetD:Bd,hand:items.length,played:r.played.length,aD,oD,aF,oF,judge,better,ratio});
         }
-        const rD=sumOD>0?sumAD/sumOD:null,rF=sumOF>0?sumAF/sumOF:null,rs=[rD,rF].filter(v=>v!=null);
-        const playScore=rs.length?100*rs.reduce((a,b)=>a+b,0)/rs.length:null;
-        const pInfo=infoN,pRounds=rrows.length;
+        // 回合等权：一次回合是一次决策。按伤害加权求和会让后期的大数字把早期的失误稀释掉
+        // （151789 R4 打出 212 而手上有张值 847 的牌，4 倍失误，却被 R7 的 3.1 万摊平）。
+        const playScore=rratios.length?100*rratios.reduce((a,b)=>a+b,0)/rratios.length:null;
+        const pInfo=infoN,pJudge=judgeN,pRounds=rrows.length;
+        // 展示用的两轴达成率：只在「本回合确实投入了这条轴」的回合里按回合等权平均
+        const axisRatio=(ak,ok)=>{const v=rrows.filter(r=>r.judge&&r[ak]>0&&r[ok]>0).map(r=>r[ak]/r[ok]);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
         // keyflare choice quality: realised value of the chosen skill versus the best known alternative
         const kp=pl.filter(p=>p.kind==='keeper'),cnt=Math.max(1,cardPlays.length);
         const D0=cardPlays.reduce((n,p)=>n+p.dmg,0)/cnt||1,F0=cardPlays.reduce((n,p)=>n+p.block+1.2*p.heal,0)/cnt||1,U0=cardPlays.reduce((n,p)=>n+p.eng+p.ali*0.05+p.draw,0)/cnt||1;
@@ -2142,7 +2180,7 @@
         const e1=cons+waste>0?cons/(cons+waste):null,e2=disc==null?null:(used+disc>0?used/(used+disc):null),
           e3=over==null?null:(cons+over>0?cons/(cons+over):null),es=[e1,e2,e3].filter(v=>v!=null),effScore=es.length?100*es.reduce((a,b)=>a+b,0)/es.length:null;
         const parts=[['pick',pickScore],['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
-        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,pInfo,pRounds,rD,rF,eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
+        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,pInfo,pJudge,pRounds,rD:axisRatio('aD','oD'),rF:axisRatio('aF','oF'),eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
       })();
       // ---- merged scoring model (morimens-replay-scoring.js): semantic gear value, role-adaptive awakeners, keeper decision quality
       const SC=window.MorimensReplayScoring;
@@ -2519,8 +2557,8 @@
     const name=t=>res.nameSkill(t);
     const picks=k.picks.length?k.picks.map(p=>`<div class="mr2mrow"><span>${ui(`第 ${p.round} 回合`,`R${p.round}`)} <small>${ui('选择','picked')} ${esc(name(p.chosen))}${p.ratio!=null&&p.bestTid!=null&&String(p.bestTid)!==String(p.chosen)?` · ${ui('已知最优','best known')} ${esc(name(p.bestTid))}`:''}</small></span><b>${p.cv==null?'—':p.cv.toFixed(2)}</b><i class="mr2msc"><u style="width:${p.ratio==null?0:(p.ratio*100).toFixed(0)}%"></u></i><em>${p.ratio==null?'—':Math.round(p.ratio*100)}</em></div>`).join(''):`<div class="mr2empty">${ui('本场没有可比较的钥令选择','No comparable keyflare picks')}</div>`;
     const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
-    const rr=k.rrows.map(r=>{const dR=r.oD>0?r.aD/r.oD:null,fR=r.oF>0?r.aF/r.oF:null,vs=[dR,fR].filter(v=>v!=null),avg=vs.length?vs.reduce((x,y)=>x+y,0)/vs.length:null,inf=r.inf!==false;
-      return `<div class="mr2mrow"${inf?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}`,`${r.hand}/${r.played}/${r.budget}`)}${inf?'':` · ${ui('无更优解，不计','no better line')}`}</small></span><b>${ui(`伤${pct(dR)} 防${pct(fR)}`,`d${pct(dR)} f${pct(fR)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em></em></div>`}).join('')||`<div class="mr2empty">—</div>`;
+    const rr=k.rrows.map(r=>{const dR=r.aD>0&&r.oD>0?r.aD/r.oD:null,fR=r.aF>0&&r.oF>0?r.aF/r.oF:null,vs=[dR,fR].filter(v=>v!=null),avg=r.ratio!=null?r.ratio:(vs.length?vs.reduce((x,y)=>x+y,0)/vs.length:null),judge=(r.judge!=null?r.judge:r.inf!==false)&&avg!=null;
+      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('手上没有别的可打，不计','nothing else to play')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}</small></span><b>${ui(`${dR!=null?`伤${pct(dR)} `:''}${fR!=null?`防${pct(fR)}`:''}`.trim()||'—',`${dR!=null?`d${pct(dR)} `:''}${fR!=null?`f${pct(fR)}`:''}`.trim()||'—')}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
     const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
     const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
     const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
@@ -2559,7 +2597,7 @@
         ${row(ui('手牌利用率（未被回合末弃掉）','Hand used'),pct(E.e2),E.e2==null?null:E.e2*100,ui(`打出 ${f(E.used)} / 回合末弃牌 ${f(E.disc)}`,''))}
         ${row(ui('算力未溢出','No overflow'),pct(E.e3),E.e3==null?null:E.e3*100,ui(`溢出 ${f(E.over)}`,''))}
         ${row(ui('手牌未溢出（未因手牌已满丢牌）','No hand overflow'),fx.handOverflowPct==null?'—':pc(fx.handOverflowPct),fx.handOverflowPct==null?null:Math.max(0,100-Math.min(100,fx.handOverflowPct/25*100)),ui(`丢牌 ${f(fx.handOverflow||0)} / 进手 ${f(fx.handCardsSeen||0)}`,''))}</div>
-      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的平均实际产出估算最优组合（背包）。伤害达成 ${pct(k.rD)}，防御达成 ${pct(k.rF)}`,`Best achievable damage / defence with the same hand and energy`)}</small>${rr}</div>
+      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。每张牌的价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。按回合等权，不看伤害大小；铺垫（觉醒 / 抽牌 / 加狂气）花掉的算力不会在伤害轴上被再罚一次。伤害达成 ${pct(k.rD)}，防御达成 ${pct(k.rF)}；共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得选`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight), unplayed cards are priced at their type's damage-per-energy. Rounds are weighted equally; setup energy is not charged twice. Damage ${pct(k.rD)}, defence ${pct(k.rF)}; ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds had a choice`)}</small>${rr}</div>
       <div class="mr2mcol"><h6>${ui('各钥令实际价值','Keyflare values')}</h6>${kv||`<div class="mr2empty">—</div>`}</div></div>`;
   }
   function ratingPanel(m,total,DIM,res){
