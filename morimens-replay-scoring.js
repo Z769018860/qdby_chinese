@@ -269,22 +269,56 @@ function scoreKeeper(m,tl){
 
 
 // ---------- Keeper decision model v2: six dimensions + regret + confidence ----------------------
-// Principle: judge only what the player controls (resource use, card order, burst/alemus use, keyflare use, risk, team-window use), with ratio-type metrics so that
-// team strength / wheels / covenants / draw luck are not credited to the keeper. Facts (raw statistics) are returned beside the scores.
-// 第六维原为「节奏」= 同关卡回合数分位数。两个致命问题：① 依赖外部样本表，查不到就永远是「—」（本仓库里大量关卡样本 < 8 或根本不在表里）；
-// ② 它比的是「打了几回合」，而回合数主要由队伍强度、命轮密契和发牌运气决定 —— 正是本模型声明不计入守密人的东西。
-// 现替换为「爆发」：狂气是玩家手动放掉的资源，用不用完全由守密人决定，且比率型（用掉的 ÷ 用掉+剩下），与卡组强度无关。
-// 单指标维度，权重调低到 12%，其余让给数据更厚的资源/出牌两维（22→25）。
-const KW={R:.25,P:.25,B:.12,K:.14,S:.14,C:.10};
+// Principle: judge only what the player controls (resource turnover incl. aliemus use, card order, pace vs the same lineup's own history,
+// keyflare use, risk, team-window use), with ratio-type metrics so that team strength / wheels / covenants / draw luck are not credited to the keeper.
+// Facts (raw statistics) are returned beside the scores.
+// 狂气爆发（B）不再是独立维度：它本来就是「攒起来的资源有没有用掉」，与算力/护盾/手牌的溢出同属资源周转，
+// 因此并入 R 的周转子项（见 Rscore）。腾出来的位置给真正的「节奏」。
+//
+// 新「节奏」（T）= 与**这支队伍自己的往期表现**比，推进是快是慢、每回合有没有在做事。
+// 旧版「节奏」= 同关卡回合数分位数的两个致命问题都由这个改法解决：
+//   ① 数据自足：参照库 team-tempo.json 由 dzone 4.5 万场战报生成（88 个关卡，每关中位 460 场），
+//      关卡不在库里才返回 null，不再出现「大部分回放恒为 —」；
+//   ② 口径干净：回合数本身被队伍强度污染，所以不能直接比「谁回合少」，而是拿**同一阵容的往期分布**当中心
+//      （p50，按样本量向「同关卡常态」收缩），此时强度/面板/招式都被固定住，剩下的才是决策差异。
+//      没有该阵容的历史时才退回同关卡全体（此时置信度下调，并在界面标注「对比的是同关卡全体」）。
+const KW={R:.30,P:.22,T:.13,K:.13,S:.13,C:.09};
+// 分段线性映射：比率 → 分数。速度「越小越好」，密度「越大越好」。
+// 1.00 = 与该队伍往期常态持平 → 78 / 80 分，留出「明显快于常态」才算优秀的空间。
+const TEMPO_SPEED=[[.65,100],[.80,100],[.90,90],[1,78],[1.10,66],[1.25,50],[1.45,32],[1.70,16],[2,0]];
+const TEMPO_DENS=[[.55,20],[.70,45],[.85,66],[1,80],[1.10,90],[1.25,100],[1.60,100]];
+function piece(x,tab){if(x==null||!Number.isFinite(x))return null;if(x<=tab[0][0])return tab[0][1];
+  for(let i=1;i<tab.length;i++){const [x1,y1]=tab[i];if(x<=x1){const [x0,y0]=tab[i-1];return y0+(y1-y0)*(x-x0)/(x1-x0)}}
+  return tab[tab.length-1][1]}
 function mean(a){a=a.filter(v=>v!=null&&Number.isFinite(v));return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
 function wavg(entries){let s=0,w=0;for(const [v,wt] of entries){if(v==null||!Number.isFinite(v)||wt<=0)continue;s+=v*wt;w+=wt}return w?s/w:null}
-function scoreKeeperV2(m,tl,ref){
+function scoreKeeperV2(m,tl,tempoCtx){
   const k=m?.keeper;if(!k)return null;
   const rounds=(tl.rounds||[]).filter(r=>!r.dim),R=Math.max(1,rounds.length),plays=(tl.playLog||[]).filter(p=>p.kind==='card'&&(tl.actors?.get(String(p.owner))?.kind==='awakener'));
   const cost=p=>{const v=p.cost!=null?Number(p.cost):Number(tl.res?.skill?.[String(p.tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
   const valued=p=>num(p.dmg)+num(p.block)+num(p.heal)+num(p.eng)+num(p.draw)+num(p.ali)>0||p.vuln;
   const facts={},conf={};
-  // ---- Resource management --------------------------------------------------------------------
+  // ---- Burst / 狂气周转（R 的周转子项，不再是独立维度）--------------------------------------------------
+  // 数据全部来自回放明文：守密人自己的爆发次数（playLog 里 kind==='ultimate'）+ 回合结束时各唤醒体的狂气 / 上限快照。
+  // 不用 1028 的 changedValue 反推「溢出」，因为无法确认服务器是否已经钳制过增量；「结束时还剩多少」是明文数值，足够且不会错。
+  // 只数「我方唤醒体」的爆发：敌方技能也会以 kind='ultimate' 落进 playLog（roleUid 分支），
+  // 所以必须同时校验 actor 的 kind 与 camp，否则敌人的爆发会被当成我的狂气消耗。
+  const casts=(tl.playLog||[]).filter(p=>{if(p.kind!=='ultimate')return false;const a=tl.actors?.get(String(p.owner));return !!a&&a.kind==='awakener'&&a.camp===1}).length;
+  let Bleft=0,BcapSum=0,Bunits=0,Bmax=0;
+  {const endsU=[...(tl.roundEnd?.entries()||[])].sort((a,b)=>a[0]-b[0]).map(([,e])=>e.ulti).filter(a=>Array.isArray(a)&&a.length);
+   const lastU=endsU.length?endsU[endsU.length-1]:null;
+   if(lastU)for(const x of lastU){const cap=Number(x?.m)||0;if(!(cap>0))continue;Bunits++;BcapSum+=cap;Bleft+=Math.max(0,Math.min(Number(x?.v)||0,cap));if(cap>Bmax)Bmax=cap}}
+  const oneBurst=Bunits?(BcapSum/Bunits):(Bmax||100);              // 一次爆发大概要多少狂气（上限即消耗）
+  const Bused=casts*oneBurst,Btot=Bused+Bleft;
+  // 没有任何回合末狂气快照 → 不知道还剩多少，只能判 null（不能凭次数给满分）；整场供给不足一次爆发 → 同上（放不出来 ≠ 不想放）。
+  // 这里只算「原始比率」，真正的分数在 Rother 出来后按供给量做平滑收缩（见下方 Bscore）：
+  // 旧写法在「供给 0.8 次爆发」处硬切 null / 0，两次几乎相同的操作会有 10 分 R 的悬崖。
+  const Braw=Bunits>0?clamp(100*Bused/Btot):null;
+  const Bsupply=Bunits>0?Btot/Math.max(1,oneBurst):0;             // 本场攒出几次爆发的狂气
+  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,playsPerRound:Math.round(perRoundPlays*10)/10,
+    burstCasts:casts,burstSpent:Math.round(Bused),burstLeft:Bunits?Math.round(Bleft):null,burstUnits:Bunits,
+    burstSupply:Math.round(Bsupply*100)/100,burstOneCost:Math.round(oneBurst)});
+  // ---- Resource management（资源周转：算力 / 护盾 / 手牌 / 能量循环 + 狂气爆发）--------------------------
   const eff=k.eff||{},ends=[...(tl.roundEnd?.entries()||[])].sort((a,b)=>a[0]-b[0]);
   const Espend=eff.e1!=null?eff.e1*100:null,Eover=eff.e3!=null?eff.e3*100:null,Ecycle=eff.e2!=null?eff.e2*100:null;
   const spentTotal=plays.reduce((n,p)=>n+cost(p),0),valuedCost=plays.filter(valued).reduce((n,p)=>n+cost(p),0);
@@ -309,10 +343,20 @@ function scoreKeeperV2(m,tl,ref){
   const EovfRaw=ovfRate==null?null:clamp(100-100*Math.min(1,ovfRate/OVF_FULL));
   const Rother=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
   const Eovf=EovfRaw==null?null:(Rother==null?EovfRaw:EovfRaw*ovfConf+Rother*(1-ovfConf));
-  const Rscore=wavg([[Espend,.30],[wavg([[Eover,.45],[ShieldScore,.30],[Eovf,.25]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
+  // 狂气子项：按「本场攒出了几次爆发」平滑收缩到 R 的其余分量 —— 供给 0.5 次 → 完全中性，2 次以上 → 全按实际比率。
+  // 这道收缩替代了原来的 0.8 次硬门槛：否则「一场没放爆发、总和 79.99」判 null（R=81.7）、「80.00」判 0（R=71.0），
+  // 两次几乎相同的操作会差 10.6 分 R（总分 3.2），而 0 次爆发恰好落在门槛附近的局面很常见。
+  const Bw=clamp((Bsupply-.5)/1.5);
+  const Bscore=Braw==null?null:(Rother==null?Braw:Braw*Bw+Rother*(1-Bw));
+  Object.assign(facts,{burstUnusedPct:Bscore==null?null:100*Bleft/Btot,burstScore:Bscore});
+  conf.burst=Bscore==null?.3:(Bw>=.9?.9:.65);   // 周转子项的置信度（不再是独立维度，不参与总分归一）
+  // 周转 = 算力转化（Espend）· 浪费（护盾 / 算力 / 手牌溢出）· 出牌价值密度（Econv）· 循环（Ecycle）· 储备（Ereserve）· 狂气（Bscore）
+  // B 原为独立维度（12%），现并入 R：它衡量的就是「攒起来的资源有没有用掉」，与上面五项同构。权重合计 1.00。
+  const Rscore=wavg([[Espend,.26],[wavg([[Eover,.45],[ShieldScore,.30],[Eovf,.25]]),.22],[Econv,.17],[Ecycle,.13],[Ereserve,.09],[Bscore,.13]]);
   Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds,
     handOverflow:ovfD+ovfH,handOverflowPct:ovfRate==null?null:100*ovfRate,handOverflowDirect:ovfD,handOverflowInHand:ovfH,handCardsSeen:hDen||null,handPeak:Number.isFinite(hf.peak)?hf.peak:null});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
+  if(Bscore==null)conf.R=conf.R*.85;    // 狂气那一项没算进来（无快照 / 供给不足）→ R 的可信度相应下调
   // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
   const rr=k.rrows||[],aD=rr.reduce((n,r)=>n+r.aD,0),oD=rr.reduce((n,r)=>n+r.oD,0),aF=rr.reduce((n,r)=>n+r.aF,0),oF=rr.reduce((n,r)=>n+r.oF,0);
   const ratios=[oD>0?aD/oD:null,oF>0?aF/oF:null].filter(v=>v!=null);
@@ -325,24 +369,46 @@ function scoreKeeperV2(m,tl,ref){
   const Pscore=playRatio==null?null:Math.max(0,Math.min(100,100*(playRatio-seqRatio)));
   Object.assign(facts,{regretPct:playRatio==null?null:100*(1-playRatio),orderLossPct:100*seqRatio,vulnRounds:byRound.size});
   conf.P=Math.min(.95,.45+.5*Math.min(1,rr.length/R))*(.7+.3*(k.playConfidence??.7));
-  // ---- Burst: 狂气周转（涨起来的狂气有没有真的放出去）------------------------------------------------
-  // 数据全部来自回放明文：守密人自己的爆发次数（playLog 里 kind==='ultimate'）+ 回合结束时各唤醒体的狂气 / 上限快照。
-  // 不用 1028 的 changedValue 反推「溢出」，因为无法确认服务器是否已经钳制过增量；「结束时还剩多少」是明文数值，足够且不会错。
-  // 只数「我方唤醒体」的爆发：敌方技能也可能以 kind='ultimate' 落进 playLog（roleUid 分支），不排除会把敌人的技能算成我的狂气消耗
-  const casts=(tl.playLog||[]).filter(p=>p.kind==='ultimate'&&(tl.actors?.get(String(p.owner))?.kind??'awakener')==='awakener').length;
-  let Bleft=0,BcapSum=0,Bunits=0,Bmax=0;
-  {const endsU=[...(tl.roundEnd?.entries()||[])].sort((a,b)=>a[0]-b[0]).map(([,e])=>e.ulti).filter(a=>Array.isArray(a)&&a.length);
-   const lastU=endsU.length?endsU[endsU.length-1]:null;
-   if(lastU)for(const x of lastU){const m=Number(x?.m)||0;if(!(m>0))continue;Bunits++;BcapSum+=m;Bleft+=Math.max(0,Math.min(Number(x?.v)||0,m));if(m>Bmax)Bmax=m}}
-  const oneBurst=Bunits?(BcapSum/Bunits):(Bmax||100);              // 一次爆发大概要多少狂气（上限即消耗）
-  const Bused=casts*oneBurst,Btot=Bused+Bleft;
-  // 全队整场只涨到不足一次爆发的狂气时无法评价（不是不想放，是根本放不出来）—— 返回 null 而不是 0 分。
-  // 没有任何回合末狂气快照时同样返回 null：只知道放了几次、不知道还剩多少，不能据此给满分。
-  const Bscore=Bunits>0&&Btot>=oneBurst*.8?clamp(100*Bused/Btot):null;
-  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,playsPerRound:Math.round(perRoundPlays*10)/10,
-    burstCasts:casts,burstSpent:Math.round(Bused),burstLeft:Bunits?Math.round(Bleft):null,burstUnits:Bunits,
-    burstUnusedPct:Bscore==null?null:100*Bleft/Btot,burstOneCost:Math.round(oneBurst)});
-  conf.B=Bscore==null?.3:(Btot>=oneBurst*2?.9:.65);
+  // ---- Tempo: 与「这支队伍自己的往期」比推进 -----------------------------------------------
+  // 参照库 team-tempo.json 由 scripts/build-team-tempo.py 从 dzone 战报生成（88 关卡 / 4.5 万场 / 2419 支阵容）。
+  // tempo 入参：{db, stageId, stageTid, lineup, rounds, cards, derived, lost}
+  //   rounds = 本场回合数；cards = 本场出牌数（优先取战报统计的 TotalUseCard，与参照库同口径；UsedCardCount 次之）
+  //   derived = cards 为回放反推（口径不同，密度项作废）；approx = 取客户端统计（置信度 ×0.9）；lost = 本场是否失利
+  const tempo=(()=>{const t=tempoCtx;if(!t||!t.db)return null;
+    const db=t.db,stg=(db.stages||{})[String(t.stageId??'')]||(t.stageTid!=null?(db.stages||{})[String(t.stageTid)]:null)||null;
+    if(!Array.isArray(stg)||!(Number(stg[0])>=8))return null;       // 关卡不在库内（样本 <8）→ 无法归一化
+    // stg = [样本数, 回合中位 ×10, 每回合用牌中位 ×1000]（×10 是为了短关卡：10 回合的关 ±0.5 回合就是 5%）
+    const sR=(Number(stg[1])||0)/10,sC=(Number(stg[2])||0)/1000,R0=Number(t.rounds)||0,C0=Number(t.cards)||0;
+    if(!(R0>0)||!(sR>0)||!Number.isFinite(sR))return null;
+    const cpr=C0>0?C0/R0:null;
+    const uSpeed=R0/sR,uDens=cpr!=null&&sC>0?cpr/sC:null;
+    const team=(db.teams||{})[String(t.lineup||'')]||null,tn=team?Number(team[0])||0:0;
+    const w=tn>0?tn/(tn+3):0;                                      // 样本越小越向「同关卡常态」收缩
+    const nSpeed=tn>0?1+(Number(team[2])/1000-1)*w:1;              // 队伍往期 p50（回合 / 同关卡中位）
+    const nDens =tn>0?1+(Number(team[5])/1000-1)*w:1;              // 队伍往期 p50（每回合用牌 / 同关卡中位）
+    if(!(nSpeed>0)||!Number.isFinite(nSpeed)||!(nDens>0)||!Number.isFinite(nDens))return null;
+    const relSpeed=Number.isFinite(uSpeed/nSpeed)?uSpeed/nSpeed:null;
+    // 用牌数若来自回放反推（口径与战报统计不同），密度项整体作废：宁可少一个指标，也不拿两种口径相比
+    const relDens=(uDens!=null&&!t.derived)?(Number.isFinite(uDens/nDens)?uDens/nDens:null):null;
+    let sSpeed=piece(relSpeed,TEMPO_SPEED);
+    const sDens=piece(relDens,TEMPO_DENS);
+    // 打输了谈不上「节奏达标」：把速度项压到 55 以下（仍保留「快」的部分信息，但不给优秀）
+    if(t.lost&&sSpeed!=null)sSpeed=Math.min(sSpeed,55);
+    const baseline=tn>0?'team':'stage';
+    let score=wavg([[sSpeed,.60],[sDens,.40]]);
+    // 密度项缺失（用牌数是回放反推）时只剩速度一个指标，不能让单指标把 T 拉到极端，同样向中性收缩 30%
+    if(score!=null&&sDens==null)score=78+(score-78)*.7;
+    // 没有该阵容的往期时只能跟「同关卡全体」比，这条路正是旧「节奏」被诟病的地方（会把队伍强度算进来），
+    // 所以把结果按 40% 向中性（78）收缩：仍能区分明显拖拉 / 明显偏快，但不让 off-meta 队伍的强度差拉出 ±40 分。
+    if(score!=null&&baseline==='stage')score=78+(score-78)*.6;
+    return {score,sSpeed,sDens,relSpeed,relDens,uSpeed,uDens,nSpeed,nDens,tn,sn:Number(stg[0]),
+      stageRounds:sR,stageCpr:sC,rounds:R0,cards:C0,cpr,derived:!!t.derived,approx:!!t.approx,lost:!!t.lost,baseline};
+  })();
+  const Tscore=tempo?tempo.score:null;
+  Object.assign(facts,{tempoRounds:tempo?tempo.rounds:null,tempoStageRounds:tempo?Math.round(tempo.stageRounds*10)/10:null,tempoCpr:tempo?tempo.cpr:null,
+    tempoStageCpr:tempo?tempo.stageCpr:null,tempoSpeedRel:tempo?tempo.relSpeed:null,tempoDensRel:tempo?tempo.relDens:null,
+    tempoTeamN:tempo?tempo.tn:null,tempoStageN:tempo?tempo.sn:null,tempoBaseline:tempo?tempo.baseline:null,tempoDerived:tempo?tempo.derived:null,tempoApprox:tempo?tempo.approx:null});
+  conf.T=tempo?clamp(.35+.35*Math.min(1,tempo.tn/10)+.20*Math.min(1,tempo.sn/200))*(tempo.derived?.85:tempo.approx?.9:1):.3;
   // ---- Keyflare choice and use -------------------------------------------------------------------------
   const kvv=(k.kv||[]).filter(x=>x.n>0),kuses=kvv.reduce((n,x)=>n+x.n,0),meanVal=kuses?kvv.reduce((n,x)=>n+x.val*x.n,0)/kuses:null;
   const Ksel=k.pickScore,Kexec=meanVal==null?null:Math.min(100,100*meanVal/2);
@@ -368,7 +434,7 @@ function scoreKeeperV2(m,tl,ref){
   Object.assign(facts,{critOverflowPct:critOver,critBuilds:critBuild,vulnCoveragePct:cover==null?null:100*cover,buffLeveragePct:sup>0?100*bufShare:null});
   conf.C=cover!=null?.8:sup>0||critOver!=null?.6:.35;
   // ---- Total (weights renormalised over the dimensions that could be measured) ------------------------------
-  const dims={R:Rscore,P:Pscore,B:Bscore,K:Kscore,S:Sscore,C:Cscore};
+  const dims={R:Rscore,P:Pscore,T:Tscore,K:Kscore,S:Sscore,C:Cscore};
   let sw=0,sv=0,cw=0,cv=0;for(const key of Object.keys(KW)){if(dims[key]==null)continue;sw+=KW[key];sv+=KW[key]*dims[key];cw+=KW[key];cv+=KW[key]*(conf[key]||0)}
   const score=sw?sv/sw:null,confidence=cw?cv/cw:0;
   const potential=mean([playRatio==null?null:100*playRatio,Econv]),windows=mean([cover==null?null:100*cover,sup>0?100*bufShare:null]);

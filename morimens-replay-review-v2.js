@@ -154,11 +154,14 @@
   // ---- icons / entity resolution -------------------------------------------------
   const ART='assets/morimens';
   let awakenerSlugs=null;
-  let gearCatalog=null,relicCatalog={},relicFallback=null,imageRealms=null;
+  let gearCatalog=null,relicCatalog={},relicFallback=null,imageRealms=null,tempoDB=null;
   async function preloadAssets(){
     if(!relicCatalog.loaded){try{const r=await fetch('data/morimens/replay-relics.json',{cache:'force-cache'});relicCatalog={loaded:1,...(r.ok?(await r.json()).relics:{})}}catch{relicCatalog={loaded:1}}}
-    // stage-rounds.json（同关卡回合数分位）不再加载：见 scoreKeeperV2 —— 「节奏」维度已替换为「爆发」，
-    // 那个分位数既依赖外部样本表、又奖励「回合短」这种队伍强度/发牌运气的结果，不属于守密人决策。
+    // 旧 stage-rounds.json（只存「同关卡回合数」的 101 个分位点）不再加载：它把「回合短」直接当加分，
+    // 而回合数主要由队伍强度/命轮密契/发牌运气决定。新的参照库 team-tempo.json 增加了「按阵容归一」这一层。
+    // 守密人「节奏」的参照库：队伍往期 + 同关卡中位的回合数 / 每回合用牌（scripts/build-team-tempo.py 生成，88 关 4.5 万场）。
+    // 缺这个文件时节奏维度返回 null（按其余维度重新归一），不会给出错误的分数。
+    if(!tempoDB){try{const r=await fetch('data/morimens/replay/team-tempo.json?v=20261025',{cache:'no-cache'});tempoDB=r.ok?await r.json():null}catch{tempoDB=null}}
     if(!imageRealms){try{const r=await fetch('data/morimens/replay/dimension-image-realms.json?v=20261006',{cache:'no-cache'});imageRealms=r.ok?await r.json():{}}catch{imageRealms={}}}
     if(!relicFallback){try{const r=await fetch('data/morimens/replay-relic-config.json',{cache:'force-cache'});relicFallback=r.ok?await r.json():{}}catch{relicFallback={}}}
     // 造物表缺口：replay-relic-config.json 只覆盖了部分 tid（相对 replay-relics.json 缺 86 条，含全部维度影像）。
@@ -1263,7 +1266,7 @@
     .mr2rating{border-top:1px dashed rgba(213,177,118,.25);padding-top:8px;display:grid;gap:5px}.mr2rating h5{margin:0;font-size:12px;color:#d9c391}.mr2rrow{display:grid;grid-template-columns:minmax(150px,1.2fr) minmax(110px,.9fr) minmax(420px,3.4fr);gap:8px;align-items:center;padding:4px 6px;border-radius:8px}.mr2rrow.top{background:rgba(255,210,74,.07)}.mr2rn{display:flex;align-items:center;gap:7px;font-size:12px;color:#e6edf6}.mr2rscore{position:relative;display:flex;align-items:center;height:20px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;padding:0 8px}.mr2rscore i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(255,138,61,.65),rgba(255,210,74,.65))}.mr2rscore b{position:relative;font-size:12px;color:#fff;font-variant-numeric:tabular-nums}
     .mr2facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:4px 12px;font-size:10.5px;color:#aab6c6}.mr2facts span{display:flex;justify-content:space-between;gap:8px;padding:2px 0;border-bottom:1px dashed rgba(148,163,184,.12)}.mr2facts b{color:#e6edf6}
     .mr2radar{display:flex;flex-direction:column;align-items:center;padding:6px 0 10px;border-bottom:1px dashed rgba(148,163,184,.14);margin-bottom:6px}.mr2radarnote{margin-top:4px;font-size:10px;color:#8ea0b6}.mr2radarnote b{color:#f1d69f;font-size:13px}
-    .mr2rdims.kp6{grid-template-columns:repeat(6,1fr)}.mr2conf{margin-left:6px;font-size:9px;color:#8ea0b6;font-weight:400}
+    .mr2rdims.kp6{grid-template-columns:repeat(6,1fr)!important}.mr2conf{margin-left:6px;font-size:9px;color:#8ea0b6;font-weight:400}
     .mr2rdims{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}.mr2rdets{display:grid;gap:4px}.mr2rdet{display:grid;grid-template-columns:140px 1fr;gap:8px;font-size:11px;color:#b6c2d2}.mr2rdet b{display:flex;align-items:center;gap:5px;color:#e6edf6}.mr2rdims span{display:grid;text-align:center;padding:2px 0;border-radius:6px;background:rgba(255,255,255,.04)}.mr2rdims span.na{opacity:.4}.mr2rdims small{font-size:9px;color:#7f8ea2}.mr2rdims b{font-size:12px;color:#e6edf6;font-variant-numeric:tabular-nums}
     .mr2rmodel{font-size:11px;color:#b6c2d2;line-height:1.6;display:grid;gap:4px}.mr2rmodel p{margin:0}.mr2rmodel ul{margin:0;padding-left:18px}
     @media(max-width:700px){.mr2rrow{grid-template-columns:1fr}.mr2rdims{grid-template-columns:repeat(5,1fr)}.mr2rdet{grid-template-columns:1fr}}
@@ -2092,8 +2095,28 @@
           for(const row of SC.scoreGear(wrapped,tl,totalDmg||1)){const it=relicItems.find(x=>x.r===row.r);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}}
         for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff}}
         awRows.sort((a,b)=>b.score-a.score);
-        // 守密人六维里的「节奏」已换成「爆发」（狂气周转）：不再需要同关卡回合数参考表
-        const v2=SC.scoreKeeperV2({keeper,awakeners:awRows},tl);
+        // 守密人「节奏」的上游数据：本场回合数 / 用牌数尽量走战报统计（与参照库 team-tempo.json 同口径）。
+        // 三级取数：① 服务端统计的 TotalUseCard（与库完全同口径）→ ② 客户端统计的 UsedCardCount（同概念、命名不同，置信度打折）
+        // → ③ 回放反推的出牌数（口径不同，密度项直接作废，只用速度）。宁可少一个指标，也不拿两种口径相比。
+        // 阵容键 = 我方 4 名唤醒体的 tid 升序（参照库按同一规则生成）。
+        const tempoCtx=(()=>{try{
+          // battleFinishData.statistics 在不同版本里有时是平铺、有时包一层 BattleStats / GlobalStats，两种都要能取到
+          const stat=(tl.battleCounts?.()||null)?.finish||null,srcs=[];
+          for(const o of [bd.statistics,stat,bd]){if(!o||typeof o!=='object')continue;srcs.push(o);
+            for(const k of ['BattleStats','GlobalStats','battleStats','globalStats','Statistics'])if(o[k]&&typeof o[k]==='object')srcs.push(o[k])}
+          const pick=k=>{for(const o of srcs){const v=o[k];if(v!=null&&Number.isFinite(Number(v))&&Number(v)>0)return Number(v)}return null};
+          const rN=pick('StageRoundCount')??pick('stageRoundCount');
+          const cExact=pick('TotalUseCard')??pick('totalUseCard');
+          const cNear=cExact==null?(pick('UsedCardCount')??pick('usedCardCount')):null;
+          const lineup=[...actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.tid)).sort().join(',');
+          // 反推出牌数：注意 cardPlays 是 keeper IIFE 的局部变量，这里必须自算一份
+          const fbCards=(tl.playLog||[]).filter(p=>p.kind==='card'&&(actors.get(String(p.owner))?.kind??'')==='awakener').length;
+          return {db:tempoDB,stageId:String(bd.stageId??''),stageTid:bd.stageTid!=null?String(bd.stageTid):null,lineup,
+            rounds:rN!=null?rN:(tl.rounds||[]).filter(r=>!r.dim).length,
+            cards:cExact??cNear??fbCards,approx:cNear!=null,derived:cExact==null&&cNear==null,
+            lost:!!(tl.result&&Number(tl.result.winCamp)!==1)};
+        }catch(e){console.warn('tempo ctx failed',e);return null}})();
+        const v2=SC.scoreKeeperV2({keeper,awakeners:awRows},tl,tempoCtx);
         if(v2&&v2.score!=null){keeper.v2=v2;keeper.score=v2.score;keeper.grade=v2.grade;keeper.enh=true}
         try{keeper.luck=SC.scoreLuck(tl,{imageRealms})}catch(e){console.warn('luck score failed',e)}
       }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
@@ -2352,14 +2375,14 @@
     return `<div class="mr2luck"><div class="mr2luckhead"><b>🍀 ${ui('幸运','Luck')} ${Math.round(l.score)}</b>${l.unlucky>0?`<b style="color:#ff9b9b">💧 ${ui('不幸','Unlucky')} ${Math.round(l.unlucky)}</b>`:''}<i>${esc(l.label)}</i>${l.score>=80&&l.score>=l.unlucky?`<em style="font-style:normal;color:#ffd24a">${ui('恭喜你找到了正确的时间线~','You found the right timeline~')}</em>`:''}<small>${ui('彩蛋项目，不计入守密人评分','Easter egg - not part of the keeper rating')}</small></div>${it.length?`<ul>${it.map(x=>`<li${x.bad?' style="color:#ff9b9b"':''}><span>${esc(x.text)}</span><em${x.bad?' style="color:#ff9b9b"':''}>${x.bad?'−':'+'}${Math.round(x.pts)}</em></li>`).join('')}</ul>`:`<small class="mr2luckempty">${ui('这场没有触发任何幸运 / 不幸事件。评判：① 死亡抵抗面板很低却触发了死亡抵抗；② 没有指轮却持有队伍唤醒体的维度影像；③ 低暴击率的唤醒体打出大量暴击。','No lucky events this battle.')}</small>`}</div>`}
   // hexagonal radar of the keeper's six dimensions (missing dimensions sit at the centre and are marked)
   function keeperRadar(v2){
-    const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['B',ui('爆发','Burst')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
+    const D=[['R',ui('资源','Resources')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Keyflare')],['S',ui('风险','Risk')],['C',ui('协同','Team')]],cx=130,cy=108,R0=78;
     const pt=(i,r)=>{const a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*r,cy+Math.sin(a)*r]},poly=(f)=>D.map((_,i)=>pt(i,R0*f).map(n=>n.toFixed(1)).join(',')).join(' ');
     const val=D.map(([k])=>v2.dims[k]==null?0:Math.max(0,Math.min(100,v2.dims[k]))/100),vp=val.map((f,i)=>pt(i,R0*f).map(n=>n.toFixed(1)).join(',')).join(' ');
     const axes=D.map((_,i)=>{const [x,y]=pt(i,R0);return `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#3a4658" stroke-width="1"/>`}).join('');
     const labs=D.map(([k,l],i)=>{const [x,y]=pt(i,R0+22),v=v2.dims[k],anchor=Math.abs(x-cx)<6?'middle':x>cx?'start':'end';return `<text x="${x.toFixed(1)}" y="${(y-2).toFixed(1)}" text-anchor="${anchor}" font-size="11" fill="#aab6c6">${esc(l)}</text><text x="${x.toFixed(1)}" y="${(y+12).toFixed(1)}" text-anchor="${anchor}" font-size="12" font-weight="800" fill="${v==null?'#657286':'#f1d69f'}">${v==null?'—':Math.round(v)}</text>`}).join('');
     const dots=val.map((f,i)=>{const [x,y]=pt(i,R0*f);return v2.dims[D[i][0]]==null?'':`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#f1d69f"/>`}).join('');
     return `<div class="mr2radar"><svg viewBox="0 0 260 236" width="100%" style="max-width:300px;overflow:visible" role="img" aria-label="${esc(ui('守密人六维图','Keeper radar'))}">${[.25,.5,.75,1].map(f=>`<polygon points="${poly(f)}" fill="none" stroke="#3a4658" stroke-width="1"${f===1?'':' stroke-dasharray="2 3"'}/>`).join('')}${axes}<polygon points="${vp}" fill="rgba(213,177,118,.24)" stroke="#d5b176" stroke-width="2" stroke-linejoin="round"/>${dots}${labs}</svg><div class="mr2radarnote"><b>${v2.score==null?'—':v2.score.toFixed(1)}</b> · ${ui('潜力实现','Potential')} ${v2.potential==null?'—':Math.round(v2.potential)}% · ${ui('关键窗口','Windows')} ${v2.windows==null?'—':Math.round(v2.windows)}% · ${ui('可信度','Confidence')} ${Math.round(v2.confidence*100)}%${v2.confidence<.6?` · ${ui('仅供参考','indicative only')}`:''}</div></div>`}
-  const KEEPER_DIMS=()=>[['R',ui('资源','Res.')],['P',ui('出牌','Plays')],['B',ui('爆发','Burst')],['K',ui('钥令','Key')],['S',ui('风险','Risk')],['C',ui('协同','Team')]];
+  const KEEPER_DIMS=()=>[['R',ui('资源','Res.')],['P',ui('出牌','Plays')],['T',ui('节奏','Tempo')],['K',ui('钥令','Key')],['S',ui('风险','Risk')],['C',ui('协同','Team')]];
   const DIMS_UI=()=>[['out',ui('输出','Output')],['def',ui('防御','Defense')],['sup',ui('辅助','Support')]];
   function renderMvp(full,tl,st){
     const res=tl.res,m=st.mvp,total=st.totalDmg;if(!m)return '';
@@ -2430,9 +2453,9 @@
     const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
     const rr=k.rrows.map(r=>`<div class="mr2mrow"><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}`,`${r.hand}/${r.played}/${r.budget}`)}</small></span><b>${ui(`伤${pct(r.oD>0?r.aD/r.oD:null)} 防${pct(r.oF>0?r.aF/r.oF:null)}`,`d${pct(r.oD>0?r.aD/r.oD:null)} f${pct(r.oF>0?r.aF/r.oF:null)}`)}</b><i class="mr2msc"><u style="width:${(()=>{const a=[r.oD>0?r.aD/r.oD:null,r.oF>0?r.aF/r.oF:null].filter(v=>v!=null);return a.length?(100*a.reduce((x,y)=>x+y,0)/a.length).toFixed(0):0})()}%"></u></i><em></em></div>`).join('')||`<div class="mr2empty">—</div>`;
     const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
-    const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),B:ui('爆发 / 狂气','Burst'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
+    const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
     const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
-      <small class="mr2from">${ui('只评价玩家能控制的决策，使用比率型指标，不把队伍强度、命轮密契强度和发牌运气算到守密人头上。总分 = 0.25 资源 + 0.25 出牌 + 0.12 爆发 + 0.14 钥令 + 0.14 风险 + 0.10 协同（缺项时按其余维度重新归一）。','Ratio-type decision metrics; weights 25/25/12/14/14/10, renormalised over measurable dimensions.')}</small>
+      <small class="mr2from">${ui('只评价玩家能控制的决策，使用比率型指标，不把队伍强度、命轮密契强度和发牌运气算到守密人头上。总分 = 0.30 资源周转 + 0.22 出牌 + 0.13 节奏 + 0.13 钥令 + 0.13 风险 + 0.09 协同（缺项时按其余维度重新归一）。狂气爆发已并入「资源周转」子项。','Ratio-type decision metrics; weights 30/22/13/13/13/9, renormalised over measurable dimensions. Aliemus burst is a sub-item of resource turnover.')}</small>
       ${Object.keys(v2.weights).map(key=>row(`${LAB[key]} <small>${ui('权重','w')} ${Math.round(v2.weights[key]*100)}%</small>`,v2.dims[key]==null?'—':Math.round(v2.dims[key]),v2.dims[key],ui(`可信度 ${Math.round((v2.conf[key]||0)*100)}%`,`conf ${Math.round((v2.conf[key]||0)*100)}%`))).join('')}
       ${row(ui('潜力实现率（实际出牌价值 ÷ 同手牌同算力下的估计最优）','Potential realised'),v2.potential==null?'—':Math.round(v2.potential)+'%',v2.potential)}
       ${row(ui('关键窗口利用（易伤 / 增益窗口内的输出占比）','Window use'),v2.windows==null?'—':Math.round(v2.windows)+'%',v2.windows)}
@@ -2444,7 +2467,10 @@
         <span>${ui('平均决策机会损失','Mean regret')} <b>${pc(fx.regretPct)}</b></span>
         <span>${ui('出牌顺序损失（易伤晚于伤害）','Ordering loss')} <b>${pc(fx.orderLossPct)}</b></span>
         <span>${ui('回合数 / 每回合出牌','Rounds / plays per round')} <b>${fx.rounds} / ${fx.playsPerRound}</b></span>
-        <span>${ui('爆发次数 / 消耗狂气','Burst casts / aliemus spent')} <b>${f(fx.burstCasts||0)} / ${f(fx.burstSpent||0)}</b></span>
+        ${fx.tempoStageRounds==null?'':`<span>${ui('节奏：回合数 / 同关卡中位','Tempo: rounds / stage median')} <b>${f(fx.tempoRounds)} / ${f(fx.tempoStageRounds)}${fx.tempoSpeedRel==null?'':` · ${ui('耗时 = 往期的','took')} ${Math.round(fx.tempoSpeedRel*100)}%${ui('（越低越好）',' (lower is better)')}`}</b></span>
+        <span>${ui('节奏：每回合用牌 / 同关卡中位','Tempo: cards per round / stage median')} <b>${fx.tempoCpr==null?'—':fx.tempoCpr.toFixed(1)} / ${fx.tempoStageCpr==null?'—':fx.tempoStageCpr.toFixed(1)}${fx.tempoDensRel==null?'':` · ${ui('密度 = 往期的','density')} ${Math.round(fx.tempoDensRel*100)}%`}</b></span>
+        <span>${ui('节奏参照','Tempo baseline')} <b>${fx.tempoBaseline==='team'?ui(`同阵容往期 ${fx.tempoTeamN} 场`,'own lineup: '+fx.tempoTeamN+' runs'):ui(`同关卡全体 ${fx.tempoStageN} 场（无该阵容往期）`,'stage-wide ('+fx.tempoStageN+' runs)')}${fx.tempoDerived?ui(' · 用牌数为回放反推，密度项不参与',' · cards derived from replay: density excluded'):fx.tempoApprox?ui(' · 用牌数取客户端统计（置信度略降）',' · cards from client stats (confidence lowered)'):''}</b></span>`}
+        <span>${ui('狂气爆发（计入资源周转）','Aliemus burst (inside resource turnover)')} <b>${f(fx.burstCasts||0)} ${ui('次','casts')} · ${f(fx.burstSpent||0)} ${ui('狂气','aliemus')}</b></span>
         <span>${ui('战斗结束时剩余狂气（未使用比例）','Aliemus left at battle end (unused %)')} <b>${fx.burstLeft==null?'—':f(fx.burstLeft)} · ${pc(fx.burstUnusedPct)}</b></span>
         <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>
         <span>${ui('死亡抵抗 / 濒危回合','Death resist / critical rounds')} <b>${fx.deathResist} / ${fx.lethalRounds}</b></span>
@@ -2454,7 +2480,7 @@
         <span>${ui('易伤窗口覆盖','Vulnerability coverage')} <b>${pc(fx.vulnCoveragePct)}</b></span>
         <span>${ui('队友增益借力','Buff leverage')} <b>${pc(fx.buffLeveragePct)}</b></span>
         <span>${ui('暴击率溢出（超过 100% 的部分）','Crit rate overflow (above 100%)')} <b>${fx.critOverflowPct==null?'—':pc(fx.critOverflowPct)}</b></span>
-      </div><small class="mr2from">${ui('护盾溢出：回合末钥令身上的盾量减去该回合敌方伤害（被盾吸收的部分）后的剩余；护盾通常不会保留到下回合，若被特殊效果保留（下回合开头仍在）则不计溢出。','Shield overflow: shield left on the keeper at round end after the enemy damage it absorbed; shield normally expires, and shield that a special effect keeps into the next round is not counted.')}</small></div>`:'';
+      </div><small class="mr2from">${ui('护盾溢出：回合末钥令身上的盾量减去该回合敌方伤害（被盾吸收的部分）后的剩余；护盾通常不会保留到下回合，若被特殊效果保留（下回合开头仍在）则不计溢出。节奏：本场回合数 / 每回合用牌先除以「同关卡中位」做归一，再与「同一套阵容的往期分布（中位数）」比较 —— 只比同队伍，是因为回合数本身被队伍强度决定，直接比快慢等于把卡组强度算成决策质量。','Shield overflow: shield left on the keeper at round end after the enemy damage it absorbed. Tempo: rounds and cards-per-round are first normalised by the stage median, then compared with the same lineup\'s own history - only then is pace a decision metric rather than a proxy for team strength.')}</small></div>`:'';
     const E=k.eff;
     return `<div class="mr2mgrid">${v2html}
       <div class="mr2mcol"><h6>${ui('钥令选择','Keyflare choice')} <em>${sc(k.pickScore)}</em></h6><small class="mr2from">${ui('已选技能的实际价值（伤害 / 防御 / 辅助按全队单张出牌均值归一后相加）÷ 同次可选技能中已知价值最高者','Realised value of the chosen skill vs best known alternative')}</small>${picks}</div>
