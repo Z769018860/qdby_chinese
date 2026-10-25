@@ -142,11 +142,14 @@
         const desc=pipeName(rr.State[sids.find(x=>rr.State[x].Desc)||sids[0]].Desc||'').replace(/(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)/g,(m,x,y)=>plus?y:x);
         rcT[tid]={ID:Number(tid),Name:'x|'+zh,Desc:'x|'+desc,BattleDesc:'x|'+desc,State1:sids.map(Number),StatePara:[],synthesized:true}}}
     const skill=rr.Skill||{},aw=rr.AwakerConfig||{},state=rr.State||{},relic=rr.RelicConfig||{},monster=rr.MonsterConfig||{};
-    const nameSkill=id=>{const x=skill[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||String(id)};
-    const nameState=id=>{const x=state[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`State ${id}`};
-    const nameRelic=id=>{const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||(()=>{const c=relicCatalog[String(id)];return c?(isEn()?c.en||c.zh:c.zh||c.en):''})()||`Relic ${id}`};
-    const nameAw=id=>{const x=aw[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||String(id)):(pipeName(x.Name)||x.NameEn||String(id))};
-    const nameMonster=id=>{const x=monster[String(id)]||{};const bestiary=pipeName(x.MonsterName)||pipeName(x.Name);return isEn()?(x.NameEn||bestiary||tailCn(x.CnID)||String(id)):(bestiary||tailCn(x.CnID)||x.NameEn||String(id))};
+    // 传入 null / undefined 时返回空串：过去会拼成字面量「undefined」直接显示在界面上
+    // （`选择目标 → undefined`、命中行末尾的 `undefined`），因为 String(undefined) 是字符串。
+    const noId=id=>id==null||id==='';
+    const nameSkill=id=>{if(noId(id))return '';const x=skill[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||String(id)};
+    const nameState=id=>{if(noId(id))return '';const x=state[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||`State ${id}`};
+    const nameRelic=id=>{if(noId(id))return '';const x=relic[String(id)]||{};return pipeName(x.Name)||tailCn(x.CnID)||(()=>{const c=relicCatalog[String(id)];return c?(isEn()?c.en||c.zh:c.zh||c.en):''})()||`Relic ${id}`};
+    const nameAw=id=>{if(noId(id))return '';const x=aw[String(id)]||{};return isEn()?(x.NameEn||pipeName(x.Name)||String(id)):(pipeName(x.Name)||x.NameEn||String(id))};
+    const nameMonster=id=>{if(noId(id))return '';const x=monster[String(id)]||{};const bestiary=pipeName(x.MonsterName)||pipeName(x.Name);return isEn()?(x.NameEn||bestiary||tailCn(x.CnID)||String(id)):(bestiary||tailCn(x.CnID)||x.NameEn||String(id))};
     const clean=f=>id=>String(f(id)).replace(/^日服[^命密造]{0,8}(?:插画)?(?:命轮|密契|造物)/,'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'').trim();
     return {rr,skill,aw,state,relic,monster,nameSkill:clean(nameSkill),nameState:clean(nameState),nameRelic:clean(nameRelic),nameAw:clean(nameAw),nameMonster:clean(nameMonster)};
   }
@@ -467,7 +470,24 @@
       physique:['force',/体质/,'all','physique'],physique_per:['force',/体质/,'all','physique'],
       ulti_strength_multiple:['ultim',/爆发倍率|倍率/,'ult'],
     };
-    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),roundPool=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    // ---- 回合末状态快照 ----------------------------------------------------------------
+    // 算力余额 / 护盾 / 剩余手牌 / 狂气。P（出牌）用它算「这一回合本来还有多少算力没花」。
+    // 原来只在「玩家→敌方」这一种切场上拍快照，于是**最后一回合**（战斗在玩家回合里结束、
+    // 根本没有切到敌方）整轮被跳过 —— 151789 的 R8、153180 的 R6（唯一的爆发回合、21 手牌）都没被评。
+    const snapRoundEnd=()=>({hpf:(()=>{let m=1;for(const a of actors.values()){if(a.kind!=='awakener')continue;const p=board.get(String(a.uid))?.props||{};if(p.max_hp>0&&p.hp!=null)m=Math.min(m,Math.max(0,p.hp)/p.max_hp)}return m})(),
+      energy:unit(ent.keeperUid).energy??0,block:Number(unit(ent.keeperUid).block)||0,
+      hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost})),
+      // 狂气快照（守密人「爆发」维度）：回合结束时各唤醒体的狂气 / 上限。
+      // 只用快照、不用 1028 的 changedValue 推溢出 —— 服务器是否钳制过增量无法从回放确认，
+      // 而「结束时还剩多少狂气」是明文数值，够用且不会错。
+      ulti:(()=>{const o=[];for(const a of actors.values()){if(a.kind!=='awakener'||a.camp!==1)continue;const u=unit(a.uid),m=Number(u.ultiMax)||0;if(m>0)o.push({uid:String(a.uid),v:Math.max(0,Number(u.ulti)||0),m})}return o})()});
+    // 回合内「可选的牌」= 回合开始时的手牌 ∪ 玩家行动阶段里抽到的牌。
+    // 回合末快照只留「最后还在手上的」，中途抽到又打掉 / 弃掉的牌会被漏掉（实测 151789 R2/R5/R8 各漏 3~6 张），
+    // 于是背包以为「你就这些牌可选」，把本来有失误的回合判成打平。
+    // 回合键用 rk()（超维回合是 bout+0.5），与 playLog 里的 p.round 同一套编号。
+    const poolAdd=k=>{if(!(camp===1&&phase===1&&rk()>0))return;const s=roundPool.get(rk())||new Set();s.add(String(k));roundPool.set(rk(),s)};
+    const poolSeed=()=>{if(!(camp===1&&phase===1&&rk()>0))return;const s=roundPool.get(rk())||new Set();for(const u of handUids)s.add(String(u));roundPool.set(rk(),s)};
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
     const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
@@ -940,17 +960,21 @@
           if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
           else if(e===1077&&d.statsData){lastStats=d.statsData}
           else if(e===1011&&d.roleUid!=null&&d.args&&typeof d.args==='object'){unit(d.roleUid).skillArgs=d.args}
-          if(e===1020&&d?.battleFinishData){endDR={lost:Number(d.battleFinishData.winCamp)!==1,t:Number(unit(ent.keeperUid).props?.death_resist_times)||0,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})(),bout};result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null}
+          if(e===1020&&d?.battleFinishData){endDR={lost:Number(d.battleFinishData.winCamp)!==1,t:Number(unit(ent.keeperUid).props?.death_resist_times)||0,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})(),bout};result={winCamp:d.battleFinishData.winCamp,finishType:d.battleFinishData.finishType};finishStats=d.battleFinishData.statistics||null;
+            // 最后一回合往往在玩家回合里就打完了，不会再有「切到敌方」的 1019 —— 补一张回合末快照。
+            if(rk()>0&&!roundEnd.has(rk())){roundEnd.set(rk(),snapRoundEnd())}}
           if(e===1019&&d?.boutNumber){
             push('snap','','',d,fr,{snap:snap()});
             const nb=Number(d.boutNumber)||bout;
+            // 回合键必须在 dimOn 被改写之前取，否则「刚进入超维回合」那一刻会算出 bout+0.5 的假键。
+            const prevKey=rk();
             if(d?.config?.camp===1&&Number(d.newPhase)===1){shieldStart.set(nb,Number(unit(ent.keeperUid).block)||0);if(rounds.has(rk()))getRound(rk()).snapEnd=snap();dimOn=nb===lastDim;getRound(dimOn?nb+.5:nb).snapStart=snap()}
-            if(d?.config?.camp===2&&camp===1&&bout>0&&!roundEnd.has(bout)){expireCreated();roundEnd.set(bout,{hpf:(()=>{let m=1;for(const a of actors.values()){if(a.kind!=='awakener')continue;const p=board.get(String(a.uid))?.props||{};if(p.max_hp>0&&p.hp!=null)m=Math.min(m,Math.max(0,p.hp)/p.max_hp)}return m})(),energy:unit(ent.keeperUid).energy??0,block:Number(unit(ent.keeperUid).block)||0,hand:[...handUids].map(u=>({uid:u,tid:cards.get(u)?.tid,cost:cards.get(u)?.cost})),
-              // 狂气快照（守密人「爆发」维度）：回合结束时各唤醒体的狂气 / 上限。
-              // 只用快照、不用 1028 的 changedValue 推溢出 —— 服务器是否钳制过增量无法从回放确认，
-              // 而「结束时还剩多少狂气」是明文数值，够用且不会错。
-              ulti:(()=>{const o=[];for(const a of actors.values()){if(a.kind!=='awakener'||a.camp!==1)continue;const u=unit(a.uid),m=Number(u.ultiMax)||0;if(m>0)o.push({uid:String(a.uid),v:Math.max(0,Number(u.ulti)||0),m})}return o})()})}
-            bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
+            if(d?.config?.camp===2&&camp===1&&prevKey>0&&!roundEnd.has(prevKey)){expireCreated();roundEnd.set(prevKey,snapRoundEnd())}
+            bout=nb;camp=d?.config?.camp||camp;phase=Number(d.newPhase)||0;
+            // 除「玩家→敌方」之外的回合边界（超维回合收尾、最后一回合被战斗结束截断等）：
+            // 只要回合键变了，就替上一回合补一张快照，否则那一整轮不参与 P 的评分。
+            if(prevKey>0&&rk()!==prevKey&&!roundEnd.has(prevKey))roundEnd.set(prevKey,snapRoundEnd());
+            poolSeed();execSrc.cur=camp===2?{name:ui('敌方回合','Enemy turn')}:null;
             if(camp===1&&phase===1)push('round',dimOn?ui(`第 ${bout} 回合后 · 超维回合开始`,`Ultra-Space bout after round ${bout}`):ui(`第 ${bout} 回合开始`,`Round ${bout} start`),'',d,fr);
             /* a second player phase 1 inside the same bout number is the Ultra-Space (超维) bout */if(camp===1&&phase===1&&dynIds.size)for(const id of dynIds)for(const [uid,m] of bstates){let ly=0;for(const v of m.values())if(String(v.stateId)===id)ly+=v.layer||0;if(ly>0){const k=uid+'|'+id;if(!layerSeries.has(k))layerSeries.set(k,[]);layerSeries.get(k).push(ly)}}
             if(camp===1&&phase===1){if(dimOn)gearTrigger('dimension',{},fr.time);else{lastDim=bout;gearTrigger('boutBegin',{},fr.time)}}else if(camp===1&&phase===3)gearTrigger('boutEnd',{},fr.time);
@@ -1075,7 +1099,7 @@
                 // changeReason===1 是回合末弃牌（上面 kind 判据即用此区分），不能算爆牌
                 else if(nd0==='GraveyardDeck'&&Number(d.changeReason)!==1){const was=handInAt.get(k);if(was!=null&&sq-was<=HAND_OVF_GAP){handFlow.ovfHand++;handInAt.delete(k)}}
               }
-              if(nd0==='HandDeck'){if(od0==='DrawDeck')handFlow.draws++;else if(od0==='GraveyardDeck')handFlow.retrieved++;else if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,sq)}
+              if(nd0==='HandDeck'){if(od0==='DrawDeck')handFlow.draws++;else if(od0==='GraveyardDeck')handFlow.retrieved++;else if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,sq);poolAdd(k)}
             }
             if(od0==='HandDeck'&&nd0==='GraveyardDeck')handFlow.discarded+=d.cardUidList.length;
             // 抽牌堆 → 弃牌堆既可能是爆牌，也可能是「把牌库顶 N 张磨掉」的削牌库效果；只有手牌正处在观测到的最大容量时
@@ -1083,8 +1107,8 @@
             if(od0==='DrawDeck'&&nd0==='GraveyardDeck'&&bout>0&&handUids.size>0&&handUids.size>=handFlow.peak)handFlow.ovfDirect+=d.cardUidList.length;
             if(handUids.size>handFlow.peak)handFlow.peak=handUids.size;
           }
-          if((e===1025&&d.deck==='HandDeck'&&d.cards?.length))for(const c of d.cards){const k=String(c.uid);if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,++hfSeq)}
-          if(e===1035&&d.deck==='HandDeck'&&d.cardUid!=null){const k=String(d.cardUid);if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,++hfSeq)}
+          if((e===1025&&d.deck==='HandDeck'&&d.cards?.length))for(const c of d.cards){const k=String(c.uid);if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,++hfSeq);poolAdd(k)}
+          if(e===1035&&d.deck==='HandDeck'&&d.cardUid!=null){const k=String(d.cardUid);if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,++hfSeq);poolAdd(k)}
           if(e===1027&&Array.isArray(d.cardUidList)&&d.cardUidList.length){
             const mk=moveKind(d.oldDeck,d.newDeck,d.changeReason);
             if(mk){const list=d.cardUidList;push('move',`${MOVE_LABEL[mk]} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead mv ${mk}">${ui(MOVE_LABEL[mk],mk)}</span>${list.slice(0,10).map(t=>chip(t)).join('')}${list.length>10?`<span class="mr2from">+${list.length-10}</span>`:''}`,d,fr,{mv:mk,count:list.length,cardUids:list})}
@@ -1144,7 +1168,7 @@
     // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
-    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -2124,43 +2148,65 @@
         };
         // knapsack per round: with the same hand and energy budget, what was the best achievable damage / defence versus what was played
         const rounds=new Map();for(const p of cardPlays){const r=rounds.get(p.round)||{played:[],spent:0};r.played.push(p);r.spent+=costOf(p.tid,p.cost);rounds.set(p.round,r)}
-        const knap=(items,B,key)=>{const dp=new Array(B+1).fill(0);for(const it of items){const c=it.c;if(c>B)continue;for(let b=B;b>=c;b--)dp[b]=Math.max(dp[b],dp[b-c]+it[key])}return dp[B]};
+        // 单轴背包：给定这点算力，某条轴最多能换到多少
+        const knapX=(its,B,key)=>{const N=Math.max(0,Math.round(B)||0),dp=new Array(N+1).fill(0);
+          for(const it of its){const c=Math.max(0,Math.round(it.c)||0);if(c>N)continue;for(let b=N;b>=c;b--)dp[b]=Math.max(dp[b],dp[b-c]+it[key])}
+          return dp[N]};
         let infoN=0,judgeN=0;const rrows=[],rratios=[];
         for(const [rd,r] of [...rounds.entries()].sort((a,b)=>a[0]-b[0])){
           const end=tl.roundEnd?.get(rd);if(!end)continue;
           const B=Math.min(30,r.spent+Math.max(0,Math.round(end.energy||0)));
           const avg=valueUpTo(rd);
-          const items=[...r.played.map(p=>({tid:p.tid,c:costOf(p.tid,p.cost),played:true})),...(end.hand||[]).filter(h=>actors.get(String(tl.ent.cards.get(String(h.uid))?.ownerUid))?.kind==='awakener'&&!r.played.some(p=>String(p.cardUid)===String(h.uid))).map(h=>({tid:h.tid,c:costOf(h.tid,h.cost),played:false}))].map(it=>{const a=avg(it.tid,it.c);return {...it,d:a.d,f:a.f,src:a.src}});
+          // 可选的牌 = 回合末还在手上的 ∪ 回合进行中抽到过的（roundPool）。
+          // 只用回合末手牌会漏掉「抽到又打掉 / 弃掉」的牌，把有失误的回合判成打平。
+          const poolUids=[...new Set([...(tl.roundPool?.get(rd)||[]),...(end.hand||[]).map(h=>String(h.uid))])];
+          const playedU=new Set(r.played.map(p=>String(p.cardUid)));
+          const cardOf=u=>tl.ent.cards.get(String(u))||(end.hand||[]).find(h=>String(h.uid)===String(u));
+          const items=[...r.played.map(p=>({uid:String(p.cardUid),tid:p.tid,c:costOf(p.tid,p.cost),played:true}))];
+          for(const u of poolUids){
+            if(playedU.has(u))continue;
+            const cd=cardOf(u);if(!cd||cd.tid==null)continue;
+            // 守密人自己的牌（胚胎 / 症状 / 银钥微光）不在唤醒体的手牌里，但确实花了算力 ——
+            // 不放进背包，而是从预算里扣掉（见下面 outsideCost），否则等于用别人的钱买最优解。
+            if(actors.get(String(cd.ownerUid))?.kind!=='awakener')continue;
+            items.push({uid:u,tid:cd.tid,c:costOf(cd.tid,cd.cost),played:false});
+          }
+          for(const it of items){const a=avg(it.tid,it.c);it.d=a.d;it.f=a.f;it.src=a.src}
           const aD=items.filter(i=>i.played).reduce((n,i)=>n+i.d,0),aF=items.filter(i=>i.played).reduce((n,i)=>n+i.f,0);
           // 铺垫（打出但既没伤害也没防御：觉醒 / 抽牌 / 加狂气）不该在伤害轴上被罚两次：
           // 它花掉的算力本来就不可能再用于打伤害。把这部分从伤害轴预算里去掉，
           // 等价于「按你选定的方案评」，而不是拿一份没花在铺垫上的假预算算最优解。
           const setup=items.filter(i=>i.played&&i.d<=0&&i.f<=0).reduce((n,i)=>n+i.c,0);
           const Bd=Math.max(0,B-setup);
-          const oD=Math.max(aD,knap(items,Bd,'d')),oF=Math.max(aF,knap(items,B,'f'));
-          // 轴归属：本回合在某个轴上没有投入（aD/aF 为 0）就不评那条轴 ——
-          // 一回合只有一份算力，全攻回合不该被防守轴判 0（151789 R7 的 aF=0 / oF=161 就是这么来的）。
-          const useD=aD>0,useF=aF>0;
-          const better=(useD&&(oD-aD)>oD*.01)||(useF&&(oF-aF)>oF*.01);
+          // 两条轴各拿满预算求最优再平均，等于要求「同时」打出最高伤害和最高护盾 ——
+          // 一回合只有一份算力，物理上做不到：151789 R8 花 3 点算力，既打了 0 费的
+          // 涡！流！弹！（31057 伤害）又留了张 3 费防御牌，旧口径按「31057 + 22808 伤害」判成 57%。
+          // 合成成单一目标再比：1 点护盾按吸收 1 点伤害计（游戏语义，与 def=block+1.2·heal 同一口径），
+          // 不引入人为的交换率常数 —— 防御牌贵不贵由它的费用体现，不由「轴权重」体现。
+          for(const it of items)it.v=it.d+it.f;
+          const aV=items.filter(i=>i.played).reduce((n,i)=>n+i.v,0);
+          const oV=Math.max(aV,knapX(items,Bd,'v'));
+          const better=(oV-aV)>oV*.01;
           // 这一回合「有没有得选」：池子里必须留着一张没打的牌，否则谈不上选择。
           // 注意不能只认「有伤害的替代」——防御牌、纯功能牌同样是可以打出去的另一个选择，
           // 只比伤害会让「你手上还有 3 张牌没打，且打出的就是最优」这种好决策无法被承认。
           // 区别很重要：「手上能打的都打了」不是打得完美、也不是打得差，是没有决策可评。
           const alt=items.some(i=>!i.played);
-          const axes=[];if(useD&&oD>0)axes.push(aD/oD);if(useF&&oF>0)axes.push(aF/oF);
-          // 有得选就打一个分：打平记 1.0（这是证据，不是白送 —— 价格取自**之前的**回合，
+          // 有得选就打一个分：贴在边界上记 1.0（这是证据，不是白送 —— 价格取自**之前的**回合，
           // 不是你这一手自己定义的）。只数失误的话 P 会退化成「失败率」。
-          const judge=alt&&axes.length>0;
-          const ratio=judge?axes.reduce((x,y)=>x+y,0)/axes.length:null;
+          const judge=alt&&aV>0&&oV>0;
+          const ratio=judge?Math.min(1,aV/oV):null;
           if(ratio!=null){rratios.push(ratio);judgeN++;if(better)infoN++}
-          rrows.push({round:rd,budget:B,budgetD:Bd,hand:items.length,played:r.played.length,aD,oD,aF,oF,judge,better,ratio});
+          // 展示用：两条轴各自在全预算下的上限（不参与打分，只用来解释「当时还有多少空间」）
+          const oD=Math.max(aD,knapX(items,Bd,'d')),oF=Math.max(aF,knapX(items,Bd,'f'));
+          rrows.push({round:rd,budget:B,budgetD:Bd,hand:items.length,played:r.played.length,aD,oD,aF,oF,aV,oV,judge,better,ratio,
+            items:items.map(i=>({tid:i.tid,c:i.c,d:Math.round(i.d),f:Math.round(i.f),src:i.src,played:i.played}))});
         }
         // 回合等权：一次回合是一次决策。按伤害加权求和会让后期的大数字把早期的失误稀释掉
         // （151789 R4 打出 212 而手上有张值 847 的牌，4 倍失误，却被 R7 的 3.1 万摊平）。
         const playScore=rratios.length?100*rratios.reduce((a,b)=>a+b,0)/rratios.length:null;
         const pInfo=infoN,pJudge=judgeN,pRounds=rrows.length;
         // 展示用的两轴达成率：只在「本回合确实投入了这条轴」的回合里按回合等权平均
-        const axisRatio=(ak,ok)=>{const v=rrows.filter(r=>r.judge&&r[ak]>0&&r[ok]>0).map(r=>r[ak]/r[ok]);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
         // keyflare choice quality: realised value of the chosen skill versus the best known alternative
         const kp=pl.filter(p=>p.kind==='keeper'),cnt=Math.max(1,cardPlays.length);
         const D0=cardPlays.reduce((n,p)=>n+p.dmg,0)/cnt||1,F0=cardPlays.reduce((n,p)=>n+p.block+1.2*p.heal,0)/cnt||1,U0=cardPlays.reduce((n,p)=>n+p.eng+p.ali*0.05+p.draw,0)/cnt||1;
@@ -2180,7 +2226,7 @@
         const e1=cons+waste>0?cons/(cons+waste):null,e2=disc==null?null:(used+disc>0?used/(used+disc):null),
           e3=over==null?null:(cons+over>0?cons/(cons+over):null),es=[e1,e2,e3].filter(v=>v!=null),effScore=es.length?100*es.reduce((a,b)=>a+b,0)/es.length:null;
         const parts=[['pick',pickScore],['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
-        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,pInfo,pJudge,pRounds,rD:axisRatio('aD','oD'),rF:axisRatio('aF','oF'),eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
+        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,pInfo,pJudge,pRounds,eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
       })();
       // ---- merged scoring model (morimens-replay-scoring.js): semantic gear value, role-adaptive awakeners, keeper decision quality
       const SC=window.MorimensReplayScoring;
@@ -2557,8 +2603,9 @@
     const name=t=>res.nameSkill(t);
     const picks=k.picks.length?k.picks.map(p=>`<div class="mr2mrow"><span>${ui(`第 ${p.round} 回合`,`R${p.round}`)} <small>${ui('选择','picked')} ${esc(name(p.chosen))}${p.ratio!=null&&p.bestTid!=null&&String(p.bestTid)!==String(p.chosen)?` · ${ui('已知最优','best known')} ${esc(name(p.bestTid))}`:''}</small></span><b>${p.cv==null?'—':p.cv.toFixed(2)}</b><i class="mr2msc"><u style="width:${p.ratio==null?0:(p.ratio*100).toFixed(0)}%"></u></i><em>${p.ratio==null?'—':Math.round(p.ratio*100)}</em></div>`).join(''):`<div class="mr2empty">${ui('本场没有可比较的钥令选择','No comparable keyflare picks')}</div>`;
     const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
-    const rr=k.rrows.map(r=>{const dR=r.aD>0&&r.oD>0?r.aD/r.oD:null,fR=r.aF>0&&r.oF>0?r.aF/r.oF:null,vs=[dR,fR].filter(v=>v!=null),avg=r.ratio!=null?r.ratio:(vs.length?vs.reduce((x,y)=>x+y,0)/vs.length:null),judge=(r.judge!=null?r.judge:r.inf!==false)&&avg!=null;
-      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('手上没有别的可打，不计','nothing else to play')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}</small></span><b>${ui(`${dR!=null?`伤${pct(dR)} `:''}${fR!=null?`防${pct(fR)}`:''}`.trim()||'—',`${dR!=null?`d${pct(dR)} `:''}${fR!=null?`f${pct(fR)}`:''}`.trim()||'—')}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
+    const rr=k.rrows.map(r=>{const avg=r.ratio!=null?r.ratio:null,judge=(r.judge!=null?r.judge:r.inf!==false)&&avg!=null;
+      const aV=Math.round(r.aV||0),oV=Math.round(r.oV||0);
+      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('没有可比的价格，不计','no priceable alternative')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}</small></span><b>${ui(`产出 ${f(aV)} / 上限 ${f(oV)}`,`${f(aV)} / ${f(oV)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
     const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
     const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
     const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
@@ -2597,7 +2644,7 @@
         ${row(ui('手牌利用率（未被回合末弃掉）','Hand used'),pct(E.e2),E.e2==null?null:E.e2*100,ui(`打出 ${f(E.used)} / 回合末弃牌 ${f(E.disc)}`,''))}
         ${row(ui('算力未溢出','No overflow'),pct(E.e3),E.e3==null?null:E.e3*100,ui(`溢出 ${f(E.over)}`,''))}
         ${row(ui('手牌未溢出（未因手牌已满丢牌）','No hand overflow'),fx.handOverflowPct==null?'—':pc(fx.handOverflowPct),fx.handOverflowPct==null?null:Math.max(0,100-Math.min(100,fx.handOverflowPct/25*100)),ui(`丢牌 ${f(fx.handOverflow||0)} / 进手 ${f(fx.handCardsSeen||0)}`,''))}</div>
-      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。每张牌的价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。按回合等权，不看伤害大小；铺垫（觉醒 / 抽牌 / 加狂气）花掉的算力不会在伤害轴上被再罚一次。伤害达成 ${pct(k.rD)}，防御达成 ${pct(k.rF)}；共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得选`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight), unplayed cards are priced at their type's damage-per-energy. Rounds are weighted equally; setup energy is not charged twice. Damage ${pct(k.rD)}, defence ${pct(k.rF)}; ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds had a choice`)}</small>${rr}</div>
+      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。产出一律折成「伤害当量」：1 点护盾按吸收 1 点伤害计，所以选攻还是选守不会被重复扣分。按回合等权，不看数字大小；铺垫（觉醒 / 抽牌 / 加狂气）花掉的算力不参与最优解。共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得比`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight). Damage and shield are added 1:1, so picking defence over offence is not punished twice. Rounds are weighted equally; setup energy is excluded from the optimum. ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds were comparable`)}</small>${rr}</div>
       <div class="mr2mcol"><h6>${ui('各钥令实际价值','Keyflare values')}</h6>${kv||`<div class="mr2empty">—</div>`}</div></div>`;
   }
   function ratingPanel(m,total,DIM,res){
