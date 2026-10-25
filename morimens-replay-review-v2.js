@@ -137,7 +137,8 @@
       const idx=new Map();for(const [sid,r0] of Object.entries(rr.State)){const m=String(r0.CnID||'').match(/^状态@(?:[^@]{0,6}篇)?(.+?)(?:Pro)?$/);if(m){if(!idx.has(m[1]))idx.set(m[1],[]);idx.get(m[1]).push(sid)}
         const nk=pipeName(String(r0.Name||'')).replace(/<[^>]+>/g,'').trim();if(nk&&/^维度影像/.test(nk)&&/^状态@星辰篇/.test(String(r0.CnID||''))&&!/效果|计数|标记/.test(String(r0.CnID||''))){if(!idx.has(nk))idx.set(nk,[]);if(!idx.get(nk).includes(sid))idx.get(nk).push(sid)}}
       const rcT=rr.RelicConfig=rr.RelicConfig||{};
-      for(const r1 of full.battleDat?.relics||[]){const tid=String(r1.tid);if(rcT[tid])continue;const cat=relicCatalog[tid],zh=String(cat?.zh||'');if(!zh)continue;const plus=/\+$/.test(zh),base=zh.replace(/\+$/,''),sids=idx.get(base);if(!sids||!sids.length)continue;
+      // __synth 是 preloadAssets 用目录表补的最小条目（只有名称 / 描述），必须让这里基于 State 表的完整合成覆盖它
+      for(const r1 of full.battleDat?.relics||[]){const tid=String(r1.tid);if(rcT[tid]&&!rcT[tid].__synth)continue;const cat=relicCatalog[tid],zh=String(cat?.zh||'');if(!zh)continue;const plus=/\+$/.test(zh),base=zh.replace(/\+$/,''),sids=idx.get(base);if(!sids||!sids.length)continue;
         const desc=pipeName(rr.State[sids.find(x=>rr.State[x].Desc)||sids[0]].Desc||'').replace(/(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)/g,(m,x,y)=>plus?y:x);
         rcT[tid]={ID:Number(tid),Name:'x|'+zh,Desc:'x|'+desc,BattleDesc:'x|'+desc,State1:sids.map(Number),StatePara:[],synthesized:true}}}
     const skill=rr.Skill||{},aw=rr.AwakerConfig||{},state=rr.State||{},relic=rr.RelicConfig||{},monster=rr.MonsterConfig||{};
@@ -159,6 +160,10 @@
     if(!stageRef){try{const r=await fetch('data/morimens/replay/stage-rounds.json?v=20261005',{cache:'no-cache'});stageRef=r.ok?await r.json():{};for(const k of Object.keys(stageRef))if(k.startsWith('cnt:')&&Array.isArray(stageRef[k.slice(4)]))stageRef[k.slice(4)].total=stageRef[k]}catch{stageRef={}}}
     if(!imageRealms){try{const r=await fetch('data/morimens/replay/dimension-image-realms.json?v=20261006',{cache:'no-cache'});imageRealms=r.ok?await r.json():{}}catch{imageRealms={}}}
     if(!relicFallback){try{const r=await fetch('data/morimens/replay-relic-config.json',{cache:'force-cache'});relicFallback=r.ok?await r.json():{}}catch{relicFallback={}}}
+    // 造物表缺口：replay-relic-config.json 只覆盖了部分 tid（相对 replay-relics.json 缺 86 条，含全部维度影像）。
+    // 缺失者在复盘里连 BattleDesc / Desc 都没有，语义评分与效果展示完全失明 —— 用 replay-relics.json
+    // 合成最小条目（只有名称 / 图标 / 描述，绝不臆造 State 数值），至少让名称、图标与语义匹配可用。
+    if(relicFallback&&relicCatalog.loaded){const t=relicFallback.relic=relicFallback.relic||{};for(const [tid,v] of Object.entries(relicCatalog)){if(tid==='loaded'||!v||typeof v!=='object'||t[tid])continue;const nm=v.zh||v.en,tx=v.desc||'';if(!nm&&!tx)continue;t[tid]={ID:Number(tid)||tid,Name:nm||v.en||'',CnID:'造物',Desc:tx,BattleDesc:tx,...(v.icon?{Icon:v.icon}:{}),__synth:1}}}
     if(!gearCatalog){try{const r=await fetch('data/morimens/replay-gear.json',{cache:'force-cache'});gearCatalog=r.ok?await r.json():{wheels:{},covenants:{}}}catch{gearCatalog={wheels:{},covenants:{}}}}
     if(awakenerSlugs)return;
     try{const r=await fetch('data/morimens/skeydb/awakeners.json',{cache:'force-cache'});const j=await r.json();awakenerSlugs=new Map((j.records||[]).map(x=>[String(x.ingameId).toUpperCase(),x.assetSlug]))}
@@ -747,22 +752,25 @@
           else if(relWin&&((relWin.gear?(fr.time||0)>relWin.until:fr.time!==relWin.time)||e===1067||e===1064||e===1019||(!relWin.gear&&(e===1013||e===1093||e===1014))))relWin=null;
           if(relWin){
             const powers=relWin.queue.filter(r=>r.kind==='power'),basics=relWin.queue.filter(r=>r.kind==='basic');
+            // power 增益是等到 2900 / 3130 状态事件才入账的（1028 帧只挂 pend），比下面的角色归因更晚。
+            // 不提前认领的话同一笔力量会在 1028 帧先走一次角色归因、状态到达时再走一次窗口实例。
+            if(powers.length)(relWin.claimed=relWin.claimed||new Set()).add('damage_plus');
             if(powers.length){
               if(e===1028&&d.propertyType==='damage_plus'&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener')relWin.pend.set(String(d.uid),Number(d.changedValue));
               else if((e===1004||e===1007)&&(d.stateId===2900||d.stateId===3130)){
                 const delta=e===1004?(d.layer||0):((d.newLayer||0)-(d.oldLayer||0));
-                if(delta>0&&relWin.pi<powers.length){const rel=powers[relWin.pi++],ctx=newInstance(relWin,rel,delta,d.stateId===3130);for(const [uid,amt] of relWin.pend)grant(ctx,uid,amt,rel,d.stateId===3130);relWin.pend.clear()}
+                if(delta>0&&relWin.pi<powers.length){const rel=powers[relWin.pi++],ctx=newInstance(relWin,rel,delta,d.stateId===3130);for(const [uid,amt] of relWin.pend)grant(ctx,uid,amt,rel,d.stateId===3130);relWin.pend.clear();(relWin.claimed=relWin.claimed||new Set()).add('damage_plus')}
               }
             }
             const crits=relWin.queue.filter(r=>r.kind==='crit');
             if(crits.length&&e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'){
               if(!relWin.critCtx||relWin.critCtx.inst.awakeners.has(String(d.uid))){const rel=crits[Math.min(relWin.ci||0,crits.length-1)];relWin.ci=(relWin.ci||0)+1;relWin.critCtx=newInstance(relWin,rel,Number(d.changedValue),true);relWin.critCtx.rel=rel}
-              grant(relWin.critCtx,d.uid,Number(d.changedValue),relWin.critCtx.rel,true);
+              grant(relWin.critCtx,d.uid,Number(d.changedValue),relWin.critCtx.rel,true);(relWin.claimed=relWin.claimed||new Set()).add('crit_damage');
             }
             if(basics.length&&e===1028&&(d.propertyType==='i_basic_damage_per'||d.propertyType==='basic_damage_per')&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'){
               const uid=String(d.uid);
               if(!relWin.basicCtx||relWin.basicCtx.inst.awakeners.has(uid)){if(relWin.basicCtx)relWin.bi++;const rel=basics[Math.min(relWin.bi,basics.length-1)];relWin.basicCtx=newInstance(relWin,rel,Number(d.changedValue),false);relWin.basicCtx.rel=rel}
-              grant(relWin.basicCtx,uid,Number(d.changedValue),relWin.basicCtx.rel,false);
+              grant(relWin.basicCtx,uid,Number(d.changedValue),relWin.basicCtx.rel,false);(relWin.claimed=relWin.claimed||new Set()).add(d.propertyType);
             }
           }
           if(relWin&&!relWin.gear&&e===1028&&d.propertyType==='damage_plus'&&Number(d.changedValue)<0&&actors.get(String(d.uid))?.kind==='monster'){
@@ -775,7 +783,7 @@
               const cands=relWin.queue.filter(q=>re.test(relicTxt(q.tid))),exact=cands.filter(q=>(res.relic[String(q.tid)]?.StatePara||[]).some(v=>Math.abs(Number(v)-Number(d.changedValue))<1e-6)||new RegExp('(?:^|[^\\d.])'+Number(d.changedValue)+'(?:[^\\d]|$)').test(relicTxt(q.tid)));
               for(const q of (exact.length?exact:cands)){const gk=q.tid+'|'+d.propertyType;relWin.gctx=relWin.gctx||new Map();
                 let ctx=relWin.gctx.get(gk);if(!ctx||ctx.inst.awakeners.has(uid)){ctx=newInstance(relWin,{tid:q.tid,kind:kd},Number(d.changedValue),false);relWin.gctx.set(gk,ctx)}
-                grant(ctx,uid,Number(d.changedValue),{tid:q.tid,kind:kd},false);break}
+                (relWin.claimed=relWin.claimed||new Set()).add(d.propertyType);grant(ctx,uid,Number(d.changedValue),{tid:q.tid,kind:kd},false);break}
             }
           }
           // ---- state tracking (runs for every frame, including pre-battle setup)
@@ -858,7 +866,10 @@
             if(pt==='keeper_energy'&&dimKeyHalf.size&&execSrc.cur?.play&&!dimTid&&!gKey&&keys.length){const hw=actors.get(String(d.extraData?.castRoleUid))?.name,ht=hw!=null?dimKeyHalf.get(hw):null;if(ht){const half=cv/2;supOf('rel:'+ht).key+=half;for(const k of keys)supOf(k).key-=half*part}}
             if(!keys.length){if(pt==='ulti_energy')passiveSupport.ali+=cv;else if(pt==='keeper_energy')passiveSupport.key+=cv}
             // actor-sourced buffs: power / crit damage / crit rate / base damage -> estimated extra damage through the same hit model as relics
-            if(rcv?.kind==='awakener'&&keys.length&&!relWin){
+            // P1-9：造物 / 装备触发窗口内的属性增益此前被 !relWin 整块丢弃（窗口内只有 RELIC_GEN 四类能入账）。
+            // 改为按「窗口已认领过的属性类型」逐类放行：同一笔增益不会被窗口实例与角色实例各记一次，
+            // 而窗口没有认领的属性类型（如 o_damage_per_ulti / awaker_ulti_dmg_per / 各类带作用域的增伤）照常归因给窗口来源。
+            if(rcv?.kind==='awakener'&&keys.length&&!(relWin&&relWin.claimed&&relWin.claimed.has(pt))){
               const pk0=PROP_KIND[pt],kind=pt==='damage_plus'?'power':pt==='crit_damage'?'crit':pt==='crit'?'critrate':(pt==='basic_damage_per'||pt==='i_basic_damage_per')?'basic':pk0?pk0[0]:null,kscope=['damage_plus','crit_damage','crit','basic_damage_per','i_basic_damage_per'].includes(pt)?undefined:pk0?.[1];
               if(kind)for(const k of keys.filter(x=>x.startsWith('act:')||x.startsWith('gear:'))){const tid=k,rel={tid,kind,scope:kscope},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
                 const ctx=newInstance({time:fr.time},rel,cv,temp);grant(ctx,d.uid,cv,rel,temp);supOf(k)[kind==='power'?'powerGain':kind==='crit'?'critGain':kind==='critrate'?'critRateGain':'basicGain']+=cv}
@@ -1740,8 +1751,12 @@
         if(re.lump){const gs=[...new Set(re.lump.chs.map(c=>c.base))],per=re.lump.n/Math.max(1,gs.length);
           for(const g of gs){const grp=re.lump.chs.filter(c=>c.base===g),cplx=grp.filter(c=>c.complex).length;for(const c of grp){const nn=c.complex?per/Math.max(1,cplx):per;for(const x of c.effs)if(eT[x.kind]!=null&&!x.cond)eT[x.kind]+=x.amt*(x.mult||1)*nn}}}
         r.engTot=eT;{const sm=Object.entries(eT).filter(([,v])=>v>0).map(([k,v])=>`${KL[k]||k} ${fmt(Math.round(v*10)/10)}`);if(sm.length)r.eff.push({kind:'total',text:`${ui('合计','Total')}：${sm.join(' · ')}`})}}}
-    // a relic that says "抽 N 张牌" cannot have drawn more than N × its trigger count: the rest of the draws in its frame group are the round's normal draw
-    for(const r of relicRows){const sp=tl.supStore?.get('rel:'+r.tid);if(!sp||!(sp.draws>0)||r.engine)continue;const rec=res.relic[r.tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/);if(!m)continue;const k=m[1]?Number((rec.StatePara||[])[Number(m[1])-1]):Number(m[2]);if(Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n)sp.draws=k*r.n}
+    // 造物文本写「抽 N 张牌」时，帧组里会混进该回合的常规抽牌，实测 draws 常高于「N × 触发次数」。
+    // 但污染量有上界：常规抽牌每回合只发生一次，最多污染「每回合常规抽牌数 × 触发回合数」。
+    // 超出上界的部分说明 r.n 被低估（触发事件漏记 / 文本与实际不符），此时截断会丢掉真实抽牌 ——
+    // 只在污染量可解释时截断（名义型造物的 r.n = 回合数 本身就精确，一律截断），否则保留实测值并给出说明。
+    {const base=Math.max(1,draws/Math.max(1,tl.rounds.length));
+    for(const r of relicRows){const sp=tl.supStore?.get('rel:'+r.tid);if(!sp||!(sp.draws>0)||r.engine)continue;const rec=res.relic[r.tid]||{},t=pipeName(rec.BattleDesc||rec.Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/);if(!m)continue;const k=m[1]?Number((rec.StatePara||[])[Number(m[1])-1]):Number(m[2]);if(!(Number.isFinite(k)&&k>0&&r.n>0))continue;const capN=k*r.n;if(sp.draws<=capN)continue;const allow=base*Math.max(1,(r.rounds&&r.rounds.length)||0);if(r.staticTot||sp.draws<=capN+allow)sp.draws=capN;else{r.eff.push({kind:'draw',text:ui(`抽牌按实测计 ${fmt(Math.round(sp.draws*10)/10)} 张：超出「${fmt(k)} 张 × ${fmt(r.n)} 次触发」的部分已大于常规抽牌污染能解释的范围，疑似触发次数被低估`,`Draws kept at ${fmt(Math.round(sp.draws*10)/10)}: the excess over ${fmt(k)}×${fmt(r.n)} exceeds what round-draw contamination can explain`)})}}}
     // generated cards: how many each source created and how many times those cards were actually played
     const genBy=new Map();for(const g of tl.genCards?.values()||[]){const k=`${g.key}|${g.label}`,o=genBy.get(k)||{key:g.key,label:g.label,created:0,played:0,byCard:new Map()};o.created++;o.played+=g.played;const nm=res.nameSkill(g.tid)||String(g.tid),c=o.byCard.get(nm)||{created:0,played:0};c.created++;c.played+=g.played;o.byCard.set(nm,c);genBy.set(k,o)}
     const genRows=[...genBy.values()].filter(o=>o.created>0).sort((a,b)=>b.created-a.created).map(o=>({...o,verify:tl.genVerify?.get(o.key)||null,byCard:[...o.byCard.entries()].map(([n,v])=>({n,...v})).sort((a,b)=>b.created-a.created)}));
@@ -1789,12 +1804,13 @@
     // whose text names that state and that does not already own it as a related state. Several candidates split the damage equally.
     const DOT_EN={'出血':'Bleed','中毒':'Poison','反击':'Counter','献祭':'Sacrifice','灼烧':'Burn','旧日余烬':'Ember'};
     const relicText=tid=>{const r=res.relic[String(tid)]||{};return pipeName(pickVariant(r.BattleDesc||r.Desc,0))||''};
-    const dotCands=[...relicRows.map(r=>({o:r,text:relicText(r.tid),own:new Set((()=>{const rec=res.relic[r.tid]||{},a=[];for(const [k,v] of Object.entries(rec))if(/^State\d+$/.test(k)&&Array.isArray(v))a.push(...v.map(String));return a})())})),
+    const dotCands=[...relicRows.map(r=>({o:r,text:relicText(r.tid),synth:!!res.relic[String(r.tid)]?.__synth,own:new Set((()=>{const rec=res.relic[r.tid]||{},a=[];for(const [k,v] of Object.entries(rec))if(/^State\d+$/.test(k)&&Array.isArray(v))a.push(...v.map(String));return a})())})),
       ...gearRows.map(g=>({o:g,text:(g.desc||'')+' '+(g.effectsEn||[]).map(x=>x.desc).join(' '),own:new Set([...g.related].map(String))}))];
     let dotAttr=0;
     for(const sr of stateRows){
       if(!(sr.dmg>0))continue;const nm=res.nameState(sr.id),en=DOT_EN[nm];
-      const cs=dotCands.filter(c=>!c.own.has(String(sr.id))&&(c.text.includes(nm)||(en&&new RegExp('\\b'+en,'i').test(c.text))));
+      // synth 条目只有英文描述模板，走英文关键词会把「Counter / Poison」一类词误当成状态名，稀释真正的 DoT 归属
+      const cs=dotCands.filter(c=>!c.synth&&!c.own.has(String(sr.id))&&(c.text.includes(nm)||(en&&new RegExp('\\b'+en+'\\b','i').test(c.text))));
       if(!cs.length)continue;
       const share=sr.dmg/cs.length;
       for(const c of cs){c.o.dot=(c.o.dot||0)+share;(c.o.dotStates=c.o.dotStates||[]).push({id:sr.id,name:nm,dmg:share,shared:cs.length});dotAttr+=share}
@@ -1835,7 +1851,7 @@
       const vE=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+v.vulnExtra,0);
       const kpMax0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;   // one embryo is worth 5% of the HP pool in the 血池
       const sub=(sp,extra={})=>({
-        key:sp.key+(extra.key||0),ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0)+(sp.beaconExtra||0),ero:(extra.ero||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.5*sp.cycles+0.6*(sp.dimAdd||0)+0.9*(sp.dimPull||0),cyc:0,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards+(kpMax0>0?(sp.poolGain||0)/(0.05*kpMax0):0),dis:sp.dispelPts||0});
+        key:sp.key+(extra.key||0),ali:sp.aliOthers+0.5*sp.aliSelf,seal:sp.seal,eng:sp.energy+sp.inspire,vuln:vE>0?sp.vulnExtra:(sp.dbCls.vuln||0),buf:(extra.buf||0)+(sp.beaconExtra||0),ero:(extra.ero||0),cut:sp.cut+sp.costCut,draw:sp.draws+0.6*(sp.dimAdd||0)+0.9*(sp.dimPull||0),cyc:sp.cycles,realm:(extra.rm||0)+sp.rm,emb:sp.embryo+sp.embCards+(kpMax0>0?(sp.poolGain||0)/(0.05*kpMax0):0),dis:sp.dispelPts||0});   // cyc 此前恒为 0（SUP_W 里的死维度）；过牌循环不再借道 draw 计 0.5 倍，而是独立成维度
       // raw metrics of one entity -> {out:{...},def:{...},sup:{...}}
       const rawOf=(o)=>o; // placeholder to keep structure readable
       const rate=(items,{withEff=false}={})=>{
@@ -1929,8 +1945,8 @@
         return {out,outT:out.dir+out.dot+out.oth,sh:block+1.2*heal+0.5*(sp.maxHp||0),block,heal,mit:sp.prevented,prevTypes:[...sp.prevTypes.entries()].map(([n,v])=>({n,v})),ctl:ctlOf(sp),dbCls:sp.dbCls,dbTypes:[...sp.dbTypes.entries()].map(([n,o])=>({n,k:o.k,c:o.n})),dr:sp.dr,sup:sub(sp,{buf:(buf||0)+(sp.tenExtra||0)}),inspire:sp.inspire,draws:sp.draws,cycles:sp.cycles,weakCov:weakCovered(sp),costCut:sp.costCut,vulnExtra:sp.vulnExtra,aliOthers:sp.aliOthers,aliSelf:sp.aliSelf,engBase:sp.energy,cutBase:sp.cut}};
       const gearItems=kind=>gearRows.filter(g=>g.kind===kind).map(g=>({g,val:g.extra+g.out.dmg+(g.dot||0),...itemRaw(supOf('gear:'+g.key),{dir:g.out.dmg,dot:g.dot||0},g.extra||0,g.out.block,g.out.heal)}));
       const wheelItems=gearItems('wheel'),covItems=gearItems('covenant');
-      const relSup0=r=>{const sp=supOf('rel:'+r.tid);const t=pipeName((res.relic[r.tid]||{}).BattleDesc||(res.relic[r.tid]||{}).Desc||''),m=t.match(/抽\s*(?:\[Arg(\d)\]|(\d+))\s*张牌/),k=m?(m[1]?Number((res.relic[r.tid]?.StatePara||[])[Number(m[1])-1]):Number(m[2])):NaN;
-        return Number.isFinite(k)&&k>0&&r.n>0&&sp.draws>k*r.n?{...sp,draws:k*r.n}:sp};
+      // 抽牌上限已在上面按「污染可解释性」统一处理并写回 supStore，这里不再重复截断（否则 drawOver 的实测值会被二次压回名义上限）
+      const relSup0=r=>supOf('rel:'+r.tid);
       const relSup=r=>{const sp=relSup0(r),rmg=r.rmGain||0;return r.engTot&&(r.engine||r.staticTot)?{...sp,aliOthers:r.engTot.ali,aliSelf:0,key:r.engTot.keyE,energy:r.engTot.energy,draws:r.engTot.draw,cycles:0,cut:0,costCut:0,copies:0,tenGain:0,embryo:0,embCards:0,inspire:0,rm:rmg,dr:0,seal:0}:(rmg?{...sp,rm:(sp.rm||0)+rmg}:sp)};
       const relicItems=relicRows.map(r=>({r,val:r.dmg+(r.buff?.extra||0)+(r.dot||0),...itemRaw(relSup(r),{dir:r.dmg,dot:r.dot||0},r.buff?.extra||0,r.block,r.heal)}));
       rate(wheelItems);rate(covItems);rate(relicItems);
@@ -2267,7 +2283,7 @@
     /* structured data for the MVP image export */
     try{const kp0=m.keeper,v=kp0?.v2;window.__mr2MvpExport={
       keeper:kp0&&kp0.score!=null?{name:keeperName()||ui('守密人','Keeper'),score:kp0.score,grade:kp0.grade,luck:kp0.luck?{score:kp0.luck.score,label:kp0.luck.label,unlucky:kp0.luck.unlucky}:null,dims:v?KEEPER_DIMS().map(([k0,l])=>[l,v.dims[k0]]):[],potential:v?.potential,windows:v?.windows,conf:v?.confidence,facts:v?.facts||null}:null,
-      aw:m.awakeners.map(o=>({top:(()=>{const x=o.x||{},L={out:ui('输出','Output'),sh:ui('护盾/治疗量','Shield+heal'),mit:ui('减伤','Mitigation'),ctl:ui('控制','Control'),dr:ui('死亡抵抗','Death resist'),key:ui('银钥能量','Keyflare'),ali:ui('狂气','Aliemus'),seal:ui('黑印','Seals'),eng:ui('行动力','Energy'),vuln:ui('易伤增伤','Vuln. dmg'),buf:ui('伤害加成','Dmg buffs'),cut:ui('减费','Cost cut'),draw:ui('过牌','Draws'),realm:ui('界域精通','Realm mastery'),emb:ui('胚胎','Embryo'),dis:ui('驱散','Dispel')};
+      aw:m.awakeners.map(o=>({top:(()=>{const x=o.x||{},L={out:ui('输出','Output'),sh:ui('护盾/治疗量','Shield+heal'),mit:ui('减伤','Mitigation'),ctl:ui('控制','Control'),dr:ui('死亡抵抗','Death resist'),key:ui('银钥能量','Keyflare'),ali:ui('狂气','Aliemus'),seal:ui('黑印','Seals'),eng:ui('行动力','Energy'),vuln:ui('易伤增伤','Vuln. dmg'),buf:ui('伤害加成','Dmg buffs'),cut:ui('减费','Cost cut'),draw:ui('抽牌','Draws'),cyc:ui('过牌','Cycling'),ero:ui('侵蚀','Corrosion'),realm:ui('界域精通','Realm mastery'),emb:ui('胚胎','Embryo'),dis:ui('驱散','Dispel')};
           const c=[];if(o.cats?.out!=null&&x.outT>0)c.push({l:L.out,s:o.cats.out,v:x.outT});for(const k of ['sh','mit','ctl','dr']){const sc=x.defS?.[k],v=k==='sh'?x.sh:x[k];if(sc!=null&&v>0)c.push({l:L[k],s:sc,v})}for(const k of Object.keys(x.supS||{})){const sc=x.supS[k],v=x.sup?.[k];if(sc!=null&&v>0)c.push({l:L[k]||k,s:sc,v})}
           return c.sort((a,b)=>b.s-a.s||b.v-a.v).slice(0,2).map(q=>({l:q.l,v:q.v,s:Math.round(q.s)}))})(),name:o.r.a.name,icon:o.r.a.icon,score:o.score,grade:o.grade,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]]),dmg:o.r.dmg,pct:total?pctOf(o.r.dmg,total):0,block:o.r.block,heal:o.r.heal,plays:o.r.plays})),
       wheels:m.wheels.slice(0,3).map(o=>({name:o.g.name,icon:o.g.icon,score:o.score,grade:o.grade,n:o.g.n,passive:!!o.g.passive,val:o.val,dims:DIM.filter(([k])=>o.cats[k]!=null).map(([k,l])=>[l,o.cats[k]])})),
@@ -2301,8 +2317,10 @@
       ['eng',ui('算力（产生 + 制造灵感）','Energy'),f(S.eng),ui(`产生 ${f(x.engBase||0)} · 灵感 ${x.inspire||0}`,'')],
       ['vuln',ui('易伤（带来的增伤 / 上层次数）','Vulnerability'),f(S.vuln),typeNote(dbBy('vuln'))],
       ['buf',ui('其他伤害加成（力量 / 暴击 / 基伤 / 强效 / 触腕的间接伤害）','Damage buffs'),f(S.buf),ui(`力量 ${f(x.bufPower||0)} · 暴击 ${f(x.bufCrit||0)}${x.created&&x.created.buf>0?` · 创造的造物（${[...x.created.names].join('、')}，仅当回合）${f(x.created.buf)}`:''}`,'')],
+      ['ero',ui('侵蚀（独立计入辅助维度，不再并入输出 / 其他加成）','Corrosion'),f(S.ero),''],
       ['cut',ui('减费（点数）','Cost cuts'),f(S.cut),ui(`复制 ${f(x.copies||0)} 张`,'')],
-      ['draw',ui('抽牌与过牌（过牌按 0.5 折算）','Draw & cycling'),f(S.draw),ui(`抽牌 ${f(x.draws||0)} · 过牌 ${f(x.cycles||0)}（取回 / 置顶 / 效果弃牌）`,'')],
+      ['draw',ui('抽牌','Draws'),f(S.draw),ui(`抽牌 ${f(x.draws||0)}`,'')],
+      ['cyc',ui('过牌（取回 / 置顶 / 效果弃牌）','Cycling'),f(S.cyc),ui(`过牌 ${f(x.cycles||0)}`,'')],
       ['dis',ui('驱散 / 净化（技能指定的状态真的被清除才计）','Dispel'),f(S.dis),x.dispelN||x.dispelMiss?ui(`实际驱散 ${x.dispelN} 次${x.dispelTypes?.length?'（'+x.dispelTypes.map(([n,c])=>`${n}×${c}`).join('、')+'）':''} · 未命中（当时没有可驱散的状态）${x.dispelMiss||0} 次`,`${x.dispelN} dispelled, ${x.dispelMiss||0} missed`):''],
       ['realm',ui('界域精通','Realm mastery'),f(S.realm),''],['emb',ui('胚胎融合 / 制造胚胎','Embryo fusion'),f(S.emb),'']
     ].filter(r=>(S[r[0]]||0)>0).map(r=>row(r[1],r[2],ss[r[0]],r[3])).join('')||`<div class="mr2empty">—</div>`;
@@ -2369,7 +2387,7 @@
     const model=ui(`<p><b>三大类均分</b>：输出、防御、辅助各占 1/3（本场没人产出的大类自动剔除并重新分配）。每个小项的得分 = 占同类总量的份额，达到公平份额（1/${m.model.N}）的 2 倍记 100 分；大类得分是其小项得分的加权平均，<b>综合评分 = 大类加权平均 × 出牌效率修正（×0.90~1.10）</b>。点击每一行可展开全部小项。</p>
       <ul><li><b>输出</b>：造成的全部伤害，细分直接伤害（出牌 / 技能 / 爆发）、持续伤害（出血 / 中毒 / 献祭…）、反击、斩杀、触腕 / 怒涛（按各唤醒体提高的触腕伤害加成占比折算）、其他状态伤害；侵蚀单列并计入辅助维度、不并入输出总量；以统计包为准。</li>
       <li><b>防御</b>（小项权重 护盾+治疗 ${SW.def.sh} · 减伤 ${SW.def.mit} · 控制 ${SW.def.ctl} · 死亡抵抗 ${SW.def.dr}）：护盾 + 1.2×治疗；<u>减伤</u> = 降低敌方多少伤害（按敌方每次主动攻击的实际伤害反推：虚弱 / 痴醉 / 恐惧固着等百分比减伤 = 伤害×p/(1−p)，降力等固定减伤 = 降低的点数，按状态施加者分摊）；控制 = 眩晕 / 石化 / 冻结等控制（每次 3 点）与脆弱上层（每次 2 点）；虚弱已按减伤计算，不再重复计入；死亡抵抗 = 面板值 + 战斗中额外提供，并按占比分配「实际救场」次数（每次 100 点）。</li>
-      <li><b>辅助</b>（小项权重 ${subW(SW.sup)}）：银钥能量、充狂（给队友 + 0.5×给自己）、黑印、算力（产生 + 制造灵感）、易伤（带来的增伤，没有则按上层次数）、其他伤害加成（力量 / 暴击伤害 / 暴击率 / 基础伤害的间接额外伤害，用拟合的力量倍率和逐次命中估算）、减费（卡牌算力消耗降低点数，含复制减费）、抽牌与过牌（过牌 = 取回 / 置顶 / 效果弃牌，按 0.5 折算）、界域精通、胚胎融合。</li></ul>
+      <li><b>辅助</b>（小项权重 ${subW(SW.sup)}）：银钥能量、充狂（给队友 + 0.5×给自己）、黑印、算力（产生 + 制造灵感）、易伤（带来的增伤，没有则按上层次数）、其他伤害加成（力量 / 暴击伤害 / 暴击率 / 基础伤害的间接额外伤害，用拟合的力量倍率和逐次命中估算）、减费（卡牌算力消耗降低点数，含复制减费）、抽牌、过牌（取回 / 置顶 / 效果弃牌）、侵蚀、界域精通、胚胎融合。</li></ul>
       <p><b>守密人（决策）</b>：钥令选择、战斗效率、出牌是否最优三项均分。钥令选择 = 所选钥令的实际价值 ÷ 同次可选技能里已知价值最高者；战斗效率 = 算力利用率、手牌利用率（回合末未被弃掉）、算力未溢出的平均；出牌最优 = 每回合在同一手牌、同一算力预算下，所打出的牌相对于背包最优组合所能达到的伤害 / 防御比例（每张牌的产出取本场实际平均值估算）。</p><p>归属规则：同一帧触发的造物 > 同一帧触发的命轮 / 密契 > 正在结算的行动（含派生技能的施放者）> 无来源（回合开始等被动，不计）。回放没有记录战斗内黑印的变化，黑印一项保留但通常为 0；减伤只统计敌方的主动攻击。等级：≥80 S，≥65 A，≥50 B，≥35 C，其余 D。</p>
       <p><b>增强模型（已合并）</b>：唤醒体按主定位自适应（主职权重最高，并用贡献 / 牌权修正效率）；命轮 / 密契综合实战贡献与静态机制价值（手牌上限、算力上限、抽牌、减费、易伤、死亡抵抗、取回循环等按语义计分）；守密人按出牌决策、资源管理、钥令选择分层计分，未知信息按置信度收缩。</p>
       <p>全队合计：输出 ${fmt(T.out)}，护盾+治疗 ${fmt(Math.round(T.sh))}，减伤 ${fmt(Math.round(T.mit))}，控制弱化 ${fmt(Math.round(T.ctl))}；实际救场 ${m.model.deathSaves} 次。</p>`,`<p>Three categories (output / defense / support), each a weighted mean of share-based sub-scores; the composite is multiplied by a 0.9-1.1 card-efficiency factor. Click a row for every sub-metric.</p>`);

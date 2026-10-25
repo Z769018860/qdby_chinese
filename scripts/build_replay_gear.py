@@ -47,7 +47,32 @@ def main():
     for en, zh in zh_cov.items():
         if en not in seen:
             covenants["g:" + en] = {"en": en, "zh": zh, "icon": "", "effects": []}
-    out = {"version": 1, "wheels": wheels, "covenants": covenants}
+    # 产物里有一批手工补录的条目（带 desc / owner，且部分 id 在赛季数据里已取不到）。
+    # 直接覆盖会丢掉它们（实测会丢 11 条命轮），因此按 id 合并：源数据优先，源里没有的字段沿用旧值。
+    old = {}
+    if os.path.exists(OUT):
+        try:
+            old = json.load(open(OUT, encoding="utf-8"))
+        except ValueError:
+            old = {}
+
+    def merge(old_v, new_v):
+        out = dict(old_v or {})
+        for k, v in new_v.items():
+            if v not in (None, "", [], {}):
+                out[k] = v
+            elif k not in out:
+                out[k] = v
+        return out
+
+    wheels = {k: merge((old.get("wheels") or {}).get(k), v) for k, v in wheels.items()}
+    covenants = {k: merge((old.get("covenants") or {}).get(k), v) for k, v in covenants.items()}
+    for k, v in (old.get("wheels") or {}).items():
+        wheels.setdefault(k, v)
+    for k, v in (old.get("covenants") or {}).items():
+        covenants.setdefault(k, v)
+    # version 2：与产物实际版本对齐（此前脚本写 1、产物是 2，重建会静默降版本）
+    out = {"version": 2, "wheels": wheels, "covenants": covenants}
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     print("wheels", len(wheels), "covenants", len(covenants), "bytes", os.path.getsize(OUT))

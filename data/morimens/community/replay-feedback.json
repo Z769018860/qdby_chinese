@@ -5,7 +5,9 @@
   "summary": {
     "replays": 4,
     "good": 2,
-    "bad": 2
+    "bad": 2,
+    "problemOpen": 0,
+    "problemResolved": 2
   },
   "problemReplays": [
     {
@@ -13,14 +15,22 @@
       "bad": 1,
       "good": 0,
       "notes": [],
-      "lastAt": "2026-10-16T08:14:10Z"
+      "lastAt": "2026-10-16T08:14:10Z",
+      "status": "resolved",
+      "resolvedAt": "2026-10-25T00:00:00Z",
+      "resolvedBy": "audit-20261025",
+      "resolvedNote": "造物只走团队内相对排名导致评分过低，已由提交 062aca41 修复并在 HEAD 生效（造物均分 21→52）。反馈 note 为空，「造物评分过低」为复核推断。"
     },
     {
       "replayId": "06928b48-73a5-36f3-98ba-12af76943c71",
       "bad": 1,
       "good": 0,
       "notes": [],
-      "lastAt": "2026-10-16T14:16:20Z"
+      "lastAt": "2026-10-16T14:16:20Z",
+      "status": "resolved",
+      "resolvedAt": "2026-10-25T00:00:00Z",
+      "resolvedBy": "audit-20261025",
+      "resolvedNote": "同上：造物排名口径问题，已由提交 062aca41 修复。附带问题（命轮叠位已算出却不渲染）已在 2026-10-25 的评分/归因修复提交中修正。"
     }
   ],
   "records": [

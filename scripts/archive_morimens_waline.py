@@ -24,7 +24,11 @@ DZONE_FILE = DATA_DIR / "dzone.json"
 ASSIST_FILE = DATA_DIR / "assist.json"
 HISTORY_FILE = DATA_DIR / "history.json"
 REPLAY_FB_FILE = DATA_DIR / "replay-feedback.json"
+# 人工处置台账（replayId -> {status, resolvedAt, resolvedBy, note}）。problemReplays 每次归档都会
+# 从 records 重新生成，处置状态不能写在里面（会被覆盖），因此单独存一份由维护者编辑的台账并在此合并。
+REPLAY_TRIAGE_FILE = DATA_DIR / "replay-feedback-triage.json"
 STATE_FILE = DATA_DIR / "archive-state.json"
+TRIAGE_STATUS = ("open", "investigating", "resolved", "wontfix")
 CLEANUP_FILE = ROOT / ".tmp" / "morimens-waline-cleanup.json"
 
 DZONE_PATH = "/__morimens_dzone_submissions__/"
@@ -317,10 +321,26 @@ def archive(force: bool) -> int:
     # 被举报最多的排在最前；同一举报数时按最近反馈时间倒序（先按时间排、再按举报数稳定排序）
     problems = sorted((o for o in by_replay.values() if o["bad"] > 0), key=lambda o: str(o["lastAt"]), reverse=True)
     problems.sort(key=lambda o: o["bad"], reverse=True)
+    triage_doc = load_json(REPLAY_TRIAGE_FILE, {"version": 1, "updatedAt": None, "records": []})
+    triage = {}
+    for t in triage_doc.get("records", []):
+        rid = str(t.get("replayId") or "").strip().lower()
+        st = str(t.get("status") or "").strip().lower()
+        if rid and st in TRIAGE_STATUS:
+            triage[rid] = t
+    def with_status(o: dict) -> dict:
+        t = triage.get(str(o["replayId"]).strip().lower())
+        if not t:
+            return {**o, "status": "open", "resolvedAt": None, "resolvedBy": None, "resolvedNote": None}
+        return {**o, "status": st, "resolvedAt": t.get("resolvedAt"), "resolvedBy": t.get("resolvedBy"), "resolvedNote": t.get("note") or None}   # st 已归一化：台账写 "OPEN" 时也不会被当成已处置
+    problems = [with_status(o) for o in problems]
+    open_n = sum(1 for o in problems if o["status"] in ("open", "investigating"))
     write_json(REPLAY_FB_FILE, {
         "version": 1, "updatedAt": stamp, "recordCount": len(fb_records),
-        "summary": {"replays": len(by_replay), "good": sum(o["good"] for o in by_replay.values()), "bad": sum(o["bad"] for o in by_replay.values())},
-        "problemReplays": [{"replayId": o["replayId"], "bad": o["bad"], "good": o["good"], "notes": o["notes"][:10], "lastAt": o["lastAt"]} for o in problems],
+        "summary": {"replays": len(by_replay), "good": sum(o["good"] for o in by_replay.values()), "bad": sum(o["bad"] for o in by_replay.values()),
+                    "problemOpen": open_n, "problemResolved": len(problems) - open_n},
+        "problemReplays": [{"replayId": o["replayId"], "bad": o["bad"], "good": o["good"], "notes": o["notes"][:10], "lastAt": o["lastAt"],
+                            "status": o["status"], "resolvedAt": o["resolvedAt"], "resolvedBy": o["resolvedBy"], "resolvedNote": o["resolvedNote"]} for o in problems],
         "records": fb_records,
     })
     write_json(STATE_FILE, {

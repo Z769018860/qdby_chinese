@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-25T00:00:00Z",
+  "note": "人工处置台账：由维护者编辑，归档脚本（scripts/archive_morimens_waline.py）在生成 replay-feedback.json 的 problemReplays 时按 replayId 合并。status 取值 open / investigating / resolved / wontfix。",
+  "records": [
+    {
+      "replayId": "b76f871c-b803-3a93-9a3c-3488b5deda27",
+      "status": "resolved",
+      "resolvedAt": "2026-10-25T00:00:00Z",
+      "resolvedBy": "audit-20261025",
+      "note": "造物只走团队内相对排名导致评分过低，已由提交 062aca41 修复并在 HEAD 生效（造物均分 21→52）。反馈 note 为空，「造物评分过低」为复核推断。"
+    },
+    {
+      "replayId": "06928b48-73a5-36f3-98ba-12af76943c71",
+      "status": "resolved",
+      "resolvedAt": "2026-10-25T00:00:00Z",
+      "resolvedBy": "audit-20261025",
+      "note": "同上：造物排名口径问题，已由提交 062aca41 修复。附带问题（命轮叠位已算出却不渲染）已在 2026-10-25 的评分/归因修复提交中修正。"
+    }
+  ]
+}

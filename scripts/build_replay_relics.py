@@ -36,6 +36,8 @@ for tid, en in ids.items():
     plus = "+" if en.endswith("+") else ""
     z = zh.get(en) or (zh.get(base) + plus if zh.get(base) else None)
     r = recs.get(en) or recn.get(norm(en)) or recs.get(base) or recn.get(norm(base)) or {}
-    out[tid] = {"en": en, **({"zh": z} if z else {}), **({"icon": r["icon"]} if r.get("icon") else {})}
+    # desc 此前一直没写进产物（脚本开头承诺 {en, zh, icon, desc}，实测 desc 覆盖率 0）：
+    # 缺失 RelicConfig 的造物在复盘里连描述都没有，语义评分完全失明。
+    out[tid] = {"en": en, **({"zh": z} if z else {}), **({"icon": r["icon"]} if r.get("icon") else {}), **({"desc": r["desc"]} if r.get("desc") else {})}
 (D / "replay-relics.json").write_text(json.dumps({"version": 1, "relics": out}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-print(len(out), "zh", sum(1 for v in out.values() if v.get("zh")), "icon", sum(1 for v in out.values() if v.get("icon")))
+print(len(out), "zh", sum(1 for v in out.values() if v.get("zh")), "icon", sum(1 for v in out.values() if v.get("icon")), "desc", sum(1 for v in out.values() if v.get("desc")))
