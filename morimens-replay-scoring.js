@@ -33,7 +33,10 @@ function typeList(v){return Array.isArray(v)?v:(v==null?[]:[v])}
 // ---------- Wheel / Covenant semantic value -----------------------------------------------
 function textOf(x,tl){
   // effectsEn 的元素是 {pieces,desc}：直接 join 会得到 "[object Object]"，分档效果（Realm Mastery +12 / Death Resistance +x% / Crit DMG …）会整段丢失
-  const g=x?.g||{},parts=[g.name,g.en,g.desc,...(g.effectsEn||[]).map(v=>String(v?.desc??v))];
+  // 密契的效果按件套分档（3 件 / 6 件），只有已生效档位才应该参与评分：件数已知时按 pieces 过滤，
+  // 未知时（回放与队伍数据都查不到）保留全部档位 —— 宁可保持原样，也不凭猜测砍掉高档位。
+  const g=x?.g||{},effs=(g.effectsEn||[]).filter(v=>{const p=Number(v?.pieces);return !(p>0)||!(g.count>0)||p<=g.count});
+  const parts=[g.name,g.en,g.desc,...effs.map(v=>String(v?.desc??v))];
   for(const q of g.statics||[])parts.push(`${q.prop||''} ${q.val??''}`);
   if(g.related&&tl?.res?.state)for(const id of g.related){const r=tl.res.state[String(id)]||{};parts.push(r.CnID,r.Name,r.Desc,r.BattleDesc,JSON.stringify(r.ExistProperty||{}))}
   return clean(parts.filter(Boolean).join(' | ')).replace(/％/g,'%').replace(/[＋]/g,'+').replace(/[－–—]/g,'-');
@@ -111,7 +114,10 @@ function semantic(x,tl){
   if(S.cyc>0&&!f.some(q=>q.k==='cycle'))add('cycle','实战过牌','Observed cycling',58);
   const a=f.map(q=>q.v).sort((x,y)=>y-x);let support=a[0]||0;if(a[1])support+=a[1]*.2;if(a[2])support+=a[2]*.08;
   if(RISK)support-=16;   // 高收益 + 高代价：扣回代价，且不再享受手牌上限的保底
-  const hand=f.find(q=>q.k==='hand'),floor=hand&&!RISK?Math.min(92,72+(Number(hand.n||1)-1)*9):0;
+  // 手牌上限的保底同样必须有证据：一件从未触发、也没有静态属性的装备不该只凭一句「手牌上限 +N」
+  // 就拿到 72 分整（这与下面「额外行动 76 分保底必须有实测触发证据」是同一条规则）。
+  const evidenced=(+x.g?.n||0)>0||(x.g?.statics?.length||0)>0;
+  const hand=f.find(q=>q.k==='hand'),floor=hand&&!RISK&&evidenced?Math.min(92,72+(Number(hand.n||1)-1)*9):0;
   return {f,support:clamp(support),floor};
 }
 function supportRaw(x,total){
@@ -169,7 +175,15 @@ function scoreAwakeners(m){
     const supDims=Object.entries(SUP_W).map(([k,w])=>[rel(num(x.sup?.[k]),TS[k]||0,N),w]);
     const supMean=wmean(supDims),supSorted=supDims.map(d=>d[0]).filter(v=>v!=null).sort((p,q)=>q-p);
     const sup=supMean==null?null:.7*supMean+.3*((supSorted[0]||0)*.7+(supSorted[1]||0)*.2+(supSorted[2]||0)*.1);
-    const cats={out,def,sup},available=Object.entries(cats).filter(([,v])=>v!=null).sort((a,b)=>b[1]-a[1]);
+    const cats={out,def,sup};
+    // 类内份额只有在「这一类本身有量级」的时候才可评。全辅助队里 800 点伤害就是全队 100% 的伤害份额，
+    // 于是那一次顺手命中的角色被评成「输出核心 / 86 分 / A」——份额对，语义错。
+    // 某类总量不到全队产出（伤害 + 护盾 + 减伤，同为伤害当量）的 4% 时，该类不参与评分；
+    // 三类都被排除时退回全部可用类，避免整场无分。
+    const mass=T.out+T.sh+T.mit;
+    const tiny={out:mass>0&&T.out<mass*.04,def:mass>0&&(T.sh+T.mit)<mass*.04,sup:false};
+    let available=Object.entries(cats).filter(([k,v])=>v!=null&&!tiny[k]).sort((a,b)=>b[1]-a[1]);
+    if(!available.length)available=Object.entries(cats).filter(([,v])=>v!=null).sort((a,b)=>b[1]-a[1]);
     const top=available[0]?.[1]||0,second=available[1]?.[1]||0,third=available[2]?.[1]||0;
     let base=top*.72+second*.20+third*.08;
     const specialist=Math.min(8,Math.max(0,(top-second)*.12)),breadth=(second>=55?3.5:0)+(third>=45?2:0),rescue=Math.min(6,num(x.saves)*4);
@@ -187,7 +201,9 @@ function scoreAwakeners(m){
     let eff=60,ratio=null,mod=1;
     if(impact!=null&&burden!=null&&burden>0){ratio=impact/Math.max(burden,fairS*.4);eff=clamp(50+20*Math.log2(Math.max(.25,Math.min(8,ratio))),20,92);mod=.94+.12*(eff/100)}
     let score=(base+specialist+breadth)*mod*gate+rescue*mod;
-    score=.95*score+.05*clamp(ref.score);
+    // 5% 先验：旧值缺失时应取中性（等于自身），而不是被 clamp(undefined)=0 当成「旧模型给 0 分」——
+    // 后者会无条件扣掉 5%，与 scoreKeeperV2 里 `k.score==null?score:...` 的写法不一致。
+    score=.95*score+.05*(ref.score==null?clamp(score):clamp(ref.score));
     // 保底同样受存在性闸门约束：几乎没出力的角色不该靠"某一维度份额很高"拿到 58 / 68 的保底
     if(top>=85)score=Math.max(score,68*gate);else if(top>=75)score=Math.max(score,58*gate);
     score=clamp(score);

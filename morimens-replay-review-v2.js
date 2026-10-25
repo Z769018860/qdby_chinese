@@ -437,7 +437,32 @@
     const condRelics=(bd.relics||[]).map(r=>{const rec=res.relic[String(r.tid)]||{},t=pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',pa=rec.StatePara||[],tok=x=>{const m=String(x).match(/\[Arg(\d)\]/);return m?Number(pa[m[1]-1]):Number(x)},T='(\\[Arg\\d\\]|\\d+)',
       m=t.match(new RegExp('(?:打出卡牌后[，,]?\\s*若|当)手牌数(?:小于等于|不超过|小于)\\s*'+T+'\\s*(?:时)?[，,]?[^。]*?抽\\s*'+T+'\\s*张牌[^。]*?每回合最多触发\\s*'+T));return m?{tid:String(r.tid),hand:tok(m[1]),draw:tok(m[2]),cap:tok(m[3]),per:new Map()}:null}).filter(x=>x&&Number.isFinite(x.hand));
     const relicTxt=tid=>{const rec=res.relic[String(tid)]||{};return (pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'').replace(/<[A-Za-z0-9_]+:([^<>]*)>/g,'$1').replace(/<\/?[A-Za-z][^<>]*>/g,'')};
-    const RELIC_GEN={crit:['critrate',/暴击率/],crit_damage:['crit',/暴击伤害/],i_damage_per:['final',/最终伤害/],o_damage_per:['out',/(?<!基础)伤害(?:提高|增加|提升)/]};
+    // 造物触发窗口内的属性增益：propertyType -> [kind, 文本正则, 作用域, prop]
+    // 原先只有 4 类（暴击率 / 暴击伤害 / 最终伤害 / 伤害提高）。于是造物在窗口里给的
+    // 攻击 / 防御 / 体质、带作用域的增伤（打击 / 爆发 / 卡牌 / 追击 / 对首领）、爆发倍率、
+    // 打击伤害强效一律匹配不到 → 事件发生了却一分不计入该造物（review-audit §11.2）。
+    // damage_plus（力量）与 basic_damage_per 走上面的 2900 / 3130 与 basics 通道，这里不重复登记。
+    const RELIC_GEN={
+      crit:['critrate',/暴击率/],
+      crit_per_from_strikecard:['critrate',/暴击率/,'strike'],
+      crit_damage:['crit',/暴击伤害/],
+      crit_damage_from_strikecard:['crit',/暴击伤害/,'strike'],
+      crit_damage_from_ulti:['crit',/暴击伤害/,'ult'],
+      i_damage_per:['final',/最终伤害/],
+      i_damage_per_strikecard:['final',/打击[^。]{0,10}伤害/,'strike'],
+      awaker_ulti_dmg_per:['final',/爆发[^。]{0,10}伤害/,'ult'],
+      damage_per2monster_boss:['final',/首领/],
+      o_damage_per:['out',/(?<!基础)伤害(?:提高|增加|提升)/],
+      o_damage_per_card:['out',/卡牌[^。]{0,10}伤害/,'card'],
+      o_damage_per_strikecard:['out',/打击[^。]{0,10}伤害/,'strike'],
+      o_damage_per_ulti:['out',/爆发[^。]{0,10}伤害/,'ult'],
+      o_damage_per_attachpost:['out',/追击/,'attach'],
+      strikecard_damage_plus:['power',/打击[^。]{0,10}伤害强效/,'strike'],
+      atk:['force',/攻击力/,'all','atk'],atk_per:['force',/攻击力/,'all','atk'],
+      def:['force',/防御力/,'all','def'],def_per:['force',/防御力/,'all','def'],
+      physique:['force',/体质/,'all','physique'],physique_per:['force',/体质/,'all','physique'],
+      ulti_strength_multiple:['ultim',/爆发倍率|倍率/,'ult'],
+    };
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
@@ -471,6 +496,22 @@
       if(!e.desc){const d0=pipeName(mainRec.Desc||'');if(d0)e.desc=fillArgs(d0,g.params&&g.params.length?g.params:g.args)}
     }
     for(const e of gears.values())for(const sid of e.related){if(!gearsOfState.has(sid))gearsOfState.set(sid,[]);gearsOfState.get(sid).push(e)}
+    // 密契件套档位：3 件 / 6 件是两组完全不同的效果（`replay-gear.json` 里 effects[].pieces），
+    // 但回放本身不记录件数（状态没有层数含义、也没有 count 字段）。这里只在能查到队伍详情时
+    // （融灾榜单回放可反查到该玩家的编队）按件数过滤；查不到就保留全部档位，并把 tiersKnown 记为 false，
+    // 界面据此提示「档位未知」，而不是假装知道。
+    {const hit0=(()=>{try{return window.MorimensDtideTeamLookup?.(bd.battleUuid)||null}catch{return null}})();
+      for(const e of gears.values()){
+        if(e.kind!=='covenant')continue;
+        e.tiers=[...new Set((e.effectsEn||[]).map(x=>Number(x?.pieces)).filter(x=>x>0))].sort((a,b)=>a-b);
+        let cnt=null;
+        for(const u of e.owners){const nm=String(actors.get(String(u))?.name||'');if(!nm)continue;
+          const mem=(hit0?.team?.members||[]).find(m=>[m.name,m.canonicalName].some(x=>String(x||'').toLowerCase()===nm.toLowerCase()));
+          const cs=[...(mem?.covenants||(mem?.covenant?[mem.covenant]:[]))];
+          const own=cs.find(c=>{const z=String(c.zh||c.name||'');return z&&(z===e.name||e.name.includes(z)||z.includes(e.name))});
+          const n=Number(own?.count);if(n>0)cnt=Math.max(cnt||0,n)}
+        e.count=cnt;e.tiersKnown=cnt!=null&&cnt>0;
+      }}
     // Trigger channels: every TriggerCondN/TriggerCmdN pair on the equipped state is one way the item fires.
     const COND_LABEL={LisBattleEndAfter:'战斗结束后',LisShopTriggerAfter:'商店触发后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDoActiveDamage:'造成主动伤害后',BSTAfterTentacleAttack:'触腕攻击后',BSTBeforeUltiSkill:'释放狂气爆发前',BSTAfterBeActiveDamage:'承受主动伤害后',BSTAfterAttackedByTentacle:'被触腕攻击后',BSTAfterUseSpecialDimension:'使用维度技能后',BSTAfterUseDimensionSkill:'使用维度技能后',BSTRoleDrawCard:'抽牌时',BSTRoleDropCard:'弃牌时',BSTHpChanged:'生命变化时',BSTAfterScarlletBloodFull:'猩红之血蓄满后',BSTBeforeDiscardCards:'弃牌前',BSTDrawDeckReset:'抽牌堆重洗时',BSTAfterSwitchOceanModel:'切换深海形态后',BSTAfterUseBloodRecoverSkill:'使用血液回复技能后',BSTStateOnAdd:'获得时',BSTBeforeBattleEnd:'战斗结束前',BSTAfterUseCard:'打出卡牌后',BSTAfterUseKeeperSkill:'释放钥令后',BSTAfterUltiSkill:'释放狂气爆发后',BSTAfterBoutBegin:'回合开始时',BSTAfterBoutEnd:'回合结束时',BSTBeforeBoutBegin:'回合开始前',BSTBeforeBoutEnd:'回合结束前',BSTAfterLaunchSwallow:'吞噬后',BSTAfterDimensionBoutBegin:'进入超维回合后',NAMED:'释放指定技能后',BSTRoleAfterDeathResist:'触发死亡抵抗后',BSTAfterSilverKeyAwake:'银钥觉醒后',BSTAfterDrawCards:'抽牌后',BSTBattleBegin:'战斗开始时',StageState:'战斗开始时'};
     const TYPE_QUAL={Card_Strike:'打击',Card_Defend:'防御'};
@@ -786,11 +827,11 @@
           if(relWin){
             // generic permanent / stacking buffs a relic lands in its window (crit rate, crit damage, final / outgoing damage): the property that changes names the kind
             if(e===1028&&Number(d.changedValue)>0&&actors.get(String(d.uid))?.kind==='awakener'&&RELIC_GEN[d.propertyType]){
-              const [kd,re]=RELIC_GEN[d.propertyType],uid=String(d.uid);
+              const [kd,re,sc0,pp0]=RELIC_GEN[d.propertyType],uid=String(d.uid),prop0=pp0||d.propertyType;
               const cands=relWin.queue.filter(q=>re.test(relicTxt(q.tid))),exact=cands.filter(q=>(res.relic[String(q.tid)]?.StatePara||[]).some(v=>Math.abs(Number(v)-Number(d.changedValue))<1e-6)||new RegExp('(?:^|[^\\d.])'+Number(d.changedValue)+'(?:[^\\d]|$)').test(relicTxt(q.tid)));
-              for(const q of (exact.length?exact:cands)){const gk=q.tid+'|'+d.propertyType;relWin.gctx=relWin.gctx||new Map();
-                let ctx=relWin.gctx.get(gk);if(!ctx||ctx.inst.awakeners.has(uid)){ctx=newInstance(relWin,{tid:q.tid,kind:kd},Number(d.changedValue),false);relWin.gctx.set(gk,ctx)}
-                (relWin.claimed=relWin.claimed||new Set()).add(d.propertyType);grant(ctx,uid,Number(d.changedValue),{tid:q.tid,kind:kd},false);break}
+              for(const q of (exact.length?exact:cands)){const gk=q.tid+'|'+d.propertyType,rel={tid:q.tid,kind:kd,scope:sc0,prop:prop0};relWin.gctx=relWin.gctx||new Map();
+                let ctx=relWin.gctx.get(gk);if(!ctx||ctx.inst.awakeners.has(uid)){ctx=newInstance(relWin,rel,Number(d.changedValue),false);relWin.gctx.set(gk,ctx)}
+                (relWin.claimed=relWin.claimed||new Set()).add(d.propertyType);grant(ctx,uid,Number(d.changedValue),rel,false);break}
             }
           }
           // ---- state tracking (runs for every frame, including pre-battle setup)
@@ -1470,7 +1511,12 @@
         rows.push(`<span class="mr2chip st" title="${esc(fillArgs(pipeName(res.state[String(x.stateId)]?.WeaponDesc||res.state[String(x.stateId)]?.Desc||''),x.stateParams||[]))}">${c.icon?ico(`${ART}/wheels/${c.icon}.webp`,c.zh,'st'):''}<span>${esc(c.zh||c.en)}</span><em>${lvl!=null?esc(wheelStackText(lvl)):''}</em></span>`)}
       if(m){for(const c of m.covenants||(m.covenant?[m.covenant]:[]))rows.push(`<span class="mr2chip st" title="${esc((c.effects||[]).map(e=>`${e.pieces}${ui('件','pc')}：${String(e.desc||'').replace(/<[^>]+>/g,'')}`).join('\n'))}"><span>${esc(nmz.covenant(c))}</span><em>${esc(c.count??'')}${ui('件','pc')}${m.covenantScore!=null?` · ${ui('评分','score')} ${esc(m.covenantScore)}`:''}</em></span>`)}
       else{const cats=Object.values(gearCatalog?.covenants||{}),stems=[...new Set(sts.filter(y=>catOf(y)==='cov').map(y=>cnOf(y.stateId).replace(/^状态@饰品/,'')))],seen=new Set();
-        for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((a,b)=>b.zh.length-a.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);rows.push(`<span class="mr2chip st"><span>${esc(c.zh)}</span></span>`)}}}
+        for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((a,b)=>b.zh.length-a.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);
+          // 回放不记录密契件数，这条回放又不在榜单队伍数据里 → 只能列套装名，档位标成「?」
+          const tiers=[...new Set((c.effects||[]).map(e=>Number(e.pieces)).filter(x=>x>0))].sort((a,b)=>a-b);
+          const tip=(c.effects||[]).map(e=>`${e.pieces}${ui('件','pc')}：${String(e.desc||'').replace(/<[^>]+>/g,'')}`).join('\n')
+            +(tiers.length?`\n${ui('件数未记录：评分按全部档位计算','Piece count not recorded: scored with all tiers')}`:'');
+          rows.push(`<span class="mr2chip st" title="${esc(tip)}"><span>${esc(c.zh)}</span>${tiers.length?`<em>${tiers.join('/')}${ui('件','pc')}?</em>`:''}</span>`)}}}
       // 天赋此前被 group() 的 rest 排除、也没有任何别处渲染，等于完全不可见；这里和命轮 / 密契一样单独成行
       const talTip=x=>{try{return fillArgs(pipeName(res.state[String(x.stateId)]?.Desc||''),x.stateParams||[])||cnOf(x.stateId)}catch{return cnOf(x.stateId)}};
       for(const x of sts.filter(y=>catOf(y)==='tal'&&!/空状态/.test(cnOf(y.stateId))&&!hidden(y.stateId)))rows.push(`<span class="mr2chip st" title="${esc(talTip(x))}"><span>${esc(res.nameState(x.stateId)||cnOf(x.stateId))}</span>${Number(x.layer)>1?`<em>×${esc(x.layer)}</em>`:''}</span>`)
