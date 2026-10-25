@@ -277,8 +277,21 @@ function scoreKeeperV2(m,tl,ref){
   const shGen=plays.reduce((n,p)=>n+num(p.block),0),shPct=shGen>0&&shRounds?Math.min(100,100*shOver/shGen):null;
   // 旧写法 100-2·shPct 在溢出 50% 时就归零，罚项提前饱和；改为到 70% 才归零的线性罚
   const ShieldScore=shPct==null?null:Math.max(0,100-100*shPct/70);
-  const Rscore=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
-  Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds});
+  // 手牌上限溢出（爆牌）：抽到了却因为手牌已满而丢掉 —— 与算力溢出、护盾溢出同构，都是守密人的资源浪费。
+  // 必须用比例而非绝对值：绝对惩罚会系统性扣掉抽牌多的强队，那是牌组强度不是决策质量。
+  // 回放里既没有手牌上限字段也没有溢出标记，检测器是启发式的，所以它只占溢出子组的一部分，
+  // 并在样本少时向 R 的其余分量收缩（而不是向常数收缩，避免 R 整体偏低时白送分）。
+  const hf=tl.handFlow||{},OVF_FULL=.25;                                 // 进手的牌里有 25% 因手牌已满丢掉 → 0 分
+  const ovfD=num(hf.ovfDirect),ovfH=num(hf.ovfHand);
+  const hDen=num(hf.draws)+num(hf.created)+num(hf.retrieved)+ovfD;       // ovfHand 已经算在 draws 里，不能再加一次
+  const ovfRate=hDen>0?(ovfD+ovfH)/hDen:null;
+  const ovfConf=hDen>0?1-Math.exp(-hDen/10):0;
+  const EovfRaw=ovfRate==null?null:clamp(100-100*Math.min(1,ovfRate/OVF_FULL));
+  const Rother=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
+  const Eovf=EovfRaw==null?null:(Rother==null?EovfRaw:EovfRaw*ovfConf+Rother*(1-ovfConf));
+  const Rscore=wavg([[Espend,.30],[wavg([[Eover,.45],[ShieldScore,.30],[Eovf,.25]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
+  Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds,
+    handOverflow:ovfD+ovfH,handOverflowPct:ovfRate==null?null:100*ovfRate,handOverflowDirect:ovfD,handOverflowInHand:ovfH,handCardsSeen:hDen||null,handPeak:Number.isFinite(hf.peak)?hf.peak:null});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
   // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
   const rr=k.rrows||[],aD=rr.reduce((n,r)=>n+r.aD,0),oD=rr.reduce((n,r)=>n+r.oD,0),aF=rr.reduce((n,r)=>n+r.aF,0),oF=rr.reduce((n,r)=>n+r.oF,0);

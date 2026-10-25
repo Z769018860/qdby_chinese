@@ -399,7 +399,11 @@
 
     // Live battlefield: hp / shield / energy per unit and the states each unit currently carries.
     const board=new Map(),bstates=new Map();
-    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;const cardSt=new Map(),cardStOf=new Map(),handUids=new Set();for(const c of ent.initialCards||[])if(c.deck==='HandDeck')handUids.add(String(c.uid));
+    const cardMul=new Map(),FIA_LVL={98466:1,98470:2,98468:3},fiaCard=new Map(),fiaByState=new Map(),fiaUse=new Map();let curFia=null;const cardSt=new Map(),cardStOf=new Map(),handUids=new Set();
+    // 手牌上限溢出（爆牌）：回放既没有手牌上限字段、也没有溢出标记，只能从卡牌移动的形态推断
+    // A) 抽牌堆 → 弃牌堆：抽到了但根本没进手（手牌已满）  B) 刚进手就在相邻的一次移动里进弃牌堆且从未打出
+    // 两种都只统计「抽到了却没留住」这一件事，供守密人评分使用；B 的窗口故意取得很窄，宁可漏判也不把回合末弃牌误判成爆牌。
+    const HAND_OVF_GAP=2,handFlow={draws:0,created:0,retrieved:0,discarded:0,ovfDirect:0,ovfHand:0,peak:handUids.size};const handInAt=new Map();let hfSeq=0;for(const c of ent.initialCards||[])if(c.deck==='HandDeck')handUids.add(String(c.uid));handFlow.peak=handUids.size;
     // character-specific formula parts, evaluated against the live state: pf = multiplier inside the damage term of Para,
     // pp = ParaPlus (extra flat damage, e.g. team shield x stacks). Evaluated when the card is played, because that is when the game computes them.
     const evalPara=(tid,caster,cuid)=>{
@@ -437,10 +441,13 @@
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
     // 'execute' states (e.g. Arachne's Fate Verdict): layers pile up on an enemy and kill it when they reach its HP
     const isExec=sid=>{const k=String(sid);if(!execIs.has(k)){const r=res.state[k]||{};execIs.set(k,/直接击杀|直接斩杀/.test(pipeName(String(r.Desc||''))))}return execIs.get(k)};
-    const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
+    const HIT_PROPS=['atk','atk_per','tentacle_dmg','def','def_per','physique','physique_per','basic_damage_per','i_basic_damage_per','o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per_strikecard','awaker_ulti_dmg_per','damage_per2monster_boss','crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti','damage_plus','strikecard_damage_plus','ulti_strength_multiple'];
     // ---- equipment: wheels (命轮, 'Weapon' state source) and covenant sets (密契, '状态@饰品X' states)
     const PROP_KIND={awaker_ulti_dmg_per:['final','ult'],o_damage_per:['out','all'],o_damage_per_card:['out','card'],o_damage_per_strikecard:['out','strike'],o_damage_per_attachpost:['out','attach'],o_damage_per_ulti:['out','ult'],basic_damage_per:['out','all'],i_basic_damage_per:['in','all'],
-      i_damage_per:['final','all'],i_damage_per_strikecard:['final','strike'],damage_per2monster_boss:['final','all'],crit_damage:['crit','all'],crit_damage_from_strikecard:['crit','strike'],crit_damage_from_ulti:['crit','ult'],damage_plus:['power','all'],strikecard_damage_plus:['power','strike']};
+      i_damage_per:['final','all'],i_damage_per_strikecard:['final','strike'],damage_per2monster_boss:['final','all'],crit_damage:['crit','all'],crit_damage_from_strikecard:['crit','strike'],crit_damage_from_ulti:['crit','ult'],damage_plus:['power','all'],strikecard_damage_plus:['power','strike'],
+      // 面板力（攻击 / 防御 / 体质）与其百分比、触腕伤害、爆发倍率：先前不在这张表里，命轮 / 密契 / 造物给的
+      // 攻击%、触腕、爆发倍率一律拿不到 kind，于是触发了却一分不计（review-audit §1「密契触发了却一分不给」的未修部分）
+      atk:['force','all'],atk_per:['force','all'],def:['force','all'],def_per:['force','all'],physique:['force','all'],physique_per:['force','all'],tentacle_dmg:['tenta','all'],ulti_strength_multiple:['ultim','ult']};
     const gearCat=gearCatalog||{wheels:{},covenants:{}},covByZh=new Map(Object.values(gearCat.covenants||{}).map(c=>[c.zh,c]));
     const gears=new Map(),gearsOfState=new Map();
     // covenants split their effect over helper states named "<covenant>效果 / 计数 / 标记 …": fold them into the shortest covenant stem they start with
@@ -621,10 +628,10 @@
     const genKind=tid=>{const t=relicTxt(tid);return /暴击率/.test(t)?'critrate':/暴击伤害/.test(t)?'crit':/最终伤害/.test(t)?'final':RELIC_GEN.o_damage_per[1].test(t)?'out':null};
     const buffOf=tid=>{const k=String(tid);if(!relicBuffs.has(k))relicBuffs.set(k,{tid:k,kind:relicKind(tid)||(String(tid).startsWith('gear:')?null:genKind(tid)),gain:0,extra:0,instances:[]});return relicBuffs.get(k)};
     // one relic trigger -> one instance (gain counted once per trigger, per-awakener amounts used for the damage split)
-    const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp,kind:rel.kind};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
+    const newInstance=(win,rel,gain,temp)=>{const rec=buffOf(rel.tid),inst={round:bout,time:win.time,gain,awakeners:new Set(),extra:0,hits:0,temp,kind:rel.kind,prop:rel.prop};rec.instances.push(inst);rec.gain+=gain;return {rec,inst}};
     /* relics an awakener creates mid-battle ("创构的…", e.g. Pickman's) only last the round they were made in */
     const relicCreators=new Map(),isCreatedRelic=tid=>/^创构的/.test(String(res.nameRelic(String(tid))||''));
-    const grant=(ctx,uid,amt,rel,temp)=>{const k=String(uid);ctx.inst.awakeners.add(k);if(!activeBuff.has(k))activeBuff.set(k,[]);activeBuff.get(k).push({inst:ctx.inst,kind:rel.kind,scope:rel.scope,amt,temp,rel:ctx.rec,created:isCreatedRelic(rel.tid)})};
+    const grant=(ctx,uid,amt,rel,temp)=>{const k=String(uid);ctx.inst.awakeners.add(k);if(!activeBuff.has(k))activeBuff.set(k,[]);activeBuff.get(k).push({inst:ctx.inst,kind:rel.kind,scope:rel.scope,amt,temp,rel:ctx.rec,prop:rel.prop,created:isCreatedRelic(rel.tid)})};
     const expireCreated=()=>{for(const [k,v] of activeBuff)activeBuff.set(k,v.filter(x=>!x.created))};
     const expireTemp=()=>{for(const [k,v] of activeBuff)activeBuff.set(k,v.filter(x=>!x.temp))};
     // passive relics that amplify every shield / heal ("…基础效果提高 N%"): each shield or heal an awakener produces counts as one effect
@@ -634,7 +641,7 @@
     const keyText=k=>{if(k.startsWith('gear:')){const g=gears.get(k.slice(5));return g?[g.desc,...g.mainStates.map(m=>pipeName(res.state[String(m.stateId)]?.WeaponDesc||'')),...(g.effectsEn||[]).map(x=>x.desc)].join(' '):''}
       if(k.startsWith('rel:')){const r=res.relic[k.slice(4)]||{};return pipeName(pickVariant(r.BattleDesc||r.Desc,0))||''}return ''};
     const keyHas=(k,re)=>{if(!keyTextCache.has(k))keyTextCache.set(k,keyText(k));return re.test(keyTextCache.get(k))};
-    const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,blk:0,heal:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});return supStore.get(k)};
+    const supOf=k=>{if(!supStore.has(k))supStore.set(k,{aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,forceGain:0,ultiMultGain:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,blk:0,heal:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});return supStore.get(k)};
     // who gets credit for an effect at this timestamp: a relic firing in this frame group, else a wheel / covenant state firing now, else the awakener whose action is being resolved
     const gearWins=[];   // short windows after commands that fire without a state change (超维 bout, named skill, death resist)
     // cards a wheel / relic / covenant puts into the deck ("将 1 张「春之信」加入牌库"): everything such a card does when played (keyflare, energy, draws, buffs) belongs to that item, not to the awakener who plays it
@@ -687,7 +694,7 @@
       for(const st of e.statics){
         const pk=PROP_KIND[st.prop];if(!pk||!actors.get(st.owner)||actors.get(st.owner).kind!=='awakener')continue;
         const inst={round:0,time:0,gain:st.val,awakeners:new Set([st.owner]),extra:0,hits:0,temp:false,prop:st.prop};rec.instances.push(inst);rec.gain+=st.val;
-        if(!activeBuff.has(st.owner))activeBuff.set(st.owner,[]);activeBuff.get(st.owner).push({inst,kind:pk[0],scope:pk[1],amt:st.val,temp:false,rel:rec});
+        if(!activeBuff.has(st.owner))activeBuff.set(st.owner,[]);activeBuff.get(st.owner).push({inst,kind:pk[0],scope:pk[1],amt:st.val,temp:false,rel:rec,prop:st.prop});
       }
     }
     /* counter / marker / cooldown / carry-flag states only keep score for the item's other states: adding one is not an effect, so it must not open an attribution window for whatever else happens in that frame */
@@ -869,10 +876,10 @@
             // P1-9：造物 / 装备触发窗口内的属性增益此前被 !relWin 整块丢弃（窗口内只有 RELIC_GEN 四类能入账）。
             // 改为按「窗口已认领过的属性类型」逐类放行：同一笔增益不会被窗口实例与角色实例各记一次，
             // 而窗口没有认领的属性类型（如 o_damage_per_ulti / awaker_ulti_dmg_per / 各类带作用域的增伤）照常归因给窗口来源。
-            if(rcv?.kind==='awakener'&&keys.length&&!(relWin&&relWin.claimed&&relWin.claimed.has(pt))){
+            if(rcv?.kind==='awakener'&&keys.length&&!(relWin&&relWin.claimed&&relWin.claimed.has(pt))&&pt!=='tentacle_dmg'){   // tentacle_dmg 上面已经按 part 分摊记过 tenGain，这里再记会翻倍
               const pk0=PROP_KIND[pt],kind=pt==='damage_plus'?'power':pt==='crit_damage'?'crit':pt==='crit'?'critrate':(pt==='basic_damage_per'||pt==='i_basic_damage_per')?'basic':pk0?pk0[0]:null,kscope=['damage_plus','crit_damage','crit','basic_damage_per','i_basic_damage_per'].includes(pt)?undefined:pk0?.[1];
-              if(kind)for(const k of keys.filter(x=>x.startsWith('act:')||x.startsWith('gear:'))){const tid=k,rel={tid,kind,scope:kscope},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
-                const ctx=newInstance({time:fr.time},rel,cv,temp);grant(ctx,d.uid,cv,rel,temp);supOf(k)[kind==='power'?'powerGain':kind==='crit'?'critGain':kind==='critrate'?'critRateGain':'basicGain']+=cv}
+              if(kind)for(const k of keys.filter(x=>x.startsWith('act:')||x.startsWith('gear:'))){const tid=k,rel={tid,kind,scope:kscope,prop:pt},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
+                const ctx=newInstance({time:fr.time},rel,cv,temp);grant(ctx,d.uid,cv,rel,temp);supOf(k)[kind==='power'?'powerGain':kind==='crit'?'critGain':kind==='critrate'?'critRateGain':kind==='force'?'forceGain':kind==='ultim'?'ultiMultGain':'basicGain']+=cv}
             }
           }
           if(e===1028&&d.propertyType==='crit_damage'&&Number(d.changedValue)<0&&d.uid!=null){const k=String(d.uid);if(activeBuff.has(k))activeBuff.set(k,activeBuff.get(k).filter(x=>!(x.kind==='crit'&&x.temp)))}
@@ -961,9 +968,10 @@
                 for(const v of (bstates.get(String(h.castRoleUid))?.values()||[])){if(!(v.layer>0))continue;const ex=res.state[String(v.stateId)]?.ExistProperty;if(!ex)continue;for(const key of ['crit_per_from_ulti','crit_per_from_strikecard']){if(ex[key]==null)continue;let t=String(ex[key]).replace(/StateArg(\d+)/g,(m,n)=>v.args?.[Number(n)-1]??'NaN').replace(/ChangedLayer/g,v.layer);if(!/^[\d.+\-*\/() NaN]+$/.test(t))continue;let x;try{x=Function('"use strict";return ('+t+')')()}catch{x=NaN}if(Number.isFinite(x)){if(key==='crit_per_from_ulti')o.u+=x;else o.s+=x}}}
                 {const sk=res.skill[String(h.skillConfigId)],tx=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(tx).join(' '):String(v),m=tx(sk?.BattleDesc||sk?.Desc).match(/此卡[^。，；]{0,8}暴击率[^。，；\d]{0,6}(\d+(?:\.\d+)?)\s*[%％]/);if(m)o.c+=Number(m[1])}
                 return o})();
-              hitLog.push({dt:h.damageType,cx,cr:(()=>{const x=board.get(String(h.castRoleUid))?.props?.crit;return x==null?null:Number(x)})(),t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:curFia&&curFia.uid===String(h.castRoleUid)?curFia.args:null,ptid:curFia?.tid,cmul:curFia&&curFia.uid===String(h.castRoleUid)?curFia.cmul:0,fia:curFia&&curFia.uid===String(h.castRoleUid)?curFia.pct:0,fiaLvl:curFia&&curFia.uid===String(h.castRoleUid)?curFia.lvl:0,
+              const fiaM=!!curFia&&curFia.uid===String(h.castRoleUid)&&(h.skillConfigId==null||String(curFia.tid)===String(h.skillConfigId));   // 活焰 / 卡牌力量倍率属于那张打出的牌，不能泄漏到之后的 DoT / 反击 / 触腕命中
+              hitLog.push({dt:h.damageType,cx,cr:(()=>{const x=board.get(String(h.castRoleUid))?.props?.crit;return x==null?null:Number(x)})(),t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:fiaM?curFia.args:null,ptid:fiaM?curFia.tid:null,cmul:fiaM?curFia.cmul:0,fia:fiaM?curFia.pct:0,fiaLvl:fiaM?curFia.lvl:0,
                 amp:(()=>{const out=[];for(const [su,v] of bstates.get(String(h.targetRoleUid))||[]){const ex=res.state[String(v.stateId)]?.ExistProperty;if(!ex)continue;for(const [pr,expr] of Object.entries(ex)){if(!/^be_damage_per/.test(pr))continue;const m=String(expr).match(/^ChangedLayer\s*\*\s*(-?\d+(?:\.\d+)?)$/),pv=m?(v.layer||1)*Number(m[1]):Number.isFinite(Number(expr))?Number(expr):null;if(pv>0)out.push({p:pv,keys:stSrc.get(String(su))||[],nm:res.nameState(v.stateId)})}}return out})(),
-                stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(curFia&&curFia.uid===String(h.castRoleUid)&&String(curFia.tid)===String(h.skillConfigId)&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,curFia&&curFia.uid===String(h.castRoleUid)?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+                stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(fiaM&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,fiaM?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -999,9 +1007,25 @@
             const kind=od==='DrawDeck'&&nd==='HandDeck'?'draw':(od==='GraveyardDeck'&&(nd==='HandDeck'||nd==='DrawDeck'))?'cycle':(od==='HandDeck'&&nd==='GraveyardDeck'&&why!==1)?'cycle':null;
             if(kind==='draw'&&execSrc.cur?.play)execSrc.cur.play.draw+=n;
             if(kind&&ks.length)for(const k of ks){const sp=supOf(k);if(kind==='draw')sp.draws+=n/ks.length;else sp.cycles+=n/ks.length}}
-          if(e===1027&&Array.isArray(d.cardUidList)){for(const u of d.cardUidList){const k=String(u);if(d.oldDeck==='HandDeck')handUids.delete(k);if(d.newDeck==='HandDeck')handUids.add(k)}}
-          if((e===1025&&d.deck==='HandDeck'&&d.cards?.length))for(const c of d.cards)handUids.add(String(c.uid));
-          if(e===1035&&d.deck==='HandDeck'&&d.cardUid!=null)handUids.add(String(d.cardUid));
+          if(e===1027&&Array.isArray(d.cardUidList)){
+            const sq=++hfSeq,od0=d.oldDeck,nd0=d.newDeck;
+            for(const u of d.cardUidList){
+              const k=String(u);
+              if(od0==='HandDeck'){handUids.delete(k);
+                if(nd0==='UsingDeck')handInAt.delete(k);   // 打出去了：不再是爆牌候选
+                // changeReason===1 是回合末弃牌（上面 kind 判据即用此区分），不能算爆牌
+                else if(nd0==='GraveyardDeck'&&Number(d.changeReason)!==1){const was=handInAt.get(k);if(was!=null&&sq-was<=HAND_OVF_GAP){handFlow.ovfHand++;handInAt.delete(k)}}
+              }
+              if(nd0==='HandDeck'){if(od0==='DrawDeck')handFlow.draws++;else if(od0==='GraveyardDeck')handFlow.retrieved++;else if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,sq)}
+            }
+            if(od0==='HandDeck'&&nd0==='GraveyardDeck')handFlow.discarded+=d.cardUidList.length;
+            // 抽牌堆 → 弃牌堆既可能是爆牌，也可能是「把牌库顶 N 张磨掉」的削牌库效果；只有手牌正处在观测到的最大容量时
+            // 才可能是前者：磨牌与手牌数无关，爆牌必然发生在手牌已满时。bout>0 排除开局布置阶段的移动。
+            if(od0==='DrawDeck'&&nd0==='GraveyardDeck'&&bout>0&&handUids.size>0&&handUids.size>=handFlow.peak)handFlow.ovfDirect+=d.cardUidList.length;
+            if(handUids.size>handFlow.peak)handFlow.peak=handUids.size;
+          }
+          if((e===1025&&d.deck==='HandDeck'&&d.cards?.length))for(const c of d.cards){const k=String(c.uid);if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,++hfSeq)}
+          if(e===1035&&d.deck==='HandDeck'&&d.cardUid!=null){const k=String(d.cardUid);if(!handUids.has(k))handFlow.created++;handUids.add(k);handInAt.set(k,++hfSeq)}
           if(e===1027&&Array.isArray(d.cardUidList)&&d.cardUidList.length){
             const mk=moveKind(d.oldDeck,d.newDeck,d.changeReason);
             if(mk){const list=d.cardUidList;push('move',`${MOVE_LABEL[mk]} · ${list.map(plainName).join(', ')}`,`<span class="mr2lead mv ${mk}">${ui(MOVE_LABEL[mk],mk)}</span>${list.slice(0,10).map(t=>chip(t)).join('')}${list.length>10?`<span class="mr2from">+${list.length-10}</span>`:''}`,d,fr,{mv:mk,count:list.length,cardUids:list})}
@@ -1061,7 +1085,7 @@
     // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
-    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -1447,7 +1471,11 @@
       if(m){for(const c of m.covenants||(m.covenant?[m.covenant]:[]))rows.push(`<span class="mr2chip st" title="${esc((c.effects||[]).map(e=>`${e.pieces}${ui('件','pc')}：${String(e.desc||'').replace(/<[^>]+>/g,'')}`).join('\n'))}"><span>${esc(nmz.covenant(c))}</span><em>${esc(c.count??'')}${ui('件','pc')}${m.covenantScore!=null?` · ${ui('评分','score')} ${esc(m.covenantScore)}`:''}</em></span>`)}
       else{const cats=Object.values(gearCatalog?.covenants||{}),stems=[...new Set(sts.filter(y=>catOf(y)==='cov').map(y=>cnOf(y.stateId).replace(/^状态@饰品/,'')))],seen=new Set();
         for(const st of stems){const c=cats.filter(z=>z.zh&&st.startsWith(z.zh)).sort((a,b)=>b.zh.length-a.zh.length)[0];if(c&&!seen.has(c.zh)){seen.add(c.zh);rows.push(`<span class="mr2chip st"><span>${esc(c.zh)}</span></span>`)}}}
-      return rows.length?`<div class="mr2ostate"><span class="mr2from">${ui('命轮 / 密契','Wheels / Covenants')}</span>${rows.join('')}</div>`:''};
+      // 天赋此前被 group() 的 rest 排除、也没有任何别处渲染，等于完全不可见；这里和命轮 / 密契一样单独成行
+      const talTip=x=>{try{return fillArgs(pipeName(res.state[String(x.stateId)]?.Desc||''),x.stateParams||[])||cnOf(x.stateId)}catch{return cnOf(x.stateId)}};
+      for(const x of sts.filter(y=>catOf(y)==='tal'&&!/空状态/.test(cnOf(y.stateId))&&!hidden(y.stateId)))rows.push(`<span class="mr2chip st" title="${esc(talTip(x))}"><span>${esc(res.nameState(x.stateId)||cnOf(x.stateId))}</span>${Number(x.layer)>1?`<em>×${esc(x.layer)}</em>`:''}</span>`)
+      for(const x of sts.filter(y=>catOf(y)==='enl'&&!/空状态/.test(cnOf(y.stateId))&&!hidden(y.stateId)))rows.push(`<span class="mr2chip st" title="${esc(talTip(x))}"><span>${esc(res.nameState(x.stateId)||cnOf(x.stateId))}</span></span>`)
+      return rows.length?`<div class="mr2ostate"><span class="mr2from">${ui('命轮 / 密契 / 天赋 / 启灵','Wheels / Covenants / Talents / Enlightenment')}</span>${rows.join('')}</div>`:''};
     const blocks=roles.map(ri=>{
       const a=tl.actors.get(String(ri.uid));if(!a)return '';
       const at=ri.attrs||{},op=tl.openProps?.get(String(ri.uid))||{};
@@ -1492,8 +1520,9 @@
   }
   // ---- damage-formula calibration ------------------------------------------------------
   // Calculator order: ATK x coefficient x base-damage pools -> + STR x strength multiplier -> x vulnerability -> x crit.
-  // Per awakener we fit  D/(crit*vuln) = a_skill * (ATK_force * basePool) + m * STR  on this replay's own hits,
+  // Per awakener we fit  D/(crit*final*vuln) = a_skill * (ATK_force * basePool) + m * STR  on this replay's own hits,
   // where m is the real strength multiplier (the calculator assumes 1 for active damage).
+  // D = ( a_skill*T + m*STR_eff + 触腕加成 + ParaPlus ) * (1 + 终伤池) * 易伤/被增伤 * (暴击 ? 1+暴伤池 : 1)
   function solveLeastSquares(rows,y,w){
     const n=rows[0].length,A=Array.from({length:n},()=>new Array(n+1).fill(0));
     rows.forEach((r,i)=>{const ww=w[i]*w[i];for(let a=0;a<n;a++){for(let b=0;b<n;b++)A[a][b]+=r[a]*r[b]*ww;A[a][n]+=r[a]*y[i]*ww}});
@@ -1535,30 +1564,39 @@
       const P=h.P,sc=scopeOf(h),g=k=>P[k]||0,full=mode==='full';
       const out=g('basic_damage_per')+(full?g('o_damage_per')+(sc.card?g('o_damage_per_card'):0)+(sc.strike?g('o_damage_per_strikecard'):0)+(sc.attach?g('o_damage_per_attachpost'):0)+(sc.ult?g('o_damage_per_ulti'):0):0);
       const inn=g('i_basic_damage_per');
-      const fin=full?(h.fia||0)+g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss'):0;
-      const cd=g('crit_damage')+(sc.ult?g('crit_damage_from_ulti'):0);
+      // 终伤池：局内伤害 + 打击局内伤害 + 对首领增伤 + 爆发伤害加成（awaker_ulti_dmg_per 在 PROP_KIND 里就是 final，
+      // 之前只进了归因的分子、没进这里的分母，爆发输出的终伤归因被系统性高估）
+      const fin=full?(h.fia||0)+g('i_damage_per')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss')+(sc.ult?g('awaker_ulti_dmg_per'):0):0;
+      // 暴伤池：打击 / 爆发各有专属暴伤属性，漏掉会让这两类命中的归一化不足，并让它们的暴伤归因被高估
+      const cd=g('crit_damage')+(sc.strike?g('crit_damage_from_strikecard'):0)+(sc.ult?g('crit_damage_from_ulti'):0);
       const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*(h.cmul>0?h.cmul/100:1);
-      const fk=forceKind(h.skill),atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
-      return {sc,out,inn,fin,cd,S,atkForce,T:atkForce*(1+out/100)*(1+inn/100)*(h.pf||1)};
+      const fk=forceKind(h.skill),per=fk==='def'?g('def_per'):fk==='phys'?g('physique_per'):g('atk_per'),force0=fk==='def'?g('def'):fk==='phys'?g('physique'):g('atk');
+      const atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
+      return {sc,out,inn,fin,cd,S,atkForce,fk,per,force0,T:atkForce*(1+out/100)*(1+inn/100)*(h.pf||1)};
     };
     const Vof=(h,useV=true)=>(useV&&h.vOn?1+h.vPct/100:1)*(1+(h.amp||[]).reduce((n,x)=>n+x.p,0)/100);   // vulnerability and enemy-state damage-taken amplifiers (共感 ...)
     const dnOf=(h,c,useV=true)=>h.dmg/(h.crit?1+c.cd/100:1)/(1+c.fin/100)/Vof(h,useV);
+    // 技能描述写明的两件事必须进拟合，否则触腕 / 固定加值会被当成力量、把 m 拉偏：
+    // 「享受 N% 力量加成」缩放力量项（力量倍率 m 仍然共用，只是这一项按说明打了折）；
+    // 「享受 N% 触腕伤害加成」与 ParaPlus 固定加值是**已知系数**的加项，移到等式左边，不参与 m 的拟合。
+    // 口径与下面 argFit 的 build() 完全一致；没有写明这些描述的技能 strMul=1 / tenMul=0 / pp=0，行为不变。
+    const extS=(h,c)=>c.S*strMul(h),extY=h=>(h.P.tentacle_dmg||0)*tenMul(h)+(h.pp||0);
     const byActor=new Map();const blindBy=new Map();for(const h of log){if(scopeOf(h).ult)continue;if(h.blind){blindBy.set(h.uid,(blindBy.get(h.uid)||0)+1);continue}if(!byActor.has(h.uid))byActor.set(h.uid,[]);byActor.get(h.uid).push(h)}
     const fits=new Map(),report=[];
     const fitActor=(hits,mode,useV)=>{
-      const uniq=new Map();for(const h of hits){const c=ctxOf(h,mode),key=`${h.skill}|${Math.round(dnOf(h,c,true))}|${c.S}|${c.T.toFixed(1)}`;if(!uniq.has(key))uniq.set(key,{h,c})}
+      const uniq=new Map();for(const h of hits){const c=ctxOf(h,mode),key=`${h.skill}|${Math.round(dnOf(h,c,true)-extY(h))}|${extS(h,c)}|${c.T.toFixed(1)}`;if(!uniq.has(key))uniq.set(key,{h,c})}
       let pts=[...uniq.values()],trimmed=0;
       for(let pass=0;pass<2&&pts.length>=6;pass++){const sk=[...new Set(pts.map(p=>p.h.skill))],si=new Map(sk.map((s,i)=>[s,i]));
-        const rw=pts.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=p.c.S;return r}),yy=pts.map(p=>dnOf(p.h,p.c,useV)),ww=yy.map(v=>1/Math.max(1,v));
+        const rw=pts.map(p=>{const r=new Array(sk.length+1).fill(0);r[si.get(p.h.skill)]=p.c.T;r[sk.length]=extS(p.h,p.c);return r}),yy=pts.map(p=>dnOf(p.h,p.c,useV)-extY(p.h)),ww=yy.map(v=>1/Math.max(1,Math.abs(v)));
         const xx=new Set(pts.map(p=>p.c.S)).size>=2&&pts.length>sk.length+4?solveLeastSquares(rw,yy,ww):null;if(!xx)break;
-        const keep=pts.filter((p,i)=>Math.abs(rw[i].reduce((t,v,k)=>t+v*xx[k],0)-yy[i])/yy[i]<=0.3);
+        const keep=pts.filter((p,i)=>Math.abs(rw[i].reduce((t,v,k)=>t+v*xx[k],0)-yy[i])/Math.max(1,Math.abs(yy[i]))<=0.3);
         if(keep.length===pts.length||keep.length<sk.length+4)break;trimmed+=pts.length-keep.length;pts=keep}
       const skills=[...new Set(pts.map(p=>p.h.skill))],sIdx=new Map(skills.map((s,i)=>[s,i])),distinctS=new Set(pts.map(p=>p.c.S)).size;
-      const rows=pts.map(p=>{const r=new Array(skills.length+1).fill(0);r[sIdx.get(p.h.skill)]=p.c.T;r[skills.length]=p.c.S;return r}),y=pts.map(p=>dnOf(p.h,p.c,useV)),w=y.map(v=>1/Math.max(1,v));
+      const rows=pts.map(p=>{const r=new Array(skills.length+1).fill(0);r[sIdx.get(p.h.skill)]=p.c.T;r[skills.length]=extS(p.h,p.c);return r}),y=pts.map(p=>dnOf(p.h,p.c,useV)-extY(p.h)),w=y.map(v=>1/Math.max(1,Math.abs(v)));
       const x=distinctS>=2&&pts.length>skills.length?solveLeastSquares(rows,y,w):null;
-      let errs=null;if(x)errs=rows.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)-y[i])/y[i]);
+      let errs=null;if(x)errs=rows.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*x[k],0)-y[i])/Math.max(1,Math.abs(y[i])));
       // calculator default (strength x1): refit only per-skill coefficients
-      let calcErr=null;{const r1=pts.map(p=>{const r=new Array(skills.length).fill(0);r[sIdx.get(p.h.skill)]=p.c.T;return r}),y1=pts.map((p,i)=>y[i]-p.c.S),xx=solveLeastSquares(r1,y1,w);if(xx)calcErr=r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*xx[k],0)+pts[i].c.S-y[i])/y[i]).reduce((a,b)=>a+b,0)/pts.length}
+      let calcErr=null;{const r1=pts.map(p=>{const r=new Array(skills.length).fill(0);r[sIdx.get(p.h.skill)]=p.c.T;return r}),y1=pts.map((p,i)=>y[i]-extS(p.h,p.c)),xx=solveLeastSquares(r1,y1,w);if(xx)calcErr=r1.map((r,i)=>Math.abs(r.reduce((t,v,k)=>t+v*xx[k],0)+pts[i].c.S-y[i])/y[i]).reduce((a,b)=>a+b,0)/pts.length}
       return {pts,trimmed,skills,distinctS,x,m:x?Math.max(0,Math.min(10,x[skills.length])):null,mean:errs?errs.reduce((a,b)=>a+b,0)/errs.length:null,max:errs?Math.max(...errs):null,calcErr};
     };
     for(const [uid,hits] of byActor){
@@ -1610,19 +1648,28 @@
     for(const h of log){
       if(h.amp?.length){const tot=h.amp.reduce((n,x)=>n+x.p,0),ex=h.dmg*tot/(100+tot);for(const x of h.amp){const sh=ex*x.p/tot,keys=x.keys.length?x.keys:[];for(const k of keys){const sp=tl.supStore?.get(k)||null;if(sp){sp.vulnExtra+=sh/keys.length;sp.ampTypes=sp.ampTypes||new Map();sp.ampTypes.set(x.nm,(sp.ampTypes.get(x.nm)||0)+sh/keys.length)}}}}
       if(h.vOn&&h.vsrc){const sp=tl.supStore?.get(h.vsrc);if(sp)sp.vulnExtra+=h.dmg*((h.vPct||50)/100)/(1+(h.vPct||50)/100)}
+      if(h.blind)continue;   // 致盲命中被排除在拟合之外（上面 byActor 就不收），也不该用没见过它的 m 去做归因
       if(!h.buffs.length)continue;
       const c=ctxOf(h),sc=c.sc,fit=fits.get(h.uid),m=sc.ult&&h.P.ulti_strength_multiple?h.P.ulti_strength_multiple/100:(fit?fit.m:fallbackM);
-      const dn=dnOf(h,c),strPart=Math.min(dn,m*c.S),basePart=Math.max(0,dn-strPart),baseShare=dn>0?basePart/dn:0;
+      // 力量为负（被削减）时不能再从基础项里"借"出份额：原来 strPart 取 min(dn, m*S) 为负 →
+      // basePart = dn - 负数 > dn → baseShare > 1，基础 / 局内增伤被整体放大，而这份负力量没有任何人承担。
+      const dn=dnOf(h,c),strPart=Math.max(0,Math.min(dn,m*extS(h,c))),basePart=Math.max(0,dn-strPart),baseShare=dn>0?basePart/dn:0;   // 拟合的回归元已经是 S×strMul，这里必须用同一个量，否则 strMul≠1 的技能会差 1/strMul 倍
       const fracs=[];   // every buff's share of this hit; together they can never exceed the hit itself (stacked buffs overshoot when the hit's own panel total is smaller than their sum)
       for(const b of h.buffs){
         if(!inScope(sc,b.scope))continue;
         let frac=0;
-        if(b.kind==='power')frac=m*b.amt/dn;
+        if(b.kind==='power')frac=m*b.amt*strMul(h)*(h.cmul>0?h.cmul/100:1)/dn;   // 同上：力量项要乘技能说明的力量加成比例
         else if(b.kind==='basic'||b.kind==='in')frac=baseShare*(b.amt/100)/(1+c.inn/100);
         else if(b.kind==='out')frac=baseShare*(b.amt/100)/(1+c.out/100);
         else if(b.kind==='final')frac=(b.amt/100)/(1+c.fin/100);
         else if(b.kind==='crit')frac=h.crit?(b.amt/100)/(1+c.cd/100):0;
         else if(b.kind==='critrate')frac=(noCritSk.has(String(h.skill))||h.dt===2||h.dt===6)?0:(b.amt/100)*(c.cd/100)/(h.crit?1+c.cd/100:1);
+        // 面板力（攻击 / 防御 / 体质）：百分比类按 1/(100+已有百分比) 折算，固定值类按 1/基础值 折算
+        else if(b.kind==='force'){const pb=/^(atk|def|physique)(_per)?$/.exec(String(b.prop||''));frac=pb&&pb[1]===(c.fk||'atk')?(pb[2]?(b.amt/100)/(1+c.per/100):c.force0>0?b.amt/c.force0:0):0}   // 必须与该次命中实际吃的那一项面板力对得上
+        // 触腕伤害：与拟合口径一致，加项是 触腕伤害 × 技能说明的触腕加成比例，且它位于终伤池之前（dn 就是 X）
+        else if(b.kind==='tenta')frac=(b.amt*tenMul(h))/dn;
+        // 爆发倍率：它决定的正是力量倍率 m（爆发命中不做拟合、直接取面板值），所以边际贡献是 Δ/100 × 力量项
+        else if(b.kind==='ultim')frac=(b.amt/100)*c.S/dn;
         fracs.push([b,Math.max(0,Math.min(1,frac))]);
       }
       {const F=fracs.reduce((n,f)=>n+f[1],0),k=F>0.95?0.95/F:1;for(const [b,f] of fracs){const x=h.dmg*f*k;b.inst.extra+=x;b.inst.hits++;b.rel.extra+=x}}
@@ -1834,7 +1881,7 @@
       const weakCovered=sp=>[...(sp.prevTypes?.entries?.()||[])].some(([n,v])=>/虚弱/.test(n)&&v>0),ctlOf=sp=>(sp.dbCls.ctrl||0)*3+(weakCovered(sp)?0:(sp.dbCls.weak||0)*2)+(sp.dbCls.frail||0)*2;
       const SUBW={def:{sh:40,mit:30,ctl:20,dr:10},sup:{key:1.5,ali:1.5,seal:.5,eng:1.5,vuln:1.5,buf:1.5,ero:1.4,cut:1,draw:1,cyc:.5,realm:.5,emb:.5,dis:1.2}};   // ero = 侵蚀（薇薇安 / 沙耶一类靠侵蚀出伤的角色单独成维度，不混在伤害增益里）
       const roles=bd.roleData||[],attrOf=uid=>roles.find(x=>String(x.uid)===String(uid))?.attrs||{};
-      const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
+      const blank=()=>({aliSelf:0,aliOthers:0,key:0,energy:0,dr:0,rm:0,powerGain:0,critGain:0,critRateGain:0,basicGain:0,dbPts:0,dbN:0,dbTypes:new Map(),dbCls:{vuln:0,weak:0,frail:0,ctrl:0,dot:0,other:0},vulnExtra:0,embryo:0,embCards:0,seal:0,cut:0,draws:0,cycles:0,inspire:0,copies:0,costCut:0,ultCasts:0,prevented:0,prevTypes:new Map(),tenGain:0,tenExtra:0,forceGain:0,ultiMultGain:0,dimAdd:0,dimPull:0,poolGain:0,beaconExtra:0,dispelN:0,dispelPts:0,dispelTypes:new Map()});
       const supOf=k=>tl.supStore?.get(k)||blank();
       const gradeOf=sc=>sc>=80?'S':sc>=65?'A':sc>=50?'B':sc>=35?'C':'D';
       const shareScore=(v,t,N)=>t>0?Math.min(100,100*(v/t)/(2/Math.max(1,N))):null;   // 2x the fair share of the class total = 100
@@ -2004,7 +2051,7 @@
       }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
       return {keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
     })();
-    return {genRows,genBy,genText,roundDmg,typeDmg,mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[]};
+    return {genRows,genBy,genText,roundDmg,typeDmg,mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[],handFlow:tl.handFlow||null};
   }
   const fold=(title,html,open=false)=>html?`<details class="mr2fold"${open?' open':''}><summary>${title}</summary>${html}</details>`:'';
   const pctOf=(a,b)=>b>0?Math.round(a/b*1000)/10:0;
@@ -2024,7 +2071,7 @@
       !critAll.length?null:(critExact/critAll.length>=.85?`✓ ${ui(`暴击：伤害 = 非暴击 × (1 + 暴击伤害%)，在 ${critAll.length} 组同条件命中中有 ${critExact} 组精确成立（偏差 <1%）${critAll.length>critExact?'；其余个别组可能是该次命中被护盾抵挡/溢出等拆分了伤害':''}`,`Crit: ×(1 + crit damage%) holds exactly in ${critExact}/${critAll.length} same-context pairs`)}`:`✗ ${ui(`暴击倍率只有 ${critExact}/${critAll.length} 组与 1 + 暴击伤害% 吻合`,`Crit multiplier matches 1 + crit damage% in only ${critExact}/${critAll.length} pairs`)}`),
       med==null?(c.report.some(r=>r.m!=null)?`△ ${ui('可拟合的角色样本太少（需要至少 3 种力量取值且条件数多于技能数），暂不下结论','Too few contexts to conclude')}`:null):`${Math.abs(med-1)>.3?'✗':'✓'} ${ui(`力量倍率：计入分类基伤池（卡牌 / 打击 / 追击 / 爆发）和终伤池（局内伤害、对首领增伤）后，${oldMed&&Math.abs(oldMed-med)>.1*med?`拟合力量倍率由约 ×${oldMed.toFixed(2)} 降到 ×${med.toFixed(2)}`:`拟合力量倍率约 ×${med.toFixed(2)}`}（计算器默认 ×1）。${Math.abs(med-1)>.3?'剩余差距可能来自触腕/其他加算项或未识别的乘区。':'与计算器默认基本一致。'}`,`Strength multiplier: with scoped base pools and final pools the fit drops from ×${(oldMed||med).toFixed(2)} to ×${med.toFixed(2)} (calculator: ×1).`)}`,
       fitted.length?(vBetter>=Math.ceil(fitted.length/2)?`✓ ${ui('易伤：对带易伤的目标按 ×(1 + 易伤增幅) 计入后拟合更准','Vulnerability ×(1 + amp) improves the fit')}`:`? ${ui('易伤乘区本场无法确认（样本不足或已被其他乘区吸收）','Vulnerability could not be confirmed on this sample')}`):null,
-      fitted.length?`${fitted.every(r=>r.meanErr<.1)?'✓':'△'} ${ui('公式顺序（攻击力×系数×基伤池 → +力量 → ×易伤 → ×暴击）拟合后平均误差','Formula order fits with mean error ')}${pc(fitted.reduce((a,r)=>a+r.meanErr,0)/fitted.length)}${fitted.some(r=>r.maxErr>.2)?ui('，个别条件偏差超过 20%，说明还有未建模的乘区（如终伤池、伤害强效、状态加成）','; some contexts deviate >20%: unmodelled multipliers'):''}`:null,
+      fitted.length?`${fitted.every(r=>r.meanErr<.1)?'✓':'△'} ${ui('公式顺序（攻击力 / 防御 / 体质 × 系数 × 外部基伤池 × 局内基伤池 → +力量（含卡牌力量倍率、享受 N% 力量加成）→ ×终伤池（局内伤害 / 打击伤害 / 对首领增伤 / 爆发伤害加成 / 活焰）→ ×易伤及被增伤 → ×暴击（含打击 / 爆发暴伤））拟合后平均误差','Formula order (force x coef x outer base pool x inner base pool -> + strength -> x final pool -> x vulnerability -> x crit) fits with mean error ')}${pc(fitted.reduce((a,r)=>a+r.meanErr,0)/fitted.length)}${fitted.some(r=>r.maxErr>.2)?ui('，个别条件偏差超过 20%，说明还有未建模的乘区（如终伤池、伤害强效、状态加成）','; some contexts deviate >20%: unmodelled multipliers'):''}`:null,
       ...(()=>{const ar=c.report.filter(r=>r.arg&&r.arg.m!=null&&r.arg.match!=null&&r.arg.match>=.5);if(!ar.length)return [];const ms2=ar.map(r=>r.arg.m).sort((a,b)=>a-b),md=ms2[Math.floor(ms2.length/2)];return [`${Math.abs(md-1)>.3?'✗':'✓'} ${ui(`卡面伤害核对（不含暴击/易伤，更直接）：${ar.length} 名角色的出牌卡面值与实际伤害一致，拟合力量倍率中位数 ×${md.toFixed(2)}，计算器默认 ×1 的平均误差 ${pc(ar.reduce((a,r)=>a+r.arg.calcErr,0)/ar.length)}`,`Card-face check: median fitted STR mult ×${md.toFixed(2)}`)}`]})()
     ].filter(Boolean);
     return `<div class="mr2ssec"><h5>${ui('伤害公式校验（用本场每次命中拟合）','Damage formula check (fitted on this replay)')}</h5>
@@ -2353,6 +2400,7 @@
         <span>${ui('每回合出牌','Plays per round')} <b>${fx.playsPerRound}</b></span>
         <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>
         <span>${ui('死亡抵抗 / 濒危回合','Death resist / critical rounds')} <b>${fx.deathResist} / ${fx.lethalRounds}</b></span>
+        <span>${ui('爆牌（手牌已满而丢掉的牌 / 进手总数）','Hand overflow (cards lost to a full hand / cards drawn)')} <b>${f(fx.handOverflow||0)} / ${f(fx.handCardsSeen||0)} · ${fx.handOverflowPct==null?'—':pc(fx.handOverflowPct)}</b></span>
         <span>${ui('治疗溢出','Overheal')} <b>${pc(fx.overhealPct)}</b></span>
         <span>${ui('护盾溢出（回合末盾量 − 敌方伤害）','Shield overflow (end shield − enemy dmg)')} <b>${fx.shieldOverflow==null?'—':f(fx.shieldOverflow)+' / '+f(fx.shieldGenerated||0)+' · '+pc(fx.shieldOverflowPct)}</b></span>
         <span>${ui('易伤窗口覆盖','Vulnerability coverage')} <b>${pc(fx.vulnCoveragePct)}</b></span>
@@ -2365,7 +2413,8 @@
       <div class="mr2mcol"><h6>${ui('战斗效率','Battle efficiency')} <em>${sc(k.effScore)}</em></h6>
         ${row(ui('算力利用率','Energy used'),pct(E.e1),E.e1==null?null:E.e1*100,ui(`消耗 ${f(E.spent)} / 回合末剩余 ${f(E.waste)}`,''))}
         ${row(ui('手牌利用率（未被回合末弃掉）','Hand used'),pct(E.e2),E.e2==null?null:E.e2*100,ui(`打出 ${f(E.used)} / 回合末弃牌 ${f(E.disc)}`,''))}
-        ${row(ui('算力未溢出','No overflow'),pct(E.e3),E.e3==null?null:E.e3*100,ui(`溢出 ${f(E.over)}`,''))}</div>
+        ${row(ui('算力未溢出','No overflow'),pct(E.e3),E.e3==null?null:E.e3*100,ui(`溢出 ${f(E.over)}`,''))}
+        ${row(ui('手牌未溢出（未因手牌已满丢牌）','No hand overflow'),fx.handOverflowPct==null?'—':pc(fx.handOverflowPct),fx.handOverflowPct==null?null:Math.max(0,100-Math.min(100,fx.handOverflowPct/25*100)),ui(`丢牌 ${f(fx.handOverflow||0)} / 进手 ${f(fx.handCardsSeen||0)}`,''))}</div>
       <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的平均实际产出估算最优组合（背包）。伤害达成 ${pct(k.rD)}，防御达成 ${pct(k.rF)}`,`Best achievable damage / defence with the same hand and energy`)}</small>${rr}</div>
       <div class="mr2mcol"><h6>${ui('各钥令实际价值','Keyflare values')}</h6>${kv||`<div class="mr2empty">—</div>`}</div></div>`;
   }
