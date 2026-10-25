@@ -225,7 +225,7 @@ function cardPlayModel(tl){
   for(const p of all){const v=value(p);add(byTid,String(p.tid),v);add(byType,typeOf(p.tid),v)}
   const global=all.reduce((n,p)=>n+value(p),0)/all.length||1;
   const estimate=tid=>{const a=byTid.get(String(tid));if(a?.n)return {v:a.v/a.n,c:1};const b=byType.get(typeOf(tid));if(b?.n)return {v:b.v/b.n,c:.65};return {v:global,c:.35}};
-  const costOf=(tid,c)=>{const v=c!=null?Number(c):Number(res.skill?.[String(tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
+  const costOf=(tid,c)=>{const v=rawCost(c!=null?c:res.skill?.[String(tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
   const grouped=new Map();for(const p of all){const r=grouped.get(p.round)||{played:[],spent:0};r.played.push(p);r.spent+=costOf(p.tid,p.cost);grouped.set(p.round,r)}
   const knap=(items,B)=>{const dp=new Array(B+1).fill(0);for(const it of items){if(it.c>B)continue;for(let b=B;b>=it.c;b--)dp[b]=Math.max(dp[b],dp[b-it.c]+it.v)}return dp[B]};
   const rounds=[];let sw=0,ss=0,sc=0;
@@ -287,6 +287,10 @@ const KW={R:.30,P:.22,T:.13,K:.13,S:.13,C:.09};
 // 1.00 = 与该队伍往期常态持平 → 78 / 80 分，留出「明显快于常态」才算优秀的空间。
 const TEMPO_SPEED=[[.65,100],[.80,100],[.90,90],[1,78],[1.10,66],[1.25,50],[1.45,32],[1.70,16],[2,0]];
 const TEMPO_DENS=[[.55,20],[.70,45],[.85,66],[1,80],[1.10,90],[1.25,100],[1.60,100]];
+// 技能费用可能是公式字符串（实测 144492 是 `3-PlayerRole.GetStateLayer(148517)`）。
+// 直接 Number() 得 NaN，再被下游当成 0 —— 这类牌会在背包里变成免费牌，算出假的「最优」。
+// 取字符串开头的数字当基准费用：公式里的减项最多把费用降到 0，不会让它更贵。
+function rawCost(v){let n=Number(v);if(!Number.isFinite(n)){const m=String(v??'').match(/^\s*(\d+(?:\.\d+)?)/);n=m?Number(m[1]):NaN}return n}
 function piece(x,tab){if(x==null||!Number.isFinite(x))return null;if(x<=tab[0][0])return tab[0][1];
   for(let i=1;i<tab.length;i++){const [x1,y1]=tab[i];if(x<=x1){const [x0,y0]=tab[i-1];return y0+(y1-y0)*(x-x0)/(x1-x0)}}
   return tab[tab.length-1][1]}
@@ -295,7 +299,7 @@ function wavg(entries){let s=0,w=0;for(const [v,wt] of entries){if(v==null||!Num
 function scoreKeeperV2(m,tl,tempoCtx){
   const k=m?.keeper;if(!k)return null;
   const rounds=(tl.rounds||[]).filter(r=>!r.dim),R=Math.max(1,rounds.length),plays=(tl.playLog||[]).filter(p=>p.kind==='card'&&(tl.actors?.get(String(p.owner))?.kind==='awakener'));
-  const cost=p=>{const v=p.cost!=null?Number(p.cost):Number(tl.res?.skill?.[String(p.tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
+  const cost=p=>{const v=rawCost(p.cost!=null?p.cost:tl.res?.skill?.[String(p.tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
   // 「这一手有没有产出」：数值产出（伤害/护盾/治疗/算力/抽牌/狂气/易伤）之外，
   // 给己方叠状态层也算（state）：纯功能牌（装填！/ 生物拟态）在回放窗口里没有任何数值，
   // 旧口径会把它们当成浪费算力的零价值出牌，系统性压低辅助向阵容的出牌价值密度。
@@ -365,7 +369,9 @@ function scoreKeeperV2(m,tl,tempoCtx){
   if(Bscore==null)conf.R=conf.R*.85;    // 狂气那一项没算进来（无快照 / 供给不足）→ R 的可信度相应下调
   if(Ecycle==null||Eover==null)conf.R=conf.R*.85;   // 战报统计包缺失（弃牌 / 算力溢出未知）→ 只剩两个子项，可信度下调
   // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
-  const rr=k.rrows||[],aD=rr.reduce((n,r)=>n+r.aD,0),oD=rr.reduce((n,r)=>n+r.oD,0),aF=rr.reduce((n,r)=>n+r.aF,0),oF=rr.reduce((n,r)=>n+r.oF,0);
+  // 只统计「背包最优 ≠ 实际打出」的回合：两者相等时这一回合没有信息量（打出 A 就证明 A 是最优），
+  // 把它算进分母等于给满分。151789 的 7 个回合里 5 个 aD≡oD、6 个 aF≡oF —— 旧口径 P=95.1 是这么来的。
+  const rr=k.rrows||[],rrI=rr.filter(r=>r.inf!==false),aD=rrI.reduce((n,r)=>n+r.aD,0),oD=rrI.reduce((n,r)=>n+r.oD,0),aF=rrI.reduce((n,r)=>n+r.aF,0),oF=rrI.reduce((n,r)=>n+r.oF,0);
   const ratios=[oD>0?aD/oD:null,oF>0?aF/oF:null].filter(v=>v!=null);
   const playRatio=ratios.length?ratios.reduce((a,b)=>a+b,0)/ratios.length:null;
   // ordering: a vulnerability applied after enemy damage was already dealt in the same round wastes that share of the earlier damage
@@ -373,9 +379,15 @@ function scoreKeeperV2(m,tl,tempoCtx){
   const byRound=new Map();for(const p of tl.playLog||[]){if(p.vuln){if(!byRound.has(p.round))byRound.set(p.round,[]);byRound.get(p.round).push(p.time)}}
   for(const [rd,ts] of byRound){const tv=Math.max(...ts);for(const h of hits){if(h.round!==rd||h.blind)continue;seqBase+=h.dmg;if(h.t!=null&&h.t<tv&&!h.vOn)seqLoss+=h.dmg*(h.vPct||50)/(100+(h.vPct||50))}}
   const totalHitDmg=hits.reduce((n,h)=>n+(h.blind?0:h.dmg),0)||1,seqRatio=seqLoss/totalHitDmg;
-  const Pscore=playRatio==null?null:Math.max(0,Math.min(100,100*(playRatio-seqRatio)));
-  Object.assign(facts,{regretPct:playRatio==null?null:100*(1-playRatio),orderLossPct:100*seqRatio,vulnRounds:byRound.size});
+  let Pscore=playRatio==null?null:Math.max(0,Math.min(100,100*(playRatio-seqRatio)));
+  // 覆盖率：有信息量的回合 / 能看到回合末手牌的回合。低于 40% 说明这场「怎么打都差不多」，
+  // P 的分数不是「打得完美」而是「模型看不出来」——向中性 78 收缩（与节奏全库回退同一套做法）。
+  const pTot=k.pRounds??rr.length,pInf=k.pInfo??null,pCov=pTot>0&&pInf!=null?pInf/pTot:null;
+  if(Pscore!=null&&pCov!=null&&pCov<.4)Pscore=78+(Pscore-78)*(pCov/.4);
+  Object.assign(facts,{regretPct:playRatio==null?null:100*(1-playRatio),orderLossPct:100*seqRatio,vulnRounds:byRound.size,
+    pInfoRounds:pInf,pScoredRounds:pTot||null,pCover:pCov});
   conf.P=Math.min(.95,.45+.5*Math.min(1,rr.length/R))*(.7+.3*(k.playConfidence??.7));
+  if(pCov!=null)conf.P=conf.P*(.55+.45*Math.min(1,pCov/.5));
   // ---- Tempo: 与「这支队伍自己的往期」比推进 -----------------------------------------------
   // 参照库 team-tempo.json 由 scripts/build-team-tempo.py 从 dzone 战报生成（88 关卡 / 4.5 万场 / 2419 支阵容）。
   // tempo 入参：{db, stageId, stageTid, lineup, rounds, cards, densOk, derived, approx, lost}
