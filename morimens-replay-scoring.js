@@ -346,7 +346,10 @@ function scoreKeeperV2(m,tl,tempoCtx){
   // 狂气子项：按「本场攒出了几次爆发」平滑收缩到 R 的其余分量 —— 供给 0.5 次 → 完全中性，2 次以上 → 全按实际比率。
   // 这道收缩替代了原来的 0.8 次硬门槛：否则「一场没放爆发、总和 79.99」判 null（R=81.7）、「80.00」判 0（R=71.0），
   // 两次几乎相同的操作会差 10.6 分 R（总分 3.2），而 0 次爆发恰好落在门槛附近的局面很常见。
-  const Bw=clamp((Bsupply-.5)/1.5);
+  // ⚠ 必须显式写 clamp(x,0,1)：clamp 的默认上界是 100（给百分制用的），
+  //   漏掉上界时 Bw 会跑到 6.5，于是 Bscore = Braw*6.5 + Rother*(1-6.5) 变成负数
+  //   （实测：一局 7 次爆发、狂气剩 31% 的场次算出 Bscore = -45.7，直接把这个子项判成「负数贡献」）。
+  const Bw=clamp((Bsupply-.5)/1.5,0,1);
   const Bscore=Braw==null?null:(Rother==null?Braw:Braw*Bw+Rother*(1-Bw));
   Object.assign(facts,{burstUnusedPct:Bscore==null?null:100*Bleft/Btot,burstScore:Bscore});
   conf.burst=Bscore==null?.3:(Bw>=.9?.9:.65);   // 周转子项的置信度（不再是独立维度，不参与总分归一）
@@ -357,6 +360,7 @@ function scoreKeeperV2(m,tl,tempoCtx){
     handOverflow:ovfD+ovfH,handOverflowPct:ovfRate==null?null:100*ovfRate,handOverflowDirect:ovfD,handOverflowInHand:ovfH,handCardsSeen:hDen||null,handPeak:Number.isFinite(hf.peak)?hf.peak:null});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
   if(Bscore==null)conf.R=conf.R*.85;    // 狂气那一项没算进来（无快照 / 供给不足）→ R 的可信度相应下调
+  if(Ecycle==null||Eover==null)conf.R=conf.R*.85;   // 战报统计包缺失（弃牌 / 算力溢出未知）→ 只剩两个子项，可信度下调
   // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
   const rr=k.rrows||[],aD=rr.reduce((n,r)=>n+r.aD,0),oD=rr.reduce((n,r)=>n+r.oD,0),aF=rr.reduce((n,r)=>n+r.aF,0),oF=rr.reduce((n,r)=>n+r.oF,0);
   const ratios=[oD>0?aD/oD:null,oF>0?aF/oF:null].filter(v=>v!=null);
@@ -371,12 +375,22 @@ function scoreKeeperV2(m,tl,tempoCtx){
   conf.P=Math.min(.95,.45+.5*Math.min(1,rr.length/R))*(.7+.3*(k.playConfidence??.7));
   // ---- Tempo: 与「这支队伍自己的往期」比推进 -----------------------------------------------
   // 参照库 team-tempo.json 由 scripts/build-team-tempo.py 从 dzone 战报生成（88 关卡 / 4.5 万场 / 2419 支阵容）。
-  // tempo 入参：{db, stageId, stageTid, lineup, rounds, cards, derived, lost}
-  //   rounds = 本场回合数；cards = 本场出牌数（优先取战报统计的 TotalUseCard，与参照库同口径；UsedCardCount 次之）
-  //   derived = cards 为回放反推（口径不同，密度项作废）；approx = 取客户端统计（置信度 ×0.9）；lost = 本场是否失利
+  // tempo 入参：{db, stageId, stageTid, lineup, rounds, cards, densOk, derived, approx, lost}
+  //   rounds = 本场回合数；cards = 本场用牌数。**两者必须同源**：
+  //     服务端统计（StageRoundCount / TotalUseCard，与参照库完全同口径）或 回放反推（回合数 + 出牌数）。
+  //     曾经出现过「服务端用牌数 94 + 回放回放的回合数 6」的混搭，算出每回合 15.7 张牌，
+  //     密度项直接顶到 100 分 —— 两种口径各自都对，混在一起就是错的。
+  //   densOk = 回合数与用牌数同源（否则密度项作废，只用速度项）
+  //   derived = 两者都是回放反推（口径与参照库不同，置信度 ×0.85）；approx = 服务端统计但字段名不同（×0.9）
+  //   lost = 本场是否失利
   const tempo=(()=>{const t=tempoCtx;if(!t||!t.db)return null;
-    const db=t.db,stg=(db.stages||{})[String(t.stageId??'')]||(t.stageTid!=null?(db.stages||{})[String(t.stageTid)]:null)||null;
-    if(!Array.isArray(stg)||!(Number(stg[0])>=8))return null;       // 关卡不在库内（样本 <8）→ 无法归一化
+    const db=t.db;
+    // 关卡不在库内（样本 <8）时退回**全库中位**（db.g：4.5 万场的总体中位），而不是直接判 null。
+    // 否则 69 期以前 / 新开的关卡永远是「—」，这正是旧版被诟病的「节奏维度没有数据」。
+    const pickStg=id=>{const v=(db.stages||{})[String(id??'')];return Array.isArray(v)&&Number(v[0])>=8?v:null};
+    let stg=pickStg(t.stageId)||(t.stageTid!=null?pickStg(t.stageTid):null),scope='stage';
+    if(!stg){const g=db.g;if(Array.isArray(g)&&Number(g[0])>=8){stg=g;scope='global'}}
+    if(!stg)return null;
     // stg = [样本数, 回合中位 ×10, 每回合用牌中位 ×1000]（×10 是为了短关卡：10 回合的关 ±0.5 回合就是 5%）
     const sR=(Number(stg[1])||0)/10,sC=(Number(stg[2])||0)/1000,R0=Number(t.rounds)||0,C0=Number(t.cards)||0;
     if(!(R0>0)||!(sR>0)||!Number.isFinite(sR))return null;
@@ -388,27 +402,40 @@ function scoreKeeperV2(m,tl,tempoCtx){
     const nDens =tn>0?1+(Number(team[5])/1000-1)*w:1;              // 队伍往期 p50（每回合用牌 / 同关卡中位）
     if(!(nSpeed>0)||!Number.isFinite(nSpeed)||!(nDens>0)||!Number.isFinite(nDens))return null;
     const relSpeed=Number.isFinite(uSpeed/nSpeed)?uSpeed/nSpeed:null;
-    // 用牌数若来自回放反推（口径与战报统计不同），密度项整体作废：宁可少一个指标，也不拿两种口径相比
-    const relDens=(uDens!=null&&!t.derived)?(Number.isFinite(uDens/nDens)?uDens/nDens:null):null;
+    // 回合数与用牌数同源才比密度：宁可少一个指标，也不拿两种口径相比
+    const relDens=(uDens!=null&&t.densOk!==false)?(Number.isFinite(uDens/nDens)?uDens/nDens:null):null;
     let sSpeed=piece(relSpeed,TEMPO_SPEED);
     const sDens=piece(relDens,TEMPO_DENS);
     // 打输了谈不上「节奏达标」：把速度项压到 55 以下（仍保留「快」的部分信息，但不给优秀）
     if(t.lost&&sSpeed!=null)sSpeed=Math.min(sSpeed,55);
-    const baseline=tn>0?'team':'stage';
+    const baseline=tn>0?'team':scope;
     let score=wavg([[sSpeed,.60],[sDens,.40]]);
-    // 密度项缺失（用牌数是回放反推）时只剩速度一个指标，不能让单指标把 T 拉到极端，同样向中性收缩 30%
+    // 密度项缺失时只剩速度一个指标，不能让单指标把 T 拉到极端，同样向中性收缩 30%
     if(score!=null&&sDens==null)score=78+(score-78)*.7;
-    // 没有该阵容的往期时只能跟「同关卡全体」比，这条路正是旧「节奏」被诟病的地方（会把队伍强度算进来），
-    // 所以把结果按 40% 向中性（78）收缩：仍能区分明显拖拉 / 明显偏快，但不让 off-meta 队伍的强度差拉出 ±40 分。
-    if(score!=null&&baseline==='stage')score=78+(score-78)*.6;
-    return {score,sSpeed,sDens,relSpeed,relDens,uSpeed,uDens,nSpeed,nDens,tn,sn:Number(stg[0]),
-      stageRounds:sR,stageCpr:sC,rounds:R0,cards:C0,cpr,derived:!!t.derived,approx:!!t.approx,lost:!!t.lost,baseline};
+    // 没有该阵容的往期时只能跟「同关卡 / 全库」比，这条路会把队伍强度算进来（正是旧「节奏」被诟病的地方），
+    // 所以按 40%（同关卡）/ 55%（全库）向中性（78）收缩：仍能区分明显拖拉 / 明显偏快，但不让 off-meta 队伍的强度差拉出 ±40 分。
+    if(score!=null){
+      if(baseline==='stage')score=78+(score-78)*.6;
+      // 关卡不在参照库时，速度项的分母（关卡回合中位）是拿**全库中位**顶替的：难度不可比，
+      // 哪怕这支队伍有自己的往期，也不能按「比往期快 2 倍」给满分 —— 必须同样向中性收缩。
+      else if(scope==='global')score=78+(score-78)*.45;
+    }
+    return {score,sSpeed,sDens,relSpeed,relDens,uSpeed,uDens,nSpeed,nDens,tn,sn:Number(stg[0]),scope,
+      stageRounds:sR,stageCpr:sC,rounds:R0,cards:C0,cpr,densOk:t.densOk!==false,derived:!!t.derived,approx:!!t.approx,lost:!!t.lost,baseline};
   })();
   const Tscore=tempo?tempo.score:null;
   Object.assign(facts,{tempoRounds:tempo?tempo.rounds:null,tempoStageRounds:tempo?Math.round(tempo.stageRounds*10)/10:null,tempoCpr:tempo?tempo.cpr:null,
     tempoStageCpr:tempo?tempo.stageCpr:null,tempoSpeedRel:tempo?tempo.relSpeed:null,tempoDensRel:tempo?tempo.relDens:null,
-    tempoTeamN:tempo?tempo.tn:null,tempoStageN:tempo?tempo.sn:null,tempoBaseline:tempo?tempo.baseline:null,tempoDerived:tempo?tempo.derived:null,tempoApprox:tempo?tempo.approx:null});
-  conf.T=tempo?clamp(.35+.35*Math.min(1,tempo.tn/10)+.20*Math.min(1,tempo.sn/200))*(tempo.derived?.85:tempo.approx?.9:1):.3;
+    tempoTeamN:tempo?tempo.tn:null,tempoStageN:tempo?tempo.sn:null,tempoBaseline:tempo?tempo.baseline:null,tempoDerived:tempo?tempo.derived:null,tempoApprox:tempo?tempo.approx:null,
+    tempoCards:tempo?tempo.cards:null,tempoDensOk:tempo?tempo.densOk:null,tempoScope:tempo?tempo.scope:null});
+  // 置信度：阵容往期（team）> 同关卡全体（stage）> 全库中位（global），再按数据口径打折。
+  // 旧写法只用样本量，全库 4.5 万场会把「跟所有人比」也顶到高置信度，与实际精度相反。
+  // ⚠ 上界必须显式写 1：clamp 的默认上界是 100（给百分制用的），漏掉时置信度会算出 1.02，界面直接显示「可信度 102%」。
+  const tBase=tempo?.baseline==='team'?.95:tempo?.baseline==='stage'?.60:tempo?.baseline==='global'?.40:0;
+  // 先封顶 0.95 再乘口径折扣：否则「阵容往期 + 大样本」会顶到 1.0，
+  // 而「回放反推」（口径不同，应该更低）也被同一道上界压平，两者看不出差别。
+  // scope=global 再打 0.6：分母是拿全库中位顶替关卡中位的，难度不可比。
+  conf.T=tempo?clamp(Math.min(.95,tBase+.25*Math.min(1,tempo.tn/10))*(tempo.derived?.85:tempo.approx?.9:1)*(tempo.scope==='global'?.6:1),0,1):.3;
   // ---- Keyflare choice and use -------------------------------------------------------------------------
   const kvv=(k.kv||[]).filter(x=>x.n>0),kuses=kvv.reduce((n,x)=>n+x.n,0),meanVal=kuses?kvv.reduce((n,x)=>n+x.val*x.n,0)/kuses:null;
   const Ksel=k.pickScore,Kexec=meanVal==null?null:Math.min(100,100*meanVal/2);

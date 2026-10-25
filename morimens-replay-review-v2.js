@@ -918,7 +918,10 @@
             // P1-9：造物 / 装备触发窗口内的属性增益此前被 !relWin 整块丢弃（窗口内只有 RELIC_GEN 四类能入账）。
             // 改为按「窗口已认领过的属性类型」逐类放行：同一笔增益不会被窗口实例与角色实例各记一次，
             // 而窗口没有认领的属性类型（如 o_damage_per_ulti / awaker_ulti_dmg_per / 各类带作用域的增伤）照常归因给窗口来源。
-            if(rcv?.kind==='awakener'&&keys.length&&!(relWin&&relWin.claimed&&relWin.claimed.has(pt))&&pt!=='tentacle_dmg'){   // tentacle_dmg 上面已经按 part 分摊记过 tenGain，这里再记会翻倍
+            // bout>0：开场（bout 0）的属性变化是**面板静态值**（命轮 / 密契 / 造物写死的加成），
+            // 它们已经在每次命中的快照 h.P 里参与乘区计算，再当成一次「战斗内触发的增益」就是重复计入，
+            // 而且会把造物 / 命轮的静态加成算成唤醒体的辅助贡献（实测一局里 i_basic_damage_per 开场 4 次全部落到唤醒体头上）。
+            if(bout>0&&rcv?.kind==='awakener'&&keys.length&&!(relWin&&relWin.claimed&&relWin.claimed.has(pt))&&pt!=='tentacle_dmg'){   // tentacle_dmg 上面已经按 part 分摊记过 tenGain，这里再记会翻倍
               const pk0=PROP_KIND[pt],kind=pt==='damage_plus'?'power':pt==='crit_damage'?'crit':pt==='crit'?'critrate':(pt==='basic_damage_per'||pt==='i_basic_damage_per')?'basic':pk0?pk0[0]:null,kscope=['damage_plus','crit_damage','crit','basic_damage_per','i_basic_damage_per'].includes(pt)?undefined:pk0?.[1];
               if(kind)for(const k of keys.filter(x=>x.startsWith('act:')||x.startsWith('gear:'))){const tid=k,rel={tid,kind,scope:kscope,prop:pt},temp=kind==='power'?tempPow.has(`${fr.time}|${d.uid}`):kind==='crit'?critReverts.has(`${fr.time}|${d.uid}`):false;
                 const ctx=newInstance({time:fr.time},rel,cv,temp);grant(ctx,d.uid,cv,rel,temp);supOf(k)[kind==='power'?'powerGain':kind==='crit'?'critGain':kind==='critrate'?'critRateGain':kind==='force'?'forceGain':kind==='ultim'?'ultiMultGain':'basicGain']+=cv}
@@ -2081,8 +2084,15 @@
         const pr=picks.filter(x=>x.ratio!=null),pickScore=pr.length?100*pr.reduce((n,x)=>n+x.ratio,0)/pr.length:null;
         // battle efficiency: energy not wasted, hand not discarded, no overflow
         const waste=[...(tl.roundEnd?.values()||[])].reduce((n,e)=>n+Math.max(0,e.energy||0),0),spent=cardPlays.reduce((n,p)=>n+costOf(p.tid,p.cost),0);
-        const st0=bd.statistics||{},disc=Number(st0.EndBoutDiscardCount)||0,used=Number(st0.UsedCardCount)||cardPlays.length,over=Number(st0.OverFlowEnergy)||0,cons=Number(st0.ConsumeEnergy)||spent;
-        const e1=spent+waste>0?spent/(spent+waste):null,e2=used+disc>0?used/(used+disc):null,e3=cons+over>0?cons/(cons+over):null,es=[e1,e2,e3].filter(v=>v!=null),effScore=es.length?100*es.reduce((a,b)=>a+b,0)/es.length:null;
+        const st0=bd.statistics||{};
+        // 战报统计包在新格式回放里可能整包为 0（字段存在但没采集）。这时「弃牌 0 / 溢出 0」不是「没有浪费」，
+        // 而是「不知道」—— 当成 100 分等于白送分（实测新格式回放：UsedCardCount / ConsumeEnergy / OverFlowEnergy 全 0，
+        // 于是「手牌循环」「算力溢出」两个子项各拿满分）。判定用「有任一消费类计数」作闸门，缺失就判 null 让权重重新归一。
+        const statKnown=Number(st0.UsedCardCount)>0||Number(st0.ConsumeEnergy)>0||Number(st0.OverFlowEnergy)>0||Number(st0.EndBoutDiscardCount)>0;
+        const disc=statKnown?(Number(st0.EndBoutDiscardCount)||0):null,used=Number(st0.UsedCardCount)||cardPlays.length,
+          over=statKnown?(Number(st0.OverFlowEnergy)||0):null,cons=Number(st0.ConsumeEnergy)||spent;
+        const e1=spent+waste>0?spent/(spent+waste):null,e2=disc==null?null:(used+disc>0?used/(used+disc):null),
+          e3=over==null?null:(cons+over>0?cons/(cons+over):null),es=[e1,e2,e3].filter(v=>v!=null),effScore=es.length?100*es.reduce((a,b)=>a+b,0)/es.length:null;
         const parts=[['pick',pickScore],['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
         return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,rD,rF,eff:{e1,e2,e3,waste,spent,disc,used,over,cons},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
       })();
@@ -2095,32 +2105,42 @@
           for(const row of SC.scoreGear(wrapped,tl,totalDmg||1)){const it=relicItems.find(x=>x.r===row.r);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}}
         for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff}}
         awRows.sort((a,b)=>b.score-a.score);
-        // 守密人「节奏」的上游数据：本场回合数 / 用牌数尽量走战报统计（与参照库 team-tempo.json 同口径）。
-        // 三级取数：① 服务端统计的 TotalUseCard（与库完全同口径）→ ② 客户端统计的 UsedCardCount（同概念、命名不同，置信度打折）
-        // → ③ 回放反推的出牌数（口径不同，密度项直接作废，只用速度）。宁可少一个指标，也不拿两种口径相比。
-        // 阵容键 = 我方 4 名唤醒体的 tid 升序（参照库按同一规则生成）。
+        // 守密人「节奏」的上游数据：本场回合数 / 用牌数。**这两个数必须同源**，
+        // 否则「服务端回合数 17 + 回放反推用牌数 38」会算出每回合 2.2 张牌（或反过来 15.7 张），
+        // 密度项直接顶到满分 —— 两个口径各自都对，混在一起就是错的。
+        //   ① 服务端统计（StageRoundCount / TotalUseCard，与参照库完全同口径）→ 最优
+        //   ② 服务端统计（BoutCount / UsedCardCount，同概念、字段名不同）→ 成对使用，置信度 ×0.9
+        //   ③ 回放反推（回合数 + 出牌数）→ 成对使用，置信度 ×0.85，并在界面标注
+        // 只拿到一半时（如服务端有回合数、没有用牌数），速度项用服务端值、密度项作废（densOk=false）。
+        // 阵容键 = 我方 4 名唤醒人的 tid 升序（参照库按同一规则生成）。
         const tempoCtx=(()=>{try{
           // battleFinishData.statistics 在不同版本里有时是平铺、有时包一层 BattleStats / GlobalStats，两种都要能取到
           const stat=(tl.battleCounts?.()||null)?.finish||null,srcs=[];
           for(const o of [bd.statistics,stat,bd]){if(!o||typeof o!=='object')continue;srcs.push(o);
             for(const k of ['BattleStats','GlobalStats','battleStats','globalStats','Statistics'])if(o[k]&&typeof o[k]==='object')srcs.push(o[k])}
           const pick=k=>{for(const o of srcs){const v=o[k];if(v!=null&&Number.isFinite(Number(v))&&Number(v)>0)return Number(v)}return null};
-          const rN=pick('StageRoundCount')??pick('stageRoundCount');
-          const cExact=pick('TotalUseCard')??pick('totalUseCard');
-          const cNear=cExact==null?(pick('UsedCardCount')??pick('usedCardCount')):null;
-          const lineup=[...actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.tid)).sort().join(',');
+          const exactR=pick('StageRoundCount')??pick('stageRoundCount'),exactC=pick('TotalUseCard')??pick('totalUseCard');
+          const looseR=pick('BoutCount')??pick('boutCount'),looseC=pick('UsedCardCount')??pick('usedCardCount');
+          const reconR=(tl.rounds||[]).filter(r=>!r.dim).length;
           // 反推出牌数：注意 cardPlays 是 keeper IIFE 的局部变量，这里必须自算一份
-          const fbCards=(tl.playLog||[]).filter(p=>p.kind==='card'&&(actors.get(String(p.owner))?.kind??'')==='awakener').length;
+          const reconC=(tl.playLog||[]).filter(p=>p.kind==='card'&&(actors.get(String(p.owner))?.kind??'')==='awakener').length;
+          let rounds,cards,approx=false,derived=false,densOk=true,srcTag='recon';
+          if(exactR!=null&&exactC!=null){rounds=exactR;cards=exactC;srcTag='exact'}
+          else if(looseR!=null&&looseC!=null){rounds=looseR;cards=looseC;approx=true;srcTag='loose'}
+          else if(exactR!=null||looseR!=null){rounds=exactR??looseR;cards=reconC;approx=exactR!=null;densOk=false;srcTag='rounds-only'}
+          else{rounds=reconR;cards=reconC;derived=true;srcTag='recon'}
+          const lineup=[...actors.values()].filter(a=>a.kind==='awakener'&&a.camp===1).map(a=>String(a.tid)).sort().join(',');
           return {db:tempoDB,stageId:String(bd.stageId??''),stageTid:bd.stageTid!=null?String(bd.stageTid):null,lineup,
-            rounds:rN!=null?rN:(tl.rounds||[]).filter(r=>!r.dim).length,
-            cards:cExact??cNear??fbCards,approx:cNear!=null,derived:cExact==null&&cNear==null,
+            rounds,cards,densOk,approx,derived,srcTag,reconRounds:reconR,reconCards:reconC,
             lost:!!(tl.result&&Number(tl.result.winCamp)!==1)};
         }catch(e){console.warn('tempo ctx failed',e);return null}})();
         const v2=SC.scoreKeeperV2({keeper,awakeners:awRows},tl,tempoCtx);
         if(v2&&v2.score!=null){keeper.v2=v2;keeper.score=v2.score;keeper.grade=v2.grade;keeper.enh=true}
         try{keeper.luck=SC.scoreLuck(tl,{imageRealms})}catch(e){console.warn('luck score failed',e)}
       }catch(e){console.warn('Replay scoring model failed; keeping the base ratings',e)}}
-      return {keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
+      // 结果挂在 tl 上：渲染层从这里取，回归测试也能直接读六维（此前这个 IIFE 的返回值被丢弃，只能靠渲染间接观察）
+      const scored={keeper,awakeners:awRows,model:{CAT_W,SUBW,N:awMeta.N,totals:awMeta.T,sub:awMeta.TS,deathSaves,TD},wheels:best(wheelItems,6),covenants:best(covItems,6),relics:best(relicItems,8)};
+      tl._scored=scored;return scored;
     })();
     return {genRows,genBy,genText,roundDmg,typeDmg,mvp,ctrRows,execRows,dotAttr,per:[...per.values()],totalDmg,totalPlays,totalEnergy,draws,discards,exhausts,awakenOrder,ultiOrder,keeperUses:keeperUses.length,keeperRows,relicRows,relicDmg,gearRows,gearExtra,buffExtra,powerGain,basicGain,stateRows,havePacks,rounds:tl.rounds.length,picks:tl.keeperPicks||[],handFlow:tl.handFlow||null};
   }
@@ -2462,14 +2482,14 @@
       ${row(ui('数据置信度','Data confidence'),Math.round(v2.confidence*100)+'%',v2.confidence*100,v2.confidence<.6?ui('评分仅供参考','indicative only'):'')}
       <h6 style="margin-top:8px">${ui('事实数据（可追溯）','Facts')}</h6>
       <div class="mr2facts">
-        <span>${ui('算力消耗 / 回合末剩余 / 溢出','Energy spent / left / overflow')} <b>${f(fx.energySpent||0)} / ${f(fx.energyLeft||0)} / ${f(fx.energyOverflow||0)}</b></span>
-        <span>${ui('回合末弃牌 / 零产出出牌','Discards / zero-value plays')} <b>${f(fx.discards||0)} / ${f(fx.zeroValuePlays||0)}</b></span>
+        <span>${ui('算力消耗 / 回合末剩余 / 溢出','Energy spent / left / overflow')} <b>${f(fx.energySpent||0)} / ${f(fx.energyLeft||0)} / ${fx.energyOverflow==null?'—':f(fx.energyOverflow)}</b></span>
+        <span>${ui('回合末弃牌 / 零产出出牌','Discards / zero-value plays')} <b>${fx.discards==null?'—':f(fx.discards)} / ${f(fx.zeroValuePlays||0)}</b></span>
         <span>${ui('平均决策机会损失','Mean regret')} <b>${pc(fx.regretPct)}</b></span>
         <span>${ui('出牌顺序损失（易伤晚于伤害）','Ordering loss')} <b>${pc(fx.orderLossPct)}</b></span>
         <span>${ui('回合数 / 每回合出牌','Rounds / plays per round')} <b>${fx.rounds} / ${fx.playsPerRound}</b></span>
-        ${fx.tempoStageRounds==null?'':`<span>${ui('节奏：回合数 / 同关卡中位','Tempo: rounds / stage median')} <b>${f(fx.tempoRounds)} / ${f(fx.tempoStageRounds)}${fx.tempoSpeedRel==null?'':` · ${ui('耗时 = 往期的','took')} ${Math.round(fx.tempoSpeedRel*100)}%${ui('（越低越好）',' (lower is better)')}`}</b></span>
-        <span>${ui('节奏：每回合用牌 / 同关卡中位','Tempo: cards per round / stage median')} <b>${fx.tempoCpr==null?'—':fx.tempoCpr.toFixed(1)} / ${fx.tempoStageCpr==null?'—':fx.tempoStageCpr.toFixed(1)}${fx.tempoDensRel==null?'':` · ${ui('密度 = 往期的','density')} ${Math.round(fx.tempoDensRel*100)}%`}</b></span>
-        <span>${ui('节奏参照','Tempo baseline')} <b>${fx.tempoBaseline==='team'?ui(`同阵容往期 ${fx.tempoTeamN} 场`,'own lineup: '+fx.tempoTeamN+' runs'):ui(`同关卡全体 ${fx.tempoStageN} 场（无该阵容往期）`,'stage-wide ('+fx.tempoStageN+' runs)')}${fx.tempoDerived?ui(' · 用牌数为回放反推，密度项不参与',' · cards derived from replay: density excluded'):fx.tempoApprox?ui(' · 用牌数取客户端统计（置信度略降）',' · cards from client stats (confidence lowered)'):''}</b></span>`}
+        ${fx.tempoStageRounds==null?'':`<span>${ui('节奏：回合数 / 参照中位','Tempo: rounds / reference median')} <b>${f(fx.tempoRounds)} / ${f(fx.tempoStageRounds)}${fx.tempoSpeedRel==null?'':` · ${ui('耗时 = 往期的','took')} ${Math.round(fx.tempoSpeedRel*100)}%${ui('（越低越好）',' (lower is better)')}`}</b></span>
+        <span>${ui('节奏：每回合用牌 / 参照中位','Tempo: cards per round / reference median')} <b>${fx.tempoCpr==null?'—':fx.tempoCpr.toFixed(1)} / ${fx.tempoStageCpr==null?'—':fx.tempoStageCpr.toFixed(1)}${fx.tempoDensRel==null?'':` · ${ui('密度 = 往期的','density')} ${Math.round(fx.tempoDensRel*100)}%`}</b></span>
+        <span>${ui('节奏参照','Tempo baseline')} <b>${(fx.tempoBaseline==='team'?ui(`同阵容往期 ${fx.tempoTeamN} 场`,'own lineup: '+fx.tempoTeamN+' runs'):fx.tempoBaseline==='stage'?ui(`同关卡全体 ${fx.tempoStageN} 场（无该阵容往期）`,'stage-wide ('+fx.tempoStageN+' runs)'):ui(`全库中位 ${fx.tempoStageN} 场（该关卡不在参照库）`,'global median ('+fx.tempoStageN+' runs)'))}${fx.tempoDerived?ui(' · 回合数与用牌数为回放反推（置信度略降）',' · rounds/cards derived from replay'):fx.tempoApprox?ui(' · 用牌数取客户端统计（置信度略降）',' · cards from client stats (confidence lowered)'):''}${fx.tempoDensOk===false?ui(' · 密度项作废（回合数与用牌数口径不同）',' · density excluded (mixed sources)'):''}</b></span>`}
         <span>${ui('狂气爆发（计入资源周转）','Aliemus burst (inside resource turnover)')} <b>${f(fx.burstCasts||0)} ${ui('次','casts')} · ${f(fx.burstSpent||0)} ${ui('狂气','aliemus')}</b></span>
         <span>${ui('战斗结束时剩余狂气（未使用比例）','Aliemus left at battle end (unused %)')} <b>${fx.burstLeft==null?'—':f(fx.burstLeft)} · ${pc(fx.burstUnusedPct)}</b></span>
         <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>
