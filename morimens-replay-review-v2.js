@@ -875,8 +875,18 @@
           if((e===1004||e===1006)&&FIA_LVL[d.stateId]&&d.stateUid!=null){fiaByState.set(String(d.stateUid),String(d.ownerUid));fiaCard.set(String(d.ownerUid),FIA_LVL[d.stateId])}
           else if(e===1005&&d.stateUid!=null&&fiaByState.has(String(d.stateUid))){const cu=fiaByState.get(String(d.stateUid));fiaByState.delete(String(d.stateUid));if(fiaCard.get(cu)&&![...fiaByState.values()].includes(cu))fiaCard.delete(cu)}
           // 1006 与 1004 同为"新增状态"：漏掉它时易伤检测 / 暴击换算 / 增伤 be_damage_per / 必爆 / 驱散全部对 1006 引入的状态失效
-          else if((e===1004||e===1006)&&d.stateUid!=null&&(d.stateType===1||actors.has(String(d.ownerUid??d.roleUid)))){stateMap(d.ownerUid??d.roleUid).set(String(d.stateUid),{stateId:d.stateId,layer:d.layer??1,args:d.descArgs?.curValues})}
-          else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??0)<(d.oldLayer??0))dispelHit(cur.stateId,d.ownerUid??d.roleUid,(d.oldLayer||0)-(d.newLayer||0));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues}else if(cur){if(cur.stateId===3130)expireTemp();m.delete(String(d.stateUid))}}
+          // play.state：这一手「对己方叠了层」也算产出。纯功能牌（装填！= 涡流装填 3 次、生物拟态 = 胚胎融合 + 羽种）
+          // 在回放窗口里既没伤害也没护盾/算力/狂气/抽牌，旧口径把它们判成「零价值出牌」，
+          // 于是 6 张装填（费 2×6=12）+ 3 张拟态（费 6）占本场算力 36%，出牌价值密度被压到 64%。
+          else if((e===1004||e===1006)&&d.stateUid!=null&&(d.stateType===1||actors.has(String(d.ownerUid??d.roleUid)))){const ow=d.ownerUid??d.roleUid,pl=execSrc.cur?.play;
+            {const L=Number(d.layer),inc=Number.isFinite(L)&&L>0?L:1,cast=d.extraData?.castRoleUid;
+              if(pl&&pl.kind==='card'&&actors.get(String(ow))?.camp===1&&(cast==null||String(cast)===String(pl.owner)))pl.state=(pl.state||0)+inc}
+            stateMap(ow).set(String(d.stateUid),{stateId:d.stateId,layer:d.layer??1,args:d.descArgs?.curValues})}
+          else if(e===1007&&d.stateUid!=null){const m=stateMap(d.ownerUid??d.roleUid),cur=m.get(String(d.stateUid));if(cur&&(d.newLayer??0)<(d.oldLayer??0))dispelHit(cur.stateId,d.ownerUid??d.roleUid,(d.oldLayer||0)-(d.newLayer||0));if(cur&&(d.newLayer??1)>0){cur.layer=d.newLayer;if(d.descArgs?.curValues?.length)cur.args=d.descArgs.curValues;
+            // 层数上涨同样是「这一手在给己方叠层」（与 1004/1006 的 play.state 同口径）
+            {const pl=execSrc.cur?.play,up=(Number(d.newLayer)||0)-(Number(d.oldLayer)||0),cast=d.extraData?.castRoleUid;
+              if(pl&&pl.kind==='card'&&up>0&&actors.get(String(d.ownerUid??d.roleUid))?.camp===1&&(cast==null||String(cast)===String(pl.owner)))pl.state=(pl.state||0)+up}
+          }else if(cur){if(cur.stateId===3130)expireTemp();m.delete(String(d.stateUid))}}
           else if(e===1005&&d.stateUid!=null){const cur=stateMap(d.ownerUid).get(String(d.stateUid));if(cur)dispelHit(cur.stateId,d.ownerUid,cur.layer||1);if(cur?.stateId===3130)expireTemp();stateMap(d.ownerUid).delete(String(d.stateUid))}
           else if(e===1001&&d.roleUid!=null){unit(d.roleUid).intent=d.intention||null}
           if(e===1028&&d.propertyType==='death_resist_times'&&d.extraData&&Number(d.changedValue)>0){deathResistN++;drLog.push({time:fr.time,bout,times:Number(d.value)||1,v:(()=>{const x=unit(ent.keeperUid).props?.death_resist??openProps.get(String(ent.keeperUid))?.death_resist;return x==null?null:Number(x)})()});gearTrigger('deathResist',{},fr.time)}
@@ -1732,6 +1742,35 @@
     return tl.calib;
   }
   // ---- statistics ---------------------------------------------------------------------
+  // 战报统计包的三个来源，含义完全不同（实测一局融灾：本场 6 回合 / 34 张牌）：
+  //   ① `battleFinishData.statistics.BattleStats` = **本场**
+  //   ② `battleDat.statistics`                    = **本场之前**的累计（第一场战斗时整包为 0）
+  //   ③ `battleFinishData.statistics.GlobalStats` = **本场之后**的累计（= ①+②）
+  // 实测 ②③① 逐个字段成立：BoutCount 17/23/6、UsedCardCount 94/128/34、EndBoutDiscardCount 33/41/8、
+  // ConsumeEnergy 89/121/32、UltiSkillCount 11/18/7、DeathResistCount 1/4/3 —— 23=17+6、128=94+34 …
+  // 旧代码读的是 ②（本场之前的累计），于是多场融灾里「本场用牌 34 张」会被读成 94 张，
+  // 弃牌、算力溢出、回合数全部把前面几场算进来；第一场战斗时 ② 整包为 0，又被误判成「服务端没采集」。
+  // 正确顺序：① 本场 → ③−② 反推本场 → ② 兜底（老回放没有 1020 统计包时只能用它）。
+  function statSourceOf(bd,tl){
+    const fin=(()=>{try{return (tl?.battleCounts?.()||null)?.finish||null}catch(_){return null}})();
+    const sub=(o,k)=>(o&&typeof o==='object'&&o[k]&&typeof o[k]==='object')?o[k]:null;
+    const top=bd&&bd.statistics,bs=sub(fin,'BattleStats')||sub(fin,'battleStats'),
+      gs=sub(fin,'GlobalStats')||sub(fin,'globalStats')||sub(top,'BattleStats')||sub(top,'GlobalStats')||fin;
+    const live=o=>{if(!o||typeof o!=='object')return false;const n=k=>Number(o[k])||0;
+      return n('UsedCardCount')>0||n('ConsumeEnergy')>0||n('DrawCardCount')>0||n('BoutCount')>0||n('EndBoutDiscardCount')>0};
+    if(live(bs))return bs;
+    // 没有 BattleStats 时用「本场之后 − 本场之前」反推本场；任一字段为负说明两者不是同一累计口径，放弃
+    if(live(gs)&&live(top)&&gs!==top){const d={};let ok=true;
+      for(const k of Object.keys(gs)){const a=Number(gs[k]),b=Number(top[k]);if(!Number.isFinite(a)||!Number.isFinite(b))continue
+        if(typeof gs[k]==='object')continue;const v=a-b;if(v<0){ok=false;break}d[k]=v}
+      if(ok&&live(d))return d;}
+    if(live(gs))return gs;
+    return live(top)?top:null;
+  }
+  function statReader(bd,tl){
+    const src=statSourceOf(bd,tl);
+    return {src,get:k=>{if(!src)return null;const v=Number(src[k]);return Number.isFinite(v)?v:null}};
+  }
   function computeStats(full,tl){return tl._stats||(tl._stats=computeStatsRaw(full,tl))}
   function computeStatsRaw(full,tl){
     calibrateHits(tl);
@@ -1948,7 +1987,7 @@
       // classify one stat-pack source entry into an output sub-metric
       const outKind=o=>{if(o.typ==='skill'||o.typ==='utilSkill')return 'dir';const id=String(o.id),nm=stName(id);if(id==='3255')return 'ctr';if(execIds.has(id))return 'exe';if(nm===ERO_NM)return 'ero';if(/触腕|怒涛/.test(nm))return 'ten';if(dotRe.test(nm))return 'dot';return 'oth'};
       const tenIds=[...stateTotals.keys()].filter(id=>/触腕|怒涛/.test(stName(id))),TD=tenIds.reduce((n,id)=>n+(stateTotals.get(id)?.dmg||0),0);
-      const deathSaves=tl.drLog?.length>0?tl.drLog.length:(Number(bd.statistics?.DeathResistCount)||0);
+      const deathSaves=tl.drLog?.length>0?tl.drLog.length:(statReader(bd,tl).get('DeathResistCount')||0);
       const vE=[...(tl.supStore?.values()||[])].reduce((n,v)=>n+v.vulnExtra,0);
       const kpMax0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.max_hp)||0;   // one embryo is worth 5% of the HP pool in the 血池
       const sub=(sp,extra={})=>({
@@ -2084,17 +2123,17 @@
         const pr=picks.filter(x=>x.ratio!=null),pickScore=pr.length?100*pr.reduce((n,x)=>n+x.ratio,0)/pr.length:null;
         // battle efficiency: energy not wasted, hand not discarded, no overflow
         const waste=[...(tl.roundEnd?.values()||[])].reduce((n,e)=>n+Math.max(0,e.energy||0),0),spent=cardPlays.reduce((n,p)=>n+costOf(p.tid,p.cost),0);
-        const st0=bd.statistics||{};
-        // 战报统计包在新格式回放里可能整包为 0（字段存在但没采集）。这时「弃牌 0 / 溢出 0」不是「没有浪费」，
-        // 而是「不知道」—— 当成 100 分等于白送分（实测新格式回放：UsedCardCount / ConsumeEnergy / OverFlowEnergy 全 0，
-        // 于是「手牌循环」「算力溢出」两个子项各拿满分）。判定用「有任一消费类计数」作闸门，缺失就判 null 让权重重新归一。
-        const statKnown=Number(st0.UsedCardCount)>0||Number(st0.ConsumeEnergy)>0||Number(st0.OverFlowEnergy)>0||Number(st0.EndBoutDiscardCount)>0;
-        const disc=statKnown?(Number(st0.EndBoutDiscardCount)||0):null,used=Number(st0.UsedCardCount)||cardPlays.length,
-          over=statKnown?(Number(st0.OverFlowEnergy)||0):null,cons=Number(st0.ConsumeEnergy)||spent;
-        const e1=spent+waste>0?spent/(spent+waste):null,e2=disc==null?null:(used+disc>0?used/(used+disc):null),
+        // 统计包统一走 statReader（BattleStats = 本场，见 statSourceOf 的注释）。
+        // 一份「有采集迹象」的快照都没有时才算未知（判 null 让权重归一），而不是当成 0 送满分。
+        const SR=statReader(bd,tl),S=SR.get,statKnown=!!SR.src;
+        const disc=S('EndBoutDiscardCount'),used=S('UsedCardCount')??cardPlays.length,
+          over=S('OverFlowEnergy'),cons=S('ConsumeEnergy')??spent;
+        // 分子用服务端的 ConsumeEnergy（含出牌之外的算力消耗，实测一局 32 vs 出牌费用和 28），
+        // 与分母里的「回合末剩余」同源；没有统计包时才退回出牌费用之和。
+        const e1=cons+waste>0?cons/(cons+waste):null,e2=disc==null?null:(used+disc>0?used/(used+disc):null),
           e3=over==null?null:(cons+over>0?cons/(cons+over):null),es=[e1,e2,e3].filter(v=>v!=null),effScore=es.length?100*es.reduce((a,b)=>a+b,0)/es.length:null;
         const parts=[['pick',pickScore],['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
-        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,rD,rF,eff:{e1,e2,e3,waste,spent,disc,used,over,cons},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
+        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,rD,rF,eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
       })();
       // ---- merged scoring model (morimens-replay-scoring.js): semantic gear value, role-adaptive awakeners, keeper decision quality
       const SC=window.MorimensReplayScoring;
@@ -2114,13 +2153,11 @@
         // 只拿到一半时（如服务端有回合数、没有用牌数），速度项用服务端值、密度项作废（densOk=false）。
         // 阵容键 = 我方 4 名唤醒人的 tid 升序（参照库按同一规则生成）。
         const tempoCtx=(()=>{try{
-          // battleFinishData.statistics 在不同版本里有时是平铺、有时包一层 BattleStats / GlobalStats，两种都要能取到
-          const stat=(tl.battleCounts?.()||null)?.finish||null,srcs=[];
-          for(const o of [bd.statistics,stat,bd]){if(!o||typeof o!=='object')continue;srcs.push(o);
-            for(const k of ['BattleStats','GlobalStats','battleStats','globalStats','Statistics'])if(o[k]&&typeof o[k]==='object')srcs.push(o[k])}
-          const pick=k=>{for(const o of srcs){const v=o[k];if(v!=null&&Number.isFinite(Number(v))&&Number(v)>0)return Number(v)}return null};
-          const exactR=pick('StageRoundCount')??pick('stageRoundCount'),exactC=pick('TotalUseCard')??pick('totalUseCard');
-          const looseR=pick('BoutCount')??pick('boutCount'),looseC=pick('UsedCardCount')??pick('usedCardCount');
+          // 与 R 的 eff 用同一份统计快照（statReader）：跨来源逐字段取「第一个 >0」会把服务端回合数
+          // 和回放出牌数拼在一起（实测 17 回合 + 38 张 = 15.7 张/回合的假象），必须整包同源。
+          const SRt=statReader(bd,tl),sg=k=>{const v=SRt.get(k);return v!=null&&v>0?v:null};
+          const exactR=sg('StageRoundCount')??sg('stageRoundCount'),exactC=sg('TotalUseCard')??sg('totalUseCard');
+          const looseR=sg('BoutCount')??sg('boutCount'),looseC=sg('UsedCardCount')??sg('usedCardCount');
           const reconR=(tl.rounds||[]).filter(r=>!r.dim).length;
           // 反推出牌数：注意 cardPlays 是 keeper IIFE 的局部变量，这里必须自算一份
           const reconC=(tl.playLog||[]).filter(p=>p.kind==='card'&&(actors.get(String(p.owner))?.kind??'')==='awakener').length;
@@ -2379,10 +2416,12 @@
     const win=tl.result?.winCamp===1,lost=tl.result&&tl.result.winCamp!=null&&tl.result.winCamp!==1;
     const verdict=win?ui('胜利','VICTORY'):lost?ui('战败','DEFEAT'):ui('结果未知','RESULT UNKNOWN');
     // the structured statistics block is missing from some replays: fall back to the finish packet, then to what the timeline counted
-    const fin=tl.battleCounts?.()||{},pick=(...vals)=>{for(const v of vals)if(Number.isFinite(Number(v))&&v!=null&&Number(v)>0)return Number(v);return 0};
-    const bs=bd.statistics||{},fs0=fin.finish?.BattleStats||fin.finish?.GlobalStats||fin.finish||{};
+    const fin=tl.battleCounts?.()||{};
+    // 本场统计统一走 statReader（BattleStats 优先，见 statSourceOf 的注释）：
+    // 这里若继续读 battleDat.statistics，多场融灾会把「本场之前」的累计当成这一场（实测 94 张 vs 34 张）。
+    const SRb=statReader(bd,tl);
     // death resist triggers counted from the replay's own death_resist_times events (each is a fatal hit that was survived); the statistics block can disagree with them
-    const cnt={cards:pick(bs.UsedCardCount,fs0.UsedCardCount,fin.cards),deathResist:(tl.drLog?.length>0?tl.drLog.length:pick(bs.DeathResistCount,fs0.DeathResistCount,fin.deathResist)),kills:pick(bs.KillCount,fs0.KillCount,fin.kills)};
+    const cnt={cards:SRb.get('UsedCardCount')??fin.cards,deathResist:(tl.drLog?.length>0?tl.drLog.length:(SRb.get('DeathResistCount')??fin.deathResist)),kills:SRb.get('KillCount')??fin.kills};
     // the game's panel shows the whole run's death-resist count: triggers of the earlier battles (death_resist_times at battle start) + this battle's
     const drTotal=(()=>{const t0=Number(tl.openProps?.get(String(tl.ent?.keeperUid))?.death_resist_times),inb=Number(cnt.deathResist)||0,fin2=Number(tl.endDR?.()?.t);return Number.isFinite(fin2)&&fin2>=inb?Math.max(fin2,(Number.isFinite(t0)?t0:0)+inb):(Number.isFinite(t0)?t0:0)+inb})();
     const k0=bd.keeperSkill!=null?res.nameSkill(bd.keeperSkill):'',k=/^\d+$/.test(String(k0))?'':k0;
@@ -2488,8 +2527,8 @@
         <span>${ui('出牌顺序损失（易伤晚于伤害）','Ordering loss')} <b>${pc(fx.orderLossPct)}</b></span>
         <span>${ui('回合数 / 每回合出牌','Rounds / plays per round')} <b>${fx.rounds} / ${fx.playsPerRound}</b></span>
         ${fx.tempoStageRounds==null?'':`<span>${ui('节奏：回合数 / 参照中位','Tempo: rounds / reference median')} <b>${f(fx.tempoRounds)} / ${f(fx.tempoStageRounds)}${fx.tempoSpeedRel==null?'':` · ${ui('耗时 = 往期的','took')} ${Math.round(fx.tempoSpeedRel*100)}%${ui('（越低越好）',' (lower is better)')}`}</b></span>
-        <span>${ui('节奏：每回合用牌 / 参照中位','Tempo: cards per round / reference median')} <b>${fx.tempoCpr==null?'—':fx.tempoCpr.toFixed(1)} / ${fx.tempoStageCpr==null?'—':fx.tempoStageCpr.toFixed(1)}${fx.tempoDensRel==null?'':` · ${ui('密度 = 往期的','density')} ${Math.round(fx.tempoDensRel*100)}%`}</b></span>
-        <span>${ui('节奏参照','Tempo baseline')} <b>${(fx.tempoBaseline==='team'?ui(`同阵容往期 ${fx.tempoTeamN} 场`,'own lineup: '+fx.tempoTeamN+' runs'):fx.tempoBaseline==='stage'?ui(`同关卡全体 ${fx.tempoStageN} 场（无该阵容往期）`,'stage-wide ('+fx.tempoStageN+' runs)'):ui(`全库中位 ${fx.tempoStageN} 场（该关卡不在参照库）`,'global median ('+fx.tempoStageN+' runs)'))}${fx.tempoDerived?ui(' · 回合数与用牌数为回放反推（置信度略降）',' · rounds/cards derived from replay'):fx.tempoApprox?ui(' · 用牌数取客户端统计（置信度略降）',' · cards from client stats (confidence lowered)'):''}${fx.tempoDensOk===false?ui(' · 密度项作废（回合数与用牌数口径不同）',' · density excluded (mixed sources)'):''}</b></span>`}
+        <span>${fx.tempoScope==='global'?ui('节奏：每回合用牌 / 全库中位','Tempo: cards per round / global median'):ui('节奏：每回合用牌 / 参照中位','Tempo: cards per round / reference median')} <b>${fx.tempoCpr==null?'—':fx.tempoCpr.toFixed(1)} / ${fx.tempoStageCpr==null?'—':fx.tempoStageCpr.toFixed(1)}${fx.tempoDensRel==null?'':` · ${ui('密度 = 往期的','density')} ${Math.round(fx.tempoDensRel*100)}%`}</b></span>
+        <span>${ui('节奏参照','Tempo baseline')} <b>${(fx.tempoBaseline==='team'?ui(`同阵容往期 ${fx.tempoTeamN} 场`,'own lineup: '+fx.tempoTeamN+' runs'):fx.tempoBaseline==='stage'?ui(`同关卡全体 ${fx.tempoStageN} 场（无该阵容往期）`,'stage-wide ('+fx.tempoStageN+' runs)'):ui(`全库中位 ${fx.tempoStageN} 场（该关卡不在参照库）`,'global median ('+fx.tempoStageN+' runs)'))}${fx.tempoDerived?ui(' · 回合数与用牌数为回放反推（置信度略降）',' · rounds/cards derived from replay'):fx.tempoApprox?ui(' · 用牌数取客户端统计（置信度略降）',' · cards from client stats (confidence lowered)'):''}${fx.tempoDensOk===false?ui(' · 密度项作废（回合数与用牌数口径不同）',' · density excluded (mixed sources)'):''}${fx.tempoScope==='global'?ui(' · 速度项作废（回合数不能跨关卡比，只比每回合用牌）',' · speed excluded (rounds not comparable across stages)'):''}</b></span>`}
         <span>${ui('狂气爆发（计入资源周转）','Aliemus burst (inside resource turnover)')} <b>${f(fx.burstCasts||0)} ${ui('次','casts')} · ${f(fx.burstSpent||0)} ${ui('狂气','aliemus')}</b></span>
         <span>${ui('战斗结束时剩余狂气（未使用比例）','Aliemus left at battle end (unused %)')} <b>${fx.burstLeft==null?'—':f(fx.burstLeft)} · ${pc(fx.burstUnusedPct)}</b></span>
         <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>

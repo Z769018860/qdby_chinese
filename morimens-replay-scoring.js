@@ -296,7 +296,10 @@ function scoreKeeperV2(m,tl,tempoCtx){
   const k=m?.keeper;if(!k)return null;
   const rounds=(tl.rounds||[]).filter(r=>!r.dim),R=Math.max(1,rounds.length),plays=(tl.playLog||[]).filter(p=>p.kind==='card'&&(tl.actors?.get(String(p.owner))?.kind==='awakener'));
   const cost=p=>{const v=p.cost!=null?Number(p.cost):Number(tl.res?.skill?.[String(p.tid)]?.Cost);return Number.isFinite(v)&&v>0?Math.round(v):0};
-  const valued=p=>num(p.dmg)+num(p.block)+num(p.heal)+num(p.eng)+num(p.draw)+num(p.ali)>0||p.vuln;
+  // 「这一手有没有产出」：数值产出（伤害/护盾/治疗/算力/抽牌/狂气/易伤）之外，
+  // 给己方叠状态层也算（state）：纯功能牌（装填！/ 生物拟态）在回放窗口里没有任何数值，
+  // 旧口径会把它们当成浪费算力的零价值出牌，系统性压低辅助向阵容的出牌价值密度。
+  const valued=p=>num(p.dmg)+num(p.block)+num(p.heal)+num(p.eng)+num(p.draw)+num(p.ali)+num(p.state)>0||p.vuln;
   const facts={},conf={};
   // ---- Burst / 狂气周转（R 的周转子项，不再是独立维度）--------------------------------------------------
   // 数据全部来自回放明文：守密人自己的爆发次数（playLog 里 kind==='ultimate'）+ 回合结束时各唤醒体的狂气 / 上限快照。
@@ -356,7 +359,7 @@ function scoreKeeperV2(m,tl,tempoCtx){
   // 周转 = 算力转化（Espend）· 浪费（护盾 / 算力 / 手牌溢出）· 出牌价值密度（Econv）· 循环（Ecycle）· 储备（Ereserve）· 狂气（Bscore）
   // B 原为独立维度（12%），现并入 R：它衡量的就是「攒起来的资源有没有用掉」，与上面五项同构。权重合计 1.00。
   const Rscore=wavg([[Espend,.26],[wavg([[Eover,.45],[ShieldScore,.30],[Eovf,.25]]),.22],[Econv,.17],[Ecycle,.13],[Ereserve,.09],[Bscore,.13]]);
-  Object.assign(facts,{energySpent:eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds,
+  Object.assign(facts,{energySpent:eff.cons??eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds,
     handOverflow:ovfD+ovfH,handOverflowPct:ovfRate==null?null:100*ovfRate,handOverflowDirect:ovfD,handOverflowInHand:ovfH,handCardsSeen:hDen||null,handPeak:Number.isFinite(hf.peak)?hf.peak:null});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
   if(Bscore==null)conf.R=conf.R*.85;    // 狂气那一项没算进来（无快照 / 供给不足）→ R 的可信度相应下调
@@ -404,27 +407,31 @@ function scoreKeeperV2(m,tl,tempoCtx){
     const relSpeed=Number.isFinite(uSpeed/nSpeed)?uSpeed/nSpeed:null;
     // 回合数与用牌数同源才比密度：宁可少一个指标，也不拿两种口径相比
     const relDens=(uDens!=null&&t.densOk!==false)?(Number.isFinite(uDens/nDens)?uDens/nDens:null):null;
-    let sSpeed=piece(relSpeed,TEMPO_SPEED);
+    // scope=global 时 sR 是拿**全库中位**顶替关卡中位的：回合数不能跨关卡比 ——
+    // 参照库里 88 个关卡的中位从 9 回合到 35.5 回合（差 4 倍），拿同一个分母去比，等于按关卡长度打分：
+    // 短关卡（实测 151789：本场 8 回合 vs 全库中位 16）白送速度满分，长关卡则被无端扣分。
+    // 所以这种情况速度项整体作废，只保留**与关卡长度无关**的密度项（每回合用牌数由每回合算力 / 抽牌决定，跨关卡稳定）。
+    const speedUsable=scope!=='global';
+    let sSpeed=speedUsable?piece(relSpeed,TEMPO_SPEED):null;
     const sDens=piece(relDens,TEMPO_DENS);
     // 打输了谈不上「节奏达标」：把速度项压到 55 以下（仍保留「快」的部分信息，但不给优秀）
     if(t.lost&&sSpeed!=null)sSpeed=Math.min(sSpeed,55);
     const baseline=tn>0?'team':scope;
     let score=wavg([[sSpeed,.60],[sDens,.40]]);
-    // 密度项缺失时只剩速度一个指标，不能让单指标把 T 拉到极端，同样向中性收缩 30%
-    if(score!=null&&sDens==null)score=78+(score-78)*.7;
+    // 只剩一个指标时（密度缺失 / 全库回退导致速度作废），不能让单指标把 T 拉到极端，向中性收缩 30%
+    if(score!=null&&(sDens==null||sSpeed==null))score=78+(score-78)*.7;
     // 没有该阵容的往期时只能跟「同关卡 / 全库」比，这条路会把队伍强度算进来（正是旧「节奏」被诟病的地方），
     // 所以按 40%（同关卡）/ 55%（全库）向中性（78）收缩：仍能区分明显拖拉 / 明显偏快，但不让 off-meta 队伍的强度差拉出 ±40 分。
     if(score!=null){
       if(baseline==='stage')score=78+(score-78)*.6;
-      // 关卡不在参照库时，速度项的分母（关卡回合中位）是拿**全库中位**顶替的：难度不可比，
-      // 哪怕这支队伍有自己的往期，也不能按「比往期快 2 倍」给满分 —— 必须同样向中性收缩。
+      // 全库回退时连「参照中位」这个分母本身都是替身，再收一道
       else if(scope==='global')score=78+(score-78)*.45;
     }
-    return {score,sSpeed,sDens,relSpeed,relDens,uSpeed,uDens,nSpeed,nDens,tn,sn:Number(stg[0]),scope,
-      stageRounds:sR,stageCpr:sC,rounds:R0,cards:C0,cpr,densOk:t.densOk!==false,derived:!!t.derived,approx:!!t.approx,lost:!!t.lost,baseline};
+    return {score,sSpeed,sDens,relSpeed:speedUsable?relSpeed:null,relDens,uSpeed,uDens,nSpeed,nDens,tn,sn:Number(stg[0]),scope,speedUsable,
+      stageRounds:speedUsable?sR:null,stageCpr:sC,rounds:R0,cards:C0,cpr,densOk:t.densOk!==false,derived:!!t.derived,approx:!!t.approx,lost:!!t.lost,baseline};
   })();
   const Tscore=tempo?tempo.score:null;
-  Object.assign(facts,{tempoRounds:tempo?tempo.rounds:null,tempoStageRounds:tempo?Math.round(tempo.stageRounds*10)/10:null,tempoCpr:tempo?tempo.cpr:null,
+  Object.assign(facts,{tempoRounds:tempo?tempo.rounds:null,tempoStageRounds:tempo&&tempo.stageRounds!=null?Math.round(tempo.stageRounds*10)/10:null,tempoCpr:tempo?tempo.cpr:null,
     tempoStageCpr:tempo?tempo.stageCpr:null,tempoSpeedRel:tempo?tempo.relSpeed:null,tempoDensRel:tempo?tempo.relDens:null,
     tempoTeamN:tempo?tempo.tn:null,tempoStageN:tempo?tempo.sn:null,tempoBaseline:tempo?tempo.baseline:null,tempoDerived:tempo?tempo.derived:null,tempoApprox:tempo?tempo.approx:null,
     tempoCards:tempo?tempo.cards:null,tempoDensOk:tempo?tempo.densOk:null,tempoScope:tempo?tempo.scope:null});
