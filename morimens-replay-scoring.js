@@ -369,23 +369,36 @@ function scoreKeeperV2(m,tl,tempoCtx){
   if(Bscore==null)conf.R=conf.R*.85;    // 狂气那一项没算进来（无快照 / 供给不足）→ R 的可信度相应下调
   if(Ecycle==null||Eover==null)conf.R=conf.R*.85;   // 战报统计包缺失（弃牌 / 算力溢出未知）→ 只剩两个子项，可信度下调
   // ---- Card-play decisions: knapsack regret + ordering regret --------------------------------------
-  // 只统计「背包最优 ≠ 实际打出」的回合：两者相等时这一回合没有信息量（打出 A 就证明 A 是最优），
-  // 把它算进分母等于给满分。151789 的 7 个回合里 5 个 aD≡oD、6 个 aF≡oF —— 旧口径 P=95.1 是这么来的。
-  const rr=k.rrows||[],rrI=rr.filter(r=>r.inf!==false),aD=rrI.reduce((n,r)=>n+r.aD,0),oD=rrI.reduce((n,r)=>n+r.oD,0),aF=rrI.reduce((n,r)=>n+r.aF,0),oF=rrI.reduce((n,r)=>n+r.oF,0);
-  const ratios=[oD>0?aD/oD:null,oF>0?aF/oF:null].filter(v=>v!=null);
-  const playRatio=ratios.length?ratios.reduce((a,b)=>a+b,0)/ratios.length:null;
+  // 每回合单独给一个达成率（v2 已按「轴归属」算好：本回合没投入的轴不评），再**回合等权**平均。
+  // 不再按伤害加权求和：那样后期回合的大数字会把早期的失误摊平
+  // （151789 R4 打出 212 而手上有张值 847 的牌，4 倍失误，却被 R7 的 3.1 万拉回接近 1.0）。
+  // 「打平」的回合要计 1.0：旧口径因为价格来自本场自身（打出 A 就让 A 成为最优）而自称没有信息量，
+  // 现在价格只取**这一回合之前**的回合，打平是真实证据。只数失误会让 P 退化成「失败率」。
+  const rr=k.rrows||[],rrI=rr.filter(r=>(r.judge!=null?r.judge:r.inf!==false)),aD=rrI.reduce((n,r)=>n+r.aD,0),oD=rrI.reduce((n,r)=>n+r.oD,0),aF=rrI.reduce((n,r)=>n+r.aF,0),oF=rrI.reduce((n,r)=>n+r.oF,0);
+  // 优先用 v2 给的 r.ratio；老数据（回归测试里手搓的 rrows）没有这个字段就从两轴现算，同样带轴归属。
+  const rowRatio=r=>{
+    if(r.ratio!=null&&Number.isFinite(r.ratio))return r.ratio;
+    if(r.judge===false)return null;
+    if(r.judge==null&&r.inf===false)return null;
+    const d=r.aD>0&&r.oD>0?r.aD/r.oD:null,f=r.aF>0&&r.oF>0?r.aF/r.oF:null,vs=[d,f].filter(v=>v!=null);
+    return vs.length?vs.reduce((x,y)=>x+y,0)/vs.length:null;
+  };
+  const rrP=rr.map(rowRatio).filter(v=>v!=null);
+  const playRatio=rrP.length?rrP.reduce((a,b)=>a+b,0)/rrP.length:null;
   // ordering: a vulnerability applied after enemy damage was already dealt in the same round wastes that share of the earlier damage
   let seqLoss=0,seqBase=0;const hits=tl.hitLog||[];
   const byRound=new Map();for(const p of tl.playLog||[]){if(p.vuln){if(!byRound.has(p.round))byRound.set(p.round,[]);byRound.get(p.round).push(p.time)}}
   for(const [rd,ts] of byRound){const tv=Math.max(...ts);for(const h of hits){if(h.round!==rd||h.blind)continue;seqBase+=h.dmg;if(h.t!=null&&h.t<tv&&!h.vOn)seqLoss+=h.dmg*(h.vPct||50)/(100+(h.vPct||50))}}
   const totalHitDmg=hits.reduce((n,h)=>n+(h.blind?0:h.dmg),0)||1,seqRatio=seqLoss/totalHitDmg;
   let Pscore=playRatio==null?null:Math.max(0,Math.min(100,100*(playRatio-seqRatio)));
-  // 覆盖率：有信息量的回合 / 能看到回合末手牌的回合。低于 40% 说明这场「怎么打都差不多」，
-  // P 的分数不是「打得完美」而是「模型看不出来」——向中性 78 收缩（与节奏全库回退同一套做法）。
-  const pTot=k.pRounds??rr.length,pInf=k.pInfo??null,pCov=pTot>0&&pInf!=null?pInf/pTot:null;
+  // 覆盖率：**有得选**的回合 / 能看到回合末手牌的回合。分母不再是「有更优解的回合」——
+  // 「手上能打的都打了」不是打得完美、也不是打得差，是没有决策可评；这类回合不该拉低分母。
+  // 低于 40% 说明这场几乎没给选择空间，P 的分数不是「打得完美」而是「模型看不出来」，
+  // 向中性 78 收缩（与节奏全库回退同一套做法）。
+  const pTot=k.pRounds??rr.length,pJudge=k.pJudge??rrP.length,pCov=pTot>0?pJudge/pTot:null;
   if(Pscore!=null&&pCov!=null&&pCov<.4)Pscore=78+(Pscore-78)*(pCov/.4);
   Object.assign(facts,{regretPct:playRatio==null?null:100*(1-playRatio),orderLossPct:100*seqRatio,vulnRounds:byRound.size,
-    pInfoRounds:pInf,pScoredRounds:pTot||null,pCover:pCov});
+    pInfoRounds:k.pInfo??null,pJudgeRounds:pJudge,pScoredRounds:pTot||null,pCover:pCov});
   conf.P=Math.min(.95,.45+.5*Math.min(1,rr.length/R))*(.7+.3*(k.playConfidence??.7));
   if(pCov!=null)conf.P=conf.P*(.55+.45*Math.min(1,pCov/.5));
   // ---- Tempo: 与「这支队伍自己的往期」比推进 -----------------------------------------------
