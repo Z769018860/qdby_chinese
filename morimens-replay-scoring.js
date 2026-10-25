@@ -348,7 +348,7 @@ function scoreKeeperV2(m,tl,tempoCtx){
   const ovfRate=hDen>0?(ovfD+ovfH)/hDen:null;
   const ovfConf=hDen>0?1-Math.exp(-hDen/10):0;
   const EovfRaw=ovfRate==null?null:clamp(100-100*Math.min(1,ovfRate/OVF_FULL));
-  const Rother=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Econv,.20],[Ecycle,.15],[Ereserve,.10]]);
+  const Rother=wavg([[Espend,.30],[wavg([[Eover,.6],[ShieldScore,.4]]),.25],[Ecycle,.16],[Ereserve,.11]]);
   const Eovf=EovfRaw==null?null:(Rother==null?EovfRaw:EovfRaw*ovfConf+Rother*(1-ovfConf));
   // 狂气子项：按「本场攒出了几次爆发」平滑收缩到 R 的其余分量 —— 供给 0.5 次 → 完全中性，2 次以上 → 全按实际比率。
   // 这道收缩替代了原来的 0.8 次硬门槛：否则「一场没放爆发、总和 79.99」判 null（R=81.7）、「80.00」判 0（R=71.0），
@@ -360,9 +360,13 @@ function scoreKeeperV2(m,tl,tempoCtx){
   const Bscore=Braw==null?null:(Rother==null?Braw:Braw*Bw+Rother*(1-Bw));
   Object.assign(facts,{burstUnusedPct:Bscore==null?null:100*Bleft/Btot,burstScore:Bscore});
   conf.burst=Bscore==null?.3:(Bw>=.9?.9:.65);   // 周转子项的置信度（不再是独立维度，不参与总分归一）
-  // 周转 = 算力转化（Espend）· 浪费（护盾 / 算力 / 手牌溢出）· 出牌价值密度（Econv）· 循环（Ecycle）· 储备（Ereserve）· 狂气（Bscore）
+  // 周转 = 算力转化（Espend）· 浪费（护盾 / 算力 / 手牌溢出 + 零产出出牌）· 循环（Ecycle）· 储备（Ereserve）· 狂气（Bscore）
   // B 原为独立维度（12%），现并入 R：它衡量的就是「攒起来的资源有没有用掉」，与上面五项同构。权重合计 1.00。
-  const Rscore=wavg([[Espend,.26],[wavg([[Eover,.45],[ShieldScore,.30],[Eovf,.25]]),.22],[Econv,.17],[Ecycle,.13],[Ereserve,.09],[Bscore,.13]]);
+  // Econv 原来单列 17%：把纯功能牌（装填！/ 生物拟态）计入产出之后它基本恒为 100，
+  // 两场真实回放的 zeroValuePlays 都是 0 —— 等于给 R 白送 17% 的满分。
+  // 它仍是有意义的闸门（白打一手就掉分），只是没有梯度，所以并进「浪费」组、权重降到组内 16%。
+  const Ewaste=wavg([[Eover,.38],[ShieldScore,.25],[Eovf,.21],[Econv,.16]]);
+  const Rscore=wavg([[Espend,.30],[Ewaste,.26],[Ecycle,.16],[Ereserve,.11],[Bscore,.17]]);
   Object.assign(facts,{energySpent:eff.cons??eff.spent,energyLeft:Math.round(eff.waste||0),energyOverflow:eff.over,discards:eff.disc,cardsUsed:eff.used,zeroValuePlays:plays.filter(p=>!valued(p)).length,reserveRounds:leftRounds,
     handOverflow:ovfD+ovfH,handOverflowPct:ovfRate==null?null:100*ovfRate,handOverflowDirect:ovfD,handOverflowInHand:ovfH,handCardsSeen:hDen||null,handPeak:Number.isFinite(hf.peak)?hf.peak:null});
   conf.R=ends.length>=Math.max(1,R*.6)?.92:.6;
