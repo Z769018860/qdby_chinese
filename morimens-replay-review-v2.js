@@ -2434,13 +2434,56 @@
         const playScore=rratios.length?100*rratios.reduce((a,b)=>a+b,0)/rratios.length:null;
         const pInfo=infoN,pJudge=judgeN,pRounds=rrows.length;
         // 展示用的两轴达成率：只在「本回合确实投入了这条轴」的回合里按回合等权平均
-        // keyflare choice quality: realised value of the chosen skill versus the best known alternative
-        const kp=pl.filter(p=>p.kind==='keeper'),cnt=Math.max(1,cardPlays.length);
-        const D0=cardPlays.reduce((n,p)=>n+p.dmg,0)/cnt||1,F0=cardPlays.reduce((n,p)=>n+p.block+1.2*p.heal,0)/cnt||1,U0=cardPlays.reduce((n,p)=>n+p.eng+p.ali*0.05+p.draw,0)/cnt||1;
-        const kv=new Map();for(const p of kp){const k=String(p.tid),v=kv.get(k)||{n:0,val:0,dmg:0,def:0,util:0};v.n++;v.dmg+=p.dmg;v.def+=p.block+1.2*p.heal;v.util+=p.eng+p.ali*0.05+p.draw;v.val+=p.dmg/D0+(p.block+1.2*p.heal)/F0+(p.eng+p.ali*0.05+p.draw)/U0;kv.set(k,v)}
-        const val=tid=>{const v=kv.get(String(tid));return v&&v.n?v.val/v.n:null};
-        const picks=(tl.keeperPicks||[]).filter(pk=>pk.options.length>=2&&pk.chosen!=null).map(pk=>{const cv=val(pk.chosen),known=pk.options.map(o=>({tid:o,v:val(o)})).filter(x=>x.v!=null),best=known.reduce((m,x)=>Math.max(m,x.v),0);return {round:pk.round,chosen:pk.chosen,options:pk.options,cv,best,bestTid:known.find(x=>x.v===best)?.tid,ratio:cv!=null&&best>0?Math.min(1,cv/best):null}});
-        const pr=picks.filter(x=>x.ratio!=null),pickScore=pr.length?100*pr.reduce((n,x)=>n+x.ratio,0)/pr.length:null;
+        // ---- 钥令（守密人技能）的「全部效果」账本 ----
+        // 这里不评「三选一选得对不对」——回放只存了最终选择、没存另外两个选项，
+        // 任何「最优解」都是拿同一手的兑现结果反推，必然自证。
+        // 改成把钥令真正给出来的东西逐条统计，每个通道都用「钥令贡献 / 全队该通道总量」的占比：
+        // 占比天然落在 [0,1]，跨队伍、跨关卡可比；而拿本场费率把资源折成伤害会乘上队伍的乘区强度，
+        // 实测 rhoE 在 19 场里从 470 到 996,408（差 2000 倍），折出来的「钥令当量」一度比全场伤害还高。
+        // 数据来源有两处：playLog 里 kind==='keeper' 的直接产出，以及 supStore 的 'kp' 账本
+        // （钥令挂出去的状态 / 增益 / 减益 / 免伤，全部按触发者归到 'kp'）。
+        const kp=pl.filter(p=>p.kind==='keeper');
+        const kfVal=key=>{
+          let v=0;
+          for(const p of kp)v+=Number(p[key])||0;
+          return v;
+        };
+        const kf=(()=>{
+          const sp=(tl.supStore&&tl.supStore.get)?(tl.supStore.get('kp')||{}):{};   // 钥令（触发者=守密人）的账本
+          const ledgers=[...(tl.supStore?.values()||[])];
+          const sumLed=f=>ledgers.reduce((n,s)=>n+(Number(s[f])||0),0);
+          const sumPlay=f=>(tl.playLog||[]).reduce((n,p)=>n+(Number(p[f])||0),0);
+          const hitTotal=(tl.hitLog||[]).reduce((n,h)=>n+(h.blind?0:(Number(h.dmg)||0)),0);
+          // 钥令这一侧：直接产出 + 'kp' 账本
+          const kfDmg=kfVal('dmg')+(Number(sp.vulnExtra)||0)+(Number(sp.tenExtra)||0);
+          const kfAli=kfVal('ali')+(Number(sp.aliSelf)||0)+(Number(sp.aliOthers)||0);
+          const kfEng=kfVal('eng')+(Number(sp.energy)||0);
+          const kfDraw=kfVal('draw')+(Number(sp.draws)||0);
+          const kfBlk=kfVal('block')+(Number(sp.blk)||0);
+          const kfHeal=kfVal('heal')+(Number(sp.heal)||0);
+          const kfPrev=Number(sp.prevented)||0;
+          // 全队这一侧
+          const duDmg=hitTotal;                        // vulnExtra / tenExtra 本身就已经是打出去的伤害，不再加进分母
+          const duAli=sumLed('aliSelf')+sumLed('aliOthers')+sumPlay('ali');
+          const duEng=sumPlay('eng')+sumLed('energy');
+          const duDraw=sumPlay('draw')+sumLed('draws');
+          const duBlk=sumPlay('block')+sumLed('blk');
+          const duHeal=sumPlay('heal')+sumLed('heal');
+          const duPrev=sumLed('prevented');
+          const share=(a,b)=>(b>0&&Number.isFinite(a/b))?Math.max(0,Math.min(1,a/b)):null;
+          const ch={dmg:share(kfDmg,duDmg),ali:share(kfAli,duAli),eng:share(kfEng,duEng),draw:share(kfDraw,duDraw),
+            blk:share(kfBlk,duBlk),heal:share(kfHeal,duHeal),prev:share(kfPrev,duPrev)};
+          // 效果类别数：真正给出来的通道有几个（用于面板展示与置信度，不直接进分）
+          const kinds=Object.values(ch).filter(v=>v!=null&&v>0).length;
+          const amt={dmg:kfDmg,ali:kfAli,eng:kfEng,draw:kfDraw,blk:kfBlk,heal:kfHeal,prev:kfPrev};
+          const team={dmg:duDmg,ali:duAli,eng:duEng,draw:duDraw,blk:duBlk,heal:duHeal,prev:duPrev};
+          return {uses:kp.length,rounds:tl.rounds.length,ch,amt,team,kinds};
+        })();
+        // 钥令使用明细（按技能分组）：次数 + 各通道直接产出
+        const kv=new Map();
+        for(const p of kp){const k=String(p.tid),v=kv.get(k)||{n:0,dmg:0,block:0,heal:0,eng:0,ali:0,draw:0,rounds:new Set()};v.n++;v.rounds.add(p.round);
+          for(const f of ['dmg','block','heal','eng','ali','draw'])v[f]+=Number(p[f])||0;kv.set(k,v)}
+
         // battle efficiency: energy not wasted, hand not discarded, no overflow
         const waste=[...(tl.roundEnd?.values()||[])].reduce((n,e)=>n+Math.max(0,e.energy||0),0),spent=cardPlays.reduce((n,p)=>n+costOf(p.tid,p.cost),0);
         // 统计包统一走 statReader（BattleStats = 本场，见 statSourceOf 的注释）。
@@ -2452,8 +2495,10 @@
         // 与分母里的「回合末剩余」同源；没有统计包时才退回出牌费用之和。
         const e1=cons+waste>0?cons/(cons+waste):null,e2=disc==null?null:(used+disc>0?used/(used+disc):null),
           e3=over==null?null:(cons+over>0?cons/(cons+over):null),es=[e1,e2,e3].filter(v=>v!=null),effScore=es.length?100*es.reduce((a,b)=>a+b,0)/es.length:null;
-        const parts=[['pick',pickScore],['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
-        return {score,grade:score==null?'—':gradeOf(score),pickScore,effScore,playScore,picks,rrows,pInfo,pJudge,pRounds,eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,val:v.val/v.n,dmg:v.dmg/v.n,def:v.def/v.n,util:v.util/v.n})),kpSup:supOf('kp')};
+        // 「钥令三选一是否正确」已从整体分里移除（见上面 kf 的注释：回放没有另外两个选项，
+        // 任何「最优」都是拿本手自己的兑现结果反推）。这里只剩资源周转与出牌达成率。
+        const parts=[['eff',effScore],['play',playScore]],ok=parts.filter(x=>x[1]!=null),score=ok.length?ok.reduce((n,x)=>n+x[1],0)/ok.length:null;
+        return {score,grade:score==null?'—':gradeOf(score),effScore,playScore,rrows,pInfo,pJudge,pRounds,eff:{e1,e2,e3,waste,spent,cons,disc,used,over},kf,kv:[...kv.entries()].map(([tid,v])=>({tid,n:v.n,dmg:v.dmg,block:v.block,heal:v.heal,eng:v.eng,ali:v.ali,draw:v.draw,rounds:[...v.rounds]})),kpSup:supOf('kp')};
       })();
       // ---- merged scoring model (morimens-replay-scoring.js): semantic gear value, role-adaptive awakeners, keeper decision quality
       const SC=window.MorimensReplayScoring;
@@ -2660,7 +2705,7 @@
       const detail=srcs.length?`<div class="mr2tdetail">${r.fia?`<span class="mr2tag" title="${esc(ui('出牌时卡牌的活焰层数分布','Fiamma stacks on played cards'))}">🔥 ${ui('活焰出牌','Fiamma')} ${r.fia[1]+r.fia[2]+r.fia[3]}（1/2/3 层 ${r.fia[1]}/${r.fia[2]}/${r.fia[3]}）</span>`:''}${[...r.types.entries()].map(([k,v])=>`<span class="mr2tag">${esc(k)} ×${v}</span>`).join('')}<div class="mr2srcs">${srcs.map(o=>{const v=o.dmg||o.block||o.heal,lab=o.dmg?ui('伤害','DMG'):o.block?ui('护盾','Shield'):ui('治疗','Heal');return `<div class="mr2srow"><span class="mr2sname">${esc(srcName(o))}${o.typ==='utilSkill'?`<small>${ui('爆发','Burst')}</small>`:o.typ==='state'?`<small>${ui('状态','State')}</small>`:''}</span>${bar(v/top,o.dmg?'dmg':o.block?'blk':'heal')}<b>${fmt(v)}</b><small>${lab}${o.dmg&&r.dmg?` ${pctOf(o.dmg,r.dmg)}%`:''}</small></div>`}).join('')}</div></div>`:'';
       return `<details class="mr2trowd"><summary class="mr2trow"><span class="mr2tn">${ico(a.icon,isK?'守':a.name,`av ${isK?'keeper':''}`)}<b>${esc(a.name)}</b>${r.awake?`<span class="mr2tag awake">${ui(`#${r.awake.order} 觉醒 R${r.awake.round}`,`Awake #${r.awake.order} R${r.awake.round}`)}</span>`:(!isK?`<span class="mr2tag dim">${ui('未觉醒','no awakening')}</span>`:'')}</span><span class="mr2tc">${isK?'—':r.plays}</span><span class="mr2tc">${isK?'—':fmt(r.energy)}</span><span class="mr2tc">${isK?'—':r.ulti}</span><span class="mr2tbar"><i style="width:${Math.max(0,r.dmg/maxDmg*100).toFixed(1)}%;background:${col}"></i><b>${fmt(r.dmg)}</b><em>${pctOf(r.dmg,st.totalDmg)}%</em></span><span class="mr2tc">${r.block?fmt(r.block):'—'}</span><span class="mr2tc">${r.heal?fmt(r.heal):'—'}</span></summary>${detail}</details>`}).join('');
     const roles=`<div class="mr2thead"><span>${ui('角色','Character')}</span><span>${ui('出牌','Cards')}</span><span>${ui('算力','Energy')}</span><span>${ui('爆发','Burst')}</span><span>${ui('伤害','Damage')}</span><span>${ui('护盾','Shield')}</span><span>${ui('治疗','Heal')}</span></div>${roleRows}<small class="mr2from">${ui('点击一行展开该角色的伤害 / 护盾来源。出牌数占比（牌权）：','Click a row for its output sources. Card share: ')}${st.per.filter(r=>r.a.kind!=='keeper'&&r.plays).map(r=>`${esc(r.a.name)} ${pctOf(r.plays,st.totalPlays)}%`).join(' · ')}</small>`;
-    const rhythm=`<div class="mr2cols2"><div class="mr2panel"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div><div class="mr2panel"><h5>${ui('钥令使用与选择偏好','Keyflare skills & picks')}</h5>${keeperHtml}</div></div>`;
+    const rhythm=`<div class="mr2cols2"><div class="mr2panel"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div><div class="mr2panel"><h5>${ui('钥令使用与效果','Keyflare skills & effects')}</h5>${keeperHtml}</div></div>`;
     const relicTiles=st.relicRows.map(r=>{const b=r.buff&&r.buff.gain>0?r.buff:null,val=r.dmg+(b?.extra||0)+(r.dot||0);
       return `<div class="mr2tile ${r.n||b||(r.eff||[]).length?'':'idle'}"${relicTipAttr(res,r.tid)}>${ico(relicIconSrc(res,r.tid),res.nameRelic(r.tid),'rl big')}<div><b>${esc(res.nameRelic(r.tid))}</b><small>${r.start?ui('开局携带','Start'):ui('战斗中获得','Gained')} · ${r.n?ui(`${r.n} 次`,`${r.n}×`):b||(r.eff||[]).length?ui('开局生效','at start'):ui('未触发','idle')}${r.rounds.length&&r.n<=12?` · R${r.rounds.join('/')}`:''}</small>${val>0?`<em>${ui('估算贡献','Est.')} ${fmt(Math.round(val))} (${pctOf(val,st.totalDmg)}%)</em>`:''}${b?`<small class="p">${b.kind==='power'?ui(`+${fmt(b.gain)} 力量`,`+${fmt(b.gain)} power`):ui(`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[0]} +${fmt(Math.round(b.gain*10)/10)}%`,`${(BUFF_NAME[b.kind]||BUFF_NAME.basic)[1]} +${fmt(Math.round(b.gain*10)/10)}%`)}</small>`:''}${r.block?`<small class="b">${ui('护盾','Shield')} ${fmt(Math.round(r.block))}</small>`:''}${r.heal?`<small class="h">${ui('治疗','Heal')} ${fmt(Math.round(r.heal))}</small>`:''}${(r.eff||[]).map(x=>`<small class="p">${esc(x.text)}</small>`).join('')}${r.engine?'':supChips(tl,'rel:'+r.tid)}</div></div>`}).join('');
     const relics=`<div class="mr2tiles">${relicTiles}</div>${buffSummary}${fold(ui('每个造物的详细触发与每次增益','Per-relic details'),`<div class="mr2ssec">${relicHtml}</div>`)}`;
@@ -2828,8 +2873,29 @@
     const f=v=>fmt(Math.round(v)),pct=v=>v==null?'—':`${(v*100).toFixed(0)}%`,sc=v=>v==null?'—':Math.round(v);
     const row=(label,val,score,note='')=>`<div class="mr2mrow"><span>${label}${note?` <small>${esc(note)}</small>`:''}</span><b>${val}</b><i class="mr2msc"><u style="width:${score==null?0:Math.max(0,Math.min(100,score)).toFixed(0)}%"></u></i><em>${score==null?'—':Math.round(score)}</em></div>`;
     const name=t=>res.nameSkill(t);
-    const picks=k.picks.length?k.picks.map(p=>`<div class="mr2mrow"><span>${ui(`第 ${p.round} 回合`,`R${p.round}`)} <small>${ui('选择','picked')} ${esc(name(p.chosen))}${p.ratio!=null&&p.bestTid!=null&&String(p.bestTid)!==String(p.chosen)?` · ${ui('已知最优','best known')} ${esc(name(p.bestTid))}`:''}</small></span><b>${p.cv==null?'—':p.cv.toFixed(2)}</b><i class="mr2msc"><u style="width:${p.ratio==null?0:(p.ratio*100).toFixed(0)}%"></u></i><em>${p.ratio==null?'—':Math.round(p.ratio*100)}</em></div>`).join(''):`<div class="mr2empty">${ui('本场没有可比较的钥令选择','No comparable keyflare picks')}</div>`;
-    const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
+    // 钥令「全部效果」逐通道统计。柱长 = 该通道上钥令占全队的比例（不是绝对数值），
+    // 所以一场 3000 万伤害的战斗和一场 8000 伤害的战斗可以直接放在一起看。
+    const KCH=[['dmg',ui('伤害（直接 + 易伤 / 触腕放大）','Damage (direct + amplified)')],['ali',ui('狂气','Aliemus')],['eng',ui('算力','Energy')],['draw',ui('抽牌','Draws')],['blk',ui('护盾','Shield')],['prev',ui('免伤','Damage prevented')],['heal',ui('治疗','Heal')]];
+    const kfx=k.kf||null;
+    // 一次都没放时不要列通道：kp 账本里只剩守密人被动留下的残余，列出来会与「K = —」自相矛盾。
+    const kfActive=!!(kfx&&kfx.uses>0);
+    const kfHead=kfActive?`<div class="mr2from">${ui(`共 ${kfx.uses} 次钥令 / ${kfx.rounds} 回合，覆盖 ${kfx.kinds} 类效果；每个通道都是「钥令贡献 ÷ 全队该通道总量」`,`${kfx.uses} casts over ${kfx.rounds} rounds, ${kfx.kinds} effect channels; each bar is keyflare's share of the team total`)}</div>`:'';
+    const kfRows=kfActive?KCH.map(([key,label])=>{
+      const sh=kfx.ch[key],amt=kfx.amt[key];
+      if(sh==null||!(amt>0))return '';
+      return row(label,f(amt),sh*100,ui(`占全队 ${(sh*100).toFixed(1)}% · 全队 ${f(kfx.team[key])}`,`${(sh*100).toFixed(1)}% of team total ${f(kfx.team[key])}`));
+    }).join(''):`<div class="mr2empty">${ui('本场没有使用钥令，这一维不计分','No keyflare used in this battle; dimension not scored')}</div>`;
+    const kv=k.kv.slice().sort((a,b)=>b.n-a.n).map(v=>{
+      const parts=[];
+      if(v.dmg>0)parts.push([`伤害 ${f(v.dmg)}`,`dmg ${f(v.dmg)}`]);
+      if(v.block>0)parts.push([`护盾 ${f(v.block)}`,`shield ${f(v.block)}`]);
+      if(v.heal>0)parts.push([`治疗 ${f(v.heal)}`,`heal ${f(v.heal)}`]);
+      if(v.eng>0)parts.push([`算力 ${f(v.eng)}`,`energy ${f(v.eng)}`]);
+      if(v.ali>0)parts.push([`狂气 ${f(v.ali)}`,`aliemus ${f(v.ali)}`]);
+      if(v.draw>0)parts.push([`抽牌 ${f(v.draw)}`,`draw ${f(v.draw)}`]);
+      const txt=parts.length?ui(parts.map(x=>x[0]).join(' · '),parts.map(x=>x[1]).join(' / ')):ui('只给状态 / 增益（已计入效果账本）','status / buff only (counted in the effect ledger)');
+      return `<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${txt}</small></span><b>${v.n}</b><i class="mr2msc"><u style="width:${Math.min(100,v.n*8)}%"></u></i><em></em></div>`;
+    }).join('');
     const rr=k.rrows.map(r=>{const avg=r.ratio!=null?r.ratio:null,judge=(r.judge!=null?r.judge:r.inf!==false)&&avg!=null;
       const aV=Math.round(r.aV||0),oV=Math.round(r.oV||0);
       // 分区折算：乘区（增益抬起来的份额）/ 算力 / 狂气 / 抽牌 / 延迟结算，都只在有值时才占位
@@ -2837,9 +2903,9 @@
         .filter(([v])=>v>0).map(([v,n])=>` · ${n} ${f(v)}`).join('');
       return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('没有可比的价格，不计','no priceable alternative')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}${zs}</small></span><b>${ui(`产出 ${f(aV)} / 上限 ${f(oV)}`,`${f(aV)} / ${f(oV)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
     const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
-    const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
+    const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令效果','Keyflare effects'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
     const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
-      <small class="mr2from">${ui('只评价玩家能控制的决策，使用比率型指标，不把队伍强度、命轮密契强度和发牌运气算到守密人头上。总分 = 0.30 资源周转 + 0.22 出牌 + 0.13 节奏 + 0.13 钥令 + 0.13 风险 + 0.09 协同（缺项时按其余维度重新归一）。狂气爆发已并入「资源周转」子项。','Ratio-type decision metrics; weights 30/22/13/13/13/9, renormalised over measurable dimensions. Aliemus burst is a sub-item of resource turnover.')}</small>
+      <small class="mr2from">${ui('只评价玩家能控制的决策，使用比率型指标，不把队伍强度、命轮密契强度和发牌运气算到守密人头上。总分 = 0.30 资源周转 + 0.22 出牌 + 0.13 节奏 + 0.13 钥令 + 0.13 风险 + 0.09 协同（缺项时按其余维度重新归一）。狂气爆发已并入「资源周转」子项。钥令一维只统计「钥令实际给出的效果占全队的比例」，不评三选一选得对不对（回放没有存另外两个选项）。','Ratio-type decision metrics; weights 30/22/13/13/13/9, renormalised over measurable dimensions. Aliemus burst is a sub-item of resource turnover. The keyflare dimension tallies what the keyflare actually produced (share of the team total); it does not judge the 3-option pick, because the replay never stores the two alternatives.')}</small>
       ${Object.keys(v2.weights).map(key=>row(`${LAB[key]} <small>${ui('权重','w')} ${Math.round(v2.weights[key]*100)}%</small>`,v2.dims[key]==null?'—':Math.round(v2.dims[key]),v2.dims[key],ui(`可信度 ${Math.round((v2.conf[key]||0)*100)}%`,`conf ${Math.round((v2.conf[key]||0)*100)}%`))).join('')}
       ${row(ui('潜力实现率（实际出牌价值 ÷ 同手牌同算力下的估计最优）','Potential realised'),v2.potential==null?'—':Math.round(v2.potential)+'%',v2.potential)}
       ${fx.pCover!=null&&fx.pCover<1?`<small class="mr2from">${ui(`背包模型只在 ${fx.pInfoRounds}/${fx.pScoredRounds} 个回合里找到「更优解」；其余回合的最优解就是实际打法，不提供信息也不计分。覆盖率低于 40% 时「出牌决策」向 78 收缩。`,`Knapsack found a better line in ${fx.pInfoRounds}/${fx.pScoredRounds} rounds; the rest had no alternative to compare against, so they are scored neither way. Below 40% coverage the card-play score is shrunk toward 78.`)}</small>`:''}
@@ -2857,7 +2923,7 @@
         <span>${ui('节奏参照','Tempo baseline')} <b>${(fx.tempoBaseline==='team'?ui(`同阵容往期 ${fx.tempoTeamN} 场`,'own lineup: '+fx.tempoTeamN+' runs'):fx.tempoBaseline==='stage'?ui(`同关卡全体 ${fx.tempoStageN} 场（无该阵容往期）`,'stage-wide ('+fx.tempoStageN+' runs)'):ui(`全库中位 ${fx.tempoStageN} 场（该关卡不在参照库）`,'global median ('+fx.tempoStageN+' runs)'))}${fx.tempoDerived?ui(' · 回合数与用牌数为回放反推（置信度略降）',' · rounds/cards derived from replay'):fx.tempoApprox?ui(' · 用牌数取客户端统计（置信度略降）',' · cards from client stats (confidence lowered)'):''}${fx.tempoDensOk===false?ui(' · 密度项作废（回合数与用牌数口径不同）',' · density excluded (mixed sources)'):''}${fx.tempoScope==='global'?ui(' · 速度项作废（回合数不能跨关卡比，只比每回合用牌）',' · speed excluded (rounds not comparable across stages)'):''}</b></span>`}
         <span>${ui('狂气爆发（计入资源周转）','Aliemus burst (inside resource turnover)')} <b>${f(fx.burstCasts||0)} ${ui('次','casts')} · ${f(fx.burstSpent||0)} ${ui('狂气','aliemus')}</b></span>
         <span>${ui('战斗结束时剩余狂气（未使用比例）','Aliemus left at battle end (unused %)')} <b>${fx.burstLeft==null?'—':f(fx.burstLeft)} · ${pc(fx.burstUnusedPct)}</b></span>
-        <span>${ui('钥令使用 / 每次价值','Keyflare uses / value each')} <b>${fx.keeperUses} / ${fx.keeperValuePerUse==null?'—':fx.keeperValuePerUse}</b></span>
+        <span>${ui('钥令使用 / 效果类别','Keyflare casts / effect channels')} <b>${fx.keeperUses??'—'} / ${fx.keeperKinds??'—'}</b></span>
         <span>${ui('死亡抵抗 / 濒危回合','Death resist / critical rounds')} <b>${fx.deathResist} / ${fx.lethalRounds}</b></span>
         <span>${ui('爆牌（手牌已满而丢掉的牌 / 进手总数）','Hand overflow (cards lost to a full hand / cards drawn)')} <b>${f(fx.handOverflow||0)} / ${f(fx.handCardsSeen||0)} · ${fx.handOverflowPct==null?'—':pc(fx.handOverflowPct)}</b></span>
         <span>${ui('治疗溢出','Overheal')} <b>${pc(fx.overhealPct)}</b></span>
@@ -2868,7 +2934,7 @@
       </div><small class="mr2from">${ui('护盾溢出：回合末钥令身上的盾量减去该回合敌方伤害（被盾吸收的部分）后的剩余；护盾通常不会保留到下回合，若被特殊效果保留（下回合开头仍在）则不计溢出。节奏：本场回合数 / 每回合用牌先除以「同关卡中位」做归一，再与「同一套阵容的往期分布（中位数）」比较 —— 只比同队伍，是因为回合数本身被队伍强度决定，直接比快慢等于把卡组强度算成决策质量。','Shield overflow: shield left on the keeper at round end after the enemy damage it absorbed. Tempo: rounds and cards-per-round are first normalised by the stage median, then compared with the same lineup\'s own history - only then is pace a decision metric rather than a proxy for team strength.')}</small></div>`:'';
     const E=k.eff;
     return `<div class="mr2mgrid">${v2html}
-      <div class="mr2mcol"><h6>${ui('钥令选择','Keyflare choice')} <em>${sc(k.pickScore)}</em></h6><small class="mr2from">${ui('已选技能的实际价值（伤害 / 防御 / 辅助按全队单张出牌均值归一后相加）÷ 同次可选技能中已知价值最高者','Realised value of the chosen skill vs best known alternative')}</small>${picks}</div>
+      <div class="mr2mcol"><h6>${ui('钥令效果','Keyflare effects')} <em>${sc(v2&&v2.dims?v2.dims.K:null)}</em></h6><small class="mr2from">${ui('回放只记录最终选择，没有存另外两个选项，所以不评「三选一选得对不对」（任何「最优」都只能拿本手自己的结果反推）；这里只统计钥令实际给出的全部效果。','The replay stores only the final pick, never the two alternatives, so "was the 3-choice right" is unanswerable here. This panel just tallies what the keyflare actually produced.')}</small>${kfHead}${kfRows}${kv}</div>
       <div class="mr2mcol"><h6>${ui('战斗效率','Battle efficiency')} <em>${sc(k.effScore)}</em></h6>
         ${row(ui('算力利用率','Energy used'),pct(E.e1),E.e1==null?null:E.e1*100,ui(`消耗 ${f(E.spent)} / 回合末剩余 ${f(E.waste)}`,''))}
         ${row(ui('手牌利用率（未被回合末弃掉）','Hand used'),pct(E.e2),E.e2==null?null:E.e2*100,ui(`打出 ${f(E.used)} / 回合末弃牌 ${f(E.disc)}`,''))}

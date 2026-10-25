@@ -241,13 +241,12 @@ function cardPlayModel(tl){
   return {score:sw?ss/sw:null,confidence:sw?sc/sw:0,rounds};
 }
 function keyChoiceModel(k){
-  const map=new Map((k?.kv||[]).map(v=>[String(v.tid),v])),picks=k?.picks||[];let s=0,w=0,cSum=0;
-  const rows=[];
-  for(const p of picks){if(!Array.isArray(p.options)||p.options.length<2||p.chosen==null)continue;const cv=map.get(String(p.chosen))?.val;if(!(cv>=0))continue;const known=p.options.map(t=>({tid:t,v:map.get(String(t))?.val})).filter(x=>x.v!=null),best=Math.max(0,...known.map(x=>x.v));if(!(best>0))continue;
-    const raw=Math.min(1,cv/best),coverage=known.length/p.options.length,conf=clamp(coverage*(known.length>=2?1:.45),0,1),adj=raw*conf+.74*(1-conf),wt=.5+conf;
-    s+=adj*100*wt;w+=wt;cSum+=conf*wt;rows.push({round:p.round,raw,confidence:conf,known:known.length,total:p.options.length});
-  }
-  return {score:w?s/w:null,confidence:w?cSum/w:0,rows};
+  // 已停用：回放只存「最后选了哪一个」，另外两个选项的数值从未落盘，
+  // 任何「最优选项」都只能用同一手的兑现结果去反推 —— 那样等于自己证明自己，
+  // 而且会把「这一手打得好」算成「这一手选得对」。保留函数只为兼容旧调用方，
+  // 恒返回 score=null（调用方按「无该指标」处理，不会当成 0 分）。
+  void k;
+  return {score:null,confidence:0,rows:[],disabled:true};
 }
 function resourceModel(k){
   const e=k?.eff||{},vals=[];
@@ -287,6 +286,14 @@ const KW={R:.30,P:.22,T:.13,K:.13,S:.13,C:.09};
 // 1.00 = 与该队伍往期常态持平 → 78 / 80 分，留出「明显快于常态」才算优秀的空间。
 const TEMPO_SPEED=[[.65,100],[.80,100],[.90,90],[1,78],[1.10,66],[1.25,50],[1.45,32],[1.70,16],[2,0]];
 const TEMPO_DENS=[[.55,20],[.70,45],[.85,66],[1,80],[1.10,90],[1.25,100],[1.60,100]];
+// 钥令：占比 → 分数。横轴是「钥令在这场战斗某通道里的贡献占比」，不是绝对数值。
+// 实测 19 场：伤害通道只要钥令真的参与就落在 8%~16%；支撑通道（狂气 / 算力 / 抽牌 / 护盾 / 免伤）
+// 的均值中位约 26%。所以 8% 伤害≈65 分、22% 支撑≈78 分，与「一次钥令该值多少」的直觉一致。
+const KF_DMG=[[.02,30],[.05,50],[.08,65],[.12,80],[.18,92],[.25,100]];
+const KF_SUP=[[.05,35],[.10,52],[.15,65],[.22,78],[.30,90],[.40,100]];
+// 伤害占比低于这个值就当「这套钥令本来就不打伤害」，不判分（而不是判 0 分）。
+// 实测 729db967 的钥令伤害占比 0.2%、却给了全队 58% 的狂气 —— 拿 0.2% 去扣分是错的。
+const KF_DMG_MIN=.01;
 // 技能费用可能是公式字符串（实测 144492 是 `3-PlayerRole.GetStateLayer(148517)`）。
 // 直接 Number() 得 NaN，再被下游当成 0 —— 这类牌会在背包里变成免费牌，算出假的「最优」。
 // 取字符串开头的数字当基准费用：公式里的减项最多把费用降到 0，不会让它更贵。
@@ -472,12 +479,31 @@ function scoreKeeperV2(m,tl,tempoCtx){
   // 而「回放反推」（口径不同，应该更低）也被同一道上界压平，两者看不出差别。
   // scope=global 再打 0.6：分母是拿全库中位顶替关卡中位的，难度不可比。
   conf.T=tempo?clamp(Math.min(.95,tBase+.25*Math.min(1,tempo.tn/10))*(tempo.derived?.85:tempo.approx?.9:1)*(tempo.scope==='global'?.6:1),0,1):.3;
-  // ---- Keyflare choice and use -------------------------------------------------------------------------
-  const kvv=(k.kv||[]).filter(x=>x.n>0),kuses=kvv.reduce((n,x)=>n+x.n,0),meanVal=kuses?kvv.reduce((n,x)=>n+x.val*x.n,0)/kuses:null;
-  const Ksel=k.pickScore,Kexec=meanVal==null?null:Math.min(100,100*meanVal/2);
-  const Kscore=wavg([[Ksel,.35],[Kexec,.65]]);
-  Object.assign(facts,{keeperUses:kuses,keeperValuePerUse:meanVal==null?null:Math.round(meanVal*100)/100});
-  conf.K=kuses?Math.min(.9,.5+.1*Math.min(4,kuses)):.4;
+  // ---- Keyflare: what the keyflare actually gave (not whether the 3-choice was right) --------------------
+  // 回放只记录「最后选了哪一个」，另外两个选项的数值从未落盘。任何「选得对不对」都只能拿同一手的
+  // 兑现结果去反推，等于自己证明自己 —— 所以这一维不再评选择，只统计**钥令真正给出来的全部效果**。
+  // 每个通道都用「钥令贡献 ÷ 全队该通道总量」的占比：占比天然落在 [0,1]，跨队伍 / 跨关卡可比。
+  // 不用「本场费率把资源折成伤害」：那个费率里含着队伍的乘区强度，19 场实测 rhoE 从 470 到 996,408
+  // （差 2000 倍），折出来的「钥令当量」一度比全场伤害还高（729db967）。
+  const kfx=k.kf||null;
+  const kfCh=kfx&&kfx.ch?kfx.ch:null;
+  let Kdmg=null,Ksup=null,Kscore=null;
+  // 一次钥令都没放：这一维没有证据 —— 判 null 让权重归一，而不是拿「守密人被动留下的那点狂气」扣分。
+  // （实测 0c8d6e18 全程 0 次钥令，kp 账本里只剩被动给的 120 点狂气 = 全队 5.4%，
+  //  按 5.4% 打 36.5 分是错的：那不是决策，是发牌。）
+  if(kfCh&&kfx.uses>0){
+    // 伤害通道：低于 1% 视为「这套钥令本来就不打伤害」，判 null 让权重归一，而不是当 0 扣分。
+    Kdmg=(kfCh.dmg!=null&&kfCh.dmg>=KF_DMG_MIN)?piece(kfCh.dmg,KF_DMG):null;
+    const supCh=['ali','eng','draw','blk','prev','heal'].map(x=>kfCh[x]).filter(v=>v!=null&&v>0);
+    Ksup=supCh.length?piece(supCh.reduce((a,b)=>a+b,0)/supCh.length,KF_SUP):null;
+    Kscore=wavg([[Kdmg,.55],[Ksup,.45]]);
+  }
+  Object.assign(facts,{keeperUses:kfx?kfx.uses:null,keeperRounds:kfx?kfx.rounds:null,keeperKinds:kfx?kfx.kinds:null,
+    keeperShareDmg:kfCh?kfCh.dmg:null,keeperShareAli:kfCh?kfCh.ali:null,keeperShareEng:kfCh?kfCh.eng:null,
+    keeperShareDraw:kfCh?kfCh.draw:null,keeperShareBlk:kfCh?kfCh.blk:null,keeperSharePrev:kfCh?kfCh.prev:null,
+    keeperValDmg:kfx&&kfx.amt?Math.round(kfx.amt.dmg):null});
+  // 置信度：钥令次数越多、覆盖的通道越全，越可信；没放过钥令时给很低的置信度（而不是给 0 分）。
+  conf.K=kfx&&kfx.uses?Math.min(.9,.45+.06*Math.min(6,kfx.uses))*(.75+.25*Math.min(1,(kfx.kinds||0)/4)):.3;
   // ---- Risk control ----------------------------------------------------------------------------------------
   const kf=tl.keeperFacts?.()||{},dr=kf.deathResist||0,lethal=ends.filter(([,e])=>e.hpf!=null&&e.hpf<.25).length,overheal=kf.healNom>0?1-kf.healAct/kf.healNom:null;
   let pen=0;if(dr>0)pen+=4+10*(dr-1);pen+=Math.min(40,6*lethal);if(overheal!=null)pen+=20*Math.max(0,overheal);
