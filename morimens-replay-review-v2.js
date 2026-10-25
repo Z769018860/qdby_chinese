@@ -439,7 +439,11 @@
     // 和唤醒体亲手抬起来的部分混在同一行里，会出现「署名之和 < 层量」这种看着像漏账的东西。
     block:'护盾强效（唤醒体）',heal:'治疗强效（唤醒体）',
     blockGear:'护盾强效（造物 / 命轮）',healGear:'治疗强效（造物 / 命轮）',
-    gear:'造物 / 命轮 / 密契（未按层拆）'};
+    // 这一层是「摊不开的余量」：造物实例的 buff 类型已按乘区层摊开，剩下没有挂到实例上的
+    // 归因才落在这里（文本估算的常驻增益 / 无法识别 kind 的属性）。所以不再写「未按层拆」。
+    gear:'造物 / 命轮 / 密契（未映射到乘区层的余量）'};
+  // 属性生效范围的显示名：o_damage_per_ulti 之类只对特定牌型生效，界面上要能直接看懂
+  const SCOPE_ZH={all:'全部',card:'卡牌',strike:'打击',ult:'爆发',attach:'挂载'};
   // 回放观测不到的层（不是「没算」，是「没有数据源」）。界面上要为此显式说明，不能显示成 0 产出。
   const ZONE_UNOBSERVABLE=new Set(['power']);
   // 一次命中在乘区链上的位置。`base` 是加算力量之前的那一块，`str` 已经按该技能的力量倍率折算成点数。
@@ -453,15 +457,25 @@
     const FINP=g('i_damage_per')+g('i_damage_per1')+g('i_damage_per5')+g('i_damage_per6');
     const fin=(Number(h.fia)||0)+FINP+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss')+(sc.ult?g('awaker_ulti_dmg_per'):0);
     const cd=g('crit_damage')+(sc.strike?g('crit_damage_from_strikecard'):0)+(sc.ult?g('crit_damage_from_ulti'):0);
-    const cmul=h.cmul>0?h.cmul/100:1;
-    const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*cmul;
+    // `card_strength_multiple` 不再进乘区链。这个字段名很像「力量倍率」，但三项证据都不支持：
+    //   ① 它等于技能记录的 `StatePara[0]`（146014：两者都是 400），而该技能的「享受 [Arg2]% 力量加成」
+    //      是 500 —— `curValues` 按描述出现顺序给出 [次数, 伤害, 力量加成] = [1, 11169, 500]，
+    //      与 `Para[1]=500` 一致。400 ≠ 500，说明它不是力量加成比例，是另一个系数。
+    //   ② 它是**逐卡实例的活值**，还会在手里长起来（4017 从 200 涨到 5000），而且只在一部分命中上有值
+    //      （同一场同一张牌，有的命中带 400、有的没有）—— 当乘区用会让力量项在相邻两击之间跳 4 倍甚至 25 倍，
+    //      这不是建模精度问题，是往公式里灌噪声。
+    //   ③ 交叉验证：先用**不含该字段**的命中定出力量倍率 m，再看含它的命中推出什么 m ——
+    //      9 个可测样本里有 4 个按「乘上去」口径偏 3～16 倍，按「不乘」口径都在 1.2 倍以内；
+    //      中位偏差 61%（不乘）对 70%（乘）。它没有解释力，只把 m 的量纲压扁。
+    // 字段本身仍然记录在 hitLog 上（`h.cmul`），只是不再当作力量乘区。
+    const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0));
     const fk=sm.forceKind(h.skill);
     const force0=fk==='def'?g('def'):fk==='phys'?g('physique'):g('atk');
     const per=fk==='def'?g('def_per'):fk==='phys'?g('physique_per'):g('atk_per');
     const atkForce=Math.ceil(force0*(1+per/100));
     const strMul=sm.strMul(h),tenMul=sm.tenMul(h);
     const base=atkForce*(Number(h.pf)||1);
-    return {h,sc,g,out,inn,fin,cd,S,cmul,strMul,tenMul,fk,force0,per,atkForce,base,zeroCrit:sm.zeroCrit,
+    return {h,sc,g,out,inn,fin,cd,S,cmul:h.cmul>0?h.cmul/100:1,strMul,tenMul,fk,force0,per,atkForce,base,zeroCrit:sm.zeroCrit,
       z:{base,out,inn,power:0,fin,str:S*strMul,cd}};
   };
   // 与 MorimensDamageMath.zoneMarginalRatio 严格同式（那边是唯一实现；这里内联一份，
@@ -500,7 +514,7 @@
     }
     if(ch==='tenta')return zoneMarginalRatio(ctx.z,'strength',d*ctx.tenMul);   // 触腕与力量同位：终伤池前的加项
     if(ch==='ultim')return zoneMarginalRatio(ctx.z,'strength',(d/100)*ctx.z.str);   // 爆发倍率决定力量倍率本身
-    if(ch==='strength')return zoneMarginalRatio(ctx.z,'strength',d*ctx.cmul*ctx.strMul);
+    if(ch==='strength')return zoneMarginalRatio(ctx.z,'strength',d*ctx.strMul);   // 一点力量 → strMul 点力量项（cm 不进公式，见 zoneCtxOf）
     return zoneMarginalRatio(ctx.z,ch,d);
   };
   // 兼容旧签名（x = 真值, mine = 本场牌抬起的部分）
@@ -1088,6 +1102,16 @@
     const hbZoneStk=new Map();    // uid → [{kind,amt,play,round,gain}] 还活着、且已经兑现过多少
     const hbZoneLast=new Map();   // uid|kind → 上一次观测到的总强效
     const hbLive=(uid,kind)=>{const pr=board.get(String(uid))?.props||{};let t=0;for(const p of HB_ZONE[kind])t+=Number(pr[p])||0;return t};
+    // 卡片自带的强效（card_block_per2 / card_heal_per2 / instructcard_final_block_per …）。
+    // 这类属性挂在**卡片实例**上（1028 事件的 uid 是卡 uid，不是角色 uid），所以 `board` 里读不到，
+    // hbLive() 恒为 0 —— 它们抬高的那份护盾 / 治疗此前一分不入账（审计 §23.8 第 1 条）。
+    // 卡片一离开手（被弃 / 消耗）客户端就把值写回 0，所以「值 > 0」本身就是「这张牌还带着这份强效」。
+    const cardHbProps=new Map();  // 卡片实例 uid → {prop:value}
+    const cardHbOf=(cuid,kind)=>{
+      if(cuid==null)return 0;
+      const m=cardHbProps.get(String(cuid));if(!m)return 0;
+      let t=0;for(const p of HB_ZONE[kind])t+=Number(m[p])||0;return t;
+    };
     // 一次护盾 / 治疗真正落地：这笔产出里有多少是「已经抬起来、还活着」的乘区额度贡献的。
     // 与伤害侧同一个差分口径：总额 amt 已经含强效，所以增量是 amt × M/(100+T)。
     //
@@ -1098,7 +1122,15 @@
     const hbZoneHit=(kind,amt,uids)=>{
       let pick=null,T=0;
       for(const u of uids){if(u==null)continue;const v=hbLive(u,kind);if(v>0){pick=String(u);T=v;break}}
-      if(pick==null)return 0;
+      // 卡牌级强效同时起作用：它不在单位身上，但确实抬高了这一击的护盾 / 治疗。
+      // 分母必须是「单位 + 卡片」的合计，否则同一笔产出会被两份强效各自按自己分母折算而超发。
+      const cur=execSrc.cur,play=cur?.play||null;
+      const cardAmt=cardHbOf(play?.cardUid,kind);
+      if(pick==null){
+        if(!(cardAmt>0))return 0;
+        // 单位身上一点强效都没有、只有卡片自带的那份：署名归这张牌的所有者
+        const own=play?.owner??cur?.actor;if(own==null)return 0;pick=String(own);T=0;
+      }
       const k=pick+'|'+kind,prev=hbZoneLast.get(k);hbZoneLast.set(k,T);
       let list=hbZoneStk.get(pick);
       if(prev!=null&&T>prev+1e-9){
@@ -1107,17 +1139,43 @@
         // 施术者 → 强效持有者本身（强效挂在谁身上就是谁抬起来的），保证每一笔都有署名。
         list.push({kind,amt:T-prev,play:execSrc.cur?.play||null,owner:execSrc.cur?.play?.owner??execSrc.cur?.actor??pick,round:bout,gain:0});
       }
-      if(!(amt>0)||!list||!list.length)return 0;
-      let M=0;for(const b of list)if(b.kind===kind&&b.amt>1e-9)M+=b.amt;
-      if(!(M>0)||!(T>0))return 0;
-      // 额度不可能超过真值：强效到期 / 被驱散时按比例缩回，过期的部分不能再领钱
-      if(M>T+1e-9){const f=T/M;for(const b of list)if(b.kind===kind)b.amt*=f;M=T}
-      const gain=amt*M/(100+T);
-      if(!(gain>0))return 0;
-      for(const b of list)if(b.kind===kind&&b.amt>1e-9){
-        const share=gain*b.amt/M;b.gain+=share;
-        // 按「兑现的回合」再记一份：回合行要回答「这一回合的护盾 / 治疗里有多少是乘区加上去的」
-        const rg=b.rg||(b.rg={});rg[bout]=(rg[bout]||0)+share;
+      if(!(amt>0))return 0;
+      const denom=100+T+cardAmt;if(!(denom>0))return 0;
+      let gain=0;
+      if(list&&list.length){
+        let M=0;for(const b of list)if(b.kind===kind&&b.amt>1e-9)M+=b.amt;
+        if(M>0&&T>0){
+          // 额度不可能超过真值：强效到期 / 被驱散时按比例缩回，过期的部分不能再领钱
+          if(M>T+1e-9){const f=T/M;for(const b of list)if(b.kind===kind)b.amt*=f;M=T}
+          const g=amt*M/denom;
+          if(g>0){
+            for(const b of list)if(b.kind===kind&&b.amt>1e-9){
+              const share=g*b.amt/M;b.gain+=share;
+              // 按「兑现的回合」再记一份：回合行要回答「这一回合的护盾 / 治疗里有多少是乘区加上去的」
+              const rg=b.rg||(b.rg={});rg[bout]=(rg[bout]||0)+share;
+            }
+            gain+=g;
+          }
+        }
+      }
+      if(cardAmt>0){
+        // 卡片那一份单独成账，归到「这张牌」名下：同一张牌可能给多次盾 / 治疗，所以复用一条额度。
+        const gc=amt*cardAmt/denom;
+        if(gc>0){
+          // 挂在 execSrc.cur 上（不是 play 对象）：play 会被 playLog 长期持有，
+          // 额度条目再回指 play 就成了循环引用，导出 / 序列化会炸。
+          const slot=cur;if(!slot)return gain;
+          const box=slot.hbCardAmt||(slot.hbCardAmt={});
+          let ent=box[kind];
+          if(!ent){
+            if(!list)hbZoneStk.set(pick,list=[]);
+            // amt 记为 0：这份额度已经算在 cardAmt 里，不能再进单位那本账的分子（会重复领钱）
+            ent={kind,amt:0,card:true,owner:play?.owner??cur?.actor??pick,round:bout,gain:0};
+            list.push(ent);box[kind]=ent;
+          }
+          ent.gain+=gc;const rg=ent.rg||(ent.rg={});rg[bout]=(rg[bout]||0)+gc;
+          gain+=gc;
+        }
       }
       return gain;
     };
@@ -1228,6 +1286,11 @@
           // ---- state tracking (runs for every frame, including pre-battle setup)
           if(e===1028&&d.propertyType==='card_strength_multiple'&&d.uid!=null&&typeof d.value==='number')cardMul.set(String(d.uid),d.value);
           if(e===1028&&d.value!=null&&d.uid!=null&&typeof d.value==='number'&&actors.has(String(d.uid))){const u=unit(d.uid);(u.props=u.props||{})[d.propertyType]=d.value;if(PROP[d.propertyType])u[PROP[d.propertyType]]=d.value}
+          // 卡片级强效：uid 是卡片实例、不在 actors 里，所以上面那一句永远轮不到它。
+          // 只收护盾 / 治疗类的几个属性，其余卡片属性（如 card_strength_multiple）各有专门的去处。
+          else if(e===1028&&d.value!=null&&d.uid!=null&&typeof d.value==='number'&&HB_OF[d.propertyType]){
+            const cu=String(d.uid);let m=cardHbProps.get(cu);if(!m)cardHbProps.set(cu,m={});m[d.propertyType]=d.value;
+          }
           else if(e===1014&&d.beHitConfig?.targetRoleUid!=null){const h=d.beHitConfig,u=unit(h.targetRoleUid);if(h.curHp!=null)u.hp=h.curHp;if(h.curMaxHp!=null)u.max=h.curMaxHp}
           if((e===1004||e===1006||e===1007||e===1005)&&d.stateUid!=null){
             const su0=String(d.stateUid);
@@ -1552,7 +1615,7 @@
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
     zoneFlush();   // 最后一个时间戳的乘区缓冲也要落地
-    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs,zoneStk,zoneRound,hbZoneStk,hbLive,ambientByRound,hbTotals};
+    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs,zoneStk,zoneRound,hbZoneStk,hbLive,cardHbProps,cardHbOf,ambientByRound,hbTotals};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -2020,7 +2083,7 @@
       const fin=full?(h.fia||0)+g('i_damage_per')+g('i_damage_per1')+g('i_damage_per5')+g('i_damage_per6')+(sc.strike?g('i_damage_per_strikecard'):0)+g('damage_per2monster_boss')+(sc.ult?g('awaker_ulti_dmg_per'):0):0;
       // 暴伤池：打击 / 爆发各有专属暴伤属性，漏掉会让这两类命中的归一化不足，并让它们的暴伤归因被高估
       const cd=g('crit_damage')+(sc.strike?g('crit_damage_from_strikecard'):0)+(sc.ult?g('crit_damage_from_ulti'):0);
-      const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0))*(h.cmul>0?h.cmul/100:1);
+      const S=(g('damage_plus')+(sc.strike?g('strikecard_damage_plus'):0));   // 不含 card_strength_multiple，理由见 zoneCtxOf
       const fk=forceKind(h.skill),per=fk==='def'?g('def_per'):fk==='phys'?g('physique_per'):g('atk_per'),force0=fk==='def'?g('def'):fk==='phys'?g('physique'):g('atk');
       const atkForce=Math.ceil(fk==='def'?g('def')*(1+g('def_per')/100):fk==='phys'?g('physique')*(1+g('physique_per')/100):g('atk')*(1+g('atk_per')/100));
       return {sc,out,inn,fin,cd,S,atkForce,fk,per,force0,T:atkForce*(1+out/100)*(1+inn/100)*(h.pf||1)};
@@ -2109,7 +2172,7 @@
       for(const b of h.buffs){
         if(!inScope(sc,b.scope))continue;
         let frac=0;
-        if(b.kind==='power')frac=m*b.amt*strMul(h)*(h.cmul>0?h.cmul/100:1)/dn;   // 同上：力量项要乘技能说明的力量加成比例
+        if(b.kind==='power')frac=m*b.amt*strMul(h)/dn;   // 力量项按技能说明的力量加成比例缩放（card_strength_multiple 不进公式，见 zoneCtxOf）
         else if(b.kind==='basic'||b.kind==='in')frac=baseShare*(b.amt/100)/(1+c.inn/100);
         else if(b.kind==='out')frac=baseShare*(b.amt/100)/(1+c.out/100);
         else if(b.kind==='final')frac=(b.amt/100)/(1+c.fin/100);
@@ -2768,7 +2831,19 @@
         //    （实例上带着 PROP_KIND 给出的 buff 类型），所以顺带算一份分层构成，
         //    免得这一行永远是个占 60%+ 的黑箱。
         const BUF_ZCH={power:'strength',basic:'in',in:'in',out:'out',final:'final',crit:'critDmg',critrate:'critRate',force:'basic',tenta:'tenta',ultim:'ultim'};
-        let relicDmg=0,gearInstSum=0;const gearLayers=new Map();
+        // 落到**具体属性**为止：同一层里可能混着好几个回放属性（终伤池就有 i_damage_per / i_damage_per_strikecard /
+        // awaker_ulti_dmg_per 三个桶），只给层名等于把「哪一条属性在起作用」这层信息丢掉了。
+        // 属性带得动 scope 的（o_damage_per_ulti / _card / _strikecard）一并带上，界面可以解释「为什么只对它生效」。
+        const PROP_ZH={damage_plus:'力量',strikecard_damage_plus:'力量（打击）',crit:'暴击率',crit_damage:'暴击伤害',
+          crit_damage_from_ulti:'暴击伤害（爆发）',crit_damage_from_strikecard:'暴击伤害（打击）',
+          atk:'攻击',atk_per:'攻击%',def:'防御',def_per:'防御%',physique:'体质',physique_per:'体质%',
+          tentacle_dmg:'触腕伤害',ulti_strength_multiple:'爆发倍率',basic_damage_per:'基础伤害',
+          i_basic_damage_per:'基础伤害（局内）',i_damage_per:'伤害（局内）',i_damage_per1:'伤害（局内·桶1）',
+          i_damage_per6:'伤害（局内·桶6）',i_damage_per_strikecard:'伤害（局内·打击）',
+          o_damage_per:'伤害（局外）',o_damage_per_card:'伤害（局外·卡牌）',o_damage_per_strikecard:'伤害（局外·打击）',
+          o_damage_per_attachpost:'伤害（局外·挂载）',o_damage_per_ulti:'伤害（局外·爆发）',
+          awaker_ulti_dmg_per:'伤害（爆发）',damage_per2monster_boss:'对首领伤害'};
+        let relicDmg=0,gearInstSum=0;const gearLayers=new Map(),gearProps=new Map();
         for(const rec of (tl.relicBuffs?tl.relicBuffs.values():[])){
           relicDmg+=Math.max(0,Number(rec.extra)||0);
           for(const inst of (rec.instances||[])){
@@ -2776,6 +2851,11 @@
             gearInstSum+=v;
             const ch=BUF_ZCH[inst.kind]||null;
             gearLayers.set(ch||'gear',(gearLayers.get(ch||'gear')||0)+v);
+            // 键必须是「层 + 属性」而不是「属性」：同一个回放属性会落在不同层
+            // （basic_damage_per 既有 kind=basic 的实例、也有 kind=out 的），只按属性分组会
+            // 把金额全记给首次出现的层，另一层就出现「属性分摊和 ≠ 层量」。
+            const pk=(ch||'gear')+'|'+(inst.prop||'*text*'),pe=gearProps.get(pk);
+            if(pe)pe.amt+=v;else gearProps.set(pk,{ch:ch||'gear',prop:inst.prop||'*text*',scope:inst.scope||null,amt:v});
           }
         }
         // 实例之外的余量（没有挂到具体实例上的归因）不能丢，否则「分层和 = 合计」当场破
@@ -2803,7 +2883,10 @@
         // 但分层构成挂在 layers 上，界面可以直接说明「这 60% 里有多少是力量、多少是终伤池」。
         if(relicDmg>0){
           const o=add('gear',relicDmg,0,0);
-          o.layers=[...gearLayers.entries()].filter(([,v])=>v>0).map(([ch,v])=>({ch,label:ZONE_LAYER_NAME[ch]||ch,amt:v})).sort((a,b)=>b.amt-a.amt);
+          o.layers=[...gearLayers.entries()].filter(([,v])=>v>0).map(([ch,v])=>({ch,label:ZONE_LAYER_NAME[ch]||ch,amt:v,
+            props:[...gearProps.values()].filter(p=>p.ch===ch).map(p=>({prop:p.prop,
+              label:p.prop==='*text*'?ui('文本估算（无对应属性）','text-derived (no property)'):(PROP_ZH[p.prop]||p.prop),
+              scope:p.scope,amt:p.amt})).sort((a,b)=>b.amt-a.amt)})).sort((a,b)=>b.amt-a.amt);
         }
         // 护盾 / 治疗同样按来源分行：装备给的那部分没有唤醒体署名，单独一行，
         // 这样「唤醒体」那两行的署名和恒等于层量，不用再靠容差蒙过去。
@@ -3279,8 +3362,17 @@
       const rows=g.rows.map(r=>{
         const tot=r.dmg+r.blk+r.heal;
         const note=[r.dmg>0?ui(`伤害 ${f(r.dmg)}`,`dmg ${f(r.dmg)}`):'',r.blk>0?ui(`护盾 +${f(r.blk)}`,`shield +${f(r.blk)}`):'',r.heal>0?ui(`治疗 +${f(r.heal)}`,`heal +${f(r.heal)}`):''].filter(Boolean).join(' · ');
-        // 分层构成（目前只有造物那一行有）：把「占 60%+ 的黑箱」摊开成「力量 / 终伤池 / 暴伤 …」
-        const lay=(r.layers||[]).filter(x=>x.amt>0).slice(0,4).map(x=>`${esc(x.label)} ${f(x.amt)}`).join(' · ');
+        // 分层构成（目前只有造物那一行有）：把「占 60%+ 的黑箱」摊开成「力量 / 终伤池 / 暴伤 …」，
+        // 每层再挂上它由哪几个回放属性构成（悬停可看），这样能直接对着回放字段核账。
+        const layTitle=(r.layers||[]).filter(x=>x.amt>0).map(x=>{
+          // 属性名里已经写着生效范围（「暴击伤害（打击）」）就不再重复标「仅打击」
+          const ps=(x.props||[]).map(p=>{
+            const sc=p.scope?(SCOPE_ZH[p.scope]||p.scope):'';
+            return `${p.label}${sc&&!String(p.label).includes(sc)?`（仅${sc}）`:''} ${f(p.amt)}`;
+          }).join(' + ');
+          return `${x.label} ${f(x.amt)}${ps?` = ${ps}`:''}`;
+        }).join(' ; ');
+        const lay=(r.layers||[]).filter(x=>x.amt>0).slice(0,4).map(x=>`<span title="${esc(layTitle)}">${esc(x.label)} ${f(x.amt)}</span>`).join(' · ');
         const noteAll=lay?`${note}${note?` · `:''}${ui('内含','equals')} ${lay}`:note;
         // 谁抬起来的：取前两位贡献者，名字后面挂 skeydb 的建模署名（悬停看全档：定位 / 稀有度 / 卡型分布）
         const by=(r.byRows||[]).slice(0,2).map(x=>{
