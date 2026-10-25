@@ -352,6 +352,51 @@
     const mk=d.match(/算力消耗\s*-\s*\[Arg(\d+)\]/),mc=d.match(/将其\s*\[Arg(\d+)\]\s*张/);
     const info=mk?{cutPos:order.indexOf(mk[1]),copyPos:mc?order.indexOf(mc[1]):-1}:null;copyMemo.set(k,info);return info;
   }
+  // ---- 伤害乘区（damage zones）--------------------------------------------------------------
+  // 增益牌自己不打伤害，它的伤害当量得靠「它把哪个乘区抬了多少」换算回来。
+  // 分区口径必须和下面「伤害公式校验」的拟合完全一致，否则两处会各说一套：
+  //   加算区（力量）: 每次命中里的力量部分 = 力量 × 该技能的力量系数，抬 Δ 点 = 每次命中多 Δ × strMul
+  //   乘算增伤区    : 伤害里 x/(100+x) 归这个乘区，抬 Δ 点 = 多 dmg × Δ/(100+x+Δ)
+  //   暴伤区        : 只在暴击的命中上作用（伤害 × x/(100+x)）
+  //   暴击率区      : 只在非暴击的命中上作用（Δ% × 该次暴击的额外倍率）
+  // 每点乘区值多少伤害，一律用**这回合之前**的真实命中测出来；没测到就不给分（宁可低估）。
+  const ZONE_ADD=['damage_plus','strikecard_damage_plus'];
+  const ZONE_MUL=['o_damage_per','o_damage_per_card','o_damage_per_strikecard','o_damage_per_attachpost','o_damage_per_ulti','i_damage_per','i_damage_per1','i_damage_per6','i_damage_per_strikecard','i_basic_damage_per','basic_damage_per','damage_per2monster_boss','awaker_ulti_dmg_per'];
+  const ZONE_CD=['crit_damage','crit_damage_from_strikecard','crit_damage_from_ulti'];
+  const ZONE_CR=['crit','crit_per_from_ulti','crit_per_from_strikecard'];
+  const ZONE_ALL=new Set([...ZONE_ADD,...ZONE_MUL,...ZONE_CD,...ZONE_CR]);
+  const isZoneProp=p=>ZONE_ALL.has(p);
+  // 一个乘区在**一次命中**里贡献了多少伤害。x = 该乘区此刻的真值，mine = 其中由「本回合打出的牌」抬起来的部分。
+  //   add（力量   ）: 命中的力量部分 = 力量 × 该技能的力量系数（× 卡牌力量倍率），抬 mine 点 = mine × 系数
+  //   cd （暴伤   ）: 只在暴击命中上，伤害 × x/(100+x)
+  //   cr （暴击率 ）: 只在非暴击命中上，Δ% × 该次暴击本该多出的倍率
+  //   mul（增伤区 ）: 伤害 × x/(100+x)
+  // 四个区各自独立算边际会重复计算（各自都能「占 30%」），调用方必须再按本次伤害等比压回来。
+  const zoneDmgOf=(prop,x,mine,dmg,o)=>{
+    if(!(dmg>0)||!(x>0)||!(mine>0))return 0;
+    const sh=Math.min(1,mine/x);
+    if(ZONE_ADD.includes(prop))return Math.min(dmg,x*((o&&o.strMul)||1)*((o&&o.cmul)>0?(o&&o.cmul)/100:1))*sh;
+    if(ZONE_CD.includes(prop))return (o&&o.crit)?dmg*x/(100+x)*sh:0;
+    if(ZONE_CR.includes(prop))return (o&&o.crit)?0:dmg*(mine/100)*(((o&&o.critDmg)||0)/100);
+    return dmg*x/(100+x)*sh;
+  };
+  // skill text -> where each number sits in the card's displayed values, and the per-skill strength share
+  // ("享受 [Arg2]% 力量加成"). 与渲染侧 descInfo / strMul 是同一份实现（按 res 记忆，语言切换会换 res）。
+  const descToolsCache=new WeakMap();
+  const descTools=res=>{
+    if(descToolsCache.has(res))return descToolsCache.get(res);
+    const descMemo=new Map();
+    const descInfo=tid=>{const k=String(tid);if(descMemo.has(k))return descMemo.get(k);
+      let d=res.skill[k]?.Desc;if(d&&typeof d==='object'){const keys=Object.keys(d).sort((a,b)=>Number(b)-Number(a));d=d[keys[0]]}
+      d=pipeName(String(d||''));const order=[];for(const m of d.matchAll(/Arg(\d+)/g)){if(!order.includes(m[1]))order.push(m[1])}
+      const pos=n=>{const i=order.indexOf(String(n));return i<0?-1:i};
+      const dm=d.match(/Damage:\[?Damage:Arg(\d+)/),xm=d.match(/力量[^。]{0,12}发挥\s*\[Arg(\d+)\]\s*倍/),sm=d.match(/享受\s*(?:\[Arg(\d+)\]|(\d+(?:\.\d+)?))\s*[%％]\s*力量加成/),tm=d.match(/享受\s*(?:\[Arg(\d+)\]|(\d+(?:\.\d+)?))\s*[%％]\s*触腕伤害加成/);
+      const info={dmgPos:dm?pos(dm[1]):-1,strPos:sm&&sm[1]?pos(sm[1]):-1,timesPos:xm?pos(xm[1]):-1,strFix:sm&&sm[2]?Number(sm[2]):null,tenPos:tm&&tm[1]?pos(tm[1]):-1,tenFix:tm&&tm[2]?Number(tm[2]):null};
+      descMemo.set(k,info);return info};
+    const strMul=h=>{const i=descInfo(h.skill);if(i.timesPos>=0){const v=h.arg?.[i.timesPos];if(v>=1&&v<=50)return v}if(i.strPos>=0){const v=h.arg?.[i.strPos];if(v>=10&&v<=2000&&v%5===0)return v/100;return 1}if(i.strFix!=null)return i.strFix/100;return 1};
+    const out={descInfo,strMul};
+    descToolsCache.set(res,out);return out;
+  };
   // the decoded replay is immutable, and several overlay modules ask for the timeline on every DOM mutation: build it once per replay and language
   const tlCache=new WeakMap();
   function buildTimeline(full){const k=isEn()?'en':'zh',c=tlCache.get(full);if(c&&c.k===k)return c.tl;const tl=buildTimelineRaw(full);tlCache.set(full,{k,tl});return tl}
@@ -471,6 +516,74 @@
       ulti_strength_multiple:['ultim',/爆发倍率|倍率/,'ult'],
     };
     const relicBuffs=new Map(),activeBuff=new Map();let relWin=null;const hitLog=[];let result=null;const playLog=[],roundEnd=new Map(),roundPool=new Map(),shieldIn=new Map(),shieldStart=new Map(),stSrc=new Map(),supStore=new Map(),passiveSupport={ali:0,key:0};const relicPass=new Map(),openRelic=new Map(),keyTextCache=new Map(),gearTimes=new Map(),tempPow=new Set(),critReverts=new Map(),vulnSrc=new Map();const counterLog=new Map(),counterGain=new Map(),execStates=new Map(),execInst=new Map(),execSrc={cur:null},execIs=new Map();
+    // ---- 乘区账本：增益牌不打伤害，它的伤害当量 = 它抬起来的那部分乘区在后续命中里贡献的伤害 ----
+    // 坑：回放里每次出牌都会把整套属性重算一遍（`-40` 紧跟 `+40`），1028 的增量整场累加**正好为 0**，
+    // 拿它建账会被重复的 `+45` 刷到爆表（实测把 98 万伤害记到一张 0 费牌头上）。
+    // 命中快照里的乘区真值却是干净的（R1:436 → R6:2603），所以改用「两次命中之间的真值增量」：
+    // 增量天然守恒（ΣΔ ≤ 真值），只在真值上涨的那段窗口里、把上涨量记给这段时间打出的牌。
+    const zoneStk=new Map(),zoneLast=new Map(),zoneLastT=new Map();
+    const {strMul:zStrMul}=descTools(res);
+    const skTypes=h=>asList(res.skill[String(h.skill)]?.Type);
+    // 分区只在它描述的那类命中上生效（打击区不给爆发，爆发区不给小牌）
+    const propFits=(prop,h)=>{const T=skTypes(h);
+      if(prop==='strikecard_damage_plus'||/strikecard/.test(prop))return T.includes('Card_Strike');
+      if(/ulti/.test(prop))return T.includes('Ulti_Skill');
+      if(prop==='o_damage_per_card')return T.some(x=>String(x).startsWith('Card_'));
+      if(prop==='o_damage_per_attachpost')return T.includes('Card_AttachPost');
+      return true};
+    // 这一击里某乘区贡献的伤害 × 「牌给的份额 / 乘区总量」，按各张牌的额度分账
+    const zoneHit=h=>{
+      if(!(h.dmg>0)||!(h.round>0))return h;
+      const uid=String(h.uid),P=h.P||{},t0=zoneLastT.get(uid);
+      let list=zoneStk.get(uid);if(!list)zoneStk.set(uid,list=[]);
+      const give=[];   // 先算「每个乘区这一击贡献多少」，最后按总伤害封顶再分账
+      for(const prop of ZONE_ALL){
+        const x=Number(P[prop])||0,lk=uid+'|'+prop,prev=zoneLast.get(lk);
+        if(x>0)zoneLast.set(lk,x);
+        // ① 真值涨了：把涨出来的这点记给「这段间隔里打出的牌」，权重优先用牌自己声明的乘区额度
+        if(prev!=null&&x>prev+1e-9){
+          const d=x-prev;
+          const win=playLog.filter(p=>p.kind==='card'&&(t0==null||p.time>t0)&&p.time<=h.t);
+          if(win.length){const wsum=win.reduce((n,p)=>n+Math.max(0,(p.zones&&p.zones[prop])||0),0);
+            for(const p of win){const w=wsum>0?Math.max(0,(p.zones&&p.zones[prop])||0)/wsum:1/win.length;
+              if(w>0)list.push({prop,amt:d*w,tid:p.tid,play:p,round:h.round,dmg:0})}}
+        }
+        // ② 真值回落（增益到期 / 被驱散）：账本按比例缩回，过期的增益不能再领钱
+        let tracked=0;for(const b of list)if(b.prop===prop&&b.amt>1e-9)tracked+=b.amt;
+        if(tracked>x+1e-9&&tracked>0){const f=(x>0?x:0)/tracked;for(const b of list)if(b.prop===prop)b.amt*=f;tracked=x}
+        // ③ 只在本回合内计息：跨回合的持续增益不重复领钱（宁可低估），否则一张 0 费牌能吃掉整场 90%
+        const live=[];let mine=0;
+        for(const b of list)if(b.prop===prop&&b.amt>1e-9&&b.round===h.round){live.push(b);mine+=b.amt}
+        if(!live.length||!(x>0)||!propFits(prop,h))continue;
+        const dz=zoneDmgOf(prop,x,mine,h.dmg,{strMul:zStrMul(h),cmul:h.cmul,crit:h.crit,critDmg:Number(P.crit_damage)||0});
+        if(dz>0)give.push({prop,live,mine,dz});
+      }
+      // 四个乘区各自独立算边际会重复计算（各自都「占 30%」，加起来超过 100%）——按总伤害等比压回来
+      const sum=give.reduce((n,g)=>n+g.dz,0);
+      const k=sum>h.dmg?h.dmg/sum:1;
+      for(const g of give){const dz=g.dz*k;
+        for(const b of g.live){// 只在本牌打出的那一回合内计息：跨回合领钱会让 R3 的牌吃 R5 的爆发，
+          // 既破坏「每回合归因 ≤ 该回合伤害」，也让价格偷看未来（price 只取 round < 当前回合）
+          if(b.play&&b.play.round!==h.round)continue;
+          const c=dz*b.amt/g.mine;b.dmg+=c;
+          if(b.play){b.play.zoneDmg=(b.play.zoneDmg||0)+c;const m=b.play.zoneDmgBy||(b.play.zoneDmgBy={});m[g.prop]=(m[g.prop]||0)+c}}
+      }
+      zoneLastT.set(uid,h.t);
+      return h;
+    };
+    // 牌自己声明了哪些乘区（只作分账权重与展示，不直接换成伤害 —— 那个必须由真值增量给）
+    const zoneBuf=new Map();let zoneBufT=null;
+    const zoneFlush=()=>{for(const r of zoneBuf.values()){if(!(r.net>1e-9))continue;
+        const pl=r.play;if(!pl||pl.kind!=='card')continue;
+        (pl.zones||(pl.zones={}))[r.prop]=Math.round(((pl.zones[r.prop]||0)+r.net)*100)/100}
+      zoneBuf.clear();zoneBufT=null};
+    const zoneNote=(t,uid,prop,cv,play)=>{
+      const zt=Math.round((t||0)*100)/100;
+      if(zoneBufT!=null&&zt!==zoneBufT)zoneFlush();
+      zoneBufT=zt;
+      const k=uid+'|'+prop,r=zoneBuf.get(k)||{net:0,uid,prop,t,play:play||null};
+      r.net+=cv;zoneBuf.set(k,r);
+    };
     // ---- 回合末状态快照 ----------------------------------------------------------------
     // 算力余额 / 护盾 / 剩余手牌 / 狂气。P（出牌）用它算「这一回合本来还有多少算力没花」。
     // 原来只在「玩家→敌方」这一种切场上拍快照，于是**最后一回合**（战斗在玩家回合里结束、
@@ -916,6 +1029,10 @@
           if((e===1004||e===1006||e===1007)&&d.stateId!=null){const ly=e===1007?Number(d.newLayer):Number(d.layer||1),k=String(d.ownerUid??d.roleUid)+'|'+d.stateId;if(ly>(layerPeak.get(k)||0))layerPeak.set(k,ly)}
           if(e===1028&&d.uid!=null&&Number(d.changedValue)<0&&bout>0&&(d.propertyType==='card_cost'||d.propertyType==='awaker_cmdcard_notextend_cost_fix')){
             const ks=srcKeys(fr.time);for(const k of ks)supOf(k).cut+=-Number(d.changedValue)/ks.length}
+          // 乘区：把净增量攒进当前时间戳的缓冲，下一个时间戳再结算（记到当时正在结算的那张牌上）
+          if(e===1028&&d.propertyType!=null&&d.uid!=null&&isZoneProp(d.propertyType)&&bout>0){
+            zoneNote(fr.time,String(d.uid),d.propertyType,Number(d.changedValue)||0,execSrc.cur?.play)
+          }
           if(e===1028&&d.uid!=null&&Number(d.changedValue)>0&&bout>0){
             if(d.propertyType==='block'&&actors.get(String(d.uid))?.camp===1){passiveHit('shield',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('block',Number(d.changedValue),d.extraData?.castRoleUid)}else if(d.propertyType==='hp'&&d.reason!==4&&actors.get(String(d.uid))?.camp===1){passiveHit('heal',Number(d.changedValue),d.extraData?.castRoleUid);staticHit('heal',Number(d.changedValue),d.extraData?.castRoleUid)}
             const pt=d.propertyType,cv=Number(d.changedValue),wm=pt==='ulti_energy'&&d.extraData?.cmdServerUid!=null?gearWins.find(w=>w.ali!=null&&fr.time>=w.t0&&fr.time<=w.t1&&Math.abs(w.ali-Number(d.extraData?.castValue))<.01&&(w.tgt!=='StateOwner'||w.owners.includes(String(d.uid)))):null,evm=(()=>{if(!evList.length||(relWin&&!relWin.gear&&relWin.queue?.length))return null;const cv0=Math.abs(Number(d.extraData?.castValue));if(!(cv0>0)||d.extraData?.cmdServerUid==null)return null;/* natural regeneration carries no command id */const SB=['BSTAfterUseCard','BSTAfterUseKeeperSkill','BSTAfterUltiSkill','BSTAfterBoutBegin','BSTAfterBoutEnd','BSTAfterLaunchSwallow','BSTRoleAfterDeathResist','BSTAfterDimensionBoutBegin','NAMED'],gk=(x)=>'gear:'+x.e.key,live=x=>gearWins.some(w=>w.ch===x.ch&&fr.time>=w.t0&&fr.time<=w.t1)||(!!x.e.fx&&gearTimes.get(fr.time)?.has(gk(x)));const hit=evList.filter(x=>x.prop===pt&&Math.abs((amtOf(x,d,pt,cv)??-1)-cv0)<.01&&(pt!=='hp'||actors.get(String(d.uid))?.camp===1)&&(!SB.includes(x.ch.base)||live(x))&&(x.tgt!=='StateOwner'||x.e.owners.includes(String(d.uid))));return hit.length&&new Set(hit.map(x=>x.e)).size===1?hit:null})(),keys0=wm?wm.keys:evm?['gear:'+evm[0].e.key]:srcKeys(fr.time),keys1=(wm||evm||execSrc.cur?.play?.ownerKey)?keys0:keys0.filter(k=>!(k.startsWith('gear:')&&Object.values(EV_PROP).includes(pt))),   // resource changes reach a wheel / covenant only through an exact amount match
@@ -1052,9 +1169,9 @@
                 {const sk=res.skill[String(h.skillConfigId)],tx=v=>v==null?'':typeof v==='string'?v:typeof v==='object'?Object.values(v).map(tx).join(' '):String(v),m=tx(sk?.BattleDesc||sk?.Desc).match(/此卡[^。，；]{0,8}暴击率[^。，；\d]{0,6}(\d+(?:\.\d+)?)\s*[%％]/);if(m)o.c+=Number(m[1])}
                 return o})();
               const fiaM=!!curFia&&curFia.uid===String(h.castRoleUid)&&(h.skillConfigId==null||String(curFia.tid)===String(h.skillConfigId));   // 活焰 / 卡牌力量倍率属于那张打出的牌，不能泄漏到之后的 DoT / 反击 / 触腕命中
-              hitLog.push({dt:h.damageType,cx,cr:(()=>{const x=board.get(String(h.castRoleUid))?.props?.crit;return x==null?null:Number(x)})(),t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:fiaM?curFia.args:null,ptid:fiaM?curFia.tid:null,cmul:fiaM?curFia.cmul:0,fia:fiaM?curFia.pct:0,fiaLvl:fiaM?curFia.lvl:0,
+              hitLog.push(zoneHit({dt:h.damageType,cx,cr:(()=>{const x=board.get(String(h.castRoleUid))?.props?.crit;return x==null?null:Number(x)})(),t:fr.time,uid:String(h.castRoleUid),cmd:String(h.fromCmdServerUid??h.cmdServerUid??''),target:String(h.targetRoleUid),skill:h.skillConfigId,dmg:Number(h.originVal)||amt,crit:!!h.isCrit,round:bout,P:pk,arg:fiaM?curFia.args:null,ptid:fiaM?curFia.tid:null,cmul:fiaM?curFia.cmul:0,fia:fiaM?curFia.pct:0,fiaLvl:fiaM?curFia.lvl:0,
                 amp:(()=>{const out=[];for(const [su,v] of bstates.get(String(h.targetRoleUid))||[]){const ex=res.state[String(v.stateId)]?.ExistProperty;if(!ex)continue;for(const [pr,expr] of Object.entries(ex)){if(!/^be_damage_per/.test(pr))continue;const m=String(expr).match(/^ChangedLayer\s*\*\s*(-?\d+(?:\.\d+)?)$/),pv=m?(v.layer||1)*Number(m[1]):Number.isFinite(Number(expr))?Number(expr):null;if(pv>0)out.push({p:pv,keys:stSrc.get(String(su))||[],nm:res.nameState(v.stateId)})}}return out})(),
-                stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(fiaM&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,fiaM?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))});
+                stl:(()=>{const o={};for(const v of (bstates.get(String(h.castRoleUid))?.values()||[]))if(v.layer>0)o[v.stateId]=(o[v.stateId]||0)+v.layer;return o})(),vOn,vsrc:vOn?vulnSrc.get(String(h.targetRoleUid))||null:null,blind:[...(bstates.get(String(h.castRoleUid))?.values()||[])].some(x=>x.stateId===44763&&x.layer>0),...(fiaM&&curFia.ev?curFia.ev:evalPara(h.skillConfigId,h.castRoleUid,fiaM?curFia.cuid:'')),kst:(()=>{const o={};for(const [uid,m] of bstates)if(!actors.get(uid)||actors.get(uid).kind==='keeper')for(const v of m.values())if([98181,98469,133285].includes(v.stateId))o[v.stateId]=(o[v.stateId]||0)+(v.layer||0);return o})(),vPct:tp.vulnerable_per||50,buffs:(activeBuff.get(String(h.castRoleUid))||[]).map(b=>({...b}))}));
             }
             const hpAfter=hpMini(h.curHp,h.curMaxHp,actorOf(h.targetRoleUid)?.camp===2);
             const html=`${chip(h.castRoleUid)}<span class="mr2arrow">→</span>${chip(h.targetRoleUid)}<span class="mr2amt ${typ}">${typ==='damage'?'−':'+'}${fmt(amt)}</span>${hpAfter}${h.isCrit?`<span class="mr2tag crit">${ui('暴击','CRIT')}</span>`:''}${h.blockedDamage?`<span class="mr2tag">${ui('护盾抵挡','Blocked')} ${fmt(h.blockedDamage)}</span>`:''}<span class="mr2from">${esc(sname)}</span>`;
@@ -1168,7 +1285,8 @@
     // passive "team max HP +N%" (e.g. wheel 灵魂诞生) never shows as an event: the start-of-battle max HP already contains it, so credit N/(100+N) of the keeper's HP pool to the item
     {const kp0=openProps.get(String(ent.keeperUid))?.max_hp;if(kp0>0){const credit=(key,txt)=>{const m=String(txt||'').match(/(?:队伍|团队|所有唤醒体)[^。，；]{0,6}生命上限(?:提高|增加|提升)\s*(\d+(?:\.\d+)?)\s*%/);if(m&&!supStore.get(key)?.maxHp){const p=Number(m[1]);supOf(key).maxHp=(supOf(key).maxHp||0)+kp0*p/(100+p)}};
       for(const g of gears.values())credit('gear:'+g.key,keyText('gear:'+g.key));for(const r of bd.relics||[])credit('rel:'+r.tid,keyText('rel:'+r.tid))}}
-    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs};
+    zoneFlush();   // 最后一个时间戳的乘区缓冲也要落地
+    return {keTotal,eroApplied,keeperFacts:()=>({healNom,healAct,deathResist:deathResistN}),drLog,endDR:()=>endDR,startRelics:(bd.relics||[]).map(x=>String(x.tid)),openProps,relicCreators,genCards,genVerify,genExp,shieldIn,shieldStart,relicEngine,relicDebuff,relicCond,battleCounts:()=>({cards:playLog.filter(p=>p.kind==='card').length,deathResist:deathResistN,kills:killed.size,finish:finishStats}),relicStateAdds,gearDyn,relicPass,openRelic,playLog,roundEnd,roundPool,handFlow,get result(){return result},supStore,passiveSupport,counterLog,counterGain,execStates,openProps,rounds:[...rounds.values()].sort((a,b)=>a.round-b.round),actors,frameCount,eventCount:globalSeq,res,ent,chip,campOf,lastStats,keeperPicks,relicBuffs,hitLog,gears,gearRecs,zoneStk};
   }
 
   function styles(){if(document.getElementById('morimensReplayReviewV2Style'))return;const s=document.createElement('style');s.id='morimensReplayReviewV2Style';s.textContent=`
@@ -2133,7 +2251,9 @@
           const byTid=new Map(),byType=new Map();
           for(const p of cardPlays){
             if(upto!=null&&p.round>=upto)continue;
-            const dmg=Number(p.dmg)||0,def=(Number(p.block)||0)+1.2*(Number(p.heal)||0),c=costOf(p.tid,p.cost);
+            // 增益牌自己没有直接伤害，它的产出 = 它抬起来的乘区在命中里折出来的那份伤害（zoneDmg）：
+            // 力量区按技能系数放大，增伤 / 暴伤 / 暴击率区按 dmg×x/(100+x) 折算，且只在本回合内计息。
+            const dmg=(Number(p.dmg)||0)+(Number(p.zoneDmg)||0),def=(Number(p.block)||0)+1.2*(Number(p.heal)||0),c=costOf(p.tid,p.cost);
             const k=String(p.tid),v=byTid.get(k)||{n:0,dmg:0,def:0};v.n++;v.dmg+=dmg;v.def+=def;byTid.set(k,v);
             const t=typeOf(p.tid),w=byType.get(t)||{n:0,dmg:0,def:0,cost:0};w.n++;w.dmg+=dmg;w.def+=def;w.cost+=c;byType.set(t,w);
           }
@@ -2199,7 +2319,11 @@
           if(ratio!=null){rratios.push(ratio);judgeN++;if(better)infoN++}
           // 展示用：两条轴各自在全预算下的上限（不参与打分，只用来解释「当时还有多少空间」）
           const oD=Math.max(aD,knapX(items,Bd,'d')),oF=Math.max(aF,knapX(items,Bd,'f'));
-          rrows.push({round:rd,budget:B,budgetD:Bd,hand:items.length,played:r.played.length,aD,oD,aF,oF,aV,oV,judge,better,ratio,
+          // 本回合增益牌靠乘区折出来的伤害当量（展示用：让人看得见这部分产出不是凭空给的）
+          // r.played 本身就是 playLog 里的出牌对象，直接取 zoneDmg —— 按 cardUid 去 playLog 里反查会
+          // 把「没有 cardUid 的出牌」（守密人技能）全匹配到一起，把别的回合的归因加进来。
+          const zoneV=r.played.reduce((n,p)=>n+(Number(p.zoneDmg)||0),0);
+          rrows.push({round:rd,budget:B,budgetD:Bd,hand:items.length,played:r.played.length,aD,oD,aF,oF,aV,oV,judge,better,ratio,zoneV,
             items:items.map(i=>({tid:i.tid,c:i.c,d:Math.round(i.d),f:Math.round(i.f),src:i.src,played:i.played}))});
         }
         // 回合等权：一次回合是一次决策。按伤害加权求和会让后期的大数字把早期的失误稀释掉
@@ -2605,7 +2729,7 @@
     const kv=k.kv.sort((a,b)=>b.val-a.val).map(v=>`<div class="mr2mrow"><span>${esc(name(v.tid))} <small>${v.n}× · ${ui(`伤害 ${f(v.dmg)} · 防御 ${f(v.def)} · 辅助 ${f(v.util)}`,`dmg ${f(v.dmg)} / def ${f(v.def)} / util ${f(v.util)}`)}</small></span><b>${v.val.toFixed(2)}</b><i class="mr2msc"><u style="width:${Math.min(100,v.val*50)}%"></u></i><em></em></div>`).join('');
     const rr=k.rrows.map(r=>{const avg=r.ratio!=null?r.ratio:null,judge=(r.judge!=null?r.judge:r.inf!==false)&&avg!=null;
       const aV=Math.round(r.aV||0),oV=Math.round(r.oV||0);
-      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('没有可比的价格，不计','no priceable alternative')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}</small></span><b>${ui(`产出 ${f(aV)} / 上限 ${f(oV)}`,`${f(aV)} / ${f(oV)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
+      return `<div class="mr2mrow"${judge?'':' style="opacity:.55"'}><span>${ui(`第 ${r.round} 回合`,`R${r.round}`)} <small>${ui(`手${r.hand}·出${r.played}·能${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?`（铺垫占 ${r.budget-r.budgetD}）`:''}`,`${r.hand}/${r.played}/${r.budget}${r.budgetD!=null&&r.budgetD!==r.budget?` (setup ${r.budget-r.budgetD})`:''}`)}${judge?'':` · ${ui('没有可比的价格，不计','no priceable alternative')}`}${judge&&r.better?` · ${ui('有更优解','better line existed')}`:''}${r.zoneV>0?` · ${ui(`乘区折 ${f(r.zoneV)}`,`zones ${f(r.zoneV)}`)}`:''}</small></span><b>${ui(`产出 ${f(aV)} / 上限 ${f(oV)}`,`${f(aV)} / ${f(oV)}`)}</b><i class="mr2msc"><u style="width:${avg==null?0:(100*avg).toFixed(0)}%"></u></i><em>${avg==null?'—':Math.round(avg*100)}</em></div>`}).join('')||`<div class="mr2empty">—</div>`;
     const v2=k.v2,fx=v2?.facts||{},pc=v=>v==null?'—':`${Math.round(v*10)/10}%`;
     const LAB={R:ui('资源管理','Resources'),P:ui('出牌决策','Card plays'),T:ui('节奏（对往期）','Tempo'),K:ui('钥令 / 守密人技能','Keyflare'),S:ui('风险控制','Risk'),C:ui('团队协同','Teamwork')};
     const v2html=v2?`<div class="mr2mcol v2"><h6>${ui('守密人评分模型（6 维 + 置信度）','Keeper model (6 dimensions + confidence)')} <em>${sc(v2.score)}</em></h6>
@@ -2644,7 +2768,7 @@
         ${row(ui('手牌利用率（未被回合末弃掉）','Hand used'),pct(E.e2),E.e2==null?null:E.e2*100,ui(`打出 ${f(E.used)} / 回合末弃牌 ${f(E.disc)}`,''))}
         ${row(ui('算力未溢出','No overflow'),pct(E.e3),E.e3==null?null:E.e3*100,ui(`溢出 ${f(E.over)}`,''))}
         ${row(ui('手牌未溢出（未因手牌已满丢牌）','No hand overflow'),fx.handOverflowPct==null?'—':pc(fx.handOverflowPct),fx.handOverflowPct==null?null:Math.max(0,100-Math.min(100,fx.handOverflowPct/25*100)),ui(`丢牌 ${f(fx.handOverflow||0)} / 进手 ${f(fx.handCardsSeen||0)}`,''))}</div>
-      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。产出一律折成「伤害当量」：1 点护盾按吸收 1 点伤害计，所以选攻还是选守不会被重复扣分。按回合等权，不看数字大小；铺垫（觉醒 / 抽牌 / 加狂气）花掉的算力不参与最优解。共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得比`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight). Damage and shield are added 1:1, so picking defence over offence is not punished twice. Rounds are weighted equally; setup energy is excluded from the optimum. ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds were comparable`)}</small>${rr}</div>
+      <div class="mr2mcol"><h6>${ui('出牌是否最优','Play optimality')} <em>${sc(k.playScore)}</em></h6><small class="mr2from">${ui(`同一手牌、同一算力下，用每张牌的价格估算最优组合（背包）。价格只取「这一回合之前」的出牌（不用后面回合的结果倒推），没有历史的按「同类型每点算力产出 × 本牌费用」估。产出一律折成「伤害当量」：1 点护盾按吸收 1 点伤害计，所以选攻还是选守不会被重复扣分；增益牌本身不打伤害，它的当量按它抬起来的「伤害乘区」折算 —— 力量区按「力量 × 该技能的力量系数」算每次命中多打的部分，增伤 / 暴伤区按「伤害 × x/(100+x)」算，暴击率区按「暴击率% × 该次暴伤」算，且只在本牌打出的那一回合内计息，几个乘区之间再按总伤害等比压回来（各自独立算边际会重复计算）。按回合等权，不看数字大小；纯铺垫（觉醒 / 抽牌 / 加狂气）花掉的算力不参与最优解。共 ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} 个回合有得比`,`Best achievable line with the same hand and energy. Card prices come only from rounds before the one being scored (no hindsight). Damage and shield are added 1:1, so picking defence over offence is not punished twice. A buff card deals no damage itself: its equivalent is priced through the damage zones it raised (strength x the skill's strength scale per hit; damage-amp and crit-damage zones as damage x x/(100+x); crit-rate as rate% x crit damage), counted only within the round the card was played, then scaled down so the zones together never claim more than the hit's damage. Rounds are weighted equally; pure setup energy is excluded from the optimum. ${k.pJudge==null?k.pRounds:k.pJudge}/${k.pRounds} rounds were comparable`)}</small>${rr}</div>
       <div class="mr2mcol"><h6>${ui('各钥令实际价值','Keyflare values')}</h6>${kv||`<div class="mr2empty">—</div>`}</div></div>`;
   }
   function ratingPanel(m,total,DIM,res){
@@ -2764,5 +2888,7 @@
     enhance();new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType===1)enhance(n)}).observe(document.body,{subtree:true,childList:true});if(location.hash==='#replay')activateTab();return true;
   }
   if(!setup()){const mo=new MutationObserver(()=>{if(setup())mo.disconnect()});mo.observe(document.documentElement,{subtree:true,childList:true})}
-  window.MorimensReplayReview={importData,exportData,renderFull,analyze,fetchReplay,buildTimeline,unpackLz4Msgpack,calibrateHits,computeStats,preloadAssets};
+  window.MorimensReplayReview={importData,exportData,renderFull,analyze,fetchReplay,buildTimeline,unpackLz4Msgpack,calibrateHits,computeStats,preloadAssets,
+    // 测试钩子：乘区折算公式与分区表（界面不依赖它们，只给回归测试钉口径）
+    _zone:{zoneDmgOf,ZONE_ADD,ZONE_MUL,ZONE_CD,ZONE_CR,isZoneProp}};
 })();
