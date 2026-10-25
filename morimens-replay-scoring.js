@@ -269,9 +269,13 @@ function scoreKeeper(m,tl){
 
 
 // ---------- Keeper decision model v2: six dimensions + regret + confidence ----------------------
-// Principle: judge only what the player controls (resource use, card order, tempo, keyflare use, risk, team-window use), with ratio-type metrics so that
+// Principle: judge only what the player controls (resource use, card order, burst/alemus use, keyflare use, risk, team-window use), with ratio-type metrics so that
 // team strength / wheels / covenants / draw luck are not credited to the keeper. Facts (raw statistics) are returned beside the scores.
-const KW={R:.22,P:.22,T:.18,K:.14,S:.14,C:.10};
+// 第六维原为「节奏」= 同关卡回合数分位数。两个致命问题：① 依赖外部样本表，查不到就永远是「—」（本仓库里大量关卡样本 < 8 或根本不在表里）；
+// ② 它比的是「打了几回合」，而回合数主要由队伍强度、命轮密契和发牌运气决定 —— 正是本模型声明不计入守密人的东西。
+// 现替换为「爆发」：狂气是玩家手动放掉的资源，用不用完全由守密人决定，且比率型（用掉的 ÷ 用掉+剩下），与卡组强度无关。
+// 单指标维度，权重调低到 12%，其余让给数据更厚的资源/出牌两维（22→25）。
+const KW={R:.25,P:.25,B:.12,K:.14,S:.14,C:.10};
 function mean(a){a=a.filter(v=>v!=null&&Number.isFinite(v));return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
 function wavg(entries){let s=0,w=0;for(const [v,wt] of entries){if(v==null||!Number.isFinite(v)||wt<=0)continue;s+=v*wt;w+=wt}return w?s/w:null}
 function scoreKeeperV2(m,tl,ref){
@@ -321,11 +325,24 @@ function scoreKeeperV2(m,tl,ref){
   const Pscore=playRatio==null?null:Math.max(0,Math.min(100,100*(playRatio-seqRatio)));
   Object.assign(facts,{regretPct:playRatio==null?null:100*(1-playRatio),orderLossPct:100*seqRatio,vulnRounds:byRound.size});
   conf.P=Math.min(.95,.45+.5*Math.min(1,rr.length/R))*(.7+.3*(k.playConfidence??.7));
-  // ---- Tempo: percentile against the same stage ------------------------------------------------------
-  let Tscore=null,topPct=null;const refs=Array.isArray(ref)?ref.filter(x=>Number.isFinite(x)):[];
-  if(refs.length>=8){const slower=refs.filter(x=>x>R).length,same=refs.filter(x=>x===R).length;Tscore=100*(slower+same*.5)/refs.length;topPct=100*(refs.filter(x=>x<R).length+same*.5)/refs.length}
-  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,stageSamples:ref?.total||refs.length,topPct,playsPerRound:Math.round(perRoundPlays*10)/10});
-  conf.T=refs.length>=8?.9:.3;
+  // ---- Burst: 狂气周转（涨起来的狂气有没有真的放出去）------------------------------------------------
+  // 数据全部来自回放明文：守密人自己的爆发次数（playLog 里 kind==='ultimate'）+ 回合结束时各唤醒体的狂气 / 上限快照。
+  // 不用 1028 的 changedValue 反推「溢出」，因为无法确认服务器是否已经钳制过增量；「结束时还剩多少」是明文数值，足够且不会错。
+  // 只数「我方唤醒体」的爆发：敌方技能也可能以 kind='ultimate' 落进 playLog（roleUid 分支），不排除会把敌人的技能算成我的狂气消耗
+  const casts=(tl.playLog||[]).filter(p=>p.kind==='ultimate'&&(tl.actors?.get(String(p.owner))?.kind??'awakener')==='awakener').length;
+  let Bleft=0,BcapSum=0,Bunits=0,Bmax=0;
+  {const endsU=[...(tl.roundEnd?.entries()||[])].sort((a,b)=>a[0]-b[0]).map(([,e])=>e.ulti).filter(a=>Array.isArray(a)&&a.length);
+   const lastU=endsU.length?endsU[endsU.length-1]:null;
+   if(lastU)for(const x of lastU){const m=Number(x?.m)||0;if(!(m>0))continue;Bunits++;BcapSum+=m;Bleft+=Math.max(0,Math.min(Number(x?.v)||0,m));if(m>Bmax)Bmax=m}}
+  const oneBurst=Bunits?(BcapSum/Bunits):(Bmax||100);              // 一次爆发大概要多少狂气（上限即消耗）
+  const Bused=casts*oneBurst,Btot=Bused+Bleft;
+  // 全队整场只涨到不足一次爆发的狂气时无法评价（不是不想放，是根本放不出来）—— 返回 null 而不是 0 分。
+  // 没有任何回合末狂气快照时同样返回 null：只知道放了几次、不知道还剩多少，不能据此给满分。
+  const Bscore=Bunits>0&&Btot>=oneBurst*.8?clamp(100*Bused/Btot):null;
+  const perRoundPlays=R>0?plays.length/R:0;Object.assign(facts,{rounds:R,playsPerRound:Math.round(perRoundPlays*10)/10,
+    burstCasts:casts,burstSpent:Math.round(Bused),burstLeft:Bunits?Math.round(Bleft):null,burstUnits:Bunits,
+    burstUnusedPct:Bscore==null?null:100*Bleft/Btot,burstOneCost:Math.round(oneBurst)});
+  conf.B=Bscore==null?.3:(Btot>=oneBurst*2?.9:.65);
   // ---- Keyflare choice and use -------------------------------------------------------------------------
   const kvv=(k.kv||[]).filter(x=>x.n>0),kuses=kvv.reduce((n,x)=>n+x.n,0),meanVal=kuses?kvv.reduce((n,x)=>n+x.val*x.n,0)/kuses:null;
   const Ksel=k.pickScore,Kexec=meanVal==null?null:Math.min(100,100*meanVal/2);
@@ -351,7 +368,7 @@ function scoreKeeperV2(m,tl,ref){
   Object.assign(facts,{critOverflowPct:critOver,critBuilds:critBuild,vulnCoveragePct:cover==null?null:100*cover,buffLeveragePct:sup>0?100*bufShare:null});
   conf.C=cover!=null?.8:sup>0||critOver!=null?.6:.35;
   // ---- Total (weights renormalised over the dimensions that could be measured) ------------------------------
-  const dims={R:Rscore,P:Pscore,T:Tscore,K:Kscore,S:Sscore,C:Cscore};
+  const dims={R:Rscore,P:Pscore,B:Bscore,K:Kscore,S:Sscore,C:Cscore};
   let sw=0,sv=0,cw=0,cv=0;for(const key of Object.keys(KW)){if(dims[key]==null)continue;sw+=KW[key];sv+=KW[key]*dims[key];cw+=KW[key];cv+=KW[key]*(conf[key]||0)}
   const score=sw?sv/sw:null,confidence=cw?cv/cw:0;
   const potential=mean([playRatio==null?null:100*playRatio,Econv]),windows=mean([cover==null?null:100*cover,sup>0?100*bufShare:null]);
