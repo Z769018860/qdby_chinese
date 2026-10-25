@@ -1779,7 +1779,7 @@
     .mr2stack{display:flex;height:14px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.05)}.mr2stack i{display:block;min-width:2px}.mr2legend2{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:#c9d4e3}.mr2legend2 span{display:inline-flex;align-items:center;gap:5px}.mr2legend2>span>i{width:9px;height:9px;border-radius:3px;display:inline-block}.mr2legend2 em{font-style:normal;color:#8ea0b6}.mr2legend2 b{font-variant-numeric:tabular-nums}
     .mr2rchart{display:flex;align-items:flex-end;gap:4px;height:90px;padding:4px 2px 0}.mr2rcol{flex:1;min-width:10px;max-width:38px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px}.mr2rcol i{display:block;width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#ffb36b,#ff8a3d)}.mr2rcol small{font-size:9px;color:#7f8ea2}
     .mr2thead,.mr2trow{display:grid;grid-template-columns:minmax(150px,1.6fr) 54px 58px 54px minmax(160px,2.2fr) 70px 70px;gap:8px;align-items:center}.mr2thead{font-size:10px;color:#7f8ea2;padding:0 10px}.mr2trowd{border:1px solid rgba(148,163,184,.1);border-radius:9px;background:rgba(255,255,255,.02)}.mr2trowd[open]{background:rgba(255,255,255,.04)}.mr2trow{padding:6px 10px;cursor:pointer;list-style:none;font-size:12px;color:#e6edf6}.mr2trow::-webkit-details-marker{display:none}.mr2tn{display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap}.mr2tn b{font-size:12px}.mr2tc{text-align:right;font-variant-numeric:tabular-nums;color:#c9d4e3}
-    .mr2tbar{position:relative;display:flex;align-items:center;gap:6px;height:22px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;padding:0 8px}.mr2tbar i{position:absolute;left:0;top:0;bottom:0;opacity:.55}.mr2tbar b,.mr2tbar em{position:relative;font-size:11px;font-style:normal;font-variant-numeric:tabular-nums}.mr2tbar em{margin-left:auto;color:#dbe4f0}.mr2tdetail{padding:4px 10px 10px;display:grid;gap:6px}
+    .mr2tbar{position:relative;display:flex;align-items:center;gap:6px;height:22px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;padding:0 8px}.mr2tbar i{position:absolute;left:0;top:0;bottom:0;opacity:.55}.mr2tbar b,.mr2tbar em{position:relative;font-size:11px;font-style:normal;font-variant-numeric:tabular-nums}.mr2tbar em{margin-left:auto;color:#dbe4f0}.mr2tdetail{padding:4px 10px 10px;display:grid;gap:6px}.mr2tdetail.zm{margin-top:2px;padding:7px 10px;border-radius:9px;background:rgba(148,163,184,.05);border:1px solid rgba(148,163,184,.12)}.mr2zmt{font-size:10px;color:#8fa0b5;font-weight:600}.mr2zmg{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:5px}.mr2zmg span{display:grid;gap:1px;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.03)}.mr2zmg b{font-size:13px;color:#f4f7fb;font-variant-numeric:tabular-nums}.mr2zmg small{font-size:9px;color:#7f8ea2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .mr2tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px}.mr2tile{display:flex;gap:8px;align-items:flex-start;padding:7px 9px;border-radius:9px;background:rgba(103,190,146,.06);border:1px solid rgba(103,190,146,.22)}.mr2tile.idle{opacity:.5;border-color:rgba(148,163,184,.14);background:rgba(255,255,255,.02)}.mr2tile>div{display:grid;gap:1px;min-width:0}.mr2tile b{font-size:12px;color:#e8f6ee}.mr2tile small{font-size:10px;color:#8ea0b6}.mr2tile em{font-style:normal;font-size:11px;color:#ffb36b;font-weight:700}.mr2tile small.p{color:#9fd0ff}.mr2tile small.b{color:#8fbfff}.mr2tile small.h{color:#8fe0b2}
     @media(max-width:700px){.mr2thead{display:none}.mr2trow{grid-template-columns:1fr 1fr 1fr;row-gap:6px}.mr2trow .mr2tn{grid-column:1/-1}.mr2trow .mr2tbar{grid-column:1/-1}}
 
@@ -2971,10 +2971,66 @@
         for(const r of rows)r.byRows=[...r.by.entries()].map(([uid,amt])=>{
           const p=people.get(uid)||{};
           return {uid,name:p.name||uid,amt,isKeeper:!!p.isKeeper,skey:p.skey||null}}).sort((a,b)=>b.amt-a.amt);
-        // 按唤醒体汇总（只列真有产出的），每个人带上他的乘区分层明细与 skeydb 档案。
+        // ===== 每个唤醒体的乘区建模（zoneModel） =====
+        // 「按唤醒体汇总」原来只有署名账（zones：谁在各乘区层被记了多少伤害），缺一样东西：
+        // **这个唤醒体自己的乘区堆得有多高**——面板力、局外/局内基伤池、力量、终伤池、暴伤、
+        // 暴击率各是多少，力量倍率多大，这些乘区把基础伤害放大了几倍、其中力量贡献了多少份额。
+        // 这里从每个唤醒体的历次命中快照（h.P + zoneCtxOf）聚合出一份乘区档案：
+        //   静态乘区（面板力 / 局外池 / 局内池）整场稳定，取终值快照；
+        //   动态乘区（力量 / 终伤池 / 暴伤 / 暴击率）战斗中剧烈变化，按命中数加权统计 min/mean/max。
+        // 口径与分区分账（zoneCtxOf / zoneChainOf）完全同一份。注意：这里**不做**「重建真实伤害」——
+        // 命中快照里没有技能倍率、暴击倍率、敌方承伤这三样，拿链式当量去比 h.dmg 会差 2~3 个数量级，
+        // 那是个口径错误。能严谨回答的是「乘区本身的放大倍数」与「各乘区在链里的相对份额」。
+        const zoneModelByUid=new Map();
+        for(const h of (tl.hitLog||[])){
+          if(!(h.dmg>0)||h.blind||!(h.round>0))continue;
+          const uid=String(h.uid);const ac=tl.actors?.get(uid);
+          if(!ac||ac.kind!=='awakener')continue;
+          const ctx=zoneCtxOf(res,h);if(!ctx)continue;
+          let m=zoneModelByUid.get(uid);
+          if(!m){m={uid,tid:ac.tid,name:ac.name,n:0,dmg:0,force0:0,per:0,fk:'atk',strMulSum:0,
+            out:0,inn:0,strMin:Infinity,strMax:-Infinity,strSum:0,finMin:Infinity,finMax:-Infinity,finSum:0,
+            cdMin:Infinity,cdMax:-Infinity,cdSum:0,crMin:Infinity,crMax:-Infinity,crSum:0,
+            ampSum:0,strShareSum:0,finShareSum:0};
+            zoneModelByUid.set(uid,m)}
+          const z=ctx.z;
+          m.n++;m.dmg+=h.dmg;m.force0=ctx.force0;m.per=ctx.per;m.fk=ctx.fk;
+          m.strMulSum+=ctx.strMul||0;
+          m.out=z.out||0;m.inn=z.inn||0;                 // 静态池：终值快照
+          const str=z.str||0,fin=z.fin||0,cd=z.cd||0,cr=Number(h.P&&h.P.crit)||0;
+          m.strMin=Math.min(m.strMin,str);m.strMax=Math.max(m.strMax,str);m.strSum+=str;
+          m.finMin=Math.min(m.finMin,fin);m.finMax=Math.max(m.finMax,fin);m.finSum+=fin;
+          m.cdMin=Math.min(m.cdMin,cd);m.cdMax=Math.max(m.cdMax,cd);m.cdSum+=cd;
+          m.crMin=Math.min(m.crMin,cr);m.crMax=Math.max(m.crMax,cr);m.crSum+=cr;
+          // 乘区放大系数（不含暴击/承伤，因为暴击命中才兑现、承伤在敌方侧）：
+          //   amp   = (1+out)(1+inn)(1+fin) —— 池与终伤把基础伤害放大的倍数
+          //   strShare = str / (base×(1+out)(1+inn) + str) —— 力量这个加算项在链式输出里的份额
+          //   finShare = fin/(100+fin) —— 终伤池在「其生效前的链」上的边际占比
+          const pool=(1+z.out/100)*(1+z.inn/100);
+          const amp=pool*(1+z.fin/100);
+          const baseTerm=z.base*pool;
+          const strShare=(baseTerm+str)>0?str/(baseTerm+str):0;
+          const finShare=(100+fin)>0?fin/(100+fin):0;
+          m.ampSum+=amp;m.strShareSum+=strShare;m.finShareSum+=finShare;
+        }
+        const zoneModelOf=uid=>{const m=zoneModelByUid.get(String(uid));if(!m)return null;
+          const mean=k=>m.n>0?m[k+'Sum']/m.n:0;
+          const atkForce=Math.ceil(m.force0*(1+m.per/100));
+          return {uid:m.uid,tid:m.tid,name:m.name,hits:m.n,dmg:m.dmg,
+            force:{value:m.force0,pct:m.per,fk:m.fk,atkForce},
+            out:m.out,inn:m.inn,
+            str:{min:m.strMin,max:m.strMax,mean:mean('str')},
+            fin:{min:m.finMin,max:m.finMax,mean:mean('fin')},
+            cd:{min:m.cdMin,max:m.cdMax,mean:mean('cd')},
+            cr:{min:m.crMin,max:m.crMax,mean:mean('cr')},
+            strMul:mean('strMul'),
+            amp:mean('amp'),strShare:mean('strShare'),finShare:mean('finShare')};
+        };
+        // 按唤醒体汇总（只列真有产出的），每个人带上他的乘区分层明细、乘区模型与 skeydb 档案。
         const byAwakener=[...people.values()].filter(p=>p.dmg||p.blk||p.heal).map(p=>({
           uid:p.uid,tid:p.tid,name:p.name,kind:p.kind,isKeeper:p.isKeeper,dmg:p.dmg,blk:p.blk,heal:p.heal,
-          skey:p.skey,zones:[...p.zones.entries()].map(([ch,amt])=>({ch,label:ZONE_LAYER_NAME[ch]||ch,amt})).sort((a,b)=>b.amt-a.amt)}))
+          skey:p.skey,zones:[...p.zones.entries()].map(([ch,amt])=>({ch,label:ZONE_LAYER_NAME[ch]||ch,amt})).sort((a,b)=>b.amt-a.amt),
+          zoneModel:zoneModelOf(p.uid)}))
           .sort((a,b)=>(b.dmg+b.blk+b.heal)-(a.dmg+a.blk+a.heal));
         // 关联体检：本场出现的唤醒体有几个、有几个在 skeydb 里找得到。
         // 找得到 = 客户端 AwakerConfig id → dzone ingameId → skeydb 记录，三步全通。
@@ -3205,7 +3261,24 @@
     const roleRows=st.per.map(r=>{
       const a=r.a,isK=a.kind==='keeper',srcs=[...r.src.values()].sort((x,y)=>(y.dmg+y.block+y.heal)-(x.dmg+x.block+x.heal)),top=Math.max(1,...srcs.map(o=>o.dmg||o.block||o.heal));
       const col=colorOf.get(String(a.uid))||'#9aa7b8';
-      const detail=srcs.length?`<div class="mr2tdetail">${r.fia?`<span class="mr2tag" title="${esc(ui('出牌时卡牌的活焰层数分布','Fiamma stacks on played cards'))}">🔥 ${ui('活焰出牌','Fiamma')} ${r.fia[1]+r.fia[2]+r.fia[3]}（1/2/3 层 ${r.fia[1]}/${r.fia[2]}/${r.fia[3]}）</span>`:''}${[...r.types.entries()].map(([k,v])=>`<span class="mr2tag">${esc(k)} ×${v}</span>`).join('')}<div class="mr2srcs">${srcs.map(o=>{const v=o.dmg||o.block||o.heal,lab=o.dmg?ui('伤害','DMG'):o.block?ui('护盾','Shield'):ui('治疗','Heal');return `<div class="mr2srow"><span class="mr2sname">${esc(srcName(o))}${o.typ==='utilSkill'?`<small>${ui('爆发','Burst')}</small>`:o.typ==='state'?`<small>${ui('状态','State')}</small>`:''}</span>${bar(v/top,o.dmg?'dmg':o.block?'blk':'heal')}<b>${fmt(v)}</b><small>${lab}${o.dmg&&r.dmg?` ${pctOf(o.dmg,r.dmg)}%`:''}</small></div>`}).join('')}</div></div>`:'';
+      // 每个唤醒体的乘区档案：面板力 / 各池 / 力量 / 终伤 / 暴击，及乘区放大系数与力量、终伤份额。
+      // 与分区分账（zoneCtxOf）同一份口径，数值就是「这个人的乘区堆到多高」，不含技能倍率 / 敌方承伤。
+      const zm=(st.gains&&st.gains.byAwakener||[]).find(x=>x.uid===String(a.uid))?.zoneModel;
+      const zoneModelHtml=(zm&&zm.hits>0)?`<div class="mr2tdetail zm"><small class="mr2zmt">${ui('乘区模型（命中快照聚合）','Multiplier model (from hit snapshots)')} · ${zm.hits} ${ui('次命中','hits')}</small><div class="mr2zmg">`+
+        `<span>${ui('面板力','Panel force')}<b>${fmt(zm.force.atkForce)}</b><small>${zm.force.fk==='def'?ui('防御','DEF'):zm.force.fk==='phys'?ui('体质','PHYS'):ui('攻击','ATK')}${zm.force.pct?` +${zm.force.pct}%`:''}</small></span>`+
+        `<span>${ui('局外池','Out-of-battle')}<b>+${fmt(zm.out)}%</b></span>`+
+        `<span>${ui('局内池','In-battle')}<b>+${fmt(zm.inn)}%</b></span>`+
+        `<span>${ui('力量','Strength')}<b>${fmt(Math.round(zm.str.mean))}</b><small>${fmt(Math.round(zm.str.min))}~${fmt(Math.round(zm.str.max))}</small></span>`+
+        `<span>${ui('终伤池','Final pool')}<b>+${fmt(Math.round(zm.fin.mean))}%</b><small>${fmt(Math.round(zm.fin.min))}~${fmt(Math.round(zm.fin.max))}</small></span>`+
+        `<span>${ui('暴伤','Crit DMG')}<b>${fmt(Math.round(zm.cd.mean))}%</b></span>`+
+        `<span>${ui('暴击率','Crit rate')}<b>${fmt(Math.round(zm.cr.mean))}%</b></span>`+
+        `<span>${ui('力量倍率','STR mult')}<b>×${zm.strMul.toFixed(2)}</b></span>`+
+        `</div><div class="mr2zmg">`+
+        `<span>${ui('乘区放大','Multiplier amp')}<b>×${zm.amp.toFixed(2)}</b><small>${ui('池×终伤','pools × final')}</small></span>`+
+        `<span>${ui('力量份额','Strength share')}<b>${(zm.strShare*100).toFixed(0)}%</b><small>${ui('加算项占比','of additive chain')}</small></span>`+
+        `<span>${ui('终伤份额','Final share')}<b>${(zm.finShare*100).toFixed(0)}%</b></span>`+
+        `</div><small class="mr2from">${ui('乘区链：面板力 → 局外池 → 局内池 → ＋力量 → ×终伤池（→ ×暴击，未在此建模）。力量份额 = 力量 / (面板力×各池 + 力量)，终伤份额 = 终伤/(100+终伤)；动态乘区（力量 / 终伤）按命中数加权取均值。','Chain: panel force → out-pool → in-pool → +STR → ×final (→ ×crit, not modelled here). Strength share = STR/(force×pools+STR); dynamic zones averaged over hits.')}</small></div>`:'';
+      const detail=(srcs.length||zoneModelHtml)?`<div class="mr2tdetail">${r.fia?`<span class="mr2tag" title="${esc(ui('出牌时卡牌的活焰层数分布','Fiamma stacks on played cards'))}">🔥 ${ui('活焰出牌','Fiamma')} ${r.fia[1]+r.fia[2]+r.fia[3]}（1/2/3 层 ${r.fia[1]}/${r.fia[2]}/${r.fia[3]}）</span>`:''}${[...r.types.entries()].map(([k,v])=>`<span class="mr2tag">${esc(k)} ×${v}</span>`).join('')}${srcs.length?`<div class="mr2srcs">${srcs.map(o=>{const v=o.dmg||o.block||o.heal,lab=o.dmg?ui('伤害','DMG'):o.block?ui('护盾','Shield'):ui('治疗','Heal');return `<div class="mr2srow"><span class="mr2sname">${esc(srcName(o))}${o.typ==='utilSkill'?`<small>${ui('爆发','Burst')}</small>`:o.typ==='state'?`<small>${ui('状态','State')}</small>`:''}</span>${bar(v/top,o.dmg?'dmg':o.block?'blk':'heal')}<b>${fmt(v)}</b><small>${lab}${o.dmg&&r.dmg?` ${pctOf(o.dmg,r.dmg)}%`:''}</small></div>`}).join('')}</div>`:''}${zoneModelHtml}</div>`:'';
       return `<details class="mr2trowd"><summary class="mr2trow"><span class="mr2tn">${ico(a.icon,isK?'守':a.name,`av ${isK?'keeper':''}`)}<b>${esc(a.name)}</b>${r.awake?`<span class="mr2tag awake">${ui(`#${r.awake.order} 觉醒 R${r.awake.round}`,`Awake #${r.awake.order} R${r.awake.round}`)}</span>`:(!isK?`<span class="mr2tag dim">${ui('未觉醒','no awakening')}</span>`:'')}</span><span class="mr2tc">${isK?'—':r.plays}</span><span class="mr2tc">${isK?'—':fmt(r.energy)}</span><span class="mr2tc">${isK?'—':r.ulti}</span><span class="mr2tbar"><i style="width:${Math.max(0,r.dmg/maxDmg*100).toFixed(1)}%;background:${col}"></i><b>${fmt(r.dmg)}</b><em>${pctOf(r.dmg,st.totalDmg)}%</em></span><span class="mr2tc">${r.block?fmt(r.block):'—'}</span><span class="mr2tc">${r.heal?fmt(r.heal):'—'}</span></summary>${detail}</details>`}).join('');
     const roles=`<div class="mr2thead"><span>${ui('角色','Character')}</span><span>${ui('出牌','Cards')}</span><span>${ui('算力','Energy')}</span><span>${ui('爆发','Burst')}</span><span>${ui('伤害','Damage')}</span><span>${ui('护盾','Shield')}</span><span>${ui('治疗','Heal')}</span></div>${roleRows}<small class="mr2from">${ui('点击一行展开该角色的伤害 / 护盾来源。出牌数占比（牌权）：','Click a row for its output sources. Card share: ')}${st.per.filter(r=>r.a.kind!=='keeper'&&r.plays).map(r=>`${esc(r.a.name)} ${pctOf(r.plays,st.totalPlays)}%`).join(' · ')}</small>`;
     const rhythm=`<div class="mr2cols2"><div class="mr2panel"><h5>${ui('觉醒与爆发顺序','Awakening & burst order')}</h5>${orderRow(st.awakenOrder,ui('灵知觉醒顺序','Awakening order'))||`<div class="mr2empty">${ui('本场没有灵知觉醒','No awakening this battle')}</div>`}${orderRow(st.ultiOrder,ui('狂气爆发顺序','Burst order'))}</div><div class="mr2panel"><h5>${ui('钥令使用与效果','Keyflare skills & effects')}</h5>${keeperHtml}</div></div>`;
