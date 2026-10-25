@@ -154,6 +154,51 @@
     return {baseRaw,outOfBattleBase,baseAfterPools,amplifiedBase,withAdditions,afterOutgoingState,afterFinal,beforeCrit};
   }
   window.MorimensDamageMath={...(window.MorimensDamageMath||{}),evaluateCoreDamage:evaluateUniversalCore};
+  // ---- 乘区边际：某乘区抬 delta 时，这一击会多出多少伤害 ------------------------------------
+  // 这是「增益类折成伤害」的唯一算式。回放复盘的乘区分账、伤害计算器的乘区校验都调这里，
+  // 保证同一份乘区在两边得到同一个边际贡献，不会再出现「分区分账一套公式、乘区校验另一套」。
+  // 与 evaluateUniversalCore 严格同序（ATK×系数 → 局外基伤池 → 局内基伤池 → 伤害强效
+  // → +力量 → ×终伤池 → ×敌方承伤/等级/加固），因此加算项（力量）不会被基伤池放大、
+  // 也不会被伤害强效放大 —— 这正是手写 `dmg×x/(100+x)` 时最容易搞错的地方。
+  // z.base : 面板力 × 技能系数（加算力量之前的那一块）
+  // z.out / z.inn / z.power / z.fin : 各池当前累计百分比
+  // z.str  : 力量点数，已乘过该技能的「力量加成倍率」
+  // z.cd   : 暴击伤害累计百分比（用于暴伤 / 暴击率两个区）
+  // 返回增量比例 Δdmg / dmg_now（0..∞），调用方乘上该次命中伤害即为折算值。
+  const zoneChain=(z,out,inn,power,str,fin)=>((((Number(z&&z.base)||0)*(1+out/100)*(1+inn/100)*(1+power/100))+str)*(1+fin/100));
+  function zoneMarginalRatio(z,zone,delta){
+    const d=Number(delta)||0;if(!(d>0))return 0;
+    const out=Number(z&&z.out)||0,inn=Number(z&&z.inn)||0,power=Number(z&&z.power)||0,
+      fin=Number(z&&z.fin)||0,str=Number(z&&z.str)||0,cd=Number(z&&z.cd)||0;
+    if(zone==='critDmg')return cd+100>0?d/(100+cd):0;             // 只在暴击命中上：dmg_crit = dmg×(1+cd/100)
+    if(zone==='critRate')return (d/100)*(cd/100);                 // 只在非暴击命中上：多出的期望倍率
+    const now=zoneChain(z,out,inn,power,str,fin);
+    if(!(now>0))return 0;
+    let nxt;
+    if(zone==='strength')nxt=zoneChain(z,out,inn,power,str+d,fin);
+    else if(zone==='out')nxt=zoneChain(z,out+d,inn,power,str,fin);
+    else if(zone==='in')nxt=zoneChain(z,out,inn+d,power,str,fin);
+    else if(zone==='power')nxt=zoneChain(z,out,inn,power+d,str,fin);
+    else if(zone==='final')nxt=zoneChain(z,out,inn,power,str,fin+d);
+    else return 0;
+    return Math.max(0,(nxt-now)/now);
+  }
+  window.MorimensDamageMath.zoneMarginalRatio=zoneMarginalRatio;
+  window.MorimensDamageMath.zoneMarginalDmg=(z,zone,delta,dmgNow)=>Math.max(0,Number(dmgNow)||0)*zoneMarginalRatio(z,zone,delta);
+  // 分区 → 计算器里的字段名：让「分区分账」的每个通道都能说清它落在公式的哪一层
+  window.MorimensDamageMath.zoneLayers={
+    strength:'strengthAdd（加算，在伤害强效之后、终伤池之前）',
+    out:'outOfBattleBasePools（局外基伤池，乘算，不放大力量）',
+    in:'inBattleBasePools（局内基伤池，乘算，不放大力量）',
+    power:'damageAmpPct（伤害强效，乘算，不放大力量）',
+    final:'finalPools（终伤池，乘算）',
+    critDmg:'Critical 倍率（×（1+暴伤/100），仅暴击）',
+    critRate:'Critical 期望（仅非暴击命中）',
+    enemy:'enemyStateMult（敌方承伤 / 易伤，乘算）',
+    level:'postMult 中的等级系数',
+    fortify:'postMult 中的加固系数',
+    basic:'面板力 × 技能系数（baseRaw）'
+  };
   const damageMathReferenceCases=(()=>{
     const critBase=evaluateUniversalCore({baseRaw:309,basePools:[30,25],damageAmpPct:105,strengthAdd:0,additiveAdd:0,outgoingStateMult:1,finalPools:[],enemyStateMult:1,postMult:.95});
     const vulnerableStrength=evaluateUniversalCore({baseRaw:309,basePools:[30,25],damageAmpPct:105,strengthAdd:47*3,additiveAdd:0,outgoingStateMult:1,finalPools:[],enemyStateMult:1.5,postMult:.95});
