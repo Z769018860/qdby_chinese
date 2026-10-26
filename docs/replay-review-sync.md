@@ -16,7 +16,7 @@
 | 审计记录 | `data/morimens/replay/review-audit-20261015.md`（Claude）、README / 各轮提交说明（WorkBuddy） | |
 | 批量审计脚本 | `scripts/replay_audit/audit.js`（新增，见 §7） | 两边可共用 |
 
-**版本号**：`morimens-tools.js` 的 `assetVersion`、`morimens-tools.html`、`morimens-replay-timeline.js` 三处必须同值（现为 `20261026.1`）。每次发版两边都会改这三行，**合并冲突几乎只会出在这里**——冲突时取较新的并整体再加一档，不要保留旧值，否则线上浏览器会读到旧模块。
+**版本号（缓存击穿）**：`morimens-tools.js` 的 `assetVersion`、`morimens-tools.html` 里 `morimens-tools.js?v=`、`morimens-replay-timeline.js` 里 `morimens-replay-review-v2.js?v=` 三处，改了对应 JS 就要一起往上加一档（现为 `20261026.1`；WorkBuddy 侧近期这三处的值不完全一致，没关系，只要都比上次发布的新）。**合并冲突几乎只会出在这几行**——冲突时取较新的并再加一档，不要保留旧值，否则线上浏览器会读到旧模块。
 
 ## 2. Claude 侧改动（2026-10-05 → 10-26，按主题）
 
