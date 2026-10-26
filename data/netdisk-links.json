@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_at": "2026-10-26 00:05:59",
-  "checked_at": "2026-10-26 00:05",
+  "generated_at": "2026-10-27 00:05:29",
+  "checked_at": "2026-10-27 00:05",
   "source_repo": "Z769018860/qdby_chinese",
   "source_site": "https://qdby-chinese.vercel.app",
   "note": "来源：B 站发布视频的简介 / UP主置顶评论 / 评论区补充 / 专栏正文",
@@ -10,9 +10,9 @@
   "unique_links": 174,
   "checked": true,
   "summary": {
-   "ok": 112,
+   "ok": 110,
    "dead": 66,
-   "unknown": 1
+   "unknown": 3
   },
   "platform_summary": {
    "百度网盘": {
@@ -28,8 +28,8 @@
     "dead": 4
    },
    "迅雷云盘": {
-    "ok": 20,
-    "unknown": 1
+    "ok": 18,
+    "unknown": 3
    },
    "腾讯微云": {
     "ok": 7
@@ -70,7 +70,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1rNwBx54-gIK5R0qt3yaJ4Q?pwd=i6r4",
@@ -82,7 +82,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/370da4bf04b4",
@@ -94,7 +94,7 @@
      "status": "ok",
      "detail": "分享有效｜温柔狗男人mac版.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -124,7 +124,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -157,7 +157,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/302f48898702",
@@ -167,7 +167,7 @@
      "platform_name": "夸克网盘",
      "share_id": "302f48898702",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -203,7 +203,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -235,7 +235,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -264,7 +264,7 @@
      "share_id": null,
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip 192.84 MB2025-09-09"
     },
     {
@@ -275,7 +275,7 @@
      "platform_name": "夸克网盘",
      "share_id": "b7b1e6055406",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -288,7 +288,7 @@
      "platform_name": "夸克网盘",
      "share_id": "5cfc2ad79a6d",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -323,7 +323,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -353,7 +353,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -385,7 +385,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -417,7 +417,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -449,7 +449,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1qn-CH9xUsu7-cbzl61Bebg?pwd=dqhy",
@@ -462,7 +462,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -491,7 +491,7 @@
      "share_id": null,
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09"
     },
     {
@@ -504,7 +504,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans#",
@@ -515,7 +515,7 @@
      "share_id": "VOfYSx",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07 "
     },
     {
@@ -526,7 +526,7 @@
      "platform_name": "夸克网盘",
      "share_id": "fb7d7e01f866",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -539,7 +539,7 @@
      "platform_name": "夸克网盘",
      "share_id": "8364570fa481",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -553,7 +553,7 @@
      "share_id": "05WlFxr6",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB "
     },
     {
@@ -566,7 +566,7 @@
      "status": "ok",
      "detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -596,7 +596,7 @@
      "platform_name": "百度网盘",
      "share_id": "1DAqNIhnDWAcQNWf00j1H_w",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -608,10 +608,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOfYDWOOMzhvlP6cMegiBr0JA1",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜kimiwaaoiro_chs.zip 160.8MB 2026-06-12 05:04 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "status": "unknown",
+     "detail": "页面状态无法判定",
+     "status_text": "待确认",
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://www.123865.com/s/ootDVv-8Vjov?pwd=ulAI#",
@@ -623,7 +623,7 @@
      "status": "ok",
      "detail": "分享有效｜kimikaaoiro_chs.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/f849c4061ca14",
@@ -635,7 +635,7 @@
      "status": "ok",
      "detail": "分享有效｜kimiwaaoiro_chs.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8471392676-333c65?p=1528",
@@ -647,7 +647,7 @@
      "status": "ok",
      "detail": "分享有效｜kimikaaoiro_chs.zip 115.35 MB2025-11-13",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ef0f6ffdb1e1",
@@ -657,7 +657,7 @@
      "platform_name": "夸克网盘",
      "share_id": "ef0f6ffdb1e1",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -670,14 +670,14 @@
      "platform_name": "夸克网盘",
      "share_id": "ff13dece379d",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
     }
    ],
    "notes": [],
-   "links_ok": 4,
+   "links_ok": 3,
    "links_dead": 3
   },
   {
@@ -701,7 +701,7 @@
      "platform_name": "夸克网盘",
      "share_id": "e6baf1abb1d3",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -716,7 +716,7 @@
      "status": "ok",
      "detail": "分享有效｜COLOR_COLLAR汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://share.weiyun.com/P5w3qWaW",
@@ -728,7 +728,7 @@
      "status": "ok",
      "detail": "分享有效｜COLOR_COLLAR汉化补丁.zip 2025年11月24日 52.83 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://www.123865.com/s/ootDVv-rQTmv?pwd=5qAd#",
@@ -741,7 +741,7 @@
      "status": "ok",
      "detail": "分享有效｜CC 补丁备份.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1tWtzsbCMzyOTK6tRR5-z2g?pwd=v9bv",
@@ -754,7 +754,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -782,7 +782,7 @@
      "platform_name": "百度网盘",
      "share_id": "1OF25L4HEX00_JHZaXZdq_A",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -795,7 +795,7 @@
      "platform_name": "夸克网盘",
      "share_id": "a227dde020c2",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -810,7 +810,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜不要抛下我 汉化补丁.zip 16MB 2026-02-01 20:13 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/7a1ca4a8e4804",
@@ -820,7 +820,7 @@
      "platform_name": "UC网盘",
      "share_id": "7a1ca4a8e4804",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -833,7 +833,7 @@
      "platform_name": "夸克网盘",
      "share_id": "e445d3ad3c0f",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -848,7 +848,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜不要抛下我 汉化备份.zip 187.5MB 2026-02-20 16:00 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -878,7 +878,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1398Th72qKWRtKV3w_sk3fQ?pwd=anxt",
@@ -890,7 +890,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm",
@@ -900,7 +900,7 @@
      "platform_name": "夸克网盘",
      "share_id": "e477f65feaa8",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -915,7 +915,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜花嫁隐 汉化补丁备份（密码见视频简介）.zip 265.6MB 2026-02-20 16:01 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/19A5I7Dk-hzY8xZD-Js-41Q?pwd=458t",
@@ -927,7 +927,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c",
@@ -937,7 +937,7 @@
      "platform_name": "百度网盘",
      "share_id": "10aV7oN1zITo4Q5g4LJP9GA",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -970,7 +970,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VtjaKZ2RVHvxSRV7H7pr7Q?pwd=qfbm",
@@ -982,7 +982,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1012,7 +1012,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1042,7 +1042,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -1074,7 +1074,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -1106,7 +1106,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1136,7 +1136,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VO9pWQjGe0jn3dDBnT-SLw?pwd=23rs",
@@ -1149,7 +1149,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1179,7 +1179,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -1211,7 +1211,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -1243,7 +1243,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -1275,7 +1275,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -1307,7 +1307,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/4d8a94a454f3",
@@ -1317,7 +1317,7 @@
      "platform_name": "夸克网盘",
      "share_id": "4d8a94a454f3",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1350,7 +1350,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1380,7 +1380,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/9b7b131baf30",
@@ -1390,7 +1390,7 @@
      "platform_name": "夸克网盘",
      "share_id": "9b7b131baf30",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1423,7 +1423,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/531bc6015b3f",
@@ -1433,7 +1433,7 @@
      "platform_name": "夸克网盘",
      "share_id": "531bc6015b3f",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1446,14 +1446,14 @@
      "comment_date": "2026-03-18",
      "platform_name": "迅雷云盘",
      "share_id": "VOnyNubGFfhY9O",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜灰姑娘现象FD机翻润色补丁.zip 704MB 2026-03-18 07:04 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "status": "unknown",
+     "detail": "页面状态无法判定",
+     "status_text": "待确认",
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 2,
+   "links_ok": 1,
    "links_dead": 1
   },
   {
@@ -1478,7 +1478,7 @@
      "share_id": null,
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效｜人类保管库 汉化版.zip 137.26 MB2025-10-14"
     },
     {
@@ -1491,7 +1491,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://share.weiyun.com/3sblmV9F",
@@ -1502,7 +1502,7 @@
      "share_id": "3sblmV9F",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效｜人类保管库 汉化版.zip 2025年10月14日 137.26 MB "
     },
     {
@@ -1513,7 +1513,7 @@
      "platform_name": "夸克网盘",
      "share_id": "00dffb67943b",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1548,7 +1548,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://share.weiyun.com/wgc5yqS9",
@@ -1560,7 +1560,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip 2025年10月14日 84.8 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8452136792-41c934?p=1528",
@@ -1572,7 +1572,7 @@
      "status": "ok",
      "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip 84.80 MB2025-10-14",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/d707fbc6e074",
@@ -1582,7 +1582,7 @@
      "platform_name": "夸克网盘",
      "share_id": "d707fbc6e074",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1615,7 +1615,7 @@
      "status": "ok",
      "detail": "分享有效｜并非兄妹 汉化完整版.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8452133618-d25165?p=1528",
@@ -1627,7 +1627,7 @@
      "status": "ok",
      "detail": "分享有效｜并非兄妹的热病 汉化补丁.zip 141.62 MB2025-10-14",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/aacaa363282f",
@@ -1637,7 +1637,7 @@
      "platform_name": "夸克网盘",
      "share_id": "aacaa363282f",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1652,7 +1652,7 @@
      "status": "ok",
      "detail": "分享有效｜并非兄妹的热病 汉化补丁.zip 2025年10月14日 141.62 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1682,7 +1682,7 @@
      "status": "ok",
      "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip",
@@ -1694,7 +1694,7 @@
      "status": "dead",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "skip_recheck": true
     },
     {
@@ -1706,7 +1706,7 @@
      "share_id": "SOCeG7UU",
      "status": "ok",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00",
+     "checked_at": "2026-10-27 00:00",
      "detail": "分享有效｜关于梦 汉化补丁.zip 2025年11月28日 47.8 MB "
     },
     {
@@ -1717,7 +1717,7 @@
      "platform_name": "夸克网盘",
      "share_id": "849df8014b17",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1730,7 +1730,7 @@
      "platform_name": "夸克网盘",
      "share_id": "0a1e3c67c472",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1763,7 +1763,7 @@
      "platform_name": "百度网盘",
      "share_id": "19hK8KkVXFLy3IfY70pw_eg",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1776,7 +1776,7 @@
      "platform_name": "夸克网盘",
      "share_id": "246f4d295926",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1791,7 +1791,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/d05786e3dbc84",
@@ -1801,7 +1801,7 @@
      "platform_name": "UC网盘",
      "share_id": "d05786e3dbc84",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1814,7 +1814,7 @@
      "platform_name": "百度网盘",
      "share_id": "1oDNRBPmxr_KjnppmdGX4Og",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1828,7 +1828,7 @@
      "platform_name": "百度网盘",
      "share_id": "1VHUrWgoOHfDzyMnP9uTlFw",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1861,7 +1861,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/b1670df90436?pwd=aeTt",
@@ -1871,7 +1871,7 @@
      "platform_name": "夸克网盘",
      "share_id": "b1670df90436",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1883,10 +1883,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOiDvXodPCJ",
-     "status": "unknown",
-     "detail": "页面状态无法判定",
-     "status_text": "待确认",
-     "checked_at": "2026-10-26 00:00"
+     "status": "ok",
+     "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈(1).zip 19.6MB 2026-01-06 00:11 ",
+     "status_text": "有效",
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1IXFJlXpg3oOmU7bWRM-6wA?pwd=88ac",
@@ -1899,7 +1899,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1_Kt7VHEgLnhVWzfIs8fHHw?pwd=gxn6",
@@ -1912,7 +1912,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/980575fd2e8e",
@@ -1923,7 +1923,7 @@
      "platform_name": "夸克网盘",
      "share_id": "980575fd2e8e",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -1939,11 +1939,11 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈.zip 19.6MB 2026-01-05 23:42 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 4,
+   "links_ok": 5,
    "links_dead": 2
   },
   {
@@ -1969,7 +1969,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -1999,7 +1999,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/0cc65915c309",
@@ -2009,7 +2009,7 @@
      "platform_name": "夸克网盘",
      "share_id": "0cc65915c309",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2042,7 +2042,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -2074,7 +2074,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ea843c28afe4",
@@ -2084,7 +2084,7 @@
      "platform_name": "夸克网盘",
      "share_id": "ea843c28afe4",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2117,7 +2117,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/93069786f079",
@@ -2127,7 +2127,7 @@
      "platform_name": "夸克网盘",
      "share_id": "93069786f079",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2158,7 +2158,7 @@
      "platform_name": "百度网盘",
      "share_id": "1jAimzdUD4aCQIRvsZZnXeQ",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2174,7 +2174,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜爱情寄生虫 汉化完整版.zip 304.2MB 2026-02-25 18:04 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2202,7 +2202,7 @@
      "platform_name": "百度网盘",
      "share_id": "1_Tnf_8MG-0_1yZL0Zpy3kw",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2215,7 +2215,7 @@
      "platform_name": "夸克网盘",
      "share_id": "4045e8716360",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2230,7 +2230,7 @@
      "status": "ok",
      "detail": "分享有效｜惩罚之吻 汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528",
@@ -2240,7 +2240,7 @@
      "platform_name": "城通网盘",
      "share_id": null,
      "status": "dead",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2253,7 +2253,7 @@
      "platform_name": "城通网盘",
      "share_id": null,
      "status": "dead",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2268,7 +2268,7 @@
      "status": "ok",
      "detail": "分享有效｜惩罚之吻 汉化补丁.zip 2025年12月03日 15.76 MB ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2298,7 +2298,7 @@
      "status": "ok",
      "detail": "分享有效｜HIKEBACK汉化完整版.zip 72.33 MB2025-09-13",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw",
@@ -2308,7 +2308,7 @@
      "platform_name": "百度网盘",
      "share_id": "1HYbELL2mt7A9AbfY8BYKtg",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2321,7 +2321,7 @@
      "platform_name": "夸克网盘",
      "share_id": "c3635ad46422",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2354,7 +2354,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2384,7 +2384,7 @@
      "status": "ok",
      "detail": "分享有效｜demonheart 机翻润色补丁.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn",
@@ -2394,7 +2394,7 @@
      "platform_name": "百度网盘",
      "share_id": "1Bu3lcAQK7pdPbSMvhIWoqg",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2427,7 +2427,7 @@
      "status": "ok",
      "detail": "分享有效｜恶魔之心：猎人 机翻汉化补丁.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln",
@@ -2437,7 +2437,7 @@
      "platform_name": "百度网盘",
      "share_id": "1A_tJhr1VxYqKGUdREKgr5g",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2470,7 +2470,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2500,7 +2500,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1VfM569bIXc88XNqNWkPOPw?pwd=wd47",
@@ -2512,7 +2512,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/03c50cd0bb46",
@@ -2522,7 +2522,7 @@
      "platform_name": "夸克网盘",
      "share_id": "03c50cd0bb46",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2555,7 +2555,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2586,7 +2586,7 @@
      "detail": "分享有效（需提取码）｜永久有效｜与死神的约会 本体完整汉化版.zip 929.3MB 2026-02-25 18:19 ",
      "note": "来自 UP 主 2026-04-06 的补档博文（视频被举报下架后的补档）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOmJJ6JS9lZjFpoV7D3wTk0PA1",
@@ -2599,7 +2599,7 @@
      "detail": "分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19 ",
      "note": "同上",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/7592f83e7545",
@@ -2609,7 +2609,7 @@
      "share_id": "7592f83e7545",
      "status": "dead",
      "source": "weibo",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "note": "同上",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
@@ -2623,7 +2623,7 @@
      "share_id": "c7a6308b4f59",
      "status": "dead",
      "source": "weibo",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "note": "同上",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
@@ -2657,7 +2657,7 @@
      "platform_name": "百度网盘",
      "share_id": "1Gfv3o5OrV-Y_cjm217TyUQ",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2670,7 +2670,7 @@
      "platform_name": "夸克网盘",
      "share_id": "625a66c341d1",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2684,7 +2684,7 @@
      "platform_name": "夸克网盘",
      "share_id": "8e9e4cff4611",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2717,7 +2717,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2745,7 +2745,7 @@
      "platform_name": "百度网盘",
      "share_id": "15udWdc7EQcXUfmkO6QekJA",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2776,7 +2776,7 @@
      "platform_name": "夸克网盘",
      "share_id": "d2a976a8cf14",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2791,7 +2791,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2821,7 +2821,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528",
@@ -2833,7 +2833,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip 209.17 MB2025-10-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/fb2fd1917f21",
@@ -2845,7 +2845,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁v1.1.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528",
@@ -2855,7 +2855,7 @@
      "platform_name": "城通网盘",
      "share_id": null,
      "status": "dead",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2870,7 +2870,7 @@
      "status": "ok",
      "detail": "分享有效｜别吃收银员！ 汉化补丁.zip｜到期 2099-12-12",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/e84b113d573c",
@@ -2880,7 +2880,7 @@
      "platform_name": "夸克网盘",
      "share_id": "e84b113d573c",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2913,7 +2913,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [
@@ -2943,7 +2943,7 @@
      "platform_name": "百度网盘",
      "share_id": "1V3DaknVe_YzqV3zY4HsQWg",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2956,7 +2956,7 @@
      "platform_name": "夸克网盘",
      "share_id": "9780b9de1b7c",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -2971,7 +2971,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -2999,7 +2999,7 @@
      "platform_name": "百度网盘",
      "share_id": "1q21Upm-P4cM_y8xWEnsNHA",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3012,7 +3012,7 @@
      "platform_name": "夸克网盘",
      "share_id": "d891ae5de524",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3027,7 +3027,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/e2f43ca43b8b4",
@@ -3037,7 +3037,7 @@
      "platform_name": "UC网盘",
      "share_id": "e2f43ca43b8b4",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3070,7 +3070,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/ebf194eb099f",
@@ -3080,7 +3080,7 @@
      "platform_name": "夸克网盘",
      "share_id": "ebf194eb099f",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3095,7 +3095,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化补丁v1.1by青灯不弈.zip 43.9MB 2026-07-06 15:50 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q",
@@ -3105,7 +3105,7 @@
      "platform_name": "百度网盘",
      "share_id": "1viVsipJI6GcrsUR_kb6jvQ",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3118,7 +3118,7 @@
      "platform_name": "夸克网盘",
      "share_id": "d727e34ead20",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3133,7 +3133,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜梦之门（冬弥雪） 汉化补丁by青灯不弈.zip 43.9MB 2026-05-10 16:50 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/874242a1ffa44",
@@ -3143,7 +3143,7 @@
      "platform_name": "UC网盘",
      "share_id": "874242a1ffa44",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3158,7 +3158,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1#",
@@ -3170,7 +3170,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化备份.zip 340.9MB 2026-05-10 16:45 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -3200,7 +3200,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/47eec60af621",
@@ -3212,7 +3212,7 @@
      "status": "ok",
      "detail": "分享有效｜冬弥雪短篇",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1#",
@@ -3224,7 +3224,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/a15712f77ccf4",
@@ -3234,7 +3234,7 @@
      "platform_name": "UC网盘",
      "share_id": "a15712f77ccf4",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3265,7 +3265,7 @@
      "platform_name": "百度网盘",
      "share_id": "1DYCaJZQl-aUs2063qBxm4w",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3280,7 +3280,7 @@
      "status": "ok",
      "detail": "分享有效｜替身谎言",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1#",
@@ -3289,10 +3289,10 @@
      "source": "desc",
      "platform_name": "迅雷云盘",
      "share_id": "VOyriyR9yyRk8XQqXaSHwtK1A1",
-     "status": "ok",
-     "detail": "分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29 ",
-     "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "status": "unknown",
+     "detail": "页面状态无法判定",
+     "status_text": "待确认",
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/e818987ce1474",
@@ -3304,11 +3304,11 @@
      "status": "ok",
      "detail": "分享有效｜替身谎言",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
-   "links_ok": 3,
+   "links_ok": 2,
    "links_dead": 1
   },
   {
@@ -3332,7 +3332,7 @@
      "platform_name": "百度网盘",
      "share_id": "1KBjc7WT1ya1ptOmWS0l2SA",
      "status": "dead",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3345,7 +3345,7 @@
      "platform_name": "夸克网盘",
      "share_id": "14e3bebe2f45",
      "status": "dead",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "status_text": "失效",
      "checked_at": "2026-10-25 00:54",
      "skip_recheck": true
@@ -3360,7 +3360,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip 10MB 2026-10-16 20:03 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/d890c62374494",
@@ -3372,7 +3372,7 @@
      "status": "ok",
      "detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://wwanu.lanzoue.com/iJbaA4c89rde",
@@ -3384,7 +3384,7 @@
      "status": "ok",
      "detail": "分享有效｜10.0 M",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
@@ -3414,7 +3414,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.quark.cn/s/499e10eefe3d",
@@ -3426,7 +3426,7 @@
      "status": "ok",
      "detail": "分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1#",
@@ -3438,7 +3438,7 @@
      "status": "ok",
      "detail": "分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58 ",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://drive.uc.cn/s/6a8f0cac8f604",
@@ -3450,7 +3450,7 @@
      "status": "ok",
      "detail": "分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     },
     {
      "url": "https://wwanu.lanzoue.com/iFdGG4cg9hnc",
@@ -3462,7 +3462,7 @@
      "status": "ok",
      "detail": "分享有效｜81.7 M",
      "status_text": "有效",
-     "checked_at": "2026-10-26 00:00"
+     "checked_at": "2026-10-27 00:00"
     }
    ],
    "notes": [],
