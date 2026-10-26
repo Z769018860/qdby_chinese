@@ -132,25 +132,26 @@ def write_json(path: Path, obj):
 def bump_asset_version():
     today = dt.datetime.now(TZ).strftime("%Y%m%d")
     js = ROOT / "morimens-tools.js"
-    m = re.search(r'assetVersion="(\d{8})\.(\d+)"', js.read_text(encoding="utf-8"))
+    m = re.search(r'assetVersion="(\d{8})\.(\d+)"', js.read_bytes().decode("utf-8"))
     old = m.group(0)
     new_ver = f"{today}.{int(m.group(2)) + 1 if m.group(1) == today else 1}"
     for f in (js, ROOT / "morimens-tools.html"):
-        t = f.read_text(encoding="utf-8")
-        t = re.sub(r"\d{8}\.\d+", new_ver, t) if f.suffix == ".html" else t.replace(old, f'assetVersion="{new_ver}"')
-        f.write_text(t, encoding="utf-8")
+        t = f.read_bytes().decode("utf-8")      # bytes, so CRLF / LF line endings stay exactly as they are
+        t = re.sub(r"(?<=\?v=)\d{8}\.\d+", new_ver, t) if f.suffix == ".html" else t.replace(old, f'assetVersion="{new_ver}"')
+        f.write_bytes(t.encode("utf-8"))
     log(f"assetVersion -> {new_ver}")
 
 
 def add_changelog(zh, en):
     f = ROOT / "morimens-dtide.js"
-    t = f.read_text(encoding="utf-8")
+    t = f.read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in t else "\n"
     i = t.index('<div class="sourceItem"><strong>20')
     day = dt.datetime.now(TZ).strftime("%Y-%m-%d")
     if "'" in zh or "'" in en:
         raise SystemExit("the changelog texts are inside single-quoted JS strings: do not use apostrophes (use other wording)")
-    entry = f"<div class=\"sourceItem\"><strong>{day}</strong><br>${{ui('{zh}','{en}')}}</div>\n        "
-    f.write_text(t[:i] + entry + t[i:], encoding="utf-8")
+    entry = f"<div class=\"sourceItem\"><strong>{day}</strong><br>${{ui('{zh}','{en}')}}</div>{nl}        "
+    f.write_bytes((t[:i] + entry + t[i:]).encode("utf-8"))
     log("changelog entry added")
 
 
