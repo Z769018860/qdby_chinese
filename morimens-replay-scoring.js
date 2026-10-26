@@ -197,7 +197,9 @@ function scoreAwakeners(m){
     // ——burden→0 时 ratio→∞（实测：整场只抽 1 张牌的角色 eff 封顶 92，与打满全场的主力同分）。
     // 因此用"实际消耗的资源份额 / 其公平份额"判断这个角色是否真的参与了战斗，作为 [0.55,1] 的系数。
     // 尺度 0.35：消耗到"公平份额"时 gate≈0.97（不再通缩），只有 burden < 0.4·fairS 才明显扣分
-    const fairS=1/N,gate=burden==null?1:.55+.45*(sat(burden/Math.max(1e-9,fairS),.35)/100);
+    // 参与度取「消耗份额」与「贡献份额(impact)」的较大者：被动 / 辅助 / 自动输出型唤醒体（沙耶、「24」…）几乎不打牌，但贡献可以很大——
+    // 只看出牌 / 算力份额会把他们的分数系统性压低（实测 22 个 impact>20% 的角色 gate 只有 0.6–0.8）
+    const fairS=1/N,presence=burden==null?null:Math.max(burden,impact==null?0:impact),gate=presence==null?1:.55+.45*(sat(presence/Math.max(1e-9,fairS),.35)/100);
     let eff=60,ratio=null,mod=1;
     if(impact!=null&&burden!=null&&burden>0){ratio=impact/Math.max(burden,fairS*.4);eff=clamp(50+20*Math.log2(Math.max(.25,Math.min(8,ratio))),20,92);mod=.94+.12*(eff/100)}
     let score=(base+specialist+breadth)*mod*gate+rescue*mod;
@@ -207,7 +209,7 @@ function scoreAwakeners(m){
     // 保底同样受存在性闸门约束：几乎没出力的角色不该靠"某一维度份额很高"拿到 58 / 68 的保底
     if(top>=85)score=Math.max(score,68*gate);else if(top>=75)score=Math.max(score,58*gate);
     score=clamp(score);
-    return {ref,x,score,grade:grade(score),cats,role:available[0]?.[0]||'out',roleLabel:roleName(available[0]?.[0]||'out'),eff,ratio,features:awakenerUtilityLabels(x)};
+    return {ref,x,score,grade:grade(score),gate,impact,burden,cats,role:available[0]?.[0]||'out',roleLabel:roleName(available[0]?.[0]||'out'),eff,ratio,features:awakenerUtilityLabels(x)};
   }).sort((a,b)=>b.score-a.score);
 }
 

@@ -3070,7 +3070,7 @@
         // relics / creations go through the same semantic + measured model (they used to keep the plain relative rating, which buried e.g. a +30% damage relic worth 21% of the team's damage at 12 points)
         {const wrapped=relicItems.map(it=>{const rec=res.relic[it.r.tid]||{};return {...it,g:{name:res.nameRelic(it.r.tid),en:'',desc:pipeName(pickVariant(rec.BattleDesc||rec.Desc,0))||'',effectsEn:[],statics:[],related:new Set(),n:it.r.n||0}}});
           for(const row of SC.scoreGear(wrapped,tl,totalDmg||1)){const it=relicItems.find(x=>x.r===row.r);if(it){it.score=row.enhancedScore;it.grade=row.enhancedGrade;it._sm=row._sm;it.cats=row.enhancedCats}}}
-        for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff}}
+        for(const o of SC.scoreAwakeners({awakeners:awRows})){o.ref.score=o.score;o.ref.grade=o.grade;o.ref.cats=o.cats;o.ref.enh={role:o.role,roleLabel:o.roleLabel,features:o.features,eff:o.eff,gate:o.gate,impact:o.impact,burden:o.burden}}
         awRows.sort((a,b)=>b.score-a.score);
         // 守密人「节奏」的上游数据：本场回合数 / 用牌数。**这两个数必须同源**，
         // 否则「服务端回合数 17 + 回放反推用牌数 38」会算出每回合 2.2 张牌（或反过来 15.7 张），
@@ -3613,7 +3613,8 @@
       await Promise.all((full.battleDat?.roleData||[]).map(async ri=>{
         const nm=String(res.aw[String(ri.tid)]?.NameEn||'').toLowerCase(),rec=skAwakeners.find(x=>String(x.name).toLowerCase()===nm);if(!rec)return;
         const st=list.find(x=>String(x.ownerData?.uid)===String(ri.uid)&&(x.source||[]).some(q=>q.sourceType==='AwakerTalents')&&/通用天赋/.test(res.state[String(x.stateId)]?.CnID||'')),P=(st?.stateParams||[]).map(Number);if(P.length<2)return;
-        const r=await fetch(`data/morimens/skeydb/public-v3/records/talents/talent.${rec.slug}.soulforge-aptitude.json`,{cache:'force-cache'});if(!r.ok)return;const t=await r.json(),a1=t.descriptionArgs?.Arg1,a2=t.descriptionArgs?.Arg2;if(!a1||!a2)return;
+        let r=await fetch(`data/morimens/skeydb/public-v3/records/talents/talent.${rec.slug}.soulforge-aptitude.json`,{cache:'force-cache'});if(!r.ok)r=await fetch(`data/morimens/skeydb/public-v3/records/talents/talent.${rec.slug}s.soulforge-aptitude.json`,{cache:'force-cache'});   // SKeyDB names the awakener 'jenkin' but its talent files 'jenkins'
+        if(!r.ok)return;const t=await r.json(),a1=t.descriptionArgs?.Arg1,a2=t.descriptionArgs?.Arg2;if(!a1||!a2)return;
         const val=(a,L)=>a.kind==='linear'?Number(a.base)+Number(a.gainPerLevel)*(L-1):a.kind==='scaling'?Number(a.values?.[L-1]):NaN;
         for(let L=1;L<=(t.maxLevel||0);L++)if(Math.abs(val(a1,L)-P[0])<1e-6&&Math.abs(val(a2,L)-P[1])<1e-6){out.set(String(ri.uid),L);break}
       }));
