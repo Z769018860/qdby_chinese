@@ -318,6 +318,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('新增第72期融灾（血肉戒指）榜单，同步地图总览与助战列表。','Added the Season 72 (Caro Ring) leaderboard; map overview and assist list synced.')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第71期终榜特刊上线（6 版）：总览、各禁区配队榜、数据之最、小众数据、启灵榜，新增第6版「与第70期对比」；入口在第71期榜单下方。','Season 71 final report (6 pages) added, incl. a new page 6 comparing with Season 70; links sit below the Season 71 leaderboard.')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第71期榜单更新为结算终榜（10/26 16:47，Top 2000，2000 人均有队伍详情）。','Season 71 leaderboard updated to the final settlement board (10/26 16:47, Top 2000, all 2,000 players with team details).')}</div>
         <div class="sourceItem"><strong>2026-10-25</strong><br>${ui('第71期榜单合并最新抓取（10/25 04:19，2000 人，11634 支队伍）：2000/2000 名上榜玩家均已补齐队伍详情（此前 370 人仅有排名），并补入新密契 151695「Nightborn Evil」。','Season 71 leaderboard merged with the latest capture (10/25 04:19, 2,000 players, 11,634 team rows): all 2,000 ranked players now have team details (370 of them were rank-only before); new keeper skill 151695 "Nightborn Evil" named.')}</div>
@@ -1333,7 +1334,8 @@ if(isCurrent&&loadedRankDoc?.rows?.length){
   if(!note&&host){note=document.createElement("div");note.id=noteId;note.className="calcBetaNotice";host.insertBefore(note,host.firstChild)}
   if(note){
     const en=localStorage.getItem("morimens.language")==="en";
-    note.textContent=rankOnlyRecordCount>0?(en?`Season 71 ranking refreshed to Oct 25; detailed teams are available for ${season.detailCoverage}/2000 ranked players. ${rankOnlyRecordCount} players are awaiting team-detail import.`:`第71期排名已更新至10月25日；当前有 ${season.detailCoverage}/2000 名上榜玩家具备队伍详情，另有 ${rankOnlyRecordCount} 名玩家的队伍数据待导入。`):(en?"Season 71 ranking and team details are complete.":"第71期排名与队伍详情已完整同步。");
+    const sid=Number(sourceSeasonId)||71,rt=String(currentRankRows.length||2000),when=String(season?.dataUpdatedAt||"").match(/-(\d\d)-(\d\d)T/),dayZh=when?`${+when[1]}月${+when[2]}日`:"",dayEn=when?`${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+when[1]-1]} ${+when[2]}`:"";
+    note.textContent=rankOnlyRecordCount>0?(en?`Season ${sid} ranking refreshed to ${dayEn}; detailed teams are available for ${season.detailCoverage}/${rt} ranked players. ${rankOnlyRecordCount} players are awaiting team-detail import.`:`第${sid}期排名已更新至${dayZh}；当前有 ${season.detailCoverage}/${rt} 名上榜玩家具备队伍详情，另有 ${rankOnlyRecordCount} 名玩家的队伍数据待导入。`):(en?`Season ${sid} ranking and team details are complete.`:`第${sid}期排名与队伍详情已完整同步。`);
   }
 }
     const seasonOption=[...($('dtideSeason')?.options||[])].find(option=>String(option.value)===String(id));
