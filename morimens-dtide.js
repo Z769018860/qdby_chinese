@@ -1378,16 +1378,6 @@ if(isCurrent&&loadedRankDoc?.rows?.length){
       if(!sel.options.length)throw new Error(ui('暂无融灾快照','No D-Zone snapshot is available'));
       sel.value=String(manifest.currentSeason&&manifest.availableSeasons.some(x=>!x.snapshotId&&x.seasonId===manifest.currentSeason)?manifest.currentSeason:(manifest.availableSeasons[0].snapshotId??manifest.availableSeasons[0].seasonId));
       await loadSeason(sel.value);
-      const pending=manifest.pendingBackfillSeasonIds||[];let note=$('dtideCoverageNote');
-      if(!note){const noteHost=document.getElementById("morimensDtidePanel")||document.getElementById("dtide");if(noteHost){note=document.createElement("div");note.id="dtideCoverageNote";note.className="calcBetaNotice";noteHost.appendChild(note)}}
-      if(note){
-        const rawNotes=(manifest.notes||[]).join(' ');
-        const translatedNotes=zh()?rawNotes:(/[㐀-鿿]/.test(rawNotes)?'Statistics use the synchronized snapshot and only fields present in its structured data.':rawNotes);
-        const pendingText=pending.length
-          ?(zh()?` 当前 ${pending.length} 个历史期次仍为增量快照：${pending.slice(0,12).join('、')}${pending.length>12?'…':''}`:` ${pending.length} historical season(s) are still incremental snapshots: ${pending.slice(0,12).join(', ')}${pending.length>12?'…':''}`)
-          :'';
-        note.innerHTML=`<strong>${ui('字段真实性：','Field integrity: ')}</strong>${esc(translatedNotes)}${pendingText}`;
-      }
       sel.addEventListener('change',()=>{const requested=sel.value;loadSeason(requested).catch(error=>{if(sel.value===requested)showError(error)})});
       for(const id of ['dtideRankScope','dtideDifficulty','dtideTotalScore','dtideWave','dtideClearType','dtideRateMode','dtideSort','dtideEntityType','dtideCreationFilter'])$(id)?.addEventListener('change',scheduleRender);
       $('dtideEquipCharacter')?.addEventListener('change',renderEquipment);
