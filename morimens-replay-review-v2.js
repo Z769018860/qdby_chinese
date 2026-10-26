@@ -3055,7 +3055,12 @@
             m.set(k,o)}
           return [...m.values()].map(o=>({...o,states:[...o.states]})).sort((a,b)=>b.dmg-a.dmg)})();
         const dotSum=dotRows.reduce((n,o)=>n+o.dmg,0);
-        return {rows,byAwakener,linkStat,cardDmg,relicDmg,selfDmg,blkAmp,healAmp,hbDyn,dotRows,dotSum,dmg:cap>0?Math.min(cap,rawDmg):rawDmg,rawDmg,cap,blk:blkAmp+hbDyn.block,heal:healAmp+hbDyn.heal};
+        // 乘区模型独立成一张表（zoneModels）：`byAwakener` 只列「有增益折算」的人，
+        // 但乘区模型描述的是「这个唤醒体的乘区堆多高」，跟增益折算无关——一个纯直接伤害、
+        // 没有任何乘区增益的唤醒体，照样有自己的面板力/力量/暴伤档案。所以不能跟着 byAwakener
+        // 的过滤走，否则 UI 查不到这些人的乘区模型（第十九轮后实测 76 人里漏 11 个）。
+        const zoneModels=[...zoneModelByUid.values()].map(m=>zoneModelOf(m.uid)).filter(Boolean);
+        return {rows,byAwakener,zoneModels,linkStat,cardDmg,relicDmg,selfDmg,blkAmp,healAmp,hbDyn,dotRows,dotSum,dmg:cap>0?Math.min(cap,rawDmg):rawDmg,rawDmg,cap,blk:blkAmp+hbDyn.block,heal:healAmp+hbDyn.heal};
       })();
       tl._gains=gains;   // 这个 IIFE 的返回值只回传评分部分，账本挂到 tl 上供外层与渲染层取
       // ---- merged scoring model (morimens-replay-scoring.js): semantic gear value, role-adaptive awakeners, keeper decision quality
@@ -3263,7 +3268,7 @@
       const col=colorOf.get(String(a.uid))||'#9aa7b8';
       // 每个唤醒体的乘区档案：面板力 / 各池 / 力量 / 终伤 / 暴击，及乘区放大系数与力量、终伤份额。
       // 与分区分账（zoneCtxOf）同一份口径，数值就是「这个人的乘区堆到多高」，不含技能倍率 / 敌方承伤。
-      const zm=(st.gains&&st.gains.byAwakener||[]).find(x=>x.uid===String(a.uid))?.zoneModel;
+      const zm=(st.gains&&st.gains.zoneModels||[]).find(x=>x.uid===String(a.uid));
       const zoneModelHtml=(zm&&zm.hits>0)?`<div class="mr2tdetail zm"><small class="mr2zmt">${ui('乘区模型（命中快照聚合）','Multiplier model (from hit snapshots)')} · ${zm.hits} ${ui('次命中','hits')}</small><div class="mr2zmg">`+
         `<span>${ui('面板力','Panel force')}<b>${fmt(zm.force.atkForce)}</b><small>${zm.force.fk==='def'?ui('防御','DEF'):zm.force.fk==='phys'?ui('体质','PHYS'):ui('攻击','ATK')}${zm.force.pct?` +${zm.force.pct}%`:''}</small></span>`+
         `<span>${ui('局外池','Out-of-battle')}<b>+${fmt(zm.out)}%</b></span>`+
