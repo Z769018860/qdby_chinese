@@ -178,10 +178,15 @@ function scoreAwakeners(m){
     const cats={out,def,sup};
     // 类内份额只有在「这一类本身有量级」的时候才可评。全辅助队里 800 点伤害就是全队 100% 的伤害份额，
     // 于是那一次顺手命中的角色被评成「输出核心 / 86 分 / A」——份额对，语义错。
-    // 某类总量不到全队产出（伤害 + 护盾 + 减伤，同为伤害当量）的 4% 时，该类不参与评分；
+    // 但伤害 / 护盾 / 减伤是不同量纲：伤害动辄几千万，护盾只有几千，强行相加成 mass 后，
+    // 「护盾+减伤 < 全队产出 4%」几乎永远成立，会把队里唯一的护盾手（防御核心）也误剔除、
+    // 降级成「辅助核心」，总分被压 20~30 分（实测 13 个 def 明显最高的角色全被误判）。
+    // 正确做法分开判：
+    //   out —— 只有伤害总量不足防御产出（全辅助队）时才剔除，防止「顺手 800 伤害=输出核心」；
+    //   def —— 只要队里有任何护盾 / 减伤产出，防御类就参与评分（队里护盾手天然是防御核心）；
     // 三类都被排除时退回全部可用类，避免整场无分。
     const mass=T.out+T.sh+T.mit;
-    const tiny={out:mass>0&&T.out<mass*.04,def:mass>0&&(T.sh+T.mit)<mass*.04,sup:false};
+    const tiny={out:mass>0&&T.out<(T.sh+T.mit)*.25,def:(T.sh+T.mit)<=0,sup:false};
     let available=Object.entries(cats).filter(([k,v])=>v!=null&&!tiny[k]).sort((a,b)=>b[1]-a[1]);
     if(!available.length)available=Object.entries(cats).filter(([,v])=>v!=null).sort((a,b)=>b[1]-a[1]);
     const top=available[0]?.[1]||0,second=available[1]?.[1]||0,third=available[2]?.[1]||0;
