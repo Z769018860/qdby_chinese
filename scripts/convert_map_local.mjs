@@ -12,7 +12,7 @@ const KIND={ // node name -> site kind / icon / texture
   '事件':{k:'event',i:'event'},'灰烬遗迹':{k:'reward',i:'ash-ruins'},'褪色遗骨':{k:'reward',i:'bones'},'黑印':{k:'reward',i:'black-seal'},
   '锈蚀钥匙':{k:'mechanism',i:'rusted-key'},'锈蚀门扉':{k:'obstacle',i:'locked-door'},'幻象':{k:'obstacle',i:'illusion'},
   '隧道':{k:'passage',i:'tunnel'},'单行密道':{k:'passage',i:'passage-in'},'密道出口':{k:'passage',i:'passage-out'},
-  '探照灯':{k:'utility',i:'lamp'},'不牢固的地板':{k:'terrain',t:'unstable-floor'},'毒地板':{k:'terrain',t:'poison-floor'},
+  '探照灯':{k:'utility',i:'lamp'},'不牢固的地板':{k:'terrain',t:'unstable-floor'},'毒地板':{k:'terrain',t:'poison-floor'},'恶沼':{k:'terrain',t:'poison-floor'},
   '开始':{k:'start'}
 };
 const waves=[];

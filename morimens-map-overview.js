@@ -14,7 +14,7 @@
   const KIND={'战斗':['combat','combat'],'精英':['elite','elite'],'最终战':['boss','boss'],'事件':['event','event'],'剧情':['event','event'],
     '灰烬遗迹':['reward','ash-ruins'],'褪色遗骨':['reward','bones'],'黑印':['reward','black-seal'],'锈蚀钥匙':['mechanism','rusted-key'],'锈蚀门扉':['obstacle','locked-door'],
     '幻象':['obstacle','illusion'],'隧道':['passage','tunnel'],'单行密道':['passage','passage-in'],'密道出口':['passage','passage-out'],'探照灯':['utility','lamp'],
-    '不牢固的地板':['terrain',null,'unstable-floor'],'毒地板':['terrain',null,'poison-floor'],'开始':['start',null]};
+    '不牢固的地板':['terrain',null,'unstable-floor'],'毒地板':['terrain',null,'poison-floor'],'恶沼':['terrain',null,'poison-floor'],'开始':['start',null]};
   const CLS={Boss:['首领','Boss'],Elite:['精英','Elite'],Common:['普通','Common']};
 
   function css(){

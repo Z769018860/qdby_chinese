@@ -318,6 +318,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第72期融灾地图与怪物改用仓库内客户端数据生成，新增地形恶沼。','Season 72 zone maps and monsters are now built from the in-repo client data; added the Miasma Bog terrain.')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('新增第72期融灾（血肉戒指）榜单，同步地图总览与助战列表。','Added the Season 72 (Caro Ring) leaderboard; map overview and assist list synced.')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第71期终榜特刊上线（6 版）：总览、各禁区配队榜、数据之最、小众数据、启灵榜，新增第6版「与第70期对比」；入口在第71期榜单下方。','Season 71 final report (6 pages) added, incl. a new page 6 comparing with Season 70; links sit below the Season 71 leaderboard.')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第71期榜单更新为结算终榜（10/26 16:47，Top 2000，2000 人均有队伍详情）。','Season 71 leaderboard updated to the final settlement board (10/26 16:47, Top 2000, all 2,000 players with team details).')}</div>
