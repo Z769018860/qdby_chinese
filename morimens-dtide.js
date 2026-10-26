@@ -318,6 +318,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第71期终榜特刊上线（6 版）：总览、各禁区配队榜、数据之最、小众数据、启灵榜，新增第6版「与第70期对比」；入口在第71期榜单下方。','Season 71 final report (6 pages) added, incl. a new page 6 comparing with Season 70; links sit below the Season 71 leaderboard.')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第71期榜单更新为结算终榜（10/26 16:47，Top 2000，2000 人均有队伍详情）。','Season 71 leaderboard updated to the final settlement board (10/26 16:47, Top 2000, all 2,000 players with team details).')}</div>
         <div class="sourceItem"><strong>2026-10-25</strong><br>${ui('第71期榜单合并最新抓取（10/25 04:19，2000 人，11634 支队伍）：2000/2000 名上榜玩家均已补齐队伍详情（此前 370 人仅有排名），并补入新密契 151695「Nightborn Evil」。','Season 71 leaderboard merged with the latest capture (10/25 04:19, 2,000 players, 11,634 team rows): all 2,000 ranked players now have team details (370 of them were rank-only before); new keeper skill 151695 "Nightborn Evil" named.')}</div>
         <div class="sourceItem"><strong>2026-10-25</strong><br>${ui('修复「战斗回放复盘」无法读取近期回放：兼容游戏更新后直接返回的 LZ4 数据，同时保留旧版 compStr 格式支持；命令行回放导出工具同步修正。','Fixed Battle Replay Review for recent replays: support direct LZ4 responses introduced by the game update while retaining the older compStr format; the command-line replay exporter was updated too.')}</div>
@@ -1204,7 +1205,7 @@ function sortUsageRows(a,b,groups,waves){const spec=$('dtideSort')?.value||'tota
   window.MorimensDtideCommunity={getContext:communityDzoneContext,mergeRecords:mergeCommunityDzoneRecords,validateCandidate:validateCommunityCandidate,getRecordState:communityCurrentRecordState};
 
   // report images (newspaper-style special issue) linked under the Season 70 leaderboard
-  const REPORTS={70:{title:['融灾第70期终榜特刊','Season 70 final report'],pages:[['第1版 · 总览','Page 1 · Overview'],['第2版 · 各禁区配队榜','Page 2 · Top teams by zone'],['第3版 · 数据之最与出场榜','Page 3 · Records & usage'],['第4版 · 小众数据','Page 4 · Niche data'],['第5版 · 启灵榜','Page 5 · Enlightenment']],path:n=>`assets/morimens/reports/s70-page${n}.webp?v=20261012b`}};
+  const REPORTS={70:{title:['融灾第70期终榜特刊','Season 70 final report'],pages:[['第1版 · 总览','Page 1 · Overview'],['第2版 · 各禁区配队榜','Page 2 · Top teams by zone'],['第3版 · 数据之最与出场榜','Page 3 · Records & usage'],['第4版 · 小众数据','Page 4 · Niche data'],['第5版 · 启灵榜','Page 5 · Enlightenment']],path:n=>`assets/morimens/reports/s70-page${n}.webp?v=20261012b`},71:{title:['融灾第71期终榜特刊','Season 71 final report'],pages:[['第1版 · 总览','Page 1 · Overview'],['第2版 · 各禁区配队榜','Page 2 · Top teams by zone'],['第3版 · 数据之最与出场榜','Page 3 · Records & usage'],['第4版 · 小众数据','Page 4 · Niche data'],['第5版 · 启灵榜','Page 5 · Enlightenment'],['第6版 · 与70期对比','Page 6 · vs Season 70']],path:n=>`assets/morimens/reports/s71-page${n}.webp?v=20261026a`}};
   function renderReports(){
     const host=$('dtideReports');if(!host)return;
     const id=Number(activeSeasonEntry?.snapshotId?null:activeSeasonEntry?.seasonId),cfg=REPORTS[id];
