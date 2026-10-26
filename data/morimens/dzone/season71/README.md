@@ -1,7 +1,7 @@
-# Season 71 (activityTid 83331) Top 1000 / 2000
+# Season 71 (activityTid 83331) Top 2000 — FINAL (settled 2026-10-26)
 
-Data updated: 2026-10-25 04:19 (Top 2000 snapshot) (UTC+8) — the season ends 10/26, so this is the last full snapshot before it closes.
-Source: official `Rank.QueryRank` / `Facade.QueryFacadeFields` responses (`season_83331` capture, rank snapshot retrieved 2026-10-25T04:19:24+08:00). Team rows come from `teams_latest.jsonl` of the same capture (9,816 rows) merged with the 2026-10-21 14:24 raw shards, which still hold 1,818 rows the newer capture no longer carries — 11,634 rows in total, one per player × stage group. Earlier rank snapshots are kept as `ranking-20261021-1424.json.gz`, `ranking-20261019-1456.json.gz`, `ranking-20261019-1410-top1000.json.gz`, `ranking-20261013-0200.json.gz`, `ranking-20261014-1214.json.gz`, `ranking-20261015-1205.json.gz`, `ranking-20261016-0020.json.gz` and `ranking-20261017-1124.json.gz`.
+Data updated: 2026-10-26 16:47 (UTC+8) — **final settled snapshot**: the season ended on 10/26, this is the settlement board.
+Source: official `Rank.QueryRank` / `Facade.QueryFacadeFields` responses (`season_83331` capture, rank snapshot retrieved 2026-10-26T16:47:03+08:00). Team rows come from `teams_latest.jsonl` of the same capture (9,816 rows) merged with the 2026-10-21 14:24 raw shards, which still hold 1,818 rows the newer capture no longer carries — 11,634 rows in total, one per player × stage group. Earlier rank snapshots are kept as `ranking-20261021-1424.json.gz`, `ranking-20261019-1456.json.gz`, `ranking-20261019-1410-top1000.json.gz`, `ranking-20261013-0200.json.gz`, `ranking-20261014-1214.json.gz`, `ranking-20261015-1205.json.gz`, `ranking-20261016-0020.json.gz` and `ranking-20261017-1124.json.gz`.
 
 | File | Content |
 | --- | --- |
@@ -23,3 +23,7 @@ Rebuild with `scripts/import_morimens_season71_top2000.py`, `scripts/postprocess
 ### 2026-10-25 04:19 (UTC+8) — team details completed
 
 The 2026-10-25 04:19 capture has been repacked into the 71st-season team-detail chunks. The previous detailed snapshot was still the 2026-10-21 14:24 build, so 370 of the 2,000 currently ranked UIDs had no profile at all; merging the two captures (`teams_latest.jsonl` wins per player × stage group, older shards fill the gaps) lifts coverage to 2,000/2,000 and the season is no longer marked partial. Battle-level statistics grow from 17,701 to 21,373 rows.
+
+### 2026-10-26 16:47 (UTC+8) — final settlement
+
+`season_83331` settlement capture (`ranking.json` + `teams_latest.jsonl`, 9,839 team rows) imported with `--fallback-raw` pointing at the previous merged `raw-teams`, so the 3,403 rows the final capture does not carry are kept from the older captures: 13,242 rows in total, all 2,000 ranked players have team details. The previous (10-25 04:19) rank snapshot is kept as `ranking-20261025-0419.json.gz`. The full procedure is written down in `docs/morimens-leaderboard-sync-workbuddy.md`.
