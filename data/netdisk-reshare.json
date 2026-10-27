@@ -746,7 +746,15 @@
           "refit": "",
           "size": 26305845,
           "bvid": "BV1vh4y1T7NB",
-          "bili_url": "https://www.bilibili.com/video/BV1vh4y1T7NB"
+          "bili_url": "https://www.bilibili.com/video/BV1vh4y1T7NB",
+          "comment": {
+            "aid": 617778876,
+            "rpid": "322102185616",
+            "root": 183128406288,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:31"
+          }
         }
       }
     },
@@ -765,7 +773,15 @@
           "refit": "",
           "size": 125753258,
           "bvid": "BV1pTE66vEQ8",
-          "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8"
+          "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
+          "comment": {
+            "aid": 116733520118898,
+            "rpid": "322102072432",
+            "root": "",
+            "where": "top",
+            "pinned": "",
+            "at": "2026-10-28 03:31"
+          }
         }
       }
     },
@@ -784,7 +800,15 @@
           "refit": "",
           "size": 50125631,
           "bvid": "BV1SuS5BjEJN",
-          "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN"
+          "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
+          "comment": {
+            "aid": 115623891830968,
+            "rpid": "322102075616",
+            "root": 283701942608,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:32"
+          }
         }
       }
     },
@@ -803,7 +827,15 @@
           "refit": "",
           "size": 20518510,
           "bvid": "BV1LLibBaESe",
-          "bili_url": "https://www.bilibili.com/video/BV1LLibBaESe"
+          "bili_url": "https://www.bilibili.com/video/BV1LLibBaESe",
+          "comment": {
+            "aid": 115843304259966,
+            "rpid": "322102079376",
+            "root": 287635435424,
+            "where": "reply",
+            "pinned": "自己热评",
+            "at": "2026-10-28 03:32"
+          }
         }
       }
     },
@@ -822,7 +854,15 @@
           "refit": "",
           "size": 45998955,
           "bvid": "BV1UW5E6zEfy",
-          "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy"
+          "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
+          "comment": {
+            "aid": 116549423726986,
+            "rpid": "322102095840",
+            "root": 301956893424,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:32"
+          }
         }
       }
     }
