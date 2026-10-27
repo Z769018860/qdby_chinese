@@ -39,6 +39,7 @@ LINKS = os.path.join(REPO, 'data', 'netdisk-links.json')
 INDEX = os.path.join(WORK, 'cloud-index.json')
 PLAN = os.path.join(WORK, 'reshare-plan.json')
 OUT = os.path.join(REPO, 'data', 'netdisk-reshare.json')
+ALIASES = os.path.join(REPO, 'data', 'netdisk-aliases.json')
 
 QUARK_PROFILES = [
     os.path.join(os.environ.get('APPDATA', ''), 'quark-cloud-drive'),
@@ -203,13 +204,50 @@ def clean_cloud(name):
     return s
 
 
-def score(a, b):
-    """a=站上汉化名, b=云端名字；取所有别名里的最高分"""
+_ALIAS_MAP = None
+
+
+def alias_map():
+    """人工确认过的「站上名 → 云端真名」映射，读一次缓存住"""
+    global _ALIAS_MAP
+    if _ALIAS_MAP is None:
+        _ALIAS_MAP = {}
+        try:
+            with open(ALIASES, encoding='utf-8') as f:
+                d = json.load(f)
+            for k, v in (d.get('map') or {}).items():
+                _ALIAS_MAP[k] = ({'target': v, 'aliases': []} if isinstance(v, str)
+                                 else v)
+        except Exception:
+            _ALIAS_MAP = {}
+    return _ALIAS_MAP
+
+
+def _target_score(b, want):
+    """云端名就是人工指定的那个 → 满分；带 (1)/(2) 编号的变体也算"""
+    b, want = (b or '').strip(), (want or '').strip()
+    if not want:
+        return 0.0
+    if b == want:
+        return 1.0
+    if norm(b) == norm(want):
+        return 0.98
+    # 云端存了同名副本时会带 (1)(2)，剥掉编号再比
+    if norm(want) and re.sub(r'[(（]\d+[)）]', '', norm(b)) == norm(want):
+        return 0.96
+    return 0.0
+
+
+def _raw_score(a, b, conf):
+    """纯字符串相似度的部分：别名池里取最高分"""
     nb = norm(clean_cloud(b))
     if not nb:
         return 0.0
     best = 0.0
-    for al in aliases(a):
+    pool = aliases(a)
+    if conf:
+        pool = pool + list(conf.get('aliases') or [])
+    for al in pool:
         na = norm(al)
         if not na:
             continue
@@ -224,6 +262,28 @@ def score(a, b):
             sc = difflib.SequenceMatcher(None, na, nb).ratio() * 0.95
         best = max(best, sc)
     return best
+
+
+# 人工指名过、但云端名对不上的同族变体，分再高也只能到这儿。
+# 必须低于 AUTO_SCORE，否则「汉化备份」「.7z」「别的角色版」会跟正主并列满分。
+SIBLING_CAP = 0.75
+
+
+def score(a, b):
+    """a=站上汉化名, b=云端名字；取所有别名里的最高分
+
+    人工拍过板的先按指名道姓算。「梦之门」在云端有四个同族文件（本体/冬弥雪版/
+    备份/v1.1），把「汉化补丁」「v1.1」这些尾巴清洗掉后长得一模一样，
+    纯相似度必然并列满分、挑错人，所以显式 target 命中才给高分，
+    其余同族一律压到自动阈值以下。
+    """
+    conf = alias_map().get(a)
+    if conf:
+        ts = _target_score(b, conf.get('target'))
+        if ts:
+            return ts
+        return min(SIBLING_CAP, _raw_score(a, b, conf))
+    return _raw_score(a, b, None)
 
 
 def pick(game, items, plat):

@@ -46,7 +46,27 @@ import reup_violation as V  # noqa: E402
 OUT_DIR = os.path.join(WORK, 'reup')
 SALVAGE = os.path.join(REPO, 'data', 'netdisk-salvage.json')
 RESHARE = os.path.join(REPO, 'data', 'netdisk-reshare.json')
+LINKS = os.path.join(REPO, 'data', 'netdisk-links.json')
 REPORT = os.path.join(WORK, 'auto-reshare-report.json')
+
+
+def bvid_of(game):
+    """从站点链接台账里取这部作品的 bvid。
+
+    补档台账只关心网盘链接，bvid 从来不往里写，可 post_comments 发评论时
+    恰恰要读 links[平台].bvid。不补这一步，补档会成功、评论却发不出去，
+    相当于白补一趟 —— 站上还挂着「没有可用链接」。
+    """
+    if not os.path.exists(LINKS):
+        return '', ''
+    try:
+        d = json.load(open(LINKS, encoding='utf-8'))
+        for g in (d.get('games') or []):
+            if g.get('name') == game:
+                return g.get('bvid') or '', g.get('bili_url') or ''
+    except Exception:
+        pass
+    return '', ''
 PY = os.environ.get('QD_PY') or sys.executable
 PORT = os.environ.get('QD_PORT', '9228')
 
@@ -276,7 +296,9 @@ def do_one(game, info, dry=False, min_score=AUTO_SCORE, force_refit=False):
     if dry:
         return {'state': 'dry', 'plan': plan}
 
-    log = {'source': top, 'plan': plan}
+    # size 是留给评论用的：读者看到「23.4MB」才知道下的是不是完整版，
+    # 也从侧面印证补的那份确实是正主，不是同名的备份/旧版
+    log = {'source': top, 'plan': plan, 'size': top.get('size') or 0}
     base = ''.join(ch for ch in game if ch not in '\\/:*?"<>|')[:40]
     src = os.path.join(OUT_DIR, base + '.orig')
     # 1) 下载
@@ -290,7 +312,8 @@ def do_one(game, info, dry=False, min_score=AUTO_SCORE, force_refit=False):
     if 'refit' in plan:
         up = os.path.join(OUT_DIR, base + ' 汉化补丁（补档版）.zip')
         token, how = V.repack(src, up)
-        log.update({'refit': how, 'token': token, 'md5_after': V.md5_of(up)})
+        log.update({'refit': how, 'token': token, 'md5_after': V.md5_of(up),
+                    'size': os.path.getsize(up)})
         print(f'    改装 {how} → {os.path.basename(up)}')
     # 3) 上传
     if 'upload' in plan:
@@ -350,10 +373,14 @@ def save_reshare(game, log):
     links = g.get('links')
     if not isinstance(links, dict):
         links = {}
+    bvid, bili_url = bvid_of(game)
     links[sh['plat']] = {
         'platform': sh['plat'],
         'url': sh['url'],
         'pwd': sh['pwd'],
+        # 发评论要按它找视频，缺了就只能补档、发不出去
+        'bvid': bvid,
+        'bili_url': bili_url,
         'share_id': (sh['url'].rstrip('/').split('/')[-1].split('?')[0]
                      if sh['plat'] == 'quark' else ''),
         'verified': True,
@@ -362,9 +389,12 @@ def save_reshare(game, log):
         'created_at': time.strftime('%Y-%m-%d %H:%M'),
         'via': 'salvage',
         'refit': log.get('refit') or '',
+        'size': log.get('size') or 0,
     }
     g['links'] = links
-    with open(RESHARE, 'w', encoding='utf-8', newline='\n') as f:
+    # 台账原本是 indent=2 + CRLF，这里照原样写：
+    # 换成 1 空格缩进或 LF 换行都会把整个文件重写一遍，diff 全是噪音
+    with open(RESHARE, 'w', encoding='utf-8') as f:
         json.dump(d, f, ensure_ascii=False, indent=2)
 
 

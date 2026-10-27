@@ -1,9 +1,16 @@
 {
-  "generated_at": "2026-10-28 02:13",
+  "generated_at": "2026-10-28 03:03",
   "games": {
     "Lost Friends 2": {
       "kind": "missing",
       "cands": [
+        {
+          "plat": "quark",
+          "name": "LF2汉化补丁.zip",
+          "fid": "e1f930fa09de4ace8ca4d28e77ea09bf",
+          "size": 26305845,
+          "score": 1.0
+        },
         {
           "plat": "baidu",
           "name": "银灰初雪logos",
@@ -23,21 +30,14 @@
           "name": "WPS Office",
           "fid": 761331896487920,
           "size": 0,
-          "score": 0.426
+          "score": 0.447
         },
         {
           "plat": "baidu",
           "name": "tieba",
           "fid": 689918721417532,
           "size": 0,
-          "score": 0.394
-        },
-        {
-          "plat": "quark",
-          "name": "LF2汉化补丁.zip",
-          "fid": "e1f930fa09de4ace8ca4d28e77ea09bf",
-          "size": 26305845,
-          "score": 0.38
+          "score": 0.419
         },
         {
           "plat": "quark",
@@ -56,42 +56,42 @@
           "name": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
           "fid": "446a64a5c46d4ec09a52e88f59c7a88e",
           "size": 125753258,
-          "score": 0.317
-        },
-        {
-          "plat": "quark",
-          "name": "情人节巧克力短篇 汉化备份.zip",
-          "fid": "d245337bcfac4bafb05bd655bf3855c5",
-          "size": 135680314,
-          "score": 0.317
-        },
-        {
-          "plat": "quark",
-          "name": "情人节巧克力短篇 汉化补丁by青灯.7z",
-          "fid": "f1bbfcce8d9e45f39dc7cfc85c91d96d",
-          "size": 125760132,
-          "score": 0.317
-        },
-        {
-          "plat": "baidu",
-          "name": "情人节巧克力短篇 汉化备份.zip",
-          "fid": 1102149074675803,
-          "size": 135680314,
-          "score": 0.317
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
           "fid": 231292542570394,
           "size": 125753258,
-          "score": 0.317
+          "score": 1.0
+        },
+        {
+          "plat": "quark",
+          "name": "情人节巧克力短篇 汉化备份.zip",
+          "fid": "d245337bcfac4bafb05bd655bf3855c5",
+          "size": 135680314,
+          "score": 0.75
+        },
+        {
+          "plat": "quark",
+          "name": "情人节巧克力短篇 汉化补丁by青灯.7z",
+          "fid": "f1bbfcce8d9e45f39dc7cfc85c91d96d",
+          "size": 125760132,
+          "score": 0.75
+        },
+        {
+          "plat": "baidu",
+          "name": "情人节巧克力短篇 汉化备份.zip",
+          "fid": 1102149074675803,
+          "size": 135680314,
+          "score": 0.75
         },
         {
           "plat": "baidu",
           "name": "情人节巧克力短篇 汉化补丁by青灯.7z",
           "fid": 441371664178210,
           "size": 125760132,
-          "score": 0.317
+          "score": 0.75
         }
       ]
     },
@@ -103,28 +103,42 @@
           "name": "关于梦 汉化补丁.zip",
           "fid": "ca4437f0e25244d7acc08fa948ff5d90",
           "size": 50125631,
-          "score": 0.518
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "关于梦 汉化补丁.zip",
           "fid": 1047062125661555,
           "size": 50125631,
-          "score": 0.518
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "关于梦 汉化补丁.zip",
           "fid": 332482464183779,
           "size": 50125631,
-          "score": 0.518
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "关于梦 汉化补丁.zip",
           "fid": 737174249974958,
           "size": 50125631,
-          "score": 0.518
+          "score": 1.0
+        },
+        {
+          "plat": "quark",
+          "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+          "fid": "aefc1f882782481f8d9d8b41d9f55a3f",
+          "size": 45998955,
+          "score": 0.317
+        },
+        {
+          "plat": "baidu",
+          "name": "梦之门 汉化备份.zip",
+          "fid": 1109929689456301,
+          "size": 357443490,
+          "score": 0.317
         }
       ]
     },
@@ -257,42 +271,42 @@
           "name": "暴走族夜怪 汉化补丁by青灯不弈.zip",
           "fid": "3be5f7f6e7134e39849247a1391d7828",
           "size": 20518510,
-          "score": 0.633
-        },
-        {
-          "plat": "baidu",
-          "name": "暴走族夜怪 汉化备份.zip",
-          "fid": 173277573577981,
-          "size": 238344151,
-          "score": 0.633
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "暴走族夜怪 汉化补丁by青灯不弈.zip",
           "fid": 243790085505215,
           "size": 20518510,
-          "score": 0.633
+          "score": 1.0
         },
         {
           "plat": "quark",
           "name": "暴走族夜怪 汉化补丁by青灯不弈(1).zip",
           "fid": "bafff86aa369411bbdb056d5d38edb11",
           "size": 20518485,
-          "score": 0.585
+          "score": 0.75
         },
         {
           "plat": "quark",
           "name": "暴走族夜怪 汉化补丁by青灯不弈(2).zip",
           "fid": "d42d82eb16ca40d59a61dd9acae656e4",
           "size": 20518485,
-          "score": 0.585
+          "score": 0.75
+        },
+        {
+          "plat": "baidu",
+          "name": "暴走族夜怪 汉化备份.zip",
+          "fid": 173277573577981,
+          "size": 238344151,
+          "score": 0.75
         },
         {
           "plat": "baidu",
           "name": "暴走族夜怪 汉化补丁by青灯不弈(1).zip",
           "fid": 577456611025391,
           "size": 20518485,
-          "score": 0.585
+          "score": 0.75
         }
       ]
     },
@@ -308,42 +322,42 @@
           "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
           "fid": "aefc1f882782481f8d9d8b41d9f55a3f",
           "size": 45998955,
-          "score": 0.69
-        },
-        {
-          "plat": "baidu",
-          "name": "梦之门 汉化备份.zip",
-          "fid": 1109929689456301,
-          "size": 357443490,
-          "score": 0.69
-        },
-        {
-          "plat": "baidu",
-          "name": "梦之门 汉化补丁by青灯不弈.zip",
-          "fid": 394580826413559,
-          "size": 46019532,
-          "score": 0.69
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
           "fid": 657794626087084,
           "size": 45998955,
-          "score": 0.69
+          "score": 1.0
         },
         {
           "plat": "baidu",
           "name": "冬弥雪 梦之门",
           "fid": 865025526034477,
           "size": 0,
-          "score": 0.394
+          "score": 0.871
         },
         {
           "plat": "quark",
           "name": "梦之门 汉化补丁v1.1by青灯不弈 备份.zip",
           "fid": "2e7934e05ced4852a6018515e08eb046",
           "size": 391720219,
-          "score": 0.356
+          "score": 0.75
+        },
+        {
+          "plat": "baidu",
+          "name": "梦之门 汉化备份.zip",
+          "fid": 1109929689456301,
+          "size": 357443490,
+          "score": 0.75
+        },
+        {
+          "plat": "baidu",
+          "name": "梦之门 汉化补丁by青灯不弈.zip",
+          "fid": 394580826413559,
+          "size": 46019532,
+          "score": 0.75
         }
       ]
     },
@@ -398,5 +412,29 @@
         }
       ]
     }
-  }
+  },
+  "results": {
+    "粉碎梦之门与病娇的按钮": {
+      "source": {
+        "plat": "quark",
+        "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+        "fid": "aefc1f882782481f8d9d8b41d9f55a3f",
+        "size": 45998955,
+        "score": 1.0
+      },
+      "plan": [
+        "share"
+      ],
+      "size": 45998955,
+      "shared": {
+        "plat": "quark",
+        "url": "https://pan.quark.cn/s/0a83402008da",
+        "pwd": "qdby",
+        "verified": true,
+        "note": "status=1 audit=0 viol=0"
+      },
+      "state": "done"
+    }
+  },
+  "ran_at": "2026-10-28 03:08"
 }

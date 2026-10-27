@@ -15,8 +15,8 @@
           "check": "status=1",
           "path": "/汉化补丁补档/自恋囚笼 汉化补丁by青灯不弈.zip",
           "created_at": "2026-10-24 22:09",
-          "bvid": "",
-          "bili_url": "",
+          "bvid": "BV12uxqzwEY9",
+          "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
           "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip"
@@ -326,7 +326,9 @@
           "verified": true,
           "share_id": "049238d235ab",
           "created_at": "2026-10-28 02:08",
-          "via": "salvage"
+          "via": "salvage",
+          "bvid": "BV1scqNBmEJt",
+          "bili_url": "https://www.bilibili.com/video/BV1scqNBmEJt"
         }
       }
     },
@@ -643,7 +645,9 @@
           "verified": true,
           "share_id": "9f7aef4d6415",
           "created_at": "2026-10-28 02:05",
-          "via": "salvage"
+          "via": "salvage",
+          "bvid": "BV1bEp16TErC",
+          "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC"
         }
       }
     },
@@ -724,6 +728,101 @@
       "links": {
         "baidu": {
           "error": "errno=109 文件违规，无法分享"
+        }
+      }
+    },
+    "Lost Friends 2": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/113b975990d5",
+          "pwd": "qdby",
+          "share_id": "113b975990d5",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "LF2汉化补丁.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 26305845,
+          "bvid": "BV1vh4y1T7NB",
+          "bili_url": "https://www.bilibili.com/video/BV1vh4y1T7NB"
+        }
+      }
+    },
+    "~把最棒的巧克力送给你 这份心意就是全部哦~": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/99b23c1a429e",
+          "pwd": "qdby",
+          "share_id": "99b23c1a429e",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 125753258,
+          "bvid": "BV1pTE66vEQ8",
+          "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8"
+        }
+      }
+    },
+    "关于埋葬某人的梦": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/154cad1d6c14",
+          "pwd": "qdby",
+          "share_id": "154cad1d6c14",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "关于梦 汉化补丁.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 50125631,
+          "bvid": "BV1SuS5BjEJN",
+          "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN"
+        }
+      }
+    },
+    "暴走族怪谈大会 再归": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/0b305a5d9e73",
+          "pwd": "qdby",
+          "share_id": "0b305a5d9e73",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "暴走族夜怪 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 20518510,
+          "bvid": "BV1LLibBaESe",
+          "bili_url": "https://www.bilibili.com/video/BV1LLibBaESe"
+        }
+      }
+    },
+    "粉碎梦之门与病娇的按钮": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/0a83402008da",
+          "pwd": "qdby",
+          "share_id": "0a83402008da",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 45998955,
+          "bvid": "BV1UW5E6zEfy",
+          "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy"
         }
       }
     }

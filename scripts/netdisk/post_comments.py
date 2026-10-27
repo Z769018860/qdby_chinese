@@ -35,21 +35,45 @@ REPO = os.path.normpath(os.path.join(BASE, '..', '..'))
 WORK = os.path.normpath(os.path.join(REPO, '..'))
 CK = os.path.join(WORK, 'ck360_all.json')
 SHARE = os.path.join(REPO, 'data', 'netdisk-reshare.json')
+LINKS = os.path.join(REPO, 'data', 'netdisk-links.json')
 
 PLAT = {'quark': ('夸克网盘', 'pan.quark.cn'), 'baidu': ('百度网盘', 'pan.baidu.com'),
         'uc': ('UC网盘', 'drive.uc.cn'), 'xunlei': ('迅雷云盘', 'pan.xunlei.com')}
 
+# 登录态统一交给 bili_login：它负责 URL 解码 + 本地没有时去 B 站客户端取
+sys.path.insert(0, os.path.normpath(os.path.join(BASE, '..', 'bili')))
+try:
+    import bili_login as BL
+except Exception:                      # 缺依赖时也还能用老快照顶一阵
+    BL = None
+
+
+def bili_ck():
+    if BL is not None:
+        d = BL.load_cookies()
+        if d.get('SESSDATA'):
+            return d
+        ck, _src = BL.cookies_from_browser()   # 内部已用 nav 验证过，能登录才返回
+        if ck:
+            BL.save(ck)
+            return BL.load_cookies()
+    d = {}
+    if os.path.exists(CK):
+        for c in json.load(open(CK, encoding='utf-8')):
+            h = c.get('host', '').lstrip('.')
+            if h == 'bilibili.com' or h.endswith('.bilibili.com'):
+                d[c['name']] = c['value']
+    return d
+
 
 def session():
-    ck = json.load(open(CK, encoding='utf-8'))
-    d = {}
-    for c in ck:
-        h = c['host'].lstrip('.')
-        if h == 'bilibili.com' or h.endswith('.bilibili.com'):
-            d[c['name']] = c['value']
+    d = bili_ck()
     s = requests.Session()
+    # 用 cookie jar 而不是手拼 Cookie 头：requests 会处理编码，
+    # 手拼会把 SESSDATA 里的逗号当成 cookie 分隔符
+    for k, v in d.items():
+        s.cookies.set(k, v, domain='.bilibili.com', path='/')
     s.headers.update({
-        'Cookie': '; '.join(f'{k}={v}' for k, v in d.items()),
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                       '(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
         'Referer': 'https://www.bilibili.com/',
@@ -58,6 +82,21 @@ def session():
     s.csrf = d.get('bili_jct', '')
     s.mid = d.get('DedeUserID', '')
     return s
+
+
+def bvid_of(name):
+    """补档台账里可能没记 bvid（salvage 补的那批就是这样），
+    兜底回站点链接台账查一次；查不到才真的发不了。"""
+    if not os.path.exists(LINKS):
+        return '', ''
+    try:
+        d = json.load(open(LINKS, encoding='utf-8'))
+        for g in (d.get('games') or []):
+            if g.get('name') == name:
+                return g.get('bvid') or '', g.get('bili_url') or ''
+    except Exception:
+        pass
+    return '', ''
 
 
 def aid_of(s, bvid):
@@ -93,12 +132,37 @@ def pinned_of(s, aid):
     return None, ''
 
 
+def human_size(n):
+    """23.4MB 这种写法；不到 1MB 就不往上凑，直接按 KB 说"""
+    try:
+        n = float(n or 0)
+    except Exception:
+        return ''
+    if n <= 0:
+        return ''
+    for unit in ('B', 'KB', 'MB', 'GB'):
+        if n < 1024 or unit == 'GB':
+            if unit in ('B', 'KB'):
+                return '%d%s' % (round(n), unit)
+            v = '%.1f' % n                       # 8.0MB 写成 8MB，别带多余的零
+            return (v[:-2] if v.endswith('.0') else v) + unit
+        n /= 1024.0
+    return '%.1fTB' % n
+
+
 def build(name, links):
-    """只发两样东西：补档说明 + 网盘链接。不加免责声明、不加站内引导。
+    """补档说明 + 网盘链接 + 文件大小，就这三样。不加免责声明、不加站内引导。
 
     已被巡检判死的补档链接不再写进评论（`daily_check.py` 会把 checked 写回条目），
-    免得读者点过去看到的是「来晚啦，该分享已被取消」。"""
-    lines = ['【补档】《%s》' % name]
+    免得读者点过去看到的是「来晚啦，该分享已被取消」。
+    大小是顺手带的：读者一眼能看出下的是完整版还是残缺包，
+    也是给自己留个交叉验证——补到的那份大小明显不对，就说明补错了。
+    """
+    live = [v for v in links.values() if v.get('url') and v.get('checked') != 'dead']
+    sizes = [v.get('size') or 0 for v in live]
+    mx = max(sizes) if sizes else 0
+    sz = human_size(mx)
+    lines = ['【补档】《%s》%s' % (name, (' · ' + sz) if sz else '')]
     for k, v in links.items():
         if not v.get('url') or v.get('checked') == 'dead':
             continue
@@ -162,7 +226,7 @@ def reformat(s, data, name, g, args):
         else:
             print(f'  ! {name} 新评论已发({rpid})，旧评论删除失败 code={dr.get("code")}')
         time.sleep(3)
-    json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
     return 1
 
 
@@ -199,6 +263,13 @@ def main():
             continue
         links = g.get('links') or {}
         bvid = next((v.get('bvid') for v in links.values() if v.get('bvid')), '')
+        if not bvid:
+            bvid, bili_url = bvid_of(name)
+            if bvid:      # 补上并写回台账，下次就不用再查了
+                for v in links.values():
+                    v['bvid'] = bvid
+                    if bili_url:
+                        v['bili_url'] = bili_url
 
         # 清理旧的顶层评论（之前那版是直接发顶层，会刷屏）
         if args.cleanup or args.force:
@@ -220,7 +291,7 @@ def main():
                     print(f'  ✗ {name} 删除失败 code={r.get("code")} {r.get("message")}')
                 v.pop('comment', None)
                 time.sleep(3)
-            json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+            json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
             if args.cleanup and not args.force:
                 continue
 
@@ -255,7 +326,7 @@ def main():
                                 'pinned': src, 'at': time.strftime('%Y-%m-%d %H:%M')}
             n_ok += 1
             print(f'  ✓ {name} [{bvid}] {("回复 " + str(root)) if root else "顶层"} → rpid={rpid}')
-            json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+            json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
         else:
             print(f'  ✗ {name}: code={r.get("code")} {r.get("message")}')
             n_fail += 1
@@ -263,7 +334,7 @@ def main():
                 time.sleep(60)
         time.sleep(8 + random.random() * 6)
 
-    json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
     print(f'完成：成功 {n_ok}，跳过 {n_skip}，失败 {n_fail}，删除 {n_del}')
 
 
