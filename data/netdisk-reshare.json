@@ -19,7 +19,15 @@
           "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
-          "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip"
+          "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip",
+          "comment": {
+            "aid": 115339853563059,
+            "rpid": "322102123504",
+            "root": 278632042208,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:38"
+          }
         }
       }
     },
@@ -93,7 +101,15 @@
           "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
-          "checked_detail": "分享有效（需提取码）"
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 115978260186304,
+            "rpid": "322102319184",
+            "root": 290103459760,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:38"
+          }
         },
         "quark": {
           "url": "https://pan.quark.cn/s/3857bc04db6c",
@@ -328,7 +344,15 @@
           "created_at": "2026-10-28 02:08",
           "via": "salvage",
           "bvid": "BV1scqNBmEJt",
-          "bili_url": "https://www.bilibili.com/video/BV1scqNBmEJt"
+          "bili_url": "https://www.bilibili.com/video/BV1scqNBmEJt",
+          "comment": {
+            "aid": 115848404537202,
+            "rpid": "322102402880",
+            "root": 287715660256,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          }
         }
       }
     },
@@ -403,7 +427,15 @@
           "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc",
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
-          "checked_detail": "分享有效（需提取码）"
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 115652094330194,
+            "rpid": "322102406480",
+            "root": 284197812240,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          }
         },
         "quark": {
           "platform": "quark",
@@ -447,7 +479,15 @@
           "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
-          "checked_detail": "分享有效（需提取码）"
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 115194999145805,
+            "rpid": "322102355184",
+            "root": 275908594160,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          }
         },
         "quark": {
           "url": "https://pan.quark.cn/s/2505995c5313",
@@ -632,7 +672,15 @@
           "bili_url": "https://www.bilibili.com/video/BV1ziGw6zEsC",
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
-          "checked_detail": "分享有效（需提取码）"
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 117014152612105,
+            "rpid": "322102413184",
+            "root": 311642516304,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          }
         }
       }
     },
@@ -647,7 +695,15 @@
           "created_at": "2026-10-28 02:05",
           "via": "salvage",
           "bvid": "BV1bEp16TErC",
-          "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC"
+          "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC",
+          "comment": {
+            "aid": 117438985276217,
+            "rpid": "322102416496",
+            "root": 321759980944,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:40"
+          }
         }
       }
     },
