@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-10-26T09:09:09.102Z",
+ "fetchedAt": "2026-10-27T09:11:01.757Z",
  "posts": [
+  {
+   "title": "📢 Steam Community Items Launch Announcement",
+   "date": "2026-10-26",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1847286114044227"
+  },
   {
    "title": "V2.6.2.0 서비스 중단 유지 보수 공지",
    "date": "2026-10-17",
