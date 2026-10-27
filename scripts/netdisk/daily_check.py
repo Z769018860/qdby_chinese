@@ -382,7 +382,13 @@ def bili_state():
         sys.path.insert(0, os.path.join(REPO, 'scripts', 'bili'))
         import bili_login as BL
         if not BL.check(verbose=False):
-            return {'ok': False, 'why': 'B 站登录态失效（nav 返回未登录）'}
+            # 失效就直接去 B 站 PC 客户端的内嵌浏览器里取，别干等着人来扫码
+            ck, src = BL.cookies_from_browser()
+            if ck:
+                BL.save(ck)
+                if BL.check(verbose=False):
+                    return {'ok': True, 'why': '已从 %s 自动取回' % src}
+            return {'ok': False, 'why': 'B 站登录态失效，且自动取回失败'}
     except Exception as e:
         return {'ok': True, 'why': '登录态自检不可用：%s' % str(e)[:60]}
     return {'ok': True, 'why': ''}
@@ -512,7 +518,8 @@ def main():
         print('B 站登录：%s' % bili['why'])
         dead.append({'name': '（B 站登录态）', 'links': [], 'auto': bili['why'],
                      'bili_login': True})
-        print('提示：跑 python scripts/bili/bili_login.py 扫码登录（登录态存在仓库外）')
+        print('提示：在 B 站 PC 客户端里保持登录即可自动续期；')
+        print('      或手动跑 python scripts/bili/bili_login.py qrcode 扫码（仓库外保存）')
 
     if not args.no_site:
         print('-- 更新站点数据 --')

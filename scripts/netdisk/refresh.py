@@ -53,12 +53,28 @@ BILI_CK_HDR = '; '.join(f'{k}={v}' for k, v in BILI_CK.items())
 
 
 def bili_login_state():
-    """开跑前先看看 B 站登录态还在不在，不在就提醒，别抓完才发现全是空"""
-    if not BILI_OK:
-        return False, '没有 B 站登录态，抓取评论区可能被风控挡回'
-    if BL is not None and not BL.check(verbose=False):
-        return False, 'B 站登录态已失效（nav 返回未登录）'
-    return True, ''
+    """开跑前先看看 B 站登录态还在不在
+
+    失效时不再干等着人来扫码，而是直接去 B 站 PC 客户端的内嵌浏览器里
+    （%LOCALAPPDATA%\\bililive\\User Data\\Browser Cache *）把 Web 登录态取回来。
+    用户在客户端里是登录的，这条路径在无人值守时也能成。
+    """
+    global BILI_CK, BILI_OK, BILI_CK_HDR
+    if BILI_OK and (BL is None or BL.check(verbose=False)):
+        return True, ''
+    if BL is not None:
+        try:
+            ck, src = BL.cookies_from_browser()   # 内部已用 nav 验证过，能登录才返回
+            if ck:
+                BL.save(ck)
+                BILI_CK = BL.load_cookies()
+                BILI_OK = bool(BILI_CK.get('SESSDATA'))
+                BILI_CK_HDR = '; '.join(f'{k}={v}' for k, v in BILI_CK.items())
+                if BILI_OK and BL.check(verbose=False):
+                    return True, f'已从 {src} 自动取回'
+        except Exception:
+            pass
+    return False, 'B 站登录态取不回来，抓取评论区可能被风控挡回'
 
 
 def http(url, data=None, referer='', headers=None, timeout=25):
@@ -828,7 +844,9 @@ def main():
     # 与其事后对着一堆空结果猜，不如开跑前就把话说清楚
     ok, why = bili_login_state()
     if not ok:
-        print('B 站登录：%s → 跑 python scripts/bili/bili_login.py 扫码续期' % why)
+        print('B 站登录：%s' % why)
+        print('  → 恢复办法：在 B 站 PC 客户端里保持登录，或手动跑一次')
+        print('    python scripts/bili/bili_login.py qrcode 扫码')
         with open(os.path.join(WORKW, 'bili-login-state.json'), 'w',
                   encoding='utf-8', newline='\n') as f:
             json.dump({'ok': False, 'why': why, 'at': time.strftime('%Y-%m-%d %H:%M')},

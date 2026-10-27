@@ -9,16 +9,24 @@
 登录态过期后这两步会静默失败（表现为「抓不到链接 / 发不出评论」），
 所以需要一个能自己续期的入口。
 
-为什么不做「从浏览器导出 cookie」
---------------------------------
-Chromium 系浏览器运行时 Cookies 数据库是被独占锁住的，复制出来必然
-PermissionError；而关掉用户的浏览器再导出又太粗暴。这里直接用 B 站官方
-的扫码登录接口，不碰任何浏览器。
+登录态从哪来
+------------
+优先级从高到低：
+  1. B 站 PC 客户端（bililive_browser）：它内嵌了一套 Chromium，用户在客户端里
+     登录后，Web 登录态（SESSDATA/bili_jct）会落在
+     %LOCALAPPDATA%\\bililive\\User Data\\Browser Cache <随机>\\Network\\Cookies。
+     这个目录只有客户端自己用，不像常驻浏览器那样被独占锁住，随时能读。
+  2. 本机浏览器的闲置 profile（比如 Edge 的 User Data2）。开着在用的 profile
+     （360/Edge 主 profile）会被锁，读不到也不强求。
+  3. 上面都没有时，才需要人工扫码 —— 那是最后一次，扫码后就能长期自动。
+
+注意 SESSDATA 存的是 URL 编码串（逗号写成 %2C），取出来必须 unquote，
+否则 B 站会当成非法 cookie 返回 -101 账号未登录。
 
 用法：
     python scripts/bili/bili_login.py --check          # 只体检，不改任何文件
-    python scripts/bili/bili_login.py                  # 出二维码 → 扫码 → 落地 cookie
-    python scripts/bili/bili_login.py --qr-only        # 只出二维码，不轮询（给别的进程用）
+    python scripts/bili/bili_login.py                  # 自动取登录态并落地（默认，不等待）
+    python scripts/bili/bili_login.py qrcode           # 出二维码 → 扫码 → 落地 cookie
 
 扫码成功后写到仓库外两处：
     work/bili_cookies.json   —— 专属 B 站，本脚本与后续新脚本优先读它
@@ -35,6 +43,7 @@ import sys
 import time
 
 import requests
+from urllib.parse import unquote
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.environ.get('QD_REPO') or os.path.normpath(os.path.join(BASE, '..', '..'))
@@ -61,13 +70,31 @@ def _session(cookies: dict | None = None) -> requests.Session:
     return s
 
 
+def _plain(cookies: dict) -> dict:
+    """cookie 值在库里是 URL 编码的（逗号写成 %2C），发请求前必须还原"""
+    out = {}
+    for k, v in cookies.items():
+        if not v:
+            continue
+        v = unquote(v)
+        if '%' in v:            # 编码过头的老快照，再解一层
+            try:
+                v2 = unquote(v)
+                if v2 != v:
+                    v = v2
+            except Exception:
+                pass
+        out[k] = v
+    return out
+
+
 def load_cookies() -> dict:
     """按顺序读：bili_cookies.json → ck360_all.json 里的 bilibili 段"""
     if os.path.exists(CK_BILI):
         try:
             d = json.load(open(CK_BILI, encoding='utf-8'))
             if isinstance(d, dict) and d.get('SESSDATA'):
-                return {k: v for k, v in d.items() if v}
+                return _plain({k: v for k, v in d.items() if v})
         except Exception:
             pass
     if os.path.exists(CK_360):
@@ -78,7 +105,7 @@ def load_cookies() -> dict:
                 h = (c.get('host') or '').lstrip('.')
                 if h == 'bilibili.com' or h.endswith('.bilibili.com'):
                     d[c['name']] = c['value']
-            return {k: v for k, v in d.items() if v}
+            return _plain({k: v for k, v in d.items() if v})
         except Exception:
             pass
     return {}
@@ -87,6 +114,116 @@ def load_cookies() -> dict:
 def bili_sess(cookies: dict | None = None) -> requests.Session:
     """给其它脚本用：拿一个带有效 B 站登录态的 requests.Session"""
     return _session(cookies or load_cookies())
+
+
+# B 站 PC 客户端的内嵌浏览器根目录（名字带随机后缀，要动态发现）
+BILI_CLIENT_ROOT = r"%LOCALAPPDATA%\bililive\User Data"
+
+# 常见 Chromium 系浏览器的 User Data 目录（存在才试）
+BROWSER_ROOTS = [
+    ("Edge2", r"%LOCALAPPDATA%\Microsoft\Edge\User Data2"),
+    ("Edge", r"%LOCALAPPDATA%\Microsoft\Edge\User Data"),
+    ("360极速X", r"%LOCALAPPDATA%\360ChromeX\Chrome\User Data"),
+    ("360极速", r"%LOCALAPPDATA%\360Chrome\Chrome\User Data"),
+    ("Chrome", r"%LOCALAPPDATA%\Google\Chrome\User Data"),
+]
+
+
+def _client_sources():
+    """B 站 PC 客户端：User Data\\Browser Cache <随机>\\ 直接就是个 user-data-dir"""
+    root = os.path.expandvars(BILI_CLIENT_ROOT)
+    if not os.path.isdir(root):
+        return []
+    out = []
+    for sub in sorted(os.listdir(root), reverse=True):
+        if not sub.startswith('Browser Cache'):
+            continue
+        p = os.path.join(root, sub)
+        if os.path.exists(os.path.join(p, 'Network', 'Cookies')):
+            out.append((f'B站客户端/{sub}', p, ''))
+    return out
+
+
+def _browser_sources():
+    out = []
+    for name, tpl in BROWSER_ROOTS:
+        d = os.path.expandvars(tpl)
+        if not os.path.isdir(d):
+            continue
+        for sub in ('Default', 'Profile 1', 'Profile 2'):
+            if os.path.exists(os.path.join(d, sub, 'Network', 'Cookies')):
+                out.append((f'{name}/{sub}', d, sub))
+    return out
+
+
+def _sources():
+    return _client_sources() + _browser_sources()
+
+
+def cookies_from_browser():
+    """自动从 B 站客户端 / 本机浏览器里取 B 站登录态
+
+    返回 (cookies, 说明)。读不到就返回空 dict —— 调用方据此降级，不要卡住。
+    """
+    sys.path.insert(0, os.path.normpath(os.path.join(BASE, '..', 'netdisk')))
+    try:
+        import browser_cookies as BC
+    except Exception as e:
+        return {}, f'读不了浏览器 cookie：{type(e).__name__}'
+
+    tried, cands = [], []
+    for label, d, sub in _sources():
+        try:
+            ck = BC.read_cookies_direct(d, sub)
+        except Exception:
+            ck = []
+        if not ck:
+            try:
+                ck = BC.read_cookies(d, sub)   # 复制式读取：被锁时会 PermissionError
+            except Exception:
+                ck = []
+        if ck:
+            tried.append(f'{label}({len(ck)})')
+        got = {}
+        for c in ck:
+            h = (c.get('host') or '').lstrip('.')
+            if h == 'bilibili.com' or h.endswith('.bilibili.com'):
+                if c['name'] in KEEP or c['name'] in ('buvid3', 'buvid4', 'b_nut'):
+                    got[c['name']] = c['value']
+        if got.get('SESSDATA') and got.get('bili_jct'):
+            cands.append((label, got))
+
+    if not cands:
+        why = '浏览器/客户端里没有可用的 B 站登录态'
+        if tried:
+            why += f'（读到内容但缺 SESSDATA/bili_jct：{", ".join(tried)}）'
+        else:
+            why += '（Cookies 被锁或目录不存在）'
+        return {}, why
+
+    # 同一台机器上常躺着好几份过期快照，字段多少说明不了新旧，
+    # 只能逐个拿去问 B 站：谁真的还登录着就用谁。
+    rejected = []
+    for label, got in cands:
+        if not got.get('buvid3'):
+            # 客户端只存了 buvid4，缺 buvid3 会被风控挡，现取一个补上
+            try:
+                bj = _session().get('https://api.bilibili.com/x/frontend/finger/spi',
+                                    timeout=20).json()
+                bd = bj.get('data') or {}
+                if bd.get('b_3'):
+                    got['buvid3'] = bd['b_3']
+                    if bd.get('b_4') and not got.get('buvid4'):
+                        got['buvid4'] = bd['b_4']
+            except Exception:
+                pass
+        cookies = _plain(got)
+        j = nav(cookies)
+        if j.get('code') == 0 and (j.get('data') or {}).get('isLogin'):
+            return cookies, label
+        rejected.append(f'{label}(code={j.get("code")})')
+
+    return {}, f'{len(cands)} 处都有登录态但都已被 B 站作废：{", ".join(rejected)}'
 
 
 def nav(cookies: dict) -> dict:
@@ -101,7 +238,8 @@ def nav(cookies: dict) -> dict:
 def check(verbose: bool = True) -> bool:
     ck = load_cookies()
     if not ck.get('SESSDATA'):
-        print('B 站登录态：没有 cookie（需要扫码登录）')
+        print('B 站登录态：本地没有 cookie → 跑一次 python scripts/bili/bili_login.py'
+              '（会自动从 B 站 PC 客户端取）')
         return False
     j = nav(ck)
     ok = j.get('code') == 0 and (j.get('data') or {}).get('isLogin')
@@ -109,7 +247,8 @@ def check(verbose: bool = True) -> bool:
         if ok:
             print(f"B 站登录态：有效（{(j.get('data') or {}).get('uname')} / mid={ck.get('DedeUserID')}）")
         else:
-            print(f"B 站登录态：失效（code={j.get('code')} {j.get('message')}）→ 跑一次 bili_login.py 扫码续期")
+            print(f"B 站登录态：失效（code={j.get('code')} {j.get('message')}）"
+                  f"→ 跑一次 python scripts/bili/bili_login.py（会自动从 B 站客户端取）")
     return bool(ok)
 
 
@@ -214,62 +353,73 @@ def save(cookies: dict):
             merged = json.load(open(CK_360, encoding='utf-8'))
         except Exception:
             merged = []
-    merged = [c for c in merged
-              if not (c.get('host', '').lstrip('.') == 'bilibili.com'
-                      or c.get('host', '').endswith('.bilibili.com'))]
+    # 清干净所有旧条目（.bilibili.com 和 .bilibili.cn 都要清），
+    # 否则过期快照会一直赖在里面，被旧脚本当成有效 cookie 用。
+    merged = [c for c in merged if 'bilibili' not in (c.get('host') or '')]
     for k, v in cookies.items():
         merged.append({'host': '.bilibili.com', 'name': k, 'value': v, 'path': '/'})
     with open(CK_360, 'w', encoding='utf-8', newline='\n') as f:
         json.dump(merged, f, ensure_ascii=False, indent=2)
 
 
-def main():
-    ap = argparse.ArgumentParser(description='B 站扫码登录 / 登录态自检')
-    ap.add_argument('--check', action='store_true', help='只检查登录态')
-    ap.add_argument('--key', help='只对已有的 qrcode_key 收尾（二维码已被扫、轮询进程又不在时用）')
-    ap.add_argument('--timeout', type=int, default=170, help='等待扫码秒数')
-    args = ap.parse_args()
+def cmd_auto():
+    """全自动路径：已有就用，没有就从浏览器取，都拿不到就体面退出"""
+    if check(verbose=False):
+        j = nav(load_cookies())
+        print(f"B 站登录态：有效（{(j.get('data') or {}).get('uname')}），可直接发评论")
+        return 0
+    ck, src = cookies_from_browser()      # 返回时已经拿 nav 验证过，能登录才给
+    if ck:
+        save(ck)
+        j = nav(ck)
+        print(f"B 站登录态：已从 {src} 取回（{(j.get('data') or {}).get('uname')}）")
+        return 0
+    print(f'B 站登录态：{src or "无"}')
+    print('  → 自动流程会跳过「发补档评论」这一步，补档照常进行并上站；')
+    print('    恢复办法：在 B 站 PC 客户端里保持登录，或手动跑一次')
+    print('    python scripts/bili/bili_login.py qrcode 扫码（扫一次就够，之后自动续）')
+    return 2
 
-    if args.check:
-        sys.exit(0 if check() else 2)
 
-    if args.key:
-        # 二维码已经扫过、只差收尾：不需要再出图，直接轮询这个 key
-        key, url = args.key, ''
-        sess = _session()
-        try:
-            sess.get('https://www.bilibili.com/', timeout=20)
-        except Exception:
-            pass
-        print(f'沿用已有二维码 {key[:8]}… 直接收尾')
-    else:
-        key, url, sess = new_qrcode()
-
-    if url:
-        png_ok = make_qr(url, QR_PNG)
-        print('扫码登录 B 站：')
-        print(f'  二维码图片：{QR_PNG}' if png_ok else '  二维码图片生成失败，请手动打开下面的链接')
-        print(f'  扫码链接：{url}')
-        print(f'  请用 B 站 App「扫一扫」扫码并确认（{args.timeout} 秒内有效）')
-
+def cmd_qrcode(timeout=170):
+    key, url, sess = new_qrcode()
+    png_ok = make_qr(url, QR_PNG)
+    print('扫码登录 B 站（这一步需要人操作，所以只在手动跑时才做）：')
+    print(f'  二维码图片：{QR_PNG}' if png_ok else '  二维码图片生成失败，请手动打开下面的链接')
+    print(f'  扫码链接：{url}')
+    print(f'  请用 B 站 App「扫一扫」扫码并确认（{timeout} 秒内有效）')
     sys.stdout.flush()
-    state, data = poll(sess, key, timeout=args.timeout)
+    state, data = poll(sess, key, timeout=timeout)
     if state == 'expired':
         sys.exit('二维码已失效，重跑一次')
     if state == 'timeout':
         sys.exit('等待扫码超时，重跑一次')
     if state != 'ok':
         sys.exit(f'扫码失败：{data.get("message") or data}')
-
     cookies = harvest_cookies(sess, data)
     if not cookies.get('SESSDATA') or not cookies.get('bili_jct'):
         sys.exit(f'拿到了扫码结果但没拿到 SESSDATA/bili_jct：{list(cookies)[:8]}')
     save(cookies)
     if check(verbose=False):
-        j = nav(cookies)
-        print(f"登录成功：{(j.get('data') or {}).get('uname')}（mid={cookies.get('DedeUserID')}）")
+        print(f"登录成功：{(nav(cookies).get('data') or {}).get('uname')}")
     else:
         print('cookie 已写入，但 nav 校验没通过，可能需要再扫一次')
+
+
+def main():
+    ap = argparse.ArgumentParser(description='B 站登录态：自动获取（默认）/ 扫码（手动）')
+    ap.add_argument('cmd', nargs='?', default='auto', choices=['auto', 'qrcode'],
+                    help='auto=自动从浏览器取（默认，不等待）；qrcode=出二维码（需人工扫）')
+    ap.add_argument('--check', action='store_true', help='只检查登录态，不改任何文件')
+    ap.add_argument('--timeout', type=int, default=170, help='qrcode 模式等待扫码秒数')
+    args = ap.parse_args()
+
+    if args.check:
+        sys.exit(0 if check() else 2)
+    if args.cmd == 'qrcode':
+        cmd_qrcode(args.timeout)
+        return
+    sys.exit(cmd_auto())
 
 
 if __name__ == '__main__':

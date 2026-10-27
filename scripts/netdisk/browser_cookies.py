@@ -45,8 +45,30 @@ def dpapi_decrypt(data: bytes) -> bytes:
         ctypes.windll.kernel32.LocalFree(blob_out.pbData)
 
 
+# 密钥文件名：标准 Chromium 是 "Local State"，但很多内嵌壳（B 站 PC 客户端等）
+# 把它改叫 "LocalPrefs.json"，内容结构完全一样，都得认。
+KEY_FILES = ("Local State", "LocalPrefs.json", "Preferences")
+
+
+def find_key_file(user_data_dir: str) -> str:
+    for name in KEY_FILES:
+        p = os.path.join(user_data_dir, name)
+        if not os.path.exists(p):
+            continue
+        try:
+            with open(p, "r", encoding="utf-8") as f:
+                state = json.load(f)
+        except Exception:
+            continue
+        if (state.get("os_crypt") or {}).get("encrypted_key"):
+            return p
+    return ""
+
+
 def load_key(user_data_dir: str) -> bytes:
-    ls = os.path.join(user_data_dir, "Local State")
+    ls = find_key_file(user_data_dir)
+    if not ls:
+        raise FileNotFoundError(f"找不到 os_crypt.encrypted_key：{user_data_dir}")
     with open(ls, "r", encoding="utf-8") as f:
         state = json.load(f)
     enc = base64.b64decode(state["os_crypt"]["encrypted_key"])
@@ -87,6 +109,48 @@ def find_db(user_data_dir: str, profile: str = "Default") -> str:
         if os.path.exists(cand):
             return cand
     return ""
+
+
+def read_cookies_direct(user_data_dir: str, profile: str = "Default") -> list[dict]:
+    """不复制、直接只读打开浏览器的 Cookies 数据库
+
+    浏览器开着时 Cookies 是被独占的，shutil.copy2 必然 PermissionError。
+    但把浏览器关掉（夜里）之后，它只是个普通 SQLite，可以直接只读打开——
+    这条路径让每日巡检能在无人值守时自动拿到登录态。
+    读不到（浏览器还开着 / 权限不够）就返回空，让调用方自己降级。
+    """
+    db = find_db(user_data_dir, profile)
+    if not db:
+        return []
+    try:
+        key = load_key(user_data_dir)
+    except Exception:
+        return []
+    out = []
+    try:
+        conn = sqlite3.connect("file:%s?mode=ro" % db.replace("\\", "/"), uri=True)
+    except Exception:
+        return []
+    try:
+        conn.execute("PRAGMA query_only = 1")
+        rows = conn.execute(
+            "select host_key, name, encrypted_value, path from cookies").fetchall()
+    except Exception:
+        return []
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
+    for host, name, enc, path in rows:
+        try:
+            value = decrypt_value(enc, key, host)
+        except Exception:
+            continue
+        if not value:
+            continue
+        out.append({"host": host, "name": name, "value": value, "path": path or "/"})
+    return out
 
 
 def read_cookies(user_data_dir: str, profile: str = "Default") -> list[dict]:
