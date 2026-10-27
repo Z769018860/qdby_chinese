@@ -32,7 +32,7 @@ function style(){
   .dtideLowspec th{color:#9fb0c4;font-weight:600;white-space:nowrap}.dtideLowspec th button{all:unset;cursor:pointer;color:inherit;font:inherit}.dtideLowspec th button:hover{color:#f3dcab}.dtideLowspec td.lsName{text-align:left;min-width:120px}.dtideLowspec td.lsName small{display:block;color:#7f8da1;font-size:10px}
   .dtideLowspec .lsTeam{display:flex;gap:4px;justify-content:center}.dtideLowspec .lsTeam span{position:relative;display:block;width:34px;height:34px}.dtideLowspec .lsTeam img{width:34px;height:34px;border-radius:7px;object-fit:cover;background:#0b1220}
   .dtideLowspec .lsTeam span.b:after{content:'助';position:absolute;right:-2px;bottom:-2px;font-size:8px;background:#d7a85b;color:#1b1406;border-radius:4px;padding:0 2px}
-  .dtideLowspec td.hl{color:#fff;font-weight:800}.dtideLowspec td[style*=hsla]{color:#f3f6fa;font-variant-numeric:tabular-nums}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
+  .dtideLowspec td small.x,.dtideLowspec td[style*=hsla] small{display:block;margin-top:1px;font-size:9px;font-weight:400;opacity:.78;white-space:nowrap}.dtideLowspec td.hl{color:#fff;font-weight:800}.dtideLowspec td[style*=hsla]{color:#f3f6fa;font-variant-numeric:tabular-nums}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
   .dtideLowspec .lsMore{margin:10px auto;display:block;padding:7px 18px;border:1px solid rgba(215,168,91,.4);border-radius:9px;background:rgba(215,168,91,.08);color:#e8ca91;cursor:pointer}
     .dtideLowspec tr.lsRow{cursor:pointer}.dtideLowspec tr.lsRow:hover{background:rgba(255,255,255,.025)}.dtideLowspec tr.lsRow.open{background:rgba(215,168,91,.06)}
   .dtideLowspec td.lsName small{user-select:text}.dtideLowspec tr.lsDetail>td{padding:10px 8px;background:rgba(255,255,255,.02);text-align:left}
@@ -54,7 +54,14 @@ function load(){
   const p=lowspecPath(key).then(path=>path?fetch(path,{cache:'no-cache'}).then(r=>r.ok?r.json():null):null).catch(()=>null).then(d=>{state.season=key;state.data=d;state.loading=null;return d});
   state.loading={key,p};return p;
 }
-const val=(t,k)=>k==='wheel'&&(state.noPermWheel||state.noPassWheel||state.noGiftWheel)?t[6].reduce((n,m)=>n+(m[7]||[]).reduce((s,w)=>s+(w[2]>=1&&!(w[2]===2&&state.noPermWheel)&&!(w[2]===3&&state.noPassWheel)&&!(w[2]===4&&state.noGiftWheel)?w[1]:0),0),0):k==='keeper'?(t[5]??0):k==='enl'&&state.noPerm?t[6].reduce((n,m)=>n+(state.data.aw[m[0]][4]?0:m[1]),0):t[6].reduce((n,m)=>n+m[{enl:1,skill:2,forge:3,wheel:4}[k]],0);
+// per-member figures behind each lineup value (the filters about permanent Awakeners / wheels already applied)
+const memberVals=(t,k)=>t[6].map(m=>{
+  if(k==='enl')return state.noPerm&&state.data.aw[m[0]][4]?0:m[1];
+  if(k==='skill')return m[2];
+  if(k==='forge')return m[3];
+  return (m[7]||[]).reduce((s,w)=>s+(w[2]>=1&&!(w[2]===2&&state.noPermWheel)&&!(w[2]===3&&state.noPassWheel)&&!(w[2]===4&&state.noGiftWheel)?w[1]:0),0);
+});
+const val=(t,k)=>k==='keeper'?(t[5]??0):memberVals(t,k).reduce((a,b)=>a+b,0);
 const scoreOk=p=>{const s=state.score;if(s==='all')return true;if(s.includes(':')){const [a,b]=s.split(':').map(Number);return p[3]>=a&&p[3]<=b}return p[3]===Number(s)};
 // percentile = share of the other lineups in the group that invest MORE (low mode) / LESS (high mode) than this one, ties count half
 function percentiles(list){
@@ -74,7 +81,7 @@ function lineups(d,filter){
     if(state.zone===0&&!scoreOk(p))continue;
     if(state.noAssist&&t[6].some(m=>m[5]))continue;
     if(!filter(t))continue;
-    rows.push({t,p,v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)]))});
+    rows.push({t,p,v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)])),mv:{enl:memberVals(t,'enl'),forge:memberVals(t,'forge'),wheel:memberVals(t,'wheel')},cards:t[6].reduce((n,m)=>n+(m[6]||[]).length,0),lv:t[6].reduce((n,m)=>n+m[2],0)});
   }
   return rows;
 }
@@ -90,8 +97,8 @@ function playerRows(d){
   for(const g of groups.values())percentiles(g);
   const by=new Map();
   for(const r of rows){
-    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,items:[],v:{enl:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
-    o.n++;o.index+=r.index;o.items.push(r);
+    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,items:[],cards:0,lv:0,v:{enl:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
+    o.n++;o.index+=r.index;o.items.push(r);o.cards+=r.cards;o.lv+=r.lv;
     for(const k of ['enl','skill','forge','wheel'])o.v[k]+=r.v[k];
     o.v.keeper=Math.max(o.v.keeper,r.v.keeper);
   }
@@ -136,7 +143,12 @@ function render(){
   const arrow=k=>k===L?(D>0?' ↑':' ↓'):' ↕';
   const head=METRICS.map(m=>`<th class="${state.skip.has(m.key)?'lsOff':''}" title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}${arrow(m.key)}</button></th>`).join('');
   const body=shown.map((r,i)=>{
-    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}${state.skip.has(m.key)?' lsOff':''}" style="${heatOf(m.key,r.v[m.key])}">${fmt(r.v[m.key])}</td>`).join('');
+    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),sub1=k=>{
+      if(k==='keeper')return '';
+      if(k==='skill')return `<small>${ui('均 ','avg ')}${r.cards?(r.lv/r.cards).toFixed(2):'—'}${ui(' /张',' per card')}</small>`;
+      return all?`<small>${ui('合计 ','sum ')}${r.items.reduce((s,x)=>s+x.v[k],0)}</small>`:`<small>${r.mv[k].join('+')}</small>`;
+    },
+    cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}${state.skip.has(m.key)?' lsOff':''}" style="${heatOf(m.key,r.v[m.key])}">${fmt(r.v[m.key])}${sub1(m.key)}</td>`).join('');
     const key=all?'p'+p[0]:p[0]+'|'+r.t[1]+'|'+r.t[3],open=state.open.has(key);
     let mid,sub;
     if(all){mid=`<td>${r.n}</td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}`}
