@@ -79,7 +79,8 @@ def main():
             str_idx[key] = len(strings)
             strings.append([en, zh_of[kind].get(norm(en), en)])
         return str_idx[key]
-    avail = {x['ingameId']: x['availabilityType'] for x in json.loads((D / 'skeydb/awakeners.json').read_text(encoding='utf-8'))['records']}
+    perm = {x['ingameId'] for x in json.loads((D / 'skeydb/awakeners.json').read_text(encoding='utf-8'))['records']
+            if x['availabilityType'] == 'PERMANENT' or (x['availabilityType'] == 'WELFARE' and x['rarity'] == 'SR')}  # permanent banner + welfare SR
     stages = {}
     for sid, st in names['stages'].items():
         m = re.match(r'Zone (\d): (?:Threat Level (\w+)|▼)', st['name'])
@@ -103,7 +104,7 @@ def main():
                 if info['canonicalName'] not in aw_idx:
                     p = pool.get(norm(info['canonicalName'])) or {}
                     aw_idx[info['canonicalName']] = len(aw)
-                    aw.append([info['ingameId'], info['canonicalName'], p.get('zh') or info['canonicalName'], p.get('img', ''), 1 if avail.get(info['ingameId']) == 'PERMANENT' else 0])
+                    aw.append([info['ingameId'], info['canonicalName'], p.get('zh') or info['canonicalName'], p.get('img', ''), 1 if info['ingameId'] in perm else 0])
                 skill = sum(s.get('level', 0) for s in a.get('slots') or [] if not s.get('lock'))
                 forge = (a.get('talents') or {}).get(forge_tid.get(a['tid']), {}).get('lv', 0)
                 wheel, wl = 0, []
