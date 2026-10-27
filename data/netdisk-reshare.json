@@ -776,14 +776,17 @@
           "bili_url": null,
           "checked": "ok",
           "checked_at": "2026-10-28 00:00",
-          "checked_detail": "分享有效｜与死神的约会 本体完整汉化版.zip"
+          "checked_detail": "分享有效｜与死神的约会 本体完整汉化版.zip",
+          "site_direct": true
         }
       }
     },
     "恶魔之心": {
       "links": {
         "baidu": {
-          "error": "errno=109 文件违规，无法分享"
+          "error": "errno=109 文件违规，无法分享",
+          "bvid": "BV1Pz421971k",
+          "bili_url": "https://www.bilibili.com/video/BV1Pz421971k"
         }
       }
     },

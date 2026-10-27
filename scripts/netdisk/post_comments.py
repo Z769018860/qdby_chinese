@@ -295,12 +295,17 @@ def main():
             if args.cleanup and not args.force:
                 continue
 
-        todo = {k: v for k, v in links.items() if v.get('url') and not v.get('comment')}
+        todo = {k: v for k, v in links.items()
+                if v.get('url') and not v.get('comment') and not v.get('site_direct')}
         if not todo:
             continue
         if not bvid:
             print(f'  - {name}: 没有投稿，跳过（补档内容只写进站点）')
             n_skip += 1
+            # 打个标记：这种作品的链接本来就该由站内直出（autofill 会处理），
+            # 不记一笔的话它永远挂在「待发」队列里，每次巡检都报一遍
+            for v in todo.values():
+                v['site_direct'] = True
             continue
         msg = build(name, todo)
         if args.dry:
