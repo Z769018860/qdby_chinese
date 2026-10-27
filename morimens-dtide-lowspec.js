@@ -14,7 +14,7 @@ const METRICS=[
   {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
   {key:'keeper',cn:'守密人等级',en:'Keeper level',tip:['该场战斗时玩家的守密人等级','The player’s keeper level in that battle']}
 ];
-const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',diff:6,zone:1,noAssist:false,noPerm:false,limit:100,score:'all',count:'all',open:new Set()};
+const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',dir:-1,diff:6,zone:1,noAssist:false,noPerm:false,limit:100,score:'all',count:'all',open:new Set()};
 const $=id=>document.getElementById(id);
 const stateOf=()=>document.getElementById('dtideSeason')?.value||'';
 const seasonKey=v=>/^\d+$/.test(String(v))?String(v):null;
@@ -29,7 +29,7 @@ function style(){
   .dtideLowspec .lsTabs button[aria-pressed=true]{border-color:#d7a85b;background:rgba(215,168,91,.14);color:#f3dcab}
   .dtideLowspec .lsNote{font-size:11px;line-height:1.7;color:#8c9aae;margin:6px 0 10px}
   .dtideLowspec table{width:100%;border-collapse:collapse;font-size:12px}.dtideLowspec th,.dtideLowspec td{padding:7px 8px;text-align:center;border-bottom:1px solid rgba(148,163,184,.1);vertical-align:middle}
-  .dtideLowspec th{color:#9fb0c4;font-weight:600;white-space:nowrap}.dtideLowspec td.lsName{text-align:left;min-width:120px}.dtideLowspec td.lsName small{display:block;color:#7f8da1;font-size:10px}
+  .dtideLowspec th{color:#9fb0c4;font-weight:600;white-space:nowrap}.dtideLowspec th button{all:unset;cursor:pointer;color:inherit;font:inherit}.dtideLowspec th button:hover{color:#f3dcab}.dtideLowspec td.lsName{text-align:left;min-width:120px}.dtideLowspec td.lsName small{display:block;color:#7f8da1;font-size:10px}
   .dtideLowspec .lsTeam{display:flex;gap:4px;justify-content:center}.dtideLowspec .lsTeam span{position:relative;display:block;width:34px;height:34px}.dtideLowspec .lsTeam img{width:34px;height:34px;border-radius:7px;object-fit:cover;background:#0b1220}
   .dtideLowspec .lsTeam span.b:after{content:'助';position:absolute;right:-2px;bottom:-2px;font-size:8px;background:#d7a85b;color:#1b1406;border-radius:4px;padding:0 2px}
   .dtideLowspec td.hl{color:#f3dcab;font-weight:800;background:rgba(215,168,91,.08)}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
@@ -118,8 +118,8 @@ function render(){
   if(all&&state.count!=='all'&&!counts.includes(Number(state.count)))state.count='all';
   if(all&&state.count!=='all')rows=rows.filter(r=>r.n===Number(state.count));
   const pidx=r=>all?r.p:r.p;
-  if(L==='score')rows.sort((a,b)=>b.index-a.index||pidx(a)[2]-pidx(b)[2]);
-  else rows.sort((a,b)=>(state.mode==='high'?b.v[L]-a.v[L]:a.v[L]-b.v[L])||b.index-a.index||pidx(a)[2]-pidx(b)[2]);
+  const D=state.dir;
+  rows.sort((a,b)=>(L==='score'?D*(a.index-b.index):D*(a.v[L]-b.v[L]))||b.index-a.index||pidx(a)[2]-pidx(b)[2]);
   const total=rows.length,shown=rows.slice(0,state.limit);
   const lbl=m=>zh()?m.cn:m.en;
   const diffOpts=d.diffs.map((n,i)=>`<option value="${i}"${i===state.diff?' selected':''}>${ui('危险等级','Threat ')}${n}</option>`).reverse().join('');
@@ -128,8 +128,8 @@ function render(){
   const cnt=new Map();for(const p of d.players)cnt.set(p[3],(cnt.get(p[3])||0)+1);
   const exact=[...cnt].sort((a,b)=>b[0]-a[0]).map(([s,c])=>`<option value="${s}"${String(state.score)===String(s)?' selected':''}>${s}${ui(' 分（',' pts (')}${c}${ui(' 人）',' players)')}</option>`).join('');
   const scoreSel=`<option value="all">${ui('全部分数','All scores')}</option>${exact}`;
-  const tabs=[{key:'score',cn:all?'综合评分榜（平均）':'综合评分榜',en:all?'Overall score (average)':'Overall score'},...METRICS].map(m=>`<button type="button" data-ls-list="${m.key}" aria-pressed="${L===m.key}" title="${esc(m.tip?ui(m.tip[0],m.tip[1]):ui('五项投入的百分位平均：越高越“低配”','Average of the five investment percentiles: higher = lower investment'))}">${esc(lbl(m))}${m.key==='score'?'':high?ui(' · 最高',' · highest'):ui(' · 最低',' · lowest')}</button>`).join('');
-  const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}</th>`).join('');
+  const arrow=k=>k===L?(D>0?' ↑':' ↓'):' ↕';
+  const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}${arrow(m.key)}</button></th>`).join('');
   const body=shown.map((r,i)=>{
     const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}">${fmt(r.v[m.key])}</td>`).join('');
     const key=all?'p'+p[0]:p[0]+'|'+r.t[1]+'|'+r.t[3],open=state.open.has(key);
@@ -147,14 +147,14 @@ function render(){
   const noteZone=zh()
     ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。`
     :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. `;
-  const note=all?noteAll:noteZone;
+  const hint=zh()?'点击表头可按该列升序 / 降序排列；综合评分升序即“高配”（投入最多）。':'Click a column header to sort ascending / descending; ascending overall score = high investment.';
+  const note=(all?noteAll:noteZone)+' '+hint;
   host.innerHTML=`<div class="dtideLowspec">
     <div class="lsTabs">${zoneTabs}</div>
     <div class="lsNote">${note}</div>
     <div class="lsBar">${all?'':`<label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label>`}${all?`<label>${ui('玩家总分','Player score')}<select data-ls-score>${scoreSel}</select></label>`:''}
     ${all?`<label>${ui('阵容数','Lineups')}<select data-ls-count><option value="all">${ui('不限','Any')}</option>${counts.map(c=>`<option value="${c}"${String(state.count)===String(c)?' selected':''}>${c}${ui(' 个阵容',' lineups')}</option>`).join('')}</select></label>`:''}<label class="lsChk" title="${esc(ui('常驻角色（常驻池 20 名 + 福利 SR 4 名）的启灵不计入总启灵数','Enlightenment of permanent Awakeners (20 standard-banner + 4 welfare SR) is left out of the total'))}"><input type="checkbox" data-ls-perm${state.noPerm?' checked':''}> ${ui('总启灵数不计常驻角色','Total enlightenment: skip permanent Awakeners')}</label><label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label></div>
-    <div class="lsTabs">${tabs}</div>
-    <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th>${all?ui('平均评分','Avg score'):ui('综合评分','Score')}</th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
+    <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th title="${esc(ui('五项投入的百分位平均：越高越“低配”；升序即高配','Average of the five investment percentiles: higher = lower investment; ascending = high investment'))}"><button type="button" class="dtideSortHead" data-ls-sort="score">${all?ui('平均评分','Avg score'):ui('综合评分','Score')}${arrow('score')}</button></th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
     ${total>shown.length?`<button type="button" class="lsMore" data-ls-more>${ui('显示更多','Show more')}（${shown.length}/${total}）</button>`:`<div class="lsNote">${ui('共','Total')} ${total} ${all?ui('名玩家','players'):ui('支阵容','lineups')}</div>`}</div>`;
 }
 const titleOf=()=>state.mode==='high'?ui('高配榜单','High-investment Leaderboard'):ui('低配榜单','Low-investment Leaderboard');
@@ -198,8 +198,8 @@ function mount(){
   const tabs=document.querySelector('.dtideLeaderboardTabs');if(!tabs||tabs.querySelector('[data-dtide-lowspec-tab]'))return !!tabs;
   style();
   const mk=(mode,cn,en)=>{const b=document.createElement('button');b.type='button';b.className='dtideLeaderboardTab';b.setAttribute('data-dtide-lowspec-tab',mode);b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.hidden=true;b.textContent=ui(cn,en);return b};
-  const low=mk('low','低配榜单','Low-investment'),high=mk('high','高配榜单','High-investment');
-  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]');anchor.after(low);low.after(high);
+  const low=mk('low','低配榜单','Low-investment');
+  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]');anchor.after(low);
   const panel=document.createElement('div');panel.id='dtideLowspec';panel.className='dtideBattle';panel.hidden=true;($('dtideBattle')||$('dtideMatrix')).after(panel);
   $('dtideSeason')?.addEventListener('change',()=>{state.data=null;state.season=null;setTimeout(refreshTab,300)});
   refreshTab();
@@ -209,7 +209,7 @@ document.addEventListener('click',e=>{
   const lt=e.target.closest?.('[data-dtide-lowspec-tab]');if(lt){const mode=lt.dataset.dtideLowspecTab||'low';if(!state.active)activate(mode);else if(state.mode!==mode){state.mode=mode;state.limit=100;apply();render()}return}
   if(state.active&&e.target.closest?.('[data-dtide-entity],[data-dtide-battle-tab]')){deactivate();return}
   const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
-  const l=e.target.closest('[data-ls-list]');if(l){state.list=l.dataset.lsList;state.limit=100;render();return}
+  const l=e.target.closest('[data-ls-sort]');if(l){const k=l.dataset.lsSort;if(state.list===k)state.dir=-state.dir;else{state.list=k;state.dir=k==='score'?-1:1}state.limit=100;render();return}
   const row=e.target.closest('tr[data-ls-key]');if(row&&!e.target.closest('a,button')){const k=row.dataset.lsKey;if(state.open.has(k))state.open.delete(k);else state.open.add(k);render();return}
   const z=e.target.closest('button[data-ls-zone]');if(z){state.zone=Number(z.dataset.lsZone);state.limit=100;render();return}
   if(e.target.closest('[data-ls-more]')){state.limit+=100;render()}
