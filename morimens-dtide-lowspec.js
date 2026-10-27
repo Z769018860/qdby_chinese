@@ -71,16 +71,16 @@ function percentiles(list){
   for(const m of METRICS){
     const vs=list.map(r=>r.v[m.key]).sort((a,b)=>a-b),pos=new Map();
     for(const r of list){const v=r.v[m.key];if(!pos.has(v)){let lo=0,hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<v)lo=mid+1;else hi=mid}const a=lo;lo=a;hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<=v)lo=mid+1;else hi=mid}pos.set(v,[a,lo])}}
-    for(const r of list){const [a,b]=pos.get(r.v[m.key]);const low=n>1?100*((n-b)+(b-a-1)/2)/(n-1):100;r['p_'+m.key]=state.mode==='high'?100-low:low}
+    for(const r of list){const [a,b]=pos.get(r.v[m.key]);const low=n>1?100*((n-b)+(b-a-1)/2)/(n-1):50;r['p_'+m.key]=state.mode==='high'?100-low:low}
   }
   const used=METRICS.filter(m=>!state.skip.has(m.key)),wsum=used.reduce((s,m)=>s+(m.weight??1),0);
   for(const r of list)r.index=used.reduce((s,m)=>s+(m.weight??1)*r['p_'+m.key],0)/wsum;
 }
-function lineups(d,filter){
+function lineups(d,filter,ignoreScore){
   const rows=[];
   for(const t of d.teams){
     const p=d.players[t[0]];
-    if(state.zone===0&&!scoreOk(p))continue;
+    if(state.zone===0&&!ignoreScore&&!scoreOk(p))continue;
     if(state.noAssist&&t[6].some(m=>m[5]))continue;
     if(!filter(t))continue;
     rows.push({t,p,v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)])),mv:{enl:memberVals(t,'enl'),lv:memberVals(t,'lv'),forge:memberVals(t,'forge'),wheel:memberVals(t,'wheel')},cards:t[6].reduce((n,m)=>n+(m[6]||[]).length,0),lv:t[6].reduce((n,m)=>n+m[2],0)});
@@ -94,7 +94,8 @@ function zoneRows(d){
 }
 // all zones: per zone and threat level the lineups are scored against each other, a player's lineup scores add up
 function playerRows(d){
-  const rows=lineups(d,()=>true),groups=new Map();
+  // percentiles are taken against every player's lineups of the same zone and threat level (a score-filtered group is far too small: a lone lineup would score 100 everywhere); the score filter only picks the players shown
+  const rows=lineups(d,()=>true,true),groups=new Map();
   for(const r of rows){const k=r.t[1]+'|'+r.t[2];(groups.get(k)||groups.set(k,[]).get(k)).push(r)}
   for(const g of groups.values())percentiles(g);
   const by=new Map();
@@ -105,7 +106,7 @@ function playerRows(d){
     o.v.keeper=Math.max(o.v.keeper,r.v.keeper);
   }
   // players with the same score can own a different number of lineups: rank on the per-lineup average, not on the sum
-  return [...by.values()].map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.n,lv:o.v.lv/o.n,skill:o.v.skill/o.n,forge:o.v.forge/o.n,wheel:o.v.wheel/o.n,keeper:o.v.keeper}}));
+  return [...by.values()].filter(o=>scoreOk(o.p)).map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.n,lv:o.v.lv/o.n,skill:o.v.skill/o.n,forge:o.v.forge/o.n,wheel:o.v.wheel/o.n,keeper:o.v.keeper}}));
 }
 const nm=i=>{const s=(state.data.names||[])[i];return s?(zh()?s[1]:s[0]):''};
 const diffName=i=>state.data.diffs[i];
