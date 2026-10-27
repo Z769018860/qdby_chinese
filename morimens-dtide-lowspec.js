@@ -14,7 +14,7 @@ const METRICS=[
   {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
   {key:'keeper',cn:'守密人等级',en:'Keeper level',tip:['该场战斗时玩家的守密人等级','The player’s keeper level in that battle']}
 ];
-const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',dir:-1,diff:6,zone:1,noAssist:false,noPerm:false,noPermWheel:false,noPassWheel:false,noGiftWheel:false,limit:100,score:'all',count:'all',open:new Set()};
+const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',dir:-1,diff:6,zone:1,skip:new Set(),noAssist:false,noPerm:false,noPermWheel:false,noPassWheel:false,noGiftWheel:false,limit:100,score:'all',count:'all',open:new Set()};
 const $=id=>document.getElementById(id);
 const stateOf=()=>document.getElementById('dtideSeason')?.value||'';
 const seasonKey=v=>/^\d+$/.test(String(v))?String(v):null;
@@ -27,7 +27,7 @@ function style(){
   .dtideLowspec .lsChk{flex-direction:row;align-items:center;gap:6px;min-height:34px}
   .dtideLowspec .lsTabs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}.dtideLowspec .lsTabs button{padding:6px 11px;border:1px solid rgba(148,163,184,.22);border-radius:999px;background:rgba(255,255,255,.03);color:#c9d3df;cursor:pointer;font-size:12px}
   .dtideLowspec .lsTabs button[aria-pressed=true]{border-color:#d7a85b;background:rgba(215,168,91,.14);color:#f3dcab}
-  .dtideLowspec .lsNote{font-size:11px;line-height:1.7;color:#8c9aae;margin:6px 0 10px}
+  .dtideLowspec .lsIncLbl{align-self:center;font-size:11px;color:#8fa0b5}.dtideLowspec th.lsOff,.dtideLowspec td.lsOff{opacity:.38}.dtideLowspec .lsNote{font-size:11px;line-height:1.7;color:#8c9aae;margin:6px 0 10px}
   .dtideLowspec table{width:100%;border-collapse:collapse;font-size:12px}.dtideLowspec th,.dtideLowspec td{padding:7px 8px;text-align:center;border-bottom:1px solid rgba(148,163,184,.1);vertical-align:middle}
   .dtideLowspec th{color:#9fb0c4;font-weight:600;white-space:nowrap}.dtideLowspec th button{all:unset;cursor:pointer;color:inherit;font:inherit}.dtideLowspec th button:hover{color:#f3dcab}.dtideLowspec td.lsName{text-align:left;min-width:120px}.dtideLowspec td.lsName small{display:block;color:#7f8da1;font-size:10px}
   .dtideLowspec .lsTeam{display:flex;gap:4px;justify-content:center}.dtideLowspec .lsTeam span{position:relative;display:block;width:34px;height:34px}.dtideLowspec .lsTeam img{width:34px;height:34px;border-radius:7px;object-fit:cover;background:#0b1220}
@@ -64,8 +64,8 @@ function percentiles(list){
     for(const r of list){const v=r.v[m.key];if(!pos.has(v)){let lo=0,hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<v)lo=mid+1;else hi=mid}const a=lo;lo=a;hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<=v)lo=mid+1;else hi=mid}pos.set(v,[a,lo])}}
     for(const r of list){const [a,b]=pos.get(r.v[m.key]);const low=n>1?100*((n-b)+(b-a-1)/2)/(n-1):100;r['p_'+m.key]=state.mode==='high'?100-low:low}
   }
-  const wsum=METRICS.reduce((s,m)=>s+(m.weight??1),0);
-  for(const r of list)r.index=METRICS.reduce((s,m)=>s+(m.weight??1)*r['p_'+m.key],0)/wsum;
+  const used=METRICS.filter(m=>!state.skip.has(m.key)),wsum=used.reduce((s,m)=>s+(m.weight??1),0);
+  for(const r of list)r.index=used.reduce((s,m)=>s+(m.weight??1)*r['p_'+m.key],0)/wsum;
 }
 function lineups(d,filter){
   const rows=[];
@@ -134,9 +134,9 @@ function render(){
   const exact=[...cnt].sort((a,b)=>b[0]-a[0]).map(([s,c])=>`<option value="${s}"${String(state.score)===String(s)?' selected':''}>${s}${ui(' 分（',' pts (')}${c}${ui(' 人）',' players)')}</option>`).join('');
   const scoreSel=`<option value="all">${ui('全部分数','All scores')}</option>${exact}`;
   const arrow=k=>k===L?(D>0?' ↑':' ↓'):' ↕';
-  const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}${arrow(m.key)}</button></th>`).join('');
+  const head=METRICS.map(m=>`<th class="${state.skip.has(m.key)?'lsOff':''}" title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}${arrow(m.key)}</button></th>`).join('');
   const body=shown.map((r,i)=>{
-    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}" style="${heatOf(m.key,r.v[m.key])}">${fmt(r.v[m.key])}</td>`).join('');
+    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}${state.skip.has(m.key)?' lsOff':''}" style="${heatOf(m.key,r.v[m.key])}">${fmt(r.v[m.key])}</td>`).join('');
     const key=all?'p'+p[0]:p[0]+'|'+r.t[1]+'|'+r.t[3],open=state.open.has(key);
     let mid,sub;
     if(all){mid=`<td>${r.n}</td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}`}
@@ -152,11 +152,13 @@ function render(){
   const noteZone=zh()
     ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。`
     :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. `;
-  const hint=zh()?'综合评分权重：总启灵数 27%，其余四项（技能总级别、灵塑适性、SSR 命轮叠位、守密人等级）各 18%。热力图：蓝色 = 投入少，红色 = 投入多（按当前筛选内的各列最小 / 最大值着色）。点击表头可按该列升序 / 降序排列；综合评分升序即“高配”（投入最多）。':'Overall score weights: total enlightenment 27%, the other four (skill levels, Soulforge aptitude, SSR wheel stacks, keeper level) 18% each. Heat map: blue = little investment, red = a lot (per column, over the current filter). Click a column header to sort ascending / descending; ascending overall score = high investment.';
+  const usedM=METRICS.filter(m=>!state.skip.has(m.key)),wTot=usedM.reduce((s,m)=>s+(m.weight??1),0),wTxt=usedM.map(m=>`${lbl(m)} ${Math.round(100*(m.weight??1)/wTot)}%`).join(zh()?'，':', ');
+  const hint=zh()?'综合评分只计入勾选的项目，权重：'+wTxt+'（总启灵数略高，其余相同）。热力图：蓝色 = 投入少，红色 = 投入多（按当前筛选内的各列最小 / 最大值着色）。点击表头可按该列升序 / 降序排列；综合评分升序即“高配”（投入最多）。':'The overall score only counts the ticked items, weights: '+wTxt+' (total enlightenment slightly higher, the rest equal). Heat map: blue = little investment, red = a lot (per column, over the current filter). Click a column header to sort ascending / descending; ascending overall score = high investment.';
   const note=(all?noteAll:noteZone)+' '+hint;
   host.innerHTML=`<div class="dtideLowspec">
     <div class="lsTabs">${zoneTabs}</div>
     <div class="lsNote">${note}</div>
+    <div class="lsTabs lsInc"><span class="lsIncLbl">${ui('评分计入：','Score counts:')}</span>${METRICS.map(m=>`<button type="button" data-ls-inc="${m.key}" aria-pressed="${!state.skip.has(m.key)}" title="${esc(ui(m.tip[0],m.tip[1]))}">${esc(lbl(m))}</button>`).join('')}</div>
     <div class="lsBar">${all?'':`<label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label>`}${all?`<label>${ui('玩家总分','Player score')}<select data-ls-score>${scoreSel}</select></label>`:''}
     ${all?`<label>${ui('阵容数','Lineups')}<select data-ls-count><option value="all">${ui('不限','Any')}</option>${counts.map(c=>`<option value="${c}"${String(state.count)===String(c)?' selected':''}>${c}${ui(' 个阵容',' lineups')}</option>`).join('')}</select></label>`:''}<label class="lsChk" title="${esc(ui('常驻角色（常驻池 20 名 + 福利 SR 4 名）的启灵不计入总启灵数','Enlightenment of permanent Awakeners (20 standard-banner + 4 welfare SR) is left out of the total'))}"><input type="checkbox" data-ls-perm${state.noPerm?' checked':''}> ${ui('总启灵数不计常驻角色','Total enlightenment: skip permanent Awakeners')}</label><label class="lsChk" title="${esc(ui('常驻命轮（常驻角色的专属 SSR 命轮）的叠位不计入 SSR 命轮叠位；无专属角色的通用命轮按限定处理','Stacks of permanent wheels (exclusive SSR wheels of permanent Awakeners) are left out; generic wheels count as limited'))}"><input type="checkbox" data-ls-permwheel${state.noPermWheel?' checked':''}> ${ui('命轮叠位不计常驻命轮','Wheel stacks: skip permanent wheels')}</label><label class="lsChk" title="${esc(ui('通用命轮中的纪行命轮（如搭档特训、特别纪行「伊玛戈的诊室」）的叠位不计入','Stacks of pass / archive wheels (e.g. Special Training, Imago’s Clinic) are left out'))}"><input type="checkbox" data-ls-passwheel${state.noPassWheel?' checked':''}> ${ui('命轮叠位不计纪行命轮','Wheel stacks: skip pass wheels')}</label><label class="lsChk" title="${esc(ui('赠送命轮的叠位不计入（名单见 scripts/data/lowspec_wheel_groups.json，目前尚未收录）','Stacks of gifted wheels are left out (list in scripts/data/lowspec_wheel_groups.json, still empty)'))}"><input type="checkbox" data-ls-giftwheel${state.noGiftWheel?' checked':''}> ${ui('命轮叠位不计赠送命轮','Wheel stacks: skip gifted wheels')}</label><label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label></div>
     <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th title="${esc(ui('五项投入的百分位加权平均（启灵 27%，其余四项各 18%）：越高越“低配”；升序即高配','Weighted average of the five investment percentiles (enlightenment 27%, the other four 18% each): higher = lower investment; ascending = high investment'))}"><button type="button" class="dtideSortHead" data-ls-sort="score">${all?ui('平均评分','Avg score'):ui('综合评分','Score')}${arrow('score')}</button></th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
@@ -220,6 +222,7 @@ document.addEventListener('click',e=>{
   const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
   const l=e.target.closest('[data-ls-sort]');if(l){const k=l.dataset.lsSort;if(state.list===k)state.dir=-state.dir;else{state.list=k;state.dir=k==='score'?-1:1}state.limit=100;render();return}
   const row=e.target.closest('tr[data-ls-key]');if(row&&!e.target.closest('a,button')){const k=row.dataset.lsKey;if(state.open.has(k))state.open.delete(k);else state.open.add(k);render();return}
+  const inc=e.target.closest('button[data-ls-inc]');if(inc){const k=inc.dataset.lsInc;if(state.skip.has(k))state.skip.delete(k);else if(state.skip.size<METRICS.length-1)state.skip.add(k);if(state.skip.has(state.list))state.list='score',state.dir=-1;render();return}
   const z=e.target.closest('button[data-ls-zone]');if(z){state.zone=Number(z.dataset.lsZone);state.limit=100;render();return}
   if(e.target.closest('[data-ls-more]')){state.limit+=100;render()}
 });
