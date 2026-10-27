@@ -7,6 +7,7 @@ Per clear / extra team of every Top-2000 player the file keeps the investment fi
   skill  sum of the members' unlocked skill slot levels
   forge  sum of the members' soulforge aptitude (灵塑适性, talent family soulforge_aptitude, max 10) levels
   wheel  sum of the levels (1-15 = stack) of the equipped SSR wheels
+  (aw[i][4] = 1 marks permanent-banner awakeners: the page can leave their enlightenment out)
   keeper the player's keeper (守密人) level in that battle
 Talent ids are not named in the raw data: the family of a talent id is inferred from its maximum observed level per awakener
 (12 = madness omen, 10 = soulforge, 5 = gnostic, 1 = passive) over the given seasons.
@@ -78,6 +79,7 @@ def main():
             str_idx[key] = len(strings)
             strings.append([en, zh_of[kind].get(norm(en), en)])
         return str_idx[key]
+    avail = {x['ingameId']: x['availabilityType'] for x in json.loads((D / 'skeydb/awakeners.json').read_text(encoding='utf-8'))['records']}
     stages = {}
     for sid, st in names['stages'].items():
         m = re.match(r'Zone (\d): (?:Threat Level (\w+)|▼)', st['name'])
@@ -101,7 +103,7 @@ def main():
                 if info['canonicalName'] not in aw_idx:
                     p = pool.get(norm(info['canonicalName'])) or {}
                     aw_idx[info['canonicalName']] = len(aw)
-                    aw.append([info['ingameId'], info['canonicalName'], p.get('zh') or info['canonicalName'], p.get('img', '')])
+                    aw.append([info['ingameId'], info['canonicalName'], p.get('zh') or info['canonicalName'], p.get('img', ''), 1 if avail.get(info['ingameId']) == 'PERMANENT' else 0])
                 skill = sum(s.get('level', 0) for s in a.get('slots') or [] if not s.get('lock'))
                 forge = (a.get('talents') or {}).get(forge_tid.get(a['tid']), {}).get('lv', 0)
                 wheel, wl = 0, []

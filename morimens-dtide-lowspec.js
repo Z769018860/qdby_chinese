@@ -14,7 +14,7 @@ const METRICS=[
   {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
   {key:'keeper',cn:'守密人等级',en:'Keeper level',tip:['该场战斗时玩家的守密人等级','The player’s keeper level in that battle']}
 ];
-const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',diff:6,zone:1,noAssist:false,limit:100,score:'all',count:'all',open:new Set()};
+const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',diff:6,zone:1,noAssist:false,noPerm:false,limit:100,score:'all',count:'all',open:new Set()};
 const $=id=>document.getElementById(id);
 const stateOf=()=>document.getElementById('dtideSeason')?.value||'';
 const seasonKey=v=>/^\d+$/.test(String(v))?String(v):null;
@@ -54,7 +54,7 @@ function load(){
   const p=fetch(`data/morimens/eremora/lowspec/${key}.json`,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(d=>{state.season=key;state.data=d;state.loading=null;return d});
   state.loading={key,p};return p;
 }
-const val=(t,k)=>k==='keeper'?(t[5]??0):t[6].reduce((n,m)=>n+m[{enl:1,skill:2,forge:3,wheel:4}[k]],0);
+const val=(t,k)=>k==='keeper'?(t[5]??0):k==='enl'&&state.noPerm?t[6].reduce((n,m)=>n+(state.data.aw[m[0]][4]?0:m[1]),0):t[6].reduce((n,m)=>n+m[{enl:1,skill:2,forge:3,wheel:4}[k]],0);
 const scoreOk=p=>{const s=state.score;if(s==='all')return true;if(s.includes(':')){const [a,b]=s.split(':').map(Number);return p[3]>=a&&p[3]<=b}return p[3]===Number(s)};
 // percentile = share of the other lineups in the group that invest MORE (low mode) / LESS (high mode) than this one, ties count half
 function percentiles(list){
@@ -152,7 +152,7 @@ function render(){
     <div class="lsTabs">${zoneTabs}</div>
     <div class="lsNote">${note}</div>
     <div class="lsBar">${all?'':`<label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label>`}${all?`<label>${ui('玩家总分','Player score')}<select data-ls-score>${scoreSel}</select></label>`:''}
-    ${all?`<label>${ui('阵容数','Lineups')}<select data-ls-count><option value="all">${ui('不限','Any')}</option>${counts.map(c=>`<option value="${c}"${String(state.count)===String(c)?' selected':''}>${c}${ui(' 个阵容',' lineups')}</option>`).join('')}</select></label>`:''}<label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label></div>
+    ${all?`<label>${ui('阵容数','Lineups')}<select data-ls-count><option value="all">${ui('不限','Any')}</option>${counts.map(c=>`<option value="${c}"${String(state.count)===String(c)?' selected':''}>${c}${ui(' 个阵容',' lineups')}</option>`).join('')}</select></label>`:''}<label class="lsChk" title="${esc(ui('常驻池角色（阿格里帕、卡茜亚等 20 名）的启灵不计入总启灵数','Enlightenment of permanent-banner Awakeners (Agrippa, Casiah, …, 20 in total) is left out of the total'))}"><input type="checkbox" data-ls-perm${state.noPerm?' checked':''}> ${ui('总启灵数不计常驻角色','Total enlightenment: skip permanent Awakeners')}</label><label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label></div>
     <div class="lsTabs">${tabs}</div>
     <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th>${all?ui('平均评分','Avg score'):ui('综合评分','Score')}</th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
     ${total>shown.length?`<button type="button" class="lsMore" data-ls-more>${ui('显示更多','Show more')}（${shown.length}/${total}）</button>`:`<div class="lsNote">${ui('共','Total')} ${total} ${all?ui('名玩家','players'):ui('支阵容','lineups')}</div>`}</div>`;
@@ -221,6 +221,7 @@ document.addEventListener('change',e=>{
   else if(t.matches('[data-ls-score]'))state.score=t.value;
   else if(t.matches('[data-ls-count]'))state.count=t.value;
   else if(t.matches('[data-ls-assist]'))state.noAssist=t.checked;
+  else if(t.matches('[data-ls-perm]'))state.noPerm=t.checked;
   else return;
   state.limit=100;render();
 });
