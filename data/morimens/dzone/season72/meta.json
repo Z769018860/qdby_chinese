@@ -3,67 +3,28 @@
   "activityTid": 83314,
   "name": "第72期 融灾 · 血肉戒指",
   "date": "10.26-11.8",
-  "updatedAt": "2026-10-26 18:25",
+  "updatedAt": "2026-10-27 23:38",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-26T18:25:44.073707+08:00",
+  "sourceRetrievedAt": "2026-10-27T23:38:49.893758+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 4991
+    "teams_latest.jsonl": 9020,
+    "previous-capture": 1432
   },
   "skippedTailLines": 0,
   "duplicateRankRowsDropped": [
     {
-      "uid": 101851701,
-      "rank": 291,
-      "score": 370
-    },
-    {
-      "uid": 100710708,
-      "rank": 1011,
-      "score": 160
-    },
-    {
-      "uid": 102277313,
-      "rank": 1221,
-      "score": 125
-    },
-    {
-      "uid": 101301769,
-      "rank": 1271,
-      "score": 100
-    },
-    {
-      "uid": 100586052,
-      "rank": 1651,
-      "score": 85
-    },
-    {
-      "uid": 101107192,
-      "rank": 1652,
-      "score": 85
-    },
-    {
-      "uid": 101909151,
-      "rank": 1653,
-      "score": 85
-    },
-    {
-      "uid": 101204512,
-      "rank": 1871,
-      "score": 75
-    },
-    {
-      "uid": 101886279,
-      "rank": 1911,
-      "score": 70
+      "uid": 101354688,
+      "rank": 751,
+      "score": 380
     }
   ],
-  "recordCount": 1991,
-  "playersWithTeamDetail": 1981,
-  "teamRows": 4991,
+  "recordCount": 1999,
+  "playersWithTeamDetail": 1999,
+  "teamRows": 10452,
   "stageGroupIds": [
     83429,
     83430,
@@ -94,7 +55,23 @@
       },
       {
         "file": "raw-teams/teams-004.jsonl.gz",
-        "lines": 191
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-005.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-006.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-007.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-008.jsonl.gz",
+        "lines": 852
       }
     ],
     "uids": "uids.csv",
