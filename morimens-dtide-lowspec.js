@@ -9,6 +9,7 @@ const ui=(cn,en)=>zh()?cn:en;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const METRICS=[
   {key:'enl',cn:'总启灵数',en:'Total enlightenment',max:60,weight:1.5,tip:['4 名唤醒体启灵等级之和（3 = 3启，15 = +12）','Sum of the 4 members’ enlightenment levels (3 = E3, 15 = +12)']},
+  {key:'lv',cn:'唤醒体等级',en:'Awakener level',weight:1.5,tip:['4 名唤醒体角色等级之和（单人最高 90）','Sum of the 4 members’ character levels (max 90 each)']},
   {key:'skill',cn:'技能总级别',en:'Skill levels',tip:['4 名唤醒体已解锁技能槽的等级之和','Sum of the unlocked skill-slot levels of the 4 members']},
   {key:'forge',cn:'灵塑适性',en:'Soulforge aptitude',max:40,tip:['4 名唤醒体灵塑适性等级之和（单人最高 10）','Sum of the members’ Soulforge aptitude levels (max 10 each)']},
   {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
@@ -57,6 +58,7 @@ function load(){
 // per-member figures behind each lineup value (the filters about permanent Awakeners / wheels already applied)
 const memberVals=(t,k)=>t[6].map(m=>{
   if(k==='enl')return state.noPerm&&state.data.aw[m[0]][4]?0:m[1];
+  if(k==='lv')return m[9]||0;
   if(k==='skill')return m[2];
   if(k==='forge')return m[3];
   return (m[7]||[]).reduce((s,w)=>s+(w[2]>=1&&!(w[2]===2&&state.noPermWheel)&&!(w[2]===3&&state.noPassWheel)&&!(w[2]===4&&state.noGiftWheel)?w[1]:0),0);
@@ -81,7 +83,7 @@ function lineups(d,filter){
     if(state.zone===0&&!scoreOk(p))continue;
     if(state.noAssist&&t[6].some(m=>m[5]))continue;
     if(!filter(t))continue;
-    rows.push({t,p,v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)])),mv:{enl:memberVals(t,'enl'),forge:memberVals(t,'forge'),wheel:memberVals(t,'wheel')},cards:t[6].reduce((n,m)=>n+(m[6]||[]).length,0),lv:t[6].reduce((n,m)=>n+m[2],0)});
+    rows.push({t,p,v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)])),mv:{enl:memberVals(t,'enl'),lv:memberVals(t,'lv'),forge:memberVals(t,'forge'),wheel:memberVals(t,'wheel')},cards:t[6].reduce((n,m)=>n+(m[6]||[]).length,0),lv:t[6].reduce((n,m)=>n+m[2],0)});
   }
   return rows;
 }
@@ -97,13 +99,13 @@ function playerRows(d){
   for(const g of groups.values())percentiles(g);
   const by=new Map();
   for(const r of rows){
-    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,items:[],cards:0,lv:0,v:{enl:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
+    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,items:[],cards:0,lv:0,v:{enl:0,lv:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
     o.n++;o.index+=r.index;o.items.push(r);o.cards+=r.cards;o.lv+=r.lv;
-    for(const k of ['enl','skill','forge','wheel'])o.v[k]+=r.v[k];
+    for(const k of ['enl','lv','skill','forge','wheel'])o.v[k]+=r.v[k];
     o.v.keeper=Math.max(o.v.keeper,r.v.keeper);
   }
   // players with the same score can own a different number of lineups: rank on the per-lineup average, not on the sum
-  return [...by.values()].map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.n,skill:o.v.skill/o.n,forge:o.v.forge/o.n,wheel:o.v.wheel/o.n,keeper:o.v.keeper}}));
+  return [...by.values()].map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.n,lv:o.v.lv/o.n,skill:o.v.skill/o.n,forge:o.v.forge/o.n,wheel:o.v.wheel/o.n,keeper:o.v.keeper}}));
 }
 const nm=i=>{const s=(state.data.names||[])[i];return s?(zh()?s[1]:s[0]):''};
 const diffName=i=>state.data.diffs[i];
@@ -155,7 +157,7 @@ function render(){
     else{const t=r.t,team=t[6].map(m=>{const a=d.aw[m[0]];return `<span class="${m[5]?'b':''}" title="${esc(zh()?a[2]:a[1])}"><img src="${esc(a[3])}" alt="" loading="lazy"></span>`}).join('');
       mid=`<td><div class="lsTeam">${team}</div></td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}${t[3]?ui(' · 额外队',' · extra'):''}`}
     const tr=`<tr class="lsRow${open?' open':''}" data-ls-key="${esc(key)}" title="${esc(ui('点击展开详细阵容','Click for the full lineup'))}"><td>${i+1}</td><td class="lsName">${esc(p[1])}<small>UID ${esc(p[0])}</small><small>${sub}</small></td>${mid}${cells}<td class="lsScore${L==='score'?' hl':''}" style="${heat(1-r.index/100)}"${all?` title="${esc(ui('各阵容评分合计 ','Sum of lineup scores '))}${r.total.toFixed(1)}"`:''}>${r.index.toFixed(1)}</td></tr>`;
-    const detail=open?`<tr class="lsDetail"><td colspan="9">${all?r.items.slice().sort((x,y)=>x.t[1]-y.t[1]||x.t[3]-y.t[3]).map(lineupCard).join(''):lineupCard(r)}</td></tr>`:'';
+    const detail=open?`<tr class="lsDetail"><td colspan="10">${all?r.items.slice().sort((x,y)=>x.t[1]-y.t[1]||x.t[3]-y.t[3]).map(lineupCard).join(''):lineupCard(r)}</td></tr>`:'';
     return tr+detail;
   }).join('');
   const noteAll=zh()
@@ -173,7 +175,7 @@ function render(){
     <div class="lsTabs lsInc"><span class="lsIncLbl">${ui('评分计入：','Score counts:')}</span>${METRICS.map(m=>`<button type="button" data-ls-inc="${m.key}" aria-pressed="${!state.skip.has(m.key)}" title="${esc(ui(m.tip[0],m.tip[1]))}">${esc(lbl(m))}</button>`).join('')}</div>
     <div class="lsBar">${all?'':`<label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label>`}${all?`<label>${ui('玩家总分','Player score')}<select data-ls-score>${scoreSel}</select></label>`:''}
     ${all?`<label>${ui('阵容数','Lineups')}<select data-ls-count><option value="all">${ui('不限','Any')}</option>${counts.map(c=>`<option value="${c}"${String(state.count)===String(c)?' selected':''}>${c}${ui(' 个阵容',' lineups')}</option>`).join('')}</select></label>`:''}<label class="lsChk" title="${esc(ui('常驻角色（常驻池 20 名 + 福利 SR 4 名）的启灵不计入总启灵数','Enlightenment of permanent Awakeners (20 standard-banner + 4 welfare SR) is left out of the total'))}"><input type="checkbox" data-ls-perm${state.noPerm?' checked':''}> ${ui('总启灵数不计常驻角色','Total enlightenment: skip permanent Awakeners')}</label><label class="lsChk" title="${esc(ui('常驻命轮（常驻角色的专属 SSR 命轮）的叠位不计入 SSR 命轮叠位；无专属角色的通用命轮按限定处理','Stacks of permanent wheels (exclusive SSR wheels of permanent Awakeners) are left out; generic wheels count as limited'))}"><input type="checkbox" data-ls-permwheel${state.noPermWheel?' checked':''}> ${ui('命轮叠位不计常驻命轮','Wheel stacks: skip permanent wheels')}</label><label class="lsChk" title="${esc(ui('通用命轮中的纪行命轮（如搭档特训、特别纪行「伊玛戈的诊室」）的叠位不计入','Stacks of pass / archive wheels (e.g. Special Training, Imago’s Clinic) are left out'))}"><input type="checkbox" data-ls-passwheel${state.noPassWheel?' checked':''}> ${ui('命轮叠位不计纪行命轮','Wheel stacks: skip pass wheels')}</label><label class="lsChk" title="${esc(ui('赠送命轮的叠位不计入（名单见 scripts/data/lowspec_wheel_groups.json，目前尚未收录）','Stacks of gifted wheels are left out (list in scripts/data/lowspec_wheel_groups.json, still empty)'))}"><input type="checkbox" data-ls-giftwheel${state.noGiftWheel?' checked':''}> ${ui('命轮叠位不计赠送命轮','Wheel stacks: skip gifted wheels')}</label><label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label></div>
-    <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th title="${esc(ui('五项投入的百分位加权平均（启灵 27%，其余四项各 18%）：越高越“低配”；升序即高配','Weighted average of the five investment percentiles (enlightenment 27%, the other four 18% each): higher = lower investment; ascending = high investment'))}"><button type="button" class="dtideSortHead" data-ls-sort="score">${all?ui('平均评分','Avg score'):ui('综合评分','Score')}${arrow('score')}</button></th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
+    <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th title="${esc(ui('五项投入的百分位加权平均（启灵 27%，其余四项各 18%）：越高越“低配”；升序即高配','Weighted average of the five investment percentiles (enlightenment 27%, the other four 18% each): higher = lower investment; ascending = high investment'))}"><button type="button" class="dtideSortHead" data-ls-sort="score">${all?ui('平均评分','Avg score'):ui('综合评分','Score')}${arrow('score')}</button></th></tr></thead><tbody>${body||`<tr><td colspan="10">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
     ${total>shown.length?`<button type="button" class="lsMore" data-ls-more>${ui('显示更多','Show more')}（${shown.length}/${total}）</button>`:`<div class="lsNote">${ui('共','Total')} ${total} ${all?ui('名玩家','players'):ui('支阵容','lineups')}</div>`}</div>`;
 }
 const titleOf=()=>state.mode==='high'?ui('高配榜单','High-investment Leaderboard'):ui('低配榜单','Low-investment Leaderboard');
