@@ -22,10 +22,12 @@ refresh.py —— 汉化资源网盘链接抓取与核验（一键刷新）
 import argparse, gzip, json, os, re, ssl, subprocess, sys, tempfile, time
 import urllib.request, urllib.parse, urllib.error
 from collections import Counter, defaultdict
+import sys
 from concurrent.futures import ThreadPoolExecutor
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
+WORKW = os.environ.get('QD_WORK') or os.path.normpath(os.path.join(REPO, '..'))
 DATA_DIR = os.path.join(REPO, 'data')
 CACHE = os.path.join(tempfile.gettempdir(), 'qdby-netdisk-cache')
 RAW = os.path.join(CACHE, 'bili.json')
@@ -36,11 +38,33 @@ CTX = ssl.create_default_context()
 CTX.check_hostname = False
 CTX.verify_mode = ssl.CERT_NONE
 
+# B 站登录态：匿名也能看评论，但带上登录态能显著降低被风控挡回的概率。
+# 登录态来自 scripts/bili/bili_login.py（扫码登录落地到仓库外的 cookie 文件）。
+sys.path.insert(0, os.path.normpath(os.path.join(HERE, '..', 'bili')))
+try:
+    import bili_login as BL
+except Exception:                     # 缺依赖也不影响主流程
+    BL = None
+BILI_CK = BL.load_cookies() if BL else {}
+BILI_OK = bool(BILI_CK.get('SESSDATA'))
+BILI_CK_HDR = '; '.join(f'{k}={v}' for k, v in BILI_CK.items())
+
 # ---------------------------------------------------------------- 通用网络请求
+
+
+def bili_login_state():
+    """开跑前先看看 B 站登录态还在不在，不在就提醒，别抓完才发现全是空"""
+    if not BILI_OK:
+        return False, '没有 B 站登录态，抓取评论区可能被风控挡回'
+    if BL is not None and not BL.check(verbose=False):
+        return False, 'B 站登录态已失效（nav 返回未登录）'
+    return True, ''
 
 
 def http(url, data=None, referer='', headers=None, timeout=25):
     h = {'User-Agent': UA, 'Accept': '*/*', 'Accept-Encoding': 'gzip', 'Referer': referer}
+    if 'api.bilibili.com' in url and BILI_CK_HDR:
+        h['Cookie'] = BILI_CK_HDR
     if data is not None:
         h['Content-Type'] = 'application/json'
         data = json.dumps(data).encode()
@@ -799,6 +823,16 @@ def main():
     args = ap.parse_args()
     os.environ['NODE_BIN'] = args.node
     os.makedirs(CACHE, exist_ok=True)
+
+    # 先自检 B 站登录态：登录失效时抓评论区会被风控挡掉，
+    # 与其事后对着一堆空结果猜，不如开跑前就把话说清楚
+    ok, why = bili_login_state()
+    if not ok:
+        print('B 站登录：%s → 跑 python scripts/bili/bili_login.py 扫码续期' % why)
+        with open(os.path.join(WORKW, 'bili-login-state.json'), 'w',
+                  encoding='utf-8', newline='\n') as f:
+            json.dump({'ok': False, 'why': why, 'at': time.strftime('%Y-%m-%d %H:%M')},
+                      f, ensure_ascii=False)
 
     site, raw = stage_fetch(reuse_cache=args.reuse_cache)
     games = stage_parse(site, raw)

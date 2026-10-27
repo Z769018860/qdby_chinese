@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated_at": "2026-10-28 00:05",
+  "generated_at": "2026-10-28 02:14",
   "source_checked_at": "2026-10-28 00:05",
   "games": 64,
   "summary": {
@@ -1601,15 +1601,15 @@
     "platform": "quark",
     "platform_name": "夸克网盘",
     "pwd": "qdby",
-    "detail": "/舌头上的动物园 汉化补丁1.0.zip",
+    "detail": "",
     "source": "comment",
     "where": "视频置顶评论（补档）",
     "share_id": "",
     "verified": true,
-    "at": "2026-10-24 22:12",
-    "check": "status=1 audit=4 viol=0",
-    "checked": "ok",
-    "checked_at": "2026-10-28 00:00",
+    "at": "2026-10-28 02:08",
+    "check": "",
+    "checked": "",
+    "checked_at": "",
     "from_reshare": true
    },
    "alt": [
@@ -1676,15 +1676,15 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "qdby",
-     "detail": "/舌头上的动物园 汉化补丁1.0.zip",
+     "detail": "",
      "source": "comment",
      "where": "评论区",
      "share_id": "",
      "verified": true,
-     "at": "2026-10-24 22:12",
-     "check": "status=1 audit=4 viol=0",
-     "checked": "ok",
-     "checked_at": "2026-10-28 00:00"
+     "at": "2026-10-28 02:08",
+     "check": "",
+     "checked": "",
+     "checked_at": ""
     }
    ]
   },
@@ -3234,15 +3234,15 @@
     "platform": "quark",
     "platform_name": "夸克网盘",
     "pwd": "qdby",
-    "detail": "/拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+    "detail": "",
     "source": "comment",
     "where": "视频置顶评论（补档）",
     "share_id": "",
     "verified": true,
-    "at": "2026-10-24 22:12",
-    "check": "status=1 audit=0 viol=0",
-    "checked": "ok",
-    "checked_at": "2026-10-28 00:00",
+    "at": "2026-10-28 02:05",
+    "check": "",
+    "checked": "",
+    "checked_at": "",
     "from_reshare": true
    },
    "alt": [
@@ -3300,15 +3300,15 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "qdby",
-     "detail": "/拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+     "detail": "",
      "source": "comment",
      "where": "评论区",
      "share_id": "",
      "verified": true,
-     "at": "2026-10-24 22:12",
-     "check": "status=1 audit=0 viol=0",
-     "checked": "ok",
-     "checked_at": "2026-10-28 00:00"
+     "at": "2026-10-28 02:05",
+     "check": "",
+     "checked": "",
+     "checked_at": ""
     }
    ]
   },

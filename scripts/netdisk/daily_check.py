@@ -368,6 +368,26 @@ def git_push(now, sync_main=False):
 
 
 # ---------------------------------------------------------------- main
+def bili_state():
+    """B 站登录态：读 refresh 自检写下的结果，没有就自己问一次 nav"""
+    path = os.path.join(WORK, 'bili-login-state.json')
+    if os.path.exists(path):
+        try:
+            d = json.load(open(path, encoding='utf-8'))
+            if d.get('ok') is False:
+                return {'ok': False, 'why': d.get('why') or 'B 站登录态失效'}
+        except Exception:
+            pass
+    try:
+        sys.path.insert(0, os.path.join(REPO, 'scripts', 'bili'))
+        import bili_login as BL
+        if not BL.check(verbose=False):
+            return {'ok': False, 'why': 'B 站登录态失效（nav 返回未登录）'}
+    except Exception as e:
+        return {'ok': True, 'why': '登录态自检不可用：%s' % str(e)[:60]}
+    return {'ok': True, 'why': ''}
+
+
 def main():
     ap = argparse.ArgumentParser(description='每日网盘巡检 + 站点更新 + 全灭告警')
     ap.add_argument('--fast', action='store_true', help='跳过迅雷/城通/微云的浏览器核验')
@@ -484,6 +504,15 @@ def main():
     failed = report.get('failed') or {}
     for d in dead:
         d['auto'] = failed.get(d['name']) or ('自动补档没救回来' if report else '')
+
+    # B 站登录态没了也要说一声：不然补档链接是补上了，评论却发不出去，
+    # 站上还显示着「没有可用链接」，白补一趟。
+    bili = bili_state()
+    if not bili['ok']:
+        print('B 站登录：%s' % bili['why'])
+        dead.append({'name': '（B 站登录态）', 'links': [], 'auto': bili['why'],
+                     'bili_login': True})
+        print('提示：跑 python scripts/bili/bili_login.py 扫码登录（登录态存在仓库外）')
 
     if not args.no_site:
         print('-- 更新站点数据 --')

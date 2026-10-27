@@ -142,6 +142,48 @@ def try_local_upload(name, info, report):
     return True, '已上传并改名'
 
 
+def try_salvage(name, report, force_refit=False):
+    """本地也没文件 / 百度判违规时，交给 salvage 跨网盘抢救
+
+    salvage 会自己判断：
+      · 别的盘里有同名（或像）的文件 → 下载 → 上传 → 建分享
+      · 百度判违规的那几个 → 下载 → 改装换哈希 → 上传 → 建分享
+    scan 只跑 API，do 才需要浏览器（下载/上传都走网页版）。
+    """
+    salvage = os.path.join('scripts', 'netdisk', 'salvage.py')
+    if not os.path.exists(os.path.join(REPO, 'scripts', 'netdisk', 'salvage.py')):
+        return False, '缺少 scripts/netdisk/salvage.py'
+    env = dict(os.environ, QD_PY=PY, QD_NODE=(os.environ.get('NODE_BIN') or 'node'))
+    args = [PY, salvage, 'do', '--game', name, '--kind',
+            'violation' if force_refit else 'missing', '--min-score', '0.79']
+    if force_refit:
+        args.append('--force-refit')
+    saved = os.environ.get('QD_PORT')
+    try:
+        with D.Headless(port=UPLOAD_PORT) as br:
+            if br is None:
+                return False, '没有可用浏览器，无法走网页版下载/上传'
+            env = dict(env, QD_PORT=UPLOAD_PORT)
+            code, out = run(args, timeout=2700, env=env)
+    finally:
+        if saved is None:
+            os.environ.pop('QD_PORT', None)
+        else:
+            os.environ['QD_PORT'] = saved
+    for line in (out or '').splitlines():
+        if line.strip() and not any(n in line for n in NOISE):
+            print('    ' + line.strip()[:140])
+
+    data = load(os.path.join(REPO, 'data', 'netdisk-salvage.json'), {})
+    res = (data.get('results') or {}).get(name) or {}
+    state = res.get('state')
+    if state == 'done':
+        return True, '跨网盘抢救成功'
+    if state in ('need_confirm', 'no_candidate'):
+        return False, ('云端匹配度不够，等人确认（%s）' % state)
+    return False, (res.get('note') or state or 'salvage 未成功')[:120]
+
+
 def main():
     ap = argparse.ArgumentParser(description='失效资源自动补档')
     ap.add_argument('--dry', action='store_true', help='只打印要做什么')
@@ -211,10 +253,14 @@ def main():
                 report['skipped'][name] = '已有补档链接且仍有效'
                 print('  = %s：已有补档链接且仍有效' % name)
                 continue
-            # 云端没货：全灭的作品再试一次本地文件
+            # 云端没货：全灭的作品先试本地文件，本地也没有就跨网盘抢救
             if info['all_dead'] and not errs:
                 ok, why = try_local_upload(name, info, report)
+                if not ok:
+                    report['salvage_try'] = report.get('salvage_try', []) + [name]
+                    ok, why = try_salvage(name, report)
                 if ok:
+                    report['uploaded'].append(name)
                     report['uploaded'].append(name)
                     code, out = run([PY, os.path.join('scripts', 'netdisk', 'reshare.py'),
                                      'run', '--only', name, '--exact'], timeout=300)
@@ -227,6 +273,14 @@ def main():
                         print('  ' + line[:150])
                     if not got:
                         errs = [l for l in more if ('✗' in l or 'errno' in l)]
+            # 百度判违规（errno=109）：改装换哈希再传，内容没变、用户解压方式不变
+            if not got and any('109' in e for e in errs):
+                report['salvage_try'] = report.get('salvage_try', []) + [name]
+                if try_salvage(name, report, force_refit=True)[0]:
+                    report['uploaded'].append(name)
+                    rs = load(RESHARE, {'games': {}})
+                    got = {k: u for k, u in snapshot(rs, name).items()
+                           if u and u != before.get(k)}
             if not got:
                 reason = (errs or ['云端没有同名资源'])[-1][:120]
                 report['failed'][name] = reason
