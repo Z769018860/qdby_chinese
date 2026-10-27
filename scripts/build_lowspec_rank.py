@@ -69,6 +69,10 @@ def main():
     for l in gzip.open(D / f'dzone/season{season}/battle-summary.jsonl.gz', 'rt'):
         x = json.loads(l); keeper[x['battleUuid']] = x.get('playerLevel')
     ssr = {norm(w['name']) for w in json.loads((D / 'skeydb/public-v3/catalogs/wheels.json').read_text(encoding='utf-8'))['records'] if w.get('rarity') == 'SSR'}
+    # SSR wheels whose exclusive Awakener is a permanent-banner one count as permanent wheels (w[2] == 2); generic wheels are treated as limited
+    awk = {x['id']: x for x in json.loads((D / 'skeydb/awakeners.json').read_text(encoding='utf-8'))['records']}
+    perm_wheels = {norm(w['name']) for w in json.loads((D / 'skeydb/public-v3/catalogs/wheels.json').read_text(encoding='utf-8'))['records']
+                   if w.get('rarity') == 'SSR' and awk.get(w.get('ownerAwakenerId'), {}).get('availabilityType') == 'PERMANENT'}
     kinds = json.loads((D / 'game/tier-pool.json').read_text(encoding='utf-8'))['kinds']
     pool = {norm(it['en']): it for it in kinds['awakener']}
     zh_of = {k: {norm(it['en']): it['zh'] for it in kinds[k] if it.get('zh')} for k in ('wheel', 'covenant')}
@@ -116,7 +120,7 @@ def main():
                     wn = names['wheel'].get(str(it['tid']), f"#{it['tid']}")
                     is_ssr = norm(wn) in ssr
                     if is_ssr: wheel += s.get('level') or 0
-                    wl.append([sidx('wheel', wn), s.get('level') or 0, 1 if is_ssr else 0])
+                    wl.append([sidx('wheel', wn), s.get('level') or 0, (2 if norm(wn) in perm_wheels else 1) if is_ssr else 0])
                 suits = collections.Counter()
                 for u in a.get('trinkets') or []:
                     it = items.get(str(u))
