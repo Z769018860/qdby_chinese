@@ -150,7 +150,8 @@ def video_of(g):
         rel = g.get('release_url') or ''
         if rel and not PAN_RE.search(rel):
             return {'bvid': '', 'url': rel,
-                    'title': '微博发布页' if 'weibo' in rel else '发布页',
+                    'title': ('微博发布页' if 'weibo' in rel
+                              else '专栏原文' if '/read/' in rel else '发布页'),
                     'pubdate': g.get('pubdate') or ''}
         return {'bvid': bv, 'url': '', 'title': '', 'pubdate': g.get('pubdate') or ''}
     return {'bvid': bv, 'url': url, 'title': g.get('video_title') or '',
@@ -232,6 +233,12 @@ def main():
             'candidates': [],
         }
 
+        # 补档链接能不能写回发布处：只有 B 站视频能（发到置顶评论的回复里）。
+        # 视频下架的、或当初发在微博/专栏的，我们写不回去 ——
+        # 注意别用 video.url 判断：「与死神的约会」能跳微博，但微博里没有也不可能有
+        # 这条补档链接，读者跳过去照样拿不到。
+        can_write_back = bool(g.get('bvid'))
+
         # 有失效、或压根没收录 → 都值得回评论区/原文里再找一遍
         if state != 'ok':
             known = {R.normalize(L['url']) for L in links}
@@ -274,13 +281,17 @@ def main():
             row.update({'verified': v.get('verified'), 'at': v.get('created_at') or '',
                         'check': v.get('check') or '',
                         'checked': v.get('checked') or '', 'checked_at': v.get('checked_at') or ''})
+            if not can_write_back:
+                row.update({'url': v.get('url') or '', 'where': '本站补档',
+                            'no_video': True})
             done.append(row)
         if done:
             rec['reshare'] = done
             # 补档过的作品：补档链接顶到首选位（原链接退到备选），
             # 页面卡片第一个看到的就是补档那条，不再让旧链接排在前面。
             first = dict(done[0])
-            first['where'] = '视频置顶评论（补档）'
+            first['where'] = ('本站补档' if not can_write_back
+                              else '视频置顶评论（补档）')
             first['from_reshare'] = True
             alts = []
             if rec.get('active'):

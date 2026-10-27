@@ -1,13 +1,13 @@
 {
  "meta": {
-  "generated_at": "2026-10-28 02:14",
+  "generated_at": "2026-10-28 03:52",
   "source_checked_at": "2026-10-28 00:05",
   "games": 64,
   "summary": {
    "ok": 28,
-   "failover": 10,
+   "failover": 5,
    "recovered": 0,
-   "reshared": 26,
+   "reshared": 31,
    "pending": 0,
    "none": 0
   },
@@ -1531,7 +1531,7 @@
    ]
   },
   "关于埋葬某人的梦": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1SuS5BjEJN",
     "url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
@@ -1539,15 +1539,30 @@
     "pubdate": "2025-11-28"
    },
    "active": {
-    "platform": "123pan",
-    "platform_name": "123云盘",
-    "pwd": "bae5",
-    "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "ootDVv-hQTmv"
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "qdby",
+    "detail": "关于梦 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-10-28 03:08",
+    "check": "status=1 audit=0 viol=0",
+    "checked": "",
+    "checked_at": "",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "bae5",
+     "detail": "分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ootDVv-hQTmv"
+    },
     {
      "platform": "weiyun",
      "platform_name": "腾讯微云",
@@ -1587,7 +1602,23 @@
      "share_id": ""
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "关于梦 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-28 03:08",
+     "check": "status=1 audit=0 viol=0",
+     "checked": "",
+     "checked_at": ""
+    }
+   ]
   },
   "舌头上的动物园": {
    "state": "reshared",
@@ -1689,7 +1720,7 @@
    ]
   },
   "暴走族怪谈大会 再归": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1LLibBaESe",
     "url": "https://www.bilibili.com/video/BV1LLibBaESe",
@@ -1697,15 +1728,30 @@
     "pubdate": "2026-01-05"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "igqz",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1JS9og_ufq2ij3MweaONMaA"
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "qdby",
+    "detail": "暴走族夜怪 汉化补丁by青灯不弈.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-10-28 03:08",
+    "check": "status=1 audit=4 viol=0",
+    "checked": "",
+    "checked_at": "",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "igqz",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1JS9og_ufq2ij3MweaONMaA"
+    },
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
@@ -1763,7 +1809,23 @@
      "share_id": "980575fd2e8e"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "暴走族夜怪 汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-28 03:08",
+     "check": "status=1 audit=4 viol=0",
+     "checked": "",
+     "checked_at": ""
+    }
+   ]
   },
   "Lost Friends1-DisappeardName-": {
    "state": "ok",
@@ -1787,7 +1849,7 @@
    "candidates": []
   },
   "Lost Friends 2": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1vh4y1T7NB",
     "url": "https://www.bilibili.com/video/BV1vh4y1T7NB",
@@ -1795,15 +1857,31 @@
     "pubdate": "2023-08-26"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "5nfh",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1GoE1Tph2N41YvO6-jkMEww"
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "qdby",
+    "detail": "LF2汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-10-28 03:08",
+    "check": "status=1 audit=4 viol=0",
+    "checked": "",
+    "checked_at": "",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "5nfh",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1GoE1Tph2N41YvO6-jkMEww"
+    }
+   ],
    "dead": [
     {
      "platform": "quark",
@@ -1820,13 +1898,29 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "",
-     "detail": "分享不存在（已被取消或删除）",
+     "detail": "待核验",
      "source": "desc",
      "where": "视频简介",
      "share_id": "0cc65915",
-     "status": "dead",
+     "status": "unknown",
      "author": "",
      "is_up": false
+    }
+   ],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "LF2汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-28 03:08",
+     "check": "status=1 audit=4 viol=0",
+     "checked": "",
+     "checked_at": ""
     }
    ]
   },
@@ -2480,13 +2574,15 @@
     "pwd": "qdby",
     "detail": "/汉化补丁补档/与死神的约会 本体完整汉化版.zip",
     "source": "comment",
-    "where": "视频置顶评论（补档）",
+    "where": "本站补档",
     "share_id": "",
     "verified": true,
     "at": "2026-10-25 00:52",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
     "checked_at": "2026-10-28 00:00",
+    "url": "https://pan.quark.cn/s/05ac5941a9ea",
+    "no_video": true,
     "from_reshare": true
    },
    "alt": [
@@ -2537,13 +2633,15 @@
      "pwd": "qdby",
      "detail": "/汉化补丁补档/与死神的约会 本体完整汉化版.zip",
      "source": "comment",
-     "where": "评论区",
+     "where": "本站补档",
      "share_id": "",
      "verified": true,
      "at": "2026-10-25 00:52",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-10-28 00:00"
+     "checked_at": "2026-10-28 00:00",
+     "url": "https://pan.quark.cn/s/05ac5941a9ea",
+     "no_video": true
     }
    ]
   },
@@ -2859,7 +2957,7 @@
    "video": {
     "bvid": "",
     "url": "https://www.bilibili.com/read/cv22831035/?spm_id_from=333.1387.0.0&opus_fallback=1",
-    "title": "发布页",
+    "title": "专栏原文",
     "pubdate": ""
    },
    "active": {
@@ -2997,7 +3095,7 @@
    ]
   },
   "粉碎梦之门与病娇的按钮": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1UW5E6zEfy",
     "url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
@@ -3005,15 +3103,30 @@
     "pubdate": "2026-05-10"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "3ww8",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1mlcD0J_uExvR0ZjtVvq9xw"
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "qdby",
+    "detail": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-10-28 03:08",
+    "check": "status=1 audit=0 viol=0",
+    "checked": "",
+    "checked_at": "",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "3ww8",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1mlcD0J_uExvR0ZjtVvq9xw"
+    },
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
@@ -3089,10 +3202,26 @@
      "share_id": "874242a1ffa44"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-28 03:08",
+     "check": "status=1 audit=0 viol=0",
+     "checked": "",
+     "checked_at": ""
+    }
+   ]
   },
   "~把最棒的巧克力送给你 这份心意就是全部哦~": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1pTE66vEQ8",
     "url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
@@ -3100,15 +3229,30 @@
     "pubdate": "2026-06-12"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "4stn",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1g8qMG1nAzMjVSfUMMMqaqQ"
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "qdby",
+    "detail": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-10-28 03:08",
+    "check": "status=1 audit=4 viol=0",
+    "checked": "",
+    "checked_at": "",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "4stn",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1g8qMG1nAzMjVSfUMMMqaqQ"
+    },
     {
      "platform": "quark",
      "platform_name": "夸克网盘",
@@ -3139,7 +3283,23 @@
      "share_id": "a15712f77ccf4"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-28 03:08",
+     "check": "status=1 audit=4 viol=0",
+     "checked": "",
+     "checked_at": ""
+    }
+   ]
   },
   "替身谎言~one night liar": {
    "state": "reshared",

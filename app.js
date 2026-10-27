@@ -568,6 +568,9 @@ function netdiskCell(r){
     const active = au.active;
     const alt = au.alt || [];
     const dead = au.dead || [];
+    // 后端只在「没有视频可回跳」时才把补档地址带出来；有地址就说明可以站内直出
+    const hasDirect = [].concat(active || [], au.reshare || [])
+                        .some(L => !!L.url);
     const [cls, text] = ND_STATE_TEXT[au.state] || ND_STATE_TEXT.ok;
     const chips = [];
     if(active) chips.push(ndChipOf(active, "ok", active.from_reshare ? "补档" : ""));
@@ -583,12 +586,18 @@ function netdiskCell(r){
       `<div class="ndMeta">` +
         `<span class="ndState ${cls}" data-nd="${escapeHtml(au.state)}"` +
           (checked ? ` title="网盘链接检查于 ${escapeHtml(checked)}"` : "") + `>${text}</span>` +
-        (au.video && au.video.url
+        ((au.video || {}).bvid && au.video.url
           ? `<a class="ndTo" href="${escapeHtml(au.video.url)}" target="_blank" rel="noopener"
                  title="链接写在视频简介或评论区，去发布处自己拿">去发布处 ↗</a>`
-          : "") +
+          // 没有 bvid（视频下架 / 发在微博）：原发布页上不会有这条补档链接，
+          // 卡片上直接标注「站内直链」，点开详情就能拿到地址
+          : (hasDirect
+              ? `<span class="ndTo" title="原视频已下架或发布在视频以外的地方，补档地址由本站直接给出">站内直链</span>`
+              : (au.video && au.video.url
+                  ? `<a class="ndTo" href="${escapeHtml(au.video.url)}" target="_blank" rel="noopener">去原发布处 ↗</a>`
+                  : ""))) +
         `<button class="ndFix" data-ndname="${escapeHtml(name)}" type="button">` +
-          `${au.state === "pending" ? "求补档" : "补档详情"}</button>` +
+          `${au.state === "pending" ? "求补档" : (hasDirect ? "拿链接" : "补档详情")}</button>` +
       `</div>`;
   }
 
@@ -624,14 +633,22 @@ function ndDialogHtml(name, au){
   parts.push(`<p class="ndSub"><span class="ndState ${cls}">${text}</span>` +
     `<span class="ndTime">数据更新于 ${escapeHtml(safeText((state.autofill.meta || {}).generated_at) || "—")}</span></p>`);
 
-  // 唯一的对外入口：回到发布处
-  if(v.url){
+  // 有 B 站视频的：唯一入口是回到发布处，地址不外链
+  if(v.bvid && v.url){
     parts.push(`<div class="ndRow ndRow--go"><span class="ndRowK">取链接</span><div>
       <a class="ndGo ndGo--big" href="${escapeHtml(v.url)}" target="_blank" rel="noopener">` +
       `<span class="ndGoIcon" aria-hidden="true">↗</span><span class="ndGoPlat">去视频发布处</span></a>
       <span class="ndRowNote">链接与提取码由 UP 主写在${escapeHtml(
         (au.active && au.active.where) || "视频简介 / 置顶评论")}里，本页不转存、不外链网盘地址${
         v.pubdate ? `；视频发布于 ${escapeHtml(v.pubdate)}` : ""}。</span>
+    </div></div>`);
+  } else if(v.url){
+    // 没有 bvid：要么视频已下架、要么当初就发在微博/专栏。原页面还在，
+    // 但那里写不进我们的补档链接（也确实没有），所以链接只能由本站给出。
+    parts.push(`<div class="ndRow ndRow--go"><span class="ndRowK">原发布处</span><div>
+      <a class="ndTo" href="${escapeHtml(v.url)}" target="_blank" rel="noopener">` +
+      `去${escapeHtml(v.title || "原发布处")} ↗</a>
+      <span class="ndRowNote">这里没有可以回写链接的地方，补档地址由本站直接给出（见下方）。</span>
     </div></div>`);
   }
 
@@ -640,29 +657,48 @@ function ndDialogHtml(name, au){
     const from = au.recovered_from
       ? `来源：${a.where || "评论区"}${au.recovered_from.author ? "（" + (au.recovered_from.is_up ? "UP 主 " : "") + escapeHtml(au.recovered_from.author) + "）" : ""}`
       : a.from_reshare
-        ? `补档链接：本机重新建过分享，写在视频置顶评论里${a.at ? `（${escapeHtml(a.at)}）` : ""}`
+        ? (a.no_video
+            ? `补档链接：本机重新建过分享${a.at ? `（${escapeHtml(a.at)}）` : ""}`
+            : `补档链接：本机重新建过分享，写在视频置顶评论里${a.at ? `（${escapeHtml(a.at)}）` : ""}`)
         : `写在：${escapeHtml(a.where || "原记录")}`;
     parts.push(`<div class="ndRow"><span class="ndRowK">${a.from_reshare ? "补档首选" : "现在可用"}</span><div>
       <div class="ndNow"><span class="ndNowPlat">${escapeHtml(a.platform_name || "网盘")}</span>` +
       (a.from_reshare ? `<span class="ndGoPwd">补档</span>` : "") +
       (a.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(a.pwd)}</span>` : "") +
       (a.detail ? `<span class="ndRowNote">${escapeHtml(a.detail)}</span>` : "") +
-      `</div><span class="ndRowNote">${escapeHtml(from)}</span></div></div>`);
+      `</div>` +
+      // 没有视频可回跳的作品（下架 / 发在微博），地址只能站内直出，否则读者拿不到
+      (a.url ? `<a class="ndGo ndGo--big" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">` +
+        `<span class="ndGoIcon" aria-hidden="true">↗</span>` +
+        `<span class="ndGoPlat">打开${escapeHtml(a.platform_name || "网盘")}</span></a>` : "") +
+      `<span class="ndRowNote">${escapeHtml(from)}</span></div></div>`);
   }
 
-  // 本机重新建过分享的：新地址写在视频「置顶评论」的回复里，页面仍不直出
-  const resh = au.reshare || [];
+  const allResh = au.reshare || [];
+  const direct = allResh.some(r => r.url);
+  // 「补档首选」已经把首选那条直链给出来了，「刚补的档」里不必再重复一次
+  const resh = allResh.filter(r => !(au.active && au.active.url && r.url && r.url === au.active.url));
   if(resh.length){
     parts.push(`<div class="ndRow"><span class="ndRowK">刚补的档</span><div class="ndNowList">` +
       resh.map(r => `<div class="ndNow">
         <span class="ndNowPlat">${escapeHtml(r.platform_name || r.platform)}</span>` +
         (r.pwd ? `<span class="ndGoPwd">提取码 ${escapeHtml(r.pwd)}</span>` : "") +
         (r.checked === "dead" ? `<span class="ndDeadWhy">复查：这条也已失效，等下次补档</span>` : "") +
-        `<span class="ndRowNote">写在视频置顶评论的回复里${r.at ? ` · ${escapeHtml(r.at)}` : ""}</span>` +
+        (r.url
+          ? `<a class="ndGo ndGo--big" href="${escapeHtml(r.url)}" target="_blank" rel="noopener">` +
+            `<span class="ndGoIcon" aria-hidden="true">↗</span>` +
+            `<span class="ndGoPlat">打开${escapeHtml(r.platform_name || r.platform)}</span></a>` +
+            `<span class="ndRowNote">${escapeHtml(r.where || "本站补档")}` +
+              `${r.detail ? ` · ${escapeHtml(r.detail)}` : ""}` +
+              `${r.at ? ` · ${escapeHtml(r.at)}` : ""}</span>`
+          : `<span class="ndRowNote">写在视频置顶评论的回复里${r.at ? ` · ${escapeHtml(r.at)}` : ""}</span>`) +
       `</div>`).join("") +
-      `<span class="ndRowNote">这批链接是重新建过分享的（原来的失效了），站内同样不直出地址：` +
-      `点「去视频发布处」，在置顶评论下方找「【补档】」那条回复。</span>` +
-      (v.url ? `<a class="ndTo" href="${escapeHtml(v.url)}" target="_blank" rel="noopener">去置顶评论 ↗</a>` : "") +
+      (direct
+        ? `<span class="ndRowNote">这个作品没有可回跳的视频页面（原视频已下架，或当初就发布在视频以外的地方），` +
+          `所以补档地址直接在站内给出。</span>`
+        : `<span class="ndRowNote">这批链接是重新建过分享的（原来的失效了），站内不直出地址：` +
+          `点「去视频发布处」，在置顶评论下方找「【补档】」那条回复。</span>` +
+          (v.url ? `<a class="ndTo" href="${escapeHtml(v.url)}" target="_blank" rel="noopener">去置顶评论 ↗</a>` : "")) +
       `</div></div>`);
   }
 
@@ -723,7 +759,10 @@ function ndDialogHtml(name, au){
   }
 
   parts.push(`<p class="ndFoot">自动处理规则：同一作品有多条链接时，失效的自动跳过、切到还能打开的那条；
-    全部失效时回到简介 / 评论区 / 微博里重新找；本页只告诉你「用哪个盘、提取码、写在哪」，地址请回发布处取。</p>`);
+    全部失效时回到简介 / 评论区 / 微博里重新找；` +
+    (v.bvid
+      ? `本页只告诉你「用哪个盘、提取码、写在哪」，地址请回发布处取。`
+      : `这个作品没有可回写链接的视频页面，补档地址已在上方直接给出。`) + `</p>`);
   return parts.join("");
 }
 
