@@ -14,7 +14,7 @@ const METRICS=[
   {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
   {key:'keeper',cn:'守密人等级',en:'Keeper level',tip:['该场战斗时玩家的守密人等级','The player’s keeper level in that battle']}
 ];
-const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',diff:6,zone:1,noAssist:true,limit:100,score:'all',count:'all'};
+const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',diff:6,zone:1,noAssist:false,limit:100,score:'all',count:'all',open:new Set()};
 const $=id=>document.getElementById(id);
 const stateOf=()=>document.getElementById('dtideSeason')?.value||'';
 const seasonKey=v=>/^\d+$/.test(String(v))?String(v):null;
@@ -34,6 +34,15 @@ function style(){
   .dtideLowspec .lsTeam span.b:after{content:'助';position:absolute;right:-2px;bottom:-2px;font-size:8px;background:#d7a85b;color:#1b1406;border-radius:4px;padding:0 2px}
   .dtideLowspec td.hl{color:#f3dcab;font-weight:800;background:rgba(215,168,91,.08)}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
   .dtideLowspec .lsMore{margin:10px auto;display:block;padding:7px 18px;border:1px solid rgba(215,168,91,.4);border-radius:9px;background:rgba(215,168,91,.08);color:#e8ca91;cursor:pointer}
+    .dtideLowspec tr.lsRow{cursor:pointer}.dtideLowspec tr.lsRow:hover{background:rgba(255,255,255,.025)}.dtideLowspec tr.lsRow.open{background:rgba(215,168,91,.06)}
+  .dtideLowspec td.lsName small{user-select:text}.dtideLowspec tr.lsDetail>td{padding:10px 8px;background:rgba(255,255,255,.02);text-align:left}
+  .dtideLowspec .lsCard{margin:0 0 10px;padding:10px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(9,16,27,.55)}.dtideLowspec .lsCard:last-child{margin-bottom:0}
+  .dtideLowspec .lsCardHd{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-bottom:8px}.dtideLowspec .lsCardHd b{color:#ead9b9}.dtideLowspec .lsCardHd span{color:#9fb0c4;font-size:11px}.dtideLowspec .lsCardHd .btns{margin-left:auto;display:flex;gap:6px;align-items:center}
+  .dtideLowspec .lsCardHd button,.dtideLowspec .lsLink{padding:4px 9px;border:1px solid rgba(215,168,91,.4);border-radius:7px;background:rgba(215,168,91,.08);color:#e8ca91;font-size:11px;text-decoration:none;cursor:pointer}
+  .dtideLowspec .lsMems{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}.dtideLowspec .lsMem{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:8px;border:1px solid rgba(148,163,184,.12);border-radius:9px;background:rgba(255,255,255,.02)}
+  .dtideLowspec .lsMem.bor{border-color:rgba(215,168,91,.35)}.dtideLowspec .lsMem img{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#0b1220}
+  .dtideLowspec .lsMem b{display:block;font-size:12px;color:#edf2f7}.dtideLowspec .lsMem em{font-style:normal;font-size:9px;color:#1b1406;background:#d7a85b;border-radius:4px;padding:0 3px}
+  .dtideLowspec .lsMem small{display:block;color:#8ea0b6;font-size:10px;line-height:1.5}.dtideLowspec .lsMem ul{margin:3px 0 0;padding:0;list-style:none;font-size:10px;color:#b9c5d4}.dtideLowspec .lsMem li.ssr{color:#f1d69f}.dtideLowspec .lsMem li b{display:inline;font-size:10px;color:inherit}
   @media(max-width:700px){.dtideLowspec table{display:block;overflow-x:auto}}`;
   document.head.appendChild(s);
 }
@@ -61,7 +70,7 @@ function lineups(d,filter){
   const rows=[];
   for(const t of d.teams){
     const p=d.players[t[0]];
-    if(!scoreOk(p))continue;
+    if(state.zone===0&&!scoreOk(p))continue;
     if(state.noAssist&&t[6].some(m=>m[5]))continue;
     if(!filter(t))continue;
     rows.push({t,p,v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)]))});
@@ -80,13 +89,23 @@ function playerRows(d){
   for(const g of groups.values())percentiles(g);
   const by=new Map();
   for(const r of rows){
-    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,v:{enl:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
-    o.n++;o.index+=r.index;
+    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,items:[],v:{enl:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
+    o.n++;o.index+=r.index;o.items.push(r);
     for(const k of ['enl','skill','forge','wheel'])o.v[k]+=r.v[k];
     o.v.keeper=Math.max(o.v.keeper,r.v.keeper);
   }
   // players with the same score can own a different number of lineups: rank on the per-lineup average, not on the sum
   return [...by.values()].map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.n,skill:o.v.skill/o.n,forge:o.v.forge/o.n,wheel:o.v.wheel/o.n,keeper:o.v.keeper}}));
+}
+const nm=i=>{const s=(state.data.names||[])[i];return s?(zh()?s[1]:s[0]):''};
+const diffName=i=>state.data.diffs[i];
+function lineupCard(r){
+  const d=state.data,t=r.t,p=r.p;
+  const mem=t[6].map(m=>{
+    const a=d.aw[m[0]],sl=(m[6]||[]).join('/'),wh=(m[7]||[]).map(w=>`<li class="${w[2]?'ssr':''}">${esc(nm(w[0]))} <b>${w[1]}</b></li>`).join(''),cv=(m[8]||[]).map(c=>`${esc(nm(c[0]))}×${c[1]}`).join(' · ');
+    return `<div class="lsMem${m[5]?' bor':''}"><img src="${esc(a[3])}" alt="" loading="lazy"><div><b>${esc(zh()?a[2]:a[1])}${m[5]?` <em>${ui('助战','Assist')}</em>`:''}</b><small>Lv ${m[9]||'—'} · ${ui('启灵','Enl.')} ${m[1]} · ${ui('灵塑适性','Soulforge')} ${m[3]}/10</small><small>${ui('技能','Skills')} ${esc(sl)} (${m[2]})</small><ul>${wh}</ul>${cv?`<small>${esc(cv)}</small>`:''}</div></div>`}).join('');
+  const code=t[7]||'';
+  return `<div class="lsCard"><div class="lsCardHd"><b>${ui('第'+t[1]+'禁区','Zone '+t[1])} · ${ui('危险等级','Threat ')}${esc(diffName(t[2]))}${t[3]?ui(' · 额外队',' · extra team'):''}</b><span>${ui('守密人 Lv ','Keeper Lv ')}${t[5]??'—'}${t[4]!=null?` · ${t[4]}${ui('分','pts')}`:''}</span><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${esc(ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay'))}">${ui('复制录像回放','Copy Replay')}</button>`:''}<a class="lsLink" href="https://eremora.com/u/${esc(p[0])}/challenges/dzone/${state.season}" target="_blank" rel="noopener noreferrer">${ui('Eremora 队伍','Eremora Teams')} ↗</a></span></div><div class="lsMems">${mem}</div></div>`;
 }
 function render(){
   const host=$('dtideLowspec');if(!host||!state.active)return;
@@ -113,23 +132,26 @@ function render(){
   const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}</th>`).join('');
   const body=shown.map((r,i)=>{
     const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}">${fmt(r.v[m.key])}</td>`).join('');
+    const key=all?'p'+p[0]:p[0]+'|'+r.t[1]+'|'+r.t[3],open=state.open.has(key);
     let mid,sub;
     if(all){mid=`<td>${r.n}</td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}`}
     else{const t=r.t,team=t[6].map(m=>{const a=d.aw[m[0]];return `<span class="${m[5]?'b':''}" title="${esc(zh()?a[2]:a[1])}"><img src="${esc(a[3])}" alt="" loading="lazy"></span>`}).join('');
       mid=`<td><div class="lsTeam">${team}</div></td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}${t[3]?ui(' · 额外队',' · extra'):''}`}
-    return `<tr><td>${i+1}</td><td class="lsName">${esc(p[1])}<small>${sub}</small></td>${mid}${cells}<td class="lsScore${L==='score'?' hl':''}"${all?` title="${esc(ui('各阵容评分合计 ','Sum of lineup scores '))}${r.total.toFixed(1)}"`:''}>${r.index.toFixed(1)}</td></tr>`;
+    const tr=`<tr class="lsRow${open?' open':''}" data-ls-key="${esc(key)}" title="${esc(ui('点击展开详细阵容','Click for the full lineup'))}"><td>${i+1}</td><td class="lsName">${esc(p[1])}<small>UID ${esc(p[0])}</small><small>${sub}</small></td>${mid}${cells}<td class="lsScore${L==='score'?' hl':''}"${all?` title="${esc(ui('各阵容评分合计 ','Sum of lineup scores '))}${r.total.toFixed(1)}"`:''}>${r.index.toFixed(1)}</td></tr>`;
+    const detail=open?`<tr class="lsDetail"><td colspan="9">${all?r.items.slice().sort((x,y)=>x.t[1]-y.t[1]||x.t[3]-y.t[3]).map(lineupCard).join(''):lineupCard(r)}</td></tr>`:'';
+    return tr+detail;
   }).join('');
   const noteAll=zh()
     ?`每个禁区、每个难度里，阵容（含额外队伍）互相比较投入；玩家的各阵容评分取平均（同分玩家的阵容数可能不同，所以不用合计），${high?'越高越“高配”':'越高越“低配”'}；可再按阵容数筛选。单项榜按各阵容该项的平均值（守密人等级取最高）${high?'从高到低':'从低到高'}排序。`
     :`In every zone and threat level the lineups (extra teams included) are compared on investment; a player’s lineup scores are averaged (players with the same score can own different numbers of lineups, so no sum), ${high?'higher = higher investment':'higher = lower investment'}; you can also filter by lineup count. Single lists sort the per-lineup averages (keeper level: the highest) from ${high?'high to low':'low to high'}.`;
   const noteZone=zh()
-    ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。选择分数后，只在该分数的玩家之间比较。`
-    :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. With a score selected, only players with that score are compared.`;
+    ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。`
+    :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. `;
   const note=all?noteAll:noteZone;
   host.innerHTML=`<div class="dtideLowspec">
     <div class="lsTabs">${zoneTabs}</div>
     <div class="lsNote">${note}</div>
-    <div class="lsBar">${all?'':`<label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label>`}<label>${ui('玩家总分','Player score')}<select data-ls-score>${scoreSel}</select></label>
+    <div class="lsBar">${all?'':`<label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label>`}${all?`<label>${ui('玩家总分','Player score')}<select data-ls-score>${scoreSel}</select></label>`:''}
     ${all?`<label>${ui('阵容数','Lineups')}<select data-ls-count><option value="all">${ui('不限','Any')}</option>${counts.map(c=>`<option value="${c}"${String(state.count)===String(c)?' selected':''}>${c}${ui(' 个阵容',' lineups')}</option>`).join('')}</select></label>`:''}<label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label></div>
     <div class="lsTabs">${tabs}</div>
     <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th>${all?ui('平均评分','Avg score'):ui('综合评分','Score')}</th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
@@ -188,6 +210,7 @@ document.addEventListener('click',e=>{
   if(state.active&&e.target.closest?.('[data-dtide-entity],[data-dtide-battle-tab]')){deactivate();return}
   const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
   const l=e.target.closest('[data-ls-list]');if(l){state.list=l.dataset.lsList;state.limit=100;render();return}
+  const row=e.target.closest('tr[data-ls-key]');if(row&&!e.target.closest('a,button')){const k=row.dataset.lsKey;if(state.open.has(k))state.open.delete(k);else state.open.add(k);render();return}
   const z=e.target.closest('button[data-ls-zone]');if(z){state.zone=Number(z.dataset.lsZone);state.limit=100;render();return}
   if(e.target.closest('[data-ls-more]')){state.limit+=100;render()}
 });

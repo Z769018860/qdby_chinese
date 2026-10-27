@@ -68,7 +68,16 @@ def main():
     for l in gzip.open(D / f'dzone/season{season}/battle-summary.jsonl.gz', 'rt'):
         x = json.loads(l); keeper[x['battleUuid']] = x.get('playerLevel')
     ssr = {norm(w['name']) for w in json.loads((D / 'skeydb/public-v3/catalogs/wheels.json').read_text(encoding='utf-8'))['records'] if w.get('rarity') == 'SSR'}
-    pool = {norm(it['en']): it for it in json.loads((D / 'game/tier-pool.json').read_text(encoding='utf-8'))['kinds']['awakener']}
+    kinds = json.loads((D / 'game/tier-pool.json').read_text(encoding='utf-8'))['kinds']
+    pool = {norm(it['en']): it for it in kinds['awakener']}
+    zh_of = {k: {norm(it['en']): it['zh'] for it in kinds[k] if it.get('zh')} for k in ('wheel', 'covenant')}
+    strings, str_idx = [], {}
+    def sidx(kind, en):  # [english, chinese] name pool shared by wheels / covenants
+        key = (kind, en)
+        if key not in str_idx:
+            str_idx[key] = len(strings)
+            strings.append([en, zh_of[kind].get(norm(en), en)])
+        return str_idx[key]
     stages = {}
     for sid, st in names['stages'].items():
         m = re.match(r'Zone (\d): (?:Threat Level (\w+)|▼)', st['name'])
@@ -95,21 +104,31 @@ def main():
                     aw.append([info['ingameId'], info['canonicalName'], p.get('zh') or info['canonicalName'], p.get('img', '')])
                 skill = sum(s.get('level', 0) for s in a.get('slots') or [] if not s.get('lock'))
                 forge = (a.get('talents') or {}).get(forge_tid.get(a['tid']), {}).get('lv', 0)
-                wheel = 0
+                wheel, wl = 0, []
                 slots = a.get('weaponSlots') or []
                 if isinstance(slots, dict): slots = [slots[k] for k in sorted(slots, key=int)]
                 for s in slots:
                     it = items.get(str(s.get('weaponUid')))
-                    if it and norm(names['wheel'].get(str(it['tid']), '')) in ssr: wheel += s.get('level') or 0
+                    if not it: continue
+                    wn = names['wheel'].get(str(it['tid']), f"#{it['tid']}")
+                    is_ssr = norm(wn) in ssr
+                    if is_ssr: wheel += s.get('level') or 0
+                    wl.append([sidx('wheel', wn), s.get('level') or 0, 1 if is_ssr else 0])
+                suits = collections.Counter()
+                for u in a.get('trinkets') or []:
+                    it = items.get(str(u))
+                    if it and it.get('suitId'): suits[it['suitId']] += 1
+                cov = [[sidx('covenant', names['covenant'].get(str(sid), f'#{sid}')), n] for sid, n in suits.items()]
+                sl = [s.get('level', 0) for s in a.get('slots') or [] if not s.get('lock')]
                 bor = 1 if a.get('assistPlayerId') else 0
                 borrowed += bor
-                ms.append([aw_idx[info['canonicalName']], a.get('potencyLevel') or 0, skill, forge, wheel, bor])
+                ms.append([aw_idx[info['canonicalName']], a.get('potencyLevel') or 0, skill, forge, wheel, bor, sl, wl, cov, a.get('level') or 0])
             if uid not in pl_idx:
                 r = rank[uid]; pl_idx[uid] = len(players)
                 players.append([str(uid), re.sub(r'<[^>]*>', '', r['name']), r['rank'], r['score']])
             uuid = (side.get('recordStageData') or {}).get('battleUuid')
-            teams.append([pl_idx[uid], z[0], z[1], slot, row['response'].get('score') if slot == 0 else None, keeper.get(uuid), ms])
-    out = {'season': season, 'diffs': DIFFS, 'aw': aw, 'players': players, 'teams': teams}
+            teams.append([pl_idx[uid], z[0], z[1], slot, row['response'].get('score') if slot == 0 else None, keeper.get(uuid), ms, uuid])
+    out = {'season': season, 'diffs': DIFFS, 'aw': aw, 'names': strings, 'players': players, 'teams': teams}
     dest = D / f'eremora/lowspec/{season}.json'
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
