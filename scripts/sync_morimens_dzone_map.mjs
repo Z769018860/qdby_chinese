@@ -7,7 +7,7 @@ import path from 'node:path';
 const RAW='https://raw.githubusercontent.com/Morimenz-kr/Morimens.Info.kr/main';
 const SOURCE_ROOT=process.env.MORIMENZ_SOURCE||'.morimenz';
 const OUT='data/morimens/dzone-info';
-const FILES={68:['dzone_season68.json','dzone_maps_season68.json'],69:['dzone_season69.json','dzone_maps_season69.json'],70:['dzone_current.json','dzone_maps.json']};
+const FILES={68:['dzone_season68.json','dzone_maps_season68.json'],69:['dzone_season69.json','dzone_maps_season69.json'],70:['dzone_season70.json','dzone_maps_season70.json'],71:['dzone_season71.json','dzone_maps_season71.json'],72:['dzone_season72.json','dzone_maps_season72.json']};
 const exists=async f=>{try{await stat(f);return true}catch{return false}};
 const local=await exists(path.join(SOURCE_ROOT,'data'));
 async function readSource(rel){

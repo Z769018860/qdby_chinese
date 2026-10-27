@@ -9,7 +9,7 @@ const RAW=`https://raw.githubusercontent.com/${OWNER}/${REPO}/${REF}`;
 const SOURCE_ROOT=process.env.MORIMENZ_SOURCE||'.morimenz';
 const OUT='data/morimens/dzone-info';
 const SKEYDB_SEASONS='data/morimens/skeydb/dzone/seasons';
-const FILES={67:'dzone_season67.json',68:'dzone_season68.json',69:'dzone_season69.json',70:'dzone_current.json'};
+const FILES={67:'dzone_season67.json',68:'dzone_season68.json',69:'dzone_season69.json',70:'dzone_season70.json',71:'dzone_season71.json',72:'dzone_season72.json'};
 const exists=async f=>{try{await stat(f);return true}catch{return false}};
 const local=await exists(path.join(SOURCE_ROOT,'data'));
 async function readSource(rel){
