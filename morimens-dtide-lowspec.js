@@ -14,7 +14,7 @@ const METRICS=[
   {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
   {key:'keeper',cn:'守密人等级',en:'Keeper level',tip:['该场战斗时玩家的守密人等级','The player’s keeper level in that battle']}
 ];
-const state={season:null,data:null,loading:null,active:false,list:'score',diff:6,zone:1,noAssist:true,limit:100,score:'all'};
+const state={season:null,data:null,loading:null,active:false,mode:'low',list:'score',diff:6,zone:1,noAssist:true,limit:100,score:'all'};
 const $=id=>document.getElementById(id);
 const stateOf=()=>document.getElementById('dtideSeason')?.value||'';
 const seasonKey=v=>/^\d+$/.test(String(v))?String(v):null;
@@ -47,13 +47,13 @@ function load(){
 }
 const val=(t,k)=>k==='keeper'?(t[5]??0):t[6].reduce((n,m)=>n+m[{enl:1,skill:2,forge:3,wheel:4}[k]],0);
 const scoreOk=p=>{const s=state.score;if(s==='all')return true;if(s.includes(':')){const [a,b]=s.split(':').map(Number);return p[3]>=a&&p[3]<=b}return p[3]===Number(s)};
-// percentile = share of the other lineups in the group that invest MORE than this one (ties count half): 100 = the lowest investment
+// percentile = share of the other lineups in the group that invest MORE (low mode) / LESS (high mode) than this one, ties count half
 function percentiles(list){
   const n=list.length;
   for(const m of METRICS){
     const vs=list.map(r=>r.v[m.key]).sort((a,b)=>a-b),pos=new Map();
     for(const r of list){const v=r.v[m.key];if(!pos.has(v)){let lo=0,hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<v)lo=mid+1;else hi=mid}const a=lo;lo=a;hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<=v)lo=mid+1;else hi=mid}pos.set(v,[a,lo])}}
-    for(const r of list){const [a,b]=pos.get(r.v[m.key]);r['p_'+m.key]=n>1?100*((n-b)+(b-a-1)/2)/(n-1):100}
+    for(const r of list){const [a,b]=pos.get(r.v[m.key]);const low=n>1?100*((n-b)+(b-a-1)/2)/(n-1):100;r['p_'+m.key]=state.mode==='high'?100-low:low}
   }
   for(const r of list)r.index=METRICS.reduce((s,m)=>s+r['p_'+m.key],0)/METRICS.length;
 }
@@ -92,21 +92,20 @@ function render(){
   apply();
   const d=state.data;
   if(!d){host.innerHTML=`<div class="dtideEmpty">${ui('当前期次暂无低配榜单数据。','No low-investment data for this season yet.')}</div>`;return}
-  const all=state.zone===0,L=state.list;
+  const all=state.zone===0,L=state.list,high=state.mode==='high';
   const rows=all?playerRows(d):zoneRows(d);
   const pidx=r=>all?r.p:r.p;
   if(L==='score')rows.sort((a,b)=>b.index-a.index||pidx(a)[2]-pidx(b)[2]);
-  else rows.sort((a,b)=>a.v[L]-b.v[L]||b.index-a.index||pidx(a)[2]-pidx(b)[2]);
+  else rows.sort((a,b)=>(state.mode==='high'?b.v[L]-a.v[L]:a.v[L]-b.v[L])||b.index-a.index||pidx(a)[2]-pidx(b)[2]);
   const total=rows.length,shown=rows.slice(0,state.limit);
   const lbl=m=>zh()?m.cn:m.en;
   const diffOpts=d.diffs.map((n,i)=>`<option value="${i}"${i===state.diff?' selected':''}>${ui('危险等级','Threat ')}${n}</option>`).reverse().join('');
   const zoneTabs=[0,1,2,3,4,5].map(z=>`<button type="button" data-ls-zone="${z}" aria-pressed="${z===state.zone}">${z?ui(`第${z}禁区`,`Zone ${z}`):ui('全部禁区（玩家合计）','All zones (player total)')}</button>`).join('');
-  // score filter: ranges of the main leaderboard plus every exact score shared by at least 3 players
+  // score filter: every exact score of the season's players
   const cnt=new Map();for(const p of d.players)cnt.set(p[3],(cnt.get(p[3])||0)+1);
-  const exact=[...cnt].filter(([s,c])=>c>=3).sort((a,b)=>b[0]-a[0]).map(([s,c])=>`<option value="${s}"${String(state.score)===String(s)?' selected':''}>${s}${ui(' 分（',' pts (')}${c}${ui(' 人）',' players)')}</option>`).join('');
-  const ranges=[['500:525','500–525'],['450:499','450–499'],['400:449','400–449'],['0:399',ui('400 分以下','Below 400')]].map(([v,n])=>`<option value="${v}"${state.score===v?' selected':''}>${n}</option>`).join('');
-  const scoreSel=`<option value="all">${ui('全部分数','All scores')}</option>${ranges}${exact}`;
-  const tabs=[{key:'score',cn:all?'综合评分榜（合计）':'综合评分榜',en:all?'Overall score (sum)':'Overall score'},...METRICS].map(m=>`<button type="button" data-ls-list="${m.key}" aria-pressed="${L===m.key}" title="${esc(m.tip?ui(m.tip[0],m.tip[1]):ui('五项投入的百分位平均：越高越“低配”','Average of the five investment percentiles: higher = lower investment'))}">${esc(lbl(m))}${m.key==='score'?'':ui(' · 最低',' · lowest')}</button>`).join('');
+  const exact=[...cnt].sort((a,b)=>b[0]-a[0]).map(([s,c])=>`<option value="${s}"${String(state.score)===String(s)?' selected':''}>${s}${ui(' 分（',' pts (')}${c}${ui(' 人）',' players)')}</option>`).join('');
+  const scoreSel=`<option value="all">${ui('全部分数','All scores')}</option>${exact}`;
+  const tabs=[{key:'score',cn:all?'综合评分榜（合计）':'综合评分榜',en:all?'Overall score (sum)':'Overall score'},...METRICS].map(m=>`<button type="button" data-ls-list="${m.key}" aria-pressed="${L===m.key}" title="${esc(m.tip?ui(m.tip[0],m.tip[1]):ui('五项投入的百分位平均：越高越“低配”','Average of the five investment percentiles: higher = lower investment'))}">${esc(lbl(m))}${m.key==='score'?'':high?ui(' · 最高',' · highest'):ui(' · 最低',' · lowest')}</button>`).join('');
   const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（合计）',' (sum)'):''}</th>`).join('');
   const body=shown.map((r,i)=>{
     const p=r.p,cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}">${r.v[m.key]}</td>`).join('');
@@ -116,9 +115,13 @@ function render(){
       mid=`<td><div class="lsTeam">${team}</div></td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}${t[3]?ui(' · 额外队',' · extra'):''}`}
     return `<tr><td>${i+1}</td><td class="lsName">${esc(p[1])}<small>${sub}</small></td>${mid}${cells}<td class="lsScore${L==='score'?' hl':''}">${r.index.toFixed(1)}</td></tr>`;
   }).join('');
-  const note=all
-    ?ui('每个禁区、每个难度里，阵容（含额外队伍）互相比较投入；玩家的各阵容评分相加得到合计，越高越“低配”。单项榜按各阵容该项合计（守密人等级取最高）从低到高排序。','In every zone and threat level the lineups (extra teams included) are compared on investment; a player’s lineup scores add up to the total, higher = lower investment. Single lists sort the per-lineup sums (keeper level: the highest) from low to high.')
-    :ui('统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越少排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“低配”）；单项榜按该项数值从低到高排序。选择分数后，只在该分数的玩家之间比较。','Lineups (extra teams included) that cleared the same zone and threat level are compared: the less they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = lower investment); single lists sort that figure from low to high. With a score selected, only players with that score are compared.');
+  const noteAll=zh()
+    ?`每个禁区、每个难度里，阵容（含额外队伍）互相比较投入；玩家的各阵容评分相加得到合计，${high?'越高越“高配”':'越高越“低配”'}。单项榜按各阵容该项合计（守密人等级取最高）${high?'从高到低':'从低到高'}排序。`
+    :`In every zone and threat level the lineups (extra teams included) are compared on investment; a player’s lineup scores add up to the total, ${high?'higher = higher investment':'higher = lower investment'}. Single lists sort the per-lineup sums (keeper level: the highest) from ${high?'high to low':'low to high'}.`;
+  const noteZone=zh()
+    ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。选择分数后，只在该分数的玩家之间比较。`
+    :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. With a score selected, only players with that score are compared.`;
+  const note=all?noteAll:noteZone;
   host.innerHTML=`<div class="dtideLowspec">
     <div class="lsTabs">${zoneTabs}</div>
     <div class="lsNote">${note}</div>
@@ -128,17 +131,19 @@ function render(){
     <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${all?ui('阵容数','Lineups'):ui('阵容','Lineup')}</th>${head}<th>${all?ui('合计评分','Total score'):ui('综合评分','Score')}</th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
     ${total>shown.length?`<button type="button" class="lsMore" data-ls-more>${ui('显示更多','Show more')}（${shown.length}/${total}）</button>`:`<div class="lsNote">${ui('共','Total')} ${total} ${all?ui('名玩家','players'):ui('支阵容','lineups')}</div>`}</div>`;
 }
+const titleOf=()=>state.mode==='high'?ui('高配榜单','High-investment Leaderboard'):ui('低配榜单','Low-investment Leaderboard');
 const HIDE=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
 let savedTitle=null;
 function apply(){
   const on=state.active;
-  document.querySelectorAll('.dtideLeaderboardTab').forEach(x=>{if(on)x.setAttribute('aria-selected',String(x.hasAttribute('data-dtide-lowspec-tab')))});
+  document.querySelectorAll('.dtideLeaderboardTab').forEach(x=>{if(on)x.setAttribute('aria-selected',String(x.hasAttribute('data-dtide-lowspec-tab')&&(x.dataset.dtideLowspecTab||'low')===state.mode))});
   for(const sel of HIDE){const el=document.querySelector(sel);if(el)el.style.display=on?'none':''}
   const title=$('dtideMatrixTitle');
-  if(title){if(on){if(savedTitle==null&&title.textContent!==ui('低配榜单','Low-investment Leaderboard'))savedTitle=title.textContent;title.textContent=ui('低配榜单','Low-investment Leaderboard')}else if(savedTitle!=null){title.textContent=savedTitle;savedTitle=null}}
+  if(title){if(on){if(savedTitle==null&&title.textContent!==ui('低配榜单','Low-investment Leaderboard')&&title.textContent!==ui('高配榜单','High-investment Leaderboard'))savedTitle=title.textContent;title.textContent=titleOf()}else if(savedTitle!=null){title.textContent=savedTitle;savedTitle=null}}
   const host=$('dtideLowspec');if(host)host.hidden=!on;
 }
-async function activate(){
+async function activate(mode){
+  state.mode=mode||'low';
   // leave the battle-stats tab first (it listens to clicks on the other tabs)
   if(!$('dtideBattle')?.hidden)document.querySelector('[data-dtide-entity="character"]')?.click();
   state.active=true;state.limit=100;apply();
@@ -147,26 +152,35 @@ async function activate(){
 }
 function deactivate(){if(!state.active)return;state.active=false;apply();const f=$('dtideEntityType');f?.dispatchEvent(new Event('change',{bubbles:true}))}
 async function refreshTab(){
-  const btn=document.querySelector('[data-dtide-lowspec-tab]');if(!btn)return;
+  const btns=[...document.querySelectorAll('[data-dtide-lowspec-tab]')];if(!btns.length)return;
   const key=seasonKey(stateOf());
   let ok=false;
   if(key){try{const r=await fetch(`data/morimens/eremora/lowspec/${key}.json`,{method:'HEAD',cache:'no-cache'});ok=r.ok}catch{}}
-  btn.hidden=!ok;
+  btns.forEach(b=>{b.hidden=!ok});
   if(!ok&&state.active){state.active=false;apply()}
   else if(state.active){state.data=null;await load();render()}
 }
+// other renderers rewrite the matrix title on every redraw: keep ours while the tab is open
+let titleWatch=null;
+function watchTitle(){
+  const title=$('dtideMatrixTitle');if(!title||titleWatch)return;
+  titleWatch=new MutationObserver(()=>{if(state.active&&title.textContent!==titleOf()){savedTitle=null;title.textContent=titleOf()}});
+  titleWatch.observe(title,{childList:true,characterData:true,subtree:true});
+}
 function mount(){
+  watchTitle();
   const tabs=document.querySelector('.dtideLeaderboardTabs');if(!tabs||tabs.querySelector('[data-dtide-lowspec-tab]'))return !!tabs;
   style();
-  const b=document.createElement('button');b.type='button';b.className='dtideLeaderboardTab';b.setAttribute('data-dtide-lowspec-tab','');b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.hidden=true;b.textContent=ui('低配榜单','Low-investment');
-  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]');anchor.after(b);
+  const mk=(mode,cn,en)=>{const b=document.createElement('button');b.type='button';b.className='dtideLeaderboardTab';b.setAttribute('data-dtide-lowspec-tab',mode);b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.hidden=true;b.textContent=ui(cn,en);return b};
+  const low=mk('low','低配榜单','Low-investment'),high=mk('high','高配榜单','High-investment');
+  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]');anchor.after(low);low.after(high);
   const panel=document.createElement('div');panel.id='dtideLowspec';panel.className='dtideBattle';panel.hidden=true;($('dtideBattle')||$('dtideMatrix')).after(panel);
   $('dtideSeason')?.addEventListener('change',()=>{state.data=null;state.season=null;setTimeout(refreshTab,300)});
   refreshTab();
   return true;
 }
 document.addEventListener('click',e=>{
-  if(e.target.closest?.('[data-dtide-lowspec-tab]')){if(!state.active)activate();return}
+  const lt=e.target.closest?.('[data-dtide-lowspec-tab]');if(lt){const mode=lt.dataset.dtideLowspecTab||'low';if(!state.active)activate(mode);else if(state.mode!==mode){state.mode=mode;state.limit=100;apply();render()}return}
   if(state.active&&e.target.closest?.('[data-dtide-entity],[data-dtide-battle-tab]')){deactivate();return}
   const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
   const l=e.target.closest('[data-ls-list]');if(l){state.list=l.dataset.lsList;state.limit=100;render();return}

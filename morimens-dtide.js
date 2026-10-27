@@ -318,6 +318,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('新增「高配榜单」（与低配榜单对应，投入最多的阵容）；分数筛选改为具体分数。','Added a High-investment leaderboard (counterpart of the Low-investment one); the score filter now lists exact scores.')}</div>
         <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('融灾榜单新增「低配榜单」：按总启灵数、技能总级别、灵塑适性、SSR命轮叠位、守密人等级给出单项榜与综合评分榜（第70–72期）。','Added a Low-investment leaderboard tab: single lists and an overall score by total enlightenment, skill levels, Soulforge aptitude, SSR wheel stacks and keeper level (Seasons 70-72).')}</div>
         <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('更新第72期融灾榜单（10月27日 23:38 快照）。','Updated the Season 72 leaderboard (Oct 27 23:38 snapshot).')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第70、71期榜单报纸新增「最终战增刊」：首领战回合数、分布与速杀队伍。','Added a Final battle extra to the Season 70 and 71 reports: boss-fight rounds, distribution and fastest teams.')}</div>
