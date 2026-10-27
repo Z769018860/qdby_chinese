@@ -69,6 +69,8 @@ def main():
     for l in gzip.open(D / f'dzone/season{season}/battle-summary.jsonl.gz', 'rt'):
         x = json.loads(l); keeper[x['battleUuid']] = x.get('playerLevel')
     ssr = {norm(w['name']) for w in json.loads((D / 'skeydb/public-v3/catalogs/wheels.json').read_text(encoding='utf-8'))['records'] if w.get('rarity') == 'SSR'}
+    groups = json.loads((ROOT / 'scripts/data/lowspec_wheel_groups.json').read_text(encoding='utf-8'))
+    wheel_group = {**{norm(n): 3 for n in groups['pass']}, **{norm(n): 4 for n in groups['gift']}}  # 3 = pass / archive (纪行), 4 = gift (赠送)
     # SSR wheels whose exclusive Awakener is a permanent-banner one count as permanent wheels (w[2] == 2); generic wheels are treated as limited
     awk = {x['id']: x for x in json.loads((D / 'skeydb/awakeners.json').read_text(encoding='utf-8'))['records']}
     perm_wheels = {norm(w['name']) for w in json.loads((D / 'skeydb/public-v3/catalogs/wheels.json').read_text(encoding='utf-8'))['records']
@@ -120,7 +122,7 @@ def main():
                     wn = names['wheel'].get(str(it['tid']), f"#{it['tid']}")
                     is_ssr = norm(wn) in ssr
                     if is_ssr: wheel += s.get('level') or 0
-                    wl.append([sidx('wheel', wn), s.get('level') or 0, (2 if norm(wn) in perm_wheels else 1) if is_ssr else 0])
+                    wl.append([sidx('wheel', wn), s.get('level') or 0, (2 if norm(wn) in perm_wheels else wheel_group.get(norm(wn), 1)) if is_ssr else 0])
                 suits = collections.Counter()
                 for u in a.get('trinkets') or []:
                     it = items.get(str(u))
