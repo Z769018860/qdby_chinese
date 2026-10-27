@@ -32,7 +32,7 @@ function style(){
   .dtideLowspec th{color:#9fb0c4;font-weight:600;white-space:nowrap}.dtideLowspec th button{all:unset;cursor:pointer;color:inherit;font:inherit}.dtideLowspec th button:hover{color:#f3dcab}.dtideLowspec td.lsName{text-align:left;min-width:120px}.dtideLowspec td.lsName small{display:block;color:#7f8da1;font-size:10px}
   .dtideLowspec .lsTeam{display:flex;gap:4px;justify-content:center}.dtideLowspec .lsTeam span{position:relative;display:block;width:34px;height:34px}.dtideLowspec .lsTeam img{width:34px;height:34px;border-radius:7px;object-fit:cover;background:#0b1220}
   .dtideLowspec .lsTeam span.b:after{content:'助';position:absolute;right:-2px;bottom:-2px;font-size:8px;background:#d7a85b;color:#1b1406;border-radius:4px;padding:0 2px}
-  .dtideLowspec td.hl{color:#f3dcab;font-weight:800;background:rgba(215,168,91,.08)}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
+  .dtideLowspec td.hl{color:#fff;font-weight:800}.dtideLowspec td[style*=hsla]{color:#f3f6fa;font-variant-numeric:tabular-nums}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
   .dtideLowspec .lsMore{margin:10px auto;display:block;padding:7px 18px;border:1px solid rgba(215,168,91,.4);border-radius:9px;background:rgba(215,168,91,.08);color:#e8ca91;cursor:pointer}
     .dtideLowspec tr.lsRow{cursor:pointer}.dtideLowspec tr.lsRow:hover{background:rgba(255,255,255,.025)}.dtideLowspec tr.lsRow.open{background:rgba(215,168,91,.06)}
   .dtideLowspec td.lsName small{user-select:text}.dtideLowspec tr.lsDetail>td{padding:10px 8px;background:rgba(255,255,255,.02);text-align:left}
@@ -121,6 +121,10 @@ function render(){
   const D=state.dir;
   rows.sort((a,b)=>(L==='score'?D*(a.index-b.index):D*(a.v[L]-b.v[L]))||b.index-a.index||pidx(a)[2]-pidx(b)[2]);
   const total=rows.length,shown=rows.slice(0,state.limit);
+  // heat map: blue = little investment, red = a lot (per column, over every row of the current filter); the score column uses the same orientation
+  const range={};for(const m of METRICS){let lo=Infinity,hi=-Infinity;for(const r of rows){const v=r.v[m.key];if(v<lo)lo=v;if(v>hi)hi=v}range[m.key]=[lo,hi]}
+  const heat=x=>`background:hsla(${Math.round(215-215*x)},72%,45%,${(.14+.42*x).toFixed(2)})`;
+  const heatOf=(k,v)=>{const [lo,hi]=range[k];return heat(hi>lo?(v-lo)/(hi-lo):0)};
   const lbl=m=>zh()?m.cn:m.en;
   const diffOpts=d.diffs.map((n,i)=>`<option value="${i}"${i===state.diff?' selected':''}>${ui('危险等级','Threat ')}${n}</option>`).reverse().join('');
   const zoneTabs=[0,1,2,3,4,5].map(z=>`<button type="button" data-ls-zone="${z}" aria-pressed="${z===state.zone}">${z?ui(`第${z}禁区`,`Zone ${z}`):ui('全部禁区（玩家合计）','All zones (player total)')}</button>`).join('');
@@ -131,13 +135,13 @@ function render(){
   const arrow=k=>k===L?(D>0?' ↑':' ↓'):' ↕';
   const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}${arrow(m.key)}</button></th>`).join('');
   const body=shown.map((r,i)=>{
-    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}">${fmt(r.v[m.key])}</td>`).join('');
+    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}" style="${heatOf(m.key,r.v[m.key])}">${fmt(r.v[m.key])}</td>`).join('');
     const key=all?'p'+p[0]:p[0]+'|'+r.t[1]+'|'+r.t[3],open=state.open.has(key);
     let mid,sub;
     if(all){mid=`<td>${r.n}</td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}`}
     else{const t=r.t,team=t[6].map(m=>{const a=d.aw[m[0]];return `<span class="${m[5]?'b':''}" title="${esc(zh()?a[2]:a[1])}"><img src="${esc(a[3])}" alt="" loading="lazy"></span>`}).join('');
       mid=`<td><div class="lsTeam">${team}</div></td>`;sub=`${ui('榜单第','Rank #')}${p[2]}${ui('名 · ',' · ')}${p[3]}${ui('分','pts')}${t[3]?ui(' · 额外队',' · extra'):''}`}
-    const tr=`<tr class="lsRow${open?' open':''}" data-ls-key="${esc(key)}" title="${esc(ui('点击展开详细阵容','Click for the full lineup'))}"><td>${i+1}</td><td class="lsName">${esc(p[1])}<small>UID ${esc(p[0])}</small><small>${sub}</small></td>${mid}${cells}<td class="lsScore${L==='score'?' hl':''}"${all?` title="${esc(ui('各阵容评分合计 ','Sum of lineup scores '))}${r.total.toFixed(1)}"`:''}>${r.index.toFixed(1)}</td></tr>`;
+    const tr=`<tr class="lsRow${open?' open':''}" data-ls-key="${esc(key)}" title="${esc(ui('点击展开详细阵容','Click for the full lineup'))}"><td>${i+1}</td><td class="lsName">${esc(p[1])}<small>UID ${esc(p[0])}</small><small>${sub}</small></td>${mid}${cells}<td class="lsScore${L==='score'?' hl':''}" style="${heat(1-r.index/100)}"${all?` title="${esc(ui('各阵容评分合计 ','Sum of lineup scores '))}${r.total.toFixed(1)}"`:''}>${r.index.toFixed(1)}</td></tr>`;
     const detail=open?`<tr class="lsDetail"><td colspan="9">${all?r.items.slice().sort((x,y)=>x.t[1]-y.t[1]||x.t[3]-y.t[3]).map(lineupCard).join(''):lineupCard(r)}</td></tr>`:'';
     return tr+detail;
   }).join('');
@@ -147,7 +151,7 @@ function render(){
   const noteZone=zh()
     ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。`
     :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. `;
-  const hint=zh()?'点击表头可按该列升序 / 降序排列；综合评分升序即“高配”（投入最多）。':'Click a column header to sort ascending / descending; ascending overall score = high investment.';
+  const hint=zh()?'热力图：蓝色 = 投入少，红色 = 投入多（按当前筛选内的各列最小 / 最大值着色）。点击表头可按该列升序 / 降序排列；综合评分升序即“高配”（投入最多）。':'Heat map: blue = little investment, red = a lot (per column, over the current filter). Click a column header to sort ascending / descending; ascending overall score = high investment.';
   const note=(all?noteAll:noteZone)+' '+hint;
   host.innerHTML=`<div class="dtideLowspec">
     <div class="lsTabs">${zoneTabs}</div>
