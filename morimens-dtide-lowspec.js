@@ -100,13 +100,13 @@ function playerRows(d){
   for(const g of groups.values())percentiles(g);
   const by=new Map();
   for(const r of rows){
-    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,index:0,items:[],cards:0,lv:0,v:{enl:0,lv:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
-    o.n++;o.index+=r.index;o.items.push(r);o.cards+=r.cards;o.lv+=r.lv;
+    const o=by.get(r.t[0])||by.set(r.t[0],{p:r.p,n:0,m:0,index:0,items:[],cards:0,lv:0,v:{enl:0,lv:0,skill:0,forge:0,wheel:0,keeper:0}}).get(r.t[0]);
+    o.n++;o.m+=r.t[6].length;o.index+=r.index;o.items.push(r);o.cards+=r.cards;o.lv+=r.lv;
     for(const k of ['enl','lv','skill','forge','wheel'])o.v[k]+=r.v[k];
-    o.v.keeper=Math.max(o.v.keeper,r.v.keeper);
+    o.v.keeper+=r.v.keeper;
   }
-  // players with the same score can own a different number of lineups: rank on the per-lineup average, not on the sum
-  return [...by.values()].filter(o=>scoreOk(o.p)).map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.n,lv:o.v.lv/o.n,skill:o.v.skill/o.n,forge:o.v.forge/o.n,wheel:o.v.wheel/o.n,keeper:o.v.keeper}}));
+  // averages are per Awakener (all members of all the player's lineups), so a different number of lineups does not matter; keeper level: mean over the lineups
+  return [...by.values()].filter(o=>scoreOk(o.p)).map(o=>({...o,total:o.index,index:o.index/o.n,v:{enl:o.v.enl/o.m,lv:o.v.lv/o.m,skill:o.v.skill/o.m,forge:o.v.forge/o.m,wheel:o.v.wheel/o.m,keeper:o.v.keeper/o.n}}));
 }
 const nm=i=>{const s=(state.data.names||[])[i];return s?(zh()?s[1]:s[0]):''};
 const diffName=i=>state.data.diffs[i];
@@ -144,9 +144,9 @@ function render(){
   const exact=[...cnt].sort((a,b)=>b[0]-a[0]).map(([s,c])=>`<option value="${s}"${String(state.score)===String(s)?' selected':''}>${s}${ui(' 分（',' pts (')}${c}${ui(' 人）',' players)')}</option>`).join('');
   const scoreSel=`<option value="all">${ui('全部分数','All scores')}</option>${exact}`;
   const arrow=k=>k===L?(D>0?' ↑':' ↓'):' ↕';
-  const head=METRICS.map(m=>`<th class="${state.skip.has(m.key)?'lsOff':''}" title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all&&m.key!=='keeper'?ui('（均值）',' (avg)'):''}${arrow(m.key)}</button></th>`).join('');
+  const head=METRICS.map(m=>`<th class="${state.skip.has(m.key)?'lsOff':''}" title="${esc(ui(m.tip[0],m.tip[1]))}"><button type="button" class="dtideSortHead" data-ls-sort="${m.key}">${esc(lbl(m))}${all?ui('（人均）',' (per Awakener)'):''}${arrow(m.key)}</button></th>`).join('');
   const body=shown.map((r,i)=>{
-    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(1),sub1=k=>{
+    const p=r.p,fmt=x=>Number.isInteger(x)?x:x.toFixed(all?2:1),sub1=k=>{
       if(k==='keeper')return '';
       if(k==='skill')return `<small>${ui('均 ','avg ')}${r.cards?(r.lv/r.cards).toFixed(2):'—'}${ui(' /张',' per card')}</small>`;
       return all?`<small>${ui('合计 ','sum ')}${r.items.reduce((s,x)=>s+x.v[k],0)}</small>`:`<small>${r.mv[k].join('+')}</small>`;
@@ -162,8 +162,8 @@ function render(){
     return tr+detail;
   }).join('');
   const noteAll=zh()
-    ?`每个禁区、每个难度里，阵容（含额外队伍）互相比较投入；玩家的各阵容评分取平均（同分玩家的阵容数可能不同，所以不用合计），${high?'越高越“高配”':'越高越“低配”'}；可再按阵容数筛选。单项榜按各阵容该项的平均值（守密人等级取最高）${high?'从高到低':'从低到高'}排序。`
-    :`In every zone and threat level the lineups (extra teams included) are compared on investment; a player’s lineup scores are averaged (players with the same score can own different numbers of lineups, so no sum), ${high?'higher = higher investment':'higher = lower investment'}; you can also filter by lineup count. Single lists sort the per-lineup averages (keeper level: the highest) from ${high?'high to low':'low to high'}.`;
+    ?`每个禁区、每个难度里，阵容（含额外队伍）互相比较投入；玩家的各阵容评分取平均；各项数值按每名唤醒体平均（合计 ÷ 阵容数×4，技能小字为每张技能卡平均），守密人等级取各阵容的平均，${high?'越高越“高配”':'越高越“低配”'}；可再按阵容数筛选。单项榜按该项人均值${high?'从高到低':'从低到高'}排序。`
+    :`In every zone and threat level the lineups (extra teams included) are compared on investment; a player’s lineup scores are averaged; the figures are per Awakener (total ÷ lineups × 4, skill small print: per skill card) and keeper level is the mean over the lineups; ${high?'higher = higher investment':'higher = lower investment'}; you can also filter by lineup count. Sorting a column uses its per-Awakener value, from ${high?'high to low':'low to high'}.`;
   const noteZone=zh()
     ?`统计同一禁区、同一难度通关的阵容（含额外队伍）：投入越${high?'多':'少'}排名越靠前。综合评分 = 五项投入在该组阵容中的百分位平均（0–100，越高越“${high?'高配':'低配'}”）；单项榜按该项数值从${high?'高到低':'低到高'}排序。`
     :`Lineups (extra teams included) that cleared the same zone and threat level are compared: the ${high?'more':'less'} they invest, the higher they rank. Overall score = average percentile of the five investments within the group (0–100, higher = ${high?'higher':'lower'} investment); single lists sort that figure from ${high?'high to low':'low to high'}. `;
