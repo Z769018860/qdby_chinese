@@ -1,0 +1,156 @@
+(()=>{
+'use strict';
+// "低配榜单": ranks lineups by how little they invest (enlightenment, skill levels, soulforge, SSR wheel stacks, keeper level).
+// Data: data/morimens/eremora/lowspec/<season>.json built by scripts/build_lowspec_rank.py.
+if(window.__morimensDtideLowspec)return;
+window.__morimensDtideLowspec=true;
+const zh=()=>localStorage.getItem('morimens.language')!=='en';
+const ui=(cn,en)=>zh()?cn:en;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const METRICS=[
+  {key:'enl',cn:'总启灵数',en:'Total enlightenment',max:60,tip:['4 名唤醒体启灵等级之和（3 = 3启，15 = +12）','Sum of the 4 members’ enlightenment levels (3 = E3, 15 = +12)']},
+  {key:'skill',cn:'技能总级别',en:'Skill levels',tip:['4 名唤醒体已解锁技能槽的等级之和','Sum of the unlocked skill-slot levels of the 4 members']},
+  {key:'forge',cn:'灵塑等级',en:'Soulforge',max:40,tip:['4 名唤醒体灵塑天赋等级之和（单人最高 10）','Sum of the members’ Soulforge talent levels (max 10 each)']},
+  {key:'wheel',cn:'SSR命轮叠位',en:'SSR wheel stacks',tip:['队伍装备的 SSR 命轮等级（叠位）之和','Sum of the levels (stacks) of the equipped SSR wheels']},
+  {key:'keeper',cn:'守密人等级',en:'Keeper level',tip:['该场战斗时玩家的守密人等级','The player’s keeper level in that battle']}
+];
+const state={season:null,data:null,loading:null,active:false,list:'score',diff:6,zone:0,noAssist:true,withExtra:false,limit:100,minScore:0};
+const $=id=>document.getElementById(id);
+const stateOf=()=>document.getElementById('dtideSeason')?.value||'';
+const seasonKey=v=>/^\d+$/.test(String(v))?String(v):null;
+
+function style(){
+  if($('dtideLowspecStyle'))return;
+  const s=document.createElement('style');s.id='dtideLowspecStyle';s.textContent=`
+  .dtideLowspec{margin-top:6px}.dtideLowspec .lsBar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:flex-end;margin:6px 0 10px}
+  .dtideLowspec label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:#8fa0b5}.dtideLowspec select{min-height:34px;border:1px solid rgba(148,163,184,.22);border-radius:8px;background:#0d1621;color:#e9eef5;padding:0 8px}
+  .dtideLowspec .lsChk{flex-direction:row;align-items:center;gap:6px;min-height:34px}
+  .dtideLowspec .lsTabs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}.dtideLowspec .lsTabs button{padding:6px 11px;border:1px solid rgba(148,163,184,.22);border-radius:999px;background:rgba(255,255,255,.03);color:#c9d3df;cursor:pointer;font-size:12px}
+  .dtideLowspec .lsTabs button[aria-pressed=true]{border-color:#d7a85b;background:rgba(215,168,91,.14);color:#f3dcab}
+  .dtideLowspec .lsNote{font-size:11px;line-height:1.7;color:#8c9aae;margin:6px 0 10px}
+  .dtideLowspec table{width:100%;border-collapse:collapse;font-size:12px}.dtideLowspec th,.dtideLowspec td{padding:7px 8px;text-align:center;border-bottom:1px solid rgba(148,163,184,.1);vertical-align:middle}
+  .dtideLowspec th{color:#9fb0c4;font-weight:600;white-space:nowrap}.dtideLowspec td.lsName{text-align:left;min-width:120px}.dtideLowspec td.lsName small{display:block;color:#7f8da1;font-size:10px}
+  .dtideLowspec .lsTeam{display:flex;gap:4px;justify-content:center}.dtideLowspec .lsTeam span{position:relative;display:block;width:34px;height:34px}.dtideLowspec .lsTeam img{width:34px;height:34px;border-radius:7px;object-fit:cover;background:#0b1220}
+  .dtideLowspec .lsTeam span.b:after{content:'助';position:absolute;right:-2px;bottom:-2px;font-size:8px;background:#d7a85b;color:#1b1406;border-radius:4px;padding:0 2px}
+  .dtideLowspec td.hl{color:#f3dcab;font-weight:800;background:rgba(215,168,91,.08)}.dtideLowspec .lsScore{font-weight:800;color:#f1d69f;font-variant-numeric:tabular-nums}
+  .dtideLowspec .lsMore{margin:10px auto;display:block;padding:7px 18px;border:1px solid rgba(215,168,91,.4);border-radius:9px;background:rgba(215,168,91,.08);color:#e8ca91;cursor:pointer}
+  @media(max-width:700px){.dtideLowspec table{display:block;overflow-x:auto}}`;
+  document.head.appendChild(s);
+}
+function load(){
+  const key=seasonKey(stateOf());
+  if(!key)return Promise.resolve(null);
+  if(state.season===key&&state.data)return Promise.resolve(state.data);
+  if(state.loading&&state.loading.key===key)return state.loading.p;
+  const p=fetch(`data/morimens/eremora/lowspec/${key}.json`,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(d=>{state.season=key;state.data=d;state.loading=null;return d});
+  state.loading={key,p};return p;
+}
+const val=(t,k)=>k==='keeper'?(t[5]??0):t[6].reduce((n,m)=>n+m[{enl:1,skill:2,forge:3,wheel:4}[k]],0);
+function compute(d){
+  const rows=[];
+  for(const t of d.teams){
+    if(t[3]===1&&!state.withExtra)continue;
+    if(state.noAssist&&t[6].some(m=>m[5]))continue;
+    if(state.zone&&t[1]!==state.zone)continue;
+    if(t[2]!==state.diff)continue;
+    rows.push({t,p:d.players[t[0]],v:Object.fromEntries(METRICS.map(m=>[m.key,val(t,m.key)]))});
+  }
+  const cohort=new Map();
+  for(const r of rows){const k=r.t[1]+'|'+r.t[2];(cohort.get(k)||cohort.set(k,[]).get(k)).push(r)}
+  for(const list of cohort.values()){
+    const n=list.length;
+    for(const m of METRICS){
+      const vs=list.map(r=>r.v[m.key]).sort((a,b)=>a-b);
+      const lower=new Map();let i=0;
+      // share of lineups in the cohort that invest MORE than this one (ties count half)
+      for(const r of list){const v=r.v[m.key];if(!lower.has(v)){let lo=0,hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<v)lo=mid+1;else hi=mid}let a=lo;lo=a;hi=n;while(lo<hi){const mid=(lo+hi)>>1;if(vs[mid]<=v)lo=mid+1;else hi=mid}lower.set(v,[a,lo])}}
+      for(const r of list){const [a,b]=lower.get(r.v[m.key]);r['p_'+m.key]=n>1?100*((n-b)+(b-a-1)/2)/(n-1):100}
+    }
+    for(const r of list)r.index=METRICS.reduce((s,m)=>s+r['p_'+m.key],0)/METRICS.length;
+  }
+  return rows;
+}
+function render(){
+  const host=$('dtideLowspec');if(!host||!state.active)return;
+  const d=state.data;
+  if(!d){host.innerHTML=`<div class="dtideEmpty">${ui('当前期次暂无低配榜单数据。','No low-investment data for this season yet.')}</div>`;return}
+  let rows=compute(d).filter(r=>!state.minScore||(r.p[3]>=state.minScore));
+  const L=state.list;
+  if(L==='score')rows.sort((a,b)=>b.index-a.index||a.p[2]-b.p[2]);
+  else rows.sort((a,b)=>a.v[L]-b.v[L]||b.index-a.index||a.p[2]-b.p[2]);
+  const total=rows.length,shown=rows.slice(0,state.limit);
+  const lbl=m=>zh()?m.cn:m.en;
+  const diffOpts=d.diffs.map((n,i)=>`<option value="${i}"${i===state.diff?' selected':''}>${ui('危险等级','Threat ')}${n}</option>`).reverse().join('');
+  const zoneOpts=[0,1,2,3,4,5].map(z=>`<option value="${z}"${z===state.zone?' selected':''}>${z?ui(`第${z}禁区`,`Zone ${z}`):ui('全部禁区','All zones')}</option>`).join('');
+  const tabs=[{key:'score',cn:'综合评分榜',en:'Overall score'},...METRICS].map(m=>`<button type="button" data-ls-list="${m.key}" aria-pressed="${L===m.key}" title="${esc(m.tip?ui(m.tip[0],m.tip[1]):ui('五项投入的百分位平均：越高越“低配”','Average of the five investment percentiles: higher = lower investment'))}">${esc(lbl(m))}${m.key==='score'?'':ui(' · 最低',' · lowest')}</button>`).join('');
+  const head=METRICS.map(m=>`<th title="${esc(ui(m.tip[0],m.tip[1]))}">${esc(lbl(m))}</th>`).join('');
+  const body=shown.map((r,i)=>{
+    const t=r.t,team=t[6].map(m=>{const a=d.aw[m[0]];return `<span class="${m[5]?'b':''}" title="${esc(zh()?a[2]:a[1])}"><img src="${esc(a[3])}" alt="" loading="lazy"></span>`}).join('');
+    const cells=METRICS.map(m=>`<td class="${L===m.key?'hl':''}">${r.v[m.key]}</td>`).join('');
+    return `<tr><td>${i+1}</td><td class="lsName">${esc(r.p[1])}<small>${ui('榜单第','Rank #')}${r.p[2]}${ui('名 · ',' · ')}${r.p[3]}${ui('分','pts')} · ${ui('第'+t[1]+'禁区','Zone '+t[1])}${t[3]?ui(' · 额外队',' · extra'):''}</small></td><td><div class="lsTeam">${team}</div></td>${cells}<td class="lsScore${L==='score'?' hl':''}">${r.index.toFixed(1)}</td></tr>`;
+  }).join('');
+  host.innerHTML=`<div class="dtideLowspec">
+    <div class="lsNote">${ui('统计同一禁区、同一难度通关的阵容：投入越少排名越靠前。综合评分 = 五项投入在同组阵容中的百分位平均（0–100，越高越“低配”）；单项榜按该项数值从低到高排序。','Lineups that cleared the same zone and threat level are compared: the less they invest, the higher they rank. Overall score = average percentile of the five investments within the same group (0–100, higher = lower investment); single lists sort that figure from low to high.')}</div>
+    <div class="lsBar"><label>${ui('难度','Threat level')}<select data-ls-diff>${diffOpts}</select></label><label>${ui('禁区','Zone')}<select data-ls-zone>${zoneOpts}</select></label>
+    <label class="lsChk"><input type="checkbox" data-ls-assist${state.noAssist?' checked':''}> ${ui('排除含助战角色的阵容','Exclude lineups with a borrowed Awakener')}</label>
+    <label class="lsChk"><input type="checkbox" data-ls-extra${state.withExtra?' checked':''}> ${ui('包含额外队伍','Include extra teams')}</label></div>
+    <div class="lsTabs">${tabs}</div>
+    <div class="dtideScroll"><table><thead><tr><th>#</th><th>${ui('玩家','Player')}</th><th>${ui('阵容','Lineup')}</th>${head}<th>${ui('综合评分','Score')}</th></tr></thead><tbody>${body||`<tr><td colspan="9">${ui('该筛选下暂无阵容','No lineups for this filter')}</td></tr>`}</tbody></table></div>
+    ${total>shown.length?`<button type="button" class="lsMore" data-ls-more>${ui('显示更多','Show more')}（${shown.length}/${total}）</button>`:`<div class="lsNote">${ui('共','Total')} ${total} ${ui('支阵容','lineups')}</div>`}</div>`;
+}
+const HIDE=['#dtideMatrix','#dtideTableDownload','.dtideCreationFilter','#dtideRatioLegend'];
+let savedTitle=null;
+function apply(){
+  const on=state.active;
+  document.querySelectorAll('.dtideLeaderboardTab').forEach(x=>{if(on)x.setAttribute('aria-selected',String(x.hasAttribute('data-dtide-lowspec-tab')))});
+  for(const sel of HIDE){const el=document.querySelector(sel);if(el)el.style.display=on?'none':''}
+  const title=$('dtideMatrixTitle');
+  if(title){if(on){if(savedTitle==null)savedTitle=title.textContent;title.textContent=ui('低配榜单','Low-investment Leaderboard')}else if(savedTitle!=null){title.textContent=savedTitle;savedTitle=null}}
+  const host=$('dtideLowspec');if(host)host.hidden=!on;
+}
+async function activate(){
+  // leave the battle-stats tab first (it listens to clicks on the other tabs)
+  if(!$('dtideBattle')?.hidden)document.querySelector('[data-dtide-entity="character"]')?.click();
+  state.active=true;state.limit=100;apply();
+  const host=$('dtideLowspec');if(host)host.innerHTML=`<div class="dtideEmpty">${ui('正在读取…','Loading…')}</div>`;
+  await load();render();
+}
+function deactivate(){if(!state.active)return;state.active=false;apply();const f=$('dtideEntityType');f?.dispatchEvent(new Event('change',{bubbles:true}))}
+async function refreshTab(){
+  const btn=document.querySelector('[data-dtide-lowspec-tab]');if(!btn)return;
+  const key=seasonKey(stateOf());
+  let ok=false;
+  if(key){try{const r=await fetch(`data/morimens/eremora/lowspec/${key}.json`,{method:'HEAD',cache:'no-cache'});ok=r.ok}catch{}}
+  btn.hidden=!ok;
+  if(!ok&&state.active){state.active=false;apply()}
+  else if(state.active){state.data=null;await load();render()}
+}
+function mount(){
+  const tabs=document.querySelector('.dtideLeaderboardTabs');if(!tabs||tabs.querySelector('[data-dtide-lowspec-tab]'))return !!tabs;
+  style();
+  const b=document.createElement('button');b.type='button';b.className='dtideLeaderboardTab';b.setAttribute('data-dtide-lowspec-tab','');b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.hidden=true;b.textContent=ui('低配榜单','Low-investment');
+  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]');anchor.after(b);
+  const panel=document.createElement('div');panel.id='dtideLowspec';panel.className='dtideBattle';panel.hidden=true;($('dtideBattle')||$('dtideMatrix')).after(panel);
+  $('dtideSeason')?.addEventListener('change',()=>{state.data=null;state.season=null;setTimeout(refreshTab,300)});
+  refreshTab();
+  return true;
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest?.('[data-dtide-lowspec-tab]')){if(!state.active)activate();return}
+  if(state.active&&e.target.closest?.('[data-dtide-entity],[data-dtide-battle-tab]')){deactivate();return}
+  const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
+  const l=e.target.closest('[data-ls-list]');if(l){state.list=l.dataset.lsList;state.limit=100;render();return}
+  if(e.target.closest('[data-ls-more]')){state.limit+=100;render()}
+});
+document.addEventListener('change',e=>{
+  const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
+  const t=e.target;
+  if(t.matches('[data-ls-diff]'))state.diff=Number(t.value);
+  else if(t.matches('[data-ls-zone]'))state.zone=Number(t.value);
+  else if(t.matches('[data-ls-assist]'))state.noAssist=t.checked;
+  else if(t.matches('[data-ls-extra]'))state.withExtra=t.checked;
+  else return;
+  state.limit=100;render();
+});
+let tries=0;const iv=setInterval(()=>{if(mount()||++tries>120)clearInterval(iv)},500);
+})();

@@ -229,6 +229,8 @@ def main():
     finally:
         season_file.unlink(missing_ok=True)  # intermediate only, never committed
     run([sys.executable, ROOT / "scripts/compact_json.py", data / "eremora", n])
+    # low-investment ranking data ("低配榜单"): needs the raw teams of this and the previous seasons for the soulforge talent inference
+    run([sys.executable, ROOT / "scripts/build_lowspec_rank.py", n, str(int(n) - 1), str(int(n) - 2)])
 
     # manifest
     mpath = data / "eremora/manifest.json"

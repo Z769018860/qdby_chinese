@@ -141,3 +141,7 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
       usage v2 分片 2 片 ≈ 934 KB，战斗分片 2 片 ≈ 776 KB，未命名 id：造物 98420
 命轮 id 推断：151737 先知的难题 / 151763 她和她的树洞 / 152952 伊玛戈的诊室（见 id-names.json._note）
 ```
+
+## 低配榜单数据
+
+`scripts/sync_morimens_leaderboard.py` 在打包完成后会自动运行 `scripts/build_lowspec_rank.py <期> <期-1> <期-2>`，生成 `data/morimens/eremora/lowspec/<期>.json`（融灾榜单页的「低配榜单」标签读取它）。数据来自该期 `raw-teams`（启灵、技能槽等级、灵塑天赋等级、SSR 命轮等级）和 `battle-summary`（守密人等级）；灵塑天赋 id 没有名称，脚本用最近三期里每个唤醒体各天赋的最高等级（10 = 灵塑）推断。手动补旧期：`python3 scripts/build_lowspec_rank.py 71 70 69`。
