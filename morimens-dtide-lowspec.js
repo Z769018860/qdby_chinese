@@ -189,9 +189,10 @@ const lowspecPath=async key=>{
   try{manifestPromise=manifestPromise||fetch('data/morimens/eremora/manifest.json',{cache:'no-cache'}).then(r=>r.json());
     const m=await manifestPromise;const e=(m.availableSeasons||[]).find(x=>String(x.seasonId)===String(key)&&!x.snapshotId&&!x.aggregatePath);return e?.lowspecPath||null}catch{manifestPromise=null;return null}
 };
+let lastKey=null;
 async function refreshTab(){
   const btns=[...document.querySelectorAll('[data-dtide-lowspec-tab]')];if(!btns.length)return;
-  const key=seasonKey(stateOf());
+  const key=seasonKey(stateOf());lastKey=key;
   const ok=!!(key&&await lowspecPath(key));
   btns.forEach(b=>{b.hidden=!ok});
   if(!ok&&state.active){state.active=false;apply()}
@@ -240,5 +241,7 @@ document.addEventListener('change',e=>{
   else return;
   state.limit=100;render();
 });
+// the season select is filled after this module starts and may change without a change event: follow it
+setInterval(()=>{const k=seasonKey(stateOf());if(document.querySelector('[data-dtide-lowspec-tab]')&&k!==lastKey)refreshTab()},700);
 let tries=0;const iv=setInterval(()=>{if(mount()||++tries>120)clearInterval(iv)},500);
 })();
