@@ -5,7 +5,7 @@ data/morimens/eremora/lowspec/<season>.json from data/morimens/dzone/season<N>/r
 Per clear / extra team of every Top-2000 player the file keeps the investment figures the page ranks:
   enl    sum of the 4 members' enlightenment level (potencyLevel, 0-15 each; 3 = "3启", 15 = "+12")
   skill  sum of the members' unlocked skill slot levels
-  forge  sum of the members' soulforge (灵塑, talent family soulforge_aptitude, max 10) levels
+  forge  sum of the members' soulforge aptitude (灵塑适性, talent family soulforge_aptitude, max 10) levels
   wheel  sum of the levels (1-15 = stack) of the equipped SSR wheels
   keeper the player's keeper (守密人) level in that battle
 Talent ids are not named in the raw data: the family of a talent id is inferred from its maximum observed level per awakener
