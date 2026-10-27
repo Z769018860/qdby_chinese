@@ -1,0 +1,402 @@
+{
+  "generated_at": "2026-10-28 02:13",
+  "games": {
+    "Lost Friends 2": {
+      "kind": "missing",
+      "cands": [
+        {
+          "plat": "baidu",
+          "name": "银灰初雪logos",
+          "fid": 656565587849785,
+          "size": 0,
+          "score": 0.516
+        },
+        {
+          "plat": "baidu",
+          "name": "心法logo",
+          "fid": 230420450089771,
+          "size": 0,
+          "score": 0.447
+        },
+        {
+          "plat": "baidu",
+          "name": "WPS Office",
+          "fid": 761331896487920,
+          "size": 0,
+          "score": 0.426
+        },
+        {
+          "plat": "baidu",
+          "name": "tieba",
+          "fid": 689918721417532,
+          "size": 0,
+          "score": 0.394
+        },
+        {
+          "plat": "quark",
+          "name": "LF2汉化补丁.zip",
+          "fid": "e1f930fa09de4ace8ca4d28e77ea09bf",
+          "size": 26305845,
+          "score": 0.38
+        },
+        {
+          "plat": "quark",
+          "name": "温柔狗男人windows版.zip",
+          "fid": "1f996fa214204520bcdb5799a292c223",
+          "size": 193933124,
+          "score": 0.38
+        }
+      ]
+    },
+    "~把最棒的巧克力送给你 这份心意就是全部哦~": {
+      "kind": "missing",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+          "fid": "446a64a5c46d4ec09a52e88f59c7a88e",
+          "size": 125753258,
+          "score": 0.317
+        },
+        {
+          "plat": "quark",
+          "name": "情人节巧克力短篇 汉化备份.zip",
+          "fid": "d245337bcfac4bafb05bd655bf3855c5",
+          "size": 135680314,
+          "score": 0.317
+        },
+        {
+          "plat": "quark",
+          "name": "情人节巧克力短篇 汉化补丁by青灯.7z",
+          "fid": "f1bbfcce8d9e45f39dc7cfc85c91d96d",
+          "size": 125760132,
+          "score": 0.317
+        },
+        {
+          "plat": "baidu",
+          "name": "情人节巧克力短篇 汉化备份.zip",
+          "fid": 1102149074675803,
+          "size": 135680314,
+          "score": 0.317
+        },
+        {
+          "plat": "baidu",
+          "name": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+          "fid": 231292542570394,
+          "size": 125753258,
+          "score": 0.317
+        },
+        {
+          "plat": "baidu",
+          "name": "情人节巧克力短篇 汉化补丁by青灯.7z",
+          "fid": 441371664178210,
+          "size": 125760132,
+          "score": 0.317
+        }
+      ]
+    },
+    "关于埋葬某人的梦": {
+      "kind": "missing",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "关于梦 汉化补丁.zip",
+          "fid": "ca4437f0e25244d7acc08fa948ff5d90",
+          "size": 50125631,
+          "score": 0.518
+        },
+        {
+          "plat": "baidu",
+          "name": "关于梦 汉化补丁.zip",
+          "fid": 1047062125661555,
+          "size": 50125631,
+          "score": 0.518
+        },
+        {
+          "plat": "baidu",
+          "name": "关于梦 汉化补丁.zip",
+          "fid": 332482464183779,
+          "size": 50125631,
+          "score": 0.518
+        },
+        {
+          "plat": "baidu",
+          "name": "关于梦 汉化补丁.zip",
+          "fid": 737174249974958,
+          "size": 50125631,
+          "score": 0.518
+        }
+      ]
+    },
+    "君かアオイロ。（or君青）": {
+      "kind": "missing",
+      "cands": []
+    },
+    "恶魔之心": {
+      "kind": "violation",
+      "cands": [
+        {
+          "plat": "baidu",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁（补档版）.zip",
+          "fid": 131564499023509,
+          "size": 32006416,
+          "score": 1.0
+        },
+        {
+          "plat": "quark",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "fid": "8bcb2fa67e0c4e6dbb2037fe4efa9d49",
+          "size": 32005706,
+          "score": 0.718
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "fid": 39137737173972,
+          "size": 32005706,
+          "score": 0.718
+        }
+      ],
+      "conflict": [
+        "恶魔之心：猎人"
+      ]
+    },
+    "恶魔之心：猎人": {
+      "kind": "missing",
+      "cands": [
+        {
+          "plat": "baidu",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁（补档版）.zip",
+          "fid": 131564499023509,
+          "size": 32006416,
+          "score": 0.775
+        },
+        {
+          "plat": "quark",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "fid": "8bcb2fa67e0c4e6dbb2037fe4efa9d49",
+          "size": 32005706,
+          "score": 0.475
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "fid": 39137737173972,
+          "size": 32005706,
+          "score": 0.475
+        }
+      ],
+      "conflict": [
+        "恶魔之心"
+      ]
+    },
+    "恶魔之心：被诅咒的试炼": {
+      "kind": "violation",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "fid": "8bcb2fa67e0c4e6dbb2037fe4efa9d49",
+          "size": 32005706,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "fid": 39137737173972,
+          "size": 32005706,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心 被诅咒的试炼 汉化魔改补丁（补档版）.zip",
+          "fid": 131564499023509,
+          "size": 32006416,
+          "score": 1.0
+        }
+      ]
+    },
+    "拍卖开始的五分钟后": {
+      "kind": "violation",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+          "fid": "528b5355f8c440f8807dd49fc4d275e5",
+          "size": 10459934,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "拍卖开始的五分钟后 汉化补丁by青灯不弈（补档版）.zip",
+          "fid": 978934862076484,
+          "size": 10460652,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+          "fid": 894029617017048,
+          "size": 10459934,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "拍卖会",
+          "fid": 902353125095569,
+          "size": 0,
+          "score": 0.373
+        }
+      ]
+    },
+    "暴走族怪谈大会 再归": {
+      "kind": "missing",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "暴走族夜怪 汉化补丁by青灯不弈.zip",
+          "fid": "3be5f7f6e7134e39849247a1391d7828",
+          "size": 20518510,
+          "score": 0.633
+        },
+        {
+          "plat": "baidu",
+          "name": "暴走族夜怪 汉化备份.zip",
+          "fid": 173277573577981,
+          "size": 238344151,
+          "score": 0.633
+        },
+        {
+          "plat": "baidu",
+          "name": "暴走族夜怪 汉化补丁by青灯不弈.zip",
+          "fid": 243790085505215,
+          "size": 20518510,
+          "score": 0.633
+        },
+        {
+          "plat": "quark",
+          "name": "暴走族夜怪 汉化补丁by青灯不弈(1).zip",
+          "fid": "bafff86aa369411bbdb056d5d38edb11",
+          "size": 20518485,
+          "score": 0.585
+        },
+        {
+          "plat": "quark",
+          "name": "暴走族夜怪 汉化补丁by青灯不弈(2).zip",
+          "fid": "d42d82eb16ca40d59a61dd9acae656e4",
+          "size": 20518485,
+          "score": 0.585
+        },
+        {
+          "plat": "baidu",
+          "name": "暴走族夜怪 汉化补丁by青灯不弈(1).zip",
+          "fid": 577456611025391,
+          "size": 20518485,
+          "score": 0.585
+        }
+      ]
+    },
+    "汝，当爱休息区的他": {
+      "kind": "missing",
+      "cands": []
+    },
+    "粉碎梦之门与病娇的按钮": {
+      "kind": "missing",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+          "fid": "aefc1f882782481f8d9d8b41d9f55a3f",
+          "size": 45998955,
+          "score": 0.69
+        },
+        {
+          "plat": "baidu",
+          "name": "梦之门 汉化备份.zip",
+          "fid": 1109929689456301,
+          "size": 357443490,
+          "score": 0.69
+        },
+        {
+          "plat": "baidu",
+          "name": "梦之门 汉化补丁by青灯不弈.zip",
+          "fid": 394580826413559,
+          "size": 46019532,
+          "score": 0.69
+        },
+        {
+          "plat": "baidu",
+          "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+          "fid": 657794626087084,
+          "size": 45998955,
+          "score": 0.69
+        },
+        {
+          "plat": "baidu",
+          "name": "冬弥雪 梦之门",
+          "fid": 865025526034477,
+          "size": 0,
+          "score": 0.394
+        },
+        {
+          "plat": "quark",
+          "name": "梦之门 汉化补丁v1.1by青灯不弈 备份.zip",
+          "fid": "2e7934e05ced4852a6018515e08eb046",
+          "size": 391720219,
+          "score": 0.356
+        }
+      ]
+    },
+    "缝缝补补的幸福": {
+      "kind": "missing",
+      "cands": []
+    },
+    "舌头上的动物园": {
+      "kind": "violation",
+      "cands": [
+        {
+          "plat": "quark",
+          "name": "舌头上的动物园 汉化补丁1.0.zip",
+          "fid": "5ae2e01fe0d544198907f378e88993cf",
+          "size": 16644547,
+          "score": 1.0
+        },
+        {
+          "plat": "quark",
+          "name": "舌头上的动物园 汉化补丁（补档版）.zip",
+          "fid": "56c64991a6a64d1fa3d24276f30be117",
+          "size": 16645201,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "舌头上的动物园 汉化备份（补档版）.zip",
+          "fid": 1429795734418,
+          "size": 300743744,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "舌头上的动物园 汉化备份.zip",
+          "fid": 1058497566917548,
+          "size": 300743066,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "舌头上的动物园 汉化补丁1.0.zip",
+          "fid": 25664583204932,
+          "size": 16644547,
+          "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "动物园",
+          "fid": 1008253276233595,
+          "size": 0,
+          "score": 0.852
+        }
+      ]
+    }
+  }
+}
