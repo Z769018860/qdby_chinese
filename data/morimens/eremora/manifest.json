@@ -29,7 +29,8 @@
       "teamDetailRevision": "87554ce0f81cdd4a3d84b062e552327af72b60e33c274ca2631f5480cccc066a",
       "battleDetailRevision": "a48cf71de5d79ff01a8fdf653c4e55945324da372fa594711d5b224f09504c8b",
       "payloadEncoding": "table-pool-v2",
-      "revision": "87554ce0f81cdd4a3d84b062e552327af72b60e33c274ca2631f5480cccc066a"
+      "revision": "87554ce0f81cdd4a3d84b062e552327af72b60e33c274ca2631f5480cccc066a",
+      "lowspecPath": "data/morimens/eremora/lowspec/72.json"
     },
     {
       "seasonId": 71,
@@ -60,7 +61,8 @@
       },
       "teamDetailRevision": "28091b192222c2b0e3d988fdebb094f38ede493f14111027ebfd4385b7b85d49",
       "battleDetailRevision": "75cfe37b63a9a920d6bbb68f342d33ce76754a6acd066c38a67e8f6d1c22ad60",
-      "payloadEncoding": "table-pool-v2"
+      "payloadEncoding": "table-pool-v2",
+      "lowspecPath": "data/morimens/eremora/lowspec/71.json"
     },
     {
       "seasonId": 70,
@@ -79,7 +81,8 @@
       "ringRealmZh": "深海",
       "rankPath": "data/morimens/eremora/rank-index/70.json",
       "battleArchivePath": "data/morimens/dzone/season70/meta.json",
-      "battleDetailPath": "data/morimens/eremora/usage/70-battle-gzip/index.json"
+      "battleDetailPath": "data/morimens/eremora/usage/70-battle-gzip/index.json",
+      "lowspecPath": "data/morimens/eremora/lowspec/70.json"
     },
     {
       "seasonId": 69,

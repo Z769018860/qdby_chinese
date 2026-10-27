@@ -135,6 +135,15 @@ def main():
     dest = D / f'eremora/lowspec/{season}.json'
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+    # advertise the file in the manifest (the page shows the tab from there, no probing request)
+    mp = D / 'eremora/manifest.json'
+    raw = mp.read_bytes().decode('utf-8'); crlf = '\r\n' in raw
+    man = json.loads(raw)
+    for e in man['availableSeasons']:
+        if e.get('seasonId') == season and not e.get('snapshotId') and not e.get('aggregatePath'):
+            e['lowspecPath'] = f'data/morimens/eremora/lowspec/{season}.json'
+    txt = json.dumps(man, ensure_ascii=False, indent=2) + '\n'
+    mp.write_bytes((txt.replace('\n', '\r\n') if crlf else txt).encode('utf-8'))
     print(f'{dest}: {len(players)} players, {len(teams)} teams, {len(aw)} awakeners, {dest.stat().st_size:,} bytes')
 
 main()

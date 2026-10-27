@@ -51,7 +51,7 @@ function load(){
   if(!key)return Promise.resolve(null);
   if(state.season===key&&state.data)return Promise.resolve(state.data);
   if(state.loading&&state.loading.key===key)return state.loading.p;
-  const p=fetch(`data/morimens/eremora/lowspec/${key}.json`,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(d=>{state.season=key;state.data=d;state.loading=null;return d});
+  const p=lowspecPath(key).then(path=>path?fetch(path,{cache:'no-cache'}).then(r=>r.ok?r.json():null):null).catch(()=>null).then(d=>{state.season=key;state.data=d;state.loading=null;return d});
   state.loading={key,p};return p;
 }
 const val=(t,k)=>k==='keeper'?(t[5]??0):k==='enl'&&state.noPerm?t[6].reduce((n,m)=>n+(state.data.aw[m[0]][4]?0:m[1]),0):t[6].reduce((n,m)=>n+m[{enl:1,skill:2,forge:3,wheel:4}[k]],0);
@@ -181,11 +181,15 @@ async function activate(mode){
   await load();render();
 }
 function deactivate(){if(!state.active)return;state.active=false;apply();const f=$('dtideEntityType');f?.dispatchEvent(new Event('change',{bubbles:true}))}
+let manifestPromise=null;
+const lowspecPath=async key=>{
+  try{manifestPromise=manifestPromise||fetch('data/morimens/eremora/manifest.json',{cache:'no-cache'}).then(r=>r.json());
+    const m=await manifestPromise;const e=(m.availableSeasons||[]).find(x=>String(x.seasonId)===String(key)&&!x.snapshotId&&!x.aggregatePath);return e?.lowspecPath||null}catch{manifestPromise=null;return null}
+};
 async function refreshTab(){
   const btns=[...document.querySelectorAll('[data-dtide-lowspec-tab]')];if(!btns.length)return;
   const key=seasonKey(stateOf());
-  let ok=false;
-  if(key){try{const r=await fetch(`data/morimens/eremora/lowspec/${key}.json`,{method:'HEAD',cache:'no-cache'});ok=r.ok}catch{}}
+  const ok=!!(key&&await lowspecPath(key));
   btns.forEach(b=>{b.hidden=!ok});
   if(!ok&&state.active){state.active=false;apply()}
   else if(state.active){state.data=null;await load();render()}
