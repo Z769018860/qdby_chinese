@@ -1,5 +1,6 @@
 /* 忘忘看报 · 校猫日志
-   深色玻璃 + 金色强调，与站内其他面板保持一致。 */
+   深色玻璃 + 金色强调，与站内其他面板保持一致。
+   官方发言用「头像 + 徽章 + 金边卡片」强化，译文用青绿侧栏区分，配图走画廊 + 灯箱。 */
 
 #morimensCatlogPanel { --catlog-gold: #e0bd82; }
 
@@ -59,6 +60,30 @@
 .catlogFields input:focus,
 .catlogFields select:focus { border-color: #9b825e; box-shadow: 0 0 0 3px rgba(213, 177, 118, .1); }
 
+.catlogToggles { display: flex; gap: 7px; flex-wrap: wrap; }
+.catlogChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(148, 163, 184, .22);
+  border-radius: 999px;
+  background: rgba(11, 17, 26, .55);
+  color: #97a5b8;
+  padding: 5px 12px 5px 10px;
+  font: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: border-color .16s, color .16s, background .16s;
+}
+.catlogChip i {
+  width: 11px; height: 11px; border-radius: 3px;
+  border: 1px solid rgba(148, 163, 184, .5);
+  position: relative; flex: 0 0 auto;
+}
+.catlogChip[aria-pressed="true"] { border-color: rgba(111, 179, 174, .55); color: #a9dbd6; background: rgba(111, 179, 174, .12); }
+.catlogChip[aria-pressed="true"] i { border-color: #6fb3ae; background: #6fb3ae; box-shadow: inset 0 0 0 2px #0d1622; }
+.catlogChip:hover { border-color: rgba(213, 177, 118, .42); color: #e9dcc2; }
+
 .catlogMeta {
   margin-top: 12px;
   display: flex;
@@ -99,6 +124,7 @@
 .catlogHead:focus-visible { outline: 2px solid #d5b176; outline-offset: -2px; }
 .catlogHeadMain { min-width: 0; flex: 1; }
 .catlogTitle { margin: 0 0 6px; font-size: 14px; line-height: 1.45; color: #f0e7d5; font-weight: 800; word-break: break-word; }
+.catlogTitleTr { display: block; margin-top: 3px; font-size: 12px; font-weight: 600; color: #b9a684; }
 .catlogItemMeta { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; font-size: 10.5px; color: #8a99ad; }
 .catlogTag {
   padding: 2px 7px;
@@ -109,69 +135,303 @@
 }
 .catlogTag.sec { border-color: rgba(213, 177, 118, .38); color: #e2c893; }
 .catlogTag.count { border-color: rgba(111, 179, 174, .34); color: #9fd0cc; font-variant-numeric: tabular-nums; }
+.catlogTag.img { border-color: rgba(150, 160, 220, .34); color: #b9c2ee; }
+.catlogTag.tr { border-color: rgba(111, 179, 174, .3); color: #93c9c4; }
 .catlogExcerpt { margin: 7px 0 0; font-size: 11.5px; line-height: 1.65; color: #97a5b8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.catlogExcerpt.tr { margin-top: 3px; color: #8fa8a5; border-left: 2px solid rgba(111, 179, 174, .28); padding-left: 7px; }
 .catlogChevron { color: #7c8b9e; font-size: 12px; padding-top: 3px; transition: transform .18s; flex: 0 0 auto; }
 .catlogItem.isOpen .catlogChevron { transform: rotate(180deg); color: #d5b176; }
 
 .catlogBody { padding: 0 15px 15px; border-top: 1px solid rgba(148, 163, 184, .12); }
 .catlogBody[hidden] { display: none; }
 
+/* ---------------------------------------------------------------- 原贴 */
+
 .catlogOp {
   margin: 13px 0 0;
-  padding: 12px 13px;
+  padding: 13px 14px;
   border: 1px solid rgba(213, 177, 118, .22);
   border-radius: 12px;
   background: linear-gradient(150deg, rgba(224, 189, 130, .07), rgba(10, 15, 23, .34));
 }
-.catlogOpLab { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 10.5px; color: #b9a684; margin-bottom: 8px; letter-spacing: .04em; }
+.catlogOpLab { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 10.5px; color: #b9a684; margin-bottom: 10px; letter-spacing: .04em; }
 .catlogOpLab a { color: #d9bd8c; text-decoration: none; border-bottom: 1px dotted rgba(217, 189, 140, .5); }
 .catlogOpLab a:hover { color: #f3dfb8; }
+.catlogOp .catlogText { margin-top: 9px; }
 
-.catlogMsgs { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
-.catlogMsg { padding: 0 0 0 11px; border-left: 2px solid rgba(148, 163, 184, .18); }
-.catlogMsg:first-child { border-left-color: rgba(213, 177, 118, .45); }
-.catlogMsgHead { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 10.5px; color: #8595a9; margin-bottom: 6px; }
-.catlogMsgHead time { font-variant-numeric: tabular-nums; color: #b6c2d1; }
-.catlogAcc { padding: 1px 6px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, .3); color: #9fadbf; }
-.catlogSep { color: #4c5867; }
-.catlogMsgHead a { color: #b79d72; text-decoration: none; }
-.catlogMsgHead a:hover { color: #f0d9ac; text-decoration: underline; }
+/* ---------------------------------------------------------------- 官方发言 */
+
+.catlogMsgs { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+
+.catlogMsg {
+  position: relative;
+  padding: 13px 15px 14px;
+  border: 1px solid rgba(148, 163, 184, .14);
+  border-left: 3px solid rgba(213, 177, 118, .5);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .018);
+  transition: border-color .18s, background .18s;
+}
+.catlogMsg:hover { background: rgba(255, 255, 255, .032); border-color: rgba(213, 177, 118, .3); }
+.catlogMsg.isOfficial {
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(224, 189, 130, .085), rgba(224, 189, 130, 0) 58%),
+    rgba(255, 255, 255, .02);
+  border-color: rgba(224, 189, 130, .26);
+  border-left-color: #d5b176;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
+}
+
+.catlogMsgHead { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; flex-wrap: wrap; }
+.catlogSeq {
+  flex: 0 0 auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 6px;
+  border: 1px solid rgba(213, 177, 118, .3);
+  color: #d3bc93;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  background: rgba(213, 177, 118, .08);
+}
+.catlogMsgLinks { margin-left: auto; font-size: 10.5px; }
+.catlogMsgLinks a { color: #b79d72; text-decoration: none; }
+.catlogMsgLinks a:hover { color: #f0d9ac; text-decoration: underline; }
+
+.catlogWho { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.catlogAvatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border: 1.5px solid rgba(224, 189, 130, .55);
+  background: #131c28;
+  box-shadow: 0 0 0 2px rgba(224, 189, 130, .08);
+}
+.catlogAvatar.ph { display: grid; place-items: center; font-size: 14px; color: #d8c39a; }
+.catlogWhoMain { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.catlogName { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 800; color: #f2e3c4; letter-spacing: .01em; }
+.catlogBadge {
+  font-style: normal;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  padding: 1px 6px;
+  border-radius: 5px;
+  color: #2a1c0c;
+  background: linear-gradient(135deg, #f0d9a8, #d9b878);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+}
+.catlogWhoSub { font-size: 10px; color: #8595a9; letter-spacing: .02em; }
 
 .catlogPrev {
-  margin: 0 0 7px;
+  margin: 0 0 9px;
   padding: 8px 10px;
   border-radius: 9px;
-  background: rgba(2, 6, 23, .32);
+  background: rgba(2, 6, 23, .34);
   border-left: 2px solid rgba(111, 179, 174, .35);
   color: #93a2b5;
   font-size: 11px;
   line-height: 1.65;
-  white-space: pre-wrap;
   word-break: break-word;
 }
 .catlogPrev b { color: #b7c4d3; font-weight: 700; }
 
-.catlogText { font-size: 12.5px; line-height: 1.85; color: #d7dee8; white-space: pre-wrap; word-break: break-word; }
-.catlogText h4 { margin: 10px 0 4px; font-size: 13px; color: #f0e2c6; }
+.catlogText { font-size: 13.5px; line-height: 1.92; color: #dfe6ef; white-space: pre-wrap; word-break: break-word; }
+.catlogText h4 { margin: 12px 0 5px; font-size: 14px; color: #f3e6cb; }
 .catlogText a { color: #9ec6e8; text-decoration: none; border-bottom: 1px solid rgba(158, 198, 232, .35); }
 .catlogText a:hover { color: #cfe6fa; }
-.catlogText code { padding: 1px 4px; border-radius: 5px; background: rgba(148, 163, 184, .16); font-size: 11.5px; }
+.catlogText strong { color: #f6ecd6; }
+.catlogText code { padding: 1px 4px; border-radius: 5px; background: rgba(148, 163, 184, .16); font-size: 12px; }
 .catlogText pre { margin: 8px 0; padding: 9px 11px; border-radius: 9px; background: rgba(2, 6, 23, .5); overflow: auto; font-size: 11.5px; line-height: 1.6; }
 .catlogText pre code { background: none; padding: 0; }
 .catlogText blockquote { margin: 6px 0; padding-left: 10px; border-left: 2px solid rgba(148, 163, 184, .3); color: #a9b6c7; }
-.catlogText .catlogEmoji { color: #b7a382; font-size: 11.5px; }
+.catlogText .catlogEmoji { color: #b7a382; font-size: 12px; }
 .catlogText .catlogStamp { color: #c9b28a; font-variant-numeric: tabular-nums; }
 .catlogText .catlogSpoiler { background: #2a3444; color: transparent; border-radius: 4px; padding: 0 3px; cursor: pointer; }
 .catlogText .catlogSpoiler.isOpen { background: rgba(148, 163, 184, .16); color: inherit; }
 
-.catlogImgs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 9px; }
-.catlogImg { border: 1px solid rgba(148, 163, 184, .18); border-radius: 9px; overflow: hidden; background: rgba(2, 6, 23, .3); max-width: 190px; }
-.catlogImg img { display: block; width: 100%; height: auto; max-height: 190px; object-fit: cover; }
-.catlogImg span { display: block; padding: 5px 7px; font-size: 10px; color: #8595a9; }
-.catlogImg.isBroken img { display: none; }
-.catlogImg.isBroken::before { content: "图片链接已失效，可在 Discord 原帖查看"; display: block; padding: 14px 10px; font-size: 10px; line-height: 1.5; color: #7f8da1; text-align: center; }
-.catlogFileChip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 8px; border: 1px solid rgba(148, 163, 184, .22); color: #a9b6c7; font-size: 11px; text-decoration: none; }
-.catlogFileChip:hover { border-color: rgba(213, 177, 118, .4); color: #e8d7b6; }
+/* ---------------------------------------------------------------- 中文译文 */
+
+.catlogTr {
+  margin-top: 10px;
+  padding: 9px 12px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(111, 179, 174, .22);
+  border-left: 3px solid rgba(111, 179, 174, .62);
+  background: rgba(111, 179, 174, .055);
+}
+.catlogTr.inline { margin: 7px 0 0; padding: 7px 10px; }
+.catlogTrLab {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: #8fc9c3;
+  text-transform: uppercase;
+}
+.catlogTrText { font-size: 12.5px; line-height: 1.85; color: #cfe0dd; white-space: pre-wrap; word-break: break-word; }
+.catlogTrText a { color: #9ec6e8; text-decoration: none; border-bottom: 1px solid rgba(158, 198, 232, .3); }
+
+/* ---------------------------------------------------------------- 配图 */
+
+.catlogGallery { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+.catlogPic {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, .2);
+  border-radius: 10px;
+  background: rgba(2, 6, 23, .35);
+  overflow: hidden;
+  cursor: zoom-in;
+  line-height: 0;
+  max-width: 100%;
+  transition: border-color .16s, transform .16s;
+}
+.catlogPic:hover { border-color: rgba(213, 177, 118, .5); }
+.catlogPic:focus-visible { outline: 2px solid #d5b176; outline-offset: 2px; }
+.catlogPic img {
+  display: block;
+  max-height: 230px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.catlogPicZoom {
+  position: absolute;
+  right: 6px; bottom: 6px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(8, 12, 20, .78);
+  color: #e6d6b6;
+  font-size: 10px;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity .16s;
+}
+.catlogPic:hover .catlogPicZoom { opacity: 1; }
+.catlogPic.isBroken { cursor: default; }
+.catlogPic.isBroken img { display: none; }
+.catlogPic.isBroken::before {
+  content: "配图未能镜像，请到 Discord 原帖查看";
+  display: block;
+  width: 190px;
+  padding: 22px 12px;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: #7f8da1;
+  text-align: center;
+}
+.catlogFiles { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+.catlogFileChip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 9px; border-radius: 8px;
+  border: 1px dashed rgba(148, 163, 184, .28);
+  color: #8b98a9; font-size: 10.5px;
+}
+
+/* ---------------------------------------------------------------- 灯箱 */
+
+body.catlogLock { overflow: hidden; }
+.catlogLb {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 26px 16px;
+  background: rgba(3, 7, 14, .93);
+  backdrop-filter: blur(6px);
+}
+.catlogLb[hidden] { display: none; }
+.catlogLb figure { margin: 0; width: 100%; max-width: 1180px; display: grid; justify-items: center; gap: 10px; }
+.catlogLb img {
+  max-width: 100%;
+  max-height: 84vh;
+  border-radius: 10px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .6);
+  background: #0b1119;
+}
+.catlogLb figcaption { font-size: 11.5px; color: #b7c2d1; text-align: center; }
+.catlogLbClose, .catlogLbNav {
+  border: 1px solid rgba(148, 163, 184, .28);
+  background: rgba(17, 24, 39, .82);
+  color: #e6ecf4;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 1;
+  padding: 9px 0;
+  cursor: pointer;
+  font-family: inherit;
+  backdrop-filter: blur(4px);
+}
+.catlogLbClose { position: absolute; top: 14px; right: 16px; width: 38px; }
+.catlogLbNav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 64px; }
+.catlogLbNav.prev { left: 12px; }
+.catlogLbNav.next { right: 12px; }
+.catlogLbNav[hidden] { display: none; }
+.catlogLbClose:hover, .catlogLbNav:hover { border-color: rgba(213, 177, 118, .6); color: #f4dcae; }
+
+/* ---------------------------------------------------------------- 搜索命中 */
+
+.catlogHits { display: grid; gap: 5px; margin-top: 9px; }
+.catlogSnippet {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: baseline;
+  width: 100%;
+  text-align: left;
+  padding: 6px 9px;
+  border: 1px solid rgba(213, 177, 118, .2);
+  border-left: 2px solid rgba(213, 177, 118, .5);
+  border-radius: 8px;
+  background: rgba(213, 177, 118, .06);
+  color: #cfd8e3;
+  font: inherit;
+  font-size: 11.5px;
+  line-height: 1.6;
+  cursor: pointer;
+  transition: background .16s, border-color .16s;
+}
+.catlogSnippet:hover { background: rgba(213, 177, 118, .13); border-color: rgba(213, 177, 118, .45); }
+.catlogSnippet:focus-visible { outline: 2px solid #d5b176; outline-offset: 1px; }
+.catlogWhere {
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(213, 177, 118, .35);
+  color: #e2c893;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.catlogSn { color: #a9b6c7; word-break: break-word; }
+.catlogHitsMore { font-size: 10.5px; color: #8a99ad; padding-left: 3px; }
+.catlogTag.hit { border-color: rgba(213, 177, 118, .5); color: #f0d9ac; background: rgba(213, 177, 118, .12); }
+
+mark.catlogHit {
+  background: linear-gradient(180deg, rgba(240, 205, 130, .34), rgba(240, 205, 130, .22));
+  color: #fff4d9;
+  border-radius: 3px;
+  padding: 0 2px;
+  box-shadow: inset 0 -1px 0 rgba(240, 205, 130, .5);
+}
+
+.catlogOp.isFlash, .catlogMsg.isFlash { animation: catlogFlash 1.8s ease-out; }
+@keyframes catlogFlash {
+  0% { box-shadow: 0 0 0 2px rgba(213, 177, 118, .8), 0 0 22px rgba(213, 177, 118, .35); }
+  100% { box-shadow: 0 0 0 2px rgba(213, 177, 118, 0), 0 0 0 rgba(213, 177, 118, 0); }
+}
+
+/* ---------------------------------------------------------------- 其他 */
 
 .catlogEmpty { padding: 26px 12px; text-align: center; color: #7f8da1; font-size: 12.5px; }
 .catlogMoreWrap { margin-top: 12px; text-align: center; }
@@ -200,6 +460,14 @@
   .catlogHead { padding: 12px; }
   .catlogBody { padding: 0 12px 12px; }
   .catlogFields { grid-template-columns: 1fr 1fr; }
-  .catlogText { font-size: 12px; }
-  .catlogImg { max-width: 44%; }
+  .catlogText { font-size: 13px; }
+  .catlogMsg { padding: 11px 11px 12px; }
+  .catlogPic img { max-height: 180px; }
+  .catlogLb { grid-template-columns: 1fr; padding: 12px; }
+  .catlogLbNav { display: none; }
+  .catlogLb img { max-height: 76vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catlogPic, .catlogItem, .catlogMsg, .catlogChip, .catlogSegBtn { transition: none; }
 }

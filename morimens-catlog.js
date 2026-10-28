@@ -2,7 +2,8 @@
  * 把《忘却前夜》制作人 Mythag Cat ～ Light 在官方 Discord 的发言汇编成可筛选的归档。
  * 数据由 discord_sync 只读同步后导出到 data/morimens/catlog/：
  *   index.json         轻量索引（标题 / 分类 / 日期 / 条数 / 摘要）
- *   sections/*.json    分区正文（原贴 + 发言），按需加载
+ *   sections/*.json    分区正文（原贴 + 发言 + 配图），按需加载
+ * 每条发言都带：官方身份标识、镜像后的配图、以及（原文非中文时的）中文机翻。
  */
 (() => {
   'use strict';
@@ -12,6 +13,8 @@
   const PANEL_ID = 'morimensCatlogPanel';
   const HASH = '#catlog';
   const PAGE = 18;
+  const LS_TR = 'morimens.catlog.showTr';
+  const NAME = 'Mythag Cat ～ Light';
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -28,6 +31,7 @@
     year: '',
     acc: '',
     sort: 'new',
+    prevSort: '',
     q: '',
     limit: PAGE,
     open: new Set(),
@@ -35,6 +39,9 @@
     started: false,
     error: null,
     loadingSections: false,
+    showTr: localStorage.getItem(LS_TR) !== '0',
+    onlyImg: false,
+    onlyTr: false,
   };
 
   /* ---------------------------------------------------------------- 文本渲染 */
@@ -110,6 +117,83 @@
   }
 
   const kb = n => (n >= 1024 * 1024 ? (n / 1024 / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB');
+  const avatar = acc => (state.idx?.accounts?.[acc]?.avatar || '');
+
+  /* ---------------------------------------------------------------- 搜索命中 */
+
+  /** 去掉 Markdown / 表情 / 提及，只留可读文字，用于截取命中片段。 */
+  function readable(s) {
+    return String(s || '')
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/<a?:[A-Za-z0-9_~]{2,32}:\d+>/g, ' ')
+      .replace(/<[^>]{1,60}>/g, ' ')
+      .replace(/\[([^\]\n]{1,80})\]\((https?:\/\/[^\s)]+)\)/g, '$1')
+      .replace(/[*_~`>#]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  /** 命中位置 + 前后各 45 字的上下文片段。 */
+  function snippetOf(text, needle, radius = 45) {
+    const t = readable(text);
+    if (!t) return '';
+    const i = t.toLowerCase().indexOf(needle);
+    if (i < 0) return '';
+    const start = Math.max(0, i - radius);
+    const end = Math.min(t.length, i + needle.length + radius);
+    return (start > 0 ? '…' : '') + t.slice(start, end) + (end < t.length ? '…' : '');
+  }
+
+  /** 在整帖范围内找出所有命中，返回 [{where, sn, mi}]（mi=-1 表示原贴，>=0 表示第几条发言）。 */
+  function matchInfo(post, needle) {
+    const hits = [];
+    const push = (where, text, mi) => {
+      const sn = snippetOf(text, needle);
+      if (sn) hits.push({ where, sn, mi });
+    };
+    push(ui('标题', 'Title'), post.title, -1);
+    push(ui('标题译文', 'Title (zh)'), post.titleTr, -1);
+    if (post.op) {
+      push(ui('原贴正文', 'Original post'), post.op.content, -1);
+      push(ui('原贴译文', 'Post (zh)'), post.op.tr, -1);
+    }
+    (post.messages || []).forEach((m, i) => {
+      push(ui(`第 ${i + 1} 条发言`, `#${i + 1}`), m.content, i);
+      push(ui(`第 ${i + 1} 条发言的译文`, `#${i + 1} (zh)`), m.tr, i);
+      push(ui(`第 ${i + 1} 条引用的玩家留言`, `#${i + 1} quoted`), m.prev, i);
+    });
+    return hits;
+  }
+
+  /** 渲染后把命中词包成 <mark>，避免在 HTML 字符串里做替换误伤标签。 */
+  function markHits(root, needle) {
+    if (!root || !needle) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    const nodes = [];
+    let n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    for (const node of nodes) {
+      const text = node.nodeValue || '';
+      const lower = text.toLowerCase();
+      let i = lower.indexOf(needle);
+      if (i < 0) continue;
+      const parent = node.parentNode;
+      if (!parent || parent.nodeName === 'MARK') continue;
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      while (i >= 0) {
+        if (i > last) frag.appendChild(document.createTextNode(text.slice(last, i)));
+        const mk = document.createElement('mark');
+        mk.className = 'catlogHit';
+        mk.textContent = text.slice(i, i + needle.length);
+        frag.appendChild(mk);
+        last = i + needle.length;
+        i = lower.indexOf(needle, last);
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      parent.replaceChild(frag, node);
+    }
+  }
 
   /* ---------------------------------------------------------------- 数据加载 */
 
@@ -121,8 +205,9 @@
 
   function indexInto(post, key) {
     const copy = Object.assign({}, post, { _sec: key });
-    const bag = [post.title, post.category, post.opAuthor || '', post.op ? post.op.content : ''];
-    for (const m of post.messages || []) bag.push(m.content, m.prev || '');
+    const bag = [post.title, post.titleTr || '', post.category, post.opAuthor || '',
+      post.op ? post.op.content : '', post.op ? post.op.tr || '' : ''];
+    for (const m of post.messages || []) bag.push(m.content, m.tr || '', m.prev || '', m.prevTr || '');
     copy._hay = plain(bag.join(' ')).toLowerCase();
     state.byId[post.id] = copy;
   }
@@ -168,8 +253,8 @@
           <p class="eyebrow">SCHOOLCAT'S NOTES</p>
           <h2 id="morimensCatlogTitle">${ui('校猫日志', "Schoolcat's Notes")}</h2>
           <p class="panelLead" id="morimensCatlogLead">${ui(
-            '《忘却前夜》制作人 Mythag Cat ～ Light 在官方 Discord 的公开发言汇编：版本公告、活动说明、玩家问答与留言回复，按帖子归档并保留原贴全文。',
-            'An archive of public messages from Morimens producer Mythag Cat ～ Light on the official Discord: patch notes, event posts, player Q&amp;A, and replies, grouped by thread with the original post kept intact.')}</p>
+            '《忘却前夜》制作人 Mythag Cat ～ Light 在官方 Discord 的公开发言汇编：版本公告、活动说明、玩家问答与留言回复，按帖子归档并保留原贴全文、配图与中文翻译。',
+            'An archive of public messages from Morimens producer Mythag Cat ～ Light on the official Discord: patch notes, event posts, player Q&amp;A, and replies — grouped by thread with the original post, images, and Chinese translations kept intact.')}</p>
         </div>
         <span class="statusPill" id="morimensCatlogPill">${ui('Discord 只读同步', 'Discord read-only sync')}</span>
       </div>
@@ -177,11 +262,22 @@
       <div class="catlogBar">
         <div class="catlogSeg" id="morimensCatlogSeg" role="tablist" aria-label="${ui('分区筛选', 'Section filter')}"></div>
         <div class="catlogFields">
-          <input id="morimensCatlogQ" type="search" autocomplete="off" aria-label="${ui('搜索', 'Search')}" placeholder="${ui('搜索标题、公告正文或发言内容…', 'Search titles, post text or replies…')}">
+          <input id="morimensCatlogQ" type="search" autocomplete="off" aria-label="${ui('搜索', 'Search')}" placeholder="${ui('搜索标题、公告正文、发言或译文…', 'Search titles, post text or replies…')}">
           <select id="morimensCatlogCat" aria-label="${ui('分类', 'Category')}"></select>
           <select id="morimensCatlogYear" aria-label="${ui('年份', 'Year')}"></select>
           <select id="morimensCatlogAcc" aria-label="${ui('账号', 'Account')}"></select>
           <select id="morimensCatlogSort" aria-label="${ui('排序', 'Sort')}"></select>
+        </div>
+        <div class="catlogToggles">
+          <button type="button" class="catlogChip" id="morimensCatlogTrToggle" aria-pressed="${state.showTr}">
+            <i aria-hidden="true"></i>${ui('显示中文翻译', 'Show translations')}
+          </button>
+          <button type="button" class="catlogChip" id="morimensCatlogImgOnly" aria-pressed="false">
+            <i aria-hidden="true"></i>${ui('只看有配图', 'With images')}
+          </button>
+          <button type="button" class="catlogChip" id="morimensCatlogTrOnly" aria-pressed="false">
+            <i aria-hidden="true"></i>${ui('只看有译文', 'With translations')}
+          </button>
         </div>
       </div>
       <div class="catlogMeta" id="morimensCatlogMeta"></div>
@@ -264,8 +360,22 @@
       q.addEventListener('input', () => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-          state.q = q.value.trim();
+          const now = q.value.trim();
+          const had = state.q;
+          state.q = now;
           state.limit = PAGE;
+          const sortSel = $('morimensCatlogSort');
+          if (now && state.sort !== 'rel') {
+            // 有搜索词时默认按命中数排序，清空后还原
+            if (!state.prevSort) state.prevSort = state.sort;
+            state.sort = 'rel';
+            if (sortSel) sortSel.value = 'rel';
+          } else if (!now && state.prevSort) {
+            state.sort = state.prevSort;
+            state.prevSort = '';
+            if (sortSel) sortSel.value = state.sort;
+          }
+          if (now && !had) loadRest();     // 先触发全量载入，正文检索才准
           renderList(true);
         }, 220);
       });
@@ -287,19 +397,54 @@
     bind('morimensCatlogAcc', 'acc');
     bind('morimensCatlogSort', 'sort');
 
+    const chip = (id, fn) => {
+      const el = $(id);
+      if (!el || el.dataset.bound) return;
+      el.dataset.bound = '1';
+      el.addEventListener('click', () => {
+        fn(el);
+        state.limit = PAGE;
+        renderList(true);
+      });
+    };
+    chip('morimensCatlogTrToggle', el => {
+      state.showTr = !state.showTr;
+      localStorage.setItem(LS_TR, state.showTr ? '1' : '0');
+      el.setAttribute('aria-pressed', String(state.showTr));
+      document.querySelectorAll('#morimensCatlogList [data-post]').forEach(item => {
+        if (item.classList.contains('isOpen')) paintBody(item.querySelector('.catlogBody'), item.dataset.post);
+      });
+    });
+    chip('morimensCatlogImgOnly', el => {
+      state.onlyImg = !state.onlyImg;
+      el.setAttribute('aria-pressed', String(state.onlyImg));
+    });
+    chip('morimensCatlogTrOnly', el => {
+      state.onlyTr = !state.onlyTr;
+      el.setAttribute('aria-pressed', String(state.onlyTr));
+    });
+
     const list = $('morimensCatlogList');
     if (list && !list.dataset.bound) {
       list.dataset.bound = '1';
       list.addEventListener('click', ev => {
+        const hit = ev.target.closest('.catlogSnippet');
+        if (hit) { ev.stopPropagation(); jumpTo(hit.closest('.catlogItem'), Number(hit.dataset.jump)); return; }
         const sp = ev.target.closest('.catlogSpoiler');
         if (sp) { sp.classList.toggle('isOpen'); return; }
+        const pic = ev.target.closest('.catlogPic');
+        if (pic) { openLightbox(pic); return; }
         const head = ev.target.closest('.catlogHead');
         if (head && !ev.target.closest('a')) togglePost(head.closest('.catlogItem'));
       });
       list.addEventListener('keydown', ev => {
         if (ev.key !== 'Enter' && ev.key !== ' ') return;
+        const hit = ev.target.closest('.catlogSnippet');
+        if (hit) { ev.preventDefault(); jumpTo(hit.closest('.catlogItem'), Number(hit.dataset.jump)); return; }
         const sp = ev.target.closest('.catlogSpoiler');
         if (sp) { ev.preventDefault(); sp.classList.toggle('isOpen'); return; }
+        const pic = ev.target.closest('.catlogPic');
+        if (pic) { ev.preventDefault(); openLightbox(pic); return; }
         const head = ev.target.closest('.catlogHead');
         if (head) { ev.preventDefault(); togglePost(head.closest('.catlogItem')); }
       });
@@ -310,6 +455,72 @@
       more.dataset.bound = '1';
       more.addEventListener('click', () => { state.limit += PAGE; renderList(false); });
     }
+  }
+
+  /* ---------------------------------------------------------------- 灯箱 */
+
+  let lb = null;
+
+  function ensureLightbox() {
+    if (lb) return lb;
+    const el = document.createElement('div');
+    el.className = 'catlogLb';
+    el.hidden = true;
+    el.innerHTML = `<button type="button" class="catlogLbClose" aria-label="${ui('关闭', 'Close')}">×</button>
+      <button type="button" class="catlogLbNav prev" aria-label="${ui('上一张', 'Previous')}">‹</button>
+      <figure><img alt=""><figcaption></figcaption></figure>
+      <button type="button" class="catlogLbNav next" aria-label="${ui('下一张', 'Next')}">›</button>`;
+    document.body.appendChild(el);
+    el.addEventListener('click', ev => {
+      if (ev.target === el || ev.target.classList.contains('catlogLbClose')) closeLightbox();
+      else if (ev.target.classList.contains('prev')) stepLightbox(-1);
+      else if (ev.target.classList.contains('next')) stepLightbox(1);
+    });
+    document.addEventListener('keydown', ev => {
+      if (el.hidden) return;
+      if (ev.key === 'Escape') closeLightbox();
+      else if (ev.key === 'ArrowLeft') stepLightbox(-1);
+      else if (ev.key === 'ArrowRight') stepLightbox(1);
+    });
+    lb = { el, items: [], i: 0 };
+    return lb;
+  }
+
+  function openLightbox(pic) {
+    const box = ensureLightbox();
+    const gallery = pic.closest('.catlogGallery');
+    const nodes = gallery ? [...gallery.querySelectorAll('.catlogPic')] : [pic];
+    box.items = nodes.map(n => ({ src: n.dataset.full, name: n.dataset.name || '' }));
+    box.i = Math.max(0, nodes.indexOf(pic));
+    paintLightbox();
+    box.el.hidden = false;
+    document.body.classList.add('catlogLock');
+  }
+
+  function paintLightbox() {
+    const box = lb;
+    if (!box || !box.items.length) return;
+    const it = box.items[box.i];
+    const img = box.el.querySelector('img');
+    img.src = it.src;
+    img.alt = it.name;
+    box.el.querySelector('figcaption').textContent = box.items.length > 1
+      ? `${it.name}（${box.i + 1}/${box.items.length}）` : it.name;
+    box.el.querySelector('.prev').hidden = box.items.length < 2;
+    box.el.querySelector('.next').hidden = box.items.length < 2;
+  }
+
+  function stepLightbox(d) {
+    const box = lb;
+    if (!box || box.items.length < 2) return;
+    box.i = (box.i + d + box.items.length) % box.items.length;
+    paintLightbox();
+  }
+
+  function closeLightbox() {
+    if (!lb) return;
+    lb.el.hidden = true;
+    document.body.classList.remove('catlogLock');
   }
 
   /* ---------------------------------------------------------------- 打开的交互 */
@@ -395,7 +606,8 @@
     if (sortSel) {
       sortSel.innerHTML = `<option value="new">${ui('最新优先', 'Newest first')}</option>` +
         `<option value="old">${ui('最早优先', 'Oldest first')}</option>` +
-        `<option value="hot">${ui('发言最多', 'Most replies')}</option>`;
+        `<option value="hot">${ui('发言最多', 'Most replies')}</option>` +
+        `<option value="rel">${ui('相关度（命中最多）', 'Most matches')}</option>`;
       sortSel.value = state.sort;
     }
     syncSeg();
@@ -413,17 +625,18 @@
     const t = idx.totals;
     const range = idx.posts.length ? `${idx.posts[idx.posts.length - 1].date} → ${idx.posts[0].date}` : '';
     el.innerHTML = ui(
-      `共收录 <strong>${t.posts}</strong> 个帖子、<strong>${t.messages.toLocaleString()}</strong> 条发言，覆盖 ${range}（${idx.timezone}）。` +
-      `已剔除综合讨论等聊天频道的日常闲聊，只保留论坛帖子内的公告与问答。<strong>数据截至 ${idx.generated}</strong>。`,
-      `<strong>${t.posts}</strong> threads and <strong>${t.messages.toLocaleString()}</strong> messages, spanning ${range} (${idx.timezone}). ` +
-      `Casual chat from general channels is excluded; only forum threads are kept. <strong>Data updated ${idx.generated}</strong>.`
+      `共收录 <strong>${t.posts}</strong> 个帖子、<strong>${t.messages.toLocaleString()}</strong> 条发言、<strong>${t.images}</strong> 张配图，` +
+      `覆盖 ${range}（${idx.timezone}）。原贴与回复里的图片已镜像到本站，Discord 签名链接过期也不会失效；` +
+      `原文非中文的发言附<strong>机翻中文</strong>（${t.translated} 条）。<strong>数据截至 ${idx.generated}</strong>。`,
+      `<strong>${t.posts}</strong> threads, <strong>${t.messages.toLocaleString()}</strong> messages and <strong>${t.images}</strong> images, spanning ${range} (${idx.timezone}). ` +
+      `Attachments are mirrored locally so expiring Discord links no longer break them; non-Chinese messages carry machine translations (${t.translated}). <strong>Data updated ${idx.generated}</strong>.`
     );
 
     const foot = $('morimensCatlogFoot');
     if (foot) {
       foot.innerHTML = ui(
-        `来源：Discord 官方服务器「Morimens」· 校猫（Mythag Cat ～ Light）公开发言，两个账号合并：旧号 @game.producer.light（2023-10-29 → 2026-03-28，账号已丢失）与现号 @lightproud（2026-03-29 起）。时间统一为 UTC+8。本页只做只读归档，不含任何玩家私信内容。`,
-        `Source: public messages from Mythag Cat ～ Light (Morimens producer) on the official Discord, merging the old account @game.producer.light (2023-10-29 → 2026-03-28, since lost) and the current @lightproud (from 2026-03-29). All times are UTC+8. Read-only archive; no private messages are included.`
+        `来源：Discord 官方服务器「Morimens」· 校猫（Mythag Cat ～ Light）公开发言，两个账号合并：旧号 @game.producer.light（2023-10-29 → 2026-03-28，账号已丢失）与现号 @lightproud（2026-03-29 起）。时间统一为 UTC+8。配图为原帖附件，已压缩转存。中文译文由机器翻译生成，仅供参考，以原文为准。本页只做只读归档，不含任何玩家私信内容。`,
+        `Source: public messages from Mythag Cat ～ Light (Morimens producer) on the official Discord, merging the old account @game.producer.light (2023-10-29 → 2026-03-28, since lost) and the current @lightproud (from 2026-03-29). All times UTC+8. Images are compressed copies of the original attachments. Chinese translations are machine-generated, for reference only. Read-only archive; no private messages are included.`
       );
     }
   }
@@ -437,7 +650,9 @@
     const loaded = Object.keys(state.sections).length;
     const total = (state.idx.sections || []).length;
     const dot = state.loadingSections || loaded < total ? 'warn' : 'ok';
-    el.innerHTML = `<span>${ui('筛出', 'Matched')} <b>${posts}</b> ${ui('帖', 'threads')} · <b>${msgs.toLocaleString()}</b> ${ui('条发言', 'messages')}</span>` +
+    const hits = state.q ? rows.reduce((sum, p) => sum + (p._hits || 0), 0) : 0;
+    el.innerHTML = `<span>${ui('筛出', 'Matched')} <b>${posts}</b> ${ui('帖', 'threads')} · <b>${msgs.toLocaleString()}</b> ${ui('条发言', 'messages')}` +
+      (state.q ? ` · <b>${hits}</b> ${ui('处命中', 'hits')}` : '') + '</span>' +
       `<span class="catlogLoadState"><i class="catlogDot ${dot}"></i>${state.q
         ? (loaded < total ? ui(`正文检索：已载入 ${loaded}/${total} 个分区…`, `Full-text: ${loaded}/${total} sections loaded…`) : ui('正文检索已就绪', 'Full-text ready'))
         : ui(`已载入 ${loaded}/${total} 个分区`, `${loaded}/${total} sections loaded`)}</span>`;
@@ -453,19 +668,25 @@
       if (state.tab !== 'all' && p.section !== state.tab) continue;
       if (state.cat && p.category !== state.cat) continue;
       if (state.year && String(p.year) !== state.year) continue;
+      if (state.onlyImg && !p.imgs) continue;
+      if (state.onlyTr && !p.trans) continue;
       const full = state.byId[p.id];
       if (state.acc) {
         if (!full || !(full.accounts || []).includes(state.acc)) continue;
       }
       if (q) {
-        const hay = full ? full._hay : plain(`${p.title} ${p.excerpt} ${p.category} ${p.opAuthor || ''}`).toLowerCase();
+        const hay = full ? full._hay : plain(`${p.title} ${p.titleTr || ''} ${p.excerpt} ${p.excerptTr || ''} ${p.category} ${p.opAuthor || ''}`).toLowerCase();
         if (hay.indexOf(q) < 0) continue;
+        p._hits = full ? matchInfo(full, q).length : 0;
+      } else {
+        p._hits = 0;
       }
       out.push(p);
     }
     const byDate = (a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
     if (state.sort === 'old') out.sort((a, b) => -byDate(a, b));
     else if (state.sort === 'hot') out.sort((a, b) => b.count - a.count || byDate(a, b));
+    else if (state.sort === 'rel' && q) out.sort((a, b) => (b._hits || 0) - (a._hits || 0) || byDate(a, b));
     else out.sort(byDate);
     return out;
   }
@@ -475,19 +696,42 @@
     return meta ? ui(meta.label, meta.labelEn) : key;
   };
 
+  /** 搜索时在卡片头部直接给出「命中了哪里」的片段，点一下跳到那条发言。 */
+  function hitsHtml(p) {
+    const full = state.byId[p.id];
+    if (!full) return '';
+    const hits = matchInfo(full, state.q.toLowerCase());
+    if (!hits.length) return '';
+    const shown = hits.slice(0, 3);
+    return '<div class="catlogHits">' + shown.map(h =>
+      `<button type="button" class="catlogSnippet" data-jump="${h.mi}">
+        <span class="catlogWhere">${esc(h.where)}</span>
+        <span class="catlogSn">${esc(h.sn)}</span>
+      </button>`).join('') +
+      (hits.length > shown.length
+        ? `<span class="catlogHitsMore">${ui(`另有 ${hits.length - shown.length} 处命中`, `+${hits.length - shown.length} more`)}</span>`
+        : '') + '</div>';
+  }
+
   function card(p) {
     const isOpen = state.open.has(p.id);
+    const titleTr = p.titleTr && p.titleTr !== p.title ? `<span class="catlogTitleTr">${esc(p.titleTr)}</span>` : '';
     return `<article class="catlogItem${isOpen ? ' isOpen' : ''}" data-post="${p.id}">
       <div class="catlogHead" role="button" tabindex="0" aria-expanded="${isOpen}">
         <div class="catlogHeadMain">
-          <h3 class="catlogTitle">${esc(p.title)}</h3>
+          <h3 class="catlogTitle">${esc(p.title)}${titleTr}</h3>
           <div class="catlogItemMeta">
             <span class="catlogTag sec">${esc(sectionLabel(p.section))}</span>
             ${p.category && p.category !== sectionLabel(p.section) ? `<span class="catlogTag">${esc(p.category)}</span>` : ''}
             <span>${esc(p.date)}</span>
-            <span class="catlogTag count">${ui(`校猫 ${p.count} 条`, `${p.count} msg`)}</span>
+            <span class="catlogTag count">${ui(`官方 ${p.count} 条`, `${p.count} msg`)}</span>
+            ${p.imgs ? `<span class="catlogTag img">🖼 ${p.imgs}</span>` : ''}
+            ${p.trans ? `<span class="catlogTag tr">${ui('译', 'ZH')} ${p.trans}</span>` : ''}
+            ${p._hits ? `<span class="catlogTag hit">${ui(`命中 ${p._hits} 处`, `${p._hits} hits`)}</span>` : ''}
           </div>
           ${p.excerpt ? `<p class="catlogExcerpt">${esc(p.excerpt)}</p>` : ''}
+          ${p.excerptTr ? `<p class="catlogExcerpt tr">${esc(p.excerptTr)}</p>` : ''}
+          ${state.q ? hitsHtml(p) : ''}
         </div>
         <span class="catlogChevron" aria-hidden="true">▾</span>
       </div>
@@ -507,8 +751,29 @@
     }
     const slice = rows.slice(0, state.limit);
     list.innerHTML = slice.map(card).join('');
+    if (state.q) markHits(list, state.q.toLowerCase());
     $('morimensCatlogMore').hidden = rows.length <= state.limit;
     updateMeta();
+  }
+
+  /* ---------------------------------------------------------------- 正文 */
+
+  function officialHead(acc, opts) {
+    const meta = state.idx?.accounts?.[acc] || {};
+    const label = acc === 'old' ? ui('旧账号', 'Old account') : ui('现账号', 'Current account');
+    const av = avatar(acc);
+    return `<div class="catlogWho">
+      ${av ? `<img class="catlogAvatar" src="${esc(av)}" alt="" width="34" height="34" loading="lazy">` : '<span class="catlogAvatar ph" aria-hidden="true">猫</span>'}
+      <div class="catlogWhoMain">
+        <span class="catlogName">${esc(NAME)}<i class="catlogBadge" title="${ui('官方账号', 'Official account')}">${ui('官方', 'OFFICIAL')}</i></span>
+        <span class="catlogWhoSub">${esc(meta.handle || '')} · ${esc(label)}${opts && opts.time ? ' · ' + esc(opts.time) : ''}</span>
+      </div>
+    </div>`;
+  }
+
+  function trBlock(zh, cls) {
+    if (!zh || !state.showTr) return '';
+    return `<div class="catlogTr${cls ? ' ' + cls : ''}"><span class="catlogTrLab">${ui('中文翻译', 'Chinese translation')}</span><div class="catlogTrText">${md(zh)}</div></div>`;
   }
 
   function bodyHtml(id) {
@@ -516,13 +781,15 @@
     if (!post) return `<div class="catlogEmpty">${ui('正在载入正文…', 'Loading…')}</div>`;
     const opAuthorIsCat = /light/i.test(post.opAuthor || '') || !post.opAuthor;
     const out = [];
-    if (post.op && post.op.content) {
-      out.push(`<div class="catlogOp">
+    if (post.op && (post.op.content || (post.op.images || []).length)) {
+      out.push(`<div class="catlogOp${opAuthorIsCat ? ' isOfficial' : ''}">
         <div class="catlogOpLab">
-          <span>${opAuthorIsCat ? ui('原贴 · 校猫本人发布', 'Original post · by Schoolcat') : ui('原贴 · 楼主 ' + esc(post.opAuthor), 'Original post · by ' + esc(post.opAuthor))}</span>
+          <span>${opAuthorIsCat ? ui('原贴 · 官方发布', 'Original post · official') : ui('原贴 · 楼主 ' + esc(post.opAuthor), 'Original post · by ' + esc(post.opAuthor))}</span>
           <a href="https://discord.com/channels/${state.idx.guildId}/${post.id}" target="_blank" rel="noopener noreferrer">${ui('在 Discord 打开 ↗', 'Open in Discord ↗')}</a>
         </div>
-        <div class="catlogText">${md(post.op.content)}</div>
+        ${opAuthorIsCat ? officialHead(post.op.account || 'new', { time: (post.op.ts || '').slice(0, 10) }) : ''}
+        ${post.op.content ? `<div class="catlogText">${md(post.op.content)}</div>` : ''}
+        ${trBlock(post.op.tr)}
         ${imgs(post.op.images)}
       </div>`);
     }
@@ -534,19 +801,18 @@
     out.push('<ol class="catlogMsgs">' + msgs.map((m, i) => {
       const prev = (m.prev || '').trim();
       const prevHtml = prev && prev !== (post.op?.content || '').trim()
-        ? `<div class="catlogPrev"><b>${esc(m.prevAuthor || ui('玩家', 'Player'))}：</b>${prev.length > 260 ? md(prev.slice(0, 260)) + '…' : md(prev)}</div>` : '';
-      return `<li class="catlogMsg">
+        ? `<div class="catlogPrev"><b>${esc(m.prevAuthor || ui('玩家', 'Player'))}：</b>${prev.length > 260 ? md(prev.slice(0, 260)) + '…' : md(prev)}${trBlock(m.prevTr, 'inline')}</div>` : '';
+      return `<li class="catlogMsg isOfficial" data-mi="${i}">
         <div class="catlogMsgHead">
-          <time>${esc(m.time || m.ts.slice(0, 16).replace('T', ' '))}</time>
-          <span class="catlogSep">·</span>
-          <span class="catlogAcc">${m.account === 'old' ? ui('旧号', 'Old acct') : ui('现号', 'Current')}</span>
-          <span class="catlogSep">·</span>
-          <span>#${i + 1}</span>
-          <span class="catlogSep">·</span>
-          <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${ui('原帖 ↗', 'Source ↗')}</a>
+          <span class="catlogSeq">${i + 1}</span>
+          ${officialHead(m.account)}
+          <span class="catlogMsgLinks">
+            <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${ui('原帖 ↗', 'Source ↗')}</a>
+          </span>
         </div>
         ${prevHtml}
         <div class="catlogText">${md(m.content)}</div>
+        ${trBlock(m.tr)}
         ${imgs(m.images)}
       </li>`;
     }).join('') + '</ol>');
@@ -555,18 +821,35 @@
 
   function imgs(list) {
     if (!list || !list.length) return '';
-    return '<div class="catlogImgs">' + list.map(([src, name, size, kind]) => {
-      const label = esc(name) + ' · ' + kb(size || 0);
-      // 只有已镜像到站内的图片才内嵌；未镜像的（体积过大）Discord 签名 URL 会过期，改走原帖链接
-      if (kind === 'image' && !/^https?:/i.test(src)) {
-        return `<figure class="catlogImg"><img src="${esc(src)}" alt="${esc(name)}" loading="lazy" onerror="this.parentNode.classList.add('isBroken');this.hidden=true"><span>${label}</span></figure>`;
-      }
-      return `<a class="catlogFileChip" href="${esc(src)}" target="_blank" rel="noopener noreferrer">📎 ${label}</a>`;
-    }).join('') + '</div>';
+    const pics = [], files = [];
+    for (const it of list) {
+      const [src, name, size, kind, w, h] = it;
+      if (kind === 'image' && src) pics.push({ src, name, size, w, h });
+      else files.push(it);
+    }
+    const gallery = pics.length
+      ? `<div class="catlogGallery" data-count="${pics.length}">` + pics.map(p =>
+        `<button type="button" class="catlogPic" data-full="${esc(p.src)}" data-name="${esc(p.name)}" aria-label="${esc(p.name)}">
+          <img src="${esc(p.src)}" alt="${esc(p.name)}" loading="lazy" decoding="async"${p.w && p.h ? ` width="${p.w}" height="${p.h}"` : ''} onerror="this.closest('.catlogPic').classList.add('isBroken')">
+          <span class="catlogPicZoom" aria-hidden="true">${ui('放大', 'Zoom')}</span>
+        </button>`).join('') + '</div>'
+      : '';
+    const chips = files.length
+      ? '<div class="catlogFiles">' + files.map(([src, name, size, kind]) => {
+        const label = `${kind === 'image-lost' ? ui('配图未能镜像', 'Image not mirrored') : kind === 'video' ? ui('视频附件', 'Video') : ui('附件', 'File')} · ${esc(name)} · ${kb(size || 0)}`;
+        return `<span class="catlogFileChip" title="${ui('Discord 附件链接会过期，请到原帖查看', 'Discord links expire — open the source post')}">📎 ${label}</span>`;
+      }).join('') + '</div>'
+      : '';
+    return gallery + chips;
+  }
+
+  function paintBody(panel, id) {
+    panel.innerHTML = bodyHtml(id);
+    if (state.q) markHits(panel, state.q.toLowerCase());
   }
 
   function togglePost(item) {
-    if (!item) return;
+    if (!item) return Promise.resolve();
     const id = item.dataset.post;
     const panel = item.querySelector('.catlogBody');
     const head = item.querySelector('.catlogHead');
@@ -576,7 +859,7 @@
       item.classList.remove('isOpen');
       head.setAttribute('aria-expanded', 'false');
       panel.hidden = true;
-      return;
+      return Promise.resolve();
     }
     state.open.add(id);
     item.classList.add('isOpen');
@@ -584,13 +867,31 @@
     panel.hidden = false;
 
     const post = state.byId[id];
-    if (post) { panel.innerHTML = bodyHtml(id); return; }
+    if (post) { paintBody(panel, id); return Promise.resolve(); }
     panel.innerHTML = `<div class="catlogEmpty">${ui('正在载入正文…', 'Loading…')}</div>`;
     const key = (state.idx.posts.find(p => p.id === id) || {}).section;
-    if (!key) return;
-    ensureSection(key).then(() => {
-      panel.innerHTML = bodyHtml(id);
+    if (!key) return Promise.resolve();
+    return ensureSection(key).then(() => {
+      paintBody(panel, id);
       updateMeta();
+    });
+  }
+
+  /** 点命中片段：展开该帖并滚到对应位置，短暂高亮闪一下。 */
+  function jumpTo(item, mi) {
+    if (!item) return;
+    const id = item.dataset.post;
+    const wasOpen = state.open.has(id);
+    const p = wasOpen ? Promise.resolve() : togglePost(item);
+    p.then(() => {
+      const panel = item.querySelector('.catlogBody');
+      const target = mi >= 0
+        ? panel.querySelector(`[data-mi="${mi}"]`)
+        : (panel.querySelector('.catlogOp') || panel);
+      if (!target) return;
+      target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      target.classList.add('isFlash');
+      setTimeout(() => target.classList.remove('isFlash'), 1800);
     });
   }
 
