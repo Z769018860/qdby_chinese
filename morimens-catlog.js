@@ -617,8 +617,9 @@
 
     const sortSel = $('morimensCatlogSort');
     if (sortSel) {
-      sortSel.innerHTML = `<option value="new">${ui('最新优先', 'Newest first')}</option>` +
-        `<option value="old">${ui('最早优先', 'Oldest first')}</option>` +
+      sortSel.innerHTML = `<option value="new">${ui('最新回复', 'Newest reply')}</option>` +
+        `<option value="posted">${ui('最新发帖', 'Newest thread')}</option>` +
+        `<option value="old">${ui('最早发帖', 'Oldest thread')}</option>` +
         `<option value="hot">${ui('发言最多', 'Most replies')}</option>` +
         `<option value="rel">${ui('相关度（命中最多）', 'Most matches')}</option>`;
       sortSel.value = state.sort;
@@ -696,10 +697,21 @@
       }
       out.push(p);
     }
+    /* 时间键都是 "YYYY-MM-DD HH:MM"，可直接按字符串比较。
+       lastAt = 最后回复时间（无人回复时导出端已回填成发帖时间），postedAt = 发帖时间。
+       原来只按 date（到天）排，同一天内的帖子顺序是乱的；这里细化到分钟。 */
+    const lastKey = p => p.lastAt || p.postedAt || p.date || '';
+    const postKey = p => p.postedAt || p.lastAt || p.date || '';
+    const cmpDesc = (a, b) => b.localeCompare(a);
+    const byLast = (a, b) => cmpDesc(lastKey(a), lastKey(b)) || cmpDesc(postKey(a), postKey(b));
+    const byPost = (a, b) => cmpDesc(postKey(a), postKey(b)) || cmpDesc(lastKey(a), lastKey(b));
+    const byPostAsc = (a, b) => postKey(a).localeCompare(postKey(b)) || lastKey(a).localeCompare(lastKey(b));
     const byDate = (a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
-    if (state.sort === 'old') out.sort((a, b) => -byDate(a, b));
-    else if (state.sort === 'hot') out.sort((a, b) => b.count - a.count || byDate(a, b));
-    else if (state.sort === 'rel' && q) out.sort((a, b) => (b._hits || 0) - (a._hits || 0) || byDate(a, b));
+    if (state.sort === 'posted') out.sort(byPost);
+    else if (state.sort === 'old') out.sort(byPostAsc);
+    else if (state.sort === 'hot') out.sort((a, b) => b.count - a.count || byLast(a, b));
+    else if (state.sort === 'rel' && q) out.sort((a, b) => (b._hits || 0) - (a._hits || 0) || byLast(a, b));
+    else if (state.sort === 'new') out.sort(byLast);
     else out.sort(byDate);
     return out;
   }
