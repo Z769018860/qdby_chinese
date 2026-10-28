@@ -49,7 +49,7 @@
       ]
     },
     "~把最棒的巧克力送给你 这份心意就是全部哦~": {
-      "kind": "missing",
+      "kind": "violation",
       "cands": [
         {
           "plat": "quark",
@@ -170,9 +170,6 @@
           "size": 32005706,
           "score": 0.718
         }
-      ],
-      "conflict": [
-        "恶魔之心：猎人"
       ]
     },
     "恶魔之心：猎人": {
@@ -414,27 +411,10 @@
     }
   },
   "results": {
-    "粉碎梦之门与病娇的按钮": {
-      "source": {
-        "plat": "quark",
-        "name": "梦之门 汉化补丁v1.1by青灯不弈.zip",
-        "fid": "aefc1f882782481f8d9d8b41d9f55a3f",
-        "size": 45998955,
-        "score": 1.0
-      },
-      "plan": [
-        "share"
-      ],
-      "size": 45998955,
-      "shared": {
-        "plat": "quark",
-        "url": "https://pan.quark.cn/s/0a83402008da",
-        "pwd": "qdby",
-        "verified": true,
-        "note": "status=1 audit=0 viol=0"
-      },
-      "state": "done"
+    "舌头上的动物园": {
+      "state": "error",
+      "note": "RuntimeError: node C:\\Users\\Administrator\\WorkBuddy\\2026-10-24-17-17-43\\work\\clone\\scripts\\netdisk\\web_download.mjs --quark 失败：Warning: Detected unsettled top-level await at "
     }
   },
-  "ran_at": "2026-10-28 03:08"
+  "ran_at": "2026-10-29 00:06"
 }
