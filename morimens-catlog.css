@@ -1,0 +1,205 @@
+/* 忘忘看报 · 校猫日志
+   深色玻璃 + 金色强调，与站内其他面板保持一致。 */
+
+#morimensCatlogPanel { --catlog-gold: #e0bd82; }
+
+.catlogShell { margin-bottom: 20px; }
+
+.catlogNotice {
+  margin: 14px 0 4px;
+  padding: 11px 13px;
+  border: 1px solid rgba(224, 189, 130, .28);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(224, 189, 130, .09), rgba(143, 52, 65, .05));
+  color: #d8d0c0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.catlogNotice strong { color: #f4dcae; }
+.catlogNotice a { color: #e6cf9f; text-decoration: underline; text-underline-offset: 2px; }
+
+.catlogBar { margin-top: 14px; display: grid; gap: 10px; }
+
+.catlogSeg { display: flex; gap: 7px; flex-wrap: wrap; }
+.catlogSegBtn {
+  border: 1px solid rgba(148, 163, 184, .22);
+  border-radius: 10px;
+  background: rgba(11, 17, 26, .6);
+  color: #aeb8c7;
+  padding: 7px 13px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color .16s, color .16s, background .16s;
+}
+.catlogSegBtn:hover { color: #e9dcc2; border-color: rgba(213, 177, 118, .42); }
+.catlogSegBtn[aria-selected="true"] {
+  border-color: rgba(213, 177, 118, .55);
+  background: rgba(213, 177, 118, .16);
+  color: #f4e2bd;
+}
+.catlogSegBtn small { font-weight: 500; opacity: .68; margin-left: 5px; font-variant-numeric: tabular-nums; }
+
+.catlogFields { display: grid; grid-template-columns: minmax(180px, 1fr) repeat(4, minmax(96px, 140px)); gap: 8px; }
+.catlogFields input,
+.catlogFields select {
+  width: 100%;
+  height: 38px;
+  border: 1px solid rgba(148, 163, 184, .26);
+  border-radius: 10px;
+  background: #111827;
+  color: #eef2f7;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+.catlogFields input::placeholder { color: #6d7c90; }
+.catlogFields input:focus,
+.catlogFields select:focus { border-color: #9b825e; box-shadow: 0 0 0 3px rgba(213, 177, 118, .1); }
+
+.catlogMeta {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 11px;
+  color: #8a99ad;
+}
+.catlogMeta b { color: #ead9b9; font-variant-numeric: tabular-nums; }
+.catlogLoadState { display: inline-flex; align-items: center; gap: 6px; }
+.catlogDot { width: 6px; height: 6px; border-radius: 50%; background: #64748b; }
+.catlogDot.ok { background: #5bb98c; }
+.catlogDot.warn { background: #d7a85b; }
+
+.catlogList { margin-top: 10px; display: grid; gap: 10px; }
+
+.catlogItem {
+  border: 1px solid rgba(148, 163, 184, .15);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .022);
+  overflow: hidden;
+  transition: border-color .18s, background .18s;
+}
+.catlogItem:hover { border-color: rgba(213, 177, 118, .32); }
+.catlogItem.isOpen { border-color: rgba(213, 177, 118, .4); background: rgba(255, 255, 255, .035); }
+
+.catlogHead {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 15px;
+  cursor: pointer;
+  user-select: none;
+}
+.catlogHead:focus-visible { outline: 2px solid #d5b176; outline-offset: -2px; }
+.catlogHeadMain { min-width: 0; flex: 1; }
+.catlogTitle { margin: 0 0 6px; font-size: 14px; line-height: 1.45; color: #f0e7d5; font-weight: 800; word-break: break-word; }
+.catlogItemMeta { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; font-size: 10.5px; color: #8a99ad; }
+.catlogTag {
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, .26);
+  color: #a9b6c7;
+  white-space: nowrap;
+}
+.catlogTag.sec { border-color: rgba(213, 177, 118, .38); color: #e2c893; }
+.catlogTag.count { border-color: rgba(111, 179, 174, .34); color: #9fd0cc; font-variant-numeric: tabular-nums; }
+.catlogExcerpt { margin: 7px 0 0; font-size: 11.5px; line-height: 1.65; color: #97a5b8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.catlogChevron { color: #7c8b9e; font-size: 12px; padding-top: 3px; transition: transform .18s; flex: 0 0 auto; }
+.catlogItem.isOpen .catlogChevron { transform: rotate(180deg); color: #d5b176; }
+
+.catlogBody { padding: 0 15px 15px; border-top: 1px solid rgba(148, 163, 184, .12); }
+.catlogBody[hidden] { display: none; }
+
+.catlogOp {
+  margin: 13px 0 0;
+  padding: 12px 13px;
+  border: 1px solid rgba(213, 177, 118, .22);
+  border-radius: 12px;
+  background: linear-gradient(150deg, rgba(224, 189, 130, .07), rgba(10, 15, 23, .34));
+}
+.catlogOpLab { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 10.5px; color: #b9a684; margin-bottom: 8px; letter-spacing: .04em; }
+.catlogOpLab a { color: #d9bd8c; text-decoration: none; border-bottom: 1px dotted rgba(217, 189, 140, .5); }
+.catlogOpLab a:hover { color: #f3dfb8; }
+
+.catlogMsgs { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+.catlogMsg { padding: 0 0 0 11px; border-left: 2px solid rgba(148, 163, 184, .18); }
+.catlogMsg:first-child { border-left-color: rgba(213, 177, 118, .45); }
+.catlogMsgHead { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 10.5px; color: #8595a9; margin-bottom: 6px; }
+.catlogMsgHead time { font-variant-numeric: tabular-nums; color: #b6c2d1; }
+.catlogAcc { padding: 1px 6px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, .3); color: #9fadbf; }
+.catlogSep { color: #4c5867; }
+.catlogMsgHead a { color: #b79d72; text-decoration: none; }
+.catlogMsgHead a:hover { color: #f0d9ac; text-decoration: underline; }
+
+.catlogPrev {
+  margin: 0 0 7px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: rgba(2, 6, 23, .32);
+  border-left: 2px solid rgba(111, 179, 174, .35);
+  color: #93a2b5;
+  font-size: 11px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.catlogPrev b { color: #b7c4d3; font-weight: 700; }
+
+.catlogText { font-size: 12.5px; line-height: 1.85; color: #d7dee8; white-space: pre-wrap; word-break: break-word; }
+.catlogText h4 { margin: 10px 0 4px; font-size: 13px; color: #f0e2c6; }
+.catlogText a { color: #9ec6e8; text-decoration: none; border-bottom: 1px solid rgba(158, 198, 232, .35); }
+.catlogText a:hover { color: #cfe6fa; }
+.catlogText code { padding: 1px 4px; border-radius: 5px; background: rgba(148, 163, 184, .16); font-size: 11.5px; }
+.catlogText pre { margin: 8px 0; padding: 9px 11px; border-radius: 9px; background: rgba(2, 6, 23, .5); overflow: auto; font-size: 11.5px; line-height: 1.6; }
+.catlogText pre code { background: none; padding: 0; }
+.catlogText blockquote { margin: 6px 0; padding-left: 10px; border-left: 2px solid rgba(148, 163, 184, .3); color: #a9b6c7; }
+.catlogText .catlogEmoji { color: #b7a382; font-size: 11.5px; }
+.catlogText .catlogStamp { color: #c9b28a; font-variant-numeric: tabular-nums; }
+.catlogText .catlogSpoiler { background: #2a3444; color: transparent; border-radius: 4px; padding: 0 3px; cursor: pointer; }
+.catlogText .catlogSpoiler.isOpen { background: rgba(148, 163, 184, .16); color: inherit; }
+
+.catlogImgs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 9px; }
+.catlogImg { border: 1px solid rgba(148, 163, 184, .18); border-radius: 9px; overflow: hidden; background: rgba(2, 6, 23, .3); max-width: 190px; }
+.catlogImg img { display: block; width: 100%; height: auto; max-height: 190px; object-fit: cover; }
+.catlogImg span { display: block; padding: 5px 7px; font-size: 10px; color: #8595a9; }
+.catlogImg.isBroken img { display: none; }
+.catlogImg.isBroken::before { content: "图片链接已失效，可在 Discord 原帖查看"; display: block; padding: 14px 10px; font-size: 10px; line-height: 1.5; color: #7f8da1; text-align: center; }
+.catlogFileChip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 8px; border: 1px solid rgba(148, 163, 184, .22); color: #a9b6c7; font-size: 11px; text-decoration: none; }
+.catlogFileChip:hover { border-color: rgba(213, 177, 118, .4); color: #e8d7b6; }
+
+.catlogEmpty { padding: 26px 12px; text-align: center; color: #7f8da1; font-size: 12.5px; }
+.catlogMoreWrap { margin-top: 12px; text-align: center; }
+.catlogMoreBtn {
+  border: 1px solid rgba(213, 177, 118, .34);
+  border-radius: 10px;
+  background: rgba(213, 177, 118, .1);
+  color: #ead7b5;
+  padding: 9px 22px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.catlogMoreBtn:hover { background: rgba(213, 177, 118, .18); border-color: rgba(213, 177, 118, .55); }
+.catlogMoreBtn[hidden] { display: none; }
+
+.catlogFoot { margin-top: 14px; padding-top: 11px; border-top: 1px solid rgba(148, 163, 184, .12); font-size: 10.5px; line-height: 1.7; color: #78869a; }
+.catlogFoot a { color: #a9b6c7; }
+
+@media (max-width: 900px) {
+  .catlogFields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .catlogFields input { grid-column: 1 / -1; }
+}
+@media (max-width: 580px) {
+  .catlogHead { padding: 12px; }
+  .catlogBody { padding: 0 12px 12px; }
+  .catlogFields { grid-template-columns: 1fr 1fr; }
+  .catlogText { font-size: 12px; }
+  .catlogImg { max-width: 44%; }
+}
