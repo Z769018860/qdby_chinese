@@ -198,9 +198,24 @@
   font-variant-numeric: tabular-nums;
   background: rgba(213, 177, 118, .08);
 }
-.catlogMsgLinks { margin-left: auto; font-size: 10.5px; }
+.catlogMsgLinks { margin-left: auto; font-size: 10.5px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; justify-content: flex-end; }
 .catlogMsgLinks a { color: #b79d72; text-decoration: none; }
 .catlogMsgLinks a:hover { color: #f0d9ac; text-decoration: underline; }
+
+/* 具体时间：发帖 / 最后回复 / 每条发言 */
+.catlogTime {
+  color: #8e9db1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.catlogTime.isLast { color: #7f8da1; }
+.catlogMsgTime {
+  color: #7d8ca0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  letter-spacing: .2px;
+}
+.catlogOpTime { color: #8a99ad; font-variant-numeric: tabular-nums; margin-left: 6px; }
 
 .catlogWho { display: flex; align-items: center; gap: 9px; min-width: 0; }
 .catlogAvatar {

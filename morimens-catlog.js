@@ -716,6 +716,8 @@
   function card(p) {
     const isOpen = state.open.has(p.id);
     const titleTr = p.titleTr && p.titleTr !== p.title ? `<span class="catlogTitleTr">${esc(p.titleTr)}</span>` : '';
+    const posted = p.postedAt || p.date || '';
+    const last = p.lastAt || posted;
     return `<article class="catlogItem${isOpen ? ' isOpen' : ''}" data-post="${p.id}">
       <div class="catlogHead" role="button" tabindex="0" aria-expanded="${isOpen}">
         <div class="catlogHeadMain">
@@ -723,7 +725,8 @@
           <div class="catlogItemMeta">
             <span class="catlogTag sec">${esc(sectionLabel(p.section))}</span>
             ${p.category && p.category !== sectionLabel(p.section) ? `<span class="catlogTag">${esc(p.category)}</span>` : ''}
-            <span>${esc(p.date)}</span>
+            <time class="catlogTime" datetime="${esc(String(posted).replace(' ', 'T'))}" title="${ui('发帖时间', 'Posted at')}">${ui('发帖', 'Posted')} ${esc(posted)}</time>
+            ${last && last !== posted ? `<time class="catlogTime isLast" datetime="${esc(String(last).replace(' ', 'T'))}" title="${ui('最后回复时间', 'Last reply at')}">${ui('最后回复', 'Last reply')} ${esc(last)}</time>` : ''}
             <span class="catlogTag count">${ui(`官方 ${p.count} 条`, `${p.count} msg`)}</span>
             ${p.imgs ? `<span class="catlogTag img">🖼 ${p.imgs}</span>` : ''}
             ${p.trans ? `<span class="catlogTag tr">${ui('译', 'ZH')} ${p.trans}</span>` : ''}
@@ -784,10 +787,10 @@
     if (post.op && (post.op.content || (post.op.images || []).length)) {
       out.push(`<div class="catlogOp${opAuthorIsCat ? ' isOfficial' : ''}">
         <div class="catlogOpLab">
-          <span>${opAuthorIsCat ? ui('原贴 · 官方发布', 'Original post · official') : ui('原贴 · 楼主 ' + esc(post.opAuthor), 'Original post · by ' + esc(post.opAuthor))}</span>
+          <span>${opAuthorIsCat ? ui('原贴 · 官方发布', 'Original post · official') : ui('原贴 · 楼主 ' + esc(post.opAuthor), 'Original post · by ' + esc(post.opAuthor))}${!opAuthorIsCat && post.op.time ? ` <time class="catlogOpTime">${esc(post.op.time)}</time>` : ''}</span>
           <a href="https://discord.com/channels/${state.idx.guildId}/${post.id}" target="_blank" rel="noopener noreferrer">${ui('在 Discord 打开 ↗', 'Open in Discord ↗')}</a>
         </div>
-        ${opAuthorIsCat ? officialHead(post.op.account || 'new', { time: (post.op.ts || '').slice(0, 10) }) : ''}
+        ${opAuthorIsCat ? officialHead(post.op.account || 'new', { time: post.op.time || post.postedAt || (post.op.ts || '').slice(0, 10) }) : ''}
         ${post.op.content ? `<div class="catlogText">${md(post.op.content)}</div>` : ''}
         ${trBlock(post.op.tr)}
         ${imgs(post.op.images)}
@@ -807,6 +810,7 @@
           <span class="catlogSeq">${i + 1}</span>
           ${officialHead(m.account)}
           <span class="catlogMsgLinks">
+            ${m.time ? `<time class="catlogMsgTime" datetime="${esc(m.time.replace(' ', 'T'))}" title="${ui('发言时间', 'Sent at')}">${esc(m.time)}</time>` : ''}
             <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${ui('原帖 ↗', 'Source ↗')}</a>
           </span>
         </div>
