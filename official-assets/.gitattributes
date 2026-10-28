@@ -1,0 +1,4 @@
+# 图片是二进制，别让 git 做文本 diff
+*.png binary
+*.jpg binary
+*.gif binary
