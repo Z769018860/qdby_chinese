@@ -123,6 +123,7 @@
     '<span>'+ui('· 伤害计算器：唤醒体 / 命轮 / 密契 / 造物伤害计算（测试中，欢迎反馈）；','· Damage Calculator: Awakener / wheel / covenant / creation damage calculation (in testing, feedback welcome);')+'</span>',
     '<span>'+ui('· 卡池活动复刻日历：卡池与活动月历、复刻空窗榜；','· Banner & Rerun Calendar: monthly banner / event calendar and rerun gap leaderboards;')+'</span>',
     '<span>'+ui('· 每日签、爱的节奏榜、留言板；','· Daily Fortune, Love Rhythm ranking and Guestbook;')+'</span>',
+    '<span>'+ui('· 校猫日志：制作人 Mythag Cat ～ Light 在官方 Discord 的发言汇编，含版本公告、活动说明与玩家问答；','· Schoolcat Notes: an archive of producer Mythag Cat ～ Light’s official Discord messages, including patch notes, event posts and player Q&A;')+'</span>',
     '<span>'+ui('· 右上角：爱发电、视频发布、生日日历、更新日志、关于。','· Top right: 爱发电, release video, birthday calendar, changelog and about.')+'</span>',
     '<span>'+ui('数据来源：','Data sources: ')+'<a href="https://eremora.com/" target="_blank" rel="noopener noreferrer">Eremora</a> · <a href="https://docs.qq.com/sheet/DR2NCWEt4b3dpU01M" target="_blank" rel="noopener noreferrer">'+ui('旧版融灾425出场率在线文档','Legacy D-Zone 425 appearance-rate sheet')+'</a></span>',
     '<span>'+ui('我不是数据的制造者，我只是节奏的搬运工。','I do not manufacture the data; I only carry the rhythm.')+'</span>',
@@ -318,6 +319,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('新增「校猫日志」标签页：汇总制作人 Mythag Cat ～ Light 在官方 Discord 的公开发言（旧号 @game.producer.light 与现号 @lightproud 合并），共 467 帖 / 3,762 条，按校猫日志、给校猫的留言、官方问答、活动资讯与其他帖子分区；支持分类 / 年份 / 账号筛选与正文检索，每条回复都保留原贴全文与上文。','Added the “Schoolcat Notes” tab: an archive of producer Mythag Cat ～ Light’s public Discord messages (the old @game.producer.light merged with the current @lightproud), 467 threads / 3,762 messages across five sections, with category / year / account filters, full-text search, and the original post kept with every reply.')}</div>
         <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('融灾榜单新增「低配榜单」：按总启灵数、技能总级别、灵塑适性、SSR命轮叠位、守密人等级给出综合评分与各项排序，表头点击可升序 / 降序，评分升序即高配（第70–72期）。','Added a Low-investment leaderboard tab: overall score and sortable columns (click a header; ascending score = high investment) by total enlightenment, skill levels, Soulforge aptitude, SSR wheel stacks and keeper level (Seasons 70-72).')}</div>
         <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('更新第72期融灾榜单（10月27日 23:38 快照）。','Updated the Season 72 leaderboard (Oct 27 23:38 snapshot).')}</div>
         <div class="sourceItem"><strong>2026-10-26</strong><br>${ui('第70、71期榜单报纸新增「最终战增刊」：首领战回合数、分布与速杀队伍。','Added a Final battle extra to the Season 70 and 71 reports: boss-fight rounds, distribution and fastest teams.')}</div>
