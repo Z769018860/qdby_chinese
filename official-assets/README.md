@@ -61,6 +61,20 @@ cd ../qdby_assets && git add -A && git commit -m "chore(assets): 同步官方素
 注意：Discord CDN 链接带签名（`?ex=&is=&hm=`），**必须在拿到清单的当天完成下载**，过期后会 404；
 重新跑一次 `collect_assets.py`（不要加 `--from-manifest`）即可拿到新签名。
 
+## 直接引用
+
+素材放在 `assets` 分支，站点构建分支（`main` / `preview`）不含这些文件。可用 jsDelivr 直接按路径取图：
+
+```
+https://cdn.jsdelivr.net/gh/Z769018860/qdby_chinese@assets/official-assets/<分类>/<帖子目录>/<文件名>
+```
+
+也可以用 GitHub 原始链接：
+
+```
+https://raw.githubusercontent.com/Z769018860/qdby_chinese/assets/official-assets/<分类>/<帖子目录>/<文件名>
+```
+
 ## 来源与版权
 
 素材版权归《忘却前夜 / Morimens》官方所有，本仓库仅作社区存档与二创取用，请勿商用。
