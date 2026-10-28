@@ -14,6 +14,7 @@
   const HASH = '#catlog';
   const PAGE = 18;
   const LS_TR = 'morimens.catlog.showTr';
+  const LS_ORDER = 'morimens.catlog.msgDesc';   // 帖内回复顺序：'1' 倒序（最新在上）/ '0' 正序
   const NAME = 'Mythag Cat ～ Light';
 
   const $ = id => document.getElementById(id);
@@ -40,6 +41,7 @@
     error: null,
     loadingSections: false,
     showTr: localStorage.getItem(LS_TR) !== '0',
+    msgDesc: localStorage.getItem(LS_ORDER) !== '0',   // 帖内回复默认「最新在上」
     onlyImg: false,
     onlyTr: false,
   };
@@ -432,6 +434,8 @@
         if (hit) { ev.stopPropagation(); jumpTo(hit.closest('.catlogItem'), Number(hit.dataset.jump)); return; }
         const sp = ev.target.closest('.catlogSpoiler');
         if (sp) { sp.classList.toggle('isOpen'); return; }
+        const ord = ev.target.closest('.catlogMsgOrder');
+        if (ord) { ev.stopPropagation(); setMsgOrder(ord.closest('.catlogItem'), ord.dataset.order); return; }
         const pv = ev.target.closest('.catlogPrev');
         if (pv) {
           const open = pv.classList.toggle('isOpen');
@@ -826,7 +830,17 @@
       out.push(`<div class="catlogEmpty">${ui('本帖没有追加发言。', 'No follow-up messages in this thread.')}</div>`);
       return out.join('');
     }
-    out.push('<ol class="catlogMsgs">' + msgs.map((m, i) => {
+    // 帖内回复可以按时间倒序（最新在上）显示；data-mi 一律保留原始下标，
+    // 这样搜索跳转（jumpTo 按 data-mi 定位）和「第 N 条发言」编号在两种顺序下都成立。
+    const desc = state.msgDesc !== false;
+    const order = msgs.map((_, i) => i);
+    if (desc) order.reverse();
+    out.push(`<div class="catlogMsgBar">
+      <span class="catlogMsgCount">${ui(`共 ${msgs.length} 条回复`, `${msgs.length} replies`)} · <b>${ui(desc ? '最新在上' : '最早在上', desc ? 'newest on top' : 'oldest on top')}</b></span>
+      <button type="button" class="catlogMsgOrder" data-order="${desc ? 'asc' : 'desc'}" title="${ui(desc ? '改为按时间正序（最早的回复在上）' : '改为按时间倒序（最新的回复在上）', desc ? 'Show oldest replies first' : 'Show newest replies first')}">${ui(desc ? '改为正序' : '改为倒序', desc ? 'Oldest first' : 'Newest first')}</button>
+    </div>`);
+    out.push(`<ol class="catlogMsgs${desc ? ' isDesc' : ''}">` + order.map(i => {
+      const m = msgs[i];
       const prev = (m.prev || '').trim();
       const replyTo = (m.replyTo || '').trim();
       const toLabel = `${ui('回复', 'Reply to')} ${esc(replyTo || ui('玩家', 'Player'))}`;
@@ -834,7 +848,7 @@
         ? `<div class="catlogPrev${prev.length > 90 ? ' isClamped' : ''}" role="button" tabindex="0" aria-expanded="false"><b class="catlogPrevTo">${toLabel}</b><div class="catlogPrevText">${md(prev)}</div><span class="catlogPrevHint" aria-hidden="true">${ui('展开全文', 'more')}</span>${trBlock(m.prevTr, 'inline')}</div>` : '';
       return `<li class="catlogMsg isOfficial" data-mi="${i}">
         <div class="catlogMsgHead">
-          <span class="catlogSeq">${i + 1}</span>
+          <span class="catlogSeq" title="${ui('在该帖中的序号', 'Position in thread')}">${i + 1}</span>
           ${officialHead(m.account)}
           <span class="catlogMsgLinks">
             ${m.time ? `<time class="catlogMsgTime" datetime="${esc(m.time.replace(' ', 'T'))}" title="${ui('发言时间', 'Sent at')}">${esc(m.time)}</time>` : ''}
@@ -906,6 +920,21 @@
       paintBody(panel, id);
       updateMeta();
     });
+  }
+
+  /** 切换帖内回复的时间顺序（全局生效，记在 localStorage），重绘后保持视口位置不跳。 */
+  function setMsgOrder(item, order) {
+    const desc = order !== 'asc';
+    if (desc === state.msgDesc) return;
+    state.msgDesc = desc;
+    try { localStorage.setItem(LS_ORDER, desc ? '1' : '0'); } catch (e) { /* 无痕模式忽略 */ }
+    if (!item) return;
+    const panel = item.querySelector('.catlogBody');
+    if (!panel || panel.hidden) return;
+    const before = panel.getBoundingClientRect().top;
+    paintBody(panel, item.dataset.post);
+    const after = panel.getBoundingClientRect().top;
+    if (after !== before) window.scrollBy(0, after - before);
   }
 
   /** 点命中片段：展开该帖并滚到对应位置，短暂高亮闪一下。 */
