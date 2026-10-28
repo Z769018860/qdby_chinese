@@ -432,6 +432,12 @@
         if (hit) { ev.stopPropagation(); jumpTo(hit.closest('.catlogItem'), Number(hit.dataset.jump)); return; }
         const sp = ev.target.closest('.catlogSpoiler');
         if (sp) { sp.classList.toggle('isOpen'); return; }
+        const pv = ev.target.closest('.catlogPrev');
+        if (pv) {
+          const open = pv.classList.toggle('isOpen');
+          pv.setAttribute('aria-expanded', open ? 'true' : 'false');
+          return;
+        }
         const pic = ev.target.closest('.catlogPic');
         if (pic) { openLightbox(pic); return; }
         const head = ev.target.closest('.catlogHead');
@@ -443,6 +449,13 @@
         if (hit) { ev.preventDefault(); jumpTo(hit.closest('.catlogItem'), Number(hit.dataset.jump)); return; }
         const sp = ev.target.closest('.catlogSpoiler');
         if (sp) { ev.preventDefault(); sp.classList.toggle('isOpen'); return; }
+        const pv = ev.target.closest('.catlogPrev');
+        if (pv) {
+          ev.preventDefault();
+          const open = pv.classList.toggle('isOpen');
+          pv.setAttribute('aria-expanded', open ? 'true' : 'false');
+          return;
+        }
         const pic = ev.target.closest('.catlogPic');
         if (pic) { ev.preventDefault(); openLightbox(pic); return; }
         const head = ev.target.closest('.catlogHead');
@@ -803,8 +816,10 @@
     }
     out.push('<ol class="catlogMsgs">' + msgs.map((m, i) => {
       const prev = (m.prev || '').trim();
+      const replyTo = (m.replyTo || '').trim();
+      const toLabel = `${ui('回复', 'Reply to')} ${esc(replyTo || ui('玩家', 'Player'))}`;
       const prevHtml = prev && prev !== (post.op?.content || '').trim()
-        ? `<div class="catlogPrev"><b>${esc(m.prevAuthor || ui('玩家', 'Player'))}：</b>${prev.length > 260 ? md(prev.slice(0, 260)) + '…' : md(prev)}${trBlock(m.prevTr, 'inline')}</div>` : '';
+        ? `<div class="catlogPrev${prev.length > 90 ? ' isClamped' : ''}" role="button" tabindex="0" aria-expanded="false"><b class="catlogPrevTo">${toLabel}</b><div class="catlogPrevText">${md(prev)}</div><span class="catlogPrevHint" aria-hidden="true">${ui('展开全文', 'more')}</span>${trBlock(m.prevTr, 'inline')}</div>` : '';
       return `<li class="catlogMsg isOfficial" data-mi="${i}">
         <div class="catlogMsgHead">
           <span class="catlogSeq">${i + 1}</span>
