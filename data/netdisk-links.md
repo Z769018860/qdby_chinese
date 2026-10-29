@@ -4,17 +4,17 @@
 
 > 仅供维护使用，**不在汉化主页上展示**。
 
-- 生成时间：2026-10-29 00:08
+- 生成时间：2026-10-30 00:07
 - 收录游戏 64 个，网盘链接 179 条（去重 174 条）
-- 状态：有效 112 ／ 失效 66 ／ 待确认 1
+- 状态：有效 112 ／ 失效 67 ／ 待确认 0
 
 ## 平台分布
 
 | 平台 | 有效 | 失效 | 待确认 | 合计 |
 | --- | ---: | ---: | ---: | ---: |
 | 百度网盘 | 53 | 18 | 0 | 71 |
-| 夸克网盘 | 5 | 39 | 0 | 44 |
-| 迅雷云盘 | 20 | 0 | 1 | 21 |
+| 夸克网盘 | 4 | 40 | 0 | 44 |
+| 迅雷云盘 | 21 | 0 | 0 | 21 |
 | 城通网盘 | 8 | 4 | 0 | 12 |
 | 123云盘 | 11 | 0 | 0 | 11 |
 | UC网盘 | 4 | 5 | 0 | 9 |
@@ -25,72 +25,73 @@
 
 | 游戏 | 平台 | 链接 | 判定依据 |
 | --- | --- | --- | --- |
-| 缝缝补补的幸福 | 夸克网盘 | https://pan.quark.cn/s/302f48898702 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 戏剧之爱·安乐死 | 夸克网盘 | https://pan.quark.cn/s/b7b1e6055406 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 戏剧之爱·安乐死 | 夸克网盘 | https://pan.quark.cn/s/5cfc2ad79a6d | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 自恋囚笼 | 夸克网盘 | https://pan.quark.cn/s/fb7d7e01f866 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 自恋囚笼 | 夸克网盘 | https://pan.quark.cn/s/8364570fa481 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 君かアオイロ。（or君青） | 百度网盘 | https://pan.baidu.com/s/1DAqNIhnDWAcQNWf00j1H_w | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 君かアオイロ。（or君青） | 夸克网盘 | https://pan.quark.cn/s/ef0f6ffdb1e1 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 君かアオイロ。（or君青） | 夸克网盘 | https://pan.quark.cn/s/ff13dece379d | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| COLOR☆COLLAR | 夸克网盘 | https://pan.quark.cn/s/e6baf1abb1d3 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 不要抛下我!! | 百度网盘 | https://pan.baidu.com/s/1OF25L4HEX00_JHZaXZdq_A?pwd=2gcy | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 不要抛下我!! | 夸克网盘 | https://pan.quark.cn/s/a227dde020c2?pwd=bwyd | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 不要抛下我!! | UC网盘 | https://drive.uc.cn/s/7a1ca4a8e4804 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 不要抛下我!! | 夸克网盘 | https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 神隐新娘（花嫁隐） | 夸克网盘 | https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 神隐新娘（花嫁隐） | 百度网盘 | https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| meet her there | 夸克网盘 | https://pan.quark.cn/s/4d8a94a454f3 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 灰姑娘现象 | 夸克网盘 | https://pan.quark.cn/s/9b7b131baf30 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 灰姑娘现象FD永远 | 夸克网盘 | https://pan.quark.cn/s/531bc6015b3f | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 人类保管库 | 夸克网盘 | https://pan.quark.cn/s/00dffb67943b | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 细思极恐的恐怖游戏 | 夸克网盘 | https://pan.quark.cn/s/d707fbc6e074 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 并非兄妹的热病 | 夸克网盘 | https://pan.quark.cn/s/aacaa363282f | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 关于埋葬某人的梦 | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 关于埋葬某人的梦 | 夸克网盘 | https://pan.quark.cn/s/849df8014b17 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 关于埋葬某人的梦 | 夸克网盘 | https://pan.quark.cn/s/0a1e3c67c472 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 舌头上的动物园 | 百度网盘 | https://pan.baidu.com/s/19hK8KkVXFLy3IfY70pw_eg?pwd=tjck | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 舌头上的动物园 | 夸克网盘 | https://pan.quark.cn/s/246f4d295926?pwd=XiEz | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 舌头上的动物园 | UC网盘 | https://drive.uc.cn/s/d05786e3dbc84 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 舌头上的动物园 | 百度网盘 | https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 舌头上的动物园 | 百度网盘 | https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 暴走族怪谈大会 再归 | 夸克网盘 | https://pan.quark.cn/s/b1670df90436?pwd=aeTt | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 暴走族怪谈大会 再归 | 夸克网盘 | https://pan.quark.cn/s/980575fd2e8e | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| Lost Friends 2 | 夸克网盘 | https://pan.quark.cn/s/0cc65915c309 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 深海的勿忘草 | 夸克网盘 | https://pan.quark.cn/s/ea843c28afe4 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 水手服与命中注定之人 | 夸克网盘 | https://pan.quark.cn/s/93069786f079 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 爱情寄生虫 | 百度网盘 | https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 百度网盘 | https://pan.baidu.com/s/1_Tnf_8MG-0_1yZL0Zpy3kw?pwd=p0ag | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 夸克网盘 | https://pan.quark.cn/s/4045e8716360 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 城通网盘 | https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| HIKEBACK | 百度网盘 | https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| HIKEBACK | 夸克网盘 | https://pan.quark.cn/s/c3635ad46422 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 恶魔之心 | 百度网盘 | https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 恶魔之心：猎人 | 百度网盘 | https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| Magical Otoge Ciel | 夸克网盘 | https://pan.quark.cn/s/03c50cd0bb46 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 与死神的约会 | 夸克网盘 | https://pan.quark.cn/s/7592f83e7545 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 与死神的约会 | 夸克网盘 | https://pan.quark.cn/s/c7a6308b4f59 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 冬鸦何处去 | 百度网盘 | https://pan.baidu.com/s/1Gfv3o5OrV-Y_cjm217TyUQ?pwd=rajl | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 冬鸦何处去 | 夸克网盘 | https://pan.quark.cn/s/625a66c341d1 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 冬鸦何处去 | 夸克网盘 | https://pan.quark.cn/s/8e9e4cff4611 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 销魂罪人 | 百度网盘 | https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| MAMIYA | 夸克网盘 | https://pan.quark.cn/s/d2a976a8cf14 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 别吃收银员！ | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 别吃收银员！ | 夸克网盘 | https://pan.quark.cn/s/e84b113d573c | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 汝，当爱休息区的他 | 百度网盘 | https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 汝，当爱休息区的他 | 夸克网盘 | https://pan.quark.cn/s/9780b9de1b7c | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 恶魔之心：被诅咒的试炼 | 百度网盘 | https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 恶魔之心：被诅咒的试炼 | 夸克网盘 | https://pan.quark.cn/s/d891ae5de524 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 恶魔之心：被诅咒的试炼 | UC网盘 | https://drive.uc.cn/s/e2f43ca43b8b4 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 粉碎梦之门与病娇的按钮 | 夸克网盘 | https://pan.quark.cn/s/ebf194eb099f | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 粉碎梦之门与病娇的按钮 | 百度网盘 | https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 粉碎梦之门与病娇的按钮 | 夸克网盘 | https://pan.quark.cn/s/d727e34ead20?pwd=RSW6 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 粉碎梦之门与病娇的按钮 | UC网盘 | https://drive.uc.cn/s/874242a1ffa44 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| ~把最棒的巧克力送给你 这份心意就是全部哦~ | UC网盘 | https://drive.uc.cn/s/a15712f77ccf4 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 替身谎言~one night liar | 百度网盘 | https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 拍卖开始的五分钟后 | 百度网盘 | https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 拍卖开始的五分钟后 | 夸克网盘 | https://pan.quark.cn/s/14e3bebe2f45 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 缝缝补补的幸福 | 夸克网盘 | https://pan.quark.cn/s/302f48898702 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 戏剧之爱·安乐死 | 夸克网盘 | https://pan.quark.cn/s/b7b1e6055406 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 戏剧之爱·安乐死 | 夸克网盘 | https://pan.quark.cn/s/5cfc2ad79a6d | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 自恋囚笼 | 夸克网盘 | https://pan.quark.cn/s/fb7d7e01f866 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 自恋囚笼 | 夸克网盘 | https://pan.quark.cn/s/8364570fa481 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 君かアオイロ。（or君青） | 百度网盘 | https://pan.baidu.com/s/1DAqNIhnDWAcQNWf00j1H_w | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 君かアオイロ。（or君青） | 夸克网盘 | https://pan.quark.cn/s/ef0f6ffdb1e1 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 君かアオイロ。（or君青） | 夸克网盘 | https://pan.quark.cn/s/ff13dece379d | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| COLOR☆COLLAR | 夸克网盘 | https://pan.quark.cn/s/e6baf1abb1d3 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 不要抛下我!! | 百度网盘 | https://pan.baidu.com/s/1OF25L4HEX00_JHZaXZdq_A?pwd=2gcy | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 不要抛下我!! | 夸克网盘 | https://pan.quark.cn/s/a227dde020c2?pwd=bwyd | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 不要抛下我!! | UC网盘 | https://drive.uc.cn/s/7a1ca4a8e4804 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 不要抛下我!! | 夸克网盘 | https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 神隐新娘（花嫁隐） | 夸克网盘 | https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 神隐新娘（花嫁隐） | 百度网盘 | https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| meet her there | 夸克网盘 | https://pan.quark.cn/s/4d8a94a454f3 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 灰姑娘现象 | 夸克网盘 | https://pan.quark.cn/s/9b7b131baf30 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 灰姑娘现象FD永远 | 夸克网盘 | https://pan.quark.cn/s/531bc6015b3f | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 人类保管库 | 夸克网盘 | https://pan.quark.cn/s/00dffb67943b | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 细思极恐的恐怖游戏 | 夸克网盘 | https://pan.quark.cn/s/d707fbc6e074 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 并非兄妹的热病 | 夸克网盘 | https://pan.quark.cn/s/aacaa363282f | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 关于埋葬某人的梦 | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 关于埋葬某人的梦 | 夸克网盘 | https://pan.quark.cn/s/849df8014b17 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 关于埋葬某人的梦 | 夸克网盘 | https://pan.quark.cn/s/0a1e3c67c472 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 舌头上的动物园 | 百度网盘 | https://pan.baidu.com/s/19hK8KkVXFLy3IfY70pw_eg?pwd=tjck | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 舌头上的动物园 | 夸克网盘 | https://pan.quark.cn/s/246f4d295926?pwd=XiEz | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 舌头上的动物园 | UC网盘 | https://drive.uc.cn/s/d05786e3dbc84 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 舌头上的动物园 | 百度网盘 | https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 舌头上的动物园 | 百度网盘 | https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 暴走族怪谈大会 再归 | 夸克网盘 | https://pan.quark.cn/s/b1670df90436?pwd=aeTt | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 暴走族怪谈大会 再归 | 夸克网盘 | https://pan.quark.cn/s/980575fd2e8e | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| Lost Friends 2 | 夸克网盘 | https://pan.quark.cn/s/0cc65915c309 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 深海的勿忘草 | 夸克网盘 | https://pan.quark.cn/s/ea843c28afe4 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 水手服与命中注定之人 | 夸克网盘 | https://pan.quark.cn/s/93069786f079 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 爱情寄生虫 | 百度网盘 | https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 百度网盘 | https://pan.baidu.com/s/1_Tnf_8MG-0_1yZL0Zpy3kw?pwd=p0ag | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 夸克网盘 | https://pan.quark.cn/s/4045e8716360 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 城通网盘 | https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 对，现在骂人是犯规……惩罚之吻……要来咯（笑） | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| HIKEBACK | 百度网盘 | https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| HIKEBACK | 夸克网盘 | https://pan.quark.cn/s/c3635ad46422 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 恶魔之心 | 百度网盘 | https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 恶魔之心：猎人 | 百度网盘 | https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| Magical Otoge Ciel | 夸克网盘 | https://pan.quark.cn/s/03c50cd0bb46 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 与死神的约会 | 夸克网盘 | https://pan.quark.cn/s/7592f83e7545 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 与死神的约会 | 夸克网盘 | https://pan.quark.cn/s/c7a6308b4f59 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 冬鸦何处去 | 百度网盘 | https://pan.baidu.com/s/1Gfv3o5OrV-Y_cjm217TyUQ?pwd=rajl | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 冬鸦何处去 | 夸克网盘 | https://pan.quark.cn/s/625a66c341d1 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 冬鸦何处去 | 夸克网盘 | https://pan.quark.cn/s/8e9e4cff4611 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 销魂罪人 | 百度网盘 | https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| MAMIYA | 夸克网盘 | https://pan.quark.cn/s/d2a976a8cf14 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 别吃收银员！ | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 别吃收银员！ | 夸克网盘 | https://pan.quark.cn/s/e84b113d573c | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 汝，当爱休息区的他 | 百度网盘 | https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 汝，当爱休息区的他 | 夸克网盘 | https://pan.quark.cn/s/9780b9de1b7c | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 恶魔之心：被诅咒的试炼 | 百度网盘 | https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 恶魔之心：被诅咒的试炼 | 夸克网盘 | https://pan.quark.cn/s/d891ae5de524 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 恶魔之心：被诅咒的试炼 | UC网盘 | https://drive.uc.cn/s/e2f43ca43b8b4 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 粉碎梦之门与病娇的按钮 | 夸克网盘 | https://pan.quark.cn/s/ebf194eb099f | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 粉碎梦之门与病娇的按钮 | 百度网盘 | https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 粉碎梦之门与病娇的按钮 | 夸克网盘 | https://pan.quark.cn/s/d727e34ead20?pwd=RSW6 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 粉碎梦之门与病娇的按钮 | UC网盘 | https://drive.uc.cn/s/874242a1ffa44 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| ~把最棒的巧克力送给你 这份心意就是全部哦~ | UC网盘 | https://drive.uc.cn/s/a15712f77ccf4 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 替身谎言~one night liar | 百度网盘 | https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 拍卖开始的五分钟后 | 百度网盘 | https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 拍卖开始的五分钟后 | 夸克网盘 | https://pan.quark.cn/s/14e3bebe2f45 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 死刑前的心理咨询 | 夸克网盘 | https://pan.quark.cn/s/499e10eefe3d | 分享已被封禁（文件涉及违规内容） |
 
 ## 按游戏明细
 
@@ -123,7 +124,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/16hLO_2-CAY1TxffTHKCTFA?pwd=zc13 | zc13 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/302f48898702 | AmMd | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/302f48898702 | AmMd | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### Dear Virgin
 
@@ -150,8 +151,8 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 城通网盘 | https://url08.ctfile.com/f/65517308-8425987321-60a99b?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip 192.84 MB2025-09-09 |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/b7b1e6055406 | wMiR | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/5cfc2ad79a6d | wMiR | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/b7b1e6055406 | wMiR | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/5cfc2ad79a6d | wMiR | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 十二条船全抛
 
@@ -210,9 +211,9 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 城通网盘 | https://url08.ctfile.com/f/65517308-8448495775-8f3108?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227.05 MB2025-10-09 |
 | 2 | 百度网盘 | https://pan.baidu.com/s/1BZ7NmTX-N-qAtTWo9meH4w?pwd=iu8b | iu8b | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans# | 6ans | 视频简介 | ⚠️ 待确认 | 页面状态无法判定 |
-| 4 | 夸克网盘 | https://pan.quark.cn/s/fb7d7e01f866 | U44Z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 5 | 夸克网盘 | https://pan.quark.cn/s/8364570fa481 | Uurz | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYSx__7tQXw3AlHpHCFpQBA1?pwd=6ans# | 6ans | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜自恋囚笼 汉化补丁by青灯不弈.zip 227MB 2025-12-03 17:07  |
+| 4 | 夸克网盘 | https://pan.quark.cn/s/fb7d7e01f866 | U44Z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 5 | 夸克网盘 | https://pan.quark.cn/s/8364570fa481 | Uurz | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 6 | 腾讯微云 | https://share.weiyun.com/05WlFxr6 | 8x8jzi | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip 2025年10月09日 227.05 MB  |
 | 7 | 123云盘 | https://www.123684.com/s/ootDVv-sDjov?pwd=eZEe | eZEe | 视频简介 | ✅ 有效 | 分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip｜到期 2099-12-12 |
 
@@ -222,13 +223,13 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1DAqNIhnDWAcQNWf00j1H_w | ejm6 | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1DAqNIhnDWAcQNWf00j1H_w | ejm6 | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 2 | 迅雷云盘 | https://pan.xunlei.com/s/VOfYDWOOMzhvlP6cMegiBr0JA1?pwd=3ssm# | 3ssm | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜kimiwaaoiro_chs.zip 160.8MB 2026-06-12 05:04  |
 | 3 | 123云盘 | https://www.123865.com/s/ootDVv-8Vjov?pwd=ulAI# | ulAI | 视频简介 | ✅ 有效 | 分享有效｜kimikaaoiro_chs.zip｜到期 2099-12-12 |
 | 4 | UC网盘 | https://drive.uc.cn/s/f849c4061ca14 | veg1 | 视频简介 | ✅ 有效 | 分享有效｜kimiwaaoiro_chs.zip |
 | 5 | 城通网盘 | https://url08.ctfile.com/f/65517308-8471392676-333c65?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜kimikaaoiro_chs.zip 115.35 MB2025-11-13 |
-| 6 | 夸克网盘 | https://pan.quark.cn/s/ef0f6ffdb1e1 | FLd5 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 7 | 夸克网盘 | https://pan.quark.cn/s/ff13dece379d | Vp15 | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 6 | 夸克网盘 | https://pan.quark.cn/s/ef0f6ffdb1e1 | FLd5 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 7 | 夸克网盘 | https://pan.quark.cn/s/ff13dece379d | Vp15 | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### COLOR☆COLLAR
 
@@ -236,7 +237,7 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 夸克网盘 | https://pan.quark.cn/s/e6baf1abb1d3 | eX6G | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 夸克网盘 | https://pan.quark.cn/s/e6baf1abb1d3 | eX6G | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 2 | 123云盘 | https://www.123865.com/s/ootDVv-EATmv?pwd=0Dgd# | 0Dgd | 视频简介 | ✅ 有效 | 分享有效｜COLOR_COLLAR汉化补丁.zip｜到期 2099-12-12 |
 | 3 | 腾讯微云 | https://share.weiyun.com/P5w3qWaW | qacqpv | 视频简介 | ✅ 有效 | 分享有效｜COLOR_COLLAR汉化补丁.zip 2025年11月24日 52.83 MB  |
 | 4 | 123云盘 | https://www.123865.com/s/ootDVv-rQTmv?pwd=5qAd# | 5qAd | UP主评论区补充 | ✅ 有效 | 分享有效｜CC 补丁备份.zip｜到期 2099-12-12 |
@@ -248,11 +249,11 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1OF25L4HEX00_JHZaXZdq_A?pwd=2gcy | 2gcy | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/a227dde020c2?pwd=bwyd | bwyd | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOk8azICB36-iaIVxsQ9CsshA1# | t4kv | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜不要抛下我 汉化补丁.zip 16MB 2026-02-01 20:13  |
-| 4 | UC网盘 | https://drive.uc.cn/s/7a1ca4a8e4804 | bXRu | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 5 | 夸克网盘 | https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V | 6u1V | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1OF25L4HEX00_JHZaXZdq_A?pwd=2gcy | 2gcy | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/a227dde020c2?pwd=bwyd | bwyd | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOk8azICB36-iaIVxsQ9CsshA1# | t4kv | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
+| 4 | UC网盘 | https://drive.uc.cn/s/7a1ca4a8e4804 | bXRu | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 5 | 夸克网盘 | https://pan.quark.cn/s/e445d3ad3c0f?pwd=6u1V | 6u1V | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 6 | 迅雷云盘 | https://pan.xunlei.com/s/VOkO99MFKyO9IeyiAjA0x1RjA1# | hbs4 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜不要抛下我 汉化备份.zip 187.5MB 2026-02-20 16:00  |
 
 ### 神隐新娘（花嫁隐）
@@ -263,10 +264,10 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1MvF9BvKN0J9Q0BsosmdXXA?pwd=ycd4 | ycd4 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 百度网盘 | https://pan.baidu.com/s/1398Th72qKWRtKV3w_sk3fQ?pwd=anxt | anxt | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm | RGSm | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/e477f65feaa8?pwd=RGSm | RGSm | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 4 | 迅雷云盘 | https://pan.xunlei.com/s/VOlu3IiBSu2p7ajUopKT6tRWA1# | bw9a | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜花嫁隐 汉化补丁备份（密码见视频简介）.zip 265.6MB 2026-02-20 16:01  |
 | 5 | 百度网盘 | https://pan.baidu.com/s/19A5I7Dk-hzY8xZD-Js-41Q?pwd=458t | 458t | 置顶评论 | ✅ 有效 | 分享有效（需提取码） |
-| 6 | 百度网盘 | https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c | 3w4c | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 6 | 百度网盘 | https://pan.baidu.com/s/10aV7oN1zITo4Q5g4LJP9GA?pwd=3w4c | 3w4c | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### trapped with jester
 
@@ -369,7 +370,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1rpXbddHBDgcVd1FDJfol9Q?pwd=saz2 | saz2 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/4d8a94a454f3 | AkUR | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/4d8a94a454f3 | AkUR | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### Line 88
 
@@ -386,7 +387,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1iLYNAz-Kazw3nZvczUBuNw?pwd=i9ei | i9ei | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/9b7b131baf30 | 9zQg | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/9b7b131baf30 | 9zQg | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 灰姑娘现象FD永远
 
@@ -395,7 +396,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1f2dNCgw9PrqzUdPqJsxndA?pwd=m29s | m29s | 置顶评论 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/531bc6015b3f | uZEx | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/531bc6015b3f | uZEx | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOnyNubGFfhY9O_bSCZxGpbiA1# | e2aw | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜灰姑娘现象FD机翻润色补丁.zip 704MB 2026-03-18 07:04  |
 
 ### 人类保管库
@@ -409,7 +410,7 @@
 | 1 | 城通网盘 | https://url08.ctfile.com/f/65517308-8452140339-7cfe4e?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜人类保管库 汉化版.zip 137.26 MB2025-10-14 |
 | 2 | 123云盘 | https://www.123865.com/s/ootDVv-t8jov?pwd=nJnu# | nJnu | 视频简介 | ✅ 有效 | 分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12 |
 | 3 | 腾讯微云 | https://share.weiyun.com/3sblmV9F | NjAj | 视频简介 | ✅ 有效 | 分享有效｜人类保管库 汉化版.zip 2025年10月14日 137.26 MB  |
-| 4 | 夸克网盘 | https://pan.quark.cn/s/00dffb67943b | NjAj | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 夸克网盘 | https://pan.quark.cn/s/00dffb67943b | NjAj | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 细思极恐的恐怖游戏
 
@@ -420,7 +421,7 @@
 | 1 | 123云盘 | https://www.123865.com/s/ootDVv-e8jov?pwd=0W0H# | 0W0H | 视频简介 | ✅ 有效 | 分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12 |
 | 2 | 腾讯微云 | https://share.weiyun.com/wgc5yqS9 | i7nvek | 视频简介 | ✅ 有效 | 分享有效｜细思极恐的恐怖游戏 汉化版.zip 2025年10月14日 84.8 MB  |
 | 3 | 城通网盘 | https://url08.ctfile.com/f/65517308-8452136792-41c934?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜细思极恐的恐怖游戏 汉化版.zip 84.80 MB2025-10-14 |
-| 4 | 夸克网盘 | https://pan.quark.cn/s/d707fbc6e074 | 38iF | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 夸克网盘 | https://pan.quark.cn/s/d707fbc6e074 | 38iF | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 并非兄妹的热病
 
@@ -430,7 +431,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 123云盘 | https://www.123865.com/s/ootDVv-Z8jov?pwd=X3mv# | X3mv | 视频简介 | ✅ 有效 | 分享有效｜并非兄妹 汉化完整版.zip｜到期 2099-12-12 |
 | 2 | 城通网盘 | https://url08.ctfile.com/f/65517308-8452133618-d25165?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜并非兄妹的热病 汉化补丁.zip 141.62 MB2025-10-14 |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/aacaa363282f | 1WkS | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/aacaa363282f | 1WkS | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 4 | 腾讯微云 | https://share.weiyun.com/qlGJBhrY | 99ctdh | 视频简介 | ✅ 有效 | 分享有效｜并非兄妹的热病 汉化补丁.zip 2025年10月14日 141.62 MB  |
 
 ### 关于埋葬某人的梦
@@ -442,10 +443,10 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 123云盘 | https://www.123865.com/s/ootDVv-hQTmv?pwd=bae5# | bae5 | 视频简介 | ✅ 有效 | 分享有效｜关于梦 汉化补丁.zip｜到期 2099-12-12 |
-| 2 | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | gk4sj4 | 视频简介 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8515303151/148508/%E5%85%B3%E4%BA%8E%E6%A2%A6%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | gk4sj4 | 视频简介 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 腾讯微云 | https://share.weiyun.com/SOCeG7UU | gk4sj4 | 视频简介 | ✅ 有效 | 分享有效｜关于梦 汉化补丁.zip 2025年11月28日 47.8 MB  |
-| 4 | 夸克网盘 | https://pan.quark.cn/s/849df8014b17 | qKNp | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 5 | 夸克网盘 | https://pan.quark.cn/s/0a1e3c67c472 | d8vs | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 夸克网盘 | https://pan.quark.cn/s/849df8014b17 | qKNp | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 5 | 夸克网盘 | https://pan.quark.cn/s/0a1e3c67c472 | d8vs | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 舌头上的动物园
 
@@ -453,12 +454,12 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/19hK8KkVXFLy3IfY70pw_eg?pwd=tjck | tjck | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/246f4d295926?pwd=XiEz | XiEz | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/19hK8KkVXFLy3IfY70pw_eg?pwd=tjck | tjck | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/246f4d295926?pwd=XiEz | XiEz | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOiITcGJud8b9aFLSLFdI1nRA1# | cejm | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23  |
-| 4 | UC网盘 | https://drive.uc.cn/s/d05786e3dbc84 | 4xEq | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 5 | 百度网盘 | https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx | 5mkx | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 6 | 百度网盘 | https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf | 3umf | UP主评论区补充 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | UC网盘 | https://drive.uc.cn/s/d05786e3dbc84 | 4xEq | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 5 | 百度网盘 | https://pan.baidu.com/s/1oDNRBPmxr_KjnppmdGX4Og?pwd=5mkx | 5mkx | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 6 | 百度网盘 | https://pan.baidu.com/s/1VHUrWgoOHfDzyMnP9uTlFw?pwd=3umf | 3umf | UP主评论区补充 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 暴走族怪谈大会 再归
 
@@ -467,11 +468,11 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1JS9og_ufq2ij3MweaONMaA?pwd=igqz | igqz | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/b1670df90436?pwd=aeTt | aeTt | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/b1670df90436?pwd=aeTt | aeTt | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOiDvXodPCJ-e23xvHJQ2cWkA1# | xtgi | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈(1).zip 19.6MB 2026-01-06 00:11  |
 | 4 | 百度网盘 | https://pan.baidu.com/s/1IXFJlXpg3oOmU7bWRM-6wA?pwd=88ac | 88ac | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码） |
 | 5 | 百度网盘 | https://pan.baidu.com/s/1_Kt7VHEgLnhVWzfIs8fHHw?pwd=gxn6 | gxn6 | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码） |
-| 6 | 夸克网盘 | https://pan.quark.cn/s/980575fd2e8e | d6pz | UP主评论区补充 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 6 | 夸克网盘 | https://pan.quark.cn/s/980575fd2e8e | d6pz | UP主评论区补充 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 7 | 迅雷云盘 | https://pan.xunlei.com/s/VOiDrNAPa1_8MkwA3Y1WFrBjA1# | 7fyk | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜暴走族夜怪 汉化补丁by青灯不弈.zip 19.6MB 2026-01-05 23:42  |
 
 ### Lost Friends1-DisappeardName-
@@ -489,7 +490,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1GoE1Tph2N41YvO6-jkMEww?pwd=5nfh | 5nfh | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/0cc65915c309 | Xr9D | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/0cc65915c309 | Xr9D | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 相反的理想主义
 
@@ -506,7 +507,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1HnPY270U8_ZEegiTRs81vg?pwd=hjvv | hjvv | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/ea843c28afe4 | VPSs | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/ea843c28afe4 | VPSs | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 水手服与命中注定之人
 
@@ -515,7 +516,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1PiwRqSKWBEBbL5OgVEsLbA?pwd=d7fw | d7fw | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/93069786f079 | HgjG | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/93069786f079 | HgjG | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 爱情寄生虫
 
@@ -523,7 +524,7 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo | l5zo | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1jAimzdUD4aCQIRvsZZnXeQ?pwd=l5zo | l5zo | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 2 | 迅雷云盘 | https://pan.xunlei.com/s/VOmFlnMQuNyWGoD8c6c6jjzxA1# | cgpw | UP主评论区补充 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜爱情寄生虫 汉化完整版.zip 304.2MB 2026-02-25 18:04  |
 
 ### 对，现在骂人是犯规……惩罚之吻……要来咯（笑）
@@ -532,11 +533,11 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1_Tnf_8MG-0_1yZL0Zpy3kw?pwd=p0ag | p0ag | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/4045e8716360 | hEf2 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1_Tnf_8MG-0_1yZL0Zpy3kw?pwd=p0ag | p0ag | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/4045e8716360 | hEf2 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 123云盘 | https://www.123865.com/s/ootDVv-ioTmv?pwd=gqAu# | gqAu | 视频简介 | ✅ 有效 | 分享有效｜惩罚之吻 汉化补丁.zip｜到期 2099-12-12 |
-| 4 | 城通网盘 | https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528 | 1528 | 视频简介 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 5 | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | gibybv | 视频简介 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 城通网盘 | https://url08.ctfile.com/f/65517308-8531361019-83fe7a?p=1528 | 1528 | 视频简介 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 5 | 城通网盘 | https://drfs.ctcontents.com/file/65517308/8531361019/e55a70/%E6%83%A9%E7%BD%9A%E4%B9%8B%E5%90%BB%20%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81.zip | gibybv | 视频简介 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 6 | 腾讯微云 | https://share.weiyun.com/RvqDhtES | gibybv | 视频简介 | ✅ 有效 | 分享有效｜惩罚之吻 汉化补丁.zip 2025年12月03日 15.76 MB  |
 
 ### HIKEBACK
@@ -546,8 +547,8 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 城通网盘 | https://url08.ctfile.com/f/65517308-8432179003-769a05?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜HIKEBACK汉化完整版.zip 72.33 MB2025-09-13 |
-| 2 | 百度网盘 | https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw | 6ydw | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/c3635ad46422 | 2nY6 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 百度网盘 | https://pan.baidu.com/s/1HYbELL2mt7A9AbfY8BYKtg?pwd=6ydw | 6ydw | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/c3635ad46422 | 2nY6 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### seekL
 
@@ -564,7 +565,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 蓝奏云 | https://wwk.lanzoue.com/iW0Ug1q78fcf | 0nnn | 置顶评论 | ✅ 有效 | 分享有效｜demonheart 机翻润色补丁.zip |
-| 2 | 百度网盘 | https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn | 0nnn | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 百度网盘 | https://pan.baidu.com/s/1Bu3lcAQK7pdPbSMvhIWoqg?pwd=0nnn | 0nnn | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 恶魔之心：猎人
 
@@ -573,7 +574,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 蓝奏云 | https://wwk.lanzoue.com/idF3k1ru6cif | gkln | 视频简介 | ✅ 有效 | 分享有效｜恶魔之心：猎人 机翻汉化补丁.zip |
-| 2 | 百度网盘 | https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln | gkln | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 百度网盘 | https://pan.baidu.com/s/1A_tJhr1VxYqKGUdREKgr5g?pwd=gkln | gkln | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 不速之死
 
@@ -591,7 +592,7 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1MQGB57xKOuJFI0mf-Q8sUw?pwd=5br8 | 5br8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 百度网盘 | https://pan.baidu.com/s/1VfM569bIXc88XNqNWkPOPw?pwd=wd47 | wd47 | 置顶评论 | ✅ 有效 | 分享有效（需提取码） |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/03c50cd0bb46 | PTRp | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/03c50cd0bb46 | PTRp | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### Birla_NNN
 
@@ -609,8 +610,8 @@
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 迅雷云盘 | https://pan.xunlei.com/s/VOmJJ6JT-I48EuFreIkmxQKqA1 | 5h7k | weibo | ✅ 有效 | 分享有效（需提取码）｜永久有效｜与死神的约会 本体完整汉化版.zip 929.3MB 2026-02-25 18:19  |
 | 2 | 迅雷云盘 | https://pan.xunlei.com/s/VOmJJ6JS9lZjFpoV7D3wTk0PA1 | 3hxn | weibo | ✅ 有效 | 分享有效（需提取码）｜永久有效｜与死神的约会（含DLC版汉化补丁）.zip 893.5MB 2026-02-25 18:19  |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/7592f83e7545 | Tfnr | weibo | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 4 | 夸克网盘 | https://pan.quark.cn/s/c7a6308b4f59 | thfd | weibo | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/7592f83e7545 | Tfnr | weibo | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 夸克网盘 | https://pan.quark.cn/s/c7a6308b4f59 | thfd | weibo | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 冬鸦何处去
 
@@ -618,9 +619,9 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1Gfv3o5OrV-Y_cjm217TyUQ?pwd=rajl | rajl | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/625a66c341d1 | BgmE | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 3 | 夸克网盘 | https://pan.quark.cn/s/8e9e4cff4611 | 1ukP | UP主评论区补充 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1Gfv3o5OrV-Y_cjm217TyUQ?pwd=rajl | rajl | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/625a66c341d1 | BgmE | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 3 | 夸克网盘 | https://pan.quark.cn/s/8e9e4cff4611 | 1ukP | UP主评论区补充 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 杀死公主
 
@@ -636,7 +637,7 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi | c3xi | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/15udWdc7EQcXUfmkO6QekJA?pwd=c3xi | c3xi | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### MAMIYA
 
@@ -644,7 +645,7 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 夸克网盘 | https://pan.quark.cn/s/d2a976a8cf14 | gZP3 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 夸克网盘 | https://pan.quark.cn/s/d2a976a8cf14 | gZP3 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 2 | 百度网盘 | https://pan.baidu.com/s/1s3e_j513Xw7TzBIldQAUdw?pwd=pi79 | pi79 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 
 ### 别吃收银员！
@@ -656,9 +657,9 @@
 | 1 | 123云盘 | https://www.123865.com/s/ootDVv-Frjov?pwd=2zNr# | 2zNr | 视频简介 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁v1.1.zip｜到期 2099-12-12 |
 | 2 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450712659-59335e?p=1528 | 1528 | 视频简介 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁v1.1.zip 209.17 MB2025-10-12 |
 | 3 | 夸克网盘 | https://pan.quark.cn/s/fb2fd1917f21 | 1u5z | 视频简介 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁v1.1.zip |
-| 4 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 1528 | 置顶评论 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 城通网盘 | https://url08.ctfile.com/f/65517308-8450245157-46cb7a?p=1528 | 1528 | 置顶评论 | ❌ 失效 | 文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 5 | 123云盘 | https://www.123684.com/s/ootDVv-cDjov?pwd=7mRc | 7mRc | 置顶评论 | ✅ 有效 | 分享有效｜别吃收银员！ 汉化补丁.zip｜到期 2099-12-12 |
-| 6 | 夸克网盘 | https://pan.quark.cn/s/e84b113d573c | KdJV | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 6 | 夸克网盘 | https://pan.quark.cn/s/e84b113d573c | KdJV | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### BUSTAFELLOWS
 
@@ -676,8 +677,8 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3 | a1s3 | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/9780b9de1b7c | h79D | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1V3DaknVe_YzqV3zY4HsQWg?pwd=a1s3 | a1s3 | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/9780b9de1b7c | h79D | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOmoYvBo974B8b5YVyYDQQegA1# | 3am3 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜邻人 汉化补丁.zip 43MB 2026-03-04 00:37  |
 
 ### 恶魔之心：被诅咒的试炼
@@ -686,10 +687,10 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq | 72mq | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/d891ae5de524 | tm89 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1q21Upm-P4cM_y8xWEnsNHA?pwd=72mq | 72mq | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/d891ae5de524 | tm89 | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOnS5Nm02L74hPotSQhGoJwoA1# | tm89 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip 30.5MB 2026-03-11 21:26  |
-| 4 | UC网盘 | https://drive.uc.cn/s/e2f43ca43b8b4 | Xx9z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | UC网盘 | https://drive.uc.cn/s/e2f43ca43b8b4 | Xx9z | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 粉碎梦之门与病娇的按钮
 
@@ -698,12 +699,12 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1mlcD0J_uExvR0ZjtVvq9xw?pwd=3ww8 | 3ww8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/ebf194eb099f | 4jJg | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/ebf194eb099f | 4jJg | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOwqPQU1hyfxAii1mCw0LVNTA1# | ypz5 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜梦之门 汉化补丁v1.1by青灯不弈.zip 43.9MB 2026-07-06 15:50  |
-| 4 | 百度网盘 | https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q | vu7q | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 5 | 夸克网盘 | https://pan.quark.cn/s/d727e34ead20?pwd=RSW6 | RSW6 | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | 百度网盘 | https://pan.baidu.com/s/1viVsipJI6GcrsUR_kb6jvQ?pwd=vu7q | vu7q | 置顶评论 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 5 | 夸克网盘 | https://pan.quark.cn/s/d727e34ead20?pwd=RSW6 | RSW6 | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 6 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG4aIEXvegNNo9MQgXuNthA1# | pdu5 | 置顶评论 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜梦之门（冬弥雪） 汉化补丁by青灯不弈.zip 43.9MB 2026-05-10 16:50  |
-| 7 | UC网盘 | https://drive.uc.cn/s/874242a1ffa44 | CC5B | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 7 | UC网盘 | https://drive.uc.cn/s/874242a1ffa44 | CC5B | 置顶评论 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 8 | 百度网盘 | https://pan.baidu.com/s/1Sk67xbjZbziK63wRPFIMCQ?pwd=ry7r | ry7r | 置顶评论 | ✅ 有效 | 分享有效（需提取码） |
 | 9 | 迅雷云盘 | https://pan.xunlei.com/s/VOsG37JWLGwjOcLEBy26L1yHA1# | upat | 置顶评论 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜梦之门 汉化备份.zip 340.9MB 2026-05-10 16:45  |
 
@@ -716,7 +717,7 @@
 | 1 | 百度网盘 | https://pan.baidu.com/s/1g8qMG1nAzMjVSfUMMMqaqQ?pwd=4stn | 4stn | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/47eec60af621 | 43u2 | 视频简介 | ✅ 有效 | 分享有效｜冬弥雪短篇 |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOusVbmPXRqKqPVGD4QF6Jw_A1# | 43u2 | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05  |
-| 4 | UC网盘 | https://drive.uc.cn/s/a15712f77ccf4 | GpRv | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 4 | UC网盘 | https://drive.uc.cn/s/a15712f77ccf4 | GpRv | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 
 ### 替身谎言~one night liar
 
@@ -724,7 +725,7 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix | mwix | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1DYCaJZQl-aUs2063qBxm4w?pwd=mwix | mwix | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 2 | 夸克网盘 | https://pan.quark.cn/s/782fc8938454 | r83W | 视频简介 | ✅ 有效 | 分享有效｜替身谎言 |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VOyriyR9yyRk8XQqXaSHwtK1A1# | kpvq | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29  |
 | 4 | UC网盘 | https://drive.uc.cn/s/e818987ce1474 | bFaJ | 视频简介 | ✅ 有效 | 分享有效｜替身谎言 |
@@ -735,8 +736,8 @@
 
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
-| 1 | 百度网盘 | https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j | ur5j | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/14e3bebe2f45 | jiyj | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 1 | 百度网盘 | https://pan.baidu.com/s/1KBjc7WT1ya1ptOmWS0l2SA?pwd=ur5j | ur5j | 视频简介 | ❌ 失效 | 来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/14e3bebe2f45 | jiyj | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP43aDVHIUFIXuga6fe-IRJoA1# | skdr | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip 10MB 2026-10-16 20:03  |
 | 4 | UC网盘 | https://drive.uc.cn/s/d890c62374494 | aePj | 视频简介 | ✅ 有效 | 分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip |
 | 5 | 蓝奏云 | https://wwanu.lanzoue.com/iJbaA4c89rde | ei6b | 视频简介 | ✅ 有效 | 分享有效｜10.0 M |
@@ -748,7 +749,7 @@
 | # | 平台 | 链接 | 提取码 | 来源 | 状态 | 说明 |
 | ---: | --- | --- | --- | --- | --- | --- |
 | 1 | 百度网盘 | https://pan.baidu.com/s/1SS04HchS9uVIc5t-cqCDuA?pwd=n2b8 | n2b8 | 视频简介 | ✅ 有效 | 分享有效（需提取码） |
-| 2 | 夸克网盘 | https://pan.quark.cn/s/499e10eefe3d | K3rm | 视频简介 | ✅ 有效 | 分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip |
+| 2 | 夸克网盘 | https://pan.quark.cn/s/499e10eefe3d | K3rm | 视频简介 | ❌ 失效 | 分享已被封禁（文件涉及违规内容） |
 | 3 | 迅雷云盘 | https://pan.xunlei.com/s/VP4Ds50puFl_80nT5rSiBG9WA1# | estz | 视频简介 | ✅ 有效 | 分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58  |
 | 4 | UC网盘 | https://drive.uc.cn/s/6a8f0cac8f604 | s6Uh | 视频简介 | ✅ 有效 | 分享有效｜死刑前的心理咨询 汉化补丁v1.01.zip |
 | 5 | 蓝奏云 | https://wwanu.lanzoue.com/iFdGG4cg9hnc | 4s6x | 视频简介 | ✅ 有效 | 分享有效｜81.7 M |
