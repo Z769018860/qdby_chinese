@@ -1,1009 +1,1039 @@
 {
- "meta": {
-  "generated_at": "2026-10-31 00:06",
-  "note": "重新分享得到的补档链接；平台的登录态来自本机客户端 cookie"
- },
- "games": {
-  "自恋囚笼": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/6939ce179779",
-     "pwd": "qdby",
-     "share_id": "af887d2c293c477581b3fcf14d7cb67b",
-     "verified": true,
-     "check": "status=1",
-     "path": "/汉化补丁补档/自恋囚笼 汉化补丁by青灯不弈.zip",
-     "created_at": "2026-10-24 22:09",
-     "bvid": "BV12uxqzwEY9",
-     "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip",
-     "comment": {
-      "aid": 115339853563059,
-      "rpid": "322102123504",
-      "root": 278632042208,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-28 03:38"
-     }
-    }
-   }
+  "meta": {
+    "generated_at": "2026-10-31 00:15",
+    "note": "重新分享得到的补档链接；平台的登录态来自本机客户端 cookie"
   },
-  "戏剧之爱·安乐死": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/88dde2bc1723",
-     "pwd": "qdby",
-     "share_id": "d4901d91aff949b7b98ebf3193eb2fb0",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/戏剧之爱 机翻汉化补丁by青灯不弈.zip",
-     "created_at": "2026-10-24 22:11",
-     "bvid": "BV1UrYAzoEJc",
-     "bili_url": "https://www.bilibili.com/video/BV1UrYAzoEJc",
-     "comment": {
-      "aid": 115172182068280,
-      "rpid": "321761098752",
-      "root": 275522097280,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:22"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip"
-    }
-   }
-  },
-  "COLOR☆COLLAR": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/11d0f1c49a21",
-     "pwd": "qdby",
-     "share_id": "f9a2cf17f1ea4f8b82261f16e318e7ca",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/COLOR_COLLAR汉化补丁.zip",
-     "created_at": "2026-10-30 00:04",
-     "bvid": "BV1bZUgBPEGz",
-     "bili_url": "https://www.bilibili.com/video/BV1bZUgBPEGz",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜COLOR_COLLAR汉化补丁.zip",
-     "comment": {
-      "aid": 115601578133429,
-      "rpid": "322294215168",
-      "root": 283345963776,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-30 00:06"
-     }
-    }
-   }
-  },
-  "不要抛下我!!": {
-   "links": {
-    "baidu": {
-     "url": "https://pan.baidu.com/s/1fgzWMCZ1BFoBrcNxpxlFig",
-     "pwd": "qdby",
-     "share_id": "53105790978",
-     "platform": "baidu",
-     "verified": true,
-     "check": "errno=-9",
-     "path": "/不要抛下我",
-     "created_at": "2026-10-31 00:05",
-     "bvid": "BV1u96wBxEak",
-     "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效（需提取码）",
-     "comment": {
-      "aid": 115978260186304,
-      "rpid": "322402857904",
-      "root": 290103459760,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-31 00:06"
-     }
+  "games": {
+    "自恋囚笼": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/6939ce179779",
+          "pwd": "qdby",
+          "share_id": "af887d2c293c477581b3fcf14d7cb67b",
+          "verified": true,
+          "check": "status=1",
+          "path": "/汉化补丁补档/自恋囚笼 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-24 22:09",
+          "bvid": "BV12uxqzwEY9",
+          "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip",
+          "comment": {
+            "aid": 115339853563059,
+            "rpid": "322102123504",
+            "root": 278632042208,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:38"
+          }
+        }
+      }
     },
-    "quark": {
-     "url": "https://pan.quark.cn/s/3857bc04db6c",
-     "pwd": "qdby",
-     "share_id": "eee179ae217e459586c06d5ced358587",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/不要抛下我 汉化补丁.zip",
-     "created_at": "2026-10-24 22:11",
-     "bvid": "BV1u96wBxEak",
-     "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
-     "comment": {
-      "aid": 115978260186304,
-      "rpid": "322402717136",
-      "root": 290103459760,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-31 00:06"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜不要抛下我 汉化补丁.zip"
-    }
-   }
-  },
-  "神隐新娘（花嫁隐）": {
-   "links": {
-    "baidu": {
-     "url": "https://pan.baidu.com/s/1A_vhXoeYj8meHcq27zz2Ag",
-     "pwd": "qdby",
-     "share_id": "2857460916",
-     "platform": "baidu",
-     "verified": true,
-     "check": "errno=-9",
-     "path": "/花嫁隐 全部一起解压（分卷版",
-     "created_at": "2026-10-24 22:11",
-     "bvid": "BV1ZcfgBBEVw",
-     "bili_url": "https://www.bilibili.com/video/BV1ZcfgBBEVw",
-     "comment": {
-      "aid": 116101908268663,
-      "rpid": "321761285872",
-      "root": 292830836016,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:23"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效（需提取码）"
-    }
-   }
-  },
-  "meet her there": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/21f7498c60d9",
-     "pwd": "qdby",
-     "share_id": "f7a81f644b8847a595518e54cffc1362",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/meetherthere汉化补丁.zip",
-     "created_at": "2026-10-24 22:11",
-     "bvid": "BV1z94y1x7c7",
-     "bili_url": "https://www.bilibili.com/video/BV1z94y1x7c7",
-     "comment": {
-      "aid": 363274480,
-      "rpid": "321761294752",
-      "root": 185351344464,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:23"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜meetherthere汉化补丁.zip"
-    }
-   }
-  },
-  "灰姑娘现象": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/b31dc4b7a012",
-     "pwd": "qdby",
-     "share_id": "fb26ca47b78f48cf8d7b555b9c0ba6d1",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/灰姑娘现象 机翻汉化补丁.zip",
-     "created_at": "2026-10-24 22:11",
-     "bvid": "BV1fz4y1K7zW",
-     "bili_url": "https://www.bilibili.com/video/BV1fz4y1K7zW",
-     "comment": {
-      "aid": 575548092,
-      "rpid": "321761240144",
-      "root": 184456669632,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:23"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜灰姑娘现象 机翻汉化补丁.zip"
-    }
-   }
-  },
-  "灰姑娘现象FD永远": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/1911b5350265",
-     "pwd": "qdby",
-     "share_id": "1a8c7b14386a40eabd7be71e37e4e78e",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/汉化补丁补档/灰姑娘现象FD机翻润色补丁.zip",
-     "created_at": "2026-10-24 22:11",
-     "bvid": "BV1WH4y1D7U7",
-     "bili_url": "https://www.bilibili.com/video/BV1WH4y1D7U7",
-     "comment": {
-      "aid": 960855184,
-      "rpid": "321761311216",
-      "root": 185510017424,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:24"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜灰姑娘现象FD机翻润色补丁.zip"
-    }
-   }
-  },
-  "人类保管库": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/43f940379fef",
-     "pwd": "qdby",
-     "share_id": "8a3b90837a3c4ac293e67df2f477254d",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/汉化补丁补档/人类保管库 汉化版.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1eB41zMEqG",
-     "bili_url": "https://www.bilibili.com/video/BV1eB41zMEqG",
-     "comment": {
-      "aid": 115365203936691,
-      "rpid": "321761318624",
-      "root": 279216248368,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:24"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜人类保管库 汉化版.zip"
-    }
-   }
-  },
-  "细思极恐的恐怖游戏": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/02c2ea3c1ef0",
-     "pwd": "qdby",
-     "share_id": "4ce7fcbcc03a4a39b57fc2c0b4846cd8",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/汉化补丁补档/细思极恐的恐怖游戏 汉化版.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV13A41zAE7f",
-     "bili_url": "https://www.bilibili.com/video/BV13A41zAE7f",
-     "comment": {
-      "aid": 115365254334876,
-      "rpid": "321761327536",
-      "root": 279216501280,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:24"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip"
-    }
-   }
-  },
-  "并非兄妹的热病": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/e76da78ce902",
-     "pwd": "qdby",
-     "share_id": "55457b88a7d64e1585161ed66bd8939b",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/汉化补丁补档/并非兄妹的热病 汉化补丁.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1m14uzoEgp",
-     "bili_url": "https://www.bilibili.com/video/BV1m14uzoEgp",
-     "comment": {
-      "aid": 115359902404241,
-      "rpid": "321761405344",
-      "root": 279211944032,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:24"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜并非兄妹的热病 汉化补丁.zip"
-    }
-   }
-  },
-  "舌头上的动物园": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/049238d235ab",
-     "pwd": "qdby",
-     "verified": true,
-     "share_id": "049238d235ab",
-     "created_at": "2026-10-28 02:08",
-     "via": "salvage",
-     "bvid": "BV1scqNBmEJt",
-     "bili_url": "https://www.bilibili.com/video/BV1scqNBmEJt",
-     "comment": {
-      "aid": 115848404537202,
-      "rpid": "322102402880",
-      "root": 287715660256,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-28 03:39"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜舌头上的动物园 汉化补丁1.0.zip"
+    "戏剧之爱·安乐死": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/88dde2bc1723",
+          "pwd": "qdby",
+          "share_id": "d4901d91aff949b7b98ebf3193eb2fb0",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/戏剧之爱 机翻汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-24 22:11",
+          "bvid": "BV1UrYAzoEJc",
+          "bili_url": "https://www.bilibili.com/video/BV1UrYAzoEJc",
+          "comment": {
+            "aid": 115172182068280,
+            "rpid": "321761098752",
+            "root": 275522097280,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:22"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip"
+        }
+      }
     },
-    "baidu": {
-     "error": "errno=109 文件违规，无法分享"
-    }
-   }
-  },
-  "深海的勿忘草": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/8d25f0d5cd90",
-     "pwd": "qdby",
-     "share_id": "6bcb4bf580934fcc80d080b06d1d835f",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/深海的勿忘草 汉化补丁.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1sN411y7jE",
-     "bili_url": "https://www.bilibili.com/video/BV1sN411y7jE",
-     "comment": {
-      "aid": 487060161,
-      "rpid": "321761422064",
-      "root": 169282756688,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:25"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜深海的勿忘草 汉化补丁.zip"
-    }
-   }
-  },
-  "水手服与命中注定之人": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/43c262b596bc",
-     "pwd": "qdby",
-     "share_id": "17a663e32ccf4775a2c9343aba1be8c6",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/水手服与命中注定之人 汉化补丁.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1Gh4y1K75f",
-     "bili_url": "https://www.bilibili.com/video/BV1Gh4y1K75f",
-     "comment": {
-      "aid": 618063262,
-      "rpid": "321761464608",
-      "root": 184552360192,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:25"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜水手服与命中注定之人 汉化补丁.zip"
-    }
-   }
-  },
-  "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
-   "links": {
-    "baidu": {
-     "url": "https://pan.baidu.com/s/1NZjlDgVvDmb1y-8XRohRig",
-     "pwd": "qdby",
-     "share_id": "16035964912",
-     "platform": "baidu",
-     "verified": true,
-     "check": "errno=-9",
-     "path": "/惩罚之吻 汉化补丁（补档版）.zip",
-     "created_at": "2026-10-24 23:21",
-     "bvid": "BV1PgShBDEsc",
-     "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效（需提取码）",
-     "comment": {
-      "aid": 115652094330194,
-      "rpid": "322102406480",
-      "root": 284197812240,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-28 03:39"
-     }
+    "COLOR☆COLLAR": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/11d0f1c49a21",
+          "pwd": "qdby",
+          "share_id": "f9a2cf17f1ea4f8b82261f16e318e7ca",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/COLOR_COLLAR汉化补丁.zip",
+          "created_at": "2026-10-30 00:04",
+          "bvid": "BV1bZUgBPEGz",
+          "bili_url": "https://www.bilibili.com/video/BV1bZUgBPEGz",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜COLOR_COLLAR汉化补丁.zip",
+          "comment": {
+            "aid": 115601578133429,
+            "rpid": "322294215168",
+            "root": 283345963776,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-30 00:06"
+          }
+        }
+      }
     },
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/0b5669db48a4",
-     "pwd": "qdby",
-     "share_id": "a2cdee0e119d444aba54e3165f9e3654",
-     "verified": true,
-     "check": "status=1",
-     "path": "/惩罚之吻 汉化补丁（文件夹）",
-     "created_at": "2026-10-24 22:41",
-     "bvid": "BV1PgShBDEsc",
-     "comment": {
-      "aid": 115652094330194,
-      "rpid": "321761602240",
-      "root": 284197812240,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:25"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜惩罚之吻 汉化补丁"
-    }
-   },
-   "bvid": "BV1PgShBDEsc",
-   "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc"
-  },
-  "HIKEBACK": {
-   "links": {
-    "baidu": {
-     "url": "https://pan.baidu.com/s/1gn3U07hd5yLbuzf3RSkGgw",
-     "pwd": "qdby",
-     "share_id": "63795919760",
-     "platform": "baidu",
-     "verified": true,
-     "check": "errno=-9",
-     "path": "/HIKEBACK汉化完整版（补档版）.zip",
-     "created_at": "2026-10-24 23:20",
-     "bvid": "BV1nqpLzXEe9",
-     "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效（需提取码）",
-     "comment": {
-      "aid": 115194999145805,
-      "rpid": "322102355184",
-      "root": 275908594160,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-28 03:39"
-     }
+    "不要抛下我!!": {
+      "links": {
+        "baidu": {
+          "url": "https://pan.baidu.com/s/1fgzWMCZ1BFoBrcNxpxlFig",
+          "pwd": "qdby",
+          "share_id": "53105790978",
+          "platform": "baidu",
+          "verified": true,
+          "check": "errno=-9",
+          "path": "/不要抛下我",
+          "created_at": "2026-10-31 00:05",
+          "bvid": "BV1u96wBxEak",
+          "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 115978260186304,
+            "rpid": "322402857904",
+            "root": 290103459760,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-31 00:06"
+          }
+        },
+        "quark": {
+          "url": "https://pan.quark.cn/s/3857bc04db6c",
+          "pwd": "qdby",
+          "share_id": "eee179ae217e459586c06d5ced358587",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/不要抛下我 汉化补丁.zip",
+          "created_at": "2026-10-24 22:11",
+          "bvid": "BV1u96wBxEak",
+          "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
+          "comment": {
+            "aid": 115978260186304,
+            "rpid": "322402717136",
+            "root": 290103459760,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-31 00:06"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜不要抛下我 汉化补丁.zip"
+        }
+      }
     },
-    "quark": {
-     "url": "https://pan.quark.cn/s/2505995c5313",
-     "pwd": "qdby",
-     "share_id": "99e6e499d7994e35890c7f10b6057cd3",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/HIKEBACK汉化完整版.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1nqpLzXEe9",
-     "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
-     "comment": {
-      "aid": 115194999145805,
-      "rpid": "321761540256",
-      "root": 275908594160,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:26"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜HIKEBACK汉化完整版.zip"
-    }
-   }
-  },
-  "Magical Otoge Ciel": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/726eace5633a",
-     "pwd": "qdby",
-     "share_id": "8ab5fc6be253403f9ef4ea99723922fb",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/ciel机翻补丁.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1pN411k7sR",
-     "bili_url": "https://www.bilibili.com/video/BV1pN411k7sR",
-     "comment": {
-      "aid": 487194030,
-      "rpid": "321761549248",
-      "root": 169552316240,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:26"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜ciel机翻补丁.zip"
-    }
-   }
-  },
-  "冬鸦何处去": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/a38e116a5cce",
-     "pwd": "qdby",
-     "share_id": "9f19801ffbac451a8e7b81c48e482e2d",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/冬鸦何处去 机翻补丁.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV16C4y1271r",
-     "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
-     "comment": {
-      "aid": 790890367,
-      "rpid": "321761504768",
-      "root": 194445555040,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:26"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜冬鸦何处去 机翻补丁.zip"
-    }
-   }
-  },
-  "MAMIYA": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/84d73880bf01",
-     "pwd": "qdby",
-     "share_id": "4857ea29b966420e97f4fe00e94903ae",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/MAMIYA 机翻润色补丁1.0.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1MH4y117qX",
-     "bili_url": "https://www.bilibili.com/video/BV1MH4y117qX",
-     "comment": {
-      "aid": 964020944,
-      "rpid": "321761638832",
-      "root": 196781721104,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:26"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜MAMIYA 机翻润色补丁1.0.zip"
-    }
-   }
-  },
-  "别吃收银员！": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/c74f09e414b5",
-     "pwd": "qdby",
-     "share_id": "31e8c9404a0f43acbd5db0e4793046dc",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
-     "created_at": "2026-10-24 22:12",
-     "bvid": "BV1j94czJEkt",
-     "bili_url": "https://www.bilibili.com/video/BV1j94czJEkt",
-     "comment": {
-      "aid": 115354332299302,
-      "rpid": "321761683216",
-      "root": 278871447616,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-24 23:27"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜别吃收银员！ 汉化补丁.zip"
-    }
-   }
-  },
-  "恶魔之心：被诅咒的试炼": {
-   "links": {
-    "baidu": {
-     "error": "errno=109 文件违规，无法分享"
+    "神隐新娘（花嫁隐）": {
+      "links": {
+        "baidu": {
+          "url": "https://pan.baidu.com/s/1A_vhXoeYj8meHcq27zz2Ag",
+          "pwd": "qdby",
+          "share_id": "2857460916",
+          "platform": "baidu",
+          "verified": true,
+          "check": "errno=-9",
+          "path": "/花嫁隐 全部一起解压（分卷版",
+          "created_at": "2026-10-24 22:11",
+          "bvid": "BV1ZcfgBBEVw",
+          "bili_url": "https://www.bilibili.com/video/BV1ZcfgBBEVw",
+          "comment": {
+            "aid": 116101908268663,
+            "rpid": "321761285872",
+            "root": 292830836016,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:23"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效（需提取码）"
+        }
+      }
     },
-    "quark": {
-     "url": "https://pan.quark.cn/s/80eff14a12ed",
-     "pwd": "qdby",
-     "share_id": "cd22c0d09d5749fca8a2e9879c8b8746",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
-     "created_at": "2026-10-26 00:04",
-     "bvid": "BV174wFzQEQy",
-     "bili_url": "https://www.bilibili.com/video/BV174wFzQEQy",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
-     "comment": {
-      "aid": 116210876287752,
-      "rpid": "321882405728",
-      "root": 295185192144,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-26 00:05"
-     }
-    }
-   }
-  },
-  "替身谎言~one night liar": {
-   "links": {
-    "baidu": {
-     "url": "https://pan.baidu.com/s/1QiF4niD9QqUVsL98vpvKGA",
-     "pwd": "qdby",
-     "share_id": "22278314569",
-     "platform": "baidu",
-     "verified": true,
-     "check": "errno=-9",
-     "path": "/替身谎言",
-     "created_at": "2026-10-30 00:05",
-     "bvid": "BV1ziGw6zEsC",
-     "bili_url": "https://www.bilibili.com/video/BV1ziGw6zEsC",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效（需提取码）",
-     "comment": {
-      "aid": 117014152612105,
-      "rpid": "322294298240",
-      "root": 311642516304,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-30 00:06"
-     }
-    }
-   }
-  },
-  "拍卖开始的五分钟后": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/4c9ce70b62c2",
-     "pwd": "qdby",
-     "share_id": "0f5202c8ea3940c68539ade51d1e2819",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
-     "created_at": "2026-10-30 00:05",
-     "bvid": "BV1bEp16TErC",
-     "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
-     "comment": {
-      "aid": 117438985276217,
-      "rpid": "322294145856",
-      "root": 321759980944,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-30 00:06"
-     }
+    "meet her there": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/21f7498c60d9",
+          "pwd": "qdby",
+          "share_id": "f7a81f644b8847a595518e54cffc1362",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/meetherthere汉化补丁.zip",
+          "created_at": "2026-10-24 22:11",
+          "bvid": "BV1z94y1x7c7",
+          "bili_url": "https://www.bilibili.com/video/BV1z94y1x7c7",
+          "comment": {
+            "aid": 363274480,
+            "rpid": "321761294752",
+            "root": 185351344464,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:23"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜meetherthere汉化补丁.zip"
+        }
+      }
     },
-    "baidu": {
-     "error": "errno=109 文件违规，无法分享"
-    }
-   }
-  },
-  "销魂罪人": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/891a96ff4450",
-     "pwd": "qdby",
-     "share_id": "c8be2c1b2cd64ac993e4be25cbf33d9b",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/夸克上传文件/销魂罪人 机翻润色补丁.zip",
-     "created_at": "2026-10-25 00:35",
-     "bvid": "BV1yz421m7Dp",
-     "bili_url": "https://www.bilibili.com/video/BV1yz421m7Dp",
-     "comment": {
-      "aid": 1354464951,
-      "rpid": "321768466928",
-      "root": 220712094416,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-25 00:36"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜销魂罪人 机翻润色补丁.zip"
-    }
-   }
-  },
-  "爱情寄生虫": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/7f0eb1beb164",
-     "pwd": "qdby",
-     "share_id": "59fc955437eb4c68a90b6f3603db2129",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "/爱情寄生虫 汉化完整版.zip",
-     "created_at": "2026-10-29 00:06",
-     "bvid": "BV1S5411v7Hm",
-     "bili_url": "https://www.bilibili.com/video/BV1S5411v7Hm",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜爱情寄生虫 汉化完整版.zip",
-     "comment": {
-      "aid": 453511227,
-      "rpid": "322193240320",
-      "root": 202454366624,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-29 00:07"
-     }
-    }
-   }
-  },
-  "与死神的约会": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/05ac5941a9ea",
-     "pwd": "qdby",
-     "share_id": "686af0e1deda4e14b1ec82758f26b84a",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/汉化补丁补档/与死神的约会 本体完整汉化版.zip",
-     "created_at": "2026-10-25 00:52",
-     "bvid": null,
-     "bili_url": null,
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜与死神的约会 本体完整汉化版.zip",
-     "site_direct": true
-    }
-   }
-  },
-  "恶魔之心": {
-   "links": {
-    "baidu": {
-     "error": "errno=109 文件违规，无法分享"
-    }
-   }
-  },
-  "Lost Friends 2": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/113b975990d5",
-     "pwd": "qdby",
-     "share_id": "113b975990d5",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "LF2汉化补丁.zip",
-     "created_at": "2026-10-28 03:08",
-     "via": "salvage",
-     "refit": "",
-     "size": 26305845,
-     "bvid": "BV1vh4y1T7NB",
-     "bili_url": "https://www.bilibili.com/video/BV1vh4y1T7NB",
-     "comment": {
-      "aid": 617778876,
-      "rpid": "322102185616",
-      "root": 183128406288,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-28 03:31"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜LF2汉化补丁.zip"
-    }
-   }
-  },
-  "~把最棒的巧克力送给你 这份心意就是全部哦~": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/99b23c1a429e",
-     "pwd": "qdby",
-     "share_id": "99b23c1a429e",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
-     "created_at": "2026-10-28 03:08",
-     "via": "salvage",
-     "refit": "",
-     "size": 125753258,
-     "bvid": "BV1pTE66vEQ8",
-     "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
-     "comment": {
-      "aid": 116733520118898,
-      "rpid": "322102072432",
-      "root": "",
-      "where": "top",
-      "pinned": "",
-      "at": "2026-10-28 03:31"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip"
+    "灰姑娘现象": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/b31dc4b7a012",
+          "pwd": "qdby",
+          "share_id": "fb26ca47b78f48cf8d7b555b9c0ba6d1",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/灰姑娘现象 机翻汉化补丁.zip",
+          "created_at": "2026-10-24 22:11",
+          "bvid": "BV1fz4y1K7zW",
+          "bili_url": "https://www.bilibili.com/video/BV1fz4y1K7zW",
+          "comment": {
+            "aid": 575548092,
+            "rpid": "321761240144",
+            "root": 184456669632,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:23"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜灰姑娘现象 机翻汉化补丁.zip"
+        }
+      }
     },
-    "baidu": {
-     "error": "errno=109 文件违规，无法分享"
-    }
-   }
-  },
-  "关于埋葬某人的梦": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/154cad1d6c14",
-     "pwd": "qdby",
-     "share_id": "154cad1d6c14",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "关于梦 汉化补丁.zip",
-     "created_at": "2026-10-28 03:08",
-     "via": "salvage",
-     "refit": "",
-     "size": 50125631,
-     "bvid": "BV1SuS5BjEJN",
-     "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
-     "comment": {
-      "aid": 115623891830968,
-      "rpid": "322102075616",
-      "root": 283701942608,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-28 03:32"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜关于梦 汉化补丁.zip"
-    }
-   }
-  },
-  "暴走族怪谈大会 再归": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/0b305a5d9e73",
-     "pwd": "qdby",
-     "share_id": "0b305a5d9e73",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "暴走族夜怪 汉化补丁by青灯不弈.zip",
-     "created_at": "2026-10-28 03:08",
-     "via": "salvage",
-     "refit": "",
-     "size": 20518510,
-     "bvid": "BV1LLibBaESe",
-     "bili_url": "https://www.bilibili.com/video/BV1LLibBaESe",
-     "comment": {
-      "aid": 115843304259966,
-      "rpid": "322102079376",
-      "root": 287635435424,
-      "where": "reply",
-      "pinned": "自己热评",
-      "at": "2026-10-28 03:32"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜暴走族夜怪 汉化补丁by青灯不弈.zip"
-    }
-   }
-  },
-  "粉碎梦之门与病娇的按钮": {
-   "links": {
-    "quark": {
-     "platform": "quark",
-     "url": "https://pan.quark.cn/s/0a83402008da",
-     "pwd": "qdby",
-     "share_id": "0a83402008da",
-     "verified": true,
-     "check": "status=1 audit=0 viol=0",
-     "path": "梦之门 汉化补丁v1.1by青灯不弈.zip",
-     "created_at": "2026-10-28 03:08",
-     "via": "salvage",
-     "refit": "",
-     "size": 45998955,
-     "bvid": "BV1UW5E6zEfy",
-     "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
-     "comment": {
-      "aid": 116549423726986,
-      "rpid": "322193286160",
-      "root": 301956893424,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "short": true,
-      "at": "2026-10-29 00:07"
-     },
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜梦之门 汉化补丁v1.1by青灯不弈.zip"
+    "灰姑娘现象FD永远": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/1911b5350265",
+          "pwd": "qdby",
+          "share_id": "1a8c7b14386a40eabd7be71e37e4e78e",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/汉化补丁补档/灰姑娘现象FD机翻润色补丁.zip",
+          "created_at": "2026-10-24 22:11",
+          "bvid": "BV1WH4y1D7U7",
+          "bili_url": "https://www.bilibili.com/video/BV1WH4y1D7U7",
+          "comment": {
+            "aid": 960855184,
+            "rpid": "321761311216",
+            "root": 185510017424,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:24"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜灰姑娘现象FD机翻润色补丁.zip"
+        }
+      }
     },
-    "baidu": {
-     "url": "https://pan.baidu.com/s/1ecJeOtd23AT6TT7SfPwd2A",
-     "pwd": "qdby",
-     "share_id": "50897785825",
-     "platform": "baidu",
-     "verified": true,
-     "check": "errno=-9",
-     "path": "/冬弥雪 梦之门/梦之门 汉化补丁v1.1by青灯不弈.zip",
-     "created_at": "2026-10-29 00:06",
-     "bvid": "BV1UW5E6zEfy",
-     "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效（需提取码）",
-     "comment": {
-      "aid": 116549423726986,
-      "rpid": "322193257728",
-      "root": 301956893424,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-29 00:07"
-     }
+    "人类保管库": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/43f940379fef",
+          "pwd": "qdby",
+          "share_id": "8a3b90837a3c4ac293e67df2f477254d",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/汉化补丁补档/人类保管库 汉化版.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1eB41zMEqG",
+          "bili_url": "https://www.bilibili.com/video/BV1eB41zMEqG",
+          "comment": {
+            "aid": 115365203936691,
+            "rpid": "321761318624",
+            "root": 279216248368,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:24"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜人类保管库 汉化版.zip"
+        }
+      }
+    },
+    "细思极恐的恐怖游戏": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/02c2ea3c1ef0",
+          "pwd": "qdby",
+          "share_id": "4ce7fcbcc03a4a39b57fc2c0b4846cd8",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/汉化补丁补档/细思极恐的恐怖游戏 汉化版.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV13A41zAE7f",
+          "bili_url": "https://www.bilibili.com/video/BV13A41zAE7f",
+          "comment": {
+            "aid": 115365254334876,
+            "rpid": "321761327536",
+            "root": 279216501280,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:24"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip"
+        }
+      }
+    },
+    "并非兄妹的热病": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/e76da78ce902",
+          "pwd": "qdby",
+          "share_id": "55457b88a7d64e1585161ed66bd8939b",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/汉化补丁补档/并非兄妹的热病 汉化补丁.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1m14uzoEgp",
+          "bili_url": "https://www.bilibili.com/video/BV1m14uzoEgp",
+          "comment": {
+            "aid": 115359902404241,
+            "rpid": "321761405344",
+            "root": 279211944032,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:24"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜并非兄妹的热病 汉化补丁.zip"
+        }
+      }
+    },
+    "舌头上的动物园": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/049238d235ab",
+          "pwd": "qdby",
+          "verified": true,
+          "share_id": "049238d235ab",
+          "created_at": "2026-10-28 02:08",
+          "via": "salvage",
+          "bvid": "BV1scqNBmEJt",
+          "bili_url": "https://www.bilibili.com/video/BV1scqNBmEJt",
+          "comment": {
+            "aid": 115848404537202,
+            "rpid": "322102402880",
+            "root": 287715660256,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜舌头上的动物园 汉化补丁1.0.zip"
+        },
+        "baidu": {
+          "error": "errno=109 文件违规，无法分享"
+        }
+      }
+    },
+    "深海的勿忘草": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/8d25f0d5cd90",
+          "pwd": "qdby",
+          "share_id": "6bcb4bf580934fcc80d080b06d1d835f",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/深海的勿忘草 汉化补丁.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1sN411y7jE",
+          "bili_url": "https://www.bilibili.com/video/BV1sN411y7jE",
+          "comment": {
+            "aid": 487060161,
+            "rpid": "321761422064",
+            "root": 169282756688,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:25"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜深海的勿忘草 汉化补丁.zip"
+        }
+      }
+    },
+    "水手服与命中注定之人": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/43c262b596bc",
+          "pwd": "qdby",
+          "share_id": "17a663e32ccf4775a2c9343aba1be8c6",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/水手服与命中注定之人 汉化补丁.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1Gh4y1K75f",
+          "bili_url": "https://www.bilibili.com/video/BV1Gh4y1K75f",
+          "comment": {
+            "aid": 618063262,
+            "rpid": "321761464608",
+            "root": 184552360192,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:25"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜水手服与命中注定之人 汉化补丁.zip"
+        }
+      }
+    },
+    "对，现在骂人是犯规……惩罚之吻……要来咯（笑）": {
+      "links": {
+        "baidu": {
+          "url": "https://pan.baidu.com/s/1NZjlDgVvDmb1y-8XRohRig",
+          "pwd": "qdby",
+          "share_id": "16035964912",
+          "platform": "baidu",
+          "verified": true,
+          "check": "errno=-9",
+          "path": "/惩罚之吻 汉化补丁（补档版）.zip",
+          "created_at": "2026-10-24 23:21",
+          "bvid": "BV1PgShBDEsc",
+          "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 115652094330194,
+            "rpid": "322102406480",
+            "root": 284197812240,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          }
+        },
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/0b5669db48a4",
+          "pwd": "qdby",
+          "share_id": "a2cdee0e119d444aba54e3165f9e3654",
+          "verified": true,
+          "check": "status=1",
+          "path": "/惩罚之吻 汉化补丁（文件夹）",
+          "created_at": "2026-10-24 22:41",
+          "bvid": "BV1PgShBDEsc",
+          "comment": {
+            "aid": 115652094330194,
+            "rpid": "321761602240",
+            "root": 284197812240,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:25"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜惩罚之吻 汉化补丁"
+        }
+      },
+      "bvid": "BV1PgShBDEsc",
+      "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc"
+    },
+    "HIKEBACK": {
+      "links": {
+        "baidu": {
+          "url": "https://pan.baidu.com/s/1gn3U07hd5yLbuzf3RSkGgw",
+          "pwd": "qdby",
+          "share_id": "63795919760",
+          "platform": "baidu",
+          "verified": true,
+          "check": "errno=-9",
+          "path": "/HIKEBACK汉化完整版（补档版）.zip",
+          "created_at": "2026-10-24 23:20",
+          "bvid": "BV1nqpLzXEe9",
+          "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 115194999145805,
+            "rpid": "322102355184",
+            "root": 275908594160,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:39"
+          }
+        },
+        "quark": {
+          "url": "https://pan.quark.cn/s/2505995c5313",
+          "pwd": "qdby",
+          "share_id": "99e6e499d7994e35890c7f10b6057cd3",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/HIKEBACK汉化完整版.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1nqpLzXEe9",
+          "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
+          "comment": {
+            "aid": 115194999145805,
+            "rpid": "321761540256",
+            "root": 275908594160,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:26"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜HIKEBACK汉化完整版.zip"
+        }
+      }
+    },
+    "Magical Otoge Ciel": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/726eace5633a",
+          "pwd": "qdby",
+          "share_id": "8ab5fc6be253403f9ef4ea99723922fb",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/ciel机翻补丁.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1pN411k7sR",
+          "bili_url": "https://www.bilibili.com/video/BV1pN411k7sR",
+          "comment": {
+            "aid": 487194030,
+            "rpid": "321761549248",
+            "root": 169552316240,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:26"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜ciel机翻补丁.zip"
+        }
+      }
+    },
+    "冬鸦何处去": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/a38e116a5cce",
+          "pwd": "qdby",
+          "share_id": "9f19801ffbac451a8e7b81c48e482e2d",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/冬鸦何处去 机翻补丁.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV16C4y1271r",
+          "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
+          "comment": {
+            "aid": 790890367,
+            "rpid": "321761504768",
+            "root": 194445555040,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:26"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜冬鸦何处去 机翻补丁.zip"
+        }
+      }
+    },
+    "MAMIYA": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/84d73880bf01",
+          "pwd": "qdby",
+          "share_id": "4857ea29b966420e97f4fe00e94903ae",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/MAMIYA 机翻润色补丁1.0.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1MH4y117qX",
+          "bili_url": "https://www.bilibili.com/video/BV1MH4y117qX",
+          "comment": {
+            "aid": 964020944,
+            "rpid": "321761638832",
+            "root": 196781721104,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:26"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜MAMIYA 机翻润色补丁1.0.zip"
+        }
+      }
+    },
+    "别吃收银员！": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/c74f09e414b5",
+          "pwd": "qdby",
+          "share_id": "31e8c9404a0f43acbd5db0e4793046dc",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
+          "created_at": "2026-10-24 22:12",
+          "bvid": "BV1j94czJEkt",
+          "bili_url": "https://www.bilibili.com/video/BV1j94czJEkt",
+          "comment": {
+            "aid": 115354332299302,
+            "rpid": "321761683216",
+            "root": 278871447616,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-24 23:27"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜别吃收银员！ 汉化补丁.zip"
+        }
+      }
+    },
+    "恶魔之心：被诅咒的试炼": {
+      "links": {
+        "baidu": {
+          "error": "errno=109 文件违规，无法分享"
+        },
+        "quark": {
+          "url": "https://pan.quark.cn/s/80eff14a12ed",
+          "pwd": "qdby",
+          "share_id": "cd22c0d09d5749fca8a2e9879c8b8746",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "created_at": "2026-10-26 00:04",
+          "bvid": "BV174wFzQEQy",
+          "bili_url": "https://www.bilibili.com/video/BV174wFzQEQy",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
+          "comment": {
+            "aid": 116210876287752,
+            "rpid": "321882405728",
+            "root": 295185192144,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-26 00:05"
+          }
+        }
+      }
+    },
+    "替身谎言~one night liar": {
+      "links": {
+        "baidu": {
+          "url": "https://pan.baidu.com/s/1QiF4niD9QqUVsL98vpvKGA",
+          "pwd": "qdby",
+          "share_id": "22278314569",
+          "platform": "baidu",
+          "verified": true,
+          "check": "errno=-9",
+          "path": "/替身谎言",
+          "created_at": "2026-10-30 00:05",
+          "bvid": "BV1ziGw6zEsC",
+          "bili_url": "https://www.bilibili.com/video/BV1ziGw6zEsC",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 117014152612105,
+            "rpid": "322294298240",
+            "root": 311642516304,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-30 00:06"
+          }
+        }
+      }
+    },
+    "拍卖开始的五分钟后": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/4c9ce70b62c2",
+          "pwd": "qdby",
+          "share_id": "0f5202c8ea3940c68539ade51d1e2819",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-30 00:05",
+          "bvid": "BV1bEp16TErC",
+          "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
+          "comment": {
+            "aid": 117438985276217,
+            "rpid": "322294145856",
+            "root": 321759980944,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-30 00:06"
+          }
+        },
+        "baidu": {
+          "error": "errno=109 文件违规，无法分享"
+        }
+      }
+    },
+    "销魂罪人": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/891a96ff4450",
+          "pwd": "qdby",
+          "share_id": "c8be2c1b2cd64ac993e4be25cbf33d9b",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/夸克上传文件/销魂罪人 机翻润色补丁.zip",
+          "created_at": "2026-10-25 00:35",
+          "bvid": "BV1yz421m7Dp",
+          "bili_url": "https://www.bilibili.com/video/BV1yz421m7Dp",
+          "comment": {
+            "aid": 1354464951,
+            "rpid": "321768466928",
+            "root": 220712094416,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-25 00:36"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜销魂罪人 机翻润色补丁.zip"
+        }
+      }
+    },
+    "爱情寄生虫": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/7f0eb1beb164",
+          "pwd": "qdby",
+          "share_id": "59fc955437eb4c68a90b6f3603db2129",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/爱情寄生虫 汉化完整版.zip",
+          "created_at": "2026-10-29 00:06",
+          "bvid": "BV1S5411v7Hm",
+          "bili_url": "https://www.bilibili.com/video/BV1S5411v7Hm",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜爱情寄生虫 汉化完整版.zip",
+          "comment": {
+            "aid": 453511227,
+            "rpid": "322193240320",
+            "root": 202454366624,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-29 00:07"
+          }
+        }
+      }
+    },
+    "与死神的约会": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/05ac5941a9ea",
+          "pwd": "qdby",
+          "share_id": "686af0e1deda4e14b1ec82758f26b84a",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/汉化补丁补档/与死神的约会 本体完整汉化版.zip",
+          "created_at": "2026-10-25 00:52",
+          "bvid": null,
+          "bili_url": null,
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜与死神的约会 本体完整汉化版.zip",
+          "site_direct": true
+        }
+      }
+    },
+    "恶魔之心": {
+      "links": {
+        "baidu": {
+          "error": "errno=109 文件违规，无法分享"
+        }
+      }
+    },
+    "Lost Friends 2": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/113b975990d5",
+          "pwd": "qdby",
+          "share_id": "113b975990d5",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "LF2汉化补丁.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 26305845,
+          "bvid": "BV1vh4y1T7NB",
+          "bili_url": "https://www.bilibili.com/video/BV1vh4y1T7NB",
+          "comment": {
+            "aid": 617778876,
+            "rpid": "322102185616",
+            "root": 183128406288,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:31"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜LF2汉化补丁.zip"
+        }
+      }
+    },
+    "~把最棒的巧克力送给你 这份心意就是全部哦~": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/99b23c1a429e",
+          "pwd": "qdby",
+          "share_id": "99b23c1a429e",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 125753258,
+          "bvid": "BV1pTE66vEQ8",
+          "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
+          "comment": {
+            "aid": 116733520118898,
+            "rpid": "322102072432",
+            "root": "",
+            "where": "top",
+            "pinned": "",
+            "at": "2026-10-28 03:31"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip"
+        },
+        "baidu": {
+          "error": "errno=109 文件违规，无法分享"
+        }
+      }
+    },
+    "关于埋葬某人的梦": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/154cad1d6c14",
+          "pwd": "qdby",
+          "share_id": "154cad1d6c14",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "关于梦 汉化补丁.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 50125631,
+          "bvid": "BV1SuS5BjEJN",
+          "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN",
+          "comment": {
+            "aid": 115623891830968,
+            "rpid": "322102075616",
+            "root": 283701942608,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-28 03:32"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜关于梦 汉化补丁.zip"
+        }
+      }
+    },
+    "暴走族怪谈大会 再归": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/0b305a5d9e73",
+          "pwd": "qdby",
+          "share_id": "0b305a5d9e73",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "暴走族夜怪 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 20518510,
+          "bvid": "BV1LLibBaESe",
+          "bili_url": "https://www.bilibili.com/video/BV1LLibBaESe",
+          "comment": {
+            "aid": 115843304259966,
+            "rpid": "322102079376",
+            "root": 287635435424,
+            "where": "reply",
+            "pinned": "自己热评",
+            "at": "2026-10-28 03:32"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜暴走族夜怪 汉化补丁by青灯不弈.zip"
+        }
+      }
+    },
+    "粉碎梦之门与病娇的按钮": {
+      "links": {
+        "quark": {
+          "platform": "quark",
+          "url": "https://pan.quark.cn/s/0a83402008da",
+          "pwd": "qdby",
+          "share_id": "0a83402008da",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "梦之门 汉化补丁v1.1by青灯不弈.zip",
+          "created_at": "2026-10-28 03:08",
+          "via": "salvage",
+          "refit": "",
+          "size": 45998955,
+          "bvid": "BV1UW5E6zEfy",
+          "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
+          "comment": {
+            "aid": 116549423726986,
+            "rpid": "322193286160",
+            "root": 301956893424,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-29 00:07"
+          },
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜梦之门 汉化补丁v1.1by青灯不弈.zip"
+        },
+        "baidu": {
+          "url": "https://pan.baidu.com/s/1ecJeOtd23AT6TT7SfPwd2A",
+          "pwd": "qdby",
+          "share_id": "50897785825",
+          "platform": "baidu",
+          "verified": true,
+          "check": "errno=-9",
+          "path": "/冬弥雪 梦之门/梦之门 汉化补丁v1.1by青灯不弈.zip",
+          "created_at": "2026-10-29 00:06",
+          "bvid": "BV1UW5E6zEfy",
+          "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效（需提取码）",
+          "comment": {
+            "aid": 116549423726986,
+            "rpid": "322193257728",
+            "root": 301956893424,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-29 00:07"
+          }
+        }
+      }
+    },
+    "死刑前的心理咨询": {
+      "links": {
+        "quark": {
+          "url": "https://pan.quark.cn/s/13b5867398e4",
+          "pwd": "qdby",
+          "share_id": "23ca620f64084d05b5b7d693135ced64",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=4 viol=0",
+          "path": "/死刑前的心理咨询 汉化补丁by青灯不弈.zip",
+          "created_at": "2026-10-31 00:05",
+          "bvid": "BV1LyJi6mEsh",
+          "bili_url": "https://www.bilibili.com/video/BV1LyJi6mEsh",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:00",
+          "checked_detail": "分享有效｜死刑前的心理咨询 汉化补丁by青灯不弈.zip",
+          "comment": {
+            "aid": 117456064547441,
+            "rpid": "322402967072",
+            "root": 321039878080,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-31 00:07"
+          }
+        }
+      }
+    },
+    "汝，当爱休息区的他": {
+      "links": {
+        "baidu": {
+          "error": "errno=109 文件违规，无法分享"
+        },
+        "quark": {
+          "url": "https://pan.quark.cn/s/70ef1f011c6c",
+          "pwd": "qdby",
+          "share_id": "fa8d2716b472418193bc5e7d754baa91",
+          "platform": "quark",
+          "verified": true,
+          "check": "status=1 audit=0 viol=0",
+          "path": "/邻人 汉化补丁.zip",
+          "created_at": "2026-10-31 00:15",
+          "bvid": "BV1BsPczfENe",
+          "bili_url": "https://www.bilibili.com/video/BV1BsPczfENe",
+          "checked": "ok",
+          "checked_at": "2026-10-31 00:14",
+          "checked_detail": "status=1 audit=4 viol=0",
+          "comment": {
+            "aid": 116166316003236,
+            "rpid": "322403724624",
+            "root": 294351309888,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "at": "2026-10-31 00:15"
+          }
+        }
+      }
     }
-   }
-  },
-  "死刑前的心理咨询": {
-   "links": {
-    "quark": {
-     "url": "https://pan.quark.cn/s/13b5867398e4",
-     "pwd": "qdby",
-     "share_id": "23ca620f64084d05b5b7d693135ced64",
-     "platform": "quark",
-     "verified": true,
-     "check": "status=1 audit=4 viol=0",
-     "path": "/死刑前的心理咨询 汉化补丁by青灯不弈.zip",
-     "created_at": "2026-10-31 00:05",
-     "bvid": "BV1LyJi6mEsh",
-     "bili_url": "https://www.bilibili.com/video/BV1LyJi6mEsh",
-     "checked": "ok",
-     "checked_at": "2026-10-31 00:00",
-     "checked_detail": "分享有效｜死刑前的心理咨询 汉化补丁by青灯不弈.zip",
-     "comment": {
-      "aid": 117456064547441,
-      "rpid": "322402967072",
-      "root": 321039878080,
-      "where": "reply",
-      "pinned": "UP主置顶",
-      "at": "2026-10-31 00:07"
-     }
-    }
-   }
   }
- }
 }

@@ -31,6 +31,10 @@
     "Lost Friends 2": {
       "target": "LF2汉化补丁.zip",
       "aliases": ["LF2", "Lost Friends"]
+    },
+    "汝，当爱休息区的他": {
+      "target": "邻人 汉化补丁.zip",
+      "aliases": ["邻人", "隣人"]
     }
   }
 }

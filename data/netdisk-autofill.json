@@ -1,14 +1,14 @@
 {
  "meta": {
-  "generated_at": "2026-10-31 00:07",
+  "generated_at": "2026-10-31 00:16",
   "source_checked_at": "2026-10-31 00:07",
   "games": 64,
   "summary": {
    "ok": 27,
    "failover": 4,
    "recovered": 0,
-   "reshared": 32,
-   "pending": 1,
+   "reshared": 33,
+   "pending": 0,
    "none": 0
   },
   "recovered_links": 0,
@@ -2974,14 +2974,28 @@
    "candidates": []
   },
   "汝，当爱休息区的他": {
-   "state": "pending",
+   "state": "reshared",
    "video": {
     "bvid": "BV1BsPczfENe",
     "url": "https://www.bilibili.com/video/BV1BsPczfENe",
     "title": "【电波浪漫短篇】深夜的休息区偶遇一个在洗手池里钓鱼的神秘男主——《汝，当爱休息区的他》（汝、フードコートの隣人を愛せ）汉化发布+测试实况",
     "pubdate": "2026-03-04"
    },
-   "active": null,
+   "active": {
+    "platform": "quark",
+    "platform_name": "夸克网盘",
+    "pwd": "qdby",
+    "detail": "/邻人 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-10-31 00:15",
+    "check": "status=1 audit=0 viol=0",
+    "checked": "ok",
+    "checked_at": "2026-10-31 00:14",
+    "from_reshare": true
+   },
    "alt": [],
    "dead": [
     {
@@ -3004,15 +3018,22 @@
     }
    ],
    "candidates": [],
-   "request": {
-    "bili_url": "https://www.bilibili.com/video/BV1BsPczfENe",
-    "weibo_url": "",
-    "dead_platforms": [
-     "夸克网盘",
-     "百度网盘"
-    ],
-    "message": "《汝，当爱休息区的他》的夸克网盘、百度网盘链接失效了，求补档 🙏"
-   }
+   "reshare": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "qdby",
+     "detail": "/邻人 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-10-31 00:15",
+     "check": "status=1 audit=0 viol=0",
+     "checked": "ok",
+     "checked_at": "2026-10-31 00:14"
+    }
+   ]
   },
   "恶魔之心：被诅咒的试炼": {
    "state": "reshared",
