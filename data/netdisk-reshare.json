@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-31 00:15",
+    "generated_at": "2026-10-31 00:35",
     "note": "重新分享得到的补档链接；平台的登录态来自本机客户端 cookie"
   },
   "games": {
@@ -1008,7 +1008,27 @@
     "汝，当爱休息区的他": {
       "links": {
         "baidu": {
-          "error": "errno=109 文件违规，无法分享"
+          "pwd": "qdby",
+          "platform": "baidu",
+          "verified": false,
+          "check": "访客视角「涉及侵权…无法访问」",
+          "path": "/邻人2 汉化补丁.zip",
+          "created_at": "2026-10-31 00:35",
+          "bvid": "BV1BsPczfENe",
+          "bili_url": "https://www.bilibili.com/video/BV1BsPczfENe",
+          "checked": "dead",
+          "checked_at": "2026-10-31 00:37",
+          "checked_detail": "errno=-9",
+          "comment": {
+            "aid": 116166316003236,
+            "rpid": "322405708736",
+            "root": 294351309888,
+            "where": "reply",
+            "pinned": "UP主置顶",
+            "short": true,
+            "at": "2026-10-31 00:37"
+          },
+          "error": "内容级封禁：换哈希+改名重传后分享仍被屏蔽，放弃百度"
         },
         "quark": {
           "url": "https://pan.quark.cn/s/70ef1f011c6c",
@@ -1026,11 +1046,12 @@
           "checked_detail": "status=1 audit=4 viol=0",
           "comment": {
             "aid": 116166316003236,
-            "rpid": "322403724624",
+            "rpid": "322405708736",
             "root": 294351309888,
             "where": "reply",
             "pinned": "UP主置顶",
-            "at": "2026-10-31 00:15"
+            "short": true,
+            "at": "2026-10-31 00:37"
           }
         }
       }

@@ -342,9 +342,12 @@ def cmd_plan():
 
     for name, info in dead.items():
         row = {'bvid': info['bvid'], 'bili_url': info['bili_url'], 'plats': {}}
+        # 有些盘对某部作品是**内容级**封禁：换哈希、换名字、重传都救不回来，
+        # 硬试只会反复攒违规记录。别名表里写 "skip": ["baidu"] 就彻底别再碰这个盘。
+        skip_plats = set((alias_map().get(name) or {}).get('skip') or [])
         for ln in info['links']:
             plat = ln['platform']
-            if plat not in idx:
+            if plat not in idx or plat in skip_plats:
                 continue
             it, sc = pick(name, idx[plat], plat)
             if not it or sc < 0.72:
@@ -360,6 +363,8 @@ def cmd_plan():
         # 对读者来说「夸克能下」远好过「百度已取消、没有替代」。
         if not row['plats']:
             for plat2 in idx:
+                if plat2 in skip_plats:
+                    continue
                 it, sc = pick(name, idx[plat2], plat2)
                 if not it or sc < 0.72:
                     continue

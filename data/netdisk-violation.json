@@ -76,9 +76,22 @@
    "error": "errno=109 文件违规，无法分享",
    "at": "2026-10-24 22:30",
    "uploaded_at": "2026-10-24 23:28"
+  },
+  "汝，当爱休息区的他": {
+   "platform": "baidu",
+   "from_path": "/邻人 汉化补丁.zip",
+   "out": "reup\\邻人 汉化补丁（补档版）.zip",
+   "size": 45096896,
+   "md5_before": "7e2cf53bb8697bfa87d65ba896713e70",
+   "md5_after": "fe5edac0588544a987fd317928c1d3c0",
+   "token": "c642c7652af5ed51c52176cb17841374",
+   "mode": "wrap",
+   "uploaded": false,
+   "error": "errno=109 文件违规，无法分享",
+   "at": "2026-10-31 00:26"
   }
  },
- "checked_at": "2026-10-25 00:28",
+ "checked_at": "2026-10-31 00:25",
  "upload_probe": {
   "baidu": {
    "precreate_errno": 9019,
