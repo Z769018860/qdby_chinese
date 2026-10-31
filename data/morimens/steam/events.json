@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-10-29T10:12:49.606Z",
+ "fetchedAt": "2026-10-30T10:15:03.288Z",
  "posts": [
+  {
+   "title": "📦 Steam Community items are now live!",
+   "date": "2026-10-29",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1847920302234584"
+  },
   {
    "title": "🐱 Light's 30-Day Challenge Log: Days 9–16",
    "date": "2026-10-27",
