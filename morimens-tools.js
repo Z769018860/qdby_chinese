@@ -80,7 +80,7 @@ function setupMorimensReplayShell(){
 
 (async()=>{
   try{
-  const assetVersion="20261028.30";
+  const assetVersion="20261031.1";
   // fetch every module in parallel up front; the sequential imports below then only evaluate them
   for(const m of ["morimens-dtide-loader","morimens-dtide-battle","morimens-dtide-battle-ui","morimens-dtide-zones","morimens-tierlist","morimens-summon-calendar","morimens-birthday-calendar","morimens-dtide","morimens-catlog","morimens-replay-scoring","morimens-replay-timeline","morimens-data","morimens-skeydb","morimens-love-ranking","morimens-i18n","morimens-calculator-formulas","morimens-calculator-skeydb","morimens-calculator-stats","morimens-calculator-realms","morimens-calculator-combat","morimens-calculator-export","morimens-replay-score-enhancer","morimens-replay-export-v2","morimens-dtide-usage","morimens-dtide-team-ui","morimens-dtide-progression-fix","morimens-assist-list"]){const l=document.createElement("link");l.rel="modulepreload";l.href=`./${m}.js?v=${assetVersion}`;document.head.appendChild(l)}
     window.MorimensDtideRenderer="legacy";
@@ -109,6 +109,7 @@ function setupMorimensReplayShell(){
     await import(`./morimens-map-overview.js?v=${assetVersion}`);
     await import(`./morimens-birthday-calendar.js?v=${assetVersion}`);
     // 校猫日志独立于榜单数据：单独 try 包裹，模块自身失败也不会中断后续初始化
+    try{await import(`./morimens-main-hard.js?v=${assetVersion}`)}catch(mainHardError){console.error('Hard main-story module failed to load',mainHardError)}
     try{await import(`./morimens-catlog.js?v=${assetVersion}`)}catch(catlogError){console.error('Catlog module failed to load',catlogError)}
     await import(`./morimens-dtide.js?v=${assetVersion}`);
     await new Promise(resolve=>requestAnimationFrame(()=>resolve()));

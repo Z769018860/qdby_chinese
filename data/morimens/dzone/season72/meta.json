@@ -3,22 +3,22 @@
   "activityTid": 83314,
   "name": "第72期 融灾 · 血肉戒指",
   "date": "10.26-11.8",
-  "updatedAt": "2026-10-28 21:08",
+  "updatedAt": "2026-10-31 16:00",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-10-28T21:08:10.496303+08:00",
+  "sourceRetrievedAt": "2026-10-31T16:00:25.199407+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 9427,
-    "previous-capture": 3039
+    "teams_latest.jsonl": 9760,
+    "previous-capture": 5996
   },
   "skippedTailLines": 0,
   "duplicateRankRowsDropped": [],
   "recordCount": 2000,
   "playersWithTeamDetail": 2000,
-  "teamRows": 12466,
+  "teamRows": 15756,
   "stageGroupIds": [
     83429,
     83430,
@@ -73,7 +73,19 @@
       },
       {
         "file": "raw-teams/teams-010.jsonl.gz",
-        "lines": 466
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-011.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-012.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-013.jsonl.gz",
+        "lines": 156
       }
     ],
     "uids": "uids.csv",
