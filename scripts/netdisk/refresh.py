@@ -301,6 +301,7 @@ def fetch_video(entry):
 def fetch_article(cv_id):
     """B 站专栏正文（需要先访问一次首页取 buvid cookie，否则会被风控 -352）"""
     try:
+        os.makedirs(CACHE, exist_ok=True)
         jar = os.path.join(CACHE, 'cookie.txt')
         subprocess.run(['curl', '-s', '-m', '20', '-A', UA, '-c', jar, '-o', os.devnull,
                         'https://www.bilibili.com/'], check=False)
@@ -320,6 +321,7 @@ def fetch_article(cv_id):
 def fetch_article_browser(cv_id):
     """接口被风控时，用无头浏览器渲染专栏页并取正文"""
     try:
+        os.makedirs(CACHE, exist_ok=True)
         fin = os.path.join(CACHE, 'art_in.json')
         fout = os.path.join(CACHE, 'art_out.json')
         json.dump([{'key': 'cv%d' % cv_id, 'platform': 'biliart',
@@ -645,6 +647,7 @@ def run_spa_checks(links, node_bin='node'):
     if not items:
         return Counter()
     print('[4/4] 浏览器通道核验 %d 条（迅雷/城通/微云），需要本机 Chrome 或 Edge…' % len(items))
+    os.makedirs(CACHE, exist_ok=True)
     ts = str(int(time.time()))
     fin = os.path.join(CACHE, 'spa_in.json')
     fout = os.path.join(CACHE, 'spa_out.json')
