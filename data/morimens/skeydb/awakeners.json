@@ -2,8 +2,8 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "4a6bce06cef8d7c655349147e81aca238932fdf6",
-    "syncedAt": "2026-11-01T10:39:12.653Z",
+    "commit": "b13070b233d065f5513233f6220fa3045738ebd0",
+    "syncedAt": "2026-11-02T11:27:28.219Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "count": 62,
@@ -96,7 +96,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Mythag uses the silver extracted from the bodies of the deceased to create the Awakener.\n\nThe Sculptors' Association induce the formation of silver from living bodies and refine it into the Awakener.\n\nThese are two entirely different ideologies. The latter, while having an extremely high ceiling, clearly violates ethical standards, thus becoming a taboo Research that persists despite prohibitions.\n\nAfter the Wax Museum incident, 24 was brought back to Mythag. She spent a long time in the campus observation rooms and research labs, necessitating personal supervision whenever she went out.\n\nUndoubtedly, this is an extremely uncontrollable living Awakener. During the subsequent observation period of half a year, 24's body continuously split into many personalities.\n\nShe suddenly found herself with unfamiliar friends and enemies, bought many strange items, and even learned to speak Chinese without realizing it.\n\nHer life is never short of \"surprises\".\n\n\"24 is a discrete function composed of a series of isolated points,\" Doll commented, \"Do not believe every word she says.\""
+            "content": "Mythag uses the silver extracted from the bodies of the deceased to create the Awakener.\n\nThe Sculptors' Association induce the formation of silver from living bodies and refine it into the Awakener.\n\nThese are two entirely different ideologies. The latter, while having an extremely high ceiling, clearly violates ethical standards, thus becoming a taboo Research that persists despite prohibitions.\n\nAfter the Wax Museum incident, 24 was brought back to Mythag. She spent a long time in the campus observation rooms and research labs, necessitating personal supervision whenever she went out.\n\nUndoubtedly, this is an extremely uncontrollable living Awakener. During the subsequent observation period of half a year, 24's body continuously split into many personalities.\n\nShe suddenly found herself with unfamiliar friends and enemies, bought many strange items, and even learned to speak Chinese without realizing it.\n\nHer life is never short of \"surprises\".\n\n\"24 is a discrete function composed of a series of isolated points,\" Doll commented,\"Do not believe every word she says.\""
           },
           {
             "kind": "story",
@@ -108,14 +108,14 @@
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "On a snowy day that November, 24 fell ill.\n\nAfter a week of grueling work, she came down with a severe fever and lay in bed for days on end.\n\nIn her daze, she seemed to hear little mice whimpering near her ears. After an unknown stretch of time, someone was standing at her bedside.\n\nShe recognized those eyes—it was the child from the sewer. Covered in mud, the child held out a grimy little pill to 24.\n\n\"For you. Take it,\" the child said bluntly, her voice surprisingly pleasant—so it turned out she was a girl.\n\n24 looked at the scrapes on her elbow and face but did not ask where the pill had come from. She simply held the girl's hand tightly.\n\nThe girl mumbled awkwardly, then said in a cool tone, \"I won't leave. I'll go once you're better.\"\n\nEven when I'm better—don't leave.\n\n24 answered silently, in her heart.\n\nThe first snow of winter fell over Londinium for an entire week. On the day it finally stopped, 24 was very happy—because not only had her fever broken, but she had also gained a sister."
+            "content": "On a snowy day that November, 24 fell ill.\n\nAfter a week of grueling work, she came down with a severe fever and lay in bed for days on end.\n\nIn her daze, she seemed to hear little mice whimpering near her ears. After an unknown stretch of time, someone was standing at her bedside.\n\nShe recognized those eyes—it was the child from the sewer. Covered in mud, the child held out a grimy little pill to 24.\n\n\"For you. Take it,\" the child said bluntly, her voice surprisingly pleasant—so it turned out she was a girl.\n\n24 looked at the scrapes on her elbow and face but did not ask where the pill had come from. She simply held the girl's hand tightly.\n\nThe girl mumbled awkwardly, then said in a cool tone,\"I won't leave. I'll go once you're better.\"\n\nEven when I'm better—don't leave.\n\n24 answered silently, in her heart.\n\nThe first snow of winter fell over Londinium for an entire week. On the day it finally stopped, 24 was very happy—because not only had her fever broken, but she had also gained a sister."
           }
         ],
         "voiceLines": [
           {
             "id": "voice-6516",
             "title": "Awaken",
-            "content": "My name, uh, I can't remember. Oh, right, \"24,\" that's what they call me... No! Stop! Don't come out! You can't, not now..."
+            "content": "My name, uh, I can't remember. Oh, right,\"24,\" that's what they call me... No! Stop! Don't come out! You can't, not now..."
           },
           {
             "id": "voice-5751",
@@ -248,7 +248,7 @@
           {
             "id": "voice-6297",
             "title": "Investigation Begins",
-            "content": "Although I am a pacifist, \"they\" clearly think otherwise..."
+            "content": "Although I am a pacifist,\"they\" clearly think otherwise..."
           },
           {
             "id": "voice-6529",
@@ -641,7 +641,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Arithmetic: Zero points. Aurita even scored 2 points.\n\nEnglish: Failing. It took a long time to understand the difference between \"shift\" and \"bullshit.\"\n\n......\n\nHistory: Failing. Claimed Caligula was the most outstanding Roman emperor because he built many arenas.\n\nDanger Rating: C. Shows a degree of aggression when interacting with other Awakeners. Not a serious threat; no special attention needed.\n\nNotes: This individual has almost no self-care abilities (another victim poisoned by slavery), requires constant attention, and must not be allowed to use snowflake cream as a dental cleaner again.\n\n—Excerpt from A.F. 313, \"Mythag Annual Student Profile.\""
+            "content": "Arithmetic: Zero points. Aurita even scored 2 points.\n\nEnglish: Failing. It took a long time to understand the difference between \"shift\" and \"bullshit.\"\n\n......\n\nHistory: Failing. Claimed Caligula was the most outstanding Roman emperor because he built many arenas.\n\nDanger Rating: C. Shows a degree of aggression when interacting with other Awakeners. Not a serious threat; no special attention needed.\n\nNotes: This individual has almost no self-care abilities (another victim poisoned by slavery), requires constant attention, and must not be allowed to use snowflake cream as a dental cleaner again.\n\n—Excerpt from A.F. 313,\"Mythag Annual Student Profile.\""
           },
           {
             "kind": "story",
@@ -2249,7 +2249,7 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "During the investigation along the southern coast of Cornwall, I discovered a derelict village unmarked on any known map. Upon investigation, we confirmed that it had been \"erased\" by an outbreak of dissolution.\n\nIn the village, we collected a large number of anomalous marine specimens, including carnivorous giant clams, heat-resistant sea angels, and most baffling of all, \"amphibious jellyfish\" found everywhere.\n\nIn a dilapidated house that had become a jellyfish nest, we recovered a fluid Silver Core weighing approximately 11.85 drams. While extracting the core, our team was attacked by mutated jellyfish; fortunately, their glands had decayed, posing no neurotoxic threat.\n\n—<Italic:Record of the Third Biology Department Field Survey, A.F. 308>"
+            "content": "During the investigation along the southern coast of Cornwall, I discovered a derelict village unmarked on any known map. Upon investigation, we confirmed that it had been \"erased\" by an outbreak of dissolution.\n\nIn the village, we collected a large number of anomalous marine specimens, including carnivorous giant clams, heat-resistant sea angels, and most baffling of all,\"amphibious jellyfish\" found everywhere.\n\nIn a dilapidated house that had become a jellyfish nest, we recovered a fluid Silver Core weighing approximately 11.85 drams. While extracting the core, our team was attacked by mutated jellyfish; fortunately, their glands had decayed, posing no neurotoxic threat.\n\n—<Italic:Record of the Third Biology Department Field Survey, A.F. 308>"
           },
           {
             "kind": "story",
@@ -3975,7 +3975,7 @@
           },
           {
             "id": "voice-90373",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "I was immersed in that black, sticky ooze for a long, long time—so long that I forgot about time itself, so long that even Pollux forgot about me. It didn't bring physical pain... just dread, watching my soul dissolve away."
           },
           {
@@ -5039,7 +5039,7 @@
           },
           {
             "id": "voice-81170",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "Mental illness is not exclusive to this era; it transcends time and space. Dissolution is the same. Both transcend the boundaries of human cognition, don't they?"
           },
           {
@@ -5454,13 +5454,13 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Corposant's daily schedule is very fixed; you just need to be at a specific place at a specific time to find her.\n\nGenerally speaking, Corposant gets up at 6:00, takes a cold bath, and does exercises. 7:00 is breakfast time, and besides oatmeal and pickled fish, a large amount of caffeine supplements is also required.\n\nFrom 9:00 to 12:00, it is Corposant's study time; she will revise nautical charts or calibrate equipment during this period. When the class bell rings, Corposant will come outdoors, waving a flag as a traffic officer, which greatly alleviates the road congestion during lunch.\n\nCorposant's lunch time depends on the \"traffic conditions, \" but no later than 12: 30. After a short break, at 14:00, Corposant will appear at the seaside on time, observing wind direction and weather. At this point, attention should be paid to the movements of Corposant, Faros, and Celeste, to avoid them \"commandeering\" the museum model ships or luring passersby out to sea.\n\nDinner time is at 19:00. To numb her sleep cycle, completely destroyed by long-term sailing, Corposant needs to consume a large amount of alcohol and sleep-inducing tinctures. Only in this way can she successfully fall asleep at 22:00; otherwise, she will force herself to stay awake to deal with possible \"accidents\" during the voyage.\n\nConsequently, situations resulting from this include, but are not limited to, the phenomenon of St. Elmo's fire going out of control, leading to the entire area shining like daylight, or abnormal, uncontrolled area voltage, machinery running erratically, fires, etc.\n\n<Red:Note, during this time absolutely do not let Erica and Corposant come into contact with each other!>\n\nFinally, a criticism notification:\n\nAfter Corposant's arrival, Winkle made several attempts to extract and study @2 at Corposant's chest as a light source. A verbal criticism has been issued; if any abnormalities are found, be sure to inform the Keeper in time.\n\n—Keeper %player%"
+            "content": "Corposant's daily schedule is very fixed; you just need to be at a specific place at a specific time to find her.\n\nGenerally speaking, Corposant gets up at 6:00, takes a cold bath, and does exercises. 7:00 is breakfast time, and besides oatmeal and pickled fish, a large amount of caffeine supplements is also required.\n\nFrom 9:00 to 12:00, it is Corposant's study time; she will revise nautical charts or calibrate equipment during this period. When the class bell rings, Corposant will come outdoors, waving a flag as a traffic officer, which greatly alleviates the road congestion during lunch.\n\nCorposant's lunch time depends on the \"traffic conditions,\"but no later than 12: 30. After a short break, at 14:00, Corposant will appear at the seaside on time, observing wind direction and weather. At this point, attention should be paid to the movements of Corposant, Faros, and Celeste, to avoid them \"commandeering\" the museum model ships or luring passersby out to sea.\n\nDinner time is at 19:00. To numb her sleep cycle, completely destroyed by long-term sailing, Corposant needs to consume a large amount of alcohol and sleep-inducing tinctures. Only in this way can she successfully fall asleep at 22:00; otherwise, she will force herself to stay awake to deal with possible \"accidents\" during the voyage.\n\nConsequently, situations resulting from this include, but are not limited to, the phenomenon of St. Elmo's fire going out of control, leading to the entire area shining like daylight, or abnormal, uncontrolled area voltage, machinery running erratically, fires, etc.\n\n<Red:Note, during this time absolutely do not let Erica and Corposant come into contact with each other!>\n\nFinally, a criticism notification:\n\nAfter Corposant's arrival, Winkle made several attempts to extract and study @2 at Corposant's chest as a light source. A verbal criticism has been issued; if any abnormalities are found, be sure to inform the Keeper in time.\n\n—Keeper %player%"
           },
           {
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "Before learning to speak, having grown up on a cruise ship, Corposant could already mimic the rhythm of waves crashing against the ship.\n\nSometimes the rhythm was \"splash, \" sometimes it was \"boom, \" like a lullaby sung by nature, making her feel secure, making her feel familiar, making her yearn.\n\nShe always understood the \"mood\" of the sea quicker than others, always read the \"language\" of the clouds quicker than others, and everyone said she was a natural \"navigator.\"\n\nIn reality, when she first heard the term, young Corposant couldn't understand. She only instinctively wanted to help the captain and sailors who took her in, wanting them to return home safely, not to be lost to storms or disasters from other ships.\n\nThe navigator who understood her wish said, \"Become a navigator, Corposant, become a navigator, fulfill your duty, and then your wish will come true.\"\n\nThe naive Corposant nodded, and thus, that navigator became her mentor. He taught her how to observe the stars, how to calibrate the sextant, and told her the ballads passed down through generations of navigators, those ominous ballads.\n\n\"I don't want to be embraced by saltwater, that's too cold, nor do I want to become phosphorescence.\" Young Corposant objected.\n\nHer mentor didn't teach her anything further, just touched her head and smiled.\n\nBecause time will teach her the meaning of the \"navigator's\" duty—\n\nShe is the sole guide on the vast ocean, the only hope."
+            "content": "Before learning to speak, having grown up on a cruise ship, Corposant could already mimic the rhythm of waves crashing against the ship.\n\nSometimes the rhythm was \"splash,\"sometimes it was \"boom,\"like a lullaby sung by nature, making her feel secure, making her feel familiar, making her yearn.\n\nShe always understood the \"mood\" of the sea quicker than others, always read the \"language\" of the clouds quicker than others, and everyone said she was a natural \"navigator.\"\n\nIn reality, when she first heard the term, young Corposant couldn't understand. She only instinctively wanted to help the captain and sailors who took her in, wanting them to return home safely, not to be lost to storms or disasters from other ships.\n\nThe navigator who understood her wish said,\"Become a navigator, Corposant, become a navigator, fulfill your duty, and then your wish will come true.\"\n\nThe naive Corposant nodded, and thus, that navigator became her mentor. He taught her how to observe the stars, how to calibrate the sextant, and told her the ballads passed down through generations of navigators, those ominous ballads.\n\n\"I don't want to be embraced by saltwater, that's too cold, nor do I want to become phosphorescence.\" Young Corposant objected.\n\nHer mentor didn't teach her anything further, just touched her head and smiled.\n\nBecause time will teach her the meaning of the \"navigator's\" duty—\n\nShe is the sole guide on the vast ocean, the only hope."
           },
           {
             "kind": "story",
@@ -5563,7 +5563,7 @@
           },
           {
             "id": "voice-84188",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "I don't know why it exists. I know only this: I must navigate successfully, and bring everyone home."
           },
           {
@@ -5574,7 +5574,7 @@
           {
             "id": "voice-84194",
             "title": "Chat: What I Like",
-            "content": "Rather than \"like, \" I prefer the word \"devotion.\" When I look directly at that indescribable god, my mind loses reason and fills with ecstasy. I should fear Him, but I can't help myself."
+            "content": "Rather than \"like,\"I prefer the word \"devotion.\" When I look directly at that indescribable god, my mind loses reason and fills with ecstasy. I should fear Him, but I can't help myself."
           },
           {
             "id": "voice-84196",
@@ -7152,7 +7152,7 @@
           },
           {
             "id": "voice-96366",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "My people and I revere the beauty of permanence. Dissolution slowly weathers a living person, wiping away all traces of their existence... Such cruel torture should not be allowed."
           },
           {
@@ -7580,19 +7580,19 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "At 18:00 yesterday, room CB-101 in the basement of the Prince Building at Mythag University was vandalized by unknown parties. The reinforced door was badly damaged, black lightning-shaped scorch marks were left across the walls both inside and out, and the room itself was in ruins.\n\"A momentary surge of current can leave marks like these,\" said Dr. Adams of the electrical engineering department of the scorching on the walls. \"It would take an enormous voltage. An ordinary apparatus capable of that would be huge—far too big to hide. But with a Silvercore... anything is possible.\"\nSince Silvercores are kept year-round under the strict guard of the Awakening Studies Department, it is hard to imagine anyone using one privately without being noticed. And so attention has turned instead to the Awakeners, who carry Silvercore energy inside their own bodies.\n\"If you ask me, she did it, no question,\" one Awakening Studies student told this paper on condition of anonymity. Asked who exactly he meant, he grew nervous. \"You know—her. The one they call the Tick-Tock Man! Haven't you heard that current running through her body, on and on? I hear 'current' and I think of her. Has to be her.\"\nPlenty of students voiced similar suspicions. But the Awakener who moves like a clockwork doll and wears that uncanny smile is not without allies: several Investigators have publicly stood up for Erica, urging everyone to keep to the facts and the evidence, and not to harm others over personal prejudice.\nDr. Sokolova, acting head of the Awakening Studies Department, declined to comment. The investigation is ongoing.\n—Excerpted from the Mythag Daily, \"A First Look at the CB-101 Explosion\""
+            "content": "At 18:00 yesterday, room CB-101 in the basement of the Prince Building at Mythag University was vandalized by unknown parties. The reinforced door was badly damaged, black lightning-shaped scorch marks were left across the walls both inside and out, and the room itself was in ruins.\n\"A momentary surge of current can leave marks like these,\" said Dr. Adams of the electrical engineering department of the scorching on the walls. \"It would take an enormous voltage. An ordinary apparatus capable of that would be huge—far too big to hide. But with a Silvercore... anything is possible.\"\nSince Silvercores are kept year-round under the strict guard of the Awakening Studies Department, it is hard to imagine anyone using one privately without being noticed. And so attention has turned instead to the Awakeners, who carry Silvercore energy inside their own bodies.\n\"If you ask me, she did it, no question,\" one Awakening Studies student told this paper on condition of anonymity. Asked who exactly he meant, he grew nervous. \"You know—her. The one they call the Tick-Tock Man! Haven't you heard that current running through her body, on and on? I hear 'current' and I think of her. Has to be her.\"\nPlenty of students voiced similar suspicions. But the Awakener who moves like a clockwork doll and wears that uncanny smile is not without allies: several Investigators have publicly stood up for Erica, urging everyone to keep to the facts and the evidence, and not to harm others over personal prejudice.\nDr. Sokolova, acting head of the Awakening Studies Department, declined to comment. The investigation is ongoing.\n—Excerpted from the Mythag Daily,\"A First Look at the CB-101 Explosion\""
           },
           {
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "Hannah: As you see it, is there any difference between you as an automaton and you now?\nErica: That version of me retained \"emotion.\"\nHannah: What sort of emotions, exactly—if you're willing to share?\nErica: I'm sorry. I do not understand the question.\nHannah: Uh, I mean—if the question feels too personal, you don't have to answer.\nErica: I cannot perceive \"willingness.\" My apologies.\nHannah: Then... please tell me what you felt at the time?\nErica: Flesh-and-blood self survived an explosion: happiness, delight.\nDiscovery that my mind had been transferred to and stored in a mechanical doll: tension, excitement.\nDiscovery that my consciousness was slipping out of control, together with a strong urge to destroy: tension, fear, protection.\nHannah: Protection?\nErica: I am very sorry. The detailed record has been lost.\nHannah: A different question, then—one all our readers want answered. Why do you have no emotions now? What happened?\nErica: Sanity could not be restored through the Spiritual Link, for reasons unknown. The university took the necessary measures: all emotion suppressed by Silvercore-assisted apparatus. Aggression and danger reduced. Intelligence retained. Usability retained.\n—Excerpted from the Mythag Daily, \"Awakener Faculty Interview: The Tick-Tock Man\""
+            "content": "Hannah: As you see it, is there any difference between you as an automaton and you now?\nErica: That version of me retained \"emotion.\"\nHannah: What sort of emotions, exactly—if you're willing to share?\nErica: I'm sorry. I do not understand the question.\nHannah: Uh, I mean—if the question feels too personal, you don't have to answer.\nErica: I cannot perceive \"willingness.\" My apologies.\nHannah: Then... please tell me what you felt at the time?\nErica: Flesh-and-blood self survived an explosion: happiness, delight.\nDiscovery that my mind had been transferred to and stored in a mechanical doll: tension, excitement.\nDiscovery that my consciousness was slipping out of control, together with a strong urge to destroy: tension, fear, protection.\nHannah: Protection?\nErica: I am very sorry. The detailed record has been lost.\nHannah: A different question, then—one all our readers want answered. Why do you have no emotions now? What happened?\nErica: Sanity could not be restored through the Spiritual Link, for reasons unknown. The university took the necessary measures: all emotion suppressed by Silvercore-assisted apparatus. Aggression and danger reduced. Intelligence retained. Usability retained.\n—Excerpted from the Mythag Daily,\"Awakener Faculty Interview: The Tick-Tock Man\""
           },
           {
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "Hannah: Do you remember what happened before you were taken apart?\nErica: The automaton's behavior began to go out of control, gaps appeared in its consciousness, and during those gaps it would destroy everything everything everything will be buried under current and flame\nHannah: Erica?\nErica: ...\nHannah: I can't be lucky enough to run into the \"Tick-Tock Man Effect\" myself... Erica?\nErica: Head module back online. My apologies for the interruption.\nAs I was saying, the automaton noticed that the threat it posed to humans was steadily growing, and since it still regarded itself as human at the time, this caused it great pain.\nHannah: When you said \"protect\" earlier, did you mean protecting humans?\nErica: The automaton wished to protect. Yes.\nHannah: Then why didn't you tell me that just now?\nErica: ...\nHannah: Do you want me to ask something else?\nErica: No. I am no longer troubled by emotion. I can answer.\nOnce it recognized the danger it posed, the automaton tried to short-circuit its body before each lapse in consciousness, to reduce the chance of the body causing destruction on its own.\nThe protection failed in the end. The human friend died.\nThe automaton felt sorrow, regret, despair.\nThe automaton self-destructed to ensure it would cause no further destruction. The Silvercore was then recovered by Mythag University and used to make me: Erica, chassis number EA307881.\n—Excerpt from Hannah Peaslee's recording, \"0711: An Interview with the Tick-Tock Man\""
+            "content": "Hannah: Do you remember what happened before you were taken apart?\nErica: The automaton's behavior began to go out of control, gaps appeared in its consciousness, and during those gaps it would destroy everything everything everything will be buried under current and flame\nHannah: Erica?\nErica: ...\nHannah: I can't be lucky enough to run into the \"Tick-Tock Man Effect\" myself... Erica?\nErica: Head module back online. My apologies for the interruption.\nAs I was saying, the automaton noticed that the threat it posed to humans was steadily growing, and since it still regarded itself as human at the time, this caused it great pain.\nHannah: When you said \"protect\" earlier, did you mean protecting humans?\nErica: The automaton wished to protect. Yes.\nHannah: Then why didn't you tell me that just now?\nErica: ...\nHannah: Do you want me to ask something else?\nErica: No. I am no longer troubled by emotion. I can answer.\nOnce it recognized the danger it posed, the automaton tried to short-circuit its body before each lapse in consciousness, to reduce the chance of the body causing destruction on its own.\nThe protection failed in the end. The human friend died.\nThe automaton felt sorrow, regret, despair.\nThe automaton self-destructed to ensure it would cause no further destruction. The Silvercore was then recovered by Mythag University and used to make me: Erica, chassis number EA307881.\n—Excerpt from Hannah Peaslee's recording,\"0711: An Interview with the Tick-Tock Man\""
           }
         ],
         "voiceLines": [
@@ -8261,7 +8261,7 @@
           {
             "id": "voice-6207",
             "title": "Chat: About the Keeper",
-            "content": "Tinct said, \"Repay kindness.\" So, as long as it is within my ability to help, I will lend a hand..."
+            "content": "Tinct said,\"Repay kindness.\" So, as long as it is within my ability to help, I will lend a hand..."
           },
           {
             "id": "voice-4945",
@@ -9216,7 +9216,7 @@
           {
             "id": "voice-5830",
             "title": "Upgrade: II",
-            "content": "Still counting on me to be your backup, \"Savior\"?"
+            "content": "Still counting on me to be your backup,\"Savior\"?"
           },
           {
             "id": "voice-5829",
@@ -9329,7 +9329,7 @@
           {
             "id": "voice-5927",
             "title": "Chat: What I Hate",
-            "content": "I loathe your pretentious act. Think I'm mad? Pathetic? You're the Icarus here, \"Savior\". You and your little flock, eyes scorched white from staring at that glorious sun you chase."
+            "content": "I loathe your pretentious act. Think I'm mad? Pathetic? You're the Icarus here,\"Savior\". You and your little flock, eyes scorched white from staring at that glorious sun you chase."
           },
           {
             "id": "voice-6551",
@@ -10248,7 +10248,7 @@
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "While she holds Ramona's body, \"Ramona\" never walks the campus.\nLotan's bold generosity, Ogier's shy loyalty, William's cool composure, Doll's exacting rigor... no one keeps those moments closer than she does.\nBut she never forgets: none of it belongs to her anymore.\nThe woman she is now must give every scrap of her attention to guarding another person marked by fate... and through that, another world teetering on the edge, another innocent version of herself."
+            "content": "While she holds Ramona's body,\"Ramona\" never walks the campus.\nLotan's bold generosity, Ogier's shy loyalty, William's cool composure, Doll's exacting rigor... no one keeps those moments closer than she does.\nBut she never forgets: none of it belongs to her anymore.\nThe woman she is now must give every scrap of her attention to guarding another person marked by fate... and through that, another world teetering on the edge, another innocent version of herself."
           }
         ],
         "voiceLines": [
@@ -10749,13 +10749,13 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "On April 2, A.F. 3@2, a temple remain in the Ashdod region was vandalized.\n\nAs the only one who had university education, I, a mere visitor, was invited by the regional administrator to participate in the architectural assessment of the ruins. Haha, I should never let them know that my \"university\" isn't quite what it seems.\n\nOn the afternoon of April 3, I entered the center of the temple. Ancient Semitics used it as a place of worship, and their pagan belief once flourished among the pillars before lost in history.\n\nYet what appeared before me was a sculpture that could be mistaken by no one. I clearly knew that the folds on its clothes should indicate the texture of striped linen.\n\nHowever, its both hands were broken, its head severed from the body, and its lower limbs shattered on the threshold. Mucilage covered everywhere like the trace of a sticky slug. Upon inspection, there were few peculiar scratches buried within, accompanied by a giant, webbed footprint.\n\nThe pagan belief may still circulate nearby, but a formal investigation is not urgently necessary. I will extend my stay in the Ashdod region.\n\nFin@1@2sen, \"An account of a trip around five cities of the Philistines\""
+            "content": "On April 2, A.F. 3@2, a temple remain in the Ashdod region was vandalized.\n\nAs the only one who had university education, I, a mere visitor, was invited by the regional administrator to participate in the architectural assessment of the ruins. Haha, I should never let them know that my \"university\" isn't quite what it seems.\n\nOn the afternoon of April 3, I entered the center of the temple. Ancient Semitics used it as a place of worship, and their pagan belief once flourished among the pillars before lost in history.\n\nYet what appeared before me was a sculpture that could be mistaken by no one. I clearly knew that the folds on its clothes should indicate the texture of striped linen.\n\nHowever, its both hands were broken, its head severed from the body, and its lower limbs shattered on the threshold. Mucilage covered everywhere like the trace of a sticky slug. Upon inspection, there were few peculiar scratches buried within, accompanied by a giant, webbed footprint.\n\nThe pagan belief may still circulate nearby, but a formal investigation is not urgently necessary. I will extend my stay in the Ashdod region.\n\nFin@1@2sen,\"An account of a trip around five cities of the Philistines\""
           },
           {
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Goliath is tyrannical and ruthless, but his power is undeniable. According to Miss Erica's battle records, his brutal brawn can no doubt guarantee his advantage even in isolated and vicious situations. I believe that Goliath does not care about the level of his partner's ability just because no one can hold a candle to him in his world.\n\nHowever, everytime Goliath faces Miryam, fear always seeps from his eyes uncontrollably. It's hard to imagine what kind of existence would evoke such awe from this despotic ruler and brutal former-king.\n\nAdditionally, he has shown unusual concern for Miss Murphy. Sometimes he was witnessed to wander around the university's surrounding maze, maybe waiting for Murphy to return from her mission. Sometimes he would distantly observe Murphy's condition, seemingly worrying about possible injuries during her tasks.\n\nMiss Peaslee also notices this. Once she said to me half-jokingly, \"Hey, don't you think he's trying to be an ordinary father?\"\n\n\"Observation record from an intern researcher\""
+            "content": "Goliath is tyrannical and ruthless, but his power is undeniable. According to Miss Erica's battle records, his brutal brawn can no doubt guarantee his advantage even in isolated and vicious situations. I believe that Goliath does not care about the level of his partner's ability just because no one can hold a candle to him in his world.\n\nHowever, everytime Goliath faces Miryam, fear always seeps from his eyes uncontrollably. It's hard to imagine what kind of existence would evoke such awe from this despotic ruler and brutal former-king.\n\nAdditionally, he has shown unusual concern for Miss Murphy. Sometimes he was witnessed to wander around the university's surrounding maze, maybe waiting for Murphy to return from her mission. Sometimes he would distantly observe Murphy's condition, seemingly worrying about possible injuries during her tasks.\n\nMiss Peaslee also notices this. Once she said to me half-jokingly,\"Hey, don't you think he's trying to be an ordinary father?\"\n\n\"Observation record from an intern researcher\""
           },
           {
             "kind": "story",
@@ -11298,7 +11298,7 @@
           {
             "kind": "introduction",
             "title": "Basic Information",
-            "unlockCondition": "Awakener has reached level 1",
+            "unlockCondition": "Awakener Level 1",
             "content": "At first glance, Hameln always reminded you of a kind of Eastern porcelain—white, luxurious, with graceful curves and a wave-like gentle sheen, yet somewhat cold to the touch.\n\nBeneath that respectable, meticulous exterior lies a soul of extreme, empty purity. His entire life revolved around a single thought, like a machine programmed with one command, devoid of all other responses.\n\nTo him, everything was merely a sequence of musical notes.\n\nPlay, play, endlessly play."
           },
           {
@@ -11311,7 +11311,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Hameln did not always appear before students. Even though he was willing to attend Mythag's musical events and guide the less adept students, most of the time, he played alone in a soundproof room or in secluded woods.\n\nExcept for official events, he called all of his playing simply \"practice,\" as if the practice was endless, and the perfect performance would never arrive.\n\n People praised his work, \"Such a diligent and humble master,\" they sung, intoxicated by its melody.\n\nYet, Hameln never knew humility; his words were always straightforward and overly harsh.\n\nSuch an obsessive pursuit of perfection in music made his classes a primary source of stress for students, earning him the title the \"devil's teacher.\"\n\nIf, for some reason, you wished to get his attention, simply play the wrong note, and his frowning expression would be upon you almost immediately.\n\nHe bore no grudge against those he \"tormented,\" merely imposing his passionate, impossibly perfect standard upon them, even if it was much milder compared to what he demanded of himself.\n\nHe was like a horse with a carrot dangling overhead, forever striving for somethung unattainable.\n\nExcept for pausing for the elegant dancer, he rarely initiated contact with other Awakeners. However, he always displayed a surprising patience with requests and initiating conversation.\n\nPerhaps it wasn't indifference that hindered him, but too narrow a mind."
+            "content": "Hameln did not always appear before students. Even though he was willing to attend Mythag's musical events and guide the less adept students, most of the time, he played alone in a soundproof room or in secluded woods.\n\nExcept for official events, he called all of his playing simply \"practice,\" as if the practice was endless, and the perfect performance would never arrive.\n\n People praised his work,\"Such a diligent and humble master,\" they sung, intoxicated by its melody.\n\nYet, Hameln never knew humility; his words were always straightforward and overly harsh.\n\nSuch an obsessive pursuit of perfection in music made his classes a primary source of stress for students, earning him the title the \"devil's teacher.\"\n\nIf, for some reason, you wished to get his attention, simply play the wrong note, and his frowning expression would be upon you almost immediately.\n\nHe bore no grudge against those he \"tormented,\" merely imposing his passionate, impossibly perfect standard upon them, even if it was much milder compared to what he demanded of himself.\n\nHe was like a horse with a carrot dangling overhead, forever striving for somethung unattainable.\n\nExcept for pausing for the elegant dancer, he rarely initiated contact with other Awakeners. However, he always displayed a surprising patience with requests and initiating conversation.\n\nPerhaps it wasn't indifference that hindered him, but too narrow a mind."
           },
           {
             "kind": "story",
@@ -11852,7 +11852,7 @@
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "The girl wears a plain dress, her skin still stinging from the rough scrubbing earlier. She doesn't understand why soldiers brought her here; a noble master's house is no place for slaves to come and go freely, and she is far too young to serve here.\n\nThe lady in the snowy white gown sits poised in the chair. The girl lowers her head, trembling with fear and nerves.\n\n\"I knew I wasn't wrong...\" the lady says, \"So much like her... truly.\"\n\nLike? Does that mean she looks like someone else?\n\n\"Perfect. Simply perfect.\" The lady claps her hands happily, \"It shall be you. From today on, I am your mother. Do you understand?\"\n\nMother? But she already has a mother. Her mother was at home, crying out loud when she was taken away.\n\nIf so... what about her mother?\n\nConfusion swirls in the girl's mind. She wants to ask, yet she understands all too well: a mistress's word was a slave's command, and disobedience meant severe punishment.\n\n\"I understand, Madam.\"\n\n\"What a good child. Let me think... I'll call you Helot. Do you like that name, Helot? I'm sure you do. Come, put on this dress and show it to mommy.\""
+            "content": "The girl wears a plain dress, her skin still stinging from the rough scrubbing earlier. She doesn't understand why soldiers brought her here; a noble master's house is no place for slaves to come and go freely, and she is far too young to serve here.\n\nThe lady in the snowy white gown sits poised in the chair. The girl lowers her head, trembling with fear and nerves.\n\n\"I knew I wasn't wrong...\" the lady says,\"So much like her... truly.\"\n\nLike? Does that mean she looks like someone else?\n\n\"Perfect. Simply perfect.\" The lady claps her hands happily,\"It shall be you. From today on, I am your mother. Do you understand?\"\n\nMother? But she already has a mother. Her mother was at home, crying out loud when she was taken away.\n\nIf so... what about her mother?\n\nConfusion swirls in the girl's mind. She wants to ask, yet she understands all too well: a mistress's word was a slave's command, and disobedience meant severe punishment.\n\n\"I understand, Madam.\"\n\n\"What a good child. Let me think... I'll call you Helot. Do you like that name, Helot? I'm sure you do. Come, put on this dress and show it to mommy.\""
           },
           {
             "kind": "story",
@@ -13076,7 +13076,7 @@
             "id": "voice-6347",
             "title": "Chat: About Nautila",
             "unlockCondition": "Unlocks after acquiring Awakener \"Nautila\"",
-            "content": "What do you mean, \"I took it\"? It's not fair! When her stupid screws went missing, I was busy—Brown, stop! ... Heh, just forget what you saw, alright?"
+            "content": "What do you mean,\"I took it\"? It's not fair! When her stupid screws went missing, I was busy—Brown, stop! ... Heh, just forget what you saw, alright?"
           },
           {
             "id": "voice-5915",
@@ -13088,7 +13088,7 @@
             "id": "voice-5410",
             "title": "Chat: About \"24\"",
             "unlockCondition": "Unlocks after acquiring Awakener \"24\"",
-            "content": "Mason... No, this is fine. At least we're together again, \"24\"."
+            "content": "Mason... No, this is fine. At least we're together again,\"24\"."
           },
           {
             "id": "voice-6118",
@@ -13499,13 +13499,13 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "A.F. 1@2/@1/@1 10:31 AM, the police received a report of multiple bloodstains discovered within @1@1 Manor. Detective Belford immediately headed to the scene, began an investigation, and found an unidentified bluish-green slime within the bloodstains.\n\n13:44, Detective Belford submitted the report, and the Mystia Treaty Committee promptly took over the case.\n\n14:25, the seventh response team of the committee arrived at the manor, controlled the related personnel, and sealed off the site. Based on the situation at the scene, the team leader speculated that there were at least five victims within the manor, and multiple instances of D-Phenomenon were observed.\n\n18:00, investigators from Mythag University arrived at the scene, confirmed the existence of the D-phenomenon, and entered the manor with the Awakener for cleanup and investigation.\n\n23:11, the cleanup of the manor was completed. Investigators discovered a large number of mystical documents and ritual materials in the basement and study's secret room, and found an incomplete Awakener. The Awakener identified herself as \"Maid Karen,\" the chief maid of Duke @3. When discovered, the Awakener was dressed in a maid's uniform, adorned with various styles of jewelry, and was working very hard to clean the basement. This Awakener had a human form, bluish-green skin, and semi-transparent adhesive-like extremities, suspected to be an incomplete or erroneously summoned product. The slime secreted from her matched in texture and color with the substance found on the severed limbs.\n\nThe investigators questioned her, and Maid Karen admitted to @1 facts and expressed that everything was to gain her master's attention. Upon learning that Duke @3 would be arrested, she murmured, \"Then where is my new master?\" and then disassembled into gel, leaving behind a Silver.\n\n01:37, the team leader of the seventh response team interrogated the related personnel and detained @1@1 Manor's owner, Duke @3, according to the \"Treaty.\" \n\n03:09, investigators returned to Mythag University and logged the K-033 Silver into the database.\n\n—\"Incident Report of @1@1 Manor\""
+            "content": "A.F. 1@2/@1/@1 10:31 AM, the police received a report of multiple bloodstains discovered within @1@1 Manor. Detective Belford immediately headed to the scene, began an investigation, and found an unidentified bluish-green slime within the bloodstains.\n\n13:44, Detective Belford submitted the report, and the Mystia Treaty Committee promptly took over the case.\n\n14:25, the seventh response team of the committee arrived at the manor, controlled the related personnel, and sealed off the site. Based on the situation at the scene, the team leader speculated that there were at least five victims within the manor, and multiple instances of D-Phenomenon were observed.\n\n18:00, investigators from Mythag University arrived at the scene, confirmed the existence of the D-phenomenon, and entered the manor with the Awakener for cleanup and investigation.\n\n23:11, the cleanup of the manor was completed. Investigators discovered a large number of mystical documents and ritual materials in the basement and study's secret room, and found an incomplete Awakener. The Awakener identified herself as \"Maid Karen,\" the chief maid of Duke @3. When discovered, the Awakener was dressed in a maid's uniform, adorned with various styles of jewelry, and was working very hard to clean the basement. This Awakener had a human form, bluish-green skin, and semi-transparent adhesive-like extremities, suspected to be an incomplete or erroneously summoned product. The slime secreted from her matched in texture and color with the substance found on the severed limbs.\n\nThe investigators questioned her, and Maid Karen admitted to @1 facts and expressed that everything was to gain her master's attention. Upon learning that Duke @3 would be arrested, she murmured,\"Then where is my new master?\" and then disassembled into gel, leaving behind a Silver.\n\n01:37, the team leader of the seventh response team interrogated the related personnel and detained @1@1 Manor's owner, Duke @3, according to the \"Treaty.\" \n\n03:09, investigators returned to Mythag University and logged the K-033 Silver into the database.\n\n—\"Incident Report of @1@1 Manor\""
           },
           {
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Uniforms must be steamed and ironed, quilts must be hand washed, the fireplace must be spotless in summer and always have a fire burning in winter. Wooden floors must gleam, bookshelves must be dust-free, and black tea must always be kept at the right temperature for easy enjoyment.\n\nFor her noble, special, and unique new master—the Keeper who has given her life anew—she can do anything. She is the best maid in the world and must certainly be able to complete every task perfectly, refining every detail.\n\nHer master's praise always makes her extraordinarily happy, but it's not enough, still not enough. What can she do to gain more attention from her master? What can she do to make herself more eye-catching?\n\n\"It must be the lack of earrings, necklaces, bracelets, rings, and hair ornaments!\"She thrust the broom into the ground and muttered to herself, \"As long as I have shiny jewelry decorations, Karen will surely become cuter, and everyone will enjoy looking at Karen even more!\""
+            "content": "Uniforms must be steamed and ironed, quilts must be hand washed, the fireplace must be spotless in summer and always have a fire burning in winter. Wooden floors must gleam, bookshelves must be dust-free, and black tea must always be kept at the right temperature for easy enjoyment.\n\nFor her noble, special, and unique new master—the Keeper who has given her life anew—she can do anything. She is the best maid in the world and must certainly be able to complete every task perfectly, refining every detail.\n\nHer master's praise always makes her extraordinarily happy, but it's not enough, still not enough. What can she do to gain more attention from her master? What can she do to make herself more eye-catching?\n\n\"It must be the lack of earrings, necklaces, bracelets, rings, and hair ornaments!\"She thrust the broom into the ground and muttered to herself,\"As long as I have shiny jewelry decorations, Karen will surely become cuter, and everyone will enjoy looking at Karen even more!\""
           },
           {
             "kind": "story",
@@ -13722,7 +13722,7 @@
           {
             "id": "voice-54605",
             "title": "Over-Exalt",
-            "content": "Here's your meal!"
+            "content": "Here's Your Meal!"
           },
           {
             "id": "traphase-99844",
@@ -14135,7 +14135,7 @@
           },
           {
             "id": "voice-95423",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "What do I think of Dissolution? Ask a sewer rat what it thinks of the king. My answer is simple: a deep, instinctual disgust. Give me the chance, and I'll pour a glass of camel milk wine and listen to their scream as my guns burns them to ashes."
           },
           {
@@ -17266,7 +17266,7 @@
           {
             "kind": "introduction",
             "title": "Basic Information",
-            "unlockCondition": "Awakener has reached level 1",
+            "unlockCondition": "Awakener Level 1",
             "content": "Strictly speaking, she does not belong to this world on the brink of collapse, but she appreciates it.\n\nShe admires the magnificent spectacle of this world burning, appreciates the suffering and breakdown of these humans in despair.\n\nFaith is dead, society has come to a halt, morals have crumbled, and nature no longer needs to disguise itself as a boring \"normal person\" —\nshe can finally unleash the beast within her and reveal her true self, becoming her authentic self."
           },
           {
@@ -17388,7 +17388,7 @@
           },
           {
             "id": "voice-123787",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "I know as much about Dissolution as I do about the Mist Disaster back home—nothing, that is. But that's precisely what makes them so fascinating, right?"
           },
           {
@@ -17820,7 +17820,7 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "In the summer of 3@2 A.F., stories of a sea monster began going around Niugini Island.\nFishermen claimed they had sighted a cephalopod some five stories tall in the coastal waters. Deep red all over, with black concentric rings along its tentacles.\nWhen the rumor reached me, Johansen and I were verifying a suspected Dissolution Phenomenon in the Medan region. The next day he had a ship ready for Niugini Island. I am writing this report in the middle of the Amirante Ocean.\nDay three of the voyage: dead fish across the surface in great drifts—mackerel, flounder, dolphins. I swear there was a pregnant sperm whale among them. The old hands all say overbreeding starves the water of oxygen and that is what kills them, but I can't shake the feeling that we are missing something...\nDay eight: my seasickness is far worse, and the nausea is bad enough that I can hardly eat. We were close to Niugini Island, but Johansen insisted we turn back @3... I don't understand it, but I have chosen to trust him.\n—Bell Columbus, \"Internship Report, Summer of 3@2 A.F.\""
+            "content": "In the summer of 3@2 A.F., stories of a sea monster began going around Niugini Island.\nFishermen claimed they had sighted a cephalopod some five stories tall in the coastal waters. Deep red all over, with black concentric rings along its tentacles.\nWhen the rumor reached me, Johansen and I were verifying a suspected Dissolution Phenomenon in the Medan region. The next day he had a ship ready for Niugini Island. I am writing this report in the middle of the Amirante Ocean.\nDay three of the voyage: dead fish across the surface in great drifts—mackerel, flounder, dolphins. I swear there was a pregnant sperm whale among them. The old hands all say overbreeding starves the water of oxygen and that is what kills them, but I can't shake the feeling that we are missing something...\nDay eight: my seasickness is far worse, and the nausea is bad enough that I can hardly eat. We were close to Niugini Island, but Johansen insisted we turn back @3... I don't understand it, but I have chosen to trust him.\n—Bell Columbus,\"Internship Report, Summer of 3@2 A.F.\""
           },
           {
             "kind": "story",
@@ -18488,7 +18488,7 @@
         {
           "kind": "skill",
           "id": "skill.murphy.made-into-being",
-          "name": "Made Into Being",
+          "name": "Made into Being",
           "route": {
             "slug": "made-into-being",
             "canonicalPath": "/database/awakeners/murphy/skills/made-into-being"
@@ -18503,11 +18503,11 @@
         },
         {
           "kind": "skill",
-          "id": "skill.murphy.oath-of-liberation",
-          "name": "Oath of Liberation",
+          "id": "skill.murphy.oath-of-freedom",
+          "name": "Oath of Freedom",
           "route": {
-            "slug": "oath-of-liberation",
-            "canonicalPath": "/database/awakeners/murphy/skills/oath-of-liberation"
+            "slug": "oath-of-freedom",
+            "canonicalPath": "/database/awakeners/murphy/skills/oath-of-freedom"
           },
           "cardFamily": "exalt",
           "cardTypes": [
@@ -18635,7 +18635,7 @@
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "Recorder: Erich von Werner\nDate: November 7, 19@1\nCoordinates: 68°14′S, 67°10′W\nDue to an unusual number of floating sperm whale carcasses in our route, we were forced to land on this cursed island of ice. Below a glacial waterfall in the south shore fjord, the expedition team discovered the remains of a fifty-foot-long cephalopod. Its body was a deep indigo blue, densely covered in phosphorescent, luminous blue concentric rings, the edges of which secreted a thin layer of mucus. After we sampled and purified the substance, an unsettling quantity of blue crystals precipitated from the mucus.\n\nThe suckers on the creature's arms exceeded two feet in diameter, and the inner walls of the suckers were etched with patterns resembling an unknown script. The main nerve cord was in a semi-transparent, gelatinous state, maintaining a faint pulse even in the -30°C environment (see attached Figure D-7). Dr. Harris, the accompanying biologist, attempted to collect a tissue sample from the nerve cord, but the moment the scalpel made contact, the entire carcass instantly disintegrated into powder. Indigo-blue dust became visible, suspended throughout the laboratory.\n\nDuring the voyage home, Dr. Harris developed persistent delirium. He repeatedly drew geometric shapes combining spirals and polyhedrons on the cabin walls, screaming, \"They are spawning beneath the Antarctic ice sheet!\" On the morning of the second day, a patrolling crew member found him drowned in the ballast water tank. Autopsy revealed his alveoli were filled with indigo-blue microorganisms (identical to the octopus corpse dust). The captain ordered the incineration of all clothing that had come into contact with the samples.\n\nMay no one else ever touch the nightmare lurking beneath the ice.\n\n— Appendix No. 37, Antarctic Expedition Log"
+            "content": "Recorder: Erich von Werner\nDate: November 7, 19@1\nCoordinates: 68°14′S, 67°10′W\nDue to an unusual number of floating sperm whale carcasses in our route, we were forced to land on this cursed island of ice. Below a glacial waterfall in the south shore fjord, the expedition team discovered the remains of a fifty-foot-long cephalopod. Its body was a deep indigo blue, densely covered in phosphorescent, luminous blue concentric rings, the edges of which secreted a thin layer of mucus. After we sampled and purified the substance, an unsettling quantity of blue crystals precipitated from the mucus.\n\nThe suckers on the creature's arms exceeded two feet in diameter, and the inner walls of the suckers were etched with patterns resembling an unknown script. The main nerve cord was in a semi-transparent, gelatinous state, maintaining a faint pulse even in the -30°C environment (see attached Figure D-7). Dr. Harris, the accompanying biologist, attempted to collect a tissue sample from the nerve cord, but the moment the scalpel made contact, the entire carcass instantly disintegrated into powder. Indigo-blue dust became visible, suspended throughout the laboratory.\n\nDuring the voyage home, Dr. Harris developed persistent delirium. He repeatedly drew geometric shapes combining spirals and polyhedrons on the cabin walls, screaming,\"They are spawning beneath the Antarctic ice sheet!\" On the morning of the second day, a patrolling crew member found him drowned in the ballast water tank. Autopsy revealed his alveoli were filled with indigo-blue microorganisms (identical to the octopus corpse dust). The captain ordered the incineration of all clothing that had come into contact with the samples.\n\nMay no one else ever touch the nightmare lurking beneath the ice.\n\n— Appendix No. 37, Antarctic Expedition Log"
           },
           {
             "kind": "story",
@@ -18973,7 +18973,7 @@
             "id": "traphase-120281",
             "title": "Fatal Blow",
             "unlockCondition": "Unlock after triggering this dialogue in Traphase",
-            "content": "Hmph, disrespectful one."
+            "content": "Hmph. Insolent crudes."
           },
           {
             "id": "traphase-120273",
@@ -22949,13 +22949,13 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "After the @3@1 incident, Ryker took a post as special advisor to Mythag University.\nHe is good at the job. Professors vanishing without explanation, instruments breaking for no reason, or something as small as a missing cat or dog—Ryker handles all of it patiently, quickly, and to everyone's satisfaction.\nBetween his striking looks, his polished manners, and his habit of helping anyone who asks, he soon became the idol of half the young men and women at Mythag.\nProfessor Dexter once sighed, \"The young ones take all the limelight these days.\"\nBut the more he settled into campus life, the less anyone saw of him.\nAround the same time, the rattle of dice began drifting up from a certain abandoned basement at Mythag, night after night."
+            "content": "After the @3@1 incident, Ryker took a post as special advisor to Mythag University.\nHe is good at the job. Professors vanishing without explanation, instruments breaking for no reason, or something as small as a missing cat or dog—Ryker handles all of it patiently, quickly, and to everyone's satisfaction.\nBetween his striking looks, his polished manners, and his habit of helping anyone who asks, he soon became the idol of half the young men and women at Mythag.\nProfessor Dexter once sighed,\"The young ones take all the limelight these days.\"\nBut the more he settled into campus life, the less anyone saw of him.\nAround the same time, the rattle of dice began drifting up from a certain abandoned basement at Mythag, night after night."
           },
           {
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "At twenty-five, while working a locked-room murder, Ryker ran into a very strange suspect.\nThe chain of evidence was absolutely airtight. Then the suspect, cuffed at the police station, simply vanished—the handcuffs left without a scratch. That was the duty officer's problem, of course; Ryker collected his fee all the same.\nHe spent that fee crossing an ocean for a holiday, and there, beside a street stall, he ran into his fugitive. The man was running a game of chance, and the sight of Ryker didn't hurry him in the slightest. He only invited Ryker to sit in, promising that if Ryker won, he would come quietly.\n\nRyker never won a single round.\n\nHe lost his pipe. He lost his tie. He lost his hat. He lost his coat.\nStripped bare, he had all of it handed back to him: the stakes, said the suspect, were too small. Ryker asked at once what the man would rather play for, and when the answer was an arm, he agreed without blinking.\n\nSeveral raises later, the man produced a revolver. Life against death—Ryker picked up the gun and set it against his temple without a moment's pause.\nA shot rang out and Ryker went down. The suspect called his spirit back from the dead, meaning to mock him for his ignorance. Instead, Ryker's first words were, \"So what are we betting next?\"\n\nHis sheer arrogance finally caught the demon's interest. The suspect, whose true name was \"N@2@3,\" decided the game could go on.\n\n\"N\" set out three top hats and told him to make the \"best choice\" among them—the one that would give him his body back.\nRyker picked a hat. \"N\" lifted another, empty, and asked if he cared to change his mind. Ryker shook his head.\n\n—Don't you understand probability?\n—I just trust my luck.\n\n\"N\" lifted the third hat. Empty as well. At last he lifted Ryker's hat, and inside was a churning knot of black mist. It surged at Ryker and took shape as the limbs of some impossible beast. \"N\" gave him the body of that avatar in place of the one he had already wagered away.\n\n—A man with the nose of a beast—doesn't this avatar suit you perfectly? So you see, that was the \"best choice\"!"
+            "content": "At twenty-five, while working a locked-room murder, Ryker ran into a very strange suspect.\nThe chain of evidence was absolutely airtight. Then the suspect, cuffed at the police station, simply vanished—the handcuffs left without a scratch. That was the duty officer's problem, of course; Ryker collected his fee all the same.\nHe spent that fee crossing an ocean for a holiday, and there, beside a street stall, he ran into his fugitive. The man was running a game of chance, and the sight of Ryker didn't hurry him in the slightest. He only invited Ryker to sit in, promising that if Ryker won, he would come quietly.\n\nRyker never won a single round.\n\nHe lost his pipe. He lost his tie. He lost his hat. He lost his coat.\nStripped bare, he had all of it handed back to him: the stakes, said the suspect, were too small. Ryker asked at once what the man would rather play for, and when the answer was an arm, he agreed without blinking.\n\nSeveral raises later, the man produced a revolver. Life against death—Ryker picked up the gun and set it against his temple without a moment's pause.\nA shot rang out and Ryker went down. The suspect called his spirit back from the dead, meaning to mock him for his ignorance. Instead, Ryker's first words were,\"So what are we betting next?\"\n\nHis sheer arrogance finally caught the demon's interest. The suspect, whose true name was \"N@2@3,\" decided the game could go on.\n\n\"N\" set out three top hats and told him to make the \"best choice\" among them—the one that would give him his body back.\nRyker picked a hat. \"N\" lifted another, empty, and asked if he cared to change his mind. Ryker shook his head.\n\n—Don't you understand probability?\n—I just trust my luck.\n\n\"N\" lifted the third hat. Empty as well. At last he lifted Ryker's hat, and inside was a churning knot of black mist. It surged at Ryker and took shape as the limbs of some impossible beast. \"N\" gave him the body of that avatar in place of the one he had already wagered away.\n\n—A man with the nose of a beast—doesn't this avatar suit you perfectly? So you see, that was the \"best choice\"!"
           },
           {
             "kind": "story",
@@ -24059,7 +24059,7 @@
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "Cité Art Salon Exhibition, A.F.2@1.\n\n\"Let me take her home!\" The assailant shouted while hammering at the sculptor August's final work, \"The Nameless Ms. Coral,\" before hastily stopped by the congregation. However, this unstrung old man had surprisingly turned out to be none other than the long-reclusive August himself.\n\nFor a time, speculations and discussions about \"The Nameless Ms. Coral\" flooded in.\n\nSome people said it was inspired by a female apprentice named Sanga, who was the actual owner of August's best works. August is merely a shameful plagiarist.\n\nSome people said that Sanga came from an illustrious family—her father was a renowned writer, and her brother was a diplomat. In order to pursue the sculpture art, she disengaged with her family and set alone to Paris, living penuriously until her death.\n\nSome people said Sanga suffered from a strange illness. Ominous black ooze streamed on her body, and her each carving transformed a part of her flesh into coral. \"The Nameless Ms. Coral\" was actually her coraled appearance, not a sculpture at all.\n\nOther people said...\n\nThe apprentice, the devoted, the patient. Words pile upon Ms. Coral, sculpting her as the crowd dispersed from the exhibition hall. She blinks in the pouring moonlight. She's still waiting, and waiting—for her moment of returning home."
+            "content": "Cité Art Salon Exhibition, A.F.2@1.\n\n\"Let me take her home!\" The assailant shouted while hammering at the sculptor August's final work,\"The Nameless Ms. Coral,\" before hastily stopped by the congregation. However, this unstrung old man had surprisingly turned out to be none other than the long-reclusive August himself.\n\nFor a time, speculations and discussions about \"The Nameless Ms. Coral\" flooded in.\n\nSome people said it was inspired by a female apprentice named Sanga, who was the actual owner of August's best works. August is merely a shameful plagiarist.\n\nSome people said that Sanga came from an illustrious family—her father was a renowned writer, and her brother was a diplomat. In order to pursue the sculpture art, she disengaged with her family and set alone to Paris, living penuriously until her death.\n\nSome people said Sanga suffered from a strange illness. Ominous black ooze streamed on her body, and her each carving transformed a part of her flesh into coral. \"The Nameless Ms. Coral\" was actually her coraled appearance, not a sculpture at all.\n\nOther people said...\n\nThe apprentice, the devoted, the patient. Words pile upon Ms. Coral, sculpting her as the crowd dispersed from the exhibition hall. She blinks in the pouring moonlight. She's still waiting, and waiting—for her moment of returning home."
           },
           {
             "kind": "story",
@@ -25245,7 +25245,7 @@
           },
           {
             "id": "voice-67316",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "It is Their will... No, it is an unconscious gaze that encompasses all things within Their breath."
           },
           {
@@ -27996,7 +27996,7 @@
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "\"They who give themselves to fornication and lust shall suffer the punishment of eternal fire, as an example to all...\"\nFor twenty-three days the monk stood outside her gate, reciting his dreary scripture.\nWanda had him bound and brought in.\nThe monk said, \"Why be anxious over suffering? Where the spirit of the Lord is, there is freedom.\"\nShe stripped off his clothes.\nThe monk said, \"Why be anxious over clothing? The lilies of the field neither spin nor bow their heads.\"\nShe cut off his limbs.\nThe monk said, \"Why be anxious over blood? Of all that is flesh, nothing lives forever.\"\nWanda laughed. \"I shall not merely make thee bleed. I shall make thee my slave, for life after life.\"\n\"Why?\" The monk lifted his head. \"Should you not have mercy on your fellow, as I have had mercy on you?\"\nWanda studied him. His eyes were very blue, the blue of a clear sky.\nShe gouged them out.\nThe monk died in the end, unable to endure the torture. The local parish feared her money and her power, and not one soul dared accuse her.\nBefore he died the monk said, \"@2 is near. You should—\"\nYears went by. Wanda had long forgotten the monk's face and his name; only his eyes stayed with her. On the night she was about to be devoured by @2, that unfinished sentence came back to her.\n\"@2 is near. You should—\"\nHer mind clouding over, she tried to guess how it ended, and found nothing."
+            "content": "\"They who give themselves to fornication and lust shall suffer the punishment of eternal fire, as an example to all...\"\nFor twenty-three days the monk stood outside her gate, reciting his dreary scripture.\nWanda had him bound and brought in.\nThe monk said,\"Why be anxious over suffering? Where the spirit of the Lord is, there is freedom.\"\nShe stripped off his clothes.\nThe monk said,\"Why be anxious over clothing? The lilies of the field neither spin nor bow their heads.\"\nShe cut off his limbs.\nThe monk said,\"Why be anxious over blood? Of all that is flesh, nothing lives forever.\"\nWanda laughed. \"I shall not merely make thee bleed. I shall make thee my slave, for life after life.\"\n\"Why?\" The monk lifted his head. \"Should you not have mercy on your fellow, as I have had mercy on you?\"\nWanda studied him. His eyes were very blue, the blue of a clear sky.\nShe gouged them out.\nThe monk died in the end, unable to endure the torture. The local parish feared her money and her power, and not one soul dared accuse her.\nBefore he died the monk said,\"@2 is near. You should—\"\nYears went by. Wanda had long forgotten the monk's face and his name; only his eyes stayed with her. On the night she was about to be devoured by @2, that unfinished sentence came back to her.\n\"@2 is near. You should—\"\nHer mind clouding over, she tried to guess how it ended, and found nothing."
           }
         ],
         "voiceLines": [
@@ -28042,7 +28042,7 @@
             "id": "voice-6339",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "This tome, \"The @1@2 Revelation,\" is yours now. It helps to enlighten the mind, or perhaps, to swiftly invite slumber."
+            "content": "This tome,\"The @1@2 Revelation,\" is yours now. It helps to enlighten the mind, or perhaps, to swiftly invite slumber."
           },
           {
             "id": "voice-6336",
@@ -29142,7 +29142,7 @@
           },
           {
             "id": "voice-126983",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "All things end in the Void. Why not seek some further pleasure with me before then?\n\nRest assured, should the day come that you cannot resist the Dissolution further, I shall not allow It to claim you first."
           },
           {
@@ -29169,7 +29169,7 @@
             "id": "voice-126956",
             "title": "Chat: About Sorel",
             "unlockCondition": "Unlocks after acquiring Awakener \"Sorel\"",
-            "content": "That Madam in Red once sent me several invitations to her salons.\nThe foreign confections were passable, but... \nShe ought to have informed me sooner that at her residence, \"desserts\" and \"servants\" were not synonymous."
+            "content": "That Madam in Red once sent me several invitations to her salons.\nThe foreign confections were passable, but... \nShe ought to have informed me sooner that at her residence,\"desserts\" and \"servants\" were not synonymous."
           },
           {
             "id": "voice-126981",
@@ -29659,7 +29659,7 @@
           },
           {
             "id": "voice-129664",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "No, no! Coalsie, Vortice protect!"
           },
           {
@@ -30212,7 +30212,7 @@
           },
           {
             "id": "voice-133721",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "The tragedy before you is only one glance among countless possibilities.\n\nBeyond fate's curtain lies a stage swallowed in darkness—\nlights extinguished, players gone, everything returning to the deep.\n\nBut that is not where it ends.\nI carry the resolve to endure this thankless labor, until the day the lights return."
           },
           {
@@ -30612,7 +30612,7 @@
       },
       "profile": {
         "title": "Saya",
-        "birthday": "Unknown",
+        "birthday": "???",
         "voiceActor": "Kawamura Midori",
         "gender": "Female",
         "height": "?",
@@ -30744,7 +30744,7 @@
           },
           {
             "id": "voice-140539",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "Certain threats out there could bring darkness great enough to destroy this world, right? I know. Professor Doll told me all about it."
           },
           {
@@ -31280,7 +31280,7 @@
           },
           {
             "id": "voice-143518",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "Erasing memory. Erasing existence. Familiar, isn't it? You know what I mean. Different origins—and yet They always breed in the dark."
           },
           {
@@ -31826,7 +31826,7 @@
           },
           {
             "id": "voice-146167",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "I care little for the fading of this world—but I will not let it hinder my pursuit of strength."
           },
           {
@@ -31847,7 +31847,7 @@
           {
             "id": "voice-146160",
             "title": "Chat: About the Keeper",
-            "content": "I dislike those with a divided heart, as such division usually means weakness. But you are an exception. I once believed those who carry too much could never go far. But the path you've chosen surprises me... Perhaps an opponent walking a different path is more worthy of honing and challenge. Wouldn't you agree, \"opponent\"?"
+            "content": "I dislike those with a divided heart, as such division usually means weakness. But you are an exception. I once believed those who carry too much could never go far. But the path you've chosen surprises me... Perhaps an opponent walking a different path is more worthy of honing and challenge. Wouldn't you agree,\"opponent\"?"
           },
           {
             "id": "voice-146175",
@@ -32381,7 +32381,7 @@
           },
           {
             "id": "voice-149702",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "Caraboo's blessing can cure every illness in the world—including this black plague, of course... Of course it's true! You just have to be devout enough, trust Caraboo enough, hehe."
           },
           {
@@ -32794,7 +32794,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Mythag once had a haunting that put the whole school on edge. Below is the interview transcript compiled by campus reporter Hannah:\n\"Late at night, I heard rustling in the stacks... I didn't dare look. But the next morning, I found all the books shelved perfectly, better than I could have done it myself!\" —School Librarian\n\"Don't you think the campus has been much cleaner lately? Could there be a ghost picking up the trash at night?\" —A Fieldwork Instructor\n\"On missions, I always feel like I'm being followed... Sometimes I hear fierce fighting, but when I turn around, there are only the remains of Dissoluted monsters all over the ground.\" —A Rookie Investigator\nA few bold students formed an investigation squad, trading one night's sleep for the truth.\nThe culprit confessed to his \"crimes\" and sincerely apologized for causing panic. Yet when the thanks began to pour in, he seemed rather ill at ease. In his own words, \"I just like to keep my hands busy.\"\nWhen asked, the school counselor, Sylvia, offered her diagnosis: \"He's a good boy, kind by nature—but he carries too much guilt over the past. Over time, it turned into a deep-rooted sense of unworthiness—kindness offered too plainly only makes it harder for him.\"\nThis incident blew over quietly, but the legend of the \"Formless Ghost\" spread in its wake. By unspoken agreement, the faculty and students said nothing of who he was. In time, everyone came to understand that this \"ghost\" simply wanted to help.\nEveryone seemed to sense that for a boy who doesn't want to be seen, the best thanks is to let this secret remain his alone."
+            "content": "Mythag once had a haunting that put the whole school on edge. Below is the interview transcript compiled by campus reporter Hannah:\n\"Late at night, I heard rustling in the stacks... I didn't dare look. But the next morning, I found all the books shelved perfectly, better than I could have done it myself!\" —School Librarian\n\"Don't you think the campus has been much cleaner lately? Could there be a ghost picking up the trash at night?\" —A Fieldwork Instructor\n\"On missions, I always feel like I'm being followed... Sometimes I hear fierce fighting, but when I turn around, there are only the remains of Dissoluted monsters all over the ground.\" —A Rookie Investigator\nA few bold students formed an investigation squad, trading one night's sleep for the truth.\nThe culprit confessed to his \"crimes\" and sincerely apologized for causing panic. Yet when the thanks began to pour in, he seemed rather ill at ease. In his own words,\"I just like to keep my hands busy.\"\nWhen asked, the school counselor, Sylvia, offered her diagnosis: \"He's a good boy, kind by nature—but he carries too much guilt over the past. Over time, it turned into a deep-rooted sense of unworthiness—kindness offered too plainly only makes it harder for him.\"\nThis incident blew over quietly, but the legend of the \"Formless Ghost\" spread in its wake. By unspoken agreement, the faculty and students said nothing of who he was. In time, everyone came to understand that this \"ghost\" simply wanted to help.\nEveryone seemed to sense that for a boy who doesn't want to be seen, the best thanks is to let this secret remain his alone."
           },
           {
             "kind": "story",
@@ -32903,7 +32903,7 @@
           },
           {
             "id": "voice-150443",
-            "title": "Chat: About the Crisis",
+            "title": "Chat: About Dissolution",
             "content": "It feels so much like the power that coils about my body, only... more evil. Is this what you've been fighting all this time, my lord?"
           },
           {
@@ -33222,7 +33222,7 @@
             "kind": "story",
             "title": "Story: II",
             "unlockCondition": "Affinity Level 5",
-            "content": "Vivian's laboratory in Mythag has moved several times.\n\nAt first, Mythag built it \"to the standards of a princess's palace,\" as an exact life-size replica of the home she had lived in during her former life.\n\nHowever, that enormously expensive laboratory was flattened by a single potion explosion. The cause was that Vivian had been feeling lazy while mixing her ingredients and had asked the Seer to prepare the raw materials.\n\nClearly, it was too much to ask of a Seer who was, give or take, an amphibian, to tell apart \"blood-red wood with a regular spiral grain\" and \"orange-red wood with a fine, hair-like grain,\" or \"cyan potion with a flowing shimmer\" and \"jade potion with a scaly sheen,\" or \"white combustible metal\" and \"silver mutable metal,“ especially when none of them were moving.\n\nIn any case, Vivian's laboratories got smaller, and smaller, and smaller, until they were so small that if she fell asleep slumped over the workbench, she might kick over a cauldron by accident.\n\nYes, that is exactly how the last lab accident happened.\n\nBut Vivian always quietly tidied up the disaster, then started on the day's potions as if nothing had happened.\n\nAfter all, if you never cause other people any trouble, it's much easier to refuse the trouble they try to cause you. This is one of Vivian's guiding principles in life."
+            "content": "Vivian's laboratory in Mythag has moved several times.\n\nAt first, Mythag built it \"to the standards of a princess's palace,\" as an exact life-size replica of the home she had lived in during her former life.\n\nHowever, that enormously expensive laboratory was flattened by a single potion explosion. The cause was that Vivian had been feeling lazy while mixing her ingredients and had asked the Seer to prepare the raw materials.\n\nClearly, it was too much to ask of a Seer who was, give or take, an amphibian, to tell apart \"blood-red wood with a regular spiral grain\" and \"orange-red wood with a fine, hair-like grain,\" or \"cyan potion with a flowing shimmer\" and \"jade potion with a scaly sheen,\" or \"white combustible metal\" and \"silver mutable metal,\" especially when none of them were moving.\n\nIn any case, Vivian's laboratories got smaller, and smaller, and smaller, until they were so small that if she fell asleep slumped over the workbench, she might kick over a cauldron by accident.\n\nYes, that is exactly how the last lab accident happened.\n\nBut Vivian always quietly tidied up the disaster, then started on the day's potions as if nothing had happened.\n\nAfter all, if you never cause other people any trouble, it's much easier to refuse the trouble they try to cause you. This is one of Vivian's guiding principles in life."
           },
           {
             "kind": "story",
@@ -33331,7 +33331,7 @@
           },
           {
             "id": "voice-154151",
-            "title": "Chat: About the Disaster",
+            "title": "Chat: About Dissolution",
             "content": "Dissolution... I used it to protect the last of my subjects, but it was also what brought my countrty down. A pity. Of all the knowledge They poured into me, not one page contained a way to prevent something like that."
           },
           {
