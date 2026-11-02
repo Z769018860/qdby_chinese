@@ -319,6 +319,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-11-02</strong><br>${ui('更新第72期融灾榜单与低配榜单数据。','Updated the Season 72 leaderboard and Low-investment data.')}</div>
         <div class="sourceItem"><strong>2026-10-31</strong><br>${ui('新增「主线困难榜单」标签：忘却篇 / 星辰篇 11 个主线困难关卡的通关回放统计，每个关卡一列，含角色、钥令、速通榜与常用配队。','Added a Hard Main-story leaderboard tab: statistics of the public clears of 11 hard main-story stages, one column per stage, with Awakeners, keeper skills, fastest clears and common teams.')}</div>
         <div class="sourceItem"><strong>2026-10-31</strong><br>${ui('更新第72期融灾榜单与低配榜单数据。','Updated the Season 72 leaderboard and Low-investment data.')}</div>
         <div class="sourceItem"><strong>2026-10-28</strong><br>${ui('更新第72期融灾榜单与低配榜单数据。','Updated the Season 72 leaderboard and Low-investment data.')}</div>
