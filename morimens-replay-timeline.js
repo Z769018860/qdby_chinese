@@ -39,6 +39,11 @@
     }
     return false;
   }
+  function isBattleReplayObject(bytes){
+    // Newer public objects are a raw LZ4 frame; older ones wrap compStr in JSON.
+    return (bytes.length>=4&&bytes[0]===0x04&&bytes[1]===0x22&&bytes[2]===0x4d&&bytes[3]===0x18)
+      || containsAscii(bytes,'"compStr"');
+  }
   function formatBytes(n){
     const v=Number(n)||0;if(v<1024)return `${v} B`;if(v<1048576)return `${(v/1024).toFixed(1)} KB`;return `${(v/1048576).toFixed(2)} MB`;
   }
@@ -89,7 +94,7 @@
     if(safe.method==='HEAD'){if(!response.ok)throw new Error(`HTTP ${response.status}`);return response}
     const body=await readResponseWithProgress(response,candidate);
     if(!body.length)throw new Error('empty response');
-    if(!containsAscii(body,'"compStr"'))throw new Error(`response is not a BattleReplay envelope (${body.length} bytes)`);
+    if(!isBattleReplayObject(body))throw new Error(`response is not a BattleReplay object (${body.length} bytes)`);
     setProgress(74,ui('正在校验并解压回放','Validating and decoding replay'),ui('下一步：LZ4 → MessagePack → recordZips','Next: LZ4 → MessagePack → recordZips'));
     const headers=new Headers(response.headers);headers.set('X-Morimens-Replay-Relay',candidate.name);headers.set('Content-Length',String(body.length));return new Response(body,{status:200,statusText:'OK',headers});
   }
@@ -131,7 +136,7 @@
       for(let t=0;t<3&&!ok;t++){try{const r=await nativeFetch(proxy,{...safe,mode:'same-origin',headers:hdr(a,b)});if(r.status!==206)throw new Error(`HTTP ${r.status}`);const buf=new Uint8Array(await r.arrayBuffer());if(buf.length!==b-a+1)throw new Error('short chunk');out.set(buf,a);loaded+=buf.length;prog();ok=true}catch(e){err=e}}
       if(!ok)throw err}};
     await Promise.all([worker(),worker(),worker()]);
-    if(!containsAscii(out,'"compStr"'))throw new Error(`response is not a BattleReplay envelope (${out.length} bytes)`);
+    if(!isBattleReplayObject(out))throw new Error(`response is not a BattleReplay object (${out.length} bytes)`);
     setProgress(74,ui('正在校验并解压回放','Validating and decoding replay'),'');
     return new Response(out,{status:200,statusText:'OK',headers:{'Content-Type':'application/octet-stream','Content-Length':String(out.length),'X-Morimens-Replay-Relay':'same-origin-chunks'}});
   }
@@ -153,5 +158,5 @@
     done();let q=false;new MutationObserver(()=>{if(q)return;q=true;queueMicrotask(()=>{q=false;done()})}).observe(document.documentElement,{childList:true,subtree:true})};
   const bodyObserver=new MutationObserver(()=>{if(document.getElementById('morimensReplayPanel')){observe();bodyObserver.disconnect()}});bodyObserver.observe(document.documentElement,{childList:true,subtree:true});
 
-  import('./morimens-replay-review-v2.js?v=20261026.1').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
+  import('./morimens-replay-review-v2.js?v=20261104.1').catch(error=>{setProgress(0,ui('回放模块加载失败','Replay module failed to load'),String(error?.message||error));console.error('Replay review failed to load',error)});
 })();
