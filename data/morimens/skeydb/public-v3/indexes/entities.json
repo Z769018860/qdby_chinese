@@ -23634,6 +23634,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0048",
       "ownerAwakenerName": "Thais"
@@ -23651,6 +23653,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0044",
       "ownerAwakenerName": "Salvador"
@@ -23668,6 +23672,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0003",
       "ownerAwakenerName": "Aigis"
@@ -23685,6 +23691,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0046",
       "ownerAwakenerName": "Sorel"
@@ -23702,6 +23710,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0023",
       "ownerAwakenerName": "Helot"
@@ -23719,6 +23729,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0019",
       "ownerAwakenerName": "Helot: Catena"
@@ -23736,6 +23748,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0002",
       "ownerAwakenerName": "Agrippa"
@@ -23753,6 +23767,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0051",
       "ownerAwakenerName": "Uvhash"
@@ -23770,6 +23786,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0028",
       "ownerAwakenerName": "Leigh"
@@ -23787,6 +23805,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0016",
       "ownerAwakenerName": "Faint"
@@ -23804,6 +23824,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0014",
       "ownerAwakenerName": "Doresain"
@@ -23821,6 +23843,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0040",
       "ownerAwakenerName": "Pickman"
@@ -23838,6 +23862,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0054",
       "ownerAwakenerName": "Xu"
@@ -23855,6 +23881,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0042",
       "ownerAwakenerName": "Ramona"
@@ -23872,6 +23900,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0013",
       "ownerAwakenerName": "Doll"
@@ -23889,6 +23919,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0018",
       "ownerAwakenerName": "Doll: Inferno"
@@ -23906,6 +23938,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0038",
       "ownerAwakenerName": "Ogier"
@@ -23923,6 +23957,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0031",
       "ownerAwakenerName": "Lotan"
@@ -23940,6 +23976,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0043",
       "ownerAwakenerName": "Ryker"
@@ -23957,6 +23995,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0001",
       "ownerAwakenerName": "24"
@@ -23974,6 +24014,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0036",
       "ownerAwakenerName": "Nautila"
@@ -23991,6 +24033,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0037",
       "ownerAwakenerName": "Nymphaea"
@@ -24008,6 +24052,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0039",
       "ownerAwakenerName": "Pandia"
@@ -24025,6 +24071,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0029",
       "ownerAwakenerName": "Lily"
@@ -24042,6 +24090,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0004",
       "ownerAwakenerName": "Alva"
@@ -24059,6 +24109,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0026",
       "ownerAwakenerName": "Karen"
@@ -24076,6 +24128,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0047",
       "ownerAwakenerName": "Tawil"
@@ -24093,6 +24147,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0027",
       "ownerAwakenerName": "Kathigu-Ra"
@@ -24110,6 +24166,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0033",
       "ownerAwakenerName": "Mouchette"
@@ -24127,6 +24185,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0030",
       "ownerAwakenerName": "Liz"
@@ -24144,6 +24204,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0012",
       "ownerAwakenerName": "Daffodil"
@@ -24161,6 +24223,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0049",
       "ownerAwakenerName": "Tinct"
@@ -24178,6 +24242,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0052",
       "ownerAwakenerName": "Wanda"
@@ -24195,6 +24261,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0053",
       "ownerAwakenerName": "Winkle"
@@ -24212,6 +24280,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0024",
       "ownerAwakenerName": "Horla"
@@ -24229,6 +24299,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0025",
       "ownerAwakenerName": "Jenkin"
@@ -24246,6 +24318,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0015",
       "ownerAwakenerName": "Erica"
@@ -24263,6 +24337,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0007",
       "ownerAwakenerName": "Casiah"
@@ -24280,6 +24356,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0008",
       "ownerAwakenerName": "Castor"
@@ -24297,6 +24375,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0022",
       "ownerAwakenerName": "Hameln"
@@ -24314,6 +24394,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0010",
       "ownerAwakenerName": "Clementine"
@@ -24331,6 +24413,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0041",
       "ownerAwakenerName": "Pollux"
@@ -24348,6 +24432,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_RATE"
     },
     "wheel-0044": {
@@ -24363,6 +24449,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0045": {
@@ -24378,6 +24466,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE"
     },
     "wheel-0046": {
@@ -24393,6 +24483,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0047": {
@@ -24408,6 +24500,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG"
     },
     "wheel-0048": {
@@ -24423,6 +24517,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "N",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0049": {
@@ -24438,6 +24534,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "N",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0050": {
@@ -24453,6 +24551,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0050",
       "ownerAwakenerName": "Tulu"
@@ -24470,6 +24570,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0034",
       "ownerAwakenerName": "Murphy"
@@ -24487,6 +24589,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0017",
       "ownerAwakenerName": "Faros"
@@ -24504,6 +24608,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0006",
       "ownerAwakenerName": "Caecus"
@@ -24521,6 +24627,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "WELFARE",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0005",
       "ownerAwakenerName": "Aurita"
@@ -24538,6 +24646,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0021",
       "ownerAwakenerName": "Goliath"
@@ -24555,6 +24665,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_FADED_LEGACY",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0032",
       "ownerAwakenerName": "Miryam"
@@ -24572,6 +24684,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0045",
       "ownerAwakenerName": "Sanga"
@@ -24589,6 +24703,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0009",
       "ownerAwakenerName": "Celeste"
@@ -24606,6 +24722,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0011",
       "ownerAwakenerName": "Corposant"
@@ -24623,6 +24741,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0055",
       "ownerAwakenerName": "Vortice"
@@ -24640,6 +24760,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN"
     },
     "wheel-0062": {
@@ -24655,6 +24777,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0063": {
@@ -24670,6 +24794,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE"
     },
     "wheel-0064": {
@@ -24685,6 +24811,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0065": {
@@ -24700,6 +24828,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP"
     },
     "wheel-0066": {
@@ -24715,6 +24845,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE"
     },
     "wheel-0067": {
@@ -24730,6 +24862,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE"
     },
     "wheel-0068": {
@@ -24745,6 +24879,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0069": {
@@ -24760,6 +24896,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE"
     },
     "wheel-0070": {
@@ -24775,6 +24913,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP"
     },
     "wheel-0071": {
@@ -24790,6 +24930,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0072": {
@@ -24805,6 +24947,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0073": {
@@ -24820,6 +24964,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG"
     },
     "wheel-0074": {
@@ -24835,6 +24981,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG"
     },
     "wheel-0076": {
@@ -24850,6 +24998,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0077": {
@@ -24865,6 +25015,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0078": {
@@ -24880,6 +25032,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0079": {
@@ -24895,6 +25049,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP"
     },
     "wheel-0080": {
@@ -24910,6 +25066,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP"
     },
     "wheel-0081": {
@@ -24925,6 +25083,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE"
     },
     "wheel-0082": {
@@ -24940,6 +25100,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0083": {
@@ -24955,6 +25117,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE"
     },
     "wheel-0084": {
@@ -24970,6 +25134,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG"
     },
     "wheel-0085": {
@@ -24985,6 +25151,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE"
     },
     "wheel-0086": {
@@ -25000,6 +25168,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN"
     },
     "wheel-0087": {
@@ -25015,6 +25185,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG"
     },
     "wheel-0088": {
@@ -25030,6 +25202,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN"
     },
     "wheel-0089": {
@@ -25045,6 +25219,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0090": {
@@ -25060,6 +25236,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0091": {
@@ -25075,6 +25253,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0092": {
@@ -25090,6 +25270,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE"
     },
     "wheel-0093": {
@@ -25105,6 +25287,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0029",
       "ownerAwakenerName": "Lily"
@@ -25122,6 +25306,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0052",
       "ownerAwakenerName": "Wanda"
@@ -25139,6 +25325,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0044",
       "ownerAwakenerName": "Salvador"
@@ -25156,6 +25344,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0001",
       "ownerAwakenerName": "24"
@@ -25173,6 +25363,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0019",
       "ownerAwakenerName": "Helot: Catena"
@@ -25190,6 +25382,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0032",
       "ownerAwakenerName": "Miryam"
@@ -25207,6 +25401,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0048",
       "ownerAwakenerName": "Thais"
@@ -25224,6 +25420,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0024",
       "ownerAwakenerName": "Horla"
@@ -25241,6 +25439,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0046",
       "ownerAwakenerName": "Sorel"
@@ -25258,6 +25458,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0034",
       "ownerAwakenerName": "Murphy"
@@ -25275,6 +25477,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0043",
       "ownerAwakenerName": "Ryker"
@@ -25292,6 +25496,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0047",
       "ownerAwakenerName": "Tawil"
@@ -25309,6 +25515,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0022",
       "ownerAwakenerName": "Hameln"
@@ -25326,6 +25534,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0018",
       "ownerAwakenerName": "Doll: Inferno"
@@ -25343,6 +25553,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0050",
       "ownerAwakenerName": "Tulu"
@@ -25360,6 +25572,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0014",
       "ownerAwakenerName": "Doresain"
@@ -25377,6 +25591,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0012",
       "ownerAwakenerName": "Daffodil"
@@ -25394,6 +25610,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0035",
       "ownerAwakenerName": "Murphy: Fauxborn"
@@ -25411,6 +25629,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0008",
       "ownerAwakenerName": "Castor"
@@ -25428,6 +25648,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0041",
       "ownerAwakenerName": "Pollux"
@@ -25445,6 +25667,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0011",
       "ownerAwakenerName": "Corposant"
@@ -25462,6 +25686,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN",
       "ownerAwakenerId": "awakener-0040",
       "ownerAwakenerName": "Pickman"
@@ -25479,6 +25705,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0027",
       "ownerAwakenerName": "Kathigu-Ra"
@@ -25496,6 +25724,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "DEATH_RESISTANCE",
       "ownerAwakenerId": "awakener-0033",
       "ownerAwakenerName": "Mouchette"
@@ -25513,6 +25743,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0054",
       "ownerAwakenerName": "Xu"
@@ -25530,6 +25762,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0055",
       "ownerAwakenerName": "Vortice"
@@ -25547,6 +25781,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "BATTLE_PASS",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0121": {
@@ -25562,6 +25798,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "BATTLE_PASS",
+      "hasShopSource": true,
       "mainstatKey": "DMG_AMP"
     },
     "wheel-0122": {
@@ -25577,6 +25815,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "BATTLE_PASS",
+      "hasShopSource": true,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0123": {
@@ -25592,6 +25832,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "DEATH_RESISTANCE"
     },
     "wheel-0124": {
@@ -25607,6 +25849,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "KEYFLARE_REGEN"
     },
     "wheel-0125": {
@@ -25622,6 +25866,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "ALIEMUS_REGEN"
     },
     "wheel-0126": {
@@ -25637,6 +25883,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": true,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0128": {
@@ -25652,6 +25900,8 @@
       },
       "realm": "ULTRA",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0056",
       "ownerAwakenerName": "Arachne"
@@ -25669,6 +25919,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG"
     },
     "wheel-0131": {
@@ -25684,6 +25936,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0035",
       "ownerAwakenerName": "Murphy: Fauxborn"
@@ -25701,6 +25955,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0056",
       "ownerAwakenerName": "Arachne"
@@ -25718,6 +25974,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "R",
+      "availabilityType": "PERMANENT",
+      "hasShopSource": false,
       "mainstatKey": "ALIEMUS_REGEN"
     },
     "wheel-0137": {
@@ -25733,6 +25991,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "KEYFLARE_REGEN",
       "ownerAwakenerId": "awakener-0010",
       "ownerAwakenerName": "Clementine"
@@ -25750,6 +26010,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0166": {
@@ -25765,6 +26027,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0167": {
@@ -25780,6 +26044,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0057",
       "ownerAwakenerName": "Saya"
@@ -25797,6 +26063,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0057",
       "ownerAwakenerName": "Saya"
@@ -25814,6 +26082,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0058",
       "ownerAwakenerName": "Pontos"
@@ -25831,6 +26101,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "DMG_AMP",
       "ownerAwakenerId": "awakener-0029",
       "ownerAwakenerName": "Lily"
@@ -25848,6 +26120,8 @@
       },
       "realm": "AEQUOR",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_DMG",
       "ownerAwakenerId": "awakener-0058",
       "ownerAwakenerName": "Pontos"
@@ -25865,6 +26139,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0059",
       "ownerAwakenerName": "Lotan: Cetarchon"
@@ -25882,6 +26158,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD",
       "ownerAwakenerId": "awakener-0059",
       "ownerAwakenerName": "Lotan: Cetarchon"
@@ -25899,6 +26177,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY"
     },
     "wheel-0175": {
@@ -25914,6 +26194,8 @@
       },
       "realm": "CARO",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0060",
       "ownerAwakenerName": "Caraboo"
@@ -25931,6 +26213,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "REALM_MASTERY",
       "ownerAwakenerId": "awakener-0060",
       "ownerAwakenerName": "Caraboo"
@@ -25948,6 +26232,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "SIGIL_YIELD"
     },
     "wheel-0178": {
@@ -25963,6 +26249,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0061",
       "ownerAwakenerName": "Ogier: Oathbound"
@@ -25980,6 +26268,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0061",
       "ownerAwakenerName": "Ogier: Oathbound"
@@ -25997,6 +26287,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE"
     },
     "wheel-0181": {
@@ -26012,6 +26304,8 @@
       },
       "realm": "CHAOS",
       "rarity": "SSR",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0062",
       "ownerAwakenerName": "Vivian"
@@ -26029,6 +26323,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE",
       "ownerAwakenerId": "awakener-0062",
       "ownerAwakenerName": "Vivian"
@@ -26046,6 +26342,8 @@
       },
       "realm": "NEUTRAL",
       "rarity": "SSR",
+      "availabilityType": "EVENT",
+      "hasShopSource": false,
       "mainstatKey": "CRIT_RATE"
     }
   },

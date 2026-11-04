@@ -10,6 +10,9 @@
   "assets": {
     "icon": "asset-wheel-0126-icon"
   },
+  "availabilityType": "EVENT",
+  "hasShopSource": true,
+  "acquisitionSource": "Event reward Wheel. Also available from the Sediment exchange shop.",
   "rarity": "SSR",
   "realm": "NEUTRAL",
   "mainstatKey": "REALM_MASTERY",
