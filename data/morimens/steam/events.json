@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-04T11:12:50.675Z",
+ "fetchedAt": "2026-11-05T11:12:54.973Z",
  "posts": [
+  {
+   "title": "🐱 Light's 30-Day Challenge Log: Days 17–21",
+   "date": "2026-11-04",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1848557880478934"
+  },
   {
    "title": "V2.6.2.3 Maintenance Announcement",
    "date": "2026-10-30",
