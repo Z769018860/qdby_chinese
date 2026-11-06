@@ -1,8 +1,22 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-01T08:01:12Z",
-  "recordCount": 43,
+  "updatedAt": "2026-11-05T08:25:14Z",
+  "recordCount": 44,
   "records": [
+    {
+      "commentId": "121",
+      "type": "dzone",
+      "uid": "100104278",
+      "submittedBy": "匿名",
+      "submittedAt": "2026-11-04T22:53:55.690Z",
+      "summary": "第 72 期 · 500 分 · 7 支队伍",
+      "summaryZh": "第 72 期 · 500 分 · 7 支队伍",
+      "summaryEn": "Season 72 · 500 pts · 7 teams",
+      "score": 500,
+      "teams": 7,
+      "seasonId": 72,
+      "communityVariant": "default"
+    },
     {
       "commentId": "118",
       "type": "dzone",
