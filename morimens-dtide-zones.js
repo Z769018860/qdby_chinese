@@ -203,6 +203,10 @@
       if(out[k]==null)continue;
       parts.push(`${ui(kinds[k][0],kinds[k][1])} <b>${esc(fmt(out[k]))}</b>${k==='Damage'&&out.AttackTimes>1?` × ${esc(out.AttackTimes)}`:''}`);
     }
+    // every other argument of the text (stack counts, percentages, turns ...) in the order it appears, so buff / debuff skills show their numbers too
+    const rest=[],seen=new Set();
+    String(tpl||'').replace(/\[(?:(\w+):)?Arg(\d+)\]/g,(m,k,n)=>{if((k&&(kinds[k]||k==='AttackTimes'))||seen.has(n))return m;seen.add(n);const v=args?.[Number(n)-1];if(v!=null)rest.push(esc(fmt(v)));return m});
+    if(rest.length)parts.push(`${ui('数值','Values')} <b>${rest.join(' / ')}</b>`);
     return parts.join(' · ');
   }
   const patLabel=id=>id==='opening'?ui('首轮行动','Opening'):(/^cycle-(\d+)/.exec(id)?ui('循环 ','Cycle ')+RegExp.$1:id);

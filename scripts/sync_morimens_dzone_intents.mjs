@@ -29,6 +29,8 @@ for(const [periodStr,file] of Object.entries(FILES)){
   const period=Number(periodStr);
   let src;try{src=await readSource(`data/${file}`)}catch(e){console.warn('skip',period,e.message);continue}
   let sk=null;try{sk=JSON.parse(await readFile(`${SKEYDB_SEASONS}/${period}.json`,'utf8'))}catch{}
+  const skIdx=JSON.parse(await readFile('data/morimens/skeydb/dzone/index.json','utf8')).monsters||{};
+  const skTr=(JSON.parse(await readFile('data/morimens/game/dzone-translations.json','utf8')).skMonsters)||{};
   const monsters={};let joined=0,total=0;
   const waves=src.waves.map((w,wi)=>{
     for(const m of w.monsters){
@@ -59,7 +61,8 @@ for(const [periodStr,file] of Object.entries(FILES)){
               const vals=(r.args||[]).map(display);args[id]=vals;
             }
             const key=m.level+':'+m.hp,list=pool.get(key);let skId=null;
-            if(list?.length){skId=list.shift();joined++}
+            if(list?.length){ // same level and hp: prefer the SKeyDB monster with the same portrait (two monsters can share both numbers)
+              const art=String(monsters[m.tid]?.img||'');const zhOf=String(monsters[m.tid]?.zh||'').replace(/[「」"\s]/g,'');const same=list.map((id,i)=>i).filter(i=>skIdx[list[i]]?.a===art);const byName=same.find(i=>String(skTr[list[i]]?.zh||'').replace(/[「」"\s]/g,'')===zhOf);let at=byName!=null?byName:same.length?same[0]:0;skId=list.splice(at,1)[0];joined++}
             const sa={};
             for(const st of m.resolvedStates||[]){
               const da=(st.descArgs||[]).map(display),sg=(st.stateArgs||[]).map(display),la=display(st.initialLayer);

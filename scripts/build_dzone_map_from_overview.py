@@ -28,8 +28,9 @@ for z in range(1, 6):
     names = {tuple(c[:2]): types[str(maps["nodes"][str(c[2])][0])][0] for c in cells}
     single = all(n in ('开始', '锈蚀门扉') for n in names.values()) and '开始' in names.values()  # boss-only arena: the start tile is the boss
     nodes, enc = [], {}
-    for x, y, nid, *_ in cells:
+    for x, y, nid, *var in cells:
         t, bid = maps['nodes'][str(nid)]
+        if single and not bid and var: bid = maps['nodes'].get(str(var[0]), [0, 0])[1]  # boss-only arena: the fight sits on the variant node of the start tile
         name = types[str(t)][0]
         d = KIND.get(name)
         if not d: unknown.add(name); continue
@@ -63,5 +64,7 @@ for tid in sorted(enc_monsters):
     if k in prior: info[k] = prior[k]; continue
     m = mon.get(k, {})
     info[k] = {'zh': m.get('n', ''), 'img': m.get('i'), 'cls': {'Boss': 'Boss', 'Elite': 'Elite'}.get(m.get('c'), 'Common'), 'fromLocalTable': True}; new += 1
-(D / f'dzone-info/{period}.json').write_text(json.dumps({'period': period, 'generatedAt': None, 'source': 'repo map overview (client config); intents reused from earlier seasons', 'monsters': info, 'waves': []}, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
-print('monsters', len(info), 'new', new)
+info_path = D / f'dzone-info/{period}.json'
+if not info_path.exists():  # the intents sync (Info.kr) writes the full file; this is only a fallback
+  info_path.write_text(json.dumps({'period': period, 'generatedAt': None, 'source': 'repo map overview (client config); intents reused from earlier seasons', 'monsters': info, 'waves': []}, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+print('monsters', len(info), 'new', new, '(kept the existing file)' if False else '')
