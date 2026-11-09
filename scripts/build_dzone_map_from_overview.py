@@ -9,6 +9,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 D = ROOT / 'data/morimens'
 period = int(sys.argv[1])
+# a dump taken before a season starts can hold stale battle groups for the zone maps (layout is reliable, monsters are not):
+# when Morimens.Info.kr already has the season, its encounters (same battle ids) replace the dump's monster groups
+import urllib.request
+info_enc = {}
+try:
+    src = urllib.request.urlopen(f'https://raw.githubusercontent.com/Morimenz-kr/Morimens.Info.kr/main/data/dzone_season{period}.json', timeout=60).read()
+    for w in json.loads(src)['waves']:
+        for e in w.get('encounters', []):
+            info_enc[e['battleId']] = {'t': e.get('battleType'), 'm': [{'tid': m['tid'], 'p': m['position']} for m in e.get('members', [])]}
+except Exception as ex:
+    print('Info.kr encounters not available:', ex)
 rj = lambda p: json.loads((D / p).read_text(encoding='utf-8'))
 idx, maps, battles, mon = rj('maps/index.json'), rj('maps/maps.json'), rj('maps/battles.json'), rj('maps/monsters.json')['monsters']
 types = idx['nodeTypes']
@@ -40,8 +51,8 @@ for z in range(1, 6):
         if d['k'] == 'combat' and bid and str(bid) in battles:
             n['b'] = bid
             bt, ms = battles[str(bid)]
-            enc[bid] = {'t': bt, 'm': [{'tid': m[0], 'p': m[1]} for m in ms]}
-            enc_monsters.update(m[0] for m in ms)
+            enc[bid] = info_enc.get(bid) or {'t': bt, 'm': [{'tid': m[0], 'p': m[1]} for m in ms]}
+            enc_monsters.update(m['tid'] for m in enc[bid]['m'])
         nodes.append(n)
     # plain walkable tiles: grid positions that are neither a node cell nor a wall (void)
     mid = str(stages[z]['m'][0])
