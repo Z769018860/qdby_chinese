@@ -271,7 +271,7 @@
   function basicBody(x,m,o){
     const chars=state.index.characteristics;
     const traits=(m.c||[]).map(id=>{const c=chars[id];if(!c)return '';const t=zh()?state.tr.characteristics[c.n]:null;return `<li><b>${esc(t?.zh||c.n)}</b> ${esc(t?.zd||c.d)}</li>`}).join('');
-    const desc=zh()?(o.tr?.zd||o.smz?.zd||o.wiki?.desc||o.cw?.description||m.d):(m.d||o.tr?.ed||'');
+    const desc=zh()?(o.tr?.zd||o.smz?.zd||o.wiki?.desc||o.cw?.description||(KO.test(m.d||'')?'':m.d)):((KO.test(m.d||'')?'':m.d)||o.tr?.ed||'');
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${x.level??'—'}</b></span><span>${ui('生命','HP')} <b>${x.hp!=null?fmt(x.hp):'—'}</b>${x.hpBars>1?` ×${x.hpBars}`:''}</span></div>`;
     const wiki=zh()&&o.wiki?wikiBlock(o.wiki):'';
     const cw=zh()&&(o.cw?.intents?.length||o.cw?.trait)?cwBlock(o.cw,true):'';
@@ -318,10 +318,11 @@
     const li=a=>(a||[]).map(t=>`<li>${esc(t)}</li>`).join('');
     return `${inner?'':'<div class="dzIntelBody">'}<div class="dzSec">${ui('中文 Wiki 意图说明','Chinese Wiki intent notes')}</div>${w.trait?`<div>${ui('特性','Trait')}：${esc(w.trait)}</div>`:''}${w.intents?.length?`<ol class="dzList">${li(w.intents)}</ol>`:''}${w.cycle?`<div>${ui('行动顺序','Action order')}：${esc(w.cycle)}</div>`:''}${inner?'':'</div>'}`;
   }
-  const skName=sk=>trText(state.tr.skills[sk?.id],'zn','en')||xl(sk?.n)||sk?.n||'';
-  const skNameKo=sk=>!trText(state.tr.skills[sk?.id],'zn','en')&&!xl(sk?.n)&&!!sk?.n;
+  const KO=/[\uac00-\ud7af]/;   // Korean source text is never shown: whatever has no Chinese (or English) version is left out
+  const skName=sk=>trText(state.tr.skills[sk?.id],'zn','en')||xl(sk?.n)||(KO.test(sk?.n||'')?'':sk?.n)||'';
+  const skNameKo=sk=>false;
   // translated description with numbers filled in; falls back to the Korean original (flagged by lang="ko")
-  function skDesc(sk,args){const t=trText(state.tr.skills[sk?.id],'zd','ed')||xl(sk?.d);return t?{text:fill(t,args),ko:false}:{text:fill(sk?.d,args),ko:true}}
+  function skDesc(sk,args){const t=trText(state.tr.skills[sk?.id],'zd','ed')||xl(sk?.d);return t?{text:fill(t,args),ko:false}:(sk?.d&&!KO.test(sk.d)?{text:fill(sk.d,args),ko:false}:{text:ui('（暂无中文说明）','(no Chinese text yet)'),ko:false})}
   function wikiBlock(w){
     if(!w)return '';
     const meta=[w.kind&&`${ui('种类','Kind')}：${esc(w.kind)}`,w.rank&&`${ui('地位','Rank')}：${esc(w.rank)}`].filter(Boolean).join(' · ');
@@ -338,9 +339,9 @@
       const nums=numbers(sk.d,row.a[sk.id]),nm=skName(sk),d=skDesc(sk,row.a[sk.id]);
       return `<tr><td${skNameKo(sk)?' lang="ko"':''}>${nm?esc(nm):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}</td><td><span class="dzTypeCell">${intentIcon(sk.t,'dzIcon dzIconSm')}${esc(typeLabel(sk.t))}</span></td><td>${esc(targetLabel(sk.g))}</td><td>${nums||'—'}</td><td class="dzKo"${d.ko?' lang="ko"':''}>${esc(d.text)}</td></tr>`;
     }).join('');
-    const sts=intel.st.map(x=>{const t=state.tr.states[x.id],n=trText(t,'zn','en')||xl(x.n),d=trText(t,'zd','ed')||xl(x.d);const ko=!d;return `<li>${(n||x.n)?`<b${n?'':' lang="ko"'}>${esc(n||x.n)}</b> `:''}<span${ko?' lang="ko"':''}>${esc(fillState(d||x.d,row.sa?.[x.id]))}</span></li>`}).join('');
+    const sts=intel.st.map(x=>{const t=state.tr.states[x.id],n=trText(t,'zn','en')||xl(x.n),d=trText(t,'zd','ed')||xl(x.d);const nm=n||(KO.test(x.n||'')?'':x.n),dd=d||(KO.test(x.d||'')?'':x.d);if(!nm&&!dd)return '';return `<li>${nm?`<b>${esc(nm)}</b> `:''}<span>${esc(fillState(dd,row.sa?.[x.id]))}</span></li>`}).join('');
     const koLeft=t=>/[\uac00-\ud7af]/.test(t);
-    const conds=intel.cond.filter(c=>c.t).map(c=>{const t=tx(c.t),ef=c.e.filter(e=>e.n).map(e=>tx(e.n)).join(zh()?'、':', ');const all=t+ef;return `<li${koLeft(all)?' lang="ko"':''}>${esc(t)}${ef?` → ${esc(ef)}`:''}</li>`}).join('');
+    const conds=intel.cond.filter(c=>c.t).map(c=>{const t=tx(c.t),ef=c.e.filter(e=>e.n).map(e=>tx(e.n)).join(zh()?'、':', ');const all=t+ef;if(koLeft(all))return '';return `<li>${esc(t)}${ef?` → ${esc(ef)}`:''}</li>`}).join('');
     return `<div class="dzIntelBody">${note?`<div class="dzNote">${esc(note)}</div>`:''}${stats}${wikiBlock(wiki)}
       <div class="dzSec">${ui('行动意图（按回合顺序）','Intent pattern (in turn order)')}</div>${pats||`<div class="dzEmpty">${ui('无固定行动序列','No fixed pattern')}</div>`}
       <div class="dzSec">${ui('技能详情','Skill details')}</div><div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('目标','Target')}</th><th>${ui('数值','Values')}</th><th>${ui('官方描述','Official text')}</th></tr></thead><tbody>${rows}</tbody></table></div>
