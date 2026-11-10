@@ -3,11 +3,35 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-11-09T10:06:00+08:00",
+    "syncedAt": "2026-11-10T15:20:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
-  "currentSeason": 72,
+  "currentSeason": 73,
   "availableSeasons": [
+    {
+      "seasonId": 73,
+      "labelEn": "Season 73 · Ultra Ring",
+      "period": "2026-11-09 – 2026-11-23",
+      "recordCount": 1997,
+      "leaderboardEntryCount": 1997,
+      "complete": true,
+      "coverageMode": "official-rank-top2000",
+      "path": "data/morimens/eremora/usage/73-local-gzip/index.json",
+      "statsPath": "data/morimens/eremora/stats/73.json",
+      "dataUpdatedAt": "2026-11-10T15:20:00+08:00",
+      "labelZh": "第73期 融灾 · 超维戒指",
+      "periodShort": "11.9–11.22",
+      "ringRealm": "Ultra",
+      "ringRealmZh": "超维",
+      "rankPath": "data/morimens/eremora/rank-index/73.json",
+      "battleArchivePath": "data/morimens/dzone/season73/meta.json",
+      "battleDetailPath": "data/morimens/eremora/usage/73-battle-gzip/index.json",
+      "lowspecPath": "data/morimens/eremora/lowspec/73.json",
+      "teamDetailRevision": "2cf7800d28092d1964f389e0a4798077c061e55e4651212773d34f563a3131a3",
+      "battleDetailRevision": "4b58751892bd92f242782627ec0a1af5c5a4331306802f965be3c91eb81f742b",
+      "payloadEncoding": "table-pool-v2",
+      "revision": "2cf7800d28092d1964f389e0a4798077c061e55e4651212773d34f563a3131a3"
+    },
     {
       "seasonId": 72,
       "labelEn": "Season 72 · Caro Ring",
@@ -192,6 +216,7 @@
     }
   ],
   "discoveredSeasonIds": [
+    73,
     72,
     71,
     70,
@@ -204,6 +229,7 @@
     63
   ],
   "pendingBackfillSeasonIds": [
+    73,
     72,
     71,
     70,
@@ -216,8 +242,8 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 2000,
-    "records": 2000,
+    "leaderboardEntries": 1997,
+    "records": 1997,
     "complete": true,
     "failures": 0
   },
@@ -318,37 +344,37 @@
     ]
   },
   "rankIndex": {
-    "seasonId": 72,
-    "path": "data/morimens/eremora/rank-index/72.json",
-    "target": 2000,
-    "count": 2000,
+    "seasonId": 73,
+    "path": "data/morimens/eremora/rank-index/73.json",
+    "target": 1997,
+    "count": 1997,
     "complete": true,
-    "syncedAt": "2026-11-09T10:06:00+08:00",
-    "revision": "s72-top2000-final-20261109-1006",
+    "syncedAt": "2026-11-10T15:20:00+08:00",
+    "revision": "s73-top2000-20261110-1520",
     "scorePolicy": "official-rank-score",
     "source": "official live Rank.QueryRank response",
-    "activityTid": 83314
+    "activityTid": 83326
   },
   "usageIndex": {
-    "seasonId": 72,
-    "path": "data/morimens/eremora/usage/72-local-gzip/index.json",
-    "statsPath": "data/morimens/eremora/stats/72.json",
-    "target": 2000,
-    "rankIndexCount": 2000,
-    "recordCount": 2000,
+    "seasonId": 73,
+    "path": "data/morimens/eremora/usage/73-local-gzip/index.json",
+    "statsPath": "data/morimens/eremora/stats/73.json",
+    "target": 1997,
+    "rankIndexCount": 1997,
+    "recordCount": 1997,
     "coverage": {
-      "expected": 2000,
-      "covered": 2000,
+      "expected": 1997,
+      "covered": 1997,
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-11-09T10:06:00+08:00",
-    "revision": "52ba85272a9a628271c90fa2b66ed3af4b5b7bc2beaeccc607ac013f9baa49a3",
+    "syncedAt": "2026-11-10T15:20:00+08:00",
+    "revision": "2cf7800d28092d1964f389e0a4798077c061e55e4651212773d34f563a3131a3",
     "format": "gzip-base64-chunked-v2",
     "chunks": 2,
     "chunkSize": 600000,
-    "chunkBytes": 935464,
-    "rawBytes": 4241313,
+    "chunkBytes": 677141,
+    "rawBytes": 3035117,
     "encoding": "table-pool-v2"
   },
   "rawTop1000Import": {
@@ -368,10 +394,10 @@
     "updatedAt": "2026-09-22T01:00:00+08:00"
   },
   "seasonRing": {
-    "seasonId": 72,
-    "realm": "Caro",
-    "nameZh": "血肉戒指",
-    "nameEn": "Caro Ring"
+    "seasonId": 73,
+    "realm": "Ultra",
+    "nameZh": "超维戒指",
+    "nameEn": "Ultra Ring"
   },
   "latestLocalImport": {
     "seasonId": 71,
@@ -381,18 +407,18 @@
       1,
       2000
     ],
-    "rankedPlayers": 2000,
-    "parsedRecords": 2000,
-    "teamRows": 20139,
+    "rankedPlayers": 1997,
+    "parsedRecords": 1997,
+    "teamRows": 7574,
     "battleRows": 21373,
     "ringRealm": "Chaos",
     "ringRealmZh": "混沌",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-11-09T10:06:00+08:00",
-    "revision": "52ba85272a9a628271c90fa2b66ed3af4b5b7bc2beaeccc607ac013f9baa49a3",
+    "updatedAt": "2026-11-10T15:20:00+08:00",
+    "revision": "2cf7800d28092d1964f389e0a4798077c061e55e4651212773d34f563a3131a3",
     "battleArchive": "data/morimens/dzone/season71/meta.json",
     "battleDetail": "data/morimens/eremora/usage/71-battle-gzip/index.json",
-    "note": "Season 72 FINAL (settled): Top 2000 rank snapshot 2026-11-09 10:06 + teams_latest.jsonl of the same capture; rows the capture lacks come from the older captures (--fallback-raw).",
+    "note": "Season 73 snapshot: Top 2000 rank snapshot 2026-11-10 15:20 + teams_latest.jsonl of the same capture; rows the capture lacks come from the older captures (--fallback-raw).",
     "teamRowsBySource": {
       "teams_latest.jsonl": 9816,
       "previous-capture": 1818
