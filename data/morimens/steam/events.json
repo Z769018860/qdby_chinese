@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-09T11:50:27.530Z",
+ "fetchedAt": "2026-11-10T11:25:37.525Z",
  "posts": [
+  {
+   "title": "🐱 Light's 30-Day Challenge Log: Days 23–30",
+   "date": "2026-11-10",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1848664643358910"
+  },
   {
    "title": "💚 Morimens × The Song of Saya丨Saya Scale Figure & OST Bundle",
    "date": "2026-11-09",
