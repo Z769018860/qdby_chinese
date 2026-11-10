@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-05T08:25:14Z",
-  "recordCount": 4,
+  "updatedAt": "2026-11-09T08:37:53Z",
+  "recordCount": 5,
   "summary": {
-    "replays": 4,
-    "good": 2,
+    "replays": 5,
+    "good": 3,
     "bad": 2,
     "problemOpen": 0,
     "problemResolved": 2
@@ -34,6 +34,19 @@
     }
   ],
   "records": [
+    {
+      "commentId": "123",
+      "submittedAt": "2026-11-08T15:08:33Z",
+      "replayId": "d1a962f2-aa70-30a1-8f89-40c1dc4cc68d",
+      "kind": "good",
+      "note": "",
+      "battleTid": 87535,
+      "stageId": 153611,
+      "player": "刀锋之誓",
+      "lang": "zh",
+      "time": "2026-11-08T15:08:32.561Z",
+      "page": "/morimens-tools.html"
+    },
     {
       "commentId": "73",
       "submittedAt": "2026-10-18T09:43:44Z",

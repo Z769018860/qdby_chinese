@@ -196,12 +196,21 @@
   const fillState=(tpl,sa)=>String(tpl||'').replace(/\[(?:\w+:)?(Desc|State)Arg(\d+)\]/g,(m,k,n)=>{const a=(k==='Desc'?sa?.da:sa?.sg)?.[Number(n)-1];return a==null?'X':String(a)}).replace(/\[Layer\]/g,()=>sa?.la==null?'X':String(sa.la));
   // language-neutral numbers pulled from the template tokens: Damage / AttackTimes / Block / Power ...
   function numbers(tpl,args){
-    const out={},kinds={Damage:['伤害','Damage'],Block:['护盾','Shield'],Power:['力量','Strength'],TentaclePower:['触腕伤害','Tentacle'],Energy:['狂气','Madness']};
-    String(tpl||'').replace(/\[(\w+):Arg(\d+)\]/g,(m,k,n)=>{out[k]=args?.[Number(n)-1];return m});
-    const parts=[];
+    const out={},kinds={Damage:['伤害','Damage'],Block:['护盾','Shield'],Power:['力量','Strength'],TentaclePower:['触腕伤害','Tentacle'],Energy:['狂气','Madness']},tp=String(tpl||'');
+    tp.replace(/\[(\w+):Arg(\d+)\]/g,(m,k,n)=>{out[k]=args?.[Number(n)-1];return m});
+    const parts=[],hits=out.AttackTimes!=null?Number(out.AttackTimes):null,hitTxt=hits!=null&&hits>=1?` × <b>${esc(hits)}</b>${ui(' 连击',' hits')}`:'';
     for(const k of Object.keys(kinds)){
       if(out[k]==null)continue;
-      parts.push(`${ui(kinds[k][0],kinds[k][1])} <b>${esc(fmt(out[k]))}</b>${k==='Damage'&&out.AttackTimes>1?` × ${esc(out.AttackTimes)}`:''}`);
+      parts.push(`${ui(kinds[k][0],kinds[k][1])} <b>${esc(fmt(out[k]))}</b>${k==='Damage'?hitTxt:''}`);
+    }
+    if(out.Damage==null&&hitTxt)parts.push(`${ui('连击','Hits')}${hitTxt}`);
+    // every other argument of the text (stack counts, percentages, turns ...) in the order it appears, followed by the words it belongs to ("9 层力量"), so buff / debuff skills show their numbers too
+    const seen=new Set(),re=/\[(?:(\w+):)?Arg(\d+)\]/g;let mt;
+    while((mt=re.exec(tp))){
+      const k=mt[1],n=mt[2];if((k&&(kinds[k]||k==='AttackTimes'))||seen.has(n))continue;seen.add(n);
+      const v=args?.[Number(n)-1];if(v==null)continue;
+      const tail=(/^\s*([%％]|[层点张次回合名只个枚条秒]+[^\s，。、；：,.;:\[\]（）()「」]{0,3})/.exec(tp.slice(re.lastIndex))||[''])[0].trim();
+      const chip=`<b>${esc(fmt(v))}</b>${esc(tail.replace(/[并及与和的而后则且并]+$/,''))}`;if(!parts.includes(chip))parts.push(chip);
     }
     return parts.join(' · ');
   }
@@ -271,7 +280,7 @@
   function basicBody(x,m,o){
     const chars=state.index.characteristics;
     const traits=(m.c||[]).map(id=>{const c=chars[id];if(!c)return '';const t=zh()?state.tr.characteristics[c.n]:null;return `<li><b>${esc(t?.zh||c.n)}</b> ${esc(t?.zd||c.d)}</li>`}).join('');
-    const desc=zh()?(o.tr?.zd||o.smz?.zd||o.wiki?.desc||o.cw?.description||m.d):(m.d||o.tr?.ed||'');
+    const desc=zh()?(o.tr?.zd||o.smz?.zd||o.wiki?.desc||o.cw?.description||(KO.test(m.d||'')?'':m.d)):((KO.test(m.d||'')?'':m.d)||o.tr?.ed||'');
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${x.level??'—'}</b></span><span>${ui('生命','HP')} <b>${x.hp!=null?fmt(x.hp):'—'}</b>${x.hpBars>1?` ×${x.hpBars}`:''}</span></div>`;
     const wiki=zh()&&o.wiki?wikiBlock(o.wiki):'';
     const cw=zh()&&(o.cw?.intents?.length||o.cw?.trait)?cwBlock(o.cw,true):'';
@@ -318,10 +327,12 @@
     const li=a=>(a||[]).map(t=>`<li>${esc(t)}</li>`).join('');
     return `${inner?'':'<div class="dzIntelBody">'}<div class="dzSec">${ui('中文 Wiki 意图说明','Chinese Wiki intent notes')}</div>${w.trait?`<div>${ui('特性','Trait')}：${esc(w.trait)}</div>`:''}${w.intents?.length?`<ol class="dzList">${li(w.intents)}</ol>`:''}${w.cycle?`<div>${ui('行动顺序','Action order')}：${esc(w.cycle)}</div>`:''}${inner?'':'</div>'}`;
   }
-  const skName=sk=>trText(state.tr.skills[sk?.id],'zn','en')||xl(sk?.n)||sk?.n||'';
-  const skNameKo=sk=>!trText(state.tr.skills[sk?.id],'zn','en')&&!xl(sk?.n)&&!!sk?.n;
+  const KO=/[\uac00-\ud7af]/;   // Korean source text is never shown: whatever has no Chinese (or English) version is left out
+  const skName=sk=>trText(state.tr.skills[sk?.id],'zn','en')||xl(sk?.n)||(KO.test(sk?.n||'')?'':sk?.n)||'';
+  const skNameKo=sk=>false;
+  const skTpl=sk=>trText(state.tr.skills[sk?.id],'zd','ed')||xl(sk?.d)||sk?.d||'';   // the Chinese text (same tokens as the Korean one) tells what each number belongs to
   // translated description with numbers filled in; falls back to the Korean original (flagged by lang="ko")
-  function skDesc(sk,args){const t=trText(state.tr.skills[sk?.id],'zd','ed')||xl(sk?.d);return t?{text:fill(t,args),ko:false}:{text:fill(sk?.d,args),ko:true}}
+  function skDesc(sk,args){const t=trText(state.tr.skills[sk?.id],'zd','ed')||xl(sk?.d);return t?{text:fill(t,args),ko:false}:(sk?.d&&!KO.test(sk.d)?{text:fill(sk.d,args),ko:false}:{text:ui('（暂无中文说明）','(no Chinese text yet)'),ko:false})}
   function wikiBlock(w){
     if(!w)return '';
     const meta=[w.kind&&`${ui('种类','Kind')}：${esc(w.kind)}`,w.rank&&`${ui('地位','Rank')}：${esc(w.rank)}`].filter(Boolean).join(' · ');
@@ -333,14 +344,14 @@
   function intelBody(row,intel,wiki,note){
     const skills=new Map(intel.sk.map(s=>[s.id,s]));
     const stats=`<div class="dzStats"><span>${ui('等级','Lv')} <b>${row.lv}</b></span><span>${ui('攻击力','ATK')} <b>${fmt(row.atk)}</b></span><span>${ui('防御','DEF')} <b>${fmt(row.def)}</b></span><span>${ui('生命','HP')} <b>${fmt(row.hp)}</b></span>${row.ph?`<span>${ui('多段血条','HP bars')} <b>${row.ph.map(fmt).join(' → ')}</b></span>`:''}</div>`;
-    const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(sk?.d,row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(skDesc(sk,row.a[id]).text)}">${intentIcon(sk?.t)}<span class="dzIntentText">${esc(skName(sk)||typeLabel(sk?.t))}<small>${esc((skName(sk)?typeLabel(sk?.t):'')+(skName(sk)&&nm?' · ':'')+nm)}</small></span></span>`}).join('')}</div>`).join('');
+    const pats=intel.pat.map(p=>`<div class="dzPat"><span class="dzPatName">${esc(patLabel(p.id))}</span>${p.s.map((id,i)=>{const sk=skills.get(id);const nm=numbers(skTpl(sk),row.a[id]).replace(/<[^>]+>/g,'');return `${i?'<span class="dzArrow">→</span>':''}<span class="dzIntent" title="${esc(skDesc(sk,row.a[id]).text)}">${intentIcon(sk?.t)}<span class="dzIntentText">${esc(skName(sk)||typeLabel(sk?.t))}<small>${esc((skName(sk)?typeLabel(sk?.t):'')+(skName(sk)&&nm?' · ':'')+nm)}</small></span></span>`}).join('')}</div>`).join('');
     const rows=intel.sk.map(sk=>{
-      const nums=numbers(sk.d,row.a[sk.id]),nm=skName(sk),d=skDesc(sk,row.a[sk.id]);
+      const nums=numbers(skTpl(sk),row.a[sk.id]),nm=skName(sk),d=skDesc(sk,row.a[sk.id]);
       return `<tr><td${skNameKo(sk)?' lang="ko"':''}>${nm?esc(nm):`<span style="color:#8290a2">${ui('（无名称）','(unnamed)')}</span>`}</td><td><span class="dzTypeCell">${intentIcon(sk.t,'dzIcon dzIconSm')}${esc(typeLabel(sk.t))}</span></td><td>${esc(targetLabel(sk.g))}</td><td>${nums||'—'}</td><td class="dzKo"${d.ko?' lang="ko"':''}>${esc(d.text)}</td></tr>`;
     }).join('');
-    const sts=intel.st.map(x=>{const t=state.tr.states[x.id],n=trText(t,'zn','en')||xl(x.n),d=trText(t,'zd','ed')||xl(x.d);const ko=!d;return `<li>${(n||x.n)?`<b${n?'':' lang="ko"'}>${esc(n||x.n)}</b> `:''}<span${ko?' lang="ko"':''}>${esc(fillState(d||x.d,row.sa?.[x.id]))}</span></li>`}).join('');
+    const sts=intel.st.map(x=>{const t=state.tr.states[x.id],n=trText(t,'zn','en')||xl(x.n),d=trText(t,'zd','ed')||xl(x.d);const nm=n||(KO.test(x.n||'')?'':x.n),dd=d||(KO.test(x.d||'')?'':x.d);if(!nm&&!dd)return '';return `<li>${nm?`<b>${esc(nm)}</b> `:''}<span>${esc(fillState(dd,row.sa?.[x.id]))}</span></li>`}).join('');
     const koLeft=t=>/[\uac00-\ud7af]/.test(t);
-    const conds=intel.cond.filter(c=>c.t).map(c=>{const t=tx(c.t),ef=c.e.filter(e=>e.n).map(e=>tx(e.n)).join(zh()?'、':', ');const all=t+ef;return `<li${koLeft(all)?' lang="ko"':''}>${esc(t)}${ef?` → ${esc(ef)}`:''}</li>`}).join('');
+    const conds=intel.cond.filter(c=>c.t).map(c=>{const t=tx(c.t),ef=c.e.filter(e=>e.n).map(e=>tx(e.n)).join(zh()?'、':', ');const all=t+ef;if(koLeft(all))return '';return `<li>${esc(t)}${ef?` → ${esc(ef)}`:''}</li>`}).join('');
     return `<div class="dzIntelBody">${note?`<div class="dzNote">${esc(note)}</div>`:''}${stats}${wikiBlock(wiki)}
       <div class="dzSec">${ui('行动意图（按回合顺序）','Intent pattern (in turn order)')}</div>${pats||`<div class="dzEmpty">${ui('无固定行动序列','No fixed pattern')}</div>`}
       <div class="dzSec">${ui('技能详情','Skill details')}</div><div class="dzScroll"><table class="dzTable dzSkill"><thead><tr><th>${ui('技能','Skill')}</th><th>${ui('类型','Type')}</th><th>${ui('目标','Target')}</th><th>${ui('数值','Values')}</th><th>${ui('官方描述','Official text')}</th></tr></thead><tbody>${rows}</tbody></table></div>

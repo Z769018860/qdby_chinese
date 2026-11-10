@@ -4,13 +4,13 @@
   "recordCount": 2000,
   "battleCount": 0,
   "source": "local detailed __data.json import",
-  "revision": "bf9f6b9ac4b01c819cdaa258d45ea3bdeef32cd57425aa9357a02a1ad4ebd34d",
-  "generatedAt": "2026-11-02T19:59:00+08:00",
+  "revision": "52ba85272a9a628271c90fa2b66ed3af4b5b7bc2beaeccc607ac013f9baa49a3",
+  "generatedAt": "2026-11-09T10:06:00+08:00",
   "chunks": [
     "data/morimens/eremora/usage/72-local-gzip/chunk-000.b64",
     "data/morimens/eremora/usage/72-local-gzip/chunk-001.b64"
   ],
   "chunkSize": 600000,
-  "compressedBytes": 928825,
-  "rawBytes": 4166405
+  "compressedBytes": 935464,
+  "rawBytes": 4241313
 }
