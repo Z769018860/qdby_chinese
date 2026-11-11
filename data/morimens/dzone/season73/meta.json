@@ -1,0 +1,104 @@
+{
+  "season": 73,
+  "activityTid": 83326,
+  "name": "第73期 融灾 · 超维戒指",
+  "date": "11.9-11.22",
+  "updatedAt": "2026-11-10 15:20",
+  "source": "official live Rank.QueryRank response",
+  "sourceRetrievedAt": "2026-11-10T15:20:05.076248+08:00",
+  "rankRange": [
+    1,
+    2000
+  ],
+  "teamRowsBySource": {
+    "teams_latest.jsonl": 7574
+  },
+  "skippedTailLines": 0,
+  "duplicateRankRowsDropped": [
+    {
+      "uid": 101222443,
+      "rank": 721,
+      "score": 350
+    },
+    {
+      "uid": 100890897,
+      "rank": 1221,
+      "score": 275
+    },
+    {
+      "uid": 101874003,
+      "rank": 1781,
+      "score": 195
+    }
+  ],
+  "recordCount": 1997,
+  "playersWithTeamDetail": 1997,
+  "teamRows": 7574,
+  "stageGroupIds": [
+    83424,
+    83425,
+    83426,
+    83427,
+    83428
+  ],
+  "files": {
+    "ranking": "ranking.json.gz",
+    "rankingPrevious": "ranking-previous.json.gz",
+    "battleSummary": "battle-summary.jsonl.gz",
+    "rawTeams": [
+      {
+        "file": "raw-teams/teams-000.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-001.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-002.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-003.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-004.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-005.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-006.jsonl.gz",
+        "lines": 374
+      }
+    ],
+    "uids": "uids.csv",
+    "teamErrors": "team-errors.jsonl",
+    "pendingQueries": "pending-queries.jsonl.gz",
+    "idNames": "id-names.json",
+    "scores": "scores.json",
+    "statistics": "statistics.json"
+  },
+  "battleFields": [
+    "stageRoundCount",
+    "bossBattleRoundCount",
+    "deathResistCount",
+    "respawnedNum",
+    "totalUseCard",
+    "totalEnergyCost",
+    "maxBoutUseCard",
+    "maxBoutEnergyCost",
+    "maxBoutDamage",
+    "maxCounterAtt",
+    "maxTentacleDamage",
+    "maxStrength",
+    "maxPosion",
+    "maxHp",
+    "leftHp",
+    "playerLevel",
+    "recordTime"
+  ]
+}
