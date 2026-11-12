@@ -204,11 +204,12 @@ const lowspecPath=async key=>{
   try{manifestPromise=manifestPromise||fetch('data/morimens/eremora/manifest.json',{cache:'no-cache'}).then(r=>r.json());
     const m=await manifestPromise;const e=(m.availableSeasons||[]).find(x=>String(x.seasonId)===String(key)&&!x.snapshotId&&!x.aggregatePath);return e?.lowspecPath||null}catch{manifestPromise=null;return null}
 };
-let lastKey=null;
+let lastKey=null,retryCount=0;
 async function refreshTab(){
   const btns=[...document.querySelectorAll('[data-dtide-lowspec-tab]')];if(!btns.length)return;
   const key=seasonKey(stateOf());lastKey=key;
-  const ok=!!(key&&await lowspecPath(key));
+  const ok=!!(key&&await lowspecPath(key));lastOk=ok;if(!ok&&key&&retryCount<6){retryCount++;manifestPromise=null;lastKey=null}else if(ok)retryCount=0;
+  document.querySelectorAll('[data-dtide-lowspec-tab]').forEach(b=>{b.hidden=!ok});
   btns.forEach(b=>{b.hidden=!ok});
   if(!ok&&state.active){state.active=false;apply()}
   else if(state.active){state.data=null;await load();render()}
@@ -222,16 +223,35 @@ function watchTitle(){
 }
 function mount(){
   watchTitle();
-  const tabs=document.querySelector('.dtideLeaderboardTabs');if(!tabs||tabs.querySelector('[data-dtide-lowspec-tab]'))return !!tabs;
+  const tabs=mainTabs();if(!tabs)return false;
+  if(!tabs.querySelector('[data-dtide-lowspec-tab]'))mountTab(tabs);
+  mountPanel();
+  return true;
+}
+// the leaderboard module may redraw its tab strip / panel area at any time: keep ours attached (self-healing)
+function mainTabs(){return [...document.querySelectorAll('.dtideLeaderboardTabs')].find(t=>t.querySelector('[data-dtide-entity]'))||null}
+let lastOk=false;
+function mountPanel(){
+  if($('dtideLowspec'))return;
+  style();
+  const panel=document.createElement('div');panel.id='dtideLowspec';panel.className='dtideBattle';panel.hidden=!state.active;
+  const after=$('dtideBattle')||$('dtideMatrix');if(!after)return;after.after(panel);
+  if(state.active&&state.data)render();
+}
+function mountTab(tabs){
   style();
   const mk=(mode,cn,en)=>{const b=document.createElement('button');b.type='button';b.className='dtideLeaderboardTab';b.setAttribute('data-dtide-lowspec-tab',mode);b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.hidden=true;b.textContent=ui(cn,en);return b};
   const low=mk('low','低配榜单','Low-investment');
-  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]');anchor.after(low);
-  const panel=document.createElement('div');panel.id='dtideLowspec';panel.className='dtideBattle';panel.hidden=true;($('dtideBattle')||$('dtideMatrix')).after(panel);
-  $('dtideSeason')?.addEventListener('change',()=>{state.data=null;state.season=null;setTimeout(refreshTab,300)});
+  low.hidden=!lastOk;low.setAttribute('aria-selected',String(state.active&&state.mode==='low'));
+  const anchor=tabs.querySelector('[data-dtide-battle-tab]')||tabs.querySelector('[data-dtide-entity="creation"]')||tabs.lastElementChild;
+  if(anchor)anchor.after(low);else tabs.appendChild(low);
+  if(!seasonBound&&$('dtideSeason')){seasonBound=true;$('dtideSeason').addEventListener('change',()=>{state.data=null;state.season=null;setTimeout(refreshTab,300)})}
   refreshTab();
-  return true;
 }
+let seasonBound=false;
+let healQueued=false;
+function heal(){healQueued=false;if(mainTabs())mount()}
+new MutationObserver(()=>{if(healQueued)return;const t=mainTabs();if(t&&t.querySelector('[data-dtide-lowspec-tab]')&&$('dtideLowspec'))return;healQueued=true;requestAnimationFrame(heal)}).observe(document.documentElement,{childList:true,subtree:true});
 document.addEventListener('click',e=>{
   const lt=e.target.closest?.('[data-dtide-lowspec-tab]');if(lt){const mode=lt.dataset.dtideLowspecTab||'low';if(!state.active)activate(mode);else if(state.mode!==mode){state.mode=mode;state.limit=100;apply();render()}return}
   if(state.active&&e.target.closest?.('[data-dtide-entity],[data-dtide-battle-tab]')){deactivate();return}
@@ -256,6 +276,6 @@ document.addEventListener('change',e=>{
   state.limit=100;render();
 });
 // the season select is filled after this module starts and may change without a change event: follow it
-setInterval(()=>{const k=seasonKey(stateOf());if(document.querySelector('[data-dtide-lowspec-tab]')&&k!==lastKey)refreshTab()},700);
-let tries=0;const iv=setInterval(()=>{if(mount()||++tries>120)clearInterval(iv)},500);
+setInterval(()=>{if(mainTabs()&&(!document.querySelector('[data-dtide-lowspec-tab]')||!$('dtideLowspec')))mount();const k=seasonKey(stateOf());if(document.querySelector('[data-dtide-lowspec-tab]')&&k!==lastKey)refreshTab()},700);
+mount();
 })();
