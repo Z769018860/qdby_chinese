@@ -1,8 +1,22 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T08:37:53Z",
-  "recordCount": 45,
+  "updatedAt": "2026-11-12T08:47:51Z",
+  "recordCount": 46,
   "records": [
+    {
+      "commentId": "124",
+      "type": "dzone",
+      "uid": "101003546",
+      "submittedBy": "一无所有",
+      "submittedAt": "2026-11-10T15:00:40.455Z",
+      "summary": "第 73 期 · 435 分 · 10 支队伍",
+      "summaryZh": "第 73 期 · 435 分 · 10 支队伍",
+      "summaryEn": "Season 73 · 435 pts · 10 teams",
+      "score": 435,
+      "teams": 10,
+      "seasonId": 73,
+      "communityVariant": "default"
+    },
     {
       "commentId": "122",
       "type": "dzone",
