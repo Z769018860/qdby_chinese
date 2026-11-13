@@ -16,6 +16,11 @@
   // 启灵 / 叠位那个数字只有十几像素高，正确读法的分实测 85~97%，错读全在 69% 以下，
   // 所以门槛反而要更高：空槽位最容易被认成「1」。
   const EN_MIN_CONF=80;
+  // 「4 组框位/阈值里只有 1 组读出数字」时用的更高门槛。多组一致说明那个数字是真的
+  // （框位和阈值同时碰对的概率很低），单独一组读出来更可能是空槽位菱形边角凑的。
+  const EN_SOLO_CONF=88;
+  // 叠位数字（命轮右下角）门槛：窄卡上字高只有 14~15px，比启灵框的噪声余地小
+  const ST_MIN_CONF=72;
 
   /* ---------- 基础图像工具 ---------- */
   function makeCanvas(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
@@ -301,7 +306,7 @@
   // 每类按多样性贪心挑 6 张：顺序取 3 张时留一图 156/159，贪心 6 张是 163/163）。
   // 缺 "3"：现有样本里没出现过 3，靠 LV_MIN_CONF=68 拒识（不会写成错数字）。
   // 拿到含 Lv.3x 的截图后重跑生成器即可补上。
-  const DIGIT_PROTO_B64={"0":["QP4aAKmqBuRGbkBvkBu5AfmmG5BvvgH45huAb74B+OYbgG++AfjmG4BvugH5lhuQb+QCuUFu5BuQqmoA5K8B","AAAAAABVAAClWgCklgZAbqQBuUFukBvkBrlBvpAb4Au9Ab6QG+ALuUG+kBvkCrlBbkAapAZQABUAAAAAAAAA","AKUVAKSqBpBbvkG+kW/5BuSWb0Cu+Qbk6y9A/r8B5P8bQP6/AeT/G0D+vgHkr29A/vkG5J9vQL6pBqRGVUAV","QFUBAKlqAOSrG1Bu5Qa5Qb7gG9AbvwC58QuQH78A+fYLkG+/APn2C5BvvwD59guQH74AveEb5BupQalVFVBV","QL4FAKlqAKRWGpAb5Aa6QX7gG+AbvwC+8QvgG78AvvEL4Bu/AL7xC+AbvgG+oRvkG7lBbkBapQGkqhoA+W8A","QP5rAPnqBpAbuUG+kB/kC/iWb4Bv+Qb4li+Ab/kC+JYvgG/5BviWb4Bv5Ab4Rr6Ab9ALuQG55RtAqloAkGoB"],"1":["AKUCAKUvAJD+AgCULwAA+QIAkC8AAPkCAJAvAAD5AgCQLwAA+QIAkC8AAPkCAJAvAAD5AgCQbwBA/hYA+b8B","AFUAAKUGAJC+AADpCwBAuQAAkAoAAKkAAIAKAACpAACQGgAAuQEAkBsAALkBAJAKAAC5AADgGwBQvhVA6q8G","ULoBAOkbAFC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQDkWwCQ/hYA+b8B","AJQCAJQqAJD6AgCVLwAA+QIAgC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAIAvAAD4AgCAbwBA+RYAqb8G","QKoCAKkvAJD6AgCVLwAA+QIAkC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAJAvAAD5AgCQbwBQ/hoA+b8G","QKoBAKUbAFC6AQCVGwAAuQEAkBsAALkBAJAbAAC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQCQGwBQ/hYA+b8B"],"2":["QPkaAKmqBqRWvkEakBtQAPkGAJBvAAC5AQCQGwBAbgAA5AYAkBoAQGoAAKQBAJAFAEAaUAWpqlrk/7+V//9v","UP5vQPr/G6Wq/5Ya5W9aAPlbAJD/AAD5DwCQvwAA+QYA5G8AQL4BAPkGAOQbAJBuAAC5AQDkBgCQG1BFvkGq","UP4bQPr/Bqmqv5EG5F8aAP5WAOBvAAD+BgDgXwBAvgEA5AYAkG8AAL0BAOQGAJAaAEBuAECpFlTlqqamvqpu","AOkbAJSqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhqQ/78B+f4b","AJUWAKSqBkCqvgEUkBsAALkBAJAbAAC5AQCQGwAAaQAApAEAkBoAAGoAAKQBAFAGAEBaUADkqhqQ/79B/v8b","QOofAKnqBpBBvgEFkBsAALkBAJAbAAC5AQDgBgBAagAApAEAkAYAQBoAAGUAAJABAEBaVQD5qhrg/79B/v8b"],"4":["AABlAACQBgBAGgAAaQAApAUAkKoBAKkuAKT5AlCWL0AZ+AJpkW+gqvpaqqqvVVX5FgCALwAA+QYAlG8BkP5r","AEAaAACkAQCQBgBAWgAAqQYApKoBQKobAKm+AaTlG1AavgFq5W+gVv4aVuVvAUC+AQDgGwBAvgEA+W8A4P8b","AEAqAACkAQBQBgBAGgAApQUAkKoBQJYbAGm4AaSBG1AG+AJqkW+gWv4aauWvUUH5BgCQLwAA+QYApW8BkP8b","AABUAACQAQBAGgAAaQAAkAYAQFoAAKkaAGS5AZCWGwAZuQFlkRugqv4WquqvUar+FgCQGwAAuQEA5G8AkP4G","AABpAACQBgBAGgAAaAAAkAYAQFoBAGkaAJTlAkBGLgAZ5AKlQW6Qq/paqaq/RVX5FgBAbwAA5AYAlL8BQOob","AABlAACQBgBAGgAAZAAAlAUAgGoBAKkaAJT5AlCVL0AZ+AJkgG+QFvlaaZW/VgH5GgCAbwAA+AIAlG8BkPpq"],"5":["kP+/APn/BpCqWgBaAACkBQBArloA5P8aAKr+BkCVvgEAkBsAALgBAEAaAACkAQCQCgBAagBAqQFUqgWQqgUA","kP+/Af3/BqSqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQDQGwBQbgBUqgGlqgWQvgUA","kP+/Afn/BpCqWkBaVQCkFQBArhYA+b8aQKr/BlClvwEA5RsAAPkGAJBvAAC5AQDQGwBQagBQqgGUqgWQugUA"],"6":["AECqAUCpBgCpFQDkBgCQGwAAuQEA5JoWkK+qBvlWvpFvkG/5AvmWL4Bv+QL4li+Ab/kG+UZulRuQqmoApL8B","AABUAQCQWgBQqgFAagUAuQEA5AYAkGsFQL6qBuSrv0G+pW/0G+Sbv0D+9AvkT75A/uQb5FuqQapQBVAFAAAA","AABVAAClGgCkawCQawFAbgEAuQEA5BcAQG5VAbmqaqCb+hu+Vb7lG5BvvwH56huQv74B+asakGpVAFQBAAAA","AJRvAFCqBUCqBQC5BQDkBgCQbwAAuqUF4KuqAb+Zb/Ab5Bu/QL7xC5AfvwD58QuQG74BuZFb5AfkqmoA+W4B","AEC6BkCpGgCpGgDkGwCQbwBAvgEA5FYFkG+pBfqqvuFv5W/+BvnrL0D//gLk7y9A/v4C5K9vkP6pBqlaVVBV","AFCuAECpBgCpBQCkBgCQGwBAbgEApZYGkKuqBbpVruAb5Bu+AfnhG5BvvgH5phuQH7kBuUFu5QqQqloA5KsB"],"7":["+f//lv//b/n//5GqqhtVAKkAAJAGAABpAACkAQBAGgAAaAAAkAYAACoAAKQBAEAKAABpAACQBgBAGgAApAEA","+v//7/////////uqqm9aVaUVAEAaAABpAACgBgBAGgAApAEAQAoAAGkAAKAGAEAaAACkAQCQCwAAaQAAUAUA","+f//lv//b6mqvlFVlRsAAKkAAJAGAAAZAACkAQBABgAAaAAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA","+f//lv//G6mqulEFkAYAAGkAAJABAEAaAABkAACQBgAAaQAAkAEAQBoAAGkAAJAGAAApAACkAQBABgAAaAAA","/v+/4f//G6qqqlABlAYAABkAAKQBAEAKAABkAACQBgAAGgAApAEAQAYAAGkAAKABAEAaAACkAQBABgAAVAAA"],"8":["QOprAKnqBpAauUFugB/kBvhGboEb5GupAfmrBkD+bwCl+hukWr5RbpBv+Qb4li+Ab/kG+EaukRuQq2oBqb4F","QKoWAKmlBqQGuUEugBvkAqRBbpAb5FtpAP6qApD/GwCp+gakVr5RGpBfuQH4lhtAbrkB5FZvgBqkWmkAqaoB","QLoaAKmqBqRWaUAukBv5AriRb5Ab5FppQPqqBpD+GwCp/gakVr6Rb5BvuQH5lhuAb7kB+JZvkBqkqmoAqb4B","QPpqAKmqBpAGuUFugG/kBvhGbpAb5FtpAPnrBkD+bwCp+hakVr6Wb5Bv+QL5li+Ab/kG+EZulRuQqmoA5L8B","QOprAKnqGpAauUFugG/kBvhGroEb5GupAfnrBkD/bwD5+hukWr5RbpBv+QL4li+Ab/kG+EaukRuQq2oBqb4F","QKoWAKmVBqQGuUEugBvkAqRBbpAb5FtpALqqAlD+GwCp+gakVr5RL5BfuQH4lhtAbrkB5FZvgBqkWmkAqaoB"],"9":["QOkWAKmqBqRGaUAukBv5AuSWL0Bu+QLkli9AbuQG5Ea+QW6QarkBUJUbAEBpAAClAQCkBgCQGgBQagBAagEA","QKoWAKWqAaRGaUAakBu5AbiRG4AfuQH4lm+Ab+QW+Ea6lm9AavkBUJUbAEBuAACpAQCUBgBQGgBQWgBAagEA"]};
+  const DIGIT_PROTO_B64={"0":["QP4aAKmqBuRGbkBvkBu5AfmmG5BvvgH45huAb74B+OYbgG++AfjmG4BvugH5lhuQb+QCuUFu5BuQqmoA5K8B","AAAAAABVAAClWgCklgZAbqQBuUFukBvkBrlBvpAb4Au9Ab6QG+ALuUG+kBvkCrlBbkAapAZQABUAAAAAAAAA","AKUVAKSqBpBbvkG+kW/5BuSWb0Cu+Qbk6y9A/r8B5P8bQP6/AeT/G0D+vgHkr29A/vkG5J9vQL6pBqRGVUAV","QFUBAKlqAOSrG1Bu5Qa5Qb7gG9AbvwC58QuQH78A+fYLkG+/APn2C5BvvwD59guQH74AveEb5BupQalVFVBV","QL4FAKlqAKRWGpAb5Aa6QX7gG+AbvwC+8QvgG78AvvEL4Bu/AL7xC+AbvgG+oRvkG7lBbkBapQGkqhoA+W8A","QP5rAPnqBpAbuUG+kB/kC/iWb4Bv+Qb4li+Ab/kC+JYvgG/5BviWb4Bv5Ab4Rr6Ab9ALuQG55RtAqloAkGoB"],"1":["QKoCAKkvAJD6AgCVLwAA+QIAkC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAJAvAAD5AgCQbwBQ/hoA+b8G","QOULAJW/AKT6C0BavgBQ5AsAQL4AAOQLAEC+AADkCwBAvgAA5AsAQL4AAOQLAEC+AADkCwBAvgFA+WsA5P8b","AFUAAKUGAJC+AADpCwBAuQAAkAoAAKkAAIAKAACpAACQGgAAuQEAkBsAALkBAJAKAAC5AADgGwBQvhVA6q8G","AJQGAFBqAED5BgCVbwBQ+QYAgG8AAPgGAIBvAAD4BgCAbwAA+AYAgG8AAPgGAIBvAAD4BgCAbwBA+RYAqb8G","ULoBAOkbAFC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQDkWwCQ/hYA+b8B","QP4CAOkvAKT+AkDpLwBA/gIA4C8AAP4CAOAvAAD+AgDgLwAA/gIA4C8AAP4CAJAvAAD1AgCUbwCQ/hpA/v8G"],"2":["kP+/Aen/G6WqvlEW5G8UAP4GAOBvAEC+AQDkGwBAbgAAuQEAlBsAQG4AAKkFAJAGAEBuUQH5q1rl/7+V//9v","UP5vQPr/G6Wq/5Ya5W9aAPlbAJD/AAD5DwCQvwAA+QYA5G8AQL4BAPkGAOQbAJBuAAC5AQDkBgCQG1BFvkGq","UP4bQOq/BaWqb5AW+RsVQL4BAOQbAEC+AQD5BgCQGwAAagAApAEAlAYAQBoAAGVBFZSqqlH+/xv5/7+R//8G","UP4bQPr/Bqmqv5EG5F8aAP5WAOBvAAD+BgDgXwBAvgEA5AYAkG8AAL0BAOQGAJAaAEBuAECpFlTlqqamvqpu","AOkbAJSqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhqQ/78B+f4b","kP8bAOn/BqWqvpEW5BtZAP4GAOAbAEC+AQDkGwBAbgAAqQEAlAYAQBoAAGkAAKUBFZQWpFW+qm/5//+W//9v"],"3":["AJUFAFSpAVBVbgAV5AYAQG4AAKkBAKQGAJSuAZCqbwBV5RsAALkBAJAbAAC4QQGQG2kAaZAbpQaklhoApVYA","UP4bQOq/AaSqLwAV+QIAQC8AAKkBAKUWAKWvBZCqbwBV+RsAQL4BAJBvFAC5kQbkG7lBvpFb+Qb55lpArmsB","QP4bAOS/AZDqL0Aa+QJUkC8AAKkBAKUWAKWvBZCqbwBV+RsAQL4BAJAbAAC5UQHkG2lAvpFbqQb55hZArlsA"],"4":["AABlAACQBgBAGgAAaQAApAUAkKoBAKkuAKT5AlCWL0AZ+AJpkW+gqvpaqqqvVVX5FgCALwAA+QYAlG8BkP5r","AEAaAACkAQCQBgBAWgAAqQYApKoBQKobAKm+AaTlG1AavgFq5W+gVv4aVuVvAUC+AQDgGwBAvgEA+W8A4P8b","AABpAACkAQBAGgAAaQAApAUAkGoBAKkaAGS5AZCRG0AauQFpkVugWv4aVeVvAQC5AQCQGwAAuQEAlFoAUFUB","AEAqAACkAQBQBgBAGgAApQUAkKoBQJYbAGm4AaSBG1AG+AJqkW+gWv4aauWvUUH5BgCQLwAA+QYApW8BkP8b","AABUAACQAQBAGgAAaQAAkAYAQFoAAKkaAGS5AZCWGwAZuQFlkRugqv4WquqvUar+FgCQGwAAuQEA5G8AkP4G","AABpAACQBgBAGgAAaAAAkAYAQFoBAGkaAJTlAkBGLgAZ5AKlQW6Qq/paqaq/RVX5FgBAbwAA5AYAlL8BQOob"],"5":["kP+/APn/BpCqWgBaAACkBQBArloA5P8aAKr+BkCVvgEAkBsAALgBAEAaAACkAQCQCgBAagBAqQFUqgWQqgUA","kP+/Af3/BqSqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQDQGwBQbgBUqgGlqgWQvgUA","kP+/Afn/BpCqWkBaVQCkFQBArhYA+b8aQKr/BlClvwEA5RsAAPkGAJBvAAC5AQDQGwBQagBQqgGUqgWQugUA","QJluAKT6BpCqKgBZVQCkAQBAagUA5KsFQPqqBVCpbgAA5BsAALkBAJAbAAC5AQCQBgBAWgBQagCUqgFAagUA"],"6":["AECqAUCpBgCpFQDkBgCQGwAAuQEA5JoWkK+qBvlWvpFvkG/5AvmWL4Bv+QL4li+Ab/kG+UZulRuQqmoApL8B","AABUAQCQWgBQqgFAagUAuQEA5AYAkGsFQL6qBuSrv0G+pW/0G+Sbv0D+9AvkT75A/uQb5FuqQapQBVAFAAAA","AABVAAClGgCkawCQawFAbgEAuQEA5BcAQG5VAbmqaqCb+hu+Vb7lG5BvvwH56huQv74B+asakGpVAFQBAAAA","AJRvAFCqBUCqBQC5BQDkBgCQbwAAuqUF4KuqAb+Zb/Ab5Bu/QL7xC5AfvwD58QuQG74BuZFb5AfkqmoA+W4B","AEC6BkCpGgCpGgDkGwCQbwBAvgEA5FYFkG+pBfqqvuFv5W/+BvnrL0D//gLk7y9A/v4C5K9vkP6pBqlaVVBV","AFCuAECpBgCpBQCkBgCQGwBAbgEApZYGkKuqBbpVruAb5Bu+AfnhG5BvvgH5phuQH7kBuUFu5QqQqloA5KsB"],"7":["+f//lv//b6mqvlFVlRsAAKkAAJAGAAAZAACkAQBABgAAaAAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA","+v//7/////////uqqm9aVaUVAEAaAABpAACgBgBAGgAApAEAQAoAAGkAAKAGAEAaAACkAQCQCwAAaQAAUAUA","VKpakfr6avn//5aqqhsVQKkBAKQGAEAaAACkAABABgAAaQAAkAEAQBoAAGQAAJAGAEAqAACkAQBAGgAAuAEA","/v+/4f//G6qqqlABlAYAABkAAKQBAEAKAABkAACQBgAAGgAApAEAQAYAAGkAAKABAEAaAACkAQBABgAAVAAA","+f+/kf//G6mqvlBVlQYAABkAAFABAAAVAABkAABABgAAGQAAkAEAQBoAAGQAAJAGAAAZAACkAQBABgAAZAAA","+f//lv//b/n//5GqqhtVAKkAAJAGAABpAACkAQBAGgAAaAAAkAYAACoAAKQBAEAKAABpAACQBgBAGgAApAEA"],"8":["QOprAKnqBpAauUFugB/kBvhGboEb5GupAfmrBkD+bwCl+hukWr5RbpBv+Qb4li+Ab/kG+EaukRuQq2oBqb4F","QKoWAKmlBqQGuUEugBvkAqRBbpAb5FtpAP6qApD/GwCp+gakVr5RGpBfuQH4lhtAbrkB5FZvgBqkWmkAqaoB","QLoaAKmqBqRWaUAukBv5AriRb5Ab5FppQPqqBpD+GwCp/gakVr6Rb5BvuQH5lhuAb7kB+JZvkBqkqmoAqb4B","QPpqAKmqBpAGuUFugG/kBvhGbpAb5FtpAPnrBkD+bwCp+hakVr6Wb5Bv+QL5li+Ab/kG+EZulRuQqmoA5L8B","QOprAKnqGpAauUFugG/kBvhGroEb5GupAfnrBkD/bwD5+hukWr5RbpBv+QL4li+Ab/kG+EaukRuQq2oBqb4F","QKoWAKmVBqQGuUEugBvkAqRBbpAb5FtpALqqAlD+GwCp+gakVr5RL5BfuQH4lhtAbrkB5FZvgBqkWmkAqaoB"],"9":["QOkWAKmqBqRGaUAukBv5AuSWL0Bu+QLkli9AbuQG5Ea+QW6QarkBUJUbAEBpAAClAQCkBgCQGgBQagBAagEA","QKoWAKWqAaRGaUAakBu5AbiRG4AfuQH4lm+Ab+QW+Ea6lm9AavkBUJUbAEBuAACpAQCUBgBQGgBQWgBAagEA"]};
   function b64Bytes(str){
     const bin=atob(str),out=new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);
@@ -371,10 +376,14 @@
     if(!t)t=clamp(otsuThr(hist,w*h),110,232);
     const mask=new Uint8Array(w*h);
     for(let i=0;i<w*h;i++)mask[i]=L[i]>t?1:0;
-    // 横贯整块的亮线（等级条上下沿、卡片描边）不是字，先抹掉
+    /* 横贯整块的亮线（等级条上下沿、卡片描边）不是字，先抹掉。
+       阈值默认 0.85（按「整块」算），叠位那种只有 50px 宽的窄框要用更低的比例
+       （见 lineFrac），否则卡底那条白边会被 JPEG 噪点打断、判不到 85% 而留下来，
+       把「2」和右边杂块粘成一坨。 */
+    const lineFrac=o.lineFrac||0.85;
     for(let y=0;y<h;y++){
       let n=0;for(let x=0;x<w;x++)n+=mask[y*w+x];
-      if(n>w*0.85)for(let x=0;x<w;x++)mask[y*w+x]=0;
+      if(n>w*lineFrac)for(let x=0;x<w;x++)mask[y*w+x]=0;
     }
     for(let x=0;x<w;x++){
       let n=0;for(let y=0;y<h;y++)n+=mask[y*w+x];
@@ -402,16 +411,30 @@
     }
     if(!comps.length)return {glyphs:[],w:w,h:h,mask:mask,thr:t};
     let maxH=0,maxA=0;
+    const hs=[];
     for(const c of comps){
       const ch=c.maxY-c.minY+1;
       if(ch>maxH)maxH=ch;
       if(c.area>maxA)maxA=c.area;
+      hs.push(ch);
     }
+    /* 「半截残字」的基准高度取**中位数**，不能取最大连通域的高度：
+       框里混进一根 31px 高的卡框竖线时，maxH 被抬到 31，门槛变成 15.5，
+       于是 14~15px 高的真数字被判成残字剔掉 —— 1209 宽那张的「12」就是这么变成「1」的
+       （而且「1」还以 95% 高分通过了，是个安静的错值）。中位数对单根长条不敏感。 */
+    hs.sort(function(a,b){return a-b});
+    const refH=hs.length?hs[Math.floor((hs.length-1)*0.6)]:maxH;
     const keep=comps.filter(function(c){
       const cw=c.maxX-c.minX+1,ch=c.maxY-c.minY+1;
       if(c.area<Math.max(2,maxA*0.06))return false;          // 噪点
-      if(ch<maxH*0.50)return false;                          // 小数点 / 半截残字
+      if(ch<Math.max(6,refH*0.50))return false;              // 小数点 / 半截残字
       if(cw>w*0.85&&ch>h*0.85)return false;                  // 整块描边
+      /* 细条不是数字：叠位框是「搜索窗」，第 4 颗菱形的竖边、卡框线会切进来，
+         切出来是 2~3px 宽、10px 高的竖条，认成「1」最坑（12 → 121 → 整格作废）。 */
+      if(cw<=3&&ch>=6)return false;
+      /* 贴着框左右边的墨块也不是数字（真数字在框内）。同一套框位在窄卡上会切进菱形，
+         1209 宽那张的「12」就是这样多读出一个 6。 */
+      if(o.edge&&(c.minX<=1||c.maxX>=w-2))return false;
       return true;
     });
     if(!keep.length)return {glyphs:[],w:w,h:h,mask:mask,thr:t};
@@ -1044,15 +1067,26 @@
             if(num.count<1||num.count>2||num.conf<EN_MIN_CONF)continue;
             const val=Number(num.text);
             // 界面上不会出现「+0」
-            if(val>=1&&val<=15)votes.push(val);
+            if(val>=1&&val<=15)votes.push({v:val,s:num.conf});
           }
-          rec.enRaws=raws;rec.votes=votes.slice();rec.enPngs=pngs;
+          rec.enRaws=raws;rec.votes=votes.map(function(q){return q.v});rec.enPngs=pngs;
           if(votes.length){
             // 多数票一致才算确定；只有一组读出来就采用但让用户核对
-            let best=votes[0],bestN=0;
-            for(const v of votes){const n=votes.filter(x=>x===v).length;if(n>bestN){best=v;bestN=n}}
-            en=base+best;
-            enLow=bestN<2;
+            let bestV=votes[0].v,bestN=0,bestS=0;
+            for(const q of votes){
+              const grp=votes.filter(function(x){return x.v===q.v});
+              if(grp.length>bestN||(grp.length===bestN&&q.s>bestS)){
+                bestV=q.v;bestN=grp.length;
+                bestS=Math.max.apply(null,grp.map(function(x){return x.s}));
+              }
+            }
+            /* **单票要高门槛**：4 组 variant 只有 1 组读出数字时，那个数字十有八九是
+               空槽位里菱形边角凑出来的（n1 r1c3 就是 3 颗亮星无数字，第 4 槽的空菱形
+               边角被读成「1」80% —— 刚好卡在 EN_MIN_CONF 上通过，把 3 启写成了 4 启）。
+               多票一致时 80 分已经够可信（框位/阈值各不相同还能读成同一个数），
+               单票则要求 88 分。 */
+            if(bestN>=2||bestS>=EN_SOLO_CONF){en=base+bestV;enLow=bestN<2}
+            else{en=base;enLow=true}
           }else{
             // 没有数字：纯启灵（0~3），亮几颗就是几启，这条是确定的
             en=base;enLow=star.num?true:false;
@@ -1075,19 +1109,36 @@
   function detectWheelGrid(pix){
     const W=pix.W,H=pix.H;
     /* 列：卡与卡之间露出页面底色（一条低方差竖缝） */
-    const xq0=Math.round(W*0.08),xq1=Math.round(W*0.72);
+    /* 搜索列缝的横向范围。原来只扫到 0.72W（2556 宽时右侧是信息面板），
+       但 1222 宽的新截图里 7 张卡几乎铺满整宽，右半边的缝全在窗口外 →
+       列数只认出 3，整页判错。放宽到 0.05~0.95W，噪声交给 findAP 的等差筛。 */
+    const xq0=Math.round(W*0.05),xq1=Math.round(W*0.95);
     const cs=axisStats(pix,xq0,xq1,Math.round(H*0.10),Math.round(H*0.90),'x');
     const medC=medianOf(cs.map(function(o){return o.std}));
     const stdAt=function(x){const i=Math.round(x)-xq0;return (i>=0&&i<cs.length)?cs[i].std:0};
-    const maxGapW=Math.max(12,Math.round(W*0.013));
+    /* 缝宽上限不能按整图宽度定：UI 缩放不同，缝的绝对宽度不一样（2556 宽时 26px=1.0%，
+       1222 宽时同样 24px 却是 2.0%，被 old 的 W*1.3% 全滤掉 → 整张图退化成兜底比例）。
+       缝宽的真正不变量是「相对卡片间距」：实测两者都是 pitch 的 14.5%。
+       所以这里放宽到 W*0.06，真正的筛选交给 findAP（等差）和后面的 pitch 范围检查。 */
+    const maxGapW=Math.max(12,Math.round(W*0.06));
     let runs=mergeRuns(runsOf(cs.length,function(x){return cs[x].std<Math.max(6,medC*0.22)},W),3)
       .map(function(r){return {a:r.a+xq0,b:r.b+xq0,c:r.c+xq0,w:r.w}})
       .filter(function(r){return r.w>=3&&r.w<=maxGapW});
     let ap=findAP(runs.map(function(r){return r.a}),W*0.035,W*0.2,0.06);
     let cols=ap.members;
-    // 真间隙两侧都得是卡面（有内容），列表左边的空白会被筛掉
+    /* 真间隙两侧都得是卡面（有内容），列表左边的空白会被筛掉。
+       但**最右边那条缝的右邻可能已经出图/出搜索窗**（1222 宽的截图里最后一列卡几乎贴着右边缘），
+       这时 stdAt 返回 0 会把这条缝错杀 → 列数少一列、整页漏掉最右那排。
+       出界就当「无法判断」，按通过处理；左边那条空白带左侧仍是 0，照样被筛掉。 */
     if(cols.length>=2){
-      const keep=cols.filter(function(c){return stdAt(c-ap.pitch*0.45)>medC*0.5&&stdAt(c+ap.pitch*0.45)>medC*0.5});
+      const stdAtLoose=function(x){
+        if(x<xq0-1||x>xq1+1)return null;
+        return stdAt(x);
+      };
+      const keep=cols.filter(function(c){
+        const l=stdAtLoose(c-ap.pitch*0.45),r=stdAtLoose(c+ap.pitch*0.45);
+        return (l===null||l>medC*0.5)&&(r===null||r>medC*0.5);
+      });
       if(keep.length>=2)cols=keep;
     }
     let pitchX=0,cardW=0,x0=0,nCols=0,fallback=false;
@@ -1145,6 +1196,25 @@
     if(!cardH){
       fallback=true;
       cardH=Math.round(H*0.132);pitchY=Math.round(H*0.178);y0=Math.round(H*0.116);
+    }
+    /* 列数用「星标行亮线的横向延伸」再校一次：亮线在每张卡上都有，它的右端就是最后一列的右边缘。
+       缝数偶尔会少算一列（最后一列的右缝贴着图边被裁掉，1209 宽那张就只数到 6 条缝），
+       而漏掉一列 = 整张图少 4 张命轮。这里只做「最多 +1」的保守修正。 */
+    if(!fallback&&rows.length>=2&&cols.length>=2&&cardW){
+      const lineThr2=clamp(medianOf(rs.map(function(o){return o.mu}))*1.9,110,215);
+      const rights=[];
+      for(const ry of rows){
+        const y=Math.round(ry);
+        if(y<0||y>=H)continue;
+        let R=-1;
+        for(let x=W-1;x>=0;x--)if(pix.L[y*W+x]>lineThr2){R=x;break}
+        if(R>x0+cardW)rights.push(R);
+      }
+      if(rights.length){
+        const R=medianOf(rights);
+        const est=Math.floor((R-x0-cardW*0.35)/pitchX)+1;
+        if(est>nCols&&est<=nCols+1)nCols=est;
+      }
     }
     return {x0:x0,y0:y0,pitchX:pitchX,pitchY:pitchY,cardW:cardW,cardH:cardH,nCols:nCols,fallback:fallback,
       rowGaps:rows,colGaps:cols};
@@ -1232,15 +1302,54 @@
         used.add(pick.id);
         // 叠位：星标行最右那颗菱形里的数字，没有数字就是 0
         let stack=0;
+        const rec={cell:{r:r,j:j}};
         try{
           // 叠位框里会连带圈进菱形描边。描边一定贴着框边，所以除了「1~2 个字形 + 高分」，
           // 还要求字形不贴框边；认不出就当 0（本体），用户可以在界面里改。
-          const stBox={x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22};
-          const rr=await readDigits(fctx,stBox,{thr:150});
-          const g0=rr.detail&&rr.detail[0];
-          const inset=g0&&g0.x>1&&(g0.x+g0.w)<stBox.w-1&&g0.y>1&&(g0.y+g0.h)<stBox.h-1;
-          if(rr.count>=1&&rr.count<=2&&rr.conf>=EN_MIN_CONF&&inset)stack=clamp(Number(rr.text),0,12);
+          /* 两套框位：
+             1) 宽的：x0.58 w0.42。**框必须比数字宽一圈**——框窄了「2」会贴到右边缘，
+                被 edge 过滤当杂块剔掉，只剩「1」还以 96% 高分通过 → 12 变 1（写错比留空糟）。
+             2) 矮的：高度缩 8px。当前选中的卡（金色粗边框）会把卡底白边带进来，
+                白边把「2」和右边杂块粘成 16px 一坨（15/16@60%），缩掉 8px 就干净了。
+             先试宽的那套（多数格一次命中），不行再试矮的。 */
+          /* 框位用**网格坐标**，不要跟 offx/offy 走。
+             曾经改成跟随艺术卡匹配的偏移，以为能把「列偏 8~10px」找回来，结果是反向的：
+             offx/offy 是「画风最像」的偏移，不是「卡片位置」的偏移，选中卡（金框把画面拉亮）
+             经常拿到 +20 之类的大偏移，叠位框整个右移把「8」切成右半环 —— 读成 3、59%、
+             然后被门槛拒（归零）。用网格反而稳：本次实测网格每列误差 ≤2px，
+             而框按 0.58~1.04W 取，宽度足够吃掉这点误差。
+             另外 offy 偏 +6 会把金框竖边留成 35/41=0.85 的列占比，卡在竖线清理的阈值上，
+             整块金框连同「2」一起留下；用网格坐标时是 41/41=1.0，被竖线规则干净抹掉。 */
+          const cbx=left,cby=top;
+          const stCfg=[
+            {y:cby+grid.cardH*0.78,h:grid.cardH*0.22,xf:0.58,wf:0.46},
+            {y:cby+grid.cardH*0.78,h:Math.max(8,grid.cardH*0.22-8),xf:0.58,wf:0.46}
+          ];
+          const stRaws=[];const reads=[];
+          for(const cfg of stCfg){
+            const stBox={x:cbx+grid.cardW*cfg.xf,y:cfg.y,w:grid.cardW*cfg.wf,h:cfg.h};
+            const rr=await readDigits(fctx,stBox,{thr:150,edge:1,lineFrac:0.6});
+            /* 叠位门槛比启灵低 8 个点：窄卡上的数字只有 14~15px 高，「2」实测 78%，
+               用 80 会把它误拒。留一类的错认上限实测 66%（缺数字 3 时 3 被认成 5），
+               所以 72 仍然卡得住——宁可留空，不写错。 */
+            const ok=rr.count>=1&&rr.count<=2&&rr.conf>=ST_MIN_CONF;
+            reads.push({ok:ok,v:ok?clamp(Number(rr.text),0,12):null,n:rr.count});
+            if(TRACE())stRaws.push(String(rr.text||'')+'/'+rr.conf+'%/'+rr.count+
+              '['+Math.round(stBox.y)+','+Math.round(stBox.h)+']');
+          }
+          /* **截断保护**：两套框位都读，只有**都合格且结果一致**才采信。
+             典型危险情形：卡底白边把「2」粘成一大块被剔掉，只剩「1」还以 95% 通过，
+             12 就写成 1（写错比留空糟得多）。两套框位的高度差 8px，白边只影响其中一套，
+             所以「合格但两边不一致」= 至少有一边被切了，留空让用户手改。
+             **只在合格的候选之间比**：矮框有时会把「12」多切出一个「2」变成 3 个字形
+             （本身就不合格，count>2），不能拿这种不合格读数去否决另一边正确的「12」
+             —— n4 r1c6 的真值就是 12，以前被这条误伤成留空。 */
+          const good=reads.filter(function(r){return r.ok});
+          if(good.length===1)stack=good[0].v;
+          else if(good.length===2&&good[0].v===good[1].v)stack=good[0].v;
+          if(TRACE())rec.stRaws=stRaws;
         }catch(e){}
+        if(TRACE())dbgSkip.push(rec);
         out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),stack:stack,
           unsure:pick.score<0.5||(pick.score-(second?second.score:0))<0.05,
           cell:{r:r,j:j},png:patch.toDataURL('image/jpeg',0.6)});
@@ -1256,7 +1365,10 @@
       const full=makeCanvas(img.naturalWidth,img.naturalHeight);
       ctxOf(full).drawImage(img,0,0,full.width,full.height);
       const g=detectWheelGrid(pixelData(full));
-      if(g&&g.nCols>=5&&(g.rowGaps||[]).length>=2)return 'wheel';
+      /* 必须是真的找到了网格（!fallback）。兜底比例是按 2556x1179 写死的，
+         任何一张「4 列角色页」都能凑出 8 列 2 行，以前就是这么把角色页判成命轮页、
+         再让整页识别出一堆乱码 id 的。 */
+      if(g&&!g.fallback&&g.nCols>=5&&(g.rowGaps||[]).length>=2)return 'wheel';
     }catch(e){}
     return 'char';
   }
@@ -1324,9 +1436,11 @@
             const patch=warpWheelArt(thumb,left,top,grid.cardW,grid.cardH,tscale);
             if(!patch)continue;
             const mm=matchWheel(patch,tpls);
-            const stBox={x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22};
+            // 叠位框必须和 analyzeWheel 用的一致，否则采出来的字形和线上认的不是同一块
+            const stBox={x:left+grid.cardW*0.58,y:top+grid.cardH*0.78,w:grid.cardW*0.42,
+              h:Math.max(8,grid.cardH*0.22-8)};
             out.push({cell:{r:r,j:j},id:mm[0]?mm[0].id:'',score:mm[0]?Number(mm[0].score.toFixed(3)):0,
-              stBox:stBox,stPng:crop(stBox,6),stGlyphs:glyphDump(fctx,stBox,{thr:150})});
+              stBox:stBox,stPng:crop(stBox,6),stGlyphs:glyphDump(fctx,stBox,{thr:150,edge:1,lineFrac:0.6})});
           }
         }
         return {kind:kind,grid:grid,W:full.width,H:full.height,cells:out};
