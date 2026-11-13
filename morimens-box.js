@@ -84,7 +84,7 @@
         const zh=md.wheelZhDb?.bySkeydbId?.[w.id]||md.wheelZhDb?.byEnglishName?.[w.name];
         const icon=artMap?.wheelIcon?.[w.id];
         return {id:w.id,name:zh?.name||w.name,en:w.name,realm:w.realm,rarity:w.rarity,owner:w.ownerAwakenerId,
-          icon:icon?`assets/morimens/wheels/thumb/${icon}.webp`:''};
+          icon:icon?`assets/morimens/wheel-thumbs/${icon}.webp`:''};
       }).sort((a,b)=>String(a.name).localeCompare(String(b.name),'zh-CN'));
     }
     renderAll();
@@ -851,7 +851,9 @@
     const isWheelRow=r=>r.kind?r.kind==='wheel':globalWheel;
     if(!ocrRows.length){host.innerHTML='<div class="boxNotice">没认出内容。可以试试：只截列表区域、避免缩放、确保文字清晰。</div>';return}
     const missLv=ocrRows.filter(r=>!isWheelRow(r)&&r.lv==null).length;
-    const missWarn=missLv?`<div class="boxNotice">有 ${missLv} 张没读出等级，导入后请手动补一下（先按满级记）。</div>`:'';
+    // 最后一行常被屏幕边缘裁掉，等级数字只露出上半截，读不出来是正常的——
+    // 与其猜个错数字，不如明确告诉用户往下滚一点再截一张
+    const missWarn=missLv?`<div class="boxNotice">有 ${missLv} 张没读出等级（最后一排被屏幕裁掉时最常见，数字下半截会糊掉），导入后可以手动补；也可以往下滚动一点再截一张补上。</div>`:'';
     host.innerHTML=`<div class="boxSectionTitle">识别结果 <small>${res.note||'请核对后导入'}</small></div>`+missWarn+
       ocrRows.map((r,i)=>{
         if(isWheelRow(r)){

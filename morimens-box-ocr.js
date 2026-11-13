@@ -189,7 +189,7 @@
     const list=[];let done=0;
     for(const row of rows){
       try{
-        const im=await loadImage(`assets/morimens/wheels/thumb/${row.file}.webp`);
+        const im=await loadImage(`assets/morimens/wheel-thumbs/${row.file}.webp`);
         const zh=md?.wheelZhDb?.bySkeydbId?.[row.id],name=zh?.name||row.id;
         const iw=im.naturalWidth||im.width,ih=im.naturalHeight||im.height,S=48,side=Math.min(iw,ih);
         // 竖长条的官方图 → 方形卡面，几种可能的取景都存一份，谁最像算谁
@@ -217,7 +217,10 @@
 
   /* ---------- 模板匹配 ---------- */
   function matchSquare(ctx,box,tpls,opts={}){
-    const n=12,aspect=opts.aspect||1,scales=opts.scales||[0.42,0.5,0.58,0.66,0.74,0.82,0.9];
+    // color=true 时用 RGB 描述子（去均值后整体归一化，点积≈平均相关）。
+    // 角色卡换角色只靠灰度容易混（发型轮廓相近的人很多），颜色（发色/服色）区分度高得多。
+    const color=!!opts.color;
+    const n=color?10:12,aspect=opts.aspect||1,scales=opts.scales||[0.42,0.5,0.58,0.66,0.74,0.82,0.9];
     const best=new Map(tpls.map(t=>[t.id,-1]));
     // 按最长边能塞进框来定基准宽度，避免 aspect 较大时 h 直接顶出框导致一个位置都不试
     const baseW=Math.min(box.w,box.h/aspect);
@@ -228,9 +231,9 @@
       const maxX=box.x+box.w-w,maxY=box.y+box.h-h;
       for(let y=box.y;y<=maxY;y+=step){
         for(let x=box.x;x<=maxX;x+=step){
-          const d=normPatch(ctx,x,y,w,h,n);
+          const d=color?normPatchRGB(ctx,x,y,w,h,n):normPatch(ctx,x,y,w,h,n);
           for(const t of tpls){
-            const v=dot(d,t.d);
+            const v=dot(d,color?t.d3:t.d);
             if(v>best.get(t.id))best.set(t.id,v);
           }
         }
@@ -344,14 +347,18 @@
     if(y0<0){y0=0;y1=ch-1}
     const hh=Math.max(1,y1-y0+1);
     // 组装成“黑字白底 + 四周留白”：tesseract 对单个又细又高的字符要留边
-    const padX=Math.max(10,Math.round(cw*0.06)),padY=Math.max(12,Math.round(hh*0.3));
-    const W2=cw+padX*2,H2=hh+padY*2;
+    // 被裁掉半截的字会变得又扁又矮，tesseract 对扁字识别率很差。
+    // targetH 把字拉伸到统一高度，等于做一次垂直归一化。
+    const dstH=o.targetH?Math.max(Math.round(o.targetH),hh):hh;
+    const padX=Math.max(10,Math.round(cw*0.06)),padY=Math.max(12,Math.round(dstH*0.3));
+    const W2=cw+padX*2,H2=dstH+padY*2;
     const canvas=makeCanvas(W2,H2),cx=ctxOf(canvas);
     const img=cx.createImageData(W2,H2);
     for(let i=0;i<W2*H2;i++){const q=i*4;img.data[q]=img.data[q+1]=img.data[q+2]=255;img.data[q+3]=255}
-    for(let y=0;y<hh;y++){
+    for(let y=0;y<dstH;y++){
+      const sy=y0+Math.min(hh-1,Math.floor(y*hh/dstH));
       for(let x=0;x<cw;x++){
-        if(!buf[(y+y0)*cw+x])continue;
+        if(!buf[sy*cw+x])continue;
         const q=((y+padY)*W2+(x+padX))*4;
         img.data[q]=img.data[q+1]=img.data[q+2]=0;
       }
@@ -364,6 +371,8 @@
     return {text:text,conf:r.data.confidence||0,png:canvas.toDataURL('image/png')};
   }
 
+  // 调试开关：页面设 window.__boxOcrTrace=true 时，识别结果里会附带每格的取样框与原始文本
+  const TRACE=function(){return typeof window!=='undefined'&&!!window.__boxOcrTrace};
   /* ---------- 角色页：列（背景间隙）+ 行（等级条） ---------- */
   function detectColumns(pix){
     const L=pix.L,W=pix.W,H=pix.H;
@@ -462,33 +471,135 @@
     }
     return best>=25?bestY+1:yPred;
   }
-  // 星标行（白菱形 + 末尾深色菱形里的启灵数字）在等级条正上方。
-  // 用“最右那颗菱形亮不亮”来找它的垂直中心，比按固定像素偏移稳。
-  function refineStarRow(pix,left,cardW,bandA){
-    const x0=Math.max(0,Math.round(left+cardW*0.58)),x1=Math.min(pix.W,Math.round(left+cardW*0.98));
-    if(x1<=x0)return Math.round(bandA-cardW*0.2);
-    const yTop=Math.max(0,Math.round(bandA-cardW*0.36)),yBot=Math.round(bandA-2);
-    let bestY=Math.round(bandA-cardW*0.2),bestN=-1;
-    for(let y=yTop;y<=yBot;y++){
-      let n=0;const off=y*pix.W;
-      for(let x=x0;x<x1;x++)if(pix.L[off+x]>190)n++;
-      if(n>=bestN){bestN=n;bestY=y}
+  // 星标行（一排菱形 + 末尾「+N」数字）紧贴在等级条正上方。
+  // 规则（来自游戏界面）：亮的菱形个数就是启灵数（0~3），末尾若还有数字，
+  // 那是「超限 +N」的加值，两者相加才是完整启灵值（三启+12 → en=15）。
+  // 排版特点：菱形等间距（约 0.2 卡宽）、宽约 0.075 卡宽，整组在卡内居中
+  // （有数字时整体左移），所以不能按绝对位置判断，只能按「段」来分：
+  // 前 3 段是菱形，第 4 段起是数字。
+  function starRowBand(bandA,cardW){
+    const mid=bandA-cardW*0.16,half=cardW*0.115;
+    return {top:Math.round(mid-half),bot:Math.round(mid+half)};
+  }
+  function readStarRow(pix,left,cardW,bandA){
+    const W=pix.W;
+    const sb=starRowBand(bandA,cardW);
+    const yTop=Math.max(0,sb.top),yBot=Math.min(pix.H-1,sb.bot);
+    if(yBot<=yTop+4)return {lit:0,num:null,segs:[],band:sb};
+    const xa=Math.max(0,Math.round(left+cardW*0.02)),xb=Math.min(W-1,Math.round(left+cardW*0.995));
+    if(xb<=xa+6)return {lit:0,num:null,segs:[],band:sb};
+    const h=yBot-yTop+1;
+    const col=new Array(xb-xa+1);
+    for(let x=xa;x<=xb;x++){
+      let n=0;
+      for(let y=yTop;y<=yBot;y++)if(pix.L[y*W+x]>190)n++;
+      col[x-xa]=n;
     }
-    return bestY;
+    // 菱形在带里占一半左右的高度，单列亮像素 >= 3 就算“这一列有亮”
+    const minW=Math.max(4,Math.round(cardW*0.030)),maxW=Math.round(cardW*0.16);
+    const segs=mergeRuns(runsOf(col.length,function(i){return col[i]>=3},Math.round(cardW*0.3)),1)
+      .map(function(r){return {a:r.a+xa,b:r.b+xa,w:r.w}})
+      .filter(function(r){return r.w>=minW&&r.w<=maxW});
+    if(!segs.length)return {lit:0,num:null,segs:[],band:sb};
+    // 前 3 段是菱形；第 4 段起是数字，中间可能被字间空隙切开，按小间隔合并
+    const dio=segs.slice(0,3),rest=segs.slice(3);
+    let num=null;
+    if(rest.length){
+      let a=rest[0].a,b=rest[0].b;
+      for(let i=1;i<rest.length;i++){
+        if(rest[i].a-b<=Math.round(cardW*0.06))b=rest[i].b;else break;
+      }
+      num={x:a-3,y:yTop-2,w:Math.min(xb,b+3)-a+6,h:h+4};
+    }
+    return {lit:dio.length,num:num,segs:segs,band:sb};
   }
   // 等级条里的「Lv.60」文字是居中的。列起点有时会差几个像素，
   // 干脆按“这一条里有亮像素的列”把文字框出来，比按比例估更稳。
-  function locateLevelText(pix,left,cardW,bandA){
-    const y0=Math.max(0,Math.round(bandA-2)),y1=Math.min(pix.H-1,Math.round(bandA+cardW*0.18));
-    const xa=Math.max(0,Math.round(left+cardW*0.12)),xb=Math.min(pix.W-1,Math.round(left+cardW*0.95));
+  function locateLevelText(pix,left,cardW,bandA,bandB){
+    // 等级条是横贯整排的深色带，文字落在带内。有的截图下面一行会被
+    // 卡片金色底条压住，文字只剩上半截，所以不能直接拿 band.b 当底边：
+    // 先按亮度剖面找“字所在的那几行”（字行偏暗、底条那一行整行发亮），再横向框。
+    const W=pix.W,H=pix.H;
+    const a=Math.round(bandA);
+    const top=Math.max(0,a+1),bot=Math.min(H-1,Math.round(a+cardW*0.24));
+    const xa=Math.max(0,Math.round(left+cardW*0.12)),xb=Math.min(W-1,Math.round(left+cardW*0.95));
+    const wid=Math.max(1,xb-xa+1);
+    // 字是接近纯白（>210），等级条底色只有 70~90，用高阈值就能把字和
+    // 下面那条金色/渐变底条分开。逐行统计后把连成一片的行聚成段、取最长的一段，
+    // 避免下方零星亮点把文字高度撑大（撑大后二值图里字只占上半截，OCR 会读错）。
+    const trows=[];
+    for(let y=top;y<=bot;y++){
+      const off=y*W;let n=0;
+      for(let x=xa;x<=xb;x++)if(pix.L[off+x]>210)n++;
+      if(n>=3&&n<=wid*0.55)trows.push(y);
+    }
+    const segsY=[];
+    if(trows.length){
+      let sa=trows[0],sb=trows[0];
+      for(let i=1;i<trows.length;i++){
+        if(trows[i]-sb<=2)sb=trows[i];
+        else{segsY.push([sa,sb]);sa=trows[i];sb=trows[i]}
+      }
+      segsY.push([sa,sb]);
+    }
+    let y0=-1,y1=-1;
+    if(segsY.length){
+      let best=segsY[0],bl=best[1]-best[0];
+      for(const sg of segsY){const l=sg[1]-sg[0];if(l>=bl){bl=l;best=sg}}
+      y0=best[0];y1=best[1];
+    }
+    if(y0<0||y1-y0<3){y0=top;y1=Math.min(bot,Math.max(Math.round(bandB||0),a+Math.round(cardW*0.13)))}
     let minX=-1,maxX=-1;
     for(let x=xa;x<=xb;x++){
       let n=0;
-      for(let y=y0;y<=y1;y++)if(pix.L[y*pix.W+x]>176)n++;
-      if(n>=(y1-y0)*0.12){if(minX<0)minX=x;maxX=x}
+      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>210)n++;
+      if(n>=Math.max(2,(y1-y0+1)*0.15)){if(minX<0)minX=x;maxX=x}
     }
     if(minX<0||maxX-minX<cardW*0.08)return null;
-    return {x:minX-3,w:Math.min(pix.W-1,maxX+3)-(minX-3),y:bandA-4,h:cardW*0.24};
+    return {x:minX-3,w:Math.min(W-1,maxX+3)-(minX-3),y:y0,h:Math.max(8,y1-y0+1)};
+  }
+  // 「Lv.62」这种文字直接整串丢给 OCR 时，小数点会把行高估计带偏，
+  // 数字经常被读丢（62 读成 02）。这里先按列把字切成字块，用小数点做分隔符，
+  // 只把后面的数字段送进 OCR——数字段的宽高比稳定，识别率明显更好。
+  function digitBoxOf(pix,box){
+    const W=pix.W,H=pix.H;
+    const x0=Math.max(0,Math.round(box.x)),x1=Math.min(W-1,Math.round(box.x+box.w)-1);
+    const y0=Math.max(0,Math.round(box.y)),y1=Math.min(H-1,Math.round(box.y+box.h)-1);
+    if(x1<=x0||y1<=y0)return box;
+    const th=Math.max(1,y1-y0+1);
+    const raw=[];let sa=-1;
+    for(let x=x0;x<=x1;x++){
+      let hit=false;
+      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>210){hit=true;break}
+      if(hit){if(sa<0)sa=x;if(raw.length&&raw[raw.length-1].b===x-1)raw[raw.length-1].b=x;else raw.push({a:x,b:x})}
+      else if(sa>=0)sa=-1;
+    }
+    if(raw.length<2)return box;
+    const info=raw.map(function(r){
+      let t=y1,b=y0;
+      for(let x=r.a;x<=r.b;x++)for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>210){if(y<t)t=y;if(y>b)b=y}
+      return {a:r.a,b:r.b,top:t,bot:b,h:b-t+1};
+    });
+    // 小数点：很矮（< 字高 22%）且贴着底线。可能有多个（L 的衬线也像），从右往左找最后一个
+    const dotMax=Math.max(4,th*0.22),botMin=y1-th*0.35;
+    let dot=-1;
+    for(let i=info.length-1;i>=0;i--){
+      const g=info[i];
+      if(g.h<=dotMax&&g.bot>=botMin){dot=i;break}
+    }
+    const tall=info.filter(function(g){return g.h>=th*0.55});
+    let digits;
+    if(dot>=0)digits=info.slice(dot+1).filter(function(g){return g.h>=th*0.55});
+    else digits=tall.slice(-2);
+    if(!digits.length)digits=tall.slice(-2);
+    if(!digits.length)return box;
+    digits=digits.slice(-2);
+    const a=digits[0].a,b=digits[digits.length-1].b;
+    let t=y1,bt=y0;
+    for(const g of digits){if(g.top<t)t=g.top;if(g.bot>bt)bt=g.bot}
+    const pad=Math.max(1,Math.round(th*0.08));
+    // n = 数字由几个字形组成；OCR 读出来的位数和它对不上就说明读错了
+    return {x:a-pad,y:t-pad,w:(b-a+1)+pad*2,h:(bt-t+1)+pad*2,n:digits.length};
   }
   async function analyzeChar(img,onProgress){
     const full=makeCanvas(img.naturalWidth,img.naturalHeight);
@@ -502,8 +613,9 @@
     const thumb=makeCanvas(Math.round(full.width*tscale),Math.round(full.height*tscale));
     const tctx=ctxOf(thumb);tctx.drawImage(full,0,0,thumb.width,thumb.height);
     const tpls=await buildCharTemplates(onProgress);
-    const out=[];
-    for(const band of bands){
+    const out=[];const dbg=[];const taken=new Set();
+    for(let bi=0;bi<bands.length;bi++){
+      const band=bands[bi];
       for(let j=0;j<nCols;j++){
         const left=Math.round(x0+j*pitch);
         if(left+cardW*0.6>full.width)break;
@@ -513,55 +625,101 @@
         const box={x:left,y:artY,w:cardW,h:cardW*1.15};
         if(box.y<-cardW*0.2||box.y+box.h>full.height)continue;
         const tbox={x:box.x*tscale,y:box.y*tscale,w:box.w*tscale,h:box.h*tscale};
-        const match=matchSquare(tctx,tbox,tpls,{scales:[0.5,0.6,0.7,0.8,0.9,1.0]});
+        const match=matchSquare(tctx,tbox,tpls,{color:true,scales:[0.5,0.6,0.7,0.8,0.9,1.0]});
         const top=match[0],second=match[1];
-        if(!top||top.score<0.42)continue;
+        const rec={cell:{r:bi,j:j},left:left,bandA:bandA,tops:match.slice(0,3).map(function(x){return {id:x.id,s:Number(x.score.toFixed(3))}})};
+        dbg.push(rec);
+        if(!top||top.score<0.42){rec.skip='match';continue}
+        // 一张图里同一个角色只会出现一次。若最佳匹配已被别的卡占掉，说明至少有一边认错了，
+        // 改用还没被占用的次优候选——比把两个不同的角色并成一条要合理得多。
+        let pick=top;
+        if(taken.has(pick.id)){
+          const alt=match.find(function(o){return !taken.has(o.id)&&o.score>=0.40});
+          if(alt)pick=alt;
+        }
+        taken.add(pick.id);
         // 等级：等级条里 “Lv.xx” 的数字（文字居中，数字在 0.50~0.80 卡宽）
         let lv=null,en=null;
         // 等级：等级条里的数字。等级条上下沿各有一条亮线，框位差几像素就会把数字切一半，
         // 所以按几个固定偏移各试一次，取第一个像样（1~99）的结果。
         // 「Lv.xx」是居中的，用它的实际位置反过来校正这一格的列起点（列检测偶尔会偏几像素）
-        const loc=locateLevelText(pix,left,cardW,bandA);
+        const loc=locateLevelText(pix,left,cardW,bandA,band.b);
         const leftAdj=left;
-        const lvBoxes=[loc,{x:leftAdj+cardW*0.50,y:bandA+1,w:cardW*0.30,h:cardW*0.19}].filter(Boolean);
+        const lvH=Math.max(10,Math.round(band.b>bandA?band.b-bandA:cardW*0.14));
+        const lvRaw=[loc,{x:leftAdj+cardW*0.50,y:bandA+1,w:cardW*0.30,h:lvH}].filter(Boolean);
+        const lvBoxes=lvRaw.map(function(b){return digitBoxOf(pix,b)});
+        if(TRACE())rec.lvDigits=lvBoxes.map(function(b){return {x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.w),h:Math.round(b.h)}});
+        const lvRaws=[];
+        // 这套字体是像素化的衬线字：psm 7（单行）会把「60」读成「6」、
+        // 「68」读成「638」；psm 8（单词）放大到 48px 高实测 24 格全对。
+        // 再配一组 psm 13 做交叉验证。字形数和读数位数对不上的一律不采信——
+        // 截图底部被裁掉时会读出一个残缺的字（「60」读成「4」），
+        // 与其写进 BOX 一个错数字，不如留空让用户补。
+        const LSPECS=[{scale:8,targetH:48,psm:'8'},{scale:12,targetH:60,psm:'13'}];
         for(const bx of lvBoxes){
           if(lv!=null)break;
-          try{
-            const r=await readDigits(fctx,bx,{whitelist:'0123456789',scale:5,thr:175});
-            const m=r.text.match(/\d{1,3}/);
-            if(m){const v=Number(m[0]);if(v>=1&&v<=MAX_LV_GUESS)lv=v}
-          }catch(e){}
+          const votes=[];
+          for(const sp of LSPECS){
+            try{
+              const r=await readDigits(fctx,bx,{whitelist:'0123456789',thr:205,scale:sp.scale,targetH:sp.targetH,psm:sp.psm});
+              lvRaws.push(r.text);
+              if(TRACE()&&!rec.lvPng)rec.lvPng=r.png;
+              const m=String(r.text||'').match(/\d{1,3}/);
+              if(!m)continue;
+              const v=Number(m[0]);
+              if(v<1||v>MAX_LV_GUESS)continue;
+              votes.push({v:v,fit:bx.n?String(v).length===bx.n:null});
+            }catch(e){lvRaws.push('ERR:'+e.message)}
+          }
+          const fit=votes.filter(function(x){return x.fit===true})[0];
+          if(fit){lv=fit.v;break}
+          // 位置框没有字形数时，只有两次识别一致才认
+          if(bx.n==null&&votes.length>=2&&votes[0].v===votes[1].v){lv=votes[0].v;break}
         }
+        rec.lvRaws=lvRaws;
         // 启灵：星标行最右侧那颗深色菱形里的数字（0-3 是「N 启」，4 是超限，5-15 是超限 +N）
         // 深色菱形直径只有十几像素，框差 1~2px 数字就糊了，所以几组阈值/偏移都试一遍。
         let enLow=false;
+        rec.lvBox=loc;rec.lv=lv;
         try{
-          const starY=refineStarRow(pix,leftAdj,cardW,bandA);
-          const variants=[
-            {x:leftAdj+cardW*0.70,y:starY-cardW*0.115,w:cardW*0.22,h:cardW*0.23,thr:175},
-            {x:leftAdj+cardW*0.68,y:starY-cardW*0.130,w:cardW*0.26,h:cardW*0.26,thr:150},
-            {x:leftAdj+cardW*0.71,y:starY-cardW*0.100,w:cardW*0.20,h:cardW*0.20,thr:195}
-          ];
-          const votes=[];
+          const star=readStarRow(pix,leftAdj,cardW,bandA);
+          rec.star=star;rec.lit=star.lit;
+          // 亮菱形数直接就是启灵数；数字只有「超限 +N」时才有
+          const base=Math.min(3,star.lit);
+          const variants=star.num?[
+            {x:star.num.x,y:star.num.y,w:star.num.w,h:star.num.h,thr:175},
+            {x:star.num.x-2,y:star.num.y-2,w:star.num.w+4,h:star.num.h+4,thr:150},
+            {x:star.num.x,y:star.num.y,w:star.num.w,h:star.num.h,thr:195}
+          ]:[];
+          const votes=[];const raws=[];const pngs=[];
           for(const v of variants){
             const num=await readDigits(fctx,{x:v.x,y:v.y,w:v.w,h:v.h},{whitelist:'0123456789',scale:6,thr:v.thr});
+            raws.push(String(num.text||''));
+            if(TRACE()&&pngs.length<3)pngs.push({box:{x:Math.round(v.x),y:Math.round(v.y),w:Math.round(v.w),h:Math.round(v.h)},thr:v.thr,png:num.png});
             const m=String(num.text||'').match(/\d{1,2}/);
             if(!m)continue;
             const val=Number(m[0]);
-            if(val<=15)votes.push(val);
+            // 界面上不会出现「+0」：数字段存在时读出 0 一定是把菱形边角当成了字
+            if(val>=1&&val<=15)votes.push(val);
           }
+          rec.enRaws=raws;rec.votes=votes.slice();rec.enPngs=pngs;
           if(votes.length){
             // 多数票一致才算确定；只有一组读出来就采用但让用户核对
             let best=votes[0],bestN=0;
             for(const v of votes){const n=votes.filter(x=>x===v).length;if(n>bestN){best=v;bestN=n}}
-            // 两票以上算确定；「超限 +N」这类两位数即便只有一票也采用（单个亮块凑不出两位数）
-            if(bestN>=2){en=best;enLow=false}else if(best>=10){en=best;enLow=true}else{en=0;enLow=true}
-          }else{en=0;enLow=true}
-        }catch(e){en=null;enLow=true}
-        out.push({id:top.id,score:top.score,margin:top.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,box:box});
+            en=base+best;
+            enLow=bestN<2;
+          }else{
+            // 没有数字：纯启灵（0~3），亮几颗就是几启，这条是确定的
+            en=base;enLow=star.num?true:false;
+          }
+          en=Math.min(en,15);
+        }catch(e){en=null;enLow=true;rec.err=String(e&&e.message||e)}
+        rec.en=en;
+        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,box:box});
       }
     }
-    return {rows:out,note:'识别到 '+out.length+' 张卡片',grid:grid};
+    return {rows:out,note:'识别到 '+out.length+' 张卡片',grid:grid,dbg:TRACE()?dbg:undefined};
   }
 
   /* ---------- 命轮页 ---------- */
@@ -682,7 +840,7 @@
     ctxOf(thumb).drawImage(full,0,0,thumb.width,thumb.height);
     const tpls=await buildWheelTemplates(onProgress);
     const nRows=grid.rowGaps&&grid.rowGaps.length?grid.rowGaps.length:Math.max(1,Math.floor((full.height-grid.y0)/grid.pitchY));
-    const out=[];
+    const out=[];const dbgSkip=[];const used=new Set();
     for(let r=0;r<nRows;r++){
       const top=Math.round(grid.y0+r*grid.pitchY);
       if(top+grid.cardH>full.height+2)break;
@@ -690,11 +848,44 @@
       for(let j=0;j<grid.nCols;j++){
         const left=Math.round(grid.x0+j*grid.pitchX);
         if(left+grid.cardW*0.6>full.width)break;
-        const patch=warpWheelArt(thumb,left,top,grid.cardW,grid.cardH,tscale);
-        if(!patch)continue;
-        const match=matchWheel(patch,tpls);
+        // 网格是按整图统计出来的，个别卡位会差几像素；按比例硬切会把边框切进来，
+        // 匹配分数就会挤成一片。这里先在一小片范围里试几组偏移，取分数最高的那个
+        // 位置再裁——「先识别再定裁剪位置」比按坐标硬切稳。
+        let patch=null,match=null,offx=0,offy=0;
+        const probeAt=function(dx,dy){
+          const pa=warpWheelArt(thumb,left+dx,top+dy,grid.cardW,grid.cardH,tscale);
+          if(!pa)return null;
+          const mm=matchWheel(pa,tpls);
+          return mm.length?{pa:pa,mm:mm}:null;
+        };
+        for(const dy of [-12,-6,0,6,12]){
+          for(const dx of [-12,-6,0,6,12]){
+            const t=probeAt(dx,dy);
+            if(t&&(!match||t.mm[0].score>match[0].score)){patch=t.pa;match=t.mm;offx=dx;offy=dy}
+          }
+        }
+        if(match){
+          for(const dy of [offy-3,offy,offy+3]){
+            for(const dx of [offx-3,offx,offx+3]){
+              const t=probeAt(dx,dy);
+              if(t&&t.mm[0].score>match[0].score){patch=t.pa;match=t.mm;offx=dx;offy=dy}
+            }
+          }
+        }
+        if(!patch){if(TRACE())dbgSkip.push({cell:{r:r,j:j},score:-1,reason:'nopatch'});continue}
         const top1=match[0],second=match[1];
-        if(!top1||top1.score<0.30)continue;
+        if(!top1||top1.score<0.30){
+          if(TRACE())dbgSkip.push({cell:{r:r,j:j},score:top1?top1.score:0,options:match.slice(0,3)});
+          continue;
+        }
+        // 一张图里同一张命轮只可能出现一次。若这一格的最佳匹配已经被别的格子占了，
+        // 说明至少有一格认错了，改用还没被占用的次优候选——比把两格并成一条更合理。
+        let pick=top1;
+        if(used.has(pick.id)){
+          const alt=match.find(function(o){return !used.has(o.id)&&o.score>=0.22});
+          if(alt)pick=alt;
+        }
+        used.add(pick.id);
         // 叠位：星标行最右那颗菱形里的数字，没有数字就是 0
         let stack=0;
         try{
@@ -702,12 +893,12 @@
           const m=rr.text.match(/\d{1,2}/);
           if(m)stack=clamp(Number(m[0]),0,12);
         }catch(e){}
-        out.push({id:top1.id,score:top1.score,margin:top1.score-(second?second.score:0),options:match.slice(0,5),stack:stack,
-          unsure:top1.score<0.5||(top1.score-(second?second.score:0))<0.05,
+        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),stack:stack,
+          unsure:pick.score<0.5||(pick.score-(second?second.score:0))<0.05,
           cell:{r:r,j:j},png:patch.toDataURL('image/jpeg',0.6)});
       }
     }
-    return {rows:out,note:'识别到 '+out.length+' 张命轮',grid:grid};
+    return {rows:out,note:'识别到 '+out.length+' 张命轮',grid:grid,dbgSkip:TRACE()?dbgSkip:undefined};
   }
 
   /* ---------- 对外接口 ---------- */
@@ -733,6 +924,9 @@
       try{
         const r=await fn(img,msg=>onProgress(`(${i+1}/${files.length}) ${msg}`));
         for(const row of r.rows){row.file=i;row.kind=kind;all.push(row)}
+        if(r.dbg)results.dbg=(results.dbg||[]).concat(r.dbg);
+        if(r.dbgSkip)results.dbgSkip=(results.dbgSkip||[]).concat(r.dbgSkip);
+        if(r.grid&&!results.grid)results.grid=r.grid;
       }catch(e){
         console.warn('analyze failed',e);
         results.note=(results.note?results.note+'；':'')+`第 ${i+1} 张：${e.message}`;
@@ -765,9 +959,9 @@
         for(let j=0;j<g.nCols&&out.length<n;j++){
           const left=Math.round(g.x0+j*g.pitch),cardW=g.cardW;
           const bandA=band.a;
-          const lvBox=locateLevelText(pix,left,cardW,bandA)||{x:left+cardW*0.50,y:bandA-4,w:cardW*0.30,h:cardW*0.24};
-          const starY=refineStarRow(pix,left,cardW,bandA);
-          const enBox={x:left+cardW*0.66,y:starY-cardW*0.13,w:cardW*0.34,h:cardW*0.26};
+          const lvBox=locateLevelText(pix,left,cardW,bandA,band.b)||{x:left+cardW*0.50,y:bandA+1,w:cardW*0.30,h:Math.max(10,cardW*0.14)};
+          const star=readStarRow(pix,left,cardW,bandA);
+          const enBox=star.num||{x:left+cardW*0.70,y:star.band.top,w:cardW*0.22,h:star.band.bot-star.band.top};
           const crop=function(b,s){
             const c=makeCanvas(Math.round(b.w*s),Math.round(b.h*s));
             ctxOf(c).drawImage(full,b.x,b.y,b.w,b.h,0,0,c.width,c.height);
