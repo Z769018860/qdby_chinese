@@ -1,12 +1,20 @@
 /* 忘忘看报 · 截图识别（角色等级 / 启灵 / 命轮叠位）
    纯前端：先用金色星条定位卡片网格，再用头像/命轮卡面做模板匹配认人，
-   数字交给本地 tesseract（仓库内自带，不联网）。
+   等级 / 启灵 / 叠位这些数字用自带的字形模板分类器认（不联网、不下载任何引擎）。
    识别结果一律返回候选列表，由 UI 让人确认。 */
 (()=>{
   const WORK_W=1200;                     // 工作宽度，够认数字又不至于太慢
-  const OCR_BASE='ocr/';
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const MAX_LV_GUESS=90;
+  // 字形匹配分（0~1，乘以 100 记为 conf）。实测：样本内正确匹配 p1=0.752；
+  // 把某一类抽掉再拿同类样本去认，最高只到 0.599 —— 所以 0.68 能干净地分开
+  // 「认得对」和「这一类模板根本没有」，认不准就留空，绝不写一个猜出来的数字。
+  // 截图底部那一排会被裁掉，字形只有 21px 高（正常 27px），匹配分会掉到 0.6 上下 ——
+  // 所以门槛按最差情况定；真错读基本都在 0.55 以下，且字段数对不上会被另外两道检查拦掉。
+  const LV_MIN_CONF=60;
+  // 启灵 / 叠位那个数字只有十几像素高，正确读法的分实测 85~97%，错读全在 69% 以下，
+  // 所以门槛反而要更高：空槽位最容易被认成「1」。
+  const EN_MIN_CONF=80;
 
   /* ---------- 基础图像工具 ---------- */
   function makeCanvas(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
@@ -281,94 +289,254 @@
     return [...best.entries()].map(([id,score])=>({id,score})).sort((a,b)=>b.score-a.score);
   }
 
-  /* ---------- OCR（本地 tesseract） ---------- */
-  let workerPromise=null,progressCb=null;
-  function loadScript(src){
-    return new Promise((res,rej)=>{
-      if(document.querySelector(`script[src="${src}"]`))return res();
-      const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('OCR 引擎加载失败：'+src));document.head.appendChild(s);
+  /* ---------- 数字识别：自带字形模板分类器 ---------- */
+  // 这套界面用的是同一款像素衬线数字。通用 OCR（tesseract）在这种字体上会把 8 认成 3、
+  // 数字第一位被菱形/描边吃掉，怎么调阈值都压不下去。改成「切字 → 归一化 → 和仓库自带的
+  // 字形模板做归一化互相关」：同一款字体下模板法比通用模型准得多，也不用再带 11MB 的
+  // wasm + traineddata，手机上还快一个数量级。
+  const GW=14,GH=18;               // 归一化位图尺寸（宽 × 高）
+  // 每个模板是 GW*GH 个 2bit 像素（0=背景 … 3=墨），base64 存。
+  // 由 tools/gen-glyph-proto.mjs 从 60 格人工标注的真实截图生成（每类最多 3 份，跨图取样）。
+  // 缺 "3"：现有样本里没有出现过 3，等补到样本再加（缺类时靠分数门槛拒识，不会写成错数字）。
+  const DIGIT_PROTO_B64={"0":["APkWAKSqAZBbaQC9kBvkBvlRb4Bv+QL4li+Ab/kC+JYvgG/5AviWL4Bv+Qb4Rm6Qb+QG+QG5kRtAqmoApL4B","kPoGQKqqAeVGbpAv4Bv6ArnhG5AfvgH59guQb78A+fYLkG+/APnmG5BvvgH5oS+QG/lCvkFu5QaQqysA+W8B","kPoGQKqqAeVGbpAv4Bv6ArnhG5AfvgH59guQb78A+fYLkG+/APnmG5BvugH5kS+QG/lCvkFu5AaQqi8A+b4B"],"1":["AKUCAKQvAFD6AgCULwAA+AIAgC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAIAvAAD4AgCALwBA+RYAqa8G","AKUCAKUvAJD+AgCULwAA+QIAkC8AAPkCAJAvAAD5AgCQLwAA+QIAkC8AAPkCAJAvAAD5AgCQbwBA/hYA+b8B","AKUCAKUvAJD+AgCULwAA+QIAkC8AAPkCAJAvAAD5AgCQLwAA+QIAkC8AAPkCAJAvAAD5AgCQbwBA/hoA+b8B"],"2":["AJUWAKSqBkCqvgEUkBsAALkBAJAbAAC5AQCQGwAAaQAApAEAkBoAAGoAAKQBAFAGAEBaUADkqhqQ/79B/v8b","AOkbAJSqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhqQ/78B+f4b","AOlbAJTqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhrQ/79B/vob"],"4":["AABUAACQAQBAGgAAaQAAkAYAQFoAAKkaAGS5AZCWGwAZuQFlkRugqv4WquqvUar+FgCQGwAAuQEA5G8AkP4G","AABlAACQBgBAGgAAZAAAlAUAgGoBAKkaAJT5AlCVL0AZ+AJkgG+QFvlaaZW/VgH5GgCAbwAA+AIAlG8BkPpq","AABlAACQBgBAGgAAZAAAlAUAgGoBAKkaAJT5AlCVL0AZ+AKkgW+QG/laqZW/VgX5GgCAbwAA+AIAlG8BkPpq"],"5":["kP+/APn/BpCqWgBaAACkBQBArloA5P8aAKr+BkCVvgEAkBsAALgBAEAaAACkAQCQCgBAagBAqQFUqgWQqgUA","kP+/Af3/BqSqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQDQGwBQbgBUqgGlqgWQvgUA","kP+/APn/BqCqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQCQCwBQagBUqgGUqgWQvgUA"],"6":["AJRvAFCqBUCqBQC5BQDkBgCQbwAAuqUF4KuqAb+Zb/Ab5Bu/QL7xC5AfvwD58QuQG74BuZFb5AfkqmoA+W4B","AJC+AUCqBgCpFQDkBgCQGwBAvhUA5KoakK/qBvlWvpFvkG/5AvmWL4Bv+QL4li+Ab/UG+UWupRuQqmoApKoB","AECpAQClGgCpVgCUGwCQbgAAuQUA5FsWkK+qBvmWvpFvlG/5AvmWL4Bv+QL4lm+Ab/kG+UZukRuQqm4ApL8G"],"7":["+f//lv//b/n//5GqqhtVAKkAAJAGAABpAACkAQBAGgAAaAAAkAYAACoAAKQBAEAKAABpAACQBgBAGgAApAEA","+f//lv//b6mqvlFVlRsAAKkAAJAGAAAZAACkAQBABgAAaAAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA","+f//lv//b6mq/lFVlRsAAKkAAJAGAAAZAACkAQBABgAAaQAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA"],"8":["QOpbAKmqBpAauUFugB/kBvhGboEb5GupAfmrBkD+bwCl+hqkWr5RbpBv+QL4li+Ab/kG+EaukRuQq6oB6asG","QKoWAKmVBqQGuUEugBvkAqRBbpAb5FtpALqqAlD+GwCp+gakVr5RL5BfuQH4lhtAbrkB5FZvgBqkWmkAqaoB","QLoaAKmqBqRWaUAukBv5AriRb5Ab5FppQPqqBpD+GwCp/gakVr6Rb5BvuQH5lhuAb7kB+JZvkBqkqmoAqb4B"],"9":["QOkWAKmqBqRGaUAukBv5AuSWL0Bu+QLkli9AbuQG5Ea+QW6QarkBUJUbAEBpAAClAQCkBgCQGgBQagBAagEA","QKoWAKWqAaRGaUAakBu5AbiRG4AfuQH4lm+Ab+QW+Ea6lm9AavkBUJUbAEBuAACpAQCUBgBQGgBQWgBAagEA"]};;
+  function b64Bytes(str){
+    const bin=atob(str),out=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);
+    return out;
+  }
+  function decodeProto(str){
+    const B=b64Bytes(str),out=new Float32Array(GW*GH);
+    for(let i=0;i<out.length;i++)out[i]=((B[i>>2]>>((i&3)*2))&3)/3;
+    let fill=0;for(let i=0;i<out.length;i++)fill+=out[i];
+    return {bm:zeroMean(out),fill:fill/out.length};
+  }
+  function zeroMean(v){
+    let mu=0;for(let i=0;i<v.length;i++)mu+=v[i];
+    mu/=v.length;
+    const o=new Float32Array(v.length);let s=0;
+    for(let i=0;i<v.length;i++){const d=v[i]-mu;o[i]=d;s+=d*d}
+    const n=Math.sqrt(s)||1;
+    for(let i=0;i<v.length;i++)o[i]/=n;
+    return o;
+  }
+  // 3x3 高斯模糊：让匹配对 ±1px 的定位误差、以及不同截图分辨率的抗锯齿差异不敏感
+  function blur3(v,w,h){
+    const o=new Float32Array(v.length);
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+      let s=0,n=0;
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+        const yy=y+dy,xx=x+dx;
+        if(yy<0||yy>=h||xx<0||xx>=w)continue;
+        const k=(dy?1:2)*(dx?1:2);
+        s+=v[yy*w+xx]*k;n+=k;
+      }
+      o[y*w+x]=s/n;
+    }
+    return o;
+  }
+  const DIGIT_PROTO=(function(){
+    const t={};
+    for(const k of Object.keys(DIGIT_PROTO_B64))t[k]=DIGIT_PROTO_B64[k].map(decodeProto);
+    return t;
+  })();
+  function otsuThr(hist,n){
+    let sum=0;for(let i=0;i<256;i++)sum+=i*hist[i];
+    let sumB=0,wB=0,best=128,bestV=-1;
+    for(let t=0;t<256;t++){
+      wB+=hist[t];if(!wB)continue;
+      const wF=n-wB;if(!wF)break;
+      sumB+=t*hist[t];
+      const mB=sumB/wB,mF=(sum-sumB)/wF;
+      const v=wB*wF*(mB-mF)*(mB-mF);
+      if(v>bestV){bestV=v;best=t}
+    }
+    return best;
+  }
+  // 把一个框里的亮字切成单个字形（连通域 → 按列归并 → 过宽的再对半劈）
+  function segmentGlyphs(ctx,box,opts){
+    const o=opts||{};
+    const x0=Math.max(0,Math.round(box.x)),y0=Math.max(0,Math.round(box.y));
+    const w=Math.max(1,Math.round(box.w)),h=Math.max(1,Math.round(box.h));
+    let data=null;
+    try{data=ctx.getImageData(x0,y0,w,h).data}catch(e){return {glyphs:[],w:w,h:h,err:'getImageData'}}
+    const L=new Float32Array(w*h),hist=new Uint32Array(256);
+    for(let i=0,p=0;i<w*h;i++,p+=4){
+      const l=data[p]*0.299+data[p+1]*0.587+data[p+2]*0.114;
+      L[i]=l;hist[Math.min(255,Math.max(0,Math.round(l)))]++;
+    }
+    let t=o.thr||0;
+    if(!t)t=clamp(otsuThr(hist,w*h),110,232);
+    const mask=new Uint8Array(w*h);
+    for(let i=0;i<w*h;i++)mask[i]=L[i]>t?1:0;
+    // 横贯整块的亮线（等级条上下沿、卡片描边）不是字，先抹掉
+    for(let y=0;y<h;y++){
+      let n=0;for(let x=0;x<w;x++)n+=mask[y*w+x];
+      if(n>w*0.85)for(let x=0;x<w;x++)mask[y*w+x]=0;
+    }
+    for(let x=0;x<w;x++){
+      let n=0;for(let y=0;y<h;y++)n+=mask[y*w+x];
+      if(n>h*0.85)for(let y=0;y<h;y++)mask[y*w+x]=0;
+    }
+    /* 连通域（8 邻域，显式栈，不递归） */
+    const lab=new Int32Array(w*h).fill(-1),stack=new Int32Array(w*h),comps=[];
+    for(let i=0;i<w*h;i++){
+      if(!mask[i]||lab[i]>=0)continue;
+      const id=comps.length;let sp=0;
+      stack[sp++]=i;lab[i]=id;
+      let minX=w,maxX=-1,minY=h,maxY=-1,area=0;
+      while(sp){
+        const p=stack[--sp],py=(p/w)|0,px=p-py*w;
+        area++;
+        if(px<minX)minX=px;if(px>maxX)maxX=px;if(py<minY)minY=py;if(py>maxY)maxY=py;
+        for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+          const yy=py+dy,xx=px+dx;
+          if(yy<0||yy>=h||xx<0||xx>=w)continue;
+          const q=yy*w+xx;
+          if(mask[q]&&lab[q]<0){lab[q]=id;stack[sp++]=q}
+        }
+      }
+      comps.push({minX:minX,maxX:maxX,minY:minY,maxY:maxY,area:area});
+    }
+    if(!comps.length)return {glyphs:[],w:w,h:h,mask:mask,thr:t};
+    let maxH=0,maxA=0;
+    for(const c of comps){
+      const ch=c.maxY-c.minY+1;
+      if(ch>maxH)maxH=ch;
+      if(c.area>maxA)maxA=c.area;
+    }
+    const keep=comps.filter(function(c){
+      const cw=c.maxX-c.minX+1,ch=c.maxY-c.minY+1;
+      if(c.area<Math.max(2,maxA*0.06))return false;          // 噪点
+      if(ch<maxH*0.50)return false;                          // 小数点 / 半截残字
+      if(cw>w*0.85&&ch>h*0.85)return false;                  // 整块描边
+      return true;
     });
+    if(!keep.length)return {glyphs:[],w:w,h:h,mask:mask,thr:t};
+    keep.sort(function(a,b){return a.minX-b.minX});
+    const groups=[];
+    for(const c of keep){
+      const g=groups[groups.length-1];
+      // 同一列里有上下分离的墨块（数字断裂、发光边）并成一个字形
+      if(g&&c.minX<=g.maxX+1){
+        if(c.maxX>g.maxX)g.maxX=c.maxX;
+        if(c.minY<g.minY)g.minY=c.minY;
+        if(c.maxY>g.maxY)g.maxY=c.maxY;
+      }else groups.push({minX:c.minX,maxX:c.maxX,minY:c.minY,maxY:c.maxY});
+    }
+    /* 两个数字粘在一起时按中间最窄的列劈开 */
+    const splitWide=function(g){
+      const gw=g.maxX-g.minX+1,gh=g.maxY-g.minY+1;
+      if(gw/gh<0.95)return [g];
+      const lo=g.minX+Math.round(gw*0.32),hi=g.minX+Math.round(gw*0.68);
+      let cut=-1,cutN=1e9;
+      for(let x=lo;x<=hi;x++){
+        let n=0;
+        for(let y=g.minY;y<=g.maxY;y++)n+=mask[y*w+x];
+        if(n<cutN){cutN=n;cut=x}
+      }
+      if(cut<0||cut<=g.minX||cut>=g.maxX)return [g];
+      const a={minX:g.minX,maxX:cut-1,minY:g.minY,maxY:g.maxY};
+      const b={minX:cut,maxX:g.maxX,minY:g.minY,maxY:g.maxY};
+      // 劈完两半都得有足够高度，否则是噪声，维持原样
+      const cnt=function(q){
+        let n=0;
+        for(let y=q.minY;y<=q.maxY;y++)for(let x=q.minX;x<=q.maxX;x++)n+=mask[y*w+x];
+        return n;
+      };
+      if(cnt(a)<maxA*0.06||cnt(b)<maxA*0.06)return [g];
+      return [a,b];
+    };
+    const glyphs=[];
+    for(const g of groups)for(const q of splitWide(g))glyphs.push(q);
+    return {glyphs:glyphs,w:w,h:h,mask:mask,thr:t};
   }
-  async function getWorker(){
-    if(workerPromise)return workerPromise;
-    workerPromise=(async()=>{
-      await loadScript(OCR_BASE+'tesseract.min.js');
-      if(!window.Tesseract)throw new Error('OCR 引擎不可用');
-      const base=new URL(OCR_BASE,location.href).href;
-      const w=await window.Tesseract.createWorker('eng',1,{
-        workerPath:base+'worker.min.js',
-        corePath:base,
-        langPath:base.replace(/\/$/,''),
-        gzip:true,
-        logger:m=>{if(progressCb&&m.status==='recognizing text')progressCb(Math.round(m.progress*100))}
-      });
-      await w.setParameters({tessedit_char_whitelist:'0123456789Lv. ',tessedit_pageseg_mode:'7'});
-      return w;
-    })();
-    return workerPromise;
+  // 把任意大小的字形缩放到 GW×GH，横向居中、按高度等比（不拉宽，否则「1」会变成一根粗条）
+  function normGlyph(mask,w,h,g){
+    const bw=g.maxX-g.minX+1,bh=g.maxY-g.minY+1;
+    let sc=GH/bh;
+    if(bw*sc>GW)sc=GW/bw;
+    const nw=Math.max(1,Math.min(GW,Math.round(bw*sc))),nh=Math.max(1,Math.min(GH,Math.round(bh*sc)));
+    const ox=Math.floor((GW-nw)/2),oy=Math.floor((GH-nh)/2);
+    const out=new Float32Array(GW*GH);
+    for(let y=0;y<nh;y++)for(let x=0;x<nw;x++){
+      let acc=0,n=0;
+      for(let sy=0;sy<2;sy++)for(let sx=0;sx<2;sx++){
+        const fx=g.minX+(x+(sx+0.5)/2)/sc,fy=g.minY+(y+(sy+0.5)/2)/sc;
+        const px=Math.floor(fx),py=Math.floor(fy);
+        if(px<0||py<0||px>=w||py>=h)continue;
+        acc+=mask[py*w+px];n++;
+      }
+      out[(oy+y)*GW+ox+x]=n?acc/n:0;
+    }
+    return blur3(out,GW,GH);
   }
-  // 把一小块区域放大 + 二值化，再交给 tesseract
+  function classifyGlyph(bm){
+    const v=zeroMean(bm);
+    let fill=0;for(let i=0;i<bm.length;i++)fill+=bm[i];
+    fill/=bm.length;
+    // 先按字类取最高分，再拿「次优字类」算领先幅度（同类不同模板之间的差没有意义）
+    let best={digit:'',score:-9};
+    const per={};
+    for(const d of Object.keys(DIGIT_PROTO)){
+      let top=-9;
+      for(const p of DIGIT_PROTO[d]){
+        let sc=0;
+        for(let i=0;i<v.length;i++)sc+=v[i]*p.bm[i];
+        sc-=Math.abs(fill-p.fill)*0.6;   // 墨量差太多基本就是认错了，扣分
+        if(sc>top)top=sc;
+      }
+      per[d]=top;
+      if(top>best.score)best={digit:d,score:top};
+    }
+    let second=-9;
+    for(const d of Object.keys(per))if(d!==best.digit&&per[d]>second)second=per[d];
+    const score=clamp(best.score,0,1);
+    return {digit:best.digit,score:score,margin:best.score-second,fill:fill};
+  }
+  // 与旧 tesseract 版同签名：返回 {text,conf,count,detail,png}
   async function readDigits(ctx,box,opts){
     const o=opts||{};
-    const whitelist=o.whitelist||'0123456789',scale=o.scale||4,thr=o.thr||0,psm=o.psm||'7';
-    const w=Math.max(8,Math.round(box.w)),h=Math.max(8,Math.round(box.h));
-    const src=ctx.getImageData(Math.round(box.x),Math.round(box.y),w,h).data;
-    const cw=w*scale,ch=h*scale;
-    const buf=new Uint8Array(cw*ch);
-    let sum=0;for(let i=0,p=0;i<w*h;i++,p+=4)sum+=src[p]*0.299+src[p+1]*0.587+src[p+2]*0.114;
-    const mean=sum/(w*h);
-    const t=thr||Math.max(90,Math.min(210,mean*1.12));
-    for(let y=0;y<ch;y++){
-      const sy=Math.min(h-1,Math.floor(y/scale));
-      for(let x=0;x<cw;x++){
-        const sx=Math.min(w-1,Math.floor(x/scale));
-        const p=(sy*w+sx)*4;
-        const l=src[p]*0.299+src[p+1]*0.587+src[p+2]*0.114;
-        buf[y*cw+x]=l>t?1:0;
+    const seg=segmentGlyphs(ctx,box,o);
+    let text='',conf=0,detail=[];
+    for(const g of seg.glyphs){
+      const c=classifyGlyph(normGlyph(seg.mask,seg.w,seg.h,g));
+      detail.push({d:c.digit,s:Number(c.score.toFixed(3)),x:g.minX,y:g.minY,w:g.maxX-g.minX+1,h:g.maxY-g.minY+1});
+      text+=c.digit;
+      conf+=c.score;
+    }
+    if(detail.length)conf/=detail.length;
+    let png=null;
+    if(TRACE()&&seg.mask){
+      // 调试图：把二值结果放大 6 倍画出来，方便核对框位
+      const sc=6,cv=makeCanvas(seg.w*sc,seg.h*sc),cx=ctxOf(cv);
+      const im=cx.createImageData(cv.width,cv.height);
+      for(let y=0;y<cv.height;y++)for(let x=0;x<cv.width;x++){
+        const on=seg.mask[((y/sc)|0)*seg.w+((x/sc)|0)];
+        const q=(y*cv.width+x)*4;
+        im.data[q]=im.data[q+1]=im.data[q+2]=on?40:245;im.data[q+3]=255;
       }
+      cx.putImageData(im,0,0);
+      png=cv.toDataURL('image/png');
     }
-    // 整行几乎全是墨 → 卡片高光/分隔条，不是字，抹掉；
-    // 另外统计每行最长的连续墨段，太长的就是横线（等级条上下沿），一并抹掉。
-    for(let y=0;y<ch;y++){
-      let n=0,run=0,runMax=0;
-      for(let x=0;x<cw;x++){
-        if(buf[y*cw+x]){n++;run++;if(run>runMax)runMax=run}
-        else run=0;
+    return {text:text,conf:Math.round(conf*100),count:detail.length,detail:detail,png:png,
+      w:seg.w,h:seg.h,thr:seg.thr,box:{x:Math.round(box.x),y:Math.round(box.y),w:Math.round(box.w),h:Math.round(box.h)}};
+  }
+  // 调试用：把某个框的切字结果与归一化位图导出来（生成模板时用）
+  function glyphDump(ctx,box,opts){
+    const seg=segmentGlyphs(ctx,box,opts||{});
+    const out={w:seg.w,h:seg.h,thr:seg.thr,glyphs:[]};
+    for(const g of seg.glyphs){
+      const bm=normGlyph(seg.mask,seg.w,seg.h,g);
+      const c=classifyGlyph(bm);
+      let bin='',q='';
+      for(let i=0;i<bm.length;i++){
+        bin+=bm[i]>0.5?'1':'0';
+        // 4 级量化（和模板存储一致），建模板用这个，别用二值
+        q+=String(Math.max(0,Math.min(3,Math.round(bm[i]*3))));
       }
-      if(n>cw*0.80||runMax>cw*0.55)for(let x=0;x<cw;x++)buf[y*cw+x]=0;
+      out.glyphs.push({x:g.minX,y:g.minY,w:g.maxX-g.minX+1,h:g.maxY-g.minY+1,bm:bin,q:q,guess:c.digit,score:Number(c.score.toFixed(3))});
     }
-    // 按行墨迹找出真正的一行字，去掉上下多余的黑边
-    let y0=-1,y1=-1;
-    for(let y=0;y<ch;y++){
-      let n=0;for(let x=0;x<cw;x++)n+=buf[y*cw+x];
-      const f=n/cw;
-      if(f>0.02&&f<0.72){if(y0<0)y0=y;y1=y}
-    }
-    if(y0<0){y0=0;y1=ch-1}
-    const hh=Math.max(1,y1-y0+1);
-    // 组装成“黑字白底 + 四周留白”：tesseract 对单个又细又高的字符要留边
-    // 被裁掉半截的字会变得又扁又矮，tesseract 对扁字识别率很差。
-    // targetH 把字拉伸到统一高度，等于做一次垂直归一化。
-    const dstH=o.targetH?Math.max(Math.round(o.targetH),hh):hh;
-    const padX=Math.max(10,Math.round(cw*0.06)),padY=Math.max(12,Math.round(dstH*0.3));
-    const W2=cw+padX*2,H2=dstH+padY*2;
-    const canvas=makeCanvas(W2,H2),cx=ctxOf(canvas);
-    const img=cx.createImageData(W2,H2);
-    for(let i=0;i<W2*H2;i++){const q=i*4;img.data[q]=img.data[q+1]=img.data[q+2]=255;img.data[q+3]=255}
-    for(let y=0;y<dstH;y++){
-      const sy=y0+Math.min(hh-1,Math.floor(y*hh/dstH));
-      for(let x=0;x<cw;x++){
-        if(!buf[sy*cw+x])continue;
-        const q=((y+padY)*W2+(x+padX))*4;
-        img.data[q]=img.data[q+1]=img.data[q+2]=0;
-      }
-    }
-    cx.putImageData(img,0,0);
-    const worker=await getWorker();
-    await worker.setParameters({tessedit_char_whitelist:whitelist,tessedit_pageseg_mode:psm});
-    const r=await worker.recognize(canvas);
-    const text=(r.data.text||'').replace(/[^0-9Lv.+]/g,'');
-    return {text:text,conf:r.data.confidence||0,png:canvas.toDataURL('image/png')};
+    return out;
   }
 
   // 调试开关：页面设 window.__boxOcrTrace=true 时，识别结果里会附带每格的取样框与原始文本
@@ -642,6 +810,25 @@
     }
     return {lit:lit,num:num,segs:blobs,band:sb,chain:dios.length,pitch:pitch};
   }
+  // 「Lv.xx」是等级条里最亮的像素，但条底本身亮度差很大：深色条只有 70~90，
+  // 有些卡是亮金渐变，底子就有 200+。原来写死 210 在亮条上会把整条都当字
+  // （u1 最后一列「Lv.80」就是这么丢的）。改成按框内亮度分位数取阈值。
+  function brightThr(pix,x0,x1,y0,y1){
+    const W=pix.W,h=new Uint32Array(256);
+    let n=0;
+    for(let y=y0;y<=y1;y++){
+      const off=y*W;
+      for(let x=x0;x<=x1;x++){h[Math.min(255,Math.max(0,Math.round(pix.L[off+x])))]++;n++}
+    }
+    if(!n)return 210;
+    const pick=function(q){
+      let acc=0;const goal=n*q;
+      for(let v=0;v<256;v++){acc+=h[v];if(acc>=goal)return v}
+      return 255;
+    };
+    const p50=pick(0.5),p99=pick(0.99);
+    return clamp(p50+(p99-p50)*0.45,150,240);
+  }
   // 等级条里的「Lv.60」文字是居中的。列起点有时会差几个像素，
   // 干脆按“这一条里有亮像素的列”把文字框出来，比按比例估更稳。
   function locateLevelText(pix,left,cardW,bandA,bandB){
@@ -656,10 +843,11 @@
     // 字是接近纯白（>210），等级条底色只有 70~90，用高阈值就能把字和
     // 下面那条金色/渐变底条分开。逐行统计后把连成一片的行聚成段、取最长的一段，
     // 避免下方零星亮点把文字高度撑大（撑大后二值图里字只占上半截，OCR 会读错）。
+    const thr=brightThr(pix,xa,xb,top,bot);
     const trows=[];
     for(let y=top;y<=bot;y++){
       const off=y*W;let n=0;
-      for(let x=xa;x<=xb;x++)if(pix.L[off+x]>210)n++;
+      for(let x=xa;x<=xb;x++)if(pix.L[off+x]>thr)n++;
       if(n>=3&&n<=wid*0.55)trows.push(y);
     }
     const segsY=[];
@@ -681,7 +869,7 @@
     let minX=-1,maxX=-1;
     for(let x=xa;x<=xb;x++){
       let n=0;
-      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>210)n++;
+      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>thr)n++;
       if(n>=Math.max(2,(y1-y0+1)*0.15)){if(minX<0)minX=x;maxX=x}
     }
     if(minX<0||maxX-minX<cardW*0.08)return null;
@@ -696,17 +884,18 @@
     const y0=Math.max(0,Math.round(box.y)),y1=Math.min(H-1,Math.round(box.y+box.h)-1);
     if(x1<=x0||y1<=y0)return box;
     const th=Math.max(1,y1-y0+1);
+    const thr=brightThr(pix,x0,x1,y0,y1);
     const raw=[];let sa=-1;
     for(let x=x0;x<=x1;x++){
       let hit=false;
-      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>210){hit=true;break}
+      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>thr){hit=true;break}
       if(hit){if(sa<0)sa=x;if(raw.length&&raw[raw.length-1].b===x-1)raw[raw.length-1].b=x;else raw.push({a:x,b:x})}
       else if(sa>=0)sa=-1;
     }
     if(raw.length<2)return box;
     const info=raw.map(function(r){
       let t=y1,b=y0;
-      for(let x=r.a;x<=r.b;x++)for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>210){if(y<t)t=y;if(y>b)b=y}
+      for(let x=r.a;x<=r.b;x++)for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>thr){if(y<t)t=y;if(y>b)b=y}
       return {a:r.a,b:r.b,top:t,bot:b,h:b-t+1};
     });
     // 小数点：很矮（< 字高 22%）且贴着底线。可能有多个（L 的衬线也像），从右往左找最后一个
@@ -776,40 +965,46 @@
         const leftAdj=left;
         const lvH=Math.max(10,Math.round(band.b>bandA?band.b-bandA:cardW*0.14));
         const lvRaw=[loc,{x:leftAdj+cardW*0.50,y:bandA+1,w:cardW*0.30,h:lvH}].filter(Boolean);
-        const lvBoxes=lvRaw.map(function(b){return digitBoxOf(pix,b)});
-        if(TRACE())rec.lvDigits=lvBoxes.map(function(b){return {x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.w),h:Math.round(b.h)}});
+        // 只认 digitBoxOf 切出来的「纯数字段」：整串「Lv.xx」一起送进来时，
+        // L / v 两个字母会稳定地被认成 1，实测比留空更糟。
+        // 列起点偶尔会偏几像素（把数字切一半），所以第一轮没读出来时再整体错位重试。
+        const baseBoxes=lvRaw.map(function(b){return digitBoxOf(pix,b)});
         const lvRaws=[];
-        // 这套字体是像素化的衬线字：psm 7（单行）会把「60」读成「6」、
-        // 「68」读成「638」；psm 8（单词）放大到 48px 高实测 24 格全对。
-        // 再配一组 psm 13 做交叉验证。字形数和读数位数对不上的一律不采信——
-        // 截图底部被裁掉时会读出一个残缺的字（「60」读成「4」），
-        // 与其写进 BOX 一个错数字，不如留空让用户补。
-        const LSPECS=[{scale:8,targetH:48,psm:'8'},{scale:10,targetH:56,psm:'8',thr:200},{scale:12,targetH:60,psm:'13'}];
-        for(const bx of lvBoxes){
-          if(lv!=null)break;
-          const votes=[];
-          for(const sp of LSPECS){
-            try{
-              const r=await readDigits(fctx,bx,{whitelist:'0123456789',thr:sp.thr||205,scale:sp.scale,targetH:sp.targetH,psm:sp.psm});
-              lvRaws.push(r.text);
-              if(TRACE()&&!rec.lvPng)rec.lvPng=r.png;
-              const m=String(r.text||'').match(/\d{1,3}/);
-              if(!m)continue;
-              const v=Number(m[0]);
-              if(v<1||v>MAX_LV_GUESS)continue;
-              votes.push({v:v,fit:bx.n?String(v).length===bx.n:null});
-            }catch(e){lvRaws.push('ERR:'+e.message)}
+        let lvBest=null;
+        const tryBox=async function(bx,tag){
+          const r=await readDigits(fctx,bx,{});
+          const ds=r.detail||[];
+          if(!ds.length){if(tag)lvRaws.push(tag+'-');return}
+          const txt=ds.map(function(g){return g.d}).join('');
+          const conf=Math.min.apply(null,ds.map(function(g){return g.s}))*100;
+          if(tag)lvRaws.push(tag+txt+'/'+Math.round(conf)+'%');
+          if(TRACE()){
+            (rec.lvTry||(rec.lvTry=[])).push({tag:tag||'shift',
+              box:[Math.round(bx.x),Math.round(bx.y),Math.round(bx.w),Math.round(bx.h)],
+              g:ds.map(function(q){return q.d+'@'+Math.round(q.s*100)+':'+q.x+','+q.y+' '+q.w+'x'+q.h})});
           }
-          const good=votes.filter(function(x){return x.fit===true});
-          if(good.length){
-            // 三票取多数：单票容易把 80 读成 30，2:1 时按多数走
-            let best=good[0],bestN=0;
-            for(const g of good){const n=good.filter(function(x){return x.v===g.v}).length;if(n>bestN){best=g;bestN=n}}
-            lv=best.v;break;
+          // 等级只有 1~2 位；切出 3 个以上字形说明框偏了（把旁边的东西圈进来了）
+          if(ds.length>2)return;
+          if(ds.length===1&&bx.n===2)return;   // 明明两位却只切出一位
+          const v=Number(txt);
+          if(!(v>=1&&v<=MAX_LV_GUESS))return;
+          if(conf<LV_MIN_CONF)return;
+          const rank=(ds.length===2?1000:0)+conf;
+          if(!lvBest||rank>lvBest.rank)lvBest={v:v,conf:conf,rank:rank};
+        };
+        for(let i=0;i<baseBoxes.length;i++)await tryBox(baseBoxes[i],i===0?'':'b'+i);
+        // 第二轮：纵向错位 ±3 像素再试（只挪纵向 —— 横向挪会把相邻字形圈进来，
+        // 实测会把「70」读成「71」，比留空更糟）
+        if(!lvBest){
+          for(const dy of [-3,3]){
+            for(let i=0;i<baseBoxes.length&&!lvBest;i++){
+              const bx=baseBoxes[i];
+              await tryBox({x:bx.x,y:bx.y+dy,w:bx.w,h:bx.h,n:bx.n},'');
+            }
+            if(lvBest&&TRACE())lvRaws.push('shiftY'+dy);
           }
-          // 位置框没有字形数时，只有两次识别一致才认
-          if(bx.n==null&&votes.length>=2&&votes[0].v===votes[1].v){lv=votes[0].v;break}
         }
+        if(lvBest)lv=lvBest.v;
         rec.lvRaws=lvRaws;
         // 启灵：星标行最右侧那颗深色菱形里的数字（0-3 是「N 启」，4 是超限，5-15 是超限 +N）
         // 深色菱形直径只有十几像素，框差 1~2px 数字就糊了，所以几组阈值/偏移都试一遍。
@@ -820,20 +1015,24 @@
           rec.star=star;rec.lit=star.lit;
           // 亮菱形数直接就是启灵数；数字只有「超限 +N」时才有
           const base=Math.min(3,star.lit);
+          // 数字在第 4 个槽位里，框差一两像素就会切歪，所以阈值和框位各给一组
           const variants=star.num?[
             {x:star.num.x,y:star.num.y,w:star.num.w,h:star.num.h,thr:175},
             {x:star.num.x-2,y:star.num.y-2,w:star.num.w+4,h:star.num.h+4,thr:150},
-            {x:star.num.x,y:star.num.y,w:star.num.w,h:star.num.h,thr:195}
+            {x:star.num.x,y:star.num.y,w:star.num.w,h:star.num.h,thr:195},
+            {x:star.num.x-1,y:star.num.y-1,w:star.num.w+2,h:star.num.h+2,thr:0}
           ]:[];
           const votes=[];const raws=[];const pngs=[];
           for(const v of variants){
-            const num=await readDigits(fctx,{x:v.x,y:v.y,w:v.w,h:v.h},{whitelist:'0123456789',scale:6,thr:v.thr});
-            raws.push(String(num.text||''));
+            const num=await readDigits(fctx,{x:v.x,y:v.y,w:v.w,h:v.h},{thr:v.thr});
+            raws.push(String(num.text||'')+'/'+num.conf+'%');
             if(TRACE()&&pngs.length<3)pngs.push({box:{x:Math.round(v.x),y:Math.round(v.y),w:Math.round(v.w),h:Math.round(v.h)},thr:v.thr,png:num.png});
-            const m=String(num.text||'').match(/\d{1,2}/);
-            if(!m)continue;
-            const val=Number(m[0]);
-            // 界面上不会出现「+0」：数字段存在时读出 0 一定是把菱形边角当成了字
+            // 只有「切出 1~2 个字形 + 高分」才算数：空槽位里的菱形边角、零星亮点
+            // 会在这两步被挡掉（之前「本来没有数字却读出 +1」就是这么来的）。
+            // +10/+11/+12 是两位，别只放一位进来。
+            if(num.count<1||num.count>2||num.conf<EN_MIN_CONF)continue;
+            const val=Number(num.text);
+            // 界面上不会出现「+0」
             if(val>=1&&val<=15)votes.push(val);
           }
           rec.enRaws=raws;rec.votes=votes.slice();rec.enPngs=pngs;
@@ -1023,9 +1222,13 @@
         // 叠位：星标行最右那颗菱形里的数字，没有数字就是 0
         let stack=0;
         try{
-          const rr=await readDigits(fctx,{x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22},{whitelist:'0123456789',scale:6,thr:150});
-          const m=rr.text.match(/\d{1,2}/);
-          if(m)stack=clamp(Number(m[0]),0,12);
+          // 叠位框里会连带圈进菱形描边。描边一定贴着框边，所以除了「1~2 个字形 + 高分」，
+          // 还要求字形不贴框边；认不出就当 0（本体），用户可以在界面里改。
+          const stBox={x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22};
+          const rr=await readDigits(fctx,stBox,{thr:150});
+          const g0=rr.detail&&rr.detail[0];
+          const inset=g0&&g0.x>1&&(g0.x+g0.w)<stBox.w-1&&g0.y>1&&(g0.y+g0.h)<stBox.h-1;
+          if(rr.count>=1&&rr.count<=2&&rr.conf>=EN_MIN_CONF&&inset)stack=clamp(Number(rr.text),0,12);
         }catch(e){}
         out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),stack:stack,
           unsure:pick.score<0.5||(pick.score-(second?second.score:0))<0.05,
@@ -1080,6 +1283,79 @@
 
   window.MorimensBoxOCR={
     analyzeFiles,
+    // 工具用：把每格的等级数字框 / 启灵数字框裁出来，附带切字后的归一化位图。
+    // 生成字形模板（tools/gen-glyph-proto）和做回归对比都靠它，普通界面不调。
+    async collect(file,mode){
+      const kind=mode||'char';
+      const img=await blobToImage(file);
+      const full=makeCanvas(img.naturalWidth,img.naturalHeight);
+      const fctx=ctxOf(full);fctx.drawImage(img,0,0,full.width,full.height);
+      const pix=pixelData(full);
+      const crop=function(b,sc){
+        const c=makeCanvas(Math.max(1,Math.round(b.w*sc)),Math.max(1,Math.round(b.h*sc)));
+        ctxOf(c).drawImage(full,b.x,b.y,b.w,b.h,0,0,c.width,c.height);
+        return c.toDataURL('image/png');
+      };
+      const out=[];const taken=new Set();
+      if(kind==='wheel'){
+        const grid=detectWheelGrid(pix);
+        const tscale=Math.min(1,WORK_W/full.width);
+        const thumb=makeCanvas(Math.round(full.width*tscale),Math.round(full.height*tscale));
+        ctxOf(thumb).drawImage(full,0,0,thumb.width,thumb.height);
+        const tpls=await buildWheelTemplates();
+        const nRows=grid.rowGaps&&grid.rowGaps.length?grid.rowGaps.length:Math.max(1,Math.floor((full.height-grid.y0)/grid.pitchY));
+        for(let r=0;r<nRows;r++){
+          const top=Math.round(grid.y0+r*grid.pitchY);
+          if(top+grid.cardH>full.height+2)break;
+          for(let j=0;j<grid.nCols;j++){
+            const left=Math.round(grid.x0+j*grid.pitchX);
+            if(left+grid.cardW*0.6>full.width)break;
+            const patch=warpWheelArt(thumb,left,top,grid.cardW,grid.cardH,tscale);
+            if(!patch)continue;
+            const mm=matchWheel(patch,tpls);
+            const stBox={x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22};
+            out.push({cell:{r:r,j:j},id:mm[0]?mm[0].id:'',score:mm[0]?Number(mm[0].score.toFixed(3)):0,
+              stBox:stBox,stPng:crop(stBox,6),stGlyphs:glyphDump(fctx,stBox,{thr:150})});
+          }
+        }
+        return {kind:kind,grid:grid,W:full.width,H:full.height,cells:out};
+      }
+      const grid=detectCharGrid(pix);
+      const tscale=Math.min(1,WORK_W/full.width);
+      const thumb=makeCanvas(Math.round(full.width*tscale),Math.round(full.height*tscale));
+      ctxOf(thumb).drawImage(full,0,0,thumb.width,thumb.height);
+      const tpls=await buildCharTemplates();
+      for(let bi=0;bi<grid.bands.length;bi++){
+        const band=grid.bands[bi];
+        for(let j=0;j<grid.nCols;j++){
+          const left=Math.round(grid.x0+j*grid.pitch),cardW=grid.cardW,bandA=band.a;
+          const box={x:left,y:bandA-cardW*1.40,w:cardW,h:cardW*1.15};
+          if(box.y<-cardW*0.2||box.y+box.h>full.height)continue;
+          const tbox={x:box.x*tscale,y:box.y*tscale,w:box.w*tscale,h:box.h*tscale};
+          const match=matchSquare(thumb?ctxOf(thumb):fctx,tbox,tpls,{color:true,scales:[0.5,0.6,0.7,0.8,0.9,1.0]});
+          let pick=match[0]||null;
+          if(pick&&taken.has(pick.id)){const alt=match.find(function(o){return !taken.has(o.id)&&o.score>=0.40});if(alt)pick=alt}
+          if(!pick||pick.score<0.42)continue;
+          taken.add(pick.id);
+          const loc=locateLevelText(pix,left,cardW,bandA,band.b);
+          const lvH=Math.max(10,Math.round(band.b>bandA?band.b-bandA:cardW*0.14));
+          const lvRaw=[loc,{x:left+cardW*0.50,y:bandA+1,w:cardW*0.30,h:lvH}].filter(Boolean);
+          // 候选框：digitBoxOf 切出的数字段 ×2，再加整串「Lv.xx」两个原框。
+        // 底部被裁掉的行 digitBoxOf 会切歪（小数点糊了、把 L、v 也当数字），
+        // 这时整串一起认、取末两位反而更稳。
+        const lvBoxes=lvRaw.map(function(b){return digitBoxOf(pix,b)}).concat(lvRaw);
+          const star=readStarRow(pix,left,cardW,bandA);
+          out.push({cell:{r:bi,j:j},id:pick.id,name:pick.name,score:Number(pick.score.toFixed(3)),
+            left:left,bandA:bandA,cardW:cardW,
+            lvBoxes:lvBoxes.map(function(b){return {x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.w),h:Math.round(b.h),n:b.n}}),
+            lvPng:lvRaw[0]?crop(lvRaw[0],5):null,
+            lvG:pix?glyphDump(fctx,lvBoxes[0],{}):null,
+            lit:star.lit,enBox:star.num?{x:Math.round(star.num.x),y:Math.round(star.num.y),w:Math.round(star.num.w),h:Math.round(star.num.h)}:null,
+            enPng:star.num?crop(star.num,8):null,enG:star.num?glyphDump(fctx,star.num,{thr:175}):null});
+        }
+      }
+      return {kind:kind,grid:grid,W:full.width,H:full.height,cells:out};
+    },
     // 调试：按同一套网格裁出“等级条 / 启灵数字”小图并做 OCR，供核对框位与识别质量
     async probe(file,limit){
       const n=limit||4;
@@ -1103,10 +1379,10 @@
           };
           let lvText='',enText='';
           let lvPng2='',alt6='',alt13='';
-          try{const rr=await readDigits(fctx,lvBox,{whitelist:'0123456789',scale:5,thr:175});lvText=rr.text;lvPng2=rr.png}catch(e){lvText='ERR '+e.message}
-          try{alt6=(await readDigits(fctx,lvBox,{whitelist:'0123456789',scale:5,thr:200,psm:'6'})).text}catch(e){}
-          try{alt13=(await readDigits(fctx,lvBox,{whitelist:'0123456789',scale:5,thr:175,invert:true})).text}catch(e){}
-          try{enText=(await readDigits(fctx,enBox,{whitelist:'0123456789',scale:6,thr:165})).text}catch(e){enText='ERR '+e.message}
+          try{const rr=await readDigits(fctx,lvBox,{thr:175});lvText=rr.text;lvPng2=rr.png}catch(e){lvText='ERR '+e.message}
+          try{alt6=(await readDigits(fctx,lvBox,{thr:200})).text}catch(e){}
+          try{alt13=(await readDigits(fctx,lvBox,{thr:150})).text}catch(e){}
+          try{enText=(await readDigits(fctx,enBox,{thr:165})).text}catch(e){enText='ERR '+e.message}
           out.push({i:out.length,left:left,band:bandA,lvText:lvText,enText:enText,alt6:alt6,alt13:alt13,
             lvPng:crop(lvBox,4),enPng:crop(enBox,6),bin:lvPng2});
         }
@@ -1137,7 +1413,7 @@
           if(!patch)continue;
           const match=matchWheel(patch,tpls);
           let st='';
-          try{st=(await readDigits(fctx,{x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22},{whitelist:'0123456789',scale:6,thr:150})).text}catch(e){st='ERR'}
+          try{st=(await readDigits(fctx,{x:left+grid.cardW*0.62,y:top+grid.cardH*0.78,w:grid.cardW*0.36,h:grid.cardH*0.22},{thr:150})).text}catch(e){st='ERR'}
           cells.push({r:r,j:j,st:st,top5:match.slice(0,5),id:match[0]?match[0].id:'',score:match[0]?match[0].score:0,
             png:patch.toDataURL('image/jpeg',0.8)});
         }
