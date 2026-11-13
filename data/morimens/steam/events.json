@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-12T11:30:50.213Z",
+ "fetchedAt": "2026-11-13T11:16:22.818Z",
  "posts": [
+  {
+   "title": "V2.7.0 Advent of the Divine Realm",
+   "date": "2026-11-13",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849192144186053"
+  },
   {
    "title": "🐱 Light's 30-Day Challenge Log: Days 23–30",
    "date": "2026-11-10",
