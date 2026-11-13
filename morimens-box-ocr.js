@@ -7,11 +7,12 @@
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const MAX_LV_GUESS=90;
   // 字形匹配分（0~1，乘以 100 记为 conf）。实测：样本内正确匹配 p1=0.752；
-  // 把某一类抽掉再拿同类样本去认，最高只到 0.599 —— 所以 0.68 能干净地分开
-  // 「认得对」和「这一类模板根本没有」，认不准就留空，绝不写一个猜出来的数字。
-  // 截图底部那一排会被裁掉，字形只有 21px 高（正常 27px），匹配分会掉到 0.6 上下 ——
-  // 所以门槛按最差情况定；真错读基本都在 0.55 以下，且字段数对不上会被另外两道检查拦掉。
-  const LV_MIN_CONF=60;
+  // 门槛怎么定的：把某一类抽掉、再拿同类样本去认（「留一类」），最高能到 0.620 ——
+  // 也就是说**一旦某类模板缺失（现在缺数字 3），错认就能爬到 62%**。
+  // 所以门槛必须 > 0.62，取 68 留 6 个点余量；认不准就留空，绝不写一个猜出来的数字。
+  // 代价：留一图口径下 163 个字里多丢 2 个（162 → 160 放行），可以接受。
+  // 改这个数之前先跑 H:/work/tmp/boxrec/eval.mjs，会直接打出「留一类最高分」。
+  const LV_MIN_CONF=68;
   // 启灵 / 叠位那个数字只有十几像素高，正确读法的分实测 85~97%，错读全在 69% 以下，
   // 所以门槛反而要更高：空槽位最容易被认成「1」。
   const EN_MIN_CONF=80;
@@ -296,9 +297,11 @@
   // wasm + traineddata，手机上还快一个数量级。
   const GW=14,GH=18;               // 归一化位图尺寸（宽 × 高）
   // 每个模板是 GW*GH 个 2bit 像素（0=背景 … 3=墨），base64 存。
-  // 由 scripts/gen-glyph-proto.mjs 从 60 格人工标注的真实截图生成（每类最多 3 份，跨图取样）。
-  // 缺 "3"：现有样本里没有出现过 3，等补到样本再加（缺类时靠分数门槛拒识，不会写成错数字）。
-  const DIGIT_PROTO_B64={"0":["APkWAKSqAZBbaQC9kBvkBvlRb4Bv+QL4li+Ab/kC+JYvgG/5AviWL4Bv9Qb4Rm6Qb9AGuQG5kRtAqmoApL4B","kPoGQKqqAeVGbpAv4Bv6ArnhG5AfvgH59guQb78A+fYLkG+/APnmG5BvvgH5oS+QG/lCvkFu5QaQqysA+W8B","kPoGQKqqAeVGbpAv4Bv6ArnhG5AfvgH59guQb78A+fYLkG+/APnmG5BvugH5kS+QG/lCvkFu5AaQqi8A+b4B"],"1":["AKUCAKQvAFD6AgCULwAA+AIAgC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAIAvAAD4AgCALwBA+RYAqa8G","AKUCAKUvAJD+AgCULwAA+QIAkC8AAPkCAJAvAAD5AgCQLwAA+QIAkC8AAPkCAJAvAAD5AgCQbwBA/hYA+b8B","AKUCAKUvAJD+AgCULwAA+QIAkC8AAPkCAJAvAAD5AgCQLwAA+QIAkC8AAPkCAJAvAAD5AgCQbwBA/hoA+b8B"],"2":["AJUWAKSqBkCqvgEUkBsAALkBAJAbAAC5AQCQGwAAaQAApAEAkBoAAGoAAKQBAFAGAEBaUADkqhqQ/79B/v8b","AOkbAJSqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhqQ/78B+f4b","AOlbAJTqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhrQ/79B/vob"],"4":["AABUAACQAQBAGgAAaQAAkAYAQFoAAKkaAGS5AZCWGwAZuQFlkRugqv4WquqvUar+FgCQGwAAuQEA5G8AkP4G","AABlAACQBgBAGgAAZAAAlAUAgGoBAKkaAJT5AlCVL0AZ+AJkgG+QFvlaaZW/VgH5GgCAbwAA+AIAlG8BkPpq","AABlAACQBgBAGgAAZAAAlAUAgGoBAKkaAJT5AlCVL0AZ+AKkgW+QG/laqZW/VgX5GgCAbwAA+AIAlG8BkPpq"],"5":["kP+/APn/BpCqWgBaAACkBQBArloA5P8aAKr+BkCVvgEAkBsAALgBAEAaAACkAQCQCgBAagBAqQFUqgWQqgUA","kP+/Af3/BqSqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQDQGwBQbgBUqgGlqgWQvgUA","kP+/APn/BqCqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQCQCwBQagBUqgGUqgWQvgUA"],"6":["AJRvAFCqBUCqBQC5BQDkBgCQbwAAuqUF4KuqAb+Zb/Ab5Bu/QL7xC5AfvwD58QuQG74BuZFb5AfkqmoA+W4B","AJC+AUCqBgCpFQDkBgCQGwBAvhUA5KoakK/qBvlWvpFvkG/5AvmWL4Bv+QL4li+Ab/UG+UWupRuQqmoApKoB","AECpAQClGgCpVgCUGwCQbgAAuQUA5FsWkK+qBvmWvpFvlG/5AvmWL4Bv+QL4lm+Ab/kG+UZukRuQqm4ApL8G"],"7":["+f//lv//b/n//5GqqhtVAKkAAJAGAABpAACkAQBAGgAAaAAAkAYAACoAAKQBAEAKAABpAACQBgBAGgAApAEA","+f//lv//b6mqvlFVlRsAAKkAAJAGAAAZAACkAQBABgAAaAAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA","+f//lv//b6mq/lFVlRsAAKkAAJAGAAAZAACkAQBABgAAaQAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA"],"8":["QOpbAKmqBpAauUFugB/kBvhGboEb5GupAfmrBkD+bwCl+hqkWr5RbpBv+QL4li+Ab/kG+EaukRuQq6oB6asG","QKoWAKmVBqQGuUEugBvkAqRBbpAb5FtpALqqAlD+GwCp+gakVr5RL5BfuQH4lhtAbrkB5FZvgBqkWmkAqaoB","QLoaAKmqBqRWaUAukBv5AriRb5Ab5FppQPqqBpD+GwCp/gakVr6Rb5BvuQH5lhuAb7kB+JZvkBqkqmoAqb4B"],"9":["QOkWAKmqBqRGaUAukBv5AuSWL0Bu+QLkli9AbuQG5Ea+QW6QarkBUJUbAEBpAAClAQCkBgCQGgBQagBAagEA","QKoWAKWqAaRGaUAakBu5AbiRG4AfuQH4lm+Ab+QW+Ea6lm9AavkBUJUbAEBuAACpAQCUBgBQGgBQWgBAagEA"]};
+  // 由 scripts/gen-glyph-proto.mjs 从 5 张真实截图 60 格人工标注生成（163 个字形样本，
+  // 每类按多样性贪心挑 6 张：顺序取 3 张时留一图 156/159，贪心 6 张是 163/163）。
+  // 缺 "3"：现有样本里没出现过 3，靠 LV_MIN_CONF=68 拒识（不会写成错数字）。
+  // 拿到含 Lv.3x 的截图后重跑生成器即可补上。
+  const DIGIT_PROTO_B64={"0":["QP4aAKmqBuRGbkBvkBu5AfmmG5BvvgH45huAb74B+OYbgG++AfjmG4BvugH5lhuQb+QCuUFu5BuQqmoA5K8B","AAAAAABVAAClWgCklgZAbqQBuUFukBvkBrlBvpAb4Au9Ab6QG+ALuUG+kBvkCrlBbkAapAZQABUAAAAAAAAA","AKUVAKSqBpBbvkG+kW/5BuSWb0Cu+Qbk6y9A/r8B5P8bQP6/AeT/G0D+vgHkr29A/vkG5J9vQL6pBqRGVUAV","QFUBAKlqAOSrG1Bu5Qa5Qb7gG9AbvwC58QuQH78A+fYLkG+/APn2C5BvvwD59guQH74AveEb5BupQalVFVBV","QL4FAKlqAKRWGpAb5Aa6QX7gG+AbvwC+8QvgG78AvvEL4Bu/AL7xC+AbvgG+oRvkG7lBbkBapQGkqhoA+W8A","QP5rAPnqBpAbuUG+kB/kC/iWb4Bv+Qb4li+Ab/kC+JYvgG/5BviWb4Bv5Ab4Rr6Ab9ALuQG55RtAqloAkGoB"],"1":["AKUCAKUvAJD+AgCULwAA+QIAkC8AAPkCAJAvAAD5AgCQLwAA+QIAkC8AAPkCAJAvAAD5AgCQbwBA/hYA+b8B","AFUAAKUGAJC+AADpCwBAuQAAkAoAAKkAAIAKAACpAACQGgAAuQEAkBsAALkBAJAKAAC5AADgGwBQvhVA6q8G","ULoBAOkbAFC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQDkWwCQ/hYA+b8B","AJQCAJQqAJD6AgCVLwAA+QIAgC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAIAvAAD4AgCAbwBA+RYAqb8G","QKoCAKkvAJD6AgCVLwAA+QIAkC8AAPgCAIAvAAD4AgCALwAA+AIAgC8AAPgCAJAvAAD5AgCQbwBQ/hoA+b8G","QKoBAKUbAFC6AQCVGwAAuQEAkBsAALkBAJAbAAC5AQCQGwAAuQEAkBsAALkBAJAbAAC5AQCQGwBQ/hYA+b8B"],"2":["QPkaAKmqBqRWvkEakBtQAPkGAJBvAAC5AQCQGwBAbgAA5AYAkBoAQGoAAKQBAJAFAEAaUAWpqlrk/7+V//9v","UP5vQPr/G6Wq/5Ya5W9aAPlbAJD/AAD5DwCQvwAA+QYA5G8AQL4BAPkGAOQbAJBuAAC5AQDkBgCQG1BFvkGq","UP4bQPr/Bqmqv5EG5F8aAP5WAOBvAAD+BgDgXwBAvgEA5AYAkG8AAL0BAOQGAJAaAEBuAECpFlTlqqamvqpu","AOkbAJSqBkBFuQEUkBsAALkBAJAbAAC5AQCQCwAAaQAApAEAkAYAQBoAAGQAAJABAEBaVQD5qhqQ/78B+f4b","AJUWAKSqBkCqvgEUkBsAALkBAJAbAAC5AQCQGwAAaQAApAEAkBoAAGoAAKQBAFAGAEBaUADkqhqQ/79B/v8b","QOofAKnqBpBBvgEFkBsAALkBAJAbAAC5AQDgBgBAagAApAEAkAYAQBoAAGUAAJABAEBaVQD5qhrg/79B/v8b"],"4":["AABlAACQBgBAGgAAaQAApAUAkKoBAKkuAKT5AlCWL0AZ+AJpkW+gqvpaqqqvVVX5FgCALwAA+QYAlG8BkP5r","AEAaAACkAQCQBgBAWgAAqQYApKoBQKobAKm+AaTlG1AavgFq5W+gVv4aVuVvAUC+AQDgGwBAvgEA+W8A4P8b","AEAqAACkAQBQBgBAGgAApQUAkKoBQJYbAGm4AaSBG1AG+AJqkW+gWv4aauWvUUH5BgCQLwAA+QYApW8BkP8b","AABUAACQAQBAGgAAaQAAkAYAQFoAAKkaAGS5AZCWGwAZuQFlkRugqv4WquqvUar+FgCQGwAAuQEA5G8AkP4G","AABpAACQBgBAGgAAaAAAkAYAQFoBAGkaAJTlAkBGLgAZ5AKlQW6Qq/paqaq/RVX5FgBAbwAA5AYAlL8BQOob","AABlAACQBgBAGgAAZAAAlAUAgGoBAKkaAJT5AlCVL0AZ+AJkgG+QFvlaaZW/VgH5GgCAbwAA+AIAlG8BkPpq"],"5":["kP+/APn/BpCqWgBaAACkBQBArloA5P8aAKr+BkCVvgEAkBsAALgBAEAaAACkAQCQCgBAagBAqQFUqgWQqgUA","kP+/Af3/BqSqWkBaVQCkFQCQrxYA+b8aQKr+BlCVvwEA5G8AAPkGAJBvAAC5AQDQGwBQbgBUqgGlqgWQvgUA","kP+/Afn/BpCqWkBaVQCkFQBArhYA+b8aQKr/BlClvwEA5RsAAPkGAJBvAAC5AQDQGwBQagBQqgGUqgWQugUA"],"6":["AECqAUCpBgCpFQDkBgCQGwAAuQEA5JoWkK+qBvlWvpFvkG/5AvmWL4Bv+QL4li+Ab/kG+UZulRuQqmoApL8B","AABUAQCQWgBQqgFAagUAuQEA5AYAkGsFQL6qBuSrv0G+pW/0G+Sbv0D+9AvkT75A/uQb5FuqQapQBVAFAAAA","AABVAAClGgCkawCQawFAbgEAuQEA5BcAQG5VAbmqaqCb+hu+Vb7lG5BvvwH56huQv74B+asakGpVAFQBAAAA","AJRvAFCqBUCqBQC5BQDkBgCQbwAAuqUF4KuqAb+Zb/Ab5Bu/QL7xC5AfvwD58QuQG74BuZFb5AfkqmoA+W4B","AEC6BkCpGgCpGgDkGwCQbwBAvgEA5FYFkG+pBfqqvuFv5W/+BvnrL0D//gLk7y9A/v4C5K9vkP6pBqlaVVBV","AFCuAECpBgCpBQCkBgCQGwBAbgEApZYGkKuqBbpVruAb5Bu+AfnhG5BvvgH5phuQH7kBuUFu5QqQqloA5KsB"],"7":["+f//lv//b/n//5GqqhtVAKkAAJAGAABpAACkAQBAGgAAaAAAkAYAACoAAKQBAEAKAABpAACQBgBAGgAApAEA","+v//7/////////uqqm9aVaUVAEAaAABpAACgBgBAGgAApAEAQAoAAGkAAKAGAEAaAACkAQCQCwAAaQAAUAUA","+f//lv//b6mqvlFVlRsAAKkAAJAGAAAZAACkAQBABgAAaAAAkAYAABkAAKQAAEAGAABpAACgBgBAGgAApAEA","+f//lv//G6mqulEFkAYAAGkAAJABAEAaAABkAACQBgAAaQAAkAEAQBoAAGkAAJAGAAApAACkAQBABgAAaAAA","/v+/4f//G6qqqlABlAYAABkAAKQBAEAKAABkAACQBgAAGgAApAEAQAYAAGkAAKABAEAaAACkAQBABgAAVAAA"],"8":["QOprAKnqBpAauUFugB/kBvhGboEb5GupAfmrBkD+bwCl+hukWr5RbpBv+Qb4li+Ab/kG+EaukRuQq2oBqb4F","QKoWAKmlBqQGuUEugBvkAqRBbpAb5FtpAP6qApD/GwCp+gakVr5RGpBfuQH4lhtAbrkB5FZvgBqkWmkAqaoB","QLoaAKmqBqRWaUAukBv5AriRb5Ab5FppQPqqBpD+GwCp/gakVr6Rb5BvuQH5lhuAb7kB+JZvkBqkqmoAqb4B","QPpqAKmqBpAGuUFugG/kBvhGbpAb5FtpAPnrBkD+bwCp+hakVr6Wb5Bv+QL5li+Ab/kG+EZulRuQqmoA5L8B","QOprAKnqGpAauUFugG/kBvhGroEb5GupAfnrBkD/bwD5+hukWr5RbpBv+QL4li+Ab/kG+EaukRuQq2oBqb4F","QKoWAKmVBqQGuUEugBvkAqRBbpAb5FtpALqqAlD+GwCp+gakVr5RL5BfuQH4lhtAbrkB5FZvgBqkWmkAqaoB"],"9":["QOkWAKmqBqRGaUAukBv5AuSWL0Bu+QLkli9AbuQG5Ea+QW6QarkBUJUbAEBpAAClAQCkBgCQGgBQagBAagEA","QKoWAKWqAaRGaUAakBu5AbiRG4AfuQH4lm+Ab+QW+Ea6lm9AavkBUJUbAEBuAACpAQCUBgBQGgBQWgBAagEA"]};
   function b64Bytes(str){
     const bin=atob(str),out=new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);
@@ -905,9 +908,17 @@
       const g=info[i];
       if(g.h<=dotMax&&g.bot>=botMin){dot=i;break}
     }
-    const tall=info.filter(function(g){return g.h>=th*0.55});
+    /* 只把「宽高比像数字」的墨块当数字。
+       实测十类数字的 w/h 全在 0.45~1.04；等级框右边常混进卡片描边、下一列的亮块
+       （w/h 只有 0.2 上下），以前会被 slice(-2) 选中，把「80」读成「0」+杂块。 */
+    const glyphish=function(g){
+      if(g.h<th*0.55)return false;
+      const r=(g.b-g.a+1)/g.h;
+      return r>=0.35&&r<=1.15;
+    };
+    const tall=info.filter(glyphish);
     let digits;
-    if(dot>=0)digits=info.slice(dot+1).filter(function(g){return g.h>=th*0.55});
+    if(dot>=0)digits=info.slice(dot+1).filter(glyphish);
     else digits=tall.slice(-2);
     if(!digits.length)digits=tall.slice(-2);
     if(!digits.length)return box;

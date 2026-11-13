@@ -18,7 +18,12 @@
  *      「留一图」和「留一类」两组准确率，用来确认模板够用。
  *
  * 模板编码：GW*GH = 14*18 = 252 个像素，每个 2bit（0=背景 … 3=墨），
- * 打包成 63 字节再 base64，一张模板 84 个字符。每类最多留 3 张（跨图取样）。
+ * 打包成 63 字节再 base64，一张模板 84 个字符。每类留 6 张（贪心挑最不一样的那几张）。
+ *
+ * 关于「模板侧再模糊一遍」（下面 blur3(q2v(x.q))）：q 里存的已经过 normGlyph 的 blur3，
+ * 所以这是第二遍。看着像 bug，但实测分离度略好（留一图 p10 0.867 vs 0.849，
+ * 留一类上限 0.620 vs 0.610，都是 K=6 贪心）——等于把模板做成更平滑的泛化版本。
+ * 改它之前先跑 H:/work/tmp/boxrec/eval.mjs 量一下，别凭直觉删。
  *
  * 注意：samples.json（十几 MB）和那几张回归截图都是游戏画面，**不入库**，
  * 只在本地跑；仓库里只有这个脚本和最终那张表。缺样本时按上面第 1 步重新采。
@@ -81,8 +86,27 @@ function blur3(v) {
   return o;
 }
 
-/* 切样本：一格里切出的字形个数必须和标注长度一致，否则说明框切歪了，丢掉 */
+const fillOf = (v) => {
+  let f = 0;
+  for (const t of v) f += t;
+  return f / N;
+};
+/* 切样本：一格里切出的字形个数必须和标注长度一致，否则说明框切歪了，丢掉。
+   每张样本存两套位图，因为**模板侧和查询侧不是同一个口径**：
+     q    = collect() 导出的 4 级量化位图，等于运行时 normGlyph 的输出（已模糊一遍）
+     bmQ/fillQ = 查询侧：直接用 q，和运行时拿到的完全一致 → 验证用这一套
+     bm /fill  = 模板侧：再平滑一遍（实测分离度略好）→ 真正写进表里的是这一套
+   混用会导致「验证的配置」和「发货的配置」不一致，之前就吃过这个亏。 */
 const samples = [];
+const addSample = (digit, tag, src, q) => {
+  const v = q2v(q);
+  const bt = blur3(v);
+  samples.push({
+    digit: digit, img: tag, src: src, q: q,
+    bm: zeroMean(bt), fill: fillOf(bt),        // 模板侧
+    bmQ: zeroMean(v), fillQ: fillOf(v),        // 查询侧（= 运行时）
+  });
+};
 for (const f of data.files || []) {
   if (f.kind !== 'char') continue;
   const tag = f.tag;
@@ -92,22 +116,12 @@ for (const f of data.files || []) {
     const g = (c.lvG && c.lvG.glyphs) || [];
     if (lv && String(lv).length === g.length) {
       const s = String(lv);
-      g.forEach((x, i) => {
-        const bm = blur3(q2v(x.q));
-        let fill = 0;
-        for (const t of bm) fill += t;
-        samples.push({ digit: s[i], img: tag, src: 'lv', bm: zeroMean(bm), fill: fill / N, q: x.q });
-      });
+      g.forEach((x, i) => addSample(s[i], tag, 'lv', x.q));
     }
     const en = (LABELS_EN[tag] || [])[idx];
     const eg = (c.enG && c.enG.glyphs) || [];
     if (en && en.length === eg.length) {
-      [...en].forEach((ch, i) => {
-        const bm = blur3(q2v(eg[i].q));
-        let fill = 0;
-        for (const t of bm) fill += t;
-        samples.push({ digit: ch, img: tag, src: 'en', bm: zeroMean(bm), fill: fill / N, q: eg[i].q });
-      });
+      [...en].forEach((ch, i) => addSample(ch, tag, 'en', eg[i].q));
     }
   }
 }
@@ -120,13 +134,44 @@ const ncc = (a, b) => {
   for (let i = 0; i < N; i++) s += a[i] * b[i];
   return s;
 };
-function build(list) {
-  const P = {};
-  for (const s of list) {
-    const arr = P[s.digit] || (P[s.digit] = []);
-    if (arr.some((p) => ncc(p.bm, s.bm) > 0.97)) continue; // 近似重复的丢掉
-    arr.push({ bm: s.bm, fill: s.fill });
+/* 每类模板张数。**验证和输出共用这一个 K**，否则「验证过的」和「发出去的」不是同一份，
+   留一类上限就会报得比实际安全（曾经报 0.651、实际只有 0.620）。 */
+const K = 6;
+const DEDUPE = 0.995;
+/* 同类里按「与已选集合最不相似」贪心挑：种子取离类内均值最近（最典型）的那张，
+   之后每次补最不像已选的 —— 同样张数下覆盖面最大 */
+function pickK(list) {
+  if (list.length <= K) return list;
+  const mean = new Array(N).fill(0);
+  for (const it of list) for (let i = 0; i < N; i++) mean[i] += it.bm[i] / list.length;
+  let seed = 0, bestSim = -9;
+  list.forEach((it, i) => {
+    const sc = ncc(it.bm, mean);
+    if (sc > bestSim) { bestSim = sc; seed = i; }
+  });
+  const picked = [list[seed]];
+  const rest = list.filter((_, i) => i !== seed);
+  while (picked.length < K && rest.length) {
+    let pick = -1, worst = 9;
+    for (let i = 0; i < rest.length; i++) {
+      let mx = -9;
+      for (const p of picked) { const sc = ncc(rest[i].bm, p.bm); if (sc > mx) mx = sc; }
+      if (mx < worst) { worst = mx; pick = i; }
+    }
+    picked.push(rest[pick]);
+    rest.splice(pick, 1);
   }
+  return picked;
+}
+function build(list) {
+  const dedup = {};
+  for (const s of list) {
+    const arr = dedup[s.digit] || (dedup[s.digit] = []);
+    if (arr.some((p) => ncc(p.bm, s.bm) > DEDUPE)) continue; // 近似重复只留一张
+    arr.push(s);
+  }
+  const P = {};
+  for (const d of Object.keys(dedup)) P[d] = pickK(dedup[d]);
   return P;
 }
 function classify(P, v, fill) {
@@ -153,7 +198,7 @@ const miss = {};
 for (const img of imgs) {
   const P = build(samples.filter((s) => s.img !== img));
   for (const s of samples.filter((s) => s.img === img)) {
-    const r = classify(P, s.bm, s.fill);
+    const r = classify(P, s.bmQ, s.fillQ);   // 查询侧口径
     tot++;
     if (r.digit !== s.digit) {
       bad++;
@@ -168,38 +213,27 @@ console.log(`留一图验证: ${tot - bad}/${tot} 正确`, JSON.stringify(miss))
 console.log('留一类验证（缺类时会错认成什么、分数多高）：');
 for (const hold of Object.keys(build(samples))) {
   const Q = build(samples.filter((s) => s.digit !== hold));
-  const rows = samples.filter((s) => s.digit === hold).map((s) => classify(Q, s.bm, s.fill));
+  const rows = samples.filter((s) => s.digit === hold).map((s) => classify(Q, s.bmQ, s.fillQ));
   if (!rows.length) continue;
   const sc = rows.map((r) => r.score).sort((a, b) => a - b);
   console.log(`  抽掉 ${hold} (n=${rows.length}) → 错认成 ${[...new Set(rows.map((r) => r.digit))].join(',')}`,
     '分数中位', sc[sc.length >> 1].toFixed(3), '最高', sc[sc.length - 1].toFixed(3));
 }
 
-/* 输出模板表：每类最多 3 张，先跨图各取一张，再补同图 */
+/* 输出模板表：每类 K 张，按「与已选集合最不相似」贪心挑 —— 同样张数下覆盖面最大。
+   实测（H:/work/tmp/boxrec/eval.mjs，留一图）：
+     顺序取 3 张 156/159，得分 p10 0.727
+     贪心 4 张 159/159；贪心 6 张 p10 0.849（不限量的上限只有 0.860）
+   代价只是表从约 2.3KB 变约 4KB，匹配耗时忽略不计。 */
 function packQ(q) {
   const bytes = new Uint8Array(Math.ceil(N / 4));
   for (let i = 0; i < N; i++) bytes[i >> 2] |= (Number(q[i]) & 3) << ((i & 3) * 2);
   return Buffer.from(bytes).toString('base64');
 }
-const byDigit = {};
-for (const s of samples) (byDigit[s.digit] = byDigit[s.digit] || []).push(s);
+const PICKED = build(samples); // 与上面两组验证用的是同一批（同 K、同去重）
 const out = {};
-for (const d of Object.keys(byDigit).sort()) {
-  const list = byDigit[d];
-  const picked = [];
-  const seen = new Set();
-  for (const it of list) {
-    if (picked.length >= 3) break;
-    if (seen.has(it.img)) continue;
-    seen.add(it.img);
-    picked.push(it);
-  }
-  for (const it of list) {
-    if (picked.length >= 3) break;
-    if (!picked.includes(it)) picked.push(it);
-  }
-  out[d] = picked.map((it) => packQ(it.q));
-}
+for (const d of Object.keys(PICKED).sort()) out[d] = PICKED[d].map((it) => packQ(it.q));
+console.log('每类模板数', Object.keys(out).sort().map((d) => d + ':' + out[d].length).join(' '));
 /* 输出成品一整行，避免「只换半个对象」把后面的 b64Bytes / decodeProto 吞掉。
    用法：在 morimens-box-ocr.js 里定位到 `const DIGIT_PROTO_B64=` 开头的那一行
    （整张表就是一行，以 `};` 结尾），整行替换成下面打印的内容，然后务必
