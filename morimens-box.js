@@ -14,7 +14,24 @@
   const REALM_ZH={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维',NEUTRAL:'中立'};
   const realmZh=k=>REALM_ZH[k]||k||'';
   const MAXLV=90,MAXEN=15,MAXPO=10,MAXSK=6,MAXSTACK=12;
-  const ENLIGHT_TEXT=en=>en<=3?`${en} 启`:(en===4?'超限':`超限 +${en-3}`);
+  // 练度换算：1 档启灵 ≈ 8 级等效。记录里的 potencyLevel 和 BOX 的 en 是同一套 0-15 刻度，可以直接相减。
+  const EN_EQ=8;
+  // 三档的门槛（都只看等级 + 启灵）：
+  //  low  整队要求全部落在 BOX 之内，且平均还富余 8 级等效以上
+  //  mid  缺口 ≤ 6 级 / ≤ 1 启，或刚好压在你的练度上
+  //  high 缺口 ≤ 15 级 / ≤ 3 启，练一练能上
+  const TIER_SPEC={
+    low:{name:'低配',hint:'整队都在你练度之内',color:'#7fd8a5',center:24},
+    mid:{name:'中配',hint:'和你练度差不多',color:'#6ea8ff',center:0},
+    high:{name:'高配',hint:'比你略高一点',color:'#d7a85b',center:-12}
+  };
+  const TIER_KEYS=['low','mid','high'];
+  // 启灵显示：亮的菱形＝启灵数（0~3），菱形行末尾那个数字是「+N」加值（最高 +12）。
+  // 用户确认过：有数字不代表超限，所以界面上一律不写「超限」，只写「3 启 +12」。
+  const ENLIGHT_TEXT=en=>{
+    const n=Math.max(0,Math.min(MAXEN,Number(en)||0));
+    return n<=3?`${n} 启`:`3 启 +${n-3}`;
+  };
 
   let boxData={v:1,chars:{},wheels:{},updated:0};
   let chars=[],charsById=new Map(),idByIngame=new Map(),wheelCatalog=[],wheelZh=null,artMap=null;
@@ -168,8 +185,19 @@
       .boxStat{padding:11px;border-radius:11px;background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.12)}
       .boxStat small{display:block;color:#8290a2;font-size:9px}
       .boxStat strong{display:block;margin-top:3px;font-size:18px;color:#f1dfbc}
+      .boxMember .okTag{color:#7fd8a5}
+      .boxTiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}
+      .boxTier{border:1px solid rgba(148,163,184,.13);border-left:3px solid var(--tier,#6ea8ff);border-radius:11px;background:rgba(255,255,255,.022);padding:10px;min-width:0}
+      .boxTierHead{display:flex;gap:7px;align-items:baseline;flex-wrap:wrap}
+      .boxTierTag{font-size:10px;font-weight:600;color:var(--tier,#6ea8ff);background:rgba(255,255,255,.06);border-radius:5px;padding:1px 6px;white-space:nowrap}
+      .boxTierScore{font-size:10px;color:#8290a2}
+      .boxTierPred{margin-left:auto;font-size:10px;color:#7fd8a5}
+      .boxTierPred.bad{color:#d7a85b}
+      .boxTierTip{font-size:10px;color:#7f8da1}
+      .boxTierMeta{font-size:10px;color:#8b98ab;line-height:1.7;margin-top:5px}
+      .boxTier .boxWaveMembers{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
       .boxToast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:300;padding:10px 16px;border-radius:999px;background:rgba(15,21,32,.96);border:1px solid rgba(213,177,118,.4);color:#f1ddb5;font-size:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.4)}
-      @media(max-width:900px){.boxPlanCtl{grid-template-columns:repeat(2,minmax(0,1fr))}.boxWaveMembers{grid-template-columns:repeat(2,minmax(0,1fr))}.boxStatRow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:900px){.boxPlanCtl{grid-template-columns:repeat(2,minmax(0,1fr))}.boxWaveMembers{grid-template-columns:repeat(2,minmax(0,1fr))}.boxStatRow{grid-template-columns:repeat(2,minmax(0,1fr))}.boxTiers{grid-template-columns:1fr}}
       @media(max-width:640px){
         .boxRow{grid-template-columns:36px minmax(70px,1fr) repeat(2,minmax(0,1fr));grid-auto-rows:auto;row-gap:6px}
         .boxRow img{width:36px;height:36px}
@@ -235,7 +263,6 @@
           <label class="boxField">赛季<select id="boxPlanSeason"></select></label>
           <label class="boxField">目标总分<input id="boxPlanTarget" type="number" min="0" max="525" step="5" value="525"></label>
           <label class="boxField">参考榜单范围<select id="boxPlanRank"><option value="0">全部记录</option><option value="50">Top 50</option><option value="200">Top 200</option><option value="500">Top 500</option><option value="1000" selected>Top 1000</option></select></label>
-          <label class="boxField">配置宽松度<select id="boxPlanMode"><option value="strict">严格（等级启灵都要够）</option><option value="normal" selected="selected">正常（允许小幅差一点）</option><option value="loose">宽松（先看能打什么）</option></select></label>
         </div>
         <div class="boxToolbar"><button type="button" class="boxBtn primary" id="boxPlanRun">生成推荐</button><span class="boxChip" id="boxPlanStatus" style="cursor:default">等待生成</span></div>
         <div id="boxPlanResult"></div>
@@ -582,7 +609,7 @@
             // v1 快照给 skeydbId；v2 只给 ingameId（C02EX 这种），要反查回 skeydbId
             const ingame=m.ingameId?String(m.ingameId):'';
             const id=m.skeydbId||idByIngame.get(ingame)||null;
-            // v2 用 potencyLevel 表示启灵（0-3 是 N 启，4 超限，5-15 超限+N）
+            // v2 用 potencyLevel 表示启灵（0-3 是 N 启，4-15 是 3 启之后的 +N）
             const en=m.potencyLevel!=null?clamp(m.potencyLevel,0,MAXEN):(m.enlightenLevel??3);
             return {
               id,ingameId:m.ingameId||null,name:m.canonicalName||m.name||'',
@@ -609,37 +636,58 @@
     if(n<15)return 4;
     return 5;
   }
-  function fitOf(member,box,borrowPool){
+  function rawFit(member,box){
+    // 等级 / 启灵都按原始刻度比，不走 enScore 那套 0-5 粗档（4~15 全挤在 4 里没法分档）
     const own=box.chars[member.id];
-    if(!own)return {owned:false,borrowable:!!member.borrow};
-    const needLv=Number(member.lv)||MAXLV;
-    const needEn=enScore(member.en);
-    const lvGap=Math.max(0,needLv-own.lv);
-    const enGap=Math.max(0,needEn-enScore(own.en));
-    return {owned:true,lvGap,enGap,needLv,needEn,own};
+    if(!own)return {owned:false,borrow:!!member.borrow};
+    const needLv=clamp(member.lv==null?MAXLV:member.lv,0,MAXLV);
+    const needEn=clamp(member.en==null?3:member.en,0,MAXEN);
+    const ownLv=clamp(own.lv,0,MAXLV),ownEn=clamp(own.en,0,MAXEN);
+    return {
+      owned:true,needLv,needEn,ownLv,ownEn,
+      lvGap:Math.max(0,needLv-ownLv),
+      enGap:Math.max(0,needEn-ownEn),
+      // 正数＝你比这套要求更强（富余），负数＝还差多少
+      eq:(ownLv-needLv)+(ownEn-needEn)*EN_EQ
+    };
   }
-  function evalTeam(team,box,mode){
-    const gaps=[];let penalty=0,missing=0;
+  function tierOf(team,box){
+    let missing=0,maxLvGap=0,maxEnGap=0,sumEq=0,sumLv=0,sumEn=0,sumOwnLv=0,sumOwnEn=0,n=0;
     for(const m of team.members){
-      const fit=fitOf(m,box);
-      if(!fit.owned){
-        // 记录里标了借用助战的格子可以直接借；否则算缺人
-        if(m.borrow){missing++;penalty+=0.05;gaps.push({id:m.id,type:'borrow'});continue}
+      const f=rawFit(m,box);
+      if(!f.owned){missing++;continue}
+      maxLvGap=Math.max(maxLvGap,f.lvGap);maxEnGap=Math.max(maxEnGap,f.enGap);
+      sumEq+=f.eq;sumLv+=f.needLv;sumEn+=f.needEn;sumOwnLv+=f.ownLv;sumOwnEn+=f.ownEn;n++;
+    }
+    if(!n)return {tier:null,missing,avgEq:0,maxLvGap,avgEnGap:0,maxEnGap:0};
+    const avgEq=sumEq/n;
+    let tier=null;
+    if(maxLvGap===0&&maxEnGap===0&&avgEq>=EN_EQ)tier='low';
+    else if(maxLvGap<=6&&maxEnGap<=1)tier='mid';
+    else if(maxLvGap<=15&&maxEnGap<=3)tier='high';
+    return {
+      tier,missing,avgEq,maxLvGap,maxEnGap,
+      needLv:Math.round(sumLv/n),needEn:Math.round((sumEn/n)*10)/10,
+      ownLv:Math.round(sumOwnLv/n),ownEn:Math.round((sumOwnEn/n)*10)/10
+    };
+  }
+  function evalTeam(team,box){
+    // 只用来估“照这套抄下来大概能拿多少分”：练度够就不打折，不够才按缺口折。
+    let gaps=0,missing=0;
+    for(const m of team.members){
+      const f=rawFit(m,box);
+      if(!f.owned){
+        // 记录里标了借用助战的格子可以直接借，算半个缺人
         missing++;
-        penalty+=0.16;
-        gaps.push({id:m.id,type:'missing'});
+        gaps+=m.borrow?0.06:0.18;
         continue;
       }
-      const lvTol=mode==='strict'?0:mode==='normal'?12:25;
-      const enTol=mode==='strict'?0:mode==='normal'?1:2;
-      penalty+=Math.max(0,fit.lvGap-lvTol)*0.012;
-      penalty+=Math.max(0,fit.enGap-enTol)*0.09;
-      if(fit.lvGap>lvTol)penalty+=(fit.lvGap-lvTol)*0.006;
-      if(fit.enGap>enTol)penalty+=(fit.enGap-enTol)*0.05;
-      if(fit.lvGap>lvTol||fit.enGap>enTol)gaps.push({id:m.id,type:'gap',lvGap:fit.lvGap,enGap:fit.enGap});
+      gaps+=Math.max(0,f.lvGap-6)*0.010;
+      gaps+=Math.max(0,f.enGap-1)*0.06;
     }
-    const pred=Math.max(0,team.score*(1-Math.min(0.6,penalty)));
-    return {pred,penalty,gaps,missing};
+    const penalty=Math.min(0.6,gaps);
+    const pred=Math.max(0,team.score*(1-penalty));
+    return {pred,penalty,missing};
   }
   function allocate(target,caps){
     const total=caps.reduce((a,b)=>a+b,0)||1;
@@ -657,7 +705,6 @@
     const season=Number($('boxPlanSeason').value||69);
     const target=Math.max(0,Math.min(525,Number($('boxPlanTarget').value||525)));
     const rankCap=Number($('boxPlanRank').value||0);
-    const mode=$('boxPlanMode').value||'normal';
     status.textContent='正在载入赛季记录…';
     try{
       const data=await loadSeasonTeams(season);
@@ -673,64 +720,96 @@
           const k=signature(t),old=dedup.get(k);
           if(!old||t.score>old.score)dedup.set(k,t);
         }
+        // 每支队伍两套指标：pred/penalty 估"照抄能打多少分"，tier 按等级+启灵缺口分低/中/高。
+        // 缺口大到离谱（超 25 级 / 6 启）的直接不进候选，免得替代档捞到根本练不出来的队。
+        const evaluated=[...dedup.values()]
+          .map(t=>({team:t,...evalTeam(t,boxData),...tierOf(t,boxData)}))
+          .filter(x=>x.missing<=1&&x.maxLvGap<=25&&x.maxEnGap<=6);
+        const buckets={low:[],mid:[],high:[],over:[]};
+        for(const x of evaluated)buckets[x.tier||'over'].push(x);
+        for(const k of Object.keys(buckets)){
+          buckets[k].sort((a,b)=>b.pred-a.pred||b.team.score-a.team.score||(a.team.rank||9999)-(b.team.rank||9999));
+        }
         const idx=waves.indexOf(w);
-        const evaluated=[...dedup.values()].map(t=>({team:t,...evalTeam(t,boxData,mode)}))
-          .filter(x=>x.missing<=1&&x.penalty<0.85)
-          .sort((a,b)=>b.pred-a.pred||(a.team.rank||9999)-(b.team.rank||9999))
-          .slice(0,40);
-        const meet=evaluated.filter(x=>x.pred>=targets[idx]);
-        const pick=(meet.length?meet:evaluated)[0]||null;
-        plans.push({wave:w,target:targets[idx],cap:caps[idx],pick,alts:evaluated.filter(x=>x!==pick).slice(0,3)});
+        const picks={},used=new Set();
+        for(const k of TIER_KEYS){
+          const spec=TIER_SPEC[k];
+          let pick=buckets[k][0]||null,alt=false;
+          if(!pick){
+            // 这一档没有正好落在区间里的队伍（比如 box 已经练满，记录里没有更高的）：
+            // 退到"练度最接近该档中心"的一支，卡片上标「替代」。
+            const pool=buckets.over.concat(buckets.high,buckets.mid,buckets.low).filter(x=>!used.has(x));
+            pool.sort((a,b)=>Math.abs(a.avgEq-spec.center)-Math.abs(b.avgEq-spec.center)||b.pred-a.pred);
+            pick=pool[0]||null;alt=!!pick;
+          }
+          if(pick)used.add(pick);
+          picks[k]={pick,alt,alts:buckets[k].filter(x=>x!==pick).slice(0,3)};
+        }
+        plans.push({wave:w,target:targets[idx],cap:caps[idx],picks});
       }
       renderPlan(plans,target,season);
     }catch(e){
       console.error(e);status.textContent='生成失败';host.innerHTML=`<div class="boxNotice bad">${esc(e.message||e)}</div>`;
     }
   }
-  function memberCard(m,idx){
+  function memberCard(m){
     const c=m.id?charsById.get(m.id):null;
-    const fit=fitOf(m,boxData);
-    const lvTxt=m.lv!=null?`Lv.${m.lv}`:'Lv.—';
-    const enTxt=m.en!=null?ENLIGHT_TEXT(enScore(m.en)===4?4:enScore(m.en)):'';
+    const f=rawFit(m,boxData);
+    const lvTxt=m.lv!=null?`需要 Lv.${m.lv}`:'需要 Lv.—';
+    const enTxt=m.en!=null?ENLIGHT_TEXT(clamp(m.en,0,MAXEN)):'';
     let tag='';
-    if(!fit.owned)tag=`<small class="${m.borrow?'warnTag':'missTag'}">${m.borrow?'可借用（记录中为助战）':'BOX 中没有'}</small>`;
-    else if(fit.lvGap||fit.enGap)tag=`<small class="warnTag">差 ${fit.lvGap?`${fit.lvGap} 级`:''}${fit.lvGap&&fit.enGap?' / ':''}${fit.enGap?`${fit.enGap} 档启灵`:''}</small>`;
+    if(!f.owned)tag=`<small class="${m.borrow?'warnTag':'missTag'}">${m.borrow?'可借用（记录中为助战）':'BOX 中没有'}</small>`;
+    else if(f.lvGap||f.enGap)tag=`<small class="warnTag">差 ${f.lvGap?`${f.lvGap} 级`:''}${f.lvGap&&f.enGap?' / ':''}${f.enGap?`${f.enGap} 启`:''}</small>`;
+    else tag=`<small class="okTag">${f.eq>=EN_EQ?`富余 ${Math.round(f.eq)} 级等效`:'刚好够'}</small>`;
     return `<div class="boxMember">${c?.portrait?`<img src="${esc(c.portrait)}" alt="" loading="lazy">`:''}
       <div style="min-width:0"><b>${esc(c?.name||m.name||m.id)}</b><small>${lvTxt}${enTxt?' · '+enTxt:''}</small>
       ${m.wheels?.length?`<small>${esc(m.wheels.slice(0,2).map(wheelNameByEn).join(' / '))}</small>`:''}${tag}</div></div>`;
   }
+  function tierCard(key,info,target){
+    const spec=TIER_SPEC[key];
+    const pick=info.pick;
+    if(!pick)return `<div class="boxTier" style="--tier:${spec.color}">
+        <div class="boxTierHead"><span class="boxTierTag">${spec.name}</span><span class="boxTierTip">${spec.hint}</span></div>
+        <div class="boxTierMeta">公开记录里没有符合这一档的队伍。</div>
+      </div>`;
+    const t=pick.team,ok=pick.pred>=target;
+    // 分档看的是"最吃练度的那个人"，所以这里也报缺口最大值，别用平均富余（会跟档位对不上）
+    const gapTxt=(pick.maxLvGap||pick.maxEnGap)
+      ? `最高差 ${pick.maxLvGap?`${pick.maxLvGap} 级`:''}${pick.maxLvGap&&pick.maxEnGap?' / ':''}${pick.maxEnGap?`${pick.maxEnGap} 启`:''}`
+      : `整队都够（平均富余 ${Math.round(pick.avgEq)} 级等效）`;
+    return `<div class="boxTier" style="--tier:${spec.color}">
+      <div class="boxTierHead">
+        <span class="boxTierTag">${spec.name}${info.alt?' · 替代':''}</span>
+        <span class="boxTierScore">参考 ${t.score} 分</span>
+        <span class="boxTierPred ${ok?'':'bad'}">预计 ${Math.round(pick.pred)}${ok?' · 达标':` · 差 ${Math.max(0,Math.round(target-pick.pred))}`}</span>
+      </div>
+      <div class="boxTierMeta">队伍 Lv.${pick.needLv} / ${pick.needEn} 启 · 你 Lv.${pick.ownLv} / ${pick.ownEn} 启 · ${gapTxt}</div>
+      <div class="boxWaveMembers">${t.members.map(memberCard).join('')}</div>
+      <div class="boxAlt">命轮位：${esc(t.members.map(m=>m.wheels?.[0]?wheelNameByEn(m.wheels[0]):'—').join(' / '))}${t.rank?` · 原榜 #${t.rank}`:''}${t.url?` · <a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">通关记录</a>`:''}</div>
+      ${info.alts.length?`<div class="boxAlt">备选：${info.alts.map(a=>`<a href="${esc(a.team.url)}" target="_blank" rel="noopener noreferrer">${Math.round(a.pred)} 分${a.team.rank?` #${a.team.rank}`:''}</a>`).join(' · ')}</div>`:''}
+    </div>`;
+  }
   function renderPlan(plans,target,season){
     const host=$('boxPlanResult');
-    const total=plans.reduce((s,p)=>s+(p.pick?.pred||0),0);
-    const gap=target-total;
+    const sumOf=k=>Math.round(plans.reduce((s,p)=>s+(p.picks[k].pick?p.picks[k].pick.pred:0),0));
+    const hits=k=>plans.filter(p=>p.picks[k].pick&&p.picks[k].pick.pred>=p.target).length;
     host.innerHTML=`
       <div class="boxStatRow">
         <div class="boxStat"><small>目标总分</small><strong>${target}</strong></div>
-        <div class="boxStat"><small>预计总分</small><strong style="color:${gap>0?'#d7a85b':'#7fd8a5'}">${Math.round(total)}</strong></div>
-        <div class="boxStat"><small>BOX 规模</small><strong>${ownedCount()} 人 / ${wheelCount()} 轮</strong></div>
-        <div class="boxStat"><small>参考期次</small><strong>第 ${season} 期</strong></div>
+        <div class="boxStat"><small>低配合计 · ${hits('low')}/${plans.length} 区达标</small><strong style="color:#7fd8a5">${sumOf('low')}</strong></div>
+        <div class="boxStat"><small>中配合计 · ${hits('mid')}/${plans.length} 区达标</small><strong style="color:#6ea8ff">${sumOf('mid')}</strong></div>
+        <div class="boxStat"><small>高配合计 · ${hits('high')}/${plans.length} 区达标</small><strong style="color:#d7a85b">${sumOf('high')}</strong></div>
       </div>
-      ${gap>0?`<div class="boxNotice">按当前 box 与公开记录，预计差 <b>${Math.round(gap)} 分</b>。可以把目标调低，或先补练推荐阵容里标注“差 X 级 / 差 X 档启灵”的角色。</div>`:`<div class="boxNotice">预计可以达到目标分，留有余量 ${Math.round(-gap)} 分。</div>`}
-      ${plans.map(p=>p.pick?`
+      <div class="boxNotice">每区按<b>等级 + 启灵</b>给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数。</div>
+      ${plans.map(p=>`
         <div class="boxWave">
           <div class="boxWaveHead">
             <div><b>第 ${p.wave} 区</b> <span>目标 ${p.target} 分 · 该区上限 ${p.cap}</span></div>
-            <div><span>参考 ${p.pick.team.score} 分 · 预计 ${Math.round(p.pick.pred)} 分 · ${esc(p.pick.team.difficulty||'')}${p.pick.team.rank?` · 原榜 #${p.pick.team.rank}`:''}</span></div>
+            <div><span>三档都能抄，越往上越吃练度</span></div>
           </div>
-          <div class="boxWaveMembers">${p.pick.team.members.map((m,i)=>memberCard(m,i)).join('')}</div>
-          <div class="boxAlt">命轮位：${esc(p.pick.team.members.map(m=>m.wheels?.[0]?wheelNameByEn(m.wheels[0]):'—').join(' / '))}
-            ${p.pick.team.url?` · <a href="${esc(p.pick.team.url)}" target="_blank" rel="noopener noreferrer">查看原通关记录</a>`:''}
-            ${p.pick.team.player?` · 记录者 ${esc(p.pick.team.player)}`:''}</div>
-          ${p.alts.length?`<div class="boxAlt">备选：${p.alts.map(a=>`<a href="${esc(a.team.url)}" target="_blank" rel="noopener noreferrer">${Math.round(a.pred)} 分（${esc(a.team.difficulty||'')}${a.team.rank?` #${a.team.rank}`:''}）</a>`).join(' · ')}</div>`:''}
-        </div>`:`
-        <div class="boxWave">
-          <div class="boxWaveHead">
-            <div><b>第 ${p.wave} 区</b> <span>目标 ${p.target} 分 · 该区上限 ${p.cap||'—'}</span></div>
-            <div><span>这区没有凑得齐的阵容</span></div>
-          </div>
-          <div class="boxAlt">BOX 里能上这一区的角色不够（或缺关键位）。可以先补角色，或者去「融灾榜单」看看这区的高分阵容需要谁。</div>
+          <div class="boxTiers">${TIER_KEYS.map(k=>tierCard(k,p.picks[k],p.target)).join('')}</div>
         </div>`).join('')}
-      <div class="boxNotice">推荐逻辑：从公开融灾记录里挑与你 box 匹配度最高的队伍，按等级/启灵差距折算预计得分；差得越多扣得越多。记录里的助战位可以直接借，所以标了“可借用”的格子不算缺人。</div>
+      <div class="boxNotice">记录里标「可借用」的格子是别人的助战位，可以直接借，不算缺人。数据来自公开融灾通关记录（第 ${season} 期）。</div>
     `;
   }
 

@@ -445,12 +445,103 @@
     }
     return out.sort(function(x,y){return x.a-y.a});
   }
+  // 裁切过的截图（手机直接框选卡片区域）整图统计会失效：卡片几乎占满宽度，
+  // 列距能到图宽的 25%，而面板占位的整屏截图只有 7%。所以改用「等级条那条暗带」
+  // 当锚点——它横贯整排卡片、上下沿都有亮线，在它的垂直窗口里找卡与卡之间的亮缝最稳。
+  function detectColumnsFromBand(pix,band){
+    const W=pix.W,H=pix.H;
+    const h=Math.max(6,Math.round(band.h||H*0.02));
+    const y0=Math.max(0,Math.round(band.a-h*3));
+    const y1=Math.min(H-1,Math.round(band.b+h*0.4));
+    const rows=Math.max(1,y1-y0+1);
+    const xEnd=Math.round(W*0.995);
+    const frac=new Float32Array(xEnd);
+    for(let x=0;x<xEnd;x++){
+      let n=0;
+      for(let y=y0;y<=y1;y++)if(pix.L[y*W+x]>185)n++;
+      frac[x]=n/rows;
+    }
+    const maxGapW=Math.max(8,Math.round(W*0.025));
+    const gs=mergeRuns(runsOf(xEnd,function(x){return frac[x]>0.85},maxGapW),1)
+      .filter(function(r){return r.w>=2});
+    if(gs.length<1)return null;
+    const cs=gs.map(function(r){return r.c});
+    if(cs.length<2)return null;
+    const cands=[];
+    for(let i=1;i<cs.length;i++){
+      const d=cs[i]-cs[i-1];
+      if(d>=W*0.06&&d<=W*0.5)cands.push(d);
+    }
+    if(!cands.length)return null;
+    const uniq=[];
+    for(const d of cands)if(!uniq.some(function(u){return Math.abs(u-d)<=2}))uniq.push(d);
+    let best=null;
+    for(const p0 of uniq){
+      for(let i=0;i<cs.length;i++){
+        const chain=[cs[i]];let expect=cs[i]+p0;
+        for(let j=i+1;j<cs.length;j++){
+          if(Math.abs(cs[j]-expect)<=p0*0.12){chain.push(cs[j]);expect=cs[j]+p0}
+        }
+        if(chain.length>=2&&(!best||chain.length>best.chain.length||
+          (chain.length===best.chain.length&&p0<best.pitch))){
+          const pp=(chain[chain.length-1]-chain[0])/(chain.length-1);
+          best={chain:chain,pitch:pp,start:chain[0]};
+        }
+      }
+    }
+    if(!best)return null;
+    const pitch=best.pitch;
+    const widths=[];
+    for(const c of best.chain){
+      const hit=gs.reduce(function(a,b){return Math.abs(b.c-c)<Math.abs(a.c-c)?b:a},gs[0]);
+      if(hit)widths.push(hit.w);
+    }
+    const gapW=medianOf(widths)||Math.round(pitch*0.03);
+    const cardW=Math.max(12,Math.round(pitch-gapW));
+    // 列起点：先把坐标退到"第一个缝的左边那张卡"，再用等级条验证这个位置真有卡。
+    // 全屏截图左边是空白面板（缝检测会把它当成一整列），所以空列要往右挪；
+    // 裁切图左边可能漏检一条缝，就往左补一列（只有验证到暗条才算数）。
+    const yTop=Math.max(0,Math.round(band.a)),yBot=Math.min(H-1,Math.round(band.b));
+    // 卡中间正好压着白色的「Lv.xx」文字，单点判断会被字挡掉，所以按 0.15/0.5/0.85 三处取样
+    const barAt=function(xx){
+      const rows=Math.max(1,yBot-yTop+1);
+      for(const f of [0.15,0.5,0.85]){
+        const mid=Math.round(xx+cardW*f);
+        if(mid<0||mid>=W)continue;
+        let dark=0;
+        for(let y=yTop;y<=yBot;y++)if(pix.L[y*W+mid]<160)dark++;
+        if(dark/rows>0.4)return true;
+      }
+      return false;
+    };
+    let x0=Math.round(best.start-cardW),guard=0;
+    while(x0-pitch>=0&&barAt(x0-pitch)&&guard++<8)x0=Math.round(x0-pitch);
+    guard=0;
+    while(x0+pitch<W&&!barAt(x0)&&guard++<8)x0=Math.round(x0+pitch);
+    const nMax=Math.max(1,Math.floor((W-x0+gapW)/pitch));
+    let nCols=0;
+    for(let i=0;i<Math.min(8,nMax);i++){
+      if(barAt(x0+i*pitch))nCols=i+1;else if(i>=1)break;
+    }
+    if(nCols<1)return null;
+    return {x0:x0,pitch:pitch,cardW:cardW,nCols:nCols,blockR:Math.round(x0+nCols*pitch-gapW),fallback:false,gutters:gs.length,fromBand:true};
+  }
   function detectCharGrid(pix){
-    const cols=detectColumns(pix);
-    const blockR=Math.min(pix.W,Math.round(cols.blockR));
-    const bands=detectBands(pix,Math.round(cols.x0),blockR,cols.cardW);
+    // 1) 先按整图统计（全屏截图最稳）；2) 再用等级条窗口复核，尺寸对不上就换它的结果
+    let cols=null;
+    try{cols=detectColumns(pix)}catch(e){}
+    let bands=[];
+    if(cols)bands=detectBands(pix,Math.max(0,Math.round(cols.x0)),Math.min(pix.W,Math.round(cols.blockR)),cols.cardW);
+    if(!bands.length)bands=detectBands(pix,0,pix.W,Math.round(pix.W/4));
     if(!bands.length)throw new Error('没找到角色卡片，请截完整的角色列表（要带上卡片下方的等级条）');
-    return {x0:cols.x0,pitch:cols.pitch,cardW:cols.cardW,nCols:cols.nCols,fallback:cols.fallback,bands:bands,blockR:blockR};
+    const fromBand=detectColumnsFromBand(pix,bands[0]);
+    if(fromBand&&(!cols||cols.fallback||fromBand.nCols!==cols.nCols||Math.abs(fromBand.cardW-cols.cardW)>cols.cardW*0.05)){
+      cols=fromBand;
+      bands=detectBands(pix,Math.max(0,Math.round(cols.x0)),Math.min(pix.W,Math.round(cols.blockR)),cols.cardW);
+      if(!bands.length)bands=detectBands(pix,0,pix.W,Math.round(pix.W/4));
+    }
+    const blockR=Math.min(pix.W,Math.round(cols.blockR));
+    return {x0:cols.x0,pitch:cols.pitch,cardW:cols.cardW,nCols:cols.nCols,fallback:cols.fallback,fromBand:!!cols.fromBand,gutters:cols.gutters,bands:bands,blockR:blockR};
   }
 
   // 等级条上沿那条细亮线在整排卡上都有，用它把每行卡片的位置再精修一次，
@@ -482,11 +573,15 @@
     return {top:Math.round(mid-half),bot:Math.round(mid+half)};
   }
   function readStarRow(pix,left,cardW,bandA){
+    // 星标行版式（实测）：左边 3 颗菱形等间距排列（间距≈0.19 卡宽），第 4 个槽位里画的是
+    // 「+N」数字。亮菱形个数＝启灵数（0~3），数字是超限加值，两者相加才是完整启灵（最高 15=3启+12）。
+    // 难点：数字和最后一颗菱形挨得很近，按"段"硬切会把菱形并进数字框里，所以改用
+    // 「等间距链」找菱形，再把最后一个菱形右边到卡宽 0.9 之间的亮像素当数字框。
     const W=pix.W;
     const sb=starRowBand(bandA,cardW);
     const yTop=Math.max(0,sb.top),yBot=Math.min(pix.H-1,sb.bot);
     if(yBot<=yTop+4)return {lit:0,num:null,segs:[],band:sb};
-    const xa=Math.max(0,Math.round(left+cardW*0.02)),xb=Math.min(W-1,Math.round(left+cardW*0.995));
+    const xa=Math.max(0,Math.round(left+cardW*0.02)),xb=Math.min(W-1,Math.round(left+cardW*0.94));
     if(xb<=xa+6)return {lit:0,num:null,segs:[],band:sb};
     const h=yBot-yTop+1;
     const col=new Array(xb-xa+1);
@@ -495,23 +590,57 @@
       for(let y=yTop;y<=yBot;y++)if(pix.L[y*W+x]>190)n++;
       col[x-xa]=n;
     }
-    // 菱形在带里占一半左右的高度，单列亮像素 >= 3 就算“这一列有亮”
-    const minW=Math.max(4,Math.round(cardW*0.030)),maxW=Math.round(cardW*0.16);
-    const segs=mergeRuns(runsOf(col.length,function(i){return col[i]>=3},Math.round(cardW*0.3)),1)
-      .map(function(r){return {a:r.a+xa,b:r.b+xa,w:r.w}})
+    const blobGap=Math.max(1,Math.round(cardW*0.02));
+    const minW=Math.max(4,Math.round(cardW*0.035)),maxW=Math.round(cardW*0.17);
+    // runsOf 的第三个参数是"最大允许宽度"，给小了会把整颗菱形直接丢掉
+    const blobs=mergeRuns(runsOf(col.length,function(i){return col[i]>=3},Math.round(cardW*0.9)),blobGap)
+      .map(function(r){return {a:r.a+xa,b:r.b+xa,c:(r.a+r.b)/2+xa,w:r.w}})
       .filter(function(r){return r.w>=minW&&r.w<=maxW});
-    if(!segs.length)return {lit:0,num:null,segs:[],band:sb};
-    // 前 3 段是菱形；第 4 段起是数字，中间可能被字间空隙切开，按小间隔合并
-    const dio=segs.slice(0,3),rest=segs.slice(3);
-    let num=null;
-    if(rest.length){
-      let a=rest[0].a,b=rest[0].b;
-      for(let i=1;i<rest.length;i++){
-        if(rest[i].a-b<=Math.round(cardW*0.06))b=rest[i].b;else break;
+    if(!blobs.length)return {lit:0,num:null,segs:[],band:sb};
+    // 在候选里找"最长的等间距链"——菱形是等距的，数字不参与
+    let chain=[];
+    for(let i=0;i<blobs.length;i++){
+      const c=[blobs[i]];
+      for(let j=i+1;j<blobs.length;j++){
+        const pitch=c[c.length-1]?blobs[j].c-c[c.length-1].c:0;
+        if(!pitch)continue;
       }
-      num={x:a-3,y:yTop-2,w:Math.min(xb,b+3)-a+6,h:h+4};
+      // 以每两个候选的间距为基准向外串
+      for(let j=i+1;j<blobs.length;j++){
+        const p=blobs[j].c-blobs[i].c;
+        if(p<cardW*0.15||p>cardW*0.26)continue;
+        const cur=[blobs[i],blobs[j]];let expect=blobs[j].c+p;
+        for(let k=j+1;k<blobs.length;k++){
+          if(Math.abs(blobs[k].c-expect)<=p*0.22){cur.push(blobs[k]);expect=blobs[k].c+p}
+        }
+        if(cur.length>chain.length)chain=cur;
+      }
     }
-    return {lit:dio.length,num:num,segs:segs,band:sb};
+    // 菱形一定在最左边：先拿最左那个亮块当第 1 颗，再用相邻间距定 pitch，
+    // 只把「第 1 颗 + 2.5 个间距」以内的块算作菱形——这样数字再亮也不会被当成第 4 颗。
+    let d0=blobs[0].c,pitch=0;
+    const diffs=[];
+    for(let i=1;i<blobs.length;i++){
+      const d=blobs[i].c-blobs[i-1].c;
+      if(d>=cardW*0.15&&d<=cardW*0.26)diffs.push(d);
+    }
+    if(diffs.length)pitch=medianOf(diffs);
+    if(!pitch){
+      // 间距估不出来（只认出 1 颗）：按版式经验值兜底
+      pitch=cardW*0.19;
+    }
+    const dios=blobs.filter(function(b){return b.c<=d0+2.5*pitch});
+    const lit=Math.min(3,dios.length);
+    // 数字画在第 4 个槽位里，右对齐；框取槽位中心一带，别把菱形发光边圈进来
+    const slotC=d0+3*pitch;
+    const yTop2=yTop,yBot2=yBot;
+    const midY=(yTop2+yBot2)/2;
+    const bw=cardW*0.30,bh=cardW*0.17;
+    let num=null;
+    if(slotC-bw/2>xa&&slotC+bw/2<W-1){
+      num={x:Math.round(slotC-bw/2),y:Math.round(midY-bh/2),w:Math.round(bw),h:Math.round(bh)};
+    }
+    return {lit:lit,num:num,segs:blobs,band:sb,chain:dios.length,pitch:pitch};
   }
   // 等级条里的「Lv.60」文字是居中的。列起点有时会差几个像素，
   // 干脆按“这一条里有亮像素的列”把文字框出来，比按比例估更稳。
@@ -655,13 +784,13 @@
         // 再配一组 psm 13 做交叉验证。字形数和读数位数对不上的一律不采信——
         // 截图底部被裁掉时会读出一个残缺的字（「60」读成「4」），
         // 与其写进 BOX 一个错数字，不如留空让用户补。
-        const LSPECS=[{scale:8,targetH:48,psm:'8'},{scale:12,targetH:60,psm:'13'}];
+        const LSPECS=[{scale:8,targetH:48,psm:'8'},{scale:10,targetH:56,psm:'8',thr:200},{scale:12,targetH:60,psm:'13'}];
         for(const bx of lvBoxes){
           if(lv!=null)break;
           const votes=[];
           for(const sp of LSPECS){
             try{
-              const r=await readDigits(fctx,bx,{whitelist:'0123456789',thr:205,scale:sp.scale,targetH:sp.targetH,psm:sp.psm});
+              const r=await readDigits(fctx,bx,{whitelist:'0123456789',thr:sp.thr||205,scale:sp.scale,targetH:sp.targetH,psm:sp.psm});
               lvRaws.push(r.text);
               if(TRACE()&&!rec.lvPng)rec.lvPng=r.png;
               const m=String(r.text||'').match(/\d{1,3}/);
@@ -671,8 +800,13 @@
               votes.push({v:v,fit:bx.n?String(v).length===bx.n:null});
             }catch(e){lvRaws.push('ERR:'+e.message)}
           }
-          const fit=votes.filter(function(x){return x.fit===true})[0];
-          if(fit){lv=fit.v;break}
+          const good=votes.filter(function(x){return x.fit===true});
+          if(good.length){
+            // 三票取多数：单票容易把 80 读成 30，2:1 时按多数走
+            let best=good[0],bestN=0;
+            for(const g of good){const n=good.filter(function(x){return x.v===g.v}).length;if(n>bestN){best=g;bestN=n}}
+            lv=best.v;break;
+          }
           // 位置框没有字形数时，只有两次识别一致才认
           if(bx.n==null&&votes.length>=2&&votes[0].v===votes[1].v){lv=votes[0].v;break}
         }
