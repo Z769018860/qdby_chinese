@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "lastArchiveAt": "2026-11-09T08:37:53Z",
-  "dzoneLatestCount": 28,
+  "lastArchiveAt": "2026-11-12T08:47:51Z",
+  "dzoneLatestCount": 29,
   "assistLatestCount": 4,
-  "historyCount": 45,
+  "historyCount": 46,
   "lastBatch": {
     "dzone": 1,
     "assist": 0,
-    "replayFeedback": 1,
+    "replayFeedback": 0,
     "skipped": 0,
-    "cleanupCount": 2
+    "cleanupCount": 1
   }
 }

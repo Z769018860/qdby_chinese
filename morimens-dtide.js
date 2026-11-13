@@ -319,6 +319,7 @@
     <section class="panel" aria-labelledby="morimensChangelogTitle">
       <div class="panelHead"><div><p class="eyebrow">CHANGELOG</p><h2 id="morimensChangelogTitle">${ui('更新日志','Changelog')}</h2><p class="panelLead">${ui('记录忘忘看报的重要功能与重大更新。','Major features and updates for Morimens Weekly.')}</p></div><span class="statusPill">${ui('持续更新','Ongoing')}</span></div>
       <div class="sourceList">
+        <div class="sourceItem"><strong>2026-11-12</strong><br>${ui('更新第73期融灾榜单(至最新抓取),并同步低配榜单','Updated the Season 73 leaderboard to the latest capture and re-synced the low/high-investment board')}</div>
         <div class="sourceItem"><strong>2026-11-10</strong><br>${ui('新增第73期融灾（超维戒指）榜单。','Added the Season 73 (Ultra Ring) leaderboard.')}</div>
         <div class="sourceItem"><strong>2026-11-09</strong><br>${ui('融灾地图怪物的技能与怪物描述统一使用中文（取自游戏内表），没有中文的韩文说明不再显示。','Monster skill and description texts in the zone guide now use Chinese (from the game tables); Korean-only text is no longer shown.')}</div>
         <div class="sourceItem"><strong>2026-11-09</strong><br>${ui('地图怪物总览新增第73期融灾地图（取自仓库内地图列表）与怪物行动意图。','Map & Monster Overview: added the Season 73 D-Zone maps (from the maps already stored in the repo) and monster intents.')}</div>

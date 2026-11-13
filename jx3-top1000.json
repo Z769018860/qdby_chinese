@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-11-10T20:48:16.822Z",
+  "updated_at": "2026-11-11T20:08:26.008Z",
   "scope": "top1000",
   "stats": [
     {
       "kungfu": "奶毒",
       "school": "五毒",
-      "sample_count": 6056,
-      "player_count": 4096,
+      "sample_count": 6946,
+      "player_count": 4707,
       "win_rate": 0.52,
       "avg_deaths": 0.48,
-      "control_rate": 0.2999,
+      "control_rate": 0.2992,
       "matchup_edge": 0.0239,
-      "orange_sample_count": 510,
-      "non_orange_sample_count": 5546,
+      "orange_sample_count": 592,
+      "non_orange_sample_count": 6354,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 6056,
-      "orange_rate": 0.0842,
+      "known_weapon_sample_count": 6946,
+      "orange_rate": 0.0852,
       "top_comps": [
         {
           "comp_key": "奶毒|苍云|蓬莱",
@@ -24,9 +24,9 @@
             "苍云",
             "蓬莱"
           ],
-          "count": 570,
+          "count": 637,
           "rate": 0.09,
-          "win_rate": 0.55
+          "win_rate": 0.56
         },
         {
           "comp_key": "天策|奶毒|霸刀",
@@ -35,9 +35,9 @@
             "奶毒",
             "霸刀"
           ],
-          "count": 442,
+          "count": 494,
           "rate": 0.07,
-          "win_rate": 0.56
+          "win_rate": 0.55
         },
         {
           "comp_key": "天策|奶毒|藏剑",
@@ -46,8 +46,8 @@
             "奶毒",
             "藏剑"
           ],
-          "count": 319,
-          "rate": 0.05,
+          "count": 413,
+          "rate": 0.06,
           "win_rate": 0.52
         }
       ]
@@ -55,17 +55,17 @@
     {
       "kungfu": "奶秀",
       "school": "七秀",
-      "sample_count": 4759,
-      "player_count": 3301,
+      "sample_count": 5683,
+      "player_count": 3806,
       "win_rate": 0.53,
-      "avg_deaths": 0.47,
-      "control_rate": 0.4464,
-      "matchup_edge": 0.0329,
-      "orange_sample_count": 861,
-      "non_orange_sample_count": 3898,
+      "avg_deaths": 0.48,
+      "control_rate": 0.4428,
+      "matchup_edge": 0.0289,
+      "orange_sample_count": 1049,
+      "non_orange_sample_count": 4634,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 4759,
-      "orange_rate": 0.1809,
+      "known_weapon_sample_count": 5683,
+      "orange_rate": 0.1846,
       "top_comps": [
         {
           "comp_key": "丐帮|奶秀|惊羽",
@@ -74,9 +74,9 @@
             "奶秀",
             "惊羽"
           ],
-          "count": 511,
-          "rate": 0.11,
-          "win_rate": 0.55
+          "count": 707,
+          "rate": 0.12,
+          "win_rate": 0.54
         },
         {
           "comp_key": "天策|奶秀|藏剑",
@@ -85,9 +85,9 @@
             "奶秀",
             "藏剑"
           ],
-          "count": 341,
+          "count": 424,
           "rate": 0.07,
-          "win_rate": 0.6
+          "win_rate": 0.58
         },
         {
           "comp_key": "凌雪|奶秀|藏剑",
@@ -96,8 +96,8 @@
             "奶秀",
             "藏剑"
           ],
-          "count": 241,
-          "rate": 0.05,
+          "count": 318,
+          "rate": 0.06,
           "win_rate": 0.56
         }
       ]
@@ -105,17 +105,17 @@
     {
       "kungfu": "奶歌",
       "school": "长歌",
-      "sample_count": 4680,
-      "player_count": 2944,
+      "sample_count": 5248,
+      "player_count": 3251,
       "win_rate": 0.53,
       "avg_deaths": 0.49,
-      "control_rate": 0.4064,
-      "matchup_edge": 0.0299,
-      "orange_sample_count": 539,
-      "non_orange_sample_count": 4141,
+      "control_rate": 0.4062,
+      "matchup_edge": 0.0282,
+      "orange_sample_count": 628,
+      "non_orange_sample_count": 4620,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 4680,
-      "orange_rate": 0.1152,
+      "known_weapon_sample_count": 5248,
+      "orange_rate": 0.1197,
       "top_comps": [
         {
           "comp_key": "喵子|奶歌|莫问",
@@ -124,8 +124,8 @@
             "奶歌",
             "莫问"
           ],
-          "count": 414,
-          "rate": 0.09,
+          "count": 431,
+          "rate": 0.08,
           "win_rate": 0.52
         },
         {
@@ -135,9 +135,9 @@
             "气纯",
             "花间"
           ],
-          "count": 317,
+          "count": 359,
           "rate": 0.07,
-          "win_rate": 0.61
+          "win_rate": 0.62
         },
         {
           "comp_key": "和尚|奶歌|田螺",
@@ -146,7 +146,7 @@
             "奶歌",
             "田螺"
           ],
-          "count": 235,
+          "count": 272,
           "rate": 0.05,
           "win_rate": 0.57
         }
@@ -155,17 +155,17 @@
     {
       "kungfu": "奶花",
       "school": "万花",
-      "sample_count": 4467,
-      "player_count": 3014,
+      "sample_count": 5235,
+      "player_count": 3537,
       "win_rate": 0.54,
-      "avg_deaths": 0.48,
-      "control_rate": 0.4765,
-      "matchup_edge": 0.0375,
-      "orange_sample_count": 116,
-      "non_orange_sample_count": 4351,
+      "avg_deaths": 0.47,
+      "control_rate": 0.4738,
+      "matchup_edge": 0.0394,
+      "orange_sample_count": 135,
+      "non_orange_sample_count": 5100,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 4467,
-      "orange_rate": 0.026,
+      "known_weapon_sample_count": 5235,
+      "orange_rate": 0.0258,
       "top_comps": [
         {
           "comp_key": "天策|奶花|藏剑",
@@ -174,8 +174,8 @@
             "奶花",
             "藏剑"
           ],
-          "count": 344,
-          "rate": 0.08,
+          "count": 377,
+          "rate": 0.07,
           "win_rate": 0.55
         },
         {
@@ -185,37 +185,37 @@
             "奶花",
             "藏剑"
           ],
-          "count": 221,
+          "count": 260,
           "rate": 0.05,
-          "win_rate": 0.65
+          "win_rate": 0.61
         },
         {
-          "comp_key": "喵子|奶花|莫问",
+          "comp_key": "冰心|奶花|气纯",
           "schools": [
-            "喵子",
+            "冰心",
             "奶花",
-            "莫问"
+            "气纯"
           ],
-          "count": 175,
+          "count": 192,
           "rate": 0.04,
-          "win_rate": 0.55
+          "win_rate": 0.63
         }
       ]
     },
     {
       "kungfu": "奶药",
       "school": "药宗",
-      "sample_count": 4054,
-      "player_count": 2678,
+      "sample_count": 4854,
+      "player_count": 3285,
       "win_rate": 0.53,
-      "avg_deaths": 0.47,
-      "control_rate": 0.4111,
-      "matchup_edge": 0.0333,
-      "orange_sample_count": 644,
-      "non_orange_sample_count": 3410,
+      "avg_deaths": 0.48,
+      "control_rate": 0.4079,
+      "matchup_edge": 0.0317,
+      "orange_sample_count": 767,
+      "non_orange_sample_count": 4087,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 4054,
-      "orange_rate": 0.1589,
+      "known_weapon_sample_count": 4854,
+      "orange_rate": 0.158,
       "top_comps": [
         {
           "comp_key": "丐帮|奶药|无方",
@@ -224,7 +224,7 @@
             "奶药",
             "无方"
           ],
-          "count": 250,
+          "count": 292,
           "rate": 0.06,
           "win_rate": 0.5
         },
@@ -235,9 +235,9 @@
             "奶药",
             "莫问"
           ],
-          "count": 241,
+          "count": 284,
           "rate": 0.06,
-          "win_rate": 0.58
+          "win_rate": 0.57
         },
         {
           "comp_key": "奶药|无方|霸刀",
@@ -246,37 +246,37 @@
             "无方",
             "霸刀"
           ],
-          "count": 139,
-          "rate": 0.03,
-          "win_rate": 0.52
+          "count": 186,
+          "rate": 0.04,
+          "win_rate": 0.54
         }
       ]
     },
     {
       "kungfu": "藏剑",
       "school": "藏剑",
-      "sample_count": 3526,
-      "player_count": 1700,
-      "win_rate": 0.53,
-      "avg_deaths": 0.48,
-      "control_rate": 0.3391,
-      "matchup_edge": 0.0264,
+      "sample_count": 4213,
+      "player_count": 1946,
+      "win_rate": 0.52,
+      "avg_deaths": 0.49,
+      "control_rate": 0.3368,
+      "matchup_edge": 0.0217,
       "orange_sample_count": 162,
-      "non_orange_sample_count": 3364,
+      "non_orange_sample_count": 4051,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 3526,
-      "orange_rate": 0.0459,
+      "known_weapon_sample_count": 4213,
+      "orange_rate": 0.0385,
       "top_comps": [
         {
-          "comp_key": "天策|奶花|藏剑",
+          "comp_key": "天策|奶毒|藏剑",
           "schools": [
             "天策",
-            "奶花",
+            "奶毒",
             "藏剑"
           ],
-          "count": 345,
+          "count": 413,
           "rate": 0.1,
-          "win_rate": 0.55
+          "win_rate": 0.52
         },
         {
           "comp_key": "天策|奶秀|藏剑",
@@ -285,9 +285,48 @@
             "奶秀",
             "藏剑"
           ],
-          "count": 329,
+          "count": 412,
+          "rate": 0.1,
+          "win_rate": 0.57
+        },
+        {
+          "comp_key": "天策|奶花|藏剑",
+          "schools": [
+            "天策",
+            "奶花",
+            "藏剑"
+          ],
+          "count": 366,
           "rate": 0.09,
-          "win_rate": 0.59
+          "win_rate": 0.54
+        }
+      ]
+    },
+    {
+      "kungfu": "天策",
+      "school": "天策",
+      "sample_count": 3820,
+      "player_count": 1814,
+      "win_rate": 0.51,
+      "avg_deaths": 0.49,
+      "control_rate": 0.3965,
+      "matchup_edge": 0.0147,
+      "orange_sample_count": 270,
+      "non_orange_sample_count": 3550,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 3820,
+      "orange_rate": 0.0707,
+      "top_comps": [
+        {
+          "comp_key": "天策|奶毒|霸刀",
+          "schools": [
+            "天策",
+            "奶毒",
+            "霸刀"
+          ],
+          "count": 482,
+          "rate": 0.13,
+          "win_rate": 0.55
         },
         {
           "comp_key": "天策|奶毒|藏剑",
@@ -296,48 +335,9 @@
             "奶毒",
             "藏剑"
           ],
-          "count": 323,
-          "rate": 0.09,
+          "count": 427,
+          "rate": 0.11,
           "win_rate": 0.52
-        }
-      ]
-    },
-    {
-      "kungfu": "天策",
-      "school": "天策",
-      "sample_count": 3321,
-      "player_count": 1535,
-      "win_rate": 0.52,
-      "avg_deaths": 0.49,
-      "control_rate": 0.3993,
-      "matchup_edge": 0.0161,
-      "orange_sample_count": 243,
-      "non_orange_sample_count": 3078,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 3321,
-      "orange_rate": 0.0732,
-      "top_comps": [
-        {
-          "comp_key": "天策|奶毒|霸刀",
-          "schools": [
-            "天策",
-            "奶毒",
-            "霸刀"
-          ],
-          "count": 432,
-          "rate": 0.13,
-          "win_rate": 0.55
-        },
-        {
-          "comp_key": "天策|奶花|藏剑",
-          "schools": [
-            "天策",
-            "奶花",
-            "藏剑"
-          ],
-          "count": 344,
-          "rate": 0.1,
-          "win_rate": 0.55
         },
         {
           "comp_key": "天策|奶秀|藏剑",
@@ -346,26 +346,26 @@
             "奶秀",
             "藏剑"
           ],
-          "count": 330,
-          "rate": 0.1,
-          "win_rate": 0.59
+          "count": 413,
+          "rate": 0.11,
+          "win_rate": 0.57
         }
       ]
     },
     {
       "kungfu": "霸刀",
       "school": "霸刀",
-      "sample_count": 3279,
-      "player_count": 1411,
+      "sample_count": 3801,
+      "player_count": 1673,
       "win_rate": 0.53,
-      "avg_deaths": 0.48,
-      "control_rate": 0.3643,
-      "matchup_edge": 0.0297,
-      "orange_sample_count": 352,
-      "non_orange_sample_count": 2927,
+      "avg_deaths": 0.47,
+      "control_rate": 0.3657,
+      "matchup_edge": 0.0317,
+      "orange_sample_count": 404,
+      "non_orange_sample_count": 3397,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 3279,
-      "orange_rate": 0.1073,
+      "known_weapon_sample_count": 3801,
+      "orange_rate": 0.1063,
       "top_comps": [
         {
           "comp_key": "天策|奶毒|霸刀",
@@ -374,9 +374,9 @@
             "奶毒",
             "霸刀"
           ],
-          "count": 445,
-          "rate": 0.14,
-          "win_rate": 0.55
+          "count": 497,
+          "rate": 0.13,
+          "win_rate": 0.54
         },
         {
           "comp_key": "奶毒|苍云|霸刀",
@@ -385,8 +385,8 @@
             "苍云",
             "霸刀"
           ],
-          "count": 278,
-          "rate": 0.08,
+          "count": 342,
+          "rate": 0.09,
           "win_rate": 0.56
         },
         {
@@ -396,8 +396,8 @@
             "奶毒",
             "霸刀"
           ],
-          "count": 250,
-          "rate": 0.08,
+          "count": 257,
+          "rate": 0.07,
           "win_rate": 0.48
         }
       ]
@@ -405,17 +405,17 @@
     {
       "kungfu": "丐帮",
       "school": "丐帮",
-      "sample_count": 2864,
-      "player_count": 1078,
+      "sample_count": 3380,
+      "player_count": 1257,
       "win_rate": 0.52,
-      "avg_deaths": 0.49,
-      "control_rate": 0.3512,
-      "matchup_edge": 0.0206,
-      "orange_sample_count": 246,
-      "non_orange_sample_count": 2618,
+      "avg_deaths": 0.5,
+      "control_rate": 0.3454,
+      "matchup_edge": 0.0163,
+      "orange_sample_count": 269,
+      "non_orange_sample_count": 3111,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2864,
-      "orange_rate": 0.0859,
+      "known_weapon_sample_count": 3380,
+      "orange_rate": 0.0796,
       "top_comps": [
         {
           "comp_key": "丐帮|奶秀|惊羽",
@@ -424,8 +424,8 @@
             "奶秀",
             "惊羽"
           ],
-          "count": 492,
-          "rate": 0.17,
+          "count": 678,
+          "rate": 0.2,
           "win_rate": 0.53
         },
         {
@@ -435,8 +435,8 @@
             "奶药",
             "无方"
           ],
-          "count": 247,
-          "rate": 0.09,
+          "count": 287,
+          "rate": 0.08,
           "win_rate": 0.5
         },
         {
@@ -446,7 +446,7 @@
             "奶毒",
             "无方"
           ],
-          "count": 213,
+          "count": 236,
           "rate": 0.07,
           "win_rate": 0.54
         }
@@ -455,17 +455,17 @@
     {
       "kungfu": "苍云",
       "school": "苍云",
-      "sample_count": 2719,
-      "player_count": 1026,
+      "sample_count": 3117,
+      "player_count": 1199,
       "win_rate": 0.52,
       "avg_deaths": 0.49,
-      "control_rate": 0.3576,
-      "matchup_edge": 0.0189,
-      "orange_sample_count": 240,
-      "non_orange_sample_count": 2479,
+      "control_rate": 0.3569,
+      "matchup_edge": 0.0168,
+      "orange_sample_count": 253,
+      "non_orange_sample_count": 2864,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2719,
-      "orange_rate": 0.0883,
+      "known_weapon_sample_count": 3117,
+      "orange_rate": 0.0812,
       "top_comps": [
         {
           "comp_key": "奶毒|苍云|蓬莱",
@@ -474,9 +474,9 @@
             "苍云",
             "蓬莱"
           ],
-          "count": 567,
-          "rate": 0.21,
-          "win_rate": 0.55
+          "count": 635,
+          "rate": 0.2,
+          "win_rate": 0.56
         },
         {
           "comp_key": "奶毒|苍云|霸刀",
@@ -485,8 +485,8 @@
             "苍云",
             "霸刀"
           ],
-          "count": 278,
-          "rate": 0.1,
+          "count": 341,
+          "rate": 0.11,
           "win_rate": 0.57
         },
         {
@@ -497,7 +497,7 @@
             "苍云"
           ],
           "count": 167,
-          "rate": 0.06,
+          "rate": 0.05,
           "win_rate": 0.46
         }
       ]
@@ -505,17 +505,17 @@
     {
       "kungfu": "衍天",
       "school": "衍天",
-      "sample_count": 2485,
-      "player_count": 948,
-      "win_rate": 0.55,
+      "sample_count": 2965,
+      "player_count": 1174,
+      "win_rate": 0.56,
       "avg_deaths": 0.46,
-      "control_rate": 0.4034,
-      "matchup_edge": 0.0549,
-      "orange_sample_count": 417,
-      "non_orange_sample_count": 2068,
+      "control_rate": 0.4031,
+      "matchup_edge": 0.0562,
+      "orange_sample_count": 433,
+      "non_orange_sample_count": 2532,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2485,
-      "orange_rate": 0.1678,
+      "known_weapon_sample_count": 2965,
+      "orange_rate": 0.146,
       "top_comps": [
         {
           "comp_key": "奶歌|花间|衍天",
@@ -524,9 +524,9 @@
             "花间",
             "衍天"
           ],
-          "count": 214,
+          "count": 265,
           "rate": 0.09,
-          "win_rate": 0.52
+          "win_rate": 0.51
         },
         {
           "comp_key": "奶歌|莫问|衍天",
@@ -535,9 +535,9 @@
             "莫问",
             "衍天"
           ],
-          "count": 190,
-          "rate": 0.08,
-          "win_rate": 0.59
+          "count": 212,
+          "rate": 0.07,
+          "win_rate": 0.58
         },
         {
           "comp_key": "奶花|段氏|衍天",
@@ -546,76 +546,26 @@
             "段氏",
             "衍天"
           ],
-          "count": 166,
-          "rate": 0.07,
-          "win_rate": 0.55
-        }
-      ]
-    },
-    {
-      "kungfu": "莫问",
-      "school": "长歌",
-      "sample_count": 2395,
-      "player_count": 1060,
-      "win_rate": 0.55,
-      "avg_deaths": 0.48,
-      "control_rate": 0.328,
-      "matchup_edge": 0.0528,
-      "orange_sample_count": 278,
-      "non_orange_sample_count": 2117,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2395,
-      "orange_rate": 0.1161,
-      "top_comps": [
-        {
-          "comp_key": "喵子|奶歌|莫问",
-          "schools": [
-            "喵子",
-            "奶歌",
-            "莫问"
-          ],
-          "count": 410,
-          "rate": 0.17,
-          "win_rate": 0.52
-        },
-        {
-          "comp_key": "喵子|奶药|莫问",
-          "schools": [
-            "喵子",
-            "奶药",
-            "莫问"
-          ],
-          "count": 243,
-          "rate": 0.1,
-          "win_rate": 0.58
-        },
-        {
-          "comp_key": "奶歌|莫问|莫问",
-          "schools": [
-            "奶歌",
-            "莫问",
-            "莫问"
-          ],
-          "count": 236,
-          "rate": 0.1,
-          "win_rate": 0.53
+          "count": 190,
+          "rate": 0.06,
+          "win_rate": 0.57
         }
       ]
     },
     {
       "kungfu": "气纯",
       "school": "纯阳",
-      "sample_count": 2353,
-      "player_count": 1153,
+      "sample_count": 2756,
+      "player_count": 1340,
       "win_rate": 0.56,
-      "avg_deaths": 0.46,
-      "control_rate": 0.3298,
-      "matchup_edge": 0.0589,
-      "orange_sample_count": 297,
-      "non_orange_sample_count": 2056,
+      "avg_deaths": 0.45,
+      "control_rate": 0.3267,
+      "matchup_edge": 0.0646,
+      "orange_sample_count": 358,
+      "non_orange_sample_count": 2398,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2353,
-      "orange_rate": 0.1262,
+      "known_weapon_sample_count": 2756,
+      "orange_rate": 0.1299,
       "top_comps": [
         {
           "comp_key": "奶歌|气纯|花间",
@@ -624,9 +574,9 @@
             "气纯",
             "花间"
           ],
-          "count": 326,
-          "rate": 0.14,
-          "win_rate": 0.62
+          "count": 368,
+          "rate": 0.13,
+          "win_rate": 0.63
         },
         {
           "comp_key": "冰心|奶花|气纯",
@@ -635,8 +585,8 @@
             "奶花",
             "气纯"
           ],
-          "count": 148,
-          "rate": 0.06,
+          "count": 182,
+          "rate": 0.07,
           "win_rate": 0.62
         },
         {
@@ -647,7 +597,7 @@
             "衍天"
           ],
           "count": 141,
-          "rate": 0.06,
+          "rate": 0.05,
           "win_rate": 0.51
         }
       ]
@@ -655,17 +605,17 @@
     {
       "kungfu": "蓬莱",
       "school": "蓬莱",
-      "sample_count": 2295,
-      "player_count": 1153,
-      "win_rate": 0.53,
-      "avg_deaths": 0.48,
-      "control_rate": 0.3431,
-      "matchup_edge": 0.0251,
-      "orange_sample_count": 336,
-      "non_orange_sample_count": 1959,
+      "sample_count": 2687,
+      "player_count": 1339,
+      "win_rate": 0.52,
+      "avg_deaths": 0.49,
+      "control_rate": 0.3377,
+      "matchup_edge": 0.0199,
+      "orange_sample_count": 367,
+      "non_orange_sample_count": 2320,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2295,
-      "orange_rate": 0.1464,
+      "known_weapon_sample_count": 2687,
+      "orange_rate": 0.1366,
       "top_comps": [
         {
           "comp_key": "奶毒|苍云|蓬莱",
@@ -674,9 +624,9 @@
             "苍云",
             "蓬莱"
           ],
-          "count": 559,
+          "count": 642,
           "rate": 0.24,
-          "win_rate": 0.54
+          "win_rate": 0.55
         },
         {
           "comp_key": "奶秀|惊羽|蓬莱",
@@ -685,187 +635,37 @@
             "惊羽",
             "蓬莱"
           ],
-          "count": 211,
+          "count": 247,
           "rate": 0.09,
-          "win_rate": 0.62
+          "win_rate": 0.6
         },
         {
-          "comp_key": "奶毒|蓬莱|霸刀",
+          "comp_key": "万灵|奶毒|蓬莱",
           "schools": [
+            "万灵",
             "奶毒",
-            "蓬莱",
-            "霸刀"
+            "蓬莱"
           ],
-          "count": 129,
+          "count": 148,
           "rate": 0.06,
-          "win_rate": 0.53
+          "win_rate": 0.52
         }
       ]
     },
     {
-      "kungfu": "段氏",
-      "school": "段氏",
-      "sample_count": 2263,
-      "player_count": 1189,
+      "kungfu": "莫问",
+      "school": "长歌",
+      "sample_count": 2646,
+      "player_count": 1137,
       "win_rate": 0.55,
-      "avg_deaths": 0.48,
-      "control_rate": 0.3639,
-      "matchup_edge": 0.0479,
-      "orange_sample_count": 248,
-      "non_orange_sample_count": 2015,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2263,
-      "orange_rate": 0.1096,
-      "top_comps": [
-        {
-          "comp_key": "奶花|段氏|衍天",
-          "schools": [
-            "奶花",
-            "段氏",
-            "衍天"
-          ],
-          "count": 165,
-          "rate": 0.07,
-          "win_rate": 0.56
-        },
-        {
-          "comp_key": "奶歌|无相|段氏",
-          "schools": [
-            "奶歌",
-            "无相",
-            "段氏"
-          ],
-          "count": 147,
-          "rate": 0.06,
-          "win_rate": 0.64
-        },
-        {
-          "comp_key": "奶药|段氏|衍天",
-          "schools": [
-            "奶药",
-            "段氏",
-            "衍天"
-          ],
-          "count": 136,
-          "rate": 0.06,
-          "win_rate": 0.64
-        }
-      ]
-    },
-    {
-      "kungfu": "无方",
-      "school": "药宗",
-      "sample_count": 2253,
-      "player_count": 1108,
-      "win_rate": 0.52,
       "avg_deaths": 0.49,
-      "control_rate": 0.3899,
-      "matchup_edge": 0.0211,
-      "orange_sample_count": 69,
-      "non_orange_sample_count": 2184,
+      "control_rate": 0.3284,
+      "matchup_edge": 0.0472,
+      "orange_sample_count": 314,
+      "non_orange_sample_count": 2332,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 2253,
-      "orange_rate": 0.0306,
-      "top_comps": [
-        {
-          "comp_key": "丐帮|奶药|无方",
-          "schools": [
-            "丐帮",
-            "奶药",
-            "无方"
-          ],
-          "count": 259,
-          "rate": 0.11,
-          "win_rate": 0.5
-        },
-        {
-          "comp_key": "丐帮|奶毒|无方",
-          "schools": [
-            "丐帮",
-            "奶毒",
-            "无方"
-          ],
-          "count": 208,
-          "rate": 0.09,
-          "win_rate": 0.53
-        },
-        {
-          "comp_key": "奶药|无方|霸刀",
-          "schools": [
-            "奶药",
-            "无方",
-            "霸刀"
-          ],
-          "count": 139,
-          "rate": 0.06,
-          "win_rate": 0.52
-        }
-      ]
-    },
-    {
-      "kungfu": "花间",
-      "school": "万花",
-      "sample_count": 1944,
-      "player_count": 1030,
-      "win_rate": 0.52,
-      "avg_deaths": 0.5,
-      "control_rate": 0.3907,
-      "matchup_edge": 0.0211,
-      "orange_sample_count": 214,
-      "non_orange_sample_count": 1730,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1944,
-      "orange_rate": 0.1101,
-      "top_comps": [
-        {
-          "comp_key": "奶歌|气纯|花间",
-          "schools": [
-            "奶歌",
-            "气纯",
-            "花间"
-          ],
-          "count": 316,
-          "rate": 0.16,
-          "win_rate": 0.61
-        },
-        {
-          "comp_key": "奶歌|花间|衍天",
-          "schools": [
-            "奶歌",
-            "花间",
-            "衍天"
-          ],
-          "count": 212,
-          "rate": 0.11,
-          "win_rate": 0.52
-        },
-        {
-          "comp_key": "喵子|奶歌|花间",
-          "schools": [
-            "喵子",
-            "奶歌",
-            "花间"
-          ],
-          "count": 151,
-          "rate": 0.08,
-          "win_rate": 0.52
-        }
-      ]
-    },
-    {
-      "kungfu": "喵子",
-      "school": "明教",
-      "sample_count": 1892,
-      "player_count": 959,
-      "win_rate": 0.53,
-      "avg_deaths": 0.51,
-      "control_rate": 0.3663,
-      "matchup_edge": 0.0254,
-      "orange_sample_count": 401,
-      "non_orange_sample_count": 1491,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1892,
-      "orange_rate": 0.2119,
+      "known_weapon_sample_count": 2646,
+      "orange_rate": 0.1187,
       "top_comps": [
         {
           "comp_key": "喵子|奶歌|莫问",
@@ -874,8 +674,19 @@
             "奶歌",
             "莫问"
           ],
-          "count": 415,
-          "rate": 0.22,
+          "count": 427,
+          "rate": 0.16,
+          "win_rate": 0.52
+        },
+        {
+          "comp_key": "奶歌|莫问|莫问",
+          "schools": [
+            "奶歌",
+            "莫问",
+            "莫问"
+          ],
+          "count": 300,
+          "rate": 0.11,
           "win_rate": 0.52
         },
         {
@@ -885,37 +696,176 @@
             "奶药",
             "莫问"
           ],
-          "count": 244,
-          "rate": 0.13,
+          "count": 275,
+          "rate": 0.1,
+          "win_rate": 0.57
+        }
+      ]
+    },
+    {
+      "kungfu": "无方",
+      "school": "药宗",
+      "sample_count": 2639,
+      "player_count": 1297,
+      "win_rate": 0.52,
+      "avg_deaths": 0.49,
+      "control_rate": 0.3884,
+      "matchup_edge": 0.0203,
+      "orange_sample_count": 103,
+      "non_orange_sample_count": 2536,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 2639,
+      "orange_rate": 0.039,
+      "top_comps": [
+        {
+          "comp_key": "丐帮|奶药|无方",
+          "schools": [
+            "丐帮",
+            "奶药",
+            "无方"
+          ],
+          "count": 304,
+          "rate": 0.12,
+          "win_rate": 0.5
+        },
+        {
+          "comp_key": "丐帮|奶毒|无方",
+          "schools": [
+            "丐帮",
+            "奶毒",
+            "无方"
+          ],
+          "count": 238,
+          "rate": 0.09,
+          "win_rate": 0.55
+        },
+        {
+          "comp_key": "奶药|无方|霸刀",
+          "schools": [
+            "奶药",
+            "无方",
+            "霸刀"
+          ],
+          "count": 187,
+          "rate": 0.07,
+          "win_rate": 0.53
+        }
+      ]
+    },
+    {
+      "kungfu": "段氏",
+      "school": "段氏",
+      "sample_count": 2553,
+      "player_count": 1375,
+      "win_rate": 0.55,
+      "avg_deaths": 0.48,
+      "control_rate": 0.3651,
+      "matchup_edge": 0.0464,
+      "orange_sample_count": 251,
+      "non_orange_sample_count": 2302,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 2553,
+      "orange_rate": 0.0983,
+      "top_comps": [
+        {
+          "comp_key": "奶药|段氏|衍天",
+          "schools": [
+            "奶药",
+            "段氏",
+            "衍天"
+          ],
+          "count": 188,
+          "rate": 0.07,
+          "win_rate": 0.67
+        },
+        {
+          "comp_key": "奶花|段氏|衍天",
+          "schools": [
+            "奶花",
+            "段氏",
+            "衍天"
+          ],
+          "count": 188,
+          "rate": 0.07,
           "win_rate": 0.58
         },
         {
-          "comp_key": "喵子|奶花|莫问",
+          "comp_key": "奶歌|无相|段氏",
           "schools": [
-            "喵子",
-            "奶花",
-            "莫问"
+            "奶歌",
+            "无相",
+            "段氏"
           ],
-          "count": 175,
-          "rate": 0.09,
-          "win_rate": 0.55
+          "count": 182,
+          "rate": 0.07,
+          "win_rate": 0.64
+        }
+      ]
+    },
+    {
+      "kungfu": "花间",
+      "school": "万花",
+      "sample_count": 2267,
+      "player_count": 1214,
+      "win_rate": 0.52,
+      "avg_deaths": 0.5,
+      "control_rate": 0.3878,
+      "matchup_edge": 0.0223,
+      "orange_sample_count": 236,
+      "non_orange_sample_count": 2031,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 2267,
+      "orange_rate": 0.1041,
+      "top_comps": [
+        {
+          "comp_key": "奶歌|气纯|花间",
+          "schools": [
+            "奶歌",
+            "气纯",
+            "花间"
+          ],
+          "count": 358,
+          "rate": 0.16,
+          "win_rate": 0.62
+        },
+        {
+          "comp_key": "奶歌|花间|衍天",
+          "schools": [
+            "奶歌",
+            "花间",
+            "衍天"
+          ],
+          "count": 263,
+          "rate": 0.12,
+          "win_rate": 0.51
+        },
+        {
+          "comp_key": "奶歌|毒经|花间",
+          "schools": [
+            "奶歌",
+            "毒经",
+            "花间"
+          ],
+          "count": 160,
+          "rate": 0.07,
+          "win_rate": 0.39
         }
       ]
     },
     {
       "kungfu": "惊羽",
       "school": "唐门",
-      "sample_count": 1830,
-      "player_count": 1002,
+      "sample_count": 2248,
+      "player_count": 1169,
       "win_rate": 0.52,
-      "avg_deaths": 0.49,
-      "control_rate": 0.3851,
-      "matchup_edge": 0.0224,
-      "orange_sample_count": 206,
-      "non_orange_sample_count": 1624,
+      "avg_deaths": 0.5,
+      "control_rate": 0.3802,
+      "matchup_edge": 0.02,
+      "orange_sample_count": 239,
+      "non_orange_sample_count": 2009,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1830,
-      "orange_rate": 0.1126,
+      "known_weapon_sample_count": 2248,
+      "orange_rate": 0.1063,
       "top_comps": [
         {
           "comp_key": "丐帮|奶秀|惊羽",
@@ -924,8 +874,8 @@
             "奶秀",
             "惊羽"
           ],
-          "count": 493,
-          "rate": 0.27,
+          "count": 695,
+          "rate": 0.31,
           "win_rate": 0.53
         },
         {
@@ -935,9 +885,9 @@
             "惊羽",
             "蓬莱"
           ],
-          "count": 219,
-          "rate": 0.12,
-          "win_rate": 0.63
+          "count": 255,
+          "rate": 0.11,
+          "win_rate": 0.6
         },
         {
           "comp_key": "天策|奶秀|惊羽",
@@ -946,26 +896,76 @@
             "奶秀",
             "惊羽"
           ],
-          "count": 101,
-          "rate": 0.06,
-          "win_rate": 0.43
+          "count": 104,
+          "rate": 0.05,
+          "win_rate": 0.41
+        }
+      ]
+    },
+    {
+      "kungfu": "喵子",
+      "school": "明教",
+      "sample_count": 2098,
+      "player_count": 1065,
+      "win_rate": 0.52,
+      "avg_deaths": 0.51,
+      "control_rate": 0.3637,
+      "matchup_edge": 0.0248,
+      "orange_sample_count": 426,
+      "non_orange_sample_count": 1672,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 2098,
+      "orange_rate": 0.2031,
+      "top_comps": [
+        {
+          "comp_key": "喵子|奶歌|莫问",
+          "schools": [
+            "喵子",
+            "奶歌",
+            "莫问"
+          ],
+          "count": 436,
+          "rate": 0.21,
+          "win_rate": 0.51
+        },
+        {
+          "comp_key": "喵子|奶药|莫问",
+          "schools": [
+            "喵子",
+            "奶药",
+            "莫问"
+          ],
+          "count": 278,
+          "rate": 0.13,
+          "win_rate": 0.57
+        },
+        {
+          "comp_key": "喵子|奶花|莫问",
+          "schools": [
+            "喵子",
+            "奶花",
+            "莫问"
+          ],
+          "count": 177,
+          "rate": 0.08,
+          "win_rate": 0.55
         }
       ]
     },
     {
       "kungfu": "田螺",
       "school": "唐门",
-      "sample_count": 1791,
-      "player_count": 687,
-      "win_rate": 0.54,
-      "avg_deaths": 0.48,
-      "control_rate": 0.3768,
-      "matchup_edge": 0.0405,
-      "orange_sample_count": 36,
-      "non_orange_sample_count": 1755,
+      "sample_count": 2058,
+      "player_count": 766,
+      "win_rate": 0.53,
+      "avg_deaths": 0.49,
+      "control_rate": 0.3772,
+      "matchup_edge": 0.0345,
+      "orange_sample_count": 39,
+      "non_orange_sample_count": 2019,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1791,
-      "orange_rate": 0.0201,
+      "known_weapon_sample_count": 2058,
+      "orange_rate": 0.019,
       "top_comps": [
         {
           "comp_key": "和尚|奶歌|田螺",
@@ -974,9 +974,9 @@
             "奶歌",
             "田螺"
           ],
-          "count": 248,
+          "count": 293,
           "rate": 0.14,
-          "win_rate": 0.58
+          "win_rate": 0.57
         },
         {
           "comp_key": "奶歌|毒经|田螺",
@@ -986,7 +986,7 @@
             "田螺"
           ],
           "count": 141,
-          "rate": 0.08,
+          "rate": 0.07,
           "win_rate": 0.46
         },
         {
@@ -996,26 +996,76 @@
             "奶秀",
             "田螺"
           ],
-          "count": 116,
+          "count": 122,
           "rate": 0.06,
-          "win_rate": 0.6
+          "win_rate": 0.58
+        }
+      ]
+    },
+    {
+      "kungfu": "凌雪",
+      "school": "凌雪",
+      "sample_count": 2057,
+      "player_count": 923,
+      "win_rate": 0.54,
+      "avg_deaths": 0.47,
+      "control_rate": 0.3523,
+      "matchup_edge": 0.043,
+      "orange_sample_count": 185,
+      "non_orange_sample_count": 1872,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 2057,
+      "orange_rate": 0.0899,
+      "top_comps": [
+        {
+          "comp_key": "凌雪|奶秀|藏剑",
+          "schools": [
+            "凌雪",
+            "奶秀",
+            "藏剑"
+          ],
+          "count": 329,
+          "rate": 0.16,
+          "win_rate": 0.56
+        },
+        {
+          "comp_key": "凌雪|奶毒|藏剑",
+          "schools": [
+            "凌雪",
+            "奶毒",
+            "藏剑"
+          ],
+          "count": 301,
+          "rate": 0.15,
+          "win_rate": 0.48
+        },
+        {
+          "comp_key": "凌雪|奶花|藏剑",
+          "schools": [
+            "凌雪",
+            "奶花",
+            "藏剑"
+          ],
+          "count": 259,
+          "rate": 0.13,
+          "win_rate": 0.62
         }
       ]
     },
     {
       "kungfu": "冰心",
       "school": "七秀",
-      "sample_count": 1712,
-      "player_count": 847,
+      "sample_count": 1991,
+      "player_count": 1040,
       "win_rate": 0.54,
       "avg_deaths": 0.47,
-      "control_rate": 0.429,
-      "matchup_edge": 0.0356,
-      "orange_sample_count": 225,
-      "non_orange_sample_count": 1487,
+      "control_rate": 0.4296,
+      "matchup_edge": 0.0379,
+      "orange_sample_count": 251,
+      "non_orange_sample_count": 1740,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1712,
-      "orange_rate": 0.1314,
+      "known_weapon_sample_count": 1991,
+      "orange_rate": 0.1261,
       "top_comps": [
         {
           "comp_key": "冰心|奶花|气纯",
@@ -1024,7 +1074,7 @@
             "奶花",
             "气纯"
           ],
-          "count": 148,
+          "count": 182,
           "rate": 0.09,
           "win_rate": 0.62
         },
@@ -1035,88 +1085,49 @@
             "冰心",
             "奶花"
           ],
-          "count": 122,
-          "rate": 0.07,
-          "win_rate": 0.64
+          "count": 174,
+          "rate": 0.09,
+          "win_rate": 0.62
         },
         {
-          "comp_key": "冰心|奶药|气纯",
+          "comp_key": "冰心|奶花|衍天",
           "schools": [
             "冰心",
-            "奶药",
-            "气纯"
-          ],
-          "count": 105,
-          "rate": 0.06,
-          "win_rate": 0.52
-        }
-      ]
-    },
-    {
-      "kungfu": "凌雪",
-      "school": "凌雪",
-      "sample_count": 1700,
-      "player_count": 772,
-      "win_rate": 0.55,
-      "avg_deaths": 0.46,
-      "control_rate": 0.3579,
-      "matchup_edge": 0.0476,
-      "orange_sample_count": 155,
-      "non_orange_sample_count": 1545,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1700,
-      "orange_rate": 0.0912,
-      "top_comps": [
-        {
-          "comp_key": "凌雪|奶毒|藏剑",
-          "schools": [
-            "凌雪",
-            "奶毒",
-            "藏剑"
-          ],
-          "count": 252,
-          "rate": 0.15,
-          "win_rate": 0.48
-        },
-        {
-          "comp_key": "凌雪|奶秀|藏剑",
-          "schools": [
-            "凌雪",
-            "奶秀",
-            "藏剑"
-          ],
-          "count": 243,
-          "rate": 0.14,
-          "win_rate": 0.56
-        },
-        {
-          "comp_key": "凌雪|奶花|藏剑",
-          "schools": [
-            "凌雪",
             "奶花",
-            "藏剑"
+            "衍天"
           ],
-          "count": 220,
-          "rate": 0.13,
-          "win_rate": 0.65
+          "count": 114,
+          "rate": 0.06,
+          "win_rate": 0.56
         }
       ]
     },
     {
       "kungfu": "毒经",
       "school": "五毒",
-      "sample_count": 1630,
-      "player_count": 932,
-      "win_rate": 0.48,
+      "sample_count": 1871,
+      "player_count": 1078,
+      "win_rate": 0.47,
       "avg_deaths": 0.57,
-      "control_rate": 0.4151,
-      "matchup_edge": -0.0233,
-      "orange_sample_count": 328,
-      "non_orange_sample_count": 1302,
+      "control_rate": 0.4097,
+      "matchup_edge": -0.0259,
+      "orange_sample_count": 377,
+      "non_orange_sample_count": 1494,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1630,
-      "orange_rate": 0.2012,
+      "known_weapon_sample_count": 1871,
+      "orange_rate": 0.2015,
       "top_comps": [
+        {
+          "comp_key": "奶歌|毒经|花间",
+          "schools": [
+            "奶歌",
+            "毒经",
+            "花间"
+          ],
+          "count": 159,
+          "rate": 0.08,
+          "win_rate": 0.4
+        },
         {
           "comp_key": "奶歌|毒经|田螺",
           "schools": [
@@ -1125,7 +1136,7 @@
             "田螺"
           ],
           "count": 141,
-          "rate": 0.09,
+          "rate": 0.08,
           "win_rate": 0.46
         },
         {
@@ -1136,36 +1147,25 @@
             "毒经"
           ],
           "count": 130,
-          "rate": 0.08,
+          "rate": 0.07,
           "win_rate": 0.48
-        },
-        {
-          "comp_key": "奶歌|毒经|花间",
-          "schools": [
-            "奶歌",
-            "毒经",
-            "花间"
-          ],
-          "count": 130,
-          "rate": 0.08,
-          "win_rate": 0.37
         }
       ]
     },
     {
       "kungfu": "刀宗",
       "school": "刀宗",
-      "sample_count": 1334,
-      "player_count": 898,
+      "sample_count": 1442,
+      "player_count": 954,
       "win_rate": 0.52,
       "avg_deaths": 0.48,
-      "control_rate": 0.3906,
-      "matchup_edge": 0.0202,
+      "control_rate": 0.387,
+      "matchup_edge": 0.0222,
       "orange_sample_count": 188,
-      "non_orange_sample_count": 1146,
+      "non_orange_sample_count": 1254,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1334,
-      "orange_rate": 0.1409,
+      "known_weapon_sample_count": 1442,
+      "orange_rate": 0.1304,
       "top_comps": [
         {
           "comp_key": "刀宗|奶毒|霸刀",
@@ -1174,9 +1174,9 @@
             "奶毒",
             "霸刀"
           ],
-          "count": 245,
-          "rate": 0.18,
-          "win_rate": 0.47
+          "count": 252,
+          "rate": 0.17,
+          "win_rate": 0.48
         },
         {
           "comp_key": "刀宗|奶秀|藏剑",
@@ -1185,37 +1185,87 @@
             "奶秀",
             "藏剑"
           ],
-          "count": 147,
-          "rate": 0.11,
-          "win_rate": 0.46
+          "count": 172,
+          "rate": 0.12,
+          "win_rate": 0.48
         },
         {
-          "comp_key": "刀宗|奶毒|藏剑",
+          "comp_key": "刀宗|奶药|藏剑",
           "schools": [
             "刀宗",
-            "奶毒",
+            "奶药",
             "藏剑"
           ],
-          "count": 103,
+          "count": 111,
           "rate": 0.08,
-          "win_rate": 0.49
+          "win_rate": 0.58
+        }
+      ]
+    },
+    {
+      "kungfu": "万灵",
+      "school": "万灵",
+      "sample_count": 1428,
+      "player_count": 779,
+      "win_rate": 0.51,
+      "avg_deaths": 0.5,
+      "control_rate": 0.3831,
+      "matchup_edge": 0.007,
+      "orange_sample_count": 231,
+      "non_orange_sample_count": 1197,
+      "unknown_sample_count": 0,
+      "known_weapon_sample_count": 1428,
+      "orange_rate": 0.1618,
+      "top_comps": [
+        {
+          "comp_key": "万灵|奶毒|蓬莱",
+          "schools": [
+            "万灵",
+            "奶毒",
+            "蓬莱"
+          ],
+          "count": 148,
+          "rate": 0.1,
+          "win_rate": 0.52
+        },
+        {
+          "comp_key": "万灵|奶秀|蓬莱",
+          "schools": [
+            "万灵",
+            "奶秀",
+            "蓬莱"
+          ],
+          "count": 134,
+          "rate": 0.09,
+          "win_rate": 0.52
+        },
+        {
+          "comp_key": "万灵|凌雪|奶秀",
+          "schools": [
+            "万灵",
+            "凌雪",
+            "奶秀"
+          ],
+          "count": 115,
+          "rate": 0.08,
+          "win_rate": 0.55
         }
       ]
     },
     {
       "kungfu": "剑纯",
       "school": "纯阳",
-      "sample_count": 1212,
-      "player_count": 605,
+      "sample_count": 1341,
+      "player_count": 687,
       "win_rate": 0.5,
       "avg_deaths": 0.51,
-      "control_rate": 0.3412,
-      "matchup_edge": 0.0008,
-      "orange_sample_count": 84,
-      "non_orange_sample_count": 1128,
+      "control_rate": 0.3406,
+      "matchup_edge": 0.0004,
+      "orange_sample_count": 108,
+      "non_orange_sample_count": 1233,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1212,
-      "orange_rate": 0.0693,
+      "known_weapon_sample_count": 1341,
+      "orange_rate": 0.0805,
       "top_comps": [
         {
           "comp_key": "剑纯|奶花|气纯",
@@ -1224,9 +1274,9 @@
             "奶花",
             "气纯"
           ],
-          "count": 104,
+          "count": 116,
           "rate": 0.09,
-          "win_rate": 0.56
+          "win_rate": 0.57
         },
         {
           "comp_key": "剑纯|奶毒|苍云",
@@ -1247,75 +1297,25 @@
             "奶秀"
           ],
           "count": 67,
-          "rate": 0.06,
+          "rate": 0.05,
           "win_rate": 0.55
-        }
-      ]
-    },
-    {
-      "kungfu": "万灵",
-      "school": "万灵",
-      "sample_count": 1196,
-      "player_count": 668,
-      "win_rate": 0.51,
-      "avg_deaths": 0.49,
-      "control_rate": 0.386,
-      "matchup_edge": 0.0067,
-      "orange_sample_count": 204,
-      "non_orange_sample_count": 992,
-      "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1196,
-      "orange_rate": 0.1706,
-      "top_comps": [
-        {
-          "comp_key": "万灵|奶秀|蓬莱",
-          "schools": [
-            "万灵",
-            "奶秀",
-            "蓬莱"
-          ],
-          "count": 117,
-          "rate": 0.1,
-          "win_rate": 0.5
-        },
-        {
-          "comp_key": "万灵|凌雪|奶秀",
-          "schools": [
-            "万灵",
-            "凌雪",
-            "奶秀"
-          ],
-          "count": 112,
-          "rate": 0.09,
-          "win_rate": 0.55
-        },
-        {
-          "comp_key": "万灵|奶毒|蓬莱",
-          "schools": [
-            "万灵",
-            "奶毒",
-            "蓬莱"
-          ],
-          "count": 90,
-          "rate": 0.08,
-          "win_rate": 0.53
         }
       ]
     },
     {
       "kungfu": "和尚",
       "school": "少林",
-      "sample_count": 1139,
-      "player_count": 503,
+      "sample_count": 1316,
+      "player_count": 531,
       "win_rate": 0.53,
       "avg_deaths": 0.48,
-      "control_rate": 0.4177,
-      "matchup_edge": 0.0277,
+      "control_rate": 0.4172,
+      "matchup_edge": 0.0319,
       "orange_sample_count": 44,
-      "non_orange_sample_count": 1095,
+      "non_orange_sample_count": 1272,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 1139,
-      "orange_rate": 0.0386,
+      "known_weapon_sample_count": 1316,
+      "orange_rate": 0.0334,
       "top_comps": [
         {
           "comp_key": "和尚|奶歌|田螺",
@@ -1324,7 +1324,7 @@
             "奶歌",
             "田螺"
           ],
-          "count": 248,
+          "count": 285,
           "rate": 0.22,
           "win_rate": 0.58
         },
@@ -1336,36 +1336,36 @@
             "苍云"
           ],
           "count": 87,
-          "rate": 0.08,
+          "rate": 0.07,
           "win_rate": 0.44
         },
         {
-          "comp_key": "和尚|奶毒|霸刀",
+          "comp_key": "和尚|奶歌|花间",
           "schools": [
             "和尚",
-            "奶毒",
-            "霸刀"
+            "奶歌",
+            "花间"
           ],
-          "count": 51,
-          "rate": 0.04,
-          "win_rate": 0.47
+          "count": 74,
+          "rate": 0.06,
+          "win_rate": 0.43
         }
       ]
     },
     {
       "kungfu": "无相",
       "school": "无相",
-      "sample_count": 945,
-      "player_count": 514,
+      "sample_count": 1033,
+      "player_count": 552,
       "win_rate": 0.57,
       "avg_deaths": 0.44,
-      "control_rate": 0.3505,
-      "matchup_edge": 0.0704,
+      "control_rate": 0.3508,
+      "matchup_edge": 0.0673,
       "orange_sample_count": 107,
-      "non_orange_sample_count": 838,
+      "non_orange_sample_count": 926,
       "unknown_sample_count": 0,
-      "known_weapon_sample_count": 945,
-      "orange_rate": 0.1132,
+      "known_weapon_sample_count": 1033,
+      "orange_rate": 0.1036,
       "top_comps": [
         {
           "comp_key": "奶歌|无相|段氏",
@@ -1374,9 +1374,9 @@
             "无相",
             "段氏"
           ],
-          "count": 146,
-          "rate": 0.15,
-          "win_rate": 0.63
+          "count": 184,
+          "rate": 0.18,
+          "win_rate": 0.62
         },
         {
           "comp_key": "奶药|无相|段氏",
@@ -1385,9 +1385,9 @@
             "无相",
             "段氏"
           ],
-          "count": 90,
-          "rate": 0.1,
-          "win_rate": 0.58
+          "count": 94,
+          "rate": 0.09,
+          "win_rate": 0.55
         },
         {
           "comp_key": "奶毒|无相|段氏",
@@ -1397,7 +1397,7 @@
             "段氏"
           ],
           "count": 85,
-          "rate": 0.09,
+          "rate": 0.08,
           "win_rate": 0.58
         }
       ]
@@ -1411,20 +1411,9 @@
         "奶花",
         "藏剑"
       ],
-      "count": 167,
-      "rate": 0.04,
-      "win_rate": 0.63
-    },
-    {
-      "comp_key": "凌雪|奶花|藏剑",
-      "schools": [
-        "凌雪",
-        "奶花",
-        "藏剑"
-      ],
-      "count": 104,
-      "rate": 0.02,
-      "win_rate": 0.66
+      "count": 179,
+      "rate": 0.03,
+      "win_rate": 0.64
     },
     {
       "comp_key": "冰心|奶花|气纯",
@@ -1433,20 +1422,31 @@
         "奶花",
         "气纯"
       ],
-      "count": 87,
+      "count": 124,
       "rate": 0.02,
-      "win_rate": 0.66
+      "win_rate": 0.69
     },
     {
-      "comp_key": "喵子|奶花|莫问",
+      "comp_key": "凌雪|奶花|藏剑",
       "schools": [
-        "喵子",
+        "凌雪",
         "奶花",
-        "莫问"
+        "藏剑"
       ],
-      "count": 63,
+      "count": 118,
+      "rate": 0.02,
+      "win_rate": 0.64
+    },
+    {
+      "comp_key": "天策|奶花|霸刀",
+      "schools": [
+        "天策",
+        "奶花",
+        "霸刀"
+      ],
+      "count": 67,
       "rate": 0.01,
-      "win_rate": 0.7
+      "win_rate": 0.6
     },
     {
       "comp_key": "奶花|段氏|衍天",
@@ -1455,9 +1455,9 @@
         "段氏",
         "衍天"
       ],
-      "count": 53,
+      "count": 63,
       "rate": 0.01,
-      "win_rate": 0.68
+      "win_rate": 0.7
     },
     {
       "comp_key": "冰心|奶花|衍天",
@@ -1466,9 +1466,20 @@
         "奶花",
         "衍天"
       ],
-      "count": 50,
+      "count": 55,
       "rate": 0.01,
-      "win_rate": 0.56
+      "win_rate": 0.62
+    },
+    {
+      "comp_key": "喵子|奶花|莫问",
+      "schools": [
+        "喵子",
+        "奶花",
+        "莫问"
+      ],
+      "count": 47,
+      "rate": 0.01,
+      "win_rate": 0.68
     },
     {
       "comp_key": "奶花|惊羽|蓬莱",
@@ -1488,31 +1499,20 @@
         "奶花",
         "气纯"
       ],
-      "count": 36,
+      "count": 42,
       "rate": 0.01,
-      "win_rate": 0.53
+      "win_rate": 0.55
     },
     {
-      "comp_key": "天策|奶花|霸刀",
-      "schools": [
-        "天策",
-        "奶花",
-        "霸刀"
-      ],
-      "count": 35,
-      "rate": 0.01,
-      "win_rate": 0.6
-    },
-    {
-      "comp_key": "奶花|田螺|衍天",
+      "comp_key": "奶花|段氏|莫问",
       "schools": [
         "奶花",
-        "田螺",
-        "衍天"
+        "段氏",
+        "莫问"
       ],
-      "count": 32,
+      "count": 40,
       "rate": 0.01,
-      "win_rate": 0.75
+      "win_rate": 0.55
     },
     {
       "comp_key": "奶毒|苍云|蓬莱",
@@ -1521,9 +1521,9 @@
         "苍云",
         "蓬莱"
       ],
-      "count": 349,
-      "rate": 0.06,
-      "win_rate": 0.57
+      "count": 374,
+      "rate": 0.05,
+      "win_rate": 0.58
     },
     {
       "comp_key": "天策|奶毒|霸刀",
@@ -1532,31 +1532,9 @@
         "奶毒",
         "霸刀"
       ],
-      "count": 262,
+      "count": 296,
       "rate": 0.04,
-      "win_rate": 0.6
-    },
-    {
-      "comp_key": "天策|奶毒|藏剑",
-      "schools": [
-        "天策",
-        "奶毒",
-        "藏剑"
-      ],
-      "count": 136,
-      "rate": 0.02,
-      "win_rate": 0.58
-    },
-    {
-      "comp_key": "凌雪|奶毒|藏剑",
-      "schools": [
-        "凌雪",
-        "奶毒",
-        "藏剑"
-      ],
-      "count": 129,
-      "rate": 0.02,
-      "win_rate": 0.42
+      "win_rate": 0.59
     },
     {
       "comp_key": "奶毒|苍云|霸刀",
@@ -1565,20 +1543,31 @@
         "苍云",
         "霸刀"
       ],
-      "count": 124,
-      "rate": 0.02,
-      "win_rate": 0.68
+      "count": 185,
+      "rate": 0.03,
+      "win_rate": 0.65
     },
     {
-      "comp_key": "刀宗|奶毒|霸刀",
+      "comp_key": "天策|奶毒|藏剑",
       "schools": [
-        "刀宗",
+        "天策",
         "奶毒",
-        "霸刀"
+        "藏剑"
       ],
-      "count": 81,
-      "rate": 0.01,
-      "win_rate": 0.53
+      "count": 171,
+      "rate": 0.02,
+      "win_rate": 0.57
+    },
+    {
+      "comp_key": "凌雪|奶毒|藏剑",
+      "schools": [
+        "凌雪",
+        "奶毒",
+        "藏剑"
+      ],
+      "count": 145,
+      "rate": 0.02,
+      "win_rate": 0.48
     },
     {
       "comp_key": "丐帮|奶毒|无方",
@@ -1587,20 +1576,20 @@
         "奶毒",
         "无方"
       ],
-      "count": 71,
+      "count": 80,
       "rate": 0.01,
-      "win_rate": 0.52
+      "win_rate": 0.55
     },
     {
-      "comp_key": "奶毒|无相|霸刀",
+      "comp_key": "刀宗|奶毒|霸刀",
       "schools": [
+        "刀宗",
         "奶毒",
-        "无相",
         "霸刀"
       ],
-      "count": 44,
+      "count": 75,
       "rate": 0.01,
-      "win_rate": 0.48
+      "win_rate": 0.55
     },
     {
       "comp_key": "万灵|奶毒|蓬莱",
@@ -1609,20 +1598,31 @@
         "奶毒",
         "蓬莱"
       ],
+      "count": 55,
+      "rate": 0.01,
+      "win_rate": 0.55
+    },
+    {
+      "comp_key": "奶毒|无相|霸刀",
+      "schools": [
+        "奶毒",
+        "无相",
+        "霸刀"
+      ],
+      "count": 45,
+      "rate": 0.01,
+      "win_rate": 0.47
+    },
+    {
+      "comp_key": "奶毒|苍云|藏剑",
+      "schools": [
+        "奶毒",
+        "苍云",
+        "藏剑"
+      ],
       "count": 41,
       "rate": 0.01,
       "win_rate": 0.56
-    },
-    {
-      "comp_key": "剑纯|奶毒|藏剑",
-      "schools": [
-        "剑纯",
-        "奶毒",
-        "藏剑"
-      ],
-      "count": 32,
-      "rate": 0.01,
-      "win_rate": 0.53
     },
     {
       "comp_key": "丐帮|奶秀|惊羽",
@@ -1631,9 +1631,9 @@
         "奶秀",
         "惊羽"
       ],
-      "count": 364,
-      "rate": 0.08,
-      "win_rate": 0.56
+      "count": 510,
+      "rate": 0.09,
+      "win_rate": 0.55
     },
     {
       "comp_key": "天策|奶秀|藏剑",
@@ -1642,7 +1642,7 @@
         "奶秀",
         "藏剑"
       ],
-      "count": 152,
+      "count": 179,
       "rate": 0.03,
       "win_rate": 0.68
     },
@@ -1653,9 +1653,9 @@
         "奶秀",
         "藏剑"
       ],
-      "count": 108,
+      "count": 131,
       "rate": 0.02,
-      "win_rate": 0.69
+      "win_rate": 0.63
     },
     {
       "comp_key": "奶秀|惊羽|蓬莱",
@@ -1664,9 +1664,9 @@
         "惊羽",
         "蓬莱"
       ],
-      "count": 95,
+      "count": 112,
       "rate": 0.02,
-      "win_rate": 0.74
+      "win_rate": 0.7
     },
     {
       "comp_key": "刀宗|奶秀|藏剑",
@@ -1675,9 +1675,9 @@
         "奶秀",
         "藏剑"
       ],
-      "count": 65,
+      "count": 82,
       "rate": 0.01,
-      "win_rate": 0.48
+      "win_rate": 0.46
     },
     {
       "comp_key": "丐帮|奶秀|田螺",
@@ -1686,20 +1686,9 @@
         "奶秀",
         "田螺"
       ],
-      "count": 64,
+      "count": 68,
       "rate": 0.01,
-      "win_rate": 0.69
-    },
-    {
-      "comp_key": "万灵|奶秀|蓬莱",
-      "schools": [
-        "万灵",
-        "奶秀",
-        "蓬莱"
-      ],
-      "count": 52,
-      "rate": 0.01,
-      "win_rate": 0.48
+      "win_rate": 0.66
     },
     {
       "comp_key": "丐帮|奶秀|霸刀",
@@ -1708,20 +1697,9 @@
         "奶秀",
         "霸刀"
       ],
-      "count": 46,
+      "count": 65,
       "rate": 0.01,
-      "win_rate": 0.5
-    },
-    {
-      "comp_key": "万灵|凌雪|奶秀",
-      "schools": [
-        "万灵",
-        "凌雪",
-        "奶秀"
-      ],
-      "count": 43,
-      "rate": 0.01,
-      "win_rate": 0.58
+      "win_rate": 0.51
     },
     {
       "comp_key": "天策|奶秀|霸刀",
@@ -1730,9 +1708,31 @@
         "奶秀",
         "霸刀"
       ],
+      "count": 60,
+      "rate": 0.01,
+      "win_rate": 0.5
+    },
+    {
+      "comp_key": "万灵|奶秀|蓬莱",
+      "schools": [
+        "万灵",
+        "奶秀",
+        "蓬莱"
+      ],
+      "count": 50,
+      "rate": 0.01,
+      "win_rate": 0.46
+    },
+    {
+      "comp_key": "万灵|凌雪|奶秀",
+      "schools": [
+        "万灵",
+        "凌雪",
+        "奶秀"
+      ],
       "count": 39,
       "rate": 0.01,
-      "win_rate": 0.59
+      "win_rate": 0.56
     },
     {
       "comp_key": "喵子|奶药|莫问",
@@ -1741,9 +1741,9 @@
         "奶药",
         "莫问"
       ],
-      "count": 175,
+      "count": 195,
       "rate": 0.04,
-      "win_rate": 0.65
+      "win_rate": 0.61
     },
     {
       "comp_key": "丐帮|奶药|无方",
@@ -1752,31 +1752,9 @@
         "奶药",
         "无方"
       ],
-      "count": 124,
+      "count": 137,
       "rate": 0.03,
-      "win_rate": 0.52
-    },
-    {
-      "comp_key": "奶药|无方|霸刀",
-      "schools": [
-        "奶药",
-        "无方",
-        "霸刀"
-      ],
-      "count": 61,
-      "rate": 0.02,
-      "win_rate": 0.54
-    },
-    {
-      "comp_key": "刀宗|奶药|藏剑",
-      "schools": [
-        "刀宗",
-        "奶药",
-        "藏剑"
-      ],
-      "count": 60,
-      "rate": 0.01,
-      "win_rate": 0.63
+      "win_rate": 0.53
     },
     {
       "comp_key": "奶药|段氏|衍天",
@@ -1785,9 +1763,31 @@
         "段氏",
         "衍天"
       ],
-      "count": 57,
+      "count": 86,
+      "rate": 0.02,
+      "win_rate": 0.73
+    },
+    {
+      "comp_key": "奶药|无方|霸刀",
+      "schools": [
+        "奶药",
+        "无方",
+        "霸刀"
+      ],
+      "count": 80,
+      "rate": 0.02,
+      "win_rate": 0.55
+    },
+    {
+      "comp_key": "刀宗|奶药|藏剑",
+      "schools": [
+        "刀宗",
+        "奶药",
+        "藏剑"
+      ],
+      "count": 65,
       "rate": 0.01,
-      "win_rate": 0.7
+      "win_rate": 0.63
     },
     {
       "comp_key": "奶药|苍云|蓬莱",
@@ -1801,59 +1801,48 @@
       "win_rate": 0.52
     },
     {
+      "comp_key": "天策|奶药|霸刀",
+      "schools": [
+        "天策",
+        "奶药",
+        "霸刀"
+      ],
+      "count": 54,
+      "rate": 0.01,
+      "win_rate": 0.56
+    },
+    {
+      "comp_key": "奶药|气纯|花间",
+      "schools": [
+        "奶药",
+        "气纯",
+        "花间"
+      ],
+      "count": 52,
+      "rate": 0.01,
+      "win_rate": 0.63
+    },
+    {
+      "comp_key": "奶药|无方|气纯",
+      "schools": [
+        "奶药",
+        "无方",
+        "气纯"
+      ],
+      "count": 52,
+      "rate": 0.01,
+      "win_rate": 0.56
+    },
+    {
       "comp_key": "奶药|田螺|衍天",
       "schools": [
         "奶药",
         "田螺",
         "衍天"
       ],
-      "count": 40,
+      "count": 51,
       "rate": 0.01,
-      "win_rate": 0.8
-    },
-    {
-      "comp_key": "刀宗|奶药|气纯",
-      "schools": [
-        "刀宗",
-        "奶药",
-        "气纯"
-      ],
-      "count": 39,
-      "rate": 0.01,
-      "win_rate": 0.54
-    },
-    {
-      "comp_key": "奶药|无方|毒经",
-      "schools": [
-        "奶药",
-        "无方",
-        "毒经"
-      ],
-      "count": 37,
-      "rate": 0.01,
-      "win_rate": 0.65
-    },
-    {
-      "comp_key": "冰心|奶药|气纯",
-      "schools": [
-        "冰心",
-        "奶药",
-        "气纯"
-      ],
-      "count": 37,
-      "rate": 0.01,
-      "win_rate": 0.62
-    },
-    {
-      "comp_key": "喵子|奶歌|莫问",
-      "schools": [
-        "喵子",
-        "奶歌",
-        "莫问"
-      ],
-      "count": 275,
-      "rate": 0.06,
-      "win_rate": 0.55
+      "win_rate": 0.73
     },
     {
       "comp_key": "奶歌|气纯|花间",
@@ -1862,9 +1851,20 @@
         "气纯",
         "花间"
       ],
-      "count": 214,
+      "count": 259,
       "rate": 0.05,
-      "win_rate": 0.66
+      "win_rate": 0.64
+    },
+    {
+      "comp_key": "喵子|奶歌|莫问",
+      "schools": [
+        "喵子",
+        "奶歌",
+        "莫问"
+      ],
+      "count": 246,
+      "rate": 0.05,
+      "win_rate": 0.54
     },
     {
       "comp_key": "和尚|奶歌|田螺",
@@ -1873,7 +1873,7 @@
         "奶歌",
         "田螺"
       ],
-      "count": 127,
+      "count": 146,
       "rate": 0.03,
       "win_rate": 0.53
     },
@@ -1884,20 +1884,20 @@
         "花间",
         "衍天"
       ],
-      "count": 104,
-      "rate": 0.02,
+      "count": 145,
+      "rate": 0.03,
       "win_rate": 0.52
     },
     {
-      "comp_key": "奶歌|毒经|田螺",
+      "comp_key": "奶歌|莫问|莫问",
       "schools": [
         "奶歌",
-        "毒经",
-        "田螺"
+        "莫问",
+        "莫问"
       ],
-      "count": 91,
+      "count": 100,
       "rate": 0.02,
-      "win_rate": 0.54
+      "win_rate": 0.5
     },
     {
       "comp_key": "奶歌|无相|段氏",
@@ -1906,7 +1906,7 @@
         "无相",
         "段氏"
       ],
-      "count": 88,
+      "count": 96,
       "rate": 0.02,
       "win_rate": 0.66
     },
@@ -1917,9 +1917,20 @@
         "莫问",
         "衍天"
       ],
-      "count": 78,
+      "count": 89,
       "rate": 0.02,
-      "win_rate": 0.6
+      "win_rate": 0.57
+    },
+    {
+      "comp_key": "奶歌|段氏|衍天",
+      "schools": [
+        "奶歌",
+        "段氏",
+        "衍天"
+      ],
+      "count": 85,
+      "rate": 0.02,
+      "win_rate": 0.67
     },
     {
       "comp_key": "奶歌|段氏|花间",
@@ -1933,27 +1944,16 @@
       "win_rate": 0.49
     },
     {
-      "comp_key": "奶歌|气纯|衍天",
+      "comp_key": "奶歌|毒经|花间",
       "schools": [
         "奶歌",
-        "气纯",
-        "衍天"
-      ],
-      "count": 68,
-      "rate": 0.01,
-      "win_rate": 0.54
-    },
-    {
-      "comp_key": "喵子|奶歌|花间",
-      "schools": [
-        "喵子",
-        "奶歌",
+        "毒经",
         "花间"
       ],
       "count": 67,
       "rate": 0.01,
-      "win_rate": 0.54
+      "win_rate": 0.46
     }
   ],
-  "synced_at": "2026-11-11T06:43:04.761Z"
+  "synced_at": "2026-11-12T07:23:52.635Z"
 }
